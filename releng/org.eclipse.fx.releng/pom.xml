@@ -25,6 +25,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.javafx</module>
 		<module>../../bundles/runtime/org.eclipse.fx.osgi</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core</module>
+		<module>../../bundles/runtime/org.eclipse.fx.osgi.util</module>
 		
 	</modules>
 
