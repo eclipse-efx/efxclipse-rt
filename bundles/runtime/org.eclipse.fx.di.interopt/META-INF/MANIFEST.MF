@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Interopt
+Bundle-SymbolicName: org.eclipse.fx.di.interopt
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.swt;bundle-version="3.100.1";resolution:=optional,
+ org.eclipse.e4.core.contexts;bundle-version="1.2.0"
+Import-Package: javafx.embed.swing;version="2.2.0",
+ javafx.embed.swt;version="2.2.0",
+ javafx.scene;version="2.2.0",
+ javafx.scene.layout;version="2.2.0"
+Bundle-ActivationPolicy: lazy
