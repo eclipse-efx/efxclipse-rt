@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: org.eclipse.fx.core
+Bundle-Version: 0.8.1.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: javax.inject;version="1.0.0"
+Export-Package: org.eclipse.fx.core,
+ org.eclipse.fx.core.log,
+ org.eclipse.fx.core.update
+Bundle-Vendor: %Bundle-Vendor
+Service-Component: OSGI-INF/jlogger.xml
+Bundle-ActivationPolicy: lazy
