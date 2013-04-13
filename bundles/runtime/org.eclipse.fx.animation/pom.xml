@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.eclipse.fx</groupId>
 		<artifactId>releng</artifactId>
-		<relativePath>../org.eclipse.fx.releng/pom.xml</relativePath>
+		<relativePath>../../../releng/org.eclipse.fx.releng/pom.xml</relativePath>
 		<version>0.8.1-SNAPSHOT</version>
 	</parent>
 
