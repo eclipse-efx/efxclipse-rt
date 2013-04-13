@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: at.bestsolution.efxclipse.runtime.javafx;singleton:=true
+Bundle-SymbolicName: org.eclipse.fx.javafx;singleton:=true
 Bundle-Version: 2.2.0.qualifier
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
