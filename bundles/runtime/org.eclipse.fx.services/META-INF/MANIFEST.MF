@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: org.eclipse.fx.services
+Bundle-Version: 0.8.1.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.eclipse.fx.services,
+ org.eclipse.fx.services.theme
+Bundle-Vendor: %Bundle-Vendor
+Import-Package: javafx.scene;version="2.0.0"

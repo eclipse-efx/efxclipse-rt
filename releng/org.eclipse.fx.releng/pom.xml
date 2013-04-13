@@ -34,6 +34,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
 		<module>../../bundles/runtime/org.eclipse.fx.panes</module>
 		<module>../../bundles/runtime/org.eclipse.fx.p2</module>
+		<module>../../bundles/runtime/org.eclipse.fx.services</module>
 	</modules>
 
 	<repositories>
