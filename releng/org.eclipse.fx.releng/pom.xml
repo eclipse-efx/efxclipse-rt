@@ -28,6 +28,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.osgi.util</module>
 		<module>../../bundles/runtime/org.eclipse.fx.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.application</module>
+		<module>../../bundles/runtime/org.eclipse.fx.di</module>
 	</modules>
 
 	<repositories>
