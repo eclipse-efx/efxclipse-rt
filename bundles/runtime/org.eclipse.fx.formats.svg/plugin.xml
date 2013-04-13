@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.w3.org/2000/svg"
+            class="org.eclipse.fx.formats.svg.svg.SvgPackage"
+            genModel="model/svg.genmodel"/>
+   </extension>
+
+</plugin>

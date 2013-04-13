@@ -1,0 +1,1518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="svg" nsURI="http://www.w3.org/2000/svg" nsPrefix="svg">
+  <eClassifiers xsi:type="ecore:EClass" name="ContentElement" abstract="true" interface="true">
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//SvgElement"/>
+    </eTypeParameters>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        containment="true">
+      <eGenericType eTypeParameter="#//ContentElement/T"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ContainerElement" abstract="true" interface="true">
+    <eTypeParameters name="T">
+      <eBounds eClassifier="#//SvgElement"/>
+    </eTypeParameters>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eTypeParameter="#//ContainerElement/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StructuralElement" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgElement" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DescriptiveElement" abstract="true"
+      interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphicsElement" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphicsReferencingElement" abstract="true"
+      interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ShapeElement" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BasicShapeElement" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TextContentElement" abstract="true"
+      interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TextContentChildElement" abstract="true"
+      interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GradientElement" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LightSourceElement" abstract="true"
+      interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FilterPrimitiveElement" abstract="true"
+      interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AnimationElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="____ENUMS____"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="Alignment_baseline">
+    <eLiterals name="auto"/>
+    <eLiterals name="baseline" value="1"/>
+    <eLiterals name="before_edge" value="2" literal="before-edge"/>
+    <eLiterals name="text_before_edge" value="3" literal="text-before-edge"/>
+    <eLiterals name="middle" value="4"/>
+    <eLiterals name="central" value="5"/>
+    <eLiterals name="after_edge" value="6" literal="after-edge"/>
+    <eLiterals name="text_after_edge" value="7" literal="text-after-edge"/>
+    <eLiterals name="ideographic" value="8"/>
+    <eLiterals name="alphabetic" value="9"/>
+    <eLiterals name="hanging" value="10"/>
+    <eLiterals name="mathematical" value="11"/>
+    <eLiterals name="inherit" value="12"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Clip_rule">
+    <eLiterals name="nonzero"/>
+    <eLiterals name="evenodd" value="1"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Color_interpolation">
+    <eLiterals name="sRGB"/>
+    <eLiterals name="auto" value="1"/>
+    <eLiterals name="linearRGB" value="2"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Color_interpolation_filters">
+    <eLiterals name="auto"/>
+    <eLiterals name="sRGB" value="1"/>
+    <eLiterals name="linearRGB" value="2"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Color_rendering">
+    <eLiterals name="auto"/>
+    <eLiterals name="optimizeSpeed" value="1"/>
+    <eLiterals name="optimizeQuality" value="2"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Direction">
+    <eLiterals name="ltr"/>
+    <eLiterals name="rtl" value="1"/>
+    <eLiterals name="inherit" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Display">
+    <eLiterals name="inline"/>
+    <eLiterals name="block" value="1"/>
+    <eLiterals name="list_item" value="2" literal="list-item"/>
+    <eLiterals name="run_in" value="3" literal="run-in"/>
+    <eLiterals name="compact" value="4"/>
+    <eLiterals name="marker" value="5"/>
+    <eLiterals name="table" value="6"/>
+    <eLiterals name="inline_table" value="7" literal="inline-table"/>
+    <eLiterals name="table_row_group" value="8" literal="table-row-group"/>
+    <eLiterals name="table_header_group" value="9" literal="table-header-group"/>
+    <eLiterals name="table_footer_group" value="10" literal="table-footer-group"/>
+    <eLiterals name="table_row" value="11" literal="table-row"/>
+    <eLiterals name="table_column_group" value="12" literal="table-column-group"/>
+    <eLiterals name="table_column" value="13" literal="table-column"/>
+    <eLiterals name="table_cell" value="14" literal="table-cell"/>
+    <eLiterals name="table_caption" value="15" literal="table-caption"/>
+    <eLiterals name="none" value="16"/>
+    <eLiterals name="inherit" value="17"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Dominant_baseline">
+    <eLiterals name="auto"/>
+    <eLiterals name="use_script" value="1" literal="use-script"/>
+    <eLiterals name="no_change" value="2" literal="no-change"/>
+    <eLiterals name="reset_size" value="3" literal="reset-size"/>
+    <eLiterals name="ideographic" value="4"/>
+    <eLiterals name="alphabetic" value="5"/>
+    <eLiterals name="hanging" value="6"/>
+    <eLiterals name="mathematical" value="7"/>
+    <eLiterals name="central" value="8"/>
+    <eLiterals name="middle" value="9"/>
+    <eLiterals name="text_after_edge" value="10" literal="text-after-edge"/>
+    <eLiterals name="text_before_edge" value="11" literal="text-before-edge"/>
+    <eLiterals name="inherit" value="12"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Fill_rule">
+    <eLiterals name="nonzero"/>
+    <eLiterals name="evenodd" value="1"/>
+    <eLiterals name="inherit" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Font_stretch">
+    <eLiterals name="normal"/>
+    <eLiterals name="wider" value="1"/>
+    <eLiterals name="narrower" value="2"/>
+    <eLiterals name="ultra_condensed" value="3" literal="ultra-condensed"/>
+    <eLiterals name="extra_condensed" value="4" literal="extra-condensed"/>
+    <eLiterals name="condensed" value="5"/>
+    <eLiterals name="semi_condensed" value="6" literal="semi-condensed"/>
+    <eLiterals name="semi_expanded" value="7" literal="semi-expanded"/>
+    <eLiterals name="expanded" value="8"/>
+    <eLiterals name="extra_expanded" value="9" literal="extra-expanded"/>
+    <eLiterals name="ultra_expanded" value="10" literal="ultra-expanded"/>
+    <eLiterals name="inherit" value="11"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Font_style">
+    <eLiterals name="normal"/>
+    <eLiterals name="italic" value="1"/>
+    <eLiterals name="oblique" value="2"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Font_variant">
+    <eLiterals name="normal"/>
+    <eLiterals name="small_caps" value="1" literal="small-caps"/>
+    <eLiterals name="inherit" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Font_weight">
+    <eLiterals name="normal"/>
+    <eLiterals name="bold" value="1"/>
+    <eLiterals name="bolder" value="2"/>
+    <eLiterals name="lighter" value="3"/>
+    <eLiterals name="em100" value="4" literal="100"/>
+    <eLiterals name="em200" value="5" literal="200"/>
+    <eLiterals name="em300" value="6" literal="300"/>
+    <eLiterals name="em400" value="7" literal="400"/>
+    <eLiterals name="em500" value="8" literal="500"/>
+    <eLiterals name="em600" value="9" literal="600"/>
+    <eLiterals name="em700" value="10" literal="700"/>
+    <eLiterals name="em800" value="11" literal="800"/>
+    <eLiterals name="em900" value="12" literal="900"/>
+    <eLiterals name="inherit" value="13"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Image_rendering">
+    <eLiterals name="auto"/>
+    <eLiterals name="optimizeSpeed" value="1"/>
+    <eLiterals name="optimizeQuality" value="2"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Overflow">
+    <eLiterals name="visible"/>
+    <eLiterals name="hidden" value="1"/>
+    <eLiterals name="scroll" value="2"/>
+    <eLiterals name="auto" value="3"/>
+    <eLiterals name="inherit" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Pointer_events">
+    <eLiterals name="visiblePainted"/>
+    <eLiterals name="visibleFill" value="1"/>
+    <eLiterals name="visibleStroke" value="2"/>
+    <eLiterals name="visible" value="3"/>
+    <eLiterals name="painted" value="4"/>
+    <eLiterals name="fill" value="5"/>
+    <eLiterals name="stroke" value="6"/>
+    <eLiterals name="all" value="7"/>
+    <eLiterals name="none" value="8"/>
+    <eLiterals name="inherit" value="9"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Shape_rendering">
+    <eLiterals name="auto"/>
+    <eLiterals name="optimizeSpeed" value="1"/>
+    <eLiterals name="crispEdges" value="2"/>
+    <eLiterals name="geometricPrecision" value="3"/>
+    <eLiterals name="inherit" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Stroke_linecap">
+    <eLiterals name="butt"/>
+    <eLiterals name="round" value="1"/>
+    <eLiterals name="square" value="2"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Stroke_linejoin">
+    <eLiterals name="miter"/>
+    <eLiterals name="round" value="1"/>
+    <eLiterals name="bevel" value="2"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Text_anchor">
+    <eLiterals name="start"/>
+    <eLiterals name="middle" value="1"/>
+    <eLiterals name="end" value="2"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Text_rendering">
+    <eLiterals name="auto"/>
+    <eLiterals name="optimizeSpeed" value="1"/>
+    <eLiterals name="optimizeLegibility" value="2"/>
+    <eLiterals name="geometricPrecision" value="3"/>
+    <eLiterals name="inherit" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Unicode_bidi">
+    <eLiterals name="normal"/>
+    <eLiterals name="embed" value="1"/>
+    <eLiterals name="bidi_override" value="2" literal="bidi-override"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Visibility">
+    <eLiterals name="visible"/>
+    <eLiterals name="hidden" value="1"/>
+    <eLiterals name="collapse" value="2"/>
+    <eLiterals name="inherit" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Writing_mode">
+    <eLiterals name="lr_tb" literal="lr-tb"/>
+    <eLiterals name="rl_tb" value="1" literal="rl-tb"/>
+    <eLiterals name="tb_rl" value="2" literal="tb-rl"/>
+    <eLiterals name="lr" value="3"/>
+    <eLiterals name="rl" value="4"/>
+    <eLiterals name="tb" value="5"/>
+    <eLiterals name="inherit" value="6"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ZoomAndPan">
+    <eLiterals name="disable"/>
+    <eLiterals name="magnify" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="LengthAdjust">
+    <eLiterals name="spacing"/>
+    <eLiterals name="spacingAndGlyphs" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Method">
+    <eLiterals name="align"/>
+    <eLiterals name="stretch" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Spacing">
+    <eLiterals name="auto"/>
+    <eLiterals name="exact" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MarkerUnits">
+    <eLiterals name="strokeWidth"/>
+    <eLiterals name="userSpaceOnUse" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Rendering_intent">
+    <eLiterals name="auto"/>
+    <eLiterals name="perceptual" value="1"/>
+    <eLiterals name="relative_colorimetric" value="2" literal="relative-colorimetric"/>
+    <eLiterals name="saturation" value="3"/>
+    <eLiterals name="absolute_colorimetric" value="4" literal="absolute-colorimetric"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="GradientUnits">
+    <eLiterals name="userSpaceOnUse"/>
+    <eLiterals name="objectBoundingBox" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SpreadMethod">
+    <eLiterals name="pad"/>
+    <eLiterals name="reflect" value="1"/>
+    <eLiterals name="repeat" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="PatternUnits">
+    <eLiterals name="userSpaceOnUse"/>
+    <eLiterals name="objectBoundingBox" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ClipPathUnits">
+    <eLiterals name="userSpaceOnUse"/>
+    <eLiterals name="objectBoundingBox" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MaskUnits">
+    <eLiterals name="userSpaceOnUse"/>
+    <eLiterals name="objectBoundingBox" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FilterUnits">
+    <eLiterals name="userSpaceOnUse"/>
+    <eLiterals name="objectBoundingBox" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="BlendMode">
+    <eLiterals name="normal"/>
+    <eLiterals name="lighten" value="1"/>
+    <eLiterals name="multiply" value="2"/>
+    <eLiterals name="screen" value="3"/>
+    <eLiterals name="darken" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ColorMatrixType">
+    <eLiterals name="matrix"/>
+    <eLiterals name="saturate" value="1"/>
+    <eLiterals name="hueRotate" value="2"/>
+    <eLiterals name="luminanceToAlpha" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="CompositeOperator">
+    <eLiterals name="over"/>
+    <eLiterals name="in" value="1"/>
+    <eLiterals name="out" value="2"/>
+    <eLiterals name="atop" value="3"/>
+    <eLiterals name="xor" value="4"/>
+    <eLiterals name="arithmetic" value="5"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ConvolveMatrixEdgeMode">
+    <eLiterals name="duplicate"/>
+    <eLiterals name="wrap" value="1"/>
+    <eLiterals name="none" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ChannelSelector">
+    <eLiterals name="R"/>
+    <eLiterals name="G" value="1"/>
+    <eLiterals name="B" value="2"/>
+    <eLiterals name="A" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MorphologyOperator">
+    <eLiterals name="erode"/>
+    <eLiterals name="dilate" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="StitchTiles">
+    <eLiterals name="stitch"/>
+    <eLiterals name="noStitch" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TurbulenceType">
+    <eLiterals name="fractalNoise"/>
+    <eLiterals name="turbulence" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="____DATATYPES____"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Length" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Angle" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Percentage" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Shape" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Funciri" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Color" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Paint" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Opacity_value" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Baseline_shift" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Clip" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Clip_path" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Color_profile" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Cursor" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Enable_background" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Fill" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Fill_opacity" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Filter" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Flood_color" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Flood_opacity" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Font_family" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Font_size" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Font_size_adjust" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Glyph_orientation_horizontal" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Glyph_orientation_vertical" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Kerning" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Letter_spacing" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Lighting_color" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Marker_end" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Marker_mid" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Marker_start" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Masks" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Opacity" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Stop_color" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Stop_opacity" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Stroke" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Stroke_dasharray" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Stroke_dashoffset" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Stroke_miterlimit" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Stroke_opacity" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Stroke_width" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Text_decoration" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Word_spacing" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Coordinate" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ViewBox" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="PreserveAspectRatio" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Number" instanceClassName="java.lang.Double"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Transform" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="PathData" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ListOfPoints" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ListOfLengths" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ListOfNumbers" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="ListOfCoordinates" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Name" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="NumberOptionalNumber" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="TransformList" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EClass" name="____ATTRIBUTES____"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConditionalProcessingAttributes" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiredFeatures" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiredExtensions" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="systemLanguage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CoreAttributes" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xml__base" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xml__lang" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xml__space" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DocumentEventAttributes" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onunload" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onabort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onerror" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onresize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onscroll" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onzoom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphicalEventAttributes" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onfocusin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onfocusout" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onactivate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onclick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onmousedown" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onmouseup" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onmouseover" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onmousemove" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onmouseout" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="onload" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PresentationAttributes" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alignment_baseline" eType="#//Alignment_baseline"
+        defaultValueLiteral="alignment_baseline.auto"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseline_shift" eType="#//Baseline_shift"
+        defaultValueLiteral="&quot;baseline&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clip" eType="#//Clip" defaultValueLiteral="auto"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clip_path" eType="#//Clip_path"
+        defaultValueLiteral="none"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clip_rule" eType="#//Clip_rule"
+        defaultValueLiteral="clip_rule.nonzero"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color" eType="#//Color"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color_interpolation" eType="#//Color_interpolation"
+        defaultValueLiteral="color_interpolation.sRGB"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color_interpolation_filters"
+        eType="#//Color_interpolation_filters" defaultValueLiteral="color_interpolation_filters.linearRGB"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color_profile" eType="#//Color_profile"
+        defaultValueLiteral="&quot;auto&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color_rendering" eType="#//Color_rendering"
+        defaultValueLiteral="&quot;auto&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cursor" eType="#//Cursor"
+        defaultValueLiteral="&quot;auto&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction" eType="#//Direction"
+        defaultValueLiteral="direction.ltr"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="display" eType="#//Display"
+        defaultValueLiteral="display.inline"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dominant_baseline" eType="#//Dominant_baseline"
+        defaultValueLiteral="dominant_baseline.auto"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enable_background" eType="#//Enable_background"
+        defaultValueLiteral="&quot;inherit&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fill" eType="#//Fill" defaultValueLiteral="black"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fill_opacity" eType="#//Fill_opacity"
+        defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fill_rule" eType="#//Fill_rule"
+        defaultValueLiteral="fill_rule.nonzero"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="filter" eType="#//Filter"
+        defaultValueLiteral="&quot;none&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="flood_color" eType="#//Flood_color"
+        defaultValueLiteral="&quot;black&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="flood_opacity" eType="#//Flood_opacity"
+        defaultValueLiteral="&quot;1&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="font_family" eType="#//Font_family"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="font_size" eType="#//Font_size"
+        defaultValueLiteral="&quot;medium&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="font_size_adjust" eType="#//Font_size_adjust"
+        defaultValueLiteral="&quot;none&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="font_stretch" eType="#//Font_stretch"
+        defaultValueLiteral="font_stretch.none"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="font_style" eType="#//Font_style"
+        defaultValueLiteral="font_style.normal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="font_variant" eType="#//Font_variant"
+        defaultValueLiteral="font_variant.normal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="font_weight" eType="#//Font_weight"
+        defaultValueLiteral="font_weight.normal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="glyph_orientation_horizontal"
+        eType="#//Glyph_orientation_horizontal" defaultValueLiteral="&quot;0deg&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="glyph_orientation_vertical"
+        eType="#//Glyph_orientation_vertical" defaultValueLiteral="&quot;auto&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="image_rendering" eType="#//Image_rendering"
+        defaultValueLiteral="&quot;auto&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kerning" eType="#//Kerning"
+        defaultValueLiteral="&quot;auto&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="letter_spacing" eType="#//Letter_spacing"
+        defaultValueLiteral="&quot;normal&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lighting_color" eType="#//Lighting_color"
+        defaultValueLiteral="&quot;white&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="marker_end" eType="#//Marker_end"
+        defaultValueLiteral="&quot;none&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="marker_mid" eType="#//Marker_mid"
+        defaultValueLiteral="&quot;none&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="marker_start" eType="#//Marker_start"
+        defaultValueLiteral="&quot;none&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="masks" eType="#//Masks"
+        defaultValueLiteral="&quot;none&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="opacity" eType="#//Opacity"
+        defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="overflow" eType="#//Overflow"
+        defaultValueLiteral="null"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pointer_events" eType="#//Pointer_events"
+        defaultValueLiteral="pointer_events.visiblePainted"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shape_rendering" eType="#//Shape_rendering"
+        defaultValueLiteral="shape_rendering.auto"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stop_color" eType="#//Stop_color"
+        defaultValueLiteral="black"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stop_opacity" eType="#//Stop_opacity"
+        defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke" eType="#//Stroke"
+        defaultValueLiteral="none"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke_dasharray" eType="#//Stroke_dasharray"
+        defaultValueLiteral="none"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke_dashoffset" eType="#//Stroke_dashoffset"
+        defaultValueLiteral="0"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke_linecap" eType="#//Stroke_linecap"
+        defaultValueLiteral="Stroke_linecap.butt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke_linejoin" eType="#//Stroke_linejoin"
+        defaultValueLiteral="stroke_linejoin.miter"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke_miterlimit" eType="#//Stroke_miterlimit"
+        defaultValueLiteral="4"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke_opacity" eType="#//Stroke_opacity"
+        defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke_width" eType="#//Stroke_width"
+        defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text_anchor" eType="#//Text_anchor"
+        defaultValueLiteral="text_anchor.start"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text_decoration" eType="#//Text_decoration"
+        defaultValueLiteral="&quot;none&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text_rendering" eType="#//Text_rendering"
+        defaultValueLiteral="text_rendering.auto"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unicode_bidi" eType="#//Unicode_bidi"
+        defaultValueLiteral="unicode_bidi.normal"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visibility" eType="#//Visibility"
+        defaultValueLiteral="visibility.visible"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="word_spacing" eType="#//Word_spacing"
+        defaultValueLiteral="&quot;normal&quot;"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="writing_mode" eType="#//Writing_mode"
+        defaultValueLiteral="writing_mode.lr_tb"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="XLinkAttributes" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xlink__href" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xlink__show" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xlink__actuate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xlink__type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xlink__role" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xlink__arcrole" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xlink__title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="resolvedInstance" eType="#//SvgElement"
+        transient="true" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FilterPrimitiveAttributes" abstract="true"
+      interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="result" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="in" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="____ELEMENTES____"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgSvgElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="viewBox" eType="#//ViewBox"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preserveAspectRatio" eType="#//PreserveAspectRatio"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zoomAndPan" eType="#//ZoomAndPan"
+        defaultValueLiteral="zoomandpan.disable"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseProfile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contentScriptType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contentStyleType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="styleSheet" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//ContainerElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+    <eGenericSuperTypes eClassifier="#//StructuralElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//DocumentEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgGElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Coordinate"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//ContainerElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+    <eGenericSuperTypes eClassifier="#//StructuralElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgDefsElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//ContainerElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+    <eGenericSuperTypes eClassifier="#//StructuralElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgDescElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//DescriptiveElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgTitleElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//DescriptiveElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgSymbolElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="viewBox" eType="#//ViewBox"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preserveAspectRatio" eType="#//PreserveAspectRatio"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//ContainerElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+    <eGenericSuperTypes eClassifier="#//StructuralElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgUseElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Coordinate"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsReferencingElement"/>
+    <eGenericSuperTypes eClassifier="#//StructuralElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgImageElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preserveAspectRatio" eType="#//PreserveAspectRatio"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="#//Length"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsReferencingElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgSwitchElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//ContainerElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgPathElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="d" eType="#//PathData"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pathLength" eType="#//Number"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
+    <eGenericSuperTypes eClassifier="#//ShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgRectElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rx" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ry" eType="#//Length"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//BasicShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
+    <eGenericSuperTypes eClassifier="#//ShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgCircleElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cx" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cy" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="r" eType="#//Length"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//BasicShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
+    <eGenericSuperTypes eClassifier="#//ShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgEllipseElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cx" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cy" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rx" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ry" eType="#//Length"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//BasicShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
+    <eGenericSuperTypes eClassifier="#//ShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgLineElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x1" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y1" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x2" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y2" eType="#//Coordinate"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//BasicShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
+    <eGenericSuperTypes eClassifier="#//ShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgPolylineElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="points" eType="#//ListOfPoints"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//BasicShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
+    <eGenericSuperTypes eClassifier="#//ShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgPolygonElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="points" eType="#//ListOfPoints"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//BasicShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
+    <eGenericSuperTypes eClassifier="#//ShapeElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgTextElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lengthAdjust" eType="#//LengthAdjust"
+        defaultValueLiteral="LengthAdjust.spacing"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" eType="#//ListOfLengths"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" eType="#//ListOfLengths"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rotate" eType="#//ListOfNumbers"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="textLength" eType="#//Length"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//GraphicsElement"/>
+    <eGenericSuperTypes eClassifier="#//TextContentElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgTspanElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//ListOfCoordinates"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//ListOfCoordinates"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" eType="#//ListOfLengths"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" eType="#//ListOfLengths"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rotate" eType="#//ListOfNumbers"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="textLength" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lengthAdjust" eType="#//LengthAdjust"
+        defaultValueLiteral="LengthAdjust.spacing"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//TextContentElement"/>
+    <eGenericSuperTypes eClassifier="#//TextContentChildElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgTrefElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//TextContentElement"/>
+    <eGenericSuperTypes eClassifier="#//TextContentChildElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgTextPathElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startOffset" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" eType="#//Method"
+        defaultValueLiteral="Method.align"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="spacing" eType="#//Spacing"
+        defaultValueLiteral="Spacing.exact"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//TextContentElement"/>
+    <eGenericSuperTypes eClassifier="#//TextContentChildElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgAltGlyphElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//ListOfCoordinates"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//ListOfCoordinates"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" eType="#//ListOfLengths"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" eType="#//ListOfLengths"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="glyphRef" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="format" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rotate" eType="#//ListOfNumbers"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//TextContentElement"/>
+    <eGenericSuperTypes eClassifier="#//TextContentChildElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//GraphicalEventAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgAltGlyphDefElement">
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgAltGlyphItemElement">
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgAltGlyphRefElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="glyphRef" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="format" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgMarkerElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="viewBox" eType="#//ViewBox"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preserveAspectRatio" eType="#//PreserveAspectRatio"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="refX" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="refY" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="markerUnits" eType="#//MarkerUnits"
+        defaultValueLiteral="MarkerUnits.strokeWidth"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="markerWidth" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="markerHeight" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="orient" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgColorProfileElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="local" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="#//Name"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rendering_intent" eType="#//Rendering_intent"
+        defaultValueLiteral="Rendering_intent.auto"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgLinearGradientElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x1" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y1" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x2" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y2" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gradientUnits" eType="#//GradientUnits"
+        defaultValueLiteral="GradientUnits.objectBoundingBox"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="spreadMethod" eType="#//SpreadMethod"
+        defaultValueLiteral="SpreadMethod.pad"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gradientTransform" eType="#//TransformList"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//GradientElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgRadialGradientElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cx" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cy" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="r" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fx" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fy" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="spreadMethod" eType="#//SpreadMethod"
+        defaultValueLiteral="SpreadMethod.pad"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gradientUnits" eType="#//GradientUnits"
+        defaultValueLiteral="GradientUnits.objectBoundingBox"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gradientTransform" eType="#//TransformList"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//GradientElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgStopElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgPatternElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="viewBox" eType="#//ViewBox"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preserveAspectRatio" eType="#//PreserveAspectRatio"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="patternUnits" eType="#//PatternUnits"
+        defaultValueLiteral="PatternUnits.objectBoundingBox"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="patternContentUnits" eType="#//PatternUnits"
+        defaultValueLiteral="PatternUnits.userSpaceOnUse"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="patternTransform" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//ContainerElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgClipPathElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transform" eType="#//Transform"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clipPathUnits" eType="#//ClipPathUnits"
+        defaultValueLiteral="ClipPathUnits.userSpaceOnUse"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgMaskElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maskUnits" eType="#//MaskUnits"
+        defaultValueLiteral="MaskUnits.objectBoundingBox"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maskContentUnits" eType="#//MaskUnits"
+        defaultValueLiteral="MaskUnits.userSpaceOnUse"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//ConditionalProcessingAttributes"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFilterElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Coordinate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="#//Length"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="filterRes" eType="#//NumberOptionalNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="filterUnits" eType="#//FilterUnits"
+        defaultValueLiteral="FilterUnits.userSpaceOnUse"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="primitiveUnits" eType="#//FilterUnits"
+        defaultValueLiteral="FilterUnits.userSpaceOnUse"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeDistantLightElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="azimuth" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="elevation" eType="#//Number"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFePointLightElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="z" eType="#//Number"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//LightSourceElement"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeSpotLightElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="z" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pointsAtX" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pointsAtY" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pointsAtZ" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="specularExponent" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="limitingConeAngle" eType="#//Number"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//LightSourceElement"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeBlendElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="in2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mode" eType="#//BlendMode"
+        defaultValueLiteral="Mode.normal"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeColorMatrixElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ColorMatrixType"
+        defaultValueLiteral="ColorMatrixType.matrix"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" eType="#//ListOfNumbers"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeComponentTransferElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeFuncRElement">
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeFuncGElement">
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeFuncBElement">
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeFuncAElement">
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeCompositeElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="in2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//CompositeOperator"
+        defaultValueLiteral="CompositeOperator.over"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="k1" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="k2" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="k3" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="k4" eType="#//Number"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeConvolveMatrixElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="order" eType="#//NumberOptionalNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kernelMatrix" eType="#//ListOfNumbers"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="divisor" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bias" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetX" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetY" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="edgeMode" eType="#//ConvolveMatrixEdgeMode"
+        defaultValueLiteral="ConvolveMatrixEdgeMode.duplicate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kernelUnitLength" eType="#//NumberOptionalNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preserveAlpha" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeDiffuseLightingElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="surfaceScale" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="diffuseConstant" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kernelUnitLength" eType="#//NumberOptionalNumber"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeDisplacementMapElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="in2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scale" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xChannelSelector" eType="#//ChannelSelector"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="yChannelSelector" eType="#//ChannelSelector"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeFloodElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeGaussianBlurElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stdDeviation" eType="#//NumberOptionalNumber"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeImageElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalResourcesRequired"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="preserveAspectRatio" eType="#//PreserveAspectRatio"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//XLinkAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeMergeElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeMergeNodeElement">
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeMorphologyElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//MorphologyOperator"
+        defaultValueLiteral="MorphologyOperator.erode"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="radius" eType="#//NumberOptionalNumber"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeOffsetElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dx" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dy" eType="#//Number"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeSpecularLightingElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="surfaceScale" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="specularConstant" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="specularExponent" eType="#//Number"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kernelUnitLength" eType="#//NumberOptionalNumber"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeTileElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgFeTurbulenceElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseFrequency" eType="#//NumberOptionalNumber"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="numOctaves" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="seed" eType="#//Number"
+        defaultValueLiteral="0"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stitchTiles" eType="#//StitchTiles"
+        defaultValueLiteral="StitchTiles.noStitch"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//TurbulenceType"
+        defaultValueLiteral="TurbulenceType.turbulence"/>
+    <eGenericSuperTypes eClassifier="#//SvgElement"/>
+    <eGenericSuperTypes eClassifier="#//CoreAttributes"/>
+    <eGenericSuperTypes eClassifier="#//PresentationAttributes"/>
+    <eGenericSuperTypes eClassifier="#//FilterPrimitiveAttributes"/>
+    <eGenericSuperTypes eClassifier="#//ContentElement">
+      <eTypeArguments eClassifier="#//SvgElement"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgAnimateElement" eSuperTypes="#//SvgElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SvgMetadataElement" eSuperTypes="#//SvgElement #//CoreAttributes"/>
+</ecore:EPackage>
