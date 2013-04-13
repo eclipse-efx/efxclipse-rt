@@ -85,7 +85,7 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 	
 	@Override
 	public BaseClassLoader createClassLoader(ClassLoader parent, final ClassLoaderDelegate delegate, BundleProtectionDomain domain, BaseData data, String[] bundleclasspath) {
-		if (data.getBundle().getSymbolicName().equals("at.bestsolution.efxclipse.runtime.javafx")) {
+		if (data.getBundle().getSymbolicName().equals("org.eclipse.fx.javafx")) {
 			try {
 				MyBundleClassLoader cl = new MyBundleClassLoader(getPackageAdmin(), parent, delegate, domain, data, bundleclasspath, context);
 				LOADER = cl;
