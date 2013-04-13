@@ -28,8 +28,10 @@
 		<module>../../bundles/runtime/org.eclipse.fx.osgi.util</module>
 		<module>../../bundles/runtime/org.eclipse.fx.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.application</module>
-		<!--  module>../../bundles/runtime/org.eclipse.fx.di</module-->
+		<module>../../bundles/runtime/org.eclipse.fx.di</module>
+		<!--  >module>../../bundles/runtime/org.eclipse.fx.di.interopt</module-->
 		<module>../../bundles/runtime/org.eclipse.fx.animation</module>
+		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
 	</modules>
 
 	<repositories>
