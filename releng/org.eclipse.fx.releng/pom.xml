@@ -10,7 +10,7 @@
 	</prerequisites>
 
 	<groupId>org.eclipse.fx</groupId>
-	<artifactId>efxclipse</artifactId>
+	<artifactId>releng</artifactId>
 	<version>0.8.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
@@ -22,8 +22,8 @@
 	</properties>
 
 	<modules>
-		<module>../runtime/org.eclipse.fx.javafx</module>
-		<module>../runtime/org.eclipse.fx.osgi</module>
+		<module>../../bundles/runtime/org.eclipse.fx.javafx</module>
+		<module>../../bundles/runtime/org.eclipse.fx.osgi</module>
 		
 	</modules>
 
@@ -51,7 +51,7 @@
 		</repository>
 	</repositories>
 
-	<!--  pluginRepositories>
+	<pluginRepositories>
 		<pluginRepository>
 			<id>tycho</id>
 			<url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
@@ -59,7 +59,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
-	</pluginRepositories-->
+	</pluginRepositories>
 
 	<build>
 

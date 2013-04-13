@@ -8,9 +8,9 @@
 	<version>2.2.0-SNAPSHOT</version>
 
 	<parent>
-		<groupId>at.bestsolution</groupId>
-		<artifactId>efxclipse</artifactId>
-		<relativePath>../../releng/org.eclipse.fx.releng/pom.xml</relativePath>
+		<groupId>org.eclipse.fx</groupId>
+		<artifactId>releng</artifactId>
+		<relativePath>../../../releng/org.eclipse.fx.releng/pom.xml</relativePath>
 		<version>0.8.1-SNAPSHOT</version>
 	</parent>
 
