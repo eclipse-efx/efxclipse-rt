@@ -29,6 +29,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.application</module>
 		<module>../../bundles/runtime/org.eclipse.fx.di</module>
+		<module>../../bundles/runtime/org.eclipse.fx.animation</module>
 	</modules>
 
 	<repositories>
