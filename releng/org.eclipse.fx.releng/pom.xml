@@ -32,6 +32,7 @@
 		<!--  >module>../../bundles/runtime/org.eclipse.fx.di.interopt</module-->
 		<module>../../bundles/runtime/org.eclipse.fx.animation</module>
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
+		<module>../../bundles/runtime/org.eclipse.fx.panes</module>
 	</modules>
 
 	<repositories>
