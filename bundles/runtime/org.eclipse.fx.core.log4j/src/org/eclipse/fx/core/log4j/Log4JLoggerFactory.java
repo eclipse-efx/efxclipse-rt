@@ -14,8 +14,8 @@ import java.text.MessageFormat;
 
 import javax.inject.Provider;
 
-import at.bestsolution.efxclipse.runtime.core.log.Logger;
-import at.bestsolution.efxclipse.runtime.core.log.LoggerFactory;
+import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.LoggerFactory;
 
 public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory> {
 
