@@ -22,8 +22,8 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.fx.application.AbstractJFXApplication;
 import org.eclipse.fx.osgi.util.LoggerCreator;
+import org.eclipse.fx.ui.application.AbstractJFXApplication;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -60,6 +60,7 @@ public class DIApplication extends AbstractJFXApplication implements IExecutable
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setInitializationData(IConfigurationElement config,
 			String propertyName, Object data) throws CoreException {
 		bundleName = config.getContributor().getName();

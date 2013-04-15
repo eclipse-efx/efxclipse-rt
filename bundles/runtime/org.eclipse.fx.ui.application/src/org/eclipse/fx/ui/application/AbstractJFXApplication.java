@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.application;
+package org.eclipse.fx.ui.application;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -29,7 +29,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.core.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core.p2</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.databinding</module>
-		<module>../../bundles/runtime/org.eclipse.fx.application</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.application</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.di</module>
 		<!--  >module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module-->
 		<module>../../bundles/runtime/org.eclipse.fx.animation</module>
