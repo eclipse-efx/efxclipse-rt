@@ -8,25 +8,22 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.animation.pagetransition.animation;
+package org.eclipse.fx.ui.animation.pagetransition.animation;
 
-
-import org.eclipse.fx.animation.pagetransition.CenterSwitchAnimation;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransitionBuilder;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransitionBuilder;
 import javafx.animation.PathTransitionBuilder;
-import javafx.animation.RotateTransitionBuilder;
 import javafx.animation.ScaleTransitionBuilder;
 import javafx.animation.SequentialTransitionBuilder;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.shape.CubicCurve;
-import javafx.scene.shape.QuadCurve;
-import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
+
+import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 
 public class PageChangeAnimation extends CenterSwitchAnimation {
 
@@ -80,7 +77,6 @@ public class PageChangeAnimation extends CenterSwitchAnimation {
 	
 	@Override
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
-		Node p = curNode.getParent();
 		Bounds b = curNode.getBoundsInLocal();
 		double cX = b.getMinX() + b.getWidth()/2;
 		double cY = b.getMinY() + b.getHeight()/2;

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<name>e(fx)clipse - Runtime - Animation Util</name>
 	<groupId>org.eclipse.fx.runtime</groupId>
-	<artifactId>org.eclipse.fx.animation</artifactId>
+	<artifactId>org.eclipse.fx.ui.animation</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<parent>

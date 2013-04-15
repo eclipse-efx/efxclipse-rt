@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Animationutils
-Bundle-SymbolicName: org.eclipse.fx.animation;singleton:=true
+Bundle-SymbolicName: org.eclipse.fx.ui.animation;singleton:=true
 Bundle-Version: 0.8.1.qualifier
 Import-Package: javafx.animation;version="2.0.0",
  javafx.application;version="2.0.0",
@@ -33,5 +33,5 @@ Import-Package: javafx.animation;version="2.0.0",
  javafx.util;version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: BestSolution.at
-Export-Package: org.eclipse.fx.animation.pagetransition,
- org.eclipse.fx.animation.pagetransition.animation
+Export-Package: org.eclipse.fx.ui.animation.pagetransition,
+ org.eclipse.fx.ui.animation.pagetransition.animation

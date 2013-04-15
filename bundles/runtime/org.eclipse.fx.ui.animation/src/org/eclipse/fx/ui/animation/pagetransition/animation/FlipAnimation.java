@@ -8,14 +8,11 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.animation.pagetransition.animation;
+package org.eclipse.fx.ui.animation.pagetransition.animation;
 
-
-import org.eclipse.fx.animation.pagetransition.CenterSwitchAnimation;
 
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
-import javafx.animation.ParallelTransitionBuilder;
 import javafx.animation.RotateTransitionBuilder;
 import javafx.animation.ScaleTransitionBuilder;
 import javafx.animation.SequentialTransitionBuilder;
@@ -28,6 +25,8 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
+
+import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 
 public class FlipAnimation extends CenterSwitchAnimation {
 
