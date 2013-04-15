@@ -10,7 +10,7 @@
  *     Brad Reynolds - bug 147515
  ******************************************************************************/
 
-package org.eclipse.fx.databinding;
+package org.eclipse.fx.core.databinding;
 
 import java.beans.PropertyDescriptor;
 

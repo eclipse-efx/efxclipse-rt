@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.fx.databinding.JFXRealm;
+import org.eclipse.fx.ui.databinding.JFXRealm;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;

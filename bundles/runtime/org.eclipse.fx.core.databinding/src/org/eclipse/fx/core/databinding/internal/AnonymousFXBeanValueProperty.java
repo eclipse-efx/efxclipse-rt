@@ -10,7 +10,7 @@
  *     Matthew Hall - bugs 264307, 264619
  ******************************************************************************/
 
-package org.eclipse.fx.databinding.internal;
+package org.eclipse.fx.core.databinding.internal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import org.eclipse.core.databinding.observable.masterdetail.MasterDetailObservab
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.DelegatingValueProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.fx.databinding.JFXBeanProperties;
+import org.eclipse.fx.core.databinding.JFXBeanProperties;
 
 
 /**

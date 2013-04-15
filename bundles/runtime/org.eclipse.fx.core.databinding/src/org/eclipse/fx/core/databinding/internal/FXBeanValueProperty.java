@@ -10,7 +10,7 @@
  *     Matthew Hall - bug 195222, 264307, 265561
  ******************************************************************************/
 
-package org.eclipse.fx.databinding.internal;
+package org.eclipse.fx.core.databinding.internal;
 
 import java.beans.PropertyDescriptor;
 

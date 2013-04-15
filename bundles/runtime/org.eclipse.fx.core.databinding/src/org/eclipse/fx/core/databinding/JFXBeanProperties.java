@@ -8,17 +8,17 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.databinding;
+package org.eclipse.fx.core.databinding;
 
 import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.fx.databinding.internal.AnonymousFXBeanValueProperty;
-import org.eclipse.fx.databinding.internal.FXBeanPropertyHelper;
-import org.eclipse.fx.databinding.internal.FXBeanValueProperty;
-import org.eclipse.fx.databinding.internal.FXBeanValuePropertyDecorator;
+import org.eclipse.fx.core.databinding.internal.AnonymousFXBeanValueProperty;
+import org.eclipse.fx.core.databinding.internal.FXBeanPropertyHelper;
+import org.eclipse.fx.core.databinding.internal.FXBeanValueProperty;
+import org.eclipse.fx.core.databinding.internal.FXBeanValuePropertyDecorator;
 
 
 import javafx.beans.property.Property;

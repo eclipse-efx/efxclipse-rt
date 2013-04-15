@@ -24,9 +24,10 @@
 	<modules>
 		<module>../../bundles/runtime/org.eclipse.fx.javafx</module>
 		<module>../../bundles/runtime/org.eclipse.fx.osgi</module>
-		<module>../../bundles/runtime/org.eclipse.fx.core</module>
 		<module>../../bundles/runtime/org.eclipse.fx.osgi.util</module>
-		<module>../../bundles/runtime/org.eclipse.fx.databinding</module>
+		<module>../../bundles/runtime/org.eclipse.fx.core</module>
+		<module>../../bundles/runtime/org.eclipse.fx.core.databinding</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.application</module>
 		<module>../../bundles/runtime/org.eclipse.fx.di</module>
 		<!--  >module>../../bundles/runtime/org.eclipse.fx.di.interopt</module-->

@@ -8,7 +8,7 @@
  * Contributors:
  *     Matthew Hall - initial API and implementation
  ******************************************************************************/
-package org.eclipse.fx.databinding.internal;
+package org.eclipse.fx.core.databinding.internal;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

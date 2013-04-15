@@ -9,7 +9,7 @@
  *     IBM Corporation - initial API and implementation
  *     Matthew Hall - bug 118516
  *******************************************************************************/
-package org.eclipse.fx.databinding.internal;
+package org.eclipse.fx.core.databinding.internal;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

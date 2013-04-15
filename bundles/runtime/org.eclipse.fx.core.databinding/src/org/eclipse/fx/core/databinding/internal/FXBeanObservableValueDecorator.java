@@ -10,7 +10,7 @@
  *     Matthew Hall - bug 246625
  ******************************************************************************/
 
-package org.eclipse.fx.databinding.internal;
+package org.eclipse.fx.core.databinding.internal;
 
 import java.beans.PropertyDescriptor;
 
@@ -18,7 +18,7 @@ import org.eclipse.core.databinding.observable.IObservable;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.DecoratingObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.fx.databinding.IJFXBeanObservable;
+import org.eclipse.fx.core.databinding.IJFXBeanObservable;
 
 
 /**

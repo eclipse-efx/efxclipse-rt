@@ -8,12 +8,11 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.databinding;
+package org.eclipse.fx.core.databinding;
 
-import java.beans.PropertyDescriptor;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.WritableValue;
 
-import org.eclipse.core.databinding.property.IProperty;
+public interface ObservableWritableValue<E> extends ObservableValue<E>, WritableValue<E> {
 
-public interface IJFXBeanProperty extends IProperty {
-	public PropertyDescriptor getPropertyDescriptor();
 }

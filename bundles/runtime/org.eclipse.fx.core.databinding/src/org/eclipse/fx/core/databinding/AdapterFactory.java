@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.databinding;
+package org.eclipse.fx.core.databinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;

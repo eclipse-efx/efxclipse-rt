@@ -8,14 +8,12 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.databinding;
+package org.eclipse.fx.core.databinding;
 
-import org.eclipse.core.databinding.property.value.IValueProperty;
+import java.beans.PropertyDescriptor;
 
-public interface IJFXBeanValueProperty extends IJFXBeanProperty, IValueProperty {
-	public IJFXBeanValueProperty value(String propertyName);
+import org.eclipse.core.databinding.property.IProperty;
 
-	public IJFXBeanValueProperty value(String propertyName, Class<?> valueType);
-
-	public IJFXBeanValueProperty value(IJFXBeanValueProperty property);
+public interface IJFXBeanProperty extends IProperty {
+	public PropertyDescriptor getPropertyDescriptor();
 }

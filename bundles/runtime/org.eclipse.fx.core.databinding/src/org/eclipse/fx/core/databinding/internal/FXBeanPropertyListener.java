@@ -10,7 +10,7 @@
  *     Matthew Hall - bug 268336
  ******************************************************************************/
 
-package org.eclipse.fx.databinding.internal;
+package org.eclipse.fx.core.databinding.internal;
 
 import java.beans.PropertyDescriptor;
 import java.util.HashMap;
