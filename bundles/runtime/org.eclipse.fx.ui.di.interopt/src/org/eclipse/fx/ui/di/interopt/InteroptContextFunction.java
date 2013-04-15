@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.di.interopt;
+package org.eclipse.fx.ui.di.interopt;
 
 import javax.swing.JPanel;
 

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<name>e(fx)clipse - Runtime - Eclipse DI Interopt Support</name>
 	<groupId>org.eclipse.fx.runtime</groupId>
-	<artifactId>org.eclipse.fx.di.interopt</artifactId>
+	<artifactId>org.eclipse.fx.ui.di.interopt</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<parent>

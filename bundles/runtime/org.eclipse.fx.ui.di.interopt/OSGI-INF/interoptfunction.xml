@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.di.interopt.interopt">
-   <implementation class="org.eclipse.fx.di.interopt.InteroptContextFunction"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.ui.di.interopt.interopt">
+   <implementation class="org.eclipse.fx.ui.di.interopt.InteroptContextFunction"/>
    <service>
       <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
    </service>
