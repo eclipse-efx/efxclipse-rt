@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.di.internal;
+package org.eclipse.fx.ui.di.internal;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
@@ -16,9 +16,9 @@ import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.contexts.ContextObjectSupplier;
 import org.eclipse.e4.core.internal.di.Requestor;
-import org.eclipse.fx.di.FXMLBuilder;
-import org.eclipse.fx.di.FXMLLoaderFactory;
-import org.eclipse.fx.di.InjectingFXMLLoader;
+import org.eclipse.fx.ui.di.FXMLBuilder;
+import org.eclipse.fx.ui.di.FXMLLoaderFactory;
+import org.eclipse.fx.ui.di.InjectingFXMLLoader;
 import org.osgi.framework.FrameworkUtil;
 
 

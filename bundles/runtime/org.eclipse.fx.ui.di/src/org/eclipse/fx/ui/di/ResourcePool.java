@@ -8,11 +8,13 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.di;
+package org.eclipse.fx.ui.di;
 
 import javafx.scene.image.Image;
 
+import org.eclipse.core.runtime.CoreException;
 
-public interface ResourceProviderService {
-	public Image getImage(String key);
+public interface ResourcePool {
+	public Image getImage(String imageKey) throws CoreException;
+	public Image getImageUnchecked(String imageKey);
 }

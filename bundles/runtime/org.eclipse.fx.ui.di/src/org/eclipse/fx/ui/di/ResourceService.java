@@ -8,20 +8,21 @@
  * Contributors:
  *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
  ******************************************************************************/
-package org.eclipse.fx.di.internal;
+package org.eclipse.fx.ui.di;
 
-import org.eclipse.e4.core.contexts.ContextFunction;
-import org.eclipse.e4.core.contexts.ContextInjectionFactory;
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.fx.di.internal.ResourceServiceImpl.ResourcePool;
+import javafx.scene.image.Image;
 
-
-@SuppressWarnings("restriction")
-public class ResourcePoolFactory extends ContextFunction {
-
-	@Override
-	public Object compute(IEclipseContext context) {
-		return ContextInjectionFactory.make(ResourcePool.class, context);
+public interface ResourceService {
+	public interface IPooledResource<T> {
+		public T getResource();
+		public String getId();
+		public void dispose();
 	}
-
+	
+	public interface IDiposeableResourcePool extends ResourcePool {
+		public void dispose();
+	}
+	
+	public IPooledResource<Image> getImage(String key);
+	public IDiposeableResourcePool getResourcePool();
 }

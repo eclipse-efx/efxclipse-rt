@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.di.internal;
+package org.eclipse.fx.ui.di.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,8 +22,8 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.fx.di.ResourceProviderService;
-import org.eclipse.fx.di.ResourceService;
+import org.eclipse.fx.ui.di.ResourceProviderService;
+import org.eclipse.fx.ui.di.ResourceService;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;

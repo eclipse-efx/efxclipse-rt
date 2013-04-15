@@ -8,20 +8,15 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.di;
+package org.eclipse.fx.ui.di;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.io.IOException;
+import java.util.ResourceBundle;
 
-import javax.inject.Qualifier;
+import javafx.util.BuilderFactory;
 
-@Qualifier
-@Documented
-@Target({ElementType.FIELD, ElementType.PARAMETER})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface FXMLLoader {
-
+public interface FXMLBuilder<N> {
+	FXMLBuilder<N> resourceBundle(ResourceBundle resourceBundle);
+	FXMLBuilder<N> builderFactory(BuilderFactory builderFactory);
+	N load() throws IOException;
 }
