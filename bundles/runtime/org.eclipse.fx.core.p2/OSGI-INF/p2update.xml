@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.p2.p2update">
-   <implementation class="org.eclipse.fx.p2.UpdateServiceImpl"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.core.p2.p2update">
+   <implementation class="org.eclipse.fx.core.p2.UpdateServiceImpl"/>
    <service>
       <provide interface="org.eclipse.fx.core.update.UpdateService"/>
    </service>

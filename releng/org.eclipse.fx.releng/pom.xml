@@ -27,14 +27,14 @@
 		<module>../../bundles/runtime/org.eclipse.fx.osgi.util</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core.databinding</module>
+		<module>../../bundles/runtime/org.eclipse.fx.core.p2</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.application</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.di</module>
-		<!--  >module>../../bundles/runtime/org.eclipse.fx.di.interopt</module-->
+		<!--  >module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module-->
 		<module>../../bundles/runtime/org.eclipse.fx.animation</module>
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
 		<module>../../bundles/runtime/org.eclipse.fx.panes</module>
-		<module>../../bundles/runtime/org.eclipse.fx.p2</module>
 		<module>../../bundles/runtime/org.eclipse.fx.services</module>
 	</modules>
 
