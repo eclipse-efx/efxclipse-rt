@@ -8,22 +8,13 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.services.theme;
+package org.eclipse.fx.ui.services.theme;
 
+import java.net.URL;
 import java.util.List;
 
-import javafx.scene.Scene;
-
-public interface ThemeManager {
-	public Theme getCurrentTheme();
-
-	public List<Theme> getAvailableThemes();
-
-	public void setCurrentThemeId(String id) throws IllegalArgumentException;
-
-	public Registration registerScene(Scene scene);
-	
-	public interface Registration {
-		public void dispose();
-	}
+public interface Theme {
+	public String getId();
+	public String getName();
+	public List<URL> getStylesheetURL();
 }

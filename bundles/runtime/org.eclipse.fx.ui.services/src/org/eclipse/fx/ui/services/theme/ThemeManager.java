@@ -8,8 +8,22 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.services;
+package org.eclipse.fx.ui.services.theme;
 
-public interface PopupMenuService<W> {
-	public void registerContextMenu(W widget, String id);
+import java.util.List;
+
+import javafx.scene.Scene;
+
+public interface ThemeManager {
+	public Theme getCurrentTheme();
+
+	public List<Theme> getAvailableThemes();
+
+	public void setCurrentThemeId(String id) throws IllegalArgumentException;
+
+	public Registration registerScene(Scene scene);
+	
+	public interface Registration {
+		public void dispose();
+	}
 }

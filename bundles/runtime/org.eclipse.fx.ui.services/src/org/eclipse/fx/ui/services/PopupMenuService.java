@@ -8,13 +8,8 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.services.theme;
+package org.eclipse.fx.ui.services;
 
-import java.net.URL;
-import java.util.List;
-
-public interface Theme {
-	public String getId();
-	public String getName();
-	public List<URL> getStylesheetURL();
+public interface PopupMenuService<W> {
+	public void registerContextMenu(W widget, String id);
 }

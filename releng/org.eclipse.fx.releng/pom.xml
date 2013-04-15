@@ -37,7 +37,7 @@
 		<!--  >module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module-->
 		<module>../../bundles/runtime/org.eclipse.fx.ui.animation</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.panes</module>
-		<module>../../bundles/runtime/org.eclipse.fx.services</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.services</module>
 		
 		<!-- Format Conversion -->
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
