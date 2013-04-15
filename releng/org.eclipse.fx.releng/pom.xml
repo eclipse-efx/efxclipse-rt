@@ -36,7 +36,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.ui.di</module>
 		<!--  >module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module-->
 		<module>../../bundles/runtime/org.eclipse.fx.ui.animation</module>
-		<module>../../bundles/runtime/org.eclipse.fx.panes</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.panes</module>
 		<module>../../bundles/runtime/org.eclipse.fx.services</module>
 		
 		<!-- Format Conversion -->

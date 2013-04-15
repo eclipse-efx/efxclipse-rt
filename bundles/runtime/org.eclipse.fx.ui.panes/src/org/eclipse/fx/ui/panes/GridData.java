@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.panes;
+package org.eclipse.fx.ui.panes;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -17,7 +17,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
-import static org.eclipse.fx.panes.AbstractLayoutPane.*;
+import static org.eclipse.fx.ui.panes.AbstractLayoutPane.*;
 
 public class GridData {
 	public enum Alignment {

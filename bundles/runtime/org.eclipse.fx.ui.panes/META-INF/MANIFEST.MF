@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: org.eclipse.fx.panes
+Bundle-SymbolicName: org.eclipse.fx.ui.panes
 Bundle-Version: 0.8.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: %Bundle-Vendor
-Export-Package: org.eclipse.fx.panes
+Export-Package: org.eclipse.fx.ui.panes
 Import-Package: com.sun.javafx,
  com.sun.javafx.css,
  com.sun.javafx.css.converters,

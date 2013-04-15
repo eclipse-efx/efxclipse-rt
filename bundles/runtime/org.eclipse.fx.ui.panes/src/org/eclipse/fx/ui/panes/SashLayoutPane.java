@@ -9,7 +9,7 @@
  *     IBM Corporation - initial API and implementation
  *     Tom Schindl<tom.schindl@bestsolution.at> - ported to JavaFX
  *******************************************************************************/
-package org.eclipse.fx.panes;
+package org.eclipse.fx.ui.panes;
 
 import java.util.ArrayList;
 import java.util.List;

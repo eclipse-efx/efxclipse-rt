@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.panes;
+package org.eclipse.fx.ui.panes;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;

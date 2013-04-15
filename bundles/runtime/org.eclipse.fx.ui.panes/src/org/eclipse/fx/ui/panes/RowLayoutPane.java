@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.panes;
+package org.eclipse.fx.ui.panes;
 
 import java.util.WeakHashMap;
 
@@ -162,7 +162,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 	}
 	
 	@Override
-	protected org.eclipse.fx.panes.AbstractLayoutPane.Size computeSize(double wHint, double hHint, boolean flushCache) {
+	protected org.eclipse.fx.ui.panes.AbstractLayoutPane.Size computeSize(double wHint, double hHint, boolean flushCache) {
 		Size extent;
 		if (type.get() == Type.HORIZONTAL) {
 			extent = layoutHorizontal(false, (wHint != FX_DEFAULT) && wrap.get(), wHint, flushCache);

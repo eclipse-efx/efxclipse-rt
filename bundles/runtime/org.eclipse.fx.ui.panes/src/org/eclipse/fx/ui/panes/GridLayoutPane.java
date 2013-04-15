@@ -9,10 +9,10 @@
  *     IBM Corporation - initial API and implementation
  *     Tom Schindl<tom.schindl@bestsolution.at> - ported to JavaFX
  *******************************************************************************/
-package org.eclipse.fx.panes;
+package org.eclipse.fx.ui.panes;
 
 
-import org.eclipse.fx.panes.GridData.Alignment;
+import org.eclipse.fx.ui.panes.GridData.Alignment;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -46,7 +46,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 	}
 	
 	@Override
-	protected org.eclipse.fx.panes.AbstractLayoutPane.Size computeSize(
+	protected org.eclipse.fx.ui.panes.AbstractLayoutPane.Size computeSize(
 			double width, double height, boolean flushCache) {
 		return calculateLayout(false, 0, 0, width, height, flushCache);
 	}
