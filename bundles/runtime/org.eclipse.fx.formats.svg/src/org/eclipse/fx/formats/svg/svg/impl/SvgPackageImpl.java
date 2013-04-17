@@ -1,9 +1,13 @@
-/**
- * <copyright>
- * </copyright>
+/*******************************************************************************
+ * Copyright (c) 2012 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
- */
+ * Contributors:
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.formats.svg.svg.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -15,137 +19,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.fx.formats.svg.svg.Alignment_baseline;
-import org.eclipse.fx.formats.svg.svg.AnimationElement;
-import org.eclipse.fx.formats.svg.svg.BasicShapeElement;
-import org.eclipse.fx.formats.svg.svg.BlendMode;
-import org.eclipse.fx.formats.svg.svg.ChannelSelector;
-import org.eclipse.fx.formats.svg.svg.ClipPathUnits;
-import org.eclipse.fx.formats.svg.svg.Clip_rule;
-import org.eclipse.fx.formats.svg.svg.ColorMatrixType;
-import org.eclipse.fx.formats.svg.svg.Color_interpolation;
-import org.eclipse.fx.formats.svg.svg.Color_interpolation_filters;
-import org.eclipse.fx.formats.svg.svg.Color_rendering;
-import org.eclipse.fx.formats.svg.svg.CompositeOperator;
-import org.eclipse.fx.formats.svg.svg.ConditionalProcessingAttributes;
-import org.eclipse.fx.formats.svg.svg.ContainerElement;
-import org.eclipse.fx.formats.svg.svg.ContentElement;
-import org.eclipse.fx.formats.svg.svg.ConvolveMatrixEdgeMode;
-import org.eclipse.fx.formats.svg.svg.CoreAttributes;
-import org.eclipse.fx.formats.svg.svg.DescriptiveElement;
-import org.eclipse.fx.formats.svg.svg.Direction;
-import org.eclipse.fx.formats.svg.svg.Display;
-import org.eclipse.fx.formats.svg.svg.DocumentEventAttributes;
-import org.eclipse.fx.formats.svg.svg.Dominant_baseline;
-import org.eclipse.fx.formats.svg.svg.Fill_rule;
-import org.eclipse.fx.formats.svg.svg.FilterPrimitiveAttributes;
-import org.eclipse.fx.formats.svg.svg.FilterPrimitiveElement;
-import org.eclipse.fx.formats.svg.svg.FilterUnits;
-import org.eclipse.fx.formats.svg.svg.Font_stretch;
-import org.eclipse.fx.formats.svg.svg.Font_style;
-import org.eclipse.fx.formats.svg.svg.Font_variant;
-import org.eclipse.fx.formats.svg.svg.Font_weight;
-import org.eclipse.fx.formats.svg.svg.GradientElement;
-import org.eclipse.fx.formats.svg.svg.GradientUnits;
-import org.eclipse.fx.formats.svg.svg.GraphicalEventAttributes;
-import org.eclipse.fx.formats.svg.svg.GraphicsElement;
-import org.eclipse.fx.formats.svg.svg.GraphicsReferencingElement;
-import org.eclipse.fx.formats.svg.svg.Image_rendering;
-import org.eclipse.fx.formats.svg.svg.LengthAdjust;
-import org.eclipse.fx.formats.svg.svg.LightSourceElement;
-import org.eclipse.fx.formats.svg.svg.MarkerUnits;
-import org.eclipse.fx.formats.svg.svg.MaskUnits;
-import org.eclipse.fx.formats.svg.svg.Method;
-import org.eclipse.fx.formats.svg.svg.MorphologyOperator;
-import org.eclipse.fx.formats.svg.svg.Overflow;
-import org.eclipse.fx.formats.svg.svg.PatternUnits;
-import org.eclipse.fx.formats.svg.svg.Pointer_events;
-import org.eclipse.fx.formats.svg.svg.PresentationAttributes;
-import org.eclipse.fx.formats.svg.svg.Rendering_intent;
-import org.eclipse.fx.formats.svg.svg.ShapeElement;
-import org.eclipse.fx.formats.svg.svg.Shape_rendering;
-import org.eclipse.fx.formats.svg.svg.Spacing;
-import org.eclipse.fx.formats.svg.svg.SpreadMethod;
-import org.eclipse.fx.formats.svg.svg.StitchTiles;
-import org.eclipse.fx.formats.svg.svg.Stroke_linecap;
-import org.eclipse.fx.formats.svg.svg.Stroke_linejoin;
-import org.eclipse.fx.formats.svg.svg.StructuralElement;
-import org.eclipse.fx.formats.svg.svg.SvgAltGlyphDefElement;
-import org.eclipse.fx.formats.svg.svg.SvgAltGlyphElement;
-import org.eclipse.fx.formats.svg.svg.SvgAltGlyphItemElement;
-import org.eclipse.fx.formats.svg.svg.SvgAltGlyphRefElement;
-import org.eclipse.fx.formats.svg.svg.SvgAnimateElement;
-import org.eclipse.fx.formats.svg.svg.SvgCircleElement;
-import org.eclipse.fx.formats.svg.svg.SvgClipPathElement;
-import org.eclipse.fx.formats.svg.svg.SvgColorProfileElement;
-import org.eclipse.fx.formats.svg.svg.SvgDefsElement;
-import org.eclipse.fx.formats.svg.svg.SvgDescElement;
-import org.eclipse.fx.formats.svg.svg.SvgElement;
-import org.eclipse.fx.formats.svg.svg.SvgEllipseElement;
-import org.eclipse.fx.formats.svg.svg.SvgFactory;
-import org.eclipse.fx.formats.svg.svg.SvgFeBlendElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeColorMatrixElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeComponentTransferElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeCompositeElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeConvolveMatrixElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeDiffuseLightingElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeDisplacementMapElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeDistantLightElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeFloodElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeFuncAElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeFuncBElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeFuncGElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeFuncRElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeGaussianBlurElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeImageElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeMergeElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeMergeNodeElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeMorphologyElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeOffsetElement;
-import org.eclipse.fx.formats.svg.svg.SvgFePointLightElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeSpecularLightingElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeSpotLightElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeTileElement;
-import org.eclipse.fx.formats.svg.svg.SvgFeTurbulenceElement;
-import org.eclipse.fx.formats.svg.svg.SvgFilterElement;
-import org.eclipse.fx.formats.svg.svg.SvgGElement;
-import org.eclipse.fx.formats.svg.svg.SvgImageElement;
-import org.eclipse.fx.formats.svg.svg.SvgLineElement;
-import org.eclipse.fx.formats.svg.svg.SvgLinearGradientElement;
-import org.eclipse.fx.formats.svg.svg.SvgMarkerElement;
-import org.eclipse.fx.formats.svg.svg.SvgMaskElement;
-import org.eclipse.fx.formats.svg.svg.SvgMetadataElement;
-import org.eclipse.fx.formats.svg.svg.SvgPackage;
-import org.eclipse.fx.formats.svg.svg.SvgPathElement;
-import org.eclipse.fx.formats.svg.svg.SvgPatternElement;
-import org.eclipse.fx.formats.svg.svg.SvgPolygonElement;
-import org.eclipse.fx.formats.svg.svg.SvgPolylineElement;
-import org.eclipse.fx.formats.svg.svg.SvgRadialGradientElement;
-import org.eclipse.fx.formats.svg.svg.SvgRectElement;
-import org.eclipse.fx.formats.svg.svg.SvgStopElement;
-import org.eclipse.fx.formats.svg.svg.SvgSvgElement;
-import org.eclipse.fx.formats.svg.svg.SvgSwitchElement;
-import org.eclipse.fx.formats.svg.svg.SvgSymbolElement;
-import org.eclipse.fx.formats.svg.svg.SvgTextElement;
-import org.eclipse.fx.formats.svg.svg.SvgTextPathElement;
-import org.eclipse.fx.formats.svg.svg.SvgTitleElement;
-import org.eclipse.fx.formats.svg.svg.SvgTrefElement;
-import org.eclipse.fx.formats.svg.svg.SvgTspanElement;
-import org.eclipse.fx.formats.svg.svg.SvgUseElement;
-import org.eclipse.fx.formats.svg.svg.TextContentChildElement;
-import org.eclipse.fx.formats.svg.svg.TextContentElement;
-import org.eclipse.fx.formats.svg.svg.Text_anchor;
-import org.eclipse.fx.formats.svg.svg.Text_rendering;
-import org.eclipse.fx.formats.svg.svg.TurbulenceType;
-import org.eclipse.fx.formats.svg.svg.Unicode_bidi;
-import org.eclipse.fx.formats.svg.svg.Visibility;
-import org.eclipse.fx.formats.svg.svg.Writing_mode;
-import org.eclipse.fx.formats.svg.svg.XLinkAttributes;
-import org.eclipse.fx.formats.svg.svg.ZoomAndPan;
-import org.eclipse.fx.formats.svg.svg.____ATTRIBUTES____;
-import org.eclipse.fx.formats.svg.svg.____DATATYPES____;
-import org.eclipse.fx.formats.svg.svg.____ELEMENTES____;
-import org.eclipse.fx.formats.svg.svg.____ENUMS____;
 import org.eclipse.fx.formats.svg.svg.*;
 
 /**

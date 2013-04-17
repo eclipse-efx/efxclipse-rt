@@ -1,16 +1,18 @@
-/**
- * <copyright>
- * </copyright>
+/*******************************************************************************
+ * Copyright (c) 2012 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
- */
+ * Contributors:
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.formats.svg.svg.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.fx.formats.svg.svg.*;
 import org.eclipse.fx.formats.svg.svg.AnimationElement;
 import org.eclipse.fx.formats.svg.svg.BasicShapeElement;
 import org.eclipse.fx.formats.svg.svg.ConditionalProcessingAttributes;
