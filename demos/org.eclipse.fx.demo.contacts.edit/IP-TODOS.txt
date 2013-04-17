@@ -1,0 +1,13 @@
+EMF-Icons (EPL)
+---------------
+icons/full/ctool16/CreateGroup_contacts_Contact.gif
+icons/full/ctool16/CreateGroup_groups_Group.gif
+icons/full/obj16/Contact.gif
+icons/full/ctool16/Group.gif
+
+FAM-FAM-FAM (Creative Commons Attribution 2.5 License):
+-------------------------------------------------------
+icons/silk/bullet_error.png
+icons/silk/folder.png
+icons/silk/readme.txt
+icons/silk/user.png
