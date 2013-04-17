@@ -43,6 +43,9 @@
 		<module>../../bundles/runtime/org.eclipse.fx.emf.edit.ui</module>
 		<module>../../bundles/runtime/org.eclipse.fx.emf.databinding</module>
 		
+		<!-- e4 -->
+		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings</module>
+		
 		<!-- Format Conversion -->
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
 	</modules>
