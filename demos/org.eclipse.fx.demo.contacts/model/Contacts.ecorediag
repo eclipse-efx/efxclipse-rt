@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_Nw2AECFTEeKSeoYRF6JIFw" type="EcoreTools" name="Contacts" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_P2alcCFTEeKSeoYRF6JIFw" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_P2dBsCFTEeKSeoYRF6JIFw" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_P2ihQCFTEeKSeoYRF6JIFw" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_Z8nZYCFTEeKSeoYRF6JIFw" type="2001">
+        <element xmi:type="ecore:EAttribute" href="Contacts.ecore#//Contact/firstName"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Z8nZYSFTEeKSeoYRF6JIFw"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_P2ihQSFTEeKSeoYRF6JIFw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_P2ihQiFTEeKSeoYRF6JIFw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_P2ihQyFTEeKSeoYRF6JIFw"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_P2jIUCFTEeKSeoYRF6JIFw" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_P2jIUSFTEeKSeoYRF6JIFw"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_P2jIUiFTEeKSeoYRF6JIFw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_P2jIUyFTEeKSeoYRF6JIFw"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_P2alcSFTEeKSeoYRF6JIFw" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="Contacts.ecore#//Contact"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_P2alciFTEeKSeoYRF6JIFw" x="96" y="216"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_zeitIC3YEeKA67t6AqYX1w" type="1001">
+    <children xmi:type="notation:Node" xmi:id="_zeitIy3YEeKA67t6AqYX1w" type="4001"/>
+    <children xmi:type="notation:Node" xmi:id="_zeseIC3YEeKA67t6AqYX1w" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_XBSQEC3dEeKA67t6AqYX1w" type="2001">
+        <element xmi:type="ecore:EAttribute" href="Contacts.ecore#//Group/name"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_XBSQES3dEeKA67t6AqYX1w"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_zeseIS3YEeKA67t6AqYX1w"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_zeseIi3YEeKA67t6AqYX1w"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_zeseIy3YEeKA67t6AqYX1w"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_zeseJC3YEeKA67t6AqYX1w" type="5002">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_zeseJS3YEeKA67t6AqYX1w"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_zeseJi3YEeKA67t6AqYX1w"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_zeseJy3YEeKA67t6AqYX1w"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_zeitIS3YEeKA67t6AqYX1w" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EClass" href="Contacts.ecore#//Group"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zeitIi3YEeKA67t6AqYX1w" x="72" y="48"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_Nw2AESFTEeKSeoYRF6JIFw"/>
+  <element xmi:type="ecore:EPackage" href="Contacts.ecore#/"/>
+  <edges xmi:type="notation:Edge" xmi:id="_2bC6gC3YEeKA67t6AqYX1w" type="3002" source="_zeitIC3YEeKA67t6AqYX1w" target="_P2alcCFTEeKSeoYRF6JIFw">
+    <children xmi:type="notation:Node" xmi:id="_2bC6hC3YEeKA67t6AqYX1w" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_2bC6hS3YEeKA67t6AqYX1w" x="-9" y="31"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_2bC6hi3YEeKA67t6AqYX1w" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_2bC6hy3YEeKA67t6AqYX1w" x="-9" y="-14"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_2bC6gS3YEeKA67t6AqYX1w" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_2bC6gi3YEeKA67t6AqYX1w" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="Contacts.ecore#//Group/contacts"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_2bC6gy3YEeKA67t6AqYX1w" points="[6, 3, 0, -129]$[6, 130, 0, -2]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UTPVcC3dEeKA67t6AqYX1w" id="(0.7352941176470589,0.9302325581395349)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2byhYC3YEeKA67t6AqYX1w" id="(0.4,0.058823529411764705)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_6SGroC3YEeKA67t6AqYX1w" type="3002" source="_zeitIC3YEeKA67t6AqYX1w" target="_zeitIC3YEeKA67t6AqYX1w">
+    <children xmi:type="notation:Node" xmi:id="_6SGrpC3YEeKA67t6AqYX1w" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_6SGrpS3YEeKA67t6AqYX1w" x="8" y="-22"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_6SGrpi3YEeKA67t6AqYX1w" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_6SGrpy3YEeKA67t6AqYX1w" x="8" y="14"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_6SGroS3YEeKA67t6AqYX1w" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_6SGroi3YEeKA67t6AqYX1w" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="Contacts.ecore#//Group/groups"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6SGroy3YEeKA67t6AqYX1w" points="[-18, 0, -19, -5]$[-54, 0, -55, -5]$[-54, 82, -55, 77]$[1, 82, 0, 77]$[1, 20, 0, 15]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_6SGrqC3YEeKA67t6AqYX1w" id="(0.18627450980392157,0.5348837209302325)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_6SGrqS3YEeKA67t6AqYX1w" id="(0.19607843137254902,0.6511627906976745)"/>
+  </edges>
+</notation:Diagram>

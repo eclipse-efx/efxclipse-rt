@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText=" Copyright (c) 2012 TESIS DYNAware GmbH and others. &#xD;&#xA; All rights reserved. This program and the accompanying materials &#xD;&#xA; are made available under the terms of the Eclipse Public License v1.0 &#xD;&#xA; which accompanies this distribution, and is available at &#xD;&#xA; http://www.eclipse.org/legal/epl-v10.html &#xD;&#xA; &#xD;&#xA; Contributors: &#xD;&#xA;     Torsten Sommer &lt;torsten.sommer@tesis.de> - initial API and implementation"
+    modelDirectory="/org.eclipse.fx.demo.contacts/src" modelPluginID="org.eclipse.fx.demo.contacts"
+    modelName="Contacts" importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0"
+    copyrightFields="false">
+  <foreignModel>Contacts.ecore</foreignModel>
+  <genPackages prefix="Contacts" basePackage="org.eclipse.fx.demo" disposableProviderFactory="true"
+      ecorePackage="Contacts.ecore#/">
+    <genClasses ecoreClass="Contacts.ecore#//Contact">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/firstName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/middleName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/lastName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/company"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/jobTitle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/street"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/city"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/zip"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/state"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/country"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/email"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/webPage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/phone"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/mobile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/jpegString"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Contacts.ecore#//Contact/sourceFile"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
