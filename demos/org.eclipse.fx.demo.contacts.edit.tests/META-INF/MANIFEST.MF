@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Contacts Edit Tests
+Bundle-SymbolicName: org.eclipse.fx.demo.contacts.edit.tests
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: org.eclipse.fx.demo.contacts.edit
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.junit

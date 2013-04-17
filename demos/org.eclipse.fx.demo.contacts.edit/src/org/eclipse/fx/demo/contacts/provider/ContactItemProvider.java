@@ -36,7 +36,7 @@ import org.eclipse.fx.demo.contacts.Contact;
 import org.eclipse.fx.demo.contacts.ContactsPackage;
 
 /**
- * This is the item provider adapter for a {@link at.bestsolution.efxclipse.runtime.demo.contacts.Contact} object.
+ * This is the item provider adapter for a {@link org.eclipse.fx.demo.contacts.Contact} object.
  * <!-- begin-user-doc -->
  * @implements ITableItemLabelProvider
  * <!-- end-user-doc -->

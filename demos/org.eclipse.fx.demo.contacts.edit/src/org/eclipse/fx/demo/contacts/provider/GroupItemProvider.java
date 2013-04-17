@@ -33,7 +33,7 @@ import org.eclipse.fx.demo.contacts.ContactsPackage;
 import org.eclipse.fx.demo.contacts.Group;
 
 /**
- * This is the item provider adapter for a {@link at.bestsolution.efxclipse.runtime.demo.contacts.Group} object.
+ * This is the item provider adapter for a {@link org.eclipse.fx.demo.contacts.Group} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
