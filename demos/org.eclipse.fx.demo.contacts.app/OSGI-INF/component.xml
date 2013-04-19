@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.demo.contacts.ContactsManager">
+   <implementation class="org.eclipse.fx.demo.contacts.model.ContactsManagerImpl"/>
+   <service>
+      <provide interface="org.eclipse.fx.demo.contacts.model.ContactsManager"/>
+   </service>
+</scr:component>

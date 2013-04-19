@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/org/eclipse/fx/demo/contacts/handlers/AddContactHandler.java=UTF-8
+encoding//src/org/eclipse/fx/demo/contacts/handlers/AddGroupHandler.java=UTF-8
+encoding//src/org/eclipse/fx/demo/contacts/handlers/PasteHandler.java=UTF-8
+encoding//src/org/eclipse/fx/demo/contacts/handlers/SwitchThemeHandler.java=UTF-8
+encoding//src/org/eclipse/fx/demo/contacts/processors/AbstractThemeProcessor.java=UTF-8

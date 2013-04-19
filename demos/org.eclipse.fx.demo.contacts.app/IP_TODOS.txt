@@ -1,0 +1,24 @@
+e4 icons:
+---------
+css/blue.png
+css/bright.png
+css/dark.png
+
+FAM-FAM-FAM (Creative Commons Attribution 2.5 License):
+-------------------------------------------------------
+icons/slik/arrow_redo.png
+icons/slik/arrow_undo.png
+icons/slik/bright.png
+icons/slik/cross.png
+icons/slik/cut.png
+icons/slik/dark.png
+icons/slik/disk.png
+icons/slik/door_in.png
+icons/slik/folder_add.png
+icons/slik/folder_user.png
+icons/slik/folder.png
+icons/slik/page_copy.png
+icons/slik/page_paste.png
+icons/slik/report_user.png
+icons/slik/user_add.png
+icons/slik/user_delete.png
