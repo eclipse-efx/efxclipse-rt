@@ -50,6 +50,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.ui.theme</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.base</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.base</module>
 		
 		<!-- Format Conversion -->
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>

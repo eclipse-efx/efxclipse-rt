@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>e(fx)clipse - Runtime - e4 workbench fx</name>
+	<name>e(fx)clipse - Runtime - e4 workbench base renderers</name>
 	<groupId>org.eclipse.fx</groupId>
-	<artifactId>org.eclipse.fx.ui.workbench.fx</artifactId>
+	<artifactId>org.eclipse.fx.ui.workbench.renderers.base</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<parent>
