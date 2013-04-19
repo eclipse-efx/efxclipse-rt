@@ -35,7 +35,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.ui.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.application</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.di</module>
-		<!--  >module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module-->
+		<!--  module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module-->
 		<module>../../bundles/runtime/org.eclipse.fx.ui.animation</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.panes</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.services</module>
@@ -55,6 +55,9 @@
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx.controls</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.fx</module>
+		
+		<!-- 3.x / 4.x SDK -->
+		<!--  module>../../bundles/runtime/org.eclipse.fx.ui.workbench3</module -->
 		
 		<!-- Format Conversion -->
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
