@@ -1,0 +1,23 @@
+.messagedialog-error ImageView.messagedialog-icon {
+	-fx-image: url("icons/dialog-error.png");
+}
+
+.messagedialog-information ImageView.messagedialog-icon {
+	-fx-image: url("icons/dialog-information.png");
+}
+
+.messagedialog-warning ImageView.messagedialog-icon {
+	-fx-image: url("icons/dialog-warning.png");
+}
+
+.messagedialog-confirm ImageView.messagedialog-icon {
+	-fx-image: url("icons/preferences-desktop-notification.png");
+}
+
+.messagedialog-question ImageView.messagedialog-icon {
+	-fx-image: url("icons/system-help.png");
+}
+
+.messagedialog-question_cancel ImageView.messagedialog-icon {
+	-fx-image: url("icons/system-help.png");
+}
