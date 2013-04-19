@@ -47,6 +47,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings.generic</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings.e4</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.theme</module>
 		
 		<!-- Format Conversion -->
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
