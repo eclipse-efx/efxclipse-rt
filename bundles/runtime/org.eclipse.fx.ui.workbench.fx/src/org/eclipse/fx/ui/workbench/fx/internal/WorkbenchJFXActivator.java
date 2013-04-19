@@ -68,7 +68,7 @@ public class WorkbenchJFXActivator implements BundleActivator {
 				filter = context.createFilter(Location.INSTANCE_FILTER);
 			} catch (InvalidSyntaxException e) {
 				// ignore this. It should never happen as we have tested the
-				// above format.
+				// above format
 			}
 			locationTracker = new ServiceTracker(context, filter, null);
 			locationTracker.open();
