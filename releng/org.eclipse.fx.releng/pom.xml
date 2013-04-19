@@ -31,6 +31,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.core.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core.p2</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core.log4j</module>
+		<module>../../bundles/runtime/org.eclipse.fx.core.guice</module>
 		<!-- UI Modules -->
 		<module>../../bundles/runtime/org.eclipse.fx.ui.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.application</module>
