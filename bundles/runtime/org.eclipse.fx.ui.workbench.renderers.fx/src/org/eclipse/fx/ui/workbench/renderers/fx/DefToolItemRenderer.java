@@ -54,6 +54,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		
 		private boolean handled = true;
 		private boolean enabled = true;
+		private boolean checkbox = false;
 		
 		@Inject
 		IResourceUtilities<Image> resourceUtilities;
@@ -62,6 +63,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		public ToolItemImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MToolItem domElement) {
 			type = domElement.getType();
 			menuButton = domElement.getMenu() != null;
+			checkbox = domElement.getTags().contains(TAG_CHECKBOX);
 		}
 		
 		@Override
@@ -120,7 +122,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 				}
 				
 			} else if( getWidget() instanceof ToggleButton ) {
-				RadioButton b = (RadioButton) getWidget();
+				ToggleButton b = (ToggleButton) getWidget();
 				if( b.isSelected() != selected ) {
 					b.setSelected(selected);
 				}
@@ -157,17 +159,20 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		private ButtonBase internalCreateWidget() {
 			switch (type) {
 			case CHECK:
-				return new CheckBox("CheckBox");
+				if( checkbox ) {
+					return new CheckBox();
+				} else {
+					return new ToggleButton();
+				}
 			case PUSH:
 				if( menuButton ) {
 					SplitMenuButton b = new SplitMenuButton();
-					b.setText("Push/Menu Button");
 					return b;
 				} else {
-					return new Button("Push Button");	
+					return new Button();	
 				}
 			case RADIO:
-				return new RadioButton("RadioButton");
+				return new RadioButton();
 			default:
 				break;
 			}
