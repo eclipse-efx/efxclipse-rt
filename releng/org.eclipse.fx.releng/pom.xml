@@ -62,6 +62,11 @@
 		
 		<!-- Format Conversion -->
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
+		
+		<!-- Features -->
+		<module>../runtime/org.eclipse.fx.core.feature</module>
+		
+		<module>../org.eclipse.fx.updatesite</module>
 	</modules>
 
 	<repositories>
