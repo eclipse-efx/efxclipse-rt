@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.eclipse.fx.core.feature_0.8.1.qualifier.jar" id="org.eclipse.fx.core.feature" version="0.8.1.qualifier">
+      <category name="fxruntime"/>
+   </feature>
+   <category-def name="fxruntime" label="FX Runtime"/>
+</site>
