@@ -14,16 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory;
+import org.eclipse.fx.emf.edit.ui.CellUtil;
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory.ICellCreationListener;
-
 
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.Cell;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.MultipleSelectionModel;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -31,24 +28,25 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 
 /**
- * Allows to drag items from viewers backed by an {@link AdapterFactoryCellFactory} using a {@link LocalTransfer}.
+ * Allows to drag items from viewers backed by an {@link AdapterFactoryCellFactory} using a
+ * {@link LocalTransfer}.
  */
 public class CellDragAdapter implements ICellCreationListener {
 
 	@Override
-	public void cellCreated(final Cell<?> treeCell) {
+	public void cellCreated(final Cell<?> cell) {
 
-		treeCell.setOnDragDetected(new EventHandler<MouseEvent>() {
+		cell.setOnDragDetected(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
 				/* allow any transfer mode */
-				Dragboard db = treeCell.startDragAndDrop(TransferMode.ANY);
+				Dragboard db = cell.startDragAndDrop(TransferMode.ANY);
 
 				/* put a string on dummy content dragboard */
 				ClipboardContent content = new ClipboardContent();
 				content.putString("dummy content");
 				db.setContent(content);
 
-				MultipleSelectionModel<?> selectionModel = getSelectionModel(treeCell);
+				MultipleSelectionModel<?> selectionModel = CellUtil.getSelectionModel(cell);
 				ObservableList<?> selectedItems = selectionModel.getSelectedItems();
 
 				List<Object> items = new ArrayList<>(selectedItems.size());
@@ -66,17 +64,6 @@ public class CellDragAdapter implements ICellCreationListener {
 			}
 		});
 
-	}
-
-	private MultipleSelectionModel<?> getSelectionModel(Cell<?> cell) {
-		if (cell instanceof TreeCell)
-			return ((TreeCell<?>) cell).getTreeView().getSelectionModel();
-		else if (cell instanceof ListCell)
-			return ((ListCell<?>) cell).getListView().getSelectionModel();
-		else if (cell instanceof TableCell)
-			return ((TableCell<?, ?>) cell).getTableView().getSelectionModel();
-
-		throw new IllegalArgumentException("Unsupported Cell type");
 	}
 
 }

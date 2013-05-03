@@ -12,40 +12,46 @@ package org.eclipse.fx.emf.edit.ui;
 
 import javafx.scene.Node;
 import javafx.scene.control.Cell;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableColumn;
 import javafx.util.Callback;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.edit.provider.IItemColorProvider;
-import org.eclipse.emf.edit.provider.IItemFontProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.ITableItemColorProvider;
+import org.eclipse.emf.edit.provider.ITableItemFontProvider;
+import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 
 /**
- * This {@link TreeCell} factory wraps an {@link AdapterFactory} and delegates calls to its {@link TreeCell}s
- * to the corresponding adapter-implemented item provider interfaces.
+ * This list cell factory wraps an {@link AdapterFactory} and delegates calls to its {@link TableCell}s to the
+ * corresponding adapter-implemented item provider interfaces.
  * 
  * <ul>
  * <li>{@link Cell#setText(String)} and {@link Cell#setGraphic(Node)} are delegated to
- * {@link IItemLabelProvider}</li>
+ * {@link ITableItemLabelProvider}</li>
  * <li>{@link Cell#setTextFill(javafx.scene.paint.Paint)} and the CSS property
- * <code>-fx-background-color</code> are delegated to {@link IItemColorProvider}</li>
- * <li>{@link Cell#setFont(javafx.scene.text.Font)} is delegated to {@link IItemFontProvider}</li>
+ * <code>-fx-background-color</code> are delegated to {@link ITableItemColorProvider}</li>
+ * <li>{@link Cell#setFont(javafx.scene.text.Font)} is delegated to {@link ITableItemFontProvider}</li>
  * </ul>
  */
-public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory implements Callback<TreeView<Object>, TreeCell<Object>> {
+public class AdapterFactoryTreeTableCellFactory<S, T> extends AdapterFactoryCellFactory implements
+		Callback<TreeTableColumn<S, T>, TreeTableCell<S, T>> {
 
-	public AdapterFactoryTreeCellFactory(AdapterFactory adapterFactory) {
+	protected int columnIndex;
+
+	public AdapterFactoryTreeTableCellFactory(AdapterFactory adapterFactory, int columnIndex) {
 		super(adapterFactory);
+		this.columnIndex = columnIndex;
 	}
 
 	@Override
-	public TreeCell<Object> call(TreeView<Object> param) {
+	@SuppressWarnings("unchecked")
+	public TreeTableCell<S, T> call(TreeTableColumn<S, T> arg0) {
 
-		final TreeCell<Object> treeCell = new TreeCell<Object>() {
+		final TreeTableCell<Object, Object> tableCell = new TreeTableCell<Object, Object>() {
 
 			Object currentItem = null;
 			ICellEditHandler cellEditHandler;
@@ -56,29 +62,6 @@ public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory imp
 					update(msg.getNotifier());
 				}
 			};
-
-			@Override
-			public void startEdit() {
-				super.startEdit();
-				cellEditHandler = getCellEditHandler(this);
-				if (cellEditHandler != null)
-					cellEditHandler.startEdit(this);
-			}
-
-			@Override
-			public void commitEdit(Object newValue) {
-				super.commitEdit(newValue);
-				if (cellEditHandler != null)
-					cellEditHandler.commitEdit(this, newValue);
-			}
-
-			@Override
-			public void cancelEdit() {
-				super.cancelEdit();
-				if (cellEditHandler != null)
-					cellEditHandler.cancelEdit(this);
-				update(getItem());
-			}
 
 			@Override
 			protected void updateItem(Object item, boolean empty) {
@@ -106,22 +89,39 @@ public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory imp
 				update(item);
 			}
 
+			@Override
+			public void startEdit() {
+				super.startEdit();
+				cellEditHandler = getCellEditHandler(this);
+				if (cellEditHandler != null)
+					cellEditHandler.startEdit(this);
+			}
+
+			@Override
+			public void commitEdit(Object newValue) {
+				super.commitEdit(newValue);
+				if (cellEditHandler != null)
+					cellEditHandler.commitEdit(this, newValue);
+			}
+
+			@Override
+			public void cancelEdit() {
+				super.cancelEdit();
+				if (cellEditHandler != null)
+					cellEditHandler.cancelEdit(this);
+				update(getItem());
+			}
+
 			private void update(Object item) {
-				// setText(item == null ? "null" : item.toString());
-				if (item != null)
-					applyItemProviderStyle(item, this, adapterFactory);
-				else {
-					setText(null);
-					setGraphic(null);
-				}
+				applyTableItemProviderStyle(item, columnIndex, this, adapterFactory);
 			}
 
 		};
 
 		for (ICellCreationListener cellCreationListener : cellCreationListeners)
-			cellCreationListener.cellCreated(treeCell);
+			cellCreationListener.cellCreated(tableCell);
 
-		return treeCell;
+		return (TreeTableCell<S, T>) tableCell;
 	}
 
 }

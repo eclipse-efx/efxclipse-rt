@@ -24,6 +24,7 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
@@ -35,6 +36,7 @@ import org.eclipse.fx.demo.contacts.Group;
 /**
  * This is the item provider adapter for a {@link org.eclipse.fx.demo.contacts.Group} object.
  * <!-- begin-user-doc -->
+ * @implements ITableItemLabelProvider
  * <!-- end-user-doc -->
  * @generated
  */
@@ -45,7 +47,8 @@ public class GroupItemProvider
 		IStructuredItemContentProvider,
 		ITreeItemContentProvider,
 		IItemLabelProvider,
-		IItemPropertySource {
+		IItemPropertySource,
+		ITableItemLabelProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -202,6 +205,26 @@ public class GroupItemProvider
 	@Override
 	public ResourceLocator getResourceLocator() {
 		return ContactsEditPlugin.INSTANCE;
+	}
+	
+	@Override
+	public String getColumnText(Object object, int columnIndex) {
+		switch (columnIndex) {
+		case 0:
+			return getText(object);
+		default:
+			return super.getColumnText(object, columnIndex);
+		}
+	}
+
+	@Override
+	public Object getColumnImage(Object object, int columnIndex) {
+		switch (columnIndex) {
+		case 0:
+			return getImage(object);
+		default:
+			return super.getColumnImage(object, columnIndex);
+		}
 	}
 
 }

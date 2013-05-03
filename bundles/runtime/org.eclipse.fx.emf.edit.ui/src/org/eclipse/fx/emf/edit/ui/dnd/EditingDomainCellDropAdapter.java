@@ -15,7 +15,6 @@ import java.util.Collection;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Cell;
-import javafx.scene.control.TableCell;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 
@@ -25,17 +24,16 @@ import org.eclipse.emf.edit.command.DragAndDropFeedback;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory;
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory.ICellCreationListener;
-
+import org.eclipse.fx.emf.edit.ui.CellUtil;
 
 /**
- * Allows to drop items into viewers backed by an
- * {@link AdapterFactoryCellFactory} using a {@link LocalTransfer}.
+ * Allows to drop items into viewers backed by an {@link AdapterFactoryCellFactory} using a
+ * {@link LocalTransfer}.
  */
 public class EditingDomainCellDropAdapter implements ICellCreationListener {
 
 	/**
-	 * Handles the feedback to Drag & Drop events by styling or otherwise
-	 * modifying the affected {@link Cell}
+	 * Handles the feedback to Drag & Drop events by styling or otherwise modifying the affected {@link Cell}
 	 */
 	public interface IDnDFeedbackHandler {
 
@@ -77,7 +75,7 @@ public class EditingDomainCellDropAdapter implements ICellCreationListener {
 			public void handle(DragEvent event) {
 				Object item = cell.getItem();
 
-				Cell<?> node = getRowNode(cell);
+				Cell<?> node = CellUtil.getRowNode(cell);
 
 				double y = event.getY();
 				double height = cell.getLayoutBounds().getHeight();
@@ -134,7 +132,7 @@ public class EditingDomainCellDropAdapter implements ICellCreationListener {
 
 			@Override
 			public void handle(DragEvent event) {
-				feedbackHandler.onFeedbackNone(getRowNode(cell));
+				feedbackHandler.onFeedbackNone(CellUtil.getRowNode(cell));
 			}
 
 		});
@@ -150,13 +148,9 @@ public class EditingDomainCellDropAdapter implements ICellCreationListener {
 		});
 	}
 
-	Cell<?> getRowNode(final Cell<?> cell) {
-		return cell instanceof TableCell ? ((TableCell<?, ?>) cell).getTableRow() : cell;
-	}
-
 	/**
-	 * This default implementation of {@link IDnDFeedbackHandler} adds a red
-	 * line where the dragged {@link Cell} can be dropped.
+	 * This default implementation of {@link IDnDFeedbackHandler} adds a red line where the dragged
+	 * {@link Cell} can be dropped.
 	 */
 	public static class DefaultFeedbackHandler implements IDnDFeedbackHandler {
 

@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedImage;
@@ -112,7 +113,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_GeneralPropertyCategory"),
 				 null));
 	}
 
@@ -134,7 +135,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_GeneralPropertyCategory"),
 				 null));
 	}
 
@@ -156,7 +157,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_GeneralPropertyCategory"),
 				 null));
 	}
 
@@ -178,7 +179,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_GeneralPropertyCategory"),
 				 null));
 	}
 
@@ -200,7 +201,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_GeneralPropertyCategory"),
 				 null));
 	}
 
@@ -222,7 +223,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_GeneralPropertyCategory"),
 				 null));
 	}
 
@@ -244,7 +245,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_BusinessAddressPropertyCategory"),
 				 null));
 	}
 
@@ -266,7 +267,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_BusinessAddressPropertyCategory"),
 				 null));
 	}
 
@@ -288,7 +289,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_BusinessAddressPropertyCategory"),
 				 null));
 	}
 
@@ -310,7 +311,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_BusinessAddressPropertyCategory"),
 				 null));
 	}
 
@@ -332,7 +333,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_BusinessAddressPropertyCategory"),
 				 null));
 	}
 
@@ -354,7 +355,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_BusinessInternetPropertyCategory"),
 				 null));
 	}
 
@@ -376,7 +377,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_BusinessInternetPropertyCategory"),
 				 null));
 	}
 
@@ -398,7 +399,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_BusinessPhonesPropertyCategory"),
 				 null));
 	}
 
@@ -420,7 +421,7 @@ public class ContactItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
+				 getString("_UI_BusinessPhonesPropertyCategory"),
 				 null));
 	}
 
@@ -589,18 +590,24 @@ public class ContactItemProvider
 	@Override
 	public String getColumnText(Object object, int columnIndex) {
 		Contact contact = (Contact) object;
-
-		String label = null;
 		switch (columnIndex) {
 		case 0:
-			label = contact.getFirstName();
-			break;
+			return getText(object);
 		case 1:
-			label = contact.getLastName();
-			break;
+			return contact.getEmail();
+		default:
+			return super.getColumnText(object, columnIndex);
 		}
+	}
 
-		return label == null ? "n/a" : label;
+	@Override
+	public Object getColumnImage(Object object, int columnIndex) {
+		switch (columnIndex) {
+		case 0:
+			return getImage(object);
+		default:
+			return super.getColumnImage(object, columnIndex);
+		}
 	}
 
 }
