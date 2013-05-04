@@ -13,16 +13,16 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
-public class CellUtil2 {
+class CellUtil2 {
 
-	public static Cell<?> getRowNode(final Cell<?> cell) {
+	static Cell<?> getRowNode(final Cell<?> cell) {
 		if (cell instanceof TableCell)
 			return ((TableCell<?, ?>) cell).getTableRow();
 		else
 			return cell;
 	}
 
-	public static MultipleSelectionModel<?> getSelectionModel(Cell<?> cell) {
+	static MultipleSelectionModel<?> getSelectionModel(Cell<?> cell) {
 		if (cell instanceof ListCell)
 			return ((ListCell<?>) cell).getListView().getSelectionModel();
 		else if (cell instanceof TreeCell)
@@ -35,14 +35,14 @@ public class CellUtil2 {
 			throw new IllegalArgumentException("Unsupported Cell type");
 	}
 
-	public static MultipleSelectionModel<?> getSelectionModel(Control view) {
+	static MultipleSelectionModel<?> getSelectionModel(Control view) {
 		if (view instanceof TreeView<?>)
 			return ((TreeView<?>) view).getSelectionModel();
 		else
 			throw new IllegalArgumentException("Unsupported View type");
 	}
 
-	public static List<?> getSelectedItems(Cell<?> cell) {
+	static List<?> getSelectedItems(Cell<?> cell) {
 		MultipleSelectionModel<?> selectionModel = getSelectionModel(cell);
 		List<?> items = selectionModel.getSelectedItems();
 

@@ -16,11 +16,9 @@ import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
 
-import org.eclipse.fx.core.Util;
+class CellUtil8 {
 
-public class CellUtil8 {
-
-	public static Cell<?> getRowNode(final Cell<?> cell) {
+	static Cell<?> getRowNode(final Cell<?> cell) {
 		if (cell instanceof TableCell)
 			return ((TableCell<?, ?>) cell).getTableRow();
 		else if (cell instanceof TreeTableCell)
@@ -29,7 +27,7 @@ public class CellUtil8 {
 			return cell;
 	}
 
-	public static MultipleSelectionModel<?> getSelectionModel(Cell<?> cell) {
+	static MultipleSelectionModel<?> getSelectionModel(Cell<?> cell) {
 		if (cell instanceof ListCell)
 			return ((ListCell<?>) cell).getListView().getSelectionModel();
 		else if (cell instanceof TreeCell)
@@ -48,10 +46,10 @@ public class CellUtil8 {
 			throw new IllegalArgumentException("Unsupported Cell type");
 	}
 
-	public static MultipleSelectionModel<?> getSelectionModel(Control view) {
+	static MultipleSelectionModel<?> getSelectionModel(Control view) {
 		if (view instanceof TreeView<?>)
 			return ((TreeView<?>) view).getSelectionModel();
-		else if (Util.isFX2() && view instanceof TreeTableView<?>)
+		else if (view instanceof TreeTableView<?>)
 			return ((TreeTableView<?>) view).getSelectionModel();
 		else
 			throw new IllegalArgumentException("Unsupported View type");

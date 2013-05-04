@@ -15,10 +15,13 @@ import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
 
-import org.eclipse.fx.core.Util;
-
 public class CellUtil {
-
+	
+	/**
+	 * Whether the JavaFX is version 2.x
+	 */
+	private static final boolean FX2 =  System.getProperty("javafx.version") != null && System.getProperty("javafx.version").startsWith("2");
+	
 	/**
 	 * Finds the row for a {@link Cell} so the feedback can be applied to the
 	 * whole row
@@ -28,7 +31,7 @@ public class CellUtil {
 	 *         {@link Cell} itself otherwise
 	 */
 	public static Cell<?> getRowNode(final Cell<?> cell) {
-		return Util.isFX2() ? CellUtil2.getRowNode(cell) : CellUtil8.getRowNode(cell);
+		return FX2 ? CellUtil2.getRowNode(cell) : CellUtil8.getRowNode(cell);
 	}
 
 	/**
@@ -42,11 +45,11 @@ public class CellUtil {
 	 * @return the {@link MultipleSelectionModel} for this {@link Cell}
 	 */
 	public static MultipleSelectionModel<?> getSelectionModel(Cell<?> cell) {
-		return Util.isFX2() ? CellUtil2.getSelectionModel(cell) : CellUtil8.getSelectionModel(cell);
+		return FX2 ? CellUtil2.getSelectionModel(cell) : CellUtil8.getSelectionModel(cell);
 	}
 
 	public static MultipleSelectionModel<?> getSelectionModel(Control view) {
-		return Util.isFX2() ? CellUtil2.getSelectionModel(view) : CellUtil8.getSelectionModel(view);
+		return FX2 ? CellUtil2.getSelectionModel(view) : CellUtil8.getSelectionModel(view);
 	}
 
 	/**
@@ -61,7 +64,7 @@ public class CellUtil {
 	 * @return a {@link List} with the selected items
 	 */
 	public static List<?> getSelectedItems(Cell<?> cell) {
-		return Util.isFX2() ? CellUtil2.getSelectedItems(cell) : CellUtil8.getSelectedItems(cell);
+		return FX2 ? CellUtil2.getSelectedItems(cell) : CellUtil8.getSelectedItems(cell);
 	}
 
 }
