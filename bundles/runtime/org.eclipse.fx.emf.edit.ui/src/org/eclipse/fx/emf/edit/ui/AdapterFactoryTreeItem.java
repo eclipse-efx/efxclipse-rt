@@ -19,8 +19,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Control;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableView;
-import javafx.scene.control.TreeView;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -79,8 +77,7 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	void updateChildren() {
 		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
 
-		MultipleSelectionModel<?> selectionModel = view instanceof TreeView<?> ? ((TreeView<?>) view).getSelectionModel()
-				: ((TreeTableView<?>) view).getSelectionModel();
+		MultipleSelectionModel<?> selectionModel = CellUtil.getSelectionModel(view);
 		List<?> selection = selectionModel.getSelectedItems();
 		ArrayList<Object> selectedItems = new ArrayList<>();
 		ArrayList<TreeItem<?>> selectedTreeItems = new ArrayList<>();

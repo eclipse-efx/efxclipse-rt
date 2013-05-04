@@ -35,6 +35,7 @@ Import-Package: javafx.animation;version="2.2.0",
  javafx.stage;version="2.2.0",
  javafx.util;version="2.2.0",
  javafx.util.converter;version="2.2.0"
-Require-Bundle: org.eclipse.emf.edit;bundle-version="2.7.0"
+Require-Bundle: org.eclipse.emf.edit;bundle-version="2.7.0",
+ org.eclipse.fx.core;bundle-version="0.8.1"
 Export-Package: org.eclipse.fx.emf.edit.ui,
  org.eclipse.fx.emf.edit.ui.dnd
