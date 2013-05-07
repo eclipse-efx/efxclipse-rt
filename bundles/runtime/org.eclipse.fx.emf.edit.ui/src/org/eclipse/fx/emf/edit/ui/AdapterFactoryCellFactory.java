@@ -29,6 +29,9 @@ import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.ITableItemColorProvider;
+import org.eclipse.emf.edit.provider.ITableItemFontProvider;
+import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 
 /**
  * Base class for the AdapterFactoryCellFactories
@@ -36,8 +39,7 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 public abstract class AdapterFactoryCellFactory {
 
 	/**
-	 * A listener interface for callbacks that process newly created
-	 * {@link Cell}s
+	 * A listener interface for callbacks that process newly created {@link Cell}s
 	 */
 	public interface ICellCreationListener {
 
@@ -49,8 +51,8 @@ public abstract class AdapterFactoryCellFactory {
 	}
 
 	/**
-	 * A listener interface for callbacks that process {@link Cell}s being
-	 * updated during {@link Cell#updateItem}.
+	 * A listener interface for callbacks that process {@link Cell}s being updated during
+	 * {@link Cell#updateItem}.
 	 */
 	public interface ICellUpdateListener {
 
@@ -64,11 +66,10 @@ public abstract class AdapterFactoryCellFactory {
 	}
 
 	/**
-	 * An interface for providers that handle cell editing. The {@link Cell}s
-	 * created by the factory will delegate calls to their editing methods to
-	 * the first handler in {@link AdapterFactoryCellFactory#cellEditHandlers}
-	 * that returns <code>true</code> for {@link ICellEditHandler#canEdit(Cell)}
-	 * .
+	 * An interface for providers that handle cell editing. The {@link Cell}s created by the factory will
+	 * delegate calls to their editing methods to the first handler in
+	 * {@link AdapterFactoryCellFactory#cellEditHandlers} that returns <code>true</code> for
+	 * {@link ICellEditHandler#canEdit(Cell)} .
 	 */
 	public interface ICellEditHandler {
 
@@ -220,6 +221,48 @@ public abstract class AdapterFactoryCellFactory {
 				if (image != null)
 					cell.setGraphic(image);
 			}
+		}
+	}
+
+	void applyTableItemProviderStyle(Object item, int columnIndex, Cell<?> cell, AdapterFactory adapterFactory) {
+		applyTableItemProviderLabel(item, columnIndex, cell, adapterFactory);
+		applyTableItemProviderColor(item, columnIndex, cell, adapterFactory);
+		applyTableItemProviderFont(item, columnIndex, cell, adapterFactory);
+	}
+
+	void applyTableItemProviderLabel(Object item, int columnIndex, Cell<?> cell, AdapterFactory adapterFactory) {
+		ITableItemLabelProvider labelProvider = (ITableItemLabelProvider) adapterFactory.adapt(item, ITableItemLabelProvider.class);
+		if (labelProvider != null) {
+			cell.setText(labelProvider.getColumnText(item, columnIndex));
+			Object columnImage = labelProvider.getColumnImage(item, columnIndex);
+			Node graphic = graphicFromObject(columnImage);
+			cell.setGraphic(graphic);
+		} else {
+			// clear the cell if there is no item
+			cell.setText(null);
+			cell.setGraphic(null);
+		}
+	}
+
+	void applyTableItemProviderColor(Object item, int columnIndex, Cell<?> cell, AdapterFactory adapterFactory) {
+		ITableItemColorProvider colorProvider = (ITableItemColorProvider) adapterFactory.adapt(item, ITableItemColorProvider.class);
+		if (colorProvider != null) {
+			Color foreground = colorFromObject(colorProvider.getForeground(item, columnIndex));
+			if (foreground != null)
+				cell.setTextFill(foreground);
+
+			String background = cssColorFromObject(colorProvider.getBackground(item, columnIndex));
+			if (background != null)
+				cell.setStyle("-fx-background-color: " + background);
+		}
+	}
+
+	void applyTableItemProviderFont(Object item, int columnIndex, Cell<?> cell, AdapterFactory adapterFactory) {
+		ITableItemFontProvider fontProvider = (ITableItemFontProvider) adapterFactory.adapt(item, ITableItemFontProvider.class);
+		if (fontProvider != null) {
+			Font font = fontFromObject(fontProvider.getFont(item, columnIndex));
+			if (font != null)
+				cell.setFont(font);
 		}
 	}
 

@@ -17,15 +17,16 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
 /**
- *	A cell value factory that simply forwards {@link CellDataFeatures#getValue()} as an {@link ObservableValue}. 
+ * A cell value factory that simply forwards {@link CellDataFeatures#getValue()} as an {@link ObservableValue}
+ * .
  */
 public class ProxyCellValueFactory<S, T> implements Callback<TableColumn.CellDataFeatures<S, T>, ObservableValue<T>> {
 
 	@Override
 	public ObservableValue<T> call(final CellDataFeatures<S, T> features) {
 
-		//TODO add notifications on update
-	
+		// TODO add notifications on update
+
 		return new ObservableValueBase<T>() {
 
 			@Override

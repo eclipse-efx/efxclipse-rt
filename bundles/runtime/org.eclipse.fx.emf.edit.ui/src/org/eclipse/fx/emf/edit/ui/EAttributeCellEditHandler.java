@@ -12,7 +12,6 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory.ICellEditHandler;
 
-
 public class EAttributeCellEditHandler implements ICellEditHandler {
 
 	EAttribute attribute;
@@ -25,8 +24,8 @@ public class EAttributeCellEditHandler implements ICellEditHandler {
 	}
 
 	@Override
-	public boolean canEdit(Cell<?> treeCell) {
-		Object item = treeCell.getItem();
+	public boolean canEdit(Cell<?> cell) {
+		Object item = cell.getItem();
 		return item instanceof EObject && ((EObject) item).eClass().getEAllAttributes().contains(attribute);
 	}
 
@@ -44,10 +43,11 @@ public class EAttributeCellEditHandler implements ICellEditHandler {
 			}
 
 		});
-		textField.setText(string);
 		cell.setText(null);
 		cell.setGraphic(textField);
-		textField.selectAll();
+		textField.setText(string);
+		// textField.requestFocus();
+		textField.selectPositionCaret(0);// selectAll();
 	}
 
 	@Override
