@@ -131,7 +131,9 @@ public class DefaultThemeManager implements ThemeManager {
 
 	@Override
 	public Theme getCurrentTheme() {
-		if (themes.size() == 1) {
+		if( themes.isEmpty() ) {
+			return null;
+		} else if (themes.size() == 1) {
 			return themes.get(0);
 		} else {
 			String id = getCurrentThemeId();
