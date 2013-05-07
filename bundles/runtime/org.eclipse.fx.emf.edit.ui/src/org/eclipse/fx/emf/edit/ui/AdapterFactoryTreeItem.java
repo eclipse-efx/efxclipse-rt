@@ -16,9 +16,9 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Control;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -28,20 +28,19 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
- * A {@link TreeItem} that wraps an {@link AdapterFactory} and retrieves its
- * children from the adapter-implemented {@link ITreeItemContentProvider}
- * interface.
+ * A {@link TreeItem} that wraps an {@link AdapterFactory} and retrieves its children from the
+ * adapter-implemented {@link ITreeItemContentProvider} interface.
  */
 public class AdapterFactoryTreeItem extends TreeItem<Object> {
 
 	final AdapterFactory adapterFactory;
-	final TreeView<?> treeView;
+	final Control view;
 	final ObservableList<TreeItem<Object>> children;
 	final ITreeItemContentProvider provider;
 
-	public AdapterFactoryTreeItem(Object object, TreeView<?> treeView, AdapterFactory adapterFactory) {
+	public AdapterFactoryTreeItem(Object object, Control treeView, AdapterFactory adapterFactory) {
 		super(object);
-		this.treeView = treeView;
+		this.view = treeView;
 		this.adapterFactory = adapterFactory;
 		children = FXCollections.unmodifiableObservableList(super.getChildren());
 
@@ -63,9 +62,8 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	}
 
 	/**
-	 * This method overrides {@link TreeItem#getChildren()} and returns an
-	 * unmodifiable {@link ObservableList} as the children may only be changed
-	 * via the underlying model.
+	 * This method overrides {@link TreeItem#getChildren()} and returns an unmodifiable {@link ObservableList}
+	 * as the children may only be changed via the underlying model.
 	 */
 	@Override
 	public ObservableList<TreeItem<Object>> getChildren() {
@@ -73,12 +71,13 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	}
 
 	/**
-	 * Recreates the child tree items using the {@link ITreeItemContentProvider}
-	 * and restores the selection and expanded state of the tree items.
+	 * Recreates the child tree items using the {@link ITreeItemContentProvider} and restores the selection
+	 * and expanded state of the tree items.
 	 */
 	void updateChildren() {
 		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
-		MultipleSelectionModel<?> selectionModel = treeView.getSelectionModel();
+
+		MultipleSelectionModel<?> selectionModel = CellUtil.getSelectionModel(view);
 		List<?> selection = selectionModel.getSelectedItems();
 		ArrayList<Object> selectedItems = new ArrayList<>();
 		ArrayList<TreeItem<?>> selectedTreeItems = new ArrayList<>();
@@ -115,7 +114,7 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 
 		// add the new tree items
 		for (Object child : provider.getChildren(getValue())) {
-			AdapterFactoryTreeItem treeItem = new AdapterFactoryTreeItem(child, treeView, adapterFactory);
+			AdapterFactoryTreeItem treeItem = new AdapterFactoryTreeItem(child, view, adapterFactory);
 
 			childTreeItems.add(treeItem);
 

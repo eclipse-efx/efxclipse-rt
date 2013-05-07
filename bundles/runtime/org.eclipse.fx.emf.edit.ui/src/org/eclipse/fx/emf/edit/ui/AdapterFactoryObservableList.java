@@ -52,11 +52,11 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 		this.root = root;
 		Object contentProvider = adapterFactory.adapt(root, IStructuredItemContentProvider.class);
 
-		if(contentProvider instanceof IStructuredItemContentProvider)
+		if (contentProvider instanceof IStructuredItemContentProvider)
 			provider = (IStructuredItemContentProvider) contentProvider;
 		else
 			throw new IllegalArgumentException("Provided root object cannot be adapted.");
-		
+
 		elements.addAll((Collection<? extends T>) provider.getElements(root));
 
 		if (root instanceof Notifier) {
@@ -77,7 +77,7 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 				public void notifyChanged(Notification notification) {
 					elements.setAll((Collection<? extends T>) provider.getElements(root));
 				}
-				
+
 			});
 		}
 

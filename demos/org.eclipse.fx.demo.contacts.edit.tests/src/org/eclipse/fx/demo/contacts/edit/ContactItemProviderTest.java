@@ -28,6 +28,7 @@ public class ContactItemProviderTest {
 
 	static final String FIRST_NAME = "Hans";
 	static final String LAST_NAME = "Wurst";
+	static final String E_MAIL = "hans.wurst@example.com";
 	Contact contact;
 	ContactItemProvider contactItemProvider;
 
@@ -56,6 +57,8 @@ public class ContactItemProviderTest {
 	public void getImageWithValidName() {
 		contact.setFirstName(FIRST_NAME);
 		contact.setLastName(LAST_NAME);
+		contact.setEmail(E_MAIL);
+
 		Object image = contactItemProvider.getImage(contact);
 		assertTrue("Image should be a URL", image instanceof URL);
 		URL imageURL = (URL) image;
