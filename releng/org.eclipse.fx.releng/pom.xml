@@ -76,19 +76,19 @@
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/juno</url>
 		</repository>
-		<!--  
-		<repository>
-			<id>e4</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/e4/updates/0.12-I-builds/</url>
-		</repository>
-		-->	
 	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
 			<id>tycho</id>
 			<url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>self</id>
+			<url>file:///Users/tomschindl/.m2/repository</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -152,16 +152,27 @@
 					<groupId>org.eclipse.tycho</groupId>
 					<artifactId>tycho-compiler-plugin</artifactId>
 					<version>${tycho-version}</version>
+					
+					<dependencies>
+    					<dependency>
+      						<groupId>org.eclipse.jdt</groupId>
+      						<artifactId>org.eclipse.jdt.core</artifactId>
+      						<version>3.9.0.v20130501-2249</version>
+    					</dependency>
+  					</dependencies>
+  					
 					<configuration>
 						<encoding>UTF-8</encoding>
+						<source>1.8</source>
+						<target>1.7</target>
 						<!-- mvn install:install-file -Dfile=/Users/tomschindl/Applications/javafx-sdk2.2.0-beta/rt/lib/jfxrt.jar -DgroupId=javafx -DartifactId=javafx.mvn -Dversion=2.2.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true -->
-						<extraClasspathElements>
+						<!-- extraClasspathElements>
 							<extraClasspathElement>
 								<groupId>javafx</groupId>
 								<artifactId>javafx.mvn</artifactId>
 								<version>2.2.0-SNAPSHOT</version>
 							</extraClasspathElement>
-						</extraClasspathElements>
+						</extraClasspathElements-->
 					</configuration>
 				</plugin>
 				<plugin>
