@@ -65,32 +65,24 @@
 		
 		<!-- Features -->
 		<module>../runtime/org.eclipse.fx.core.feature</module>
+		<module>../runtime/org.eclipse.fx.target.feature</module>
 		
 		<module>../org.eclipse.fx.updatesite</module>
 	</modules>
 
 	<repositories>
-		<!--  repository>
-			<id>indigo</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/indigo</url>
-		</repository>
 		<repository>
-			<id>xtext</id>
+			<id>juno</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
-		</repository>	
-		
+			<url>http://download.eclipse.org/releases/juno</url>
+		</repository>
+		<!--  
 		<repository>
 			<id>e4</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/e4/updates/0.12-I-builds/</url>
-		</repository-->	
-		<repository>
-			<id>local-efx</id>
-			<layout>p2</layout>
-			<url>file:///Users/tomschindl/Documents/e-workspaces/bitbucketmgr/target</url>			
 		</repository>
+		-->	
 	</repositories>
 
 	<pluginRepositories>
