@@ -19,8 +19,8 @@
 		<mockito-version>1.8.4</mockito-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform-version>[3.7,3.8)</platform-version>
-		<local-repo>file:///Users/tomschindl/.m2/repository</local-repo>
-		<jdt-core-version>3.9.0.v20130501-2249</jdt-core-version>
+		<local-repo>/var/lib/jenkins/.m2/repository</local-repo>
+		<jdt-core-version>3.9.0-SNAPSHOT</jdt-core-version>
 	</properties>
 
 	<modules>
