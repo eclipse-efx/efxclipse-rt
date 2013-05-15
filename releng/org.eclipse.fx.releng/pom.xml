@@ -165,8 +165,8 @@
   					
 					<configuration>
 						<encoding>UTF-8</encoding>
-						<source>1.8</source>
-						<target>1.7</target>
+						<!--  source>1.8</source>
+						<target>1.7</target-->
 						<!-- mvn install:install-file -Dfile=/Users/tomschindl/Applications/javafx-sdk2.2.0-beta/rt/lib/jfxrt.jar -DgroupId=javafx -DartifactId=javafx.mvn -Dversion=2.2.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true -->
 						<!-- extraClasspathElements>
 							<extraClasspathElement>
