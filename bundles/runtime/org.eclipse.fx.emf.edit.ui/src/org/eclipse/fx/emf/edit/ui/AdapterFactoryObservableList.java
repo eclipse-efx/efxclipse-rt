@@ -250,6 +250,7 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 		throw new UnsupportedOperationException(CHANGES_THROUGH_MODEL);
 	}
 
+//FIXME Java8	
 // Default methods NOT YET supported by JDT-Core
 //	@Override
 	public void forEach(Consumer<? super T> action) {

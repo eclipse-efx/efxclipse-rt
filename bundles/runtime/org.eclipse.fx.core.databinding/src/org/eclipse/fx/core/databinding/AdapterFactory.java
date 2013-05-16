@@ -17,6 +17,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
@@ -356,6 +358,18 @@ public class AdapterFactory {
 			//TODO Improve performance
 			list.clear();
 			return list.addAll(col);
+		}
+		
+//FIXME Java8	
+// Default methods NOT YET supported by JDT-Core
+//		@Override
+		public void forEach(Consumer<? super E> action) {
+			list.forEach(action);
+		}
+			
+//		@Override
+		public Spliterator<E> spliterator() {
+			return list.spliterator();
 		}
 	}
 	
