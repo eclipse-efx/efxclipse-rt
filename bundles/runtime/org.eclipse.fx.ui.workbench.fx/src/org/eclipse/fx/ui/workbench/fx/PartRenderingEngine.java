@@ -163,7 +163,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected <R extends AbstractRenderer<? extends M,Object>, M extends MUIElement> R getRendererFor(MUIElement element) {
+	protected <R extends AbstractRenderer<? extends M,Object>, M extends MUIElement> R getRendererFor(M element) {
 		return (R) element.getRenderer();
 	}
 	
