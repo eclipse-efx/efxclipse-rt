@@ -10,7 +10,6 @@
  */
 package org.eclipse.fx.emf.databinding.edit;
 
-import javafx.beans.property.ListPropertyBase;
 import javafx.beans.property.ObjectPropertyBase;
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
@@ -46,21 +45,33 @@ public class EMFEditFXProperties {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 	
-	static class EObjectObservableList<T> extends ListPropertyBase<T> {
-
-		EObject eObject;
-		EStructuralFeature feature;
-		EditingDomain editingDomain;
-		
-		public Object getBean() {
-			return eObject;
-		}
-
-		public String getName() {
-			return feature.getName();
-		}
-		
-	}
+//	static class EObjectObservableList<T> extends ListPropertyBase<T> {
+//
+//		EObject eObject;
+//		EStructuralFeature feature;
+//		EditingDomain editingDomain;
+//		
+//		public Object getBean() {
+//			return eObject;
+//		}
+//
+//		public String getName() {
+//			return feature.getName();
+//		}
+//		
+//		//FIXME Java8	
+//		// Default methods NOT YET supported by JDT-Core
+////		@Override
+//		public void forEach(Consumer<? super T> action) {
+//			super.forEach(action);
+//		}
+//					
+////		@Override
+//		public Spliterator<T> spliterator() {
+//			return super.spliterator();
+//		}
+//
+//	}
 
 	static class EObjectProperty<T> extends ObjectPropertyBase<T> {
 
