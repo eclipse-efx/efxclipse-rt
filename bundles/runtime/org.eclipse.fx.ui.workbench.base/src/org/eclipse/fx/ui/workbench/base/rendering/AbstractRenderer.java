@@ -35,6 +35,8 @@ public abstract class AbstractRenderer<M extends MUIElement, C> {
 		
 		public abstract IEclipseContext getModelContext(MUIElement part);
 		
+		public abstract void focus(MUIElement element);
+		
 		@SuppressWarnings("unchecked")
 		public C getWidget(M element) {
 			return (C) element.getWidget();

@@ -367,4 +367,13 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 	}
 	
 	protected abstract void doProcessContent(M element);
+	
+	@Override
+	public void focus(MUIElement element) {
+		if (element.getWidget() instanceof WWidget){
+			WWidget<?> widget = (WWidget<?>) element.getWidget();
+			widget.activate();
+		}
+		
+	}
 }

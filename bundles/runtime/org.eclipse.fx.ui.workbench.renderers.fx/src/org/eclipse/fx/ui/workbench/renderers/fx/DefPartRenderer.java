@@ -25,6 +25,7 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.core.log.Logger.Level;
@@ -60,6 +61,19 @@ public class DefPartRenderer extends BasePartRenderer<BorderPane, Node, Node> {
 
 		return true;
 	}
+	
+	@Override
+	public void focus(MUIElement element) {
+		super.focus(element);
+		if (element.getWidget() instanceof WPart)
+		{
+			WPart<BorderPane, Node, Node> part = ((WPart<BorderPane, Node, Node>) element.getWidget());
+			if (part==null) return;
+			Node node = (Node) part.getWidget();
+			node.requestFocus();
+		}
+		
+	}
 
 	public static class PartImpl extends WLayoutedWidgetImpl<BorderPane, AnchorPane, MPart> implements WPart<BorderPane, Node, Node> {
 		@Inject
@@ -91,6 +105,8 @@ public class DefPartRenderer extends BasePartRenderer<BorderPane, Node, Node> {
 			});
 			return p;
 		}
+		
+		
 
 		private boolean checkFocusControl() {
 			BorderPane check = getWidget();

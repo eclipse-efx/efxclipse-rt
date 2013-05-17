@@ -88,7 +88,7 @@ public abstract class BasePartRenderer<N,T,M> extends BaseRenderer<MPart, WPart<
 		element.setObject(newPart);
 		
 	}
-
+	
 	@Override
 	public void childRendered(MPart parentElement, MUIElement element) {
 		
