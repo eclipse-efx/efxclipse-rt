@@ -36,6 +36,7 @@ import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
@@ -58,6 +59,9 @@ public class PartRenderingEngine implements IPresentationEngine {
 	private final EModelService modelService;
 	
 	private MApplication app;
+	
+	@Inject
+	private Logger log;
 	
 	@Inject
 	public PartRenderingEngine(
@@ -359,6 +363,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 	@Override
 	public void focusGui(MUIElement element) {
+		@SuppressWarnings("unchecked")
 		AbstractRenderer<MUIElement, Object> renderer =  (AbstractRenderer<MUIElement, Object>) element
 				.getRenderer();
 		if (renderer == null || element.getWidget() == null)
@@ -383,12 +388,9 @@ public class PartRenderingEngine implements IPresentationEngine {
 				renderer.focus(element);
 			}
 		} catch (InjectionException e) {
-//			log("Failed to grant focus to element", "Failed to grant focus to element ({0})", //$NON-NLS-1$ //$NON-NLS-2$
-//					element.getElementId(), e);
+			log.errorf("Failed to grant focus to element (%s)", element.getElementId(), e); //$NON-NLS-1$
 		} catch (RuntimeException e) {
-//			log("Failed to grant focus to element via DI", //$NON-NLS-1$
-//					"Failed to grant focus via DI to element ({0})", element.getElementId(), e); //$NON-NLS-1$
+			log.errorf("Failed to grant focus via DI to element (%s)", element.getElementId(), e); //$NON-NLS-1$
 		}
-		
 	}
 }
