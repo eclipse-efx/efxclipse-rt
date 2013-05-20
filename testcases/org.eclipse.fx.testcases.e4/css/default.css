@@ -1,0 +1,121 @@
+.MWindow {
+	-light-black: rgb(74, 75, 78);
+    -dark-highlight: rgb(87, 89, 92);
+    -dark-black: rgb(39, 40, 40);
+    -darkest-black: rgb(5, 5, 5);
+    -mid-gray: rgb(216, 222, 227);
+    -fx-background-color: -mid-gray;
+}
+
+/* .tool-bar {
+    -fx-base: -dark-black;
+    -fx-font-size: 12pt;
+    -fx-background-color:
+        linear-gradient(to bottom, derive(-fx-base,-30%), derive(-fx-base,-60%)),
+        linear-gradient(to bottom, -light-black 2%, -dark-black 98%);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: .9em 0.416667em .9em 0.416667em;
+    -fx-effect: dropshadow(two-pass-box,black,5,.2,0,0);
+}*/
+
+/* .view-toolbar {
+	-fx-background-color: transparent;
+}*/
+
+.view-toolbar-menu {
+	-fx-background-color: green;
+	-fx-opacity: 0.5;
+}
+
+.efxSelectedRadioToolButton {
+	-light-black: orange;
+	-dark-black:  orange;
+}
+
+.segmented-button-bar .button {
+    -fx-background-color:
+        -darkest-black,
+        -dark-highlight,
+        linear-gradient(to bottom, -light-black 2%, -dark-black 98%);
+    -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
+    -fx-background-radius: 0;
+    -fx-padding: 0.4em 1.833333em 0.4em 1.833333em;
+}
+
+.segmented-button-bar .button.first {
+    -fx-background-insets: 0, 1, 2 1 1 1;
+    -fx-background-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2;
+}
+
+.segmented-button-bar .button.last {
+    -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
+    -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 2 2 0;
+}
+ 
+.segmented-button-bar .button:pressed {
+    -fx-background-color:
+        -darkest-black,
+        rgb(55, 57, 58),
+        linear-gradient(to top, -light-black 2%, -dark-black 98%);
+}
+
+
+
+#decorationArea {
+    -fx-padding: 10px;
+    -fx-background-image: url("images/top-bar.png"),
+                          url("images/clef.png");
+    -fx-background-size: cover, contain;
+    -fx-background-position: left top, center center;
+    -fx-background-repeat: no-repeat;
+}
+
+#window-resize-button {
+    -fx-background-image: url("images/window-corner.png");
+    -fx-background-position: right 1px bottom 1px;
+    -fx-background-repeat: no-repeat;
+}
+#window_close {
+    -fx-font-size: 1px;
+    -fx-background-color: null;
+    -fx-background-image: url("images/window-close.png");
+    -fx-padding: 6 6 4 6;
+}
+#window_min {
+    -fx-font-size: 1px;
+    -fx-background-color: null;
+    -fx-background-image: url("images/window-min.png");
+    -fx-padding: 6 6 4 6;
+}
+#window_max {
+    -fx-font-size: 1px;
+    -fx-background-color: null;
+    -fx-background-image: url("images/window-expand.png");
+    -fx-padding: 6 6 4 6;
+}
+#window_close:hover {
+    -fx-background-image: url("images/window-close-over.png");
+}
+#window_min:hover {
+    -fx-background-image: url("images/window-min-over.png");
+}
+#window_max:hover {
+    -fx-background-image: url("images/window-expand-over.png");
+}
+
+.album-list .list-cell:selected {
+	-fx-selection-bar: orange;
+}
+
+.content_a {
+	-fx-background-color: #f00;
+	
+}
+.content_a .part-content {
+	-fx-padding: 10;	
+}
+
+.content_b {
+	-fx-background-color: #0f0;
+	-fx-padding: 10;
+}

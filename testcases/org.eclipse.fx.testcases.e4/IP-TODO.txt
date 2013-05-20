@@ -1,0 +1,17 @@
+FamFamFam (Creative Commons 2.5):
+---------------------------------
+icons/folder.png
+
+Ensemble icons (Oracle BSD):
+-----------------------
+http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+css/images/clef.png
+css/images/dark_dotted.png
+css/images/top-bar.png
+css/images/window-close-over.png
+css/images/window-close.png
+css/images/window-corner.png
+css/images/window-expand-over.png
+css/images/window-expand.png
+css/images/window-min-over.png
+css/images/window-min.png
