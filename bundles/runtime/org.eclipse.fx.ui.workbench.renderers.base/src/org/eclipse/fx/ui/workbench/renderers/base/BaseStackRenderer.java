@@ -333,7 +333,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	
 	@Override
 	public void childRendered(MPartStack parentElement, MUIElement element) {
-		if( inLazyInit || inContentProcessing(parentElement) || ! element.isVisible() ) {
+		if( element==null || inLazyInit || inContentProcessing(parentElement) || ! element.isVisible() ) {
 			return;
 		}
 
@@ -376,7 +376,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	}
 	
 	private void showElementRecursive(MUIElement element) {
-		if( ! element.isToBeRendered() ) {
+		if(element==null || ! element.isToBeRendered() ) {
 			return;
 		}
 		

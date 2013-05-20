@@ -94,9 +94,10 @@ public class DefPartRenderer extends BasePartRenderer<BorderPane, Node, Node> {
 				@Override
 				public void handle(MouseEvent event) {
 					event.consume();
-					service.activate(getDomElement(), true);
-					if (!checkFocusControl()) {
-						ContextInjectionFactory.invoke(getDomElement().getObject(), Focus.class, getDomElement().getContext(), null);
+					MPart domElement = getDomElement();
+					service.activate(domElement, true);
+					if (!checkFocusControl() && (domElement.getObject()!=null)) {
+						ContextInjectionFactory.invoke(domElement.getObject(), Focus.class, domElement.getContext(), null);
 						if (!checkFocusControl()) {
 							p.requestFocus();
 						}
