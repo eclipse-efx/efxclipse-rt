@@ -36,6 +36,7 @@ import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
@@ -61,6 +62,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	private MApplication app;
 	
 	@Inject
+	@Log
 	private Logger log;
 	
 	@Inject
