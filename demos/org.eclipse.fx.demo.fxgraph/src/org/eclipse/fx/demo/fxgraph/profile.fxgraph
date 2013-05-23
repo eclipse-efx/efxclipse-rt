@@ -1,0 +1,129 @@
+package org.eclipse.fx.demo.fxgraph
+
+import java.lang.*
+import javafx.scene.control.*
+import javafx.scene.layout.*
+import javafx.scene.shape.*
+import javafx.scene.text.*
+import org.eclipse.fx.demo.fxgraph.*
+
+component ProfileComponent controlledby org.eclipse.fx.demo.fxgraph.ProfileController {
+	AnchorPane id Profile  {
+		prefWidth : 650.0,
+		prefHeight : 443.0,
+		children : [
+			Button id update {
+				maxHeight : 2.0,
+				text : "Update",
+				call AnchorPane#bottomAnchor : 15.0,
+				call AnchorPane#rightAnchor : 168.0,
+				onAction : controllermethod processUpdate
+			},
+			Label id message {
+				layoutX : 56.0,
+				layoutY : 77.0,
+				text : "Please review your profile data."
+			},
+			Label {
+				layoutX : 56.0,
+				layoutY : 123.0,
+				text : "User:"
+			},
+			Label {
+				layoutX : 56.0,
+				layoutY : 224.0,
+				text : "Phone:"
+			},
+			Label {
+				layoutX : 56.0,
+				layoutY : 173.0,
+				text : "Email:"
+			},
+			TextField id user {
+				editable : false,
+				layoutX : 149.0,
+				layoutY : 120.0,
+				maxWidth : 2.0,
+				maxHeight : 30.0,
+				minWidth : 215.0,
+				prefWidth : 215.0,
+				prefHeight : 30.0
+			},
+			TextField id email {
+				editable : true,
+				layoutX : 149.0,
+				layoutY : 171,
+				maxWidth : 2.0,
+				minHeight : 30.0,
+				minWidth : 215.0,
+				prefHeight : 30.0,
+				prefWidth : 215.0
+			},
+			TextField id phone {
+				layoutX : 149.0,
+				layoutY : 224,
+				maxWidth : 2.0,
+				minHeight : 30.0,
+				minWidth : 215.0,
+				prefHeight : 30.0,
+				prefWidth : 215.0
+			},
+			CheckBox id subscribed {
+				layoutX : 402,
+				layoutY : 120,
+				text : "Subscribe to Newsletter"
+			},
+			Separator {
+				layoutX : 380,
+				layoutY : 110,
+				prefHeight : 155,
+				orientation : "vertical"
+			},
+			Hyperlink id logout {
+				layoutY : 24.0,
+				text : "logout",
+				call AnchorPane#rightAnchor: 52.0,
+				onAction : controllermethod processLogout
+			},
+			Button id Button {
+				disable : true,
+				maxHeight : 2,
+				maxWidth : 2.0,
+				text : "Continue",
+				defaultButton : true,
+				call AnchorPane#bottomAnchor:15.0,
+				call AnchorPane#rightAnchor: 52.0,
+				onAction : controllermethod processLogout
+			},
+			Label id success {
+				layoutX : 100.0,
+				layoutY : 401.0,
+				opacity : 0.0,
+				text : "Profile successfully updated!"
+			},
+			Label {
+				layoutX : 56.0,
+				layoutY : 284.0,
+				text : "Address:"
+			},
+			TextArea id address {
+				maxHeight : 2.0,
+				maxWidth : 2.0,
+				minHeight : 85.0,
+				minWidth : 448.0,
+				prefHeight : 85.0,
+				prefWidth : 448.0,
+				call AnchorPane#bottomAnchor: 69.0,
+				call AnchorPane#leftAnchor: 149.0,
+				call AnchorPane#rightAnchor: 52.0,
+				call AnchorPane#topAnchor: 289.0
+			}
+		],
+		styleClass : [
+			String("profile")
+		],
+		properties : {
+			elementLockSel : Boolean(true)
+		}
+	}	
+}

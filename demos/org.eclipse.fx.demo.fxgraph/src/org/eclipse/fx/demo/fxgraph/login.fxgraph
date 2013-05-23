@@ -1,0 +1,64 @@
+package org.eclipse.fx.demo.fxgraph
+
+import java.lang.*
+import java.util.*
+import javafx.collections.*
+import javafx.scene.*
+import javafx.scene.control.*
+import javafx.scene.layout.*
+import javafx.scene.paint.*
+import javafx.scene.text.*
+
+component LoginComponent controlledby org.eclipse.fx.demo.fxgraph.LoginController styledwith "demo.css" {
+	AnchorPane id Login  {
+		prefHeight : 280.0,
+		prefWidth : 480.0,
+		children : [
+			TextField id userId {
+				layoutX : 68.0,
+				layoutY : 58.0,
+				prefWidth : 126.0,
+				onAction : controllermethod processLogin
+			},
+			PasswordField id password {
+				layoutX : 323.0,
+				layoutY : 58.0,
+				prefWidth : 126.0,
+				onAction : controllermethod processLogin
+			},
+			Label {
+				layoutX : 229.0,
+				layoutY : 61.0,
+				text : "Test"
+			},
+			Label {
+				layoutX : 16.0,
+				layoutY : 61.0,
+				text : "User"
+			},
+			Button id login {
+				layoutX : 200.0,
+				layoutY : 125.0,
+				text : "login",
+				defaultButton : true,
+				onAction : controllermethod processLogin
+			},
+			Label id errorMessage {
+				layoutX : 80.0,
+				layoutY : 200.0,
+				textFill : "RED"
+			}
+		],
+		styleClass : [
+			String("login")
+		],
+		properties : {
+			backgroundColor : Color {
+				blue: 1.0,
+				green: 1.0,
+				red: 1.0
+			},
+			elementLockSel : Boolean(true)
+		}
+	}	
+}
