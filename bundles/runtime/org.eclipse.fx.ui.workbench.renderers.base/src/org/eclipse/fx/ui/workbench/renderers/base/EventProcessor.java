@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
+import java.util.Collection;
+
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
@@ -21,9 +23,9 @@ import org.osgi.service.event.EventHandler;
 @SuppressWarnings("restriction")
 public class EventProcessor {
 	public interface ChildrenHandler<M extends MUIElement, C extends MUIElement> {
-		public void handleChildAddition(M parent, C element);
+		public void handleChildrenAddition(M parent, Collection<C> elements);
 
-		public void handleChildRemove(M parent, C element);
+		public void handleChildrenRemove(M parent, Collection<C> elements);
 	}
 
 	public static <C extends MUIElement, M extends MElementContainer<C>, R extends BaseRenderer<M, ?> & ChildrenHandler<M, C>> void attachChildProcessor(IEventBroker eventBroker, final R renderer) {
@@ -36,14 +38,10 @@ public class EventProcessor {
 				MUIElement parent = (MUIElement) changedObj;
 
 				if (parent.getRenderer() == renderer) {
-					String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-					if (UIEvents.EventTypes.ADD.equals(eventType)) {
-						MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-						renderer.handleChildAddition((M) parent, (C) element);
-					} else if (UIEvents.EventTypes.REMOVE.equals(eventType)) {
-						MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.OLD_VALUE);
-						renderer.handleChildRemove((M) parent, (C) element);
-					}
+					if (UIEvents.isADD(event))
+						renderer.handleChildrenAddition((M) parent, Util.<C> asCollection(event, UIEvents.EventTags.NEW_VALUE));
+					else if (UIEvents.isREMOVE(event))
+						renderer.handleChildrenRemove((M) parent, Util.<C> asCollection(event, UIEvents.EventTags.OLD_VALUE));
 				}
 			}
 		});
@@ -57,9 +55,9 @@ public class EventProcessor {
 			public void handleEvent(Event event) {
 				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
 				if (changedObj.isToBeRendered()) {
-					EObject parent = ((EObject)changedObj).eContainer();
+					EObject parent = ((EObject) changedObj).eContainer();
 					if (parent instanceof MUIElement) {
-						if (((MUIElement)parent).getRenderer() == renderer) {
+						if (((MUIElement) parent).getRenderer() == renderer) {
 							String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
 							if (UIEvents.EventTypes.SET.equals(eventType)) {
 								Boolean newValue = (Boolean) event.getProperty(UIEvents.EventTags.NEW_VALUE);
@@ -67,9 +65,9 @@ public class EventProcessor {
 									// TODO Is childRendered not dangerous to
 									// call
 									// here??
-									renderer.childRendered((M)parent, changedObj);
+									renderer.childRendered((M) parent, changedObj);
 								} else {
-									renderer.hideChild((M)parent, changedObj);
+									renderer.hideChild((M) parent, changedObj);
 								}
 							}
 						}

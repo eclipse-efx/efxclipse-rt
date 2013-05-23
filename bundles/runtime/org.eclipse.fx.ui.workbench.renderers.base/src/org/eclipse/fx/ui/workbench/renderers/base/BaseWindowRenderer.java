@@ -10,11 +10,18 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
+import org.eclipse.e4.core.di.InjectionException;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
@@ -29,6 +36,8 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.fx.core.log.Log;
+import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
@@ -39,7 +48,96 @@ import org.osgi.service.event.EventHandler;
 
 @SuppressWarnings("restriction")
 public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow,WWindow<N>> {
+	// derived from SWT implementation
+	private class DefaultSaveHandler implements ISaveHandler {
+		private MWindow element;
+		private WWindow<N> widget;
+
+		private DefaultSaveHandler(MWindow element, WWindow<N> widget) {
+			this.element = element;
+			this.widget = widget;
+		}
+
+//FIXME Once we compile against Kepler final we should add the @Override
+//		@Override
+		public boolean saveParts(Collection<MPart> dirtyParts, boolean confirm) {
+			if (confirm) {
+				List<MPart> dirtyPartsList = Collections
+						.unmodifiableList(new ArrayList<MPart>(dirtyParts));
+				Save[] decisions = promptToSave(dirtyPartsList);
+				for (Save decision : decisions) {
+					if (decision == Save.CANCEL) {
+						return false;
+					}
+				}
+
+				for (int i = 0; i < decisions.length; i++) {
+					if (decisions[i] == Save.YES) {
+						if (!save(dirtyPartsList.get(i), false)) {
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+
+			for (MPart dirtyPart : dirtyParts) {
+				if (!save(dirtyPart, false)) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+//FIXME Once we compile against Kepler final we should add the @Override		
+//		@Override
+		public boolean save(MPart dirtyPart, boolean confirm) {
+			if (confirm) {
+				switch (promptToSave(dirtyPart)) {
+				case NO:
+					return true;
+				case CANCEL:
+					return false;
+				case YES:
+					break;
+				}
+			}
+
+			Object client = dirtyPart.getObject();
+			try {
+				ContextInjectionFactory.invoke(client, Persist.class,
+						dirtyPart.getContext());
+			} catch (InjectionException e) {
+				logger.error("Failed to persist contents of part", e);
+				return false;
+			} catch (RuntimeException e) {
+				logger.error("Failed to persist contents of part via DI", e);
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		public Save[] promptToSave(Collection<MPart> dirtyParts) {
+			return BaseWindowRenderer.this.promptToSave(element, dirtyParts,
+					widget);
+		}
+
+		@Override
+		public Save promptToSave(MPart dirtyPart) {
+			return BaseWindowRenderer.this.promptToSave(element, dirtyPart,
+					widget);
+			// Collection<MPart> c = Collections.singleton(dirtyPart);
+			// return BaseWindowRenderer.this.promptToSave(resourceUtilities,c,
+			// widget)[0];
+		}
+	}
+
 	public static final String KEY_FULL_SCREEN = "efx.window.fullscreen";
+
+	@Inject
+	@Log
+	Logger logger;
 	
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
@@ -120,20 +218,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow,WWindow
 				return null;
 			}
 		});
-		getModelContext(element).set(ISaveHandler.class, new ISaveHandler() {
-			
-			@Override
-			public Save[] promptToSave(Collection<MPart> dirtyParts) {
-				return BaseWindowRenderer.this.promptToSave(element, dirtyParts, widget);
-			}
-			
-			@Override
-			public Save promptToSave(MPart dirtyPart) {
-				return BaseWindowRenderer.this.promptToSave(element, dirtyPart, widget);
-//				Collection<MPart> c = Collections.singleton(dirtyPart);
-//				return BaseWindowRenderer.this.promptToSave(resourceUtilities,c, widget)[0];
-			}
-		});
+		getModelContext(element).set(ISaveHandler.class, new DefaultSaveHandler(element, widget));
 	}
 	
 	protected abstract Save[] promptToSave(MWindow element, Collection<MPart> dirtyParts, WWindow<N> widget);

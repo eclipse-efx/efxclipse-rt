@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -20,8 +23,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 
-
-
 @SuppressWarnings("restriction")
 public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> implements ChildrenHandler<MMenu, MMenuElement> {
 
@@ -30,7 +31,7 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 		EventProcessor.attachChildProcessor(eventBroker, this);
 		EventProcessor.attachVisibleProcessor(eventBroker, this);
 	}
-	
+
 	@Override
 	protected void initWidget(final MMenu element, WMenu<N> widget) {
 		super.initWidget(element, widget);
@@ -42,69 +43,77 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 			}
 		});
 	}
-	
+
 	void handleShowing(MMenu element) {
-		for( MMenuElement e : element.getChildren() ) {
-			if( e.getRenderer() instanceof BaseItemRenderer) {
+		for (MMenuElement e : element.getChildren()) {
+			if (e.getRenderer() instanceof BaseItemRenderer) {
 				@SuppressWarnings("unchecked")
 				BaseItemRenderer<MMenuElement, ?> r = (BaseItemRenderer<MMenuElement, ?>) e.getRenderer();
 				r.checkEnablement(e);
 			}
 		}
 	}
-	
+
 	@Override
 	public void doProcessContent(MMenu element) {
 		// TODO Should we do this creation lazy????
 		WMenu<N> menu = getWidget(element);
-		for( MMenuElement e : element.getChildren() ) {
+		for (MMenuElement e : element.getChildren()) {
 			WMenuElement<MMenuElement> widget = engineCreateWidget(e);
-			if( widget != null ) {
+			if (widget != null) {
 				menu.addElement(widget);
 			}
 		}
 	}
-	
-	public void handleChildRemove(MMenu parent, MMenuElement element) {
-		if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
-			hideChild(parent, element);
+
+	public void handleChildrenRemove(MMenu parent, Collection<MMenuElement> elements) {
+		Iterator<MMenuElement> iterator = elements.iterator();
+		while (iterator.hasNext()) {
+			MMenuElement element = iterator.next();
+			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+				hideChild(parent, element);
+			}
 		}
 	}
-	
-	public void handleChildAddition(MMenu parent, MMenuElement element) {
-		if (element.isToBeRendered() && element.isVisible()) {
-			if( element.getWidget() == null ) {
-				engineCreateWidget(element);	
-			} else {
-				childRendered(parent, element);
+
+	public void handleChildrenAddition(MMenu parent, Collection<MMenuElement> elements) {
+		Iterator<MMenuElement> iterator = elements.iterator();
+		while (iterator.hasNext()) {
+			MMenuElement element = iterator.next();
+			if (element.isToBeRendered() && element.isVisible()) {
+				if (element.getWidget() == null) {
+					engineCreateWidget(element);
+				} else {
+					childRendered(parent, element);
+				}
 			}
 		}
 	}
 
 	@Override
 	public void childRendered(MMenu parentElement, MUIElement element) {
-		if( inContentProcessing(parentElement) ) {
+		if (inContentProcessing(parentElement)) {
 			return;
 		}
-		
+
 		int idx = getRenderedIndex(parentElement, element);
 		WMenu<N> menu = getWidget(parentElement);
 		@SuppressWarnings("unchecked")
-		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget(); 
+		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
 		menu.addElement(idx, menuElement);
 	}
 
 	@Override
 	public void hideChild(MMenu container, MUIElement changedObj) {
 		WMenu<N> menu = getWidget(container);
-		
-		if( menu == null ) {
+
+		if (menu == null) {
 			return;
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		WMenuElement<MMenuElement> widget = (WMenuElement<MMenuElement>) changedObj.getWidget();
-		if( widget != null ) {
+		if (widget != null) {
 			menu.removeElement(widget);
 		}
 	}

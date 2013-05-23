@@ -11,7 +11,9 @@
 package org.eclipse.fx.ui.workbench.renderers.base;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -28,7 +30,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-
 @SuppressWarnings("restriction")
 public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> {
 	@Inject
@@ -44,15 +45,11 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 				if (changedObj instanceof MArea) {
 					MArea parent = (MArea) changedObj;
 					if (BaseAreaRenderer.this == parent.getRenderer()) {
-						String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-						
-						if (UIEvents.EventTypes.ADD.equals(eventType)) {
-							MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-							handleChildAddition(parent, (MPartSashContainerElement) element);
-						} else if (UIEvents.EventTypes.REMOVE.equals(eventType)) {
-							MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.OLD_VALUE);
-							handleChildRemove(parent, (MPartSashContainerElement) element);
-						}
+						if (UIEvents.isADD(event))
+							handleChildrenAddition(parent, Util.<MUIElement> asCollection(event, UIEvents.EventTags.NEW_VALUE));
+						else if (UIEvents.isREMOVE(event))
+							handleChildrenRemove(parent, Util.<MUIElement> asCollection(event, UIEvents.EventTags.OLD_VALUE));
+
 					}
 				}
 			}
@@ -82,14 +79,15 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
 				if (changedObj.isToBeRendered()) {
 					MUIElement parent = changedObj.getParent();
-					if( parent != null ) {
+					if (parent != null) {
 						if (BaseAreaRenderer.this == parent.getRenderer()) {
 							MArea stack = (MArea) parent;
 							String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
 							if (UIEvents.EventTypes.SET.equals(eventType)) {
 								Boolean newValue = (Boolean) event.getProperty(UIEvents.EventTags.NEW_VALUE);
 								if (newValue.booleanValue()) {
-									// TODO Is childRendered not dangerous to call
+									// TODO Is childRendered not
+									// dangerous to call
 									// here??
 									childRendered(stack, changedObj);
 								} else {
@@ -107,14 +105,14 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 	public void doProcessContent(MArea element) {
 		WArea<N> sash = getWidget(element);
 		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
-		
+
 		for (MPartSashContainerElement e : element.getChildren()) {
 			WLayoutedWidget<MPartSashContainerElement> widget = engineCreateWidget(e);
 			if (widget != null) {
 				list.add(widget);
 			}
 		}
-		
+
 		sash.addItems(list);
 	}
 
@@ -147,19 +145,31 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 		}
 	}
 
-	void handleChildAddition(MArea parent, MPartSashContainerElement element) {
-		if (element.isToBeRendered() && element.isVisible()) {
-			if( element.getWidget() == null ) {
-				engineCreateWidget(element);	
-			} else {
-				childRendered(parent, element);
+	void handleChildrenAddition(MArea parent, Collection<MUIElement> elements) {
+
+		Iterator<MUIElement> i = elements.iterator();
+		MUIElement element;
+		while (i.hasNext()) {
+			element = i.next();
+			if (element.isToBeRendered() && element.isVisible()) {
+				if (element.getWidget() == null) {
+					engineCreateWidget(element);
+				} else {
+					childRendered(parent, element);
+				}
 			}
+
 		}
 	}
 
-	void handleChildRemove(MArea parent, MPartSashContainerElement element) {
-		if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
-			hideChild(parent, element);
+	void handleChildrenRemove(MArea parent, Collection<MUIElement> elements) {
+		Iterator<MUIElement> i = elements.iterator();
+		MUIElement element;
+		while (i.hasNext()) {
+			element = i.next();
+			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+				hideChild(parent, element);
+			}
 		}
 	}
 
