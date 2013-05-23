@@ -11,7 +11,9 @@
 package org.eclipse.fx.ui.workbench.renderers.base;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -34,8 +36,8 @@ import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspectiveStack;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspectiveStack.WStackItem;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -56,14 +58,10 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 				if (changedObj instanceof MPerspectiveStack) {
 					MPerspectiveStack parent = (MPerspectiveStack) changedObj;
 					if (BasePerspectiveStackRenderer.this == parent.getRenderer()) {
-						String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-
-						if (UIEvents.EventTypes.ADD.equals(eventType)) {
-							MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-							handleChildAddition(parent, (MPerspective) element);
-						} else if (UIEvents.EventTypes.REMOVE.equals(eventType)) {
-							MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.OLD_VALUE);
-							handleChildRemove(parent, (MPerspective) element);
+						if (UIEvents.isADD(event)){
+							handleChildrenAddition(parent, Util.<MPerspective>asCollection(event, UIEvents.EventTags.NEW_VALUE));
+						} else if (UIEvents.isREMOVE(event)) {
+							handleChildrenRemove(parent, Util.<MPerspective>asCollection(event, UIEvents.EventTags.OLD_VALUE));
 						}
 					}
 				}
@@ -233,7 +231,12 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		return item;
 	}
 
-	void handleChildAddition(MPerspectiveStack parent, MPerspective element) {
+	void handleChildrenAddition(MPerspectiveStack parent, Collection<MPerspective> elements) {
+		Iterator<MPerspective> i = elements.iterator();
+		while (i.hasNext()) {
+			MPerspective element = i.next();
+			
+			
 		if (element.isToBeRendered() && element.isVisible()) {
 			int idx = getRenderedIndex(parent, element);
 
@@ -243,11 +246,17 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 
 			stack.addItems(idx, Collections.singletonList(item));
 		}
+		}
 	}
 
-	void handleChildRemove(MPerspectiveStack parent, MPerspective element) {
+	void handleChildrenRemove(MPerspectiveStack parent, Collection<MPerspective> elements) {
+		Iterator<MPerspective> iterator = elements.iterator();
+		while (iterator.hasNext()) {
+			MPerspective element = iterator.next();
 		if (element.isToBeRendered() && element.isVisible()) {
 			hideChild(parent, element);
+		}
+		
 		}
 	}
 

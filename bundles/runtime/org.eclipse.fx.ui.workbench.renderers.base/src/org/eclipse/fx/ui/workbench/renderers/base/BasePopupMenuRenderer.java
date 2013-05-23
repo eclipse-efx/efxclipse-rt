@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -20,9 +23,10 @@ import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 
-
 @SuppressWarnings("restriction")
-public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, WPopupMenu<N>> implements ChildrenHandler<MPopupMenu, MMenuElement> {
+public abstract class BasePopupMenuRenderer<N> extends
+		BaseRenderer<MPopupMenu, WPopupMenu<N>> implements
+		ChildrenHandler<MPopupMenu, MMenuElement> {
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
 		EventProcessor.attachChildProcessor(eventBroker, this);
@@ -45,7 +49,8 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 		for (MMenuElement e : element.getChildren()) {
 			if (e.getRenderer() instanceof BaseItemRenderer) {
 				@SuppressWarnings("unchecked")
-				BaseItemRenderer<MMenuElement, ?> r = (BaseItemRenderer<MMenuElement, ?>) e.getRenderer();
+				BaseItemRenderer<MMenuElement, ?> r = (BaseItemRenderer<MMenuElement, ?>) e
+						.getRenderer();
 				r.checkEnablement(e);
 			}
 		}
@@ -63,18 +68,29 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 		}
 	}
 
-	public void handleChildRemove(MPopupMenu parent, MMenuElement element) {
-		if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
-			hideChild(parent, element);
+	public void handleChildrenRemove(MPopupMenu parent,
+			Collection<MMenuElement> elements) {
+		Iterator<MMenuElement> iterator = elements.iterator();
+		while (iterator.hasNext()) {
+			MMenuElement element = iterator.next();
+			if (element.isToBeRendered() && element.isVisible()
+					&& element.getWidget() != null) {
+				hideChild(parent, element);
+			}
 		}
 	}
 
-	public void handleChildAddition(MPopupMenu parent, MMenuElement element) {
-		if (element.isToBeRendered() && element.isVisible()) {
-			if (element.getWidget() == null) {
-				engineCreateWidget(element);
-			} else {
-				childRendered(parent, element);
+	public void handleChildrenAddition(MPopupMenu parent,
+			Collection<MMenuElement> elements) {
+		Iterator<MMenuElement> iterator = elements.iterator();
+		while (iterator.hasNext()) {
+			MMenuElement element = iterator.next();
+			if (element.isToBeRendered() && element.isVisible()) {
+				if (element.getWidget() == null) {
+					engineCreateWidget(element);
+				} else {
+					childRendered(parent, element);
+				}
 			}
 		}
 	}
@@ -88,7 +104,8 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 		int idx = getRenderedIndex(parentElement, element);
 		WPopupMenu<N> menu = getWidget(parentElement);
 		@SuppressWarnings("unchecked")
-		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
+		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element
+				.getWidget();
 		menu.addElement(idx, menuElement);
 	}
 
@@ -101,7 +118,8 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 		}
 
 		@SuppressWarnings("unchecked")
-		WMenuElement<MMenuElement> widget = (WMenuElement<MMenuElement>) changedObj.getWidget();
+		WMenuElement<MMenuElement> widget = (WMenuElement<MMenuElement>) changedObj
+				.getWidget();
 		if (widget != null) {
 			menu.removeElement(widget);
 		}
