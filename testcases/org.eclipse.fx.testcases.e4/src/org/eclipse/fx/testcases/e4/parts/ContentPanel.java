@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.di.extensions.EventTopic;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -79,5 +80,10 @@ public class ContentPanel {
 	@Optional
 	void eventASyncUI(@UIEventTopic(EventSender.ASYNC_EVENT) String event) {
 		System.err.println("UI-ASYNC: Received event: " + event + " on thread " + Thread.currentThread());
+	}
+	
+	@Persist
+	public void persist(){
+		System.err.println("Persisting .....");
 	}
 }
