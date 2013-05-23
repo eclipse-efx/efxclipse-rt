@@ -1,0 +1,30 @@
+Ensemble-Icons (Oracle BSD):
+----------------------------
+From http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+css/images/clef.png
+css/images/top-bar.png
+css/images/window-close-over.png
+css/images/window-close.png
+css/images/window-corner.png
+css/images/window-expand-over.png
+css/images/window-expand.png
+css/images/window-min-over.png
+css/images/window-min.png
+
+Eclipse-Icons (EPL):
+--------------------
+icons/alt_about.gif
+icons/alt_launcher.icns
+icons/alt_launcher.ico
+icons/alt_launcher.xpm
+icons/alt_window_16.gif
+icons/alt_window_32.gif
+
+Oxygene-Icons (Creative Commons 3.0 & LGPL):
+--------------------------------------------
+From: svn -r 760421 co svn://anonsvn.kde.org/home/kde/trunk/kdesupport/oxygen-icons
+
+icons/document-save.png
+icons/list-add-user.png
+icons/list-remove-user.png
+

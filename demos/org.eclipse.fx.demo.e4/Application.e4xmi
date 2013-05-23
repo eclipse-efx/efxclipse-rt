@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_fBMHIOrvEeCt9o_FPfmYHQ" elementId="org.eclipse.fx.demo.e4.application">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_Pod3YOr0EeCt9o_FPfmYHQ" label="My e4 FX Application" x="10" y="10" width="800" height="600">
+    <tags>decoration#topdecoration.fxml</tags>
+    <children xsi:type="basic:PartSashContainer" xmi:id="_DQApgOuPEeCDVr_5ofScGw" horizontal="true">
+      <children xsi:type="basic:Part" xmi:id="_dXzjYPRDEeCCOIYCLNYQTA" containerData="25" contributionURI="bundleclass://org.eclipse.fx.demo.e4/org.eclipse.fx.demo.e4.parts.PersonListPart" label="Person List"/>
+      <children xsi:type="basic:PartStack" xmi:id="_awnesPRDEeCCOIYCLNYQTA" elementId="detailstack" containerData="75">
+        <children xsi:type="basic:Part" xmi:id="_0P_cEPRDEeCCOIYCLNYQTA" elementId="persondetail" contributionURI="bundleclass://org.eclipse.fx.demo.e4/org.eclipse.fx.demo.e4.parts.PersonDetailPart" label="Person Detail"/>
+      </children>
+    </children>
+    <trimBars xmi:id="_VGEc4PaXEeCklfymhgw39w">
+      <children xsi:type="menu:ToolBar" xmi:id="_WRBNEPaXEeCklfymhgw39w">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_aBhDMPaXEeCklfymhgw39w" iconURI="platform:/plugin/org.eclipse.fx.demo.e4/icons/list-add-user.png" contributionURI="bundleclass://org.eclipse.fx.demo.e4/org.eclipse.fx.demo.e4.actions.NewPersonAction"/>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_FKEg8PacEeCklfymhgw39w" iconURI="platform:/plugin/org.eclipse.fx.demo.e4/icons/list-remove-user.png" contributionURI="bundleclass://org.eclipse.fx.demo.e4/org.eclipse.fx.demo.e4.actions.DeletePersonAction"/>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_JZH7UPacEeCklfymhgw39w" iconURI="platform:/plugin/org.eclipse.fx.demo.e4/icons/document-save.png" contributionURI="bundleclass://org.eclipse.fx.demo.e4/org.eclipse.fx.demo.e4.actions.SaveAction"/>
+      </children>
+    </trimBars>
+  </children>
+  <addons xmi:id="_GyGBhEMOEeKso-cEr7pQbw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_GyGBhUMOEeKso-cEr7pQbw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_GyGBhkMOEeKso-cEr7pQbw" elementId="org.eclipse.fx.ui.keybindings.e4.service" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingServiceAddon"/>
+  <addons xmi:id="_GyGBh0MOEeKso-cEr7pQbw" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_GyGBiEMOEeKso-cEr7pQbw" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_GyGBiUMOEeKso-cEr7pQbw" elementId="org.eclipse.fx.ui.keybindings.e4.model" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingProcessingAddon"/>
+</application:Application>

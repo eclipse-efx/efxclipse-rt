@@ -1,0 +1,60 @@
+package org.eclipse.fx.demo.e4.parts
+
+import javafx.scene.layout.*
+import javafx.scene.control.*
+
+component PersonDetail controlledby org.eclipse.fx.demo.e4.parts.controllers.PersonDetailPartController {
+	GridPane id personroot {
+		vgap : 10,
+		hgap : 10,
+		children : [
+			Label {
+				text : "Firstname",
+				call GridPane#columnIndex : 0,
+				call GridPane#rowIndex : 0
+			},
+			TextField id firstname {
+				call GridPane#columnIndex : 1,
+				call GridPane#rowIndex : 0,
+				call GridPane#columnSpan : 2,
+				call GridPane#hgrow : "ALWAYS"
+			},
+			Label {
+				text : "Lastname",
+				call GridPane#columnIndex : 0,
+				call GridPane#rowIndex : 1
+			},
+			TextField id lastname {
+				call GridPane#columnIndex : 1,
+				call GridPane#rowIndex : 1,
+				call GridPane#columnSpan : 2,
+				call GridPane#hgrow : "ALWAYS"
+			},
+			Label {
+				text : "Street",
+				call GridPane#columnIndex : 0,
+				call GridPane#rowIndex : 2
+			},
+			TextField id street {
+				call GridPane#columnIndex : 1,
+				call GridPane#rowIndex: 2,
+				call GridPane#columnSpan : 2,
+				call GridPane#hgrow: "ALWAYS"
+			},
+			Label {
+				text : "ZIP/City",
+				call GridPane#columnIndex : 0,
+				call GridPane#rowIndex: 3
+			},
+			TextField id zip {
+				call GridPane#columnIndex : 1,
+				call GridPane#rowIndex: 3
+			},
+			TextField id city {
+				call GridPane#columnIndex : 2,
+				call GridPane#rowIndex: 3,
+				call GridPane#hgrow: "ALWAYS"
+			}
+		]
+	}
+} 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.fx.ui.workbench.fx.application"
+            name="Hello JavaFX e4">
+         <property
+               name="windowImages"
+               value="icons/alt_window_16.gif,icons/alt_window_32.gif">
+         </property>
+         <property
+               name="applicationXMI"
+               value="org.eclipse.fx.demo.e4/Application.e4xmi">
+         </property>
+         <property
+               name="appName"
+               value="Hello JavaFX e4">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.fx.ui.theme">
+      <theme
+            basestylesheet="css/default.css"
+            id="org.eclipse.fx.demo.e4.default">
+      </theme>
+   </extension>
+
+</plugin>

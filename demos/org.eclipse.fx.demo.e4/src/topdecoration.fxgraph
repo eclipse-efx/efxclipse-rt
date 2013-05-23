@@ -1,0 +1,28 @@
+import javafx.scene.layout.*
+import javafx.scene.control.*
+
+component DecorationArea controlledby org.eclipse.fx.demo.e4.DecorationController {
+	ToolBar id decorationArea { 
+		prefHeight : 66, 
+		minHeight : 66,
+		maxHeight : 66,
+		items : [
+			Region {
+				call HBox#hgrow : "ALWAYS"
+			},
+			VBox {
+				children : [
+					Button id window_close {
+						onAction : controllermethod handleClose
+					},
+					Button id window_min {
+						onAction : controllermethod handleMin
+					},
+					Button id window_max {
+						onAction : controllermethod handleMax
+					}
+				]
+			}
+		]
+	}	
+}

@@ -1,0 +1,97 @@
+#decorationArea {
+    -fx-padding: 10px;
+    -fx-background-image: url("images/top-bar.png"),
+                          url("images/clef.png");
+    -fx-background-size: cover, contain;
+    -fx-background-position: left top, center center;
+    -fx-background-repeat: no-repeat;
+}
+
+#window-resize-button {
+    -fx-background-image: url("images/window-corner.png");
+    -fx-background-position: right 1px bottom 1px;
+    -fx-background-repeat: no-repeat;
+}
+#window_close {
+    -fx-font-size: 1px;
+    -fx-background-color: null;
+    -fx-background-image: url("images/window-close.png");
+    -fx-padding: 6 6 4 6;
+}
+#window_min {
+    -fx-font-size: 1px;
+    -fx-background-color: null;
+    -fx-background-image: url("images/window-min.png");
+    -fx-padding: 6 6 4 6;
+}
+#window_max {
+    -fx-font-size: 1px;
+    -fx-background-color: null;
+    -fx-background-image: url("images/window-expand.png");
+    -fx-padding: 6 6 4 6;
+}
+#window_close:hover {
+    -fx-background-image: url("images/window-close-over.png");
+}
+#window_min:hover {
+    -fx-background-image: url("images/window-min-over.png");
+}
+#window_max:hover {
+    -fx-background-image: url("images/window-expand-over.png");
+}
+
+
+#detail-list {
+    -fx-background-color: #d1dee3;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+    /*-fx-effect: innershadow( one-pass-box, rgba(0,0,0,0.1), 20, 0.0, 0, 0 ); */
+}
+
+#detail-list .list-cell {
+    -fx-indent: 10;
+    -fx-background-color: transparent;
+}
+
+#detail-list .list-cell:filled:selected:focused, #detail-list .list-cell:filled:selected {
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-selection-bar;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+#detailstack {
+    -fx-tab-spacing: 0px;
+}
+
+#detailstack *.tab-header-background {
+    -fx-background-color: #51555c;
+    -fx-effect: innershadow(two-pass-box , rgba(0,0,0,0.7) , 12, 0.0 , 0 , 0);
+}
+
+#detailstack .tab-header-content-spacer {
+    -fx-padding: 0;
+    -fx-border-width: 0px;
+}
+
+#detailstack .tab {
+    -fx-padding: 2 8 2 8;
+    -fx-background-radius: 8 8 0 0, 7 7 0 0, 6 6 0 0;
+}
+
+#detailstack .tab-label {
+    -fx-font-size: 1.2em;
+}
+
+#detailstack .tab:selected {
+    -fx-padding: 2 8 2 8;
+    -fx-background-radius: 8 8 0 0, 7 7 0 0, 6 6 0 0;
+    -fx-background-color: #EEEEEE;
+}
+
+#persondetail {
+    -fx-background-color: #EEEEEE;
+    -fx-background-repeat: repeat repeat;
+    -fx-background-position: left top;
+    -fx-padding: 8px;
+}
