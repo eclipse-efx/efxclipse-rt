@@ -1,0 +1,8 @@
+Eclipse Icons (EPL):
+--------------------
+icons/alt_about.gif
+icons/alt_launcher.icns
+icons/alt_launcher.ico
+icons/alt_launcher.xpm
+icons/alt_window_16.gif
+icons/alt_window_32.gif
