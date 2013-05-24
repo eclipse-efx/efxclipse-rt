@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.eclipse.fx.demo.osgi.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.fx.demo.osgi.application"
+            name="OSGIApp">
+         <property
+               name="appName"
+               value="OSGIApp">
+         </property>
+      </product>
+   </extension>
+
+</plugin>
