@@ -1,0 +1,14 @@
+package org.eclipse.fx.demo.osgi.di
+
+import javafx.scene.layout.BorderPane
+import javafx.scene.control.Button
+import org.eclipse.fx.demo.osgi.di.FXSubController
+
+component SubGraph controlledby FXSubController {
+	BorderPane {
+		center : Button id subbutton {
+			text : "Sub Button",
+			onAction : controllermethod sayHello
+		}
+	}
+}

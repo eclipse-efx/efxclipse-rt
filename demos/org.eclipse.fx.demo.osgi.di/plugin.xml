@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            thread="any">
+         <run
+               class="org.eclipse.fx.ui.di.DIApplication">
+               <parameter name="mainClass" value="org.eclipse.fx.demo.osgi.di.MainApplication" />
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.fx.demo.osgi.di.application"
+            name="Di app">
+         <property
+               name="appName"
+               value="Di app">
+         </property>
+      </product>
+   </extension>
+
+</plugin>

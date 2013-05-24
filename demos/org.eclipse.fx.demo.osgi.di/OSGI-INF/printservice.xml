@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.demo.osgi.di.printservice">
+   <implementation class="org.eclipse.fx.demo.osgi.di.PrintServiceImpl"/>
+   <service>
+      <provide interface="org.eclipse.fx.demo.osgi.di.PrintService"/>
+   </service>
+</scr:component>
