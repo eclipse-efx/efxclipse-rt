@@ -1,0 +1,81 @@
+.MWindow {
+	-light-black: rgb(74, 75, 78);
+    -dark-highlight: rgb(87, 89, 92);
+    -dark-black: rgb(39, 40, 40);
+    -darkest-black: rgb(5, 5, 5);
+    -mid-gray: rgb(216, 222, 227);
+    -fx-background-color: -mid-gray;
+}
+
+.MTrimBar {
+	-fx-background-color: 
+         linear-gradient(to bottom, derive(rgb(194,111,41),+50%),derive(rgb(194,111,41),-40%), derive(rgb(194,111,41),-20%));
+}
+
+#left_trim .tool-bar {
+	-fx-orientation: vertical;
+}
+
+.tool-bar {
+	-fx-background-color: transparent;
+	-fx-padding: .9em 0.416667em .9em 0.416667em;
+}
+
+.tool-bar .button {
+    -fx-background-color: transparent;
+    -fx-padding: 4;
+}
+
+.tool-bar .button:hover {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-color: -fx-hover-base;
+}
+
+.MPart {
+	-fx-background-image: url("theme1/images/grunge_wall.png");
+}
+
+.MPartStack {
+	-fx-background-image: url("theme2/images/purty_wood.png");
+}
+
+.MPerspectiveStack {
+	-fx-background-image: url("theme2/images/purty_wood.png");
+}
+
+.media-container {
+    -fx-background-color: null;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.media-container *.split-pane-divider{
+    -fx-padding: 0 1 0 0;
+    -fx-background-color: transparent, #333333;
+    -fx-background-insets: 0 -3 0 -3, 0;
+    -fx-border-color: null;
+}
+.media-container *.horizontal-grabber {
+    -fx-padding: 0;
+    -fx-shape: "";
+}
+
+.mediaList {
+	-fx-background-color:
+         linear-gradient(to bottom, derive(rgb(194,111,41),+50%),derive(rgb(194,111,41),-40%), derive(rgb(194,111,41),-20%));
+}
+
+.mediaList .list-cell {
+	-fx-background-color: transparent;
+}
+
+.mediaList .list-cell:selected {
+	-fx-background-color: -fx-selection-bar;
+}
+
+#switchPreview {
+	-fx-background-image: url("theme1/images/low_contrast_linen.png");
+}
+
+#configuration {
+	-fx-padding: 10px;
+}

@@ -1,0 +1,45 @@
+package org.eclipse.fx.demo.media.parts
+
+import javafx.scene.layout.GridPane
+import javafx.scene.control.Label 
+import javafx.scene.control.ChoiceBox
+import javafx.scene.layout.BorderPane
+import javafx.scene.image.ImageView
+import org.eclipse.fx.demo.media.parts.ConfigurationPartControler
+
+component ConfigurationEditor styledwith "/css/default.css" controlledby ConfigurationPartControler {
+	GridPane {
+		hgap : 5,
+		vgap : 5,
+		children : [
+			Label {
+				text : "Theme",
+				static columnIndex : 0,
+				static rowIndex : 0
+			},
+			ChoiceBox id themeId {
+				static columnIndex : 1,
+				static rowIndex : 0
+			},
+			Label {
+				text : "Transition",
+				static columnIndex : 0,
+				static rowIndex : 1
+			},
+			ChoiceBox id switchType {
+				static columnIndex : 1,
+				static rowIndex : 1
+			},
+			BorderPane id switchPreview {
+				prefWidth : 200,
+				prefHeight : 150,
+				maxWidth :  200,
+				maxHeight : 150,
+				minWidth : 200,
+				minHeight : 150,
+				static columnIndex : 1,
+				static rowIndex : 2
+			}
+		]
+	}
+}

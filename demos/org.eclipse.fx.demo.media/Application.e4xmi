@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_4jxxUBo_EeKkV9yRGUW3Gw" elementId="org.eclipse.e4.ide.application" bindingContexts="_4jxxURo_EeKkV9yRGUW3Gw">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_4jyYZho_EeKkV9yRGUW3Gw" elementId="org.efxclipse.e4.mainWindow" label="org.eclipse.fx.demo.media" x="30" y="30" width="1024" height="768">
+    <persistedState key="fx.scene.3d" value="true"/>
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_PBYm0BpAEeKkV9yRGUW3Gw" elementId="org.eclipse.fx.demo.media.perspectivestack.0">
+      <children xsi:type="advanced:Perspective" xmi:id="_Q_WvYBpAEeKkV9yRGUW3Gw" elementId="perspective.images" label="Images">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_4jyYZxo_EeKkV9yRGUW3Gw" horizontal="true">
+          <tags>media-container</tags>
+          <children xsi:type="basic:PartStack" xmi:id="_4jyYaRo_EeKkV9yRGUW3Gw" elementId="content.stack" containerData="0.8"/>
+          <children xsi:type="basic:Part" xmi:id="_4jyYaBo_EeKkV9yRGUW3Gw" containerData="0.2" contributionURI="bundleclass://org.eclipse.fx.demo.media/org.eclipse.fx.demo.media.parts.MediaListPart"/>
+        </children>
+      </children>
+      <children xsi:type="advanced:Perspective" xmi:id="_TPNSIBpAEeKkV9yRGUW3Gw" elementId="perspective.videos" label="Videos">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_o8RbgBpAEeKkV9yRGUW3Gw" elementId="org.eclipse.fx.demo.media.partsashcontainer.0" horizontal="true">
+          <tags>media-container</tags>
+          <children xsi:type="basic:PartStack" xmi:id="_qrR7ABpAEeKkV9yRGUW3Gw" elementId="content.stack" containerData="0.8"/>
+          <children xsi:type="basic:Part" xmi:id="_p8fiYBpAEeKkV9yRGUW3Gw" elementId="org.eclipse.fx.demo.media.part.0" containerData="0.2" contributionURI="bundleclass://org.eclipse.fx.demo.media/org.eclipse.fx.demo.media.parts.MediaListPart"/>
+        </children>
+      </children>
+      <children xsi:type="advanced:Perspective" xmi:id="_JAaF4Bt_EeKkV9yRGUW3Gw" elementId="perspective.configuration" label="Configuration">
+        <children xsi:type="basic:Part" xmi:id="_KV-xsBt_EeKkV9yRGUW3Gw" elementId="configuration" contributionURI="bundleclass://org.eclipse.fx.demo.media/org.eclipse.fx.demo.media.parts.ConfigurationPart"/>
+      </children>
+    </children>
+    <trimBars xmi:id="_4jyYaho_EeKkV9yRGUW3Gw" elementId="left_trim" side="Left">
+      <children xsi:type="menu:ToolBar" xmi:id="_4jyYaxo_EeKkV9yRGUW3Gw" elementId="org.efxclipse.e4.maintoolbar">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_m6AL0Bt_EeKkV9yRGUW3Gw" elementId="org.eclipse.fx.demo.media.handledtoolitem.0" iconURI="platform:/plugin/org.eclipse.fx.demo.media/icons/perspective/preferences-system.png" command="_gvNokBpCEeKkV9yRGUW3Gw">
+          <parameters xmi:id="_r_XjIBt_EeKkV9yRGUW3Gw" elementId="targetPerspectiveId" name="targetPerspectiveId" value="perspective.configuration"/>
+        </children>
+        <children xsi:type="menu:ToolBarSeparator" xmi:id="_I8410BuVEeKkV9yRGUW3Gw" elementId="org.eclipse.fx.demo.media.toolbarseparator.0"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_4jyYbBo_EeKkV9yRGUW3Gw" elementId="org.efxclipse.e4.toolitem.open" iconURI="platform:/plugin/org.eclipse.fx.demo.media/icons/perspective/camera-photo.png" command="_gvNokBpCEeKkV9yRGUW3Gw">
+          <parameters xmi:id="_HOvFsBpHEeKkV9yRGUW3Gw" elementId="targetPerspectiveId" name="targetPerspectiveId" value="perspective.images"/>
+        </children>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_4jy_cBo_EeKkV9yRGUW3Gw" elementId="org.efxclipse.e4.toolitem.save" iconURI="platform:/plugin/org.eclipse.fx.demo.media/icons/perspective/video-projector.png" command="_gvNokBpCEeKkV9yRGUW3Gw">
+          <parameters xmi:id="_M_pUYBpHEeKkV9yRGUW3Gw" elementId="targetPerspectiveId" name="targetPerspectiveId" value="perspective.videos"/>
+        </children>
+      </children>
+    </trimBars>
+  </children>
+  <handlers xmi:id="_qXDFgBpCEeKkV9yRGUW3Gw" elementId="org.eclipse.fx.demo.media.handler.0" contributionURI="bundleclass://org.eclipse.fx.demo.media/org.eclipse.fx.demo.media.handlers.PerspectiveSwitcher" command="_gvNokBpCEeKkV9yRGUW3Gw"/>
+  <bindingTables xmi:id="_4jyYYRo_EeKkV9yRGUW3Gw" bindingContext="_4jxxURo_EeKkV9yRGUW3Gw"/>
+  <rootContext xmi:id="_4jxxURo_EeKkV9yRGUW3Gw" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_4jxxUho_EeKkV9yRGUW3Gw" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_4jxxUxo_EeKkV9yRGUW3Gw" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <commands xmi:id="_gvNokBpCEeKkV9yRGUW3Gw" elementId="open.perspective" commandName="Open Perspective">
+    <parameters xmi:id="_ATUywBpHEeKkV9yRGUW3Gw" elementId="targetPerspectiveId" name="targetPerspectiveId" optional="false"/>
+  </commands>
+  <addons xmi:id="_4jxxVBo_EeKkV9yRGUW3Gw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_4jxxVRo_EeKkV9yRGUW3Gw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_4jxxVho_EeKkV9yRGUW3Gw" elementId="org.eclipse.fx.ui.keybindings.e4.service" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingServiceAddon"/>
+  <addons xmi:id="_4jxxVxo_EeKkV9yRGUW3Gw" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_4jxxWBo_EeKkV9yRGUW3Gw" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_4jxxWRo_EeKkV9yRGUW3Gw" elementId="org.eclipse.fx.ui.keybindings.e4.model" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingProcessingAddon"/>
+  <addons xmi:id="_u8hucBuYEeKlzrHlbHdKDg" elementId="prespective.transitions.addon" contributionURI="bundleclass://org.eclipse.fx.demo.media/org.eclipse.fx.demo.media.addon.PerspectiveAnimationAddon"/>
+  <addons xmi:id="_3c-AUL89EeKIBMNbSVZPsw" elementId="org.eclipse.e4.ui.workbench.addons.HandlerProcessingAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+</application:Application>

@@ -1,0 +1,23 @@
+Subtle Pattners (reative Commons Attribution-ShareAlike 3.0 Unported License):
+-------------------------------------------------------------------------------
+css/theme1/images/grunge_wall.png (http://subtlepatterns.com/?s=grunge_wall&submit=Search)
+css/theme1/images/low_contrast.png (http://subtlepatterns.com/?s=low_contrast&submit=Search)
+css/theme2/images/purty_wood.png (http://subtlepatterns.com/?s=purty_wood&submit=Search)
+
+Oxygene (LGPL):
+---------------
+From: svn -r 760421 co svn://anonsvn.kde.org/home/kde/trunk/kdesupport/oxygen-icons
+
+icons/22/games-config-background.png
+icons/22/tool-animator.png
+icons/22/player-volume.png
+icons/perspective/camera-photo.png
+icons/perspective/preferences-system.png
+icons/perspective/video-projector.png
+icons/games-config-background.png
+icons/player-volume.png
+icons/tool-animator.png
+
+Dojo (Apache 2.0):
+------------------
+icons/resources/movs/mov1.flv (Video from http://svn.dojotoolkit.org/src/demos/trunk/video/media/)

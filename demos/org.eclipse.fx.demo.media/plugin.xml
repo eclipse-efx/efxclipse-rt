@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            name="org.eclipse.fx.demo.media"
+            application="org.eclipse.fx.ui.workbench.fx.application">
+         <property
+               name="appName"
+               value="org.eclipse.fx.demo.media">
+         </property>
+         <property
+               name="applicationXMI"
+               value="org.eclipse.fx.demo.media/Application.e4xmi">
+         </property>
+         <property
+               name="cssTheme"
+               value="default.theme">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.fx.ui.theme">
+      <theme
+            basestylesheet="css/default.css"
+            id="default.theme"
+            name="Default Theme">
+      </theme>
+      <theme
+            basestylesheet="css/theme2.css"
+            id="wood.theme"
+            name="Wood Theme">
+      </theme>
+   </extension>
+
+</plugin>
