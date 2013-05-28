@@ -17,8 +17,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WTrimBar;
 
 
-
-@SuppressWarnings("restriction")
 public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTrimBar<N>> {
 
 	@Override

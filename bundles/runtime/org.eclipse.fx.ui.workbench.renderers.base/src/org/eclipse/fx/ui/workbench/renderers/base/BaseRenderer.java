@@ -42,7 +42,6 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 
-@SuppressWarnings("restriction")
 public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> extends AbstractRenderer<M, W> {
 	private static final String RENDERING_CONTEXT_KEY = "fx.rendering.context";
 	

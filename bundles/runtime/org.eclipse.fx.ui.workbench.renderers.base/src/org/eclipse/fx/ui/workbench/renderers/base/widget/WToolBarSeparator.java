@@ -12,7 +12,6 @@ package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBarSeparator;
 
-@SuppressWarnings("restriction")
 public interface WToolBarSeparator<N> extends WWidget<MToolBarSeparator> {
 
 }

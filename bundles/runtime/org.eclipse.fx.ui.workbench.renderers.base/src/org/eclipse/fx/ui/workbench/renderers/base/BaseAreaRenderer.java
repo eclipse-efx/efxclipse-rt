@@ -30,7 +30,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-@SuppressWarnings("restriction")
 public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> {
 	@Inject
 	RendererFactory factory;

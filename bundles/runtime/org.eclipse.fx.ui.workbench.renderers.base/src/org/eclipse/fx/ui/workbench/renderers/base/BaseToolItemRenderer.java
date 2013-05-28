@@ -19,8 +19,6 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolItem;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 
-
-@SuppressWarnings("restriction")
 public abstract class BaseToolItemRenderer<N> extends BaseItemRenderer<MToolItem, WToolItem<N>> {
 	@Inject
 	UISynchronize sync;

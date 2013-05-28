@@ -27,7 +27,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 
-@SuppressWarnings("restriction")
 public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToolBar<N>> implements ChildrenHandler<MToolBar, MToolBarElement> {
 	private List<MToolBarElement> widgets = new ArrayList<MToolBarElement>();
 	private Thread syncThread;

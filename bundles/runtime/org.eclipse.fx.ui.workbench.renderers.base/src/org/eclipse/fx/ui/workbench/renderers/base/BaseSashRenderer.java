@@ -30,7 +30,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-@SuppressWarnings("restriction")
 public abstract class BaseSashRenderer<N> extends
 		BaseRenderer<MPartSashContainer, WSash<N>> {
 	@Inject

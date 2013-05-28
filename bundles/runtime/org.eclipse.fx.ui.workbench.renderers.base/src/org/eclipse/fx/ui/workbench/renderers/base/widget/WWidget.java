@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 
-@SuppressWarnings("restriction")
 public interface WWidget<M extends MUIElement> {
 	public enum WidgetState {
 		IN_SETUP,

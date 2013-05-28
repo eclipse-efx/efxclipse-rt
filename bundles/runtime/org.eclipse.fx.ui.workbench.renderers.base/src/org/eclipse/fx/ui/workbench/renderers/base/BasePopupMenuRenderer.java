@@ -23,7 +23,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 
-@SuppressWarnings("restriction")
 public abstract class BasePopupMenuRenderer<N> extends
 		BaseRenderer<MPopupMenu, WPopupMenu<N>> implements
 		ChildrenHandler<MPopupMenu, MMenuElement> {

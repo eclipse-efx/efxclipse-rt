@@ -41,7 +41,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-@SuppressWarnings("restriction")
 public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRenderer<MPerspectiveStack, WPerspectiveStack<N, I, IC>> {
 	@Inject
 	RendererFactory factory;

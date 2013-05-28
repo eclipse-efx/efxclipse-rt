@@ -15,7 +15,6 @@ import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindowElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 
-@SuppressWarnings("restriction")
 public interface WWindow<N> extends WWidget<MWindow> {
 	
 	public void setMainMenu(WLayoutedWidget<MMenu> menuWidget);

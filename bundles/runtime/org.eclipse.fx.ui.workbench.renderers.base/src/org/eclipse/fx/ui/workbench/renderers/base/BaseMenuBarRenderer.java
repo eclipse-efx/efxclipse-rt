@@ -24,7 +24,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 
-@SuppressWarnings("restriction")
 public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBar<N>> implements ChildrenHandler<MMenu, MMenuElement> {
 
 	@PostConstruct

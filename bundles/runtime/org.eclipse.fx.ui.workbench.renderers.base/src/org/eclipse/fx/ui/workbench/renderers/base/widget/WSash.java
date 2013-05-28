@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
 
-@SuppressWarnings("restriction")
 public interface WSash<N> extends WLayoutedWidget<MPartSashContainer> {
 	public static final String TAG_FIXED_LAYOUT = "fx_fixedLayout";
 	

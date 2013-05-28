@@ -12,7 +12,6 @@ package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 
-@SuppressWarnings("restriction")
 public interface WToolControl<N> extends WWidget<MToolControl> {
 
 }

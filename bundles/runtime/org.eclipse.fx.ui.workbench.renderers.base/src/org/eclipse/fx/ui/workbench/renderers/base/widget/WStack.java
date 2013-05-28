@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 
-@SuppressWarnings("restriction")
 public interface WStack<N,I,IC> extends WLayoutedWidget<MPartStack>, WMinMaxableWidget {
 	public static final String TAG_PAGINATION = "fx_pagination";
 	

@@ -16,7 +16,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuSeparator;
 
 
 
-@SuppressWarnings("restriction")
 public abstract class BaseMenuSeparatorRenderer<N> extends BaseRenderer<MMenuSeparator, WMenuSeparator<N>> {
 
 

@@ -15,7 +15,6 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
 
 
-@SuppressWarnings("restriction")
 public abstract class BaseToolControlRenderer<N> extends BaseRenderer<MToolControl, WToolControl<N>> {
 	@Override
 	protected void doProcessContent(MToolControl element) {

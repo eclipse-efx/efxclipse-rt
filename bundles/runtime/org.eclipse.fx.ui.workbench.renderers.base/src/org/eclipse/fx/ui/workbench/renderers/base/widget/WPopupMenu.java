@@ -13,7 +13,6 @@ package org.eclipse.fx.ui.workbench.renderers.base.widget;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MPopupMenu;
 
-@SuppressWarnings("restriction")
 public interface WPopupMenu<N> extends WMenuElement<MPopupMenu> {
 
 	void addElement(WMenuElement<MMenuElement> widget);

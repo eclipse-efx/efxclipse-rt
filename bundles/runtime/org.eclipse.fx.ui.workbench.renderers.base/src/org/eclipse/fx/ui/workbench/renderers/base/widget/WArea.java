@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.e4.ui.model.application.ui.advanced.MArea;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
 
-@SuppressWarnings("restriction")
 public interface WArea<N> extends WLayoutedWidget<MArea> {
 
 	public void addItem(WLayoutedWidget<MPartSashContainerElement> widget);

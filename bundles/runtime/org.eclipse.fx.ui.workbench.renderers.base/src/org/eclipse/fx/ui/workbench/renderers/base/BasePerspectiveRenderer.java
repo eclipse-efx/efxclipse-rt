@@ -29,7 +29,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspective;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-@SuppressWarnings("restriction")
 public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspective, WPerspective<N>> {
 	@Inject
 	@Log

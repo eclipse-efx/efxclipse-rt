@@ -28,7 +28,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 
 
 
-@SuppressWarnings("restriction")
 public abstract class BasePlaceholderRenderer<N> extends BaseRenderer<MPlaceholder, WPlaceholderWidget> {
 	
 	@Inject

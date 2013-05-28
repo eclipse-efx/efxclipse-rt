@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 
-@SuppressWarnings("restriction")
 public interface WPerspectiveStack<N,I,IC> extends WLayoutedWidget<MPerspectiveStack> {
 	public interface WStackItem<I,IC> {
 		public I getNativeItem();

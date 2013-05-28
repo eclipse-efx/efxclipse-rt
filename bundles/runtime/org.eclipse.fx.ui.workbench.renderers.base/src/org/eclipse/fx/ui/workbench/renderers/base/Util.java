@@ -7,6 +7,7 @@ import org.osgi.service.event.Event;
 
 public class Util {
 
+	@SuppressWarnings("unchecked")
 	public static <E> Collection<E> asCollection(Event event,
 			String propertyName) {
 		Object o = event.getProperty(propertyName);

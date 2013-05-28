@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-@SuppressWarnings("restriction")
 public class EventProcessor {
 	public interface ChildrenHandler<M extends MUIElement, C extends MUIElement> {
 		public void handleChildrenAddition(M parent, Collection<C> elements);
