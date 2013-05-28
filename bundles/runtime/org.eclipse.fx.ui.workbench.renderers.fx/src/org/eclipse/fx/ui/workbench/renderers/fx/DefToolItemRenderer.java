@@ -38,7 +38,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 
 	@Override

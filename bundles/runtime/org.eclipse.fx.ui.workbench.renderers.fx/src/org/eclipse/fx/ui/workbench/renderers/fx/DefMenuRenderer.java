@@ -30,7 +30,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 
 	@Override

@@ -21,7 +21,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefPlaceholderRenderer extends BasePlaceholderRenderer<FillLayoutPane> {
 
 	@Override

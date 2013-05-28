@@ -20,7 +20,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBarSeparator;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefToolBarSeparatorRenderer extends BaseToolBarSeparatorRenderer<Separator> {
 
 	@Override

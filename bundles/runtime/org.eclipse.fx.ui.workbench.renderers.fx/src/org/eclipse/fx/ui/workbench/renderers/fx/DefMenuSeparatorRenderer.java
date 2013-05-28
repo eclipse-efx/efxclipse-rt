@@ -20,7 +20,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuSeparator;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefMenuSeparatorRenderer extends BaseMenuSeparatorRenderer<SeparatorMenuItem> {
 
 	@Override

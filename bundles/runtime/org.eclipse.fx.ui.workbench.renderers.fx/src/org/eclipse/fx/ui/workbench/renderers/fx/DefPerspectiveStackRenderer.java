@@ -32,7 +32,6 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.PerspectiveStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<BorderPane,PerspectiveStackItem,Node> {
 
 	@Override

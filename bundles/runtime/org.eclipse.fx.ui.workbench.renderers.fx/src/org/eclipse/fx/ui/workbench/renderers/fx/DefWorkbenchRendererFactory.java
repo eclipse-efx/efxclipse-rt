@@ -35,7 +35,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseWindowRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseWorkbenchRendererFactory;
 
 
-@SuppressWarnings("restriction")
 public class DefWorkbenchRendererFactory extends BaseWorkbenchRendererFactory {
 
 	@Inject

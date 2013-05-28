@@ -36,7 +36,6 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.UIEvents;
-import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.e4.controls.FXTab;
 import org.eclipse.fx.ui.workbench.fx.controls.FXTabFactory;
@@ -48,7 +47,6 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 
 	@Override
@@ -68,8 +66,8 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 //		private WCallback<WMinMaxState, Void> minMaxCallback;
 		private boolean inKeyTraversal;
 		
-		@Inject
-		private EModelService modelService;
+//		@Inject
+//		private EModelService modelService;
 		
 		public void setMouseSelectedItemCallback(WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback) {
 			this.mouseSelectedItemCallback = mouseSelectedItemCallback;

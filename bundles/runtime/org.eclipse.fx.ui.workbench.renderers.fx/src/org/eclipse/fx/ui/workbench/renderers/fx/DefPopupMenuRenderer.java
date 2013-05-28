@@ -27,7 +27,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 	@Override
 	protected Class<? extends WPopupMenu<ContextMenu>> getWidgetClass(MPopupMenu element) {

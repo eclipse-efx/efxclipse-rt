@@ -26,7 +26,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 
 
-@SuppressWarnings("restriction")
 public abstract class WWidgetImpl<N,M extends MUIElement> implements WWidget<M> {
 	private N nativeWidget;
 	private M domElement;

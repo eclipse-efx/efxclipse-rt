@@ -12,11 +12,8 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 
 import java.util.List;
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Side;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -36,7 +33,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 
 	@Override

@@ -38,7 +38,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefSashRenderer extends BaseSashRenderer<Node> {
 
 	@Override

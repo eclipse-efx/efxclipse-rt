@@ -20,7 +20,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefToolControlRenderer extends BaseToolControlRenderer<Group> {
 
 	@Override

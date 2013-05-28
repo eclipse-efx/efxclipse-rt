@@ -23,7 +23,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 
 	@Override

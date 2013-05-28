@@ -36,7 +36,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefPartRenderer extends BasePartRenderer<BorderPane, Node, Node> {
 	private static final String TOOLBAR_MENU_FLOAT_TAG = "Part-ToolBarMenu-Floating";
 	private static final String TOOLBAR_MENU_COLLAPSIBLE_TAG = "Part-ToolBarMenu-Collapsible";
@@ -67,6 +66,7 @@ public class DefPartRenderer extends BasePartRenderer<BorderPane, Node, Node> {
 		super.focus(element);
 		if (element.getWidget() instanceof WPart)
 		{
+			@SuppressWarnings("unchecked")
 			WPart<BorderPane, Node, Node> part = ((WPart<BorderPane, Node, Node>) element.getWidget());
 			if (part==null) return;
 			Node node = (Node) part.getWidget();

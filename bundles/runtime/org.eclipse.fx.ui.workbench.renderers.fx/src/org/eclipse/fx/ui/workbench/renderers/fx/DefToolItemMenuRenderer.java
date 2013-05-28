@@ -33,7 +33,6 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.ToolItemMenu;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 
 	@Override

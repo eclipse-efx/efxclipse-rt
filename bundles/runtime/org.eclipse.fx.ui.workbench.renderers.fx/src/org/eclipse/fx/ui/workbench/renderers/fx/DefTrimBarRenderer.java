@@ -21,7 +21,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WTrimBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefTrimBarRenderer extends BaseTrimBarRenderer<HBox> {
 
 	@Override

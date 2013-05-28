@@ -26,7 +26,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefMenuBarRenderer extends BaseMenuBarRenderer<MenuBar> {
 
 	@Override

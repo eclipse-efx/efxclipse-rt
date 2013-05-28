@@ -34,7 +34,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 	@Override
 	protected Class<? extends WArea<SplitPane>> getWidgetClass(MArea area) {

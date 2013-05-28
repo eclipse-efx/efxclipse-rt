@@ -25,7 +25,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspective;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
 
-@SuppressWarnings("restriction")
 public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPane> {
 
 	@Override

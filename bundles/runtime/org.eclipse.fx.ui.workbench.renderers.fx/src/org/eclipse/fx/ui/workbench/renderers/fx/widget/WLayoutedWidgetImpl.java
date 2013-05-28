@@ -28,7 +28,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 
 
 
-@SuppressWarnings("restriction")
 public abstract class WLayoutedWidgetImpl<N,NN extends Node,M extends MUIElement> extends WWidgetImpl<N,M> implements WLayoutedWidget<M> {
 	private Node staticLayoutGroup;
 	private double weight = 10;
