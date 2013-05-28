@@ -69,7 +69,6 @@
       <plugin id="org.eclipse.fx.osgi.util"/>
       <plugin id="org.eclipse.fx.testcases.e4"/>
       <plugin id="org.eclipse.fx.ui.animation"/>
-      <plugin id="org.eclipse.fx.ui.application"/>
       <plugin id="org.eclipse.fx.ui.databinding"/>
       <plugin id="org.eclipse.fx.ui.di"/>
       <plugin id="org.eclipse.fx.ui.dialogs"/>

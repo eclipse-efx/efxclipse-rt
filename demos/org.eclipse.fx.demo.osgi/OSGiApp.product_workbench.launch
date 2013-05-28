@@ -23,7 +23,7 @@
 <stringAttribute key="product" value="org.eclipse.fx.demo.osgi.product"/>
 <stringAttribute key="productFile" value="/org.eclipse.fx.demo.osgi/OSGiApp.product"/>
 <stringAttribute key="selected_target_plugins" value="com.ibm.icu@default:default,javax.inject@default:default,javax.servlet@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.databinding.observable@default:default,org.eclipse.core.databinding.property@default:default,org.eclipse.core.databinding@default:default,org.eclipse.core.jobs@default:default,org.eclipse.core.runtime.compatibility.registry@default:false,org.eclipse.core.runtime@default:true,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.ds@1:true,org.eclipse.equinox.event@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.util@default:default,org.eclipse.fx.javafx@default:default,org.eclipse.fx.osgi@default:false,org.eclipse.osgi.services@default:default,org.eclipse.osgi@-1:true"/>
-<stringAttribute key="selected_workspace_plugins" value="org.eclipse.fx.core.databinding@default:default,org.eclipse.fx.core@default:default,org.eclipse.fx.demo.osgi@default:default,org.eclipse.fx.ui.application@default:default,org.eclipse.fx.ui.databinding@default:default"/>
+<stringAttribute key="selected_workspace_plugins" value="org.eclipse.fx.core.databinding@default:default,org.eclipse.fx.core@default:default,org.eclipse.fx.demo.osgi@default:default,org.eclipse.fx.ui.databinding@default:default"/>
 <booleanAttribute key="show_selected_only" value="false"/>
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="false"/>

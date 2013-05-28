@@ -7,8 +7,8 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.demo.fxgraph.osgi.model.User;
 import org.eclipse.fx.demo.fxgraph.osgi.security.Authenticator;
+import org.eclipse.fx.osgi.util.AbstractJFXApplication;
 import org.eclipse.fx.osgi.util.OSGiFXMLLoader;
-import org.eclipse.fx.ui.application.AbstractJFXApplication;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;

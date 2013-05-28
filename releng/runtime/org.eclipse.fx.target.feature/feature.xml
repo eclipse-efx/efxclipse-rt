@@ -25,13 +25,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.fx.ui.application"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.fx.ui.keybindings"
          download-size="0"
          install-size="0"
@@ -186,13 +179,6 @@
 
    <plugin
          id="org.eclipse.fx.ui.animation.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.fx.ui.application.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

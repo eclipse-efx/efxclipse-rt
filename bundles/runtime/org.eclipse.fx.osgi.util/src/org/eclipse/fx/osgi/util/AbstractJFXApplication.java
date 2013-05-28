@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.ui.application;
+package org.eclipse.fx.osgi.util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.fx.ui.databinding.JFXRealm;
+import org.eclipse.fx.core.databinding.JFXRealm;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;

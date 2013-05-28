@@ -50,7 +50,6 @@
       <plugin id="org.eclipse.fx.javafx"/>
       <plugin id="org.eclipse.fx.osgi" fragment="true"/>
       <plugin id="org.eclipse.fx.osgi.util"/>
-      <plugin id="org.eclipse.fx.ui.application"/>
       <plugin id="org.eclipse.fx.ui.databinding"/>
       <plugin id="org.eclipse.fx.ui.di"/>
       <plugin id="org.eclipse.osgi"/>

@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.fx.ui.application.AbstractJFXApplication;
+import org.eclipse.fx.osgi.util.AbstractJFXApplication;
 
 /**
  * This class controls all aspects of the application's execution
