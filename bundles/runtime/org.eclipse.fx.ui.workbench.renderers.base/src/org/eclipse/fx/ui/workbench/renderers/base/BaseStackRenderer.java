@@ -283,13 +283,37 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	}
 
 	void handleChildrenRemove(MPartStack parent, Collection<MStackElement> elements) {
-		Iterator<MStackElement> i = elements.iterator();
-		while (i.hasNext()) {
-			MStackElement element = (MStackElement) i.next();
-			if (element.isToBeRendered() && element.isVisible()) {
-				hideChild(parent, element);
+		// more performant group removal
+		ArrayList<MStackElement> list = new ArrayList<MStackElement>(elements);
+		MStackElement selectedElement = parent.getSelectedElement();
+		if ((selectedElement != null) && (list.contains(selectedElement))) {
+			list.remove(selectedElement);
+			list.add(selectedElement);// remove and add the selected element to the end
+		}
+		WStack<N, I, IC> parentWidget = getWidget(parent);
+		List<WStackItem<I, IC>> items = transmuteList(parentWidget, list);// build the stack item list out of
+																			// the model
+		parentWidget.removeItems(items);
+		ArrayList<MStackElement> removeOnHideList = new ArrayList<MStackElement>();
+		for (MStackElement element : list) {
+			if (element.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG)) {
+				removeOnHideList.add(element);
 			}
 		}
+		parent.getChildren().removeAll(removeOnHideList);
+	}
+
+	private List<WStackItem<I, IC>> transmuteList(WStack<N, I, IC> parentWidget, ArrayList<MStackElement> list) {
+
+		ArrayList<WStackItem<I, IC>> resultList = new ArrayList<WStackItem<I, IC>>();
+		for (WStackItem<I, IC> item : parentWidget.getItems()) {
+			MStackElement domElement = item.getDomElement();
+			if (list.contains(domElement) && (domElement.isToBeRendered()) && (domElement.isVisible())) {
+				resultList.add(item);
+			}
+		}
+
+		return resultList;
 	}
 
 	void handleSelectedElement(MPartStack parent, MStackElement oldElement, MStackElement newElement) {

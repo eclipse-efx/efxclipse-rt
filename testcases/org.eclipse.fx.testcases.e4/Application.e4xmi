@@ -126,6 +126,10 @@
           <parameters xmi:id="_PsE6gIfZEeKsYN0U3N_L9Q" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.5"/>
         </children>
       </children>
+      <children xsi:type="menu:Menu" xmi:id="_xS050MayEeKo1rUjbZCXsQ" elementId="org.eclipse.fx.testcases.e4.menu.6" label="Multiple close">
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_yhjWwMayEeKo1rUjbZCXsQ" elementId="org.eclipse.fx.testcases.e4.directmenuitem.9" label="Close all" iconURI="platform:/plugin/org.eclipse.fx.testcases.e4/css/images/window-close-over.png" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.BatchRemoveHandler"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_2R3msMayEeKo1rUjbZCXsQ" elementId="org.eclipse.fx.testcases.e4.directmenuitem.10" label="Close others" iconURI="platform:/plugin/org.eclipse.fx.testcases.e4/css/images/window-close-over.png" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.CloseOthersHandler"/>
+      </children>
     </mainMenu>
     <sharedElements xsi:type="basic:Part" xmi:id="_T4J0kPW5EeG7tr8qKhf17Q" elementId="org.eclipse.fx.testcases.e4.part.7" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C7"/>
     <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_wH3xYCTGEeKdCOcPGN2T3w" elementId="org.eclipse.fx.testcases.e4.partsashcontainer.1">
