@@ -440,11 +440,17 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Inject
 		public void setX(@Named(UIEvents.Window.X) int x) {
+			if( x == -2147483648 ) {
+				x = 0;
+			}
 			getWidget().setX(x);
 		}
 
 		@Inject
 		public void setY(@Named(UIEvents.Window.Y) int y) {
+			if( y == -2147483648 ) {
+				y = 0;
+			}
 			getWidget().setY(y);
 		}
 
