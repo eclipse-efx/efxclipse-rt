@@ -105,6 +105,7 @@
         <children xsi:type="menu:DirectMenuItem" xmi:id="_VdrD0ER8EeKso-cEr7pQbw" elementId="org.eclipse.fx.testcases.e4.directmenuitem.4" label="Event Sending" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.EventSender"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_N4FhcIfmEeKsYN0U3N_L9Q" elementId="org.eclipse.fx.testcases.e4.directmenuitem.7" label="Exit" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.ExitHandler"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_3n7coIfmEeKsYN0U3N_L9Q" elementId="org.eclipse.fx.testcases.e4.directmenuitem.8" label="Restart" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.RestartHandler"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_Y2UZcMg4EeKo1rUjbZCXsQ" elementId="org.eclipse.fx.testcases.e4.directmenuitem.11" label="Dynamic Window" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DynamicWinHandler"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_d-oDwO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.menu.3" label="Switch">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_jYdPMO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.4" label="Perspective 0" command="_kCbZQO6yEeG4lfn-YKJbJw">

@@ -92,7 +92,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	}
 	
 	void setupEventListener(IEventBroker eventBroker) {
-		eventBroker.subscribe(UIEvents.UIElement.TOPIC_TOBERENDERED, new EventHandler() {
+		EventHandler tbrEventHandler = new EventHandler() {
 			
 			public void handleEvent(Event event) {
 				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
@@ -103,7 +103,31 @@ public class PartRenderingEngine implements IPresentationEngine {
 					removeGui(changedObj);
 				}
 			}
-		});
+		};
+		eventBroker.subscribe(UIEvents.UIElement.TOPIC_TOBERENDERED, tbrEventHandler);
+		
+		EventHandler childrenHandler = new EventHandler() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handleEvent(Event event) {
+				Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
+				if (changedObj instanceof MApplication){
+					if (UIEvents.isADD(event)){
+						//Using UIEvents because we don't have access to Utils from here
+						Iterable<MWindow> iterable = (Iterable<MWindow>) UIEvents.asIterable(event, UIEvents.EventTags.NEW_VALUE);
+						for (MWindow win: iterable) {
+							createGui(win);
+						}
+					} else if (UIEvents.isREMOVE(event)){
+						Iterable<MWindow> iterable = (Iterable<MWindow>) UIEvents.asIterable(event, UIEvents.EventTags.OLD_VALUE);
+						for (MWindow win: iterable) {
+							removeGui(win);
+						}
+					}
+				}
+			}
+		};
+		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, childrenHandler);
 	}
 	
 	public Object createGui(MUIElement element, Object parentWidget, IEclipseContext parentContext) {
@@ -240,8 +264,8 @@ public class PartRenderingEngine implements IPresentationEngine {
 				? element.getCurSharedRef()
 				: (MUIElement) ((EObject)element).eContainer();
 		
-		if( container != null ) {
-			AbstractRenderer<MUIElement, Object> parentRenderer = getRendererFor(container);
+		if( container != null || element instanceof MWindow ) {
+			AbstractRenderer<MUIElement, Object> parentRenderer = (AbstractRenderer<MUIElement, Object>) (container == null ? null : getRendererFor(container));
 			AbstractRenderer<MUIElement, Object> renderer = getRendererFor(element);
 			
 			if( renderer != null ) {
