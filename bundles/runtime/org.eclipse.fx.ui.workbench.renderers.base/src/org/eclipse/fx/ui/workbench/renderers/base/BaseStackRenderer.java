@@ -39,6 +39,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WMinMaxableWidget.WMinMaxState;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
@@ -138,6 +139,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	@Override
 	protected void initWidget(final MPartStack element, final WStack<N, I, IC> widget) {
 		super.initWidget(element, widget);
+//		widget.setMinMaxState(WMinMaxState.MAXIMIZED);
 		widget.setMouseSelectedItemCallback(new WCallback<WStackItem<I, IC>, Void>() {
 
 			@Override

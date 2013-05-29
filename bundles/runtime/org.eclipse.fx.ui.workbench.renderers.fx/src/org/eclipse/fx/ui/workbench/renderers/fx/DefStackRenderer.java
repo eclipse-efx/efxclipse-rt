@@ -25,6 +25,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
 import javax.annotation.PostConstruct;
@@ -43,6 +45,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
+import org.eclipse.fx.ui.workbench.renderers.fx.widget.MinMaxGroup;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
@@ -63,11 +66,25 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		
 		private WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 		private WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
-//		private WCallback<WMinMaxState, Void> minMaxCallback;
+		private WCallback<WMinMaxState, Void> minMaxCallback;
+		private MinMaxGroup minMaxGroup;
 		private boolean inKeyTraversal;
 		
 //		@Inject
 //		private EModelService modelService;
+		
+		@Override
+		protected Pane createStaticPane() {
+			return new StackPane() {
+				@Override
+				protected void layoutChildren() {
+					super.layoutChildren();
+					if( minMaxGroup != null ) {
+						
+					}
+				}
+			};
+		}
 		
 		public void setMouseSelectedItemCallback(WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback) {
 			this.mouseSelectedItemCallback = mouseSelectedItemCallback;
@@ -94,27 +111,27 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		
 		@Override
 		public void setMinMaxCallback(WCallback<WMinMaxState, Void> minMaxCallback) {
-//			this.minMaxCallback = minMaxCallback;
+			this.minMaxCallback = minMaxCallback;
 		}
 		
 		@Override
 		public void setMinMaxState(WMinMaxState state) {
-//			MinMaxState t = MinMaxState.RESTORED;
-//			switch (state) {
-//			case MAXIMIZED:
-//				t = MinMaxState.MAXIMIZED;
-//				break;
-//			case MINIMIZED:
-//				t = MinMaxState.MINIMIZED;
-//				break;
-//			case RESTORED:
-//				t = MinMaxState.RESTORED;
-//				break;
-//			case NONE:
-//				t = MinMaxState.NONE;
-//				break;
-//			}
-//			getWidget().setMinMaxState(t);
+			if( state == WMinMaxState.NONE ) {
+				if( minMaxGroup != null ) {
+					((Pane)getStaticLayoutNode()).getChildren().remove(minMaxGroup);
+					minMaxGroup = null;
+				}
+			} else {
+				if( minMaxGroup == null ) {
+					minMaxGroup = new MinMaxGroup();
+					minMaxGroup.setManaged(false);
+					minMaxGroup.setState(state);
+					((Pane)getStaticLayoutNode()).getChildren().add(minMaxGroup);
+				} else {
+					minMaxGroup.setState(state);
+					((Pane)getStaticLayoutNode()).requestLayout();
+				}
+			}
 		}
 		
 		@Override

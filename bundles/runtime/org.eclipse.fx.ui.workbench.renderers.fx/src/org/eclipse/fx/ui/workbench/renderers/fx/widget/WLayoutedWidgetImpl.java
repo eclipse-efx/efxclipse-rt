@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.workbench.renderers.fx.widget;
 import java.util.List;
 
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import javax.inject.Inject;
@@ -47,7 +48,7 @@ public abstract class WLayoutedWidgetImpl<N,NN extends Node,M extends MUIElement
 	}
 	
 	protected Node createStaticLayoutNode() {
-		StackPane staticLayoutGroup = new StackPane();
+		Pane staticLayoutGroup = createStaticPane();
 		Node n = getWidgetNode();
 		if( n != null ) {
 			staticLayoutGroup.getChildren().add(n);
@@ -55,6 +56,10 @@ public abstract class WLayoutedWidgetImpl<N,NN extends Node,M extends MUIElement
 			logger.log(Level.ERROR, "No widget node to attach");
 		}
 		return staticLayoutGroup;
+	}
+	
+	protected Pane createStaticPane() {
+		return new StackPane();
 	}
 	
 	@Override
