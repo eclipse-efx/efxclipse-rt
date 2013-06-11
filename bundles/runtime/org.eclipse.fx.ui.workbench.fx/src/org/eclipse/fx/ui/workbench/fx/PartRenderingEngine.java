@@ -31,6 +31,7 @@ import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
@@ -372,6 +373,15 @@ public class PartRenderingEngine implements IPresentationEngine {
 					createGui(window);
 				}
 			}
+			//focus the selected part
+			MUIElement element = selected;
+			while ((element!=null)&&(!(element instanceof MPart))){
+				if (element instanceof MElementContainer<?>){
+					element = ((MElementContainer<?>) element).getSelectedElement();
+				}
+			}
+			if (element!= null) focusGui(element);
+			
 		}
 		return null;
 	}
