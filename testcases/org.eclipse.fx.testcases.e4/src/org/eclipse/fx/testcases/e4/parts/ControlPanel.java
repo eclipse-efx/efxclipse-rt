@@ -19,6 +19,7 @@ import javafx.util.Callback;
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -35,6 +36,7 @@ public class ControlPanel {
 	
 	@Inject
 	IPresentationEngine engine;
+	private TextField focusField;
 	
 	@SuppressWarnings("rawtypes")
 	@Inject
@@ -304,9 +306,9 @@ public class ControlPanel {
 			{
 				HBox hbox = new HBox(10);
 				hbox.getChildren().add(new Label("X"));
-				final TextField f = new TextField(window.getX()+"");
-				f.setId("text_windowX");
-				hbox.getChildren().add(f);
+				focusField = new TextField(window.getX()+"");
+				focusField.setId("text_windowX");
+				hbox.getChildren().add(focusField);
 				
 				Button b = new Button("Set");
 				b.setId("button_windowX");
@@ -314,7 +316,7 @@ public class ControlPanel {
 
 					@Override
 					public void handle(ActionEvent event) {
-						window.setX(Integer.parseInt(f.getText()));
+						window.setX(Integer.parseInt(focusField.getText()));
 					}
 				});
 				hbox.getChildren().add(b);
@@ -404,5 +406,10 @@ public class ControlPanel {
 		}
 
 		p.setTop(box);
+	}
+	
+	@Focus
+	void setFocus() {
+		focusField.requestFocus();
 	}
 }
