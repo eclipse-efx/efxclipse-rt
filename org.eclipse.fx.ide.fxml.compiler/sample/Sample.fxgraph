@@ -6,6 +6,7 @@ import javafx.scene.layout.HBox
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
 import javafx.geometry.Insets
+import javafx.scene.layout.GridPane
 
 component Sample {
 	BorderPane {
@@ -30,9 +31,22 @@ component Sample {
 						Label {
 							text : "Label 1",
 							static vgrow : "SOMETIMES"
+						},
+						GridPane {
+							children : [
+								Label {
+									text : "In Grid 0/0",
+									static columnIndex : 0,
+									static rowIndex : 0
+								},
+								Label {
+									text : "In Grid 0/1",
+									static columnIndex : 0,
+									static rowIndex : 1
+								}
+							]
 						}
 					]
-						
 				}
 			]
 		}
