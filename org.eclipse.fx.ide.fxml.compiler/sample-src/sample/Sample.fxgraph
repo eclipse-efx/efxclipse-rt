@@ -27,6 +27,14 @@ component Sample {
 					}
 				},
 				VBox {
+					Label {
+						text : "Def 1"
+					},
+					Label {
+						text : "Def 2"
+					}
+				},
+				VBox {
 					children : [
 						Label {
 							text : "Label 1",

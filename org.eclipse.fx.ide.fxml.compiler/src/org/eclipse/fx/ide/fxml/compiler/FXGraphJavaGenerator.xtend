@@ -79,6 +79,14 @@ class FXGraphJavaGenerator {
 				«ENDFOR»
 			«ENDIF»
 		«ENDFOR»
+		«FOR p : element.defaultChildren»
+			{
+				«val i = getVarIndex»
+				«val varName = 'e_'+i»
+				«generateElementDef(varName,p)»
+				«name».get«element.type.defaultAttribute.toFirstUpper»().add(«varName»);
+			}
+		«ENDFOR»
 	«ENDIF»
 	'''
 	

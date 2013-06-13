@@ -79,7 +79,8 @@ public class FXGraphCompiler {
 			fxgraph = "/tmp/"+UUID.randomUUID().toString()+".fxgraph";
 			
 			File out = new File(fxgraph);
-			out.deleteOnExit();
+			System.err.println(out);
+//			out.deleteOnExit();
 			try {
 				FileOutputStream outStream = new FileOutputStream(out);
 				outStream.write(new FXGraphConverter().generate(m).toString().getBytes());

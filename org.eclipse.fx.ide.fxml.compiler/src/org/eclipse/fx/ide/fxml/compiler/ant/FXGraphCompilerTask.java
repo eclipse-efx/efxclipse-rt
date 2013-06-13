@@ -11,10 +11,10 @@
 package org.eclipse.fx.ide.fxml.compiler.ant;
 
 
-public class FXMLCompilerTask extends CompilerTask {
+public class FXGraphCompilerTask extends CompilerTask {
 
-	public FXMLCompilerTask() {
-		super(false);
+	public FXGraphCompilerTask() {
+		super(true);
 	}
 	
 }

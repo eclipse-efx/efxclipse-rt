@@ -27,6 +27,10 @@
 					</HBox.margin>
 				</Label>
 				<VBox> 
+					<Label text="Def 1"/> 
+					<Label text="Def 2"/> 
+				</VBox>
+				<VBox> 
 					<children>
 						<Label text="Label 1" VBox.vgrow="SOMETIMES"/> 
 						<GridPane> 
