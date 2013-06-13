@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -37,10 +38,10 @@ public class FXGraphCompiler {
 	public static void main(String[] args) {
 		Injector injector = new org.eclipse.fx.ide.fxgraph.FXGraphStandaloneSetupGenerated().createInjectorAndDoEMFRegistration();
 		FXGraphCompiler main = injector.getInstance(FXGraphCompiler.class);
-		main.compile(args[0]);
+		main.compile(args[0], args[1],null);
 	}
 	
-	protected void compile(final String string) {
+	public void compile(final String string, final String sourcePrefix, String outputPrefix) {
 		Model m;
 		String fxgraph = string;
 		if( string.endsWith("fxml") ) {
@@ -49,7 +50,13 @@ public class FXGraphCompiler {
 				
 				@Override
 				public String getPackagename() {
-					return "a";
+					if( sourcePrefix == null) {
+						return "dummy";
+					} else {
+						String filePath = new File(string).getParent();
+						String packagename = filePath.substring(sourcePrefix.length()+1);
+						return packagename.replace('/', '.');
+					}
 				}
 				
 				@Override
@@ -69,12 +76,14 @@ public class FXGraphCompiler {
 				}
 			});
 			
-			File out = new File("/tmp/tmp.fxgraph");
+			fxgraph = "/tmp/"+UUID.randomUUID().toString()+".fxgraph";
+			
+			File out = new File(fxgraph);
+			out.deleteOnExit();
 			try {
 				FileOutputStream outStream = new FileOutputStream(out);
 				outStream.write(new FXGraphConverter().generate(m).toString().getBytes());
 				outStream.close();
-				fxgraph = "/tmp/tmp.fxgraph";
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -90,6 +99,27 @@ public class FXGraphCompiler {
 		m = (Model)resource.getContents().get(0);	
 		
 		FXGraphJavaGenerator c = new FXGraphJavaGenerator();
-		System.out.println(c.generate(m));
+		
+		try {
+			String outFile = string.replaceAll("fxgraph$", "java").replaceAll("fxml$", "java");
+			
+			if( outputPrefix != null ) {
+				String filePath = new File(outFile).getAbsolutePath();
+				String packagename = filePath.substring(sourcePrefix.length()+1);
+				File f = new File(outputPrefix,packagename);
+				f.getParentFile().mkdirs();
+				outFile = f.getAbsolutePath();
+			}
+			
+			FileOutputStream out = new FileOutputStream(outFile);
+			out.write(c.generate(m).toString().getBytes());
+			out.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 }
