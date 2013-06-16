@@ -10,13 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx;
 
-import java.util.List;
-
 import javafx.scene.Group;
 
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseToolControlRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
+import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
@@ -27,22 +26,7 @@ public class DefToolControlRenderer extends BaseToolControlRenderer<Group> {
 		return WToolControlImpl.class;
 	}
 	
-	public static class WToolControlImpl extends WWidgetImpl<Group, MToolControl> implements WToolControl<Group> {
-
-		@Override
-		public void addStyleClasses(List<String> classnames) {
-			getWidget().getStyleClass().addAll(classnames);
-		}
-
-		@Override
-		public void addStyleClasses(String... classnames) {
-			getWidget().getStyleClass().addAll(classnames);
-		}
-
-		@Override
-		public void setStyleId(String id) {
-			getWidget().setId(id);
-		}
+	public static class WToolControlImpl extends WLayoutedWidgetImpl<Group, Group, MToolControl> implements WToolControl<Group> {
 
 		@Override
 		protected Group createWidget() {
@@ -53,6 +37,10 @@ public class DefToolControlRenderer extends BaseToolControlRenderer<Group> {
 		protected void setUserData(WWidgetImpl<Group, MToolControl> widget) {
 			getWidget().setUserData(widget);
 		}
-		
+
+		@Override
+		protected Group getWidgetNode() {
+			return getWidget();
+		}
 	}
 }

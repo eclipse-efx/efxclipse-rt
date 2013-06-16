@@ -149,6 +149,7 @@
             <children xsi:type="menu:HandledMenuItem" xmi:id="_Eei-MOReEeGcrYrtitkVHQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.0" label="ToolItem Menu 2"/>
           </menu>
         </children>
+        <children xsi:type="menu:ToolControl" xmi:id="_MfBjgNZYEeKlJ9ZUcG3l2Q" elementId="org.eclipse.fx.testcases.e4.toolcontrol.1" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.tool.ToolControlSample"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_kDT7AOZXEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.toolbar.1">
         <children xsi:type="menu:DirectToolItem" xmi:id="_lavA8OZXEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.directtoolitem.0" label="Push - DI 0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
@@ -157,6 +158,7 @@
         <children xsi:type="menu:DirectToolItem" xmi:id="_vOWQEOZXEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.directtoolitem.3" label="Radio - DI 3" type="Radio" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
         <children xsi:type="menu:DirectToolItem" xmi:id="_xaLOcOZXEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.directtoolitem.4" label="Split - DI 4" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
       </children>
+      <children xsi:type="menu:ToolControl" xmi:id="_Na3dgNZUEeKlJ9ZUcG3l2Q" elementId="org.eclipse.fx.testcases.e4.toolcontrol.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.tool.ToolControlSample"/>
     </trimBars>
   </children>
   <handlers xmi:id="_H2FJYOUcEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.Handler0" command="_FEZr8OUcEeGP-5z69KadAQ"/>
