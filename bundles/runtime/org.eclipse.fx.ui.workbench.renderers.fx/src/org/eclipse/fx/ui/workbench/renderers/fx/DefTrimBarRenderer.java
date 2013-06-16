@@ -46,5 +46,17 @@ public class DefTrimBarRenderer extends BaseTrimBarRenderer<HBox> {
 			Node n = (Node) trimElementWidget.getStaticLayoutNode();
 			getWidget().getChildren().add(n);
 		}
+
+		@Override
+		public void addChild(int idx, WLayoutedWidget<MTrimElement> trimElementWidget) {
+			Node n = (Node) trimElementWidget.getStaticLayoutNode();
+			getWidget().getChildren().add(idx, n);
+		}
+		
+		@Override
+		public void removeChild(WLayoutedWidget<MTrimElement> trimElementWidget) {
+			Node n = (Node) trimElementWidget.getStaticLayoutNode();
+			getWidget().getChildren().remove(n);
+		}
 	}
 }

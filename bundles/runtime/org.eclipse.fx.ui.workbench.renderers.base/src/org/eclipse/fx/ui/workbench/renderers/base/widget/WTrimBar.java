@@ -17,4 +17,7 @@ public interface WTrimBar<N> extends WLayoutedWidget<MTrimBar> {
 
 	void addChild(WLayoutedWidget<MTrimElement> trimElementWidget);
 
+	void addChild(int idx, WLayoutedWidget<MTrimElement> trimElementWidget);
+	
+	void removeChild(WLayoutedWidget<MTrimElement> trimElementWidget);
 }
