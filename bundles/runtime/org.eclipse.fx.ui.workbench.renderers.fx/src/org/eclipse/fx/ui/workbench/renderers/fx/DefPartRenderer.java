@@ -169,8 +169,8 @@ public class DefPartRenderer extends BasePartRenderer<BorderPane, Node, Node> {
 
 				AnchorPane.setTopAnchor(dataArea, 0.0);
 				AnchorPane.setLeftAnchor(dataArea, 0.0);
-				AnchorPane.setBottomAnchor(dataArea, 1.0);
-				AnchorPane.setRightAnchor(dataArea, 1.0);
+				AnchorPane.setBottomAnchor(dataArea, 0.0);
+				AnchorPane.setRightAnchor(dataArea, 0.0);
 				
 //				AnchorPane.setTopAnchor(expandGroup, 0.0);
 //				AnchorPane.setLeftAnchor(expandGroup, 0.0);
