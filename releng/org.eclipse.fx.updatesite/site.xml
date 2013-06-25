@@ -7,7 +7,7 @@
       <category name="fxtarget"/>
    </feature>
    <feature url="features/org.eclipse.fx.target.rcp.feature_0.8.1.qualifier.jar" id="org.eclipse.fx.target.rcp.feature" version="0.8.1.qualifier">
-      <category name="fxruntime"/>
+      <category name="fxtarget"/>
    </feature>
    <category-def name="fxruntime" label="FX Runtime"/>
    <category-def name="fxtarget" label="FX Target"/>

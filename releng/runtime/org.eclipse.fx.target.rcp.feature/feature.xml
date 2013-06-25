@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.fx.target.rcp.feature"
-      label="Feature"
+      label="RCP 3.x Target Platform Feature"
       version="0.8.1.qualifier"
       provider-name="BestSolution.at">
 
