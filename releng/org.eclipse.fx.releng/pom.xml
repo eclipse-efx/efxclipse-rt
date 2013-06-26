@@ -77,6 +77,11 @@
 			<url>http://download.eclipse.org/releases/kepler</url>
 		</repository>
 		<repository>
+			<id>kepler-ecf</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/rt/ecf/3.6.1/site.p2</url>
+		</repository>
+		<repository>
 			<id>xtext</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
