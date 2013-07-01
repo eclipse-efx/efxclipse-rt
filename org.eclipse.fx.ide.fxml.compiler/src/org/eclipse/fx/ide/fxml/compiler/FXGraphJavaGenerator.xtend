@@ -21,7 +21,7 @@ class FXGraphJavaGenerator {
 	def generate(Model model) '''
 	package «model.package.name»;
 	
-	//import org.eclipse.fx.core.fxml.FXMLLoading;
+	import org.eclipse.fx.core.fxml.FXMLDocument;
 	import java.util.ResourceBundle;
 	
 	«var content = generateElementDef("root", model.componentDef.rootNode)»
@@ -34,7 +34,7 @@ class FXGraphJavaGenerator {
 	import «i»;
 	«ENDFOR»
 	
-	public class «model.componentDef.name» /*implements FXMLLoading<«model.componentDef.rootNode.type.simpleName»>*/ {
+	public class «model.componentDef.name» extends FXMLDocument<«model.componentDef.rootNode.type.simpleName»> {
 		public «model.componentDef.rootNode.type.simpleName» load(ResourceBundle bundle) {
 			«content»
 			return root;
