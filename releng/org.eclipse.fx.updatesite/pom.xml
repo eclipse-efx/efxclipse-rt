@@ -32,6 +32,12 @@
 	<profiles>
 		<profile>
 			<id>build-server</id>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>Eclipse Nexus</id>
+					<url>http://maven.eclipse.org/nexus/content/repositories/public/</url>
+				</pluginRepository>
+			</pluginRepositories>
 			<build>
 				<plugins>
 					<plugin>
