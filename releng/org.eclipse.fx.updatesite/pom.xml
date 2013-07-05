@@ -14,7 +14,7 @@
 	</parent>
 
 	<properties>
-		<p2repo-zip-path>${project.build.directory}/org.eclipse.fx.repository-${project.version}.zip</p2repo-zip-path>
+		<p2repo-zip-path>${project.build.directory}/site_assembly.zip</p2repo-zip-path>
 	</properties>
 
 	<build>
