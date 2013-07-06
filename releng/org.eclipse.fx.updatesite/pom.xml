@@ -52,6 +52,11 @@
 										</delete>
 										<copy includeemptydirs="false" todir="${download-publish-path}">
 											<fileset dir="target">
+												<include name="site_assembly.zip" />
+											</fileset>
+										</copy>
+										<copy includeemptydirs="false" todir="${download-publish-path}">
+											<fileset dir="target">
 												<include name="**" />
 											</fileset>
 										</copy>
