@@ -21,7 +21,7 @@
 		<mockito-version>1.8.4</mockito-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform-version>[3.7,3.8)</platform-version>
-		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/updates-nightly</download-publish-path>
+		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/runtime-nightly</download-publish-path>
 		<eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-repo.url>
 	</properties>
 
