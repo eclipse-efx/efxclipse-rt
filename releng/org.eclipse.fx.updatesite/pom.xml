@@ -45,7 +45,7 @@
 						<artifactId>eclipse-signing-maven-plugin</artifactId>
 						<version>1.0.5</version>
 						<executions>
-							<execution>
+							<!--  execution>
 								<id>pack</id>
 								<configuration>
 									<inputFile>${p2repo-zip-path}</inputFile>
@@ -54,7 +54,7 @@
 								<goals>
 									<goal>pack</goal>
 								</goals>
-							</execution>
+							</execution-->
 							<execution>
 								<id>sign</id>
 								<configuration>
