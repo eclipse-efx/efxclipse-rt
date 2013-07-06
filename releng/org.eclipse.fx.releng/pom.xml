@@ -14,7 +14,7 @@
 	<version>0.8.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
-		<tycho-version>0.16.0</tycho-version>
+		<tycho-version>0.18.0</tycho-version>
 		<junit-version>4.8.1</junit-version>
 		<mockito-version>1.8.4</mockito-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
