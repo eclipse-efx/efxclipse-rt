@@ -30,61 +30,10 @@
 	</build>
 
 	<profiles>
-		<!--  >profile>
+		<profile>
 			<id>build-server</id>
-			<pluginRepositories>
-				<pluginRepository>
-					<id>Eclipse Nexus</id>
-					<url>http://maven.eclipse.org/nexus/content/repositories/public/</url>
-				</pluginRepository>
-			</pluginRepositories>
 			<build>
 				<plugins>
-					<plugin>
-						<groupId>org.eclipse.dash.maven</groupId>
-						<artifactId>eclipse-signing-maven-plugin</artifactId>
-						<version>1.0.5</version>
-						<executions>
-							<execution>
-								<id>pack</id>
-								<configuration>
-									<inputFile>${p2repo-zip-path}</inputFile>
-								</configuration>
-								<phase>package</phase>
-								<goals>
-									<goal>pack</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>sign</id>
-								<configuration>
-									<inputFile>${p2repo-zip-path}</inputFile>
-									<signerInputDirectory>${signer-input-directory}</signerInputDirectory>
-								</configuration>
-								<phase>package</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>repack</id>
-								<configuration>
-									<inputFile>${project.build.directory}/signed/site_assembly.zip</inputFile>
-								</configuration>
-								<phase>package</phase>
-								<goals>
-									<goal>pack</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>fixCheckSums</id>
-								<phase>package</phase>
-								<goals>
-									<goal>fixCheckSums</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
 					<plugin>
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
@@ -102,7 +51,7 @@
 											</fileset>
 										</delete>
 										<copy includeemptydirs="false" todir="${download-publish-path}">
-											<fileset dir="target/checksumFix">
+											<fileset dir="target">
 												<include name="**" />
 											</fileset>
 										</copy>
@@ -113,7 +62,7 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile-->
+		</profile>
 	</profiles>
 
 </project>

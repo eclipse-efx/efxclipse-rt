@@ -21,8 +21,7 @@
 		<mockito-version>1.8.4</mockito-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform-version>[3.7,3.8)</platform-version>
-		<!--  signer-input-directory>/home/data/httpd/download-staging.priv/efxclipse</signer-input-directory>
-		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/updates-nightly</download-publish-path-->
+		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/updates-nightly</download-publish-path>
 		<eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-repo.url>
 	</properties>
 
@@ -232,7 +231,7 @@
 	</build>
 	<profiles>
 	<profile>
-      <id>eclipse-sign</id>
+      <id>build-server</id>
       <build>
         <plugins>
           <plugin>
