@@ -33,13 +33,14 @@ import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.fx.ui.lifecycle.ELifecycleService;
+import org.eclipse.fx.ui.lifecycle.annotations.PreClose;
 import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WMinMaxableWidget.WMinMaxState;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
@@ -53,6 +54,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	@Inject
 	MApplication application;
 
+	@Inject
+	ELifecycleService lifecycleService;
+	
+	
 	boolean inLazyInit;
 
 	@PostConstruct
@@ -348,7 +353,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		IEclipseContext context = partContext == null ? parentContext : partContext;
 		// Allow closes to be 'canceled'
 		EPartService partService = (EPartService) context.get(EPartService.class.getName());
-		if (partService.savePart(part, true)) {
+		if (partService.savePart(part, true) && lifecycleService.validateAnnotation(PreClose.class, part)) {
 			partService.hidePart(part);
 			return true;
 		}

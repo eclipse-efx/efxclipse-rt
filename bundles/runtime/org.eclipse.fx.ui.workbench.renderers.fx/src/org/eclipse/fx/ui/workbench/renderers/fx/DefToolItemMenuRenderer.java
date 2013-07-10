@@ -43,6 +43,7 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 	static class WMenuImpl extends WWidgetImpl<ToolItemMenu, MMenu> implements WMenu<ToolItemMenu> {
 		private SplitMenuButton button;
 		Runnable showingCallback;
+		Runnable hidingCallback;
 		
 		@Inject
 		public WMenuImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MMenu domElement) {
@@ -59,6 +60,7 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 					}
 				}
 			});
+//			this.button.hidingProperty???
 		}
 		
 		@Override
@@ -109,6 +111,11 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 		@Override
 		public void setShowingCallback(Runnable showingCallback) {
 			this.showingCallback = showingCallback;
+		}
+
+		@Override
+		public void setHidingCallback(Runnable hidingCallback) {
+			this.hidingCallback = hidingCallback;
 		}
 	}
 	

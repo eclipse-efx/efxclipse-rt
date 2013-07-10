@@ -75,6 +75,7 @@
       <plugin id="org.eclipse.fx.ui.keybindings"/>
       <plugin id="org.eclipse.fx.ui.keybindings.e4"/>
       <plugin id="org.eclipse.fx.ui.keybindings.generic"/>
+      <plugin id="org.eclipse.fx.ui.lifecycle"/>
       <plugin id="org.eclipse.fx.ui.panes"/>
       <plugin id="org.eclipse.fx.ui.services"/>
       <plugin id="org.eclipse.fx.ui.theme"/>

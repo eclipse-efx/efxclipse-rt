@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Lifecycle
+Bundle-SymbolicName: org.eclipse.fx.ui.lifecycle
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.e4.ui.model.workbench,
+ org.eclipse.e4.core.di,
+ org.eclipse.e4.core.contexts,
+ org.eclipse.e4.core.services,
+ org.eclipse.e4.ui.workbench
+Export-Package: org.eclipse.fx.ui.lifecycle,
+ org.eclipse.fx.ui.lifecycle.annotations
+Import-Package: javax.annotation;version="1.1.0",
+ javax.inject;version="1.0.0"
+Service-Component: OSGI-INF/component.xml
+Bundle-ActivationPolicy: lazy

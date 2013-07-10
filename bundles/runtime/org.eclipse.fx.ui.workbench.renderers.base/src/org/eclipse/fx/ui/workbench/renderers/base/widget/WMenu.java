@@ -22,5 +22,7 @@ public interface WMenu<N> extends WMenuElement<MMenu> {
 	void setShowingCallback(Runnable showingCallback);
 
 	void removeElement(WMenuElement<MMenuElement> widget);
+	
+	void setHidingCallback(Runnable hidingCallback);
 
 }

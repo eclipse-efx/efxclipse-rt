@@ -40,6 +40,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 	public static class MenuImpl extends WWidgetImpl<Menu, MMenu> implements WMenu<Menu> {
 		private ToggleGroup group;
 		Runnable showingCallback;
+		Runnable hidingCallback;
 		
 		@Override
 		protected Menu createWidget() {
@@ -55,6 +56,13 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 							showingCallback.run();
 						}	
 					}
+				}
+			});
+			m.setOnHiding(new EventHandler<Event>() {
+
+				@Override
+				public void handle(Event arg0) {
+					if (hidingCallback!=null) hidingCallback.run();
 				}
 			});
 			return m;
@@ -122,6 +130,11 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		@Override
 		protected void setUserData(WWidgetImpl<Menu, MMenu> widget) {
 			getWidget().setUserData(widget);
+		}
+
+		@Override
+		public void setHidingCallback(Runnable hidingCallback) {
+			this.hidingCallback=hidingCallback;
 		}
 	}
 }

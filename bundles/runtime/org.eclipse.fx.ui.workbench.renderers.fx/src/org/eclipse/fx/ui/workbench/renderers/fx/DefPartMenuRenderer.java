@@ -44,6 +44,7 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 		private ContextMenu menu;
 		private ToggleGroup group;
 		Runnable showingCallback;
+		Runnable hidingCallback;
 		
 		@Override
 		public void addStyleClasses(List<String> classnames) {
@@ -130,8 +131,19 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 					}
 				}
 			});
+			menu.setOnHiding(new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent arg0) {
+					if (hidingCallback!=null) hidingCallback.run();
+				}
+			});
 			b.setContextMenu(menu);
 			return b;
+		}
+
+		@Override
+		public void setHidingCallback(Runnable hidingCallback) {
+			this.hidingCallback = hidingCallback;
 		}		
 	}
 }
