@@ -28,6 +28,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicPackageImpl;
+import org.eclipse.e4.ui.model.application.ui.menu.MDynamicMenuContribution;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuSeparator;
@@ -156,7 +157,7 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 				partRenderer = make(getPartRendererClass());
 			}
 			return (R) partRenderer;
-		} else if( modelObject instanceof MMenuItem ) {
+		} else if( modelObject instanceof MMenuItem && ! (modelObject instanceof MDynamicMenuContribution) ) {
 			if( menuItemRenderer == null ) {
 				menuItemRenderer = make(getMenuItemRendererClass());
 			}

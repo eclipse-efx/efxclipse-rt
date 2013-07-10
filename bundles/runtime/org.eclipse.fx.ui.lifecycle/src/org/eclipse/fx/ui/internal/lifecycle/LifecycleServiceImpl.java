@@ -39,8 +39,8 @@ public class LifecycleServiceImpl implements ELifecycleService{
 		
 	}
 
-	public boolean validateAnnotation(Class annotationClass, MUIElement element) {
-		return validateLifecycleAnnotation(annotationClass, getContextForParent(element), getModelContext(element), element);
+	public boolean validateAnnotation(Class annotationClass, MUIElement element, IEclipseContext context) {
+		return validateLifecycleAnnotation(annotationClass, getContextForParent(element), context, element);
 	}
 	
 	private boolean validateLifecycleAnnotation(Class clazz, IEclipseContext parentContext,

@@ -94,6 +94,7 @@
     </children>
     <mainMenu xmi:id="_W8hHoORZEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.menu.0">
       <children xsi:type="menu:Menu" xmi:id="_Xwuy0ORZEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.menu.1" label="M1">
+      	<tags>EFX_LC:bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.lifecycle.MenuLifecycle</tags>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_f6s64ORqEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.0" label="Push - HI 0" command="_FEZr8OUcEeGP-5z69KadAQ"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_lb8V4ORqEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.1" label="Check - HI 1" type="Check" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_pBaAsORqEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.2" label="Radio - HI 2" type="Radio" command="_FEZr8OUcEeGP-5z69KadAQ"/>

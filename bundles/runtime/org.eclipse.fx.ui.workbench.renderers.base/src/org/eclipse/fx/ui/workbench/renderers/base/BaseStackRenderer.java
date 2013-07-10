@@ -350,16 +350,25 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		IEclipseContext partContext = part.getContext();
 		IEclipseContext parentContext = getContextForParent(part);
 		// a part may not have a context if it hasn't been rendered
-		IEclipseContext context = partContext == null ? parentContext : partContext;
+		IEclipseContext context = (partContext == null ? parentContext : partContext).createChild();
+		if( partContext == null ) {
+			context.set(MPart.class, part);
+		}
+		
 		// Allow closes to be 'canceled'
 		EPartService partService = (EPartService) context.get(EPartService.class.getName());
-		if (partService.savePart(part, true) && lifecycleService.validateAnnotation(PreClose.class, part)) {
-			partService.hidePart(part);
-			return true;
+		
+		try {
+			if (partService.savePart(part, true) && lifecycleService.validateAnnotation(PreClose.class, part, context)) {
+				partService.hidePart(part);
+				return true;
+			}
+			// the user has canceled out of the save operation, so don't close the
+			// part
+			return false;			
+		} finally {
+			context.dispose();
 		}
-		// the user has canceled out of the save operation, so don't close the
-		// part
-		return false;
 
 	}
 

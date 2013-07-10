@@ -41,7 +41,7 @@ public class ClosePerspectiveHandler {
 //		AbstractRenderer renderer = (AbstractRenderer) activePerspective.getRenderer();
 //		if (renderer.validateLifecycleAnnotation(PreClose.class, null, renderer.getModelContext(activePerspective)
 //				, activePerspective))
-		if (lifecycleService.validateAnnotation(PreClose.class, activePerspective))
+		if (lifecycleService.validateAnnotation(PreClose.class, activePerspective, activePerspective.getContext()))
 		modelService.removePerspectiveModel(activePerspective, window);//this one includes selecting the next active
 
 	}
