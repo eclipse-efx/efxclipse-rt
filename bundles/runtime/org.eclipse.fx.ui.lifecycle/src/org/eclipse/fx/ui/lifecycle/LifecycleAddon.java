@@ -1,14 +1,10 @@
 package org.eclipse.fx.ui.lifecycle;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.eclipse.e4.core.contexts.ContextInjectionFactory;
-import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
@@ -44,8 +40,8 @@ public class LifecycleAddon {
 		
 	}
 
-	private void process(Class<? extends MApplicationElement> clazz, MUIElement root) {
-		List<MUIElement> elements = (List<MUIElement>) modelService.findElements(root, null, clazz, null);
+	private void process(Class<? extends MUIElement> clazz, MUIElement root) {
+		List<? extends MUIElement> elements = modelService.findElements(root, null, clazz, null);
 		for (MUIElement element : elements) {
 			//build lifecycle uris set (because no duplicates allowed)
 			List<String> tags = element.getTags();

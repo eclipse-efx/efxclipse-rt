@@ -4,7 +4,7 @@ import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 
-public class LifecycleCF extends ContextFunction {
+public class LifecycleContextFunction extends ContextFunction {
 	
 	@Override
 	public Object compute(IEclipseContext context, String contextKey) {

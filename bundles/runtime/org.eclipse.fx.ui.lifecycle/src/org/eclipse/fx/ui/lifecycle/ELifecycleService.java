@@ -1,5 +1,7 @@
 package org.eclipse.fx.ui.lifecycle;
 
+import java.lang.annotation.Annotation;
+
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 
 public interface ELifecycleService {
@@ -8,6 +10,6 @@ public interface ELifecycleService {
 
 	public void unregisterLifecycleContribution(MUIElement element, Object contribution);
 	
-	public boolean validateAnnotation(Class annotationClass, MUIElement element);
+	public boolean validateAnnotation(Class<? extends Annotation> annotationClass, MUIElement element);
 
 }
