@@ -59,6 +59,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx.controls</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.fx</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.lifecycle</module>
 		
 		<!-- 3.x / 4.x SDK -->
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench3</module>
