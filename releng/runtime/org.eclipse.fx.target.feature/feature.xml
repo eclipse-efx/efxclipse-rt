@@ -1876,7 +1876,7 @@
          version="0.0.0"
          fragment="true"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.ecf.provider.filetransfer.httpclient4.ssl.source"
          download-size="0"
@@ -2079,26 +2079,26 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.fx.ui.databinding.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>     
-
-   <!--plugin
-         id="org.eclipse.fx.ui.di.interopt"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.fx.ui.di.interopt.source"
+         id="org.eclipse.fx.ui.lifecycle"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/-->
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.fx.ui.lifecycles.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
