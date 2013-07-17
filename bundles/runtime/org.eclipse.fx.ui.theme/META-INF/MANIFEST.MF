@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.fx.ui.theme;singleton:=true
-Bundle-Version: 0.8.1.qualifier
+Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.eclipse.fx.ui.theme.internal.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.fx.ui.services,
- org.eclipse.fx.core;bundle-version="0.8.1"
+ org.eclipse.fx.core;bundle-version="0.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Service-Component: OSGI-INF/thememanager.xml
