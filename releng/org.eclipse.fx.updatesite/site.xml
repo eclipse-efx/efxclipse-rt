@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.fx.core.feature_0.8.1.qualifier.jar" id="org.eclipse.fx.core.feature" version="0.8.1.qualifier">
+   <feature url="features/org.eclipse.fx.core.feature_0.9.0.qualifier.jar" id="org.eclipse.fx.core.feature" version="0.8.1.qualifier">
       <category name="fxruntime"/>
    </feature>
-   <feature url="features/org.eclipse.fx.target.feature_0.8.1.qualifier.jar" id="org.eclipse.fx.target.feature" version="0.8.1.qualifier">
+   <feature url="features/org.eclipse.fx.target.feature_0.9.0.qualifier.jar" id="org.eclipse.fx.target.feature" version="0.8.1.qualifier">
       <category name="fxtarget"/>
    </feature>
-   <feature url="features/org.eclipse.fx.target.rcp.feature_0.8.1.qualifier.jar" id="org.eclipse.fx.target.rcp.feature" version="0.8.1.qualifier">
+   <feature url="features/org.eclipse.fx.target.rcp.feature_0.9.0.qualifier.jar" id="org.eclipse.fx.target.rcp.feature" version="0.8.1.qualifier">
       <category name="fxtarget"/>
    </feature>
    <category-def name="fxruntime" label="FX Runtime"/>
