@@ -349,7 +349,7 @@ public class KeyBindingDispatcher {
 
 			try {
 				Object o = handlerService.executeHandler(parameterizedCommand, staticContext);
-				if( o instanceof NativeStrategy && o == NativeStrategy.PROCEED ) {
+				if( o == NativeStrategy.PROCEED ) {
 					return false;
 				}
 			} catch (final Exception e) {
