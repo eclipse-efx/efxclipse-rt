@@ -62,6 +62,7 @@ import javax.inject.Named;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.translation.TranslationService;
+import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
@@ -76,6 +77,7 @@ import org.eclipse.fx.ui.dialogs.Dialog;
 import org.eclipse.fx.ui.dialogs.MessageDialog;
 import org.eclipse.fx.ui.dialogs.MessageDialog.QuestionCancelResult;
 import org.eclipse.fx.ui.panes.FillLayoutPane;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.services.theme.ThemeManager.Registration;
@@ -178,9 +180,13 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		
 		private boolean undecorated;
 		
+		private IEclipseContext applicationContext;
+		
 		@Inject
-		public WWindowImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MWindow mWindow, @Optional KeyBindingDispatcher dispatcher) {
+		public WWindowImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MWindow mWindow, @Optional KeyBindingDispatcher dispatcher, MApplication application) {
 			this.mWindow = mWindow;
+			
+			applicationContext = application.getContext();
 			
 			if( mWindow.getPersistedState().get("fx.scene.3d") != null ) {
 				System.err.println("Usage of deprecated persisted state 'fx.scene.3d' please use 'efx.window.scene.3d' instead.");
@@ -222,6 +228,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				@Override
 				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 					if( newValue.booleanValue() ) {
+						if( stage.getScene() != null ) {
+							applicationContext.set(Constants.APP_FOCUS_NODE,stage.getScene().getFocusOwner());
+						}
+						
 						activate();
 					}
 				}
@@ -284,6 +294,11 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				
 				@Override
 				public void changed(ObservableValue<? extends Node> observable, Node oldValue, Node newValue) {
+					modelContext.set(Constants.WINDOW_FOCUS_NODE, newValue);
+					if( stage.isFocused() ) {
+						applicationContext.set(Constants.APP_FOCUS_NODE, newValue);	
+					}
+					
 					if (newValue != null) {
 						final List<WWidget<?>> activationTree = new ArrayList<WWidget<?>>();
 
