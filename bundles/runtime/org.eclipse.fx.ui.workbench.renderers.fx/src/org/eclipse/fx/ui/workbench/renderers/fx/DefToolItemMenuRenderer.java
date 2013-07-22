@@ -55,12 +55,17 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 
 				@Override
 				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					if( showingCallback != null && newValue.booleanValue() ) {
-						showingCallback.run();
+					if( newValue.booleanValue() ) {
+						if( showingCallback != null ) {
+							showingCallback.run();
+						}	
+					} else {
+						if( hidingCallback != null ) {
+							hidingCallback.run();
+						}
 					}
 				}
 			});
-//			this.button.hidingProperty???
 		}
 		
 		@Override
