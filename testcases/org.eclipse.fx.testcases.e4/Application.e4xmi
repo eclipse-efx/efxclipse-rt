@@ -159,6 +159,7 @@
         <children xsi:type="menu:ToolControl" xmi:id="_MfBjgNZYEeKlJ9ZUcG3l2Q" elementId="org.eclipse.fx.testcases.e4.toolcontrol.1" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.tool.ToolControlSample"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_kDT7AOZXEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.toolbar.1">
+        <tags>fillspace</tags>
         <children xsi:type="menu:DirectToolItem" xmi:id="_lavA8OZXEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.directtoolitem.0" label="Push - DI 0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
         <children xsi:type="menu:DirectToolItem" xmi:id="_okY5gOZXEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.directtoolitem.1" label="Check - DI 1" type="Check" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
         <children xsi:type="menu:DirectToolItem" xmi:id="_s6sycOZXEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.directtoolitem.2" label="Radio - DI 2" type="Radio" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
