@@ -277,7 +277,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 		}
 		
 		if( me.getElementId() != null ) {
-			widget.setStyleId(me.getElementId());
+			widget.setStyleId(Util.toCSSId(me.getElementId()));
 		}
 		me.setWidget(widget);
 	}
