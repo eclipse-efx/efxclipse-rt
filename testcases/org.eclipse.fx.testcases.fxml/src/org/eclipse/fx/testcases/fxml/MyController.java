@@ -1,4 +1,4 @@
-package at.bestsolution.efxclipse.testcases.fxml;
+package org.eclipse.fx.testcases.fxml;
 
 import java.net.URL;
 import java.util.ResourceBundle;
