@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+	<center>
+		<Text text="Hello World">
+			<fill><Color fx:value="#f00"/> </fill>
+			<font><Font name="Arial Bold Italic" size="24"></Font></font>
+		</Text> 
+	</center>
+</BorderPane>
+
