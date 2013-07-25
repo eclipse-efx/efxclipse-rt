@@ -1,0 +1,12 @@
+package org.eclipse.fx.testcases.fxgraph.inc
+
+import javafx.scene.layout.*
+import javafx.scene.control.Button
+
+component TestInc {
+	VBox {
+		Button {
+			text : "Inc 1"
+		}
+	}
+}

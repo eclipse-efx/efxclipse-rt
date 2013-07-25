@@ -1,0 +1,33 @@
+package org.eclipse.fx.testcases.fxgraph.realworld
+
+import javafx.scene.layout.VBox
+import javafx.geometry.Insets
+import javafx.scene.layout.HBox
+import javafx.scene.control.Label
+import javafx.scene.control.PasswordField
+import org.eclipse.fx.testcases.fxgraph.realworld.GoogleGroupSample
+
+component GoogleGroupSample controlledby GoogleGroupSample {
+	VBox {
+		padding : Insets {
+			top : 10,
+			left : 0,
+			right : 0,
+			bottom : 10
+		},
+		spacing : 10,
+		children : [
+			HBox {
+				children : [
+					Label {
+						text : "Password"
+					},
+					PasswordField id pb {
+						onAction : controllermethod onAction
+					}
+				]
+			},
+			Label id message
+		]
+	}
+}

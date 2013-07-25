@@ -1,0 +1,21 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.*
+import org.eclipse.fx.testcases.fxgraph.*
+import org.eclipse.fx.testcases.fxgraph.inc.*
+import javafx.scene.control.Button
+
+component IncludeTest {
+	define Button id testButton {
+		text : "Hello Define"
+	},
+	define include ImageTest as imageInc
+	VBox {
+		children : [
+			include Controller as test1,
+			include TestInc as myTest,
+			idref testButton,
+			idref imageInc
+		]
+	}
+}

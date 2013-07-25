@@ -1,0 +1,19 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import java.lang.Double
+import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.HBox
+import javafx.scene.control.Button
+
+component ScriptTest {  
+	script javascript #{
+		var test = "Hello World!"
+	}#
+	HBox {
+		children : [
+			Button {
+				text : scriptvalue test
+			}
+		]
+	}
+}

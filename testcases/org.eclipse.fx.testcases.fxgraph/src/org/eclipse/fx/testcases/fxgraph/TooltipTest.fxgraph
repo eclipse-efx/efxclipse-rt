@@ -1,0 +1,18 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.VBox
+import javafx.scene.control.Button
+import javafx.scene.control.Tooltip
+
+component TooltipTest {
+	VBox {
+		children : [
+			Button {
+				text : "Hello Tooltip",
+				tooltip : Tooltip {
+					text : "Click me"
+				}
+			}
+		]
+	}
+}

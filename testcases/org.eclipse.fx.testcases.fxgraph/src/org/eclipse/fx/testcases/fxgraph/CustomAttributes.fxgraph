@@ -1,0 +1,17 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.BorderPane
+import org.eclipse.fx.testcases.fxgraph.MyButton
+import javafx.scene.control.Button
+
+component CustomAttributes {
+	BorderPane {
+		top : MyButton {
+			scaleFactor: 2
+		},
+		bottom : Button {
+			text : "Hello"
+		}
+	}
+}

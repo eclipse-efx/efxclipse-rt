@@ -1,0 +1,12 @@
+package org.eclipse.fx.testcases.fxgraph 
+
+import javafx.scene.layout.*
+import javafx.scene.control.*
+
+component CssTestSingle styledwith "test.css" { 
+	BorderPane { 
+		center : Button {
+			text : "Hello World"
+		}  
+	}
+}

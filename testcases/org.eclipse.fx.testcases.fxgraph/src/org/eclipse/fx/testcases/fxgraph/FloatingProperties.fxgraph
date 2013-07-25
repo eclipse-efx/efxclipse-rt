@@ -1,0 +1,19 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.*
+import javafx.scene.control.*
+import javafx.scene.transform.Scale
+
+component FloatingProperties {
+	HBox {
+		Label { 
+		    text: "Shrink me",
+		    transforms : [
+		        Scale {
+		            x : 0.5, 
+		            y : 0.75
+		        }
+		    ]
+		}
+	}
+}

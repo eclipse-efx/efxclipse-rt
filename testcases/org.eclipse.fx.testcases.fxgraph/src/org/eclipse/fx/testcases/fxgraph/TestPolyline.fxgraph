@@ -1,0 +1,25 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.BorderPane
+import javafx.scene.shape.Polyline
+import javafx.scene.paint.Color
+import javafx.scene.control.Label
+
+component TestPolyline {
+	BorderPane {
+		center : Polyline {
+			fill : "BLUE", 
+			points : [
+				Double(10),
+				Double(10),
+				Double(90),
+				Double(30),
+				Double(70),
+				Double(90),
+				100,
+				170,
+				100
+			]
+		}
+	}
+}

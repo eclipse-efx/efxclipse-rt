@@ -1,0 +1,11 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.control.*
+import javafx.scene.layout.BorderPane
+component ConstantTest {
+	BorderPane {
+		Button {
+			minHeight : const Double#NEGATIVE_INFINITY
+		}
+	}
+}

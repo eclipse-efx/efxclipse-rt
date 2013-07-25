@@ -1,0 +1,21 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.HBox
+import javafx.scene.control.Label
+import javafx.scene.control.TextField
+
+component BindingTest {
+	HBox {
+		children : [
+			Label {
+				text : "Binding" 
+			},
+			TextField id field1 {
+				
+			},
+			TextField {
+				text : bind field1#text
+			}
+		]
+	}
+}

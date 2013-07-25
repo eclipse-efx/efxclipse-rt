@@ -1,0 +1,12 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.*
+import javafx.scene.control.*
+
+component MessageTest styledwith ["test.css"] resourcefile "/translations/messages.properties" {
+	BorderPane { 
+		center : Button { 
+			text : rstring "buttonlabel" 
+		} 
+	}
+}
