@@ -21,17 +21,15 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.ui.model.application.ui.menu.ItemType;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
-import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseToolItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolItem;
@@ -56,7 +54,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		private boolean checkbox = false;
 		
 		@Inject
-		IResourceUtilities<Image> resourceUtilities;
+		private GraphicsLoader graphicsLoader;
 		
 		@Inject
 		public ToolItemImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MToolItem domElement) {
@@ -103,12 +101,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 			if( uri == null ) {
 				getWidget().setGraphic(null);
 			} else {
-				Image img = resourceUtilities.imageDescriptorFromURI(URI.createURI(uri));
-				if( img != null ) {
-					getWidget().setGraphic(new ImageView(img));
-				} else {
-					getWidget().setGraphic(null);
-				}
+				getWidget().setGraphic(graphicsLoader.getGraphicsNode(URI.createURI(uri)));
 			}
 		}
 		

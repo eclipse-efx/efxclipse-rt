@@ -28,6 +28,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MMenuItem;
 import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
@@ -47,7 +48,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		private boolean enabled = true;
 		
 		@Inject
-		IResourceUtilities<Image> resourceUtilities;
+		GraphicsLoader graphicsLoader;
 		
 		@Inject
 		public MenuItemImpl(@Named("type") ItemType type) {
@@ -139,12 +140,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 			if( uri == null ) {
 				getWidget().setGraphic(null);
 			} else {
-				Image img = resourceUtilities.imageDescriptorFromURI(URI.createURI(uri));
-				if( img != null ) {
-					getWidget().setGraphic(new ImageView(img));
-				} else {
-					getWidget().setGraphic(null);
-				}
+				getWidget().setGraphic(graphicsLoader.getGraphicsNode(URI.createURI(uri)));
 			}
 		}
 

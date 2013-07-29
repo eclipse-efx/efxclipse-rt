@@ -18,6 +18,7 @@ import java.util.WeakHashMap;
 
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import javax.inject.Inject;
 
@@ -26,6 +27,7 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.services.resources.ImageProvider;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
@@ -71,7 +73,7 @@ public class GraphicsLoaderImpl implements GraphicsLoader {
 		}
 		
 		if( img == null ) {
-			ImageProvider pv = providerComponent.getProvider(uri);
+			ImageProvider pv = providerComponent.getImageProvider(uri);
 			if( pv != null ) {
 				try {
 					img = pv.getImage(uri);
@@ -88,16 +90,35 @@ public class GraphicsLoaderImpl implements GraphicsLoader {
 		return img;
 	}
 	
+	@Override
+	public Node getGraphicsNode(URI uri) {
+		Map<String, String> map = new HashMap<>();
+		if( themeManager != null && themeManager.getCurrentTheme() != null ) {
+			map.put("themeId", themeManager.getCurrentTheme().getId());	
+		}
+		
+		uri = replaceDynamicValues(uri,map);
+		GraphicNodeProvider graphicNodeProvider = providerComponent.getGraphicNodeProvider(uri);
+		
+		if( graphicNodeProvider == null ) {
+			Image img = getImage(uri);
+			if( img != null ) {
+				return new ImageView(img);
+			}
+		} else {
+			try {
+				return graphicNodeProvider.getGraphicNode(uri);
+			} catch (IOException e) {
+				logger.error("Unable to load graphic node from '"+uri+"'", e);
+			}
+		}
+		
+		return null;
+	}
+	
 	private URI replaceDynamicValues(URI uri, Map<String, String> dynamicMap) {
 		String s = uri.toString();
 		s = StrSubstitutor.replace(s, dynamicMap);
 		return URI.createURI(s);
-	}
-	
-	
-	@Override
-	public Node getGraphicsNode(URI uri) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

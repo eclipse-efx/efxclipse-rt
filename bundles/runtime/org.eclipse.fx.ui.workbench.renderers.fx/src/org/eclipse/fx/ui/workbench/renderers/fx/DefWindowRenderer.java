@@ -78,6 +78,7 @@ import org.eclipse.fx.ui.dialogs.MessageDialog;
 import org.eclipse.fx.ui.dialogs.MessageDialog.QuestionCancelResult;
 import org.eclipse.fx.ui.panes.FillLayoutPane;
 import org.eclipse.fx.ui.services.Constants;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.services.theme.ThemeManager.Registration;
@@ -99,10 +100,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 	protected Save[] promptToSave(MWindow element, Collection<MPart> dirtyParts, WWindow<Stage> widget) {
 		Save[] response = new Save[dirtyParts.size()];
-		@SuppressWarnings("unchecked")
-		IResourceUtilities<Image> resourceUtilities = getModelContext(element).get(IResourceUtilities.class);
+		GraphicsLoader graphicsLoader = getModelContext(element).get(GraphicsLoader.class);
 
-		MultiMessageDialog d = new MultiMessageDialog((Stage) widget.getWidget(), dirtyParts, resourceUtilities);
+		MultiMessageDialog d = new MultiMessageDialog((Stage) widget.getWidget(), dirtyParts, graphicsLoader);
 		if (d.open() == Dialog.OK_BUTTON) {
 			List<MPart> parts = d.getSelectedParts();
 			Arrays.fill(response, Save.NO);
@@ -174,7 +174,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		WindowTransitionService<Stage> windowTransitionService;
 		
 		@Inject
-		private IResourceUtilities<Image> resourceUtilities;
+		private GraphicsLoader graphicsLoader;
 		
 		boolean initDone;
 		
@@ -564,7 +564,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				String[] split = iconUri.split(";");
 				List<Image> images = new ArrayList<>();
 				for( String uri : split ) {
-					Image img = resourceUtilities.imageDescriptorFromURI(URI.createURI(uri));
+					Image img = graphicsLoader.getImage(URI.createURI(uri));
 					if( img != null ) {
 						images.add(img);
 					}
@@ -617,13 +617,13 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private Collection<MPart> parts;
 		private TableView<Row> tabView;
 
-		private final IResourceUtilities<Image> resourceUtilities;
+		private GraphicsLoader graphicsLoader;
 		private List<MPart> selectedParts;
 
-		public MultiMessageDialog(Window parent, Collection<MPart> parts, IResourceUtilities<Image> resourceUtilities) {
+		public MultiMessageDialog(Window parent, Collection<MPart> parts, GraphicsLoader graphicsLoader) {
 			super(parent, "Save Resources");
 			this.parts = parts;
-			this.resourceUtilities = resourceUtilities;
+			this.graphicsLoader = graphicsLoader;
 		}
 
 		public List<MPart> getSelectedParts() {
@@ -709,7 +709,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 									setText(item.getLocalizedLabel());
 									String uri = item.getIconURI();
 									if (uri != null) {
-										setGraphic(new ImageView(resourceUtilities.imageDescriptorFromURI(URI.createURI(uri))));
+										setGraphic(graphicsLoader.getGraphicsNode(URI.createURI(uri)));
 									}
 								}
 							}

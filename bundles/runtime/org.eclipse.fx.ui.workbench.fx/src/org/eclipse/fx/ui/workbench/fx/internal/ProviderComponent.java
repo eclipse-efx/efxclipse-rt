@@ -26,9 +26,9 @@ import org.eclipse.fx.ui.services.resources.GraphicsLoader.Util;
 public class ProviderComponent {
 	static class RankedEntry<E> implements Comparable<RankedEntry<E>> {
 		public final int ranking;
-		public final ImageProvider provider;
+		public final E provider;
 		
-		public RankedEntry(int ranking, ImageProvider provider) {
+		public RankedEntry(int ranking, E provider) {
 			this.ranking = ranking;
 			this.provider = provider;
 		}
@@ -42,11 +42,14 @@ public class ProviderComponent {
 
 	private Map<String, Set<RankedEntry<ImageProvider>>> imageProviderBySuffix = new HashMap<>();
 	private Map<String, ImageProvider> imageProviderByName = new HashMap<>();
+	
+	private Map<String, Set<RankedEntry<GraphicNodeProvider>>> graphicProviderBySuffix = new HashMap<>();
+	private Map<String, GraphicNodeProvider> graphicProviderByName = new HashMap<>();
+	
 	private LoggerFactory loggerFactory;
 	private Logger logger;
 	
 	public void addImageProvider(ImageProvider provider, Map<String, Object> parameters) {
-		System.err.println("REGISTERING: " + provider);
 		synchronized (imageProviderBySuffix) {
 			for( String suffix : provider.getFileSuffix() ) {
 				Set<RankedEntry<ImageProvider>> set = imageProviderBySuffix.get(suffix);
@@ -85,20 +88,78 @@ public class ProviderComponent {
 		}
 	}
 	
-	public void addGraphicNodeProvider(GraphicNodeProvider provider) {
+	public void addGraphicNodeProvider(GraphicNodeProvider provider, Map<String, Object> parameters) {
+		synchronized (graphicProviderBySuffix) {
+			for( String suffix : provider.getFileSuffix() ) {
+				Set<RankedEntry<GraphicNodeProvider>> set = graphicProviderBySuffix.get(suffix);
+				if( set == null ) {
+					set = new TreeSet<>();
+					graphicProviderBySuffix.put(suffix, set);
+				}	
+				
+				Integer ranking = (Integer) parameters.get("service.ranking");
+				if( ranking == null ) {
+					ranking = Integer.valueOf(0);
+				}
+				set.add(new RankedEntry<GraphicNodeProvider>(ranking.intValue(), provider));
+			}
+		}
 		
+		synchronized (graphicProviderByName) {
+			GraphicNodeProvider p = graphicProviderByName.put(provider.getName(), provider);
+			if( p != null ) {
+				getLogger().warning("Replaced existing provider '"+p+"' named '"+provider.getName()+"' through new provider '"+provider+"'");
+			}
+		}
 	}
 	
 	public void removeGraphicNodeProvider(GraphicNodeProvider provider) {
-		
+		synchronized (graphicProviderBySuffix) {
+			for( Set<RankedEntry<GraphicNodeProvider>> set : graphicProviderBySuffix.values() ) {
+				Iterator<RankedEntry<GraphicNodeProvider>> it = set.iterator();
+				if( it.next().provider == provider ) {
+					it.remove();
+				}
+			}
+		}
+		synchronized (graphicProviderByName) {
+			graphicProviderByName.values().remove(provider);
+		}
 	}
 	
-	public ImageProvider getProvider(URI uri) {
+	public GraphicNodeProvider getGraphicNodeProvider(URI uri) {
+		if( uri.hasQuery() ) {
+			String provider = Util.getQueryValue(uri, "providerName");
+			if( provider != null ) {
+				GraphicNodeProvider pv;
+				synchronized (graphicProviderByName) {
+					pv = graphicProviderByName.get(provider);
+				}
+				
+				if( pv != null) {
+					return pv;
+				}
+			}
+		}
+		
+		String s = Util.suffix(uri);
+		if( s != null ) {
+			synchronized (graphicProviderBySuffix) {
+				Set<RankedEntry<GraphicNodeProvider>> set = graphicProviderBySuffix.get(s);
+				if( set != null && ! set.isEmpty() ) {
+					return set.iterator().next().provider;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public ImageProvider getImageProvider(URI uri) {
 		if( uri.hasQuery() ) {
 			String provider = Util.getQueryValue(uri, "providerName");
 			if( provider != null ) {
 				ImageProvider pv;
-				synchronized (provider) {
+				synchronized (imageProviderByName) {
 					pv = imageProviderByName.get(provider);	
 				}
 				
@@ -114,7 +175,6 @@ public class ProviderComponent {
 			s = "*";
 		}
 		synchronized (imageProviderBySuffix) {
-			System.err.println(s);
 			Set<RankedEntry<ImageProvider>> set = imageProviderBySuffix.get(s);
 			if( set != null && ! set.isEmpty() ) {
 				return set.iterator().next().provider;
