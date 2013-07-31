@@ -1,0 +1,12 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.HBox
+import javafx.scene.control.Button
+
+component ConstantsTest {
+	HBox {
+		Button {
+			
+		}
+	}
+}

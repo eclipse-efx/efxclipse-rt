@@ -1,0 +1,9 @@
+package org.eclipse.fx.testcases.fxgraph.realworld
+
+import javafx.scene.layout.BorderPane
+
+component SegmentedButton {
+	BorderPane {
+		//TODO Add Nodes
+	}
+}

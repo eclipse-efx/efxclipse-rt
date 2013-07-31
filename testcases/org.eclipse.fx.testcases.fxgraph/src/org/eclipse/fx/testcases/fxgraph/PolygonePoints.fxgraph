@@ -1,0 +1,34 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.VBox
+import javafx.scene.shape.Polygon
+import javafx.scene.layout.Pane
+import javafx.scene.shape.Rectangle
+import javafx.scene.layout.Region
+
+component PolygonePoints {
+	Pane {
+		children : [
+			Polygon {
+				layoutX : 10,
+				layoutY : 10,
+				stroke : "BLUE",
+				points: "0,20,20,40,30,0",
+				fill : "RED"
+			},
+			Polygon {
+				layoutX : 60,
+				layoutY : 10,
+				stroke : "BLUE",
+				points: [0,20,20,40,30,0],
+				fill : "RED"
+			},
+			Rectangle {
+				x : 10,
+				y : 100,
+				width : 100,
+				height : 100
+			}
+		]
+	}
+}

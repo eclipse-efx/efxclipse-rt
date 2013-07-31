@@ -1,0 +1,21 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.HBox
+import javafx.scene.control.Label
+import javafx.scene.control.TextField
+import javafx.scene.control.ChoiceBox
+import javafx.collections.FXCollections
+
+component PreviewTest {
+	HBox {
+		children : [
+			ChoiceBox {
+				runtime-only items : FXCollections createdby observableArrayList {
+					"Hello World",
+					"Hello World extra long", 
+					"Hello World extra extra long"
+				}
+			}
+		]
+	}
+}

@@ -14,14 +14,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.ref.WeakReference;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.WeakHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
@@ -70,6 +66,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.osgi.util.AbstractJFXApplication;
 import org.eclipse.fx.osgi.util.LoggerCreator;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
+import org.eclipse.fx.ui.workbench.fx.internal.GraphicsLoaderImpl;
 import org.eclipse.fx.ui.workbench.fx.internal.LoggerProviderImpl;
 import org.eclipse.fx.ui.workbench.fx.internal.WorkbenchJFXActivator;
 import org.eclipse.osgi.service.datalocation.Location;
@@ -145,7 +143,7 @@ public class E4Application extends AbstractJFXApplication {
 	public E4Workbench createE4Workbench(IApplicationContext applicationContext, Application jfxApplication, Stage primaryStage) {
 		args = (String[]) applicationContext.getArguments().get(IApplicationContext.APPLICATION_ARGS);
 
-		IEclipseContext appContext = createDefaultContext();
+		final IEclipseContext appContext = createDefaultContext();
 		ContextInjectionFactory.setDefault(appContext);
 		
 		appContext.set(Application.class, jfxApplication);
@@ -181,31 +179,11 @@ public class E4Application extends AbstractJFXApplication {
 			}
 		});
 		appContext.set(IApplicationContext.class, applicationContext);
+		appContext.set(GraphicsLoader.class,ContextInjectionFactory.make(GraphicsLoaderImpl.class, appContext));
 		appContext.set(IResourceUtilities.class, new IResourceUtilities<Image>() {
-			private WeakHashMap<URI, WeakReference<Image>> imageCache = new WeakHashMap<URI, WeakReference<Image>>();
-			
 			public Image imageDescriptorFromURI(URI iconPath) {
-				WeakReference<Image> r = imageCache.get(iconPath);
-				Image img = null;
-				if( r != null ) {
-					img = r.get();
-				}
-				
-				if( img == null ) {
-					try {
-						InputStream in = new URL(iconPath.toString()).openStream();
-						img = new Image(in);
-						in.close();
-						imageCache.put(iconPath, new WeakReference<Image>(img));
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						logger.warning("could not find icon at: " + iconPath,e);
-					}
-				}
-				
-				return img;
+				GraphicsLoader l = appContext.get(GraphicsLoader.class);
+				return l.getImage(iconPath);
 			}
 		});
 

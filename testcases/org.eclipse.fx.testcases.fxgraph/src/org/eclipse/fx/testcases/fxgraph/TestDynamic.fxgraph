@@ -1,0 +1,12 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.HBox
+import javafx.scene.control.Button
+
+dynamic component TestDynamic {
+	HBox {
+		Button {
+			text : "Hello World"
+		}
+	}
+}

@@ -1,0 +1,7 @@
+FamFamFam (Creative Commons 2.5):
+---------------------------------
+.../icons/document-save.png
+.../icons/list-add-user.png
+.../icons/list-remove-user.png
+.../icons/view-form.png
+.../icons/view-list-tree.png

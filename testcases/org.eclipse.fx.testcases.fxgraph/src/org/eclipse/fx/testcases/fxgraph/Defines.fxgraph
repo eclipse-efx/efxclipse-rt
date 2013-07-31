@@ -1,0 +1,29 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.*
+import javafx.scene.control.*
+import javafx.scene.control.RadioButton
+
+component Defines {
+	define ToggleGroup id myToggleGroup,
+	define RadioButton id testRadio { 
+		text : "D"
+	}
+	VBox {
+		children : [
+			RadioButton {
+				text : "A",
+				toggleGroup : idref myToggleGroup
+			},
+			RadioButton {
+				text : "B",
+				toggleGroup : idref myToggleGroup
+			},
+			RadioButton {
+				text : "C",
+				toggleGroup : idref myToggleGroup
+			},
+			idref testRadio
+		]
+	}
+}

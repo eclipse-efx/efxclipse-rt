@@ -35,6 +35,7 @@ import org.eclipse.fx.ui.keybindings.KeySequence;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.keybindings.service.BindingFactory;
+import org.eclipse.fx.ui.services.commands.NativeStrategy;
 
 @SuppressWarnings("restriction")
 public class KeyBindingDispatcher {
@@ -347,7 +348,10 @@ public class KeyBindingDispatcher {
 			commandHandled = HandlerServiceImpl.lookUpHandler(context, command.getId()) != null;
 
 			try {
-				handlerService.executeHandler(parameterizedCommand, staticContext);
+				Object o = handlerService.executeHandler(parameterizedCommand, staticContext);
+				if( o == NativeStrategy.PROCEED ) {
+					return false;
+				}
 			} catch (final Exception e) {
 				commandHandled = false;
 				e.printStackTrace();

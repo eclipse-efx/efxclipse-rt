@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="at.bestsolution.efxclipse.testcases.fxml.MyController">
+	<top>
+		<Button
+			text="Hello Master" 
+			onAction="#clicked" 
+		></Button> 
+	</top>
+	<center>
+		<fx:include source="Child.fxml" />
+	</center>
+</BorderPane>
+

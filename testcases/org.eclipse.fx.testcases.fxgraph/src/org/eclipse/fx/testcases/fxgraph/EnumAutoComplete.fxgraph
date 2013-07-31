@@ -1,0 +1,10 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.GridPane
+
+component EnumAutoComplete {
+	GridPane {
+		hgap : 5,
+		alignment : "BASELINE_CENTER"		
+	}
+}

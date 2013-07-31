@@ -15,4 +15,7 @@ public class Util {
 				.singleton((E) o);
 	}
 
+	public static String toCSSId(String id) {
+		return id.replace('.', '-');
+	}
 }

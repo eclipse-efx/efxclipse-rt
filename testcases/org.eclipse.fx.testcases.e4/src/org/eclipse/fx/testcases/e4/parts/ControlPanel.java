@@ -3,6 +3,7 @@ package org.eclipse.fx.testcases.e4.parts;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
@@ -17,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
@@ -29,6 +31,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicFactoryImpl;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.PopupMenuService;
 
 @SuppressWarnings("restriction")
@@ -53,6 +56,15 @@ public class ControlPanel {
 				HBox hbox = new HBox(10);
 				
 				final ComboBox<MPart> dd = new ComboBox<>();
+				dd.setButtonCell(new ListCell<MPart>() {
+					@Override
+					protected void updateItem(MPart item, boolean empty) {
+						super.updateItem(item, empty);
+						if( item != null ) {
+							setText(item.getLocalizedLabel());
+						}
+					}
+				});
 				dd.setCellFactory(new Callback<ListView<MPart>, ListCell<MPart>>() {
 					
 					@Override
@@ -87,6 +99,15 @@ public class ControlPanel {
 				HBox hbox = new HBox(10);
 				
 				final ComboBox<MPart> dd = new ComboBox<>();
+				dd.setButtonCell(new ListCell<MPart>() {
+					@Override
+					protected void updateItem(MPart item, boolean empty) {
+						super.updateItem(item, empty);
+						if( item != null ) {
+							setText(item.getLocalizedLabel());
+						}
+					}
+				});
 				dd.setCellFactory(new Callback<ListView<MPart>, ListCell<MPart>>() {
 					
 					@Override
@@ -121,6 +142,15 @@ public class ControlPanel {
 				HBox hbox = new HBox(10);
 				
 				final ComboBox<MElementContainer> dd = new ComboBox<>();
+				dd.setButtonCell(new ListCell<MElementContainer>() {
+					@Override
+					protected void updateItem(MElementContainer item, boolean empty) {
+						super.updateItem(item, empty);
+						if( item != null ) {
+							setText(item.getClass().getSimpleName());	
+						}
+					}
+				});
 				dd.setCellFactory(new Callback<ListView<MElementContainer>, ListCell<MElementContainer>>() {
 					
 					@Override
@@ -160,6 +190,15 @@ public class ControlPanel {
 				HBox hbox = new HBox(10);
 				
 				final ComboBox<MElementContainer> dd = new ComboBox<>();
+				dd.setButtonCell(new ListCell<MElementContainer>() {
+					@Override
+					protected void updateItem(MElementContainer item, boolean empty) {
+						super.updateItem(item, empty);
+						if( item != null ) {
+							setText(item.getClass().getSimpleName());	
+						}
+					}
+				});
 				dd.setCellFactory(new Callback<ListView<MElementContainer>, ListCell<MElementContainer>>() {
 					
 					@Override
@@ -194,6 +233,15 @@ public class ControlPanel {
 				HBox hbox = new HBox(10);
 				
 				final ComboBox<MElementContainer> dd = new ComboBox<>();
+				dd.setButtonCell(new ListCell<MElementContainer>() {
+					@Override
+					protected void updateItem(MElementContainer item, boolean empty) {
+						super.updateItem(item, empty);
+						if( item != null ) {
+							setText(item.getClass().getSimpleName());	
+						}
+					}
+				});
 				dd.setCellFactory(new Callback<ListView<MElementContainer>, ListCell<MElementContainer>>() {
 					
 					@Override
@@ -229,6 +277,15 @@ public class ControlPanel {
 				HBox hbox = new HBox(10);
 				
 				final ComboBox<MPart> dd = new ComboBox<>();
+				dd.setButtonCell(new ListCell<MPart>() {
+					@Override
+					protected void updateItem(MPart item, boolean empty) {
+						super.updateItem(item, empty);
+						if( item != null ) {
+							setText(item.getLocalizedLabel());
+						}
+					}
+				});
 				dd.setCellFactory(new Callback<ListView<MPart>, ListCell<MPart>>() {
 					
 					@Override
@@ -263,6 +320,15 @@ public class ControlPanel {
 				HBox hbox = new HBox(10);
 				
 				final ComboBox<MPerspective> dd = new ComboBox<>();
+				dd.setButtonCell(new ListCell<MPerspective>() {
+					@Override
+					protected void updateItem(MPerspective item, boolean empty) {
+						super.updateItem(item, empty);
+						if( item != null ) {
+							setText(item.getLocalizedLabel());
+						}
+					}
+				});
 				dd.setCellFactory(new Callback<ListView<MPerspective>, ListCell<MPerspective>>() {
 					
 					@Override
@@ -411,5 +477,15 @@ public class ControlPanel {
 	@Focus
 	void setFocus() {
 		focusField.requestFocus();
+	}
+	
+	@Inject
+	public void setAppFocusControl(@Named(Constants.APP_FOCUS_NODE) @Optional Node node) {
+		System.err.println("AppFocus@" + node);
+	}
+	
+	@Inject
+	public void setWindowFocusControl(@Named(Constants.WINDOW_FOCUS_NODE) @Optional Node node) {
+		System.err.println("WindowFocus@" + node);
 	}
 }

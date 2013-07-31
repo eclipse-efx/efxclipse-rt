@@ -1,0 +1,256 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.*
+import javafx.scene.control.*
+import javafx.scene.image.*
+import java.lang.*
+
+component AddressBook styledwith ["address.css"] {
+	BorderPane {
+		top : BorderPane { 
+			top : MenuBar {
+				menus : [
+					Menu {
+						text : "File",
+						items : [
+							MenuItem {
+								text : "New Person"
+							},
+							MenuItem {
+								text : "Delete Person"
+							},
+							MenuItem {
+								text : "Save"
+							}
+						]
+					},
+					Menu {
+						text : "Help"
+					}
+				]
+			},
+			bottom : ToolBar {
+				items : [
+					Button id SaveButton {
+						text : "Save",
+						graphic : ImageView id SaveButtonImage
+					},
+					Button id NewPersonButton {
+						text : "New",
+						graphic : ImageView id NewPersonButtonImage
+					},
+					Button id RemovePersonButton {
+						text : "Remove Person",
+						graphic : ImageView id RemovePersonButtonImage
+					}
+				]
+			}
+		},
+		center : SplitPane {
+			items : [
+				TabPane {
+					tabs : [
+						Tab id TabList {
+							content : ListView {
+								
+							},
+							text : "Personlist",
+							graphic : ImageView id ListViewTabImage
+						}
+					]
+				},
+				TabPane {
+					tabs : [
+						Tab {
+							text: "Persondetail",
+							graphic : ImageView id DetailViewTabImage,
+							content : 
+								ScrollPane {
+									content : GridPane id DetailPane {
+									children : [
+										Label {
+											text : "General",
+											styleClass : [
+												String("label"),
+												String("separator-label")
+											],
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 0,
+											call GridPane#columnSpan: 2
+										},
+										Label {
+											text : "Firstname",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 1
+										},
+										TextField id firstname {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 1,
+											call GridPane#hgrow: "ALWAYS"
+										},
+										Label {
+											text : "Lastname",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 2
+										},
+										TextField id lastname {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 2,
+											call GridPane#hgrow: "ALWAYS"
+										},
+										Label {
+											text : "Company",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 3
+										},
+										TextField id company {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 3,
+											call GridPane#hgrow: "ALWAYS"
+										},
+										Label {
+											text : "Job Title",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 4
+										},
+										TextField id jobtitle {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 4,
+											call GridPane#hgrow: "ALWAYS"
+										},
+										ImageView id personimage {
+											fitHeight : 120,
+											fitWidth : 120,
+											call GridPane#columnIndex: 2,
+											call GridPane#rowIndex: 0,
+											call GridPane#rowSpan: 5
+										},
+										Label {
+											text : "Note",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 5
+										},
+										TextField id note {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 5,
+											call GridPane#columnSpan: 2,
+											call GridPane#hgrow: "ALWAYS"
+										},
+										Label {
+											text : "Business Address",
+											styleClass : [
+												String("label"),
+												String("separator-label")
+											],
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 6,
+											call GridPane#columnSpan: 2
+										},
+										Label {
+											text : "Street",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 7
+										},
+										TextField id street {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 7,
+											call GridPane#columnSpan: 2,
+											call GridPane#hgrow: "ALWAYS"
+										},
+										Label {
+											text : "Zip",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 8
+										},
+										TextField id zip {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 8,
+											call GridPane#columnSpan: 2,
+											call GridPane#hgrow: "ALWAYS"
+										},
+										Label {
+											text : "Country",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 9
+										},
+										TextField id country {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 9,
+											call GridPane#columnSpan: 2,
+											call GridPane#hgrow: "ALWAYS"
+										},
+										Label {
+											text : "Business Phones",
+											styleClass : [
+												String("label"),
+												String("separator-label")
+											],
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 10,
+											call GridPane#columnSpan: 2
+										},
+										Label {
+											text : "Phone",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 11
+										},
+										TextField id phone {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 11,
+											call GridPane#columnSpan: 2,
+											call GridPane#hgrow: "ALWAYS"
+										},
+										Label {
+											text : "Mobile",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 12
+										},
+										TextField id mobile {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 12,
+											call GridPane#columnSpan: 2,
+											call GridPane#hgrow: "ALWAYS"
+										},
+										Label {
+											text : "Business Internet",
+											styleClass : [
+												String("label"),
+												String("separator-label")
+											],
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 13,
+											call GridPane#columnSpan: 2
+										},
+										Label {
+											text : "E-Mail",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 14
+										},
+										TextField id email {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 14,
+											call GridPane#columnSpan: 2,
+											call GridPane#hgrow: "ALWAYS"
+										} ,
+										Label {
+											text : "Web Site",
+											call GridPane#columnIndex: 0,
+											call GridPane#rowIndex: 15
+										},
+										TextField id website {
+											call GridPane#columnIndex: 1,
+											call GridPane#rowIndex: 15,
+											call GridPane#columnSpan: 2,
+											call GridPane#hgrow: "ALWAYS",
+											text : "Bla"
+										}
+									]
+								}
+							}
+						}
+					]	
+				}
+			]
+		}
+	}
+}

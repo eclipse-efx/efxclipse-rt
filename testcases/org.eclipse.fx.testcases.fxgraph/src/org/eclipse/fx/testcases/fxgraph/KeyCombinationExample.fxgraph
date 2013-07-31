@@ -1,0 +1,24 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.BorderPane
+import javafx.scene.control.MenuBar
+import javafx.scene.control.Menu
+import javafx.scene.control.MenuItem
+
+component KeyCombinationExample {
+	BorderPane {
+		top : MenuBar {
+			menus : [
+				Menu {
+					text : "File",
+					items : [
+						MenuItem {
+							text : "Open",
+							accelerator : "CTRL+O"
+						}
+					]
+				}
+			]
+		}
+	}
+}

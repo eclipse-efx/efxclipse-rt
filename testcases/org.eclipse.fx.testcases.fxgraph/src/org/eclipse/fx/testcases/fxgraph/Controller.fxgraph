@@ -1,0 +1,14 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import org.eclipse.fx.testcases.fxgraph.MyController
+import javafx.scene.layout.BorderPane
+import javafx.scene.control.Button
+
+component Controller controlledby MyController {
+	BorderPane {
+		center : Button {
+			text : "Hello World",
+			onAction : controllermethod clicked
+		}
+	} 
+}

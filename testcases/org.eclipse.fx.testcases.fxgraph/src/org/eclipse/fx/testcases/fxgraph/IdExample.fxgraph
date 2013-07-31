@@ -1,0 +1,12 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.BorderPane
+import javafx.scene.control.Button
+
+component IdExample {
+	BorderPane {
+		top : Button id test_me {
+			text : "Hello World"
+		}
+	}
+}

@@ -389,10 +389,16 @@ public class AdapterFactory {
 				
 				@Override
 				public void handleDispose(DisposeEvent event) {
-					fxInvalidationListeners.clear();
+					if( fxInvalidationListeners != null ) {
+						fxInvalidationListeners.clear();
+					}
+					
 					dbInvalidationListener = null;
 					
-					fxChangeListeners.clear();
+					if( fxChangeListeners != null ) {
+						fxChangeListeners.clear();	
+					}
+					
 					dbChangeListener = null;
 				}
 			});

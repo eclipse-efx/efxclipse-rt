@@ -26,7 +26,8 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WTrimBar;
 
 
 public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTrimBar<N>> implements ChildrenHandler<MTrimBar, MTrimElement> {
-
+	public static final String TAG_FILLSPACE = "fillspace";
+	
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
 		EventProcessor.attachChildProcessor(eventBroker, this);

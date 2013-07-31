@@ -1,0 +1,8 @@
+BorderPane {
+	-fx-background-color: green;
+	-fx-padding: 10px;
+}
+
+.test {
+	-fx-background-color: yellow;
+}

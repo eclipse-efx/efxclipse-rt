@@ -1,0 +1,39 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.BorderPane
+import javafx.scene.Group
+import org.eclipse.fx.testcases.fxgraph.shape.Cube
+import javafx.scene.transform.Rotate
+import javafx.geometry.Point3D
+
+component Scene3D {
+	Group {   
+		children : [
+			Cube { 
+				size : 50,
+				color : "RED",
+				shade : 1
+			},
+			Cube { 
+				translateX : 100,
+				size : 50,
+				color : "GREEN", 
+				shade : 1
+			},
+			Cube {
+				translateX : -100,
+				size : 50,
+				color : "ORANGE",
+				shade : 1
+			}
+		],
+		transforms : [
+			Rotate {
+				angle : 180,
+				axis : Point3D {
+					x : 1.0
+				}
+			}
+		]
+	}
+}

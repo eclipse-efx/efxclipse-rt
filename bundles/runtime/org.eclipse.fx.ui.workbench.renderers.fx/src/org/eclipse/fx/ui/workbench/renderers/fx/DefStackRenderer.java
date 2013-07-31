@@ -22,8 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -36,10 +34,10 @@ import javax.inject.Named;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
-import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.e4.controls.FXTab;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.fx.controls.FXTabFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
@@ -353,7 +351,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		private MStackElement domElement;
 		
 		@Inject
-		private IResourceUtilities<Image> resourceUtilities;
+		private GraphicsLoader graphicsLoader;
 		
 		private String label;
 		private boolean dirty;
@@ -432,7 +430,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		@Inject
 		public void setIcon(@Named(UIEvents.UILabel.ICONURI) @Optional String iconUri) {
 			if( iconUri != null ) {
-				getWidget().setGraphic(new ImageView(resourceUtilities.imageDescriptorFromURI(URI.createURI(iconUri))));
+				getWidget().setGraphic(graphicsLoader.getGraphicsNode(URI.createURI(iconUri)));
 			} else {
 				getWidget().setGraphic(null);
 			}

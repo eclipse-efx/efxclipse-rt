@@ -1,0 +1,12 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.BorderPane
+import javafx.scene.control.Button
+
+component CustomSceneUser sceneSetup org.eclipse.fx.testcases.fxgraph.PreviewScene {
+	BorderPane {
+		center : Button {
+			text : "Hello Custom Scene"
+		}
+	}
+}

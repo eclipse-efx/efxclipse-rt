@@ -1,0 +1,30 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.*
+import javafx.scene.control.Label
+import javafx.scene.control.TextField
+
+component StaticProperties {
+	GridPane {
+		children: [
+			Label {
+				text: "Firstname:",
+				call GridPane#columnIndex: 0,
+				call GridPane#rowIndex: 0
+			},
+			TextField {
+				call GridPane#columnIndex: 1,
+				call GridPane#rowIndex: 0
+			},
+			Label {
+				text: "Lastname:",
+				call GridPane#columnIndex: 0,
+				call GridPane#rowIndex: 1
+			},
+			TextField {
+				call GridPane#columnIndex: 1,
+				call GridPane#rowIndex: 1
+			}
+		]
+	}
+}

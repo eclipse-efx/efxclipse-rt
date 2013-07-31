@@ -1,0 +1,19 @@
+package org.eclipse.fx.testcases.fxgraph
+
+import javafx.scene.layout.*
+import javafx.scene.control.*
+import javafx.scene.paint.*
+
+component ReadOnlyMap {
+	Button {  
+		properties : {
+			foo : Color {
+				red : 0.1,
+				green : 0.1,
+				blue : 0.2
+			},
+			bar : 456,
+			test : "Hello" 
+		}
+	}
+}

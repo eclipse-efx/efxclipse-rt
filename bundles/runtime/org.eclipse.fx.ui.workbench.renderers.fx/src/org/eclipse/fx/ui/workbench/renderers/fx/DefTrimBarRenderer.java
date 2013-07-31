@@ -12,6 +12,7 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimElement;
@@ -44,12 +45,18 @@ public class DefTrimBarRenderer extends BaseTrimBarRenderer<HBox> {
 		@Override
 		public void addChild(WLayoutedWidget<MTrimElement> trimElementWidget) {
 			Node n = (Node) trimElementWidget.getStaticLayoutNode();
+			if( trimElementWidget.getDomElement().getTags().contains(TAG_FILLSPACE) ) {
+				HBox.setHgrow(n, Priority.ALWAYS);
+			}
 			getWidget().getChildren().add(n);
 		}
 
 		@Override
 		public void addChild(int idx, WLayoutedWidget<MTrimElement> trimElementWidget) {
 			Node n = (Node) trimElementWidget.getStaticLayoutNode();
+			if( trimElementWidget.getDomElement().getTags().contains(TAG_FILLSPACE) ) {
+				HBox.setHgrow(n, Priority.ALWAYS);
+			}
 			getWidget().getChildren().add(idx, n);
 		}
 		
