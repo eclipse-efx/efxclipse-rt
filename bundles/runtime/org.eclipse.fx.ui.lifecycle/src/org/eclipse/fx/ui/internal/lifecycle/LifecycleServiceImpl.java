@@ -50,22 +50,15 @@ public class LifecycleServiceImpl implements ELifecycleService{
 					for (Object object : set) {
 						Object invokeResult = ContextInjectionFactory.invoke(object, clazz, parentContext, partContext,true);
 						if (invokeResult!=null){//supports void methods
-							return (boolean)invokeResult;
+							boolean res = (boolean)invokeResult;
+							if (!res) return false;
 						}
-						else return true;
 					}
 				}
 			return true;
 		}
 	private IEclipseContext getContextForParent(MUIElement element) {
 		return modelService.getContainingContext(element);
-	}
-
-	private IEclipseContext getModelContext(MUIElement part) { 
-		if (part instanceof MContext) {
-			return ((MContext) part).getContext();
-		}
-		return getContextForParent(part);
 	}
 
 	@Override
