@@ -10,8 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.core.fxml;
 
+import java.net.URL;
 import java.util.ResourceBundle;
 
 public abstract class FXMLDocument<T> {
-	public abstract T load(ResourceBundle bundle);
+	public abstract T load(URL location, ResourceBundle bundle);
 }
