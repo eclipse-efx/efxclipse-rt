@@ -18,9 +18,10 @@ import javafx.fxml.FXMLLoader;
 public class ExtendedFXMLLoader {
 	public <T> T load(ClassLoader cl, String path) throws IOException {
 		try {
-			Class<?> clazz = cl.loadClass(path.replace('/', '.'));
+			String classname = path.substring(0,path.lastIndexOf('.')).replace('/', '.');
+			Class<?> clazz = cl.loadClass(classname);
 			FXMLDocument<T> d = (FXMLDocument<T>) clazz.newInstance();
-			return d.load(null);
+			return d.load(cl.getResource(path),null);
 		} catch (ClassNotFoundException e) {
 			return FXMLLoader.load(cl.getResource(path));
 		} catch (InstantiationException e) {
