@@ -11,3 +11,4 @@ Import-Package: javafx.embed.swing;version="2.2.0",
  javafx.scene;version="2.2.0",
  javafx.scene.layout;version="2.2.0"
 Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/interoptfunction.xml
