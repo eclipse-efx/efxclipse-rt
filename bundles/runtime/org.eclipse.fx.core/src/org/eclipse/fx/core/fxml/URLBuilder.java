@@ -10,10 +10,30 @@
  *******************************************************************************/
 package org.eclipse.fx.core.fxml;
 
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
-public abstract class FXMLDocument<T> {
-	public abstract T load(URL location, ResourceBundle bundle);
-	public abstract Object getController();
+import javafx.util.Builder;
+
+public class URLBuilder implements Builder<URL> {
+	private String value;
+	
+	public static URLBuilder create() {
+		return new URLBuilder();
+	}
+	
+	public URLBuilder value(String value) {
+		this.value = value;
+		return this;
+	}
+	
+	@Override
+	public URL build() {
+		try {
+			return new URL(value);
+		} catch (MalformedURLException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+
 }
