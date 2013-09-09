@@ -41,6 +41,9 @@
             <children xsi:type="basic:Part" xmi:id="_f5-RgOL-EeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.2" toBeRendered="false" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C2" closeable="true"/>
             <children xsi:type="basic:Part" xmi:id="_jRKPwOL-EeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.3" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C3" closeable="true"/>
             <children xsi:type="advanced:Placeholder" xmi:id="_ddQGkPW5EeG7tr8qKhf17Q" elementId="org.eclipse.fx.testcases.e4.placeholder.0" ref="_T4J0kPW5EeG7tr8qKhf17Q"/>
+            <children xsi:type="basic:Part" xmi:id="_7H_jwBmWEeOe294q4QTZJg" elementId="org.eclipse.fx.testcases.e4.part.15" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.TestPane" label="VBox Pane">
+              <tags>Container:VBox</tags>
+            </children>
           </children>
           <children xsi:type="basic:Part" xmi:id="_txxY4OMsEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.4" toBeRendered="false" containerData="10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C4"/>
         </children>
