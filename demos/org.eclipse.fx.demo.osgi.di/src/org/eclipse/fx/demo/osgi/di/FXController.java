@@ -24,6 +24,6 @@ public class FXController {
 	
 	@FXML
 	void sayHello() {
-		service.pring("Hello World!");
+		service.print("Hello World!");
 	}
 }

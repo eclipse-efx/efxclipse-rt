@@ -24,6 +24,6 @@ public class FXSubController {
 	
 	@FXML
 	void sayHello() {
-		service.pring("Subcontroller - Hello World!");
+		service.print("Subcontroller - Hello World!");
 	}
 }
