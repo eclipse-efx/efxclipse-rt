@@ -47,6 +47,7 @@ public class DIApplication extends AbstractJFXApplication implements IExecutable
 			try {
 				Class<?> cl = bundles[0].loadClass(applicationClass);
 				IEclipseContext eContext = EclipseContextFactory.getServiceContext(context);
+				ContextInjectionFactory.setDefault(eContext);
 				eContext.set(IApplicationContext.class, applicationContext);
 				eContext.set(Application.class, jfxApplication);
 				eContext.set(Stage.class, primaryStage);
