@@ -1,0 +1,38 @@
+.titleDialog_TitleArea {
+	-fx-border-style: none none solid none; 
+	-fx-border-color: #b4b4b4; 
+	-fx-border-width: 1;
+}
+
+.MessageTitleDialog .titleDialog_TitleArea {
+	-fx-padding: 10 14 10 14;
+    -fx-background-color: linear-gradient(#e2e2e2,#e2e2e2,#eeeeee);
+}
+
+.MessageTitleDialog {
+	-fx-background-color: linear-gradient(#ffffff,#f3f3f4);	
+}
+
+.MessageTitleDialog .titleDialog_Icon-error {
+	-fx-image: url("icons/dialog-error.png");
+}
+
+.MessageTitleDialog .titleDialog_Icon-information {
+	-fx-image: url("icons/dialog-information.png");
+}
+
+.MessageTitleDialog .titleDialog_Icon-warning {
+	-fx-image: url("icons/dialog-warning.png");
+}
+
+.MessageTitleDialog .titleDialog_Icon-confirm {
+	-fx-image: url("icons/preferences-desktop-notification.png");
+}
+
+.MessageTitleDialog .titleDialog_Icon-question {
+	-fx-image: url("icons/system-help.png");
+}
+
+.MessageTitleDialog .titleDialog_Icon-question_cancel {
+	-fx-image: url("icons/system-help.png");
+}

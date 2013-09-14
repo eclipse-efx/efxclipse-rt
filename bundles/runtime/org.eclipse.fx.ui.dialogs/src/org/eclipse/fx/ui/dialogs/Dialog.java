@@ -30,7 +30,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 public abstract class Dialog {
@@ -147,7 +146,7 @@ public abstract class Dialog {
 	}
 	
 	protected Stage create() {
-		Stage stage = new Stage(StageStyle.UTILITY);
+		Stage stage = new Stage();
 		stage.setTitle(title);
 // Causes problems when embedded in SWT		
 		stage.initOwner(parent);

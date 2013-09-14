@@ -13,6 +13,8 @@ package org.eclipse.fx.ui.dialogs;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -27,6 +29,7 @@ public abstract class TitleAreaDialog extends Dialog {
 	private String title;
 	private String message;
 	private URL imageURI;
+	private String iconClass;
 	
 	public TitleAreaDialog(Window parent, String windowTitle, String title, String message, URL imageURI) {
 		super(parent, windowTitle);
@@ -35,10 +38,25 @@ public abstract class TitleAreaDialog extends Dialog {
 		this.imageURI = imageURI;
 	}
 	
+	public TitleAreaDialog(Window parent, String windowTitle, String title, String message, String iconClass) {
+		super(parent, windowTitle);
+		this.title = title;
+		this.message = message;
+		this.iconClass = iconClass;
+	}
+	
+	@Override
+	protected List<String> getStylesheets() {
+		List<String> list = new ArrayList<String>(super.getStylesheets());
+		list.add(0, MessageDialog.class.getResource("titlearea_dialog.css").toExternalForm());
+		return list;
+	}
+	
 	@Override
 	protected final Node createDialogArea() {
 		VBox pane = new VBox();
 		BorderPane titleArea = new BorderPane();
+		titleArea.getStyleClass().add("titleDialog_TitleArea");
 		titleArea.setPadding(new Insets(0,0,0,10));
 		
 		VBox messageArea = new VBox();
@@ -58,20 +76,27 @@ public abstract class TitleAreaDialog extends Dialog {
 		}
 		
 		titleArea.setCenter(messageArea);
-		try {
-			InputStream in = imageURI.openStream();
-			titleArea.setRight(new ImageView(new Image(in)));
-			in.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	 
 		
-		titleArea.setStyle("-fx-border-style: none none solid none; -fx-border-color: lightgray; -fx-border-width: 2px;");
+		if( imageURI != null ) {
+			try {
+				InputStream in = imageURI.openStream();
+				titleArea.setRight(new ImageView(new Image(in)));
+				in.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if( iconClass != null ) {
+			System.err.println(iconClass); 
+			ImageView image = new ImageView();
+			image.getStyleClass().addAll("titleDialog_Icon-"+iconClass);
+			titleArea.setRight(image);
+		}
 		
 		pane.getChildren().add(titleArea);
 		BorderPane dialogContent = new BorderPane();
-		dialogContent.setCenter(createDialogContent());
+		dialogContent.getStyleClass().add("titleDialog_ContentArea");
+		dialogContent.setLeft(createDialogContent());
 		dialogContent.setPadding(new Insets(10, 10, 10, 10));
 		pane.getChildren().add(dialogContent);
 		

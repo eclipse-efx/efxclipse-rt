@@ -98,7 +98,7 @@ public class MessageDialog extends Dialog {
 	private final int okButton;
 	private final int cancelButton;
 	
-	public MessageDialog(Window parent, String windowTitle, String message, Type type, int okButton, int cancelButton, String... dialogButtonLabels) {
+	MessageDialog(Window parent, String windowTitle, String message, Type type, int okButton, int cancelButton, String... dialogButtonLabels) {
 		super(parent, windowTitle);
 		this.type = type;
 		this.message = message;
