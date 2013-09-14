@@ -87,7 +87,6 @@ public abstract class TitleAreaDialog extends Dialog {
 				e.printStackTrace();
 			}
 		} else if( iconClass != null ) {
-			System.err.println(iconClass); 
 			ImageView image = new ImageView();
 			image.getStyleClass().addAll("titleDialog_Icon-"+iconClass);
 			titleArea.setRight(image);
