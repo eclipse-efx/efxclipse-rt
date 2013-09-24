@@ -281,11 +281,11 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			// TODO Should we create the scene on show???
 			Scene s;
 			if (support3d && Platform.isSupported(ConditionalFeature.SCENE3D)) {
-				s = new Scene(rootPane, -1, -1, true);
+				s = new Scene(rootPane, mWindow.getWidth(), mWindow.getHeight(), true);
 				s.setCamera(new PerspectiveCamera());
 
 			} else {
-				s = new Scene(rootPane);
+				s = new Scene(rootPane, mWindow.getWidth(), mWindow.getHeight());
 			}
 
 			s.focusOwnerProperty().addListener(new ChangeListener<Node>() {
