@@ -102,15 +102,15 @@ public class E4Application extends AbstractJFXApplication {
 			try {
 				if (!checkInstanceLocation(instanceLocation))
 					return;
-
+				
 				workbenchContext = workbench.getContext();
 
 				// Create and run the UI (if any)
 				workbench.createAndRunUI(workbench.getApplication());
-
+				
 				return;
 			} finally {
-				
+				applicationContext.applicationRunning();
 			}
 		}
 	}
