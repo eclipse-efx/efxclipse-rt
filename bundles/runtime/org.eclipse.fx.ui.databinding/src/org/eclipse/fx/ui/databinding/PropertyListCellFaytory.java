@@ -20,17 +20,20 @@ import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
 public abstract class PropertyListCellFaytory<O> implements Callback<ListView<O>, ListCell<O>> {
-	
-	public static <O> PropertyListCellFaytory<O> text(final IValueProperty textProperty) {
+	public static <O> PropertyListCellFaytory<O> textFactory(final IValueProperty textProperty) {
 		return new PropertyListCellFaytory<O>() {
 
 			@Override
 			public ListCell<O> call(ListView<O> param) {
-				return new TextOnlyPropertyListCell<>(textProperty);
+				return textCell(textProperty);
 			}
 		};
 	}
-
+	
+	public ListCell<O> textCell(final IValueProperty textProperty) {
+		return new TextOnlyPropertyListCell<>(textProperty);
+	}
+	
 	static class TextOnlyPropertyListCell<O> extends ListCell<O> {
 		private IObservableValue currentObservable;
 		private IValueProperty textProperty;
