@@ -50,7 +50,8 @@ public abstract class PropertyListCellFaytory<O> implements Callback<ListView<O>
 			textProperty().unbind();
 			
 			if( item != null && ! empty ) {
-				ObservableWritableValue<String> adapt = AdapterFactory.<String>adapt(textProperty.observe(item));
+				currentObservable = textProperty.observe(item);
+				ObservableWritableValue<String> adapt = AdapterFactory.<String>adapt(currentObservable);
 				textProperty().bind(adapt);
 			}
 			
