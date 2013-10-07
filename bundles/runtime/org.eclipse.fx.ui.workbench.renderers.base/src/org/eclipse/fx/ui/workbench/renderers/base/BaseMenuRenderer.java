@@ -51,6 +51,8 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 	@Inject
 	private Logger logger;
 	
+	private static final String DYNAMIC_MENU_CONTRIBUTION = "DYNAMIC_MENU_CONTRIBUTION";
+	
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
 		EventProcessor.attachChildProcessor(eventBroker, this);
@@ -82,11 +84,15 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 						
 						Object contrib = dc.getObject();
 						if( contrib != null ) {
-							List<MMenuElement> list = new ArrayList<MMenuElement>();
-							context.set(List.class, list);
+							@SuppressWarnings("unchecked")
+							List<MMenuElement> previous = (List<MMenuElement>) dc.getTransientData().remove(DYNAMIC_MENU_CONTRIBUTION);
+							context.set(List.class, previous);
 							try {
 								ContextInjectionFactory.invoke(contrib, AboutToHide.class, context, null);
-								element.getChildren().removeAll(list);	
+								
+								if( previous != null && ! previous.isEmpty() ) {
+									element.getChildren().removeAll(previous);
+								}
 							} catch(Throwable t) {
 								logger.debug("Unable to process the AboutToHide", t);
 							}
@@ -126,7 +132,8 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 						ContextInjectionFactory.invoke(contrib, AboutToShow.class, context, null);
 	 					
 	 					int idx = element.getChildren().indexOf(e);
-	 					element.getChildren().addAll(idx, list);	
+	 					element.getChildren().addAll(idx, list);
+	 					dc.getTransientData().put(DYNAMIC_MENU_CONTRIBUTION, list);
 					} catch(Throwable t) {
 						logger.debug("Unable to process AboutToShow", t);
 					}
