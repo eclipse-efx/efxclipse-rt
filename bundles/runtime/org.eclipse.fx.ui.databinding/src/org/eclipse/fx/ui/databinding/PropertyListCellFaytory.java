@@ -33,7 +33,7 @@ public abstract class PropertyListCellFaytory<O> implements Callback<ListView<O>
 		};
 	}
 	
-	public static <O> PropertyListCellFaytory<O> textCellFactory(final String template, final IValueProperty... textProperties) {
+	public static <O> PropertyListCellFaytory<O> textFactory(final String template, final IValueProperty... textProperties) {
 		return new PropertyListCellFaytory<O>() {
 
 			@Override
