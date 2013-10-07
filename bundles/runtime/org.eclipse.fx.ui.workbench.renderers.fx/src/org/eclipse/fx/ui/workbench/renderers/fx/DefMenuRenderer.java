@@ -41,10 +41,14 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		private ToggleGroup group;
 		Runnable showingCallback;
 		Runnable hidingCallback;
+		MenuItem item;
 		
 		@Override
 		protected Menu createWidget() {
 			final Menu m = new Menu();
+			item = new MenuItem("<empty>");
+			item.setDisable(true); 
+			m.getItems().add(item);
 			m.setMnemonicParsing(true);
 			m.setOnShowing(new EventHandler<Event>() {
 				
@@ -56,6 +60,9 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 							showingCallback.run();
 						}	
 					}
+					if(getWidget().getItems().size() > 1) {
+						getWidget().getItems().remove(item);
+					}
 				}
 			});
 			m.setOnHiding(new EventHandler<Event>() {
@@ -63,6 +70,10 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 				@Override
 				public void handle(Event arg0) {
 					if (hidingCallback!=null) hidingCallback.run();
+					
+					if(getWidget().getItems().isEmpty()) {
+						getWidget().getItems().add(item);
+					}
 				}
 			});
 			return m;
@@ -95,6 +106,10 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		
 		@Override
 		public void addElement(WMenuElement<MMenuElement> widget) {
+			if(getWidget().getItems().size()==1) {
+				getWidget().getItems().remove(item);
+			}
+			
 			if( widget.getWidget() instanceof Toggle ) {
 				if( group == null ) {
 					group = new ToggleGroup();
@@ -108,6 +123,10 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		
 		@Override
 		public void addElement(int idx, WMenuElement<MMenuElement> widget) {
+			if(getWidget().getItems().size()==1) {
+				getWidget().getItems().remove(item);
+			}
+			
 			if( widget.getWidget() instanceof Toggle ) {
 				if( group == null ) {
 					group = new ToggleGroup();
@@ -125,6 +144,9 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 				((Toggle)widget.getWidget()).setToggleGroup(null);
 			}
 			getWidget().getItems().remove(widget.getWidget());
+			if( getWidget().getItems().isEmpty() ) {
+				getWidget().getItems().add(item);
+			}
 		}
 		
 		@Override
