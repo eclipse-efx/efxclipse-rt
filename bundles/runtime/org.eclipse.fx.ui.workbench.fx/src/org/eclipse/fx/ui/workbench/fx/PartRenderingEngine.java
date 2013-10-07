@@ -276,7 +276,12 @@ public class PartRenderingEngine implements IPresentationEngine {
 			// Check if the control is already rendered
 			if( renderer != null ) {
 				if (parentRenderer != null) {
-					parentRenderer.hideChild(container, element);
+					try {
+						parentRenderer.hideChild(container, element);
+					} catch(Throwable t) {
+						log.error(t.getMessage(), t); 
+					}
+					
 				}
 				
 				// Need clean up everything below
