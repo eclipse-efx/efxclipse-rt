@@ -41,7 +41,7 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 	@Log
 	Logger logger;
 	
-	private ParameterizedCommand generateParameterizedCommand(
+	protected ParameterizedCommand generateParameterizedCommand(
 			final MHandledItem item, final IEclipseContext lclContext) {
 		if( item.getCommand() == null ) {
 			logger.error("No command assigned to " + item);

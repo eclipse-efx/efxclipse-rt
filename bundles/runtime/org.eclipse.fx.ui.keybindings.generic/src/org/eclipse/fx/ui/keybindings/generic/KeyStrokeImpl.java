@@ -176,6 +176,11 @@ public class KeyStrokeImpl extends TriggerImpl implements KeyStroke {
 	}
 	
 	@Override
+	public int getKeyCode() {
+		return naturalKey;
+	}
+	
+	@Override
 	public String toString() {
 		return "Modifiers: " + modifierKeys + "; NatKey: " + naturalKey;
 	}

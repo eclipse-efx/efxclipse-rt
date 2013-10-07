@@ -10,13 +10,21 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.inject.Inject;
 
+import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuItem;
 import org.eclipse.e4.ui.model.application.ui.menu.impl.MenuPackageImpl;
+import org.eclipse.fx.ui.keybindings.KeySequence;
+import org.eclipse.fx.ui.keybindings.TriggerSequence;
+import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuItem;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 
@@ -25,7 +33,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 public abstract class BaseMenuItemRenderer<N> extends BaseItemRenderer<MMenuItem, WMenuItem<N>> {
 	@Inject
 	UISynchronize sync;
-	
+		
 	@Override
 	protected void initWidget(final MMenuItem element, WMenuItem<N> widget) {
 		super.initWidget(element, widget);
@@ -38,6 +46,23 @@ public abstract class BaseMenuItemRenderer<N> extends BaseItemRenderer<MMenuItem
 				executeAction(element,modelContext.getActiveLeaf()); 
 			}
 		});
+		
+		if( element instanceof MHandledMenuItem ) {
+			IEclipseContext lclContext = getModelContext(element);
+			EBindingService service = lclContext.get(EBindingService.class);
+			ParameterizedCommand command = generateParameterizedCommand((MHandledMenuItem) element, lclContext);
+			Collection<TriggerSequence> sequences = service.getSequencesFor(command);
+			if( ! sequences.isEmpty() ) {
+				Iterator<TriggerSequence> it = sequences.iterator();
+				while( it.hasNext() ) {
+					TriggerSequence s = it.next();
+					if( s instanceof KeySequence ) {
+						widget.setAccelerator((KeySequence) s);
+						break;
+					}
+				}
+			}
+		}
 	}
 	
 	@Override

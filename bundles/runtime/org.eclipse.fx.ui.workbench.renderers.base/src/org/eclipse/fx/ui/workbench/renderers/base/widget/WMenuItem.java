@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuItem;
+import org.eclipse.fx.ui.keybindings.KeySequence;
 
 public interface WMenuItem<N> extends WMenuElement<MMenuItem> {
 
@@ -18,4 +19,5 @@ public interface WMenuItem<N> extends WMenuElement<MMenuItem> {
 
 	void setHandled(boolean handled);
 
+	void setAccelerator(KeySequence sequence);
 }

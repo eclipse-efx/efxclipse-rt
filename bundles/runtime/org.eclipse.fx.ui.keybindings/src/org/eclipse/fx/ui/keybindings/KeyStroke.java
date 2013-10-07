@@ -19,5 +19,7 @@ public interface KeyStroke extends Trigger {
 	boolean hasShiftModifier();
 
 	boolean hasCommandModifier(); 
+	
+	int getKeyCode();
 
 }

@@ -11,23 +11,27 @@
 package org.eclipse.fx.ui.workbench.renderers.fx;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination.ModifierValue;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.ui.model.application.ui.menu.ItemType;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuItem;
-import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.ui.keybindings.KeySequence;
+import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuItem;
@@ -82,13 +86,29 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 
 		@Override
 		protected MenuItem createWidget() {
-			MenuItem item = internalCreateWidget();
+			final MenuItem item = internalCreateWidget();
 			item.setMnemonicParsing(true);
 			if( item != null ) {
+				final AtomicBoolean skip = new AtomicBoolean(false);
+				item.setOnMenuValidation(new EventHandler<Event>() {
+					
+					@Override
+					public void handle(Event event) {
+						if( ! item.isDisable() ) {
+							skip.set(true);
+						}
+					}
+				});
 				item.setOnAction(new EventHandler<ActionEvent>() {
 					
 					@Override
 					public void handle(ActionEvent event) {
+						// Always skip when called through a keyevent
+						if( skip.get() ) {
+							skip.set(false);
+							return;
+						}
+						
 						if( runnable != null ) {
 							runnable.run();
 						}
@@ -160,6 +180,24 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 				this.handled = handled;
 				updateEnabledState();	
 			}
+		}
+		
+		@Override
+		public void setAccelerator(KeySequence sequence) {
+			
+			if( sequence.getKeyStrokes().length == 1 ) {
+				KeyStroke k = sequence.getKeyStrokes()[0];
+				
+				getWidget().setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(Character.toUpperCase((char) k.getKeyCode())+""),
+						k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
+						k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
+						k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
+						k.hasCommandModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
+						ModifierValue.ANY				
+				));
+			}
+			
+//			new KeyCharacterCombination
 		}
 		
 		private void updateEnabledState() {
