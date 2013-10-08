@@ -43,7 +43,7 @@ public abstract class BaseMenuItemRenderer<N> extends BaseItemRenderer<MMenuItem
 			
 			@Override
 			public void run() {
-				executeAction(element,modelContext.getActiveLeaf()); 
+				executeAction(element,modelContext); 
 			}
 		});
 		

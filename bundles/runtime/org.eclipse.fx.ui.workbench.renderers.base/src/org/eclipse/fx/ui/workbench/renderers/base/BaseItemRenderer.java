@@ -124,7 +124,7 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 			try {
 				ContributionsAnalyzer.populateModelInterfaces(item, runContext, item.getClass().getInterfaces());
 				runContext.set(MItem.class.getName(), item);
-				ContextInjectionFactory.invoke(object,Execute.class, context.getActiveLeaf(), runContext);
+				ContextInjectionFactory.invoke(object,Execute.class, context.getActiveLeaf(), runContext, new Object());
 			} finally {
 				runContext.dispose();	
 			}
@@ -143,6 +143,7 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 			final IEclipseContext runContext = context.createChild("HI-ToolItem");
 			try {
 				ContributionsAnalyzer.populateModelInterfaces(item,runContext, item.getClass().getInterfaces());
+				runContext.set(MItem.class.getName(), item);
 				service.executeHandler(cmd, runContext);
 			} finally {
 				runContext.dispose();				

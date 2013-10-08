@@ -32,7 +32,7 @@ public abstract class BaseToolItemRenderer<N> extends BaseItemRenderer<MToolItem
 			
 			@Override
 			public void run() {
-				executeAction(element,modelContext.getActiveLeaf());
+				executeAction(element,modelContext);
 			}
 		});
 	}
