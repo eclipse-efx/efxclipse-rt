@@ -93,7 +93,7 @@ public abstract class BaseMenuItemRenderer<N> extends BaseItemRenderer<MMenuItem
 		final WMenuItem<N> widget = (WMenuItem<N>) menuElement.getWidget();
 
 		// can we call canExecute in the none ui thread????
-		sync.asyncExec(new Runnable() {
+		sync.syncExec(new Runnable() {
 			
 			@Override
 			public void run() {
