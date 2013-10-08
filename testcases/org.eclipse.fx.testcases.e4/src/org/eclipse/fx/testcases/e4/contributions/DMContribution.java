@@ -15,12 +15,12 @@ public class DMContribution {
 //		menu.getChildren().remove(0); <--works
 //		System.err.println(menu);
 //		System.err.println("ATSH");
-		for(int i=0 ; i< 5; i++) {
+		for(int i=0 ; i< 1; i++) {
 	           MDirectMenuItem menuItem = MMenuFactory.INSTANCE.createDirectMenuItem();
 	           menuItem.setLabel("Test  menu " + i);
 	           menuItem.setElementId("test.dynamicmenucontribution"+ i);
 	           menuItem.setContributorURI("platform:/plugin/org.eclipse.fx.testcases.e4");
-	           menuItem.setContributionURI("bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler");
+	           menuItem.setContributionURI("bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DynDiHandler");
 	           items.add(menuItem);
 	       }
 	}
