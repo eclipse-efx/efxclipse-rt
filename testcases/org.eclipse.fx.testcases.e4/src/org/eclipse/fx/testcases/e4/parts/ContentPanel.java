@@ -3,6 +3,7 @@ package org.eclipse.fx.testcases.e4.parts;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.di.extensions.EventTopic;
@@ -12,6 +13,7 @@ import org.eclipse.e4.ui.di.PersistState;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.fx.testcases.e4.handlers.EventSender;
 
 import javafx.event.Event;
@@ -62,6 +64,11 @@ public class ContentPanel {
 	@PersistState
 	void persistState() {
 		System.err.println("Persiting State "+ part);
+	}
+	
+	@Inject
+	void currentSelection(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) String selection) {
+		System.err.println("CURRENT SELECTION: " + selection);
 	}
 	
 //	@Inject

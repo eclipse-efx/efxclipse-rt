@@ -1,5 +1,7 @@
 package org.eclipse.fx.testcases.e4.parts;
 
+import java.util.UUID;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,6 +33,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicFactoryImpl;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.PopupMenuService;
 
@@ -40,6 +43,9 @@ public class ControlPanel {
 	@Inject
 	IPresentationEngine engine;
 	private TextField focusField;
+	
+	@Inject
+	ESelectionService selectionService;
 	
 	@SuppressWarnings("rawtypes")
 	@Inject
@@ -469,6 +475,18 @@ public class ControlPanel {
 			Label label = new Label("Context menu");
 			menuService.registerContextMenu(label, "org.eclipse.fx.testcases.e4.popupmenu.0");
 			box.getChildren().add(label);
+		}
+		
+		{
+			Button button = new Button("Publish selection");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				
+				@Override
+				public void handle(ActionEvent event) {
+					selectionService.setSelection(UUID.randomUUID().toString());
+				}
+			});
+			box.getChildren().add(button);
 		}
 
 		p.setTop(box);
