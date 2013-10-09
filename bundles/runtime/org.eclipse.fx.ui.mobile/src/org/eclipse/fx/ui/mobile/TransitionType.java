@@ -10,8 +10,20 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.mobile;
 
+import org.eclipse.fx.ui.mobile.animations.TransitionDelegate;
+
 public enum TransitionType {
-	NONE,
-	SLIDE_LEFT,
-	SLIDE_RIGHT
+	NONE(null),
+	SLIDE_LEFT(TransitionDelegate.slideLeft()),
+	SLIDE_RIGHT(TransitionDelegate.slideRight());
+	
+	private final TransitionDelegate delegate;
+	
+	private TransitionType(TransitionDelegate delegate) {
+		this.delegate = delegate;
+	}
+	
+	public TransitionDelegate getDelegate() {
+		return delegate;
+	}
 }

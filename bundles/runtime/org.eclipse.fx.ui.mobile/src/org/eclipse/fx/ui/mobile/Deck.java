@@ -10,10 +10,15 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.mobile;
 
+
+
+import org.eclipse.fx.ui.mobile.animations.TransitionDelegate;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.Rectangle;
 
 public class Deck extends Region {
 	private ObservableList<Card> cards = FXCollections.observableArrayList();
@@ -25,19 +30,33 @@ public class Deck extends Region {
 		getChildren().add(contenArea);
 	}
 	
+	@Override
+	protected void layoutChildren() {
+		super.layoutChildren();
+		contenArea.resizeRelocate(getInsets().getLeft(), getInsets().getTop(),getWidth()-getInsets().getLeft(), getHeight()-getInsets().getTop());
+		contenArea.setClip(new Rectangle(getWidth()-getInsets().getLeft(), getHeight()-getInsets().getTop()));
+	}
+	
 	public ObservableList<Card> getCards() {
 		return cards;
 	}
 	
 	public void moveTo(String name, TransitionType animation) {
-		
+		moveTo(name, animation.getDelegate());
 	}
 	
 	public void moveTo(String name, TransitionDelegate delegate) {
-		
+		for( Card c : cards ) {
+			if( name.equals(c.getName()) ) {
+				if( delegate != null ) {
+					delegate.transitionTo(contenArea, (Card) contenArea.getCenter(), c);
+				} else {
+					contenArea.setCenter(c);	
+				}
+				
+				break;
+			}
+		}
 	}
 	
-	interface TransitionDelegate {
-		void transition(Card from, Card to, Runnable finished);
-	}
 }

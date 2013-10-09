@@ -11,5 +11,5 @@
 package org.eclipse.fx.ui.mobile;
 
 public abstract class MobileApp {
-	protected abstract void createUI(Deck pane);
+	public abstract Deck createUI();
 }
