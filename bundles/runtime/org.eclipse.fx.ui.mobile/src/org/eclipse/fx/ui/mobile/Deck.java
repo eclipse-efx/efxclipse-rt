@@ -14,6 +14,8 @@ package org.eclipse.fx.ui.mobile;
 
 import org.eclipse.fx.ui.mobile.animations.TransitionDelegate;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.BorderPane;
@@ -28,6 +30,14 @@ public class Deck extends Region {
 	public Deck() {
 		contenArea = new BorderPane();
 		getChildren().add(contenArea);
+		cards.addListener(new InvalidationListener() {
+			
+			@Override
+			public void invalidated(Observable observable) {
+				contenArea.setCenter(cards.get(0));
+				cards.removeListener(this);
+			}
+		});
 	}
 	
 	@Override
