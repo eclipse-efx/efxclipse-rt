@@ -44,6 +44,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.ui.panes</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.services</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.dialogs</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.mobile</module>
 		<!-- EMF -->
 		<module>../../bundles/runtime/org.eclipse.fx.emf.edit.ui</module>
 		<module>../../bundles/runtime/org.eclipse.fx.emf.databinding</module>
