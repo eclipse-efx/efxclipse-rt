@@ -22,8 +22,6 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBarElement;
 import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 
@@ -100,10 +98,8 @@ public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToo
 		int idx = getRenderedIndex(parentElement, element);
 		WToolBar<N> toolbar = getWidget(parentElement);
 		@SuppressWarnings("unchecked")
-		WLayoutedWidget<MToolBarElement> widget = (WLayoutedWidget<MToolBarElement>) element.getWidget();
-		if (widget instanceof WMenu) {
-			toolbar.addChild(idx, widget);
-		}
+		WWidget<MToolBarElement> widget = (WWidget<MToolBarElement>) element.getWidget();
+		toolbar.addChild(idx, widget);
 	}
 
 	@Override
