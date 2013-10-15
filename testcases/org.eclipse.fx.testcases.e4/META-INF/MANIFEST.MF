@@ -26,7 +26,9 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="0.10.1",
  org.eclipse.fx.ui.workbench.renderers.base,
  org.eclipse.fx.ui.dialogs,
  org.eclipse.fx.ui.lifecycle,
- org.eclipse.fx.ui.workbench.base
+ org.eclipse.fx.ui.workbench.base,
+ org.eclipse.e4.core.commands,
+ org.eclipse.core.commands
 Bundle-ActivationPolicy: lazy
 Import-Package: javafx.animation;version="2.0.0",
  javafx.application;version="2.0.0",
