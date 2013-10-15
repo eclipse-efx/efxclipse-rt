@@ -22,6 +22,9 @@ import javafx.util.Callback;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.e4.core.commands.ECommandService;
+import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -30,6 +33,8 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicFactoryImpl;
+import org.eclipse.e4.ui.model.application.ui.menu.MHandledToolItem;
+import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
@@ -46,6 +51,12 @@ public class ControlPanel {
 	
 	@Inject
 	ESelectionService selectionService;
+	
+	@Inject
+	ECommandService commandService;
+	
+	@Inject
+	EHandlerService handlerService;
 	
 	@SuppressWarnings("rawtypes")
 	@Inject
@@ -484,6 +495,25 @@ public class ControlPanel {
 				@Override
 				public void handle(ActionEvent event) {
 					selectionService.setSelection(UUID.randomUUID().toString());
+				}
+			});
+			box.getChildren().add(button);
+		}
+		
+		{
+			Button button = new Button("Add ToolBar element");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				
+				@Override
+				public void handle(ActionEvent event) {
+					MToolBar toolbar = (MToolBar) modelService.find("org.efxclipse.e4.maintoolbar", application);
+					MHandledToolItem element = modelService.createModelElement(MHandledToolItem.class);
+					element.setElementId("my.new.item.id");
+					element.setLabel("New item");
+					
+					element.setCommand(application.getCommands().get(0));
+
+					toolbar.getChildren().add(element);
 				}
 			});
 			box.getChildren().add(button);
