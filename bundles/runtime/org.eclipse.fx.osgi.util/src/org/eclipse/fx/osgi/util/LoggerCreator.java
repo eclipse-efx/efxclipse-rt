@@ -26,7 +26,7 @@ public class LoggerCreator {
 		}
 
 		if (ctx == null) {
-			b = FrameworkUtil.getBundle(clazz);
+			b = FrameworkUtil.getBundle(LoggerCreator.class);
 
 			if (b != null) {
 				ctx = b.getBundleContext();
