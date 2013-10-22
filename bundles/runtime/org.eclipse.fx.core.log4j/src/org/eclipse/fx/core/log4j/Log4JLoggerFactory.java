@@ -14,11 +14,19 @@ import java.text.MessageFormat;
 
 import javax.inject.Provider;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 
 public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory> {
 
+	public Log4JLoggerFactory() {
+		String properties = System.getProperty("efxclipse.log4.properties");
+		if( properties != null ) {
+			PropertyConfigurator.configure( properties );
+		}
+	}
+	
 	@Override
 	public LoggerFactory get() {
 		return this;
