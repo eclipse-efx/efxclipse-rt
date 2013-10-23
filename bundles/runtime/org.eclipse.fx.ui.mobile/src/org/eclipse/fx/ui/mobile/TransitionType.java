@@ -16,7 +16,8 @@ public enum TransitionType {
 	NONE(null),
 	SLIDE_LEFT(TransitionDelegate.slideLeft()),
 	SLIDE_RIGHT(TransitionDelegate.slideRight()),
-	FADE(TransitionDelegate.fade());
+	FADE(TransitionDelegate.fade()),
+	ZOOM_SLIDE(TransitionDelegate.zoomSlide());
 	
 	private final TransitionDelegate delegate;
 	
