@@ -10,8 +10,15 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.mobile;
 
+import java.util.Collections;
+import java.util.List;
+
 import javafx.scene.layout.Region;
 
 public abstract class MobileApp {
+	public List<String> getInitialStylesheets() {
+		return Collections.emptyList();
+	}
+		
 	public abstract Region createUI();
 }
