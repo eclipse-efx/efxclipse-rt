@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.mobile;
 
-import javafx.scene.Node;
+import javafx.scene.layout.Region;
 
 public abstract class MobileApp {
-	public abstract Node createUI();
+	public abstract Region createUI();
 }
