@@ -15,7 +15,8 @@ import org.eclipse.fx.ui.mobile.animations.TransitionDelegate;
 public enum TransitionType {
 	NONE(null),
 	SLIDE_LEFT(TransitionDelegate.slideLeft()),
-	SLIDE_RIGHT(TransitionDelegate.slideRight());
+	SLIDE_RIGHT(TransitionDelegate.slideRight()),
+	FADE(TransitionDelegate.fade());
 	
 	private final TransitionDelegate delegate;
 	

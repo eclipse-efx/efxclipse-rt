@@ -1,6 +1,7 @@
 package org.eclipse.fx.ui.mobile.animations;
 
 import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
@@ -19,8 +20,8 @@ public abstract class TransitionDelegate {
 		Bounds b = from.getBoundsInParent();
 		to.resizeRelocate(b.getMinX(), b.getMinY(), b.getWidth(), b.getHeight());
 
-		parent.getChildren().add(0,from);
-		parent.getChildren().add(1,to);
+		parent.getChildren().add(0,to);
+		parent.getChildren().add(1,from);
 		
 		Animation animation = createAndPrepareAnimation(from, to);
 		
@@ -99,4 +100,24 @@ public abstract class TransitionDelegate {
 		};
 	}
 	
+	public static TransitionDelegate fade() {
+		return new TransitionDelegate() {
+			
+			@Override
+			protected void resetProperties(Card from, Card to) {
+				from.setOpacity(1);
+				to.setOpacity(1);
+			}
+			
+			@Override
+			protected Animation createAndPrepareAnimation(Card from, Card to) {
+				FadeTransition t = new FadeTransition(Duration.seconds(1));
+				t.setNode(from);
+				t.setInterpolator(Interpolator.EASE_BOTH);
+				t.setFromValue(1.0);
+				t.setToValue(0.0);
+				return t;
+			}
+		};
+	}
 }
