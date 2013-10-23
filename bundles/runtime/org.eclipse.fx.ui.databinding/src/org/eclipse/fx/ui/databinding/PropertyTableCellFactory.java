@@ -70,6 +70,8 @@ public abstract class PropertyTableCellFactory<S,T> implements Callback<TableCol
 				currentObservable = textProperty.observe(item);
 				ObservableWritableValue<String> adapt = AdapterFactory.<String>adapt(currentObservable);
 				textProperty().bind(adapt);
+			} else {
+				setText(null);
 			}
 			
 			if( oldObservable != null ) {
@@ -99,6 +101,8 @@ public abstract class PropertyTableCellFactory<S,T> implements Callback<TableCol
 				currentObservable = new TemplateComputedValue(item, template, properties);
 				ObservableWritableValue<String> adapt = AdapterFactory.<String>adapt(currentObservable);
 				textProperty().bind(adapt);
+			} else {
+				setText(null);
 			}
 			
 			if( oldObservable != null )

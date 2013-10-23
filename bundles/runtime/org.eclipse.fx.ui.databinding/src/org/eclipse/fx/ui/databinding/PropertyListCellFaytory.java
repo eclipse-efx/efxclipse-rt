@@ -71,6 +71,8 @@ public abstract class PropertyListCellFaytory<O> implements Callback<ListView<O>
 				currentObservable = textProperty.observe(item);
 				ObservableWritableValue<String> adapt = AdapterFactory.<String>adapt(currentObservable);
 				textProperty().bind(adapt);
+			} else {
+				setText(null);
 			}
 			
 			if( oldObservable != null ) {
@@ -100,6 +102,8 @@ public abstract class PropertyListCellFaytory<O> implements Callback<ListView<O>
 				currentObservable = new TemplateComputedValue(item, template, properties);
 				ObservableWritableValue<String> adapt = AdapterFactory.<String>adapt(currentObservable);
 				textProperty().bind(adapt);
+			} else {
+				setText(null);
 			}
 			
 			if( oldObservable != null )
