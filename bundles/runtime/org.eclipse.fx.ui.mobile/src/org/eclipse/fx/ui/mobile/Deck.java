@@ -58,10 +58,12 @@ public class Deck extends Region {
 	public void moveTo(String name, TransitionDelegate delegate) {
 		for( Card c : cards ) {
 			if( name.equals(c.getName()) ) {
-				if( delegate != null ) {
-					delegate.transitionTo(contenArea, (Card) contenArea.getCenter(), c);
-				} else {
-					contenArea.setCenter(c);	
+				if( contenArea.getCenter() != c ) {
+					if( delegate != null ) {
+						delegate.transitionTo(contenArea, (Card) contenArea.getCenter(), c);
+					} else {
+						contenArea.setCenter(c);	
+					}	
 				}
 				
 				break;
