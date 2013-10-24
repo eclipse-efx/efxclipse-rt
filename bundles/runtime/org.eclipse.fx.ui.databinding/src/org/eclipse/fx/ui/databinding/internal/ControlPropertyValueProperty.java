@@ -12,13 +12,14 @@ package org.eclipse.fx.ui.databinding.internal;
 
 import javafx.beans.property.Property;
 
-public abstract class ControlPropertyValueProperty extends ControlReadOnlyPropertyValueProperty {
-	protected abstract Property<Object> getProperty(Object source);
+public abstract class ControlPropertyValueProperty<O> extends ControlReadOnlyPropertyValueProperty<O> {
+	protected abstract Property<O> getProperty(Object source);
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doSetValue(Object source, Object value) {
-		Property<Object> p = getProperty(source);
-		p.setValue(value);
+		Property<O> p = getProperty(source);
+		p.setValue((O) value);
 	}
 	
 }

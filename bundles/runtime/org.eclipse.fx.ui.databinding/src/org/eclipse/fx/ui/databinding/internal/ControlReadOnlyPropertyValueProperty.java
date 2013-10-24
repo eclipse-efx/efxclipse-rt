@@ -20,15 +20,15 @@ import org.eclipse.core.databinding.property.IProperty;
 import org.eclipse.core.databinding.property.ISimplePropertyListener;
 import org.eclipse.core.databinding.property.NativePropertyListener;
 
-public abstract class ControlReadOnlyPropertyValueProperty extends ControlValueProperty {
+public abstract class ControlReadOnlyPropertyValueProperty<O> extends ControlValueProperty {
 	
 	@Override
 	protected Object doGetValue(Object source) {
-		ReadOnlyProperty<Object> p = getProperty(source);
+		ReadOnlyProperty<O> p = getProperty(source);
 		return p != null ? p.getValue() : null;
 	}
 	
-	protected abstract ReadOnlyProperty<Object> getProperty(Object source);
+	protected abstract ReadOnlyProperty<O> getProperty(Object source);
 	
 	@Override
 	public INativePropertyListener adaptListener(ISimplePropertyListener listener) {
@@ -50,7 +50,7 @@ public abstract class ControlReadOnlyPropertyValueProperty extends ControlValueP
 		@Override
 		protected void doAddTo(Object source) {
 			this.owner = source;
-			ReadOnlyProperty<Object> p = getProperty(source);
+			ReadOnlyProperty<O> p = getProperty(source);
 			if( p != null ) {
 				p.addListener(this);
 			}
@@ -59,7 +59,7 @@ public abstract class ControlReadOnlyPropertyValueProperty extends ControlValueP
 		@Override
 		protected void doRemoveFrom(Object source) {
 			this.owner = null;
-			ReadOnlyProperty<Object> p = getProperty(source);
+			ReadOnlyProperty<O> p = getProperty(source);
 			if( p != null ) {
 				p.removeListener(this);
 			}

@@ -17,7 +17,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TableView;
 
-public class SingleSelectionProperty extends ControlReadOnlyPropertyValueProperty {
+public class SingleSelectionProperty extends ControlReadOnlyPropertyValueProperty<Object> {
 
 	@Override
 	public Object getValueType() {

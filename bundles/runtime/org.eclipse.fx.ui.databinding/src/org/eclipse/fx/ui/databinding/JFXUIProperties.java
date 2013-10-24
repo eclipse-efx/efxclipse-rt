@@ -12,6 +12,7 @@ package org.eclipse.fx.ui.databinding;
 
 import org.eclipse.fx.core.databinding.IJFXBeanValueProperty;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
+import org.eclipse.fx.ui.databinding.internal.DatePickerValueProperty;
 import org.eclipse.fx.ui.databinding.internal.SingleSelectionProperty;
 
 public class JFXUIProperties {
@@ -21,5 +22,9 @@ public class JFXUIProperties {
 	
 	public static IJFXBeanValueProperty text() {
 		return JFXBeanProperties.value("text");
+	}
+	
+	public static IJFXControlValueProperty date() {
+		return new DatePickerValueProperty();
 	}
 }
