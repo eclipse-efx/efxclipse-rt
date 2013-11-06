@@ -12,6 +12,7 @@ package org.eclipse.fx.osgi.fxloader;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLConnection;
@@ -155,13 +156,22 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 				}
 				
 				
-				
 				if( jarFile.exists() ) {
 					// if SWT is available we need to construct a new URL-Classloader with SWT
 					// bundles classloader as the parent
 					if( swtAvailable ) {
-						URL url = jarFile.getCanonicalFile().toURI().toURL();
-						return new URLClassLoader(new URL[] { url }, parent);	
+						// Since JDK8b113 the swt stuff is in its own jar
+						File swtFX = new File(new File(javaHome.getAbsolutePath(),"lib"),"jfxswt.jar");
+						if( swtFX.exists() ) {
+							ClassLoader extClassLoader = ClassLoader.getSystemClassLoader().getParent();
+							if( extClassLoader.getClass().getName().equals("sun.misc.Launcher$ExtClassLoader") ) {
+								return new URLClassLoader(new URL[] { swtFX.getCanonicalFile().toURI().toURL() }, new SWTFXClassloader(parent,extClassLoader));
+							}
+							return new URLClassLoader(new URL[] { jarFile.getCanonicalFile().toURI().toURL(), swtFX.getCanonicalFile().toURI().toURL() }, parent);							
+						} else {
+							URL url = jarFile.getCanonicalFile().toURI().toURL();
+							return new URLClassLoader(new URL[] { url }, parent);	
+						}
 					} else {
 						// we should be able to delegate to the URL-Extension-Classloader, which is essential for ScenicView
 						// which installs an JMX-Component
@@ -382,5 +392,70 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 	@Override
 	public FrameworkLog createFrameworkLog() {
 		return null;
+	}
+	
+	static class SWTFXClassloader extends ClassLoader {
+		private final ClassLoader lastResortLoader;
+		private final ClassLoader primaryLoader;
+		
+		public SWTFXClassloader(ClassLoader lastResortLoader, ClassLoader primaryLoader) {
+			this.lastResortLoader = lastResortLoader;
+			this.primaryLoader = primaryLoader;
+		}
+		
+		@Override
+		public URL getResource(String name) {
+			URL url = primaryLoader.getResource(name);
+			if( url == null ) {
+				url = lastResortLoader.getResource(name); 
+			}
+			return url;
+		}
+		
+		@Override
+		public InputStream getResourceAsStream(String name) {
+			InputStream in = primaryLoader.getResourceAsStream(name);
+			if( in == null ) {
+				in = lastResortLoader.getResourceAsStream(name);
+			}
+			return in;
+		}
+		
+		@Override
+		public Enumeration<URL> getResources(String name) throws IOException {
+			final Enumeration<URL> en1 = primaryLoader.getResources(name);
+			final Enumeration<URL> en2 = lastResortLoader.getResources(name);
+			
+			return new Enumeration<URL>() {
+				@Override
+				public boolean hasMoreElements() {
+					if( en1.hasMoreElements() ) {
+						return true;
+					}
+					return en2.hasMoreElements();
+				}
+
+				@Override
+				public URL nextElement() {
+					if( ! en1.hasMoreElements() ) {
+						return en2.nextElement();
+					}
+					return en1.nextElement();
+				}
+			};
+		}
+		
+		@Override
+		public Class<?> loadClass(String name) throws ClassNotFoundException {
+			try {
+				return primaryLoader.loadClass(name);
+			} catch( ClassNotFoundException c ) {
+				try {
+					return lastResortLoader.loadClass(name);	
+				} catch( ClassCastException tmp ) {
+					throw c;
+				}
+			}
+		}
 	}
 }
