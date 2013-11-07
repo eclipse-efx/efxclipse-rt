@@ -22,7 +22,6 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-@SuppressWarnings("restriction")
 public class InteroptContextFunction extends ContextFunction {
 
 	@Override
