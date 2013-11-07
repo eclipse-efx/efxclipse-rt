@@ -155,26 +155,36 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 					System.err.println("MyBundleClassLoader#createJREBundledClassloader - Assumed location (Java 8/Java 7): " + jarFile.getAbsolutePath());
 				}
 				
-				System.err.println("=====================> WE ARE HERE");
-				
 				if( jarFile.exists() ) {
 					// if SWT is available we need to construct a new URL-Classloader with SWT
 					// bundles classloader as the parent
 					if( swtAvailable ) {
+						if( FXClassLoadingConfigurator.DEBUG ) {
+							System.err.println("MyBundleClassLoader#createJREBundledClassloader - SWT is available use different loading strategy");
+						}
+						
 						// Since JDK8b113 the swt stuff is in its own jar
 						File swtFX = new File(new File(javaHome.getAbsolutePath(),"lib"),"jfxswt.jar");
 						
-						System.err.println("SWT-FX is at: " + swtFX.getAbsolutePath());
+						if( FXClassLoadingConfigurator.DEBUG ) {
+							System.err.println("MyBundleClassLoader#createJREBundledClassloader - Searching for SWT-FX integration at " + swtFX.getAbsolutePath());
+						}
 						
 						if( swtFX.exists() ) {
-							System.err.println("FOUND SWT-FX");
+							if( FXClassLoadingConfigurator.DEBUG ) {
+								System.err.println("MyBundleClassLoader#createJREBundledClassloader - Found SWT/FX");
+							}
+							
 							ClassLoader extClassLoader = ClassLoader.getSystemClassLoader().getParent();
 							if( extClassLoader.getClass().getName().equals("sun.misc.Launcher$ExtClassLoader") ) {
-								System.err.println("DELEGATING TO EXT-CLASSPATH");
 								return new URLClassLoader(new URL[] { swtFX.getCanonicalFile().toURI().toURL() }, new SWTFXClassloader(parent,extClassLoader));
 							}
 							return new URLClassLoader(new URL[] { jarFile.getCanonicalFile().toURI().toURL(), swtFX.getCanonicalFile().toURI().toURL() }, parent);							
 						} else {
+							if( FXClassLoadingConfigurator.DEBUG ) {
+								System.err.println("MyBundleClassLoader#createJREBundledClassloader - Assume that SWT-FX part of jfxrt.jar");
+							}
+
 							URL url = jarFile.getCanonicalFile().toURI().toURL();
 							return new URLClassLoader(new URL[] { url }, parent);	
 						}
@@ -242,9 +252,7 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 		@Override
 		public Class<?> findLocalClass(String classname) throws ClassNotFoundException {
 			try {
-				System.err.println("RESOLVING: " + classname);
 				Class<?> cl = fxClassLoader.loadClass(classname);
-				System.err.println(cl);
 				return cl;
 			} catch (ClassNotFoundException e) {
 				return super.findLocalClass(classname);
