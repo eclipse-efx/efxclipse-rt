@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Luna
+Bundle-SymbolicName: org.eclipse.fx.osgi.luna
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: BestSolution.at
+Fragment-Host: org.eclipse.osgi
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
