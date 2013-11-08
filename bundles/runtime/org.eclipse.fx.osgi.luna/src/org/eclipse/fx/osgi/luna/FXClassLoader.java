@@ -8,10 +8,12 @@ import java.net.URLClassLoader;
 import java.util.Collections;
 import java.util.Enumeration;
 
+import org.eclipse.osgi.internal.debug.Debug;
 import org.eclipse.osgi.internal.framework.EquinoxConfiguration;
 import org.eclipse.osgi.internal.hookregistry.ClassLoaderHook;
 import org.eclipse.osgi.internal.loader.BundleLoader;
 import org.eclipse.osgi.internal.loader.ModuleClassLoader;
+import org.eclipse.osgi.internal.loader.classpath.ClasspathManager;
 import org.eclipse.osgi.storage.BundleInfo.Generation;
 
 public class FXClassLoader extends ClassLoaderHook {
@@ -32,36 +34,103 @@ public class FXClassLoader extends ClassLoaderHook {
 	}
 
 	static class FXModuleClassloader extends ModuleClassLoader {
+		private final EquinoxConfiguration configuration;
+		private final BundleLoader delegate;
+		private final Generation generation;
+		
 		private final URLClassLoader fxClassloader;
-
-		public FXModuleClassloader(URLClassLoader fxClassloader,
+		private ClasspathManager classpathManager;
+		
+		public FXModuleClassloader(final URLClassLoader fxClassloader,
 				ClassLoader parent, EquinoxConfiguration configuration,
 				BundleLoader delegate, Generation generation) {
-			super(parent, configuration, delegate, generation);
+			super(parent);
+			this.configuration = configuration;
+			this.delegate = delegate;
+			this.generation = generation;
 			this.fxClassloader = fxClassloader;
+			this.classpathManager = new ClasspathManager(generation, this) {
+				@Override
+				public Class<?> findLocalClass(String classname)
+						throws ClassNotFoundException {
+					return fxClassloader.loadClass(classname);
+				}
+				
+				@Override
+				public URL findLocalResource(String resource) {
+					return fxClassloader.findResource(resource);
+				}
+				
+				@Override
+				public Enumeration<URL> findLocalResources(String resource) {
+					try {
+						return fxClassloader.findResources(resource);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return Collections.emptyEnumeration();
+				}
+			};
 		}
 
 		@Override
-		public Class<?> findLocalClass(String classname)
-				throws ClassNotFoundException {
-			return fxClassloader.loadClass(classname);
+		protected Generation getGeneration() {
+			return generation;
 		}
 
 		@Override
-		public URL findLocalResource(String resource) {
-			return fxClassloader.findResource(resource);
+		protected Debug getDebug() {
+			return configuration.getDebug();
 		}
 
 		@Override
-		public Enumeration<URL> findLocalResources(String resource) {
-			try {
-				return fxClassloader.findResources(resource);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return Collections.emptyEnumeration();
+		public ClasspathManager getClasspathManager() {
+			return classpathManager;
 		}
+		
+		@Override
+		protected EquinoxConfiguration getConfiguration() {
+			return configuration;
+		}
+
+		@Override
+		public BundleLoader getBundleLoader() {
+			return delegate;
+		}
+
+		@Override
+		public boolean isRegisteredAsParallel() {
+			return false;
+		}
+		
+//		@Override
+//		public Class<?> findLocalClass(String classname)
+//				throws ClassNotFoundException {
+//			return fxClassloader.loadClass(classname);
+//		}
+//
+//		@Override
+//		public URL findLocalResource(String resource) {
+//			return fxClassloader.findResource(resource);
+//		}
+//
+//		@Override
+//		public Enumeration<URL> findLocalResources(String resource) {
+//			try {
+//				return fxClassloader.findResources(resource);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			return Collections.emptyEnumeration();
+//		}
+//		
+//		@Override
+//		protected Generation getGeneration() {
+//			// TODO Auto-generated method stub
+//			return null;
+//		}
 
 	}
 
