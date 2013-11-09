@@ -15,23 +15,51 @@ import org.eclipse.osgi.internal.loader.BundleLoader;
 import org.eclipse.osgi.internal.loader.ModuleClassLoader;
 import org.eclipse.osgi.internal.loader.classpath.ClasspathManager;
 import org.eclipse.osgi.storage.BundleInfo.Generation;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.wiring.BundleWiring;
 
 public class FXClassLoader extends ClassLoaderHook {
-	private static final String SYMBOLIC_NAME = "org.eclipse.fx.javafx";
+	private static final String FX_SYMBOLIC_NAME = "org.eclipse.fx.javafx";
+	private static final String SWT_SYMBOLIC_NAME = "org.eclipse.swt";
 
 	public ModuleClassLoader createClassLoader(ClassLoader parent,
 			EquinoxConfiguration configuration, BundleLoader delegate,
 			Generation generation) {
-		if (SYMBOLIC_NAME.equals(generation.getRevision().getBundle()
+		if (FX_SYMBOLIC_NAME.equals(generation.getRevision().getBundle()
 				.getSymbolicName())) {
-			boolean swtAvailable = false; // TODO
-			URLClassLoader cl = createJREBundledClassloader(parent,
-					swtAvailable);
+			ClassLoader swtClassloader = getSWTClassloader(generation);
+			URLClassLoader cl = createJREBundledClassloader(swtClassloader == null ? parent : swtClassloader,swtClassloader != null);
 			return new FXModuleClassloader(cl, parent, configuration, delegate,
 					generation);
 		}
 		return null;
 	}
+	
+	private static ClassLoader getSWTClassloader(Generation generation) {
+		for( Bundle b : generation.getRevision().getBundle().getBundleContext().getBundles() ) {
+			if( SWT_SYMBOLIC_NAME.equals(b.getSymbolicName()) ) {
+				if ((b.getState() & Bundle.INSTALLED) == 0) {
+					// Ensure the bundle is started else we are unable to
+					// extract the
+					// classloader
+					if ((b.getState() & Bundle.ACTIVE) != 0) {
+						try {
+							b.start();
+						} catch (BundleException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					return b.adapt(BundleWiring.class).getClassLoader();
+				}
+				
+			}
+		}
+		
+		return null;
+	}
+	
 
 	static class FXModuleClassloader extends ModuleClassLoader {
 		private final EquinoxConfiguration configuration;
