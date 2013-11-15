@@ -62,7 +62,7 @@ public abstract class BasePartMenuRenderer<N> extends
 		WMenu<N> menu = getWidget(element);
 		for (MMenuElement e : element.getChildren()) {
 			WMenuElement<MMenuElement> widget = engineCreateWidget(e);
-			if (widget != null) {
+			if (widget != null && e.isVisible()) {
 				menu.addElement(widget);
 			}
 		}

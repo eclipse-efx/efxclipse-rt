@@ -38,9 +38,9 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 	public void doProcessContent(MTrimBar element) {
 		WTrimBar<N> trimBar = getWidget(element);
 		for( MTrimElement e : element.getChildren() ) {
-			if( e.isToBeRendered() && e.isVisible() ) {
+			if( e.isToBeRendered() ) {
 				WLayoutedWidget<MTrimElement> trimElementWidget = engineCreateWidget(e);
-				if( trimElementWidget != null ) {
+				if( trimElementWidget != null && e.isVisible() ) {
 					trimBar.addChild(trimElementWidget);
 				}				
 			}

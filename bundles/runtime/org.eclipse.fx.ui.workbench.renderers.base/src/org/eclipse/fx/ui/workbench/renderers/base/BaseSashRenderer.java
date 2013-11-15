@@ -125,9 +125,9 @@ public abstract class BaseSashRenderer<N> extends
 		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		for (MPartSashContainerElement e : element.getChildren()) {
-			if( e.isToBeRendered() && e.isVisible() ) {
+			if( e.isToBeRendered() ) {
 				WLayoutedWidget<MPartSashContainerElement> widget = engineCreateWidget(e);
-				if (widget != null) {
+				if (widget != null && e.isVisible()) {
 					list.add(widget);
 				}	
 			}

@@ -159,9 +159,9 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 		// TODO Should we do this creation lazy????
 		WMenu<N> menu = getWidget(element);
 		for (MMenuElement e : element.getChildren()) {
-			if( e.isToBeRendered() && e.isVisible() ) {
+			if( e.isToBeRendered() ) {
 				WMenuElement<MMenuElement> widget = engineCreateWidget(e);
-				if (widget != null) {
+				if (widget != null && e.isVisible()) {
 					menu.addElement(widget);
 				}	
 			}
