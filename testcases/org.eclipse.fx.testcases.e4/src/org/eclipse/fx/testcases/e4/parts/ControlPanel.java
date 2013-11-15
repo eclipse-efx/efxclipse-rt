@@ -34,6 +34,8 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicFactoryImpl;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledToolItem;
+import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
+import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -514,6 +516,22 @@ public class ControlPanel {
 					element.setCommand(application.getCommands().get(0));
 
 					toolbar.getChildren().add(element);
+				}
+			});
+			box.getChildren().add(button);
+		}
+		
+		{
+			Button button = new Button("Hide/Show Menu Item");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					for( MMenuElement e : ((MMenu)window.getMainMenu().getChildren().get(0)).getChildren() ) {
+						if( "org.eclipse.fx.testcases.e4.directmenuitem.hideshow".equals(e.getElementId()) ) {
+							e.setVisible(! e.isVisible());
+							System.err.println("TOGGLED");
+						}
+					}
 				}
 			});
 			box.getChildren().add(button);
