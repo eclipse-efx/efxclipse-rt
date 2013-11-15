@@ -37,9 +37,11 @@ public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBa
 	public void doProcessContent(MMenu element) {
 		WMenuBar<N> menuBar = getWidget(element);
 		for (MMenuElement e : element.getChildren()) {
-			Object widget = engineCreateWidget(e);
-			if (widget instanceof WMenu) {
-				menuBar.addElement((WMenu<MMenuElement>) widget);
+			if( e.isToBeRendered() && e.isVisible() ) {
+				Object widget = engineCreateWidget(e);
+				if (widget instanceof WMenu) {
+					menuBar.addElement((WMenu<MMenuElement>) widget);
+				}	
 			}
 		}
 	}

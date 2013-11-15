@@ -78,9 +78,11 @@ public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToo
 	public void doProcessContent(MToolBar element) {
 		WToolBar<N> toolbar = getWidget(element);
 		for (MToolBarElement item : element.getChildren()) {
-			WWidget<MToolBarElement> itemWidget = engineCreateWidget(item);
-			if (itemWidget != null) {
-				toolbar.addChild(itemWidget);
+			if( item.isToBeRendered() && item.isVisible() ) {
+				WWidget<MToolBarElement> itemWidget = engineCreateWidget(item);
+				if (itemWidget != null) {
+					toolbar.addChild(itemWidget);
+				}	
 			}
 		}
 	}

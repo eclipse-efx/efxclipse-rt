@@ -237,33 +237,37 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow,WWindow
 		
 		if( element instanceof MTrimmedWindow ) {
 			for( MTrimBar tm : ((MTrimmedWindow)element).getTrimBars() ) {
-				WLayoutedWidget<MTrimBar> trimWidget = engineCreateWidget(tm);
-				if( trimWidget != null ) {
-					trimWidget.addStyleClasses(tm.getSide().name());
-					switch (tm.getSide()) {
-					case TOP:
-						windowWidget.setTopTrim(trimWidget);
-						break;
-					case RIGHT:
-						windowWidget.setRightTrim(trimWidget);
-						break;
-					case BOTTOM:
-						windowWidget.setBottomTrim(trimWidget);
-						break;
-					case LEFT:
-						windowWidget.setLeftTrim(trimWidget);
-						break;
-					default:
-						break;
-					}					
+				if( tm.isToBeRendered() && tm.isVisible() ) {
+					WLayoutedWidget<MTrimBar> trimWidget = engineCreateWidget(tm);
+					if( trimWidget != null ) {
+						trimWidget.addStyleClasses(tm.getSide().name());
+						switch (tm.getSide()) {
+						case TOP:
+							windowWidget.setTopTrim(trimWidget);
+							break;
+						case RIGHT:
+							windowWidget.setRightTrim(trimWidget);
+							break;
+						case BOTTOM:
+							windowWidget.setBottomTrim(trimWidget);
+							break;
+						case LEFT:
+							windowWidget.setLeftTrim(trimWidget);
+							break;
+						default:
+							break;
+						}					
+					}
 				}
 			}
 		}
 		
 		for( MWindowElement e : element.getChildren() ) {
-			WLayoutedWidget<MWindowElement> widget = engineCreateWidget(e);
-			if( widget != null ) {
-				windowWidget.addChild(widget);
+			if( e.isToBeRendered() && e.isVisible() ) {
+				WLayoutedWidget<MWindowElement> widget = engineCreateWidget(e);
+				if( widget != null ) {
+					windowWidget.addChild(widget);
+				}	
 			}
 		}
 		

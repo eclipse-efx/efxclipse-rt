@@ -91,9 +91,11 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		element.getChildren();
 		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 		for( MPartSashContainerElement e : element.getChildren() ) {
-			WLayoutedWidget<MPartSashContainerElement> w = engineCreateWidget(e);
-			if( w != null ) {
-				list.add(w);
+			if( e.isToBeRendered() && e.isVisible() ) {
+				WLayoutedWidget<MPartSashContainerElement> w = engineCreateWidget(e);
+				if( w != null ) {
+					list.add(w);
+				}				
 			}
 		}
 		getWidget(element).addItems(list);
