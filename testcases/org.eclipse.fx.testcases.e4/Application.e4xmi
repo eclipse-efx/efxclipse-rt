@@ -117,7 +117,7 @@
         <children xsi:type="menu:Menu" xmi:id="_KFx14C-JEeOp1Ym1-ovQ6w" elementId="org.eclipse.fx.testcases.e4.menu.7" label="DynSub">
           <children xsi:type="menu:DynamicMenuContribution" xmi:id="_K52XIC-JEeOp1Ym1-ovQ6w" elementId="org.eclipse.fx.testcases.e4.dynamicmenucontribution.1" label="Test2" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.contributions.DMContribution"/>
         </children>
-        <children xsi:type="menu:DirectMenuItem" xmi:id="_PeGl8E4IEeORU9_aphRSog" elementId="org.eclipse.fx.testcases.e4.directmenuitem.hideshow" label="Hide/Show Test"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_PeGl8E4IEeORU9_aphRSog" elementId="org.eclipse.fx.testcases.e4.directmenuitem.hideshow" visible="false" label="Hide/Show Test"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_d-oDwO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.menu.3" label="Switch">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_jYdPMO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.4" label="Perspective 0" command="_kCbZQO6yEeG4lfn-YKJbJw">
