@@ -6,18 +6,16 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
 package org.eclipse.fx.core;
 
 /**
- * Class with static utility methods
+ * Interface representing the subscription of a callback / handler
  */
-public class Util {
+public interface Subscription {
 	/**
-	 * @return <code>true</code> if we are on JavaFX 2
+	 * Destroy the subscription
 	 */
-	public static boolean isFX2() {
-		return System.getProperty("javafx.version") != null && System.getProperty("javafx.version").startsWith("2"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	}
+	public void dispose();
 }

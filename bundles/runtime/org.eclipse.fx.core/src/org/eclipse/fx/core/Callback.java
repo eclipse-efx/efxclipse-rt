@@ -10,6 +10,18 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+/**
+ * A simply callback class with a value
+ * 
+ * @param <T>
+ *            the type passed to {@link #call(Object)}
+ */
 public interface Callback<T> {
+	/**
+	 * Method invoked
+	 * 
+	 * @param value
+	 *            the value
+	 */
 	public void call(T value);
 }
