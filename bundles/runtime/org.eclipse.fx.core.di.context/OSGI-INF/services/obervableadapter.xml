@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.core.di.context.observableadapter">
+   <implementation class="org.eclipse.fx.core.di.context.internal.ObservableAdapterProvider"/>
+   <service>
+      <provide interface="org.eclipse.fx.core.adapter.AdapterProvider"/>
+   </service>
+</scr:component>
