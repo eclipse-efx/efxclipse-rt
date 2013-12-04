@@ -18,10 +18,16 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+/**
+ * Annotation to request a logger
+ */
 @Qualifier
 @Documented
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Log {
+	/**
+	 * @return custom name of the logger
+	 */
 	String value() default "";
 }

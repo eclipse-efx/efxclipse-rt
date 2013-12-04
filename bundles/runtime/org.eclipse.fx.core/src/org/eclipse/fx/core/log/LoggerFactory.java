@@ -10,6 +10,16 @@
  *******************************************************************************/
 package org.eclipse.fx.core.log;
 
+import org.eclipse.jdt.annotation.NonNull;
+
+/**
+ * A factory service to create a logger instance
+ */
 public interface LoggerFactory {
-	public Logger createLogger(String name);
+	/**
+	 * Create an instance of a logger
+	 * @param name the name of the logger
+	 * @return the logger instance
+	 */
+	public Logger createLogger(@NonNull String name);
 }

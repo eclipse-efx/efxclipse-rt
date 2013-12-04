@@ -12,6 +12,9 @@ package org.eclipse.fx.core.log;
 
 import javax.inject.Provider;
 
+/**
+ * Concreate implementation for a logger factory using {@link java.util.logging.Logger}
+ */
 public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory> {
 
 	@Override
@@ -34,10 +37,10 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		}
 		
 		private java.util.logging.Logger getLogger() {
-			if( logger == null ) {
-				logger = java.util.logging.Logger.getLogger(name);
+			if( this.logger == null ) {
+				this.logger = java.util.logging.Logger.getLogger(this.name);
 			}
-			return logger;
+			return this.logger;
 		}
 		
 		private static java.util.logging.Level toLogLevel(Level level) {
@@ -156,7 +159,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			if (!isEnabled(Level.DEBUG)) {
 				return;
 			}
-			log(Level.DEBUG, message, t);
+			logInternal(Level.DEBUG, message, t);
 		}
 
 		@Override

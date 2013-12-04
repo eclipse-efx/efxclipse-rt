@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * A simply callback class with a value
  * 
@@ -23,5 +25,5 @@ public interface Callback<T> {
 	 * @param value
 	 *            the value
 	 */
-	public void call(T value);
+	public void call(@Nullable T value);
 }

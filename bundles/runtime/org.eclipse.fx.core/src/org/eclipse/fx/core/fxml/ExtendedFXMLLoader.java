@@ -11,6 +11,9 @@
 package org.eclipse.fx.core.fxml;
 
 import java.io.IOException;
+import java.net.URL;
+
+import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -37,6 +40,7 @@ public class ExtendedFXMLLoader {
 	 * @throws IOException
 	 */
 	@SuppressWarnings("unchecked")
+	@NonNull
 	public <T> T load(ClassLoader cl, String path) throws IOException {
 		this.lastDocument = null;
 		this.lastLoader = null;
@@ -45,13 +49,22 @@ public class ExtendedFXMLLoader {
 			Class<?> clazz = cl.loadClass(classname);
 			FXMLDocument<T> d = (FXMLDocument<T>) clazz.newInstance();
 			this.lastDocument = d;
-			return d.load(cl.getResource(path), null);
+			URL url = cl.getResource(path);
+			if( url != null ) {
+				return d.load(url, null);
+			} else {
+				throw new IOException("Unable to get url for path '"+path+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			}
 		} catch (ClassNotFoundException e) {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setBuilderFactory(new JavaFXBuilderFactory());
 			loader.setLocation(cl.getResource(path));
 			this.lastLoader = loader;
-			return (T) loader.load(cl.getResourceAsStream(path));
+			T rv = (T) loader.load(cl.getResourceAsStream(path));
+			if( rv != null ) {
+				return rv;	
+			}
+			throw new IOException("Unable to load fxml document from '"+path+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 		} catch (InstantiationException e) {
 			throw new IOException(e);
 		} catch (IllegalAccessException e) {

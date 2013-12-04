@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.core.adapter;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * Interface implement by object who can be adapted to a different type.
  */
@@ -20,12 +23,13 @@ public interface Adaptable {
 	 * @param adapt the type to adapt to
 	 * @return the adapted object
 	 */
-	public <A> A adaptTo(Class<A> adapt);
+	@Nullable
+	public <A> A adaptTo(@NonNull Class<A> adapt);
 	
 	/**
 	 * Test if the instance can be adapted to the target
 	 * @param adapt the type to adapt to
 	 * @return <code>true</code> if adaption is possible, else <code>false</code>
 	 */
-	public boolean canAdaptTo(Class<?> adapt);
+	public boolean canAdaptTo(@NonNull Class<?> adapt);
 }

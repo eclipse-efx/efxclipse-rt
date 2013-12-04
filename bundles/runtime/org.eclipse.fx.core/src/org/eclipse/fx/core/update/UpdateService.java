@@ -11,61 +11,42 @@
 package org.eclipse.fx.core.update;
 
 import org.eclipse.fx.core.Callback;
+import org.eclipse.fx.core.ReturnValue;
 
+/**
+ * A service to update your application
+ */
 public interface UpdateService {
+	/**
+	 * Update the application
+	 * 
+	 * @param data
+	 *            the update data from the update check
+	 * @param callback
+	 *            call back to invoke when the update is done
+	 */
 	public void update(UpdateCheckData data, Callback<UpdateData> callback);
+
+	/**
+	 * Check your application for updates
+	 * 
+	 * @param callback
+	 *            the callback when the check is finished
+	 */
 	public void checkUpdate(Callback<UpdateCheckData> callback);
+
 	
-	public enum State {
-		ERROR,
-		WARNING,
-		CANCEL,
-		OK
-	}
-	
-	public static class ReturnValueImpl<V> implements ReturnValue<V> {
-		public final State state;
-		public final String message;
-		public final Throwable throwable;
-		public final V value;
-		
-		public ReturnValueImpl(State state, String message, V value, Throwable throwable) {
-			this.state = state; 
-			this.message = message;
-			this.throwable = throwable;
-			this.value = value;
-		}
-		
-		@Override
-		public String getMessage() {
-			return message;
-		}
-		
-		public Throwable getThrowable() {
-			return throwable;
-		}
-		
-		public State getState() {
-			return state;
-		}
-		
-		public V getValue() {
-			return value;
-		}
-	}
-	
-	interface ReturnValue<V> {
-		public State getState();
-		public String getMessage();
-		public V getValue();
-		public Throwable getThrowable();
-	}
-	
+	/**
+	 * Basic definition for update callback informations
+	 */
 	interface UpdateCheckData extends ReturnValue<Boolean> {
-		
+		// no methods needed
 	}
 	
+	/**
+	 * Basic definition for an update data informations
+	 */
 	interface UpdateData extends ReturnValue<Boolean> {
-		
+		// no methods needed
 	}
 }

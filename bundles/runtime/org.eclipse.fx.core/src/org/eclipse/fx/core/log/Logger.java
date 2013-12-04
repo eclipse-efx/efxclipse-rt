@@ -11,245 +11,391 @@
  *******************************************************************************/
 package org.eclipse.fx.core.log;
 
+import org.eclipse.jdt.annotation.NonNull;
+
+/**
+ * Logger interface delegating to real log framework implementation like log4j, java.util.logging, ...
+ */
 public interface Logger {
-	
+
 	/**
 	 * logs a message in the specified log level.
-	 * @param level the Log Level
-	 * @param message the message
+	 * 
+	 * @param level
+	 *            the Log Level
+	 * @param message
+	 *            the message
 	 */
-	public void log(Level level, String message);
+	public void log(@NonNull Level level, @NonNull String message);
+
 	/**
 	 * logs a message and an exception in the specified log level
-	 * @param level the Log Level
-	 * @param message the message
-	 * @param t the Exception
+	 * 
+	 * @param level
+	 *            the Log Level
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the Exception
 	 */
-	public void log(Level level, String message, Throwable t);
-	
+	public void log(@NonNull Level level, @NonNull String message, @NonNull Throwable t);
+
 	/**
 	 * logs a formatted message in the specified log level.
 	 * <p>
-	 * For formatting {@link String#format(String, Object...)} is used.
-	 * The following two method calls yield the same result, but the
-	 * logf call allows the underlying implementation to prevent the formatting
-	 * if the log level is disabled.
-	 * <code><br>
+	 * For formatting {@link String#format(String, Object...)} is used. The following two method calls yield
+	 * the same result, but the logf call allows the underlying implementation to prevent the formatting if
+	 * the log level is disabled. <code><br>
 	 *  logf(Level.TRACE, "%5.3f", num);<br>
 	 *  log(Level.TRACE, String.format("%5.3", num));
 	 * </code>
 	 * </p>
+	 * 
 	 * @see String#format(String, Object...)
-	 * @param level the Log Level
-	 * @param pattern the message format
-	 * @param args the message arguments
+	 * @param level
+	 *            the Log Level
+	 * @param pattern
+	 *            the message format
+	 * @param args
+	 *            the message arguments
 	 */
-	public void logf(Level level, String pattern, Object...args);
-	public void logf(Level level, String pattern, Throwable t, Object...args);
-	
+	public void logf(@NonNull Level level, @NonNull String pattern, Object... args);
+
+	/**
+	 * logs a formatted message in the specified log level.
+	 * <p>
+	 * For formatting {@link String#format(String, Object...)} is used. The following two method calls yield
+	 * the same result, but the logf call allows the underlying implementation to prevent the formatting if
+	 * the log level is disabled. <code><br>
+	 *  logf(Level.TRACE, "%5.3f", num);<br>
+	 *  log(Level.TRACE, String.format("%5.3", num));
+	 * </code>
+	 * </p>
+	 * 
+	 * @see String#format(String, Object...)
+	 * @param level
+	 *            the Log Level
+	 * @param pattern
+	 *            the message format
+	 * @param t
+	 *            the exception
+	 * @param args
+	 *            the message arguments
+	 */
+	public void logf(@NonNull Level level, @NonNull String pattern, @NonNull Throwable t, Object... args);
+
 	/**
 	 * convenience method for {@link #log(Level, String)} with {@link Level#TRACE}.
+	 * 
 	 * @see #log(Level, String)
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
-	public void trace(String message);
+	public void trace(@NonNull String message);
+
 	/**
 	 * convenience method for {@link #log(Level, String)} with {@link Level#DEBUG}.
+	 * 
 	 * @see #log(Level, String)
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
-	public void debug(String message);
+	public void debug(@NonNull String message);
+
 	/**
 	 * convenience method for {@link #log(Level, String)} with {@link Level#INFO}.
+	 * 
 	 * @see #log(Level, String)
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
-	public void info(String message);
+	public void info(@NonNull String message);
+
 	/**
 	 * convenience method for {@link #log(Level, String)} with {@link Level#WARNING}.
+	 * 
 	 * @see #log(Level, String)
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
-	public void warning(String message);
+	public void warning(@NonNull String message);
+
 	/**
 	 * convenience method for {@link #log(Level, String)} with {@link Level#ERROR}.
+	 * 
 	 * @see #log(Level, String)
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
-	public void error(String message);
+	public void error(@NonNull String message);
+
 	/**
 	 * convenience method for {@link #log(Level, String)} with {@link Level#FATAL}.
+	 * 
 	 * @see #log(Level, String)
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
-	public void fatal(String message);
-	
+	public void fatal(@NonNull String message);
+
 	/**
 	 * convenience method for {@link #log(Level, String, Throwable)} with {@link Level#TRACE}.
+	 * 
 	 * @see #log(Level, String, Throwable)
-	 * @param message the message
-	 * @param t the Exception
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the Exception
 	 */
-	public void trace(String message, Throwable t);
+	public void trace(@NonNull String message, @NonNull Throwable t);
+
 	/**
 	 * convenience method for {@link #log(Level, String, Throwable)} with {@link Level#DEBUG}.
+	 * 
 	 * @see #log(Level, String, Throwable)
-	 * @param message the message
-	 * @param t the Exception
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the Exception
 	 */
-	public void debug(String message, Throwable t);
+	public void debug(@NonNull String message, @NonNull Throwable t);
+
 	/**
 	 * convenience method for {@link #log(Level, String, Throwable)} with {@link Level#INFO}.
+	 * 
 	 * @see #log(Level, String, Throwable)
-	 * @param message the message
-	 * @param t the Exception
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the Exception
 	 */
-	public void info(String message, Throwable t);
+	public void info(@NonNull String message, @NonNull Throwable t);
+
 	/**
 	 * convenience method for {@link #log(Level, String, Throwable)} with {@link Level#WARNING}.
+	 * 
 	 * @see #log(Level, String, Throwable)
-	 * @param message the message
-	 * @param t the Exception
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the Exception
 	 */
-	public void warning(String message, Throwable t);
+	public void warning(@NonNull String message, @NonNull Throwable t);
+
 	/**
 	 * convenience method for {@link #log(Level, String, Throwable)} with {@link Level#ERROR}.
+	 * 
 	 * @see #log(Level, String, Throwable)
-	 * @param message the message
-	 * @param t the Exception
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the Exception
 	 */
-	public void error(String message, Throwable t);
+	public void error(@NonNull String message, @NonNull Throwable t);
+
 	/**
 	 * convenience method for {@link #log(Level, String, Throwable)} with {@link Level#FATAL}.
+	 * 
 	 * @see #log(Level, String, Throwable)
-	 * @param message the message
-	 * @param t the Exception
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the Exception
 	 */
-	public void fatal(String message, Throwable t);
-	
-	
+	public void fatal(@NonNull String message, @NonNull Throwable t);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Object..)} with {@link Level#TRACE}.
-	 * @see #logf(Level, String, Object..)
+	 * convenience method for {@link #logf(Level, String, Object...)} with {@link Level#TRACE}.
+	 * 
+	 * @see #logf(Level, String, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param args
+	 *            the message arguments
 	 */
-	public void tracef(String pattern, Object...args);
-	
+	public void tracef(@NonNull String pattern, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Object..)} with {@link Level#DEBUG}.
-	 * @see #logf(Level, String, Object..)
+	 * convenience method for {@link #logf(Level, String, Object...)} with {@link Level#DEBUG}.
+	 * 
+	 * @see #logf(Level, String, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param args
+	 *            the message arguments
 	 */
-	public void debugf(String pattern, Object...args);
-	
+	public void debugf(@NonNull String pattern, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Object..)} with {@link Level#INFO}.
-	 * @see #logf(Level, String, Object..)
+	 * convenience method for {@link #logf(Level, String, Object...)} with {@link Level#INFO}.
+	 * 
+	 * @see #logf(Level, String, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param args
+	 *            the message arguments
 	 */
-	public void infof(String pattern, Object...args);
-	
+	public void infof(@NonNull String pattern, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Object..)} with {@link Level#WARNING}.
-	 * @see #logf(Level, String, Object..)
+	 * convenience method for {@link #logf(Level, String, Object...)} with {@link Level#WARNING}.
+	 * 
+	 * @see #logf(Level, String, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param args
+	 *            the message arguments
 	 */
-	public void warningf(String pattern, Object...args);
-	
+	public void warningf(@NonNull String pattern, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Object..)} with {@link Level#ERROR}.
-	 * @see #logf(Level, String, Object..)
+	 * convenience method for {@link #logf(Level, String, Object...)} with {@link Level#ERROR}.
+	 * 
+	 * @see #logf(Level, String, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param args
+	 *            the message arguments
 	 */
-	public void errorf(String pattern, Object...args);
-	
+	public void errorf(@NonNull String pattern, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Object..)} with {@link Level#FATAL}.
-	 * @see #logf(Level, String, Object..)
+	 * convenience method for {@link #logf(Level, String, Object...)} with {@link Level#FATAL}.
+	 * 
+	 * @see #logf(Level, String, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param args
+	 *            the message arguments
 	 */
-	public void fatalf(String pattern, Object...args);
-	
+	public void fatalf(@NonNull String pattern, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Throwable, Object..)} with {@link Level#TRACE}.
-	 * @see #logf(Level, String, Throwable, Object..)
+	 * convenience method for {@link #logf(Level, String, Throwable, Object...)} with {@link Level#TRACE}.
+	 * 
+	 * @see #logf(Level, String, Throwable, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param t the Exception
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param t
+	 *            the Exception
+	 * @param args
+	 *            the message arguments
 	 */
-	public void tracef(String pattern, Throwable t, Object...args);
+	public void tracef(@NonNull String pattern, @NonNull Throwable t, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Throwable, Object..)} with {@link Level#DEBUG}.
-	 * @see #logf(Level, String, Throwable, Object..)
+	 * convenience method for {@link #logf(Level, String, Throwable, Object...)} with {@link Level#DEBUG}.
+	 * 
+	 * @see #logf(Level, String, Throwable, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param t the Exception
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param t
+	 *            the Exception
+	 * @param args
+	 *            the message arguments
 	 */
-	public void debugf(String pattern, Throwable t, Object...args);
+	public void debugf(@NonNull String pattern, @NonNull Throwable t, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Throwable, Object..)} with {@link Level#INFO}.
-	 * @see #logf(Level, String, Throwable, Object..)
+	 * convenience method for {@link #logf(Level, String, Throwable, Object...)} with {@link Level#INFO}.
+	 * 
+	 * @see #logf(Level, String, Throwable, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param t the Exception
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param t
+	 *            the Exception
+	 * @param args
+	 *            the message arguments
 	 */
-	public void infof(String pattern, Throwable t, Object...args);
+	public void infof(@NonNull String pattern, @NonNull Throwable t, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Throwable, Object..)} with {@link Level#WARNING}.
-	 * @see #logf(Level, String, Throwable, Object..)
+	 * convenience method for {@link #logf(Level, String, Throwable, Object...)} with {@link Level#WARNING}.
+	 * 
+	 * @see #logf(Level, String, Throwable, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param t the Exception
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param t
+	 *            the Exception
+	 * @param args
+	 *            the message arguments
 	 */
-	public void warningf(String pattern, Throwable t, Object...args);
+	public void warningf(@NonNull String pattern, @NonNull Throwable t, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Throwable, Object..)} with {@link Level#ERROR}.
-	 * @see #logf(Level, String, Throwable, Object..)
+	 * convenience method for {@link #logf(Level, String, Throwable, Object...)} with {@link Level#ERROR}.
+	 * 
+	 * @see #logf(Level, String, Throwable, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param t the Exception
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param t
+	 *            the Exception
+	 * @param args
+	 *            the message arguments
 	 */
-	public void errorf(String pattern, Throwable t, Object...args);
+	public void errorf(@NonNull String pattern, @NonNull Throwable t, Object... args);
+
 	/**
-	 * convenience method for {@link #logf(Level, String, Throwable, Object..)} with {@link Level#FATAL}.
-	 * @see #logf(Level, String, Throwable, Object..)
+	 * convenience method for {@link #logf(Level, String, Throwable, Object...)} with {@link Level#FATAL}.
+	 * 
+	 * @see #logf(Level, String, Throwable, Object...)
 	 * @see String#format(String, Object...)
-	 * @param pattern the message format
-	 * @param t the Exception
-	 * @param args the message arguments
+	 * @param pattern
+	 *            the message format
+	 * @param t
+	 *            the Exception
+	 * @param args
+	 *            the message arguments
 	 */
-	public void fatalf(String pattern, Throwable t, Object...args);
-	
+	public void fatalf(@NonNull String pattern, @NonNull Throwable t, Object... args);
+
 	/**
 	 * checks whether the given log level is enabled for this logger.
-	 * @param level the log level to check against
+	 * 
+	 * @param level
+	 *            the log level to check against
 	 * @return true if the log level is enabled
 	 */
 	public boolean isEnabled(Level level);
-	
+
+	/**
+	 * The log levels
+	 */
 	public enum Level {
+		/**
+		 * Trace: Use this log level when you want to track things line by line
+		 */
 		TRACE,
+		/**
+		 * Debug: Use this log level to help developers debug your application
+		 */
 		DEBUG,
+		/**
+		 * Info: Use this log level for normal log statements like (request received, ...)
+		 */
 		INFO,
+		/**
+		 * Warning: Use this log level for problems like informing about a resource pool is getting low, ...
+		 */
 		WARNING,
+		/**
+		 * Error: Use this log level if something goes wrong e.g. an SQL-Query could not be executed, ...
+		 */
 		ERROR,
+		/**
+		 * Fatal: Use this log level in case of a sever error
+		 */
 		FATAL
 	}
 }

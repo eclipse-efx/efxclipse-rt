@@ -11,6 +11,8 @@
 package org.eclipse.fx.core.adapter;
 
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Service which adapts an instance to a given type
@@ -24,11 +26,13 @@ public interface AdapterProvider<S, T> {
 	/**
 	 * @return the accepted source type
 	 */
+	@NonNull
 	public Class<S> getSourceType();
 
 	/**
 	 * @return the accepted target type
 	 */
+	@NonNull
 	public Class<T> getTargetType();
 
 	/**
@@ -40,7 +44,7 @@ public interface AdapterProvider<S, T> {
 	 *            the target type
 	 * @return <code>true</code> if adaption is possible, else <code>false</code>
 	 */
-	public boolean canAdapt(S sourceObject, Class<T> targetType);
+	public boolean canAdapt(@Nullable S sourceObject, @NonNull Class<T> targetType);
 
 	/**
 	 * Adapt the source object to the target type
@@ -53,5 +57,5 @@ public interface AdapterProvider<S, T> {
 	 *            the value access
 	 * @return the adapted object or <code>null</code> if adaption was not possible
 	 */
-	public T adapt(S sourceObject, Class<T> targetType, ValueAccess... valueAccess);
+	public T adapt(@Nullable S sourceObject, @NonNull Class<T> targetType, ValueAccess... valueAccess);
 }

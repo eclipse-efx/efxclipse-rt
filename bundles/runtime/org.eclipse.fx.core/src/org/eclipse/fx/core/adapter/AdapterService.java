@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.core.adapter;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * Service which allows to adapt an instance to another type.
  */
@@ -23,7 +26,7 @@ public interface AdapterService {
 	 *            the target type
 	 * @return <code>true</code> if object can be adapted, else <code>false</code>
 	 */
-	public boolean canAdapt(Object sourceObject, Class<?> targetType);
+	public boolean canAdapt(@Nullable Object sourceObject, @NonNull Class<?> targetType);
 
 	/**
 	 * Adapt the source object to the target type
@@ -36,7 +39,8 @@ public interface AdapterService {
 	 *            value access
 	 * @return the adapted object or <code>null</code> if adaption was not possible
 	 */
-	public <A> A adapt(Object sourceObject, Class<A> targetType, ValueAccess... valueAccesses);
+	@Nullable
+	public <A> A adapt(@Nullable Object sourceObject, @NonNull Class<A> targetType, ValueAccess... valueAccesses);
 
 	/**
 	 * Provides access to values
@@ -49,7 +53,8 @@ public interface AdapterService {
 		 *            the key
 		 * @return the value or <code>null</code>
 		 */
-		public <O> O getValue(String key);
+		@Nullable
+		public <O> O getValue(@NonNull String key);
 
 		/**
 		 * Getting the value
@@ -58,6 +63,7 @@ public interface AdapterService {
 		 *            the key
 		 * @return the value
 		 */
-		public <O> O getValue(Class<O> key);
+		@Nullable
+		public <O> O getValue(@NonNull Class<O> key);
 	}
 }

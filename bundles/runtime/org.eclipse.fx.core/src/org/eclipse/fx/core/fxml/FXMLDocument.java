@@ -13,7 +13,31 @@ package org.eclipse.fx.core.fxml;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+/**
+ * Base class for FXML-File converted and loaded with {@link ExtendedFXMLLoader}
+ * 
+ * @param <T>
+ *            the root type
+ */
 public abstract class FXMLDocument<T> {
-	public abstract T load(URL location, ResourceBundle bundle);
+	/**
+	 * "Load" the document to create the SceneGraph
+	 * 
+	 * @param location
+	 *            the location
+	 * @param bundle
+	 *            the bundle
+	 * @return the created scene graph
+	 */
+	@NonNull
+	public abstract T load(@NonNull URL location, @Nullable ResourceBundle bundle);
+
+	/**
+	 * @return the controller created, might be <code>null</code>
+	 */
+	@Nullable
 	public abstract Object getController();
 }
