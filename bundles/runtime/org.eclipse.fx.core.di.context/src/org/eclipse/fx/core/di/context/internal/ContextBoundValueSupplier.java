@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.di.IInjector;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
@@ -24,7 +25,7 @@ import org.eclipse.fx.core.di.ContextBoundValue;
 import org.eclipse.fx.core.di.ContextValue;
 
 /**
- * 
+ * Supplier which handles the {@link ContextValue}
  */
 @SuppressWarnings("restriction")
 public class ContextBoundValueSupplier extends ExtendedObjectSupplier {
@@ -43,11 +44,14 @@ public class ContextBoundValueSupplier extends ExtendedObjectSupplier {
 		if( desiredClass == ContextBoundValue.class) {
 			return c;
 		} else {
-			return c.adaptTo(desiredClass);
+			if( desiredClass != null ) {
+				return c.adaptTo(desiredClass);	
+			}
+			return IInjector.NOT_A_VALUE;
 		}
 	}
 
-	private Class<?> getDesiredClass(Type desiredType) {
+	private static Class<?> getDesiredClass(Type desiredType) {
 		if (desiredType instanceof Class<?>)
 			return (Class<?>) desiredType;
 		if (desiredType instanceof ParameterizedType) {

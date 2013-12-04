@@ -18,6 +18,8 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * Annotation to get a context bound value
  */
@@ -29,5 +31,6 @@ public @interface ContextValue {
 	/**
 	 * @return the key in the context binding to
 	 */
+	@NonNull
 	String contextKey();
 }

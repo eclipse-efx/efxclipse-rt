@@ -63,7 +63,7 @@ public class ObservableAdapterProvider implements AdapterProvider<ContextBoundVa
 				
 				@Override
 				public boolean isCurrent() {
-					return t == Thread.currentThread();
+					return this.t == Thread.currentThread();
 				}
 			};
 		}

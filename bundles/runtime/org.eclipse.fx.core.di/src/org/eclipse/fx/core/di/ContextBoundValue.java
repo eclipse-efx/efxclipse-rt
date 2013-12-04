@@ -35,7 +35,7 @@ public interface ContextBoundValue<T> extends Adaptable {
 	 * @param value
 	 *            the value to publish
 	 */
-	public void publish(@NonNull T value);
+	public void publish(@Nullable T value);
 
 	/**
 	 * Subscribe for value change events
