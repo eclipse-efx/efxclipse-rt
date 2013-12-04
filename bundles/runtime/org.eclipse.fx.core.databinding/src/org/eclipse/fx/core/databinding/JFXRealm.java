@@ -14,7 +14,13 @@ import javafx.application.Platform;
 
 import org.eclipse.core.databinding.observable.Realm;
 
+/**
+ * JavaFX realm implementation
+ */
 public class JFXRealm extends Realm {
+	/**
+	 * Create a default realm
+	 */
 	public static void createDefault() {
 		setDefault(new JFXRealm());
 	}

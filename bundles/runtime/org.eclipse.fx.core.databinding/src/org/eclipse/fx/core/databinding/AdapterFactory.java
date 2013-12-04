@@ -41,215 +41,222 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 
+/**
+ * Allows to adapt between Eclipse Databinding and JavaFX observables
+ */
 public class AdapterFactory {
 	static class WrappedList<E> implements ObservableList<E> {
-		
-		private List<InvalidationListener> fxInvalidationListeners;
-		private List<ListChangeListener<? super E>> fxChangeListeners;
 
-		private final IObservableList list;
-		private IChangeListener dbInvalidationListener;
-		private IListChangeListener dbChangeListener;
-		
+		List<InvalidationListener> fxInvalidationListeners;
+		List<ListChangeListener<? super E>> fxChangeListeners;
+
+		final IObservableList list;
+		IChangeListener dbInvalidationListener;
+		IListChangeListener dbChangeListener;
+
 		public WrappedList(IObservableList list) {
 			this.list = list;
 			this.list.addDisposeListener(new IDisposeListener() {
-				
+
 				@Override
 				public void handleDispose(DisposeEvent event) {
-					fxInvalidationListeners.clear();
-					dbInvalidationListener = null;
-					
-					fxChangeListeners.clear();
-					dbChangeListener = null;
+					if (WrappedList.this.fxInvalidationListeners != null) {
+						WrappedList.this.fxInvalidationListeners.clear();
+					}
+					WrappedList.this.dbInvalidationListener = null;
+
+					if (WrappedList.this.fxChangeListeners != null) {
+						WrappedList.this.fxChangeListeners.clear();
+					}
+					WrappedList.this.dbChangeListener = null;
 				}
 			});
 		}
-		
+
 		@Override
 		public int size() {
-			return list.size();
+			return this.list.size();
 		}
 
 		@Override
 		public boolean isEmpty() {
-			return list.isEmpty();
+			return this.list.isEmpty();
 		}
 
 		@Override
 		public boolean contains(Object o) {
-			return list.contains(o);
+			return this.list.contains(o);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public Iterator<E> iterator() {
-			return list.iterator();
+			return this.list.iterator();
 		}
 
 		@Override
 		public Object[] toArray() {
-			return list.toArray();
+			return this.list.toArray();
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public <T> T[] toArray(T[] a) {
-			return (T[]) list.toArray(a);
+			return (T[]) this.list.toArray(a);
 		}
 
 		@Override
 		public boolean add(E e) {
-			return list.add(e);
+			return this.list.add(e);
 		}
 
 		@Override
 		public boolean remove(Object o) {
-			return list.remove(o);
+			return this.list.remove(o);
 		}
 
 		@Override
 		public boolean containsAll(Collection<?> c) {
-			return list.containsAll(c);
+			return this.list.containsAll(c);
 		}
 
 		@Override
 		public boolean addAll(Collection<? extends E> c) {
-			return list.addAll(c);
+			return this.list.addAll(c);
 		}
 
 		@Override
 		public boolean addAll(int index, Collection<? extends E> c) {
-			return list.addAll(index, c);
+			return this.list.addAll(index, c);
 		}
 
 		@Override
 		public boolean removeAll(Collection<?> c) {
-			return list.removeAll(c);
+			return this.list.removeAll(c);
 		}
 
 		@Override
 		public boolean retainAll(Collection<?> c) {
-			return list.retainAll(c);
+			return this.list.retainAll(c);
 		}
 
 		@Override
 		public void clear() {
-			list.clear();
+			this.list.clear();
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public E get(int index) {
-			return (E) list.get(index);
+			return (E) this.list.get(index);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public E set(int index, E element) {
-			return (E) list.set(index, element);
+			return (E) this.list.set(index, element);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public void add(int index, E element) {
-			list.add(index, element);
+			this.list.add(index, element);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public E remove(int index) {
-			return (E) list.remove(index);
+			return (E) this.list.remove(index);
 		}
 
 		@Override
 		public int indexOf(Object o) {
-			return list.indexOf(o);
+			return this.list.indexOf(o);
 		}
 
 		@Override
 		public int lastIndexOf(Object o) {
-			return list.lastIndexOf(o);
+			return this.list.lastIndexOf(o);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListIterator<E> listIterator() {
-			return list.listIterator();
+			return this.list.listIterator();
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public ListIterator<E> listIterator(int index) {
-			return list.listIterator(index);
+			return this.list.listIterator(index);
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public List<E> subList(int fromIndex, int toIndex) {
-			return list.subList(fromIndex, toIndex);
+			return this.list.subList(fromIndex, toIndex);
 		}
 
 		@Override
 		public void addListener(InvalidationListener listener) {
-			if( fxInvalidationListeners == null ) {
-				fxInvalidationListeners = new ArrayList<InvalidationListener>();
-				dbInvalidationListener = new IChangeListener() {
-					
+			if (this.fxInvalidationListeners == null) {
+				this.fxInvalidationListeners = new ArrayList<InvalidationListener>();
+				this.dbInvalidationListener = new IChangeListener() {
+
 					@Override
 					public void handleChange(ChangeEvent event) {
-						for( InvalidationListener l : fxInvalidationListeners.toArray(new InvalidationListener[0]) ) {
+						for (InvalidationListener l : WrappedList.this.fxInvalidationListeners.toArray(new InvalidationListener[0])) {
 							l.invalidated(WrappedList.this);
 						}
 					}
 				};
-				list.addChangeListener(dbInvalidationListener);
+				this.list.addChangeListener(this.dbInvalidationListener);
 			}
-			
-			fxInvalidationListeners.add(listener);
+
+			this.fxInvalidationListeners.add(listener);
 		}
 
 		@Override
 		public void removeListener(InvalidationListener listener) {
-			if( fxInvalidationListeners != null ) {
-				fxInvalidationListeners.remove(listener);
-				if( fxInvalidationListeners.isEmpty() ) {
-					list.removeChangeListener(dbInvalidationListener);
-					dbInvalidationListener = null;
-					fxInvalidationListeners = null;
+			if (this.fxInvalidationListeners != null) {
+				this.fxInvalidationListeners.remove(listener);
+				if (this.fxInvalidationListeners.isEmpty()) {
+					this.list.removeChangeListener(this.dbInvalidationListener);
+					this.dbInvalidationListener = null;
+					this.fxInvalidationListeners = null;
 				}
 			}
 		}
 
 		@Override
 		public boolean addAll(E... elements) {
-			return list.addAll(Arrays.asList(elements));
+			return this.list.addAll(Arrays.asList(elements));
 		}
 
 		@Override
 		public void addListener(ListChangeListener<? super E> listener) {
-			if( fxChangeListeners == null ) {
-				fxChangeListeners = new ArrayList<ListChangeListener<? super E>>();
-				dbChangeListener = new IListChangeListener() {
-					
+			if (this.fxChangeListeners == null) {
+				this.fxChangeListeners = new ArrayList<ListChangeListener<? super E>>();
+				this.dbChangeListener = new IListChangeListener() {
+
 					@SuppressWarnings("unchecked")
 					@Override
 					public void handleListChange(ListChangeEvent event) {
 						final ListDiffEntry[] differences = event.diff.getDifferences();
-						
-						if( differences.length == 0 ) {
+
+						if (differences.length == 0) {
 							return;
 						}
-						
-						//TODO We need to make this perform a lot better by calculating range changes
-						for( ListChangeListener<? super E> l : fxChangeListeners.toArray(new ListChangeListener[0]) ) {
+
+						// TODO We need to make this perform a lot better by calculating range changes
+						for (ListChangeListener<? super E> l : WrappedList.this.fxChangeListeners.toArray(new ListChangeListener[0])) {
 							Change<E> change = new Change<E>(WrappedList.this) {
 								private int index = -1;
 								private ListDiffEntry current;
-								
+
 								@Override
 								public int getFrom() {
-									return current.getPosition();
+									return this.current.getPosition();
 								}
 
 								@Override
@@ -259,42 +266,46 @@ public class AdapterFactory {
 
 								@Override
 								public List<E> getRemoved() {
-									if( ! current.isAddition() ) {
-										return Collections.singletonList((E)current.getElement());
+									if (!this.current.isAddition()) {
+										return Collections.singletonList((E) this.current.getElement());
 									}
 									return Collections.emptyList();
 								}
 
 								@Override
 								public int getTo() {
-									if( current.isAddition() ) {
-										return current.getPosition() + 1;
+									if (this.current.isAddition()) {
+										return this.current.getPosition() + 1;
 									} else {
-										return current.getPosition();
+										return this.current.getPosition();
 									}
 								}
 
+								@Override
 								public boolean wasAdded() {
-									return current.isAddition();
+									return this.current.isAddition();
 								}
-								
+
+								@Override
 								public boolean wasRemoved() {
-									return ! current.isAddition();
+									return !this.current.isAddition();
 								}
-								
+
+								@Override
 								public boolean wasPermutated() {
 									return false;
 								}
-								
+
+								@Override
 								public boolean wasReplaced() {
 									return false;
 								}
-								
+
 								@Override
 								public boolean next() {
-									index++;
-									if( index < differences.length ) {
-										current = differences[index];
+									this.index++;
+									if (this.index < differences.length) {
+										this.current = differences[this.index];
 										return true;
 									}
 									return false;
@@ -302,167 +313,166 @@ public class AdapterFactory {
 
 								@Override
 								public void reset() {
-									index = 0;
+									this.index = 0;
 								}
 							};
 							l.onChanged(change);
 						}
 					}
 				};
-				list.addListChangeListener(dbChangeListener);
+				this.list.addListChangeListener(this.dbChangeListener);
 			}
-			
-			fxChangeListeners.add(listener);
+
+			this.fxChangeListeners.add(listener);
 		}
 
 		@Override
 		public void removeListener(ListChangeListener<? super E> listener) {
-			if( fxChangeListeners != null ) {
-				fxChangeListeners.remove(listener);
-				if( fxChangeListeners.isEmpty() ) {
-					list.removeListChangeListener(dbChangeListener);
-					dbChangeListener = null;
-					fxChangeListeners = null;
+			if (this.fxChangeListeners != null) {
+				this.fxChangeListeners.remove(listener);
+				if (this.fxChangeListeners.isEmpty()) {
+					this.list.removeListChangeListener(this.dbChangeListener);
+					this.dbChangeListener = null;
+					this.fxChangeListeners = null;
 				}
 			}
 		}
-		
+
 		@Override
 		public void remove(int from, int to) {
-			//TODO Improve performance??
-			for( int idx = to; idx >= from; idx-- ) {
-				list.remove(idx);
+			// TODO Improve performance??
+			for (int idx = to; idx >= from; idx--) {
+				this.list.remove(idx);
 			}
 		}
 
 		@Override
 		public boolean removeAll(E... elements) {
-			return list.removeAll(Arrays.asList(elements));
+			return this.list.removeAll(Arrays.asList(elements));
 		}
-		
 
 		@Override
 		public boolean retainAll(E... elements) {
-			return list.retainAll(Arrays.asList(elements));
+			return this.list.retainAll(Arrays.asList(elements));
 		}
 
 		@Override
 		public boolean setAll(E... elements) {
-			//TODO Improve performance
-			list.clear();
-			return list.addAll(Arrays.asList(elements));
+			// TODO Improve performance
+			this.list.clear();
+			return this.list.addAll(Arrays.asList(elements));
 		}
 
 		@Override
 		public boolean setAll(Collection<? extends E> col) {
-			//TODO Improve performance
-			list.clear();
-			return list.addAll(col);
+			// TODO Improve performance
+			this.list.clear();
+			return this.list.addAll(col);
 		}
-		
-//FIXME Java8	
-// Default methods NOT YET supported by JDT-Core
-//		@Override
+
+		// FIXME Java8
+		// Default methods NOT YET supported by JDT-Core
+		// @Override
+		@Override
 		public void forEach(Consumer<? super E> action) {
-			list.forEach(action);
+			this.list.forEach(action);
 		}
-			
-//		@Override
+
+		// @Override
 		public Spliterator<E> spliterator() {
-			return list.spliterator();
+			return this.list.spliterator();
 		}
 	}
-	
-	static class WrappedValue<E> implements ObservableWritableValue<E> {
-		
-		private List<InvalidationListener> fxInvalidationListeners;
-		private List<ChangeListener<? super E>> fxChangeListeners;
-		
-		private final IObservableValue value;
-		private IChangeListener dbInvalidationListener;
-		private IValueChangeListener dbChangeListener;
 
-		
+	static class WrappedValue<E> implements ObservableWritableValue<E> {
+
+		List<InvalidationListener> fxInvalidationListeners;
+		List<ChangeListener<? super E>> fxChangeListeners;
+
+		final IObservableValue value;
+		IChangeListener dbInvalidationListener;
+		IValueChangeListener dbChangeListener;
+
 		public WrappedValue(IObservableValue value) {
 			this.value = value;
 			this.value.addDisposeListener(new IDisposeListener() {
-				
+
 				@Override
 				public void handleDispose(DisposeEvent event) {
-					if( fxInvalidationListeners != null ) {
-						fxInvalidationListeners.clear();
+					if (WrappedValue.this.fxInvalidationListeners != null) {
+						WrappedValue.this.fxInvalidationListeners.clear();
 					}
-					
-					dbInvalidationListener = null;
-					
-					if( fxChangeListeners != null ) {
-						fxChangeListeners.clear();	
+
+					WrappedValue.this.dbInvalidationListener = null;
+
+					if (WrappedValue.this.fxChangeListeners != null) {
+						WrappedValue.this.fxChangeListeners.clear();
 					}
-					
-					dbChangeListener = null;
+
+					WrappedValue.this.dbChangeListener = null;
 				}
 			});
 		}
 
 		@Override
 		public void addListener(InvalidationListener listener) {
-			if( fxInvalidationListeners == null ) {
-				fxInvalidationListeners = new ArrayList<InvalidationListener>();
-				dbInvalidationListener = new IChangeListener() {
-					
+			if (this.fxInvalidationListeners == null) {
+				this.fxInvalidationListeners = new ArrayList<InvalidationListener>();
+				this.dbInvalidationListener = new IChangeListener() {
+
 					@Override
 					public void handleChange(ChangeEvent event) {
-						for( InvalidationListener l : fxInvalidationListeners.toArray(new InvalidationListener[0]) ) {
+						for (InvalidationListener l : WrappedValue.this.fxInvalidationListeners.toArray(new InvalidationListener[0])) {
 							l.invalidated(WrappedValue.this);
 						}
 					}
 				};
-				value.addChangeListener(dbInvalidationListener);
+				this.value.addChangeListener(this.dbInvalidationListener);
 			}
-			
-			fxInvalidationListeners.add(listener);
+
+			this.fxInvalidationListeners.add(listener);
 		}
 
 		@Override
 		public void removeListener(InvalidationListener listener) {
-			if( fxInvalidationListeners != null ) {
-				fxInvalidationListeners.remove(listener);
-				if( fxInvalidationListeners.isEmpty() ) {
-					value.removeChangeListener(dbInvalidationListener);
-					dbInvalidationListener = null;
-					fxInvalidationListeners = null;
+			if (this.fxInvalidationListeners != null) {
+				this.fxInvalidationListeners.remove(listener);
+				if (this.fxInvalidationListeners.isEmpty()) {
+					this.value.removeChangeListener(this.dbInvalidationListener);
+					this.dbInvalidationListener = null;
+					this.fxInvalidationListeners = null;
 				}
 			}
 		}
 
 		@Override
 		public void addListener(ChangeListener<? super E> listener) {
-			if( fxChangeListeners == null ) {
-				fxChangeListeners = new ArrayList<ChangeListener<? super E>>();
-				dbChangeListener = new IValueChangeListener() {
-					
+			if (this.fxChangeListeners == null) {
+				this.fxChangeListeners = new ArrayList<ChangeListener<? super E>>();
+				this.dbChangeListener = new IValueChangeListener() {
+
 					@SuppressWarnings("unchecked")
 					@Override
 					public void handleValueChange(ValueChangeEvent event) {
-						for( ChangeListener<? super E> l : fxChangeListeners.toArray(new ChangeListener[0]) ) {
-							l.changed(WrappedValue.this, (E)event.diff.getOldValue(), (E)event.diff.getNewValue());
+						for (ChangeListener<? super E> l : WrappedValue.this.fxChangeListeners.toArray(new ChangeListener[0])) {
+							l.changed(WrappedValue.this, (E) event.diff.getOldValue(), (E) event.diff.getNewValue());
 						}
 					}
 				};
-				value.addValueChangeListener(dbChangeListener);
+				this.value.addValueChangeListener(this.dbChangeListener);
 			}
-			
-			fxChangeListeners.add(listener);
+
+			this.fxChangeListeners.add(listener);
 		}
-		
+
 		@Override
 		public void removeListener(ChangeListener<? super E> listener) {
-			if( fxChangeListeners != null ) {
-				fxChangeListeners.remove(listener);
-				if( fxChangeListeners.isEmpty() ) {
-					value.removeValueChangeListener(dbChangeListener);
-					dbChangeListener = null;
-					fxChangeListeners = null;
+			if (this.fxChangeListeners != null) {
+				this.fxChangeListeners.remove(listener);
+				if (this.fxChangeListeners.isEmpty()) {
+					this.value.removeValueChangeListener(this.dbChangeListener);
+					this.dbChangeListener = null;
+					this.fxChangeListeners = null;
 				}
 			}
 		}
@@ -470,41 +480,70 @@ public class AdapterFactory {
 		@SuppressWarnings("unchecked")
 		@Override
 		public E getValue() {
-			return (E) value.getValue();
+			return (E) this.value.getValue();
 		}
 
 		@Override
 		public void setValue(E value) {
 			this.value.setValue(value);
-		}		
+		}
 	}
-	
+
+	/**
+	 * Adapt an {@link IObservableValue} to an {@link ObservableWritableValue}
+	 * 
+	 * @param value
+	 *            the eclipse db value
+	 * @return the javafx observable
+	 */
 	public static <E> ObservableWritableValue<E> adapt(IObservableValue value) {
 		return new WrappedValue<E>(value);
 	}
-	
+
+	/**
+	 * Adapt an {@link IObservableList} to an {@link ObservableList}
+	 * 
+	 * @param list
+	 *            the eclipse db list
+	 * @return the javafx observable list
+	 */
 	public static <E> ObservableList<E> adapt(IObservableList list) {
 		return new WrappedList<E>(list);
 	}
-	
+
 	enum InitialSync {
-		FX_TO_DB,
-		DB_TO_FX
+		FX_TO_DB, DB_TO_FX
 	}
-		
+
+	/**
+	 * Bind a JavaFX observable list to an Eclipse DB observable list
+	 * 
+	 * @param fxObs
+	 *            the fx observable
+	 * @param dbObs
+	 *            the eclipse db observable
+	 * @param initialSync
+	 *            the initial sync direction
+	 */
 	public static <E> void bind(ObservableList<E> fxObs, IObservableList dbObs, InitialSync initialSync) {
 		ObservableList<E> dbList = adapt(dbObs);
-		if( initialSync == InitialSync.FX_TO_DB ) {
+		if (initialSync == InitialSync.FX_TO_DB) {
 			Bindings.bindContent(dbList, fxObs);
 		} else {
-			Bindings.bindContentBidirectional(fxObs, dbList);	
+			Bindings.bindContentBidirectional(fxObs, dbList);
 		}
-		
+
 	}
-	
+
+	/**
+	 * Bind an javafx observable value to a eclipse db observable
+	 * @param fxObs the javafx observable
+	 * @param dbObs the eclipse db observable
+	 * @param initialSync the initial sync direction
+	 */
 	@SuppressWarnings("unchecked")
 	public static <E, F extends ObservableValue<E> & WritableValue<E>> void bind(F fxObs, IObservableValue dbObs, InitialSync initialSync) {
-		if( initialSync == InitialSync.FX_TO_DB ) {
+		if (initialSync == InitialSync.FX_TO_DB) {
 			dbObs.setValue(fxObs.getValue());
 		} else {
 			fxObs.setValue((E) dbObs.getValue());
@@ -512,25 +551,26 @@ public class AdapterFactory {
 		ObservableWritableValue<E> wrapped = adapt(dbObs);
 		do_bind(fxObs, wrapped);
 	}
-	
+
 	private static <E, F extends ObservableValue<E> & WritableValue<E>> void do_bind(final F fxObs, final F dbObs) {
 		fxObs.addListener(new ChangeListener<E>() {
 			boolean syncing;
+
 			@Override
 			public void changed(ObservableValue<? extends E> observable, E oldValue, E newValue) {
-				if( syncing ) {
+				if (this.syncing) {
 					return;
 				}
-				
+
 				try {
-					syncing = true;
-					if( observable == fxObs ) {
+					this.syncing = true;
+					if (observable == fxObs) {
 						dbObs.setValue(newValue);
 					} else {
 						fxObs.setValue(newValue);
 					}
 				} finally {
-					syncing = false;
+					this.syncing = false;
 				}
 			}
 		});

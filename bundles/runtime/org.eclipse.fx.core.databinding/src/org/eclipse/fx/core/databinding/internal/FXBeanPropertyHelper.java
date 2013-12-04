@@ -21,6 +21,9 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 
+/**
+ * Helper class to access javafx bean properties
+ */
 public class FXBeanPropertyHelper {
 	/**
 	 * Sets the contents of the given property on the given source object to the
@@ -120,9 +123,9 @@ public class FXBeanPropertyHelper {
 	 * @return the element type of the given collection-typed property if it is
 	 *         an array property, or Object.class otherwise.
 	 */
-	public static Class getCollectionPropertyElementType(
+	public static Class<?> getCollectionPropertyElementType(
 			PropertyDescriptor descriptor) {
-		Class propertyType = descriptor.getPropertyType();
+		Class<?> propertyType = descriptor.getPropertyType();
 		return propertyType.isArray() ? propertyType.getComponentType()
 				: Object.class;
 	}
@@ -133,7 +136,7 @@ public class FXBeanPropertyHelper {
 	 * @return the PropertyDescriptor for the named property on the given bean
 	 *         class
 	 */
-	public static PropertyDescriptor getPropertyDescriptor(Class beanClass,
+	public static PropertyDescriptor getPropertyDescriptor(Class<?> beanClass,
 			String propertyName) {
 		if (!beanClass.isInterface()) {
 			BeanInfo beanInfo;
@@ -154,7 +157,7 @@ public class FXBeanPropertyHelper {
 		} else {
 			try {
 				PropertyDescriptor propertyDescriptors[];
-				List pds = new ArrayList();
+				List<PropertyDescriptor> pds = new ArrayList<>();
 				getInterfacePropertyDescriptors(pds, beanClass);
 				if (pds.size() > 0) {
 					propertyDescriptors = (PropertyDescriptor[]) pds
@@ -187,7 +190,7 @@ public class FXBeanPropertyHelper {
 	 * @throws IntrospectionException
 	 */
 	private static void getInterfacePropertyDescriptors(
-			List propertyDescriptors, Class iface)
+			List<PropertyDescriptor> propertyDescriptors, Class<?> iface)
 			throws IntrospectionException {
 		BeanInfo beanInfo = Introspector.getBeanInfo(iface);
 		PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
@@ -195,7 +198,7 @@ public class FXBeanPropertyHelper {
 			PropertyDescriptor pd = pds[i];
 			propertyDescriptors.add(pd);
 		}
-		Class[] subIntfs = iface.getInterfaces();
+		Class<?>[] subIntfs = iface.getInterfaces();
 		for (int j = 0; j < subIntfs.length; j++) {
 			getInterfacePropertyDescriptors(propertyDescriptors, subIntfs[j]);
 		}
@@ -209,7 +212,7 @@ public class FXBeanPropertyHelper {
 	/* package */public static PropertyDescriptor getValueTypePropertyDescriptor(
 			IObservableValue observable, String propertyName) {
 		if (observable.getValueType() != null)
-			return getPropertyDescriptor((Class) observable.getValueType(),
+			return getPropertyDescriptor((Class<?>) observable.getValueType(),
 					propertyName);
 		return null;
 	}
@@ -219,7 +222,7 @@ public class FXBeanPropertyHelper {
 	 * @return String description of property descriptor
 	 */
 	public static String propertyName(PropertyDescriptor propertyDescriptor) {
-		Class beanClass = propertyDescriptor.getReadMethod()
+		Class<?> beanClass = propertyDescriptor.getReadMethod()
 				.getDeclaringClass();
 		return shortClassName(beanClass)
 				+ "." + propertyDescriptor.getName() + ""; //$NON-NLS-1$ //$NON-NLS-2$
@@ -229,7 +232,7 @@ public class FXBeanPropertyHelper {
 	 * @param beanClass
 	 * @return class name excluding package
 	 */
-	public static String shortClassName(Class beanClass) {
+	public static String shortClassName(Class<?> beanClass) {
 		if (beanClass == null)
 			return "?"; //$NON-NLS-1$
 		String className = beanClass.getName();

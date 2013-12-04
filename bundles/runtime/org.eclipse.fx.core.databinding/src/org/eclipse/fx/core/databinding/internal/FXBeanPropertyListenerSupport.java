@@ -41,7 +41,7 @@ public class FXBeanPropertyListenerSupport {
 		Assert.isNotNull(listener, "Listener cannot be null"); //$NON-NLS-1$
 		Assert.isNotNull(propertyName, "Property name cannot be null"); //$NON-NLS-1$
 		processListener(bean, propertyName, listener,
-				/*"addPropertyChangeListener",*/ "Could not attach listener to ");//$NON-NLS-1$ //$NON-NLS-2$
+				/*"addPropertyChangeListener",*/ "Could not attach listener to ");//$NON-NLS-1$
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class FXBeanPropertyListenerSupport {
 				bean,
 				propertyName,
 				listener,
-				/*"removePropertyChangeListener",*/ "Cound not remove listener from "); //$NON-NLS-1$ //$NON-NLS-2$
+				/*"removePropertyChangeListener",*/ "Cound not remove listener from "); //$NON-NLS-1$ 
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class FXBeanPropertyListenerSupport {
 	private static boolean processListener(Object bean, String propertyName,
 			ChangeListener<Object> listener, /*String methodName,*/ String message) {
 		try {
-			Method method = bean.getClass().getMethod(propertyName+"Property");
+			Method method = bean.getClass().getMethod(propertyName+"Property"); //$NON-NLS-1$
 			Object observable = method.invoke(bean);
 			if( observable instanceof ObservableValue<?> ) {
 				((ObservableValue<Object>) observable).addListener(listener);

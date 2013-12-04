@@ -15,9 +15,6 @@ package org.eclipse.fx.core.databinding.internal;
 import java.beans.PropertyDescriptor;
 
 import org.eclipse.core.databinding.observable.Realm;
-import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.databinding.property.value.ValueProperty;
@@ -32,6 +29,7 @@ import org.eclipse.fx.core.databinding.JFXBeanProperties;
 public class FXBeanValuePropertyDecorator extends ValueProperty implements
 		IJFXBeanValueProperty {
 	private final IValueProperty delegate;
+	
 	private final PropertyDescriptor propertyDescriptor;
 
 	/**
@@ -44,31 +42,38 @@ public class FXBeanValuePropertyDecorator extends ValueProperty implements
 		this.propertyDescriptor = propertyDescriptor;
 	}
 
+	@Override
 	public PropertyDescriptor getPropertyDescriptor() {
-		return propertyDescriptor;
+		return this.propertyDescriptor;
 	}
 
+	@Override
 	public Object getValueType() {
-		return delegate.getValueType();
+		return this.delegate.getValueType();
 	}
 
+	@Override
 	protected Object doGetValue(Object source) {
-		return delegate.getValue(source);
+		return this.delegate.getValue(source);
 	}
 
+	@Override
 	protected void doSetValue(Object source, Object value) {
-		delegate.setValue(source, value);
+		this.delegate.setValue(source, value);
 	}
 
+	@Override
 	public IJFXBeanValueProperty value(String propertyName) {
 		return value(propertyName, null);
 	}
 
-	public IJFXBeanValueProperty value(String propertyName, Class valueType) {
-		Class beanClass = (Class) delegate.getValueType();
+	@Override
+	public IJFXBeanValueProperty value(String propertyName, Class<?> valueType) {
+		Class<?> beanClass = (Class<?>) this.delegate.getValueType();
 		return value(JFXBeanProperties.value(beanClass, propertyName, valueType));
 	}
 
+	@Override
 	public IJFXBeanValueProperty value(IJFXBeanValueProperty property) {
 		return new FXBeanValuePropertyDecorator(super.value(property),
 				property.getPropertyDescriptor());
@@ -118,19 +123,22 @@ public class FXBeanValuePropertyDecorator extends ValueProperty implements
 				property.getPropertyDescriptor());
 	}*/
 
+	@Override
 	public IObservableValue observe(Object source) {
-		return new FXBeanObservableValueDecorator(delegate.observe(source),
-				propertyDescriptor);
+		return new FXBeanObservableValueDecorator(this.delegate.observe(source),
+				this.propertyDescriptor);
 	}
 
+	@Override
 	public IObservableValue observe(Realm realm, Object source) {
 		return new FXBeanObservableValueDecorator(
-				delegate.observe(realm, source), propertyDescriptor);
+				this.delegate.observe(realm, source), this.propertyDescriptor);
 	}
 
+	@Override
 	public IObservableValue observeDetail(IObservableValue master) {
-		return new FXBeanObservableValueDecorator(delegate.observeDetail(master),
-				propertyDescriptor);
+		return new FXBeanObservableValueDecorator(this.delegate.observeDetail(master),
+				this.propertyDescriptor);
 	}
 
 	/*public IObservableList observeDetail(IObservableList master) {
@@ -148,7 +156,8 @@ public class FXBeanValuePropertyDecorator extends ValueProperty implements
 				propertyDescriptor);
 	}*/
 
+	@Override
 	public String toString() {
-		return delegate.toString();
+		return this.delegate.toString();
 	}
 }

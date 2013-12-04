@@ -20,46 +20,71 @@ import org.eclipse.fx.core.databinding.internal.FXBeanPropertyHelper;
 import org.eclipse.fx.core.databinding.internal.FXBeanValueProperty;
 import org.eclipse.fx.core.databinding.internal.FXBeanValuePropertyDecorator;
 
-
-import javafx.beans.property.Property;
-
-
+/**
+ * Factory to create property descriptions
+ */
 public class JFXBeanProperties {
+	/**
+	 * Create a single value property without a type
+	 * 
+	 * @param propertyName
+	 *            the name of the property (nested properties are separated with a .)
+	 * @return the property
+	 */
 	public static IJFXBeanValueProperty value(String propertyName) {
 		return value(null, propertyName, null);
 	}
-	
-	public static IJFXBeanValueProperty value(String propertyName, Class valueType) {
+
+	/**
+	 * Create a single value property with a type
+	 * 
+	 * @param propertyName
+	 *            the name of the property (nested properties are separated with a .)
+	 * @param valueType
+	 *            the type
+	 * @return the property
+	 */
+	public static IJFXBeanValueProperty value(String propertyName, Class<?> valueType) {
 		return value(null, propertyName, valueType);
 	}
-	
-	public static IJFXBeanValueProperty value(Class beanClass,
-			String propertyName, Class valueType) {
+
+	/**
+	 * Create a property on a class
+	 * 
+	 * @param beanClass
+	 *            the bean type the property is created on
+	 * @param propertyName
+	 *            the property name
+	 * @param _valueType
+	 *            the type
+	 * @return the property
+	 */
+	public static IJFXBeanValueProperty value(Class<?> beanClass, String propertyName, Class<?> _valueType) {
+		Class<?> valueType = _valueType;
 		String[] propertyNames = split(propertyName);
-		if (propertyNames.length > 1)
+		if (propertyNames.length > 1) {
 			valueType = null;
+		}
 
 		PropertyDescriptor propertyDescriptor;
 		IValueProperty property;
 		if (beanClass == null) {
 			propertyDescriptor = null;
-			property = new AnonymousFXBeanValueProperty(propertyNames[0],
-					valueType);
+			property = new AnonymousFXBeanValueProperty(propertyNames[0], valueType);
 		} else {
-			propertyDescriptor = FXBeanPropertyHelper.getPropertyDescriptor(
-					beanClass, propertyNames[0]);
+			propertyDescriptor = FXBeanPropertyHelper.getPropertyDescriptor(beanClass, propertyNames[0]);
 			property = new FXBeanValueProperty(propertyDescriptor, valueType);
 		}
 
-		IJFXBeanValueProperty beanProperty = new FXBeanValuePropertyDecorator(
-				property, propertyDescriptor);
+		IJFXBeanValueProperty beanProperty = new FXBeanValuePropertyDecorator(property, propertyDescriptor);
 		for (int i = 1; i < propertyNames.length; i++) {
 			beanProperty = beanProperty.value(propertyNames[i]);
 		}
 		return beanProperty;
 	}
-	
-	private static String[] split(String propertyName) {
+
+	private static String[] split(String _propertyName) {
+		String propertyName = _propertyName;
 		if (propertyName.indexOf('.') == -1)
 			return new String[] { propertyName };
 		List<String> propertyNames = new ArrayList<String>();
@@ -69,7 +94,6 @@ public class JFXBeanProperties {
 			propertyName = propertyName.substring(index + 1);
 		}
 		propertyNames.add(propertyName);
-		return (String[]) propertyNames
-				.toArray(new String[propertyNames.size()]);
+		return (String[]) propertyNames.toArray(new String[propertyNames.size()]);
 	}
 }

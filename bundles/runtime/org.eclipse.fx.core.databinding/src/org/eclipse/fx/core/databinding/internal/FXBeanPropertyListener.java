@@ -25,8 +25,7 @@ import org.eclipse.core.databinding.property.ISimplePropertyListener;
 import org.eclipse.core.databinding.property.NativePropertyListener;
 
 /**
- * @since 3.3
- * 
+ * Wraps a native listener
  */
 public abstract class FXBeanPropertyListener extends NativePropertyListener {
 	private final PropertyDescriptor propertyDescriptor;
@@ -39,25 +38,31 @@ public abstract class FXBeanPropertyListener extends NativePropertyListener {
 		this.propertyDescriptor = propertyDescriptor;
 	}
 
-	public void propertyChange(java.beans.PropertyChangeEvent evt) {
-		if (evt.getPropertyName() == null
-				|| propertyDescriptor.getName().equals(evt.getPropertyName())) {
-			Object oldValue = evt.getOldValue();
-			Object newValue = evt.getNewValue();
-			IDiff diff;
-			if (evt.getPropertyName() == null || oldValue == null
-					|| newValue == null)
-				diff = null;
-			else
-				diff = computeDiff(oldValue, newValue);
-			fireChange(evt.getSource(), diff);
-		}
-	}
+//	public void propertyChange(java.beans.PropertyChangeEvent evt) {
+//		if (evt.getPropertyName() == null
+//				|| propertyDescriptor.getName().equals(evt.getPropertyName())) {
+//			Object oldValue = evt.getOldValue();
+//			Object newValue = evt.getNewValue();
+//			IDiff diff;
+//			if (evt.getPropertyName() == null || oldValue == null
+//					|| newValue == null)
+//				diff = null;
+//			else
+//				diff = computeDiff(oldValue, newValue);
+//			fireChange(evt.getSource(), diff);
+//		}
+//	}
 
 	protected abstract IDiff computeDiff(Object oldValue, Object newValue);
 
+	@Override
+	protected void fireChange(Object source, IDiff diff) {
+		super.fireChange(source, diff);
+	}
+	
+	@Override
 	protected void doAddTo(Object source) {
-		if( ! map.containsKey(source) ) {
+		if( ! this.map.containsKey(source) ) {
 			ChangeListener<Object> l = new ChangeListener<Object>() {
 
 				@Override
@@ -71,18 +76,19 @@ public abstract class FXBeanPropertyListener extends NativePropertyListener {
 					fireChange(source, diff);
 				}
 			};
-			map.put(source, l);
+			this.map.put(source, l);
 			FXBeanPropertyListenerSupport.hookListener(source,
-					propertyDescriptor.getName(), l);
+					this.propertyDescriptor.getName(), l);
 		}
 		
 	}
 
+	@Override
 	protected void doRemoveFrom(Object source) {
-		ChangeListener<Object> l = map.get(source);
+		ChangeListener<Object> l = this.map.get(source);
 		if (l != null) {
 			FXBeanPropertyListenerSupport.unhookListener(source,
-					propertyDescriptor.getName(), l);
+					this.propertyDescriptor.getName(), l);
 		}
 	}
 }

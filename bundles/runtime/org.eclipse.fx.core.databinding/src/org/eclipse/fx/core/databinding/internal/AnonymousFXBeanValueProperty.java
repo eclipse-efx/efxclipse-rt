@@ -20,6 +20,8 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.DelegatingValueProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 
 /**
@@ -27,39 +29,44 @@ import org.eclipse.fx.core.databinding.JFXBeanProperties;
  * 
  */
 public class AnonymousFXBeanValueProperty extends DelegatingValueProperty {
+	@NonNull
 	private final String propertyName;
 
+	@NonNull
 	private Map<Class<?>,IValueProperty> delegates;
 
 	/**
 	 * @param propertyName
 	 * @param valueType
 	 */
-	public AnonymousFXBeanValueProperty(String propertyName, Class<?> valueType) {
+	public AnonymousFXBeanValueProperty(String propertyName, @Nullable Class<?> valueType) {
 		super(valueType);
 		this.propertyName = propertyName;
 		this.delegates = new HashMap<Class<?>,IValueProperty>();
 	}
 
+	@Override
+	@Nullable
 	protected IValueProperty doGetDelegate(Object source) {
 		return getClassDelegate(source.getClass());
 	}
 
 	private IValueProperty getClassDelegate(Class<?> beanClass) {
-		if (delegates.containsKey(beanClass))
-			return delegates.get(beanClass);
+		if (this.delegates.containsKey(beanClass))
+			return this.delegates.get(beanClass);
 
 		IValueProperty delegate;
 		try {
-			delegate = JFXBeanProperties.value(beanClass, propertyName,
+			delegate = JFXBeanProperties.value(beanClass, this.propertyName,
 					(Class<?>) getValueType());
 		} catch (IllegalArgumentException noSuchProperty) {
 			delegate = null;
 		}
-		delegates.put(beanClass, delegate);
+		this.delegates.put(beanClass, delegate);
 		return delegate;
 	}
 
+	@Override
 	public IObservableValue observeDetail(IObservableValue master) {
 		Object valueType = getValueType();
 		if (valueType == null)
@@ -76,8 +83,9 @@ public class AnonymousFXBeanValueProperty extends DelegatingValueProperty {
 		return null;
 	}
 
+	@Override
 	public String toString() {
-		String s = "?." + propertyName; //$NON-NLS-1$
+		String s = "?." + this.propertyName; //$NON-NLS-1$
 		Class<?> valueType = (Class<?>) getValueType();
 		if (valueType != null)
 			s += "<" + FXBeanPropertyHelper.shortClassName(valueType) + ">"; //$NON-NLS-1$//$NON-NLS-2$

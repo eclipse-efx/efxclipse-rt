@@ -26,44 +26,50 @@ import org.eclipse.core.databinding.property.value.SimpleValueProperty;
  */
 public class FXBeanValueProperty extends SimpleValueProperty {
 	private final PropertyDescriptor propertyDescriptor;
-	private final Class valueType;
+	private final Class<?> valueType;
 
 	/**
 	 * @param propertyDescriptor
 	 * @param valueType
 	 */
 	public FXBeanValueProperty(PropertyDescriptor propertyDescriptor,
-			Class valueType) {
+			Class<?> valueType) {
 		this.propertyDescriptor = propertyDescriptor;
 		this.valueType = valueType == null ? propertyDescriptor
 				.getPropertyType() : valueType;
 	}
 
+	@Override
 	public Object getValueType() {
-		return valueType;
+		return this.valueType;
 	}
 
+	@Override
 	protected Object doGetValue(Object source) {
-		return FXBeanPropertyHelper.readProperty(source, propertyDescriptor);
+		return FXBeanPropertyHelper.readProperty(source, this.propertyDescriptor);
 	}
 
+	@Override
 	protected void doSetValue(Object source, Object value) {
-		FXBeanPropertyHelper.writeProperty(source, propertyDescriptor, value);
+		FXBeanPropertyHelper.writeProperty(source, this.propertyDescriptor, value);
 	}
 
+	@Override
 	public INativePropertyListener adaptListener(
 			final ISimplePropertyListener listener) {
-		return new FXBeanPropertyListener(this, propertyDescriptor, listener) {
+		return new FXBeanPropertyListener(this, this.propertyDescriptor, listener) {
+			@Override
 			protected IDiff computeDiff(Object oldValue, Object newValue) {
 				return Diffs.createValueDiff(oldValue, newValue);
 			}
 		};
 	}
 
+	@Override
 	public String toString() {
-		String s = FXBeanPropertyHelper.propertyName(propertyDescriptor);
-		if (valueType != null)
-			s += "<" + FXBeanPropertyHelper.shortClassName(valueType) + ">"; //$NON-NLS-1$//$NON-NLS-2$
+		String s = FXBeanPropertyHelper.propertyName(this.propertyDescriptor);
+		if (this.valueType != null)
+			s += "<" + FXBeanPropertyHelper.shortClassName(this.valueType) + ">"; //$NON-NLS-1$//$NON-NLS-2$
 		return s;
 	}
 }

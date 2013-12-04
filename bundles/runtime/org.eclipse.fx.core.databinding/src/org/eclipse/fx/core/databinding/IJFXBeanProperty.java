@@ -13,7 +13,15 @@ package org.eclipse.fx.core.databinding;
 import java.beans.PropertyDescriptor;
 
 import org.eclipse.core.databinding.property.IProperty;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Root interface of all JavaFX properties
+ */
 public interface IJFXBeanProperty extends IProperty {
+	/**
+	 * @return the descriptor
+	 */
+	@NonNull
 	public PropertyDescriptor getPropertyDescriptor();
 }

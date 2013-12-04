@@ -19,6 +19,8 @@ import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.DecoratingObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.fx.core.databinding.IJFXBeanObservable;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 
 /**
@@ -28,23 +30,27 @@ import org.eclipse.fx.core.databinding.IJFXBeanObservable;
  */
 public class FXBeanObservableValueDecorator extends DecoratingObservableValue
 		implements IJFXBeanObservable {
+	@NonNull
 	private PropertyDescriptor propertyDescriptor;
 
 	/**
 	 * @param decorated
 	 * @param propertyDescriptor
 	 */
-	public FXBeanObservableValueDecorator(IObservableValue decorated,
-			PropertyDescriptor propertyDescriptor) {
+	public FXBeanObservableValueDecorator(@NonNull IObservableValue decorated,
+			@NonNull PropertyDescriptor propertyDescriptor) {
 		super(decorated, true);
 		this.propertyDescriptor = propertyDescriptor;
 	}
 
+	@Override
 	public synchronized void dispose() {
 		this.propertyDescriptor = null;
 		super.dispose();
 	}
 
+	@Override
+	@Nullable
 	public Object getObserved() {
 		IObservable decorated = getDecorated();
 		if (decorated instanceof IObserving)
@@ -52,7 +58,9 @@ public class FXBeanObservableValueDecorator extends DecoratingObservableValue
 		return null;
 	}
 
+	@Override
+	@NonNull
 	public PropertyDescriptor getPropertyDescriptor() {
-		return propertyDescriptor;
+		return this.propertyDescriptor;
 	}
 }

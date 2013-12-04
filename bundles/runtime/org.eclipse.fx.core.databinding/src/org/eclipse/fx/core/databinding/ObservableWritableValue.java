@@ -13,6 +13,11 @@ package org.eclipse.fx.core.databinding;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
 
+/**
+ * Observable value which can be modified as well
+ * 
+ * @param <E> the type
+ */
 public interface ObservableWritableValue<E> extends ObservableValue<E>, WritableValue<E> {
-
+	// no additional methods
 }
