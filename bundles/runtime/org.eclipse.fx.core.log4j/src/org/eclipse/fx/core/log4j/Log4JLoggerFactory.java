@@ -17,11 +17,18 @@ import javax.inject.Provider;
 import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Factory to create a logger backed by log4j
+ */
 public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory> {
 
+	/**
+	 * Create a new instance
+	 */
 	public Log4JLoggerFactory() {
-		String properties = System.getProperty("efxclipse.log4.properties");
+		String properties = System.getProperty("efxclipse.log4.properties"); //$NON-NLS-1$
 		if( properties != null ) {
 			PropertyConfigurator.configure( properties );
 		}
@@ -47,13 +54,13 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		}
 		
 		private org.apache.log4j.Logger getLogger() {
-			if( logger == null ) {
-				logger = org.apache.log4j.Logger.getLogger(name);
+			if( this.logger == null ) {
+				this.logger = org.apache.log4j.Logger.getLogger(this.name);
 			}
-			return logger;
+			return this.logger;
 		}
 		
-		private org.apache.log4j.Level toLog4JLevel(Level level) {
+		private static org.apache.log4j.Level toLog4JLevel(Level level) {
 			switch (level) {
 			case DEBUG:
 				return org.apache.log4j.Level.DEBUG;
@@ -73,7 +80,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		}
 		
 		@Override
-		public void log(Level level, String message) {
+		public void log(@NonNull Level level, String message) {
 			getLogger().log(toLog4JLevel(level), message);
 		}
 
