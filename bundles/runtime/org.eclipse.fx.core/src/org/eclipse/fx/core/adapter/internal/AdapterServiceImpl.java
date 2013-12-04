@@ -79,7 +79,7 @@ public class AdapterServiceImpl implements AdapterService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private boolean canAdaptRec(Object sourceObject, Class<?> sourceType, @NonNull Class<?> targetType) {
+	private boolean canAdaptRec(@NonNull Object sourceObject, Class<?> sourceType, @NonNull Class<?> targetType) {
 		boolean adapt = canAdapt(this.adapterMap, sourceObject, (Class<Object>)sourceType, (Class<Object>)targetType);
 		if( adapt ) {
 			return true;
@@ -98,7 +98,7 @@ public class AdapterServiceImpl implements AdapterService {
 		return false;
 	}
 	
-	private static boolean canAdapt(Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap, Object sourceObject, Class<Object> source, @NonNull Class<Object> target) {
+	private static boolean canAdapt(Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap, @NonNull Object sourceObject, Class<Object> source, @NonNull Class<Object> target) {
 		Map<Class<Object>, List<AdapterProvider<Object, Object>>> map = adapterMap.get(source);
 		if( map != null ) {
 			List<AdapterProvider<Object, Object>> aList = map.get(target);
@@ -123,7 +123,7 @@ public class AdapterServiceImpl implements AdapterService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private Object adaptRec(Object sourceObject, Class<?> sourceType, @NonNull Class<?> targetType, ValueAccess[] valueAccess) {
+	private Object adaptRec(@NonNull Object sourceObject, Class<?> sourceType, @NonNull Class<?> targetType, ValueAccess[] valueAccess) {
 		Object adapt = adapt(this.adapterMap, sourceObject, (Class<Object>)sourceType, (Class<Object>)targetType, valueAccess);
 		if( adapt != null ) {
 			return adapt;
@@ -143,7 +143,7 @@ public class AdapterServiceImpl implements AdapterService {
 		return null;
 	}
 
-	private static Object adapt(Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap, Object sourceObject, Class<Object> source, @NonNull Class<Object> target, ValueAccess[] valueAccess) {
+	private static Object adapt(Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap, @NonNull Object sourceObject, Class<Object> source, @NonNull Class<Object> target, ValueAccess[] valueAccess) {
 		Map<Class<Object>, List<AdapterProvider<Object, Object>>> map = adapterMap.get(source);
 		if( map != null ) {
 			List<AdapterProvider<Object, Object>> aList = map.get(target);
