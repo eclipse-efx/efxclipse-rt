@@ -13,6 +13,8 @@ package org.eclipse.fx.core.di;
 import org.eclipse.fx.core.Callback;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.adapter.Adaptable;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A value bound to the IEclipseContext
@@ -24,6 +26,7 @@ public interface ContextBoundValue<T> extends Adaptable {
 	/**
 	 * @return the current value
 	 */
+	@Nullable
 	public T getValue();
 
 	/**
@@ -32,7 +35,7 @@ public interface ContextBoundValue<T> extends Adaptable {
 	 * @param value
 	 *            the value to publish
 	 */
-	public void publish(T value);
+	public void publish(@NonNull T value);
 
 	/**
 	 * Subscribe for value change events
@@ -41,7 +44,8 @@ public interface ContextBoundValue<T> extends Adaptable {
 	 *            the callback to be invoked
 	 * @return the subscription to revoke it
 	 */
-	public Subscription subscribeOnValueChange(Callback<T> callback);
+	@NonNull
+	public Subscription subscribeOnValueChange(@NonNull Callback<T> callback);
 
 	/**
 	 * Get informed about disposal
@@ -50,7 +54,8 @@ public interface ContextBoundValue<T> extends Adaptable {
 	 *            the callback
 	 * @return the subscription to revoke it
 	 */
-	public Subscription subscribeOnDispose(Callback<Void> callback);
+	@NonNull
+	public Subscription subscribeOnDispose(@NonNull Callback<Void> callback);
 
 	/**
 	 * Allows to adapt the type to the given type.
@@ -66,8 +71,10 @@ public interface ContextBoundValue<T> extends Adaptable {
 	 * @return the adapted type
 	 * @see Adaptable#adaptTo(Class)
 	 */
+	@SuppressWarnings("javadoc")
 	@Override
-	public <A> A adaptTo(Class<A> adapt);
+	@Nullable
+	public <A> A adaptTo(@NonNull Class<A> adapt);
 
 	/**
 	 * Test if the instance can be adapted to the target
@@ -81,5 +88,6 @@ public interface ContextBoundValue<T> extends Adaptable {
 	 * @see Adaptable#canAdaptTo(Class)
 	 */
 	@Override
-	public boolean canAdaptTo(Class<?> adapt);
+	@SuppressWarnings("javadoc")
+	public boolean canAdaptTo(@NonNull Class<?> adapt);
 }

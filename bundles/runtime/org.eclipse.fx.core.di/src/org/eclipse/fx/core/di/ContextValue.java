@@ -18,10 +18,16 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+/**
+ * Annotation to get a context bound value
+ */
 @Qualifier
 @Documented
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ContextValue {
+	/**
+	 * @return the key in the context binding to
+	 */
 	String contextKey();
 }
