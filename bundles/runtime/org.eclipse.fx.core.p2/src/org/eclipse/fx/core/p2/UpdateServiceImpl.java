@@ -22,10 +22,12 @@ import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.operations.UpdateOperation;
 import org.eclipse.fx.core.Callback;
+import org.eclipse.fx.core.ReturnValue.State;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.core.update.UpdateService;
 import org.osgi.framework.ServiceReference;
+import org.eclipse.fx.core.ReturnValue.ReturnValueImpl;
 
 public class UpdateServiceImpl implements UpdateService {
 	private Logger logger;
