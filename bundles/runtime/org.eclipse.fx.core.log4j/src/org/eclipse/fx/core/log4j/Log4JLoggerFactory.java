@@ -80,7 +80,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		}
 		
 		@Override
-		public void log(@NonNull Level level, String message) {
+		public void log(Level level, String message) {
 			getLogger().log(toLog4JLevel(level), message);
 		}
 
