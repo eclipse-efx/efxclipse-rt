@@ -10,36 +10,45 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx;
 
-import javafx.scene.Group;
+import javax.inject.Inject;
 
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
+
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseToolControlRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.CustomContainerSupport;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
-public class DefToolControlRenderer extends BaseToolControlRenderer<Group> {
+public class DefToolControlRenderer extends BaseToolControlRenderer<Parent> {
 
 	@Override
-	protected Class<? extends WToolControl<Group>> getWidgetClass(MToolControl control) {
+	protected Class<? extends WToolControl<Parent>> getWidgetClass(MToolControl control) {
 		return WToolControlImpl.class;
 	}
 	
-	public static class WToolControlImpl extends WLayoutedWidgetImpl<Group, Group, MToolControl> implements WToolControl<Group> {
-
+	public static class WToolControlImpl extends WLayoutedWidgetImpl<Parent, Parent, MToolControl> implements WToolControl<Parent> {
+		@Inject
+		IEclipseContext context;
+		
 		@Override
-		protected Group createWidget() {
-			return new Group();
+		protected Parent createWidget() {
+			Pane p = CustomContainerSupport.createContainerPane(logger, context);
+			return p == null ? new Group() : p;
 		}
 
 		@Override
-		protected void setUserData(WWidgetImpl<Group, MToolControl> widget) {
+		protected void setUserData(WWidgetImpl<Parent, MToolControl> widget) {
 			getWidget().setUserData(widget);
 		}
 
 		@Override
-		protected Group getWidgetNode() {
+		protected Parent getWidgetNode() {
 			return getWidget();
 		}
 	}
