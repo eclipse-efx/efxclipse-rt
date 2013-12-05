@@ -13,6 +13,7 @@ package org.eclipse.fx.osgi.fxloader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLConnection;
@@ -104,6 +105,8 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 
 	static class MyBundleClassLoader extends DefaultClassLoader {
 		private URLClassLoader fxClassLoader;
+		private boolean swtAvailable;
+		private boolean implicitExitSet;
 
 		public MyBundleClassLoader(PackageAdmin admin, ClassLoader parent, ClassLoaderDelegate delegate, ProtectionDomain domain, BaseData bundledata, String[] classpath, BundleContext context) throws Exception {
 			super(parent, delegate, domain, bundledata, classpath);
@@ -112,7 +115,6 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 			// used
 			// we can load those
 			Bundle[] bundles = admin.getBundles("org.eclipse.swt", null);
-			boolean swtAvailable = false;
 			
 			if (bundles != null) {
 				for (int i = 0; i < bundles.length; i++) {
@@ -129,7 +131,7 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 					}
 				}
 			}
-
+			
 			fxClassLoader = createClassloader(parent, admin, bundledata, context, swtAvailable);
 		}
 
@@ -253,6 +255,17 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 		public Class<?> findLocalClass(String classname) throws ClassNotFoundException {
 			try {
 				Class<?> cl = fxClassLoader.loadClass(classname);
+				if( swtAvailable && ! implicitExitSet && "javafx.embed.swt.FXCanvas".equals(classname) ) {
+					try {
+						Class<?> platformClass = fxClassLoader.loadClass("javafx.application.Platform");
+						Method method = platformClass.getDeclaredMethod("setImplicitExit", boolean.class);
+						method.invoke(null, false);
+						implicitExitSet = true;
+					} catch (Throwable e) {
+						System.err.println("Unable to setImplicitExit to false");
+						e.printStackTrace();
+					}
+				}
 				return cl;
 			} catch (ClassNotFoundException e) {
 				return super.findLocalClass(classname);
