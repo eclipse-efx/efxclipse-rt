@@ -24,7 +24,6 @@ import org.eclipse.fx.osgi.util.OSGiFXMLLoader;
 import org.osgi.framework.Bundle;
 
 
-@SuppressWarnings("restriction")
 public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 	ResourceBundle resourceBundle;
 	BuilderFactory builderFactory;
