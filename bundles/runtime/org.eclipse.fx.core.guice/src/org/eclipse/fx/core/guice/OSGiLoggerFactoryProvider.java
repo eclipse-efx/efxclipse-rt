@@ -7,18 +7,21 @@ import org.osgi.framework.ServiceReference;
 
 import com.google.inject.Provider;
 
+/**
+ * A logger provider who is backed by the OSGi-Service registry
+ */
 public class OSGiLoggerFactoryProvider implements Provider<LoggerFactory> {
 
 	private LoggerFactory instance = null;
 
 	@Override
 	public LoggerFactory get() {
-		if (instance == null) {
+		if (this.instance == null) {
 			BundleContext context = FrameworkUtil.getBundle(getClass()).getBundleContext();
 			ServiceReference<LoggerFactory> ref = context.getServiceReference(LoggerFactory.class);
-			instance = context.getService(ref);
+			this.instance = context.getService(ref);
 		}
-		return instance;
+		return this.instance;
 	}
 
 }

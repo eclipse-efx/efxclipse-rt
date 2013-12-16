@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 import com.google.inject.MembersInjector;
 import com.google.inject.Provider;
@@ -22,6 +23,15 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeEncounter;
 import com.google.inject.spi.TypeListener;
 
+/**
+ * Listener to support the injection of @Log
+ * <pre>
+ * class MyBean {
+ *   @Log
+ *   Logger logger;
+ * }
+ * </pre>
+ */
 public class FXLoggerListener implements TypeListener {
 	
 	@Override
@@ -32,17 +42,31 @@ public class FXLoggerListener implements TypeListener {
 				 if( loggerName == null || loggerName.isEmpty() ) {
 					 loggerName = typeLiteral.getRawType().getName();
 				 }
-				 typeEncounter.register(new FieldLoggerInjector<T>(field,loggerName,typeEncounter.getProvider(LoggerFactory.class)));
+				 if( loggerName == null ) {
+					 loggerName = "unknown"; //$NON-NLS-1$
+				 }
+				 
+				 Provider<LoggerFactory> provider = typeEncounter.getProvider(LoggerFactory.class);
+				 if( provider == null ) {
+					 throw new IllegalStateException("No " + LoggerFactory.class + " provider registered");  //$NON-NLS-1$//$NON-NLS-2$
+				 }
+				 
+				 typeEncounter.register(new FieldLoggerInjector<T>(field,loggerName,provider));
 			 }
 		 }
 	}
 	
 	static class FieldLoggerInjector<T> implements MembersInjector<T> {
+		@NonNull
 		private Provider<LoggerFactory> provider;
+		
+		@NonNull
 		private Field field;
+		
+		@NonNull
 		private String loggerName;
 		
-		public FieldLoggerInjector(Field field, String loggerName, Provider<LoggerFactory> provider) {
+		public FieldLoggerInjector(@NonNull Field field, @NonNull String loggerName, @NonNull Provider<LoggerFactory> provider) {
 			this.provider = provider;
 			this.field = field;
 			this.loggerName = loggerName;
@@ -51,14 +75,15 @@ public class FXLoggerListener implements TypeListener {
 		
 		@Override
 		public void injectMembers(T instance) {
+			Logger logger = this.provider.get().createLogger(this.loggerName);
 			try {
-				field.set(instance,provider.get().createLogger(loggerName));
+				this.field.set(instance,logger);
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Unable to inject the logger",e); //$NON-NLS-1$
+				throw new RuntimeException(e);
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Unable to inject the logger",e); //$NON-NLS-1$
+				throw new RuntimeException(e);
 			}
 		}
 	}
