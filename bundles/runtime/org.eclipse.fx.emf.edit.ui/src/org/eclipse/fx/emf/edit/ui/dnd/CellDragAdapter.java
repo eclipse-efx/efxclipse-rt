@@ -37,13 +37,14 @@ public class CellDragAdapter implements ICellCreationListener {
 	public void cellCreated(final Cell<?> cell) {
 
 		cell.setOnDragDetected(new EventHandler<MouseEvent>() {
+			@Override
 			public void handle(MouseEvent event) {
 				/* allow any transfer mode */
 				Dragboard db = cell.startDragAndDrop(TransferMode.ANY);
 
 				/* put a string on dummy content dragboard */
 				ClipboardContent content = new ClipboardContent();
-				content.putString("dummy content");
+				content.putString("dummy content"); //$NON-NLS-1$
 				db.setContent(content);
 
 				MultipleSelectionModel<?> selectionModel = CellUtil.getSelectionModel(cell);

@@ -32,14 +32,14 @@ class CellUtil2 {
 		else if (cell instanceof TableRow)
 			return ((TableRow<?>) cell).getTableView().getSelectionModel();
 		else
-			throw new IllegalArgumentException("Unsupported Cell type");
+			throw new IllegalArgumentException("Unsupported Cell type"); //$NON-NLS-1$
 	}
 
 	static MultipleSelectionModel<?> getSelectionModel(Control view) {
 		if (view instanceof TreeView<?>)
 			return ((TreeView<?>) view).getSelectionModel();
 		else
-			throw new IllegalArgumentException("Unsupported View type");
+			throw new IllegalArgumentException("Unsupported View type"); //$NON-NLS-1$
 	}
 
 	static List<?> getSelectedItems(Cell<?> cell) {

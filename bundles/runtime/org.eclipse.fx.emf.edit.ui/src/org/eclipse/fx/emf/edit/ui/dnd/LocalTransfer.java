@@ -17,6 +17,9 @@ import javafx.scene.input.Dragboard;
  */
 public class LocalTransfer {
 
+	/**
+	 * the one and only instance
+	 */
 	public static LocalTransfer INSTANCE = new LocalTransfer();
 
 	/**
@@ -24,12 +27,18 @@ public class LocalTransfer {
 	 */
 	private Object object;
 
+	/**
+	 * @param object the object to transfer
+	 */
 	public void setObject(Object object) {
 		this.object = object;
 	}
 
+	/**
+	 * @return the transfered object
+	 */
 	public Object getObject() {
-		return object;
+		return this.object;
 	}
 
 }

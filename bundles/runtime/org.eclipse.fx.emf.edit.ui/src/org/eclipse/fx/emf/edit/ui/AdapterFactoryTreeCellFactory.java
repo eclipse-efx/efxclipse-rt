@@ -38,6 +38,12 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
  */
 public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory implements Callback<TreeView<Object>, TreeCell<Object>> {
 
+	/**
+	 * Create a new tree factory
+	 * 
+	 * @param adapterFactory
+	 *            the adapter factory
+	 */
 	public AdapterFactoryTreeCellFactory(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
@@ -60,23 +66,23 @@ public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory imp
 			@Override
 			public void startEdit() {
 				super.startEdit();
-				cellEditHandler = getCellEditHandler(this);
-				if (cellEditHandler != null)
-					cellEditHandler.startEdit(this);
+				this.cellEditHandler = getCellEditHandler(this);
+				if (this.cellEditHandler != null)
+					this.cellEditHandler.startEdit(this);
 			}
 
 			@Override
 			public void commitEdit(Object newValue) {
 				super.commitEdit(newValue);
-				if (cellEditHandler != null)
-					cellEditHandler.commitEdit(this, newValue);
+				if (this.cellEditHandler != null)
+					this.cellEditHandler.commitEdit(this, newValue);
 			}
 
 			@Override
 			public void cancelEdit() {
 				super.cancelEdit();
-				if (cellEditHandler != null)
-					cellEditHandler.cancelEdit(this);
+				if (this.cellEditHandler != null)
+					this.cellEditHandler.cancelEdit(this);
 				update(getItem());
 			}
 
@@ -85,31 +91,31 @@ public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory imp
 				super.updateItem(item, empty);
 
 				// check if the item changed
-				if (item != currentItem) {
+				if (item != this.currentItem) {
 
 					// remove the adapter if attached
-					if (currentItem instanceof Notifier)
-						((Notifier) currentItem).eAdapters().remove(adapter);
+					if (this.currentItem instanceof Notifier)
+						((Notifier) this.currentItem).eAdapters().remove(this.adapter);
 
 					// update the current item
-					currentItem = item;
+					this.currentItem = item;
 
 					// attach the adapter to the new item
-					if (currentItem instanceof Notifier)
-						((Notifier) currentItem).eAdapters().add(adapter);
+					if (this.currentItem instanceof Notifier)
+						((Notifier) this.currentItem).eAdapters().add(this.adapter);
 				}
 
 				// notify the listeners
-				for (ICellUpdateListener cellUpdateListener : cellUpdateListeners)
+				for (ICellUpdateListener cellUpdateListener : AdapterFactoryTreeCellFactory.this.cellUpdateListeners)
 					cellUpdateListener.updateItem(this, item, empty);
 
 				update(item);
 			}
 
-			private void update(Object item) {
+			void update(Object item) {
 				// setText(item == null ? "null" : item.toString());
 				if (item != null)
-					applyItemProviderStyle(item, this, adapterFactory);
+					applyItemProviderStyle(item, this, AdapterFactoryTreeCellFactory.this.adapterFactory);
 				else {
 					setText(null);
 					setGraphic(null);
@@ -118,7 +124,7 @@ public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory imp
 
 		};
 
-		for (ICellCreationListener cellCreationListener : cellCreationListeners)
+		for (ICellCreationListener cellCreationListener : this.cellCreationListeners)
 			cellCreationListener.cellCreated(treeCell);
 
 		return treeCell;

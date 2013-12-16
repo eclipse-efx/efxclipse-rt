@@ -38,14 +38,24 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	final ObservableList<TreeItem<Object>> children;
 	final ITreeItemContentProvider provider;
 
+	/**
+	 * Create a new instance
+	 * 
+	 * @param object
+	 *            the object
+	 * @param treeView
+	 *            the tree
+	 * @param adapterFactory
+	 *            the factory
+	 */
 	public AdapterFactoryTreeItem(Object object, Control treeView, AdapterFactory adapterFactory) {
 		super(object);
 		this.view = treeView;
 		this.adapterFactory = adapterFactory;
-		children = FXCollections.unmodifiableObservableList(super.getChildren());
+		this.children = FXCollections.unmodifiableObservableList(super.getChildren());
 
 		Object adapter = adapterFactory.adapt(object, ITreeItemContentProvider.class);
-		provider = (adapter instanceof ITreeItemContentProvider) ? (ITreeItemContentProvider) adapter : null;
+		this.provider = (adapter instanceof ITreeItemContentProvider) ? (ITreeItemContentProvider) adapter : null;
 
 		if (object instanceof Notifier) {
 			((Notifier) object).eAdapters().add(new AdapterImpl() {
@@ -67,7 +77,7 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	 */
 	@Override
 	public ObservableList<TreeItem<Object>> getChildren() {
-		return children;
+		return this.children;
 	}
 
 	/**
@@ -77,7 +87,7 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	void updateChildren() {
 		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
 
-		MultipleSelectionModel<?> selectionModel = CellUtil.getSelectionModel(view);
+		MultipleSelectionModel<?> selectionModel = CellUtil.getSelectionModel(this.view);
 		List<?> selection = selectionModel.getSelectedItems();
 		ArrayList<Object> selectedItems = new ArrayList<>();
 		ArrayList<TreeItem<?>> selectedTreeItems = new ArrayList<>();
@@ -102,19 +112,19 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 		// clear the selection
 		for (TreeItem<?> selectedTreeItem : selectedTreeItems) {
 			int treeItemIndex = selectionModel.getSelectedItems().indexOf(selectedTreeItem);
-			int selectionIndex = selectionModel.getSelectedIndices().get(treeItemIndex);
+			int selectionIndex = selectionModel.getSelectedIndices().get(treeItemIndex).intValue();
 			selectionModel.clearSelection(selectionIndex);
 		}
 
 		// remove the old tree items
 		childTreeItems.clear();
 
-		if (provider == null)
+		if (this.provider == null)
 			return;
 
 		// add the new tree items
-		for (Object child : provider.getChildren(getValue())) {
-			AdapterFactoryTreeItem treeItem = new AdapterFactoryTreeItem(child, view, adapterFactory);
+		for (Object child : this.provider.getChildren(getValue())) {
+			AdapterFactoryTreeItem treeItem = new AdapterFactoryTreeItem(child, this.view, this.adapterFactory);
 
 			childTreeItems.add(treeItem);
 
@@ -123,10 +133,9 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 				treeItem.setExpanded(true);
 
 			// restore the selection
-			if (selectedItems.contains(child)
-					&& "javafx.scene.control.TreeView$TreeViewBitSetSelectionModel".equals(selectionModel.getClass().getName())) {
+			if (selectedItems.contains(child) && "javafx.scene.control.TreeView$TreeViewBitSetSelectionModel".equals(selectionModel.getClass().getName())) { //$NON-NLS-1$
 				try {
-					Method m = selectionModel.getClass().getDeclaredMethod("select", new Class[] { TreeItem.class });
+					Method m = selectionModel.getClass().getDeclaredMethod("select", new Class[] { TreeItem.class }); //$NON-NLS-1$
 					m.setAccessible(true);
 					m.invoke(selectionModel, treeItem);
 				} catch (Exception e) {

@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory;
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory.ICellCreationListener;
 import org.eclipse.fx.emf.edit.ui.CellUtil;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Allows to drop items into viewers backed by an {@link AdapterFactoryCellFactory} using a
@@ -37,31 +38,72 @@ public class EditingDomainCellDropAdapter implements ICellCreationListener {
 	 */
 	public interface IDnDFeedbackHandler {
 
+		/**
+		 * insert before feedback
+		 * 
+		 * @param cell
+		 *            the cell
+		 */
 		void onFeedbackInsertBefore(Cell<?> cell);
 
+		/**
+		 * insert after feedback
+		 * 
+		 * @param cell
+		 *            the cell
+		 */
 		void onFeedbackInsertAfter(Cell<?> cell);
 
+		/**
+		 * select feedback
+		 * 
+		 * @param cell
+		 *            the cell
+		 */
 		void onFeedbackSelect(Cell<?> cell);
 
+		/**
+		 * no feedback
+		 * 
+		 * @param cell
+		 *            the cell
+		 */
 		void onFeedbackNone(Cell<?> cell);
 
 	}
 
 	final EditingDomain editingDomain;
 	Command dndCommand;
+	@NonNull
 	IDnDFeedbackHandler feedbackHandler = new DefaultFeedbackHandler();
 
+	/**
+	 * Create a new drop adapter
+	 * 
+	 * @param editingDomain
+	 *            the editing domain
+	 */
 	public EditingDomainCellDropAdapter(EditingDomain editingDomain) {
 		this.editingDomain = editingDomain;
 	}
 
+	/**
+	 * @return the feedback
+	 */
+	@NonNull
 	public IDnDFeedbackHandler getFeedbackHandler() {
-		return feedbackHandler;
+		return this.feedbackHandler;
 	}
 
+	/**
+	 * Setting a new feedback handler
+	 * 
+	 * @param feedbackHandler
+	 *            the handler
+	 */
 	public void setFeedbackHandler(IDnDFeedbackHandler feedbackHandler) {
 		if (feedbackHandler == null)
-			throw new IllegalArgumentException("The feeback handler cannot be null");
+			throw new IllegalArgumentException("The feeback handler cannot be null"); //$NON-NLS-1$
 
 		this.feedbackHandler = feedbackHandler;
 	}
@@ -84,26 +126,26 @@ public class EditingDomainCellDropAdapter implements ICellCreationListener {
 
 				Object object = LocalTransfer.INSTANCE.getObject();
 
-				Command command = DragAndDropCommand.create(editingDomain, item, position, DragAndDropFeedback.DROP_MOVE
-						| DragAndDropFeedback.DROP_LINK, DragAndDropFeedback.DROP_MOVE, (Collection<?>) object);
+				Command command = DragAndDropCommand.create(EditingDomainCellDropAdapter.this.editingDomain, item, position, DragAndDropFeedback.DROP_MOVE | DragAndDropFeedback.DROP_LINK, DragAndDropFeedback.DROP_MOVE,
+						(Collection<?>) object);
 
 				if (command.canExecute()) {
-					dndCommand = command;
+					EditingDomainCellDropAdapter.this.dndCommand = command;
 
 					if (command instanceof DragAndDropFeedback) {
 						DragAndDropFeedback dndFeedback = (DragAndDropFeedback) command;
 						int feedback = dndFeedback.getFeedback();
 
 						if ((feedback & DragAndDropFeedback.FEEDBACK_INSERT_BEFORE) != 0)
-							feedbackHandler.onFeedbackInsertBefore(node);
+							EditingDomainCellDropAdapter.this.feedbackHandler.onFeedbackInsertBefore(node);
 						else if ((feedback & DragAndDropFeedback.FEEDBACK_INSERT_AFTER) != 0)
-							feedbackHandler.onFeedbackInsertAfter(node);
+							EditingDomainCellDropAdapter.this.feedbackHandler.onFeedbackInsertAfter(node);
 						else if ((feedback & DragAndDropFeedback.FEEDBACK_SELECT) != 0)
-							feedbackHandler.onFeedbackSelect(node);
+							EditingDomainCellDropAdapter.this.feedbackHandler.onFeedbackSelect(node);
 						else
-							feedbackHandler.onFeedbackNone(node);
+							EditingDomainCellDropAdapter.this.feedbackHandler.onFeedbackNone(node);
 
-						if (System.getProperties().getProperty("os.name").toLowerCase().contains("mac")) {
+						if (System.getProperties().getProperty("os.name").toLowerCase().contains("mac")) { //$NON-NLS-1$ //$NON-NLS-2$
 							event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 						} else {
 							ArrayList<TransferMode> modes = new ArrayList<>();
@@ -120,8 +162,8 @@ public class EditingDomainCellDropAdapter implements ICellCreationListener {
 					}
 
 				} else {
-					dndCommand = null;
-					feedbackHandler.onFeedbackNone(node);
+					EditingDomainCellDropAdapter.this.dndCommand = null;
+					EditingDomainCellDropAdapter.this.feedbackHandler.onFeedbackNone(node);
 				}
 
 			}
@@ -132,15 +174,16 @@ public class EditingDomainCellDropAdapter implements ICellCreationListener {
 
 			@Override
 			public void handle(DragEvent event) {
-				feedbackHandler.onFeedbackNone(CellUtil.getRowNode(cell));
+				EditingDomainCellDropAdapter.this.feedbackHandler.onFeedbackNone(CellUtil.getRowNode(cell));
 			}
 
 		});
 
 		cell.setOnDragDropped(new EventHandler<DragEvent>() {
+			@Override
 			public void handle(DragEvent event) {
-				if (dndCommand != null)
-					editingDomain.getCommandStack().execute(dndCommand);
+				if (EditingDomainCellDropAdapter.this.dndCommand != null)
+					EditingDomainCellDropAdapter.this.editingDomain.getCommandStack().execute(EditingDomainCellDropAdapter.this.dndCommand);
 
 				event.setDropCompleted(true);
 				event.consume();
@@ -156,22 +199,22 @@ public class EditingDomainCellDropAdapter implements ICellCreationListener {
 
 		@Override
 		public void onFeedbackInsertBefore(Cell<?> cell) {
-			cell.setStyle("-fx-border-color: red transparent transparent transparent;");
+			cell.setStyle("-fx-border-color: red transparent transparent transparent;"); //$NON-NLS-1$
 		}
 
 		@Override
 		public void onFeedbackInsertAfter(Cell<?> cell) {
-			cell.setStyle("-fx-border-color: transparent transparent red transparent;");
+			cell.setStyle("-fx-border-color: transparent transparent red transparent;"); //$NON-NLS-1$
 		}
 
 		@Override
 		public void onFeedbackSelect(Cell<?> cell) {
-			cell.setStyle("-fx-border-color: transparent;");
+			cell.setStyle("-fx-border-color: transparent;"); //$NON-NLS-1$
 		}
 
 		@Override
 		public void onFeedbackNone(Cell<?> cell) {
-			cell.setStyle("-fx-border-color: transparent;");
+			cell.setStyle("-fx-border-color: transparent;"); //$NON-NLS-1$
 		}
 
 	}

@@ -34,39 +34,50 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
  * This {@link ObservableList} wraps an {@link AdapterFactory} and retrieves its elements from the
  * adapter-implemented {@link IStructuredItemContentProvider} interface. The content of the list can only be
  * modified through changes to the underlying model.
+ * 
+ * @param <T>
+ *            the type
  */
 public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 
-	private static final String CHANGES_THROUGH_MODEL = "An AdapterFactoryObservableList cannot be manipulated directly. Changes must be made via the model.";
+	private static final String CHANGES_THROUGH_MODEL = "An AdapterFactoryObservableList cannot be manipulated directly. Changes must be made via the model."; //$NON-NLS-1$
 	protected AdapterFactory adapterFactory;
 	protected Object root;
 	protected IStructuredItemContentProvider provider;
 	/* package */ObservableList<T> elements = FXCollections.observableArrayList();
 
+	/**
+	 * Create an adapter for a list
+	 * 
+	 * @param adapterFactory
+	 *            the factory
+	 * @param root
+	 *            the root
+	 */
 	@SuppressWarnings("unchecked")
 	public AdapterFactoryObservableList(AdapterFactory adapterFactory, final Object root) {
 		super();
 
 		if (adapterFactory == null)
-			throw new IllegalArgumentException("AdapterFactory must not be null.");
+			throw new IllegalArgumentException("AdapterFactory must not be null."); //$NON-NLS-1$
 
 		this.adapterFactory = adapterFactory;
 		this.root = root;
 		Object contentProvider = adapterFactory.adapt(root, IStructuredItemContentProvider.class);
 
 		if (contentProvider instanceof IStructuredItemContentProvider)
-			provider = (IStructuredItemContentProvider) contentProvider;
+			this.provider = (IStructuredItemContentProvider) contentProvider;
 		else
-			throw new IllegalArgumentException("Provided root object cannot be adapted.");
+			throw new IllegalArgumentException("Provided root object cannot be adapted."); //$NON-NLS-1$
 
-		elements.addAll((Collection<? extends T>) provider.getElements(root));
+		this.elements.addAll((Collection<? extends T>) this.provider.getElements(root));
 
 		if (root instanceof Notifier) {
 			AdapterImpl adapter = new AdapterImpl() {
 
 				@Override
 				public void notifyChanged(Notification msg) {
-					elements.setAll((Collection<? extends T>) provider.getElements(root));
+					AdapterFactoryObservableList.this.elements.setAll((Collection<? extends T>) AdapterFactoryObservableList.this.provider.getElements(root));
 				}
 
 			};
@@ -77,7 +88,7 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 
 				@Override
 				public void notifyChanged(Notification notification) {
-					elements.setAll((Collection<? extends T>) provider.getElements(root));
+					AdapterFactoryObservableList.this.elements.setAll((Collection<? extends T>) AdapterFactoryObservableList.this.provider.getElements(root));
 				}
 
 			});
@@ -112,47 +123,47 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 
 	@Override
 	public boolean contains(Object o) {
-		return elements.contains(o);
+		return this.elements.contains(o);
 	}
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
-		return elements.containsAll(c);
+		return this.elements.containsAll(c);
 	}
 
 	@Override
 	public T get(int index) {
-		return elements.get(index);
+		return this.elements.get(index);
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		return elements.indexOf(o);
+		return this.elements.indexOf(o);
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return elements.isEmpty();
+		return this.elements.isEmpty();
 	}
 
 	@Override
 	public Iterator<T> iterator() {
-		return elements.iterator();
+		return this.elements.iterator();
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		return elements.lastIndexOf(o);
+		return this.elements.lastIndexOf(o);
 	}
 
 	@Override
 	public ListIterator<T> listIterator() {
-		return elements.listIterator();
+		return this.elements.listIterator();
 	}
 
 	@Override
 	public ListIterator<T> listIterator(int index) {
-		return elements.listIterator(index);
+		return this.elements.listIterator(index);
 	}
 
 	@Override
@@ -182,32 +193,32 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 
 	@Override
 	public int size() {
-		return elements.size();
+		return this.elements.size();
 	}
 
 	@Override
 	public List<T> subList(int fromIndex, int toIndex) {
-		return elements.subList(fromIndex, toIndex);
+		return this.elements.subList(fromIndex, toIndex);
 	}
 
 	@Override
 	public Object[] toArray() {
-		return elements.toArray();
+		return this.elements.toArray();
 	}
 
 	@Override
 	public <A> A[] toArray(A[] a) {
-		return elements.toArray(a);
+		return this.elements.toArray(a);
 	}
 
 	@Override
 	public void addListener(InvalidationListener listener) {
-		elements.addListener(listener);
+		this.elements.addListener(listener);
 	}
 
 	@Override
 	public void removeListener(InvalidationListener listener) {
-		elements.removeListener(listener);
+		this.elements.removeListener(listener);
 	}
 
 	@Override
@@ -217,7 +228,7 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 
 	@Override
 	public void addListener(ListChangeListener<? super T> listener) {
-		elements.addListener(listener);
+		this.elements.addListener(listener);
 	}
 
 	@Override
@@ -232,7 +243,7 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 
 	@Override
 	public void removeListener(ListChangeListener<? super T> listener) {
-		elements.removeListener(listener);
+		this.elements.removeListener(listener);
 	}
 
 	@Override
@@ -250,14 +261,14 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 		throw new UnsupportedOperationException(CHANGES_THROUGH_MODEL);
 	}
 
-//FIXME Java8	
-// Default methods NOT YET supported by JDT-Core
-//	@Override
+	// FIXME Java8
+	// Default methods NOT YET supported by JDT-Core
+	// @Override
 	public void forEach(Consumer<? super T> action) {
 		throw new UnsupportedOperationException(CHANGES_THROUGH_MODEL);
 	}
-	
-//	@Override
+
+	// @Override
 	public Spliterator<T> spliterator() {
 		throw new UnsupportedOperationException(CHANGES_THROUGH_MODEL);
 	}

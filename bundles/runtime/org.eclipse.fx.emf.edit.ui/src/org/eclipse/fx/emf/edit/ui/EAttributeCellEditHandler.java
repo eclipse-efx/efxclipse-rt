@@ -12,12 +12,23 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory.ICellEditHandler;
 
+/**
+ * Cell editor handler for {@link EAttribute}
+ */
 public class EAttributeCellEditHandler implements ICellEditHandler {
 
 	EAttribute attribute;
 	EditingDomain editingDomain;
 	TextField textField;
 
+	/**
+	 * Create a new instance
+	 * 
+	 * @param attribute
+	 *            the attribute
+	 * @param editingDomain
+	 *            the editing domain
+	 */
 	public EAttributeCellEditHandler(EAttribute attribute, EditingDomain editingDomain) {
 		this.attribute = attribute;
 		this.editingDomain = editingDomain;
@@ -26,28 +37,28 @@ public class EAttributeCellEditHandler implements ICellEditHandler {
 	@Override
 	public boolean canEdit(Cell<?> cell) {
 		Object item = cell.getItem();
-		return item instanceof EObject && ((EObject) item).eClass().getEAllAttributes().contains(attribute);
+		return item instanceof EObject && ((EObject) item).eClass().getEAllAttributes().contains(this.attribute);
 	}
 
 	@Override
 	public void startEdit(final Cell<?> cell) {
 		EObject item = (EObject) cell.getItem();
-		String string = EcoreUtil.convertToString(attribute.getEAttributeType(), item.eGet(attribute));
-		textField = new TextField();
-		textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+		String string = EcoreUtil.convertToString(this.attribute.getEAttributeType(), item.eGet(this.attribute));
+		this.textField = new TextField();
+		this.textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (!newValue)
-					commitEdit(cell, textField.getText());
+				if (!newValue.booleanValue())
+					commitEdit(cell, EAttributeCellEditHandler.this.textField.getText());
 			}
 
 		});
 		cell.setText(null);
-		cell.setGraphic(textField);
-		textField.setText(string);
+		cell.setGraphic(this.textField);
+		this.textField.setText(string);
 		// textField.requestFocus();
-		textField.selectPositionCaret(0);// selectAll();
+		this.textField.selectPositionCaret(0);// selectAll();
 	}
 
 	@Override
@@ -58,10 +69,10 @@ public class EAttributeCellEditHandler implements ICellEditHandler {
 	@Override
 	public void commitEdit(Cell<?> treeCell, Object newValue) {
 		Object item = treeCell.getItem();
-		Object value = EcoreUtil.createFromString(attribute.getEAttributeType(), (String) newValue);
-		Command command = SetCommand.create(editingDomain, item, attribute, value);
+		Object value = EcoreUtil.createFromString(this.attribute.getEAttributeType(), (String) newValue);
+		Command command = SetCommand.create(this.editingDomain, item, this.attribute, value);
 		if (command.canExecute())
-			editingDomain.getCommandStack().execute(command);
+			this.editingDomain.getCommandStack().execute(command);
 	}
 
 }

@@ -39,6 +39,12 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
  */
 public class AdapterFactoryListCellFactory extends AdapterFactoryCellFactory implements Callback<ListView<Object>, ListCell<Object>> {
 
+	/**
+	 * Create a new adapter factory for list cells
+	 * 
+	 * @param adapterFactory
+	 *            the adapter factory
+	 */
 	public AdapterFactoryListCellFactory(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
@@ -63,22 +69,22 @@ public class AdapterFactoryListCellFactory extends AdapterFactoryCellFactory imp
 				super.updateItem(item, empty);
 
 				// check if the item changed
-				if (item != currentItem) {
+				if (item != this.currentItem) {
 
 					// remove the adapter if attached
-					if (currentItem instanceof Notifier)
-						((Notifier) currentItem).eAdapters().remove(adapter);
+					if (this.currentItem instanceof Notifier)
+						((Notifier) this.currentItem).eAdapters().remove(this.adapter);
 
 					// update the current item
-					currentItem = item;
+					this.currentItem = item;
 
 					// attach the adapter to the new item
-					if (currentItem instanceof Notifier)
-						((Notifier) currentItem).eAdapters().add(adapter);
+					if (this.currentItem instanceof Notifier)
+						((Notifier) this.currentItem).eAdapters().add(this.adapter);
 				}
 
 				// notify the listeners
-				for (ICellUpdateListener cellUpdateListener : cellUpdateListeners)
+				for (ICellUpdateListener cellUpdateListener : AdapterFactoryListCellFactory.this.cellUpdateListeners)
 					cellUpdateListener.updateItem(this, item, empty);
 
 				update(item);
@@ -87,33 +93,33 @@ public class AdapterFactoryListCellFactory extends AdapterFactoryCellFactory imp
 			@Override
 			public void startEdit() {
 				super.startEdit();
-				cellEditHandler = getCellEditHandler(this);
-				if (cellEditHandler != null)
-					cellEditHandler.startEdit(this);
+				this.cellEditHandler = getCellEditHandler(this);
+				if (this.cellEditHandler != null)
+					this.cellEditHandler.startEdit(this);
 			}
 
 			@Override
 			public void commitEdit(Object newValue) {
 				super.commitEdit(newValue);
-				if (cellEditHandler != null)
-					cellEditHandler.commitEdit(this, newValue);
+				if (this.cellEditHandler != null)
+					this.cellEditHandler.commitEdit(this, newValue);
 			}
 
 			@Override
 			public void cancelEdit() {
 				super.cancelEdit();
-				if (cellEditHandler != null)
-					cellEditHandler.cancelEdit(this);
+				if (this.cellEditHandler != null)
+					this.cellEditHandler.cancelEdit(this);
 				update(getItem());
 			}
 
-			private void update(Object item) {
-				applyItemProviderStyle(item, this, adapterFactory);
+			void update(Object item) {
+				applyItemProviderStyle(item, this, AdapterFactoryListCellFactory.this.adapterFactory);
 			}
 
 		};
 
-		for (ICellCreationListener cellCreationListener : cellCreationListeners)
+		for (ICellCreationListener cellCreationListener : this.cellCreationListeners)
 			cellCreationListener.cellCreated(listCell);
 
 		return listCell;

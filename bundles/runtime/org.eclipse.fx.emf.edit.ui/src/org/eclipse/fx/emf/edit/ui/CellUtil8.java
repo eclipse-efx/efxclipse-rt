@@ -43,7 +43,7 @@ class CellUtil8 {
 			return ((TreeTableRow<?>) cell).getTreeTableView()
 					.getSelectionModel();
 		else
-			throw new IllegalArgumentException("Unsupported Cell type");
+			throw new IllegalArgumentException("Unsupported Cell type"); //$NON-NLS-1$
 	}
 
 	static MultipleSelectionModel<?> getSelectionModel(Control view) {
@@ -52,7 +52,7 @@ class CellUtil8 {
 		else if (view instanceof TreeTableView<?>)
 			return ((TreeTableView<?>) view).getSelectionModel();
 		else
-			throw new IllegalArgumentException("Unsupported View type");
+			throw new IllegalArgumentException("Unsupported View type"); //$NON-NLS-1$
 	}
 
 	public static List<?> getSelectedItems(Cell<?> cell) {

@@ -36,12 +36,24 @@ import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
  * <code>-fx-background-color</code> are delegated to {@link ITableItemColorProvider}</li>
  * <li>{@link Cell#setFont(javafx.scene.text.Font)} is delegated to {@link ITableItemFontProvider}</li>
  * </ul>
+ * 
+ * @param <S>
+ *            the row type
+ * @param <T>
+ *            the cell type
  */
-public class AdapterFactoryTreeTableCellFactory<S, T> extends AdapterFactoryCellFactory implements
-		Callback<TreeTableColumn<S, T>, TreeTableCell<S, T>> {
+public class AdapterFactoryTreeTableCellFactory<S, T> extends AdapterFactoryCellFactory implements Callback<TreeTableColumn<S, T>, TreeTableCell<S, T>> {
 
 	protected int columnIndex;
 
+	/**
+	 * Create a new instance
+	 * 
+	 * @param adapterFactory
+	 *            the factory
+	 * @param columnIndex
+	 *            the column index
+	 */
 	public AdapterFactoryTreeTableCellFactory(AdapterFactory adapterFactory, int columnIndex) {
 		super(adapterFactory);
 		this.columnIndex = columnIndex;
@@ -68,22 +80,22 @@ public class AdapterFactoryTreeTableCellFactory<S, T> extends AdapterFactoryCell
 				super.updateItem(item, empty);
 
 				// check if the item changed
-				if (item != currentItem) {
+				if (item != this.currentItem) {
 
 					// remove the adapter if attached
-					if (currentItem instanceof Notifier)
-						((Notifier) currentItem).eAdapters().remove(adapter);
+					if (this.currentItem instanceof Notifier)
+						((Notifier) this.currentItem).eAdapters().remove(this.adapter);
 
 					// update the current item
-					currentItem = item;
+					this.currentItem = item;
 
 					// attach the adapter to the new item
-					if (currentItem instanceof Notifier)
-						((Notifier) currentItem).eAdapters().add(adapter);
+					if (this.currentItem instanceof Notifier)
+						((Notifier) this.currentItem).eAdapters().add(this.adapter);
 				}
 
 				// notify the listeners
-				for (ICellUpdateListener cellUpdateListener : cellUpdateListeners)
+				for (ICellUpdateListener cellUpdateListener : AdapterFactoryTreeTableCellFactory.this.cellUpdateListeners)
 					cellUpdateListener.updateItem(this, item, empty);
 
 				update(item);
@@ -92,33 +104,33 @@ public class AdapterFactoryTreeTableCellFactory<S, T> extends AdapterFactoryCell
 			@Override
 			public void startEdit() {
 				super.startEdit();
-				cellEditHandler = getCellEditHandler(this);
-				if (cellEditHandler != null)
-					cellEditHandler.startEdit(this);
+				this.cellEditHandler = getCellEditHandler(this);
+				if (this.cellEditHandler != null)
+					this.cellEditHandler.startEdit(this);
 			}
 
 			@Override
 			public void commitEdit(Object newValue) {
 				super.commitEdit(newValue);
-				if (cellEditHandler != null)
-					cellEditHandler.commitEdit(this, newValue);
+				if (this.cellEditHandler != null)
+					this.cellEditHandler.commitEdit(this, newValue);
 			}
 
 			@Override
 			public void cancelEdit() {
 				super.cancelEdit();
-				if (cellEditHandler != null)
-					cellEditHandler.cancelEdit(this);
+				if (this.cellEditHandler != null)
+					this.cellEditHandler.cancelEdit(this);
 				update(getItem());
 			}
 
-			private void update(Object item) {
-				applyTableItemProviderStyle(item, columnIndex, this, adapterFactory);
+			void update(Object item) {
+				applyTableItemProviderStyle(item, AdapterFactoryTreeTableCellFactory.this.columnIndex, this, AdapterFactoryTreeTableCellFactory.this.adapterFactory);
 			}
 
 		};
 
-		for (ICellCreationListener cellCreationListener : cellCreationListeners)
+		for (ICellCreationListener cellCreationListener : this.cellCreationListeners)
 			cellCreationListener.cellCreated(tableCell);
 
 		return (TreeTableCell<S, T>) tableCell;

@@ -19,6 +19,11 @@ import javafx.util.Callback;
 /**
  * A cell value factory that simply forwards {@link CellDataFeatures#getValue()} as an {@link ObservableValue}
  * .
+ * 
+ * @param <S>
+ *            the row type
+ * @param <T>
+ *            the cell type
  */
 public class ProxyCellValueFactory<S, T> implements Callback<TableColumn.CellDataFeatures<S, T>, ObservableValue<T>> {
 
