@@ -31,20 +31,43 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.osgi.framework.FrameworkUtil;
 
+/**
+ * 
+ */
 public class ContextBoundValueTestCase {
+	
+	/**
+	 *
+	 */
 	public static class SimpleInject {
+		/**
+		 * 
+		 */
 		@Inject
 		@ContextValue(contextKey="simpleValue")
 		public ContextBoundValue<String> value;
 	}
 	
+	
+	/**
+	 *
+	 */
 	public static class ObservableInject {
+		/**
+		 * 
+		 */
 		@Inject
 		@ContextValue(contextKey="simpleValue")
 		public ContextBoundValue<String> value;
 		
+		/**
+		 * 
+		 */
 		public IObservableValue observableValue;
 
+		/**
+		 * 
+		 */
 		@Inject
 		@Named("simpleValue")
 		@Optional
@@ -52,17 +75,29 @@ public class ContextBoundValueTestCase {
 		
 		@PostConstruct
 		void makeObservable() {
-			observableValue = value.adaptTo(IObservableValue.class);
+			this.observableValue = this.value.adaptTo(IObservableValue.class);
 		}
 	}
 	
+	/**
+	 *
+	 */
 	public static class DirectObservableInject {
+		/**
+		 * 
+		 */
 		@Inject
 		@ContextValue(contextKey="simpleValue")
 		public IObservableValue value;
 	}
 	
+	/**
+	 *
+	 */
 	public static class Target {
+		/**
+		 * 
+		 */
 		@Inject
 		@Named("simpleValue")
 		@Optional
@@ -70,6 +105,9 @@ public class ContextBoundValueTestCase {
 		 
 	}
 	
+	/**
+	 * 
+	 */
 	@Test
 	public void testSimpleInjection() {
 		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
@@ -77,6 +115,9 @@ public class ContextBoundValueTestCase {
 		Assert.assertNotNull(simpleInject.value);
 	}
 	
+	/**
+	 * 
+	 */
 	@Test
 	public void testSimpleObservable() {
 		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
@@ -84,10 +125,13 @@ public class ContextBoundValueTestCase {
 		Assert.assertNotNull(obsInject.observableValue);
 	}
 	
+	/**
+	 * 
+	 */
 	@Test
 	public void observableSupportModify() {
 		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
-		serviceContext.declareModifiable("simpleValue");
+		serviceContext.declareModifiable("simpleValue"); //$NON-NLS-1$
 		ObservableInject obsInject = ContextInjectionFactory.make(ObservableInject.class, serviceContext);
 		Assert.assertNull(obsInject.injectedValue);
 		
@@ -108,14 +152,17 @@ public class ContextBoundValueTestCase {
 				bool.set(uuid.equals(event.diff.getNewValue()));
 			}
 		});
-		serviceContext.modify("simpleValue", uuid);
+		serviceContext.modify("simpleValue", uuid); //$NON-NLS-1$
 		Assert.assertTrue(bool.get());
 	}
 	
+	/**
+	 * 
+	 */
 	@Test
 	public void testContextModify() {
 		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
-		serviceContext.declareModifiable("simpleValue");
+		serviceContext.declareModifiable("simpleValue"); //$NON-NLS-1$
 		
 		Target t = ContextInjectionFactory.make(Target.class, serviceContext);
 		
@@ -127,10 +174,13 @@ public class ContextBoundValueTestCase {
 		Assert.assertEquals(uuid, t.injectedValue);
 	}
 	
+	/**
+	 * 
+	 */
 	@Test
 	public void testDirectObservable() {
 		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
-		serviceContext.declareModifiable("simpleValue");
+		serviceContext.declareModifiable("simpleValue"); //$NON-NLS-1$
 		Realm r = new Realm() {
 
 			@Override
