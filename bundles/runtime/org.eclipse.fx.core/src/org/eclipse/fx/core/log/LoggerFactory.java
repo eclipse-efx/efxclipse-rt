@@ -21,5 +21,6 @@ public interface LoggerFactory {
 	 * @param name the name of the logger
 	 * @return the logger instance
 	 */
+	@NonNull
 	public Logger createLogger(@NonNull String name);
 }
