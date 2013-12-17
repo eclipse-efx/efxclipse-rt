@@ -21,17 +21,21 @@ import org.eclipse.osgi.baseadaptor.hooks.BundleFileWrapperFactoryHook;
 public class PFBundleWrapper implements BundleFileWrapperFactoryHook {
 	private final PFAdaptorHook adaptorHook;
 
+	/**
+	 * @param adaptorHook
+	 */
 	public PFBundleWrapper(PFAdaptorHook adaptorHook) {
 		this.adaptorHook = adaptorHook;
 	}
 
+	@Override
 	public BundleFile wrapBundleFile(BundleFile bundleFile, Object content, BaseData data, boolean base) {
 		if (data.getBundleID() == 0)
 			// it is usually a bad idea to modify the behavior of the system.bundle file.
 			return null;
 		// at this point we do not know if the BaseData is a host or a fragment;
 		// we just create a PFBundleFile for all bundles
-		return new PFBundleFile(bundleFile, data, adaptorHook);
+		return new PFBundleFile(bundleFile, data, this.adaptorHook);
 	}
 
 }

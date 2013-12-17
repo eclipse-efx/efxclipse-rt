@@ -13,12 +13,21 @@ package org.eclipse.fx.osgi.fxloader;
 import org.eclipse.osgi.baseadaptor.HookConfigurator;
 import org.eclipse.osgi.baseadaptor.HookRegistry;
 
+/**
+ * Configurations for FX
+ */
 public class FXClassLoadingConfigurator implements HookConfigurator {
-	public static final boolean DEBUG = Boolean.getBoolean("efxclipse.osgi.hook.debug");
+	/**
+	 * Debug enabled
+	 */
+	public static final boolean DEBUG = Boolean.getBoolean("efxclipse.osgi.hook.debug"); //$NON-NLS-1$
 	
+	/**
+	 * 
+	 */
 	public FXClassLoadingConfigurator() {
 		if( DEBUG ) {
-			System.err.println("FXClassLoadingConfigurator - This is the classloading configurator");	
+			System.err.println("FXClassLoadingConfigurator - This is the classloading configurator");	 //$NON-NLS-1$
 		}
 		
 	}
@@ -26,7 +35,7 @@ public class FXClassLoadingConfigurator implements HookConfigurator {
 	@Override
 	public void addHooks(HookRegistry hookRegistry) {
 		if( DEBUG ) {
-			System.err.println("FXClassLoadingConfigurator - Adding hooks for classloading");	
+			System.err.println("FXClassLoadingConfigurator - Adding hooks for classloading");	 //$NON-NLS-1$
 		}
 		FXClassLoader cl = new FXClassLoader();
 		hookRegistry.addAdaptorHook(cl);

@@ -46,6 +46,9 @@ import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.packageadmin.PackageAdmin;
 import org.osgi.util.tracker.ServiceTracker;
 
+/**
+ * Hook to overwrite OSGis default classloading
+ */
 @SuppressWarnings("deprecation")
 public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 
@@ -87,9 +90,9 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 	
 	@Override
 	public BaseClassLoader createClassLoader(ClassLoader parent, final ClassLoaderDelegate delegate, BundleProtectionDomain domain, BaseData data, String[] bundleclasspath) {
-		if (data.getBundle().getSymbolicName().equals("org.eclipse.fx.javafx")) {
+		if (data.getBundle().getSymbolicName().equals("org.eclipse.fx.javafx")) { //$NON-NLS-1$
 			try {
-				MyBundleClassLoader cl = new MyBundleClassLoader(getPackageAdmin(), parent, delegate, domain, data, bundleclasspath, context);
+				MyBundleClassLoader cl = new MyBundleClassLoader(getPackageAdmin(), parent, delegate, domain, data, bundleclasspath, this.context);
 				LOADER = cl;
 				return cl;
 			} catch (Exception e) {
@@ -101,6 +104,7 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 
 	@Override
 	public void initializedClassLoader(BaseClassLoader baseClassLoader, BaseData data) {
+		//NOTHING to be done
 	}
 
 	static class MyBundleClassLoader extends DefaultClassLoader {
@@ -111,10 +115,11 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 		public MyBundleClassLoader(PackageAdmin admin, ClassLoader parent, ClassLoaderDelegate delegate, ProtectionDomain domain, BaseData bundledata, String[] classpath, BundleContext context) throws Exception {
 			super(parent, delegate, domain, bundledata, classpath);
 
+			ClassLoader parentLoader = parent;
 			// Trying to locate swt bundle so that if the swt integration is
 			// used
 			// we can load those
-			Bundle[] bundles = admin.getBundles("org.eclipse.swt", null);
+			Bundle[] bundles = admin.getBundles("org.eclipse.swt", null); //$NON-NLS-1$
 			
 			if (bundles != null) {
 				for (int i = 0; i < bundles.length; i++) {
@@ -125,19 +130,19 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 						if ((bundles[i].getState() & Bundle.ACTIVE) != 0) {
 							bundles[i].start();
 						}
-						parent = bundles[i].adapt(BundleWiring.class).getClassLoader();
-						swtAvailable = true;
+						parentLoader = bundles[i].adapt(BundleWiring.class).getClassLoader();
+						this.swtAvailable = true;
 						break;
 					}
 				}
 			}
 			
-			fxClassLoader = createClassloader(parent, admin, bundledata, context, swtAvailable);
+			this.fxClassLoader = createClassloader(parentLoader, admin, bundledata, context, this.swtAvailable);
 		}
 
 		private static URLClassLoader createJREBundledClassloader(ClassLoader parent, boolean swtAvailable) {
 			if( FXClassLoadingConfigurator.DEBUG ) {
-				System.err.println("MyBundleClassLoader#createJREBundledClassloader - Started");
+				System.err.println("MyBundleClassLoader#createJREBundledClassloader - Started"); //$NON-NLS-1$
 			}
 			
 			try {
@@ -145,16 +150,16 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 				try {
 					javaHome= new File (System.getProperty("java.home")).getCanonicalFile(); //$NON-NLS-1$
 				} catch (IOException e) {
-					throw new IllegalStateException("Unable to locate java home", e);
+					throw new IllegalStateException("Unable to locate java home", e); //$NON-NLS-1$
 				}
 				if (!javaHome.exists()) {
-					throw new IllegalStateException("The java home '"+javaHome.getAbsolutePath()+"' does not exits");
+					throw new IllegalStateException("The java home '"+javaHome.getAbsolutePath()+"' does not exits"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				
 				// Java 8 and maybe one day Java 7
-				File jarFile = new File(new File(new File(javaHome.getAbsolutePath(),"lib"),"ext"),"jfxrt.jar");
+				File jarFile = new File(new File(new File(javaHome.getAbsolutePath(),"lib"),"ext"),"jfxrt.jar"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				if( FXClassLoadingConfigurator.DEBUG ) {
-					System.err.println("MyBundleClassLoader#createJREBundledClassloader - Assumed location (Java 8/Java 7): " + jarFile.getAbsolutePath());
+					System.err.println("MyBundleClassLoader#createJREBundledClassloader - Assumed location (Java 8/Java 7): " + jarFile.getAbsolutePath()); //$NON-NLS-1$
 				}
 				
 				if( jarFile.exists() ) {
@@ -162,29 +167,29 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 					// bundles classloader as the parent
 					if( swtAvailable ) {
 						if( FXClassLoadingConfigurator.DEBUG ) {
-							System.err.println("MyBundleClassLoader#createJREBundledClassloader - SWT is available use different loading strategy");
+							System.err.println("MyBundleClassLoader#createJREBundledClassloader - SWT is available use different loading strategy"); //$NON-NLS-1$
 						}
 						
 						// Since JDK8b113 the swt stuff is in its own jar
-						File swtFX = new File(new File(javaHome.getAbsolutePath(),"lib"),"jfxswt.jar");
+						File swtFX = new File(new File(javaHome.getAbsolutePath(),"lib"),"jfxswt.jar"); //$NON-NLS-1$ //$NON-NLS-2$
 						
 						if( FXClassLoadingConfigurator.DEBUG ) {
-							System.err.println("MyBundleClassLoader#createJREBundledClassloader - Searching for SWT-FX integration at " + swtFX.getAbsolutePath());
+							System.err.println("MyBundleClassLoader#createJREBundledClassloader - Searching for SWT-FX integration at " + swtFX.getAbsolutePath()); //$NON-NLS-1$
 						}
 						
 						if( swtFX.exists() ) {
 							if( FXClassLoadingConfigurator.DEBUG ) {
-								System.err.println("MyBundleClassLoader#createJREBundledClassloader - Found SWT/FX");
+								System.err.println("MyBundleClassLoader#createJREBundledClassloader - Found SWT/FX"); //$NON-NLS-1$
 							}
 							
 							ClassLoader extClassLoader = ClassLoader.getSystemClassLoader().getParent();
-							if( extClassLoader.getClass().getName().equals("sun.misc.Launcher$ExtClassLoader") ) {
+							if( extClassLoader.getClass().getName().equals("sun.misc.Launcher$ExtClassLoader") ) { //$NON-NLS-1$
 								return new URLClassLoader(new URL[] { swtFX.getCanonicalFile().toURI().toURL() }, new SWTFXClassloader(parent,extClassLoader));
 							}
 							return new URLClassLoader(new URL[] { jarFile.getCanonicalFile().toURI().toURL(), swtFX.getCanonicalFile().toURI().toURL() }, parent);							
 						} else {
 							if( FXClassLoadingConfigurator.DEBUG ) {
-								System.err.println("MyBundleClassLoader#createJREBundledClassloader - Assume that SWT-FX part of jfxrt.jar");
+								System.err.println("MyBundleClassLoader#createJREBundledClassloader - Assume that SWT-FX part of jfxrt.jar"); //$NON-NLS-1$
 							}
 
 							URL url = jarFile.getCanonicalFile().toURI().toURL();
@@ -195,7 +200,7 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 						// which installs an JMX-Component
 						try {
 							ClassLoader extClassLoader = ClassLoader.getSystemClassLoader().getParent();
-							if( extClassLoader.getClass().getName().equals("sun.misc.Launcher$ExtClassLoader") ) {
+							if( extClassLoader.getClass().getName().equals("sun.misc.Launcher$ExtClassLoader") ) { //$NON-NLS-1$
 								return new URLClassLoader(new URL[] {}, extClassLoader);	
 							}
 						} catch(Throwable t) {
@@ -208,9 +213,9 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 				} 
 				
 				// Java 7
-				jarFile = new File(new File(javaHome.getAbsolutePath(),"lib"),"jfxrt.jar");
+				jarFile = new File(new File(javaHome.getAbsolutePath(),"lib"),"jfxrt.jar"); //$NON-NLS-1$ //$NON-NLS-2$
 				if( FXClassLoadingConfigurator.DEBUG ) {
-					System.err.println("MyBundleClassLoader#createJREBundledClassloader - Assumed location (Java 7): " + jarFile.getAbsolutePath());
+					System.err.println("MyBundleClassLoader#createJREBundledClassloader - Assumed location (Java 7): " + jarFile.getAbsolutePath()); //$NON-NLS-1$
 				}
 				
 				if( jarFile.exists() ) {
@@ -218,15 +223,14 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 					return new URLClassLoader(new URL[] { url }, parent);
 				} else {
 					if( FXClassLoadingConfigurator.DEBUG ) {
-						System.err.println("MyBundleClassLoader#createJREBundledClassloader - File does not exist.");
+						System.err.println("MyBundleClassLoader#createJREBundledClassloader - File does not exist."); //$NON-NLS-1$
 					}
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
 				e.printStackTrace();
 			} finally {
 				if( FXClassLoadingConfigurator.DEBUG ) {
-					System.err.println("MyBundleClassLoader#createJREBundledClassloader - Ended");
+					System.err.println("MyBundleClassLoader#createJREBundledClassloader - Ended"); //$NON-NLS-1$
 				}
 			}
 			
@@ -238,7 +242,7 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 			
 			{
 				if( FXClassLoadingConfigurator.DEBUG ) {
-					System.err.println("MyBundleClassLoader#createClassloader - checking for JRE bundled javafx");
+					System.err.println("MyBundleClassLoader#createClassloader - checking for JRE bundled javafx"); //$NON-NLS-1$
 				}
 				
 				loader = createJREBundledClassloader(parent, swtAvailable);
@@ -248,21 +252,21 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 				return loader;
 			}
 			
-			throw new IllegalStateException("You need to run at least Java7u6");
+			throw new IllegalStateException("You need to run at least Java7u6"); //$NON-NLS-1$
 		}
 
 		@Override
 		public Class<?> findLocalClass(String classname) throws ClassNotFoundException {
 			try {
-				Class<?> cl = fxClassLoader.loadClass(classname);
-				if( swtAvailable && ! implicitExitSet && "javafx.embed.swt.FXCanvas".equals(classname) ) {
+				Class<?> cl = this.fxClassLoader.loadClass(classname);
+				if( this.swtAvailable && ! this.implicitExitSet && "javafx.embed.swt.FXCanvas".equals(classname) ) { //$NON-NLS-1$
 					try {
-						Class<?> platformClass = fxClassLoader.loadClass("javafx.application.Platform");
-						Method method = platformClass.getDeclaredMethod("setImplicitExit", boolean.class);
-						method.invoke(null, false);
-						implicitExitSet = true;
+						Class<?> platformClass = this.fxClassLoader.loadClass("javafx.application.Platform"); //$NON-NLS-1$
+						Method method = platformClass.getDeclaredMethod("setImplicitExit", boolean.class); //$NON-NLS-1$
+						method.invoke(null, Boolean.FALSE);
+						this.implicitExitSet = true;
 					} catch (Throwable e) {
-						System.err.println("Unable to setImplicitExit to false");
+						System.err.println("Unable to setImplicitExit to false"); //$NON-NLS-1$
 						e.printStackTrace();
 					}
 				}
@@ -277,7 +281,7 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 		@Override
 		public URL findLocalResource(String resource) {
 			try {
-				URL url = fxClassLoader.findResource(resource);
+				URL url = this.fxClassLoader.findResource(resource);
 				if (url == null) {
 					url = super.findLocalResource(resource);
 				}
@@ -292,7 +296,7 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 			try {
 				List<URL> tmp = new ArrayList<URL>();
 
-				Enumeration<URL> rv = fxClassLoader.findResources(name);
+				Enumeration<URL> rv = this.fxClassLoader.findResources(name);
 				while (rv.hasMoreElements()) {
 					tmp.add(rv.nextElement());
 				}
@@ -311,7 +315,7 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 
 	@Override
 	public void initialize(BaseAdaptor adaptor) {
-		// TODO Auto-generated method stub
+		// Nothing to be done
 
 	}
 
@@ -319,93 +323,59 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 	public void frameworkStart(BundleContext context) throws BundleException {
 		this.context = context;
 
-		paTracker = new ServiceTracker<PackageAdmin, PackageAdmin>(context, PackageAdmin.class.getName(), null);
-		paTracker.open();
+		this.paTracker = new ServiceTracker<PackageAdmin, PackageAdmin>(context, PackageAdmin.class.getName(), null);
+		this.paTracker.open();
 
 		try {
 			Filter filter = context.createFilter(Location.INSTANCE_FILTER);
-			instanceLocationTracker = new ServiceTracker<Location,Location>(context, filter, null);
-			instanceLocationTracker.open();
+			this.instanceLocationTracker = new ServiceTracker<Location,Location>(context, filter, null);
+			this.instanceLocationTracker.open();
 		} catch (InvalidSyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		try {
 			Filter filter = context.createFilter(Location.INSTALL_FILTER);
-			installLocation = new ServiceTracker<Location,Location>(context, filter, null);
-			installLocation.open();
+			this.installLocation = new ServiceTracker<Location,Location>(context, filter, null);
+			this.installLocation.open();
 		} catch (InvalidSyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		preferenceServiceTracker = new ServiceTracker<Object,Object>(context, "org.eclipse.core.runtime.preferences.IPreferencesService", null);
-		preferenceServiceTracker.open();
+		this.preferenceServiceTracker = new ServiceTracker<Object,Object>(context, "org.eclipse.core.runtime.preferences.IPreferencesService", null); //$NON-NLS-1$
+		this.preferenceServiceTracker.open();
 	}
 
 	@Override
 	public void frameworkStop(BundleContext context) throws BundleException {
-		paTracker.close();
-		paTracker = null;
+		this.paTracker.close();
+		this.paTracker = null;
 
-		instanceLocationTracker.close();
-		instanceLocationTracker = null;
+		this.instanceLocationTracker.close();
+		this.instanceLocationTracker = null;
 
-		installLocation.close();
-		installLocation = null;
+		this.installLocation.close();
+		this.installLocation = null;
 
-		preferenceServiceTracker.close();
-		preferenceServiceTracker = null;
-	}
-
-	public Bundle ensureStarted(String symbolicName) {
-		Bundle[] bundles = getPackageAdmin().getBundles(symbolicName, null);
-
-		if (bundles != null) {
-			for (int i = 0; i < bundles.length; i++) {
-				if ((bundles[i].getState() & Bundle.INSTALLED) == 0) {
-					// Ensure the bundle is started else we are unable to
-					// extract the
-					// classloader
-					if ((bundles[i].getState() & Bundle.ACTIVE) != 0) {
-						try {
-							bundles[i].start();
-						} catch (BundleException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							return null;
-						}
-					}
-					return bundles[i];
-				}
-			}
-		}
-
-		return null;
+		this.preferenceServiceTracker.close();
+		this.preferenceServiceTracker = null;
 	}
 
 	private PackageAdmin getPackageAdmin() {
-		ServiceTracker<PackageAdmin, PackageAdmin> tracker = paTracker;
+		ServiceTracker<PackageAdmin, PackageAdmin> tracker = this.paTracker;
 		if (tracker == null)
 			return null;
 		return tracker.getService();
 	}
 
-	public Location getInstanceLocation() {
-		if (instanceLocationTracker != null)
-			return (Location) instanceLocationTracker.getService();
-		return null;
-	}
-
 	@Override
 	public void frameworkStopping(BundleContext context) {
-
+		// Nothing todo
 	}
 
 	@Override
 	public void addProperties(Properties properties) {
-
+		// Nothing todo
 	}
 
 	@Override
@@ -415,7 +385,7 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 
 	@Override
 	public void handleRuntimeError(Throwable error) {
-
+		// Nothing todo
 	}
 
 	@Override
@@ -435,10 +405,10 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 		@Override
 		protected Class<?> findClass(String name) throws ClassNotFoundException {
 			try {
-				return primaryLoader.loadClass(name);
+				return this.primaryLoader.loadClass(name);
 			} catch( ClassNotFoundException c ) {
 				try {
-					return lastResortLoader.loadClass(name);	
+					return this.lastResortLoader.loadClass(name);	
 				} catch( ClassNotFoundException tmp ) {
 					throw c;
 				}
@@ -447,17 +417,17 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 		
 		@Override
 		protected URL findResource(String name) {
-			URL url = primaryLoader.getResource(name);
+			URL url = this.primaryLoader.getResource(name);
 			if( url == null ) {
-				url = lastResortLoader.getResource(name); 
+				url = this.lastResortLoader.getResource(name); 
 			}
 			return url;
 		}
 		
 		@Override
 		protected Enumeration<URL> findResources(String name) throws IOException {
-			final Enumeration<URL> en1 = primaryLoader.getResources(name);
-			final Enumeration<URL> en2 = lastResortLoader.getResources(name);
+			final Enumeration<URL> en1 = this.primaryLoader.getResources(name);
+			final Enumeration<URL> en2 = this.lastResortLoader.getResources(name);
 			
 			return new Enumeration<URL>() {
 				@Override
@@ -480,26 +450,27 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 		
 		@Override
 		public URL getResource(String name) {
-			URL url = primaryLoader.getResource(name);
+			URL url = this.primaryLoader.getResource(name);
 			if( url == null ) {
-				url = lastResortLoader.getResource(name); 
+				url = this.lastResortLoader.getResource(name); 
 			}
 			return url;
 		}
 		
+		@SuppressWarnings("resource")
 		@Override
 		public InputStream getResourceAsStream(String name) {
-			InputStream in = primaryLoader.getResourceAsStream(name);
+			InputStream in = this.primaryLoader.getResourceAsStream(name);
 			if( in == null ) {
-				in = lastResortLoader.getResourceAsStream(name);
+				in = this.lastResortLoader.getResourceAsStream(name);
 			}
 			return in;
 		}
 		
 		@Override
 		public Enumeration<URL> getResources(String name) throws IOException {
-			final Enumeration<URL> en1 = primaryLoader.getResources(name);
-			final Enumeration<URL> en2 = lastResortLoader.getResources(name);
+			final Enumeration<URL> en1 = this.primaryLoader.getResources(name);
+			final Enumeration<URL> en2 = this.lastResortLoader.getResources(name);
 			
 			return new Enumeration<URL>() {
 				@Override
@@ -523,10 +494,10 @@ public class FXClassLoader implements ClassLoadingHook, AdaptorHook {
 		@Override
 		public Class<?> loadClass(String name) throws ClassNotFoundException {
 			try {
-				return primaryLoader.loadClass(name);
+				return this.primaryLoader.loadClass(name);
 			} catch( ClassNotFoundException c ) {
 				try {
-					return lastResortLoader.loadClass(name);	
+					return this.lastResortLoader.loadClass(name);	
 				} catch( ClassNotFoundException tmp ) {
 					throw c;
 				}

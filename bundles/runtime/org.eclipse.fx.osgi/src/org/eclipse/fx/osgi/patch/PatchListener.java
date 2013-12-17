@@ -12,19 +12,25 @@ package org.eclipse.fx.osgi.patch;
 
 import java.util.*;
 import java.util.Map.Entry;
+
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.SynchronousBundleListener;
 
+/**
+ * Listener to patch a bundle
+ */
 public class PatchListener implements SynchronousBundleListener {
-	private final HashMap patches = new HashMap();
+	private final HashMap<PFBundleFile,Collection<Bundle>> patches = new HashMap<>();
 
+	@Override
 	public void bundleChanged(BundleEvent event) {
 		if ((event.getType() & (BundleEvent.UNINSTALLED | BundleEvent.UNRESOLVED)) == 0)
 			return; // only reset on resolved/unresolved and uninstalled events
-		synchronized (patches) {
-			for (Iterator entries = patches.entrySet().iterator(); entries.hasNext();) {
-				Map.Entry entry = (Entry) entries.next();
-				Collection bundles = (Collection) entry.getValue();
+		synchronized (this.patches) {
+			for (Iterator<Entry<PFBundleFile,Collection<Bundle>>> entries = this.patches.entrySet().iterator(); entries.hasNext();) {
+				Entry<PFBundleFile,Collection<Bundle>> entry = entries.next();
+				Collection<Bundle> bundles = entry.getValue();
 				if (bundles.contains(event.getBundle())) {
 					PFBundleFile bundleFile = (PFBundleFile) entry.getKey();
 					bundleFile.resetPatches();
@@ -34,9 +40,13 @@ public class PatchListener implements SynchronousBundleListener {
 		}
 	}
 
-	public void listenToPatches(Collection bundles, PFBundleFile patched) {
-		synchronized (patches) {
-			patches.put(patched, bundles);
+	/**
+	 * @param bundles
+	 * @param patched
+	 */
+	public void listenToPatches(Collection<Bundle> bundles, PFBundleFile patched) {
+		synchronized (this.patches) {
+			this.patches.put(patched, bundles);
 		}
 	}
 }

@@ -15,11 +15,13 @@ import java.io.IOException;
 import java.net.URLConnection;
 import java.util.Collection;
 import java.util.Properties;
+
 import org.eclipse.osgi.baseadaptor.BaseAdaptor;
 import org.eclipse.osgi.baseadaptor.BaseData;
 import org.eclipse.osgi.baseadaptor.bundlefile.BundleFile;
 import org.eclipse.osgi.baseadaptor.hooks.AdaptorHook;
 import org.eclipse.osgi.framework.log.FrameworkLog;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.packageadmin.PackageAdmin;
 import org.osgi.util.tracker.ServiceTracker;
@@ -29,11 +31,12 @@ import org.osgi.util.tracker.ServiceTracker;
  * is needed to access the system.bundle BundleContext to track 
  * PackageAdmin and add a BundleListener.
  */
+@SuppressWarnings("deprecation")
 public class PFAdaptorHook implements AdaptorHook {
 	/**
 	 * Tracks PackageAdmin
 	 */
-	private volatile ServiceTracker paTracker;
+	private volatile ServiceTracker<?,PackageAdmin> paTracker;
 	/**
 	 * The BaseAdpator
 	 */
@@ -43,10 +46,12 @@ public class PFAdaptorHook implements AdaptorHook {
 	 */
 	private volatile PatchListener patchListener;
 
+	@Override
 	public void addProperties(Properties properties) {
 		// nothing
 	}
 
+	@Override
 	public FrameworkLog createFrameworkLog() {
 		// nothing
 		return null;
@@ -55,41 +60,52 @@ public class PFAdaptorHook implements AdaptorHook {
 	/**
 	 * Opens the ServiceTracker for PackageAdmin and registers the PatchListener.
 	 */
+	@Override
 	public void frameworkStart(BundleContext context) {
-		paTracker = new ServiceTracker(context, PackageAdmin.class.getName(), null);
-		paTracker.open();
-		patchListener = new PatchListener();
-		context.addBundleListener(patchListener);
+		this.paTracker = new ServiceTracker<>(context, PackageAdmin.class.getName(), null);
+		this.paTracker.open();
+		this.patchListener = new PatchListener();
+		context.addBundleListener(this.patchListener);
 	}
 
 	/**
 	 * Removes the PatchListener and closes the PackageAdmin ServiceTracker.
 	 */
+	@Override
 	public void frameworkStop(BundleContext context) {
-		context.removeBundleListener(patchListener);
-		patchListener = null;
-		paTracker.close();
-		paTracker = null;
+		context.removeBundleListener(this.patchListener);
+		this.patchListener = null;
+		this.paTracker.close();
+		this.paTracker = null;
 	}
 
+	@Override
 	public void frameworkStopping(BundleContext context) {
 		// nothing
 	}
 
+	@Override
 	public void handleRuntimeError(Throwable error) {
 		// nothing
 	}
 
+	@Override
 	public void initialize(BaseAdaptor adaptor) {
 		this.baseAdaptor = adaptor;
 	}
 
+	@Override
 	public URLConnection mapLocationToURLConnection(String location) {
 		// nothing
 		return null;
 	}
 
-	public boolean matchDNChain(String pattern, String[] dnChain) {
+	/**
+	 * @param pattern
+	 * @param dnChain
+	 * @return always <code>false</code>
+	 */
+	public static boolean matchDNChain(String pattern, String[] dnChain) { 
 		// nothing
 		return false;
 	}
@@ -99,10 +115,10 @@ public class PFAdaptorHook implements AdaptorHook {
 	 * @return the PackageAdmin service or null if it is not available
 	 */
 	PackageAdmin getPackageAdmin() {
-		ServiceTracker tracker = paTracker;
+		ServiceTracker<?,PackageAdmin> tracker = this.paTracker;
 		if (tracker == null)
 			return null;
-		return (PackageAdmin) tracker.getService();
+		return tracker.getService();
 	}
 
 	/**
@@ -112,7 +128,7 @@ public class PFAdaptorHook implements AdaptorHook {
 	 * @return a BundleFile to be used for a dev classpath.
 	 */
 	BundleFile createDevClasspathBundleFile(File devFile, BaseData fragmentData) {
-		BaseAdaptor adaptor = baseAdaptor;
+		BaseAdaptor adaptor = this.baseAdaptor;
 		if (adaptor == null)
 			return null;
 		try {
@@ -129,8 +145,8 @@ public class PFAdaptorHook implements AdaptorHook {
 	 * @param bundlesToListen the bundles to listen for
 	 * @param bundleFile the PFBundleFile associated with the bundles.
 	 */
-	void listenToPatches(Collection bundlesToListen, PFBundleFile bundleFile) {
-		PatchListener listener = patchListener;
+	void listenToPatches(Collection<Bundle> bundlesToListen, PFBundleFile bundleFile) {
+		PatchListener listener = this.patchListener;
 		if (listener == null)
 			return;
 		listener.listenToPatches(bundlesToListen, bundleFile);

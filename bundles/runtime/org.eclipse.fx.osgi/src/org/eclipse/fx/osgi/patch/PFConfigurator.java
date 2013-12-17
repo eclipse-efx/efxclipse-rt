@@ -45,6 +45,7 @@ public class PFConfigurator implements HookConfigurator {
 			DEBUG = options.getBooleanOption(OPTION_DEBUG, false);
 	}
 
+	@Override
 	public void addHooks(HookRegistry hookRegistry) {
 		// this is where you add the needed hooks
 

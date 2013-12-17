@@ -22,6 +22,9 @@ import org.eclipse.osgi.framework.adaptor.ClassLoaderDelegateHook;
  * Remember the classloader for use in post look ups because of native classloading by javafx' native code
  * See http://javafx-jira.kenai.com/browse/RT-20883
  */
+/**
+ * Final resort delegate for FX
+ */
 public class FXClassLoaderDelegate implements ClassLoaderDelegateHook {
 	private boolean flag;
 	
@@ -32,16 +35,16 @@ public class FXClassLoaderDelegate implements ClassLoaderDelegateHook {
 
 	@Override
 	public Class<?> postFindClass(String name, BundleClassLoader classLoader, BundleData data) throws ClassNotFoundException {
-		if ("org.eclipse.swt".equals(data.getSymbolicName())) {
-			if (FXClassLoader.LOADER != null && name.startsWith("com.sun.glass") && !flag) {
+		if ("org.eclipse.swt".equals(data.getSymbolicName())) { //$NON-NLS-1$
+			if (FXClassLoader.LOADER != null && name.startsWith("com.sun.glass") && !this.flag) { //$NON-NLS-1$
 				try {
 					// Avoid endless loop
-					flag = true;
+					this.flag = true;
 					return FXClassLoader.LOADER.loadClass(name);
 				} catch (Throwable t) {
 					t.printStackTrace();
 				} finally {
-					flag = false;
+					this.flag = false;
 				}
 			}
 		}

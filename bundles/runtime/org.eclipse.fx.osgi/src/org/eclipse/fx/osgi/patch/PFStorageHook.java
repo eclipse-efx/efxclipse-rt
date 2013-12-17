@@ -12,6 +12,7 @@ package org.eclipse.fx.osgi.patch;
 
 import java.io.*;
 import java.util.Dictionary;
+
 import org.eclipse.osgi.baseadaptor.BaseData;
 import org.eclipse.osgi.baseadaptor.hooks.StorageHook;
 import org.eclipse.osgi.framework.util.KeyedElement;
@@ -45,29 +46,35 @@ public class PFStorageHook implements StorageHook {
 	 */
 	private volatile boolean patchFragment = false;
 
+	@Override
 	public void copy(StorageHook storageHook) {
 		// nothing; Equinox-BundleType will be reread
 	}
 
+	@Override
 	public StorageHook create(BaseData bundledata) {
 		return new PFStorageHook();
 	}
 
+	@Override
 	public boolean forgetStartLevelChange(int startlevel) {
 		// nothing
 		return false;
 	}
 
+	@Override
 	public boolean forgetStatusChange(int status) {
 		// nothing
 		return false;
 	}
 
-	public Dictionary getManifest(boolean firstLoad) {
+	@Override
+	public Dictionary<String, String> getManifest(boolean firstLoad) {
 		// nothing
 		return null;
 	}
 
+	@Override
 	public int getStorageVersion() {
 		return 0;
 	}
@@ -75,18 +82,20 @@ public class PFStorageHook implements StorageHook {
 	/**
 	 * Checks the manifest for a patch fragment
 	 */
-	public void initialize(Dictionary manifest) {
+	@Override
+	public void initialize(Dictionary<String, String> manifest) {
 		// make sure this is a fragment manifest
 		if (manifest.get(Constants.FRAGMENT_HOST) == null)
 			return; // not a fragment;
 		String type = (String) manifest.get(BUNDLE_TYPE_HEADER);
-		patchFragment = BUNDLE_TYPE_PATCH.equals(type);
+		this.patchFragment = BUNDLE_TYPE_PATCH.equals(type);
 	}
 
 	/**
 	 * Loads a PFStorageHook from an input stream.  The only data stored
 	 * is a boolean to indicate if the storage hook is a patch fragment.
 	 */
+	@Override
 	public StorageHook load(BaseData bundledata, DataInputStream is) throws IOException {
 		// This method should always create a new storage hook object to load the data into
 		PFStorageHook loadHook = new PFStorageHook();
@@ -94,7 +103,11 @@ public class PFStorageHook implements StorageHook {
 		return loadHook;
 	}
 
-	public boolean matchDNChain(String pattern) {
+	/**
+	 * @param pattern
+	 * @return always false
+	 */
+	public static boolean matchDNChain(String pattern) {
 		// nothing
 		return false;
 	}
@@ -103,22 +116,27 @@ public class PFStorageHook implements StorageHook {
 	 * Saves the patch fragment.  The only data stored is a boolean
 	 * to indicate if the storage hook is a patch fragment.
 	 */
+	@Override
 	public void save(DataOutputStream os) throws IOException {
-		os.writeBoolean(patchFragment);
+		os.writeBoolean(this.patchFragment);
 	}
 
+	@Override
 	public void validate() throws IllegalArgumentException {
 		// nothing
 	}
 
+	@Override
 	public int getKeyHashCode() {
 		return HASHCODE;
 	}
 
+	@Override
 	public boolean compare(KeyedElement other) {
 		return other.getKey() == KEY;
 	}
 
+	@Override
 	public Object getKey() {
 		return KEY;
 	}
@@ -128,6 +146,6 @@ public class PFStorageHook implements StorageHook {
 	 * @return true if this storage hook is for a patch fragment
 	 */
 	boolean isPatchFragment() {
-		return patchFragment;
+		return this.patchFragment;
 	}
 }
