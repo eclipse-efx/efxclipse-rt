@@ -14,22 +14,23 @@ package org.eclipse.fx.ui.animation.pagetransition.animation;
 import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 
 import javafx.animation.Animation;
-import javafx.animation.FadeTransitionBuilder;
+import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
+/**
+ * Animation which fades between 2 nodes
+ */
 public class FadeAnimation extends CenterSwitchAnimation {
 
 	@Override
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
-		return FadeTransitionBuilder.create()
-			.node(curNode)
-			.interpolator(Interpolator.EASE_BOTH)
-			.fromValue(1.0)
-			.toValue(0.0)
-			.duration(new Duration(1000))
-			.build();
+		FadeTransition t = new FadeTransition(Duration.millis(1000),curNode);
+		t.setInterpolator(Interpolator.EASE_BOTH);
+		t.setFromValue(1.0);
+		t.setToValue(0.0);
+		return t;
 	}
 	
 	@Override

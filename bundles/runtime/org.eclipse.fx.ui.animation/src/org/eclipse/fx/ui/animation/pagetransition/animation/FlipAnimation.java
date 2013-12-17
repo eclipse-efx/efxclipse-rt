@@ -13,9 +13,9 @@ package org.eclipse.fx.ui.animation.pagetransition.animation;
 
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
-import javafx.animation.RotateTransitionBuilder;
-import javafx.animation.ScaleTransitionBuilder;
-import javafx.animation.SequentialTransitionBuilder;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -28,6 +28,9 @@ import javafx.util.Duration;
 
 import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 
+/**
+ * Flip between 2 nodes
+ */
 public class FlipAnimation extends CenterSwitchAnimation {
 
 	@Override
@@ -52,8 +55,8 @@ public class FlipAnimation extends CenterSwitchAnimation {
 		
 		pane.setCenter(area);
 		
-		if (imageView != null) {
-			pane.getChildren().add(0,imageView);
+		if (this.imageView != null) {
+			pane.getChildren().add(0,this.imageView);
 		}
 		
 		Animation animation = createAndPrepareAnimation(area, null);
@@ -67,8 +70,8 @@ public class FlipAnimation extends CenterSwitchAnimation {
 				pane.setCenter(newNode);
 				resetProperties(curNode, newNode);
 				
-				if (imageView != null) {
-					pane.getChildren().remove(imageView);
+				if (FlipAnimation.this.imageView != null) {
+					pane.getChildren().remove(FlipAnimation.this.imageView);
 				}
 			}
 		});
@@ -78,34 +81,22 @@ public class FlipAnimation extends CenterSwitchAnimation {
 	
 	@Override
 	protected Animation createAndPrepareAnimation(Node area, Node newNode) {
-		ScaleTransitionBuilder zoomOut = ScaleTransitionBuilder.create()
-				.duration(new Duration(300))
-				.toX(0.7)
-				.toY(0.7)
-				.interpolator(Interpolator.EASE_BOTH);
-			ScaleTransitionBuilder zoomIn = ScaleTransitionBuilder.create()
-				.duration(new Duration(300))
-				.toX(1)
-				.toY(1)
-				.interpolator(Interpolator.EASE_BOTH);
-			return SequentialTransitionBuilder.create()
-					.children(
-							zoomOut.node(area).build(),
-						RotateTransitionBuilder.create()
-						.axis(Rotate.Y_AXIS)
-						.node(area)
-						.byAngle(180)
-						.duration(new Duration(8000))
-						.interpolator(Interpolator.EASE_BOTH).build(),
-						zoomIn.node(area).build()
-					)
-					.build();
-//		return RotateTransitionBuilder.create()
-//			.axis(Rotate.Y_AXIS)
-//			.node(area)
-//			.byAngle(180)
-//			.duration(new Duration(4000))
-//			.interpolator(Interpolator.EASE_BOTH).build();
+		ScaleTransition zoomOut = new ScaleTransition(Duration.millis(300));
+		zoomOut.setToX(0.7);
+		zoomOut.setToY(0.7);
+		zoomOut.setInterpolator(Interpolator.EASE_BOTH);
+		
+		ScaleTransition zoomIn = new ScaleTransition(Duration.millis(300));
+		zoomIn.setToX(1);
+		zoomIn.setToY(1);
+		zoomIn.setInterpolator(Interpolator.EASE_BOTH);
+		
+		RotateTransition rt = new RotateTransition(Duration.millis(8000));
+		rt.setAxis(Rotate.Y_AXIS);
+		rt.setByAngle(180);
+		rt.setInterpolator(Interpolator.EASE_BOTH);
+		
+		return new SequentialTransition(area, zoomOut, rt, zoomIn);
 				
 	}
 

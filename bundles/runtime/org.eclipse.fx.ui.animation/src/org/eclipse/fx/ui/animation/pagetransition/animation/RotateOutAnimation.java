@@ -11,35 +11,30 @@
 package org.eclipse.fx.ui.animation.pagetransition.animation;
 
 
-import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
-
 import javafx.animation.Animation;
-import javafx.animation.ParallelTransitionBuilder;
-import javafx.animation.RotateTransitionBuilder;
-import javafx.animation.ScaleTransitionBuilder;
+import javafx.animation.ParallelTransition;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
+import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
+
+/**
+ * Rotated animation
+ */
 public class RotateOutAnimation extends CenterSwitchAnimation {
 
 	@Override
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
+		RotateTransition rt = new RotateTransition(Duration.millis(600), curNode);
+		rt.setByAngle(360);
 		
-		return ParallelTransitionBuilder.create()
-			.children(
-				RotateTransitionBuilder.create()
-					.node(curNode)
-					.byAngle(360)
-					.duration(new Duration(600))
-					.build(),
-				ScaleTransitionBuilder.create()
-					.node(curNode)
-					.toX(0)
-					.toY(0)
-					.duration(new Duration(600))
-					.build()
-			)
-			.build();
+		ScaleTransition sc = new ScaleTransition(Duration.millis(600), curNode);
+		sc.setToX(0);
+		sc.setToY(0);
+		
+		return new ParallelTransition(rt, sc);
 	}
 	
 	@Override

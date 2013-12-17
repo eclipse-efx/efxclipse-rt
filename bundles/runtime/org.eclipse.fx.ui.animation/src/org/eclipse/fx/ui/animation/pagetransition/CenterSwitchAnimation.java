@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.animation.pagetransition;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import javafx.animation.Animation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,47 +20,62 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * Basic animation API
+ */
 public abstract class CenterSwitchAnimation {
 
-	protected ImageView imageView = null;
-	
+	/**
+	 * The image view
+	 */
+	public ImageView imageView = null;
+
+	/**
+	 * Animate to the new node
+	 * 
+	 * @param pane
+	 *            the pane the animation is happening on
+	 * @param newNode
+	 *            the new node
+	 */
 	public void animate(final BorderPane pane, final Node newNode) {
-		
+
 		final Node curNode = pane.getCenter();
-		
+
 		pane.setCenter(null);
-		
+
 		Bounds b = curNode.getBoundsInParent();
 		newNode.resizeRelocate(b.getMinX(), b.getMinY(), b.getWidth(), b.getHeight());
 
-		pane.getChildren().add(0,newNode);
-		pane.getChildren().add(1,curNode);
-		
-		if (imageView != null) {
-			pane.getChildren().add(0,imageView);
+		pane.getChildren().add(0, newNode);
+		pane.getChildren().add(1, curNode);
+
+		if (this.imageView != null) {
+			pane.getChildren().add(0, this.imageView);
 		}
-		
+
 		Animation animation = createAndPrepareAnimation(curNode, newNode);
-		
+
 		animation.onFinishedProperty().set(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent event) {
 				pane.getChildren().remove(curNode);
 				pane.getChildren().remove(newNode);
 				pane.setCenter(newNode);
 				resetProperties(curNode, newNode);
-				
-				if (imageView != null) {
-					pane.getChildren().remove(imageView);
+
+				if (CenterSwitchAnimation.this.imageView != null) {
+					pane.getChildren().remove(CenterSwitchAnimation.this.imageView);
 				}
 			}
 		});
-		
+
 		animation.play();
-		
+
 	}
-	
-	protected abstract Animation createAndPrepareAnimation(Node curNode, Node newNode);
-	protected abstract void resetProperties(Node curNode, Node newNode);
+
+	protected abstract Animation createAndPrepareAnimation(@NonNull Node curNode, @NonNull Node newNode);
+
+	protected abstract void resetProperties(@NonNull Node curNode, @NonNull Node newNode);
 }

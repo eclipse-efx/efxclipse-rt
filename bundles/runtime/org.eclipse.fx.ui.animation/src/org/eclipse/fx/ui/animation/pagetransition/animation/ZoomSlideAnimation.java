@@ -24,11 +24,6 @@ import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 
 public class ZoomSlideAnimation extends CenterSwitchAnimation {
 
-	public ZoomSlideAnimation() {
-		
-		
-	}
-	
 	@Override
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
 		double deltaX = -curNode.getBoundsInLocal().getWidth();
