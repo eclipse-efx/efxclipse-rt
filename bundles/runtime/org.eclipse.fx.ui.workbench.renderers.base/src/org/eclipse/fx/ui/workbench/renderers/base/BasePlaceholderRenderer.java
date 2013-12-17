@@ -85,7 +85,7 @@ public abstract class BasePlaceholderRenderer<N> extends BaseRenderer<MPlacehold
 		}
 		
 		// Last reference removed so we can destroy it
-		if( set.isEmpty() ) {
+		if( set == null || set.isEmpty() ) {
 			if (refElement instanceof MPart) {
 				MPart thePart = (MPart) refElement;
 				String imageURI = thePart.getIconURI();
