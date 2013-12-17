@@ -20,6 +20,10 @@ import javafx.animation.TranslateTransitionBuilder;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
+/**
+ * Slide transition
+ */
+@SuppressWarnings("deprecation")
 public class SlideAnimation extends CenterSwitchAnimation {
 
 	@Override

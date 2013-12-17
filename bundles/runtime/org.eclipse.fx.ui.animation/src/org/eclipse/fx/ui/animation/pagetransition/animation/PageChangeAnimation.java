@@ -25,56 +25,12 @@ import javafx.util.Duration;
 
 import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 
+/**
+ * A page change animation
+ */
+@SuppressWarnings("deprecation")
 public class PageChangeAnimation extends CenterSwitchAnimation {
 
-//	@Override
-//	public void animate(final BorderPane pane, final Node newNode) {
-//		pane.setDepthTest(DepthTest.DISABLE);
-//		final Node curNode = pane.getCenter();
-//		
-//		pane.setCenter(null);
-//		
-//		final Group area = new Group();
-//		area.setDepthTest(DepthTest.ENABLE);
-//		
-//		Bounds b = curNode.getBoundsInParent();
-//		newNode.resizeRelocate(b.getMinX(), b.getMinY(), b.getWidth(), b.getHeight());
-//		area.getChildren().add(newNode);
-//		area.getChildren().add(curNode);
-//		
-//		newNode.setTranslateZ(0.1);
-//		curNode.setTranslateZ(-0.1);
-//		newNode.setRotationAxis(Rotate.Y_AXIS);
-//		newNode.setRotate(180);
-//		
-//		
-//		
-//		pane.setCenter(area);
-//		
-//		if (imageView != null) {
-//			pane.getChildren().add(0,imageView);
-//		}
-//		
-//		Animation animation = createAndPrepareAnimation(area, null);
-//		
-//		animation.onFinishedProperty().set(new EventHandler<ActionEvent>() {
-//			
-//			@Override
-//			public void handle(ActionEvent event) {
-//				pane.getChildren().remove(curNode);
-//				pane.getChildren().remove(newNode);
-//				pane.setCenter(newNode);
-//				resetProperties(curNode, newNode);
-//				
-//				if (imageView != null) {
-//					pane.getChildren().remove(imageView);
-//				}
-//			}
-//		});
-//		
-//		animation.play();
-//	}
-	
 	@Override
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
 		Bounds b = curNode.getBoundsInLocal();
@@ -85,10 +41,7 @@ public class PageChangeAnimation extends CenterSwitchAnimation {
 		
 		CubicCurve cIn = new CubicCurve(cX - val, cY, cX - val, cY - val, cX, cY - val, cX, cY);
 		CubicCurve cOut = new CubicCurve(cX, cY, cX, cY + val, cX + val, cY + val, cX + val, cY + 0);
-//		cIn.setRotationAxis(Rotate.X_AXIS);
-//		cIn.setRotate(70);
-//		cOut.setRotationAxis(Rotate.X_AXIS);
-//		cOut.setRotate(70);
+
 		PathTransitionBuilder moveOut = PathTransitionBuilder.create()
 				.duration(new Duration(1000))
 				.node(curNode)
@@ -162,12 +115,6 @@ public class PageChangeAnimation extends CenterSwitchAnimation {
 						).build()
 					)
 					.build();
-//		return RotateTransitionBuilder.create()
-//			.axis(Rotate.Y_AXIS)
-//			.node(area)
-//			.byAngle(180)
-//			.duration(new Duration(4000))
-//			.interpolator(Interpolator.EASE_BOTH).build();
 	}
 
 	@Override

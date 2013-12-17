@@ -22,6 +22,10 @@ import javafx.util.Duration;
 
 import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 
+/**
+ * Zoom and slide animations
+ */
+@SuppressWarnings("deprecation")
 public class ZoomSlideAnimation extends CenterSwitchAnimation {
 
 	@Override
@@ -29,9 +33,6 @@ public class ZoomSlideAnimation extends CenterSwitchAnimation {
 		double deltaX = -curNode.getBoundsInLocal().getWidth();
 		newNode.setTranslateX(-deltaX);
 		
-		
-//		curNode.setEffect(new DropShadow(2, 2, 2, Color.RED));
-//		newNode.setEffect(new DropShadow(2, 2, 2, Color.RED));
 		
 		TranslateTransitionBuilder slide = TranslateTransitionBuilder.create()
 			.interpolator(Interpolator.EASE_BOTH)
