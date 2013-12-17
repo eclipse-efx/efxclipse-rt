@@ -271,7 +271,7 @@ class FXMLConverter {
 			val o = treeIt.next;
 			if( o instanceof CoreAttributes ) {
 				if( id.equals((o as CoreAttributes).id) ) {
-					return o;
+					return o as SvgElement; // Workaround for for 424279
 				}
 			} else {
 				val eo = o as SvgElement;
