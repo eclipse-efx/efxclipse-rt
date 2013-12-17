@@ -12,13 +12,24 @@ package org.eclipse.fx.osgi.util;
 
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
+/**
+ * Factory helper to create a logger instance which is backed by the OSGi-Service registry
+ */
 public class LoggerCreator {
-	public static Logger createLogger(Class<?> clazz) {
+	/**
+	 * Create a logger for the given class
+	 * 
+	 * @param clazz
+	 *            the clazz
+	 * @return the logger created
+	 */
+	public static Logger createLogger(@NonNull Class<?> clazz) {
 		Bundle b = FrameworkUtil.getBundle(clazz);
 		BundleContext ctx = null;
 		if (b != null) {
@@ -31,6 +42,10 @@ public class LoggerCreator {
 			if (b != null) {
 				ctx = b.getBundleContext();
 			}
+		}
+
+		if (ctx == null) {
+			throw new IllegalStateException("Unable to get a bundle context"); //$NON-NLS-1$
 		}
 
 		ServiceReference<LoggerFactory> ref = ctx.getServiceReference(LoggerFactory.class);

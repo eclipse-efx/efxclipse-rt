@@ -26,35 +26,41 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
+/**
+ * Application base class for Equinox JavaFX Applications
+ */
 public abstract class AbstractJFXApplication implements IApplication {
-	private static AbstractJFXApplication SELF;
+	static AbstractJFXApplication SELF;
 	
-	private IApplicationContext applicationContext;
-	private Object returnValue;
-	private EventAdmin eventAdmin;
+	IApplicationContext applicationContext;
+	Object returnValue;
+	EventAdmin eventAdmin;
 	
+	/**
+	 * Dummy class for bootstrap
+	 */
 	public static class JFXApp extends Application {
 		private AbstractJFXApplication osgiApp = SELF;
 		private IApplicationContext applicationContext;
 		
 		@Override
 		public void start(final Stage primaryStage) throws Exception {
-			this.applicationContext = osgiApp.applicationContext;
+			this.applicationContext = this.osgiApp.applicationContext;
 			
 			JFXRealm.createDefault();
-			osgiApp.jfxStart(applicationContext,JFXApp.this,primaryStage);
+			this.osgiApp.jfxStart(this.applicationContext,JFXApp.this,primaryStage);
 			
-			if( osgiApp.eventAdmin != null ) {
+			if( this.osgiApp.eventAdmin != null ) {
 				Map<String, Object> map = new HashMap<String, Object>();
 //				map.put("name", value);
-				osgiApp.eventAdmin.sendEvent(new Event("efxapp/applicationLaunched", map));
+				this.osgiApp.eventAdmin.sendEvent(new Event("efxapp/applicationLaunched", map)); //$NON-NLS-1$
 			}
 		}
 		
 		@Override
 		public void stop() throws Exception {
 			super.stop();
-			osgiApp.returnValue = osgiApp.jfxStop();
+			this.osgiApp.returnValue = this.osgiApp.jfxStop();
 		}
 	}
 	
@@ -68,7 +74,7 @@ public abstract class AbstractJFXApplication implements IApplication {
 		BundleContext bundleContext = b.getBundleContext();
 		ServiceReference<EventAdmin> ref = bundleContext.getServiceReference(EventAdmin.class);
 		if( ref != null ) {
-			eventAdmin = bundleContext.getService(ref);
+			this.eventAdmin = bundleContext.getService(ref);
 		}
 		
 		// Looks like OS-X wants to have the context class loader to locate FX-Classes
@@ -77,19 +83,20 @@ public abstract class AbstractJFXApplication implements IApplication {
 		Application.launch(JFXApp.class);
 		
 		try {
-			return returnValue == null ? IApplication.EXIT_OK : returnValue;
+			return this.returnValue == null ? IApplication.EXIT_OK : this.returnValue;
 		} finally {
-			returnValue = null;
+			this.returnValue = null;
 		}
 	}
 
 	@Override
 	public final void stop() {
-		
+		// Nothing
 	}
 
 	protected abstract void jfxStart(IApplicationContext applicationContext, Application jfxApplication, Stage primaryStage);
 	
+	@SuppressWarnings("static-method")
 	protected Object jfxStop() {
 		return IApplication.EXIT_OK;
 	}
