@@ -244,6 +244,12 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow,WWindow
 	public void doProcessContent(MWindow element) {
 		WWindow<N> windowWidget = getWidget(element);
 		
+		Object nativeWidget = windowWidget.getWidget();
+		
+		if( nativeWidget != null ) {
+			element.getContext().set(nativeWidget.getClass().getName(), nativeWidget);
+		}
+		
 		if (element.getMainMenu() != null) {
 			WLayoutedWidget<MMenu> menuWidget = engineCreateWidget(element.getMainMenu());
 			if( menuWidget != null ) {
