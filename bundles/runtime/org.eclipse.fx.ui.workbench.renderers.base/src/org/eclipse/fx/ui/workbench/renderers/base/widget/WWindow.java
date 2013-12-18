@@ -27,6 +27,11 @@ public interface WWindow<N> extends WWidget<MWindow> {
 	public void addChild(int idx, WLayoutedWidget<MWindowElement> widget);
 	public void removeChild(WLayoutedWidget<MWindowElement> widget); 
 	
+	public void addChild(WWindow<N> widget);
+	public void removeChild(WWindow<N> widget);
+	
+	public void setOnCloseCallback(WCallback<WWindow<N>, Boolean> closeCallback);
+	
 	public void show();
 	public void close();
 }

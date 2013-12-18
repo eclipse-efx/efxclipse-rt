@@ -17,15 +17,18 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspective;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -100,12 +103,31 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		}
 		getWidget(element).addItems(list);
 		
-		for( MWindow w : element.getWindows() ) {
-			engineCreateWidget(w);
+		if( ! element.getWindows().isEmpty() ) {
+			MWindow window = findParent((EObject) element);
+			WWindow<?> topLevel = (WWindow<?>) window.getWidget();
+			for( MWindow w : element.getWindows() ) {
+				topLevel.addChild((WWindow)engineCreateWidget(w));
+			}
 		}
 	}
-
-	@SuppressWarnings("unchecked")
+	
+	private static MWindow findParent(EObject e) {
+		if( e.eContainer() instanceof MApplication ) {
+			return null;
+		}
+		
+		do {
+			e = e.eContainer();
+			if( e instanceof MWindow ) {
+				return (MWindow) e;
+			}
+		} while( e.eContainer() != null );
+		
+		return null;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void childRendered(MPerspective parentElement, MUIElement element) {
 		if( inContentProcessing(parentElement) ) {
@@ -114,9 +136,19 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		
 		if( element instanceof MPartSashContainerElement ) {
 			getWidget(parentElement).addItem(getRenderedIndex(parentElement, element),(WLayoutedWidget<MPartSashContainerElement>)element.getWidget());
+		} else if( element instanceof MWindow ) {
+			MWindow parent = findParent((EObject) parentElement);
+			WWindow<?> w = (WWindow<?>) parent.getWidget();
+			if( w != null ) {
+				WWindow ww = (WWindow)element.getWidget();
+				if( ww != null ) {
+					w.addChild(ww);	
+				}	
+			}
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void hideChild(MPerspective container, MUIElement changedObj) {
 		WPerspective<N> perspective = getWidget(container);
@@ -126,10 +158,18 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		}
 		
 		if( changedObj instanceof MPartSashContainerElement ) {
-			@SuppressWarnings("unchecked")
 			WLayoutedWidget<MUIElement> widget = (WLayoutedWidget<MUIElement>) changedObj.getWidget();
 			if( widget != null ) {
 				perspective.removeItem(widget);
+			}
+		} else if( changedObj instanceof MWindow ) {
+			MWindow parent = findParent((EObject) container);
+			WWindow<?> w = (WWindow<?>) parent.getWidget();
+			if( w != null ) {
+				WWindow ww = (WWindow)changedObj.getWidget();
+				if( ww != null ) {
+					w.removeChild(ww);	
+				}	
 			}
 		}
 	}

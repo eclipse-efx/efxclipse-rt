@@ -23,6 +23,7 @@ import org.eclipse.e4.core.di.InjectionException;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -40,6 +41,7 @@ import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
@@ -218,6 +220,20 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow,WWindow
 				return null;
 			}
 		});
+		widget.setOnCloseCallback(new WCallback<WWindow<N>, Boolean>() {
+
+			@Override
+			public Boolean call(WWindow<N> param) {
+				//TODO Call out to lifecycle
+				
+				//Set the render flag for other windows
+				//TODO What do we do with: other top-level windows, ... 
+				if( ! ((MApplicationElement)param.getDomElement().getParent() instanceof MApplication) ) {
+					param.getDomElement().setToBeRendered(false);
+				}
+				return Boolean.TRUE;
+			}
+		});
 		getModelContext(element).set(ISaveHandler.class, new DefaultSaveHandler(element, widget));
 	}
 	
@@ -271,18 +287,28 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow,WWindow
 			}
 		}
 		
-//		for( MWindow w : element.getWindows() ) {
-//			engineCreateWidget(w);
-//		}
+		for( MWindow w : element.getWindows() ) {
+			if( w.isVisible() && w.isToBeRendered() ) {
+				WWidget<MWindow> widget = engineCreateWidget(w);
+				if( widget != null ) {
+					@SuppressWarnings("unchecked")
+					WWindow<N> ww = (WWindow<N>) w.getWidget();
+					windowWidget.addChild(ww);
+				}
+			}
+		}
 	}
 
 	@Override
 	public void postProcess(MWindow element) {
 		super.postProcess(element);
-		if( element.isVisible() ) {
-			WWindow<N> window = getWidget(element);
-			if( window != null ) {
-				window.show();
+		//Only top level windows are shown explicitly
+		if( ((EObject)element).eContainer() instanceof MApplication ) {
+			if( element.isVisible() ) {
+				WWindow<N> window = getWidget(element);
+				if( window != null ) {
+					window.show();
+				}
 			}
 		}
 	}
@@ -301,6 +327,12 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow,WWindow
 				WLayoutedWidget<MWindowElement> widget = (WLayoutedWidget<MWindowElement>) element.getWidget();
 				window.addChild(idx, widget);
 			}			
+		} else if( element instanceof MWindow ) {
+			WWindow<N> window = getWidget(parentElement);
+			if( window != null ) {
+				WWindow<N> ww = (WWindow<N>) element.getWidget();
+				window.addChild(ww);
+			}
 		}
 	}
 	
@@ -313,6 +345,12 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow,WWindow
 				WLayoutedWidget<MWindowElement> widget = (WLayoutedWidget<MWindowElement>) changedObj.getWidget();
 				window.removeChild(widget);
 			}	
+		} else {
+			WWindow<N> window = getWidget(container);
+			if( window != null ) {
+				WWindow<N> ww = (WWindow<N>) changedObj.getWidget();
+				window.removeChild(ww);
+			}
 		}
 	}
 	

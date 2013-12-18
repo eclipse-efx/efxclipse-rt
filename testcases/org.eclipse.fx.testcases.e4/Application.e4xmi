@@ -149,6 +149,9 @@
         <children xsi:type="menu:DynamicMenuContribution" xmi:id="_euWogC_uEeOp1Ym1-ovQ6w" elementId="org.eclipse.fx.testcases.e4.dynamicmenucontribution.2" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.contributions.DMContribution"/>
       </children>
     </mainMenu>
+    <windows xmi:id="_tJumwF5uEeOE9IXWSZlx5Q" elementId="org.eclipse.fx.testcases.e4.window.0" label="Extra Window" x="100" y="100" width="200" height="200">
+      <children xsi:type="basic:Part" xmi:id="_i0GJgF6LEeOE9IXWSZlx5Q" elementId="org.eclipse.fx.testcases.e4.part.16" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ExtraWindowPart"/>
+    </windows>
     <sharedElements xsi:type="basic:Part" xmi:id="_T4J0kPW5EeG7tr8qKhf17Q" elementId="org.eclipse.fx.testcases.e4.part.7" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C7"/>
     <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_wH3xYCTGEeKdCOcPGN2T3w" elementId="org.eclipse.fx.testcases.e4.partsashcontainer.1">
       <children xsi:type="basic:Part" xmi:id="_wppBsCTGEeKdCOcPGN2T3w" elementId="org.eclipse.fx.testcases.e4.part.8" containerData="1" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="P 8"/>

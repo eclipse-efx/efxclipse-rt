@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
@@ -44,7 +45,6 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -53,6 +53,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 import javax.annotation.PostConstruct;
@@ -68,10 +69,10 @@ import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindowElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
-import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
 import org.eclipse.fx.ui.dialogs.Dialog;
 import org.eclipse.fx.ui.dialogs.MessageDialog;
@@ -87,6 +88,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseWindowRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.services.WindowTransitionService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.WindowTransitionService.AnimationDelegate;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
@@ -182,6 +184,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		
 		private IEclipseContext applicationContext;
 		
+		private List<WWindow<Stage>> windows = new ArrayList<>();
+		
+		private WCallback<WWindow<Stage>, Boolean> onCloseCallback;
+				
 		@Inject
 		public WWindowImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MWindow mWindow, @Optional KeyBindingDispatcher dispatcher, MApplication application) {
 			this.mWindow = mWindow;
@@ -220,9 +226,41 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			sceneRegistration.dispose();
 		}
 
+		private static MWindow findParent(EObject e) {
+			if( e.eContainer() instanceof MApplication ) {
+				return null;
+			}
+			
+			do {
+				e = e.eContainer();
+				if( e instanceof MWindow ) {
+					return (MWindow) e;
+				}
+			} while( e.eContainer() != null );
+			
+			return null;
+		}
+		
 		@Override
 		protected Stage createWidget() {
 			stage = new Stage();
+			MWindow parent = findParent((EObject) mWindow);
+			if( parent != null ) {
+				stage.initOwner((Window) ((WWindow<?>)parent.getWidget()).getWidget());
+			}
+			
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				
+				@Override
+				public void handle(WindowEvent event) {
+					if( onCloseCallback != null ) {
+						if( ! Boolean.TRUE.equals(onCloseCallback.call(WWindowImpl.this)) ) {
+							event.consume();
+						}
+					}
+				}
+			});
+			
 			stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
 				@Override
@@ -452,6 +490,11 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		protected BorderPane getWidgetNode() {
 			return rootPane;
 		}
+		
+		@Override
+		public void setOnCloseCallback(WCallback<WWindow<Stage>, Boolean> onCloseCallback) {
+			this.onCloseCallback = onCloseCallback;
+		}
 
 		@Inject
 		public void setX(@Named(UIEvents.Window.X) int x) {
@@ -526,7 +569,29 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			getWidget().close();
 		}
 		
+		@Override
+		public void addChild(WWindow<Stage> widget) {
+			windows.add(widget);
+			if( initDone && stage.isShowing() ) {
+				Stage s = (Stage) widget.getWidget();
+				s.show();
+			}
+		}
+		
+		@Override
+		public void removeChild(WWindow<Stage> widget) {
+			if( widget.getWidget() != null ) {
+				Stage s = (Stage) widget.getWidget();
+				s.hide();
+			}
+			windows.remove(widget);
+		}
+		
 		private void internalShow() {
+			if( getWidget().isShowing() ) {
+				return;
+			}
+			
 			if( windowTransitionService != null ) {
 				AnimationDelegate<Stage> delegate = windowTransitionService.getShowDelegate(mWindow);
 				if( delegate != null ) {
@@ -537,9 +602,14 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			} else {
 				getWidget().show();	
 			}
+			
+			for( WWindow<Stage> c: windows ) {
+				c.show();
+			}
 		}
 		
 		private void internalHide() {
+			//TODO Do we need to hide them recursively???
 			if( windowTransitionService != null ) {
 				AnimationDelegate<Stage> delegate = windowTransitionService.getShowDelegate(mWindow);
 				if( delegate != null ) {
