@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
@@ -28,15 +29,19 @@ import javafx.beans.value.WritableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 
 import org.eclipse.core.databinding.observable.ChangeEvent;
 import org.eclipse.core.databinding.observable.DisposeEvent;
 import org.eclipse.core.databinding.observable.IChangeListener;
 import org.eclipse.core.databinding.observable.IDisposeListener;
+import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IListChangeListener;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiffEntry;
+import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
+import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
@@ -537,9 +542,13 @@ public class AdapterFactory {
 
 	/**
 	 * Bind an javafx observable value to a eclipse db observable
-	 * @param fxObs the javafx observable
-	 * @param dbObs the eclipse db observable
-	 * @param initialSync the initial sync direction
+	 * 
+	 * @param fxObs
+	 *            the javafx observable
+	 * @param dbObs
+	 *            the eclipse db observable
+	 * @param initialSync
+	 *            the initial sync direction
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E, F extends ObservableValue<E> & WritableValue<E>> void bind(F fxObs, IObservableValue dbObs, InitialSync initialSync) {
@@ -550,6 +559,190 @@ public class AdapterFactory {
 		}
 		ObservableWritableValue<E> wrapped = adapt(dbObs);
 		do_bind(fxObs, wrapped);
+	}
+
+	/**
+	 * Creates an <b>readonly</b> observable list which is backed by the source list but the values are converted using the
+	 * converter
+	 * 
+	 * @param source
+	 *            the source list
+	 * @param converter
+	 *            the converter
+	 * @return observable list with converter value
+	 */
+	@SuppressWarnings("unchecked")
+	public static <S, T> IObservableList convertObservableList(IObservableList source, Callback<S, T> converter) {
+		ReadonlyWritableList target = new ReadonlyWritableList(source.getRealm());
+		
+		try {
+			target.modifiable = true;
+			for (Object o : source) {
+				target.add(converter.call((S)o));
+			}
+		} finally {
+			target.modifiable = false;
+		}
+		
+		source.addListChangeListener(new IListChangeListener() {
+
+			@Override
+			public void handleListChange(ListChangeEvent event) {
+				event.diff.accept(new ListDiffVisitor() {
+
+					@Override
+					public void handleRemove(int index, Object element) {
+						try {
+							target.modifiable = true;
+							target.remove(index);
+						} finally {
+							target.modifiable = false;
+						}
+					}
+
+					@Override
+					public void handleAdd(int index, Object element) {
+						try {
+							target.modifiable = true;
+							target.add(index, converter.call((S) element));
+						} finally {
+							target.modifiable = false;
+						}
+					}
+
+					@Override
+					public void handleReplace(int index, Object oldElement, Object newElement) {
+						try {
+							target.modifiable = true;
+							target.set(index, converter.call((S) newElement));
+						} finally {
+							target.modifiable = false;
+						}
+					}
+					
+					@Override
+					public void handleMove(int oldIndex, int newIndex, Object element) {
+						try {
+							target.modifiable = true;
+							target.move(oldIndex, newIndex);
+						} finally {
+							target.modifiable = false;
+						}
+					}
+				});
+			}
+		});
+
+		return target;
+	}
+	
+	static class ReadonlyWritableList extends WritableList {
+		boolean modifiable;
+		
+		public ReadonlyWritableList(Realm r) {
+			super(r);
+		}
+
+		@Override
+		public Object set(int index, Object element) {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			return super.set(index, element);
+		}
+
+		@Override
+		public Object move(int oldIndex, int newIndex) {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			return super.move(oldIndex, newIndex);
+		}
+
+		@Override
+		public Object remove(int index) {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			return super.remove(index);
+		}
+
+		@Override
+		public boolean add(Object element) {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			return super.add(element);
+		}
+
+		@Override
+		public void add(int index, Object element) {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			super.add(index, element);
+		}
+
+		@SuppressWarnings("rawtypes")
+		@Override
+		public boolean addAll(Collection c) {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			return super.addAll(c);
+		}
+
+		@SuppressWarnings("rawtypes")
+		@Override
+		public boolean addAll(int index, Collection c) {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			return super.addAll(index, c);
+		}
+
+		@Override
+		public boolean remove(Object o) {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			return super.remove(o);
+		}
+
+		@SuppressWarnings("rawtypes")
+		@Override
+		public boolean removeAll(Collection c) {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			return super.removeAll(c);
+		}
+
+		@SuppressWarnings("rawtypes")
+		@Override
+		public boolean retainAll(Collection c) {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			return super.retainAll(c);
+		}
+
+		@Override
+		public void clear() {
+			if( ! this.modifiable ) {
+				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
+			}
+			super.clear();
+		}
+	}
+
+	static <S, T> T convertIt(S object, Callback<S, T> converter, Map<S, T> cache) {
+		T t = cache.get(object);
+		if (t == null) {
+			t = 
+			cache.put(object, t);
+		}
+		return t;
 	}
 
 	private static <E, F extends ObservableValue<E> & WritableValue<E>> void do_bind(final F fxObs, final F dbObs) {
