@@ -573,7 +573,7 @@ public class AdapterFactory {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <S, T> IObservableList convertObservableList(IObservableList source, Callback<S, T> converter) {
-		ReadonlyWritableList target = new ReadonlyWritableList(source.getRealm());
+		final ReadonlyWritableList target = new ReadonlyWritableList(source.getRealm());
 		
 		try {
 			target.modifiable = true;
@@ -734,15 +734,6 @@ public class AdapterFactory {
 			}
 			super.clear();
 		}
-	}
-
-	static <S, T> T convertIt(S object, Callback<S, T> converter, Map<S, T> cache) {
-		T t = cache.get(object);
-		if (t == null) {
-			t = 
-			cache.put(object, t);
-		}
-		return t;
 	}
 
 	private static <E, F extends ObservableValue<E> & WritableValue<E>> void do_bind(final F fxObs, final F dbObs) {
