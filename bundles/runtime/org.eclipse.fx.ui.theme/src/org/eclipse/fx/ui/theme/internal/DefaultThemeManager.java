@@ -120,7 +120,7 @@ public class DefaultThemeManager implements ThemeManager {
 			if (e.getName().equals("stylesheet")) {
 				String themeId = e.getAttribute(ATT_THEME_ID);
 				for (Theme t : themes) {
-					if (t.getId().equals(themeId)) {
+					if (t.getId().equals(themeId) || themeId == null || themeId.isEmpty()) {
 						((ThemeImpl)t).addStylesheet(e);
 					}
 				}
