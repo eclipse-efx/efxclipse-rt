@@ -572,7 +572,7 @@ public class AdapterFactory {
 	 * @return observable list with converter value
 	 */
 	@SuppressWarnings("unchecked")
-	public static <S, T> IObservableList convertObservableList(IObservableList source, Callback<S, T> converter) {
+	public static <S, T> IObservableList convertObservableList(IObservableList source, final Callback<S, T> converter) {
 		final ReadonlyWritableList target = new ReadonlyWritableList(source.getRealm());
 		
 		try {
