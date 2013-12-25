@@ -261,23 +261,25 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 
 	void handleSelectedElement(MPerspectiveStack parent, MPerspective oldElement, MPerspective newElement) {
 		hideElementRecursive(oldElement);
-		WPerspectiveStack<N, I, IC> stack = getWidget(parent);
-		int idx = 0;
-		for (WStackItem<I, IC> i : stack.getItems()) {
-			if (i.getDomElement() == newElement) {
-				stack.selectItem(idx);
-				// TODO Should we do the traversal before???
-				showElementRecursive(newElement);
-				return;
+		if( newElement != null ) {
+			WPerspectiveStack<N, I, IC> stack = getWidget(parent);
+			int idx = 0;
+			for (WStackItem<I, IC> i : stack.getItems()) {
+				if (i.getDomElement() == newElement) {
+					stack.selectItem(idx);
+					// TODO Should we do the traversal before???
+					showElementRecursive(newElement);
+					return;
+				}
+				idx++;
 			}
-			idx++;
+			
+			// Looks like the child is not part of the UI yet (most likely because it got removed using IPR#removeGUI)
+			childRendered(parent, newElement);
+			stack.selectItem(parent.getChildren().indexOf(newElement));
+			// TODO Should we do the traversal before???
+			showElementRecursive(newElement);			
 		}
-		
-		// Looks like the child is not part of the UI yet (most likely because it got removed using IPR#removeGUI)
-		childRendered(parent, newElement);
-		stack.selectItem(parent.getChildren().indexOf(newElement));
-		// TODO Should we do the traversal before???
-		showElementRecursive(newElement);
 	}
 
 	boolean handleStackItemClose(MPerspective e, WStackItem<I, IC> item) {
