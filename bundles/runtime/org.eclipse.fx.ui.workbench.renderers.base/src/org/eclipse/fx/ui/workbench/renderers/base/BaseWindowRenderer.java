@@ -351,7 +351,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow,WWindow
 				WLayoutedWidget<MWindowElement> widget = (WLayoutedWidget<MWindowElement>) changedObj.getWidget();
 				window.removeChild(widget);
 			}	
-		} else {
+		} else if( changedObj instanceof MWindow ) {
 			WWindow<N> window = getWidget(container);
 			if( window != null ) {
 				WWindow<N> ww = (WWindow<N>) changedObj.getWidget();
