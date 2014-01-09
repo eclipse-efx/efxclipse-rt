@@ -150,13 +150,19 @@ public abstract class Dialog {
 		stage.setTitle(title);
 		stage.initOwner(parent);
 		Parent content = createContents();
-		Scene s = new Scene(content);
+		BorderPane rootContainer = new BorderPane(content);
+		
+		Scene s = new Scene(rootContainer);
 		s.getStylesheets().addAll(getStylesheets());
 		stage.setScene(s);
-		Point2D size = getInitialSize(content);
+		
+		Point2D size = getInitialSize(rootContainer);
 		if( size != null ) {
 			stage.setWidth(size.getX());
 			stage.setHeight(size.getY());
+		} else {
+			size = getInitialContentSize(rootContainer);
+			rootContainer.setPrefSize(size.getX(), size.getY());
 		}
 		Point2D location = getInitialLocation(content);
 		if( location != null ) {
@@ -164,6 +170,11 @@ public abstract class Dialog {
 			stage.setY(location.getY());
 		}
 		return stage;
+	}
+
+	protected Point2D getInitialContentSize(Parent rootContainer) {
+		rootContainer.impl_processCSS(true);
+		return new Point2D(rootContainer.prefWidth(-1), rootContainer.prefHeight(-1));
 	}
 	
 	protected Point2D getInitialSize(Parent rootContainer) {
