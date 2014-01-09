@@ -148,17 +148,18 @@ public abstract class Dialog {
 	protected Stage create() {
 		Stage stage = new Stage();
 		stage.setTitle(title);
-// Causes problems when embedded in SWT		
 		stage.initOwner(parent);
 		Parent content = createContents();
-		Scene s = new Scene(content);
+		Point2D size = getInitialSize(content);
+		Scene s = new Scene(content,size.getX(),size.getY());
 		s.getStylesheets().addAll(getStylesheets());
 		stage.setScene(s);
 		return stage;
 	}
 	
-	protected Point2D getInitialSize() {
-		return new Point2D(stage.getScene().getRoot().prefWidth(-1), stage.getScene().getRoot().prefHeight(-1));
+	protected Point2D getInitialSize(Parent rootContainer) {
+		stage.getScene().getRoot().impl_reapplyCSS();
+		return new Point2D(rootContainer.prefWidth(-1), rootContainer.prefHeight(-1));
 	}
 	
 	void layout() {
