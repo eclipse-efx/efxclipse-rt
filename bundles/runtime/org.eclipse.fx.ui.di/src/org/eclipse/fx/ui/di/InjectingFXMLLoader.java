@@ -21,6 +21,7 @@ import javafx.util.Callback;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.osgi.util.OSGiFXMLLoader;
+import org.eclipse.fx.osgi.util.OSGiFXMLLoader.FXMLData;
 import org.osgi.framework.Bundle;
 
 
@@ -31,30 +32,78 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 	public static <N> InjectingFXMLLoader<N> create(final IEclipseContext context, final Class<?> requester, final String relativeFxmlPath) {
 		return new InjectingFXMLLoader<N>() {
 
+			@Override
 			public N load() throws IOException {
-				return OSGiFXMLLoader.load(requester, relativeFxmlPath, resourceBundle, builderFactory, new ControllerFactory(context));
+				return OSGiFXMLLoader.load(requester, relativeFxmlPath, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
 			}
 			
+			@Override
+			public <C> Data<N,C> loadWithController() throws IOException {
+				FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(requester, relativeFxmlPath, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
+				return new Data<N, C>() {
+					@Override
+					public C getController() {
+						return d.controller;
+					}
+					
+					@Override
+					public N getNode() {
+						return d.node;
+					}
+				};
+			}
 		};
 	}
 	
 	public static <N> InjectingFXMLLoader<N> create(final IEclipseContext context, final Bundle bundle, final String bundleRelativeFxmlPath) {
 		return new InjectingFXMLLoader<N>() {
 
+			@Override
 			public N load() throws IOException {
-				return OSGiFXMLLoader.load(bundle, bundleRelativeFxmlPath, resourceBundle, builderFactory, new ControllerFactory(context));
+				return OSGiFXMLLoader.load(bundle, bundleRelativeFxmlPath, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
 			}
 			
+			@Override
+			public <C> Data<N,C> loadWithController() throws IOException {
+				FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(bundle, bundleRelativeFxmlPath, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
+				return new Data<N, C>() {
+					@Override
+					public C getController() {
+						return d.controller;
+					}
+					
+					@Override
+					public N getNode() {
+						return d.node;
+					}
+				};
+			}
 		};
 	}
 	
 	public static <N> InjectingFXMLLoader<N> create(final IEclipseContext context, final ClassLoader classloader, final URL url) {
 		return new InjectingFXMLLoader<N>() {
 
+			@Override
 			public N load() throws IOException {
-				return OSGiFXMLLoader.load(classloader, url, resourceBundle, builderFactory, new ControllerFactory(context));
+				return OSGiFXMLLoader.load(classloader, url, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
 			}
 			
+			@Override
+			public <C> Data<N,C> loadWithController() throws IOException {
+				FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(classloader, url, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
+				return new Data<N, C>() {
+					@Override
+					public C getController() {
+						return d.controller;
+					}
+					
+					@Override
+					public N getNode() {
+						return d.node;
+					}
+				};
+			}
 		};
 	}
 	

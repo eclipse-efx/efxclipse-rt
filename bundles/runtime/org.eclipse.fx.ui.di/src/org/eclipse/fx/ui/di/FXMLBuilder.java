@@ -19,4 +19,10 @@ public interface FXMLBuilder<N> {
 	FXMLBuilder<N> resourceBundle(ResourceBundle resourceBundle);
 	FXMLBuilder<N> builderFactory(BuilderFactory builderFactory);
 	N load() throws IOException;
+	<C> Data loadWithController() throws IOException;
+	
+	interface Data<N,C> {
+		public N getNode();
+		public C getController();
+	}
 }
