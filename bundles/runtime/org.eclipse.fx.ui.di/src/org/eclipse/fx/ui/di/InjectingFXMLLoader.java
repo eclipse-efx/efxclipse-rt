@@ -39,7 +39,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 			
 			@Override
 			public <C> Data<N,C> loadWithController() throws IOException {
-				FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(requester, relativeFxmlPath, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
+				final FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(requester, relativeFxmlPath, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
 				return new Data<N, C>() {
 					@Override
 					public C getController() {
@@ -65,7 +65,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 			
 			@Override
 			public <C> Data<N,C> loadWithController() throws IOException {
-				FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(bundle, bundleRelativeFxmlPath, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
+				final FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(bundle, bundleRelativeFxmlPath, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
 				return new Data<N, C>() {
 					@Override
 					public C getController() {
@@ -91,7 +91,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 			
 			@Override
 			public <C> Data<N,C> loadWithController() throws IOException {
-				FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(classloader, url, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
+				final FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(classloader, url, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
 				return new Data<N, C>() {
 					@Override
 					public C getController() {
