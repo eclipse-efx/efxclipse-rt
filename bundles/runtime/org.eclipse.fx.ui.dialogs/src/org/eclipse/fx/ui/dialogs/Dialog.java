@@ -255,7 +255,8 @@ public abstract class Dialog {
 		stage.setTitle(this.title);
 		stage.initOwner(this.parent);
 		Parent content = createContents();
-		BorderPane rootContainer = new BorderPane(content);
+		BorderPane rootContainer = new BorderPane();
+		rootContainer.setCenter(content);
 
 		Scene s = new Scene(rootContainer);
 		s.getStylesheets().addAll(getStylesheets());
