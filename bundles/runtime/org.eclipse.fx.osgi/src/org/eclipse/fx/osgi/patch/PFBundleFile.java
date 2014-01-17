@@ -148,7 +148,7 @@ public class PFBundleFile extends BundleFile {
 			if (fragments == null)
 				return null; // no fragments
 			// search the fragments for patch fragments
-			ArrayList<BundleFile> patchList = new ArrayList<>(fragments.length);
+			ArrayList<BundleFile> patchList = new ArrayList<BundleFile>(fragments.length);
 			for (int i = 0; i < fragments.length; i++) {
 				AbstractBundle fragment = (AbstractBundle) fragments[i];
 				BaseData fragmentData = (BaseData) fragment.getBundleData();

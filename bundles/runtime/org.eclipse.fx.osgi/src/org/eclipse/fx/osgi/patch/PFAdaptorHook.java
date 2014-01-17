@@ -36,7 +36,7 @@ public class PFAdaptorHook implements AdaptorHook {
 	/**
 	 * Tracks PackageAdmin
 	 */
-	private volatile ServiceTracker<?,PackageAdmin> paTracker;
+	private volatile ServiceTracker<PackageAdmin,PackageAdmin> paTracker;
 	/**
 	 * The BaseAdpator
 	 */
@@ -62,7 +62,7 @@ public class PFAdaptorHook implements AdaptorHook {
 	 */
 	@Override
 	public void frameworkStart(BundleContext context) {
-		this.paTracker = new ServiceTracker<>(context, PackageAdmin.class.getName(), null);
+		this.paTracker = new ServiceTracker<PackageAdmin,PackageAdmin>(context, PackageAdmin.class.getName(), null);
 		this.paTracker.open();
 		this.patchListener = new PatchListener();
 		context.addBundleListener(this.patchListener);

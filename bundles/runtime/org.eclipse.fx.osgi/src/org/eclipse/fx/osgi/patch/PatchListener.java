@@ -21,7 +21,7 @@ import org.osgi.framework.SynchronousBundleListener;
  * Listener to patch a bundle
  */
 public class PatchListener implements SynchronousBundleListener {
-	private final HashMap<PFBundleFile,Collection<Bundle>> patches = new HashMap<>();
+	private final HashMap<PFBundleFile,Collection<Bundle>> patches = new HashMap<PFBundleFile,Collection<Bundle>>();
 
 	@Override
 	public void bundleChanged(BundleEvent event) {
