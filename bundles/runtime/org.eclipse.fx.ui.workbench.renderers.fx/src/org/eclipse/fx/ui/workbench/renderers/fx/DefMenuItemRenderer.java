@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -110,7 +111,13 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 						}
 						
 						if( runnable != null ) {
-							runnable.run();
+							Platform.runLater(new Runnable() {
+								
+								@Override
+								public void run() {
+									runnable.run();
+								}
+							});
 						}
 					}
 				});
