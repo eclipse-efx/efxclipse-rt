@@ -580,7 +580,9 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 		// clean up cache
 		for (int i = 0; i < flushLength; i++) {
-			flush [i].cacheWidth = flush [i].cacheHeight = -1;
+			if( flush != null ) {
+				flush [i].cacheWidth = flush [i].cacheHeight = -1;	
+			}
 		}
 
 		int totalDefaultWidth = 0;

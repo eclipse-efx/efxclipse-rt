@@ -248,8 +248,12 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			}
 			if (wrap && (i != 0) && (x + childWidth > width)) {
 				wrapped = true;
-				if (move && (justify.get() || fill.get() || center.get()))
-					wraps[i - 1] = maxHeight;
+				if (move && (justify.get() || fill.get() || center.get())) {
+					if( wraps != null ) {
+						wraps[i - 1] = maxHeight;	
+					}
+				}
+					
 				x = marginLeft.get() + marginWidth.get();
 				y += spacing.get() + maxHeight;
 				if (pack.get())
@@ -261,7 +265,9 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			if (move) {
 				double childX = x + clientX, childY = y + clientY;
 				if (justify.get() || fill.get() || center.get()) {
-					bounds[i] = new BoundingBox(childX, childY, childWidth, childHeight);
+					if( bounds != null ) {
+						bounds[i] = new BoundingBox(childX, childY, childWidth, childHeight);	
+					}
 				} else {
 					child.resizeRelocate(childX, childY, childWidth, childHeight);
 				}
@@ -280,27 +286,40 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			} else {
 				if (fill.get() || justify.get() || center.get()) {
 					int last = 0;
-					if (count > 0)
-						wraps[count - 1] = maxHeight;
+					if (count > 0) {
+						if( wraps != null ) {
+							wraps[count - 1] = maxHeight;	
+						}
+					}
+						
 					for (int i = 0; i < count; i++) {
-						if (wraps[i] != 0) {
+						if ( wraps != null && wraps[i] != 0) {
 							int wrapCount = i - last + 1;
 							if (justify.get()) {
 								int wrapX = 0;
 								for (int j = last; j <= i; j++) {
-									wrapX += bounds[j].getWidth() + spacing.get();
+									if( bounds != null ) {
+										wrapX += bounds[j].getWidth() + spacing.get();	
+									}
 								}
 								space = Math.max(0, (width - wrapX) / (wrapCount + 1));
 								margin = Math.max(0, ((width - wrapX) % (wrapCount + 1)) / 2);
 							}
 							for (int j = last; j <= i; j++) {
-								if (justify.get())
-									bounds[j] = changeX(bounds[j], (space * (j - last + 1)) + margin);
+								if (justify.get()) {
+									if( bounds != null ) {
+										bounds[j] = changeX(bounds[j], (space * (j - last + 1)) + margin);	
+									}
+								}
 								if (fill.get()) {
-									bounds[j] = changeHeight(bounds[j], wraps[i]);
+									if( bounds != null ) {
+										bounds[j] = changeHeight(bounds[j], wraps[i]);	
+									}
 								} else {
 									if (center.get()) {
-										bounds[j] = changeY(bounds[j], Math.max(0, (wraps[i] - bounds[j].getHeight()) / 2));
+										if( bounds != null ) {
+											bounds[j] = changeY(bounds[j], Math.max(0, (wraps[i] - bounds[j].getHeight()) / 2));	
+										}
 									}
 								}
 							}
@@ -311,17 +330,26 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			}
 			for (int i = 0; i < count; i++) {
 				if (!wrapped) {
-					if (justify.get())
-						bounds[i] = changeX(bounds[i], (space * (i + 1)) + margin);
+					if (justify.get()) {
+						if( bounds != null ) {
+							bounds[i] = changeX(bounds[i], (space * (i + 1)) + margin);	
+						}
+					}
 					if (fill.get()) {
-						bounds[i] = changeHeight(bounds[i], maxHeight);
+						if( bounds != null ) {
+							bounds[i] = changeHeight(bounds[i], maxHeight);	
+						}
 					} else {
 						if (center.get()) {
-							bounds[i] = changeY(bounds[i], Math.max(0, (maxHeight - bounds[i].getHeight()) / 2));
+							if( bounds != null ) {
+								bounds[i] = changeY(bounds[i], Math.max(0, (maxHeight - bounds[i].getHeight()) / 2));	
+							}
 						}
 					}
 				}
-				children[i].resizeRelocate(bounds[i].getMinX(), bounds[i].getMinY(), bounds[i].getWidth(), bounds[i].getHeight());
+				if( bounds != null ) {
+					children[i].resizeRelocate(bounds[i].getMinX(), bounds[i].getMinY(), bounds[i].getWidth(), bounds[i].getHeight());	
+				}
 			}
 		}
 		return new Size(maxX, y + maxHeight + marginBottom.get() + marginHeight.get());
@@ -373,8 +401,12 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			}
 			if (wrap && (i != 0) && (y + childHeight > height)) {
 				wrapped = true;
-				if (move && (justify.get() || fill.get() || center.get()))
-					wraps[i - 1] = maxWidth;
+				if (move && (justify.get() || fill.get() || center.get())) {
+					if( wraps != null ) {
+						wraps[i - 1] = maxWidth;	
+					}
+				}
+					
 				x += spacing.get() + maxWidth;
 				y = marginTop.get() + marginHeight.get();
 				if (pack.get())
@@ -386,7 +418,9 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			if (move) {
 				double childX = x + clientX, childY = y + clientY;
 				if (justify.get() || fill.get() || center.get()) {
-					bounds[i] = new BoundingBox(childX, childY, childWidth, childHeight);
+					if( bounds != null ) {
+						bounds[i] = new BoundingBox(childX, childY, childWidth, childHeight);	
+					}
 				} else {
 					child.resizeRelocate(childX, childY, childWidth, childHeight);
 				}
@@ -405,27 +439,39 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			} else {
 				if (fill.get() || justify.get() || center.get()) {
 					int last = 0;
-					if (count > 0)
-						wraps[count - 1] = maxWidth;
+					if (count > 0) {
+						if( wraps != null ) {
+							wraps[count - 1] = maxWidth;	
+						}
+					}
 					for (int i = 0; i < count; i++) {
-						if (wraps[i] != 0) {
+						if (wraps != null && wraps[i] != 0) {
 							int wrapCount = i - last + 1;
 							if (justify.get()) {
 								int wrapY = 0;
 								for (int j = last; j <= i; j++) {
-									wrapY += bounds[j].getHeight() + spacing.get();
+									if( bounds != null ) {
+										wrapY += bounds[j].getHeight() + spacing.get();	
+									}
 								}
 								space = Math.max(0, (height - wrapY) / (wrapCount + 1));
 								margin = Math.max(0, ((height - wrapY) % (wrapCount + 1)) / 2);
 							}
 							for (int j = last; j <= i; j++) {
-								if (justify.get())
-									bounds[j] = changeY(bounds[j], (space * (j - last + 1)) + margin);
+								if (justify.get()) {
+									if( bounds != null ) {
+										bounds[j] = changeY(bounds[j], (space * (j - last + 1)) + margin);	
+									}
+								}
 								if (fill.get()) {
-									bounds[j] = changeWidth(bounds[j], wraps[i]);
+									if( bounds != null ) {
+										bounds[j] = changeWidth(bounds[j], wraps[i]);	
+									}
 								} else {
 									if (center.get()) {
-										bounds[j] = changeX(bounds[j], Math.max(0, (wraps[i] - bounds[j].getWidth()) / 2));
+										if( bounds != null ) {
+											bounds[j] = changeX(bounds[j], Math.max(0, (wraps[i] - bounds[j].getWidth()) / 2));	
+										}
 									}
 								}
 							}
@@ -436,18 +482,27 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			}
 			for (int i = 0; i < count; i++) {
 				if (!wrapped) {
-					if (justify.get())
-						bounds[i] = changeY(bounds[i], (space * (i + 1)) + margin);
+					if (justify.get()) {
+						if( bounds != null ) {
+							bounds[i] = changeY(bounds[i], (space * (i + 1)) + margin);	
+						}
+					}
 					if (fill.get()) {
-						bounds[i] = changeWidth(bounds[i], maxWidth);
+						if( bounds != null ) {
+							bounds[i] = changeWidth(bounds[i], maxWidth);	
+						}
 					} else {
 						if (center.get()) {
-							bounds[i] = changeX(bounds[i], Math.max(0, (maxWidth - bounds[i].getWidth()) / 2));
+							if( bounds != null ) {
+								bounds[i] = changeX(bounds[i], Math.max(0, (maxWidth - bounds[i].getWidth()) / 2));	
+							}
 						}
 					}
 
 				}
-				children[i].resizeRelocate(bounds[i].getMinX(), bounds[i].getMinY(), bounds[i].getWidth(), bounds[i].getHeight());
+				if( bounds != null ) {
+					children[i].resizeRelocate(bounds[i].getMinX(), bounds[i].getMinY(), bounds[i].getWidth(), bounds[i].getHeight());	
+				}
 			}
 		}
 		return new Size(x + maxWidth + marginRight.get() + marginWidth.get(), maxY);
