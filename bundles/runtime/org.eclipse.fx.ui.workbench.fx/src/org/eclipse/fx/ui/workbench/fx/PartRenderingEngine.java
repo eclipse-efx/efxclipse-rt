@@ -66,6 +66,8 @@ public class PartRenderingEngine implements IPresentationEngine {
 	@Log
 	private Logger log;
 	
+	private final IEventBroker eventBroker;
+	
 	@Inject
 	public PartRenderingEngine(
 			@Named(E4Workbench.RENDERER_FACTORY_URI) @Optional String factoryUrl,
@@ -79,6 +81,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 		IContributionFactory contribFactory = context.get(IContributionFactory.class);
 		this.factory = (RendererFactory) contribFactory.create(factoryUrl, context);
 		this.modelService = modelService;
+		this.eventBroker = eventBroker;
 		
 		if(  context.get(EBindingService.class.getName()) != null ) {
 			KeyBindingDispatcher dispatcher = ContextInjectionFactory.make(KeyBindingDispatcher.class, context);
@@ -378,6 +381,10 @@ public class PartRenderingEngine implements IPresentationEngine {
 					createGui(window);
 				}
 			}
+			if (eventBroker != null)
+				eventBroker.post(
+						UIEvents.UILifeCycle.APP_STARTUP_COMPLETE,
+						app);
 			//focus the selected part
 			MUIElement element = selected;
 			while ((element!=null)&&(!(element instanceof MPart))){
