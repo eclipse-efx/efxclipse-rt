@@ -26,6 +26,7 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
@@ -38,11 +39,13 @@ import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
+import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.PopupMenuService;
+import org.osgi.service.event.Event;
 
 @SuppressWarnings("restriction")
 public class ControlPanel {
@@ -62,7 +65,14 @@ public class ControlPanel {
 	
 	@SuppressWarnings("rawtypes")
 	@Inject
-	public ControlPanel(BorderPane p, final MApplication application, final MWindow window, @Optional final MPerspective perspective, final EPartService partService, final EModelService modelService, PopupMenuService<Control> menuService) {
+	public ControlPanel(BorderPane p, final MApplication application, final MWindow window, @Optional final MPerspective perspective, final EPartService partService, final EModelService modelService, PopupMenuService<Control> menuService, IEventBroker broker) {
+		broker.subscribe(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, new org.osgi.service.event.EventHandler() {
+			
+			@Override
+			public void handleEvent(Event arg0) {
+				System.err.println("=========> START UP COMPLETED");
+			}
+		});
 		VBox box = new VBox();
 		
 		{
