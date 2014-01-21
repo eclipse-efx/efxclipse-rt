@@ -373,6 +373,10 @@ public class PartRenderingEngine implements IPresentationEngine {
 			for (MWindow window : app.getChildren()) {
 				createGui(window);
 			}
+			if (eventBroker != null)
+				eventBroker.post(
+						UIEvents.UILifeCycle.APP_STARTUP_COMPLETE,
+						app);
 		} else {
 			// render the selected one first
 			createGui(selected);
