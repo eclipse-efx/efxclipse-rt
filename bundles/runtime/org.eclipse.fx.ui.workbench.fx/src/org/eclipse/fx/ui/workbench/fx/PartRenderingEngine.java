@@ -347,6 +347,8 @@ public class PartRenderingEngine implements IPresentationEngine {
 				if (element instanceof MContext) {
 					clearContext((MContext) element);
 				}
+				
+				element.setRenderer(null);
 			}
 		}
 	}
