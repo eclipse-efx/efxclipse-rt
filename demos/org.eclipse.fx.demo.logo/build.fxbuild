@@ -2,7 +2,7 @@
 <anttasks:AntTask xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:anttasks="http://org.eclipse.fx.ide.jdt/1.0" buildDirectory="${workspace}/at.bestsolution.efxclipse.runtime.examples.logo/">
   <deploy>
     <application name="Logo" mainclass="org.eclipse.fx.demo.logo.LogoAnimation" version="1.0.0"/>
-    <info vendor="BestSolution.at"/>
+    <info vendor="estSolution.at"/>
   </deploy>
   <signjar/>
 </anttasks:AntTask>

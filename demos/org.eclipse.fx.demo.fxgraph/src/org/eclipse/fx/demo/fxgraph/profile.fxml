@@ -28,7 +28,7 @@
 		<Separator layoutX="380" layoutY="110" prefHeight="155" orientation="vertical"/> 
 		<Hyperlink fx:id="logout" layoutY="24.0" text="logout" onAction="#processLogout" AnchorPane.rightAnchor="52.0"/> 
 		<Button fx:id="Button" disable="true" maxHeight="2" maxWidth="2.0" text="Continue" defaultButton="true" onAction="#processLogout" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="52.0"/> 
-		<Label fx:id="success" layoutX="100.0" layoutY="401.0" opacity="0" text="Profile successfully updated!"/> 
+		<Label fx:id="success" layoutX="100.0" layoutY="401.0" opacity="0.0" text="Profile successfully updated!"/> 
 		<Label layoutX="56.0" layoutY="284.0" text="Address:"/> 
 		<TextArea fx:id="address" maxHeight="2.0" maxWidth="2.0" minHeight="85.0" minWidth="448.0" prefHeight="85.0" prefWidth="448.0" AnchorPane.bottomAnchor="69.0" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="289.0"/> 
 	</children>

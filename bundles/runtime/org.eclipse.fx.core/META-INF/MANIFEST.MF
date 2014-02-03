@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.fx.core
-Bundle-Version: 0.9.0.qualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: javafx.animation;version="2.2.0",
  javafx.application;version="2.2.0",
@@ -47,3 +47,4 @@ Bundle-Vendor: %Bundle-Vendor
 Service-Component: OSGI-INF/services/jlogger.xml,
  OSGI-INF/services/adapterservice.xml
 Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)";resolution:=optional
