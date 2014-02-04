@@ -28,6 +28,7 @@
       <plugin id="javax.annotation"/>
       <plugin id="javax.inject"/>
       <plugin id="javax.xml"/>
+      <plugin id="org.apache.commons.lang"/>
       <plugin id="org.apache.commons.logging"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
@@ -51,9 +52,11 @@
       <plugin id="org.eclipse.e4.ui.workbench"/>
       <plugin id="org.eclipse.emf.common"/>
       <plugin id="org.eclipse.emf.databinding"/>
+      <plugin id="org.eclipse.emf.databinding.edit"/>
       <plugin id="org.eclipse.emf.ecore"/>
       <plugin id="org.eclipse.emf.ecore.change"/>
       <plugin id="org.eclipse.emf.ecore.xmi"/>
+      <plugin id="org.eclipse.emf.edit"/>
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.concurrent"/>
@@ -64,6 +67,9 @@
       <plugin id="org.eclipse.equinox.util"/>
       <plugin id="org.eclipse.fx.core"/>
       <plugin id="org.eclipse.fx.core.databinding"/>
+      <plugin id="org.eclipse.fx.core.di"/>
+      <plugin id="org.eclipse.fx.core.di.context"/>
+      <plugin id="org.eclipse.fx.emf.databinding"/>
       <plugin id="org.eclipse.fx.javafx"/>
       <plugin id="org.eclipse.fx.osgi" fragment="true"/>
       <plugin id="org.eclipse.fx.osgi.util"/>
@@ -76,6 +82,7 @@
       <plugin id="org.eclipse.fx.ui.keybindings.e4"/>
       <plugin id="org.eclipse.fx.ui.keybindings.generic"/>
       <plugin id="org.eclipse.fx.ui.lifecycle"/>
+      <plugin id="org.eclipse.fx.ui.modelviewer"/>
       <plugin id="org.eclipse.fx.ui.panes"/>
       <plugin id="org.eclipse.fx.ui.services"/>
       <plugin id="org.eclipse.fx.ui.theme"/>
