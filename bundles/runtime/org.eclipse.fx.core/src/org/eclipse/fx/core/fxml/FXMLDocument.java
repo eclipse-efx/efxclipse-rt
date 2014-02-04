@@ -13,6 +13,8 @@ package org.eclipse.fx.core.fxml;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.util.Callback;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -30,10 +32,14 @@ public abstract class FXMLDocument<T> {
 	 *            the location
 	 * @param bundle
 	 *            the bundle
+	 * @param controllerFactory
+	 *            factory to create controller
 	 * @return the created scene graph
 	 */
 	@NonNull
-	public abstract T load(@NonNull URL location, @Nullable ResourceBundle bundle);
+	public abstract T load(@NonNull URL location,
+			@Nullable ResourceBundle bundle,
+			@Nullable Callback<Class<?>, Object> controllerFactory);
 
 	/**
 	 * @return the controller created, might be <code>null</code>
