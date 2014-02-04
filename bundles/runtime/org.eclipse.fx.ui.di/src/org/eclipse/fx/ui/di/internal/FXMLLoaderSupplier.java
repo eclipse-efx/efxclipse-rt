@@ -17,6 +17,7 @@ import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.contexts.ContextObjectSupplier;
 import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.ui.di.FXMLBuilder;
+import org.eclipse.fx.ui.di.FXMLLoader;
 import org.eclipse.fx.ui.di.FXMLLoaderFactory;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
 import org.osgi.framework.FrameworkUtil;
@@ -32,15 +33,16 @@ public class FXMLLoaderSupplier extends ExtendedObjectSupplier {
 				.getPrimarySupplier();
 		final IEclipseContext context = sub.getContext();
 		final Class<?> requestingClass = requestor.getRequestingObject().getClass();
+		final boolean extended = descriptor.getQualifier(FXMLLoader.class).useExtendedLoader;
 		
 		return new FXMLLoaderFactory() {
 			
 			public <N> FXMLBuilder<N> loadRequestorRelative(String relativePath) {
-				return InjectingFXMLLoader.create(context, requestingClass, relativePath);
+				return InjectingFXMLLoader.create(context, requestingClass, relativePath, extended);
 			}
 			
 			public <N> FXMLBuilder<N> loadBundleRelative(String relativePath) {
-				return InjectingFXMLLoader.create(context, FrameworkUtil.getBundle(requestingClass), relativePath);
+				return InjectingFXMLLoader.create(context, FrameworkUtil.getBundle(requestingClass), relativePath, extended);
 			}
 		};
 	}

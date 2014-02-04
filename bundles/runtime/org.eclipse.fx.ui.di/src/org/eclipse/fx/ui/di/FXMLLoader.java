@@ -18,10 +18,19 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+import org.eclipse.fx.core.fxml.ExtendedFXMLLoader;
+
+/**
+ * Annotation to mark an injection of an {@link FXMLLoaderFactory}
+ */
 @Qualifier
 @Documented
-@Target({ElementType.FIELD, ElementType.PARAMETER})
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FXMLLoader {
-
+	/**
+	 * If set to true the {@link ExtendedFXMLLoader} will be used and
+	 * {@link FXMLBuilder#builderFactory(javafx.util.BuilderFactory)} is ignored
+	 */
+	boolean useExtendedLoader = false;
 }
