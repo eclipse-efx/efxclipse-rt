@@ -41,7 +41,8 @@ public class PartPopupMenuServiceImpl implements PopupMenuService<Control> {
 
 	private ContextMenu registerMenu(Control widget, MPopupMenu menu, MPart part) {
 		if( menu.getWidget() != null ) {
-			return (ContextMenu) menu.getWidget();
+			WPopupMenu<ContextMenu> c = (WPopupMenu<ContextMenu>) menu.getWidget();
+			return (ContextMenu) c.getWidget();
 		}
 		
 		IPresentationEngine engine = part.getContext().get(IPresentationEngine.class);
