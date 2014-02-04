@@ -32,5 +32,5 @@ public @interface FXMLLoader {
 	 * If set to true the {@link ExtendedFXMLLoader} will be used and
 	 * {@link FXMLBuilder#builderFactory(javafx.util.BuilderFactory)} is ignored
 	 */
-	boolean useExtendedLoader = false;
+	boolean useExtendedLoader() default false;
 }

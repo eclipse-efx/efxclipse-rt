@@ -39,7 +39,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 	
 	public static <N> InjectingFXMLLoader<N> create(final IEclipseContext context, final Class<?> requester, final String relativeFxmlPath, boolean useExtendedFXMLLoader) {
 		if( useExtendedFXMLLoader ) {
-			return create(context, FrameworkUtil.getBundle(requester), requester.getName().replace('.', '/')+"/" + relativeFxmlPath, useExtendedFXMLLoader); //$NON-NLS-1$
+			return create(context, FrameworkUtil.getBundle(requester), requester.getName().substring(0, requester.getName().lastIndexOf('.')).replace('.', '/')+"/" + relativeFxmlPath, useExtendedFXMLLoader); //$NON-NLS-1$
 		} else {
 			return new InjectingFXMLLoader<N>() {
 

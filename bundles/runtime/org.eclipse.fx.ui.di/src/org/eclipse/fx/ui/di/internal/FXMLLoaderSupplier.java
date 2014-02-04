@@ -33,7 +33,7 @@ public class FXMLLoaderSupplier extends ExtendedObjectSupplier {
 				.getPrimarySupplier();
 		final IEclipseContext context = sub.getContext();
 		final Class<?> requestingClass = requestor.getRequestingObject().getClass();
-		final boolean extended = descriptor.getQualifier(FXMLLoader.class).useExtendedLoader;
+		final boolean extended = descriptor.getQualifier(FXMLLoader.class).useExtendedLoader();
 		
 		return new FXMLLoaderFactory() {
 			

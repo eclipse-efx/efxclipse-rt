@@ -45,6 +45,7 @@
               <tags>Container:VBox</tags>
             </children>
             <children xsi:type="basic:Part" xmi:id="_UXm2oI3yEeOEhJYRfEsdog" elementId="org.eclipse.fx.testcases.e4.part.17" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.TestFXMLBuilder" label="FXMLLoader"/>
+            <children xsi:type="basic:Part" xmi:id="_NbT9cI3zEeOEhJYRfEsdog" elementId="org.eclipse.fx.testcases.e4.part.18" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.TestExtendedFXMLBuilder" label="ExtendedFXMLLoader"/>
           </children>
           <children xsi:type="basic:Part" xmi:id="_txxY4OMsEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.4" toBeRendered="false" containerData="10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C4"/>
         </children>
