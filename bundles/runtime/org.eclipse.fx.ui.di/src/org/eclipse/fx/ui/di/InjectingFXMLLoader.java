@@ -85,7 +85,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 				@Override
 				public <C> org.eclipse.fx.ui.di.FXMLBuilder.Data loadWithController()
 						throws IOException {
-					org.eclipse.fx.core.fxml.ExtendedFXMLLoader.Data<N, C> data = l.<N,C>loadWithController(bundle.adapt(BundleWiring.class).getClassLoader(), resourceBundle, new ControllerFactory(context), bundleRelativeFxmlPath);
+					final org.eclipse.fx.core.fxml.ExtendedFXMLLoader.Data<N, C> data = l.<N,C>loadWithController(bundle.adapt(BundleWiring.class).getClassLoader(), resourceBundle, new ControllerFactory(context), bundleRelativeFxmlPath);
 					return new Data<N, C>() {
 
 						@Override
