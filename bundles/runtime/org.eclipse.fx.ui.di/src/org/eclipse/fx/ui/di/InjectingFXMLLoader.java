@@ -73,7 +73,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 	
 	public static <N> InjectingFXMLLoader<N> create(final IEclipseContext context, final Bundle bundle, final String bundleRelativeFxmlPath, boolean useExtendedFXMLLoader) {
 		if( useExtendedFXMLLoader ) {
-			ExtendedFXMLLoader l = new ExtendedFXMLLoader();
+			final ExtendedFXMLLoader l = new ExtendedFXMLLoader();
 			
 			return new InjectingFXMLLoader<N>() {
 
