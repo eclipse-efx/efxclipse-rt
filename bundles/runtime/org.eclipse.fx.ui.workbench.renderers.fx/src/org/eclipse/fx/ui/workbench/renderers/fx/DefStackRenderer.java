@@ -17,6 +17,7 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
@@ -36,9 +37,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.fx.e4.controls.FXTab;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
-import org.eclipse.fx.ui.workbench.fx.controls.FXTabFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
@@ -134,7 +133,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		
 		@Override
 		protected TabPane  createWidget() {
-			TabPane  p = FXTabFactory.createTabPane();
+			TabPane  p = new TabPane();
 			
 //			ContextMenu m = new ContextMenu();
 //			
@@ -386,15 +385,16 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		}
 		
 		protected Tab createWidget() {
-			final Tab t = FXTabFactory.createTab();
-			((FXTab)t).setCloseVetoHandler(new Callback<Tab, Boolean>() {
+			final Tab t = new Tab();
+			t.setOnCloseRequest(new EventHandler<Event>() {
 				
 				@Override
-				public Boolean call(Tab param) {
+				public void handle(Event event) {
 					if( closeCallback != null ) {
-						return closeCallback.call(StackItemImpl.this);
+						if( closeCallback.call(StackItemImpl.this) ) {
+							event.consume();
+						}
 					}
-					return Boolean.FALSE;
 				}
 			});
 			return t;
