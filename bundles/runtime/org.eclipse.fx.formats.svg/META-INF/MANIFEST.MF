@@ -13,5 +13,6 @@ Export-Package: org.eclipse.fx.formats.svg.converter,
  org.eclipse.fx.formats.svg.svg.impl,
  org.eclipse.fx.formats.svg.svg.util
 Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)";resolution:=optional
 Bundle-ActivationPolicy: lazy
