@@ -14,8 +14,8 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
-		<tycho-version>0.18.0</tycho-version>
-		<tycho-extras.version>0.18.0</tycho-extras.version>
+		<tycho-version>0.19.0</tycho-version>
+		<tycho-extras.version>0.19.0</tycho-extras.version>
 		<cbi-plugins.version>1.0.3</cbi-plugins.version>
 		<junit-version>4.8.1</junit-version>
 		<mockito-version>1.8.4</mockito-version>
@@ -61,7 +61,6 @@
 		
 		<module>../../bundles/runtime/org.eclipse.fx.ui.theme</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx</module>
-		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx.controls</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.fx</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.lifecycle</module>
 		
@@ -85,6 +84,11 @@
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/luna</url>
 		</repository>
+		<!--repository>
+			<id>luna-ibuild</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/eclipse/updates/4.4-I-builds</url>
+		</repository-->
 		<!--  repository>
 			<id>kepler-ecf</id>
 			<layout>p2</layout>
