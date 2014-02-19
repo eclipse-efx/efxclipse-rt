@@ -27,6 +27,7 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
@@ -76,6 +77,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.fx.core.databinding.JFXRealm;
 import org.eclipse.fx.osgi.util.AbstractJFXApplication;
 import org.eclipse.fx.osgi.util.LoggerCreator;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
@@ -191,6 +193,7 @@ public class E4Application extends AbstractJFXApplication {
 				javafx.application.Platform.runLater(runnable);
 			}
 		});
+		appContext.set(Realm.class, JFXRealm.getDefault());
 		appContext.set(IApplicationContext.class, applicationContext);
 		appContext.set(GraphicsLoader.class,ContextInjectionFactory.make(GraphicsLoaderImpl.class, appContext));
 		appContext.set(IResourceUtilities.class, new IResourceUtilities<Image>() {
