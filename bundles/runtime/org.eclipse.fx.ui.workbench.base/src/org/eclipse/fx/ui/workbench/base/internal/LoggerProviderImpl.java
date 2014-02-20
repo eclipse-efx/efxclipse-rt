@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.ui.workbench.fx.internal;
+package org.eclipse.fx.ui.workbench.base.internal;
 
 import javax.inject.Inject;
 

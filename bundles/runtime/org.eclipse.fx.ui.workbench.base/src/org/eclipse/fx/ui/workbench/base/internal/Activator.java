@@ -1,14 +1,4 @@
-/*******************************************************************************
- * Copyright (c) 2012 BestSolution.at and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
- *******************************************************************************/
-package org.eclipse.fx.ui.workbench.fx.internal;
+package org.eclipse.fx.ui.workbench.base.internal;
 
 import org.eclipse.osgi.service.datalocation.Location;
 import org.osgi.framework.Bundle;
@@ -18,20 +8,18 @@ import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.util.tracker.ServiceTracker;
 
-public class WorkbenchJFXActivator implements BundleActivator {
-
-	public static final String PI_RENDERERS = "org.eclipse.fx.ui.workbench.fx"; //$NON-NLS-1$
+public class Activator implements BundleActivator {
 
 	private BundleContext context;
 	private ServiceTracker locationTracker;
-	private static WorkbenchJFXActivator activator;
+	private static Activator activator;
 	
 	/**
 	 * Get the default activator.
 	 * 
 	 * @return a BundleActivator
 	 */
-	public static WorkbenchJFXActivator getDefault() {
+	public static Activator getDefault() {
 		return activator;
 	}
 
@@ -42,11 +30,13 @@ public class WorkbenchJFXActivator implements BundleActivator {
 		return context;
 	}
 
+	@Override
 	public void start(BundleContext context) throws Exception {
 		activator = this;
 		this.context = context;
 	}
 
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		this.context = null;
 		activator = null;
@@ -75,4 +65,5 @@ public class WorkbenchJFXActivator implements BundleActivator {
 		}
 		return (Location) locationTracker.getService();
 	}
+
 }
