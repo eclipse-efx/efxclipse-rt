@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *      Sun Volland <sun.volland@free.fr> - Bug 429507
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
@@ -21,7 +22,8 @@ import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimElement;
 import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WTrimBar;
 
 
@@ -53,11 +55,15 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 			return;
 		}
 		
+		if (!element.isVisible() || !element.isToBeRendered()) {
+			return;
+		}
+
 		int idx = getRenderedIndex(parentElement, element);
 		WTrimBar<N> trimBar = getWidget(parentElement);
 		@SuppressWarnings("unchecked")
 		WLayoutedWidget<MTrimElement> widget = (WLayoutedWidget<MTrimElement>) element.getWidget();
-		if (widget instanceof WMenu) {
+		if (widget instanceof WToolBar || widget instanceof WToolControl) {
 			trimBar.addChild(idx, widget);
 		}
 	}
