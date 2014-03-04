@@ -42,6 +42,7 @@ import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.PopupMenuService;
@@ -209,6 +210,7 @@ public class ControlPanel {
 						p.setLabel("New Part");
 						p.setContributionURI("bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel");
 						container.getChildren().add(p);
+						partService.showPart(p, PartState.ACTIVATE);
 					}
 				});
 				hbox.getChildren().add(b);
