@@ -162,11 +162,6 @@ public class CoolBar extends Composite {
 		
 	}
 	
-	@Override
-	public DrawableGC internal_new_GC() {
-		return new NoOpDrawableGC(this,getFont());
-	}
-	
 	private static class CoolBarItem extends HBox {
 		private Control control;
 		private CoolItem item;

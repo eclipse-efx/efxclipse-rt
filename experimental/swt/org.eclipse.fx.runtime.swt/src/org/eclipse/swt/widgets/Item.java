@@ -6,7 +6,7 @@ import org.eclipse.swt.graphics.Image;
 
 public abstract class Item extends Widget {
 	private Image image;
-	private String text;
+	private String text = "";
 	
 	public Item(Widget parent, int style) {
 		super(parent, style);

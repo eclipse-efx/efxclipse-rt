@@ -17,6 +17,7 @@ public class ToolBar extends Composite {
 	@Override
 	protected javafx.scene.control.ToolBar createWidget() {
 		toolbar = new javafx.scene.control.ToolBar();
+		toolbar.getStyleClass().add("swt-toolbar");
 		return toolbar;
 	}
 	
@@ -95,9 +96,5 @@ public class ToolBar extends Composite {
 		
 	}
 	
-	@Override
-	public DrawableGC internal_new_GC() {
-		return new NoOpDrawableGC(this,getFont());
-	}
 
 }

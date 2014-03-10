@@ -36,6 +36,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.internal.MeasureGC;
 import org.eclipse.swt.internal.Util;
 
 public abstract class Control extends Widget implements Drawable {
@@ -954,7 +955,7 @@ public abstract class Control extends Widget implements Drawable {
 			evt.keyCode = lastLetterDown != null ? lastLetterDown.keyCode : 0;
 			evt.character = event.getCharacter() != KeyEvent.CHAR_UNDEFINED
 					&& event.getCharacter().length() > 0 ? event.getCharacter()
-					.charAt(0) : (char) lastLetterDown.keyCode;
+					.charAt(0) : lastLetterDown != null ? (char) lastLetterDown.keyCode : 0;
 			internal_sendEvent(SWT.KeyDown, evt, true);
 			if (!evt.doit) {
 				event.consume();
@@ -1081,6 +1082,11 @@ public abstract class Control extends Widget implements Drawable {
 		}
 	}
 	
+	@Override
+	public DrawableGC internal_new_GC() {
+		return new MeasureGC(this);
+	}
+	
 	void markLayout (boolean changed, boolean all) {
 		// nothing todo
 	}
@@ -1181,8 +1187,8 @@ public abstract class Control extends Widget implements Drawable {
 				public void handle(KeyEvent event) {
 					Control c = Widget.getWidget(event.getTarget());
 					if (c != null) {
-						System.err.println("SENDING");
 						c.sendKeyEvent(event);
+						event.consume();
 					}
 				}
 			};

@@ -201,11 +201,6 @@ public class Slider extends Control {
 		Util.logNotImplemented();
 	}
 	
-	@Override
-	public DrawableGC internal_new_GC() {
-		return new NoOpDrawableGC(this,getFont());
-	}
-	
 	static class SWTBehavior extends SliderBehavior {
 		private Slider swtSlider;
 		public SWTBehavior(Slider swtSlider, javafx.scene.control.Slider slider) {

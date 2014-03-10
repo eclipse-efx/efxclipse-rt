@@ -208,11 +208,6 @@ public class Button extends Control {
 		Util.logNotImplemented();
 	}
 	
-	@Override
-	public DrawableGC internal_new_GC() {
-		return new NoOpDrawableGC(this,getFont());
-	}
-	
 	void internal_setDefault(boolean defaultButton) {
 		if( control instanceof javafx.scene.control.Button ) {
 			((javafx.scene.control.Button) control).setDefaultButton(defaultButton);

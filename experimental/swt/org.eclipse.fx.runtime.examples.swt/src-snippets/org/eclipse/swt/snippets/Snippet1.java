@@ -28,10 +28,11 @@ public class Snippet1 implements SWTAppStart {
 	public BlockCondition createApp(Display display) {
 		Shell shell = new Shell(display);
 		shell.setSize(200, 200);
-		shell.open();
+//		shell.openBlocking();
 		// We don't need that in FX
 		 while (!shell.isDisposed ()) {
-		 if (!display.readAndDispatch ()) display.sleep ();
+			 if (!display.readAndDispatch ()) 
+				 display.sleep ();
 		 }
 		 display.dispose();
 		 return null;

@@ -5,6 +5,7 @@ import javafx.scene.text.TextAlignment;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.textlayout.InternalTextLayout;
 import org.eclipse.swt.graphics.textlayout.NativeTextLayout;
+import org.eclipse.swt.graphics.textlayout.NativeTextLayoutMac;
 import org.eclipse.swt.internal.Util;
 
 import com.sun.javafx.geom.BaseBounds;
@@ -19,6 +20,8 @@ public class TextLayout extends Resource {
 	public TextLayout(Device device) {
 		super(device);
 		layout = new NativeTextLayout(device);
+//		layout = new SwingTextLayout(device);
+		layout = new NativeTextLayoutMac(device);
 	}
 	
 	public void draw(GC gc, int x, int y) {

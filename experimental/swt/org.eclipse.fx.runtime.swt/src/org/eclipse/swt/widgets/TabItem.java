@@ -54,6 +54,7 @@ public class TabItem extends Item {
 	@Override
 	protected Tab createWidget() {
 		this.tab = new Tab();
+		this.tab.setClosable((style & SWT.CLOSE) == SWT.CLOSE );
 		return tab;
 	}
 

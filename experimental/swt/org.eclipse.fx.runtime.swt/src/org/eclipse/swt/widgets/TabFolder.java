@@ -3,12 +3,16 @@ package org.eclipse.swt.widgets;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.TabPane;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Device.NoOpDrawableGC;
 import org.eclipse.swt.graphics.Drawable.DrawableGC;
+import org.eclipse.swt.internal.Util;
 
 public class TabFolder extends Composite {
 	private List<TabItem> items = new ArrayList<TabItem>();
@@ -30,6 +34,25 @@ public class TabFolder extends Composite {
 		return tabPane;
 	}
 	
+	@Override
+	protected void initListeners() {
+		super.initListeners();
+		tabPane.getSelectionModel().selectedIndexProperty().addListener(createTabChangeListener());
+	}
+	
+	private InvalidationListener createTabChangeListener() {
+		return new InvalidationListener() {
+			
+			@Override
+			public void invalidated(Observable observable) {
+				Event e = new Event();
+				e.index = tabPane.getSelectionModel().getSelectedIndex();
+				e.item = getItem(tabPane.getSelectionModel().getSelectedIndex());
+				internal_sendEvent(SWT.Selection, e, true);
+			}
+		};
+	}
+	
 	void internal_addTabItem(TabItem item) {
 		this.items.add(item);
 		tabPane.getTabs().add(item.internal_getNativeObject());
@@ -48,6 +71,12 @@ public class TabFolder extends Composite {
 	@Override
 	protected double internal_getWidth() {
 		return tabPane.getWidth();
+	}
+	
+	@Override
+	protected Canvas internal_initCanvas() {
+		Util.logNotImplemented();
+		return null;
 	}
 	
 	@Override
@@ -134,16 +163,21 @@ public class TabFolder extends Composite {
 	
 	public void setSelection (int index) {
 		checkWidget ();
+		internal_runNoEvent(() -> tabPane.getSelectionModel().select(index));
 	}
 	
 	public void setSelection (TabItem item) {
 		checkWidget ();
 		if (item == null) error (SWT.ERROR_NULL_ARGUMENT);
+		setSelection(indexOf(item));
 	}
 	
 	public void setSelection (TabItem [] items) {
 		checkWidget ();
 		if (items == null) error (SWT.ERROR_NULL_ARGUMENT);
+		for( TabItem i : items ) {
+			setSelection(i);	
+		}
 	}
 	
 	@Override
@@ -156,8 +190,4 @@ public class TabFolder extends Composite {
 		
 	}
 	
-	@Override
-	public DrawableGC internal_new_GC() {
-		return new NoOpDrawableGC(this,getFont());
-	}
 }

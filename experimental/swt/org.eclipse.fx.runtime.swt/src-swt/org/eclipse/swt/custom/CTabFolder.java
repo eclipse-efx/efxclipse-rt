@@ -2999,12 +2999,12 @@ public void setMRUVisible(boolean show) {
  */
 public void setRenderer(CTabFolderRenderer renderer) {
 	checkWidget();
-	if (this.renderer == renderer || (useDefaultRenderer && renderer == null)) return;
-	if (this.renderer != null) this.renderer.dispose();
-	useDefaultRenderer = renderer == null;
-	if (useDefaultRenderer) renderer = new CTabFolderRenderer(this);
-	this.renderer = renderer;
-	updateFolder(REDRAW);
+//	if (this.renderer == renderer || (useDefaultRenderer && renderer == null)) return;
+//	if (this.renderer != null) this.renderer.dispose();
+//	useDefaultRenderer = renderer == null;
+//	if (useDefaultRenderer) renderer = new CTabFolderRenderer(this);
+//	this.renderer = renderer;
+//	updateFolder(REDRAW);
 }
 /**
  * Set the selection to the tab at the specified item.
