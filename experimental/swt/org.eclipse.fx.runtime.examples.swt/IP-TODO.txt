@@ -1,0 +1,1 @@
+Copy of SWT-Control sample project sources - EPL

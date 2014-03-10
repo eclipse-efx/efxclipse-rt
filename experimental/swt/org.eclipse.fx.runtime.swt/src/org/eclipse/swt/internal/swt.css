@@ -1,0 +1,57 @@
+.swt-composite > .corner {
+	-fx-background-color: derive(-fx-base,-1%);
+}
+
+.swt-message-box {
+	-fx-padding: 10;
+	-fx-spacing: 10;
+}
+
+.swt-message-box > .swt-message-error {
+	-fx-graphic: url("icons/dialog-error.png");
+	-fx-graphic-text-gap: 20; 
+}
+
+.swt-message-box > .swt-message-question {
+	-fx-graphic: url("icons/dialog-information.png");
+	-fx-graphic-text-gap: 20;
+}
+
+.swt-message-box > .swt-message-warning {
+	-fx-graphic: url("icons/dialog-warning.png");
+	-fx-graphic-text-gap: 20;
+}
+
+.swt-message-box > .swt-message-working {
+	-fx-graphic: url("icons/task-ongoing.png");
+	-fx-graphic-text-gap: 20;
+}
+
+.swt-message-box > .swt-message-information {
+	-fx-graphic: url("icons/dialog-information.png");
+	-fx-graphic-text-gap: 20;
+}
+
+.swt-tooltip {
+	-fx-text-background-color: white;
+}
+
+.swt-tooltip > .text-element {
+	-fx-font-weight: bold;
+}
+
+.swt-tooltip > .message-element {
+	
+}
+
+.swt-tooltip > .swt-text-error {
+	-fx-graphic: url("icons/dialog-error_16.png");
+}
+
+.swt-tooltip > .swt-text-warning {
+	-fx-graphic: url("icons/dialog-warning_16.png");
+}
+
+.swt-tooltip > .swt-text-information {
+	-fx-graphic: url("icons/dialog-information_16.png");
+}

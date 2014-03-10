@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="example" id="at.bestsolution.efxclipse.runtime.examples.swt.product" application="at.bestsolution.efxclipse.runtime.examples.swt.list" useFeatures="false" includeLaunchers="true">
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <vmArgs>-Dosgi.framework.extensions=at.bestsolution.efxclipse.runtime.osgi</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <plugins>
+      <plugin id="at.bestsolution.efxclipse.runtime.application"/>
+      <plugin id="at.bestsolution.efxclipse.runtime.databinding"/>
+      <plugin id="at.bestsolution.efxclipse.runtime.examples.swt"/>
+      <plugin id="at.bestsolution.efxclipse.runtime.javafx"/>
+      <plugin id="at.bestsolution.efxclipse.runtime.osgi" fragment="true"/>
+      <plugin id="at.bestsolution.efxclipse.runtime.swt"/>
+      <plugin id="com.ibm.icu"/>
+      <plugin id="org.eclipse.core.contenttype"/>
+      <plugin id="org.eclipse.core.databinding"/>
+      <plugin id="org.eclipse.core.databinding.observable"/>
+      <plugin id="org.eclipse.core.databinding.property"/>
+      <plugin id="org.eclipse.core.jobs"/>
+      <plugin id="org.eclipse.core.runtime"/>
+      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
+      <plugin id="org.eclipse.equinox.app"/>
+      <plugin id="org.eclipse.equinox.common"/>
+      <plugin id="org.eclipse.equinox.preferences"/>
+      <plugin id="org.eclipse.equinox.registry"/>
+      <plugin id="org.eclipse.osgi"/>
+   </plugins>
+
+
+</product>
