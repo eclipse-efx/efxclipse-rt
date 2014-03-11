@@ -130,3 +130,4 @@ Export-Package: org.eclipse.swt,
  org.eclipse.swt.printing,
  org.eclipse.swt.program,
  org.eclipse.swt.widgets
+Require-Bundle: org.eclipse.fx.ui.controls;bundle-version="1.0.0"

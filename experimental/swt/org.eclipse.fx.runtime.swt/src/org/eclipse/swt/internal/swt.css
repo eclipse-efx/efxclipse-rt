@@ -64,3 +64,15 @@
 	-fx-fill: blue;
 	-fx-cursor: hand;
 }
+
+.styled-text-line:filled:focused:selected {
+	-fx-background-color: #e8f2fe;
+}
+
+.styled-text-line:odd {
+	-fx-background-color: transparent; 
+}
+
+.styled-text-line:filled:hover {
+	-fx-background-color: transparent;
+}

@@ -4,6 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="src-swt"/>
-	<classpathentry kind="src" path="src-styledtext"/>
+	<classpathentry kind="src" path="src-styledtext-fx"/>
+	<classpathentry kind="src" path="src-ctabfolder"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
