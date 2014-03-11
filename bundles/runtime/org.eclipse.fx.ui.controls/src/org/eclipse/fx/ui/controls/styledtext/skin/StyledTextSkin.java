@@ -72,6 +72,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		super(styledText, new StyledTextBehavior(styledText));
 		
 		listView = new ListView<>();
+		listView.getStyleClass().add("styled-text-area");
 		listView.setFocusTraversable(false);
 		listView.setCellFactory(new Callback<ListView<Line>, ListCell<Line>>() {
 			
@@ -272,6 +273,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		private Timeline flashTimeline;
 		
 		public LineCell() {
+			getStyleClass().add("styled-text-line");
 			flashProperty = new SimpleBooleanProperty(this,"flash",false);
 			flashTimeline = new Timeline();
 			flashTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -363,7 +365,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						p.getElements().addAll(textNode.getImpl_caretShape());
 						
 						p.setLayoutX(textNode.getLayoutX());
-						p.setLayoutY(textNode.getBaselineOffset());
+						p.setLayoutY(textNode.getLayoutY());
 					}
 					
 					break;
