@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
 
-<HBox xmlns:fx="http://javafx.com/fxml">
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="org.eclipse.fx.testcases.e4.parts.TestFXMLController">
 	<Button text="Hello World"></Button>
 </HBox>
 
