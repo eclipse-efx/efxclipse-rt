@@ -14,6 +14,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -84,9 +85,16 @@ public class Shell extends Decorations {
 		final Scene s = new Scene(internal_getNativeObject());
 		s.getStylesheets().add(getClass().getClassLoader().getResource("org/eclipse/swt/internal/swt.css").toExternalForm());
 		stage.setScene(s);
-		if( (getStyle() & SWT.TOOL) == SWT.TOOL ) {
+		//TODO what to do with SWT.TOOL???
+		if( /* (getStyle() & SWT.TOOL) == SWT.TOOL ||*/ (getStyle() & SWT.NO_TRIM) == SWT.NO_TRIM ) {
 			stage.initStyle(StageStyle.UNDECORATED);
 		}
+		if( (style & SWT.APPLICATION_MODAL) == SWT.APPLICATION_MODAL ) {
+			stage.initModality(Modality.APPLICATION_MODAL);
+		} else if( (style & SWT.PRIMARY_MODAL) == SWT.PRIMARY_MODAL ) {
+			Util.logNotImplemented();
+		}
+		
 		
 		if( (getStyle() & SWT.NO_FOCUS) == SWT.NO_FOCUS ) {
 			System.err.println("NO FOCUS NOT IMPLEMENTED");
@@ -439,7 +447,14 @@ public class Shell extends Decorations {
 	}
 	
 	public void setVisible (boolean visible) {
-		stage.show();
+		if( visible ) {
+			stage.show();	
+		} else {
+			if( stage.isShowing() ) {
+				stage.hide();	
+			}
+		}
+		
 	}
 	
 	@Override

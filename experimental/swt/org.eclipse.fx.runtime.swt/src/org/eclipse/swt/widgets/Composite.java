@@ -96,6 +96,10 @@ public class Composite extends Scrollable {
 				
 			}
 		};
+		javafx.scene.shape.Rectangle r = new javafx.scene.shape.Rectangle();
+		r.widthProperty().bind(scrollable.widthProperty());
+		r.heightProperty().bind(scrollable.heightProperty());
+		scrollable.setClip(r);
 		
 		scrollable.getStyleClass().add(getStyleClassname());
 		controlContainer = internal_createLayoutPane();
@@ -490,12 +494,15 @@ public class Composite extends Scrollable {
 	
 	@Override
 	public DrawableGC internal_new_GC() {
-		internal_initCanvas();
-		return new CanvasGC(canvas,
-				getFont(),
-				getBackground(),
-				getForeground()
-				);
+		if( canvas == null ) {
+			return super.internal_new_GC();
+		} else {
+			return new CanvasGC(canvas,
+					getFont(),
+					getBackground(),
+					getForeground()
+					);	
+		}
 	}
 	
 	protected Canvas internal_initCanvas() {

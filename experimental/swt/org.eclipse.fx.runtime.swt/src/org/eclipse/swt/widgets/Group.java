@@ -100,8 +100,4 @@ public class Group extends Composite {
 		
 	}
 	
-	@Override
-	public DrawableGC internal_new_GC() {
-		return new NoOpDrawableGC(this,getFont());
-	}
 }

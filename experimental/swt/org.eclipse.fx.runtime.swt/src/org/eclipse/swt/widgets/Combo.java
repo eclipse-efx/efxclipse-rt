@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.IndexRange;
 import javafx.scene.input.KeyEvent;
 
 import org.eclipse.swt.SWT;
@@ -201,9 +202,12 @@ public class Combo extends Composite {
 	}
 	
 	public Point getSelection () {
-		//TODO Not implemented
-		Util.logNotImplemented();
-		return null;
+		if( (style & SWT.READ_ONLY) == SWT.READ_ONLY ) {
+			return new Point(0, control.getSelectionModel().getSelectedItem() == null ? 0 : control.getSelectionModel().getSelectedItem().length());
+		} else {
+			IndexRange range = control.getEditor().getSelection();
+			return new Point(range.getStart(),range.getEnd());
+		}
 	}
 	
 	public int getSelectionIndex () {
@@ -213,7 +217,7 @@ public class Combo extends Composite {
 	
 	public String getText () {
 		checkWidget();
-		return control.getValue();
+		return Util.notNull(control.getValue());
 	}
 	
 	public int getTextHeight () {
@@ -290,13 +294,12 @@ public class Combo extends Composite {
 	
 	public void select (int index) {
 		checkWidget ();
-		control.getSelectionModel().select(index);
+		internal_runNoEvent(() -> control.getSelectionModel().select(index));
 	}
 	
 	public void setItem (int index, String string) {
 		checkWidget ();
-		int idx = indexOf(string, index);
-		control.getSelectionModel().select(idx);
+		this.items.set(index, string);
 	}
 	
 	public void setItems (String [] items) {

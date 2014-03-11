@@ -84,6 +84,11 @@ public class Table extends Composite {
 		public Rectangle getBounds(int index);
 	}
 
+	@Override
+	protected Canvas internal_initCanvas() {
+		return null;
+	}
+	
 	public Table(Composite parent, int style) {
 		super(parent, style);
 	}
@@ -95,6 +100,11 @@ public class Table extends Composite {
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public void setLayout(Layout layout) {
+		Util.logNotImplemented();
 	}
 	
 	boolean internal_isMeasureItem() {
@@ -255,11 +265,6 @@ public class Table extends Composite {
 	@Override
 	public Region internal_getNativeControl() {
 		return tableView != null ? tableView : listView;
-	}
-	
-	@Override
-	public DrawableGC internal_new_GC() {
-		return new Device.NoOpDrawableGC(this,getFont());
 	}
 	
 	@Override
@@ -813,7 +818,9 @@ public class Table extends Composite {
 		if( flow != null ) {
 			SWTTableRow first = (SWTTableRow) getFlow().getFirstVisibleCellWithinViewPort();
 			SWTTableRow last = (SWTTableRow) getFlow().getLastVisibleCellWithinViewPort();
-			
+			if( first == null ) {
+				return;
+			}
 			int i = list.indexOf(first.getTableItem());
 			int j;
 			

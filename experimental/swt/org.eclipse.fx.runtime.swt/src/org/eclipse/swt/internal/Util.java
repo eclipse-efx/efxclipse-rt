@@ -31,6 +31,9 @@ public class Util {
 	}
 	
 	public static final String fixMnemonic(String string) {
+		if( string == null ) {
+			return string;
+		}
 		string = string.replace("_", "__");
 		if( string.contains("&&") ) {
 			string = string.replace("&&", "###!###");
@@ -44,6 +47,9 @@ public class Util {
 	}
 	
 	public static final String fixAccelerator(String string) {
+		if( string == null ) {
+			return null;
+		}
 		int idx = string.indexOf('\t');
 		if( idx > 0 ) {
 			return string.substring(0, idx);

@@ -16,11 +16,6 @@ public class Scale extends Control {
 	}
 
 	@Override
-	public DrawableGC internal_new_GC() {
-		return new Device.NoOpDrawableGC(this, getFont());
-	}
-
-	@Override
 	public void internal_dispose_GC(DrawableGC gc) {
 		
 	}

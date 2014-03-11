@@ -18,6 +18,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Screen;
 import javafx.util.Duration;
@@ -33,6 +35,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.internal.Util;
 
 import com.sun.glass.ui.Robot;
+import com.sun.javafx.scene.control.skin.TabPaneSkin;
 import com.sun.javafx.tk.Toolkit;
 
 @SuppressWarnings("restriction")
@@ -306,7 +309,30 @@ public class Display extends Device {
 			return new Point((int)localToScreen.getX(), (int)localToScreen.getY());
 		}
 		
-		Point2D localToScreen = from.internal_getNativeObject().localToScreen(x, y);
+		// TabFolder elements not yet attached to the control through
+		// the TabItem
+		Node node = from.internal_getNativeObject();
+		if( node.getScene() == null ) {
+			Control c = from.getParent();
+			do {
+				if( c instanceof TabFolder ) {
+					break;
+				}
+			} while( (c = c.getParent()) != null );
+			
+			if( c instanceof TabFolder ) {
+				System.err.println("Warning: TabFolder child calculation before attached to TabFolder");
+				if( c.internal_getNativeObject() instanceof TabPane ) {
+					TabPane p = (TabPane) c.internal_getNativeObject();
+//					TabPaneSkin s = (TabPaneSkin) p.getSkin();
+//					s.getChildren();
+//					FIXME This is not 100% correct
+					node = p;
+				}
+			}
+		}
+		
+		Point2D localToScreen = node.localToScreen(x, y);
 		if( to == null ) {
 			return new Point((int)localToScreen.getX(), (int)localToScreen.getY());
 		} else {			Point2D sceneToLocal = to.internal_getNativeObject().screenToLocal(localToScreen);

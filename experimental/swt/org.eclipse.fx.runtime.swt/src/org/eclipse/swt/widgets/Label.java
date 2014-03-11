@@ -122,8 +122,4 @@ public class Label extends Control {
 		
 	}
 	
-	@Override
-	public DrawableGC internal_new_GC() {
-		return new NoOpDrawableGC(this,getFont());
-	}
 }

@@ -3,17 +3,15 @@ package org.eclipse.swt.widgets;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.WindowEvent;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.HelpListener;
@@ -34,6 +32,7 @@ public class Menu extends Widget {
 	private ToggleGroup group;
 	private static ChangeListener<Toggle> TOGGLE_CHANGE_LISTENER;
 	private MenuItem parentItem;
+	private static final String DUMMY = "DUMMY";
 	
 	public Menu (Control parent) {
 		super(parent.getDisplay(),SWT.POP_UP);
@@ -113,11 +112,17 @@ public class Menu extends Widget {
 			return bar;
 		} else if( (style & SWT.POP_UP) == SWT.POP_UP ) {
 			contextMenu = new ContextMenu();
-			contextMenu.addEventHandler(javafx.scene.control.Menu.ON_SHOWING, getContextMenuShowingHandler());
-			contextMenu.addEventHandler(javafx.scene.control.Menu.ON_SHOWING, getContextMenuShowingHandler());
+			javafx.scene.control.MenuItem m = new javafx.scene.control.MenuItem("Dummy");
+			m.setUserData(DUMMY);
+			contextMenu.getItems().add(m);
+			contextMenu.addEventHandler(WindowEvent.WINDOW_SHOWING, getContextMenuShowingHandler());
+			contextMenu.addEventHandler(WindowEvent.WINDOW_HIDDEN, getContextMenuShowingHandler());
 			return contextMenu;
 		} else if( (style & SWT.DROP_DOWN) == SWT.DROP_DOWN ) {
 			menu = new javafx.scene.control.Menu();
+			javafx.scene.control.MenuItem m = new javafx.scene.control.MenuItem("Dummy");
+			m.setUserData(DUMMY);
+			menu.getItems().add(m);
 			menu.addEventHandler(javafx.scene.control.Menu.ON_SHOWING, getMenuShowingHandler());
 			menu.addEventHandler(javafx.scene.control.Menu.ON_HIDDEN, getMenuShowingHandler());
 		}
@@ -132,7 +137,13 @@ public class Menu extends Widget {
 				@Override
 				public void handle(Event event) {
 					Menu c = Widget.getWidget(event.getSource());
-					c.internal_sendEvent(event.getEventType() == javafx.scene.control.Menu.ON_SHOWING ? SWT.Show : SWT.Hide, new org.eclipse.swt.widgets.Event(), true);
+					boolean show = event.getEventType() == javafx.scene.control.Menu.ON_SHOWING || event.getEventType() == WindowEvent.WINDOW_SHOWING;
+					if( show ) {
+						c.removeDummyItem();
+					} else {
+						c.addDummyItem();
+					}
+					c.internal_sendEvent( show ? SWT.Show : SWT.Hide, new org.eclipse.swt.widgets.Event(), true);
 				}
 			};
 		}
@@ -146,6 +157,11 @@ public class Menu extends Widget {
 				@Override
 				public void handle(Event event) {
 					Menu c = Widget.getWidget(event.getSource());
+					if( event.getEventType() == javafx.scene.control.Menu.ON_SHOWING ) {
+						c.removeDummyItem();
+					} else {
+						c.addDummyItem();
+					}
 					c.internal_sendEvent(event.getEventType() == javafx.scene.control.Menu.ON_SHOWING ? SWT.Show : SWT.Hide, new org.eclipse.swt.widgets.Event(), true);
 				}
 			};
@@ -165,9 +181,37 @@ public class Menu extends Widget {
 		return null;
 	}
 
+	private void removeDummyItem() {
+		if( menu != null ) {
+			if( ! menu.getItems().isEmpty() && menu.getItems().get(0).getUserData() == DUMMY ) {
+				menu.getItems().clear();
+			}
+		} else if( contextMenu != null ) {
+			if( ! contextMenu.getItems().isEmpty() && contextMenu.getItems().get(0).getUserData() == DUMMY ) {
+				contextMenu.getItems().clear();
+			}
+		}
+	}
+	
+	private void addDummyItem() {
+		if( menu != null ) {
+			if( menu.getItems().isEmpty() ) {
+				javafx.scene.control.MenuItem item = new javafx.scene.control.MenuItem();
+				item.setUserData(DUMMY);
+				menu.getItems().add(item);
+			}
+		} else if( contextMenu != null ) {
+			if( contextMenu.getItems().isEmpty() ) {
+				javafx.scene.control.MenuItem item = new javafx.scene.control.MenuItem();
+				item.setUserData(DUMMY);
+				contextMenu.getItems().add(item);
+			}
+		}
+	}
+	
 	void internal_addItem(MenuItem item) {
+		removeDummyItem();
 		items.add(item);
-		if( item.internal_getNativeObject() != null ) {
 			if( (item.getStyle() & SWT.RADIO) == SWT.RADIO ) {
 				if( group == null ) {
 					group = new ToggleGroup();
@@ -179,11 +223,13 @@ public class Menu extends Widget {
 				menu.getItems().add(item.internal_getNativeObject());
 			} else if( contextMenu != null ) {
 				contextMenu.getItems().add(item.internal_getNativeObject());
+			} else {
+				bar.getMenus().add((javafx.scene.control.Menu) item.internal_getNativeObject());
 			}
-		}
 	}
 	
 	void internal_addItem(MenuItem item,int index) {
+		removeDummyItem();
 		items.add(index,item);
 		if( item.internal_getNativeObject() != null ) {
 			if( (item.getStyle() & SWT.RADIO) == SWT.RADIO ) {
@@ -197,6 +243,8 @@ public class Menu extends Widget {
 				menu.getItems().add(index,item.internal_getNativeObject());
 			} else if( contextMenu != null ) {
 				contextMenu.getItems().add(index,item.internal_getNativeObject());
+			} else {
+				bar.getMenus().add(index,(javafx.scene.control.Menu) item.internal_getNativeObject());
 			}
 		}
 	}
@@ -211,10 +259,13 @@ public class Menu extends Widget {
 			}
 			if( menu != null ) {
 				menu.getItems().remove(item.internal_getNativeObject());	
-			} else {
+			} else if( contextMenu != null ) {
 				contextMenu.getItems().remove(item.internal_getNativeObject());
+			} else {
+				bar.getMenus().remove(item.internal_getNativeObject());
 			}
 		}
+		addDummyItem();
 	}
 	
 	private static ChangeListener<Toggle> getSelectedChangeListener() {
@@ -243,10 +294,13 @@ public class Menu extends Widget {
 	void internal_menuAttached(MenuItem menuItem, Menu menu) {
 		int idx = items.indexOf(menuItem);
 		if( bar != null ) {
+			bar.getMenus().remove(idx);
 			bar.getMenus().add(idx,(javafx.scene.control.Menu) menu.internal_getNativeObject());
 		} else if( this.menu != null ) {
+			this.menu.getItems().remove(idx);
 			this.menu.getItems().add(idx,(javafx.scene.control.Menu) menu.internal_getNativeObject());
 		} else if( this.contextMenu != null ) {
+			this.contextMenu.getItems().remove(idx);
 			this.contextMenu.getItems().add(idx,(javafx.scene.control.Menu) menu.internal_getNativeObject());
 		}
 	}
@@ -296,6 +350,7 @@ public class Menu extends Widget {
 	
 	void setParentItem(MenuItem parentItem) {
 		this.parentItem = parentItem;
+		((javafx.scene.control.Menu)menu).setText(parentItem.getText());
 	}
 	
 	public Menu getParentMenu () {
@@ -367,7 +422,8 @@ public class Menu extends Widget {
 //	}
 	public void setVisible (boolean visible) {
 		if( contextMenu != null ) {
-			contextMenu.show(((Shell)decoration).internal_getWindow());
+			Shell s = (Shell) (control != null ? control.getShell() : decoration);
+			contextMenu.show(s.internal_getWindow());
 		}
 	}
 }

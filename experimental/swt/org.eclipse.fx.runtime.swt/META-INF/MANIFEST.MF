@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Swt
-Bundle-SymbolicName: at.bestsolution.efxclipse.runtime.swt
+Bundle-SymbolicName: org.eclipse.fx.runtime.swt
 Bundle-Version: 1.0.0.qualifier
 Import-Package: com.sun.glass.events;version="2.2.0",
  com.sun.glass.ui;version="2.2.0",

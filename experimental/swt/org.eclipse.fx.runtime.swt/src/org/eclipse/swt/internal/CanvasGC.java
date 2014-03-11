@@ -1,12 +1,9 @@
 package org.eclipse.swt.internal;
 
-import java.lang.reflect.Field;
-
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.Effect;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.ImagePattern;
@@ -15,11 +12,11 @@ import javafx.scene.paint.Paint;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.FillRule;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Affine;
+import javafx.scene.transform.Translate;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -29,7 +26,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Pattern;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Region;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.widgets.Display;
@@ -38,7 +34,6 @@ import com.sun.javafx.geom.BaseBounds;
 import com.sun.javafx.geom.Path2D;
 import com.sun.javafx.geom.PathIterator;
 import com.sun.javafx.geom.Shape;
-import com.sun.javafx.geom.transform.Affine2D;
 import com.sun.javafx.scene.text.TextLayout;
 import com.sun.javafx.scene.text.TextLayoutFactory;
 import com.sun.javafx.tk.Toolkit;
@@ -253,10 +248,10 @@ public class CanvasGC implements DrawableGC {
 		//TODO Deal with flags
 		TextLayoutFactory factory = Toolkit.getToolkit().getTextLayoutFactory();
 		TextLayout layout = factory.createLayout();
-		layout.setContent(string, canvas.getGraphicsContext2D().getFont().impl_getNativeFont());
+		layout.setContent(string, getFont().internal_getNativeObject().impl_getNativeFont());
 		BaseBounds b = layout.getBounds();
 				
-		return new Point((int)b.getWidth(), (int)b.getHeight());
+		return new Point((int)Math.ceil(b.getWidth()), (int)Math.ceil(b.getHeight()));
 	}
 	
 	@Override
@@ -381,7 +376,7 @@ public class CanvasGC implements DrawableGC {
 		layout.setContent(string, getFont().internal_getNativeObject().impl_getNativeFont());
 		BaseBounds b = layout.getBounds();
 				
-		return new Point((int)b.getWidth(), (int)b.getHeight());
+		return new Point((int)Math.ceil(b.getWidth()), (int)Math.ceil(b.getHeight()));
 	}
 	
 //	@Override
@@ -567,8 +562,16 @@ public class CanvasGC implements DrawableGC {
 	}
 	
 	@Override
-	public void drawShape(int x, int y, Shape shape) {
-		path(shape.getPathIterator(null),true);
+	public void drawShape(int xDelta, int yDelta, Shape shape) {
+		Affine transform = canvas.getGraphicsContext2D().getTransform();
+		Translate translate = Affine.translate(xDelta, yDelta);
+		
+		canvas.getGraphicsContext2D().setTransform(
+				translate.getMxx(),translate.getMyx(),
+				translate.getMxy(),translate.getMyy(),
+				translate.getTx(),translate.getTy());
+		path(shape.getPathIterator(null), true);
+		canvas.getGraphicsContext2D().setTransform(transform);
 	}
 	
 	@Override

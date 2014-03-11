@@ -124,6 +124,9 @@ public class NativeTextLayout extends Resource implements InternalTextLayout {
 			
 			for( int i = 0; i < lines.length; i++ ) {
 				GlyphList[] runs = lines[i].getRuns();
+				for( GlyphList r : runs ) {
+					System.err.println(r.getTextSpan().getText());
+				}
 				lineOffsets[i] = runs[runs.length-1].getCharOffset(0);
 			}
 			lineOffsets[lineOffsets.length-1] = text.length();
@@ -647,6 +650,20 @@ public class NativeTextLayout extends Resource implements InternalTextLayout {
 
 	@Override
 	public Point getLocation(int offset, boolean trailing) {
+		recalculateLayout();
+		for( GlyphList l : nativeLayout.getLines()[0].getRuns() ) {
+			TextSpanImpl i = (TextSpanImpl) l.getTextSpan();
+			if( i.i.start <= offset ) {
+				int idx = offset - i.i.start;
+				return new Point((int)l.getPosX(idx), (int)l.getPosY(idx));
+			}
+		}
+		
+		//		for( TextSpanImpl i : spans ) {
+//			if( i.i.start < offset ) {
+//				return nativeLayout.getRuns()[0].
+//			}
+//		}
 		// TODO Auto-generated method stub
 		Util.logNotImplemented();
 		return new Point(0, 0);

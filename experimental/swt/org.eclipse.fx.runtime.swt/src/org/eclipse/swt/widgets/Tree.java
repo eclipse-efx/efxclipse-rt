@@ -96,7 +96,7 @@ public class Tree extends Composite {
 			measureItem = true;
 			break;
 		case SWT.PaintItem:
-			paintItem = true;
+//			paintItem = true;
 			break;
 		case SWT.EraseItem:
 			eraseItem = true;
@@ -552,11 +552,6 @@ public class Tree extends Composite {
 		
 	}
 	
-	@Override
-	public DrawableGC internal_new_GC() {
-		return new NoOpDrawableGC(this,getFont());
-	}
-	
 	class TreeCellImpl extends TreeCell<TreeItem> implements SWTTreeRow, Drawable {
 		private ImageView imageView;
 		private TreeItem currentItem;
@@ -569,6 +564,7 @@ public class Tree extends Composite {
 		@Override
 		protected void updateItem(TreeItem item, boolean empty) {
 			this.currentItem = item;
+			System.err.println(item != null ? " =========> " + item.getText() : "");
 			if( item != null && ! empty ) {
 				if( measureItem ) {
 					initCanvas();

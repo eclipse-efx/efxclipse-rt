@@ -324,11 +324,6 @@ public class List extends Scrollable {
 	public void internal_dispose_GC(DrawableGC gc) {
 	}
 	
-	@Override
-	public DrawableGC internal_new_GC() {
-		return new NoOpDrawableGC(this,getFont());
-	}
-	
 	class FXSelectionListener implements EventHandler<MouseEvent> {
 		private SWTListCell cell;
 		

@@ -55,3 +55,12 @@
 .swt-tooltip > .swt-text-information {
 	-fx-graphic: url("icons/dialog-information_16.png");
 }
+
+.swt-toolbar {
+	-fx-background-color: transparent;
+}
+
+.swt-link-part {
+	-fx-fill: blue;
+	-fx-cursor: hand;
+}
