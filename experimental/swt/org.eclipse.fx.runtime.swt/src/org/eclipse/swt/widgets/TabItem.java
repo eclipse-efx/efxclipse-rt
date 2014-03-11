@@ -21,6 +21,7 @@ public class TabItem extends Item {
 	public TabItem(TabFolder parent, int style, int index) {
 		super(parent, style);
 		parent.internal_addTabItem(this, index);
+		this.parent = parent;
 	}
 
 	public TabFolder getParent() {
