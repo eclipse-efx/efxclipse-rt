@@ -198,7 +198,11 @@ public class Composite extends Scrollable {
 	}
 
 	public void internal_controlMoveAbove(Control control, Control reference) {
+		System.err.println("SELF: " + control);
+		System.err.println("REF: " + reference);
+		System.err.println("PRE REMOVE: " + children.size());
 		internal_controlRemoved(control);
+		System.err.println("POST REMOVE: " + children.size());
 		
 		if( reference == null ) {
 			internal_controlAdded(control);
@@ -218,7 +222,11 @@ public class Composite extends Scrollable {
 	}
 	
 	public void internal_controlMoveBelow(Control control, Control reference) {
+		System.out.println("SELF: " + control);
+		System.out.println("REF: " + reference);
+		System.out.println("PRE REMOVE: " + children.size());
 		internal_controlRemoved(control);
+		System.out.println("POST REMOVE: " + children.size());
 		
 		if( reference == null ) {
 			internal_controlAdded(control);

@@ -534,6 +534,7 @@ public abstract class Control extends Widget implements Drawable {
 
 	
 	 public void moveBelow (Control control) {
+		 System.out.println("MOVE BELOW: " + parent);
 		 parent.internal_controlMoveBelow(this, control);
 	 }
 	

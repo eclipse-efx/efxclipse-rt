@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SegmentListener;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
@@ -117,6 +118,10 @@ public class Combo extends Composite {
 	
 	public void add (String string, int index) {
 		items.add(index, string);
+	}
+	
+	public void addSegmentListener(SegmentListener segmentListener) {
+		Util.logNotImplemented();
 	}
 	
 	public void addModifyListener (ModifyListener listener) {
@@ -271,6 +276,10 @@ public class Combo extends Composite {
 	public void removeAll () {
 		checkWidget();
 		items.clear();
+	}
+	
+	public void removeSegmentListener(SegmentListener segmentListener) {
+		Util.logNotImplemented();
 	}
 	
 	public void removeModifyListener (ModifyListener listener) {

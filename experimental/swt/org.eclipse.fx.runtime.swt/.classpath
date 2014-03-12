@@ -3,8 +3,9 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src-ctabfolder-fx"/>
 	<classpathentry kind="src" path="src-swt"/>
 	<classpathentry kind="src" path="src-styledtext-fx"/>
-	<classpathentry kind="src" path="src-ctabfolder"/>
+	<classpathentry kind="src" path="src-styledtext-common"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

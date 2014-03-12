@@ -265,7 +265,7 @@ public class Tree extends Composite {
 	}
 	
 	public int [] getColumnOrder () {
-		int[] rv = new int[columns.size()];
+		int[] rv = new int[getColumnCount()];
 		
 		int i = 0;
 		for( javafx.scene.control.TreeTableColumn<TreeItem,?> c : treeTableView.getColumns() ) {

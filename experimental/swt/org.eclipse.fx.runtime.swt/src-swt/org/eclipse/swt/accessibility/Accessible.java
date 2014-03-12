@@ -36,4 +36,8 @@ public class Accessible {
 		Util.logNotImplemented();
 	}
 
+	public void removeAccessibleListener(AccessibleAdapter accessibleListener) {
+		Util.logNotImplemented();
+	}
+
 }
