@@ -72,6 +72,7 @@
 		
 		<!-- Features -->
 		<module>../runtime/org.eclipse.fx.core.feature</module>
+		<module>../runtime/org.eclipse.fx.runtime.feature</module>
 		<module>../runtime/org.eclipse.fx.target.feature</module>
 		<module>../runtime/org.eclipse.fx.target.rcp.feature</module>
 		
