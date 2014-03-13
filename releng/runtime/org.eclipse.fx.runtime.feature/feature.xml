@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.fx.runtime.feature"
-      label="Feature"
+      label="Rutime Bundle Collector Feature"
       version="1.0.0.qualifier"
       provider-name="BestSolution.at">
 
@@ -9,14 +9,13 @@
       Feature with all e(fx)clipse runtime bundles (Do not install into IDE)
    </description>
 
-      <copyright url="http://www.bestsolution.at">
+   <copyright url="http://www.bestsolution.at">
       Copyright (c) 2014 BestSolution.at and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
 http://www.eclipse.org/legal/epl-v10.html
    </copyright>
-
 
    <license url="http://www.eclipse.org/org/documents/epl-v10.php">
       Eclipse Public License - v 1.0
@@ -107,7 +106,7 @@ Everyone is permitted to copy and distribute copies of this Agreement, but in or
 
 This Agreement is governed by the laws of the State of New York and the intellectual property laws of the United States of America. No party to this Agreement will bring a legal action under this Agreement more than one year after the cause of action arose. Each party waives its rights to a jury trial in any resulting litigation.
    </license>
-   
+
    <plugin
          id="org.eclipse.fx.ui.animation"
          download-size="0"
@@ -415,6 +414,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
    <plugin
          id="org.eclipse.fx.formats.svg"
          download-size="0"
@@ -484,7 +484,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.fx.core.di"
          download-size="0"
@@ -512,4 +512,5 @@ This Agreement is governed by the laws of the State of New York and the intellec
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
 </feature>
