@@ -35,15 +35,15 @@ public class SVGToFXML {
 		String toFile = args[1];
 
 		try (InputStream in = fromFile.startsWith("http") ? new URL(fromFile).openStream() : new FileInputStream(new File(fromFile))) { //$NON-NLS-1$
-			File outFile = new File(toFile);
+			if( in != null ) {
+				File outFile = new File(toFile);
 
-			XMLLoader l = new XMLLoader();
-			SvgSvgElement svgRoot = l.loadDocument(outFile.getAbsolutePath(),
-					in);
-			FXMLConverter converter = new FXMLConverter(svgRoot);
-			try (FileOutputStream out = new FileOutputStream(outFile)) {
-				out.write(converter.generate().toString().getBytes());
-				out.close();
+				SvgSvgElement svgRoot = XMLLoader.loadDocument(outFile.getAbsolutePath(),in);
+				FXMLConverter converter = new FXMLConverter(svgRoot);
+				try (FileOutputStream out = new FileOutputStream(outFile)) {
+					out.write(converter.generate().toString().getBytes());
+					out.close();
+				}	
 			}
 		} catch (Throwable t) {
 			t.printStackTrace();

@@ -11,12 +11,12 @@
 package org.eclipse.fx.formats.svg;
 
 import java.io.OutputStream;
-
 import java.io.InputStream;
 
 import org.eclipse.fx.formats.svg.converter.FXMLConverter;
 import org.eclipse.fx.formats.svg.handler.XMLLoader;
 import org.eclipse.fx.formats.svg.svg.SvgSvgElement;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Utility to convert an SVG file to FXML
@@ -32,10 +32,9 @@ public class SVGStreamConverter {
 	 * @throws Exception
 	 *             if an error occurs
 	 */
-	public static void converter(InputStream inputStream, OutputStream outputStream)
+	public static void converter(@NonNull InputStream inputStream, @NonNull OutputStream outputStream)
 			throws Exception {
-		XMLLoader loader = new XMLLoader();
-		SvgSvgElement rootElement = loader.loadDocument(null, inputStream);
+		SvgSvgElement rootElement = XMLLoader.loadDocument(null, inputStream);
 		FXMLConverter converter = new FXMLConverter(rootElement);
 		outputStream.write(converter.generate().toString().getBytes());
 	}

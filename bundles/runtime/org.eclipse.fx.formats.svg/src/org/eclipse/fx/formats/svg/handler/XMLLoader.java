@@ -38,54 +38,75 @@ import org.eclipse.fx.formats.svg.svg.CoreAttributes;
 import org.eclipse.fx.formats.svg.svg.SvgElement;
 import org.eclipse.fx.formats.svg.svg.SvgPackage;
 import org.eclipse.fx.formats.svg.svg.SvgSvgElement;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * Loading an SVG and convert it into an FXML structure
+ */
 public class XMLLoader {
 	private static final Map<String, String> SUFFIXMAP = new HashMap<String, String>();
-	
+
 	{
-		SUFFIXMAP.put("image/png", "png");
-		SUFFIXMAP.put("image/jpeg", "jpg");
-		SUFFIXMAP.put("image/jpg", "jpg");
-		SUFFIXMAP.put("image/gif", "gif");
+		SUFFIXMAP.put("image/png", "png"); //$NON-NLS-1$ //$NON-NLS-2$
+		SUFFIXMAP.put("image/jpeg", "jpg"); //$NON-NLS-1$ //$NON-NLS-2$
+		SUFFIXMAP.put("image/jpg", "jpg"); //$NON-NLS-1$//$NON-NLS-2$
+		SUFFIXMAP.put("image/gif", "gif"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
-	
+
+	/**
+	 * Test method should not be called
+	 * 
+	 * @param args
+	 *            the arguments
+	 */
 	public static void main(String[] args) {
-		XMLLoader l = new XMLLoader();
 		try {
 			// TODO use workspace file
-			File f = new File("/Users/tomschindl/git/e-fx-clipse/org.eclipse.fx.formats.svg/samples/lr.svg");
-			InputStream in;
-			
-			if( f.getName().endsWith("svgz") ) {
-				in = new GZIPInputStream(f.toURI().toURL().openStream());
-			} else {
-				in = f.toURI().toURL().openStream();
+			File f = new File(
+					"/Users/tomschindl/git/e-fx-clipse/org.eclipse.fx.formats.svg/samples/lr.svg"); //$NON-NLS-1$
+			try (InputStream in = f.getName().endsWith("svgz") ? new GZIPInputStream(f.toURI().toURL().openStream()) : f.toURI().toURL().openStream()) { //$NON-NLS-1$
+				if( in != null ) {
+					// TODO use workspace file
+					SvgSvgElement g = loadDocument(
+									"/Users/tomschindl/git/e-fx-clipse/org.eclipse.fx.formats.svg/samples/test.fxml", //$NON-NLS-1$
+									in);
+					// SvgSvgElement g = l.loadDocument(new
+					// File("/Users/tomschindl/git/e-fx-clipse/org.eclipse.fx.formats.svg/samples/w3/images/shapes/rect01.svg").toURL().openStream());
+					// SvgSvgElement g = l.loadDocument(new
+					// File("/Users/tomschindl/git/e-fx-clipse/org.eclipse.fx.formats.svg/samples/w3/images/filters/filters01.svg").toURL().openStream());
+					FXMLConverter c = new FXMLConverter(g);
+					String fxmlData = c.generate().toString();
+					// TODO use workspace file
+					File outFile = new File(
+							"/Users/tomschindl/git/e-fx-clipse/org.eclipse.fx.formats.svg/samples/test.fxml"); //$NON-NLS-1$
+					try (FileOutputStream out = new FileOutputStream(outFile)) {
+						out.write(fxmlData.getBytes());
+						out.close();
+					}					
+				}
 			}
-			
-			
-			// TODO use workspace file
-			SvgSvgElement g = l.loadDocument("/Users/tomschindl/git/e-fx-clipse/org.eclipse.fx.formats.svg/samples/test.fxml",in);
-//			SvgSvgElement g = l.loadDocument(new File("/Users/tomschindl/git/e-fx-clipse/org.eclipse.fx.formats.svg/samples/w3/images/shapes/rect01.svg").toURL().openStream());
-//			SvgSvgElement g = l.loadDocument(new File("/Users/tomschindl/git/e-fx-clipse/org.eclipse.fx.formats.svg/samples/w3/images/filters/filters01.svg").toURL().openStream());
-			FXMLConverter c = new FXMLConverter(g);
-			String fxmlData = c.generate().toString();
-			// TODO use workspace file
-			File outFile = new File("/Users/tomschindl/git/e-fx-clipse/org.eclipse.fx.formats.svg/samples/test.fxml");
-			FileOutputStream out = new FileOutputStream(outFile);
-			out.write(fxmlData.getBytes());
-			out.close();
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public SvgSvgElement loadDocument(String outFile, InputStream in) {
+
+	/**
+	 * Load the SVG-File into an in memory model
+	 * 
+	 * @param outFile
+	 *            the output file, used to calculate relative paths, might by
+	 *            <code>null</code>
+	 * @param in
+	 *            the inputstream
+	 * @return the in memory model of the SVG-File
+	 */
+	public static SvgSvgElement loadDocument(@Nullable String outFile, @NonNull InputStream in) {
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			factory.setNamespaceAware(true);
@@ -98,25 +119,25 @@ public class XMLLoader {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	private void postProcess(String outFile, StringBuilder cssString, SvgSvgElement root) throws IOException {
+
+	private static void postProcess(@Nullable String outFile, StringBuilder cssString,
+			SvgSvgElement root) throws IOException {
 		int imageCount = 0;
 		TreeIterator<EObject> it = EcoreUtil.getAllContents(root, true);
 
-		if( cssString != null ) {
+		if (cssString != null) {
 			File outCssFile;
-			if( outFile == null ) {
-				outCssFile = File.createTempFile("conversion", ".css");
+			if (outFile == null) {
+				outCssFile = File.createTempFile("conversion", ".css"); //$NON-NLS-1$ //$NON-NLS-2$
 				outCssFile.deleteOnExit();
 			} else {
-				outCssFile = new File(outFile+".css");	
+				outCssFile = new File(outFile + ".css"); //$NON-NLS-1$
 			}
-			
-			try {
-				FileOutputStream out = new FileOutputStream(outCssFile);
+
+			try(FileOutputStream out = new FileOutputStream(outCssFile)) {
 				out.write(cssString.toString().getBytes());
 				out.close();
-				root.setStyleSheet("@"+outCssFile.getName());
+				root.setStyleSheet("@" + outCssFile.getName()); //$NON-NLS-1$
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -125,56 +146,66 @@ public class XMLLoader {
 				e.printStackTrace();
 			}
 		}
-		
-		while( it.hasNext() ) {
+
+		while (it.hasNext()) {
 			EObject o = it.next();
-			EStructuralFeature f = o.eClass().getEStructuralFeature("style");
-			if( f != null ) {
+			EStructuralFeature f = o.eClass().getEStructuralFeature("style"); //$NON-NLS-1$
+			if (f != null) {
 				String s = (String) o.eGet(f);
-				if( s != null && s.trim().length() > 0 ) {
-					for( Entry<String, String> e : valueMap(s).entrySet() ) {
-						String name = e.getKey().replaceAll("-", "_");
-						EStructuralFeature styleFeature = o.eClass().getEStructuralFeature(name.trim());
-						if( styleFeature != null ) {
-							Object value = EcoreUtil.createFromString((EDataType) styleFeature.getEType(), e.getValue());
+				if (s != null && s.trim().length() > 0) {
+					for (Entry<String, String> e : valueMap(s).entrySet()) {
+						String name = e.getKey().replaceAll("-", "_");  //$NON-NLS-1$//$NON-NLS-2$
+						EStructuralFeature styleFeature = o.eClass()
+								.getEStructuralFeature(name.trim());
+						if (styleFeature != null) {
+							Object value = EcoreUtil.createFromString(
+									(EDataType) styleFeature.getEType(),
+									e.getValue());
 							o.eSet(styleFeature, value);
 						} else {
-							System.err.println("Could not find style attribute: " + name + " on " + o.eClass());
+							System.err
+									.println("Could not find style attribute: " //$NON-NLS-1$
+											+ name + " on " + o.eClass()); //$NON-NLS-1$
 						}
 					}
 				}
 			}
-			
-			f = o.eClass().getEStructuralFeature("xlink__href");
-			if( f != null ) {
-				EStructuralFeature instanceFeature = o.eClass().getEStructuralFeature("resolvedInstance");
+
+			f = o.eClass().getEStructuralFeature("xlink__href"); //$NON-NLS-1$
+			if (f != null) {
+				EStructuralFeature instanceFeature = o.eClass()
+						.getEStructuralFeature("resolvedInstance"); //$NON-NLS-1$
 				String link = (String) o.eGet(f);
-				if( link != null && link.startsWith("data:") ) {
-					String type = link.substring(0,link.indexOf(';'));
-//					String encoding = link.substring(link.indexOf(';')+1,link.indexOf(','));
-					String data = link.substring(link.indexOf(',')+1);
+				if (link != null && link.startsWith("data:")) { //$NON-NLS-1$
+					String type = link.substring(0, link.indexOf(';'));
+					// String encoding =
+					// link.substring(link.indexOf(';')+1,link.indexOf(','));
+					String data = link.substring(link.indexOf(',') + 1);
 					byte[] b = DatatypeConverter.parseBase64Binary(data);
 					try {
 						String suffix = SUFFIXMAP.get(type.toLowerCase());
-						if( suffix == null ) {
-							suffix = type.substring(type.indexOf('/')+1);
+						if (suffix == null) {
+							suffix = type.substring(type.indexOf('/') + 1);
 						}
-						
+
 						File outDir;
-						
-						if( outFile == null ) {
-							outDir  = File.createTempFile("conversion", "_img");
+
+						if (outFile == null) {
+							outDir = File.createTempFile("conversion", "_img");  //$NON-NLS-1$//$NON-NLS-2$
 							outDir.delete();
 						} else {
-							outDir = new File(outFile+"img");
+							outDir = new File(outFile + "img"); //$NON-NLS-1$
+						}
+
+						File outF = new File(outDir, "img_" + (imageCount++) //$NON-NLS-1$
+								+ "." + suffix); //$NON-NLS-1$
+						outDir.mkdirs();
+						try(FileOutputStream out = new FileOutputStream(outF)) {
+							out.write(b);
+							out.close();
+							o.eSet(f, "@" + outDir.getName() + "/" + outF.getName());  //$NON-NLS-1$//$NON-NLS-2$
 						}
 						
-						File outF = new File(outDir, "img_"+(imageCount++)+"."+suffix);
-						outDir.mkdirs();
-						FileOutputStream out = new FileOutputStream(outF);
-						out.write(b);
-						out.close();
-						o.eSet(f, "@" + outDir.getName() + "/" + outF.getName());
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -183,116 +214,141 @@ public class XMLLoader {
 						e.printStackTrace();
 					}
 				} else {
-					if( link != null && link.trim().length() > 0 ) {
+					if (link != null && link.trim().length() > 0) {
 						link = link.substring(1);
-						TreeIterator<EObject> internalIt = EcoreUtil.getAllContents(root, true);
-						while( internalIt.hasNext() ) {
+						TreeIterator<EObject> internalIt = EcoreUtil
+								.getAllContents(root, true);
+						while (internalIt.hasNext()) {
 							EObject internalO = internalIt.next();
-							if( internalO instanceof CoreAttributes ) {
-								if( link.equals(internalO.eGet(SvgPackage.Literals.CORE_ATTRIBUTES__ID))) {
-									o.eSet(instanceFeature, EcoreUtil.copy(internalO));
+							if (internalO instanceof CoreAttributes) {
+								if (link.equals(internalO
+										.eGet(SvgPackage.Literals.CORE_ATTRIBUTES__ID))) {
+									o.eSet(instanceFeature,
+											EcoreUtil.copy(internalO));
 									break;
 								}
 							}
 						}
-					}					
+					}
 				}
 			}
-		}		
+		}
 	}
-	
-	private Map<String, String> valueMap(String styleString) {
-		//TODO This is a very very poor algorithm
-		Map<String,String> map = new HashMap<String, String>();
-		for( String o : styleString.split(";") ) {
-			String k = o.substring(0,o.indexOf(":"));
-			String v = o.substring(o.indexOf(":")+1,o.length());
+
+	private static Map<String, String> valueMap(String styleString) {
+		// TODO This is a very very poor algorithm
+		Map<String, String> map = new HashMap<String, String>();
+		for (String o : styleString.split(";")) { //$NON-NLS-1$
+			String k = o.substring(0, o.indexOf(":")); //$NON-NLS-1$
+			String v = o.substring(o.indexOf(":") + 1, o.length()); //$NON-NLS-1$
 			map.put(k, v);
 		}
 		return map;
 	}
-	
+
 	static class Handler extends DefaultHandler {
-		private SvgSvgElement root;
-		
+		SvgSvgElement root;
+
 		private Stack<SvgElement> elementStack = new Stack<SvgElement>();
-		
+
 		private boolean inCSS;
-		private StringBuilder cssString;
-		
-		private static final String SVG_NS = "http://www.w3.org/2000/svg";
-		private static final String XLINK_NS = "http://www.w3.org/1999/xlink";
-		
-		@SuppressWarnings("unchecked")
+		StringBuilder cssString;
+
+		private static final String SVG_NS = "http://www.w3.org/2000/svg"; //$NON-NLS-1$
+		private static final String XLINK_NS = "http://www.w3.org/1999/xlink"; //$NON-NLS-1$
+
 		@Override
-		public InputSource resolveEntity(String arg0, String arg1) throws IOException, SAXException {
-			return new InputSource(new StringReader(""));
+		public InputSource resolveEntity(String arg0, String arg1)
+				throws IOException, SAXException {
+			return new InputSource(new StringReader("")); //$NON-NLS-1$
 		}
-		
+
 		@Override
 		public void startElement(String uri, String localName, String qName,
 				Attributes attributes) throws SAXException {
-			if( SVG_NS.equals(uri) ) {
-				if( localName.equals("style") ) {
-					inCSS = true;
-					cssString = new StringBuilder();
+			if (SVG_NS.equals(uri)) {
+				if (localName.equals("style")) { //$NON-NLS-1$
+					this.inCSS = true;
+					this.cssString = new StringBuilder();
 					return;
 				}
-				
-				EClass ec = (EClass) SvgPackage.eINSTANCE.getEClassifier("Svg"+Character.toUpperCase(localName.charAt(0))+ localName.substring(1) + "Element");
-				if( ec != null ) {
+
+				EClass ec = (EClass) SvgPackage.eINSTANCE.getEClassifier("Svg" //$NON-NLS-1$
+						+ Character.toUpperCase(localName.charAt(0))
+						+ localName.substring(1) + "Element"); //$NON-NLS-1$
+				if (ec != null) {
 					SvgElement e = (SvgElement) EcoreUtil.create(ec);
-					
+
 					for (int i = 0; i < attributes.getLength(); i++) {
-						if (SVG_NS.equals(attributes.getURI(i)) || "".equals(attributes.getURI(i))) {
-							String name = attributes.getLocalName(i).replaceAll("-", "_");
-							EStructuralFeature f = e.eClass().getEStructuralFeature(name);
+						if (SVG_NS.equals(attributes.getURI(i))
+								|| "".equals(attributes.getURI(i))) { //$NON-NLS-1$
+							String name = attributes.getLocalName(i)
+									.replaceAll("-", "_"); //$NON-NLS-1$ //$NON-NLS-2$
+							EStructuralFeature f = e.eClass()
+									.getEStructuralFeature(name);
 							if (f != null) {
-								Object o = EcoreUtil.createFromString((EDataType) f.getEType(), attributes.getValue(i));
+								Object o = EcoreUtil.createFromString(
+										(EDataType) f.getEType(),
+										attributes.getValue(i));
 								e.eSet(f, o);
 							} else {
-								System.err.println("Could not find feature '" + name + "' in " + e.eClass().getName());
+								System.err
+										.println("Could not find feature '" //$NON-NLS-1$
+												+ name + "' in " //$NON-NLS-1$
+												+ e.eClass().getName());
 							}
-						} else if( XLINK_NS.equals(attributes.getURI(i)) ) {
-							String name = "xlink__" + attributes.getLocalName(i).replaceAll("-", "_");
-							EStructuralFeature f = e.eClass().getEStructuralFeature(name);
-							if( f != null ) {
-								Object o = EcoreUtil.createFromString((EDataType) f.getEType(), attributes.getValue(i));
+						} else if (XLINK_NS.equals(attributes.getURI(i))) {
+							String name = "xlink__" //$NON-NLS-1$
+									+ attributes.getLocalName(i).replaceAll(
+											"-", "_");  //$NON-NLS-1$//$NON-NLS-2$
+							EStructuralFeature f = e.eClass()
+									.getEStructuralFeature(name);
+							if (f != null) {
+								Object o = EcoreUtil.createFromString(
+										(EDataType) f.getEType(),
+										attributes.getValue(i));
 								e.eSet(f, o);
 							} else {
-								System.err.println("Could not find feature '" + name + "' in " + e.eClass().getName());
+								System.err
+										.println("Could not find feature '" //$NON-NLS-1$
+												+ name + "' in " //$NON-NLS-1$
+												+ e.eClass().getName());
 							}
 						}
 					}
-					
-					if( elementStack.isEmpty() ) {
-						root = (SvgSvgElement) e;
+
+					if (this.elementStack.isEmpty()) {
+						this.root = (SvgSvgElement) e;
 					} else {
-						((ContentElement<SvgElement>)elementStack.peek()).getChildren().add(e);
+						@SuppressWarnings("unchecked")
+						ContentElement<SvgElement> c = (ContentElement<SvgElement>) this.elementStack.peek();
+						c.getChildren().add(e);
 					}
-					
-					elementStack.push(e);
-					
+
+					this.elementStack.push(e);
+
 				} else {
-					throw new IllegalStateException("Unable to find element '"+localName+"'");
+					throw new IllegalStateException("Unable to find element '" //$NON-NLS-1$
+							+ localName + "'"); //$NON-NLS-1$
 				}
 			}
 		}
-		
+
 		@Override
-		public void characters(char[] ch, int start, int length) throws SAXException {
-			if( inCSS ) {
-				cssString.append(ch, start, length);
+		public void characters(char[] ch, int start, int length)
+				throws SAXException {
+			if (this.inCSS) {
+				this.cssString.append(ch, start, length);
 			}
 		}
-		
+
 		@Override
 		public void endElement(String uri, String localName, String qName)
 				throws SAXException {
-			if( localName.equals("style") ) {
-				inCSS = false;
-			} else if( SVG_NS.equals(uri) && ! localName.equals("svg") ) {
-				elementStack.pop();
+			if (localName.equals("style")) { //$NON-NLS-1$
+				this.inCSS = false;
+			} else if (SVG_NS.equals(uri) && !localName.equals("svg")) { //$NON-NLS-1$
+				this.elementStack.pop();
 			}
 		}
 	}
