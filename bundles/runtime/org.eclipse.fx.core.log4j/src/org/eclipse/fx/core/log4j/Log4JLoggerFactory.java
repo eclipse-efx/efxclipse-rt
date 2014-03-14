@@ -17,7 +17,6 @@ import javax.inject.Provider;
 import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
-import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Factory to create a logger backed by log4j
