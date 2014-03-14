@@ -87,10 +87,20 @@ public class UpdateServiceImpl implements UpdateService {
 			throw new IllegalStateException("No logger factory available"); //$NON-NLS-1$
 		}
 		
-		if (this.logger == null ) {
-			this.logger = this.factory.createLogger(getClass().getName());
+		Logger logger = this.logger;
+		
+		if (logger == null ) {
+			String className = getClass().getName();
+			if( className != null ) {
+				logger = this.factory.createLogger(className);	
+			} else {
+				throw new IllegalStateException();
+			}
+			
 		}
-		return this.logger;
+		this.logger = logger;
+		
+		return logger;
 	}
 
 	@Override
