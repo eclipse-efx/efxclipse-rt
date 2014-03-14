@@ -10,11 +10,28 @@
  *******************************************************************************/
 package org.eclipse.fx.formats.svg.converter;
 
+import org.eclipse.jdt.annotation.NonNull;
+
+/**
+ * A key value pair
+ */
 public class Pair {
+	/**
+	 * the key
+	 */
 	public final String key;
+	
+	/**
+	 * the value
+	 */
 	public final Object value;
 	
-	public Pair(String key, Object value) {
+	/**
+	 * Create a new key/value pair
+	 * @param key the key
+	 * @param value the value
+	 */
+	public Pair(@NonNull String key, @NonNull Object value) {
 		this.key = key;
 		this.value = value;
 	}

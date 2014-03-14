@@ -66,19 +66,19 @@ class FXMLConverter {
 	«content»
 	'''
 	
-	def dispatch handle(EObject o) '''
+	def dispatch CharSequence handle(EObject o) '''
 		<!-- Unhandled type '«o.eClass.name»' -->
 	'''
 	
-	def dispatch handle(SvgLinearGradientElement o) {
+	def dispatch CharSequence handle(SvgLinearGradientElement o) {
 		// Nothing to do we reference them directly when needed because they can contain relative sizes
 	}
 	
-	def dispatch handle(SvgRadialGradientElement o) {
+	def dispatch CharSequence handle(SvgRadialGradientElement o) {
 		// Nothing to do we reference them directly when needed because they can contain relative sizes
 	}
 	
-	def dispatch handle(SvgSvgElement element) '''
+	def dispatch CharSequence handle(SvgSvgElement element) '''
 	<Group id='_root' xmlns:fx="http://javafx.com/fxml" xmlns:fxsvg="http://efxclipse.org/fxml-svg">
 		«handleStyleClassAttributes(element.class_)»
 «««		«IF element.styleSheet != null»
@@ -94,7 +94,7 @@ class FXMLConverter {
 	</Group>
 	'''
 	
-	def dispatch handle(SvgDefsElement element) '''
+	def dispatch CharSequence handle(SvgDefsElement element) '''
 	<fx:define>
 		«FOR o : element.children»
 			«handle(o)»
@@ -102,7 +102,7 @@ class FXMLConverter {
 	</fx:define>
 	'''
 	
-	def handleGradient(SvgLinearGradientElement element, Double opacity) '''
+	def CharSequence handleGradient(SvgLinearGradientElement element, Double opacity) '''
 	<LinearGradient
 		«val t = createAffineTransform(element.gradientTransform) as AffineTransform»
 		«var x1 = element.x1.parseCoordinate»
@@ -120,7 +120,7 @@ class FXMLConverter {
 		«val owner = resolveGradientStopElement(element)»
 		«IF owner != null»
 			<stops>
-			«FOR o : (owner as ContentElement).children.filter(typeof(SvgStopElement))»
+			«FOR o : (owner as ContentElement<?>).children.filter(typeof(SvgStopElement))»
 				«handleStop(o,opacity)»
 			«ENDFOR»
 			</stops>
@@ -129,7 +129,7 @@ class FXMLConverter {
 	'''
 	
 	
-	def handleGradient(SvgRadialGradientElement element, Double opacity) '''
+	def CharSequence handleGradient(SvgRadialGradientElement element, Double opacity) '''
 	<RadialGradient
 		«val t = createAffineTransform(element.gradientTransform) as AffineTransform»
 		«var cx = element.cx.parseCoordinate»
@@ -149,7 +149,7 @@ class FXMLConverter {
 		«val owner = resolveGradientStopElement(element)» 
 		«IF owner != null»
 			<stops>
-			«FOR o : (owner as ContentElement).children.filter(typeof(SvgStopElement))»
+			«FOR o : (owner as ContentElement<?>).children.filter(typeof(SvgStopElement))»
 				«handleStop(o,opacity)»
 			«ENDFOR»
 			</stops>
@@ -248,9 +248,9 @@ class FXMLConverter {
 		}
 	}
 	
-	def resolveGradientStopElement(SvgElement element) {
-		if( element instanceof ContentElement ) {
-			val rv = (element as ContentElement); 
+	def ContentElement<?> resolveGradientStopElement(SvgElement element) {
+		if( element instanceof ContentElement<?> ) {
+			val rv = (element as ContentElement<?>); 
 			if( rv.children.filter(typeof(SvgStopElement)).empty ) {
 				if( element instanceof XLinkAttributes ) {
 					val v = element as XLinkAttributes;
@@ -317,7 +317,7 @@ class FXMLConverter {
 	</Stop>
 	'''
 	
-	def dispatch handle(SvgImageElement element) '''
+	def dispatch CharSequence handle(SvgImageElement element) '''
 	<ImageView
 		«IF element.x != null»x="«element.x.parseLength»"«ENDIF»
 		«IF element.y != null»y="«element.y.parseLength»"«ENDIF»
@@ -366,7 +366,7 @@ class FXMLConverter {
 	</ImageView>
 	'''
 	
-	def dispatch handle(SvgRectElement element) '''
+	def dispatch CharSequence handle(SvgRectElement element) '''
 	<Rectangle
 		«IF element.x != null»x="«element.x.parseLength»"«ENDIF»
 		«IF element.y != null»y="«element.y.parseLength»"«ENDIF»
@@ -420,7 +420,7 @@ class FXMLConverter {
 	</Rectangle>
 	'''
 	
-	def dispatch handle(SvgGElement element) '''
+	def dispatch CharSequence handle(SvgGElement element) '''
 	<Group
 		«IF element.x != null»translateX="«element.x.parseCoordinate»"«ENDIF»
 		«IF element.y != null»translateY="«element.y.parseCoordinate»"«ENDIF»
@@ -471,7 +471,7 @@ class FXMLConverter {
 	</Group>
 	'''
 	
-	def dispatch handle(SvgUseElement element) '''
+	def dispatch CharSequence handle(SvgUseElement element) '''
 	<Group
 		«IF element.x != null»translateX="«element.x.parseCoordinate»"«ENDIF»
 		«IF element.y != null»translateY="«element.y.parseCoordinate»"«ENDIF»
@@ -556,7 +556,7 @@ class FXMLConverter {
 		«ENDIF»
 	'''
 	
-	def dispatch handle(SvgPathElement element) '''
+	def dispatch CharSequence handle(SvgPathElement element) '''
 	<SVGPath
 		«IF element.d != null»content="«element.d»"«ENDIF»
 		«IF element.opacity != null»opacity="«element.opacity»"«ENDIF»
@@ -629,10 +629,10 @@ class FXMLConverter {
 	«ENDIF»
 	'''
 	
-	def dispatch handle(SvgClipPathElement element) {
+	def dispatch CharSequence handle(SvgClipPathElement element) {
 	}
 	
-	def dispatch handle(SvgEllipseElement element) '''
+	def dispatch CharSequence handle(SvgEllipseElement element) '''
 	<Ellipse
 		«IF element.rx != null»radiusX="«element.rx.parseLength»"«ENDIF»
 		«IF element.ry != null»radiusY="«element.ry.parseLength»"«ENDIF»
@@ -684,7 +684,7 @@ class FXMLConverter {
 	</Ellipse>
 	'''
 
-	def dispatch handle(SvgCircleElement element) '''
+	def dispatch CharSequence handle(SvgCircleElement element) '''
 	<Circle
 		«IF element.r != null»radius="«element.r.parseLength»"«ENDIF»
 		«IF element.cx != null»centerX="«element.cx.parseCoordinate»"«ENDIF»
@@ -735,7 +735,7 @@ class FXMLConverter {
 	</Circle>
 	'''
 	
-	def dispatch handle(SvgPolylineElement element) '''
+	def dispatch CharSequence handle(SvgPolylineElement element) '''
 	<Polyline
 		«IF element.points != null»points="«element.points.replaceAll("\\s+",",")»"«ENDIF»
 		«IF element.opacity != null»opacity="«element.opacity»"«ENDIF»
@@ -784,7 +784,7 @@ class FXMLConverter {
 	</Polyline>
 	'''
 	
-	def dispatch handle(SvgPolygonElement element) '''
+	def dispatch CharSequence handle(SvgPolygonElement element) '''
 	<Polygon
 		«IF element.points != null»points="«element.points.replaceAll("\\s+",",")»"«ENDIF»
 		«IF element.opacity != null»opacity="«element.opacity»"«ENDIF»
@@ -1009,11 +1009,11 @@ class FXMLConverter {
 		return builder.toString;
 	}
 	
-	def dispatch handle(SvgFilterElement filter) {
+	def dispatch CharSequence handle(SvgFilterElement filter) {
 		
 	}
 	
-	def dispatch handle(SvgFeGaussianBlurElement f) {
+	def dispatch CharSequence handle(SvgFeGaussianBlurElement f) {
 		
 	}
 	
