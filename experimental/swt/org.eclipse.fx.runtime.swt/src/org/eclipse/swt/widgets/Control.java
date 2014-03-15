@@ -1189,7 +1189,8 @@ public abstract class Control extends Widget implements Drawable {
 					Control c = Widget.getWidget(event.getTarget());
 					if (c != null) {
 						c.sendKeyEvent(event);
-						event.consume();
+//if we consume the event e.g. navigation in table/tree get broken!						
+//						event.consume();
 					}
 				}
 			};
