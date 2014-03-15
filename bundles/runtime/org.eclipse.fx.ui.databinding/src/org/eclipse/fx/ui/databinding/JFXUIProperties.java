@@ -10,20 +10,52 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.databinding;
 
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TreeTableView;
+import javafx.scene.control.TreeView;
+
 import org.eclipse.fx.core.databinding.IJFXBeanValueProperty;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
 import org.eclipse.fx.ui.databinding.internal.DatePickerValueProperty;
 import org.eclipse.fx.ui.databinding.internal.SingleSelectionProperty;
 
+/**
+ * Factory to create JavaFX properties
+ */
 public class JFXUIProperties {
+	/**
+	 * Create a single selection property for javafx views
+	 * <ul>
+	 * <li>{@link ListView}</li>
+	 * <li>{@link ComboBox}</li>
+	 * <li>{@link TableView}</li>
+	 * <li>{@link TreeView}</li>
+	 * <li>{@link TreeTableView}</li>
+	 * </ul>
+	 * 
+	 * @return the property
+	 */
 	public static IJFXControlValueProperty singleViewSelection() {
 		return new SingleSelectionProperty();
 	}
-	
+
+	/**
+	 * Create a property for the text-property of a javafx bean
+	 * 
+	 * @return the text property
+	 */
 	public static IJFXBeanValueProperty text() {
-		return JFXBeanProperties.value("text");
+		return JFXBeanProperties.value("text"); //$NON-NLS-1$
 	}
-	
+
+	/**
+	 * Create a date property of the {@link DatePicker}
+	 * 
+	 * @return the property
+	 */
 	public static IJFXControlValueProperty date() {
 		return new DatePickerValueProperty();
 	}
