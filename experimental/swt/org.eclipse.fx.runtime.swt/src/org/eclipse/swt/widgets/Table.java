@@ -350,6 +350,7 @@ public class Table extends Composite {
 					return new TableRowImpl();
 				}
 			});
+			tableView.getSelectionModel().setSelectionMode( ((style & SWT.MULTI) == SWT.MULTI) ? SelectionMode.MULTIPLE : SelectionMode.SINGLE );
 			tableView.getSelectionModel().getSelectedItems().addListener(selectionListener);
 			tableView.setContextMenu(contextMenu);
 			AnchorPane.setTopAnchor(tableView, 0.0);
