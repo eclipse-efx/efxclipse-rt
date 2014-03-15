@@ -22,9 +22,27 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.fx.core.databinding.AdapterFactory;
 import org.eclipse.fx.core.databinding.ObservableWritableValue;
 
-public abstract class PropertyTableCellFactory<S,T> implements Callback<TableColumn<S,T>, TableCell<S,T>> {
-	public static <S,T> PropertyTableCellFactory<S,T> textFactory(final IValueProperty property) {
-		return new PropertyTableCellFactory<S,T>() {
+/**
+ * Factory for table cells
+ * 
+ * @param <S>
+ *            the row value type
+ * @param <T>
+ *            the cell value type
+ */
+public abstract class PropertyTableCellFactory<S, T> implements
+		Callback<TableColumn<S, T>, TableCell<S, T>> {
+	/**
+	 * Create a factory who uses the given property for the text
+	 * 
+	 * @param property
+	 *            the property
+	 * @return the factory instance
+	 * @see #textCell(IValueProperty)
+	 */
+	public static <S, T> PropertyTableCellFactory<S, T> textFactory(
+			final IValueProperty property) {
+		return new PropertyTableCellFactory<S, T>() {
 
 			@Override
 			public TableCell<S, T> call(TableColumn<S, T> param) {
@@ -32,9 +50,21 @@ public abstract class PropertyTableCellFactory<S,T> implements Callback<TableCol
 			}
 		};
 	}
-	
-	public static <S,T> PropertyTableCellFactory<S,T> textFactory(final String template, final IValueProperty... property) {
-		return new PropertyTableCellFactory<S,T>() {
+
+	/**
+	 * Create a factory who uses the given properties and the template for the
+	 * text using {@link MessageFormat}
+	 * 
+	 * @param template
+	 *            the template
+	 * @param property
+	 *            the property
+	 * @return the factory instance
+	 * @see #textCell(String, IValueProperty...)
+	 */
+	public static <S, T> PropertyTableCellFactory<S, T> textFactory(
+			final String template, final IValueProperty... property) {
+		return new PropertyTableCellFactory<S, T>() {
 
 			@Override
 			public TableCell<S, T> call(TableColumn<S, T> param) {
@@ -42,99 +72,122 @@ public abstract class PropertyTableCellFactory<S,T> implements Callback<TableCol
 			}
 		};
 	}
-	
-	public static <S,T> TableCell<S,T> textCell(IValueProperty property) {
+
+	/**
+	 * Create a table cell using the property for the text
+	 * 
+	 * @param property
+	 *            the property
+	 * @return the table cell
+	 */
+	public static <S, T> TableCell<S, T> textCell(IValueProperty property) {
 		return new TextOnlyPropertyTableCell<>(property);
 	}
-	
-	public static <S,T> TableCell<S,T> textCell(String template, IValueProperty... property) {
-		return new TemplateTextOnlyPropertyListCell<>(template,property);
+
+	/**
+	 * Create a table cell using the properties and the template for the text
+	 * using {@link MessageFormat}
+	 * 
+	 * @param template
+	 *            the template
+	 * @param property
+	 *            the property
+	 * @return the table cell
+	 */
+	public static <S, T> TableCell<S, T> textCell(String template,
+			IValueProperty... property) {
+		return new TemplateTextOnlyPropertyListCell<>(template, property);
 	}
-	
-	static class TextOnlyPropertyTableCell<S,T> extends TableCell<S,T> {
+
+	static class TextOnlyPropertyTableCell<S, T> extends TableCell<S, T> {
 		private IObservableValue currentObservable;
 		private IValueProperty textProperty;
-		
+
 		public TextOnlyPropertyTableCell(IValueProperty textProperty) {
 			this.textProperty = textProperty;
 		}
-		
+
 		@Override
 		protected void updateItem(T item, boolean empty) {
 			super.updateItem(item, empty);
-			
-			IObservableValue oldObservable = currentObservable;
+
+			IObservableValue oldObservable = this.currentObservable;
 			textProperty().unbind();
-			
-			if( item != null && ! empty ) {
-				currentObservable = textProperty.observe(item);
-				ObservableWritableValue<String> adapt = AdapterFactory.<String>adapt(currentObservable);
+
+			if (item != null && !empty) {
+				this.currentObservable = this.textProperty.observe(item); 
+				ObservableWritableValue<String> adapt = AdapterFactory
+						.<String> adapt(this.currentObservable);
 				textProperty().bind(adapt);
 			} else {
 				setText(null);
 			}
-			
-			if( oldObservable != null ) {
-				oldObservable.dispose();	
+
+			if (oldObservable != null) {
+				oldObservable.dispose();
 			}
 		}
 	}
-	
-	static class TemplateTextOnlyPropertyListCell<S,T> extends TableCell<S,T> {
+
+	static class TemplateTextOnlyPropertyListCell<S, T> extends TableCell<S, T> {
 		private IObservableValue currentObservable;
 		private IValueProperty[] properties;
 		private String template;
-		
-		public TemplateTextOnlyPropertyListCell(String template, IValueProperty... properties) {
+
+		public TemplateTextOnlyPropertyListCell(String template,
+				IValueProperty... properties) {
 			this.template = template;
 			this.properties = properties;
 		}
-		
+
 		@Override
 		protected void updateItem(T item, boolean empty) {
 			super.updateItem(item, empty);
-			
-			IObservableValue oldObservable = currentObservable;
+
+			IObservableValue oldObservable = this.currentObservable;
 			textProperty().unbind();
-			
-			if( item != null && ! empty ) {
-				currentObservable = new TemplateComputedValue(item, template, properties);
-				ObservableWritableValue<String> adapt = AdapterFactory.<String>adapt(currentObservable);
+
+			if (item != null && !empty) {
+				this.currentObservable = new TemplateComputedValue(item, this.template,
+						this.properties);
+				ObservableWritableValue<String> adapt = AdapterFactory
+						.<String> adapt(this.currentObservable);
 				textProperty().bind(adapt);
 			} else {
 				setText(null);
 			}
-			
-			if( oldObservable != null )
+
+			if (oldObservable != null)
 				oldObservable.dispose();
 		}
 	}
-	
+
 	static class TemplateComputedValue extends ComputedValue {
 		private IObservableValue[] values;
 		private String template;
-		
-		public TemplateComputedValue(Object o, String template, IValueProperty[] properties) {
+
+		public TemplateComputedValue(Object o, String template,
+				IValueProperty[] properties) {
 			this.template = template;
 			this.values = new IObservableValue[properties.length];
-			for( int i = 0; i < values.length; i++ ) {
-				values[i] = properties[i].observe(o);
+			for (int i = 0; i < this.values.length; i++) {
+				this.values[i] = properties[i].observe(o);
 			}
 		}
-		
+
 		@Override
 		protected Object calculate() {
-			Object[] v = new Object[values.length];
-			for( int i = 0; i < values.length; i++ ) {
-				v[i] = values[i].getValue();
+			Object[] v = new Object[this.values.length];
+			for (int i = 0; i < this.values.length; i++) {
+				v[i] = this.values[i].getValue();
 			}
-			return MessageFormat.format(template, v);
+			return MessageFormat.format(this.template, v);
 		}
-		
+
 		@Override
 		public synchronized void dispose() {
 			super.dispose();
-			for( IObservableValue v : values ) {
+			for (IObservableValue v : this.values) {
 				v.dispose();
 			}
 		}

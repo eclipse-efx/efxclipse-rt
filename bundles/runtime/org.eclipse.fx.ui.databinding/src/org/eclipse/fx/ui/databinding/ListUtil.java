@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.databinding;
 
+import java.text.MessageFormat;
+
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.fx.core.databinding.AdapterFactory;
@@ -38,6 +40,7 @@ public class ListUtil {
 
 	/**
 	 * Setup a list where the template is used to format the property values
+	 * using {@link MessageFormat}
 	 * 
 	 * @param listView
 	 *            the list view
@@ -72,6 +75,7 @@ public class ListUtil {
 
 	/**
 	 * Setup a list where the template is used to format the property values
+	 * using {@link MessageFormat}
 	 * 
 	 * @param listView
 	 *            the list view
@@ -108,7 +112,7 @@ public class ListUtil {
 
 	/**
 	 * Setup a combo box where the template is used to format the property
-	 * values
+	 * values using {@link MessageFormat}
 	 * 
 	 * @param comboBox
 	 *            the combo box
@@ -146,7 +150,7 @@ public class ListUtil {
 
 	/**
 	 * Setup a combo box where the template is used to format the property
-	 * values
+	 * values using {@link MessageFormat}
 	 * 
 	 * @param comboBox
 	 *            the combo box
