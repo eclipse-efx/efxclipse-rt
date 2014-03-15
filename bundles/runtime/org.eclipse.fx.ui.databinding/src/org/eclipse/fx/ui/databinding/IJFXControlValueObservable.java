@@ -12,6 +12,9 @@ package org.eclipse.fx.ui.databinding;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 
+/**
+ * Base interface of all control observables
+ */
 public interface IJFXControlValueObservable extends IObservableValue {
-
+	// nothing to spec
 }

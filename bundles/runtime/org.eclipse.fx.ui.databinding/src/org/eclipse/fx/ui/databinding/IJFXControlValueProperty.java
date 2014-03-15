@@ -14,9 +14,42 @@ import javafx.scene.control.Control;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Base interface of control properties
+ */
 public interface IJFXControlValueProperty extends IValueProperty {
-	public IJFXControlValueObservable observe(Control control);
-	public IJFXControlValueObservable observe(Realm realm, Control control);
-	public IJFXControlValueObservable observeDelayed(int delay, Control control);
+	/**
+	 * Create an observable on the default realm
+	 * 
+	 * @param control
+	 *            the control
+	 * @return the observable
+	 */
+	@NonNull
+	public IJFXControlValueObservable observe(@NonNull Control control);
+
+	/**
+	 * Create an observable on the given realm
+	 * 
+	 * @param realm
+	 *            the realm
+	 * @param control
+	 *            the control
+	 * @return the observable
+	 */
+	public IJFXControlValueObservable observe(@NonNull Realm realm, @NonNull Control control);
+
+	/**
+	 * Create an observable who waits for the given delay until informing about
+	 * the change
+	 * 
+	 * @param delay
+	 *            the delay
+	 * @param control
+	 *            the control
+	 * @return the observable
+	 */
+	public IJFXControlValueObservable observeDelayed(int delay, @NonNull Control control);
 }
