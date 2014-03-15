@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.fx.core.databinding.AdapterFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -32,8 +33,8 @@ public class ListUtil {
 	 *            the text property
 	 * @see PropertyListCellFaytory#textFactory(IValueProperty)
 	 */
-	public static <T> void setupList(ListView<T> listView,
-			IValueProperty property) {
+	public static <T> void setupList(@NonNull ListView<T> listView,
+			@NonNull IValueProperty property) {
 		listView.setCellFactory(PropertyListCellFaytory
 				.<T> textFactory(property));
 	}
@@ -50,8 +51,8 @@ public class ListUtil {
 	 *            the properties to display
 	 * @see PropertyListCellFaytory#textCell(String, IValueProperty...)
 	 */
-	public static <T> void setupList(ListView<T> listView, String template,
-			IValueProperty... properties) {
+	public static <T> void setupList(@NonNull ListView<T> listView, @NonNull String template,
+			@NonNull IValueProperty... properties) {
 		listView.setCellFactory(PropertyListCellFaytory.<T> textFactory(
 				template, properties));
 	}
@@ -67,8 +68,8 @@ public class ListUtil {
 	 *            the property
 	 * @see #setupList(ListView, IValueProperty)
 	 */
-	public static <T> void setupList(ListView<T> listView,
-			IObservableList list, IValueProperty property) {
+	public static <T> void setupList(@NonNull ListView<T> listView,
+			@NonNull IObservableList list, @NonNull IValueProperty property) {
 		setupList(listView, property);
 		listView.setItems(AdapterFactory.<T> adapt(list));
 	}
@@ -87,8 +88,8 @@ public class ListUtil {
 	 *            the properties to display
 	 * @see #setupList(ListView, String, IValueProperty...)
 	 */
-	public static <T> void setupList(ListView<T> listView,
-			IObservableList list, String template, IValueProperty... properties) {
+	public static <T> void setupList(@NonNull ListView<T> listView,
+			@NonNull IObservableList list, @NonNull String template, @NonNull IValueProperty... properties) {
 		setupList(listView, template, properties);
 		listView.setItems(AdapterFactory.<T> adapt(list));
 	}
@@ -103,8 +104,8 @@ public class ListUtil {
 	 * @see PropertyListCellFaytory#textFactory(IValueProperty)
 	 * @see PropertyListCellFaytory#textCell(IValueProperty)
 	 */
-	public static <T> void setupComboBox(ComboBox<T> comboBox,
-			IValueProperty property) {
+	public static <T> void setupComboBox(@NonNull ComboBox<T> comboBox,
+			@NonNull IValueProperty property) {
 		comboBox.setCellFactory(PropertyListCellFaytory
 				.<T> textFactory(property));
 		comboBox.setButtonCell(PropertyListCellFaytory.<T> textCell(property));
@@ -123,8 +124,8 @@ public class ListUtil {
 	 * @see PropertyListCellFaytory#textFactory(String, IValueProperty...)
 	 * @see PropertyListCellFaytory#textCell(String, IValueProperty...)
 	 */
-	public static <T> void setupComboBox(ComboBox<T> comboBox, String template,
-			IValueProperty... properties) {
+	public static <T> void setupComboBox(@NonNull ComboBox<T> comboBox, @NonNull String template,
+			@NonNull IValueProperty... properties) {
 		comboBox.setCellFactory(PropertyListCellFaytory.<T> textFactory(
 				template, properties));
 		comboBox.setButtonCell(PropertyListCellFaytory.<T> textCell(template,
@@ -142,8 +143,8 @@ public class ListUtil {
 	 *            the property
 	 * @see #setupComboBox(ComboBox, IValueProperty)
 	 */
-	public static <T> void setupComboBox(IObservableList list,
-			ComboBox<T> comboBox, IValueProperty property) {
+	public static <T> void setupComboBox(@NonNull IObservableList list,
+			@NonNull ComboBox<T> comboBox, @NonNull IValueProperty property) {
 		setupComboBox(comboBox, property);
 		comboBox.setItems(AdapterFactory.<T> adapt(list));
 	}
@@ -162,8 +163,8 @@ public class ListUtil {
 	 *            the properties to display
 	 * @see #setupComboBox(ComboBox, String, IValueProperty...)
 	 */
-	public static <T> void setupComboBox(ComboBox<T> comboBox,
-			IObservableList list, String template, IValueProperty... properties) {
+	public static <T> void setupComboBox(@NonNull ComboBox<T> comboBox,
+			@NonNull IObservableList list, @NonNull String template, @NonNull IValueProperty... properties) {
 		setupComboBox(comboBox, template, properties);
 		comboBox.setItems(AdapterFactory.<T> adapt(list));
 	}

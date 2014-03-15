@@ -20,6 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Utility to setup a {@link TableView} with {@link TableColumn}
@@ -34,8 +35,8 @@ public class TableUtil {
 	 *            the property
 	 * @see PropertyTableCellFactory#textFactory(IValueProperty)
 	 */
-	public static <S> void setupColumn(TableColumn<S, S> column,
-			IValueProperty property) {
+	public static <S> void setupColumn(@NonNull TableColumn<S, S> column,
+			@NonNull IValueProperty property) {
 		column.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<S, S>, ObservableValue<S>>() {
 
 			@Override
@@ -59,8 +60,8 @@ public class TableUtil {
 	 *            the properties
 	 * @see PropertyTableCellFactory#textFactory(String, IValueProperty...)
 	 */
-	public static <S> void setupColumn(TableColumn<S, S> column,
-			String template, IValueProperty... property) {
+	public static <S> void setupColumn(@NonNull TableColumn<S, S> column,
+			@NonNull String template, @NonNull IValueProperty... property) {
 		column.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<S, S>, ObservableValue<S>>() {
 
 			@Override

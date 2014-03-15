@@ -16,25 +16,51 @@ import org.eclipse.core.databinding.observable.list.IListChangeListener;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
+import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
+/**
+ * Utility to setup a tree
+ */
 public class TreeUtil {
-	public static <T> TreeItem<T> createModel(T root, ObservableFactory<T> factory) {
-		return new TreeItemImpl<T>(root,factory);
+	/**
+	 * Create a tree model backed by the given {@link ObservableFactory}
+	 * 
+	 * @param root
+	 *            the root of the model
+	 * @param factory
+	 *            the factory to create children
+	 * @return the tree item backed by the given root model instance
+	 */
+	@NonNull 
+	public static <T> TreeItem<T> createModel(@NonNull T root,
+			@NonNull ObservableFactory<T> factory) {
+		return new TreeItemImpl<T>(root, factory);
 	}
 
+	/**
+	 * Factory to create child observables
+	 * 
+	 * @param <T> the type
+	 */
 	public interface ObservableFactory<T> {
-		public IObservableList createObservable(T parent);
+		/**
+		 * Create an observable list for the parent element
+		 * @param parent the parent
+		 * @return the list
+		 */
+		public IObservableList createObservable(@NonNull T parent);
 	}
 
 	static class TreeItemImpl<T> extends TreeItem<T> {
 		private IObservableList list;
-		private ObservableFactory<T> factory;
+		@NonNull
+		ObservableFactory<T> factory;
 		private boolean hasLoadedChildren = false;
 
-		public TreeItemImpl(T element, ObservableFactory<T> factory) {
+		public TreeItemImpl(@NonNull T element, @NonNull ObservableFactory<T> factory) {
 			setValue(element);
 			this.factory = factory;
 			this.list = factory.createObservable(element);
@@ -42,39 +68,40 @@ public class TreeUtil {
 
 		@Override
 		public ObservableList<TreeItem<T>> getChildren() {
-			if (hasLoadedChildren == false) {
+			if (this.hasLoadedChildren == false) {
 				loadChildren();
 			}
 			return super.getChildren();
 		}
 
-		public boolean isLeaf() {
-			if (hasLoadedChildren == false) {
-				loadChildren();
-			}
-			return super.getChildren().isEmpty();
-		}
-		
+//		public boolean isLeaf() {
+//			if (this.hasLoadedChildren == false) {
+//				loadChildren();
+//			}
+//			return super.getChildren().isEmpty();
+//		}
+
 		private void loadChildren() {
-			hasLoadedChildren = true;
-			if( list != null ) {
+			this.hasLoadedChildren = true;
+			if (this.list != null) {
 				final ObservableList<TreeItem<T>> itemList = getChildren();
-				list.addListChangeListener(new IListChangeListener() {
-					
+				this.list.addListChangeListener(new IListChangeListener() {
+
 					@Override
 					public void handleListChange(ListChangeEvent event) {
 						event.diff.accept(new ListDiffVisitor() {
-							
+
 							@Override
 							public void handleRemove(int index, Object element) {
-								if( itemList.size() < index ) {
+								if (itemList.size() < index) {
 									TreeItem<T> t = itemList.get(index);
-									if( t.getValue() == element ) {
+									if (t.getValue() == element) {
 										itemList.remove(index);
 									} else {
-										Iterator<TreeItem<T>> it = itemList.iterator();
-										while(it.hasNext()) {
-											if( it.next().getValue() == element ) {
+										Iterator<TreeItem<T>> it = itemList
+												.iterator();
+										while (it.hasNext()) {
+											if (it.next().getValue() == element) {
 												it.remove();
 												break;
 											}
@@ -82,20 +109,25 @@ public class TreeUtil {
 									}
 								}
 							}
-							
+
+							@SuppressWarnings("unchecked")
 							@Override
 							public void handleAdd(int index, Object element) {
-								if( itemList.size() > index ) {
-									itemList.add(index, new TreeItemImpl<T>((T) element, factory));
+								if (itemList.size() > index) {
+									itemList.add(index, new TreeItemImpl<T>(
+											(T) element, TreeItemImpl.this.factory));
 								} else {
-									itemList.add(new TreeItemImpl<T>((T) element, factory));
+									itemList.add(new TreeItemImpl<T>(
+											(T) element, TreeItemImpl.this.factory));
 								}
 							}
 						});
 					}
 				});
-				for( Object o : list ) {
-					itemList.add(new TreeItemImpl<T>((T) o, factory));
+				for (Object o : this.list) {
+					@SuppressWarnings("unchecked")
+					T t = (T) o;
+					itemList.add(new TreeItemImpl<T>(t, this.factory));
 				}
 			}
 		}

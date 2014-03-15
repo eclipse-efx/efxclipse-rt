@@ -21,6 +21,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.fx.core.databinding.AdapterFactory;
 import org.eclipse.fx.core.databinding.ObservableWritableValue;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Factory for table cells
@@ -40,8 +41,9 @@ public abstract class PropertyTableCellFactory<S, T> implements
 	 * @return the factory instance
 	 * @see #textCell(IValueProperty)
 	 */
+	@NonNull
 	public static <S, T> PropertyTableCellFactory<S, T> textFactory(
-			final IValueProperty property) {
+			@NonNull final IValueProperty property) {
 		return new PropertyTableCellFactory<S, T>() {
 
 			@Override
@@ -62,8 +64,9 @@ public abstract class PropertyTableCellFactory<S, T> implements
 	 * @return the factory instance
 	 * @see #textCell(String, IValueProperty...)
 	 */
+	@NonNull
 	public static <S, T> PropertyTableCellFactory<S, T> textFactory(
-			final String template, final IValueProperty... property) {
+			@NonNull final String template, @NonNull final IValueProperty... property) {
 		return new PropertyTableCellFactory<S, T>() {
 
 			@Override
@@ -80,6 +83,7 @@ public abstract class PropertyTableCellFactory<S, T> implements
 	 *            the property
 	 * @return the table cell
 	 */
+	@NonNull
 	public static <S, T> TableCell<S, T> textCell(IValueProperty property) {
 		return new TextOnlyPropertyTableCell<>(property);
 	}
@@ -94,6 +98,7 @@ public abstract class PropertyTableCellFactory<S, T> implements
 	 *            the property
 	 * @return the table cell
 	 */
+	@NonNull 
 	public static <S, T> TableCell<S, T> textCell(String template,
 			IValueProperty... property) {
 		return new TemplateTextOnlyPropertyListCell<>(template, property);
@@ -101,9 +106,10 @@ public abstract class PropertyTableCellFactory<S, T> implements
 
 	static class TextOnlyPropertyTableCell<S, T> extends TableCell<S, T> {
 		private IObservableValue currentObservable;
+		@NonNull
 		private IValueProperty textProperty;
 
-		public TextOnlyPropertyTableCell(IValueProperty textProperty) {
+		public TextOnlyPropertyTableCell(@NonNull IValueProperty textProperty) {
 			this.textProperty = textProperty;
 		}
 
@@ -131,11 +137,13 @@ public abstract class PropertyTableCellFactory<S, T> implements
 
 	static class TemplateTextOnlyPropertyListCell<S, T> extends TableCell<S, T> {
 		private IObservableValue currentObservable;
+		@NonNull
 		private IValueProperty[] properties;
+		@NonNull
 		private String template;
 
-		public TemplateTextOnlyPropertyListCell(String template,
-				IValueProperty... properties) {
+		public TemplateTextOnlyPropertyListCell(@NonNull String template,
+				@NonNull IValueProperty... properties) {
 			this.template = template;
 			this.properties = properties;
 		}
@@ -164,10 +172,11 @@ public abstract class PropertyTableCellFactory<S, T> implements
 
 	static class TemplateComputedValue extends ComputedValue {
 		private IObservableValue[] values;
+		@NonNull 
 		private String template;
 
-		public TemplateComputedValue(Object o, String template,
-				IValueProperty[] properties) {
+		public TemplateComputedValue(@NonNull Object o, @NonNull String template,
+				@NonNull IValueProperty[] properties) {
 			this.template = template;
 			this.values = new IObservableValue[properties.length];
 			for (int i = 0; i < this.values.length; i++) {
