@@ -3,6 +3,7 @@ package org.eclipse.fx.osgi.fxloader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
@@ -310,7 +311,8 @@ public class FXClassLoader extends ClassLoaderHook {
 	static class SWTFXClassloader extends ClassLoader {
 		private final ClassLoader lastResortLoader;
 		private final ClassLoader primaryLoader;
-
+		private boolean implicitExitSet;
+		
 		public SWTFXClassloader(ClassLoader lastResortLoader,
 				ClassLoader primaryLoader) {
 			this.lastResortLoader = lastResortLoader;
@@ -409,6 +411,17 @@ public class FXClassLoader extends ClassLoaderHook {
 		@Override
 		public Class<?> loadClass(String name) throws ClassNotFoundException {
 			try {
+				if( ! this.implicitExitSet && "javafx.embed.swt.FXCanvas".equals(name) ) { //$NON-NLS-1$
+					try {
+						Class<?> platformClass = loadClass("javafx.application.Platform"); //$NON-NLS-1$
+						Method method = platformClass.getDeclaredMethod("setImplicitExit", boolean.class); //$NON-NLS-1$
+						method.invoke(null, Boolean.FALSE);
+						this.implicitExitSet = true;
+					} catch (Throwable e) {
+						System.err.println("Unable to setImplicitExit to false"); //$NON-NLS-1$
+						e.printStackTrace();
+					}
+				}
 				return primaryLoader.loadClass(name);
 			} catch (ClassNotFoundException c) {
 				try {
