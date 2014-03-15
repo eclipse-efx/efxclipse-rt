@@ -1,12 +1,10 @@
 package org.eclipse.swt.graphics;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
 import org.eclipse.swt.SWT;
@@ -191,15 +189,14 @@ public class Image extends Resource implements Drawable {
 		
 		ImageData imageData = new ImageData(width, height,32, paletteData);
 		byte[] maskData = new byte[(width + 7) / 8 * height];
+		PixelReader reader = image.getPixelReader();
 		for (int x = width - 1; x >= 0; x--) {
 			for (int y = height - 1; y >= 0; y--) {
-				javafx.scene.paint.Color color = image.getPixelReader().getColor(x, y);
-				int pixel = paletteData.getPixel(new RGB(
-						(int)Math.ceil(color.getRed()*255),
-						(int)Math.ceil(color.getGreen()*255),
-						(int)Math.ceil(color.getBlue()*255)));
+				int argb = reader.getArgb(x, y);
+				RGB rgb = new RGB((argb >> 16) & 0xFF,(argb >> 8) & 0xFF, argb & 0xFF);
+				int pixel = paletteData.getPixel(rgb);
 				imageData.setPixel(x, y, pixel);
-				int alpha = Util.opacityToAlpha(color.getOpacity());
+				int alpha = (argb >> 24) & 0xFF;
 				imageData.setAlpha(x, y, alpha);
 				if (alpha != 0) {
 					int index = x + y * ((width + 7) / 8) * 8;
@@ -209,7 +206,6 @@ public class Image extends Resource implements Drawable {
 		}
 		imageData.maskPad = 1;
 		imageData.maskData = maskData;
-
 		return imageData;
 	}
 
