@@ -20,6 +20,9 @@ import org.eclipse.core.databinding.property.IProperty;
 import org.eclipse.core.databinding.property.ISimplePropertyListener;
 import org.eclipse.core.databinding.property.NativePropertyListener;
 
+/**
+ * @param <O>
+ */
 public abstract class ControlReadOnlyPropertyValueProperty<O> extends ControlValueProperty {
 	
 	@Override
@@ -44,7 +47,7 @@ public abstract class ControlReadOnlyPropertyValueProperty<O> extends ControlVal
 
 		@Override
 		public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-			fireChange(owner, Diffs.createValueDiff(oldValue, newValue));
+			fireChange(this.owner, Diffs.createValueDiff(oldValue, newValue));
 		}
 
 		@Override

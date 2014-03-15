@@ -16,10 +16,12 @@ import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.SimpleValueProperty;
-import org.eclipse.fx.core.databinding.JFXRealm;
 import org.eclipse.fx.ui.databinding.IJFXControlValueObservable;
 import org.eclipse.fx.ui.databinding.IJFXControlValueProperty;
 
+/**
+ *
+ */
 public abstract class ControlValueProperty extends SimpleValueProperty implements IJFXControlValueProperty {
 
 	@Override
@@ -30,7 +32,7 @@ public abstract class ControlValueProperty extends SimpleValueProperty implement
 	
 	@Override
 	public IJFXControlValueObservable observe(Control control) {
-		IObservableValue v = super.observe(JFXRealm.getDefault(), control);
+		IObservableValue v = super.observe(Realm.getDefault(), control);
 		return new ControlObservableValueDecorator(v);
 	}
 

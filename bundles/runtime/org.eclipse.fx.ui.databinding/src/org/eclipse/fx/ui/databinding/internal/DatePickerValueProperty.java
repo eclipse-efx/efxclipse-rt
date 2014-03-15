@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import javafx.beans.property.Property;
 import javafx.scene.control.DatePicker;
 
+/**
+ *
+ */
 public class DatePickerValueProperty extends ControlPropertyValueProperty<LocalDate> {
 
 	@Override

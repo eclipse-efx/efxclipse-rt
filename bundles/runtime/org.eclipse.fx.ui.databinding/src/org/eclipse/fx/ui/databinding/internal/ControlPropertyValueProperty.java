@@ -12,7 +12,11 @@ package org.eclipse.fx.ui.databinding.internal;
 
 import javafx.beans.property.Property;
 
+/**
+ * @param <O>
+ */
 public abstract class ControlPropertyValueProperty<O> extends ControlReadOnlyPropertyValueProperty<O> {
+	@Override
 	protected abstract Property<O> getProperty(Object source);
 	
 	@SuppressWarnings("unchecked")

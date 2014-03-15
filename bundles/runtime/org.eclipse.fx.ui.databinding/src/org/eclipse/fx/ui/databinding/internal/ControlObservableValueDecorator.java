@@ -14,8 +14,14 @@ import org.eclipse.core.databinding.observable.value.DecoratingObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.fx.ui.databinding.IJFXControlValueObservable;
 
+/**
+ * 
+ */
 public class ControlObservableValueDecorator extends DecoratingObservableValue implements IJFXControlValueObservable {
 
+	/**
+	 * @param decorated
+	 */
 	public ControlObservableValueDecorator(IObservableValue decorated) {
 		super(decorated, true);
 	}
