@@ -21,6 +21,7 @@ import org.eclipse.fx.core.databinding.IJFXBeanValueProperty;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
 import org.eclipse.fx.ui.databinding.internal.DatePickerValueProperty;
 import org.eclipse.fx.ui.databinding.internal.SingleSelectionProperty;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Factory to create JavaFX properties
@@ -38,6 +39,7 @@ public class JFXUIProperties {
 	 * 
 	 * @return the property
 	 */
+	@NonNull
 	public static IJFXControlValueProperty singleViewSelection() {
 		return new SingleSelectionProperty();
 	}
@@ -47,6 +49,7 @@ public class JFXUIProperties {
 	 * 
 	 * @return the text property
 	 */
+	@NonNull
 	public static IJFXBeanValueProperty text() {
 		return JFXBeanProperties.value("text"); //$NON-NLS-1$
 	}
@@ -56,6 +59,7 @@ public class JFXUIProperties {
 	 * 
 	 * @return the property
 	 */
+	@NonNull
 	public static IJFXControlValueProperty date() {
 		return new DatePickerValueProperty();
 	}
