@@ -21,6 +21,13 @@ import javafx.scene.control.TreeView;
  */
 public class CellUtil {
 
+	/**
+	 * Helper to get the row node for a cell
+	 * 
+	 * @param cell
+	 *            the cell
+	 * @return the row node
+	 */
 	public static Cell<?> getRowNode(final Cell<?> cell) {
 		if (cell instanceof TableCell)
 			return ((TableCell<?, ?>) cell).getTableRow();
@@ -30,6 +37,13 @@ public class CellUtil {
 			return cell;
 	}
 
+	/**
+	 * Helper to get the selection model of the view for a given cell
+	 * 
+	 * @param cell
+	 *            the cell
+	 * @return the selection model
+	 */
 	public static MultipleSelectionModel<?> getSelectionModel(Cell<?> cell) {
 		if (cell instanceof ListCell)
 			return ((ListCell<?>) cell).getListView().getSelectionModel();
@@ -58,14 +72,23 @@ public class CellUtil {
 			throw new IllegalArgumentException("Unsupported View type"); //$NON-NLS-1$
 	}
 
+	/**
+	 * Helper to get selected items for a cell
+	 * 
+	 * @param cell
+	 *            the cell
+	 * @return list of items
+	 */
 	public static List<?> getSelectedItems(Cell<?> cell) {
 		MultipleSelectionModel<?> selectionModel = getSelectionModel(cell);
 		List<?> items = selectionModel.getSelectedItems();
 
 		if (cell instanceof TreeCell || cell instanceof TreeTableCell) {
 			List<Object> unwrappedItems = new ArrayList<>(items.size());
-			for (Object item : items)
+			for (Object item : items) {
 				unwrappedItems.add(((TreeItem<?>) item).getValue());
+			}
+				
 			return unwrappedItems;
 		}
 
