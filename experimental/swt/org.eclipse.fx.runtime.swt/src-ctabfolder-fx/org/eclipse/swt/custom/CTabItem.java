@@ -109,6 +109,7 @@ public class CTabItem extends Item {
 	}
 	
 	public void setText (String string) {
+		super.setText(string);
 		tab.setText(string);
 	}
 	
