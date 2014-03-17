@@ -57,14 +57,6 @@ public class Util {
 		return string;
 	}
 	
-	public static double alphaToOpacity(int alpha) {
-		return (255 - alpha) / 255.0;
-	}
-	
-	public static int opacityToAlpha(double o) {
-		return (int)((o * 255.0 - 255 ) * -1);
-	}
-	
 	public static String notNull(String text) {
 		return text == null ? "" : text;
 	}

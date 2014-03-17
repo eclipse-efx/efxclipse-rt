@@ -40,15 +40,10 @@ public class TabItem extends Item {
 	}
 	
 	@Override
-	public String getText() {
-		checkWidget();
-		return notNullString(tab.getText());
-	}
-
-	@Override
 	public void setText(String string) {
 		checkWidget();
 		if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
+		super.setText(string);
 		tab.setText(string);
 	}
 

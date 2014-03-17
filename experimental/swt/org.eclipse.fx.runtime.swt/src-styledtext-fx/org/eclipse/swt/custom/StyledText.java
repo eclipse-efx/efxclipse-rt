@@ -35,7 +35,13 @@ public class StyledText extends Canvas {
 	@Override
 	protected Region createWidget() {
 		nativeObject = new StyledTextArea();
+		setContent(new DefaultContent());
 		return nativeObject;
+	}
+	
+	@Override
+	protected void initListeners() {
+		super.initListeners();
 	}
 	
 	@Override
@@ -59,7 +65,7 @@ public class StyledText extends Canvas {
 		fxTextStyle.borderStyle = swtRange.borderStyle;
 		fxTextStyle.data = swtRange.data;
 		fxTextStyle.font = swtRange.font != null ? swtRange.font.internal_getNativeObject() : null;
-		fxTextStyle.foreground = swtRange.foreground != null ? swtRange.foreground.internal_getNativeObject() : null;
+		fxTextStyle.foreground = swtRange.foreground != null ? swtRange.foreground.internal_getNativeObject() : javafx.scene.paint.Color.BLACK;
 		fxTextStyle.rise = swtRange.rise;
 		fxTextStyle.strikeout = swtRange.strikeout;
 		fxTextStyle.strikeoutColor = swtRange.strikeoutColor != null ? swtRange.strikeoutColor.internal_getNativeObject() : null;
@@ -818,6 +824,7 @@ public class StyledText extends Canvas {
 							l.textChanged(e);
 						}
 					}
+					System.err.println("NEW TEXT: " + getTextRange(0, getCharCount()));
 				}
 			};
 		}

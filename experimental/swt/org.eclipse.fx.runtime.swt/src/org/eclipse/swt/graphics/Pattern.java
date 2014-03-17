@@ -1,6 +1,5 @@
 package org.eclipse.swt.graphics;
 
-import org.eclipse.swt.internal.Util;
 
 public class Pattern extends Resource {
 	javafx.scene.paint.Color color1;
@@ -24,8 +23,8 @@ public class Pattern extends Resource {
 	public Pattern(Device device, float x1, float y1, float x2, float y2, Color color1, int alpha1, Color color2, int alpha2) {
 		super(device);
 		this.color1 = color1.internal_getNativeObject();
-		this.color1 = javafx.scene.paint.Color.rgb(color1.getRed(), color1.getGreen(), color1.getBlue(), Util.alphaToOpacity(alpha1));
-		this.color2 = javafx.scene.paint.Color.rgb(color2.getRed(), color2.getGreen(), color2.getBlue(), Util.alphaToOpacity(alpha2));
+		this.color1 = javafx.scene.paint.Color.rgb(color1.getRed(), color1.getGreen(), color1.getBlue(), alpha1 / 255.0);
+		this.color2 = javafx.scene.paint.Color.rgb(color2.getRed(), color2.getGreen(), color2.getBlue(), alpha2 / 255.0);
 		this.x1 = x1;
 		this.x2 = x2;
 		this.y1 = y1;

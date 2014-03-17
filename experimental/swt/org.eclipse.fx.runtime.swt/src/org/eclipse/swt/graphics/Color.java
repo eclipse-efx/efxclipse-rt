@@ -12,6 +12,20 @@ public class Color extends Resource {
 		color = javafx.scene.paint.Color.rgb(red, green, blue);
 	}
 	
+	/**
+	 * Internal API
+	 * @param device
+	 * @param red
+	 * @param green
+	 * @param blue
+	 * @param opacity
+	 * @noreference 
+	 */
+	public Color(Device device, int red, int green, int blue, double opacity ) {
+		super(device);
+		color = javafx.scene.paint.Color.rgb(red, green, blue, opacity);
+	}
+	
 	public int getRed() {
 		return (int)(color.getRed() * 255);
 	}

@@ -115,7 +115,7 @@ public class CanvasGC implements DrawableGC {
 	
 	@Override
 	public void setAlpha(int alpha) {
-		canvas.getGraphicsContext2D().setGlobalAlpha(Util.alphaToOpacity(alpha));
+		canvas.getGraphicsContext2D().setGlobalAlpha(alpha / 255.0);
 	}
 	
 	@Override
