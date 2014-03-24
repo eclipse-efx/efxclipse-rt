@@ -17,22 +17,33 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
+/**
+ * ViewPart base class to embed JavaFX into an RCP View
+ */
 public abstract class FXViewPart extends ViewPart {
 	private FXCanvas canvas;
-	
+
 	@Override
 	public void createPartControl(Composite parent) {
-		canvas = new FXCanvas(parent, SWT.NONE);
-		canvas.setScene(createFxScene());
+		this.canvas = new FXCanvas(parent, SWT.NONE);
+		this.canvas.setScene(createFxScene());
 	}
-	
+
+	/**
+	 * Create a scene, called as part of {@link #createPartControl(Composite)}
+	 * 
+	 * @return the scene to show
+	 */
 	protected abstract Scene createFxScene();
-	
+
 	@Override
 	public void setFocus() {
-		canvas.setFocus();
+		this.canvas.setFocus();
 		setFxFocus();
 	}
-	
+
+	/**
+	 * Set the focus call when {@link #setFocus()} is called
+	 */
 	protected abstract void setFxFocus();
 }
