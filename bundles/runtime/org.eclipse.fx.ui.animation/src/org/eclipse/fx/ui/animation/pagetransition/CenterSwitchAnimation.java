@@ -45,7 +45,8 @@ public abstract class CenterSwitchAnimation {
 		pane.setCenter(null);
 
 		Bounds b = curNode.getBoundsInParent();
-		newNode.resizeRelocate(b.getMinX(), b.getMinY(), b.getWidth(), b.getHeight());
+		newNode.resizeRelocate(b.getMinX(), b.getMinY(), b.getWidth(),
+				b.getHeight());
 
 		pane.getChildren().add(0, newNode);
 		pane.getChildren().add(1, curNode);
@@ -66,7 +67,8 @@ public abstract class CenterSwitchAnimation {
 				resetProperties(curNode, newNode);
 
 				if (CenterSwitchAnimation.this.imageView != null) {
-					pane.getChildren().remove(CenterSwitchAnimation.this.imageView);
+					pane.getChildren().remove(
+							CenterSwitchAnimation.this.imageView);
 				}
 			}
 		});
@@ -75,7 +77,27 @@ public abstract class CenterSwitchAnimation {
 
 	}
 
-	protected abstract Animation createAndPrepareAnimation(@NonNull Node curNode, @NonNull Node newNode);
+	/**
+	 * Create an animation and prepare it for execution - but don't execute!
+	 * 
+	 * @param curNode
+	 *            the current node (node moved out!)
+	 * @param newNode
+	 *            the replacement node (node moved in)
+	 * @return the animation
+	 */
+	@NonNull
+	protected abstract Animation createAndPrepareAnimation(
+			@NonNull Node curNode, @NonNull Node newNode);
 
-	protected abstract void resetProperties(@NonNull Node curNode, @NonNull Node newNode);
+	/**
+	 * Reset properties to their default after the animation has finished
+	 * 
+	 * @param curNode
+	 *            the current node (node moved out!)
+	 * @param newNode
+	 *            the new node (node moved in)
+	 */
+	protected abstract void resetProperties(@NonNull Node curNode,
+			@NonNull Node newNode);
 }
