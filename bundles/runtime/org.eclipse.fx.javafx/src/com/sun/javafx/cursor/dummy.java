@@ -1,5 +1,5 @@
 package com.sun.javafx.cursor;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

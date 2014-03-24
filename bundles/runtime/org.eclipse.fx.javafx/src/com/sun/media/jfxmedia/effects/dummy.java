@@ -1,5 +1,5 @@
 package com.sun.media.jfxmedia.effects;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

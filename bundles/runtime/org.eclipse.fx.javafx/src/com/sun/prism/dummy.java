@@ -1,5 +1,5 @@
 package com.sun.prism;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

@@ -1,5 +1,5 @@
 package com.sun.javafx.menu;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

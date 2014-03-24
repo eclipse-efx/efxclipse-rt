@@ -1,5 +1,5 @@
 package javafx.util.converter;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

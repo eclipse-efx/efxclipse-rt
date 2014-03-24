@@ -1,5 +1,5 @@
 package javafx.scene.web;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

@@ -1,5 +1,5 @@
 package com.sun.scenario;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

@@ -1,5 +1,5 @@
 package com.sun.media;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

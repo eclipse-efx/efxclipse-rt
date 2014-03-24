@@ -1,5 +1,5 @@
 package javafx.stage;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

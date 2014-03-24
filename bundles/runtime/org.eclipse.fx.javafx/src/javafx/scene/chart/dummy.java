@@ -1,5 +1,5 @@
 package javafx.scene.chart;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

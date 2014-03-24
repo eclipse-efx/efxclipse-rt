@@ -1,5 +1,5 @@
 package com.sun.javafx.sg.prism;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

@@ -1,5 +1,5 @@
 package com.sun.scenario.effect.impl.state;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

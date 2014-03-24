@@ -1,5 +1,5 @@
 package javafx.animation;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

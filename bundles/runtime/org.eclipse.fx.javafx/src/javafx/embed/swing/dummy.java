@@ -1,5 +1,5 @@
 package javafx.embed.swing;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

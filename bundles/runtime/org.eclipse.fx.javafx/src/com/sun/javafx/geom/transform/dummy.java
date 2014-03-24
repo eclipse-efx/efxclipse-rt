@@ -1,5 +1,5 @@
 package com.sun.javafx.geom.transform;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

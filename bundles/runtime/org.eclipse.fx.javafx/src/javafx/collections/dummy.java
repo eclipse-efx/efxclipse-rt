@@ -1,5 +1,5 @@
 package javafx.collections;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

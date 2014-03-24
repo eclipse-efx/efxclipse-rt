@@ -1,5 +1,5 @@
 package com.sun.javafx.binding;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

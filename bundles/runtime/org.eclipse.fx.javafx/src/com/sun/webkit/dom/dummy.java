@@ -1,5 +1,5 @@
 package com.sun.webkit.dom;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

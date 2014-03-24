@@ -1,5 +1,5 @@
 package com.sun.javafx.text;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

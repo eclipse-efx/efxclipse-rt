@@ -1,5 +1,5 @@
 package javafx.beans.property;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

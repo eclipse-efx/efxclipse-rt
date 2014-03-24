@@ -1,5 +1,5 @@
 package com.sun.javafx.applet;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

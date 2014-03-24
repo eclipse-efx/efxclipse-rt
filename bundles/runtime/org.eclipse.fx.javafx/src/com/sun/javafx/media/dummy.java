@@ -1,5 +1,5 @@
 package com.sun.javafx.media;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

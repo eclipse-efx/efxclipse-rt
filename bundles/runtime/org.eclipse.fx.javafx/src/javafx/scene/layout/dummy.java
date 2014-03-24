@@ -1,5 +1,5 @@
 package javafx.scene.layout;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

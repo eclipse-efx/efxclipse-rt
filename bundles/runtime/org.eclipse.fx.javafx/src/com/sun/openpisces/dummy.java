@@ -1,5 +1,5 @@
 package com.sun.openpisces;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

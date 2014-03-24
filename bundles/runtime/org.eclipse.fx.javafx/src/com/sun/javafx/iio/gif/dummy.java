@@ -1,5 +1,5 @@
 package com.sun.javafx.iio.gif;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

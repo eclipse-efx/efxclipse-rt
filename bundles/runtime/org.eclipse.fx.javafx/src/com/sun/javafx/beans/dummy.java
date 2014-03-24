@@ -1,5 +1,5 @@
 package com.sun.javafx.beans;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

@@ -1,5 +1,5 @@
 package javafx.scene.transform;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

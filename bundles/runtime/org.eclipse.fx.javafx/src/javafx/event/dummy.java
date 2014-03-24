@@ -1,5 +1,5 @@
 package javafx.event;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

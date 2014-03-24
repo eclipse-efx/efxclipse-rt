@@ -1,5 +1,5 @@
 package javafx.geometry;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

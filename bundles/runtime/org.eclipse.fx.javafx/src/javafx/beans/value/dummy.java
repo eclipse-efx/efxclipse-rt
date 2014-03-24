@@ -1,5 +1,5 @@
 package javafx.beans.value;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

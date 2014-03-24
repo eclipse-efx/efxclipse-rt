@@ -1,5 +1,5 @@
 package javafx.concurrent;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

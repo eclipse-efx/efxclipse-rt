@@ -1,5 +1,5 @@
 package javafx.application;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

@@ -1,5 +1,5 @@
 package com.sun.javafx.accessible.providers;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

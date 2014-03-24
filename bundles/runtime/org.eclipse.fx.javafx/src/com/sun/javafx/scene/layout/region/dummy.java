@@ -1,5 +1,5 @@
 package com.sun.javafx.scene.layout.region;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

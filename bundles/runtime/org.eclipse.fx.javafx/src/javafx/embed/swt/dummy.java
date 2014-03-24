@@ -1,5 +1,5 @@
 package javafx.embed.swt;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

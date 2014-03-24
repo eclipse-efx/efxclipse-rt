@@ -1,5 +1,5 @@
 package javafx.print;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

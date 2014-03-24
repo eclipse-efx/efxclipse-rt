@@ -1,5 +1,5 @@
 package javafx.collections.transformation;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

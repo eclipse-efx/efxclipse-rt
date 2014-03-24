@@ -1,5 +1,5 @@
 package com.sun.javafx.scene.traversal;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

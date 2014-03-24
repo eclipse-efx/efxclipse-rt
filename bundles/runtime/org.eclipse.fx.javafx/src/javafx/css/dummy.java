@@ -1,5 +1,5 @@
 package javafx.css;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

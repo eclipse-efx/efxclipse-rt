@@ -1,5 +1,5 @@
 package com.sun.javafx.logging;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

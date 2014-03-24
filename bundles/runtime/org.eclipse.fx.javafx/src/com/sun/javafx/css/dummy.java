@@ -1,5 +1,5 @@
 package com.sun.javafx.css;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

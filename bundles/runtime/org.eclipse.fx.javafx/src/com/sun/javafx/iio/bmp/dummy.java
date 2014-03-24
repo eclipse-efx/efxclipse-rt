@@ -1,5 +1,5 @@
 package com.sun.javafx.iio.bmp;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

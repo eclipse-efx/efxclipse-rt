@@ -1,5 +1,5 @@
 package javafx.beans.binding;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

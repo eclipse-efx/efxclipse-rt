@@ -1,5 +1,5 @@
 package com.sun.javafx.webkit;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

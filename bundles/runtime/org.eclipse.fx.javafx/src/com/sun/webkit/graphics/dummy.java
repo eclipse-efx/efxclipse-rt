@@ -1,5 +1,5 @@
 package com.sun.webkit.graphics;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }

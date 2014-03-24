@@ -1,5 +1,5 @@
 package javafx.scene;
 
-public class dummy {
-
+class dummy {
+	// nothing
 }
