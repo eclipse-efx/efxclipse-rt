@@ -14,21 +14,30 @@ import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 
-@SuppressWarnings("restriction")
+/**
+ * A context function which caches the value so that child contexts don't create
+ * an instance them selfes
+ */
 public abstract class CachingContextFunction extends ContextFunction {
 	private final Class<?> clazz;
-	
+
+	/**
+	 * Create a instance
+	 * 
+	 * @param clazz
+	 *            the class to create an instance of
+	 */
 	public CachingContextFunction(Class<?> clazz) {
 		this.clazz = clazz;
 	}
-	
+
 	@Override
 	public Object compute(IEclipseContext context) {
-		Object rv = context.get("cached_" + clazz.getName());
-		if( rv == null ) {
-			rv = ContextInjectionFactory.make(clazz, context);
-			context.set("cached_" + clazz.getName(), rv);
+		Object rv = context.get("cached_" + this.clazz.getName()); //$NON-NLS-1$
+		if (rv == null) {
+			rv = ContextInjectionFactory.make(this.clazz, context);
+			context.set("cached_" + this.clazz.getName(), rv); //$NON-NLS-1$
 		}
 		return rv;
-	}	
+	}
 }
