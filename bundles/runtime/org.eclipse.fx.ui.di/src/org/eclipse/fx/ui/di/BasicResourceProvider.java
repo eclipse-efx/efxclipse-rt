@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.di;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Map;
@@ -19,39 +18,62 @@ import javafx.scene.image.Image;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.Logger.Level;
+import org.eclipse.fx.osgi.util.LoggerCreator;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.BundleContext;
 
+/**
+ * Basic implementation of a resource provider
+ */
 public abstract class BasicResourceProvider implements ResourceProviderService {
+	/**
+	 * Service properties
+	 */
 	protected Map<String, String> properties;
+	/**
+	 * The bundle context
+	 */
 	protected BundleContext context;
 	
+	/**
+	 * A logger instance
+	 */
+	protected Logger logger = LoggerCreator.createLogger(getClass());
+
+	/**
+	 * Called when the service is activated
+	 * 
+	 * @param context
+	 *            the bundle context
+	 * @param properties
+	 *            the properties
+	 */
 	public void activate(BundleContext context, Map<String, String> properties) {
 		this.properties = properties;
 		this.context = context;
 	}
-	
-	public Image getImage(String key) {
-		URL url = FileLocator.find(context.getBundle(),new Path(properties.get(key)),null);
-		
-		if( url != null ) {
-			InputStream stream = null;
-			try {
-				stream = url.openStream();
+
+	@Override
+	@Nullable
+	public Image getImage(@NonNull String key) {
+		URL url = FileLocator.find(this.context.getBundle(),
+				new Path(this.properties.get(key)), null);
+
+		if (url != null) {
+			try(InputStream stream = url.openStream()) {
 				return new Image(stream);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				if( stream != null ) {
-					try {
-						stream.close();
-					} catch (IOException e) {
-					}
-				}
+				this.logger.error("Unabled to load image with key '"+key+"' at URL '"+url+"'", e);  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 			}
 		}
 		
-		// TODO Auto-generated method stub
+		if( this.logger.isEnabled(Level.INFO) ) {
+			this.logger.info("Unable to find image with key '"+key+"'");	  //$NON-NLS-1$//$NON-NLS-2$
+		}
+		
 		return null;
 	}
 }
