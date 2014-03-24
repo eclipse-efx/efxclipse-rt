@@ -43,7 +43,9 @@ import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
  *            the cell type
  */
 public class AdapterFactoryTreeTableCellFactory<S, T> extends AdapterFactoryCellFactory implements Callback<TreeTableColumn<S, T>, TreeTableCell<S, T>> {
-
+	/**
+	 * The column index
+	 */
 	protected int columnIndex;
 
 	/**

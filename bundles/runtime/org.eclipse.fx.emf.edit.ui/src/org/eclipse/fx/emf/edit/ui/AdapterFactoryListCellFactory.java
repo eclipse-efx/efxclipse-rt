@@ -23,6 +23,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * This list cell factory wraps an {@link AdapterFactory} and delegates calls to its {@link ListCell}s to the
@@ -45,12 +46,12 @@ public class AdapterFactoryListCellFactory extends AdapterFactoryCellFactory imp
 	 * @param adapterFactory
 	 *            the adapter factory
 	 */
-	public AdapterFactoryListCellFactory(AdapterFactory adapterFactory) {
+	public AdapterFactoryListCellFactory(@NonNull AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
 	@Override
-	public ListCell<Object> call(ListView<Object> param) {
+	public ListCell<Object> call(@NonNull ListView<Object> param) {
 
 		final ListCell<Object> listCell = new ListCell<Object>() {
 

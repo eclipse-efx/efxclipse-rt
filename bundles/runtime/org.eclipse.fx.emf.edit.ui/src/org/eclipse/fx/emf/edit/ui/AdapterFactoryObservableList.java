@@ -29,6 +29,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * This {@link ObservableList} wraps an {@link AdapterFactory} and retrieves its elements from the
@@ -41,10 +42,22 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 
 	private static final String CHANGES_THROUGH_MODEL = "An AdapterFactoryObservableList cannot be manipulated directly. Changes must be made via the model."; //$NON-NLS-1$
-	protected AdapterFactory adapterFactory;
-	protected Object root;
+	/**
+	 * The adapter factory
+	 */
+	@NonNull
+	protected final AdapterFactory adapterFactory;
+	/**
+	 * The to root
+	 */
+	@NonNull
+	protected final Object root;
+	/**
+	 * The content provider
+	 */
+	@NonNull
 	protected IStructuredItemContentProvider provider;
-	/* package */ObservableList<T> elements = FXCollections.observableArrayList();
+	/* package */final ObservableList<T> elements = FXCollections.observableArrayList();
 
 	/**
 	 * Create an adapter for a list
@@ -55,7 +68,7 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 	 *            the root
 	 */
 	@SuppressWarnings("unchecked")
-	public AdapterFactoryObservableList(AdapterFactory adapterFactory, final Object root) {
+	public AdapterFactoryObservableList(@NonNull AdapterFactory adapterFactory, @NonNull final Object root) {
 		super();
 
 		if (adapterFactory == null)

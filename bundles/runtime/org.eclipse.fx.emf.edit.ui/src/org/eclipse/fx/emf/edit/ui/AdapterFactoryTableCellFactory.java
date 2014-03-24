@@ -43,6 +43,9 @@ import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
  */
 public class AdapterFactoryTableCellFactory<S, T> extends AdapterFactoryCellFactory implements Callback<TableColumn<S, T>, TableCell<S, T>> {
 
+	/**
+	 * The cells column index
+	 */
 	protected int columnIndex;
 
 	/**

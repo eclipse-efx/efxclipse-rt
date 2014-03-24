@@ -116,6 +116,9 @@ public abstract class AdapterFactoryCellFactory {
 
 	}
 
+	/**
+	 * The adapter factory
+	 */
 	@NonNull
 	final protected AdapterFactory adapterFactory;
 	@NonNull
