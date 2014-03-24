@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.osgi.fxloader;
 
 import java.io.File;
@@ -23,9 +33,10 @@ import org.osgi.framework.wiring.BundleWiring;
  * Hook to overwrite OSGis default classloading
  */
 public class FXClassLoader extends ClassLoaderHook {
-	private static final String FX_SYMBOLIC_NAME = "org.eclipse.fx.javafx";
-	private static final String SWT_SYMBOLIC_NAME = "org.eclipse.swt";
+	private static final String FX_SYMBOLIC_NAME = "org.eclipse.fx.javafx"; //$NON-NLS-1$
+	private static final String SWT_SYMBOLIC_NAME = "org.eclipse.swt"; //$NON-NLS-1$
 
+	@Override
 	public ModuleClassLoader createClassLoader(ClassLoader parent,
 			EquinoxConfiguration configuration, BundleLoader delegate,
 			Generation generation) {
@@ -50,7 +61,6 @@ public class FXClassLoader extends ClassLoaderHook {
 						try {
 							b.start();
 						} catch (BundleException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -95,7 +105,6 @@ public class FXClassLoader extends ClassLoaderHook {
 					try {
 						return fxClassloader.findResources(resource);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					return EmptyEnumeration.INSTANCE;
@@ -105,69 +114,40 @@ public class FXClassLoader extends ClassLoaderHook {
 
 		@Override
 		protected Generation getGeneration() {
-			return generation;
+			return this.generation;
 		}
 
 		@Override
 		protected Debug getDebug() {
-			return configuration.getDebug();
+			return this.configuration.getDebug();
 		}
 
 		@Override
 		public ClasspathManager getClasspathManager() {
-			return classpathManager;
+			return this.classpathManager;
 		}
 		
 		@Override
 		protected EquinoxConfiguration getConfiguration() {
-			return configuration;
+			return this.configuration;
 		}
 
 		@Override
 		public BundleLoader getBundleLoader() {
-			return delegate;
+			return this.delegate;
 		}
 
 		@Override
 		public boolean isRegisteredAsParallel() {
 			return false;
 		}
-		
-//		@Override
-//		public Class<?> findLocalClass(String classname)
-//				throws ClassNotFoundException {
-//			return fxClassloader.loadClass(classname);
-//		}
-//
-//		@Override
-//		public URL findLocalResource(String resource) {
-//			return fxClassloader.findResource(resource);
-//		}
-//
-//		@Override
-//		public Enumeration<URL> findLocalResources(String resource) {
-//			try {
-//				return fxClassloader.findResources(resource);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			return Collections.emptyEnumeration();
-//		}
-//		
-//		@Override
-//		protected Generation getGeneration() {
-//			// TODO Auto-generated method stub
-//			return null;
-//		}
-
 	}
 
 	private static URLClassLoader createJREBundledClassloader(
 			ClassLoader parent, boolean swtAvailable) {
 		if (FXClassloaderConfigurator.DEBUG) {
 			System.err
-					.println("MyBundleClassLoader#createJREBundledClassloader - Started");
+					.println("MyBundleClassLoader#createJREBundledClassloader - Started"); //$NON-NLS-1$
 		}
 
 		try {
@@ -175,19 +155,19 @@ public class FXClassLoader extends ClassLoaderHook {
 			try {
 				javaHome = new File(System.getProperty("java.home")).getCanonicalFile(); //$NON-NLS-1$
 			} catch (IOException e) {
-				throw new IllegalStateException("Unable to locate java home", e);
+				throw new IllegalStateException("Unable to locate java home", e); //$NON-NLS-1$
 			}
 			if (!javaHome.exists()) {
-				throw new IllegalStateException("The java home '"
-						+ javaHome.getAbsolutePath() + "' does not exits");
+				throw new IllegalStateException("The java home '" //$NON-NLS-1$
+						+ javaHome.getAbsolutePath() + "' does not exits"); //$NON-NLS-1$
 			}
 
 			// Java 8 and maybe one day Java 7
 			File jarFile = new File(new File(new File(
-					javaHome.getAbsolutePath(), "lib"), "ext"), "jfxrt.jar");
+					javaHome.getAbsolutePath(), "lib"), "ext"), "jfxrt.jar"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			if (FXClassloaderConfigurator.DEBUG) {
 				System.err
-						.println("MyBundleClassLoader#createJREBundledClassloader - Assumed location (Java 8/Java 7): "
+						.println("MyBundleClassLoader#createJREBundledClassloader - Assumed location (Java 8/Java 7): " //$NON-NLS-1$
 								+ jarFile.getAbsolutePath());
 			}
 
@@ -198,29 +178,29 @@ public class FXClassLoader extends ClassLoaderHook {
 				if (swtAvailable) {
 					if (FXClassloaderConfigurator.DEBUG) {
 						System.err
-								.println("MyBundleClassLoader#createJREBundledClassloader - SWT is available use different loading strategy");
+								.println("MyBundleClassLoader#createJREBundledClassloader - SWT is available use different loading strategy"); //$NON-NLS-1$
 					}
 
 					// Since JDK8b113 the swt stuff is in its own jar
 					File swtFX = new File(new File(javaHome.getAbsolutePath(),
-							"lib"), "jfxswt.jar");
+							"lib"), "jfxswt.jar");  //$NON-NLS-1$//$NON-NLS-2$
 
 					if (FXClassloaderConfigurator.DEBUG) {
 						System.err
-								.println("MyBundleClassLoader#createJREBundledClassloader - Searching for SWT-FX integration at "
+								.println("MyBundleClassLoader#createJREBundledClassloader - Searching for SWT-FX integration at " //$NON-NLS-1$
 										+ swtFX.getAbsolutePath());
 					}
 
 					if (swtFX.exists()) {
 						if (FXClassloaderConfigurator.DEBUG) {
 							System.err
-									.println("MyBundleClassLoader#createJREBundledClassloader - Found SWT/FX");
+									.println("MyBundleClassLoader#createJREBundledClassloader - Found SWT/FX"); //$NON-NLS-1$
 						}
 
 						ClassLoader extClassLoader = ClassLoader
 								.getSystemClassLoader().getParent();
 						if (extClassLoader.getClass().getName()
-								.equals("sun.misc.Launcher$ExtClassLoader")) {
+								.equals("sun.misc.Launcher$ExtClassLoader")) { //$NON-NLS-1$
 							return new URLClassLoader(
 									new URL[] { swtFX.getCanonicalFile()
 											.toURI().toURL() },
@@ -233,7 +213,7 @@ public class FXClassLoader extends ClassLoaderHook {
 					} else {
 						if (FXClassloaderConfigurator.DEBUG) {
 							System.err
-									.println("MyBundleClassLoader#createJREBundledClassloader - Assume that SWT-FX part of jfxrt.jar");
+									.println("MyBundleClassLoader#createJREBundledClassloader - Assume that SWT-FX part of jfxrt.jar"); //$NON-NLS-1$
 						}
 
 						URL url = jarFile.getCanonicalFile().toURI().toURL();
@@ -248,7 +228,7 @@ public class FXClassLoader extends ClassLoaderHook {
 						ClassLoader extClassLoader = ClassLoader
 								.getSystemClassLoader().getParent();
 						if (extClassLoader.getClass().getName()
-								.equals("sun.misc.Launcher$ExtClassLoader")) {
+								.equals("sun.misc.Launcher$ExtClassLoader")) { //$NON-NLS-1$
 							return new URLClassLoader(new URL[] {},
 									extClassLoader);
 						}
@@ -263,11 +243,11 @@ public class FXClassLoader extends ClassLoaderHook {
 			}
 
 			// Java 7
-			jarFile = new File(new File(javaHome.getAbsolutePath(), "lib"),
-					"jfxrt.jar");
+			jarFile = new File(new File(javaHome.getAbsolutePath(), "lib"), //$NON-NLS-1$
+					"jfxrt.jar"); //$NON-NLS-1$
 			if (FXClassloaderConfigurator.DEBUG) {
 				System.err
-						.println("MyBundleClassLoader#createJREBundledClassloader - Assumed location (Java 7): "
+						.println("MyBundleClassLoader#createJREBundledClassloader - Assumed location (Java 7): " //$NON-NLS-1$
 								+ jarFile.getAbsolutePath());
 			}
 
@@ -277,16 +257,15 @@ public class FXClassLoader extends ClassLoaderHook {
 			} else {
 				if (FXClassloaderConfigurator.DEBUG) {
 					System.err
-							.println("MyBundleClassLoader#createJREBundledClassloader - File does not exist.");
+							.println("MyBundleClassLoader#createJREBundledClassloader - File does not exist."); //$NON-NLS-1$
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
 			if (FXClassloaderConfigurator.DEBUG) {
 				System.err
-						.println("MyBundleClassLoader#createJREBundledClassloader - Ended");
+						.println("MyBundleClassLoader#createJREBundledClassloader - Ended"); //$NON-NLS-1$
 			}
 		}
 
@@ -322,10 +301,10 @@ public class FXClassLoader extends ClassLoaderHook {
 		@Override
 		protected Class<?> findClass(String name) throws ClassNotFoundException {
 			try {
-				return primaryLoader.loadClass(name);
+				return this.primaryLoader.loadClass(name);
 			} catch (ClassNotFoundException c) {
 				try {
-					return lastResortLoader.loadClass(name);
+					return this.lastResortLoader.loadClass(name);
 				} catch (ClassNotFoundException tmp) {
 					throw c;
 				}
@@ -334,9 +313,9 @@ public class FXClassLoader extends ClassLoaderHook {
 
 		@Override
 		protected URL findResource(String name) {
-			URL url = primaryLoader.getResource(name);
+			URL url = this.primaryLoader.getResource(name);
 			if (url == null) {
-				url = lastResortLoader.getResource(name);
+				url = this.lastResortLoader.getResource(name);
 			}
 			return url;
 		}
@@ -344,8 +323,8 @@ public class FXClassLoader extends ClassLoaderHook {
 		@Override
 		protected Enumeration<URL> findResources(String name)
 				throws IOException {
-			final Enumeration<URL> en1 = primaryLoader.getResources(name);
-			final Enumeration<URL> en2 = lastResortLoader.getResources(name);
+			final Enumeration<URL> en1 = this.primaryLoader.getResources(name);
+			final Enumeration<URL> en2 = this.lastResortLoader.getResources(name);
 
 			return new Enumeration<URL>() {
 				@Override
@@ -368,26 +347,27 @@ public class FXClassLoader extends ClassLoaderHook {
 
 		@Override
 		public URL getResource(String name) {
-			URL url = primaryLoader.getResource(name);
+			URL url = this.primaryLoader.getResource(name);
 			if (url == null) {
-				url = lastResortLoader.getResource(name);
+				url = this.lastResortLoader.getResource(name);
 			}
 			return url;
 		}
 
+		@SuppressWarnings("resource")
 		@Override
 		public InputStream getResourceAsStream(String name) {
-			InputStream in = primaryLoader.getResourceAsStream(name);
+			InputStream in = this.primaryLoader.getResourceAsStream(name);
 			if (in == null) {
-				in = lastResortLoader.getResourceAsStream(name);
+				in = this.lastResortLoader.getResourceAsStream(name);
 			}
 			return in;
 		}
 
 		@Override
 		public Enumeration<URL> getResources(String name) throws IOException {
-			final Enumeration<URL> en1 = primaryLoader.getResources(name);
-			final Enumeration<URL> en2 = lastResortLoader.getResources(name);
+			final Enumeration<URL> en1 = this.primaryLoader.getResources(name);
+			final Enumeration<URL> en2 = this.lastResortLoader.getResources(name);
 
 			return new Enumeration<URL>() {
 				@Override
@@ -422,10 +402,10 @@ public class FXClassLoader extends ClassLoaderHook {
 						e.printStackTrace();
 					}
 				}
-				return primaryLoader.loadClass(name);
+				return this.primaryLoader.loadClass(name);
 			} catch (ClassNotFoundException c) {
 				try {
-					return lastResortLoader.loadClass(name);
+					return this.lastResortLoader.loadClass(name);
 				} catch (ClassNotFoundException tmp) {
 					throw c;
 				}
