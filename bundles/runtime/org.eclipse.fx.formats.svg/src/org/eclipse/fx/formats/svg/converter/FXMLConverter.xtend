@@ -1038,6 +1038,8 @@ class FXMLConverter {
 				return "ROUND"
 			case Stroke_linecap::SQUARE:
 				return "SQUARE"
+			case Stroke_linecap::INHERIT:
+				return "INHERIT"
 		}
 		return "BUTT";
 	}
@@ -1050,6 +1052,8 @@ class FXMLConverter {
 				return "MITER"
 			case Stroke_linejoin::ROUND:
 				return "ROUND"
+			case Stroke_linejoin::INHERIT:
+				return "INHERIT"
 		}
 		return "BEVEL";
 	}
