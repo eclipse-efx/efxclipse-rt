@@ -17,7 +17,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
@@ -234,7 +233,7 @@ public class AdapterFactory {
 		}
 
 		@Override
-		public boolean addAll(E... elements) {
+		public boolean addAll(@SuppressWarnings("unchecked") E... elements) {
 			return this.list.addAll(Arrays.asList(elements));
 		}
 
@@ -352,17 +351,17 @@ public class AdapterFactory {
 		}
 
 		@Override
-		public boolean removeAll(E... elements) {
+		public boolean removeAll(@SuppressWarnings("unchecked") E... elements) {
 			return this.list.removeAll(Arrays.asList(elements));
 		}
 
 		@Override
-		public boolean retainAll(E... elements) {
+		public boolean retainAll(@SuppressWarnings("unchecked") E... elements) {
 			return this.list.retainAll(Arrays.asList(elements));
 		}
 
 		@Override
-		public boolean setAll(E... elements) {
+		public boolean setAll(@SuppressWarnings("unchecked") E... elements) {
 			// TODO Improve performance
 			this.list.clear();
 			return this.list.addAll(Arrays.asList(elements));
