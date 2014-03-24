@@ -32,12 +32,17 @@ public abstract class CachingContextFunction extends ContextFunction {
 	}
 
 	@Override
-	public Object compute(IEclipseContext context) {
+	public final Object compute(IEclipseContext context) {
 		Object rv = context.get("cached_" + this.clazz.getName()); //$NON-NLS-1$
 		if (rv == null) {
 			rv = ContextInjectionFactory.make(this.clazz, context);
 			context.set("cached_" + this.clazz.getName(), rv); //$NON-NLS-1$
 		}
 		return rv;
+	}
+	
+	@Override
+	public final Object compute(IEclipseContext context, String contextKey) {
+		return super.compute(context, contextKey);
 	}
 }
