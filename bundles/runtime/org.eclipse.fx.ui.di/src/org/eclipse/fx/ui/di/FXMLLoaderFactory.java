@@ -10,10 +10,37 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.di;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * Factory to build an {@link FXMLLoader}
+ */
 public interface FXMLLoaderFactory {
-	public static final String CONTEXT_KEY = "fxmlcomponent";
-	
-	public <N> FXMLBuilder<N> loadBundleRelative(String relativePath);
-	public <N> FXMLBuilder<N> loadRequestorRelative(String relativePath);
+	/**
+	 * Context key used
+	 */
+	public static final String CONTEXT_KEY = "fxmlcomponent"; //$NON-NLS-1$
+
+	/**
+	 * Load the fxml file relative to the bundle the loading class is in,
+	 * similar to pure java {@link ClassLoader#getResource(String)}
+	 * 
+	 * @param relativePath
+	 *            the relative path to the bundle classpath
+	 * @return the builder
+	 */
+	@NonNull
+	public <N> FXMLBuilder<N> loadBundleRelative(@NonNull String relativePath);
+
+	/**
+	 * Load the fxml file relative to the class requesting the loading, similar
+	 * to pure java {@link Class#getResource(String)}
+	 * 
+	 * @param relativePath
+	 *            the relative path from the class
+	 * @return the builder
+	 */
+	@NonNull
+	public <N> FXMLBuilder<N> loadRequestorRelative(@Nullable String relativePath);
 }

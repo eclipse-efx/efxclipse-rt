@@ -62,7 +62,7 @@ public interface FXMLBuilder<N> {
 	 * @throws IOException
 	 *             if there is a problem loading the fxml
 	 */
-	<C> Data<C, N> loadWithController() throws IOException;
+	<C> Data<N,C> loadWithController() throws IOException;
 
 	/**
 	 * Data struct holing root node and controller
