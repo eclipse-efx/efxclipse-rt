@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.di;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Map;
@@ -58,7 +59,7 @@ public abstract class BasicResourceProvider implements ResourceProviderService {
 
 	@Override
 	@Nullable
-	public Image getImage(@NonNull String key) {
+	public Image getImage(@NonNull String key) throws IOException {
 		URL url = FileLocator.find(this.context.getBundle(),
 				new Path(this.properties.get(key)), null);
 
@@ -67,6 +68,11 @@ public abstract class BasicResourceProvider implements ResourceProviderService {
 				return new Image(stream);
 			} catch (Exception e) {
 				this.logger.error("Unabled to load image with key '"+key+"' at URL '"+url+"'", e);  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+				if( e instanceof IOException ) {
+					throw (IOException)e;
+				} else {
+					throw new IOException(e);
+				}
 			}
 		}
 		

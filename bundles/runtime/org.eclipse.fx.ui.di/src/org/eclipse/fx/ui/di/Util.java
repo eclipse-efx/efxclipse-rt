@@ -10,25 +10,37 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.di;
 
-import org.eclipse.fx.core.Callback;
-
 import javafx.application.Platform;
 
-public abstract class Util<T> implements Callback<T> {
-	
-	public static <T> Util<T> onFX(final Callback<T> callback) {
-		if( callback instanceof Util<?> ) {
-			return (Util<T>) callback;
+import org.eclipse.fx.core.Callback;
+
+/**
+ * Utilities
+ * 
+ * @param <T>
+ *            the type passed to the callback
+ */
+public abstract class Util<T> {
+	/**
+	 * Wrap a give callback to always run on the javafx threa
+	 * 
+	 * @param callback
+	 *            the callback
+	 * @return a wrapped callback
+	 */
+	public static <T> Callback<T> onFX(final Callback<T> callback) {
+		if (callback instanceof SyncCallback<?>) {
+			return (SyncCallback<T>) callback;
 		}
-		return new Util<T>() {
+		return new SyncCallback<T>() {
 
 			@Override
 			public void call(final T value) {
-				if( Platform.isFxApplicationThread() ) {
+				if (Platform.isFxApplicationThread()) {
 					callback.call(value);
 				} else {
 					Platform.runLater(new Runnable() {
-						
+
 						@Override
 						public void run() {
 							callback.call(value);
@@ -37,5 +49,9 @@ public abstract class Util<T> implements Callback<T> {
 				}
 			}
 		};
+	}
+
+	static abstract class SyncCallback<T> implements Callback<T> {
+		// nothing to to do
 	}
 }

@@ -10,9 +10,25 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.di;
 
+import java.io.IOException;
+
 import javafx.scene.image.Image;
 
+import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * Service who maps image keys to real images
+ */
 public interface ResourceProviderService {
-	public Image getImage(String key);
+	/**
+	 * Get the image with the given key
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the image
+	 * @throws IOException
+	 *             in case something goes wrong
+	 */
+	@Nullable
+	public Image getImage(String key) throws IOException;
 }

@@ -10,11 +10,36 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.di;
 
+import java.io.IOException;
+
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.scene.image.Image;
 
-import org.eclipse.core.runtime.CoreException;
-
+/**
+ * A resource pool attached to a context releasing the resources when disposed
+ */
 public interface ResourcePool {
-	public Image getImage(String imageKey) throws CoreException;
-	public Image getImageUnchecked(String imageKey);
+	/**
+	 * Get a registered image from the pool
+	 * 
+	 * @param imageKey
+	 *            the image key
+	 * @return the image
+	 * @throws IOException
+	 *             if there's a problem loading the image
+	 */
+	@NonNull
+	public Image getImage(@NonNull String imageKey) throws IOException;
+
+	/**
+	 * Get a registered image or <code>null</code>
+	 * 
+	 * @param imageKey
+	 *            the image key
+	 * @return the image
+	 */
+	@Nullable
+	public Image getImageUnchecked(@NonNull String imageKey);
 }

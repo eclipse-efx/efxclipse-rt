@@ -22,27 +22,37 @@ import org.eclipse.fx.ui.di.FXMLLoaderFactory;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
 import org.osgi.framework.FrameworkUtil;
 
-
+/**
+ * DI Supplier to inject {@link FXMLLoader} into your DI-Bean
+ */
 @SuppressWarnings("restriction")
 public class FXMLLoaderSupplier extends ExtendedObjectSupplier {
 
 	@Override
-	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
+	public Object get(IObjectDescriptor descriptor, IRequestor requestor,
+			boolean track, boolean group) {
 		Requestor req = (Requestor) requestor;
 		ContextObjectSupplier sub = (ContextObjectSupplier) req
 				.getPrimarySupplier();
 		final IEclipseContext context = sub.getContext();
-		final Class<?> requestingClass = requestor.getRequestingObject().getClass();
-		final boolean extended = descriptor.getQualifier(FXMLLoader.class).useExtendedLoader();
-		
+		final Class<?> requestingClass = requestor.getRequestingObject()
+				.getClass();
+		final boolean extended = descriptor.getQualifier(FXMLLoader.class)
+				.useExtendedLoader();
+
 		return new FXMLLoaderFactory() {
-			
+
+			@Override
 			public <N> FXMLBuilder<N> loadRequestorRelative(String relativePath) {
-				return InjectingFXMLLoader.create(context, requestingClass, relativePath, extended);
+				return InjectingFXMLLoader.create(context, requestingClass,
+						relativePath, extended);
 			}
-			
+
+			@Override
 			public <N> FXMLBuilder<N> loadBundleRelative(String relativePath) {
-				return InjectingFXMLLoader.create(context, FrameworkUtil.getBundle(requestingClass), relativePath, extended);
+				return InjectingFXMLLoader.create(context,
+						FrameworkUtil.getBundle(requestingClass), relativePath,
+						extended);
 			}
 		};
 	}

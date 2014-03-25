@@ -15,8 +15,9 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.ui.di.internal.ResourceServiceImpl.ResourcePool;
 
-
-@SuppressWarnings("restriction")
+/**
+ * Context function who creates a resource pool
+ */
 public class ResourcePoolFactory extends ContextFunction {
 
 	@Override

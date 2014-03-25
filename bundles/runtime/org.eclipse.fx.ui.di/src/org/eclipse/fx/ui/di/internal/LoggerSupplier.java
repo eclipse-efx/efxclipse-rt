@@ -19,6 +19,9 @@ import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.LoggerFactory;
 
+/**
+ * DI Extension to inject {@link Log} into your DI-Bean
+ */
 @SuppressWarnings("restriction")
 public class LoggerSupplier extends ExtendedObjectSupplier {
 

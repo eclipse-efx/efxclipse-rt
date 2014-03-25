@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.di.internal;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ import javafx.scene.image.Image;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
-import org.eclipse.core.runtime.CoreException;
+import org.eclipse.fx.osgi.util.LoggerCreator;
 import org.eclipse.fx.ui.di.ResourceProviderService;
 import org.eclipse.fx.ui.di.ResourceService;
 import org.osgi.framework.Bundle;
@@ -30,36 +31,42 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
-
+/**
+ * Resource service implementation
+ */
 public class ResourceServiceImpl implements ResourceService {
 	static class PooledResource<T> implements IPooledResource<T> {
-		private int count;
+		int count;
 		private T resource;
 		private String id;
 		private ResourceServiceImpl resourceService;
 
-		PooledResource(ResourceServiceImpl resourceService, String id, T resource) {
+		PooledResource(ResourceServiceImpl resourceService, String id,
+				T resource) {
 			this.id = id;
 			this.count = 1;
 			this.resourceService = resourceService;
 			this.resource = resource;
 		}
 
+		@Override
 		public String getId() {
-			return id;
+			return this.id;
 		}
 
+		@Override
 		public T getResource() {
-			return resource;
+			return this.resource;
 		}
 
+		@Override
 		public void dispose() {
 			this.count--;
 			if (this.count == 0) {
-				resourceService.removePooledResource(this);
-				resource = null;
-				id = null;
-				resourceService = null;
+				this.resourceService.removePooledResource(this);
+				this.resource = null;
+				this.id = null;
+				this.resourceService = null;
 			}
 		}
 	}
@@ -73,105 +80,116 @@ public class ResourceServiceImpl implements ResourceService {
 			this.resourceService = (ResourceServiceImpl) resourceService;
 		}
 
-		public Image getImage(String imageKey) throws CoreException {
+		@Override
+		public Image getImage(String imageKey) throws IOException {
 			IPooledResource<Image> image = null;
 
-			for (IPooledResource<Image> img : pooledImages) {
+			for (IPooledResource<Image> img : this.pooledImages) {
 				if (img.getId().equals(imageKey)) {
 					image = img;
 				}
 			}
 			if (image == null) {
-				image = resourceService.getImage(imageKey);
-				pooledImages.add(image);
+				image = this.resourceService.getImage(imageKey);
+				this.pooledImages.add(image);
 			}
 
 			return image.getResource();
 		}
 
+		@Override
 		public Image getImageUnchecked(String imageKey) {
 			try {
 				return getImage(imageKey);
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// don't bother
 			}
 			return null;
 		}
 
+		@Override
 		@PreDestroy
 		public void dispose() {
-			for (IPooledResource<Image> img : pooledImages) {
+			for (IPooledResource<Image> img : this.pooledImages) {
 				img.dispose();
 			}
-			pooledImages = null;
+			this.pooledImages = null;
 		}
 	}
-	
+
 	private Map<String, PooledResource<Image>> imagePool = new HashMap<String, PooledResource<Image>>();
 
 	private BundleContext context;
 
+	/**
+	 * Create an instance
+	 */
 	public ResourceServiceImpl() {
 		Bundle b = FrameworkUtil.getBundle(ResourceServiceImpl.class);
-		context = b.getBundleContext();
+		this.context = b.getBundleContext();
 	}
-	
-	public IPooledResource<Image> getImage(String key) {
+
+	@Override
+	public IPooledResource<Image> getImage(String key) throws IOException {
 		return loadResource(key);
 	}
 
 	@SuppressWarnings("unchecked")
-	private <R> PooledResource<R> loadResource(String key) {
+	private <R> PooledResource<R> loadResource(String key) throws IOException {
 		PooledResource<R> resource = null;
 
-		resource = (PooledResource<R>) imagePool.get(key);
-		
+		resource = (PooledResource<R>) this.imagePool.get(key);
+
 		if (resource != null && resource.getResource() != null) {
 			resource.count++;
 		} else {
-			resource = new PooledResource<R>(this, key,(R) lookupResource(key));
+			resource = new PooledResource<R>(this, key, (R) lookupResource(key));
 
-			imagePool.put(key, (PooledResource<Image>) resource);
+			this.imagePool.put(key, (PooledResource<Image>) resource);
 		}
 
 		return resource;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	private <R> R lookupResource(String key) {
+	private <R> R lookupResource(String key) throws IOException {
 		ResourceProviderService provider = lookupOSGI(key);
 		if (provider != null) {
 			return (R) provider.getImage(key);
 		}
-		
-		throw new IllegalArgumentException("No provider known for '" + key
-				+ "'.");
+
+		throw new IOException("No provider known for '" + key + "'."); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private ResourceProviderService lookupOSGI(String key) {
 		try {
-			Collection<ServiceReference<ResourceProviderService>> refs = context
-					.getServiceReferences(ResourceProviderService.class, "("
-							+ key + "=*)");
+			Collection<ServiceReference<ResourceProviderService>> refs = this.context
+					.getServiceReferences(ResourceProviderService.class, "(" //$NON-NLS-1$
+							+ key + "=*)"); //$NON-NLS-1$
 			if (!refs.isEmpty()) {
-				ServiceReference<ResourceProviderService> ref = refs
-						.iterator().next();
-				return context.getService(ref);
+				ServiceReference<ResourceProviderService> ref = refs.iterator()
+						.next();
+				return this.context.getService(ref);
 			}
 		} catch (InvalidSyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LoggerCreator.createLogger(getClass()).error("Unable to query registry", e); //$NON-NLS-1$
 		}
 		return null;
 	}
-	
+
+	@Override
 	public IDiposeableResourcePool getResourcePool() {
 		return new ResourcePool(this);
 	}
-	
+
+	/**
+	 * Remove a resource from the pool
+	 * 
+	 * @param resource
+	 *            the resource to remove
+	 */
 	public void removePooledResource(PooledResource<?> resource) {
-		imagePool.remove(resource.getId());
+		this.imagePool.remove(resource.getId());
 	}
-	
+
 }
