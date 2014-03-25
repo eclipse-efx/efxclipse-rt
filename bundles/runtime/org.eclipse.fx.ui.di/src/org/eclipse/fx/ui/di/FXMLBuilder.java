@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.util.BuilderFactory;
 
@@ -82,6 +83,7 @@ public interface FXMLBuilder<N> {
 		 * @return the controller, might be <code>null</code> if the fxml is not
 		 *         associated to a controller
 		 */
+		@Nullable
 		public C getController();
 	}
 }
