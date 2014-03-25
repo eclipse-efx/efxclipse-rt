@@ -10,18 +10,34 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.dialogs;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Window;
 
+/**
+ * Dialog to prompt the user for a value
+ */
 public class PromptInputDialog extends Dialog {
 	private String text;
 	private TextField f;
 	private String input;
-	
-	public PromptInputDialog(Window parent, String title, String text) {
+
+	/**
+	 * Create a prompt dialog
+	 * 
+	 * @param parent
+	 *            the parent
+	 * @param title
+	 *            the window title
+	 * @param text
+	 *            the prompt text
+	 */
+	public PromptInputDialog(@Nullable Window parent, @NonNull String title, @NonNull String text) {
 		super(parent, title);
 		this.text = text;
 	}
@@ -29,21 +45,24 @@ public class PromptInputDialog extends Dialog {
 	@Override
 	protected Node createDialogArea() {
 		HBox box = new HBox(5);
-		box.getChildren().add(new Label(text));
-		
-		f = new TextField();
-		box.getChildren().add(f);
-		
+		box.getChildren().add(new Label(this.text));
+
+		this.f = new TextField();
+		box.getChildren().add(this.f);
+
 		return box;
 	}
-	
+
 	@Override
 	protected void okPressed() {
+		this.input = this.f.getText();
 		super.okPressed();
-		input = f.getText();
 	}
-	
+
+	/**
+	 * @return the input
+	 */
 	public String getInput() {
-		return input;
+		return this.input;
 	}
 }

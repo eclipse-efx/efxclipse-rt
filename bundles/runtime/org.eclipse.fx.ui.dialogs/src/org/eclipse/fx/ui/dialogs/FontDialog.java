@@ -10,11 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.dialogs;
 
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,157 +26,190 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+/**
+ * A font selection dialog
+ */
 public class FontDialog extends Dialog {
-	private ObjectProperty<Font> font = new SimpleObjectProperty<>(this,"font",Font.getDefault());
-	
-	public FontDialog(Window parent, String title) {
+	@NonNull
+	private final ObjectProperty<Font> font = new SimpleObjectProperty<>(this,
+			"font", Font.getDefault()); //$NON-NLS-1$
+
+	/**
+	 * Create a new dialog
+	 * 
+	 * @param parent
+	 *            the parent
+	 * @param title
+	 *            the title
+	 */
+	public FontDialog(@Nullable Window parent, @NonNull String title) {
 		super(parent, title);
 	}
-	
+
+	/**
+	 * @return the font selected
+	 */
+	@NonNull
 	public ObjectProperty<Font> font() {
-		return font;
+		return this.font;
 	}
 
-	public void setFont(Font f) {
-		font.set(f);
+	/**
+	 * Update the current selected font
+	 * 
+	 * @param f
+	 *            the new font
+	 */
+	public void setFont(@Nullable Font f) {
+		this.font.set(f);
 	}
-	
+
+	/**
+	 * @return the current font
+	 */
+	@Nullable
 	public Font getFont() {
-		return font.get();
+		return this.font.get();
 	}
-	
+
 	@Override
 	protected Node createDialogArea() {
 		VBox p = new VBox(10);
-		
+
 		{
 			HBox top = new HBox(10);
-			
+
 			{
 				VBox container = new VBox();
-				container.getChildren().add(new Label("Family:"));
-				
+				container.getChildren().add(new Label(Messages.getString("FontDialog.Family"))); //$NON-NLS-1$
+
 				TextField f = new TextField();
-				f.setText(font.get().getFamily());
+				f.setText(this.font.get().getFamily());
 				f.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
 					@Override
 					public void handle(KeyEvent event) {
 						// TODO Auto-generated method stub
-						
+
 					}
 				});
 				container.getChildren().add(f);
-				
+
 				final ListView<String> v = new ListView<String>();
 				v.setItems(FXCollections.observableArrayList(Font.getFamilies()));
-				v.getSelectionModel().select(font.get().getFamily());
-				v.scrollTo(font.get().getFamily());
+				v.getSelectionModel().select(this.font.get().getFamily());
+				v.scrollTo(this.font.get().getFamily());
 				v.setPrefHeight(250);
-				
+
 				container.getChildren().add(v);
-				
+
 				top.getChildren().add(container);
 			}
-			
+
 			{
 				VBox container = new VBox();
-				container.getChildren().add(new Label("Posture:"));
-				
-				FontPosture posture = font.get().getStyle().toLowerCase().contains("italic") ? FontPosture.ITALIC : FontPosture.REGULAR;
+				container.getChildren().add(new Label(Messages.getString("FontDialog.Posture"))); //$NON-NLS-1$
+
+				FontPosture posture = this.font.get().getStyle().toLowerCase()
+						.contains("italic") ? FontPosture.ITALIC //$NON-NLS-1$
+						: FontPosture.REGULAR;
 				TextField f = new TextField();
 				f.setText(posture.name());
 				container.getChildren().add(f);
-				
+
 				ListView<FontPosture> v = new ListView<>();
-				v.setItems(FXCollections.observableArrayList(FontPosture.values()));
-				
+				v.setItems(FXCollections.observableArrayList(FontPosture
+						.values()));
+
 				v.getSelectionModel().select(posture);
 				v.scrollTo(posture);
 				v.setPrefWidth(120);
 				v.setPrefHeight(250);
-				
+
 				container.getChildren().add(v);
-				
+
 				top.getChildren().add(container);
 			}
-			
+
 			{
 				VBox container = new VBox();
-				container.getChildren().add(new Label("Weight:"));
-				
+				container.getChildren().add(new Label(Messages.getString("FontDialog.Weight"))); //$NON-NLS-1$
+
 				TextField f = new TextField();
 				container.getChildren().add(f);
-								
+
 				ListView<FontWeight> v = new ListView<>();
-				v.setItems(FXCollections.observableArrayList(FontWeight.values()));
+				v.setItems(FXCollections.observableArrayList(FontWeight
+						.values()));
 				container.getChildren().add(v);
 				v.setPrefHeight(250);
 				v.setPrefWidth(120);
-				
+
 				top.getChildren().add(container);
 			}
-			
+
 			{
 				VBox container = new VBox();
-				container.getChildren().add(new Label("Size:"));
-				
+				container.getChildren().add(new Label(Messages.getString("FontDialog.Size"))); //$NON-NLS-1$
+
 				TextField f = new TextField();
-				f.setText(font.get().getSize()+"");
+				f.setText(this.font.get().getSize() + ""); //$NON-NLS-1$
 				container.getChildren().add(f);
-				
+
 				ListView<Double> v = new ListView<Double>();
-				ObservableList<Double> sizes = FXCollections.observableArrayList(8d,9d,10d,11d,12d,14d,16d,18d,20d,22d,24d,26d,28d,36d,48d,72d);
-				if( !sizes.contains(font.get().getSize()) ) {
-					for( int i = 0; i < sizes.size(); i++ ) {
-						if( font.get().getSize() > sizes.get(i) ) {
-							sizes.add(i, font.get().getSize());
+				ObservableList<Double> sizes = FXCollections
+						.observableArrayList(Double.valueOf(8d), Double.valueOf(9d), Double.valueOf(10d), Double.valueOf(11d), Double.valueOf(12d), Double.valueOf(14d), Double.valueOf(16d),
+								Double.valueOf(18d), Double.valueOf(20d), Double.valueOf(22d), Double.valueOf(24d), Double.valueOf(26d), Double.valueOf(28d), Double.valueOf(36d), Double.valueOf(48d), Double.valueOf(72d));
+				if (!sizes.contains(Double.valueOf(this.font.get().getSize()))) {
+					for (int i = 0; i < sizes.size(); i++) {
+						if (this.font.get().getSize() > sizes.get(i).doubleValue()) {
+							sizes.add(i, Double.valueOf(this.font.get().getSize()));
 							break;
 						}
 					}
 				}
 				v.setItems(sizes);
-				v.getSelectionModel().select(font.get().getSize());
+				v.getSelectionModel().select(Double.valueOf(this.font.get().getSize()));
 				v.setPrefWidth(80);
 				v.setPrefHeight(250);
 				container.getChildren().add(v);
-				
+
 				top.getChildren().add(container);
 			}
-			
+
 			p.getChildren().add(top);
 		}
-		
+
 		{
 			TitledPane tb = new TitledPane();
 			tb.setCollapsible(false);
-			tb.setText("Preview");
-			
-			TextField f = new TextField("AaBbYyZz");
-			f.fontProperty().bind(font);
+			tb.setText(Messages.getString("FontDialog.Preview")); //$NON-NLS-1$
+
+			TextField f = new TextField("AaBbYyZz"); //$NON-NLS-1$
+			f.fontProperty().bind(this.font);
 			f.setPrefHeight(80);
 			tb.setContent(f);
-			
+
 			p.getChildren().add(tb);
 		}
-		
-		
+
 		return p;
 	}
-	
-	public static void main(String[] args) {
-		Application.launch(TempApp.class, args);
-	}
-	
-	public static class TempApp extends Application {
-		@Override
-		public void start(Stage primaryStage) throws Exception {
-			FontDialog fd = new FontDialog(null, "Fonts");
-			fd.open();
-		}
-	}
+
+//	public static void main(String[] args) {
+//		Application.launch(TempApp.class, args);
+//	}
+
+//	public static class TempApp extends Application {
+//		@Override
+//		public void start(Stage primaryStage) throws Exception {
+//			FontDialog fd = new FontDialog(null, "Fonts");
+//			fd.open();
+//		}
+//	}
 }

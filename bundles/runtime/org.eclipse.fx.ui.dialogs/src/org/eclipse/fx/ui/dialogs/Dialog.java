@@ -130,8 +130,8 @@ public abstract class Dialog {
 	protected List<Button> createButtonsForBar() {
 		// TODO Do we need to reorder?
 		List<Button> rv = new ArrayList<Button>();
-		rv.add(createButtonForBar(CANCEL_BUTTON, "Cancel", isOkDefault(CANCEL_BUTTON), isCancelDefault(CANCEL_BUTTON)));
-		rv.add(createButtonForBar(OK_BUTTON, "Ok", isOkDefault(OK_BUTTON), isCancelDefault(OK_BUTTON)));
+		rv.add(createButtonForBar(CANCEL_BUTTON, Messages.getString("Dialog.Cancel"), isOkDefault(CANCEL_BUTTON), isCancelDefault(CANCEL_BUTTON))); //$NON-NLS-1$
+		rv.add(createButtonForBar(OK_BUTTON, Messages.getString("Dialog.Ok"), isOkDefault(OK_BUTTON), isCancelDefault(OK_BUTTON))); //$NON-NLS-1$
 		return rv;
 	}
 
