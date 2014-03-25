@@ -22,31 +22,35 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * Context function who can adapt an {@link Composite} and a {@link JPanel} to a
+ * {@link BorderPane}
+ */
 public class InteroptContextFunction extends ContextFunction {
 
 	@Override
 	public Object compute(IEclipseContext context) {
-		Object comp = context.get("org.eclipse.swt.widgets.Composite");
-		
-		if( comp != null ) {
+		Object comp = context.get("org.eclipse.swt.widgets.Composite"); //$NON-NLS-1$
+
+		if (comp != null) {
 			BorderPane pane = new BorderPane();
 			FXCanvas canvas = new FXCanvas((Composite) comp, SWT.NONE);
 			canvas.setScene(new Scene(pane));
-			
+
 			return pane;
 		} else {
-			JPanel jpanel = (JPanel) context.get("javax.swing.JPanel");
-			
-			if( jpanel != null ) {
+			JPanel jpanel = (JPanel) context.get("javax.swing.JPanel"); //$NON-NLS-1$
+
+			if (jpanel != null) {
 				BorderPane pane = new BorderPane();
 				JFXPanel fxPanel = new JFXPanel();
 				fxPanel.setScene(new Scene(pane));
 				jpanel.add(fxPanel);
-				
+
 				return pane;
 			}
 		}
-		
+
 		return null;
 	}
 
