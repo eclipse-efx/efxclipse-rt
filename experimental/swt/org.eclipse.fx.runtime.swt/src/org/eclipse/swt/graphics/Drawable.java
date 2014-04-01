@@ -53,6 +53,7 @@ public interface Drawable {
 		public void dispose();
 		public void setBackgroundPattern(Pattern pattern);
 		public void setForegroundPattern(Pattern pattern);
+		public void drawOval(int x, int y, int width, int height);
 	}
 	
 	public DrawableGC internal_new_GC();

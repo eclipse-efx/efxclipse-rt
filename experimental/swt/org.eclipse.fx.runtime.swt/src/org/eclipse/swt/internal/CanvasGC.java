@@ -114,6 +114,12 @@ public class CanvasGC implements DrawableGC {
 	}
 	
 	@Override
+	public void drawOval(int x, int y, int width, int height) {
+		canvas.getGraphicsContext2D().strokeOval(x, y, width, height);
+		snapshot();
+	}
+	
+	@Override
 	public void setAlpha(int alpha) {
 		canvas.getGraphicsContext2D().setGlobalAlpha(alpha / 255.0);
 	}

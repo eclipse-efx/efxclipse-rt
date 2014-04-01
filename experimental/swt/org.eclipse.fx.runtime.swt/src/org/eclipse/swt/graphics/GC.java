@@ -93,11 +93,11 @@ public class GC extends Resource {
 	public void drawLine(int x1, int y1, int x2, int y2) {
 		gc.drawLine(x1,y1,x2,y2);
 	}
-//	
-//	public void drawOval(int x, int y, int width, int height) {
-//		
-//	}
-//	
+	
+	public void drawOval(int x, int y, int width, int height) {
+		gc.drawOval(x,y,width,height);
+	}
+	
 	public void drawPath(Path path) {
 		gc.drawPath(path);
 	}

@@ -117,7 +117,7 @@ Import-Package: com.sun.glass.events;version="2.2.0",
  javafx.stage;version="2.0.0",
  javafx.util;version="2.0.0",
  javafx.util.converter;version="2.2.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.swt,
  org.eclipse.swt.accessibility,
  org.eclipse.swt.browser,

@@ -322,6 +322,11 @@ public abstract class Device implements Drawable {
 		public void dispose() {
 			Util.logNotImplemented();
 		}
+		
+		@Override
+		public void drawOval(int x, int y, int width, int height) {
+			Util.logNotImplemented();
+		}
 	}
 	
 	public Color getSystemColor (int id) {

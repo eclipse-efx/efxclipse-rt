@@ -240,4 +240,8 @@ public class MeasureGC implements DrawableGC {
 		// Not applicable
 	}
 
+	@Override
+	public void drawOval(int x, int y, int width, int height) {
+		// Not applicable
+	}
 }
