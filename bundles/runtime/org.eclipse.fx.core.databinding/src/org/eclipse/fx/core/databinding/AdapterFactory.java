@@ -374,18 +374,18 @@ public class AdapterFactory {
 			return this.list.addAll(col);
 		}
 
-		// FIXME Java8
-		// Default methods NOT YET supported by JDT-Core
-		// @Override
-		@Override
-		public void forEach(Consumer<? super E> action) {
-			this.list.forEach(action);
-		}
-
-		// @Override
-		public Spliterator<E> spliterator() {
-			return this.list.spliterator();
-		}
+//		// FIXME Java8
+//		// Default methods NOT YET supported by JDT-Core
+//		// @Override
+//		@Override
+//		public void forEach(Consumer<? super E> action) {
+//			this.list.forEach(action);
+//		}
+//
+//		// @Override
+//		public Spliterator<E> spliterator() {
+//			return this.list.spliterator();
+//		}
 	}
 
 	static class WrappedValue<E> implements ObservableWritableValue<E> {
