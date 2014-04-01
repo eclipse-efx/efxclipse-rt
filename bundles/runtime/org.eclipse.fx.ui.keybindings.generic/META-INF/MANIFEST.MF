@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Generic
 Bundle-SymbolicName: org.eclipse.fx.ui.keybindings.generic
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.commands;bundle-version="3.6.0",
  org.eclipse.fx.ui.keybindings;bundle-version="0.9.0",
