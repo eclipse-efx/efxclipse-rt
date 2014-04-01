@@ -4,7 +4,7 @@ Bundle-Name: EMF Databinding for JavaFX
 Bundle-SymbolicName: org.eclipse.fx.emf.databinding
 Bundle-Version: 1.0.0.qualifier
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javafx.animation;version="2.2.0",
  javafx.application;version="2.2.0",
  javafx.beans;version="2.2.0",
