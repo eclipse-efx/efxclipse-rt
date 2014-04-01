@@ -74,6 +74,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		listView = new ListView<>();
 		listView.getStyleClass().add("styled-text-area");
 		listView.setFocusTraversable(false);
+//		listView.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+//		});
 		listView.setCellFactory(new Callback<ListView<Line>, ListCell<Line>>() {
 			
 			@Override
@@ -472,22 +474,35 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			List<Segment> segments = new ArrayList<>();
 			
 			String line = getSkinnable().getContent().getLine(idx);
+			System.err.println("LINE: " + line);
 			if( line != null ) {
 				int start = getSkinnable().getContent().getOffsetAtLine(idx);
 				int length = line.length();
 				
 				StyleRange[] ranges = getSkinnable().getStyleRanges(start, length, true);
+				System.err.println("RANGES: " + ranges);
 				if( ranges == null ) {
 					return Collections.emptyList();
 				}
+				
+				int lastIndex = -1;
 				for( StyleRange r : ranges ) {
 					int begin = r.start-start;
 					int end = r.start-start+r.length;
+					if( lastIndex != -1 && lastIndex != begin ) {
+						Segment seg = new Segment();
+						seg.text = line.substring(lastIndex, begin);
+						seg.style = new StyleRange();
+						segments.add(seg);
+					}
 					Segment seg = new Segment();
 					seg.text = removeLineending(line.substring(begin, end));
 					seg.style = r;
 					segments.add(seg);
-				}	
+					lastIndex = end;
+				}
+				
+				System.err.println("SEGEMENTS: " + segments);
 			}
 			
 			return segments;

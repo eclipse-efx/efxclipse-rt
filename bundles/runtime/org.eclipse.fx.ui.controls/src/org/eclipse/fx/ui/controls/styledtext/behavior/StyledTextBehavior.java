@@ -10,6 +10,10 @@
 *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.behavior;
 
+import static javafx.scene.input.KeyEvent.KEY_PRESSED;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
@@ -28,15 +32,24 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import com.sun.javafx.scene.control.behavior.BehaviorBase;
+import com.sun.javafx.scene.control.behavior.KeyBinding;
 import com.sun.javafx.scene.text.HitInfo;
 
+@SuppressWarnings("restriction")
 public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
+	private static final List<KeyBinding> KEY_BINDINGS = new ArrayList<KeyBinding>();
+	
+	static {
+		KEY_BINDINGS.add(new KeyBinding(null, KEY_PRESSED, "Consume"));	
+	}
+	
 	public StyledTextBehavior(StyledTextArea styledText) {
-		super(styledText, null);
+		super(styledText, KEY_BINDINGS);
 	}
 
 	@Override
 	protected void callActionForEvent(KeyEvent arg0) {
+		System.err.println("ACTION CALL: " + arg0);
 		if( arg0.getEventType() == KeyEvent.KEY_PRESSED ) {
 			keyPressed(arg0, getControl().getContent().getLineAtOffset(getControl().getCaretOffset()));
 		}
@@ -61,6 +74,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	}
 	
 	private void keyPressed(KeyEvent event, int currentRowIndex) {
+		System.err.println("============> KEYPRESSED: " + event);
 		VerifyEvent evt = new VerifyEvent(getControl(), getControl(), event);
 		Event.fireEvent(getControl(), evt);
 		
