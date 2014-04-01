@@ -147,11 +147,18 @@
 						<extraClasspathElements>
 				            <extraClasspathElement>
 				                <groupId>com.oracle</groupId>
-				                <artifactId>javafx</artifactId>
+				                <artifactId>javafx8</artifactId>
 				                <version>8.0.0-SNAPSHOT</version>
 				                <systemPath>${java.home}/lib/jfxswt.jar</systemPath>
 				                <scope>system</scope>
 				            </extraClasspathElement>
+				            <extraClasspathElement>
+				            	<groupId>com.oracle</groupId>
+  								<artifactId>javafx2</artifactId>
+  								<version>2.2.0-SNAPSHOT</version>
+  								<scope>system</scope>
+  								<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
+  							</extraClasspathElement>
         				</extraClasspathElements> 
 					</configuration>
 				</plugin>
