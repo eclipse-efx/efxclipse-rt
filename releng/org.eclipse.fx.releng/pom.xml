@@ -27,8 +27,6 @@
 	</properties>
 
 	<modules>
-		<!-- OSGI Support -->
-		<module>../../bundles/runtime/org.eclipse.fx.osgi.util</module>
 		<!-- Core Modules -->
 		<module>../../bundles/runtime/org.eclipse.fx.core.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core.p2</module>
