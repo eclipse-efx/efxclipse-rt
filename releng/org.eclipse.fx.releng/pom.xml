@@ -28,6 +28,10 @@
 
 	<modules>
 		<!-- Core Modules -->
+		<module>../../bundles/runtime/org.eclipse.fx.osgi.util</module>
+		<module>../../bundles/runtime/org.eclipse.fx.core.log4j</module>
+		<module>../../bundles/runtime/org.eclipse.fx.core</module>
+		<module>../../bundles/runtime/org.eclipse.fx.core.guice</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core.p2</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core.di</module>
