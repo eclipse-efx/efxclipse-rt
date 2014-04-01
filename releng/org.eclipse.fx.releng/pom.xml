@@ -68,20 +68,15 @@
 		<module>../runtime/org.eclipse.fx.target.rcp.feature</module>
 		
 		<!-- Experimental -->
-		<module>../../experimental/swt/org.eclipse.fx.runtime.swt</module>
+		<!--  module>../../experimental/swt/org.eclipse.fx.runtime.swt</module>
 		<module>../../experimental/swt/org.eclipse.fx.runtime.swt.compat</module>
 		<module>../../experimental/swt/org.eclipse.fx.runtime.swtutil</module>
-		<module>../runtime/org.eclipse.fx.swtfx.feature</module>
+		<module>../runtime/org.eclipse.fx.swtfx.feature</module-->
 		
 		<module>../org.eclipse.fx.updatesite</module>
 	</modules>
 
 	<repositories>
-		<repository>
-			<id>luna</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/luna</url>
-		</repository>
 		<repository>
 			<id>luna</id>
 			<layout>p2</layout>
