@@ -54,14 +54,15 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 
 	@Override
 	protected boolean requiresFocus(WPart<Pane, Node, Node> widget) {
-		Node n = (Node) widget.getWidget();
-
-		do {
-			if (n.getUserData() == widget) {
-				return false;
-			}
-		} while ((n = n.getParent()) != null);
-
+//		Node n = (Node) widget.getWidget();
+//
+//		do {
+//			if (n.getUserData() == widget) {
+//				return false;
+//			}
+//		} while ((n = n.getParent()) != null);
+		
+		// By default return true see bug 431391
 		return true;
 	}
 	
@@ -106,10 +107,11 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					MPart domElement = getDomElement();
 					service.activate(domElement, true);
 					if (!checkFocusControl() && (domElement.getObject()!=null)) {
-						ContextInjectionFactory.invoke(domElement.getObject(), Focus.class, domElement.getContext(), null);
-						if (!checkFocusControl()) {
-							p.requestFocus();
-						}
+//						ContextInjectionFactory.invoke(domElement.getObject(), Focus.class, domElement.getContext(), null);
+//						if (!checkFocusControl()) {
+//							p.requestFocus();
+//						}
+						p.requestFocus();
 					}
 				}
 			});
