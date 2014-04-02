@@ -73,6 +73,8 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.fx.core.log.Log;
+import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
 import org.eclipse.fx.ui.dialogs.Dialog;
 import org.eclipse.fx.ui.dialogs.MessageDialog;
@@ -182,20 +184,28 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		
 		private boolean undecorated;
 		
+		private StageStyle stageStyle;
+		
 		private IEclipseContext applicationContext;
 		
 		private List<WWindow<Stage>> windows = new ArrayList<>();
 		
 		private WCallback<WWindow<Stage>, Boolean> onCloseCallback;
-				
+		
+		private Logger logger;
+		
 		@Inject
-		public WWindowImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MWindow mWindow, @Optional KeyBindingDispatcher dispatcher, MApplication application) {
+		public WWindowImpl(
+				@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MWindow mWindow, 
+				@Optional KeyBindingDispatcher dispatcher, 
+				MApplication application,
+				@Log Logger logger) {
 			this.mWindow = mWindow;
 			
 			applicationContext = application.getContext();
 			
 			if( mWindow.getPersistedState().get("fx.scene.3d") != null ) {
-				System.err.println("Usage of deprecated persisted state 'fx.scene.3d' please use 'efx.window.scene.3d' instead.");
+				logger.warning("Usage of deprecated persisted state 'fx.scene.3d' please use 'efx.window.scene.3d' instead.");
 				this.support3d = Boolean.parseBoolean(mWindow.getPersistedState().get("fx.scene.3d"));	
 			} else {
 				this.support3d = Boolean.parseBoolean(mWindow.getPersistedState().get("efx.window.scene.3d"));
@@ -208,10 +218,15 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if( decorationFXML == null ) {
 				decorationFXML = mWindow.getPersistedState().get("efx.window.decoration.fxml");
 			} else {
-				System.err.println("Useage of deprecated persisted state 'fx.stage.decoration' please use 'efx.window.decoration.fxml' instead.");
+				logger.warning("Useage of deprecated persisted state 'fx.stage.decoration' please use 'efx.window.decoration.fxml' instead.");
 			}
 			
-			this.undecorated = Boolean.parseBoolean(mWindow.getPersistedState().get("efx.window.undecorated"));
+			if( mWindow.getPersistedState().get("efx.window.stagestyle") != null ) {
+				this.stageStyle = StageStyle.valueOf(mWindow.getPersistedState().get("efx.window.stagestyle"));
+			} else if( mWindow.getPersistedState().get("efx.window.undecorated") != null ) {
+				logger.warning("Usage of deprecated persisted state 'efx.window.undecorated' please use 'efx.window.stagestyle'");
+				this.undecorated = Boolean.parseBoolean(mWindow.getPersistedState().get("efx.window.undecorated"));	
+			}
 		}
 		
 		@PostConstruct
@@ -312,7 +327,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				rootPane.setTop(decoratorPane);
 			}
 			
-			if( undecorated ) {
+			if( this.stageStyle != null ) {
+				this.stage.initStyle(this.stageStyle);
+			} else if( undecorated ) {
 				stage.initStyle(StageStyle.UNDECORATED);
 			}
 
