@@ -14,8 +14,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
@@ -271,18 +269,6 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 
 	@Override
 	public boolean setAll(Collection<? extends T> arg0) {
-		throw new UnsupportedOperationException(CHANGES_THROUGH_MODEL);
-	}
-
-	// FIXME Java8
-	// Default methods NOT YET supported by JDT-Core
-	// @Override
-	public void forEach(Consumer<? super T> action) {
-		throw new UnsupportedOperationException(CHANGES_THROUGH_MODEL);
-	}
-
-	// @Override
-	public Spliterator<T> spliterator() {
 		throw new UnsupportedOperationException(CHANGES_THROUGH_MODEL);
 	}
 }
