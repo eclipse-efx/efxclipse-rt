@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
+import java.util.Collection;
+
 import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
@@ -18,10 +20,13 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
 
 
@@ -30,11 +35,26 @@ public abstract class BasePartRenderer<N,T,M> extends BaseRenderer<MPart, WPart<
 	public static final String VIEW_MENU_TAG = "ViewMenu";
 	
 	@PostConstruct
-	void init(IEventBroker broker) {
-		registerEventListener(broker, UIEvents.UILabel.TOPIC_ICONURI);
-		registerEventListener(broker, UIEvents.UILabel.TOPIC_LABEL);
-		registerEventListener(broker, UIEvents.UILabel.TOPIC_TOOLTIP);
-		registerEventListener(broker, UIEvents.Dirtyable.TOPIC_DIRTY);
+	void init(IEventBroker eventBroker) {
+		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_ICONURI);
+		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LABEL);
+		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_TOOLTIP);
+		registerEventListener(eventBroker, UIEvents.Dirtyable.TOPIC_DIRTY);
+		eventBroker.subscribe(UIEvents.Part.TOPIC_MENUS, new EventHandler() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
+				MUIElement parent = (MUIElement) changedObj;
+				if (parent.getRenderer() == BasePartRenderer.this) {
+					if (UIEvents.isADD(event)) {
+						handleMenuAddition((MPart) parent, Util.<MMenu> asCollection(event, UIEvents.EventTags.NEW_VALUE));
+					} else if (UIEvents.isREMOVE(event)) {
+						handleMenuRemove((MPart) parent, Util.<MMenu> asCollection(event, UIEvents.EventTags.OLD_VALUE));
+					}
+				}
+			}
+		});
 	}
 	
 	@Override
@@ -80,23 +100,55 @@ public abstract class BasePartRenderer<N,T,M> extends BaseRenderer<MPart, WPart<
 		do {
 			element.getContext().set(cl.getName(), widget.getWidget());
 			cl = cl.getSuperclass();
-		} while( ! cl.getName().equals("java.lang.Object") );
+		} while( ! cl.getName().equals("java.lang.Object") ); //$NON-NLS-1$
 		
-		IContributionFactory contributionFactory = (IContributionFactory) element.getContext().get(IContributionFactory.class
-				.getName());
+		IContributionFactory contributionFactory = element.getContext().get(IContributionFactory.class);
 		Object newPart = contributionFactory.create(element.getContributionURI(), element.getContext());
 		element.setObject(newPart);
 		
 	}
 	
+	void handleMenuAddition(MPart parent, Collection<MMenu> elements) {
+		WPart<N,T,M> widget = getWidget(parent);
+		if( widget == null ) {
+			return;
+		}
+		
+		for( MUIElement e : elements ) {
+			if( e.getTags().contains(VIEW_MENU_TAG) ) {
+				if( widget.getMenu() == null ) {
+					@SuppressWarnings("unchecked")
+					WMenu<M> menu = (WMenu<M>) getPresentationEngine().createGui(e);
+					widget.setMenu(menu);
+				}
+				break;
+			}
+		}
+	}
+	
+	void handleMenuRemove(MPart parent, Collection<MMenu> elements) {
+		WPart<N,T,M> widget = getWidget(parent);
+		if( widget == null ) {
+			return;
+		}
+		
+		for( MMenu e : elements ) {
+			if( e.getTags().contains(VIEW_MENU_TAG) ) {
+				if( widget.getMenu() == e.getWidget() ) {
+					widget.setMenu(null);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void childRendered(MPart parentElement, MUIElement element) {
-		
+		// No children
 	}
 	
 	@Override
 	public void hideChild(MPart container, MUIElement changedObj) {
-		
+		// No children
 	}
 
 }

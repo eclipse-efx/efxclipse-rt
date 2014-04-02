@@ -15,4 +15,5 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 public interface WPart<N,T,M> extends WLayoutedWidget<MPart> {
 	public void setToolbar(WToolBar<T> widget);
 	public void setMenu(WMenu<M> widget);
+	public WMenu<M> getMenu();
 }

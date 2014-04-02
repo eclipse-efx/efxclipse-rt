@@ -93,6 +93,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		private StackPane expandGroup;
 		private StackPane toolbarGroup;
 		private Group menuGroup;
+		private WMenu<Node> viewMenuWidget;
 		
 		@Override
 		protected Pane createWidget() {
@@ -280,7 +281,15 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 			} else {
 				menuGroup.setVisible(true);
 				menuGroup.getChildren().setAll((Node) widget.getWidget());
+				contentArea.requestLayout();
 			}
+			
+			this.viewMenuWidget = widget;
+		}
+		
+		@Override
+		public WMenu<Node> getMenu() {
+			return this.viewMenuWidget;
 		}
 	}
 	
