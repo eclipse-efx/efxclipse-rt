@@ -19,7 +19,7 @@
               <children xsi:type="menu:DirectToolItem" xmi:id="_GVO3wIEGEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.directtoolitem.5" label="Hello World" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler2"/>
             </toolbar>
           </children>
-          <children xsi:type="basic:PartStack" xmi:id="_A7Q9ouL-EeGP-5z69KadAQ" elementId="content.stack" containerData="80">
+          <children xsi:type="basic:PartStack" xmi:id="_A7Q9ouL-EeGP-5z69KadAQ" elementId="content.stack" containerData="70">
             <children xsi:type="basic:Part" xmi:id="_ZHcNwOL-EeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C0" iconURI="platform:/plugin/org.eclipse.fx.testcases.e4/icons/folder.png" closeable="true">
               <tags>Part-ToolBarMenu-Floating</tags>
               <tags>Part-Toolbar-FullSpan</tags>
@@ -48,6 +48,7 @@
             <children xsi:type="basic:Part" xmi:id="_NbT9cI3zEeOEhJYRfEsdog" elementId="org.eclipse.fx.testcases.e4.part.18" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.TestExtendedFXMLBuilder" label="ExtendedFXMLLoader"/>
           </children>
           <children xsi:type="basic:Part" xmi:id="_txxY4OMsEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.4" toBeRendered="false" containerData="10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C4"/>
+          <children xsi:type="basic:Part" xmi:id="_-czbgLpMEeOpi709HEnsKw" elementId="org.eclipse.fx.testcases.e4.part.19" containerData="10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.Test_431391" label="Label Test"/>
         </children>
       </children>
       <children xsi:type="advanced:Perspective" xmi:id="_uIi_kO6wEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.perspective.1" label="P 1">
