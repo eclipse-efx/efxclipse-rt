@@ -14,11 +14,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.eclipse.fx.core.fxml.FXMLDocument.LoadData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Node;
 import javafx.util.Callback;
 
 /**
@@ -66,7 +68,29 @@ public class ExtendedFXMLLoader {
 		return ExtendedFXMLLoader.<T, Object> loadWithController(cl,
 				resourceBundle, null, path).getNode();
 	}
-
+	
+	/**
+	 * Load the FXML file
+	 * 
+	 * @param cl
+	 *            the classloader to use
+	 * @param root
+	 *            the root node if fx:root is used
+	 * @param resourceBundle
+	 *            the l10n bundle for localization
+	 * @param path
+	 *            the path to the FXML-File
+	 * @return the object graph constructed from the fxml or .class-File
+	 * @throws IOException
+	 */
+	@NonNull
+	public static <T> T load(@NonNull ClassLoader cl,
+			@Nullable ResourceBundle resourceBundle, Node root, @NonNull String path)
+			throws IOException {
+		return ExtendedFXMLLoader.<T, Object> loadWithController(cl,
+				resourceBundle, null, path).getNode();
+	}
+	
 	/**
 	 * Load the FXML file
 	 * 
@@ -81,10 +105,33 @@ public class ExtendedFXMLLoader {
 	 * @return the object graph constructed from the fxml or .class-File
 	 * @throws IOException
 	 */
+	public static <N, C> Data<N, C> loadWithController(@NonNull ClassLoader cl,
+			@Nullable ResourceBundle resourceBundle,
+			@Nullable Callback<Class<?>, Object> controllerFactory,
+			@NonNull String path) throws IOException {
+		return loadWithController(cl, resourceBundle, null, controllerFactory, path);
+	}
+
+	/**
+	 * Load the FXML file
+	 * 
+	 * @param cl
+	 *            the classloader to use
+	 * @param resourceBundle
+	 *            the l10n bundle for localization
+	 * @param root
+	 *            the root node if fx:root is used
+	 * @param controllerFactory
+	 *            an optional controller factory
+	 * @param path
+	 *            the path to the FXML-File
+	 * @return the object graph constructed from the fxml or .class-File
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
 	@NonNull
 	public static <N, C> Data<N, C> loadWithController(@NonNull ClassLoader cl,
-			@Nullable ResourceBundle resourceBundle,
+			@Nullable ResourceBundle resourceBundle, @Nullable Node root,
 			@Nullable Callback<Class<?>, Object> controllerFactory,
 			@NonNull String path) throws IOException {
 		try {
@@ -94,7 +141,8 @@ public class ExtendedFXMLLoader {
 			final FXMLDocument<N> d = (FXMLDocument<N>) clazz.newInstance();
 			URL url = cl.getResource(path);
 			if (url != null) {
-				final N n = d.load(url, resourceBundle, controllerFactory);
+				final N n = d.load(new LoadData(url, resourceBundle,
+						root,controllerFactory));
 				return new Data<N, C>() {
 
 					@Override
