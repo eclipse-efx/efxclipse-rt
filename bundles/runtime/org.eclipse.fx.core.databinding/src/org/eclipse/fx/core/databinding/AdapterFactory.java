@@ -17,8 +17,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
@@ -373,19 +371,6 @@ public class AdapterFactory {
 			this.list.clear();
 			return this.list.addAll(col);
 		}
-
-//		// FIXME Java8
-//		// Default methods NOT YET supported by JDT-Core
-//		// @Override
-//		@Override
-//		public void forEach(Consumer<? super E> action) {
-//			this.list.forEach(action);
-//		}
-//
-//		// @Override
-//		public Spliterator<E> spliterator() {
-//			return this.list.spliterator();
-//		}
 	}
 
 	static class WrappedValue<E> implements ObservableWritableValue<E> {
