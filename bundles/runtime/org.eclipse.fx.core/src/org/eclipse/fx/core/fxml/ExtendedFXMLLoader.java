@@ -14,14 +14,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.util.Callback;
+
 import org.eclipse.fx.core.fxml.FXMLDocument.LoadData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Node;
-import javafx.util.Callback;
 
 /**
  * The extended fxml loader tries to create an instance of a class with the same
@@ -85,10 +84,10 @@ public class ExtendedFXMLLoader {
 	 */
 	@NonNull
 	public static <T> T load(@NonNull ClassLoader cl,
-			@Nullable ResourceBundle resourceBundle, Node root, @NonNull String path)
+			@Nullable ResourceBundle resourceBundle, T root, @NonNull String path)
 			throws IOException {
 		return ExtendedFXMLLoader.<T, Object> loadWithController(cl,
-				resourceBundle, null, path).getNode();
+				resourceBundle, root, null, path).getNode();
 	}
 	
 	/**
@@ -131,7 +130,7 @@ public class ExtendedFXMLLoader {
 	@SuppressWarnings("unchecked")
 	@NonNull
 	public static <N, C> Data<N, C> loadWithController(@NonNull ClassLoader cl,
-			@Nullable ResourceBundle resourceBundle, @Nullable Node root,
+			@Nullable ResourceBundle resourceBundle, @Nullable N root,
 			@Nullable Callback<Class<?>, Object> controllerFactory,
 			@NonNull String path) throws IOException {
 		try {
@@ -141,7 +140,7 @@ public class ExtendedFXMLLoader {
 			final FXMLDocument<N> d = (FXMLDocument<N>) clazz.newInstance();
 			URL url = cl.getResource(path);
 			if (url != null) {
-				final N n = d.load(new LoadData(url, resourceBundle,
+				final N n = d.load(new LoadData<N>(url, resourceBundle,
 						root,controllerFactory));
 				return new Data<N, C>() {
 
