@@ -109,7 +109,6 @@ public class UpdateServiceImpl implements UpdateService {
 		if( updateOperation != null ) {
 			Job job = updateOperation.getProvisioningJob(new NullProgressMonitor());
 			job.addJobChangeListener(new JobChangeAdapter() {
-				@SuppressWarnings("null")
 				@Override
 				public void done(IJobChangeEvent event) {
 					IStatus s = event.getResult();
@@ -136,7 +135,6 @@ public class UpdateServiceImpl implements UpdateService {
 		}
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public void checkUpdate(final Callback<UpdateCheckData> callback) {
 		try {
