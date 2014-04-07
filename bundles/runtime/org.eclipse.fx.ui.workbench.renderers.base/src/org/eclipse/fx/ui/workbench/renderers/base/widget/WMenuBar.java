@@ -12,13 +12,39 @@ package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Abstraction of a menu bar
+ * 
+ * @param <N>
+ *            the native control
+ */
 public interface WMenuBar<N> extends WMenuElement<MMenu>, WLayoutedWidget<MMenu> {
+	/**
+	 * Append a widget
+	 * 
+	 * @param widget
+	 *            the widget
+	 */
+	void addElement(@NonNull WMenu<MMenuElement> widget);
 
-	void addElement(WMenu<MMenuElement> widget);
+	/**
+	 * Insert a widget at the given index
+	 * 
+	 * @param idx
+	 *            the index
+	 * @param widget
+	 *            the widget
+	 */
+	void addElement(int idx, @NonNull WMenu<MMenuElement> widget);
 
-	void addElement(int idx, WMenu<MMenuElement> widget);
-
-	void removeElement(WMenuElement<MMenuElement> widget);
+	/**
+	 * Remove widget
+	 * 
+	 * @param widget
+	 *            the widget
+	 */
+	void removeElement(@NonNull WMenuElement<MMenuElement> widget);
 
 }

@@ -14,23 +14,92 @@ import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Widget abstraction for sash
+ * 
+ * @param <N>
+ *            the native widget
+ */
 public interface WSash<N> extends WLayoutedWidget<MPartSashContainer> {
-	public static final String TAG_FIXED_LAYOUT = "fx_fixedLayout";
+	/**
+	 * PersistatedState Key to fix the layout.
+	 * <p>
+	 * Value type is boolean.
+	 * </p>
+	 */
+	public static final String TAG_FIXED_LAYOUT = "fx_fixedLayout"; //$NON-NLS-1$
 
-	public static final String FIXED_LAYOUT_WIDTH = "fx_layout_width";
-	public static final String FIXED_LAYOUT_HEIGHT = "fx_layout_height";
-	public static final String FIXED_LAYOUT_GRAB_HORIZONTAL = "fx_layout_grab_horizontal";
-	public static final String FIXED_LAYOUT_GRAB_VERTICAL = "fx_layout_grab_vertical";
+	/**
+	 * PersistatedState Key to specify the fixed layout width - only has an
+	 * effect when used with {@link #TAG_FIXED_LAYOUT}.
+	 * <p>
+	 * Value type is int.
+	 * </p>
+	 */
+	public static final String FIXED_LAYOUT_WIDTH = "fx_layout_width"; //$NON-NLS-1$
+	/**
+	 * PersistatedState Key to specify the fixed layout height - only has an
+	 * effect when used with {@link #TAG_FIXED_LAYOUT}
+	 * <p>
+	 * Value type is int.
+	 * </p>
+	 */
+	public static final String FIXED_LAYOUT_HEIGHT = "fx_layout_height"; //$NON-NLS-1$
+	/**
+	 * PersistatedState Key to specify that the control should grab the
+	 * remaining horizontal space
+	 * <p>
+	 * Value type is boolean.
+	 * </p>
+	 */
+	public static final String FIXED_LAYOUT_GRAB_HORIZONTAL = "fx_layout_grab_horizontal"; //$NON-NLS-1$
+	/**
+	 * PersistatedState Key to specify that the control should grab the
+	 * remaining vertical space
+	 * <p>
+	 * Value type is boolean.
+	 * </p>
+	 */
+	public static final String FIXED_LAYOUT_GRAB_VERTICAL = "fx_layout_grab_vertical"; //$NON-NLS-1$
 
-	public void addItem(WLayoutedWidget<MPartSashContainerElement> widget);
+	/**
+	 * Append a widget
+	 * 
+	 * @param widget
+	 *            the widget
+	 */
+	public void addItem(@NonNull WLayoutedWidget<MPartSashContainerElement> widget);
 
+	/**
+	 * @return amount of children
+	 */
 	public int getItemCount();
 
-	public void addItems(List<WLayoutedWidget<MPartSashContainerElement>> list);
+	/**
+	 * Append a list of widgets
+	 * 
+	 * @param list
+	 *            the list of widgets
+	 */
+	public void addItems(@NonNull List<WLayoutedWidget<MPartSashContainerElement>> list);
 
-	public void addItems(int index, List<WLayoutedWidget<MPartSashContainerElement>> list);
+	/**
+	 * Insert items at the given index
+	 * 
+	 * @param index
+	 *            the index
+	 * @param list
+	 *            the list of items
+	 */
+	public void addItems(int index, @NonNull List<WLayoutedWidget<MPartSashContainerElement>> list);
 
-	public void removeItem(WLayoutedWidget<MPartSashContainerElement> widget);
-
+	/**
+	 * Remove item
+	 * 
+	 * @param widget
+	 *            the widget
+	 */
+	public void removeItem(@NonNull WLayoutedWidget<MPartSashContainerElement> widget);
 }

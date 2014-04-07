@@ -12,6 +12,12 @@ package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuSeparator;
 
+/**
+ * Abstraction of a menu separator
+ * 
+ * @param <N>
+ *            the native widget
+ */
 public interface WMenuSeparator<N> extends WMenuElement<MMenuSeparator> {
-
+	//no extra methods
 }

@@ -12,6 +12,12 @@ package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 
+/**
+ * Widget abstraction for tool-controls
+ * 
+ * @param <N>
+ *            the native widget
+ */
 public interface WToolControl<N> extends WWidget<MToolControl> {
-
+	// no extra methods
 }

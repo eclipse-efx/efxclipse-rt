@@ -15,13 +15,40 @@ import java.util.List;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Abstraction of perspective widget
+ * 
+ * @param <N>
+ *            the native
+ */
 public interface WPerspective<N> extends WLayoutedWidget<MPerspective> {
 
-	void addItems(List<WLayoutedWidget<MPartSashContainerElement>> list);
+	/**
+	 * Append widgets
+	 * 
+	 * @param list
+	 *            the list of widgets
+	 */
+	void addItems(@NonNull List<WLayoutedWidget<MPartSashContainerElement>> list);
 
-	void addItem(int renderedIndex, WLayoutedWidget<MPartSashContainerElement> widget);
+	/**
+	 * Insert widgets at the given index
+	 * 
+	 * @param index
+	 *            the index
+	 * @param widget
+	 *            the widget
+	 */
+	void addItem(int index, @NonNull WLayoutedWidget<MPartSashContainerElement> widget);
 
-	void removeItem(WLayoutedWidget<MUIElement> widget);
+	/**
+	 * Remove widgets
+	 * 
+	 * @param widget
+	 *            the widget
+	 */
+	void removeItem(@NonNull WLayoutedWidget<MUIElement> widget);
 
 }

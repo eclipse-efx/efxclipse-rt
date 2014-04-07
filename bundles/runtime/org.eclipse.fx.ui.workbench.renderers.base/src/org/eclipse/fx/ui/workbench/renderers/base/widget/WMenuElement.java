@@ -12,6 +12,12 @@ package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 
+/**
+ * Abstract of menu elements
+ * 
+ * @param <M>
+ *            the native type
+ */
 public interface WMenuElement<M extends MMenuElement> extends WWidget<M> {
-
+	// no extra methods
 }

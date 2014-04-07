@@ -13,8 +13,17 @@ package org.eclipse.fx.ui.workbench.renderers.base.widget;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 
+/**
+ * Abstraction of a placeholder
+ */
 public interface WPlaceholderWidget extends WLayoutedWidget<MPlaceholder> {
 
+	/**
+	 * The widget to display
+	 * 
+	 * @param refWidget
+	 *            the referenced widget
+	 */
 	void setContent(WLayoutedWidget<MUIElement> refWidget);
 
 }

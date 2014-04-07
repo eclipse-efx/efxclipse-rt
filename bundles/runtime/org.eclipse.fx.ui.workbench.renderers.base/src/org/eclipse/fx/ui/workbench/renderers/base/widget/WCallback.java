@@ -10,6 +10,22 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
+/**
+ * Callback
+ * 
+ * @param <P>
+ *            the parameter
+ * @param <R>
+ *            the return value
+ */
+@FunctionalInterface
 public interface WCallback<P, R> {
+	/**
+	 * Callback method
+	 * 
+	 * @param param
+	 *            the parameter
+	 * @return the return value
+	 */
 	public R call(P param);
 }
