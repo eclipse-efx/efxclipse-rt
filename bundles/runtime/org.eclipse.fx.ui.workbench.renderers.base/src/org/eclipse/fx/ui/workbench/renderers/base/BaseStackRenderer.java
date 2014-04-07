@@ -45,6 +45,16 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+/**
+ * Base renderer for {@link MPartStack}
+ * 
+ * @param <N>
+ *            the native widget
+ * @param <I>
+ *            the item type
+ * @param <IC>
+ *            the native item content widget type
+ */
 public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStack, WStack<N, I, IC>> {
 	// private static final String MAP_ITEM_KEY = "fx.rendering.stackitem";
 
@@ -56,8 +66,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 	@Inject
 	ELifecycleService lifecycleService;
-	
-	
+
 	boolean inLazyInit;
 
 	@PostConstruct
@@ -125,7 +134,8 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		});
 	}
 
-	MPart getPart(MUIElement element) {
+	MPart getPart(MUIElement tmp) {
+		MUIElement element = tmp;
 		if (element instanceof MPlaceholder) {
 			return (MPart) ((MPlaceholder) element).getRef();
 		} else if (element instanceof MElementContainer<?>) {
@@ -144,7 +154,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	@Override
 	protected void initWidget(final MPartStack element, final WStack<N, I, IC> widget) {
 		super.initWidget(element, widget);
-//		widget.setMinMaxState(WMinMaxState.MAXIMIZED);
+		// widget.setMinMaxState(WMinMaxState.MAXIMIZED);
 		widget.setMouseSelectedItemCallback(new WCallback<WStackItem<I, IC>, Void>() {
 
 			@Override
@@ -180,7 +190,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		});
 	}
 
-	private void activatationJob(MPartStack stackToActivate, final MPart p, final boolean focus) {
+	void activatationJob(MPartStack stackToActivate, final MPart p, final boolean focus) {
 		if (shouldActivate(stackToActivate)) {
 			activate(p, focus);
 		}
@@ -191,10 +201,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			return false;
 		}
 
-		if (application != null) {
-			IEclipseContext applicationContext = application.getContext();
+		if (this.application != null) {
+			IEclipseContext applicationContext = this.application.getContext();
 			IEclipseContext activeChild = applicationContext.getActiveChild();
-			if (activeChild == null || activeChild.get(MWindow.class) != application.getSelectedElement() || application.getSelectedElement() != modelService.getTopLevelWindowFor(stackToActivate)) {
+			if (activeChild == null || activeChild.get(MWindow.class) != this.application.getSelectedElement() || this.application.getSelectedElement() != this.modelService.getTopLevelWindowFor(stackToActivate)) {
 				return false;
 			}
 		}
@@ -209,7 +219,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 		for (MStackElement e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
-			AbstractRenderer<MStackElement, ?> renderer = factory.getRenderer(e);
+			AbstractRenderer<MStackElement, ?> renderer = this.factory.getRenderer(e);
 			if (renderer != null && e.isToBeRendered() && e.isVisible()) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
@@ -248,7 +258,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			@SuppressWarnings("unchecked")
 			@Override
 			public IC call(WStackItem<I, IC> param) {
-				inLazyInit = true;
+				BaseStackRenderer.this.inLazyInit = true;
 				try {
 					WLayoutedWidget<MStackElement> widget = engineCreateWidget(e);
 					if (widget != null) {
@@ -256,7 +266,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 					}
 					return null;
 				} finally {
-					inLazyInit = false;
+					BaseStackRenderer.this.inLazyInit = false;
 				}
 			}
 		});
@@ -264,7 +274,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 			@Override
 			public Boolean call(WStackItem<I, IC> param) {
-				return !handleStackItemClose(e, param);
+				return Boolean.valueOf(!handleStackItemClose(e, param));
 			}
 		});
 
@@ -278,7 +288,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			if (element.isToBeRendered() && element.isVisible()) {
 				int idx = getRenderedIndex(parent, element);
 
-				AbstractRenderer<MStackElement, ?> renderer = factory.getRenderer(element);
+				AbstractRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 				WStack<N, I, IC> stack = getWidget(parent);
 				WStackItem<I, IC> item = createStackItem(getWidget(parent), element, renderer);
 
@@ -293,11 +303,12 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		MStackElement selectedElement = parent.getSelectedElement();
 		if ((selectedElement != null) && (list.contains(selectedElement))) {
 			list.remove(selectedElement);
-			list.add(selectedElement);// remove and add the selected element to the end
+			list.add(selectedElement);// remove and add the selected element to
+										// the end
 		}
 		WStack<N, I, IC> parentWidget = getWidget(parent);
-		List<WStackItem<I, IC>> items = transmuteList(parentWidget, list);// build the stack item list out of
-																			// the model
+		// build the stack item list out of the model
+		List<WStackItem<I, IC>> items = transmuteList(parentWidget, list);
 		parentWidget.removeItems(items);
 		ArrayList<MStackElement> removeOnHideList = new ArrayList<MStackElement>();
 		for (MStackElement element : list) {
@@ -351,21 +362,21 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		IEclipseContext parentContext = getContextForParent(part);
 		// a part may not have a context if it hasn't been rendered
 		IEclipseContext context = (partContext == null ? parentContext : partContext).createChild();
-		if( partContext == null ) {
+		if (partContext == null) {
 			context.set(MPart.class, part);
 		}
-		
+
 		// Allow closes to be 'canceled'
 		EPartService partService = (EPartService) context.get(EPartService.class.getName());
-		
+
 		try {
-			if (partService.savePart(part, true) && lifecycleService.validateAnnotation(PreClose.class, part, context)) {
+			if (partService.savePart(part, true) && this.lifecycleService.validateAnnotation(PreClose.class, part, context)) {
 				partService.hidePart(part);
 				return true;
 			}
-			// the user has canceled out of the save operation, so don't close the
-			// part
-			return false;			
+			// the user has canceled out of the save operation, so don't close
+			// the part
+			return false;
 		} finally {
 			context.dispose();
 		}
@@ -374,7 +385,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 	@Override
 	public void childRendered(MPartStack parentElement, MUIElement element) {
-		if (element == null || inLazyInit || inContentProcessing(parentElement) || !element.isVisible()) {
+		if (element == null || this.inLazyInit || inContentProcessing(parentElement) || !element.isVisible()) {
 			return;
 		}
 
@@ -386,7 +397,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 
 		int idx = getRenderedIndex(parentElement, element);
-		AbstractRenderer<MStackElement, ?> renderer = factory.getRenderer(element);
+		AbstractRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 		stack.addItems(idx, Collections.singletonList(createStackItem(stack, (MStackElement) element, renderer)));
 	}
 
@@ -416,7 +427,8 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 	}
 
-	private void showElementRecursive(MUIElement element) {
+	private void showElementRecursive(MUIElement tmp) {
+		MUIElement element = tmp;
 		if (element == null || !element.isToBeRendered()) {
 			return;
 		}
@@ -439,7 +451,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		if (element instanceof MContext) {
 			IEclipseContext context = ((MContext) element).getContext();
 			if (context != null) {
-				IEclipseContext newParentContext = modelService.getContainingContext(element);
+				IEclipseContext newParentContext = this.modelService.getContainingContext(element);
 				if (context.getParent() != newParentContext) {
 					context.setParent(newParentContext);
 				}

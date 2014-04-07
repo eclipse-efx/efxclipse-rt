@@ -32,39 +32,44 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+/**
+ * Base renderer for {@link MPerspective}
+ * 
+ * @param <N>
+ */
 public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspective, WPerspective<N>> {
 	@Inject
 	@Log
 	Logger logger;
-	
+
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
 		eventBroker.subscribe(UIEvents.Perspective.TOPIC_WINDOWS, new EventHandler() {
-			
+
 			@Override
 			public void handleEvent(Event event) {
 				Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
-				if( changedObj instanceof MPerspective ) {
+				if (changedObj instanceof MPerspective) {
 					MPerspective perspective = (MPerspective) changedObj;
-					if( BasePerspectiveRenderer.this == perspective.getRenderer() ) {
+					if (BasePerspectiveRenderer.this == perspective.getRenderer()) {
 						String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-						if( UIEvents.EventTypes.ADD.equals(eventType) ) {
+						if (UIEvents.EventTypes.ADD.equals(eventType)) {
 							MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-							if( element instanceof MWindow ) {
+							if (element instanceof MWindow) {
 								handleWindowAdd((MWindow) element);
-							} else if( element instanceof MPartSashContainerElement ) {
+							} else if (element instanceof MPartSashContainerElement) {
 								handleChildAdd((MPartSashContainerElement) element);
 							} else {
-								logger.error("ERROR: Unhandled child addition: " + element);
+								getLogger().error("ERROR: Unhandled child addition: " + element); //$NON-NLS-1$
 							}
-						} else if( UIEvents.EventTypes.REMOVE.equals(eventType) ) {
+						} else if (UIEvents.EventTypes.REMOVE.equals(eventType)) {
 							MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.OLD_VALUE);
-							if( element instanceof MWindow ) {
+							if (element instanceof MWindow) {
 								handleWindowRemove((MWindow) element);
-							} else if( element instanceof MPartSashContainerElement ) {
+							} else if (element instanceof MPartSashContainerElement) {
 								handleChildRemove((MPartSashContainerElement) element);
 							} else {
-								logger.error("ERROR: Unhandled child removal: " + element);
+								getLogger().error("ERROR: Unhandled child removal: " + element); //$NON-NLS-1$
 							}
 						}
 					}
@@ -72,78 +77,80 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 			}
 		});
 	}
-	
+
 	void handleWindowAdd(MWindow window) {
 		engineCreateWidget(window);
 	}
-	
+
 	void handleWindowRemove(MWindow window) {
 		// Nothing to be done
 	}
-	
+
 	void handleChildAdd(MPartSashContainerElement element) {
 		engineCreateWidget(element);
 	}
-	
+
 	void handleChildRemove(MPartSashContainerElement element) {
 		// Nothing to be done
 	}
-	
+
 	@Override
 	protected void doProcessContent(MPerspective element) {
 		element.getChildren();
 		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
-		for( MPartSashContainerElement e : element.getChildren() ) {
-			if( e.isToBeRendered() ) {
+		for (MPartSashContainerElement e : element.getChildren()) {
+			if (e.isToBeRendered()) {
 				WLayoutedWidget<MPartSashContainerElement> w = engineCreateWidget(e);
-				if( w != null && e.isVisible() ) {
+				if (w != null && e.isVisible()) {
 					list.add(w);
-				}				
+				}
 			}
 		}
 		getWidget(element).addItems(list);
-		
-		if( ! element.getWindows().isEmpty() ) {
+
+		if (!element.getWindows().isEmpty()) {
 			MWindow window = findParent((EObject) element);
 			WWindow<?> topLevel = (WWindow<?>) window.getWidget();
-			for( MWindow w : element.getWindows() ) {
-				topLevel.addChild((WWindow)engineCreateWidget(w));
+			for (MWindow w : element.getWindows()) {
+				topLevel.addChild(engineCreateWidget(w));
 			}
 		}
 	}
-	
+
 	private static MWindow findParent(EObject e) {
-		if( e.eContainer() instanceof MApplication ) {
+		EObject tmp = e;
+
+		if (tmp.eContainer() instanceof MApplication) {
 			return null;
 		}
-		
+
 		do {
-			e = e.eContainer();
-			if( e instanceof MWindow ) {
-				return (MWindow) e;
+			tmp = tmp.eContainer();
+			if (tmp instanceof MWindow) {
+				return (MWindow) tmp;
 			}
-		} while( e.eContainer() != null );
-		
+		} while (tmp.eContainer() != null);
+
 		return null;
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void childRendered(MPerspective parentElement, MUIElement element) {
-		if( inContentProcessing(parentElement) ) {
+		if (inContentProcessing(parentElement)) {
 			return;
 		}
-		
-		if( element instanceof MPartSashContainerElement ) {
-			getWidget(parentElement).addItem(getRenderedIndex(parentElement, element),(WLayoutedWidget<MPartSashContainerElement>)element.getWidget());
-		} else if( element instanceof MWindow ) {
+
+		if (element instanceof MPartSashContainerElement) {
+			getWidget(parentElement).addItem(getRenderedIndex(parentElement, element), (WLayoutedWidget<MPartSashContainerElement>) element.getWidget());
+		} else if (element instanceof MWindow) {
 			MWindow parent = findParent((EObject) parentElement);
 			WWindow<?> w = (WWindow<?>) parent.getWidget();
-			if( w != null ) {
-				WWindow ww = (WWindow)element.getWidget();
-				if( ww != null ) {
-					w.addChild(ww);	
-				}	
+			if (w != null) {
+				WWindow ww = (WWindow) element.getWidget();
+				if (ww != null) {
+					w.addChild(ww);
+				}
 			}
 		}
 	}
@@ -152,24 +159,24 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 	@Override
 	public void hideChild(MPerspective container, MUIElement changedObj) {
 		WPerspective<N> perspective = getWidget(container);
-		
-		if( perspective == null ) {
+
+		if (perspective == null) {
 			return;
 		}
-		
-		if( changedObj instanceof MPartSashContainerElement ) {
+
+		if (changedObj instanceof MPartSashContainerElement) {
 			WLayoutedWidget<MUIElement> widget = (WLayoutedWidget<MUIElement>) changedObj.getWidget();
-			if( widget != null ) {
+			if (widget != null) {
 				perspective.removeItem(widget);
 			}
-		} else if( changedObj instanceof MWindow ) {
+		} else if (changedObj instanceof MWindow) {
 			MWindow parent = findParent((EObject) container);
 			WWindow<?> w = (WWindow<?>) parent.getWidget();
-			if( w != null ) {
-				WWindow ww = (WWindow)changedObj.getWidget();
-				if( ww != null ) {
-					w.removeChild(ww);	
-				}	
+			if (w != null) {
+				WWindow ww = (WWindow) changedObj.getWidget();
+				if (ww != null) {
+					w.removeChild(ww);
+				}
 			}
 		}
 	}

@@ -23,9 +23,12 @@ import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 
-public abstract class BasePartMenuRenderer<N> extends
-		BaseRenderer<MMenu, WMenu<N>> implements
-		ChildrenHandler<MMenu, MMenuElement> {
+/**
+ * Base renderer for part menus
+ * 
+ * @param <N>
+ */
+public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> implements ChildrenHandler<MMenu, MMenuElement> {
 
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
@@ -45,12 +48,11 @@ public abstract class BasePartMenuRenderer<N> extends
 		});
 	}
 
-	void handleShowing(MMenu element) {
+	static void handleShowing(MMenu element) {
 		for (MMenuElement e : element.getChildren()) {
 			if (e.getRenderer() instanceof BaseItemRenderer) {
 				@SuppressWarnings("unchecked")
-				BaseItemRenderer<MMenuElement, ?> r = (BaseItemRenderer<MMenuElement, ?>) e
-						.getRenderer();
+				BaseItemRenderer<MMenuElement, ?> r = (BaseItemRenderer<MMenuElement, ?>) e.getRenderer();
 				r.checkEnablement(e);
 			}
 		}
@@ -68,20 +70,19 @@ public abstract class BasePartMenuRenderer<N> extends
 		}
 	}
 
-	public void handleChildrenRemove(MMenu parent,
-			Collection<MMenuElement> elements) {
+	@Override
+	public void handleChildrenRemove(MMenu parent, Collection<MMenuElement> elements) {
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
-			if (element.isToBeRendered() && element.isVisible()
-					&& element.getWidget() != null) {
+			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
 		}
 	}
 
-	public void handleChildrenAddition(MMenu parent,
-			Collection<MMenuElement> elements) {
+	@Override
+	public void handleChildrenAddition(MMenu parent, Collection<MMenuElement> elements) {
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
@@ -104,8 +105,7 @@ public abstract class BasePartMenuRenderer<N> extends
 		int idx = getRenderedIndex(parentElement, element);
 		WMenu<N> menu = getWidget(parentElement);
 		@SuppressWarnings("unchecked")
-		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element
-				.getWidget();
+		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
 		menu.addElement(idx, menuElement);
 	}
 
@@ -118,8 +118,7 @@ public abstract class BasePartMenuRenderer<N> extends
 		}
 
 		@SuppressWarnings("unchecked")
-		WMenuElement<MMenuElement> widget = (WMenuElement<MMenuElement>) changedObj
-				.getWidget();
+		WMenuElement<MMenuElement> widget = (WMenuElement<MMenuElement>) changedObj.getWidget();
 		if (widget != null) {
 			menu.removeElement(widget);
 		}

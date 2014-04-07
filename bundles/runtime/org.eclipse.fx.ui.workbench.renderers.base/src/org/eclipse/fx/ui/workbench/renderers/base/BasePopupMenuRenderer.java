@@ -23,9 +23,13 @@ import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 
-public abstract class BasePopupMenuRenderer<N> extends
-		BaseRenderer<MPopupMenu, WPopupMenu<N>> implements
-		ChildrenHandler<MPopupMenu, MMenuElement> {
+/**
+ * Base renderer for {@link MPopupMenu}
+ * 
+ * @param <N>
+ *            the native widget type
+ */
+public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, WPopupMenu<N>> implements ChildrenHandler<MPopupMenu, MMenuElement> {
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
 		EventProcessor.attachChildProcessor(eventBroker, this);
@@ -44,12 +48,11 @@ public abstract class BasePopupMenuRenderer<N> extends
 		});
 	}
 
-	void handleShowing(MPopupMenu element) {
+	static void handleShowing(MPopupMenu element) {
 		for (MMenuElement e : element.getChildren()) {
 			if (e.getRenderer() instanceof BaseItemRenderer) {
 				@SuppressWarnings("unchecked")
-				BaseItemRenderer<MMenuElement, ?> r = (BaseItemRenderer<MMenuElement, ?>) e
-						.getRenderer();
+				BaseItemRenderer<MMenuElement, ?> r = (BaseItemRenderer<MMenuElement, ?>) e.getRenderer();
 				r.checkEnablement(e);
 			}
 		}
@@ -67,20 +70,19 @@ public abstract class BasePopupMenuRenderer<N> extends
 		}
 	}
 
-	public void handleChildrenRemove(MPopupMenu parent,
-			Collection<MMenuElement> elements) {
+	@Override
+	public void handleChildrenRemove(MPopupMenu parent, Collection<MMenuElement> elements) {
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
-			if (element.isToBeRendered() && element.isVisible()
-					&& element.getWidget() != null) {
+			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
 		}
 	}
 
-	public void handleChildrenAddition(MPopupMenu parent,
-			Collection<MMenuElement> elements) {
+	@Override
+	public void handleChildrenAddition(MPopupMenu parent, Collection<MMenuElement> elements) {
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
@@ -103,8 +105,7 @@ public abstract class BasePopupMenuRenderer<N> extends
 		int idx = getRenderedIndex(parentElement, element);
 		WPopupMenu<N> menu = getWidget(parentElement);
 		@SuppressWarnings("unchecked")
-		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element
-				.getWidget();
+		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
 		menu.addElement(idx, menuElement);
 	}
 
@@ -117,8 +118,7 @@ public abstract class BasePopupMenuRenderer<N> extends
 		}
 
 		@SuppressWarnings("unchecked")
-		WMenuElement<MMenuElement> widget = (WMenuElement<MMenuElement>) changedObj
-				.getWidget();
+		WMenuElement<MMenuElement> widget = (WMenuElement<MMenuElement>) changedObj.getWidget();
 		if (widget != null) {
 			menu.removeElement(widget);
 		}

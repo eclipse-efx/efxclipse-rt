@@ -20,13 +20,49 @@ import org.eclipse.emf.ecore.EObject;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+/**
+ * Helper class to attach event processors
+ */
 public class EventProcessor {
+	/**
+	 * Interface to implement by renderers who want their children to be
+	 * processed
+	 * 
+	 * @param <M>
+	 *            the model element type
+	 * @param <C>
+	 *            the child element types
+	 */
 	public interface ChildrenHandler<M extends MUIElement, C extends MUIElement> {
+		/**
+		 * Called when children are added
+		 * 
+		 * @param parent
+		 *            the parent
+		 * @param elements
+		 *            the child elements
+		 */
 		public void handleChildrenAddition(M parent, Collection<C> elements);
 
+		/**
+		 * Called when children are removed
+		 * 
+		 * @param parent
+		 *            the parent
+		 * @param elements
+		 *            the child elements
+		 */
 		public void handleChildrenRemove(M parent, Collection<C> elements);
 	}
 
+	/**
+	 * Attach child processing
+	 * 
+	 * @param eventBroker
+	 *            the event broker
+	 * @param renderer
+	 *            the renderer
+	 */
 	public static <C extends MUIElement, M extends MElementContainer<C>, R extends BaseRenderer<M, ?> & ChildrenHandler<M, C>> void attachChildProcessor(IEventBroker eventBroker, final R renderer) {
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, new EventHandler() {
 
@@ -46,6 +82,14 @@ public class EventProcessor {
 		});
 	}
 
+	/**
+	 * Attach visibility processing
+	 * 
+	 * @param eventBroker
+	 *            the even broker
+	 * @param renderer
+	 *            the renderer
+	 */
 	public static <M extends MUIElement, R extends BaseRenderer<M, ?>> void attachVisibleProcessor(IEventBroker eventBroker, final R renderer) {
 		eventBroker.subscribe(UIEvents.UIElement.TOPIC_VISIBLE, new EventHandler() {
 

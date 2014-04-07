@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
@@ -30,31 +28,32 @@ import org.eclipse.e4.ui.model.application.commands.MParameter;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MItem;
-import org.eclipse.fx.core.log.Log;
-import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 
+/**
+ * Base renderer for item base elements
+ * 
+ * @param <M>
+ *            the model type
+ * @param <W>
+ *            the native widget type
+ */
 @SuppressWarnings("restriction")
 public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M>> extends BaseRenderer<M, W> {
-	
-	@Inject
-	@Log
-	Logger logger;
-	
-	protected ParameterizedCommand generateParameterizedCommand(
-			final MHandledItem item, final IEclipseContext lclContext) {
-		if( item.getCommand() == null ) {
-			logger.error("No command assigned to " + item);
+
+	protected ParameterizedCommand generateParameterizedCommand(final MHandledItem item, final IEclipseContext lclContext) {
+		if (item.getCommand() == null) {
+			getLogger().error("No command assigned to " + item); //$NON-NLS-1$
 			return null;
 		}
-		
-		if( item.getCommand().getElementId() == null || item.getCommand().getElementId().trim().isEmpty() ) {
-			logger.error("No command id assigned to " + item.getCommand().getElementId());
+
+		if (item.getCommand().getElementId() == null || item.getCommand().getElementId().trim().isEmpty()) {
+			getLogger().error("No command id assigned to " //$NON-NLS-1$
+					+ item.getCommand().getElementId());
 			return null;
 		}
-		
-		ECommandService cmdService = (ECommandService) lclContext
-				.get(ECommandService.class.getName());
+
+		ECommandService cmdService = (ECommandService) lclContext.get(ECommandService.class.getName());
 		Map<String, Object> parameters = null;
 		List<MParameter> modelParms = item.getParameters();
 		if (modelParms != null && !modelParms.isEmpty()) {
@@ -63,20 +62,19 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 				parameters.put(mParm.getName(), mParm.getValue());
 			}
 		}
-		ParameterizedCommand cmd = cmdService.createCommand(item.getCommand()
-				.getElementId(), parameters);
+		ParameterizedCommand cmd = cmdService.createCommand(item.getCommand().getElementId(), parameters);
 		return cmd;
 	}
-	
+
 	protected boolean canExecute(M item, IEclipseContext context) {
-		if( item instanceof MContribution ) {
+		if (item instanceof MContribution) {
 			MContribution contribution = (MContribution) item;
 			Object object = getContributionObject(context, contribution);
-			if( object == null ) {
+			if (object == null) {
 				return false;
 			}
-			
-			IEclipseContext runContext = context.createChild("DI-ToolItem");
+
+			IEclipseContext runContext = context.createChild("DI-ToolItem"); //$NON-NLS-1$
 			try {
 				ContributionsAnalyzer.populateModelInterfaces(item, runContext, item.getClass().getInterfaces());
 				runContext.set(MItem.class.getName(), item);
@@ -84,13 +82,13 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 			} finally {
 				runContext.dispose();
 			}
-		} else if( item instanceof MHandledItem ) {
+		} else if (item instanceof MHandledItem) {
 			MHandledItem handledItem = (MHandledItem) item;
 			EHandlerService service = (EHandlerService) context.get(EHandlerService.class.getName());
-			if( service == null ) {
+			if (service == null) {
 				return false;
 			}
-			
+
 			ParameterizedCommand cmd = handledItem.getWbCommand();
 			if (cmd == null) {
 				cmd = generateParameterizedCommand(handledItem, context);
@@ -99,36 +97,36 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 			if (cmd == null) {
 				return false;
 			}
-			
-			final IEclipseContext runContext = context.createChild("HI-ToolItem");
+
+			final IEclipseContext runContext = context.createChild("HI-ToolItem"); //$NON-NLS-1$
 			try {
-				ContributionsAnalyzer.populateModelInterfaces(item,runContext, item.getClass().getInterfaces());
+				ContributionsAnalyzer.populateModelInterfaces(item, runContext, item.getClass().getInterfaces());
 				return service.canExecute(cmd, runContext);
 			} finally {
-				runContext.dispose();				
+				runContext.dispose();
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	protected void executeAction(M item, IEclipseContext context) {
-		if( item instanceof MContribution ) {
+		if (item instanceof MContribution) {
 			MContribution contribution = (MContribution) item;
 			Object object = getContributionObject(context, contribution);
-			if( object == null ) {
+			if (object == null) {
 				return;
 			}
-			
-			IEclipseContext runContext = context.createChild("DI-ToolItem");
+
+			IEclipseContext runContext = context.createChild("DI-ToolItem"); //$NON-NLS-1$
 			try {
 				ContributionsAnalyzer.populateModelInterfaces(item, runContext, item.getClass().getInterfaces());
 				runContext.set(MItem.class.getName(), item);
-				ContextInjectionFactory.invoke(object,Execute.class, context.getActiveLeaf(), runContext, new Object());
+				ContextInjectionFactory.invoke(object, Execute.class, context.getActiveLeaf(), runContext, new Object());
 			} finally {
-				runContext.dispose();	
+				runContext.dispose();
 			}
-		} else if( item instanceof MHandledItem ) {
+		} else if (item instanceof MHandledItem) {
 			MHandledItem handledItem = (MHandledItem) item;
 			EHandlerService service = (EHandlerService) context.get(EHandlerService.class.getName());
 			ParameterizedCommand cmd = handledItem.getWbCommand();
@@ -137,34 +135,44 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 				handledItem.setWbCommand(cmd);
 			}
 			if (cmd == null) {
-				logger.error("Failed to execute: " + handledItem.getCommand());
+				getLogger().error("Failed to execute: " + handledItem.getCommand()); //$NON-NLS-1$
 				return;
 			}
-			final IEclipseContext runContext = context.createChild("HI-ToolItem");
+			final IEclipseContext runContext = context.createChild("HI-ToolItem"); //$NON-NLS-1$
 			try {
-				ContributionsAnalyzer.populateModelInterfaces(item,runContext, item.getClass().getInterfaces());
+				ContributionsAnalyzer.populateModelInterfaces(item, runContext, item.getClass().getInterfaces());
 				runContext.set(MItem.class.getName(), item);
 				service.executeHandler(cmd, runContext);
 			} finally {
-				runContext.dispose();				
+				runContext.dispose();
 			}
 		}
 	}
-	
+
 	private Object getContributionObject(IEclipseContext context, MContribution contribution) {
 		Object rv = contribution.getObject();
-		if( rv == null ) {
-			if( contribution.getContributionURI() == null ) {
-				logger.error("No contribution uri defined");
+		if (rv == null) {
+			if (contribution.getContributionURI() == null) {
+				getLogger().error("No contribution uri defined"); //$NON-NLS-1$
 				return null;
 			}
-			
+
 			IContributionFactory cf = (IContributionFactory) context.get(IContributionFactory.class.getName());
 			rv = cf.create(contribution.getContributionURI(), context);
 			contribution.setObject(rv);
 		}
 		return rv;
 	}
-	
+
+	/**
+	 * Check if the element is enabled
+	 * 
+	 * <p>
+	 * <b>Might be called on ANY-Thread</b>
+	 * </p>
+	 * 
+	 * @param element
+	 *            the model element
+	 */
 	public abstract void checkEnablement(M element);
 }

@@ -16,7 +16,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 public interface WMenuBar<N> extends WMenuElement<MMenu>, WLayoutedWidget<MMenu> {
 
 	void addElement(WMenu<MMenuElement> widget);
-	
+
 	void addElement(int idx, WMenu<MMenuElement> widget);
 
 	void removeElement(WMenuElement<MMenuElement> widget);

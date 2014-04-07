@@ -30,6 +30,12 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+/**
+ * Base renderer of {@link MArea}
+ * 
+ * @param <N>
+ *            the native widget type
+ */
 public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> {
 	@Inject
 	RendererFactory factory;

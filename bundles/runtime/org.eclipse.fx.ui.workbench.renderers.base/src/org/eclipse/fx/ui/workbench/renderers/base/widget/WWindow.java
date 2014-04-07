@@ -16,22 +16,30 @@ import org.eclipse.e4.ui.model.application.ui.basic.MWindowElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 
 public interface WWindow<N> extends WWidget<MWindow> {
-	
+
 	public void setMainMenu(WLayoutedWidget<MMenu> menuWidget);
+
 	public void setTopTrim(WLayoutedWidget<MTrimBar> trimBar);
+
 	public void setLeftTrim(WLayoutedWidget<MTrimBar> trimBar);
+
 	public void setRightTrim(WLayoutedWidget<MTrimBar> trimBar);
+
 	public void setBottomTrim(WLayoutedWidget<MTrimBar> trimBar);
-	
+
 	public void addChild(WLayoutedWidget<MWindowElement> widget);
+
 	public void addChild(int idx, WLayoutedWidget<MWindowElement> widget);
-	public void removeChild(WLayoutedWidget<MWindowElement> widget); 
-	
+
+	public void removeChild(WLayoutedWidget<MWindowElement> widget);
+
 	public void addChild(WWindow<N> widget);
+
 	public void removeChild(WWindow<N> widget);
-	
+
 	public void setOnCloseCallback(WCallback<WWindow<N>, Boolean> closeCallback);
-	
+
 	public void show();
+
 	public void close();
 }

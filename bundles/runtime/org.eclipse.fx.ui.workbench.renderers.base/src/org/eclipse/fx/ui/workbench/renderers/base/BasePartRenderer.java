@@ -20,7 +20,6 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.workbench.UIEvents;
-import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
@@ -28,12 +27,23 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-
-
+/**
+ * Base renderer for {@link MPart}
+ * 
+ * @param <N>
+ *            the native widget
+ * @param <T>
+ *            the native toolbar widget
+ * @param <M>
+ *            the native menu widget
+ */
 @SuppressWarnings("restriction")
-public abstract class BasePartRenderer<N,T,M> extends BaseRenderer<MPart, WPart<N,T,M>> {
-	public static final String VIEW_MENU_TAG = "ViewMenu";
-	
+public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPart<N, T, M>> {
+	/**
+	 * Tag used to mark a menu as the view menu
+	 */
+	public static final String VIEW_MENU_TAG = "ViewMenu"; //$NON-NLS-1$
+
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_ICONURI);
@@ -41,7 +51,7 @@ public abstract class BasePartRenderer<N,T,M> extends BaseRenderer<MPart, WPart<
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_TOOLTIP);
 		registerEventListener(eventBroker, UIEvents.Dirtyable.TOPIC_DIRTY);
 		eventBroker.subscribe(UIEvents.Part.TOPIC_MENUS, new EventHandler() {
-			
+
 			@Override
 			public void handleEvent(Event event) {
 				Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
@@ -56,17 +66,17 @@ public abstract class BasePartRenderer<N,T,M> extends BaseRenderer<MPart, WPart<
 			}
 		});
 	}
-	
+
 	@Override
-	protected void initWidget(final MPart element, final WPart<N,T,M> widget) {
-		super.initWidget(element, widget);				
+	protected void initWidget(final MPart element, final WPart<N, T, M> widget) {
+		super.initWidget(element, widget);
 		widget.registerActivationCallback(new WCallback<Boolean, Void>() {
-			
+
 			@Override
 			public Void call(Boolean param) {
-				if( param.booleanValue() ) {
+				if (param.booleanValue()) {
 					boolean requiresFocus = requiresFocus(widget);
-					if(requiresFocus) {
+					if (requiresFocus) {
 						activate(element, true);
 					} else {
 						activate(element, false);
@@ -76,47 +86,47 @@ public abstract class BasePartRenderer<N,T,M> extends BaseRenderer<MPart, WPart<
 			}
 		});
 	}
-	
-	protected abstract boolean requiresFocus(WPart<N,T,M> widget);
-	
+
+	protected abstract boolean requiresFocus(WPart<N, T, M> widget);
+
 	@Override
 	public void doProcessContent(MPart element) {
-		WPart<N,T,M> widget = getWidget(element);
-		
-		if( element.getToolbar() != null ) {
+		WPart<N, T, M> widget = getWidget(element);
+
+		if (element.getToolbar() != null) {
 			WToolBar<T> toolbar = engineCreateWidget(element.getToolbar());
 			widget.setToolbar(toolbar);
 		}
-		
-		for( MMenu m : element.getMenus() ) {
-			if( m.getTags().contains(VIEW_MENU_TAG) ) {
+
+		for (MMenu m : element.getMenus()) {
+			if (m.getTags().contains(VIEW_MENU_TAG)) {
 				WMenu<M> menu = engineCreateWidget(m);
 				widget.setMenu(menu);
 				break;
 			}
 		}
-		
+
 		Class<?> cl = widget.getWidget().getClass();
 		do {
 			element.getContext().set(cl.getName(), widget.getWidget());
 			cl = cl.getSuperclass();
-		} while( ! cl.getName().equals("java.lang.Object") ); //$NON-NLS-1$
-		
+		} while (!cl.getName().equals("java.lang.Object")); //$NON-NLS-1$
+
 		IContributionFactory contributionFactory = element.getContext().get(IContributionFactory.class);
 		Object newPart = contributionFactory.create(element.getContributionURI(), element.getContext());
 		element.setObject(newPart);
-		
+
 	}
-	
+
 	void handleMenuAddition(MPart parent, Collection<MMenu> elements) {
-		WPart<N,T,M> widget = getWidget(parent);
-		if( widget == null ) {
+		WPart<N, T, M> widget = getWidget(parent);
+		if (widget == null) {
 			return;
 		}
-		
-		for( MUIElement e : elements ) {
-			if( e.getTags().contains(VIEW_MENU_TAG) ) {
-				if( widget.getMenu() == null ) {
+
+		for (MUIElement e : elements) {
+			if (e.getTags().contains(VIEW_MENU_TAG)) {
+				if (widget.getMenu() == null) {
 					@SuppressWarnings("unchecked")
 					WMenu<M> menu = (WMenu<M>) getPresentationEngine().createGui(e);
 					widget.setMenu(menu);
@@ -125,27 +135,27 @@ public abstract class BasePartRenderer<N,T,M> extends BaseRenderer<MPart, WPart<
 			}
 		}
 	}
-	
+
 	void handleMenuRemove(MPart parent, Collection<MMenu> elements) {
-		WPart<N,T,M> widget = getWidget(parent);
-		if( widget == null ) {
+		WPart<N, T, M> widget = getWidget(parent);
+		if (widget == null) {
 			return;
 		}
-		
-		for( MMenu e : elements ) {
-			if( e.getTags().contains(VIEW_MENU_TAG) ) {
-				if( widget.getMenu() == e.getWidget() ) {
+
+		for (MMenu e : elements) {
+			if (e.getTags().contains(VIEW_MENU_TAG)) {
+				if (widget.getMenu() == e.getWidget()) {
 					widget.setMenu(null);
 				}
 			}
 		}
 	}
-	
+
 	@Override
 	public void childRendered(MPart parentElement, MUIElement element) {
 		// No children
 	}
-	
+
 	@Override
 	public void hideChild(MPart container, MUIElement changedObj) {
 		// No children

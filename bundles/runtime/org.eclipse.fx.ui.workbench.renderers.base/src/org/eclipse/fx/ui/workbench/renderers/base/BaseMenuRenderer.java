@@ -38,21 +38,27 @@ import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 
+/**
+ * Base renderer for {@link MMenu} representing a menu
+ * 
+ * @param <N>
+ *            the native widget type
+ */
 @SuppressWarnings("restriction")
 public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> implements ChildrenHandler<MMenu, MMenuElement> {
 
 	@Inject
-	private ELifecycleService lifecycleService;
-	
+	ELifecycleService lifecycleService;
+
 	@Inject
 	private IContributionFactory contributionFactory;
-	
+
 	@Log
 	@Inject
 	private Logger logger;
-	
-	private static final String DYNAMIC_MENU_CONTRIBUTION = "DYNAMIC_MENU_CONTRIBUTION";
-	
+
+	private static final String DYNAMIC_MENU_CONTRIBUTION = "DYNAMIC_MENU_CONTRIBUTION"; //$NON-NLS-1$
+
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
 		EventProcessor.attachChildProcessor(eventBroker, this);
@@ -70,78 +76,78 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 			}
 		});
 		widget.setHidingCallback(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				IEclipseContext context = getModelContext(element).createChild("lifecycle");
+				IEclipseContext context = getModelContext(element).createChild("lifecycle"); //$NON-NLS-1$
 				context.set(MMenu.class, element);
-				lifecycleService.validateAnnotation(PreClose.class, element, context);
-				
-				
-				for( MMenuElement e : element.getChildren().toArray(new MMenuElement[0]) ) {
-					if( e instanceof MDynamicMenuContribution ) {
+				BaseMenuRenderer.this.lifecycleService.validateAnnotation(PreClose.class, element, context);
+
+				for (MMenuElement e : element.getChildren().toArray(new MMenuElement[0])) {
+					if (e instanceof MDynamicMenuContribution) {
 						MDynamicMenuContribution dc = (MDynamicMenuContribution) e;
-						
+
 						Object contrib = dc.getObject();
-						if( contrib != null ) {
+						if (contrib != null) {
 							@SuppressWarnings("unchecked")
 							List<MMenuElement> previous = (List<MMenuElement>) dc.getTransientData().remove(DYNAMIC_MENU_CONTRIBUTION);
 							context.set(List.class, previous);
 							try {
 								ContextInjectionFactory.invoke(contrib, AboutToHide.class, context, null);
-								
-								if( previous != null && ! previous.isEmpty() ) {
+
+								if (previous != null && !previous.isEmpty()) {
 									element.getChildren().removeAll(previous);
 								}
-							} catch(Throwable t) {
-								logger.debug("Unable to process the AboutToHide", t);
+							} catch (Throwable t) {
+								getLogger().debug("Unable to process the AboutToHide", t); //$NON-NLS-1$
 							}
-							
+
 						}
 					}
 				}
-				
+
 				context.dispose();
 			}
 		});
 	}
 
 	void handleShowing(MMenu element) {
-		IEclipseContext context = getModelContext(element).createChild("lifecycle");
+		IEclipseContext context = getModelContext(element).createChild("lifecycle"); //$NON-NLS-1$
 		context.set(MMenu.class, element);
-		lifecycleService.validateAnnotation(PreShow.class, element, context);
+		this.lifecycleService.validateAnnotation(PreShow.class, element, context);
 
 		// we iterate of the copy because it is modified in between
-		for( MMenuElement e : element.getChildren().toArray(new MMenuElement[0]) ) {
-			if( e instanceof MDynamicMenuContribution ) {
+		for (MMenuElement e : element.getChildren().toArray(new MMenuElement[0])) {
+			if (e instanceof MDynamicMenuContribution) {
 				MDynamicMenuContribution dc = (MDynamicMenuContribution) e;
-				if( dc.getObject() == null && dc.getContributionURI() != null ) {
+				if (dc.getObject() == null && dc.getContributionURI() != null) {
 					try {
-						//TODO On which context should we create the instance, would
-						dc.setObject(contributionFactory.create(dc.getContributionURI(), context));
-					} catch(Throwable t ) {
-						logger.debug("Unable to create contribution", t);
+						// TODO On which context should we create the instance,
+						// would
+						dc.setObject(this.contributionFactory.create(dc.getContributionURI(), context));
+					} catch (Throwable t) {
+						getLogger().debug("Unable to create contribution", t); //$NON-NLS-1$
 					}
 				}
-				
+
 				Object contrib = dc.getObject();
-				if( contrib != null ) {
+				if (contrib != null) {
 					List<MMenuElement> list = new ArrayList<MMenuElement>();
 					context.set(List.class, list);
 					try {
 						ContextInjectionFactory.invoke(contrib, AboutToShow.class, context, null);
-	 					
-	 					int idx = element.getChildren().indexOf(e);
-	 					element.getChildren().addAll(idx, list);
-	 					dc.getTransientData().put(DYNAMIC_MENU_CONTRIBUTION, list);
-					} catch(Throwable t) {
-						logger.debug("Unable to process AboutToShow", t);
+
+						int idx = element.getChildren().indexOf(e);
+						element.getChildren().addAll(idx, list);
+						dc.getTransientData().put(DYNAMIC_MENU_CONTRIBUTION, list);
+					} catch (Throwable t) {
+						getLogger().debug("Unable to process AboutToShow", t); //$NON-NLS-1$
 					}
- 					
+
 				}
 			}
 		}
-		
+
 		for (MMenuElement e : element.getChildren()) {
 			if (e.getRenderer() instanceof BaseItemRenderer) {
 				@SuppressWarnings("unchecked")
@@ -149,52 +155,47 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 				r.checkEnablement(e);
 			}
 		}
-		
+
 		context.dispose();
 	}
-	
 
 	@Override
 	public void doProcessContent(MMenu element) {
 		// TODO Should we do this creation lazy????
 		WMenu<N> menu = getWidget(element);
 		for (MMenuElement e : element.getChildren()) {
-			if( e.isToBeRendered() ) {
+			if (e.isToBeRendered()) {
 				WMenuElement<MMenuElement> widget = engineCreateWidget(e);
 				if (widget != null && e.isVisible()) {
 					menu.addElement(widget);
-				}	
+				}
 			}
 		}
 	}
 
+	@Override
 	public void handleChildrenRemove(MMenu parent, Collection<MMenuElement> elements) {
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
-			
-			if( element instanceof MDynamicMenuContribution ) {
-				MDynamicMenuContribution dc = (MDynamicMenuContribution) element;
-				if( dc.getObject() != null ) {
-					
-				}
-			}
-			
+
 			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
 		}
 	}
 
+	@Override
 	public void handleChildrenAddition(MMenu parent, Collection<MMenuElement> elements) {
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
-//			if (element instanceof MDynamicMenuContribution) {
-//				MDynamicMenuContribution c = (MDynamicMenuContribution) element;
-//				lifecycleService.registerLifecycleURI(element, c.getContributionURI());
-//				continue;
-//			}
+			// if (element instanceof MDynamicMenuContribution) {
+			// MDynamicMenuContribution c = (MDynamicMenuContribution) element;
+			// lifecycleService.registerLifecycleURI(element,
+			// c.getContributionURI());
+			// continue;
+			// }
 			if (element.isToBeRendered() && element.isVisible()) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
@@ -221,14 +222,14 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 	@Override
 	protected int getRenderedIndex(MUIElement parent, MUIElement element) {
 		EObject eElement = (EObject) element;
-		
+
 		EObject container = eElement.eContainer();
 		@SuppressWarnings("unchecked")
 		List<MUIElement> list = (List<MUIElement>) container.eGet(eElement.eContainmentFeature());
 		int idx = 0;
-		for( MUIElement u : list ) {
-			if( u.isToBeRendered() && u.isVisible() && !(u instanceof MDynamicMenuContribution) ) {
-				if( u == element ) {
+		for (MUIElement u : list) {
+			if (u.isToBeRendered() && u.isVisible() && !(u instanceof MDynamicMenuContribution)) {
+				if (u == element) {
 					return idx;
 				}
 				idx++;
@@ -236,8 +237,7 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 		}
 		return -1;
 	}
-	
-	
+
 	@Override
 	public void hideChild(MMenu container, MUIElement changedObj) {
 		WMenu<N> menu = getWidget(container);

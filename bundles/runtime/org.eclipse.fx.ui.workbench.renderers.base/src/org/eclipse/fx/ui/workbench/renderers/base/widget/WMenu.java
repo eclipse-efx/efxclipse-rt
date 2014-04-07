@@ -16,13 +16,13 @@ import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 public interface WMenu<N> extends WMenuElement<MMenu> {
 
 	void addElement(WMenuElement<MMenuElement> widget);
-	
+
 	void addElement(int idx, WMenuElement<MMenuElement> widget);
-	
+
 	void setShowingCallback(Runnable showingCallback);
 
 	void removeElement(WMenuElement<MMenuElement> widget);
-	
+
 	void setHidingCallback(Runnable hidingCallback);
 
 }

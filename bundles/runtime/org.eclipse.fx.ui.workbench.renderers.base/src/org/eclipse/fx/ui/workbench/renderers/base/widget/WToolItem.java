@@ -14,7 +14,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
 
 public interface WToolItem<N> extends WWidget<MToolItem> {
 	public static final String TAG_CHECKBOX = "fx_checkbox";
-	
+
 	public void setOnActionCallback(Runnable onActionCallback);
 
 	public void setHandled(boolean handled);

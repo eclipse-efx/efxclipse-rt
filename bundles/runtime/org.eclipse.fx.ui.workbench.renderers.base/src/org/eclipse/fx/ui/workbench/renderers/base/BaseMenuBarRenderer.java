@@ -24,6 +24,12 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 
+/**
+ * Base renderer for a {@link MMenu} representing a menu-bar
+ * 
+ * @param <N>
+ *            the native widget type
+ */
 public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBar<N>> implements ChildrenHandler<MMenu, MMenuElement> {
 
 	@PostConstruct
@@ -37,11 +43,11 @@ public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBa
 	public void doProcessContent(MMenu element) {
 		WMenuBar<N> menuBar = getWidget(element);
 		for (MMenuElement e : element.getChildren()) {
-			if( e.isToBeRendered() ) {
+			if (e.isToBeRendered()) {
 				Object widget = engineCreateWidget(e);
 				if (widget instanceof WMenu && e.isVisible()) {
 					menuBar.addElement((WMenu<MMenuElement>) widget);
-				}	
+				}
 			}
 		}
 	}

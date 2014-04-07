@@ -25,12 +25,21 @@ import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 
+/**
+ * Base renderer for the {@link MToolBar}
+ * 
+ * @param <N>
+ *            the widget node
+ */
 public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToolBar<N>> implements ChildrenHandler<MToolBar, MToolBarElement> {
-	private List<MToolBarElement> widgets = new ArrayList<MToolBarElement>();
+	List<MToolBarElement> widgets = new ArrayList<MToolBarElement>();
 	private Thread syncThread;
 
+	/**
+	 * Create an instance
+	 */
 	public BaseToolBarRenderer() {
-		syncThread = new Thread("ToolItem Enablement Sync") {
+		this.syncThread = new Thread("ToolItem Enablement Sync") { //$NON-NLS-1$
 			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
@@ -40,8 +49,8 @@ public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToo
 					// not ideal because we'll probably check items are already
 					// removed
 					// from the ui
-					synchronized (widgets) {
-						iterationCopy = widgets.toArray(new MToolBarElement[0]);
+					synchronized (BaseToolBarRenderer.this.widgets) {
+						iterationCopy = BaseToolBarRenderer.this.widgets.toArray(new MToolBarElement[0]);
 					}
 
 					for (int i = 0; i < iterationCopy.length; i++) {
@@ -58,14 +67,13 @@ public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToo
 					try {
 						Thread.sleep(400);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						getLogger().error("Failed to sleep", e); //$NON-NLS-1$
 					}
 				}
 			}
 		};
-		syncThread.setDaemon(true);
-		syncThread.start();
+		this.syncThread.setDaemon(true);
+		this.syncThread.start();
 	}
 
 	@PostConstruct
@@ -78,19 +86,19 @@ public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToo
 	public void doProcessContent(MToolBar element) {
 		WToolBar<N> toolbar = getWidget(element);
 		for (MToolBarElement item : element.getChildren()) {
-			if( item.isToBeRendered() ) {
+			if (item.isToBeRendered()) {
 				WWidget<MToolBarElement> itemWidget = engineCreateWidget(item);
 				if (itemWidget != null && item.isVisible()) {
 					toolbar.addChild(itemWidget);
-				}	
+				}
 			}
 		}
 	}
 
 	@Override
 	public void childRendered(MToolBar parentElement, MUIElement element) {
-		synchronized (widgets) {
-			widgets.add((MToolBarElement) element);
+		synchronized (this.widgets) {
+			this.widgets.add((MToolBarElement) element);
 		}
 
 		if (inContentProcessing(parentElement)) {
@@ -106,8 +114,8 @@ public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToo
 
 	@Override
 	public void hideChild(MToolBar container, MUIElement changedObj) {
-		synchronized (widgets) {
-			widgets.remove(changedObj);
+		synchronized (this.widgets) {
+			this.widgets.remove(changedObj);
 		}
 
 		WToolBar<N> toolbar = getWidget(container);

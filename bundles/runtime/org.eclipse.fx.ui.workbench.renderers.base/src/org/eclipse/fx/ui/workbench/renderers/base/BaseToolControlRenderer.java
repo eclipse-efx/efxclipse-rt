@@ -16,23 +16,28 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
 
-
+/**
+ * Base renderer for {@link MToolControl}
+ * 
+ * @param <N>
+ *            the native widget type
+ */
 @SuppressWarnings("restriction")
 public abstract class BaseToolControlRenderer<N> extends BaseRenderer<MToolControl, WToolControl<N>> {
-	private static final String LOCAL_CONTEXT = "efx_toolcontrol_context";
+	private static final String LOCAL_CONTEXT = "efx_toolcontrol_context"; //$NON-NLS-1$
+
 	@Override
 	protected void doProcessContent(MToolControl element) {
 		WToolControl<N> widget = getWidget(element);
-		
+
 		Class<?> cl = widget.getWidget().getClass();
-		IEclipseContext context = getModelContext(element).createChild("ToolControl");
+		IEclipseContext context = getModelContext(element).createChild("ToolControl"); //$NON-NLS-1$
 		do {
 			context.set(cl.getName(), widget.getWidget());
 			cl = cl.getSuperclass();
-		} while( ! cl.getName().equals("java.lang.Object") );
-		
-		IContributionFactory contributionFactory = (IContributionFactory) context.get(IContributionFactory.class
-				.getName());
+		} while (!cl.getName().equals("java.lang.Object")); //$NON-NLS-1$
+
+		IContributionFactory contributionFactory = (IContributionFactory) context.get(IContributionFactory.class.getName());
 		Object newPart = contributionFactory.create(element.getContributionURI(), context);
 		element.setObject(newPart);
 		element.getTransientData().put(LOCAL_CONTEXT, context);
@@ -40,19 +45,19 @@ public abstract class BaseToolControlRenderer<N> extends BaseRenderer<MToolContr
 
 	@Override
 	public void childRendered(MToolControl parentElement, MUIElement element) {
-		// no child		
+		// no child
 	}
 
 	@Override
 	public void hideChild(MToolControl container, MUIElement changedObj) {
-		// no child		
+		// no child
 	}
-	
+
 	@Override
 	public void destroyWidget(MToolControl element) {
 		super.destroyWidget(element);
 		IEclipseContext local = (IEclipseContext) element.getTransientData().get(LOCAL_CONTEXT);
-		if( local != null ) {
+		if (local != null) {
 			local.dispose();
 			element.getTransientData().remove(LOCAL_CONTEXT);
 		}

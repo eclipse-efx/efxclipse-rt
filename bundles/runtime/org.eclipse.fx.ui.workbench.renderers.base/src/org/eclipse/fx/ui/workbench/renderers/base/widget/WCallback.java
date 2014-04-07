@@ -10,6 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
-public interface WCallback<P,R> {
+public interface WCallback<P, R> {
 	public R call(P param);
 }

@@ -26,25 +26,33 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WTrimBar;
 
-
+/**
+ * Base renderer for {@link MTrimBar}
+ * 
+ * @param <N>
+ *            the native widget type
+ */
 public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTrimBar<N>> implements ChildrenHandler<MTrimBar, MTrimElement> {
-	public static final String TAG_FILLSPACE = "fillspace";
-	
+	/**
+	 * Tag to use when space should be filled
+	 */
+	public static final String TAG_FILLSPACE = "fillspace"; //$NON-NLS-1$
+
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
 		EventProcessor.attachChildProcessor(eventBroker, this);
 		EventProcessor.attachVisibleProcessor(eventBroker, this);
 	}
-	
+
 	@Override
 	public void doProcessContent(MTrimBar element) {
 		WTrimBar<N> trimBar = getWidget(element);
-		for( MTrimElement e : element.getChildren() ) {
-			if( e.isToBeRendered() ) {
+		for (MTrimElement e : element.getChildren()) {
+			if (e.isToBeRendered()) {
 				WLayoutedWidget<MTrimElement> trimElementWidget = engineCreateWidget(e);
-				if( trimElementWidget != null && e.isVisible() ) {
+				if (trimElementWidget != null && e.isVisible()) {
 					trimBar.addChild(trimElementWidget);
-				}				
+				}
 			}
 		}
 	}
@@ -54,7 +62,7 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 		if (inContentProcessing(parentElement)) {
 			return;
 		}
-		
+
 		if (!element.isVisible() || !element.isToBeRendered()) {
 			return;
 		}
@@ -67,7 +75,7 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 			trimBar.addChild(idx, widget);
 		}
 	}
-	
+
 	@Override
 	public void hideChild(MTrimBar container, MUIElement changedObj) {
 		WTrimBar<N> toolbar = getWidget(container);
@@ -82,7 +90,7 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 			toolbar.removeChild(widget);
 		}
 	}
-	
+
 	@Override
 	public void handleChildrenAddition(MTrimBar parent, Collection<MTrimElement> elements) {
 		Iterator<MTrimElement> iterator = elements.iterator();
@@ -97,7 +105,7 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 			}
 		}
 	}
-	
+
 	@Override
 	public void handleChildrenRemove(MTrimBar parent, Collection<MTrimElement> elements) {
 		Iterator<MTrimElement> iterator = elements.iterator();

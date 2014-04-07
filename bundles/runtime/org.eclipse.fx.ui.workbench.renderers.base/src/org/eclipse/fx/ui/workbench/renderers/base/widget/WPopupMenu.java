@@ -16,9 +16,9 @@ import org.eclipse.e4.ui.model.application.ui.menu.MPopupMenu;
 public interface WPopupMenu<N> extends WMenuElement<MPopupMenu> {
 
 	void addElement(WMenuElement<MMenuElement> widget);
-	
+
 	void addElement(int idx, WMenuElement<MMenuElement> widget);
-	
+
 	void setShowingCallback(Runnable showingCallback);
 
 	void removeElement(WMenuElement<MMenuElement> widget);

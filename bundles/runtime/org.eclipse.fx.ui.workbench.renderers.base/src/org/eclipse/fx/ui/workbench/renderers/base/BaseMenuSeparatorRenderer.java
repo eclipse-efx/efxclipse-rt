@@ -14,24 +14,25 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuSeparator;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuSeparator;
 
-
-
+/**
+ * Base renderer for {@link MMenuSeparator}
+ * 
+ * @param <N>
+ */
 public abstract class BaseMenuSeparatorRenderer<N> extends BaseRenderer<MMenuSeparator, WMenuSeparator<N>> {
-
 
 	@Override
 	public void doProcessContent(MMenuSeparator element) {
-		// TODO Auto-generated method stub
-		
+		// nothing todo
 	}
 
 	@Override
 	public void childRendered(MMenuSeparator parentElement, MUIElement element) {
-		
+		// nothing todo
 	}
 
 	@Override
 	public void hideChild(MMenuSeparator container, MUIElement changedObj) {
-		
+		// nothing todo
 	}
 }

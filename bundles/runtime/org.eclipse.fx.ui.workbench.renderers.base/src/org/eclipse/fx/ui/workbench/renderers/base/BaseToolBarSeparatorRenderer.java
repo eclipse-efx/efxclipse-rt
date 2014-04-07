@@ -14,7 +14,12 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBarSeparator;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBarSeparator;
 
-
+/**
+ * Base renderer for {@lin MToolBarSeparator}
+ * 
+ * @param <N>
+ *            the native widget type
+ */
 public abstract class BaseToolBarSeparatorRenderer<N> extends BaseRenderer<MToolBarSeparator, WToolBarSeparator<N>> {
 
 	@Override
@@ -24,7 +29,7 @@ public abstract class BaseToolBarSeparatorRenderer<N> extends BaseRenderer<MTool
 
 	@Override
 	public void childRendered(MToolBarSeparator parentElement, MUIElement element) {
-		// there is no content		
+		// there is no content
 	}
 
 	@Override
