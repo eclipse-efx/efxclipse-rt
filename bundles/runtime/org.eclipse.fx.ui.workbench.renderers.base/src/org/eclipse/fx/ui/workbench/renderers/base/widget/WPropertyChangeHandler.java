@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @param <W>
  *            the widget type
  */
+@FunctionalInterface
 public interface WPropertyChangeHandler<W extends WWidget<?>> {
 	/**
 	 * Event object with informations about the property change
