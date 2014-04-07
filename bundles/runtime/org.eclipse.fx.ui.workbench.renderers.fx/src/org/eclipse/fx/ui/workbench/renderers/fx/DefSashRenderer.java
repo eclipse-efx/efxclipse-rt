@@ -59,6 +59,8 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 					gd.grabExcessVerticalSpace.set(true);
 					gd.verticalAlignment.set(Alignment.FILL);
 				}
+			} else {
+				gd.horizontalAlignment.set(Alignment.FILL);
 			}
 			
 			if( dataMap.containsKey(WSash.FIXED_LAYOUT_HEIGHT) ) {
@@ -67,6 +69,8 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 					gd.grabExcessHorizontalSpace.set(true);
 					gd.horizontalAlignment.set(Alignment.FILL);
 				}
+			} else {
+				gd.verticalAlignment.set(Alignment.FILL);
 			}
 			
 			if( dataMap.containsKey(WSash.FIXED_LAYOUT_GRAB_HORIZONTAL) ) {
