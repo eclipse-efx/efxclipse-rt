@@ -10,13 +10,18 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ToolBar;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBarElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseToolBarRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
@@ -32,11 +37,38 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 
 	public static class WToolBarImpl extends WLayoutedWidgetImpl<ToolBar, ToolBar, MToolBar> implements WToolBar<ToolBar> {
 		private ToggleGroup group;
+		private ToolBar toolbar;
+		private InvalidationListener orientationSync;
 		
 		@Override
 		protected ToolBar createWidget() {
 			ToolBar b = new ToolBar();
+			orientationSync = this::syncOrientation;
+			b.parentProperty().addListener(orientationSync);
 			return b;
+		}
+		
+		private void syncOrientation(Observable o) {
+			if( getDomElement() != null && ((EObject)getDomElement()).eContainer() instanceof MTrimBar ) {
+				MTrimBar bar = (MTrimBar) ((EObject)getDomElement()).eContainer();
+				switch (bar.getSide()) {
+				case LEFT:
+				case RIGHT:
+					getWidget().setOrientation(Orientation.VERTICAL);
+					break;
+				default:
+					getWidget().setOrientation(Orientation.HORIZONTAL);
+					break;
+				}
+			}
+		}
+		
+		@Override
+		protected void doCleanup() {
+			super.doCleanup();
+			if( toolbar != null && orientationSync != null ) {
+				toolbar.parentProperty().removeListener(orientationSync);
+			}
 		}
 
 		@Override
