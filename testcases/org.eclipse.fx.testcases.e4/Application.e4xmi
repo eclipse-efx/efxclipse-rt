@@ -187,6 +187,12 @@
       </children>
       <children xsi:type="menu:ToolControl" xmi:id="_Na3dgNZUEeKlJ9ZUcG3l2Q" elementId="org.eclipse.fx.testcases.e4.toolcontrol.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.tool.ToolControlSample"/>
     </trimBars>
+    <trimBars xmi:id="_s3Z_EL5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.trimbar.0" side="Left">
+      <children xsi:type="menu:ToolBar" xmi:id="_upiEAL5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.toolbar.5">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_ve_FUL5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.directtoolitem.9" label="V1"/>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_w4yJ0L5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.directtoolitem.10" label="V2"/>
+      </children>
+    </trimBars>
   </children>
   <handlers xmi:id="_H2FJYOUcEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.Handler0" command="_FEZr8OUcEeGP-5z69KadAQ"/>
   <handlers xmi:id="_0_q1EOqiEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.Handler1" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
