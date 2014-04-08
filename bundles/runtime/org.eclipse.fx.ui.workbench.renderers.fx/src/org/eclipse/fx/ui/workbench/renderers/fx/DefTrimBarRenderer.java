@@ -28,7 +28,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WTrimBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
-
+/**
+ * Default implementation of a trim renderer
+ */
 public class DefTrimBarRenderer extends BaseTrimBarRenderer<Pane> {
 
 	@Override
@@ -36,43 +38,52 @@ public class DefTrimBarRenderer extends BaseTrimBarRenderer<Pane> {
 		return WTrimBarImpl.class;
 	}
 
+	/**
+	 * TrimBar widget
+	 */
 	public static class WTrimBarImpl extends WLayoutedWidgetImpl<Pane, Pane, MTrimBar> implements WTrimBar<Pane> {
 		private SideValue sideValue;
-		
+
+		/**
+		 * Create an instance of trimbar
+		 * 
+		 * @param sideValue
+		 *            the side value
+		 */
 		@Inject
 		public WTrimBarImpl(@Named(UIEvents.GenericTrimContainer.SIDE) SideValue sideValue) {
 			this.sideValue = sideValue;
 		}
-		
+
 		@Override
 		protected Pane createWidget() {
-			//TODO Can we get dynamic here, what when the orientation changes
-			if( isVertical() ) {
+			// TODO Can we get dynamic here, what when the orientation changes
+			if (isVertical()) {
 				VBox box = new VBox();
 				return box;
 			} else {
 				HBox box = new HBox();
-				return box;				
+				return box;
 			}
 		}
-		
+
 		private boolean isVertical() {
-			return sideValue == SideValue.LEFT || sideValue == SideValue.RIGHT;
+			return this.sideValue == SideValue.LEFT || this.sideValue == SideValue.RIGHT;
 		}
 
 		@Override
 		protected Pane getWidgetNode() {
 			return getWidget();
 		}
-		
+
 		@Override
 		public void addChild(WLayoutedWidget<MTrimElement> trimElementWidget) {
 			Node n = (Node) trimElementWidget.getStaticLayoutNode();
-			if( trimElementWidget.getDomElement().getTags().contains(TAG_FILLSPACE) ) {
-				if( isVertical() ) {
+			if (trimElementWidget.getDomElement().getTags().contains(TAG_FILLSPACE)) {
+				if (isVertical()) {
 					VBox.setVgrow(n, Priority.ALWAYS);
 				} else {
-					HBox.setHgrow(n, Priority.ALWAYS);	
+					HBox.setHgrow(n, Priority.ALWAYS);
 				}
 			}
 			getWidget().getChildren().add(n);
@@ -81,16 +92,16 @@ public class DefTrimBarRenderer extends BaseTrimBarRenderer<Pane> {
 		@Override
 		public void addChild(int idx, WLayoutedWidget<MTrimElement> trimElementWidget) {
 			Node n = (Node) trimElementWidget.getStaticLayoutNode();
-			if( trimElementWidget.getDomElement().getTags().contains(TAG_FILLSPACE) ) {
-				if( isVertical() ) {
-					VBox.setVgrow(n, Priority.ALWAYS); 
+			if (trimElementWidget.getDomElement().getTags().contains(TAG_FILLSPACE)) {
+				if (isVertical()) {
+					VBox.setVgrow(n, Priority.ALWAYS);
 				} else {
-					HBox.setHgrow(n, Priority.ALWAYS);	
+					HBox.setHgrow(n, Priority.ALWAYS);
 				}
 			}
 			getWidget().getChildren().add(idx, n);
 		}
-		
+
 		@Override
 		public void removeChild(WLayoutedWidget<MTrimElement> trimElementWidget) {
 			Node n = (Node) trimElementWidget.getStaticLayoutNode();
