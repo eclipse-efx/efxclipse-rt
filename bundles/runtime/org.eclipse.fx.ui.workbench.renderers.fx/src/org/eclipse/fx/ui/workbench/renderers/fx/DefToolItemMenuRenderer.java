@@ -12,7 +12,6 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 
 import java.util.List;
 
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
@@ -33,6 +32,9 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.ToolItemMenu;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
+/**
+ * Default renderer for tool item menus
+ */
 public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 
 	@Override
@@ -51,21 +53,19 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 			@SuppressWarnings("unchecked")
 			WToolItem<SplitMenuButton> w = (WToolItem<SplitMenuButton>) item.getWidget();
 			this.button = (SplitMenuButton) w.getWidget();
-			this.button.showingProperty().addListener(new ChangeListener<Boolean>() {
-
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					if( newValue.booleanValue() ) {
-						if( showingCallback != null ) {
-							showingCallback.run();
-						}	
-					} else {
-						if( hidingCallback != null ) {
-							hidingCallback.run();
-						}
-					}
+			this.button.showingProperty().addListener(this::handleShowingProperty);
+		}
+		
+		void handleShowingProperty(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+			if( newValue.booleanValue() ) {
+				if( this.showingCallback != null ) {
+					this.showingCallback.run();
+				}	
+			} else {
+				if( this.hidingCallback != null ) {
+					this.hidingCallback.run();
 				}
-			});
+			}
 		}
 		
 		@Override
@@ -85,7 +85,7 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 
 		@Override
 		protected ToolItemMenu createWidget() {
-			return new ToolItemMenu(button);
+			return new ToolItemMenu(this.button);
 		}
 
 		@Override
