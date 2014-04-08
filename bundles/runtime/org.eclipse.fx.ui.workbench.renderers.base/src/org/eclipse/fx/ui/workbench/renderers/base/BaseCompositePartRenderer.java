@@ -14,6 +14,12 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MCompositePart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCompositePart;
 
+/**
+ * Base renderer for {@link MCompositePart}
+ * 
+ * @param <N>
+ *            the native widget
+ */
 public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MCompositePart, WCompositePart<N>> {
 
 	@Override
