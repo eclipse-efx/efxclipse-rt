@@ -931,36 +931,40 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	static class WindowResizeButton extends Region {
 		double dragOffsetX;
 		double dragOffsetY;
+		final Stage stage;
+		final double stageMinimumWidth;
+		final double stageMinimumHeight;
 
 		public WindowResizeButton(final Stage stage, final double stageMinimumWidth, final double stageMinimumHeight) {
+			this.stage = stage;
+			this.stageMinimumWidth = stageMinimumWidth;
+			this.stageMinimumHeight = stageMinimumHeight;
 			setId("window-resize-button"); //$NON-NLS-1$
 			setPrefSize(11, 11);
-			setOnMousePressed(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) {
-					WindowResizeButton.this.dragOffsetX = (stage.getX() + stage.getWidth()) - e.getScreenX();
-					WindowResizeButton.this.dragOffsetY = (stage.getY() + stage.getHeight()) - e.getScreenY();
-					e.consume();
-				}
-			});
-			setOnMouseDragged(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) {
-					ObservableList<Screen> screens = Screen.getScreensForRectangle(stage.getX(), stage.getY(), 1, 1);
-					final Screen screen;
-					if (screens.size() > 0) {
-						screen = Screen.getScreensForRectangle(stage.getX(), stage.getY(), 1, 1).get(0);
-					} else {
-						screen = Screen.getScreensForRectangle(0, 0, 1, 1).get(0);
-					}
-					Rectangle2D visualBounds = screen.getVisualBounds();
-					double maxX = Math.min(visualBounds.getMaxX(), e.getScreenX() + WindowResizeButton.this.dragOffsetX);
-					double maxY = Math.min(visualBounds.getMaxY(), e.getScreenY() - WindowResizeButton.this.dragOffsetY);
-					stage.setWidth(Math.max(stageMinimumWidth, maxX - stage.getX()));
-					stage.setHeight(Math.max(stageMinimumHeight, maxY - stage.getY()));
-					e.consume();
-				}
-			});
+			setOnMousePressed(this::handleMousePressed);
+			setOnMouseDragged(this::handleMouseDragged);
+		}
+		
+		void handleMousePressed(MouseEvent e) {
+			this.dragOffsetX = (this.stage.getX() + this.stage.getWidth()) - e.getScreenX();
+			this.dragOffsetY = (this.stage.getY() + this.stage.getHeight()) - e.getScreenY();
+			e.consume();
+		}
+		
+		void handleMouseDragged(MouseEvent e) {
+			ObservableList<Screen> screens = Screen.getScreensForRectangle(this.stage.getX(), this.stage.getY(), 1, 1);
+			final Screen screen;
+			if (screens.size() > 0) {
+				screen = Screen.getScreensForRectangle(this.stage.getX(), this.stage.getY(), 1, 1).get(0);
+			} else {
+				screen = Screen.getScreensForRectangle(0, 0, 1, 1).get(0);
+			}
+			Rectangle2D visualBounds = screen.getVisualBounds();
+			double maxX = Math.min(visualBounds.getMaxX(), e.getScreenX() + WindowResizeButton.this.dragOffsetX);
+			double maxY = Math.min(visualBounds.getMaxY(), e.getScreenY() - WindowResizeButton.this.dragOffsetY);
+			this.stage.setWidth(Math.max(this.stageMinimumWidth, maxX - this.stage.getX()));
+			this.stage.setHeight(Math.max(this.stageMinimumHeight, maxY - this.stage.getY()));
+			e.consume();
 		}
 	}
 }
