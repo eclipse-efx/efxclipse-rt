@@ -194,6 +194,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		
 		private Logger logger;
 		
+		private Boolean maximizedShell;
+		
 		@Inject
 		public WWindowImpl(
 				@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MWindow mWindow, 
@@ -226,6 +228,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			} else if( mWindow.getPersistedState().get("efx.window.undecorated") != null ) {
 				logger.warning("Usage of deprecated persisted state 'efx.window.undecorated' please use 'efx.window.stagestyle'");
 				this.undecorated = Boolean.parseBoolean(mWindow.getPersistedState().get("efx.window.undecorated"));	
+			}
+			
+			if( mWindow.getTags().contains(BaseWindowRenderer.TAG_SHELLMAXIMIZED) ) {
+				maximizedShell = Boolean.TRUE;
 			}
 		}
 		
@@ -289,6 +295,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					}
 				}
 			});
+			if( maximizedShell != null ) {
+				stage.setMaximized(maximizedShell.booleanValue());
+			}
 			stage.setFullScreen(fullscreen);
 			stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
 

@@ -134,6 +134,11 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	 * persisted map key to put window to full screen
 	 */
 	public static final String KEY_FULL_SCREEN = "efx.window.fullscreen"; //$NON-NLS-1$
+	
+	/**
+	 * Maximize the shell - provided for SWT-Compat
+	 */
+	public static final String TAG_SHELLMAXIMIZED = "shellMaximized"; //$NON-NLS-1$
 
 	@Inject
 	@Log
