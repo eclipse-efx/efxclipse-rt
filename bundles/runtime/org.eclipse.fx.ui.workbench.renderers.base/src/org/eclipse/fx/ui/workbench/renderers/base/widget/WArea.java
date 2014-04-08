@@ -14,17 +14,52 @@ import java.util.List;
 
 import org.eclipse.e4.ui.model.application.ui.advanced.MArea;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Abstraction of area widget
+ * 
+ * @param <N>
+ *            the native widget
+ */
 public interface WArea<N> extends WLayoutedWidget<MArea> {
+	/**
+	 * Append a widget
+	 * 
+	 * @param widget
+	 *            the widget
+	 */
+	public void addItem(@NonNull WLayoutedWidget<MPartSashContainerElement> widget);
 
-	public void addItem(WLayoutedWidget<MPartSashContainerElement> widget);
-
+	/**
+	 * @return number of current children
+	 */
 	public int getItemCount();
 
-	public void addItems(List<WLayoutedWidget<MPartSashContainerElement>> list);
+	/**
+	 * Append multiple widgets
+	 * 
+	 * @param list
+	 *            the list of widgets
+	 */
+	public void addItems(@NonNull List<WLayoutedWidget<MPartSashContainerElement>> list);
 
-	public void addItems(int index, List<WLayoutedWidget<MPartSashContainerElement>> list);
+	/**
+	 * Insert multiple widgets at the given index
+	 * 
+	 * @param index
+	 *            the index
+	 * @param list
+	 *            the widgets to add
+	 */
+	public void addItems(int index, @NonNull List<WLayoutedWidget<MPartSashContainerElement>> list);
 
-	public void removeItem(WLayoutedWidget<MPartSashContainerElement> widget);
+	/**
+	 * Remove a widget
+	 * 
+	 * @param widget
+	 *            the widget
+	 */
+	public void removeItem(@NonNull WLayoutedWidget<MPartSashContainerElement> widget);
 
 }
