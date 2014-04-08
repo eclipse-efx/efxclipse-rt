@@ -42,6 +42,8 @@ import org.eclipse.e4.ui.workbench.UIEvents.UIElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Base factory for renderers
@@ -52,28 +54,49 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	 * Context key used to store rendererd elements
 	 */
 	public static final String SHARED_ELEMENTS_MAP = "EFX.RENDERING.SHARED_ELEMENTS_MAP"; //$NON-NLS-1$
-
-	private IEclipseContext context;
-
+	
+	@NonNull
+	private final IEclipseContext context;
+	
+	@Nullable
 	private BaseWindowRenderer<?> windowRenderer;
+	@Nullable
 	private BaseSashRenderer<?> sashRenderer;
+	@Nullable
 	private BaseMenuBarRenderer<?> menuBarRenderer;
+	@Nullable
 	private BaseTrimBarRenderer<?> trimBarRenderer;
+	@Nullable
 	private BaseToolBarRenderer<?> toolBarRenderer;
+	@Nullable
 	private BaseToolItemRenderer<?> toolItemRenderer;
+	@Nullable
 	private BaseStackRenderer<?, ?, ?> stackRenderer;
+	@Nullable
 	private BasePartRenderer<?, ?, ?> partRenderer;
+	@Nullable
 	private BaseMenuRenderer<?> menuRenderer;
+	@Nullable
 	private BaseMenuItemRenderer<?> menuItemRenderer;
+	@Nullable
 	private BaseMenuSeparatorRenderer<?> menuSeperatorRenderer;
+	@Nullable
 	private BaseMenuRenderer<?> toolItemMenuRenderer;
+	@Nullable
 	private BasePerspectiveStackRenderer<?, ?, ?> perspectiveStackRenderer;
+	@Nullable
 	private BasePerspectiveRenderer<?> perspectiveRenderer;
+	@Nullable
 	private BasePlaceholderRenderer<?> placeholderRenderer;
+	@Nullable
 	private BaseToolControlRenderer<?> toolcontrolRenderer;
+	@Nullable
 	private BaseToolBarSeparatorRenderer<?> toolbarSeparatorRenderer;
+	@Nullable
 	private BaseAreaRenderer<?> areaRenderer;
+	@Nullable
 	private BasePopupMenuRenderer<?> popupMenuRenderer;
+	@Nullable
 	private BasePartMenuRenderer<?> partMenuRenderer;
 
 	/**
@@ -207,47 +230,128 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	 *            The renderer class to be instantiated.
 	 * @return a new instance of the given renderer class.
 	 */
+	@NonNull
 	protected <R extends AbstractRenderer<?, ?>> R make(Class<R> rendererClass) {
 		return ContextInjectionFactory.make(rendererClass, this.context);
 	}
 
+	/**
+	 * @return the window renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseWindowRenderer<?>> getWindowRendererClass();
 
+	/**
+	 * @return the sash renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseSashRenderer<?>> getSashRendererClass();
 
+	/**
+	 * @return the menubar renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseMenuBarRenderer<?>> getMenuBarRendererClass();
 
+	/**
+	 * @return the trimbar renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseTrimBarRenderer<?>> getTrimBarRendererClass();
 
+	/**
+	 * @return the toolbar renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseToolBarRenderer<?>> getToolBarRendererClass();
 
+	/**
+	 * @return the tool item renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseToolItemRenderer<?>> getToolItemRendererClass();
 
+	/**
+	 * @return the stack renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseStackRenderer<?, ?, ?>> getStackRendererClass();
 
+	/**
+	 * @return the part renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BasePartRenderer<?, ?, ?>> getPartRendererClass();
 
+	/**
+	 * @return the menu renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseMenuRenderer<?>> getMenuRendererClass();
 
+	/**
+	 * @return the menu item renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseMenuItemRenderer<?>> getMenuItemRendererClass();
 
+	/**
+	 * @return the menu separator renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseMenuSeparatorRenderer<?>> getMenuSeparatorRendererClass();
 
+	/**
+	 * @return the tool item menu renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseMenuRenderer<?>> getToolItemMenuRendererClass();
 
+	/**
+	 * @return the perspective stack renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BasePerspectiveStackRenderer<?, ?, ?>> getPerspectiveStackRendererClass();
 
+	/**
+	 * @return the perspective renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BasePerspectiveRenderer<?>> getPerspectiveRendererClass();
 
+	/**
+	 * @return the placeholder renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BasePlaceholderRenderer<?>> getPlaceholderRendererClass();
 
+	/**
+	 * @return the toolcontrol renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseToolControlRenderer<?>> getToolcontrolRendererClass();
 
+	/**
+	 * @return the toolbar separator renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseToolBarSeparatorRenderer<?>> getToolBarSeparatorRendererClass();
 
+	/**
+	 * @return the area renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BaseAreaRenderer<?>> getAreaRendererClass();
 
+	/**
+	 * @return the popup menu renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BasePopupMenuRenderer<?>> getPopupMenuRendererClass();
 
+	/**
+	 * @return the part menu renderer class
+	 */
+	@NonNull
 	protected abstract Class<? extends BasePartMenuRenderer<?>> getPartMenuRenderer();
 }
