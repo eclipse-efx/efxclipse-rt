@@ -43,9 +43,15 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+/**
+ * @author tomschindl
+ *
+ * @param <N>
+ */
 /**
  * Base renderer for {@link MWindow}
  * 
@@ -134,7 +140,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	 * persisted map key to put window to full screen
 	 */
 	public static final String KEY_FULL_SCREEN = "efx.window.fullscreen"; //$NON-NLS-1$
-	
+
 	/**
 	 * Maximize the shell - provided for SWT-Compat
 	 */
@@ -240,8 +246,31 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		getModelContext(element).set(ISaveHandler.class, new DefaultSaveHandler(element, widget));
 	}
 
-	protected abstract Save[] promptToSave(MWindow element, Collection<MPart> dirtyParts, WWindow<N> widget);
+	/**
+	 * Show a prompt to inform the user about dirty parts
+	 * 
+	 * @param element
+	 *            the parent
+	 * @param dirtyParts
+	 *            the dirty parts
+	 * @param widget
+	 *            the window widget to use for parenting
+	 * @return the result
+	 */
+	@NonNull
+	protected abstract Save[] promptToSave(@NonNull MWindow element, @NonNull Collection<MPart> dirtyParts, @NonNull WWindow<N> widget);
 
+	/**
+	 * Show a prompt to inform the user that <b>one</b> part is dirty
+	 * 
+	 * @param element
+	 *            the parent
+	 * @param dirtyPart
+	 *            the dirty part
+	 * @param widget
+	 *            the window widget to use for parenting
+	 * @return the result
+	 */
 	protected abstract Save promptToSave(MWindow element, MPart dirtyPart, WWindow<N> widget);
 
 	@Override
