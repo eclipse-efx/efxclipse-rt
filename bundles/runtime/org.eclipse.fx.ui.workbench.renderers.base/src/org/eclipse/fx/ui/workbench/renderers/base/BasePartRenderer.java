@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
@@ -24,6 +25,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -87,7 +89,14 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 		});
 	}
 
-	protected abstract boolean requiresFocus(WPart<N, T, M> widget);
+	/**
+	 * Check if the activated part needs focus called
+	 * 
+	 * @param widget
+	 *            the widget
+	 * @return <code>true</code> if activation should call {@link Focus}
+	 */
+	protected abstract boolean requiresFocus(@NonNull WPart<N, T, M> widget);
 
 	@Override
 	public void doProcessContent(MPart element) {
