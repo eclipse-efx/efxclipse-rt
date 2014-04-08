@@ -29,6 +29,7 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MItem;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Base renderer for item base elements
@@ -41,6 +42,16 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 @SuppressWarnings("restriction")
 public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M>> extends BaseRenderer<M, W> {
 
+	/**
+	 * Generate a parameterized command for the given {@link MHandledItem}
+	 * 
+	 * @param item
+	 *            the item
+	 * @param lclContext
+	 *            the local context
+	 * @return the command or <code>null</code>
+	 */
+	@Nullable
 	protected ParameterizedCommand generateParameterizedCommand(final MHandledItem item, final IEclipseContext lclContext) {
 		if (item.getCommand() == null) {
 			getLogger().error("No command assigned to " + item); //$NON-NLS-1$
@@ -66,6 +77,15 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 		return cmd;
 	}
 
+	/**
+	 * Check if the associated can be executed
+	 * 
+	 * @param item
+	 *            the item
+	 * @param context
+	 *            the context
+	 * @return <code>true</code> if can be executed
+	 */
 	protected boolean canExecute(M item, IEclipseContext context) {
 		if (item instanceof MContribution) {
 			MContribution contribution = (MContribution) item;
@@ -110,6 +130,14 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 		return false;
 	}
 
+	/**
+	 * Execute the associated code
+	 * 
+	 * @param item
+	 *            the item
+	 * @param context
+	 *            the execution context
+	 */
 	protected void executeAction(M item, IEclipseContext context) {
 		if (item instanceof MContribution) {
 			MContribution contribution = (MContribution) item;
