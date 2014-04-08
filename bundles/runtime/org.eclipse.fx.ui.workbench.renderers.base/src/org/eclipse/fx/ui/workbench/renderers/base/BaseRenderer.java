@@ -41,7 +41,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 import org.osgi.service.event.Event;
-import org.osgi.service.event.EventHandler;
 
 /**
  * Base class foe all renderers
@@ -92,18 +91,42 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 	@Log
 	Logger logger;
 
+	/**
+	 * @return the logger
+	 */
 	protected Logger getLogger() {
 		return this.logger;
 	}
 
+	/**
+	 * Check if we are currently processing this element
+	 * 
+	 * @param element
+	 *            the element to check
+	 * @return <code>true</code> if element is currently processed
+	 */
 	protected boolean inContentProcessing(MUIElement element) {
 		return this.contentProcessing.get(element) == Boolean.TRUE;
 	}
 
+	/**
+	 * Check if we are currently modifying the context of this element
+	 * 
+	 * @param element
+	 *            the element to check
+	 * @return <code>true</code> if the elements context is currently modified
+	 */
 	protected boolean inContextModification(MUIElement element) {
 		return this.contextModification.get(element) == Boolean.TRUE;
 	}
 
+	/**
+	 * Check if we are currently modifying the UI of the given element
+	 * 
+	 * @param element
+	 *            the element to check
+	 * @return <code>true</code> if the elements ui is currently modified
+	 */
 	protected boolean inUIModification(MUIElement element) {
 		return this.uiModification.get(element) == Boolean.TRUE;
 	}
@@ -138,7 +161,12 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 
 					if (attribute != null) {
 						if (attribute.getEType().getInstanceClass() == int.class) {
-							eo.eSet(attribute, Integer.valueOf(((Number) event.newValue).intValue()));
+							Object v = event.newValue;
+							if (v == null) {
+								eo.eSet(attribute, Integer.valueOf(0));
+							} else {
+								eo.eSet(attribute, Integer.valueOf(((Number) v).intValue()));
+							}
 						} else {
 							eo.eSet(attribute, event.newValue);
 						}
@@ -188,6 +216,14 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 		return context;
 	}
 
+	/**
+	 * Initialize the context
+	 * 
+	 * @param eo
+	 *            the object the context should be populated with
+	 * @param context
+	 *            the context
+	 */
 	@SuppressWarnings("static-method")
 	protected void initContext(EObject eo, IEclipseContext context) {
 		for (EAttribute e : eo.eClass().getEAllAttributes()) {
@@ -209,68 +245,91 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 		}
 	}
 
+	/**
+	 * Register an event listener for the give topic and translate it into
+	 * context informations
+	 * 
+	 * @param broker
+	 *            the event broker
+	 * @param topic
+	 *            the topic
+	 */
 	protected void registerEventListener(IEventBroker broker, String topic) {
-		broker.subscribe(topic, new EventHandler() {
+		broker.subscribe(topic, this::handleEvent);
+	}
 
-			@Override
-			public void handleEvent(Event event) {
-				Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
-				if (!(changedObj instanceof MUIElement)) {
-					return;
-				}
+	void handleEvent(Event event) {
+		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
+		if (!(changedObj instanceof MUIElement)) {
+			return;
+		}
 
-				Object newValue = event.getProperty(UIEvents.EventTags.NEW_VALUE);
-				String attributeName = event.getProperty(UIEvents.EventTags.ATTNAME).toString();
+		Object newValue = event.getProperty(UIEvents.EventTags.NEW_VALUE);
+		String attributeName = event.getProperty(UIEvents.EventTags.ATTNAME).toString();
 
-				// for now only process set events
-				// TODO Should we skip none attribute changes???
-				if (!UIEvents.isSET(event)) {
-					return;
-				}
+		// for now only process set events
+		// TODO Should we skip none attribute changes???
+		if (!UIEvents.isSET(event)) {
+			return;
+		}
 
-				MUIElement e = (MUIElement) changedObj;
-				// There is already a modification in process
-				if (inContextModification(e)) {
-					return;
-				}
+		MUIElement e = (MUIElement) changedObj;
+		// There is already a modification in process
+		if (inContextModification(e)) {
+			return;
+		}
 
-				try {
-					BaseRenderer.this.contextModification.put(e, Boolean.TRUE);
+		try {
+			BaseRenderer.this.contextModification.put(e, Boolean.TRUE);
 
-					if (changedObj instanceof MUIElement) {
-						if (e.getRenderer() == BaseRenderer.this) {
-							IEclipseContext ctx = (IEclipseContext) e.getTransientData().get(RENDERING_CONTEXT_KEY);
-							if (ctx != null) {
-								if (attributeName.equals(UIEvents.ApplicationElement.PERSISTEDSTATE) && newValue instanceof Entry) {
-									@SuppressWarnings("unchecked")
-									Entry<String, String> entry = (Entry<String, String>) newValue;
-									ctx.set(attributeName + "_" //$NON-NLS-1$
-											+ entry.getKey(), entry.getValue());
-								} else {
-									ctx.set(attributeName, newValue);
-									if (e instanceof MUILabel) {
-										MUILabel l = (MUILabel) e;
-										if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.UILabel.LABEL)) {
-											ctx.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
-										} else if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.UILabel.TOOLTIP)) {
-											ctx.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
-										}
-									}
+			if (changedObj instanceof MUIElement) {
+				if (e.getRenderer() == BaseRenderer.this) {
+					IEclipseContext ctx = (IEclipseContext) e.getTransientData().get(RENDERING_CONTEXT_KEY);
+					if (ctx != null) {
+						if (attributeName.equals(UIEvents.ApplicationElement.PERSISTEDSTATE) && newValue instanceof Entry) {
+							@SuppressWarnings("unchecked")
+							Entry<String, String> entry = (Entry<String, String>) newValue;
+							ctx.set(attributeName + "_" //$NON-NLS-1$
+									+ entry.getKey(), entry.getValue());
+						} else {
+							ctx.set(attributeName, newValue);
+							if (e instanceof MUILabel) {
+								MUILabel l = (MUILabel) e;
+								if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.UILabel.LABEL)) {
+									ctx.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
+								} else if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.UILabel.TOOLTIP)) {
+									ctx.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
 								}
 							}
 						}
 					}
-				} finally {
-					BaseRenderer.this.contextModification.remove(e);
 				}
 			}
-		});
+		} finally {
+			BaseRenderer.this.contextModification.remove(e);
+		}
 	}
 
+	/**
+	 * Initialize the rendering context
+	 * 
+	 * @param element
+	 *            the element
+	 * @param context
+	 *            the context
+	 */
 	protected void initRenderingContext(M element, IEclipseContext context) {
 		// nothing todo
 	}
 
+	/**
+	 * Initialize the widget
+	 * 
+	 * @param element
+	 *            the model element
+	 * @param widget
+	 *            the widget
+	 */
 	protected void initWidget(M element, W widget) {
 		// nothing todo
 	}
@@ -328,26 +387,69 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 		}
 	}
 
+	/**
+	 * @return get the presentation engine
+	 */
 	protected IPresentationEngine getPresentationEngine() {
 		return this._context.get(IPresentationEngine.class);
 	}
 
+	/**
+	 * Get the widgets class
+	 * 
+	 * @param element
+	 *            the widget class
+	 * @return the widget class
+	 */
 	protected abstract Class<? extends W> getWidgetClass(M element);
 
+	/**
+	 * Create a widget for the model element through the
+	 * {@link IPresentationEngine#createGui(MUIElement)}
+	 * 
+	 * @param pm
+	 *            the model element
+	 * @return the widget
+	 */
 	@SuppressWarnings("unchecked")
 	protected <LW extends WWidget<PM>, PM extends MUIElement> LW engineCreateWidget(PM pm) {
 		return (LW) getPresentationEngine().createGui(pm);
 	}
 
+	/**
+	 * Create a widget for the model element through
+	 * {@link IPresentationEngine#createGui(MUIElement, Object, IEclipseContext)}
+	 * 
+	 * @param pm
+	 *            the model element
+	 * @param context
+	 *            the context
+	 * @return the widget
+	 */
 	@SuppressWarnings("unchecked")
 	protected <LW extends WWidget<PM>, PM extends MUIElement> LW engineCreateWidget(PM pm, IEclipseContext context) {
 		return (LW) getPresentationEngine().createGui(pm, null, context);
 	}
 
+	/**
+	 * Get the rendering context of the element
+	 * 
+	 * @param element
+	 *            the element
+	 * @return the context
+	 */
 	protected IEclipseContext getRenderingContext(M element) {
 		return (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
 	}
 
+	/**
+	 * Get the context for the parent using
+	 * {@link EModelService#getContainingContext(MUIElement)}
+	 * 
+	 * @param element
+	 *            the element
+	 * @return the context
+	 */
 	protected IEclipseContext getContextForParent(MUIElement element) {
 		return this.modelService.getContainingContext(element);
 	}
@@ -360,6 +462,15 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 		return getContextForParent(part);
 	}
 
+	/**
+	 * Activate the given part using
+	 * {@link EPartService#activate(MPart, boolean)}
+	 * 
+	 * @param element
+	 *            the element
+	 * @param requiresFocus
+	 *            true of focus is required
+	 */
 	protected void activate(MPart element, boolean requiresFocus) {
 		IEclipseContext curContext = getModelContext(element);
 		if (curContext != null) {
@@ -379,6 +490,15 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 		}
 	}
 
+	/**
+	 * Get the rendering index of the element
+	 * 
+	 * @param parent
+	 *            the parent
+	 * @param element
+	 *            the element
+	 * @return the index or <code>-1</code>
+	 */
 	@SuppressWarnings("static-method")
 	protected int getRenderedIndex(MUIElement parent, MUIElement element) {
 		EObject eElement = (EObject) element;
@@ -398,6 +518,12 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 		return -1;
 	}
 
+	/**
+	 * Process the content of an element
+	 * 
+	 * @param element
+	 *            the element
+	 */
 	protected abstract void doProcessContent(M element);
 
 	@Override
