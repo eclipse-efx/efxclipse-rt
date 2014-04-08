@@ -34,9 +34,17 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseTrimBarRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseWindowRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseWorkbenchRendererFactory;
 
-
+/**
+ * Default factory for renderers
+ */
 public class DefWorkbenchRendererFactory extends BaseWorkbenchRendererFactory {
 
+	/**
+	 * Create a factory
+	 * 
+	 * @param context
+	 *            the DI context
+	 */
 	@Inject
 	public DefWorkbenchRendererFactory(IEclipseContext context) {
 		super(context);
@@ -78,7 +86,7 @@ public class DefWorkbenchRendererFactory extends BaseWorkbenchRendererFactory {
 	}
 
 	@Override
-	protected Class<? extends BasePartRenderer<?,?,?>> getPartRendererClass() {
+	protected Class<? extends BasePartRenderer<?, ?, ?>> getPartRendererClass() {
 		return DefPartRenderer.class;
 	}
 
@@ -131,12 +139,12 @@ public class DefWorkbenchRendererFactory extends BaseWorkbenchRendererFactory {
 	protected Class<? extends BaseAreaRenderer<?>> getAreaRendererClass() {
 		return DefAreaRenderer.class;
 	}
-	
+
 	@Override
 	protected Class<? extends BasePopupMenuRenderer<?>> getPopupMenuRendererClass() {
 		return DefPopupMenuRenderer.class;
 	}
-	
+
 	@Override
 	protected Class<? extends BasePartMenuRenderer<?>> getPartMenuRenderer() {
 		return DefPartMenuRenderer.class;
