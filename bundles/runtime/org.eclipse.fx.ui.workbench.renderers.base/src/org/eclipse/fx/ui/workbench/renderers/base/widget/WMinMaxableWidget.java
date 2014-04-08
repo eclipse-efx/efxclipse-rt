@@ -10,12 +10,45 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
+import org.eclipse.jdt.annotation.NonNull;
+
+/**
+ * Mixin for widgets who support min/max
+ */
 public interface WMinMaxableWidget {
+	/**
+	 * The current state
+	 */
 	public enum WMinMaxState {
-		NONE, MINIMIZED, MAXIMIZED, RESTORED
+		/**
+		 * no min/max
+		 */
+		NONE,
+		/**
+		 * Minimized
+		 */
+		MINIMIZED,
+		/**
+		 * Maximized
+		 */
+		MAXIMIZED,
+		/**
+		 * Restored
+		 */
+		RESTORED
 	}
 
-	public void setMinMaxCallback(WCallback<WMinMaxState, Void> minMaxCallback);
-
-	public void setMinMaxState(WMinMaxState state);
+	/**
+	 * Set callback to be invoked when the state changes
+	 * 
+	 * @param minMaxCallback
+	 *            the callback
+	 */
+	public void setMinMaxCallback(@NonNull WCallback<WMinMaxState, Void> minMaxCallback);
+	
+	/**
+	 * 
+	 * @param state
+	 */
+	public void setMinMaxState(@NonNull WMinMaxState state);
 }
