@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
@@ -62,6 +61,7 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.nls.Translation;
 import org.eclipse.e4.core.services.translation.TranslationService;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -94,14 +94,21 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.Messages;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.Bundle;
 
-
+/**
+ * Default implementation of a window renderer
+ */
 @SuppressWarnings("restriction")
 public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
+	@Inject
+	@Translation
+	Messages messages;
 
+	@Override
 	protected Save[] promptToSave(MWindow element, Collection<MPart> dirtyParts, WWindow<Stage> widget) {
 		Save[] response = new Save[dirtyParts.size()];
 		GraphicsLoader graphicsLoader = getModelContext(element).get(GraphicsLoader.class);
@@ -120,8 +127,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		return response;
 	}
 
+	@Override
 	protected Save promptToSave(MWindow element, MPart dirtyPart, WWindow<Stage> widget) {
-		QuestionCancelResult r = MessageDialog.openQuestionCancelDialog((Stage) widget.getWidget(), "Unsaved changes", "'" + dirtyPart.getLocalizedLabel() + "' has been modified. Save changes?");
+		QuestionCancelResult r = MessageDialog.openQuestionCancelDialog((Stage) widget.getWidget(), this.messages.DefWindowRenderer_promptToSave_Title, this.messages.DefWindowRenderer_promptToSave_Message(dirtyPart.getLocalizedLabel()));
 
 		switch (r) {
 		case CANCEL:
@@ -140,6 +148,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		return WWindowImpl.class;
 	}
 
+	/**
+	 * Default implementation of a window
+	 */
 	public static class WWindowImpl extends WLayoutedWidgetImpl<Stage, BorderPane, MWindow> implements WWindow<Stage> {
 		private boolean support3d;
 		private BorderPane rootPane;
@@ -147,8 +158,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private FillLayoutPane contentPane;
 		private KeyBindingDispatcher dispatcher;
 		private BorderPane decoratorPane;
-		private WindowResizeButton windowResizeButton;
-		private Stage stage;
+		WindowResizeButton windowResizeButton;
+		Stage stage;
 
 		@Inject
 		@Optional
@@ -157,84 +168,101 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private Registration sceneRegistration;
 
 		private String decorationFXML;
-		
+
 		private boolean fullscreen;
 
 		@Inject
 		IEclipseContext context;
-		
+
 		IEclipseContext modelContext;
-		
+
 		MWindow mWindow;
-		
+
 		@Inject
 		TranslationService translationService;
 
 		@Inject
-		BundleLocalization localizationService; //FIXME We should get rid of this
-		
+		BundleLocalization localizationService; // FIXME We should get rid of
+												// this
+
 		@Inject
 		@Optional
 		WindowTransitionService<Stage> windowTransitionService;
-		
+
 		@Inject
 		private GraphicsLoader graphicsLoader;
-		
+
 		boolean initDone;
-		
+
 		private boolean undecorated;
-		
+
 		private StageStyle stageStyle;
-		
-		private IEclipseContext applicationContext;
-		
+
+		IEclipseContext applicationContext;
+
 		private List<WWindow<Stage>> windows = new ArrayList<>();
-		
-		private WCallback<WWindow<Stage>, Boolean> onCloseCallback;
-		
-		private Logger logger;
-		
+
+		WCallback<WWindow<Stage>, Boolean> onCloseCallback;
+
 		private Boolean maximizedShell;
-		
+
+		private static final String KEY_SCENE_3D_DEPRECATED = "fx.scene.3d"; //$NON-NLS-1$
+		private static final String KEY_SCENE_3D = "efx.window.scene.3d"; //$NON-NLS-1$
+
+		private static final String KEY_STAGE_DECORATION_DEPRECATED = "fx.stage.decoration"; //$NON-NLS-1$
+		private static final String KEY_STAGE_DECORATION = "efx.window.decoration.fxml"; //$NON-NLS-1$
+
+		private static final String KEY_STAGE_STYLE = "efx.window.stagestyle"; //$NON-NLS-1$
+		private static final String KEY_STAGE_UNDECORATED_DEPRECATED = "efx.window.undecorated"; //$NON-NLS-1$
+
+		/**
+		 * Create a new window
+		 * 
+		 * @param mWindow
+		 *            the window model element
+		 * @param dispatcher
+		 *            the keybinding dispatcher
+		 * @param application
+		 *            the application model element
+		 * @param logger
+		 *            the logger
+		 */
 		@Inject
-		public WWindowImpl(
-				@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MWindow mWindow, 
-				@Optional KeyBindingDispatcher dispatcher, 
-				MApplication application,
-				@Log Logger logger) {
+		public WWindowImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MWindow mWindow, @Optional KeyBindingDispatcher dispatcher, MApplication application, @Log Logger logger) {
 			this.mWindow = mWindow;
-			
-			applicationContext = application.getContext();
-			
-			if( mWindow.getPersistedState().get("fx.scene.3d") != null ) {
-				logger.warning("Usage of deprecated persisted state 'fx.scene.3d' please use 'efx.window.scene.3d' instead.");
-				this.support3d = Boolean.parseBoolean(mWindow.getPersistedState().get("fx.scene.3d"));	
+
+			this.applicationContext = application.getContext();
+
+			if (mWindow.getPersistedState().get(KEY_SCENE_3D_DEPRECATED) != null) {
+				logger.warning("Usage of deprecated persisted state 'fx.scene.3d' please use 'efx.window.scene.3d' instead."); //$NON-NLS-1$
+				this.support3d = Boolean.parseBoolean(mWindow.getPersistedState().get(KEY_SCENE_3D_DEPRECATED));
 			} else {
-				this.support3d = Boolean.parseBoolean(mWindow.getPersistedState().get("efx.window.scene.3d"));
+				this.support3d = Boolean.parseBoolean(mWindow.getPersistedState().get(KEY_SCENE_3D));
 			}
-			
+
 			this.dispatcher = dispatcher;
 			this.modelContext = mWindow.getContext();
-			this.decorationFXML = mWindow.getPersistedState().get("fx.stage.decoration");
-			
-			if( decorationFXML == null ) {
-				decorationFXML = mWindow.getPersistedState().get("efx.window.decoration.fxml");
+			this.decorationFXML = mWindow.getPersistedState().get(KEY_STAGE_DECORATION_DEPRECATED);
+
+			if (this.decorationFXML == null) {
+				this.decorationFXML = mWindow.getPersistedState().get(KEY_STAGE_DECORATION);
 			} else {
-				logger.warning("Useage of deprecated persisted state 'fx.stage.decoration' please use 'efx.window.decoration.fxml' instead.");
+				logger.warning("Useage of deprecated persisted state 'fx.stage.decoration' please use 'efx.window.decoration.fxml' instead."); //$NON-NLS-1$
 			}
-			
-			if( mWindow.getPersistedState().get("efx.window.stagestyle") != null ) {
-				this.stageStyle = StageStyle.valueOf(mWindow.getPersistedState().get("efx.window.stagestyle"));
-			} else if( mWindow.getPersistedState().get("efx.window.undecorated") != null ) {
-				logger.warning("Usage of deprecated persisted state 'efx.window.undecorated' please use 'efx.window.stagestyle'");
-				this.undecorated = Boolean.parseBoolean(mWindow.getPersistedState().get("efx.window.undecorated"));	
+
+			if (mWindow.getPersistedState().get(KEY_STAGE_STYLE) != null) {
+				this.stageStyle = StageStyle.valueOf(mWindow.getPersistedState().get(KEY_STAGE_STYLE));
+			} else if (mWindow.getPersistedState().get(KEY_STAGE_UNDECORATED_DEPRECATED) != null) {
+				logger.warning("Usage of deprecated persisted state 'efx.window.undecorated' please use 'efx.window.stagestyle'"); //$NON-NLS-1$
+				this.undecorated = Boolean.parseBoolean(mWindow.getPersistedState().get(KEY_STAGE_UNDECORATED_DEPRECATED));
 			}
-			
-			if( mWindow.getTags().contains(BaseWindowRenderer.TAG_SHELLMAXIMIZED) ) {
-				maximizedShell = Boolean.TRUE;
+
+			if (mWindow.getTags().contains(BaseWindowRenderer.TAG_SHELLMAXIMIZED)) {
+				this.maximizedShell = Boolean.TRUE;
 			}
 		}
-		
+
+		@Override
 		@PostConstruct
 		protected void init() {
 			this.initDone = true;
@@ -244,125 +272,127 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		protected void doCleanup() {
 			super.doCleanup();
-			sceneRegistration.dispose();
+			this.sceneRegistration.dispose();
 		}
 
-		private static MWindow findParent(EObject e) {
-			if( e.eContainer() instanceof MApplication ) {
+		private static MWindow findParent(final EObject tmp) {
+			EObject e = tmp;
+			if (e.eContainer() instanceof MApplication) {
 				return null;
 			}
-			
+
 			do {
 				e = e.eContainer();
-				if( e instanceof MWindow ) {
+				if (e instanceof MWindow) {
 					return (MWindow) e;
 				}
-			} while( e.eContainer() != null );
-			
+			} while (e.eContainer() != null);
+
 			return null;
 		}
-		
+
 		@Override
 		protected Stage createWidget() {
-			stage = new Stage();
-			MWindow parent = findParent((EObject) mWindow);
-			if( parent != null ) {
-				stage.initOwner((Window) ((WWindow<?>)parent.getWidget()).getWidget());
+			this.stage = new Stage();
+			MWindow parent = findParent((EObject) this.mWindow);
+			if (parent != null) {
+				this.stage.initOwner((Window) ((WWindow<?>) parent.getWidget()).getWidget());
 			}
-			
-			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-				
+
+			this.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
 				@Override
 				public void handle(WindowEvent event) {
-					if( onCloseCallback != null ) {
-						if( ! Boolean.TRUE.equals(onCloseCallback.call(WWindowImpl.this)) ) {
+					if (WWindowImpl.this.onCloseCallback != null) {
+						if (!Boolean.TRUE.equals(WWindowImpl.this.onCloseCallback.call(WWindowImpl.this))) {
 							event.consume();
 						}
 					}
 				}
 			});
-			
-			stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			this.stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
 				@Override
 				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					if( newValue.booleanValue() ) {
-						if( stage.getScene() != null ) {
-							applicationContext.set(Constants.APP_FOCUS_NODE,stage.getScene().getFocusOwner());
+					if (newValue.booleanValue()) {
+						if (WWindowImpl.this.stage.getScene() != null) {
+							WWindowImpl.this.applicationContext.set(Constants.APP_FOCUS_NODE, WWindowImpl.this.stage.getScene().getFocusOwner());
 						}
-						
+
 						activate();
 					}
 				}
 			});
-			if( maximizedShell != null ) {
-				stage.setMaximized(maximizedShell.booleanValue());
+			if (this.maximizedShell != null) {
+				this.stage.setMaximized(this.maximizedShell.booleanValue());
 			}
-			stage.setFullScreen(fullscreen);
-			stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
+			this.stage.setFullScreen(this.fullscreen);
+			this.stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
 
 				@Override
 				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					mWindow.getPersistedState().put(BaseWindowRenderer.KEY_FULL_SCREEN, newValue.toString());
+					WWindowImpl.this.mWindow.getPersistedState().put(BaseWindowRenderer.KEY_FULL_SCREEN, newValue.toString());
 				}
 			});
-			
-			if( dispatcher != null ) {
-				stage.addEventFilter(KeyEvent.KEY_PRESSED, dispatcher.getKeyHandler());	
+
+			if (this.dispatcher != null) {
+				this.stage.addEventFilter(KeyEvent.KEY_PRESSED, this.dispatcher.getKeyHandler());
 			}
-			
+
 			this.rootPane = new BorderPane() {
 				@Override
 				protected void layoutChildren() {
 					super.layoutChildren();
-					if (windowResizeButton != null) {
-						windowResizeButton.autosize();
-						
-						windowResizeButton.setLayoutX(getWidth() - windowResizeButton.getLayoutBounds().getWidth());
-						windowResizeButton.setLayoutY(getHeight() - windowResizeButton.getLayoutBounds().getHeight());
+					if (WWindowImpl.this.windowResizeButton != null) {
+						WWindowImpl.this.windowResizeButton.autosize();
+
+						WWindowImpl.this.windowResizeButton.setLayoutX(getWidth() - WWindowImpl.this.windowResizeButton.getLayoutBounds().getWidth());
+						WWindowImpl.this.windowResizeButton.setLayoutY(getHeight() - WWindowImpl.this.windowResizeButton.getLayoutBounds().getHeight());
 					}
 				}
 			};
 
 			this.trimPane = new BorderPane();
-			this.rootPane.setCenter(trimPane);
+			this.rootPane.setCenter(this.trimPane);
 			this.contentPane = new FillLayoutPane();
-			this.trimPane.setCenter(contentPane);
+			this.trimPane.setCenter(this.contentPane);
 
-			if (decorationFXML != null) {
-				windowResizeButton = new WindowResizeButton(stage, 50, 50);
-				decoratorPane = new BorderPane();
-				decoratorPane.setTop(createTopDecoration(stage));
-				rootPane.setTop(decoratorPane);
+			if (this.decorationFXML != null) {
+				this.windowResizeButton = new WindowResizeButton(this.stage, 50, 50);
+				this.decoratorPane = new BorderPane();
+				this.decoratorPane.setTop(createTopDecoration(this.stage));
+				this.rootPane.setTop(this.decoratorPane);
 			}
-			
-			if( this.stageStyle != null ) {
+
+			if (this.stageStyle != null) {
 				this.stage.initStyle(this.stageStyle);
-			} else if( undecorated ) {
-				stage.initStyle(StageStyle.UNDECORATED);
+			} else if (this.undecorated) {
+				this.stage.initStyle(StageStyle.UNDECORATED);
 			}
 
 			// TODO Should we create the scene on show???
 			Scene s;
-			if (support3d && Platform.isSupported(ConditionalFeature.SCENE3D)) {
-				s = new Scene(rootPane, mWindow.getWidth(), mWindow.getHeight(), true);
+			if (this.support3d && Platform.isSupported(ConditionalFeature.SCENE3D)) {
+				s = new Scene(this.rootPane, this.mWindow.getWidth(), this.mWindow.getHeight(), true);
 				s.setCamera(new PerspectiveCamera());
 
 			} else {
-				s = new Scene(rootPane, mWindow.getWidth(), mWindow.getHeight());
+				s = new Scene(this.rootPane, this.mWindow.getWidth(), this.mWindow.getHeight());
 			}
 
 			s.focusOwnerProperty().addListener(new ChangeListener<Node>() {
 				List<WWidget<?>> lastActivationTree = new ArrayList<WWidget<?>>();
 				List<WWidget<?>> queuedTree = new ArrayList<WWidget<?>>();
-				
+
 				@Override
-				public void changed(ObservableValue<? extends Node> observable, Node oldValue, Node newValue) {
-					modelContext.set(Constants.WINDOW_FOCUS_NODE, newValue);
-					if( stage.isFocused() ) {
-						applicationContext.set(Constants.APP_FOCUS_NODE, newValue);	
+				public void changed(ObservableValue<? extends Node> observable, Node oldValue, Node _newValue) {
+					Node newValue = _newValue;
+					WWindowImpl.this.modelContext.set(Constants.WINDOW_FOCUS_NODE, newValue);
+					if (WWindowImpl.this.stage.isFocused()) {
+						WWindowImpl.this.applicationContext.set(Constants.APP_FOCUS_NODE, newValue);
 					}
-					
+
 					if (newValue != null) {
 						final List<WWidget<?>> activationTree = new ArrayList<WWidget<?>>();
 
@@ -372,8 +402,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 							}
 						} while ((newValue = newValue.getParent()) != null);
 
-						if (!lastActivationTree.equals(activationTree)) {
-							final List<WWidget<?>> oldTreeReversed = new ArrayList<WWidget<?>>(lastActivationTree);
+						if (!this.lastActivationTree.equals(activationTree)) {
+							final List<WWidget<?>> oldTreeReversed = new ArrayList<WWidget<?>>(this.lastActivationTree);
 							final List<WWidget<?>> newTreeReversed = new ArrayList<WWidget<?>>(activationTree);
 							Collections.reverse(oldTreeReversed);
 							Collections.reverse(newTreeReversed);
@@ -395,13 +425,14 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 							Collections.reverse(oldTreeReversed);
 							Collections.reverse(newTreeReversed);
 
-							queuedTree = activationTree;
+							this.queuedTree = activationTree;
 
 							// Delay the execution maybe there's an intermediate
 							// state we are not interested in
 							// http://javafx-jira.kenai.com/browse/RT-24069
 							Platform.runLater(new Runnable() {
 
+								@SuppressWarnings("unqualified-field-access")
 								@Override
 								public void run() {
 									if (queuedTree == activationTree) {
@@ -421,8 +452,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				}
 			});
 
-			if (themeManager != null) {
-				Theme theme = themeManager.getCurrentTheme();
+			if (this.themeManager != null) {
+				Theme theme = this.themeManager.getCurrentTheme();
 				if (theme != null) {
 					List<String> sUrls = new ArrayList<String>();
 					for (URL url : theme.getStylesheetURL()) {
@@ -431,23 +462,23 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 					s.getStylesheets().addAll(sUrls);
 				}
-				sceneRegistration = themeManager.registerScene(s);
+				this.sceneRegistration = this.themeManager.registerScene(s);
 			}
 
-			if( windowResizeButton != null ) {
-				rootPane.getChildren().add(windowResizeButton);
+			if (this.windowResizeButton != null) {
+				this.rootPane.getChildren().add(this.windowResizeButton);
 			}
-			
-			stage.setScene(s);
 
-			modelContext.set(Stage.class, stage);
-			modelContext.set(Scene.class, s);
-			
-			return stage;
+			this.stage.setScene(s);
+
+			this.modelContext.set(Stage.class, this.stage);
+			this.modelContext.set(Scene.class, s);
+
+			return this.stage;
 		}
 
 		private Node createTopDecoration(final Stage stage) {
-			URI uri = URI.createURI(decorationFXML);
+			URI uri = URI.createURI(this.decorationFXML);
 
 			if (uri != null) {
 				stage.initStyle(StageStyle.UNDECORATED);
@@ -458,30 +489,33 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 						StringBuilder sb = new StringBuilder();
 						for (int i = 2; i < uri.segmentCount(); i++) {
 							if (sb.length() != 0) {
-								sb.append("/");
+								sb.append("/"); //$NON-NLS-1$
 							}
 							sb.append(uri.segment(i));
 						}
-						
-						InjectingFXMLLoader<Node> loader = InjectingFXMLLoader.create(context, b, sb.toString());
-						loader.resourceBundle(localizationService.getLocalization(b, Locale.getDefault().toString()));
-						
-//FIXME We should make the localization service smarter						
-//						final String contributorURI = URI.createPlatformPluginURI(uri.segment(1), true).toString();
-//						loader = loader.resourceBundle(new ResourceBundle() {
-//
-//							@Override
-//							protected Object handleGetObject(String key) {
-//								return translationService.translate("%" + key, contributorURI);
-//							}
-//
-//							@Override
-//							public Enumeration<String> getKeys() {
-//								// TODO Can we do this???
-//								return Collections.emptyEnumeration();
-//							}
-//						});
-						
+
+						InjectingFXMLLoader<Node> loader = InjectingFXMLLoader.create(this.context, b, sb.toString());
+						loader.resourceBundle(this.localizationService.getLocalization(b, Locale.getDefault().toString()));
+
+						// FIXME We should make the localization service smarter
+						// final String contributorURI =
+						// URI.createPlatformPluginURI(uri.segment(1),
+						// true).toString();
+						// loader = loader.resourceBundle(new ResourceBundle() {
+						//
+						// @Override
+						// protected Object handleGetObject(String key) {
+						// return translationService.translate("%" + key,
+						// contributorURI);
+						// }
+						//
+						// @Override
+						// public Enumeration<String> getKeys() {
+						// // TODO Can we do this???
+						// return Collections.emptyEnumeration();
+						// }
+						// });
+
 						return (Node) loader.load();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -505,83 +539,122 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Override
 		public void setMainMenu(WLayoutedWidget<MMenu> menuWidget) {
-			if (decoratorPane == null) {
+			if (this.decoratorPane == null) {
 				this.rootPane.setTop((Node) menuWidget.getStaticLayoutNode());
 			} else {
-				decoratorPane.setBottom((Node) menuWidget.getStaticLayoutNode());
+				this.decoratorPane.setBottom((Node) menuWidget.getStaticLayoutNode());
 			}
 		}
 
 		@Override
 		protected BorderPane getWidgetNode() {
-			return rootPane;
+			return this.rootPane;
 		}
-		
+
 		@Override
 		public void setOnCloseCallback(WCallback<WWindow<Stage>, Boolean> onCloseCallback) {
 			this.onCloseCallback = onCloseCallback;
 		}
 
+		/**
+		 * set a new x coordinate
+		 * 
+		 * @param _x
+		 *            the new x
+		 */
 		@Inject
-		public void setX(@Named(UIEvents.Window.X) int x) {
-			if( x == -2147483648 ) {
+		public void setX(@Named(UIEvents.Window.X) int _x) {
+			int x = _x;
+			if (x == -2147483648) {
 				x = 0;
 			}
 			getWidget().setX(x);
 		}
 
+		/**
+		 * set a new y coordinate
+		 * 
+		 * @param _y
+		 *            the new y
+		 */
 		@Inject
-		public void setY(@Named(UIEvents.Window.Y) int y) {
-			if( y == -2147483648 ) {
+		public void setY(@Named(UIEvents.Window.Y) int _y) {
+			int y = _y;
+			if (y == -2147483648) {
 				y = 0;
 			}
 			getWidget().setY(y);
 		}
 
+		/**
+		 * set a new width
+		 * 
+		 * @param w
+		 *            the new width
+		 */
 		@Inject
 		public void setWidth(@Named(UIEvents.Window.WIDTH) int w) {
 			getWidget().setWidth(w);
 		}
 
+		/**
+		 * set a new height
+		 * 
+		 * @param h
+		 *            the new height
+		 */
 		@Inject
 		public void setHeight(@Named(UIEvents.Window.HEIGHT) int h) {
 			getWidget().setHeight(h);
 		}
-		
+
+		/**
+		 * update the visibility of the window
+		 * 
+		 * @param visible
+		 *            the new visible value
+		 */
 		@Inject
 		public void setVisible(@Named(UIEvents.UIElement.VISIBLE) boolean visible) {
-			// Skip the init injection because the renderer will take care of showing the stage
-			if( ! initDone ) {
+			// Skip the init injection because the renderer will take care of
+			// showing the stage
+			if (!this.initDone) {
 				return;
 			}
-			
-			if( visible ) {
+
+			if (visible) {
 				internalShow();
 			} else {
 				internalHide();
 			}
 		}
 
+		/**
+		 * Make stage shown in fullscreen
+		 * 
+		 * @param fullScreen
+		 *            the new state
+		 */
 		@Inject
 		public void setFullscreen(@Named(UIEvents.ApplicationElement.PERSISTEDSTATE + "_" + BaseWindowRenderer.KEY_FULL_SCREEN) @Optional String fullScreen) {
-			if( fullScreen != null ) {
+			if (fullScreen != null) {
 				this.fullscreen = Boolean.parseBoolean(fullScreen);
-				if( stage != null ) {
-					stage.setFullScreen(fullscreen);
+				if (this.stage != null) {
+					this.stage.setFullScreen(this.fullscreen);
 				}
 			} else {
 				this.fullscreen = false;
 			}
 		}
-		
+
 		@Override
 		public void addStyleClasses(List<String> classnames) {
-			rootPane.getStyleClass().addAll(classnames);
+			this.rootPane.getStyleClass().addAll(classnames);
 		}
 
 		@Override
 		public void setStyleId(String id) {
-			rootPane.setId(id);
+			this.rootPane.setId(id);
 		}
 
 		@Override
@@ -589,57 +662,57 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			internalShow();
 			getWidget().toFront();
 		}
-		
+
 		@Override
 		public void close() {
 			getWidget().close();
 		}
-		
+
 		@Override
 		public void addChild(WWindow<Stage> widget) {
-			windows.add(widget);
-			if( initDone && stage.isShowing() ) {
+			this.windows.add(widget);
+			if (this.initDone && this.stage.isShowing()) {
 				Stage s = (Stage) widget.getWidget();
 				s.show();
 			}
 		}
-		
+
 		@Override
 		public void removeChild(WWindow<Stage> widget) {
-			if( widget.getWidget() != null ) {
+			if (widget.getWidget() != null) {
 				Stage s = (Stage) widget.getWidget();
 				s.hide();
 			}
-			windows.remove(widget);
+			this.windows.remove(widget);
 		}
-		
+
 		private void internalShow() {
-			if( getWidget().isShowing() ) {
+			if (getWidget().isShowing()) {
 				return;
 			}
-			
-			if( windowTransitionService != null ) {
-				AnimationDelegate<Stage> delegate = windowTransitionService.getShowDelegate(mWindow);
-				if( delegate != null ) {
-					delegate.animate(stage);
+
+			if (this.windowTransitionService != null) {
+				AnimationDelegate<Stage> delegate = this.windowTransitionService.getShowDelegate(this.mWindow);
+				if (delegate != null) {
+					delegate.animate(this.stage);
 				} else {
 					getWidget().show();
 				}
 			} else {
-				getWidget().show();	
+				getWidget().show();
 			}
-			
-			for( WWindow<Stage> c: windows ) {
+
+			for (WWindow<Stage> c : this.windows) {
 				c.show();
 			}
 		}
-		
+
 		private void internalHide() {
-			//TODO Do we need to hide them recursively???
-			if( windowTransitionService != null ) {
-				AnimationDelegate<Stage> delegate = windowTransitionService.getShowDelegate(mWindow);
-				if( delegate != null ) {
-					delegate.animate(stage);
+			// TODO Do we need to hide them recursively???
+			if (this.windowTransitionService != null) {
+				AnimationDelegate<Stage> delegate = this.windowTransitionService.getShowDelegate(this.mWindow);
+				if (delegate != null) {
+					delegate.animate(this.stage);
 				} else {
 					getWidget().hide();
 				}
@@ -648,24 +721,37 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			}
 		}
 
+		/**
+		 * Set a new window title
+		 * 
+		 * @param title
+		 *            the new title
+		 */
 		@Inject
 		public void setTitle(@Named(ATTRIBUTE_localizedLabel) String title) {
 			getWidget().setTitle(title);
 		}
-		
+
+		/**
+		 * Set a window icon. Icons of multiple sizes can be set by separating
+		 * the urls using a ; (semicolon)
+		 * 
+		 * @param iconUri
+		 *            the new icon
+		 */
 		@Inject
 		public void setImageUrl(@Named(UIEvents.UILabel.ICONURI) @Optional String iconUri) {
-			if( iconUri != null ) {
-				
-				String[] split = iconUri.split(";");
+			if (iconUri != null) {
+
+				String[] split = iconUri.split(";"); //$NON-NLS-1$
 				List<Image> images = new ArrayList<>();
-				for( String uri : split ) {
-					Image img = graphicsLoader.getImage(URI.createURI(uri));
-					if( img != null ) {
+				for (String uri : split) {
+					Image img = this.graphicsLoader.getImage(URI.createURI(uri));
+					if (img != null) {
 						images.add(img);
 					}
 				}
-				
+
 				getWidget().getIcons().setAll(images);
 			} else {
 				getWidget().getIcons().clear();
@@ -674,64 +760,64 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Override
 		public void setBottomTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			trimPane.setBottom((Node) trimBar.getStaticLayoutNode());
+			this.trimPane.setBottom((Node) trimBar.getStaticLayoutNode());
 		}
 
 		@Override
 		public void setLeftTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			trimPane.setLeft((Node) trimBar.getStaticLayoutNode());
+			this.trimPane.setLeft((Node) trimBar.getStaticLayoutNode());
 		}
 
 		@Override
 		public void setRightTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			trimPane.setRight((Node) trimBar.getStaticLayoutNode());
+			this.trimPane.setRight((Node) trimBar.getStaticLayoutNode());
 		}
 
 		@Override
 		public void setTopTrim(WLayoutedWidget<MTrimBar> trimBar) {
 			Node g = (Node) trimBar.getStaticLayoutNode();
-			trimPane.setTop(g);
+			this.trimPane.setTop(g);
 		}
 
 		@Override
 		public void addChild(WLayoutedWidget<MWindowElement> widget) {
-			contentPane.getChildren().add((Node) widget.getStaticLayoutNode());
+			this.contentPane.getChildren().add((Node) widget.getStaticLayoutNode());
 		}
-		
+
 		@Override
 		public void removeChild(WLayoutedWidget<MWindowElement> widget) {
-			contentPane.getChildren().remove((Node) widget.getStaticLayoutNode());
+			this.contentPane.getChildren().remove((Node) widget.getStaticLayoutNode());
 		}
-		
+
 		@Override
 		public void addChild(int idx, WLayoutedWidget<MWindowElement> widget) {
-			contentPane.getChildren().add(idx, (Node) widget.getStaticLayoutNode());
+			this.contentPane.getChildren().add(idx, (Node) widget.getStaticLayoutNode());
 		}
 	}
 
-	static class MultiMessageDialog extends Dialog {
+	class MultiMessageDialog extends Dialog {
 		private Collection<MPart> parts;
-		private TableView<Row> tabView;
+		TableView<Row> tabView;
 
-		private GraphicsLoader graphicsLoader;
+		GraphicsLoader graphicsLoader;
 		private List<MPart> selectedParts;
 
 		public MultiMessageDialog(Window parent, Collection<MPart> parts, GraphicsLoader graphicsLoader) {
-			super(parent, "Save Resources");
+			super(parent, DefWindowRenderer.this.messages.DefWindowRenderer_MultiMessageDialog_Title);
 			this.parts = parts;
 			this.graphicsLoader = graphicsLoader;
 		}
 
 		public List<MPart> getSelectedParts() {
-			return selectedParts;
+			return this.selectedParts;
 		}
 
 		@Override
 		protected void okPressed() {
-			selectedParts = new ArrayList<MPart>();
-			for (Row r : tabView.getItems()) {
+			this.selectedParts = new ArrayList<MPart>();
+			for (Row r : this.tabView.getItems()) {
 				if (r.isSelected()) {
-					selectedParts.add(r.element.get());
+					this.selectedParts.add(r.element.get());
 				}
 			}
 			super.okPressed();
@@ -740,10 +826,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		protected Node createDialogArea() {
 			BorderPane p = new BorderPane();
-			Label l = new Label("Save resources to save");
+			Label l = new Label(DefWindowRenderer.this.messages.DefWindowRenderer_MultiMessageDialog_Message);
 			p.setTop(l);
 
-			tabView = new TableView<Row>();
+			this.tabView = new TableView<Row>();
 
 			{
 				TableColumn<Row, Boolean> column = new TableColumn<Row, Boolean>();
@@ -763,13 +849,13 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 									checkBox.setOnAction(null);
 								} else {
 									checkBox.setDisable(false);
-									checkBox.setSelected(item);
+									checkBox.setSelected(item.booleanValue());
 									checkBox.setOnAction(new EventHandler<ActionEvent>() {
 
 										@Override
 										public void handle(ActionEvent event) {
-											tabView.edit(0, param);
-											commitEdit(checkBox.isSelected());
+											MultiMessageDialog.this.tabView.edit(0, param);
+											commitEdit(Boolean.valueOf(checkBox.isSelected()));
 										}
 									});
 								}
@@ -784,11 +870,11 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 					@Override
 					public void handle(CellEditEvent<Row, Boolean> event) {
-						event.getRowValue().selected.set(event.getNewValue());
+						event.getRowValue().selected.set(event.getNewValue().booleanValue());
 					}
 				});
-				column.setCellValueFactory(new PropertyValueFactory<Row, Boolean>("selected"));
-				tabView.getColumns().add(column);
+				column.setCellValueFactory(new PropertyValueFactory<Row, Boolean>("selected")); //$NON-NLS-1$
+				this.tabView.getColumns().add(column);
 			}
 
 			{
@@ -805,39 +891,39 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 									setText(item.getLocalizedLabel());
 									String uri = item.getIconURI();
 									if (uri != null) {
-										setGraphic(graphicsLoader.getGraphicsNode(URI.createURI(uri)));
+										setGraphic(MultiMessageDialog.this.graphicsLoader.getGraphicsNode(URI.createURI(uri)));
 									}
 								}
 							}
 						};
 					}
 				});
-				column.setCellValueFactory(new PropertyValueFactory<Row, MPart>("element"));
-				tabView.getColumns().add(column);
+				column.setCellValueFactory(new PropertyValueFactory<Row, MPart>("element")); //$NON-NLS-1$
+				this.tabView.getColumns().add(column);
 			}
-			tabView.setEditable(true);
+			this.tabView.setEditable(true);
 
 			List<Row> list = new ArrayList<Row>();
-			for (MPart m : parts) {
+			for (MPart m : this.parts) {
 				list.add(new Row(m));
 			}
-			tabView.setItems(FXCollections.observableArrayList(list));
-			p.setCenter(tabView);
+			this.tabView.setItems(FXCollections.observableArrayList(list));
+			p.setCenter(this.tabView);
 
 			return p;
 		}
 	}
 
 	static class Row {
-		private BooleanProperty selected = new SimpleBooleanProperty(this, "selected", true);
-		private ObjectProperty<MPart> element = new SimpleObjectProperty<MPart>(this, "element");
+		BooleanProperty selected = new SimpleBooleanProperty(this, "selected", true); //$NON-NLS-1$
+		ObjectProperty<MPart> element = new SimpleObjectProperty<MPart>(this, "element"); //$NON-NLS-1$
 
 		public Row(MPart element) {
 			this.element.set(element);
 		}
 
 		public boolean isSelected() {
-			return selected.get();
+			return this.selected.get();
 		}
 
 		public void setSelected(boolean value) {
@@ -849,49 +935,51 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 
 		public MPart getElement() {
-			return element.get();
+			return this.element.get();
 		}
 
 		public void setElement(MPart value) {
-			element.set(value);
+			this.element.set(value);
 		}
 
 		public ObjectProperty<MPart> elementProperty() {
-			return element;
+			return this.element;
 		}
 	}
-	
-	static class WindowResizeButton extends Region {
-	    private double dragOffsetX, dragOffsetY;
 
-	    public WindowResizeButton(final Stage stage, final double stageMinimumWidth, final double stageMinimumHeight) {
-	        setId("window-resize-button");
-	        setPrefSize(11,11);
-	        setOnMousePressed(new EventHandler<MouseEvent>() {
-	            @Override public void handle(MouseEvent e) {
-	                dragOffsetX = (stage.getX() + stage.getWidth()) - e.getScreenX();
-	                dragOffsetY = (stage.getY() + stage.getHeight()) - e.getScreenY();
-	                e.consume();
-	            }
-	        });
-	        setOnMouseDragged(new EventHandler<MouseEvent>() {
-	            @Override public void handle(MouseEvent e) {
-	                ObservableList<Screen> screens = Screen.getScreensForRectangle(stage.getX(), stage.getY(), 1, 1);
-	                final Screen screen;
-	                if(screens.size()>0) {
-	                    screen = Screen.getScreensForRectangle(stage.getX(), stage.getY(), 1, 1).get(0);
-	                }
-	                else {
-	                    screen = Screen.getScreensForRectangle(0,0,1,1).get(0);
-	                }
-	                Rectangle2D visualBounds = screen.getVisualBounds();             
-	                double maxX = Math.min(visualBounds.getMaxX(), e.getScreenX() + dragOffsetX);
-	                double maxY = Math.min(visualBounds.getMaxY(), e.getScreenY() - dragOffsetY);
-	                stage.setWidth(Math.max(stageMinimumWidth, maxX - stage.getX()));
-	                stage.setHeight(Math.max(stageMinimumHeight, maxY - stage.getY()));
-	                e.consume();
-	            }
-	        });
-	    }
+	static class WindowResizeButton extends Region {
+		double dragOffsetX;
+		double dragOffsetY;
+
+		public WindowResizeButton(final Stage stage, final double stageMinimumWidth, final double stageMinimumHeight) {
+			setId("window-resize-button"); //$NON-NLS-1$
+			setPrefSize(11, 11);
+			setOnMousePressed(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent e) {
+					WindowResizeButton.this.dragOffsetX = (stage.getX() + stage.getWidth()) - e.getScreenX();
+					WindowResizeButton.this.dragOffsetY = (stage.getY() + stage.getHeight()) - e.getScreenY();
+					e.consume();
+				}
+			});
+			setOnMouseDragged(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent e) {
+					ObservableList<Screen> screens = Screen.getScreensForRectangle(stage.getX(), stage.getY(), 1, 1);
+					final Screen screen;
+					if (screens.size() > 0) {
+						screen = Screen.getScreensForRectangle(stage.getX(), stage.getY(), 1, 1).get(0);
+					} else {
+						screen = Screen.getScreensForRectangle(0, 0, 1, 1).get(0);
+					}
+					Rectangle2D visualBounds = screen.getVisualBounds();
+					double maxX = Math.min(visualBounds.getMaxX(), e.getScreenX() + WindowResizeButton.this.dragOffsetX);
+					double maxY = Math.min(visualBounds.getMaxY(), e.getScreenY() - WindowResizeButton.this.dragOffsetY);
+					stage.setWidth(Math.max(stageMinimumWidth, maxX - stage.getX()));
+					stage.setHeight(Math.max(stageMinimumHeight, maxY - stage.getY()));
+					e.consume();
+				}
+			});
+		}
 	}
 }
