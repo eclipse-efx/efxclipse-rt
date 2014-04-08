@@ -26,7 +26,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,7 +39,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -53,7 +51,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -205,6 +202,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		WCallback<WWindow<Stage>, Boolean> onCloseCallback;
 
 		private Boolean maximizedShell;
+		
+		List<WWidget<?>> lastActivationTree = new ArrayList<WWidget<?>>();
+		List<WWidget<?>> queuedTree = new ArrayList<WWidget<?>>();
 
 		private static final String KEY_SCENE_3D_DEPRECATED = "fx.scene.3d"; //$NON-NLS-1$
 		private static final String KEY_SCENE_3D = "efx.window.scene.3d"; //$NON-NLS-1$
@@ -299,42 +299,14 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				this.stage.initOwner((Window) ((WWindow<?>) parent.getWidget()).getWidget());
 			}
 
-			this.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			this.stage.setOnCloseRequest(this::handleOnCloseRequest);
 
-				@Override
-				public void handle(WindowEvent event) {
-					if (WWindowImpl.this.onCloseCallback != null) {
-						if (!Boolean.TRUE.equals(WWindowImpl.this.onCloseCallback.call(WWindowImpl.this))) {
-							event.consume();
-						}
-					}
-				}
-			});
-
-			this.stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
-
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					if (newValue.booleanValue()) {
-						if (WWindowImpl.this.stage.getScene() != null) {
-							WWindowImpl.this.applicationContext.set(Constants.APP_FOCUS_NODE, WWindowImpl.this.stage.getScene().getFocusOwner());
-						}
-
-						activate();
-					}
-				}
-			});
+			this.stage.focusedProperty().addListener(this::handledFocus);
 			if (this.maximizedShell != null) {
 				this.stage.setMaximized(this.maximizedShell.booleanValue());
 			}
 			this.stage.setFullScreen(this.fullscreen);
-			this.stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
-
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					WWindowImpl.this.mWindow.getPersistedState().put(BaseWindowRenderer.KEY_FULL_SCREEN, newValue.toString());
-				}
-			});
+			this.stage.fullScreenProperty().addListener(this::handleFullscreen);
 
 			if (this.dispatcher != null) {
 				this.stage.addEventFilter(KeyEvent.KEY_PRESSED, this.dispatcher.getKeyHandler());
@@ -381,76 +353,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				s = new Scene(this.rootPane, this.mWindow.getWidth(), this.mWindow.getHeight());
 			}
 
-			s.focusOwnerProperty().addListener(new ChangeListener<Node>() {
-				List<WWidget<?>> lastActivationTree = new ArrayList<WWidget<?>>();
-				List<WWidget<?>> queuedTree = new ArrayList<WWidget<?>>();
-
-				@Override
-				public void changed(ObservableValue<? extends Node> observable, Node oldValue, Node _newValue) {
-					Node newValue = _newValue;
-					WWindowImpl.this.modelContext.set(Constants.WINDOW_FOCUS_NODE, newValue);
-					if (WWindowImpl.this.stage.isFocused()) {
-						WWindowImpl.this.applicationContext.set(Constants.APP_FOCUS_NODE, newValue);
-					}
-
-					if (newValue != null) {
-						final List<WWidget<?>> activationTree = new ArrayList<WWidget<?>>();
-
-						do {
-							if (newValue.getUserData() instanceof WWidget<?>) {
-								activationTree.add((WWidget<?>) newValue.getUserData());
-							}
-						} while ((newValue = newValue.getParent()) != null);
-
-						if (!this.lastActivationTree.equals(activationTree)) {
-							final List<WWidget<?>> oldTreeReversed = new ArrayList<WWidget<?>>(this.lastActivationTree);
-							final List<WWidget<?>> newTreeReversed = new ArrayList<WWidget<?>>(activationTree);
-							Collections.reverse(oldTreeReversed);
-							Collections.reverse(newTreeReversed);
-							Iterator<WWidget<?>> it = newTreeReversed.iterator();
-
-							while (it.hasNext()) {
-								if (!oldTreeReversed.isEmpty()) {
-									if (oldTreeReversed.get(0) == it.next()) {
-										oldTreeReversed.remove(0);
-										it.remove();
-									} else {
-										break;
-									}
-								} else {
-									break;
-								}
-							}
-
-							Collections.reverse(oldTreeReversed);
-							Collections.reverse(newTreeReversed);
-
-							this.queuedTree = activationTree;
-
-							// Delay the execution maybe there's an intermediate
-							// state we are not interested in
-							// http://javafx-jira.kenai.com/browse/RT-24069
-							Platform.runLater(new Runnable() {
-
-								@SuppressWarnings("unqualified-field-access")
-								@Override
-								public void run() {
-									if (queuedTree == activationTree) {
-										lastActivationTree = activationTree;
-										for (WWidget<?> w : oldTreeReversed) {
-											w.deactivate();
-										}
-
-										for (WWidget<?> w : newTreeReversed) {
-											w.activate();
-										}
-									}
-								}
-							});
-						}
-					}
-				}
-			});
+			s.focusOwnerProperty().addListener(this::handleFocusOwner);
 
 			if (this.themeManager != null) {
 				Theme theme = this.themeManager.getCurrentTheme();
@@ -475,6 +378,92 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			this.modelContext.set(Scene.class, s);
 
 			return this.stage;
+		}
+		
+		private void handleOnCloseRequest(WindowEvent event) {
+			if (this.onCloseCallback != null) {
+				if (!Boolean.TRUE.equals(this.onCloseCallback.call(this))) {
+					event.consume();
+				}
+			}
+		}
+		
+		private void handleFullscreen(ObservableValue<? extends Boolean> obs, Boolean oldValue, Boolean newValue) {
+			this.mWindow.getPersistedState().put(BaseWindowRenderer.KEY_FULL_SCREEN, newValue.toString());
+		}
+		
+		private void handledFocus(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+			if (newValue.booleanValue()) {
+				if (this.stage.getScene() != null) {
+					this.applicationContext.set(Constants.APP_FOCUS_NODE, this.stage.getScene().getFocusOwner());
+				}
+
+				activate();
+			}
+		}
+		
+		private void handleFocusOwner(ObservableValue<? extends Node> observable, Node oldValue, Node _newValue) {
+			Node newValue = _newValue;
+			WWindowImpl.this.modelContext.set(Constants.WINDOW_FOCUS_NODE, newValue);
+			if (WWindowImpl.this.stage.isFocused()) {
+				WWindowImpl.this.applicationContext.set(Constants.APP_FOCUS_NODE, newValue);
+			}
+
+			if (newValue != null) {
+				final List<WWidget<?>> activationTree = new ArrayList<WWidget<?>>();
+
+				do {
+					if (newValue.getUserData() instanceof WWidget<?>) {
+						activationTree.add((WWidget<?>) newValue.getUserData());
+					}
+				} while ((newValue = newValue.getParent()) != null);
+
+				if (!this.lastActivationTree.equals(activationTree)) {
+					final List<WWidget<?>> oldTreeReversed = new ArrayList<WWidget<?>>(this.lastActivationTree);
+					final List<WWidget<?>> newTreeReversed = new ArrayList<WWidget<?>>(activationTree);
+					Collections.reverse(oldTreeReversed);
+					Collections.reverse(newTreeReversed);
+					Iterator<WWidget<?>> it = newTreeReversed.iterator();
+
+					while (it.hasNext()) {
+						if (!oldTreeReversed.isEmpty()) {
+							if (oldTreeReversed.get(0) == it.next()) {
+								oldTreeReversed.remove(0);
+								it.remove();
+							} else {
+								break;
+							}
+						} else {
+							break;
+						}
+					}
+
+					Collections.reverse(oldTreeReversed);
+					Collections.reverse(newTreeReversed);
+
+					this.queuedTree = activationTree;
+
+					// Delay the execution maybe there's an intermediate
+					// state we are not interested in
+					// http://javafx-jira.kenai.com/browse/RT-24069
+					Platform.runLater(new Runnable() {
+
+						@Override
+						public void run() {
+							if (WWindowImpl.this.queuedTree == activationTree) {
+								WWindowImpl.this.lastActivationTree = activationTree;
+								for (WWidget<?> w : oldTreeReversed) {
+									w.deactivate();
+								}
+
+								for (WWidget<?> w : newTreeReversed) {
+									w.activate();
+								}
+							}
+						}
+					});
+				}
+			}
 		}
 
 		private Node createTopDecoration(final Stage stage) {
@@ -833,71 +822,17 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			{
 				TableColumn<Row, Boolean> column = new TableColumn<Row, Boolean>();
-				column.setCellFactory(new Callback<TableColumn<Row, Boolean>, TableCell<Row, Boolean>>() {
-
-					@Override
-					public TableCell<Row, Boolean> call(final TableColumn<Row, Boolean> param) {
-						final CheckBox checkBox = new CheckBox();
-						final TableCell<Row, Boolean> cell = new TableCell<Row, Boolean>() {
-
-							@Override
-							protected void updateItem(Boolean item, boolean empty) {
-								super.updateItem(item, empty);
-								if (item == null) {
-									checkBox.setDisable(true);
-									checkBox.setSelected(false);
-									checkBox.setOnAction(null);
-								} else {
-									checkBox.setDisable(false);
-									checkBox.setSelected(item.booleanValue());
-									checkBox.setOnAction(new EventHandler<ActionEvent>() {
-
-										@Override
-										public void handle(ActionEvent event) {
-											MultiMessageDialog.this.tabView.edit(0, param);
-											commitEdit(Boolean.valueOf(checkBox.isSelected()));
-										}
-									});
-								}
-							}
-						};
-
-						cell.setGraphic(checkBox);
-						return cell;
-					}
-				});
-				column.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Row, Boolean>>() {
-
-					@Override
-					public void handle(CellEditEvent<Row, Boolean> event) {
-						event.getRowValue().selected.set(event.getNewValue().booleanValue());
-					}
-				});
+				column.setCellFactory(this::createCheckboxCell);
+				column.setOnEditCommit(
+						(event) -> event.getRowValue().selected.set(event.getNewValue().booleanValue())
+				);
 				column.setCellValueFactory(new PropertyValueFactory<Row, Boolean>("selected")); //$NON-NLS-1$
 				this.tabView.getColumns().add(column);
 			}
 
 			{
 				TableColumn<Row, MPart> column = new TableColumn<Row, MPart>();
-				column.setCellFactory(new Callback<TableColumn<Row, MPart>, TableCell<Row, MPart>>() {
-
-					@Override
-					public TableCell<Row, MPart> call(TableColumn<Row, MPart> param) {
-						return new TableCell<DefWindowRenderer.Row, MPart>() {
-							@Override
-							protected void updateItem(MPart item, boolean empty) {
-								super.updateItem(item, empty);
-								if (item != null) {
-									setText(item.getLocalizedLabel());
-									String uri = item.getIconURI();
-									if (uri != null) {
-										setGraphic(MultiMessageDialog.this.graphicsLoader.getGraphicsNode(URI.createURI(uri)));
-									}
-								}
-							}
-						};
-					}
-				});
+				column.setCellFactory(this::createTextCell);
 				column.setCellValueFactory(new PropertyValueFactory<Row, MPart>("element")); //$NON-NLS-1$
 				this.tabView.getColumns().add(column);
 			}
@@ -911,6 +846,52 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			p.setCenter(this.tabView);
 
 			return p;
+		}
+		
+		TableCell<Row, Boolean> createCheckboxCell(final TableColumn<Row, Boolean> param) {
+			final CheckBox checkBox = new CheckBox();
+			final TableCell<Row, Boolean> cell = new TableCell<Row, Boolean>() {
+
+				@Override
+				protected void updateItem(Boolean item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item == null) {
+						checkBox.setDisable(true);
+						checkBox.setSelected(false);
+						checkBox.setOnAction(null);
+					} else {
+						checkBox.setDisable(false);
+						checkBox.setSelected(item.booleanValue());
+						checkBox.setOnAction(new EventHandler<ActionEvent>() {
+
+							@Override
+							public void handle(ActionEvent event) {
+								MultiMessageDialog.this.tabView.edit(0, param);
+								commitEdit(Boolean.valueOf(checkBox.isSelected()));
+							}
+						});
+					}
+				}
+			};
+
+			cell.setGraphic(checkBox);
+			return cell;
+		}
+		
+		TableCell<Row, MPart> createTextCell(TableColumn<Row, MPart> param) {
+			return new TableCell<DefWindowRenderer.Row, MPart>() {
+				@Override
+				protected void updateItem(MPart item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item != null) {
+						setText(item.getLocalizedLabel());
+						String uri = item.getIconURI();
+						if (uri != null) {
+							setGraphic(MultiMessageDialog.this.graphicsLoader.getGraphicsNode(URI.createURI(uri)));
+						}
+					}
+				}
+			};
 		}
 	}
 
