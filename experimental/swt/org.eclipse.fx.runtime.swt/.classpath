@@ -7,6 +7,5 @@
 	<classpathentry kind="src" path="src-ctabfolder-fx"/>
 	<classpathentry kind="src" path="src-swt"/>
 	<classpathentry kind="src" path="src-styledtext-common"/>
-	<classpathentry kind="src" path="src-fx"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
