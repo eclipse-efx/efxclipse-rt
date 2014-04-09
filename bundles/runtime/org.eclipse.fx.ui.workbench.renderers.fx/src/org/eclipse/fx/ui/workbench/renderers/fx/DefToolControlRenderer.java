@@ -25,6 +25,9 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 
+/**
+ * default renderer for tool control
+ */
 public class DefToolControlRenderer extends BaseToolControlRenderer<Parent> {
 
 	@Override
@@ -32,13 +35,16 @@ public class DefToolControlRenderer extends BaseToolControlRenderer<Parent> {
 		return WToolControlImpl.class;
 	}
 	
+	/**
+	 * Tool control implementation
+	 */
 	public static class WToolControlImpl extends WLayoutedWidgetImpl<Parent, Parent, MToolControl> implements WToolControl<Parent> {
 		@Inject
 		IEclipseContext context;
 		
 		@Override
 		protected Parent createWidget() {
-			Pane p = CustomContainerSupport.createContainerPane(logger, context);
+			Pane p = CustomContainerSupport.createContainerPane(this.logger, this.context);
 			return p == null ? new Group() : p;
 		}
 

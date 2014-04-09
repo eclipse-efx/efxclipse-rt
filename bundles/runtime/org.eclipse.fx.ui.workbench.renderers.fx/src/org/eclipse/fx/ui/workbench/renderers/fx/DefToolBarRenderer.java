@@ -43,8 +43,8 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 		@Override
 		protected ToolBar createWidget() {
 			ToolBar b = new ToolBar();
-			orientationSync = this::syncOrientation;
-			b.parentProperty().addListener(orientationSync);
+			this.orientationSync = this::syncOrientation;
+			b.parentProperty().addListener(this.orientationSync);
 			return b;
 		}
 		
@@ -66,8 +66,8 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 		@Override
 		protected void doCleanup() {
 			super.doCleanup();
-			if( toolbar != null && orientationSync != null ) {
-				toolbar.parentProperty().removeListener(orientationSync);
+			if( this.toolbar != null && this.orientationSync != null ) {
+				this.toolbar.parentProperty().removeListener(this.orientationSync);
 			}
 		}
 
@@ -79,10 +79,10 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 		@Override
 		public void addChild(WWidget<MToolBarElement> itemWidget) {
 			if( itemWidget.getWidget() instanceof Toggle ) {
-				if( group == null ) {
-					group = new ToggleGroup();
+				if( this.group == null ) {
+					this.group = new ToggleGroup();
 				}
-				group.getToggles().add((Toggle) itemWidget.getWidget());
+				this.group.getToggles().add((Toggle) itemWidget.getWidget());
 			}
 			getWidget().getItems().add((Node) itemWidget.getWidget());
 		}
@@ -90,10 +90,10 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 		@Override
 		public void addChild(int idx, WWidget<MToolBarElement> widget) {
 			if( widget.getWidget() instanceof Toggle ) {
-				if( group == null ) {
-					group = new ToggleGroup();
+				if( this.group == null ) {
+					this.group = new ToggleGroup();
 				}
-				group.getToggles().add((Toggle) widget.getWidget());
+				this.group.getToggles().add((Toggle) widget.getWidget());
 			}
 			
 			getWidget().getItems().add(idx, (Node) widget.getWidget());
