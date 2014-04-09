@@ -43,6 +43,7 @@
 		<!--  module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module-->
 		<module>../../bundles/runtime/org.eclipse.fx.ui.animation</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.panes</module>
+		<module>../../bundles/runtime/org.eclipse.fx.ui.controls</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.services</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.dialogs</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.mobile</module>
@@ -70,14 +71,16 @@
 		<module>../runtime/org.eclipse.fx.runtime.feature</module>
 		<module>../runtime/org.eclipse.fx.target.feature</module>
 		<module>../runtime/org.eclipse.fx.target.rcp.feature</module>
+				
+		<module>../org.eclipse.fx.updatesite</module>
 		
 		<!-- Experimental -->
-		<!--  module>../../experimental/swt/org.eclipse.fx.runtime.swt</module>
+		<module>../../experimental/swt/org.eclipse.fx.runtime.swt</module>
 		<module>../../experimental/swt/org.eclipse.fx.runtime.swt.compat</module>
 		<module>../../experimental/swt/org.eclipse.fx.runtime.swtutil</module>
-		<module>../runtime/org.eclipse.fx.swtfx.feature</module-->
+		<module>../runtime/org.eclipse.fx.swtfx.feature</module>
+		<module>../org.eclipse.fx.experimental.updatesite</module>
 		
-		<module>../org.eclipse.fx.updatesite</module>
 	</modules>
 
 	<repositories>
