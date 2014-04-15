@@ -88,8 +88,7 @@ public abstract class AbstractE4Application implements IApplication {
 		return (String[]) applicationContext.getArguments().get(IApplicationContext.APPLICATION_ARGS);
 	}
 	
-	public E4Workbench createE4Workbench(IApplicationContext applicationContext) {
-		final IEclipseContext appContext = createApplicationContext();
+	public E4Workbench createE4Workbench(IApplicationContext applicationContext, IEclipseContext appContext) {
 		ContextInjectionFactory.setDefault(appContext);
 		
 		appContext.set(UISynchronize.class, createSynchronizer(appContext));
