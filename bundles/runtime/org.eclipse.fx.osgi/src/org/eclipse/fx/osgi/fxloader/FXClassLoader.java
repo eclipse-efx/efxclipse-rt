@@ -97,13 +97,13 @@ public class FXClassLoader extends ClassLoaderHook {
 				
 				@Override
 				public URL findLocalResource(String resource) {
-					return fxClassloader.findResource(resource);
+					return fxClassloader.getResource(resource);
 				}
 				
 				@Override
 				public Enumeration<URL> findLocalResources(String resource) {
 					try {
-						return fxClassloader.findResources(resource);
+						return fxClassloader.getResources(resource);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
