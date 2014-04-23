@@ -7,3 +7,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.e4.core.contexts,
  org.eclipse.fx.runtime.swt;bundle-version="1.0.0"
 Service-Component: OSGI-INF/services/fxtoswtfunction.xml
+Bundle-ActivationPolicy: lazy
