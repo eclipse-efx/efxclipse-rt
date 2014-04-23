@@ -78,6 +78,7 @@
 		<!-- Experimental -->
 		<module>../../experimental/swt/org.eclipse.fx.runtime.swt</module>
 		<module>../../experimental/swt/org.eclipse.fx.runtime.swt.compat</module>
+		<module>../../experimental/swt/org.eclipse.fx.runtime.swt.e4</module>
 		<module>../../experimental/swt/org.eclipse.fx.runtime.swtutil</module>
 		<module>../runtime/org.eclipse.fx.swtfx.feature</module>
 		<module>../org.eclipse.fx.experimental.updatesite</module>
