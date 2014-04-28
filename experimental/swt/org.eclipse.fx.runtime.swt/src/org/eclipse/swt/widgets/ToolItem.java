@@ -18,11 +18,11 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBase;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Separator;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -64,7 +64,7 @@ public class ToolItem extends Item {
 	@Override
 	protected Node createWidget() {
 		if( (style & SWT.CHECK) == SWT.CHECK ) {
-			nativeControl = new CheckBox();
+			nativeControl = new ToggleButton();
 		} else if( (style & SWT.RADIO) == SWT.RADIO ) {
 			nativeControl = new RadioButton();
 		} else if( (style & SWT.SEPARATOR) == SWT.SEPARATOR ) {
@@ -164,10 +164,8 @@ public class ToolItem extends Item {
 	}
 	
 	public boolean getSelection () {
-		if( nativeControl instanceof CheckBox ) {
-			return ((CheckBox) nativeControl).isSelected();
-		} else if( nativeControl instanceof RadioButton ) {
-			return ((RadioButton) nativeControl).isSelected();
+		if( nativeControl instanceof ToggleButton ) {
+			return ((ToggleButton) nativeControl).isSelected();
 		}
 		return false;
 	}
@@ -237,10 +235,8 @@ public class ToolItem extends Item {
 	}
 	
 	public void setSelection (boolean selected) {
-		if( nativeControl instanceof CheckBox ) {
-			((CheckBox) nativeControl).setSelected(selected);
-		} else if( nativeControl instanceof RadioButton ) {
-			((RadioButton) nativeControl).setSelected(selected);
+		if( nativeControl instanceof ToggleButton ) {
+			((ToggleButton) nativeControl).setSelected(selected);
 		}
 	}
 	
