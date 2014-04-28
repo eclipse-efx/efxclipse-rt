@@ -19,7 +19,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuSeparatorRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuSeparator;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
-
+/**
+ * default renderer for menu separator
+ */
 public class DefMenuSeparatorRenderer extends BaseMenuSeparatorRenderer<SeparatorMenuItem> {
 
 	@Override
@@ -27,7 +29,7 @@ public class DefMenuSeparatorRenderer extends BaseMenuSeparatorRenderer<Separato
 		return MenuSeparatorImpl.class;
 	}
 
-	public static class MenuSeparatorImpl extends WWidgetImpl<SeparatorMenuItem, MMenuSeparator> implements WMenuSeparator<SeparatorMenuItem> {
+	static class MenuSeparatorImpl extends WWidgetImpl<SeparatorMenuItem, MMenuSeparator> implements WMenuSeparator<SeparatorMenuItem> {
 
 		@Override
 		public void addStyleClasses(List<String> classnames) {

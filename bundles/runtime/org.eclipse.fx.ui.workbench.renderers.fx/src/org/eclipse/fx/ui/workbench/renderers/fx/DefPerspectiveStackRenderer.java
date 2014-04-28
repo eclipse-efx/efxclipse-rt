@@ -31,7 +31,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspectiveStack.WStac
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PerspectiveStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
-
+/**
+ * default renderer for {@link MPerspectiveStack}
+ */
 public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<BorderPane,PerspectiveStackItem,Node> {
 
 	@Override
@@ -39,10 +41,10 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		return PerspectiveStackImpl.class;
 	}
 	
-	public static class PerspectiveStackItemImpl implements WStackItem<PerspectiveStackItem, Node> {
+	static class PerspectiveStackItemImpl implements WStackItem<PerspectiveStackItem, Node> {
 		private PerspectiveStackItem item;
 		private MPerspective domElement;
-		private WCallback<WStackItem<PerspectiveStackItem, Node>, Node> initCallback;
+		WCallback<WStackItem<PerspectiveStackItem, Node>, Node> initCallback;
 		
 		@PostConstruct
 		void init() {
@@ -50,10 +52,10 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		}
 		
 		protected PerspectiveStackItem getWidget() {
-			if( item == null ) {
-				item = createWidget();
+			if( this.item == null ) {
+				this.item = createWidget();
 			}
-			return item;
+			return this.item;
 		}
 		
 		protected PerspectiveStackItem createWidget() {
@@ -62,8 +64,8 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 				
 				@Override
 				public void run() {
-					if( initCallback != null ) {
-						t.setContent(initCallback.call(PerspectiveStackItemImpl.this));
+					if( PerspectiveStackItemImpl.this.initCallback != null ) {
+						t.setContent(PerspectiveStackItemImpl.this.initCallback.call(PerspectiveStackItemImpl.this));
 					}
 				}
 			});
@@ -72,7 +74,7 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		
 		@Override
 		public PerspectiveStackItem getNativeItem() {
-			return item;
+			return this.item;
 		}
 
 		@Override
@@ -82,7 +84,7 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 
 		@Override
 		public MPerspective getDomElement() {
-			return domElement;
+			return this.domElement;
 		}
 
 		@Override
@@ -92,12 +94,12 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 
 		@Override
 		public void setOnCloseCallback(WCallback<WStackItem<PerspectiveStackItem, Node>, Boolean> callback) {
-			
+			// empty
 		}
 		
 	}
 	
-	public static class PerspectiveStackImpl extends WLayoutedWidgetImpl<BorderPane, BorderPane, MPerspectiveStack> implements WPerspectiveStack<BorderPane, PerspectiveStackItem, Node> {
+	static class PerspectiveStackImpl extends WLayoutedWidgetImpl<BorderPane, BorderPane, MPerspectiveStack> implements WPerspectiveStack<BorderPane, PerspectiveStackItem, Node> {
 		private List<WStackItem<PerspectiveStackItem, Node>> items = new ArrayList<WStackItem<PerspectiveStackItem,Node>>();
 		private int currentIndex;
 		
@@ -112,7 +114,7 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 
 		@Override
 		public void addItem(WStackItem<PerspectiveStackItem, Node> item) {
-			items.add(item);
+			this.items.add(item);
 		}
 
 		@Override
@@ -127,10 +129,10 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 
 		@Override
 		public void selectItem(int idx) {
-			WStackItem<PerspectiveStackItem, Node> item = items.get(idx);
+			WStackItem<PerspectiveStackItem, Node> item = this.items.get(idx);
 			Node node = item.getNativeItem().getContent();
-			if( getWidget().getCenter() != null && perspectiveSwitch != null ) {
-				AnimationDelegate<BorderPane, Node> a = perspectiveSwitch.getDelegate(items.get(currentIndex).getDomElement(), item.getDomElement());
+			if( getWidget().getCenter() != null && this.perspectiveSwitch != null ) {
+				AnimationDelegate<BorderPane, Node> a = this.perspectiveSwitch.getDelegate(this.items.get(this.currentIndex).getDomElement(), item.getDomElement());
 				if( a == null ) {
 					getWidget().setCenter(node);
 				} else {
@@ -139,17 +141,17 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 			} else {
 				getWidget().setCenter(node);	
 			}
-			currentIndex = idx;
+			this.currentIndex = idx;
 		}
 
 		@Override
 		public int indexOf(WStackItem<PerspectiveStackItem, Node> item) {
-			return items.indexOf(item);
+			return this.items.indexOf(item);
 		}
 
 		@Override
 		public List<WStackItem<PerspectiveStackItem, Node>> getItems() {
-			return items;
+			return this.items;
 		}
 
 		@Override
@@ -159,17 +161,17 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 
 		@Override
 		public void setMouseSelectedItemCallback(WCallback<WStackItem<PerspectiveStackItem, Node>, Void> selectedItemCallback) {
-			
+			// empty
 		}
 
 		@Override
 		public void setKeySelectedItemCallback(WCallback<WStackItem<PerspectiveStackItem, Node>, Void> selectedItemCallback) {
-			
+			// empty			
 		}
 
 		@Override
 		public int getItemCount() {
-			return items.size();
+			return this.items.size();
 		}
 
 		@Override

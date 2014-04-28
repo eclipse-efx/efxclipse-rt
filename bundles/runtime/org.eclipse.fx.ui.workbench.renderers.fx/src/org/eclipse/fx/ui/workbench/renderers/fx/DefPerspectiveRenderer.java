@@ -24,7 +24,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspective;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
-
+/**
+ * default renderer for {@link MPerspective}
+ */
 public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPane> {
 
 	@Override
@@ -32,7 +34,7 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 		return PerspectiveWidgetImpl.class;
 	}
 
-	public static class PerspectiveWidgetImpl extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPerspective> implements WPerspective<FillLayoutPane> {
+	static class PerspectiveWidgetImpl extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPerspective> implements WPerspective<FillLayoutPane> {
 
 		@Override
 		protected FillLayoutPane getWidgetNode() {

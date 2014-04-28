@@ -42,11 +42,12 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
-import org.eclipse.fx.ui.workbench.renderers.fx.widget.MinMaxGroup;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
-
+/**
+ * default renderer for {@link MPartStack}
+ */
 public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 
 	@Override
@@ -59,13 +60,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		
 	}
 
-	public static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
+	static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
 		
-		private WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
-		private WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
-		private WCallback<WMinMaxState, Void> minMaxCallback;
-		private MinMaxGroup minMaxGroup;
-		private boolean inKeyTraversal;
+		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
+		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
+//		private WCallback<WMinMaxState, Void> minMaxCallback;
+//		private MinMaxGroup minMaxGroup;
+		boolean inKeyTraversal;
 		
 //		@Inject
 //		private EModelService modelService;
@@ -76,17 +77,19 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 				@Override
 				protected void layoutChildren() {
 					super.layoutChildren();
-					if( minMaxGroup != null ) {
-						
-					}
+//					if( minMaxGroup != null ) {
+//						
+//					}
 				}
 			};
 		}
 		
+		@Override
 		public void setMouseSelectedItemCallback(WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback) {
 			this.mouseSelectedItemCallback = mouseSelectedItemCallback;
 		}
 		
+		@Override
 		public void setKeySelectedItemCallback(WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback) {
 			this.keySelectedItemCallback = keySelectedItemCallback;
 		}
@@ -108,27 +111,27 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		
 		@Override
 		public void setMinMaxCallback(WCallback<WMinMaxState, Void> minMaxCallback) {
-			this.minMaxCallback = minMaxCallback;
+//			this.minMaxCallback = minMaxCallback;
 		}
 		
 		@Override
 		public void setMinMaxState(WMinMaxState state) {
-			if( state == WMinMaxState.NONE ) {
-				if( minMaxGroup != null ) {
-					((Pane)getStaticLayoutNode()).getChildren().remove(minMaxGroup);
-					minMaxGroup = null;
-				}
-			} else {
-				if( minMaxGroup == null ) {
-					minMaxGroup = new MinMaxGroup();
-					minMaxGroup.setManaged(false);
-					minMaxGroup.setState(state);
-					((Pane)getStaticLayoutNode()).getChildren().add(minMaxGroup);
-				} else {
-					minMaxGroup.setState(state);
-					((Pane)getStaticLayoutNode()).requestLayout();
-				}
-			}
+//			if( state == WMinMaxState.NONE ) {
+//				if( minMaxGroup != null ) {
+//					((Pane)getStaticLayoutNode()).getChildren().remove(minMaxGroup);
+//					minMaxGroup = null;
+//				}
+//			} else {
+//				if( minMaxGroup == null ) {
+//					minMaxGroup = new MinMaxGroup();
+//					minMaxGroup.setManaged(false);
+//					minMaxGroup.setState(state);
+//					((Pane)getStaticLayoutNode()).getChildren().add(minMaxGroup);
+//				} else {
+//					minMaxGroup.setState(state);
+//					((Pane)getStaticLayoutNode()).requestLayout();
+//				}
+//			}
 		}
 		
 		@Override
@@ -216,7 +219,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 
 				@Override
 				public void handle(KeyEvent event) {
-					inKeyTraversal = true;
+					StackWidgetImpl.this.inKeyTraversal = true;
 				}
 				
 			});
@@ -224,7 +227,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 
 				@Override
 				public void handle(KeyEvent event) {
-					inKeyTraversal = false;
+					StackWidgetImpl.this.inKeyTraversal = false;
 				}
 				
 			});
@@ -240,10 +243,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 					w.handleSelection();
 					 
 					final WCallback<WStackItem<Object, Node>, Void> cb;
-					if( ! inKeyTraversal ) {
-						cb = mouseSelectedItemCallback;
+					if( ! StackWidgetImpl.this.inKeyTraversal ) {
+						cb = StackWidgetImpl.this.mouseSelectedItemCallback;
 					} else {
-						cb = keySelectedItemCallback;
+						cb = StackWidgetImpl.this.keySelectedItemCallback;
 					}
 					
 					if( cb != null ) {
@@ -255,7 +258,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 								@Override
 								public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 									w.tab.getContent().visibleProperty().removeListener(this);
-									if( newValue ) {
+									if( newValue.booleanValue() ) {
 										cb.call(w);
 									}
 								}
@@ -343,10 +346,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		}
 	}
 	
-	public static class StackItemImpl implements WStackItem<Object, Node> {
-		private Tab tab;
+	static class StackItemImpl implements WStackItem<Object, Node> {
+		Tab tab;
 		private WCallback<WStackItem<Object, Node>, Node> initCallback;
-		private WCallback<WStackItem<Object, Node>, Boolean> closeCallback;
+		WCallback<WStackItem<Object, Node>, Boolean> closeCallback;
 		private MStackElement domElement;
 		
 		@Inject
@@ -373,15 +376,15 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		
 		@Override
 		public MStackElement getDomElement() {
-			return domElement;
+			return this.domElement;
 		}
 
 		protected Tab getWidget() {
-			if( tab == null ) {
-				tab = createWidget();
+			if( this.tab == null ) {
+				this.tab = createWidget();
 			}
-			tab.setUserData(this);
-			return tab;
+			this.tab.setUserData(this);
+			return this.tab;
 		}
 		
 		protected Tab createWidget() {
@@ -390,8 +393,8 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 				
 				@Override
 				public void handle(Event event) {
-					if( closeCallback != null ) {
-						if( closeCallback.call(StackItemImpl.this) ) {
+					if( StackItemImpl.this.closeCallback != null ) {
+						if( StackItemImpl.this.closeCallback.call(StackItemImpl.this).booleanValue() ) {
 							event.consume();
 						}
 					}
@@ -401,12 +404,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		}
 		
 		void handleSelection() {
-			if( initCallback != null ) {
-				tab.setContent(initCallback.call(this));
-				initCallback = null;
+			if( this.initCallback != null ) {
+				this.tab.setContent(this.initCallback.call(this));
+				this.initCallback = null;
 			}	
 		}
 		
+		@Override
 		public void setInitCallback(WCallback<WStackItem<Object, Node>, Node> initCallback) {
 			this.initCallback = initCallback;
 		}
@@ -419,7 +423,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		@Inject
 		public void setLabel(@Named(ATTRIBUTE_localizedLabel) @Optional String label) {
 			this.label = label;
-			getWidget().setText(dirty ? "*" + notNull(label) : notNull(label));
+			getWidget().setText(this.dirty ? "*" + notNull(label) : notNull(label)); //$NON-NLS-1$
 		}
 		
 		@Inject
@@ -430,7 +434,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		@Inject
 		public void setIcon(@Named(UIEvents.UILabel.ICONURI) @Optional String iconUri) {
 			if( iconUri != null ) {
-				getWidget().setGraphic(graphicsLoader.getGraphicsNode(URI.createURI(iconUri)));
+				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(URI.createURI(iconUri)));
 			} else {
 				getWidget().setGraphic(null);
 			}
@@ -439,7 +443,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		@Inject
 		public void setDirty(@Named(UIEvents.Dirtyable.DIRTY) @Optional boolean dirty) {
 			this.dirty = dirty;
-			getWidget().setText(dirty ? "*" + notNull(label) : notNull(label));
+			getWidget().setText(dirty ? "*" + notNull(this.label) : notNull(this.label)); //$NON-NLS-1$
 		}
 		
 		@Override
@@ -448,14 +452,14 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		}
 		
 		private static String notNull(String s) {
-			return s == null ? "" : s;
+			return s == null ? "" : s; //$NON-NLS-1$
 		}
 	}
 	
 	
-	public static class PaginationWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
-		private List<WStackItem<Object, Node>> items = new ArrayList<WStack.WStackItem<Object,Node>>();
-		private WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
+	static class PaginationWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
+		List<WStackItem<Object, Node>> items = new ArrayList<WStack.WStackItem<Object,Node>>();
+		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 		
 		@Override
 		public void setMinMaxCallback(WCallback<WMinMaxState, Void> minMaxCallback) {
@@ -482,8 +486,8 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		
 		@Override
 		public void addItem(WStackItem<Object, Node> item) {
-			items.add(item);
-			getWidget().setPageCount(items.size());
+			this.items.add(item);
+			getWidget().setPageCount(this.items.size());
 		}
 
 		@Override
@@ -505,12 +509,12 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 
 		@Override
 		public int indexOf(WStackItem<Object, Node> item) {
-			return items.indexOf(item);
+			return this.items.indexOf(item);
 		}
 
 		@Override
 		public List<WStackItem<Object, Node>> getItems() {
-			return items;
+			return this.items;
 		}
 
 		@Override
@@ -525,12 +529,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		}
 
 		@Override
-		public void setKeySelectedItemCallback(WCallback<WStack.WStackItem<Object, Node>, Void> selectedItemCallback) {			
+		public void setKeySelectedItemCallback(WCallback<WStack.WStackItem<Object, Node>, Void> selectedItemCallback) {
+			// empty
 		}
 
 		@Override
 		public int getItemCount() {
-			return items.size();
+			return this.items.size();
 		}
 
 		@Override
@@ -545,9 +550,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 				
 				@Override
 				public Node call(Integer param) {
-					PagninationItemImpl item = (PagninationItemImpl) items.get(param.intValue());
+					PagninationItemImpl item = (PagninationItemImpl) PaginationWidgetImpl.this.items.get(param.intValue());
 					item.handleSelection();
-					mouseSelectedItemCallback.call(item);
+					PaginationWidgetImpl.this.mouseSelectedItemCallback.call(item);
 					return item.getNativeItem().getContent();
 				}
 			});
@@ -555,9 +560,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-					final PagninationItemImpl item =  (PagninationItemImpl) items.get(newValue.intValue());
-					if( mouseSelectedItemCallback != null ) {
-						mouseSelectedItemCallback.call(item);
+					final PagninationItemImpl item =  (PagninationItemImpl) PaginationWidgetImpl.this.items.get(newValue.intValue());
+					if( PaginationWidgetImpl.this.mouseSelectedItemCallback != null ) {
+						PaginationWidgetImpl.this.mouseSelectedItemCallback.call(item);
 					}
 				}
 			});
@@ -566,21 +571,21 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 		
 	}
 
-	public static class PagninationItemImpl implements WStackItem<Object, Node> {
+	static class PagninationItemImpl implements WStackItem<Object, Node> {
 		private WCallback<WStackItem<Object, Node>, Node> initCallback;
 		private PaginationItem item = new PaginationItem();
 		private MStackElement domElement;
 		
 		void handleSelection() {
-			if( initCallback != null ) {
-				item.setContent(initCallback.call(this));
-				initCallback = null;
+			if( this.initCallback != null ) {
+				this.item.setContent(this.initCallback.call(this));
+				this.initCallback = null;
 			}	
 		}
 		
 		@Override
 		public PaginationItem getNativeItem() {
-			return item;
+			return this.item;
 		}
 
 		@Override
@@ -590,7 +595,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node,Object, Node> {
 
 		@Override
 		public MStackElement getDomElement() {
-			return domElement;
+			return this.domElement;
 		}
 
 		@Override

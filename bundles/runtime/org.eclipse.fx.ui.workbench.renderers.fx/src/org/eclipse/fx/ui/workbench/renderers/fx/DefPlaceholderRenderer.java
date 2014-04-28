@@ -20,7 +20,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
-
+/**
+ * default renderer for {@link MPlaceholder}
+ */
 public class DefPlaceholderRenderer extends BasePlaceholderRenderer<FillLayoutPane> {
 
 	@Override

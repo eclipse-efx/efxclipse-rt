@@ -29,7 +29,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
-
+/**
+ * default renderer for {@link MMenu}
+ */
 public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 
 	@Override
@@ -37,7 +39,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		return MenuImpl.class;
 	}
 
-	public static class MenuImpl extends WWidgetImpl<Menu, MMenu> implements WMenu<Menu> {
+	static class MenuImpl extends WWidgetImpl<Menu, MMenu> implements WMenu<Menu> {
 		private ToggleGroup group;
 		Runnable showingCallback;
 		Runnable hidingCallback;
@@ -46,9 +48,9 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		@Override
 		protected Menu createWidget() {
 			final Menu m = new Menu();
-			item = new MenuItem("<empty>");
-			item.setDisable(true); 
-			m.getItems().add(item);
+			this.item = new MenuItem("<empty>"); //$NON-NLS-1$
+			this.item.setDisable(true); 
+			m.getItems().add(this.item);
 			m.setMnemonicParsing(true);
 			m.setOnShowing(new EventHandler<Event>() {
 				
@@ -56,12 +58,12 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 				public void handle(Event event) {
 					//TODO Work around for JIRA 24505
 					if( ! m.isShowing() ) {
-						if( showingCallback != null ) {
-							showingCallback.run();
+						if( MenuImpl.this.showingCallback != null ) {
+							MenuImpl.this.showingCallback.run();
 						}	
 					}
 					if(getWidget().getItems().size() > 1) {
-						getWidget().getItems().remove(item);
+						getWidget().getItems().remove(MenuImpl.this.item);
 					}
 				}
 			});
@@ -69,10 +71,10 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 
 				@Override
 				public void handle(Event arg0) {
-					if (hidingCallback!=null) hidingCallback.run();
+					if (MenuImpl.this.hidingCallback!=null) MenuImpl.this.hidingCallback.run();
 					
 					if(getWidget().getItems().isEmpty()) {
-						getWidget().getItems().add(item);
+						getWidget().getItems().add(MenuImpl.this.item);
 					}
 				}
 			});
@@ -107,16 +109,16 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		@Override
 		public void addElement(WMenuElement<MMenuElement> widget) {
 			if(getWidget().getItems().size()==1) {
-				getWidget().getItems().remove(item);
+				getWidget().getItems().remove(this.item);
 			}
 			
 			if( widget.getWidget() instanceof Toggle ) {
-				if( group == null ) {
-					group = new ToggleGroup();
+				if( this.group == null ) {
+					this.group = new ToggleGroup();
 				}
 				// see http://javafx-jira.kenai.com/browse/RT-24256
 //				group.getToggles().add((Toggle) widget.getWidget());
-				((Toggle)widget.getWidget()).setToggleGroup(group);
+				((Toggle)widget.getWidget()).setToggleGroup(this.group);
 			}
 			getWidget().getItems().add((MenuItem) widget.getWidget());
 		}
@@ -124,16 +126,16 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		@Override
 		public void addElement(int idx, WMenuElement<MMenuElement> widget) {
 			if(getWidget().getItems().size()==1) {
-				getWidget().getItems().remove(item);
+				getWidget().getItems().remove(this.item);
 			}
 			
 			if( widget.getWidget() instanceof Toggle ) {
-				if( group == null ) {
-					group = new ToggleGroup();
+				if( this.group == null ) {
+					this.group = new ToggleGroup();
 				}
 				// see http://javafx-jira.kenai.com/browse/RT-24256
 //				group.getToggles().add((Toggle) widget.getWidget());
-				((Toggle)widget.getWidget()).setToggleGroup(group);
+				((Toggle)widget.getWidget()).setToggleGroup(this.group);
 			}
 			getWidget().getItems().add(idx, (MenuItem) widget.getWidget());
 		}
@@ -145,7 +147,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 			}
 			getWidget().getItems().remove(widget.getWidget());
 			if( getWidget().getItems().isEmpty() ) {
-				getWidget().getItems().add(item);
+				getWidget().getItems().add(this.item);
 			}
 		}
 		

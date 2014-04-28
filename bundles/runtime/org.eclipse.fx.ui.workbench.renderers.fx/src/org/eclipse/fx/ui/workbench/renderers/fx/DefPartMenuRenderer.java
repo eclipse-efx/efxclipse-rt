@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.WindowEvent;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.base.BasePartMenuRenderer;
@@ -32,16 +33,19 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
-
+/**
+ * default renderer for {@link MMenu} on {@link MPart}
+ */
 public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
-
+	private static final String CSS_CLASS_VIEW_MENU_BUTTON_ICON = "view-menu-button-icon"; //$NON-NLS-1$
+	
 	@Override
 	protected Class<? extends WMenu<Control>> getWidgetClass(MMenu element) {
 		return MenuImpl.class;
 	}
 
-	public static class MenuImpl extends WWidgetImpl<Control, MMenu> implements WMenu<Control> {
-		private ContextMenu menu;
+	static class MenuImpl extends WWidgetImpl<Control, MMenu> implements WMenu<Control> {
+		ContextMenu menu;
 		private ToggleGroup group;
 		Runnable showingCallback;
 		Runnable hidingCallback;
@@ -70,12 +74,12 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 		public void addElement(WMenuElement<MMenuElement> widget) {
 			
 			if( widget.getWidget() instanceof Toggle ) {
-				if( group == null ) {
-					group = new ToggleGroup();
+				if( this.group == null ) {
+					this.group = new ToggleGroup();
 				}
 				// see http://javafx-jira.kenai.com/browse/RT-24256
 //				group.getToggles().add((Toggle) widget.getWidget());
-				((Toggle)widget.getWidget()).setToggleGroup(group);
+				((Toggle)widget.getWidget()).setToggleGroup(this.group);
 			}
 			getWidget().getContextMenu().getItems().add((MenuItem) widget.getWidget());
 		}
@@ -83,12 +87,12 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 		@Override
 		public void addElement(int idx, WMenuElement<MMenuElement> widget) {
 			if( widget.getWidget() instanceof Toggle ) {
-				if( group == null ) {
-					group = new ToggleGroup();
+				if( this.group == null ) {
+					this.group = new ToggleGroup();
 				}
 				// see http://javafx-jira.kenai.com/browse/RT-24256
 //				group.getToggles().add((Toggle) widget.getWidget());
-				((Toggle)widget.getWidget()).setToggleGroup(group);
+				((Toggle)widget.getWidget()).setToggleGroup(this.group);
 			}
 			getWidget().getContextMenu().getItems().add(idx, (MenuItem) widget.getWidget());
 		}
@@ -110,7 +114,7 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 		protected Control createWidget() {
 			final Label b = new Label();
 			Polygon p = new Polygon(6, 1, 15, 1, 11, 5, 10, 5);
-			p.getStyleClass().add("view-menu-button-icon");
+			p.getStyleClass().add(CSS_CLASS_VIEW_MENU_BUTTON_ICON);
 			p.setFill(Color.WHITE);
 			p.setStroke(Color.BLACK);
 			b.setGraphic(p);
@@ -118,26 +122,28 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 
 				@Override
 				public void handle(MouseEvent event) {
-					menu.show(b, Side.BOTTOM, 0, 0);
+					MenuImpl.this.menu.show(b, Side.BOTTOM, 0, 0);
 				}
 			});
-			menu = new ContextMenu();
-			menu.setOnShowing(new EventHandler<WindowEvent>() {
+			this.menu = new ContextMenu();
+			this.menu.setOnShowing(new EventHandler<WindowEvent>() {
 				
 				@Override
 				public void handle(WindowEvent event) {
-					if( showingCallback != null ) {
-						showingCallback.run();
+					if( MenuImpl.this.showingCallback != null ) {
+						MenuImpl.this.showingCallback.run();
 					}
 				}
 			});
-			menu.setOnHiding(new EventHandler<WindowEvent>() {
+			this.menu.setOnHiding(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent arg0) {
-					if (hidingCallback!=null) hidingCallback.run();
+					if (MenuImpl.this.hidingCallback!=null) {
+						MenuImpl.this.hidingCallback.run();
+					}
 				}
 			});
-			b.setContextMenu(menu);
+			b.setContextMenu(this.menu);
 			return b;
 		}
 

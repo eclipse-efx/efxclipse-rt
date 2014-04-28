@@ -26,14 +26,16 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
-
+/**
+ * default renderer for {@link MPopupMenu}
+ */
 public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 	@Override
 	protected Class<? extends WPopupMenu<ContextMenu>> getWidgetClass(MPopupMenu element) {
 		return ContextMenuImpl.class;
 	}
 
-	public static class ContextMenuImpl extends WWidgetImpl<ContextMenu, MPopupMenu> implements WPopupMenu<ContextMenu> {
+	static class ContextMenuImpl extends WWidgetImpl<ContextMenu, MPopupMenu> implements WPopupMenu<ContextMenu> {
 		private ToggleGroup group;
 		Runnable showingCallback;
 
@@ -44,8 +46,8 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 
 				@Override
 				public void handle(WindowEvent event) {
-					if (showingCallback != null) {
-						showingCallback.run();
+					if (ContextMenuImpl.this.showingCallback != null) {
+						ContextMenuImpl.this.showingCallback.run();
 					}
 				}
 			});
@@ -75,12 +77,12 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 		@Override
 		public void addElement(WMenuElement<MMenuElement> widget) {
 			if (widget.getWidget() instanceof Toggle) {
-				if (group == null) {
-					group = new ToggleGroup();
+				if (this.group == null) {
+					this.group = new ToggleGroup();
 				}
 				// see http://javafx-jira.kenai.com/browse/RT-24256
 				// group.getToggles().add((Toggle) widget.getWidget());
-				((Toggle) widget.getWidget()).setToggleGroup(group);
+				((Toggle) widget.getWidget()).setToggleGroup(this.group);
 			}
 			getWidget().getItems().add((MenuItem) widget.getWidget());
 		}
@@ -88,12 +90,12 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 		@Override
 		public void addElement(int idx, WMenuElement<MMenuElement> widget) {
 			if (widget.getWidget() instanceof Toggle) {
-				if (group == null) {
-					group = new ToggleGroup();
+				if (this.group == null) {
+					this.group = new ToggleGroup();
 				}
 				// see http://javafx-jira.kenai.com/browse/RT-24256
 				// group.getToggles().add((Toggle) widget.getWidget());
-				((Toggle) widget.getWidget()).setToggleGroup(group);
+				((Toggle) widget.getWidget()).setToggleGroup(this.group);
 			}
 			getWidget().getItems().add(idx, (MenuItem) widget.getWidget());
 		}

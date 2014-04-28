@@ -25,26 +25,29 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
-
+/**
+ * default renderer for {@link MMenu} when acting as a menubar
+ */
 public class DefMenuBarRenderer extends BaseMenuBarRenderer<MenuBar> {
-
+	private static final String KEY_NATIVE_MENUBAR = "fx.menubar.native"; //$NON-NLS-1$
+	
 	@Override
 	protected Class<? extends WMenuBar<MenuBar>> getWidgetClass(MMenu menu) {
 		return WMenuBarImpl.class;
 	}
 	
-	public static class WMenuBarImpl extends WLayoutedWidgetImpl<MenuBar, MenuBar, MMenu> implements WMenuBar<MenuBar> {
+	static class WMenuBarImpl extends WLayoutedWidgetImpl<MenuBar, MenuBar, MMenu> implements WMenuBar<MenuBar> {
 		private boolean nativeMenu;
 		
 		@Inject
 		public WMenuBarImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MMenu menu) {
-			this.nativeMenu = menu.getPersistedState().get("fx.menubar.native") != null ? Boolean.parseBoolean(menu.getPersistedState().get("fx.menubar.native")) : false;
+			this.nativeMenu = menu.getPersistedState().get(KEY_NATIVE_MENUBAR) != null ? Boolean.parseBoolean(menu.getPersistedState().get(KEY_NATIVE_MENUBAR)) : false;
 		}
 		
 		@Override
 		protected MenuBar createWidget() {
 			MenuBar b = new MenuBar();
-			b.setUseSystemMenuBar(nativeMenu);
+			b.setUseSystemMenuBar(this.nativeMenu);
 			return b;
 		}
 

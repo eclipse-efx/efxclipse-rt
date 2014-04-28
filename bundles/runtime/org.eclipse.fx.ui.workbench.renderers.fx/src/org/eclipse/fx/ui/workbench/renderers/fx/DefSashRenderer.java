@@ -37,7 +37,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
-
+/**
+ * default renderer for sash
+ */
 public class DefSashRenderer extends BaseSashRenderer<Node> {
 
 	@Override
@@ -49,7 +51,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 	}
 	
-	public static class WFixedSashImpl extends WLayoutedWidgetImpl<GridLayoutPane, Node, MPartSashContainer> implements WSash<Node> {
+	static class WFixedSashImpl extends WLayoutedWidgetImpl<GridLayoutPane, Node, MPartSashContainer> implements WSash<Node> {
 
 		private static GridData toGridData(Map<String, String> dataMap) {
 			GridData gd = new GridData();
@@ -170,18 +172,19 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		
 	}
 	
-	public static class WResizableSashImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MPartSashContainer> implements WSash<Node> {
+	static class WResizableSashImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MPartSashContainer> implements WSash<Node> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
-		private ChangeListener<Number> listener = new ChangeListener<Number>() {
-			private boolean queueing;
+		ChangeListener<Number> listener = new ChangeListener<Number>() {
+			boolean queueing;
 			
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				if( ! queueing ) {
-					queueing = true;
+				if( ! this.queueing ) {
+					this.queueing = true;
 					Platform.runLater(new Runnable() {
 						
+						@SuppressWarnings("unqualified-field-access")
 						@Override
 						public void run() {
 							recalcWeight();
@@ -192,8 +195,8 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			}
 		};
 		
-		private void recalcWeight() {
-			if( state != WidgetState.CREATED ) {
+		void recalcWeight() {
+			if( this.state != WidgetState.CREATED ) {
 				return;
 			}
 			
@@ -201,14 +204,14 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			double prev = 0;
 			int idx = 0;
 			// No items nothing to recalculate
-			if( items.isEmpty() ) {
+			if( this.items.isEmpty() ) {
 				return;
 			}
 			for( double d : getWidget().getDividerPositions() ) {
-				items.get(idx++).getDomElement().setContainerData((d - prev)*10+"");
+				this.items.get(idx++).getDomElement().setContainerData((d - prev)*10+""); //$NON-NLS-1$
 				prev = d;
 			}
-			items.get(items.size()-1).getDomElement().setContainerData((1.0-prev)*10+"");			
+			this.items.get(this.items.size()-1).getDomElement().setContainerData((1.0-prev)*10+"");			 //$NON-NLS-1$
 		}
 		
 		@Override
@@ -220,17 +223,17 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 				public void onChanged(javafx.collections.ListChangeListener.Change<? extends Divider> c) {
 					while( c.next() ) {
 						for( Divider d : c.getAddedSubList() ) {
-							d.positionProperty().addListener(listener);
+							d.positionProperty().addListener(WResizableSashImpl.this.listener);
 						}
 						
 						for( Divider d : c.getRemoved() ) {
-							d.positionProperty().removeListener(listener);	
+							d.positionProperty().removeListener(WResizableSashImpl.this.listener);	
 						}
 					}
 				}
 			});
 			for( Divider d : widget.getDividers() ) {
-				d.positionProperty().addListener(listener);
+				d.positionProperty().addListener(this.listener);
 			}
 		}
 		
@@ -254,7 +257,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		public void addItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			SplitPane p = getWidget();
 			p.getItems().add((Node) widget.getStaticLayoutNode());
-			items.add(widget);
+			this.items.add(widget);
 			updateDividers();
 		}
 		
@@ -266,7 +269,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 				l.add((Node) i.getStaticLayoutNode());
 			}
 			p.getItems().addAll(index, l);
-			items.addAll(index, list);
+			this.items.addAll(index, list);
 			updateDividers();
 		}
 		
@@ -278,7 +281,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 				l.add((Node) i.getStaticLayoutNode());
 			}
 			p.getItems().addAll(l);
-			items.addAll(list);
+			this.items.addAll(list);
 			updateDividers();
 		}
 		
@@ -294,34 +297,34 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		public void removeItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			SplitPane p = getWidget();
 			p.getItems().remove(widget.getStaticLayoutNode());
-			items.remove(widget);
+			this.items.remove(widget);
 			updateDividers();
 		}
 		
 		@Override
 		protected void doCleanup() {
 			super.doCleanup();
-			items.clear();
+			this.items.clear();
 		}
 		
 		private void updateDividers() {
-			if( items.size() <= 1 ) {
+			if( this.items.size() <= 1 ) {
 				return;
 			}
 			
-			if( state != WidgetState.CREATED ) {
+			if( this.state != WidgetState.CREATED ) {
 				return;
 			}
 			
 			double total = 0;
 			
-			for( WLayoutedWidget<MPartSashContainerElement> w : items ) {
+			for( WLayoutedWidget<MPartSashContainerElement> w : this.items ) {
 				total += w.getWeight();
 			}
 			
-			double[] deviders = new double[items.size() - 1];
-			for (int i = 0; i < items.size() - 1; i++) {
-				deviders[i] = (i == 0 ? 0 : deviders[i - 1]) + (items.get(i).getWeight() / total);
+			double[] deviders = new double[this.items.size() - 1];
+			for (int i = 0; i < this.items.size() - 1; i++) {
+				deviders[i] = (i == 0 ? 0 : deviders[i - 1]) + (this.items.get(i).getWeight() / total);
 			}
 						
 			getWidget().setDividerPositions(deviders);

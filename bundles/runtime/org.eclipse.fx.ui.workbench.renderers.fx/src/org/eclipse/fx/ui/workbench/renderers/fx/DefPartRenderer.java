@@ -25,9 +25,7 @@ import javafx.scene.shape.StrokeType;
 
 import javax.inject.Inject;
 
-import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
@@ -39,13 +37,19 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.CustomContainerSupport;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
-
+/**
+ * default renderer for {@link MPart}
+ */
 public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
-	private static final String TOOLBAR_MENU_FLOAT_TAG = "Part-ToolBarMenu-Floating";
-	private static final String TOOLBAR_MENU_COLLAPSIBLE_TAG = "Part-ToolBarMenu-Collapsible";
-	private static final String TOOLBAR_MENU_BOTTOM_TAG = "Part-ToolBarMenu-Bottom";
+	private static final String TOOLBAR_MENU_FLOAT_TAG = "Part-ToolBarMenu-Floating"; //$NON-NLS-1$
+//	private static final String TOOLBAR_MENU_COLLAPSIBLE_TAG = "Part-ToolBarMenu-Collapsible";
+	private static final String TOOLBAR_MENU_BOTTOM_TAG = "Part-ToolBarMenu-Bottom"; //$NON-NLS-1$
 
-	private static final String TOOL_BAR_FULL_SPAN_TAG = "Part-Toolbar-FullSpan";
+	private static final String TOOL_BAR_FULL_SPAN_TAG = "Part-Toolbar-FullSpan"; //$NON-NLS-1$
+	
+	private static final String CSS_CLASS_PART_CONTENT = "part-content"; //$NON-NLS-1$
+	private static final String CSS_CLASS_VIEW_TOOLBAR_CONTAINER = "view-toolbar-container"; //$NON-NLS-1$
+	private static final String CSS_CLASS_VIEW_TOOLBAR = "view-toolbar"; //$NON-NLS-1$
 	
 	@Override
 	protected Class<? extends WPart<Pane, Node, Node>> getWidgetClass(MPart part) {
@@ -80,24 +84,24 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		
 	}
 
-	public static class PartImpl extends WLayoutedWidgetImpl<Pane, AnchorPane, MPart> implements WPart<Pane, Node, Node> {
+	static class PartImpl extends WLayoutedWidgetImpl<Pane, AnchorPane, MPart> implements WPart<Pane, Node, Node> {
 		@Inject
 		EPartService service;
 		
 		@Inject
 		IEclipseContext context;
 
-		private AnchorPane contentArea;
+		AnchorPane contentArea;
 		private BorderPane dataArea;
 
 		private StackPane expandGroup;
-		private StackPane toolbarGroup;
-		private Group menuGroup;
+		StackPane toolbarGroup;
+		Group menuGroup;
 		private WMenu<Node> viewMenuWidget;
 		
 		@Override
 		protected Pane createWidget() {
-			Pane tmp = CustomContainerSupport.createContainerPane(logger, context);
+			Pane tmp = CustomContainerSupport.createContainerPane(this.logger, this.context);
 			final Pane p = tmp == null ? new BorderPane() : tmp;
 			
 			p.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -106,7 +110,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				public void handle(MouseEvent event) {
 					event.consume();
 					MPart domElement = getDomElement();
-					service.activate(domElement, true);
+					PartImpl.this.service.activate(domElement, true);
 					if (!checkFocusControl() && (domElement.getObject()!=null)) {
 //						ContextInjectionFactory.invoke(domElement.getObject(), Focus.class, domElement.getContext(), null);
 //						if (!checkFocusControl()) {
@@ -121,7 +125,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		
 		
 
-		private boolean checkFocusControl() {
+		boolean checkFocusControl() {
 			Parent check = getWidget();
 			if (check == null || check.getScene() == null) {
 				return false;
@@ -145,80 +149,81 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 
 		@Override
 		protected AnchorPane getWidgetNode() {
-			if (contentArea == null) {
-				menuGroup = new Group();
-				menuGroup.setVisible(false);
-				menuGroup.setManaged(false);
+			if (this.contentArea == null) {
+				this.menuGroup = new Group();
+				this.menuGroup.setVisible(false);
+				this.menuGroup.setManaged(false);
 				
-				expandGroup = new StackPane();
-				expandGroup.setStyle("-fx-background-color: gray");
-				expandGroup.setOpacity(0.5);
+				this.expandGroup = new StackPane();
+				//FIXME This should be moved to css
+				this.expandGroup.setStyle("-fx-background-color: gray");
+				this.expandGroup.setOpacity(0.5);
 				Node handler = new HandleGroup();//new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("/icons/format-line-spacing-normal.png")));
 				handler.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 					@Override
 					public void handle(MouseEvent event) {
-						toolbarGroup.getParent().setVisible(true);
+						PartImpl.this.toolbarGroup.getParent().setVisible(true);
 					}
 				});
-				expandGroup.getChildren().add(handler);
+				this.expandGroup.getChildren().add(handler);
 				
 //				expandView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("/icons/vcs-update-required.png")));
 //				expandView.setManaged(false);
 //				expandView.setVisible(false);
 				
-				contentArea = new AnchorPane() {
+				this.contentArea = new AnchorPane() {
 					@Override
 					protected void layoutChildren() {
 						super.layoutChildren();
 						
-						if( menuGroup.isVisible() ) {
-							menuGroup.relocate(contentArea.getWidth()-20,0);
+						if( PartImpl.this.menuGroup.isVisible() ) {
+							PartImpl.this.menuGroup.relocate(PartImpl.this.contentArea.getWidth()-20,0);
 						}
 					}
 				};
-				dataArea = new BorderPane();
+				this.dataArea = new BorderPane();
 
-				AnchorPane.setTopAnchor(dataArea, 0.0);
-				AnchorPane.setLeftAnchor(dataArea, 0.0);
-				AnchorPane.setBottomAnchor(dataArea, 0.0);
-				AnchorPane.setRightAnchor(dataArea, 0.0);
+				AnchorPane.setTopAnchor(this.dataArea, Double.valueOf(0.0));
+				AnchorPane.setLeftAnchor(this.dataArea, Double.valueOf(0.0));
+				AnchorPane.setBottomAnchor(this.dataArea, Double.valueOf(0.0));
+				AnchorPane.setRightAnchor(this.dataArea, Double.valueOf(0.0));
 				
 //				AnchorPane.setTopAnchor(expandGroup, 0.0);
 //				AnchorPane.setLeftAnchor(expandGroup, 0.0);
 //				AnchorPane.setRightAnchor(expandGroup, 1.0);
 				
-				contentArea.getChildren().addAll(dataArea, menuGroup);
+				this.contentArea.getChildren().addAll(this.dataArea, this.menuGroup);
 				Node n = getWidget();
 				if (n != null) {
-					n.getStyleClass().add("part-content");
-					dataArea.setCenter(n);
+					n.getStyleClass().add(CSS_CLASS_PART_CONTENT);
+					this.dataArea.setCenter(n);
 				} else {
-					logger.log(Level.ERROR, "No widget node to attach");
+					this.logger.log(Level.ERROR, "No widget node to attach"); //$NON-NLS-1$
 				}
 			}
-			return contentArea;
+			return this.contentArea;
 		}
 
 		private void initToolbarMenu() {
-			if (toolbarGroup == null) {
+			if (this.toolbarGroup == null) {
 				// Ensure that everything is initialized!!!
 				getStaticLayoutNode();
 				
-				toolbarGroup = new StackPane();
+				this.toolbarGroup = new StackPane();
 				
 				if (getDomElement().getTags().contains(TOOL_BAR_FULL_SPAN_TAG)) {
 					final BorderPane p = new BorderPane();
-					p.setCenter(toolbarGroup);
-					p.getStyleClass().add("view-toolbar-container");
+					p.setCenter(this.toolbarGroup);
+					p.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
 					if( getDomElement().getTags().contains(TOOLBAR_MENU_FLOAT_TAG) ) {
-						AnchorPane.setLeftAnchor(p, 0.0);
-						AnchorPane.setRightAnchor(p, 1.0);
-						AnchorPane.setTopAnchor(p, 0.0);
-						contentArea.getChildren().add(p);
+						AnchorPane.setLeftAnchor(p, Double.valueOf(0.0));
+						AnchorPane.setRightAnchor(p, Double.valueOf(0.0));
+						AnchorPane.setTopAnchor(p, Double.valueOf(0.0));
+						this.contentArea.getChildren().add(p);
 						p.setVisible(false);
-						dataArea.setTop(expandGroup);
-						expandGroup.setVisible(true);
+						this.dataArea.setTop(this.expandGroup);
+						this.expandGroup.setVisible(true);
 						p.setOnMousePressed(new EventHandler<MouseEvent>() {
 							@Override
 							public void handle(MouseEvent event) {
@@ -227,19 +232,19 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 						});
 					} else {
 						if (getDomElement().getTags().contains(TOOLBAR_MENU_BOTTOM_TAG)) {
-							dataArea.setBottom(p);
+							this.dataArea.setBottom(p);
 						} else {
-							dataArea.setTop(p);	
+							this.dataArea.setTop(p);	
 						}	
 					}
 				} else {
 					BorderPane p = new BorderPane();
-					p.setRight(toolbarGroup);
-					p.getStyleClass().add("view-toolbar-container");
+					p.setRight(this.toolbarGroup);
+					p.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
 					if (getDomElement().getTags().contains(TOOLBAR_MENU_BOTTOM_TAG)) {
-						dataArea.setBottom(p);
+						this.dataArea.setBottom(p);
 					} else {
-						dataArea.setTop(p);	
+						this.dataArea.setTop(p);	
 					}
 				}
 			}
@@ -248,10 +253,10 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		@Override
 		public void setToolbar(WToolBar<Node> widget) {
 			if (widget == null) {
-				if (toolbarGroup != null) {
-					toolbarGroup.getChildren().clear();
-					dataArea.setTop(null);
-					dataArea.setBottom(null);
+				if (this.toolbarGroup != null) {
+					this.toolbarGroup.getChildren().clear();
+					this.dataArea.setTop(null);
+					this.dataArea.setBottom(null);
 				}
 			} else {
 				initToolbarMenu();
@@ -261,27 +266,27 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					@Override
 					public void handle(MouseEvent event) {
 						if( getDomElement().getTags().contains(TOOLBAR_MENU_FLOAT_TAG) ) {
-							toolbarGroup.getParent().setVisible(false);
+							PartImpl.this.toolbarGroup.getParent().setVisible(false);
 						}
 					}
 				});
 				
-				n.getStyleClass().add("view-toolbar");
-				toolbarGroup.getChildren().setAll(n);
+				n.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR);
+				this.toolbarGroup.getChildren().setAll(n);
 			}
 		}
 
 		@Override
 		public void setMenu(WMenu<Node> widget) {
 			if (widget == null) {
-				if (menuGroup != null) {
-					menuGroup.setVisible(false);
-					menuGroup.getChildren().clear();
+				if (this.menuGroup != null) {
+					this.menuGroup.setVisible(false);
+					this.menuGroup.getChildren().clear();
 				}
 			} else {
-				menuGroup.setVisible(true);
-				menuGroup.getChildren().setAll((Node) widget.getWidget());
-				contentArea.requestLayout();
+				this.menuGroup.setVisible(true);
+				this.menuGroup.getChildren().setAll((Node) widget.getWidget());
+				this.contentArea.requestLayout();
 			}
 			
 			this.viewMenuWidget = widget;

@@ -38,7 +38,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
-
+/**
+ * default renderer for {@link MMenuItem}
+ */
 public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 
 	@Override
@@ -46,9 +48,9 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		return MenuItemImpl.class;
 	}
 
-	public static class MenuItemImpl extends WWidgetImpl<MenuItem, MMenuItem> implements WMenuItem<MenuItem> {
+	static class MenuItemImpl extends WWidgetImpl<MenuItem, MMenuItem> implements WMenuItem<MenuItem> {
 		private ItemType type;
-		private Runnable runnable;
+		Runnable runnable;
 		private boolean handled = true;
 		private boolean enabled = true;
 		
@@ -88,8 +90,8 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		@Override
 		protected MenuItem createWidget() {
 			final MenuItem item = internalCreateWidget();
-			item.setMnemonicParsing(true);
 			if( item != null ) {
+				item.setMnemonicParsing(true);
 				final AtomicBoolean skip = new AtomicBoolean(false);
 				item.setOnMenuValidation(new EventHandler<Event>() {
 					
@@ -110,12 +112,12 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 							return;
 						}
 						
-						if( runnable != null ) {
+						if( MenuItemImpl.this.runnable != null ) {
 							Platform.runLater(new Runnable() {
 								
 								@Override
 								public void run() {
-									runnable.run();
+									MenuItemImpl.this.runnable.run();
 								}
 							});
 						}
@@ -126,7 +128,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		}
 		
 		private MenuItem internalCreateWidget() {
-			switch (type) {
+			switch (this.type) {
 			case CHECK:
 				return new CheckMenuItem();
 			case RADIO:
@@ -167,7 +169,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 			if( uri == null ) {
 				getWidget().setGraphic(null);
 			} else {
-				getWidget().setGraphic(graphicsLoader.getGraphicsNode(URI.createURI(uri)));
+				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(URI.createURI(uri)));
 			}
 		}
 
@@ -195,7 +197,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 			if( sequence.getKeyStrokes().length == 1 ) {
 				KeyStroke k = sequence.getKeyStrokes()[0];
 				
-				getWidget().setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(Character.toUpperCase((char) k.getKeyCode())+""),
+				getWidget().setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(Character.toUpperCase((char) k.getKeyCode())+""), //$NON-NLS-1$
 						k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
 						k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
 						k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
@@ -208,7 +210,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		}
 		
 		private void updateEnabledState() {
-			getWidget().setDisable(!(handled && enabled));
+			getWidget().setDisable(!(this.handled && this.enabled));
 		}
 	}
 }
