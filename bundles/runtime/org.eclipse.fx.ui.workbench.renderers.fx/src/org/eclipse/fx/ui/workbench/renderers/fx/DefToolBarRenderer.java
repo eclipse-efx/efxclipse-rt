@@ -27,7 +27,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
-
+/**
+ * default renderer for {@link MToolBar}
+ */
 public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 
 	@Override
@@ -35,7 +37,7 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 		return WToolBarImpl.class;
 	}
 
-	public static class WToolBarImpl extends WLayoutedWidgetImpl<ToolBar, ToolBar, MToolBar> implements WToolBar<ToolBar> {
+	static class WToolBarImpl extends WLayoutedWidgetImpl<ToolBar, ToolBar, MToolBar> implements WToolBar<ToolBar> {
 		private ToggleGroup group;
 		private ToolBar toolbar;
 		private InvalidationListener orientationSync;
