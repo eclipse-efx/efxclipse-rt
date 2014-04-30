@@ -16,7 +16,6 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
@@ -33,65 +32,59 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WArea;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
-
+/**
+ * default renderer for {@link MArea}
+ */
 public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 	@Override
 	protected Class<? extends WArea<SplitPane>> getWidgetClass(MArea area) {
 		return WAreaImpl.class;
 	}
 	
-	public static class WAreaImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MArea> implements WArea<SplitPane> {
+	static class WAreaImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MArea> implements WArea<SplitPane> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		private ChangeListener<Number> listener = new ChangeListener<Number>() {
-			private boolean queueing;
+			boolean queueing;
 			
+			@SuppressWarnings("unqualified-field-access")
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				if( ! queueing ) {
-					queueing = true;
-					Platform.runLater(new Runnable() {
-						
-						@Override
-						public void run() {
-							recalcWeight();
-							queueing = false;
-						}
-					});
+				if( ! this.queueing ) {
+					this.queueing = true;
+					Platform.runLater(() -> {recalcWeight(); queueing = false;});
 				}
 			}
 		};
 		
-		private void recalcWeight() {
+		void recalcWeight() {
 			double prev = 0;
 			int idx = 0;
 			for( double d : getWidget().getDividerPositions() ) {
-				items.get(idx++).getDomElement().setContainerData((d - prev)*10+"");
+				this.items.get(idx++).getDomElement().setContainerData((d - prev)*10+""); //$NON-NLS-1$
 				prev = d;
 			}
-			items.get(items.size()-1).getDomElement().setContainerData((1.0-prev)*10+"");
+			this.items.get(this.items.size()-1).getDomElement().setContainerData((1.0-prev)*10+""); //$NON-NLS-1$
 		}
 		
 		@Override
 		protected void bindProperties(final SplitPane widget) {
 			super.bindProperties(widget);
-			widget.getDividers().addListener(new ListChangeListener<Divider>() {
-
-				@Override
-				public void onChanged(javafx.collections.ListChangeListener.Change<? extends Divider> c) {
-					while( c.next() ) {
-						for( Divider d : c.getAddedSubList() ) {
-							d.positionProperty().addListener(listener);
-						}
-						
-						for( Divider d : c.getRemoved() ) {
-							d.positionProperty().removeListener(listener);	
-						}
-					}
-				}
-			});
+			widget.getDividers().addListener(this::handleDeviderChange);
 			for( Divider d : widget.getDividers() ) {
-				d.positionProperty().addListener(listener);
+				d.positionProperty().addListener(this.listener);
+			}
+		}
+		
+		private void handleDeviderChange(javafx.collections.ListChangeListener.Change<? extends Divider> c) {
+			while( c.next() ) {
+				for( Divider d : c.getAddedSubList() ) {
+					d.positionProperty().addListener(this.listener);
+				}
+				
+				for( Divider d : c.getRemoved() ) {
+					d.positionProperty().removeListener(this.listener);	
+				}
 			}
 		}
 		
@@ -115,7 +108,7 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 		public void addItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			SplitPane p = getWidget();
 			p.getItems().add((Node) widget.getStaticLayoutNode());
-			items.add(widget);
+			this.items.add(widget);
 			updateDividers();
 		}
 		
@@ -127,7 +120,7 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 				l.add((Node) i.getStaticLayoutNode());
 			}
 			p.getItems().addAll(index, l);
-			items.addAll(index, list);
+			this.items.addAll(index, list);
 			updateDividers();
 		}
 		
@@ -139,7 +132,7 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 				l.add((Node) i.getStaticLayoutNode());
 			}
 			p.getItems().addAll(l);
-			items.addAll(list);
+			this.items.addAll(list);
 			updateDividers();
 		}
 		
@@ -147,30 +140,30 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 		public void removeItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			SplitPane p = getWidget();
 			p.getItems().remove(widget.getStaticLayoutNode());
-			items.remove(widget);
+			this.items.remove(widget);
 			updateDividers();
 		}
 		
 		@Override
 		protected void doCleanup() {
 			super.doCleanup();
-			items.clear();
+			this.items.clear();
 		}
 		
 		private void updateDividers() {
-			if( items.size() <= 1 ) {
+			if( this.items.size() <= 1 ) {
 				return;
 			}
 			
 			double total = 0;
 			
-			for( WLayoutedWidget<MPartSashContainerElement> w : items ) {
+			for( WLayoutedWidget<MPartSashContainerElement> w : this.items ) {
 				total += w.getWeight();
 			}
 			
-			double[] deviders = new double[items.size() - 1];
-			for (int i = 0; i < items.size() - 1; i++) {
-				deviders[i] = (i == 0 ? 0 : deviders[i - 1]) + (items.get(i).getWeight() / total);
+			double[] deviders = new double[this.items.size() - 1];
+			for (int i = 0; i < this.items.size() - 1; i++) {
+				deviders[i] = (i == 0 ? 0 : deviders[i - 1]) + (this.items.get(i).getWeight() / total);
 			}
 			
 			getWidget().setDividerPositions(deviders);
