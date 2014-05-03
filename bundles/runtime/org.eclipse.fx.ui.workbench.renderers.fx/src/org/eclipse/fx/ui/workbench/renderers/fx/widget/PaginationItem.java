@@ -30,6 +30,6 @@ public class PaginationItem {
 	 * @return the current content
 	 */
 	public Node getContent() {
-		return content;
+		return this.content;
 	}
 }
