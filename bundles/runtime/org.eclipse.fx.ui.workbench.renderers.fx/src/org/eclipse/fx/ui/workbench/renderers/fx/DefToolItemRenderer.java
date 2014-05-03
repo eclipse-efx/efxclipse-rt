@@ -173,7 +173,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 			}
 			return b;
 		}
-		
+
 		void handleOnAction(ActionEvent e) {
 			if (this.onActionCallback != null) {
 				this.onActionCallback.run();

@@ -21,8 +21,7 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 
 	@Override
-	protected Class<? extends WCompositePart<Node>> getWidgetClass(
-			MCompositePart element) {
+	protected Class<? extends WCompositePart<Node>> getWidgetClass(MCompositePart element) {
 		return CompositePartWidgetImpl.class;
 	}
 
@@ -39,6 +38,6 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 			// TODO Auto-generated method stub
 			return null;
 		}
-		
+
 	}
 }

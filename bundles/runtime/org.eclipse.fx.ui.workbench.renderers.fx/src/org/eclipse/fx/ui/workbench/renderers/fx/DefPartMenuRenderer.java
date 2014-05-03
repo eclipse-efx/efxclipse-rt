@@ -38,7 +38,7 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
  */
 public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 	private static final String CSS_CLASS_VIEW_MENU_BUTTON_ICON = "view-menu-button-icon"; //$NON-NLS-1$
-	
+
 	@Override
 	protected Class<? extends WMenu<Control>> getWidgetClass(MMenu element) {
 		return MenuImpl.class;
@@ -49,7 +49,7 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 		private ToggleGroup group;
 		Runnable showingCallback;
 		Runnable hidingCallback;
-		
+
 		@Override
 		public void addStyleClasses(List<String> classnames) {
 			getWidget().getStyleClass().addAll(classnames);
@@ -64,7 +64,7 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 		public void setStyleId(String id) {
 			getWidget().setId(id);
 		}
-		
+
 		@Override
 		protected void setUserData(WWidgetImpl<Control, MMenu> widget) {
 			getWidget().setUserData(widget);
@@ -72,27 +72,27 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 
 		@Override
 		public void addElement(WMenuElement<MMenuElement> widget) {
-			
-			if( widget.getWidget() instanceof Toggle ) {
-				if( this.group == null ) {
+
+			if (widget.getWidget() instanceof Toggle) {
+				if (this.group == null) {
 					this.group = new ToggleGroup();
 				}
 				// see http://javafx-jira.kenai.com/browse/RT-24256
-//				group.getToggles().add((Toggle) widget.getWidget());
-				((Toggle)widget.getWidget()).setToggleGroup(this.group);
+				// group.getToggles().add((Toggle) widget.getWidget());
+				((Toggle) widget.getWidget()).setToggleGroup(this.group);
 			}
 			getWidget().getContextMenu().getItems().add((MenuItem) widget.getWidget());
 		}
 
 		@Override
 		public void addElement(int idx, WMenuElement<MMenuElement> widget) {
-			if( widget.getWidget() instanceof Toggle ) {
-				if( this.group == null ) {
+			if (widget.getWidget() instanceof Toggle) {
+				if (this.group == null) {
 					this.group = new ToggleGroup();
 				}
 				// see http://javafx-jira.kenai.com/browse/RT-24256
-//				group.getToggles().add((Toggle) widget.getWidget());
-				((Toggle)widget.getWidget()).setToggleGroup(this.group);
+				// group.getToggles().add((Toggle) widget.getWidget());
+				((Toggle) widget.getWidget()).setToggleGroup(this.group);
 			}
 			getWidget().getContextMenu().getItems().add(idx, (MenuItem) widget.getWidget());
 		}
@@ -104,8 +104,8 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 
 		@Override
 		public void removeElement(WMenuElement<MMenuElement> widget) {
-			if( widget.getWidget() instanceof Toggle ) {
-				((Toggle)widget.getWidget()).setToggleGroup(null);
+			if (widget.getWidget() instanceof Toggle) {
+				((Toggle) widget.getWidget()).setToggleGroup(null);
 			}
 			getWidget().getContextMenu().getItems().remove(widget.getWidget());
 		}
@@ -127,10 +127,10 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 			});
 			this.menu = new ContextMenu();
 			this.menu.setOnShowing(new EventHandler<WindowEvent>() {
-				
+
 				@Override
 				public void handle(WindowEvent event) {
-					if( MenuImpl.this.showingCallback != null ) {
+					if (MenuImpl.this.showingCallback != null) {
 						MenuImpl.this.showingCallback.run();
 					}
 				}
@@ -138,7 +138,7 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 			this.menu.setOnHiding(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent arg0) {
-					if (MenuImpl.this.hidingCallback!=null) {
+					if (MenuImpl.this.hidingCallback != null) {
 						MenuImpl.this.hidingCallback.run();
 					}
 				}
@@ -150,6 +150,6 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 		@Override
 		public void setHidingCallback(Runnable hidingCallback) {
 			this.hidingCallback = hidingCallback;
-		}		
+		}
 	}
 }

@@ -28,41 +28,39 @@ import javafx.scene.layout.StackPane;
  */
 public class StyleableMinMaxGroup extends MinMaxGroup {
 	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
-	
-	static final CssMetaData<StyleableMinMaxGroup,String> MAXIMIZE_GRAPHIC = 
-            new CssMetaData<StyleableMinMaxGroup,String>("-fx-graphic", //$NON-NLS-1$
-                StringConverter.INSTANCE) {
 
-            @Override
-            public boolean isSettable(StyleableMinMaxGroup n) {
-                // Note that we care about the graphic, not imageUrl
-                return n.maximizeGraphic == null || !n.maximizeGraphic.isBound();
-            }
+	static final CssMetaData<StyleableMinMaxGroup, String> MAXIMIZE_GRAPHIC = new CssMetaData<StyleableMinMaxGroup, String>("-fx-graphic", //$NON-NLS-1$
+			StringConverter.INSTANCE) {
 
-			@Override
-            public StyleableProperty<String> getStyleableProperty(StyleableMinMaxGroup n) {
-                return (StyleableProperty<String>)(WritableValue<String>)n.maximizeUrlProperty();
-            }
-        };
-	
+		@Override
+		public boolean isSettable(StyleableMinMaxGroup n) {
+			// Note that we care about the graphic, not imageUrl
+			return n.maximizeGraphic == null || !n.maximizeGraphic.isBound();
+		}
+
+		@Override
+		public StyleableProperty<String> getStyleableProperty(StyleableMinMaxGroup n) {
+			return (StyleableProperty<String>) (WritableValue<String>) n.maximizeUrlProperty();
+		}
+	};
+
 	static {
-		final List<CssMetaData<? extends Styleable, ?>> styleables =
-                new ArrayList<CssMetaData<? extends Styleable, ?>>(StackPane.getClassCssMetaData());
+		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(StackPane.getClassCssMetaData());
 		STYLEABLES = Collections.unmodifiableList(styleables);
 	}
-		
+
 	@Override
 	public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
 		return STYLEABLES;
 	}
-	
+
 	private StringProperty maximizeUrl;
-	
+
 	/**
 	 * @return url to maximize icon property
 	 */
 	public StringProperty maximizeUrlProperty() {
-		if( this.maximizeUrl == null ) {
+		if (this.maximizeUrl == null) {
 			this.maximizeUrl = new StyleableStringProperty() {
 
 				@Override
@@ -79,14 +77,12 @@ public class StyleableMinMaxGroup extends MinMaxGroup {
 				public String getName() {
 					return "maximizeUrl"; //$NON-NLS-1$
 				}
-				
+
 			};
 		}
 		return this.maximizeUrl;
 	}
-	
-	
-	
+
 	static class StringConverter extends StyleConverter<String, String> {
 		final static StringConverter INSTANCE = new StringConverter();
 	}

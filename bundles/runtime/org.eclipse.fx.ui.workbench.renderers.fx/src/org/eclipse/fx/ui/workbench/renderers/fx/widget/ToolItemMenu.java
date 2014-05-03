@@ -39,21 +39,24 @@ public class ToolItemMenu {
 	}
 
 	/**
-	 * @param userData the user data to store
+	 * @param userData
+	 *            the user data to store
 	 */
 	public void setUserData(Object userData) {
 		this.userData = userData;
 	}
 
 	/**
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
 	/**
-	 * @param text the label
+	 * @param text
+	 *            the label
 	 */
 	public void setText(String text) {
 		this.text = text;

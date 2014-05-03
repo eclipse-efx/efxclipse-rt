@@ -31,7 +31,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.ToolItemMenu;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
-
 /**
  * Default renderer for tool item menus
  */
@@ -46,38 +45,38 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 		private SplitMenuButton button;
 		Runnable showingCallback;
 		Runnable hidingCallback;
-		
+
 		@Inject
 		public WMenuImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MMenu domElement) {
-			MToolItem item = (MToolItem) ((EObject)domElement).eContainer();
+			MToolItem item = (MToolItem) ((EObject) domElement).eContainer();
 			@SuppressWarnings("unchecked")
 			WToolItem<SplitMenuButton> w = (WToolItem<SplitMenuButton>) item.getWidget();
 			this.button = (SplitMenuButton) w.getWidget();
 			this.button.showingProperty().addListener(this::handleShowingProperty);
 		}
-		
+
 		void handleShowingProperty(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-			if( newValue.booleanValue() ) {
-				if( this.showingCallback != null ) {
+			if (newValue.booleanValue()) {
+				if (this.showingCallback != null) {
 					this.showingCallback.run();
-				}	
+				}
 			} else {
-				if( this.hidingCallback != null ) {
+				if (this.hidingCallback != null) {
 					this.hidingCallback.run();
 				}
 			}
 		}
-		
+
 		@Override
 		public void addStyleClasses(List<String> classnames) {
 			getWidget().getStyleClass().addAll(classnames);
 		}
-		
+
 		@Override
 		public void addStyleClasses(String... classnames) {
 			getWidget().getStyleClass().addAll(classnames);
 		}
-		
+
 		@Override
 		public void setStyleId(String id) {
 			getWidget().setId(id);
@@ -102,12 +101,12 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 		public void addElement(WMenuElement<MMenuElement> widget) {
 			getWidget().getItems().add((MenuItem) widget.getWidget());
 		}
-		
+
 		@Override
 		public void addElement(int idx, WMenuElement<MMenuElement> widget) {
-			getWidget().getItems().add(idx, (MenuItem) widget.getWidget());			
+			getWidget().getItems().add(idx, (MenuItem) widget.getWidget());
 		}
-		
+
 		@Override
 		public void removeElement(WMenuElement<MMenuElement> widget) {
 			getWidget().getItems().remove(widget.getWidget());
@@ -123,5 +122,5 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 			this.hidingCallback = hidingCallback;
 		}
 	}
-	
+
 }

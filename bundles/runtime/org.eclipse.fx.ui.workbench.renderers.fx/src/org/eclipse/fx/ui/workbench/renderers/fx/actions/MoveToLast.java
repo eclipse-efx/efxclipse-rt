@@ -19,7 +19,8 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
  */
 public class MoveToLast {
 	/**
-	 * @param part the part to move
+	 * @param part
+	 *            the part to move
 	 */
 	@SuppressWarnings("static-method")
 	public void move(MPart part) {

@@ -51,7 +51,7 @@ public class DefMenuSeparatorRenderer extends BaseMenuSeparatorRenderer<Separato
 			SeparatorMenuItem item = new SeparatorMenuItem();
 			return item;
 		}
-		
+
 		@Override
 		protected void setUserData(WWidgetImpl<SeparatorMenuItem, MMenuSeparator> widget) {
 			getWidget().setUserData(widget);

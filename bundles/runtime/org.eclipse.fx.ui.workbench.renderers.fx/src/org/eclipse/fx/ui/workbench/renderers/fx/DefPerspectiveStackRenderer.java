@@ -34,44 +34,44 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 /**
  * default renderer for {@link MPerspectiveStack}
  */
-public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<BorderPane,PerspectiveStackItem,Node> {
+public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<BorderPane, PerspectiveStackItem, Node> {
 
 	@Override
-	protected Class<? extends WPerspectiveStack<BorderPane,PerspectiveStackItem,Node>> getWidgetClass(MPerspectiveStack stack) {
+	protected Class<? extends WPerspectiveStack<BorderPane, PerspectiveStackItem, Node>> getWidgetClass(MPerspectiveStack stack) {
 		return PerspectiveStackImpl.class;
 	}
-	
+
 	static class PerspectiveStackItemImpl implements WStackItem<PerspectiveStackItem, Node> {
 		private PerspectiveStackItem item;
 		private MPerspective domElement;
 		WCallback<WStackItem<PerspectiveStackItem, Node>, Node> initCallback;
-		
+
 		@PostConstruct
 		void init() {
 			getWidget();
 		}
-		
+
 		protected PerspectiveStackItem getWidget() {
-			if( this.item == null ) {
+			if (this.item == null) {
 				this.item = createWidget();
 			}
 			return this.item;
 		}
-		
+
 		protected PerspectiveStackItem createWidget() {
 			final PerspectiveStackItem t = new PerspectiveStackItem();
 			t.setInitRunnable(new Runnable() {
-				
+
 				@Override
 				public void run() {
-					if( PerspectiveStackItemImpl.this.initCallback != null ) {
+					if (PerspectiveStackItemImpl.this.initCallback != null) {
 						t.setContent(PerspectiveStackItemImpl.this.initCallback.call(PerspectiveStackItemImpl.this));
 					}
 				}
 			});
 			return t;
 		}
-		
+
 		@Override
 		public PerspectiveStackItem getNativeItem() {
 			return this.item;
@@ -96,13 +96,13 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		public void setOnCloseCallback(WCallback<WStackItem<PerspectiveStackItem, Node>, Boolean> callback) {
 			// empty
 		}
-		
+
 	}
-	
+
 	static class PerspectiveStackImpl extends WLayoutedWidgetImpl<BorderPane, BorderPane, MPerspectiveStack> implements WPerspectiveStack<BorderPane, PerspectiveStackItem, Node> {
-		private List<WStackItem<PerspectiveStackItem, Node>> items = new ArrayList<WStackItem<PerspectiveStackItem,Node>>();
+		private List<WStackItem<PerspectiveStackItem, Node>> items = new ArrayList<WStackItem<PerspectiveStackItem, Node>>();
 		private int currentIndex;
-		
+
 		@Inject
 		@Optional
 		private PerspectiveTransitionService<BorderPane, Node> perspectiveSwitch;
@@ -131,15 +131,15 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		public void selectItem(int idx) {
 			WStackItem<PerspectiveStackItem, Node> item = this.items.get(idx);
 			Node node = item.getNativeItem().getContent();
-			if( getWidget().getCenter() != null && this.perspectiveSwitch != null ) {
+			if (getWidget().getCenter() != null && this.perspectiveSwitch != null) {
 				AnimationDelegate<BorderPane, Node> a = this.perspectiveSwitch.getDelegate(this.items.get(this.currentIndex).getDomElement(), item.getDomElement());
-				if( a == null ) {
+				if (a == null) {
 					getWidget().setCenter(node);
 				} else {
-					a.animate(getWidget(), node);	
+					a.animate(getWidget(), node);
 				}
 			} else {
-				getWidget().setCenter(node);	
+				getWidget().setCenter(node);
 			}
 			this.currentIndex = idx;
 		}
@@ -166,7 +166,7 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 
 		@Override
 		public void setKeySelectedItemCallback(WCallback<WStackItem<PerspectiveStackItem, Node>, Void> selectedItemCallback) {
-			// empty			
+			// empty
 		}
 
 		@Override

@@ -19,10 +19,10 @@ import java.text.MessageFormat;
 public class Messages {
 	public String DefWindowRenderer_promptToSave_Title;
 	public String DefWindowRenderer_promptToSave_Message;
-	
+
 	public String DefWindowRenderer_MultiMessageDialog_Title;
 	public String DefWindowRenderer_MultiMessageDialog_Message;
-	
+
 	public String DefWindowRenderer_promptToSave_Message(String partName) {
 		return MessageFormat.format(this.DefWindowRenderer_promptToSave_Message, partName);
 	}

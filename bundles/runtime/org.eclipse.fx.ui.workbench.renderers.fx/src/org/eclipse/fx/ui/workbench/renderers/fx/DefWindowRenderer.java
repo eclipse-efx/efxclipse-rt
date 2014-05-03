@@ -202,7 +202,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		WCallback<WWindow<Stage>, Boolean> onCloseCallback;
 
 		private Boolean maximizedShell;
-		
+
 		List<WWidget<?>> lastActivationTree = new ArrayList<WWidget<?>>();
 		List<WWidget<?>> queuedTree = new ArrayList<WWidget<?>>();
 
@@ -379,7 +379,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			return this.stage;
 		}
-		
+
 		private void handleOnCloseRequest(WindowEvent event) {
 			if (this.onCloseCallback != null) {
 				if (!Boolean.TRUE.equals(this.onCloseCallback.call(this))) {
@@ -387,11 +387,11 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				}
 			}
 		}
-		
+
 		private void handleFullscreen(ObservableValue<? extends Boolean> obs, Boolean oldValue, Boolean newValue) {
 			this.mWindow.getPersistedState().put(BaseWindowRenderer.KEY_FULL_SCREEN, newValue.toString());
 		}
-		
+
 		private void handledFocus(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 			if (newValue.booleanValue()) {
 				if (this.stage.getScene() != null) {
@@ -401,7 +401,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				activate();
 			}
 		}
-		
+
 		private void handleFocusOwner(ObservableValue<? extends Node> observable, Node oldValue, Node _newValue) {
 			Node newValue = _newValue;
 			WWindowImpl.this.modelContext.set(Constants.WINDOW_FOCUS_NODE, newValue);
@@ -823,9 +823,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			{
 				TableColumn<Row, Boolean> column = new TableColumn<Row, Boolean>();
 				column.setCellFactory(this::createCheckboxCell);
-				column.setOnEditCommit(
-						(event) -> event.getRowValue().selected.set(event.getNewValue().booleanValue())
-				);
+				column.setOnEditCommit((event) -> event.getRowValue().selected.set(event.getNewValue().booleanValue()));
 				column.setCellValueFactory(new PropertyValueFactory<Row, Boolean>("selected")); //$NON-NLS-1$
 				this.tabView.getColumns().add(column);
 			}
@@ -847,7 +845,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			return p;
 		}
-		
+
 		TableCell<Row, Boolean> createCheckboxCell(final TableColumn<Row, Boolean> param) {
 			final CheckBox checkBox = new CheckBox();
 			final TableCell<Row, Boolean> cell = new TableCell<Row, Boolean>() {
@@ -877,7 +875,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			cell.setGraphic(checkBox);
 			return cell;
 		}
-		
+
 		TableCell<Row, MPart> createTextCell(TableColumn<Row, MPart> param) {
 			return new TableCell<DefWindowRenderer.Row, MPart>() {
 				@Override
@@ -944,13 +942,13 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			setOnMousePressed(this::handleMousePressed);
 			setOnMouseDragged(this::handleMouseDragged);
 		}
-		
+
 		void handleMousePressed(MouseEvent e) {
 			this.dragOffsetX = (this.stage.getX() + this.stage.getWidth()) - e.getScreenX();
 			this.dragOffsetY = (this.stage.getY() + this.stage.getHeight()) - e.getScreenY();
 			e.consume();
 		}
-		
+
 		void handleMouseDragged(MouseEvent e) {
 			ObservableList<Screen> screens = Screen.getScreensForRectangle(this.stage.getX(), this.stage.getY(), 1, 1);
 			final Screen screen;

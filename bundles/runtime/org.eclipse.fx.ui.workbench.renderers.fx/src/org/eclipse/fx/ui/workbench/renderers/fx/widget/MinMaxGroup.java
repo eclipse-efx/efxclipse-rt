@@ -38,7 +38,8 @@ public class MinMaxGroup extends HBox {
 	 */
 	protected ObjectProperty<Node> restoreGraphic = new SimpleObjectProperty<>(this, "restoreGraphic"); //$NON-NLS-1$
 
-//	private static Logger LOGGER = LoggerCreator.createLogger(MinMaxGroup.class);
+	// private static Logger LOGGER =
+	// LoggerCreator.createLogger(MinMaxGroup.class);
 
 	/**
 	 * 

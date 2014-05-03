@@ -43,13 +43,13 @@ public class PartPopupMenuServiceImpl implements PopupMenuService<Control> {
 
 	@SuppressWarnings("unchecked")
 	private static ContextMenu registerMenu(Control widget, MPopupMenu menu, MPart part) {
-		if( menu.getWidget() != null ) {
-			WPopupMenu<ContextMenu> c = (WPopupMenu<ContextMenu>) menu.getWidget(); 
+		if (menu.getWidget() != null) {
+			WPopupMenu<ContextMenu> c = (WPopupMenu<ContextMenu>) menu.getWidget();
 			return (ContextMenu) c.getWidget();
 		}
-		
+
 		IPresentationEngine engine = part.getContext().get(IPresentationEngine.class);
-		return (ContextMenu) ( (WPopupMenu<ContextMenu>) engine.createGui(menu)).getWidget();
+		return (ContextMenu) ((WPopupMenu<ContextMenu>) engine.createGui(menu)).getWidget();
 	}
 
 }

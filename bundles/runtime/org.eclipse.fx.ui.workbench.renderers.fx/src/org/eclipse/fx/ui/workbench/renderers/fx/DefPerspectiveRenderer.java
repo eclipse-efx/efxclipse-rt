@@ -49,7 +49,7 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 		@Override
 		public void addItems(List<WLayoutedWidget<MPartSashContainerElement>> list) {
 			List<Node> l = new ArrayList<Node>(list.size());
-			for( WLayoutedWidget<MPartSashContainerElement> w : list ) {
+			for (WLayoutedWidget<MPartSashContainerElement> w : list) {
 				l.add((Node) w.getStaticLayoutNode());
 			}
 			getWidget().getChildren().addAll(l);
@@ -64,6 +64,6 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 		public void removeItem(WLayoutedWidget<MUIElement> widget) {
 			getWidget().getChildren().remove(widget.getStaticLayoutNode());
 		}
-		
+
 	}
 }

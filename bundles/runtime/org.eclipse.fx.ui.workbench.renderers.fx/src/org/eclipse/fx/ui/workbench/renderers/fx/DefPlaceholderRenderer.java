@@ -29,15 +29,15 @@ public class DefPlaceholderRenderer extends BasePlaceholderRenderer<FillLayoutPa
 	protected Class<? extends WPlaceholderWidget> getWidgetClass(MPlaceholder placeholder) {
 		return PlaceholderWidget.class;
 	}
-	
+
 	static class PlaceholderWidget extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPlaceholder> implements WPlaceholderWidget {
 
 		@Override
 		public void setContent(WLayoutedWidget<MUIElement> contentWidget) {
-			if( contentWidget == null ) {
+			if (contentWidget == null) {
 				getWidget().getChildren().clear();
 			} else {
-				getWidget().getChildren().setAll((Node)contentWidget.getStaticLayoutNode());
+				getWidget().getChildren().setAll((Node) contentWidget.getStaticLayoutNode());
 			}
 		}
 
@@ -51,6 +51,6 @@ public class DefPlaceholderRenderer extends BasePlaceholderRenderer<FillLayoutPa
 			FillLayoutPane pane = new FillLayoutPane();
 			return pane;
 		}
-		
+
 	}
 }

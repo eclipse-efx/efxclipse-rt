@@ -30,20 +30,20 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
  */
 public class DefMenuBarRenderer extends BaseMenuBarRenderer<MenuBar> {
 	private static final String KEY_NATIVE_MENUBAR = "fx.menubar.native"; //$NON-NLS-1$
-	
+
 	@Override
 	protected Class<? extends WMenuBar<MenuBar>> getWidgetClass(MMenu menu) {
 		return WMenuBarImpl.class;
 	}
-	
+
 	static class WMenuBarImpl extends WLayoutedWidgetImpl<MenuBar, MenuBar, MMenu> implements WMenuBar<MenuBar> {
 		private boolean nativeMenu;
-		
+
 		@Inject
 		public WMenuBarImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MMenu menu) {
 			this.nativeMenu = menu.getPersistedState().get(KEY_NATIVE_MENUBAR) != null ? Boolean.parseBoolean(menu.getPersistedState().get(KEY_NATIVE_MENUBAR)) : false;
 		}
-		
+
 		@Override
 		protected MenuBar createWidget() {
 			MenuBar b = new MenuBar();

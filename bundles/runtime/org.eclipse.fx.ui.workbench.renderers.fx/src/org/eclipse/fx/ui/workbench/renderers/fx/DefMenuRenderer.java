@@ -44,25 +44,25 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		Runnable showingCallback;
 		Runnable hidingCallback;
 		MenuItem item;
-		
+
 		@Override
 		protected Menu createWidget() {
 			final Menu m = new Menu();
 			this.item = new MenuItem("<empty>"); //$NON-NLS-1$
-			this.item.setDisable(true); 
+			this.item.setDisable(true);
 			m.getItems().add(this.item);
 			m.setMnemonicParsing(true);
 			m.setOnShowing(new EventHandler<Event>() {
-				
+
 				@Override
 				public void handle(Event event) {
-					//TODO Work around for JIRA 24505
-					if( ! m.isShowing() ) {
-						if( MenuImpl.this.showingCallback != null ) {
+					// TODO Work around for JIRA 24505
+					if (!m.isShowing()) {
+						if (MenuImpl.this.showingCallback != null) {
 							MenuImpl.this.showingCallback.run();
-						}	
+						}
 					}
-					if(getWidget().getItems().size() > 1) {
+					if (getWidget().getItems().size() > 1) {
 						getWidget().getItems().remove(MenuImpl.this.item);
 					}
 				}
@@ -71,9 +71,10 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 
 				@Override
 				public void handle(Event arg0) {
-					if (MenuImpl.this.hidingCallback!=null) MenuImpl.this.hidingCallback.run();
-					
-					if(getWidget().getItems().isEmpty()) {
+					if (MenuImpl.this.hidingCallback != null)
+						MenuImpl.this.hidingCallback.run();
+
+					if (getWidget().getItems().isEmpty()) {
 						getWidget().getItems().add(MenuImpl.this.item);
 					}
 				}
@@ -85,7 +86,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		public void setShowingCallback(Runnable showingCallback) {
 			this.showingCallback = showingCallback;
 		}
-		
+
 		@Override
 		public void addStyleClasses(List<String> classnames) {
 			getWidget().getStyleClass().addAll(classnames);
@@ -100,57 +101,57 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		public void setStyleId(String id) {
 			getWidget().setId(id);
 		}
-		
+
 		@Inject
-		public void setLabel(@Named(ATTRIBUTE_localizedLabel)String label) {
+		public void setLabel(@Named(ATTRIBUTE_localizedLabel) String label) {
 			getWidget().setText(label);
 		}
-		
+
 		@Override
 		public void addElement(WMenuElement<MMenuElement> widget) {
-			if(getWidget().getItems().size()==1) {
+			if (getWidget().getItems().size() == 1) {
 				getWidget().getItems().remove(this.item);
 			}
-			
-			if( widget.getWidget() instanceof Toggle ) {
-				if( this.group == null ) {
+
+			if (widget.getWidget() instanceof Toggle) {
+				if (this.group == null) {
 					this.group = new ToggleGroup();
 				}
 				// see http://javafx-jira.kenai.com/browse/RT-24256
-//				group.getToggles().add((Toggle) widget.getWidget());
-				((Toggle)widget.getWidget()).setToggleGroup(this.group);
+				// group.getToggles().add((Toggle) widget.getWidget());
+				((Toggle) widget.getWidget()).setToggleGroup(this.group);
 			}
 			getWidget().getItems().add((MenuItem) widget.getWidget());
 		}
-		
+
 		@Override
 		public void addElement(int idx, WMenuElement<MMenuElement> widget) {
-			if(getWidget().getItems().size()==1) {
+			if (getWidget().getItems().size() == 1) {
 				getWidget().getItems().remove(this.item);
 			}
-			
-			if( widget.getWidget() instanceof Toggle ) {
-				if( this.group == null ) {
+
+			if (widget.getWidget() instanceof Toggle) {
+				if (this.group == null) {
 					this.group = new ToggleGroup();
 				}
 				// see http://javafx-jira.kenai.com/browse/RT-24256
-//				group.getToggles().add((Toggle) widget.getWidget());
-				((Toggle)widget.getWidget()).setToggleGroup(this.group);
+				// group.getToggles().add((Toggle) widget.getWidget());
+				((Toggle) widget.getWidget()).setToggleGroup(this.group);
 			}
 			getWidget().getItems().add(idx, (MenuItem) widget.getWidget());
 		}
-		
+
 		@Override
 		public void removeElement(WMenuElement<MMenuElement> widget) {
-			if( widget.getWidget() instanceof Toggle ) {
-				((Toggle)widget.getWidget()).setToggleGroup(null);
+			if (widget.getWidget() instanceof Toggle) {
+				((Toggle) widget.getWidget()).setToggleGroup(null);
 			}
 			getWidget().getItems().remove(widget.getWidget());
-			if( getWidget().getItems().isEmpty() ) {
+			if (getWidget().getItems().isEmpty()) {
 				getWidget().getItems().add(this.item);
 			}
 		}
-		
+
 		@Override
 		protected void setUserData(WWidgetImpl<Menu, MMenu> widget) {
 			getWidget().setUserData(widget);
@@ -158,7 +159,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 
 		@Override
 		public void setHidingCallback(Runnable hidingCallback) {
-			this.hidingCallback=hidingCallback;
+			this.hidingCallback = hidingCallback;
 		}
 	}
 }

@@ -53,25 +53,25 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		Runnable runnable;
 		private boolean handled = true;
 		private boolean enabled = true;
-		
+
 		@Inject
 		GraphicsLoader graphicsLoader;
-		
+
 		@Inject
 		public MenuItemImpl(@Named("type") ItemType type) {
 			this.type = type;
 		}
-		
+
 		@Override
 		protected void bindProperties(MenuItem widget) {
 			super.bindProperties(widget);
-			if( widget instanceof CheckMenuItem ) {
+			if (widget instanceof CheckMenuItem) {
 				bindProperty(UIEvents.Item.SELECTED, ((CheckMenuItem) widget).selectedProperty());
-			} else if( widget instanceof RadioMenuItem ) {
+			} else if (widget instanceof RadioMenuItem) {
 				bindProperty(UIEvents.Item.SELECTED, ((RadioMenuItem) widget).selectedProperty());
 			}
 		}
-		
+
 		@Override
 		public void addStyleClasses(List<String> classnames) {
 			getWidget().getStyleClass().addAll(classnames);
@@ -90,31 +90,31 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		@Override
 		protected MenuItem createWidget() {
 			final MenuItem item = internalCreateWidget();
-			if( item != null ) {
+			if (item != null) {
 				item.setMnemonicParsing(true);
 				final AtomicBoolean skip = new AtomicBoolean(false);
 				item.setOnMenuValidation(new EventHandler<Event>() {
-					
+
 					@Override
 					public void handle(Event event) {
-						if( ! item.isDisable() ) {
+						if (!item.isDisable()) {
 							skip.set(true);
 						}
 					}
 				});
 				item.setOnAction(new EventHandler<ActionEvent>() {
-					
+
 					@Override
 					public void handle(ActionEvent event) {
 						// Always skip when called through a keyevent
-						if( skip.get() ) {
+						if (skip.get()) {
 							skip.set(false);
 							return;
 						}
-						
-						if( MenuItemImpl.this.runnable != null ) {
+
+						if (MenuItemImpl.this.runnable != null) {
 							Platform.runLater(new Runnable() {
-								
+
 								@Override
 								public void run() {
 									MenuItemImpl.this.runnable.run();
@@ -126,7 +126,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 			}
 			return item;
 		}
-		
+
 		private MenuItem internalCreateWidget() {
 			switch (this.type) {
 			case CHECK:
@@ -137,36 +137,36 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 				return new MenuItem();
 			}
 		}
-		
+
 		@Inject
 		public void setLabel(@Named(ATTRIBUTE_localizedLabel) String label) {
 			getWidget().setText(label);
 		}
-		
+
 		@Inject
 		public void setSelected(@Named(UIEvents.Item.SELECTED) boolean selected) {
-			if( getWidget() instanceof CheckMenuItem ) {
+			if (getWidget() instanceof CheckMenuItem) {
 				CheckMenuItem c = (CheckMenuItem) getWidget();
-				if( c.isSelected() != selected ) {
+				if (c.isSelected() != selected) {
 					c.setSelected(selected);
 				}
-			} else if( getWidget() instanceof RadioMenuItem ) {
+			} else if (getWidget() instanceof RadioMenuItem) {
 				RadioMenuItem r = (RadioMenuItem) getWidget();
-				if( r.isSelected() != selected ) {
+				if (r.isSelected() != selected) {
 					r.setSelected(selected);
 				}
 			}
 		}
-		
+
 		@Inject
 		public void setEnabled(@Named(UIEvents.Item.ENABLED) boolean enabled) {
 			this.enabled = enabled;
 			updateEnabledState();
 		}
-		
+
 		@Inject
 		public void setIconURI(@Named(UIEvents.UILabel.ICONURI) String uri) {
-			if( uri == null ) {
+			if (uri == null) {
 				getWidget().setGraphic(null);
 			} else {
 				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(URI.createURI(uri)));
@@ -182,33 +182,28 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		public void setOnActionCallback(Runnable runnable) {
 			this.runnable = runnable;
 		}
-		
+
 		@Override
 		public void setHandled(boolean handled) {
-			if( this.handled != handled ) {
+			if (this.handled != handled) {
 				this.handled = handled;
-				updateEnabledState();	
+				updateEnabledState();
 			}
 		}
-		
+
 		@Override
 		public void setAccelerator(KeySequence sequence) {
-			
-			if( sequence.getKeyStrokes().length == 1 ) {
+
+			if (sequence.getKeyStrokes().length == 1) {
 				KeyStroke k = sequence.getKeyStrokes()[0];
-				
-				getWidget().setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(Character.toUpperCase((char) k.getKeyCode())+""), //$NON-NLS-1$
-						k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
-						k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
-						k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
-						k.hasCommandModifier() ? ModifierValue.DOWN : ModifierValue.ANY,
-						ModifierValue.ANY				
-				));
+
+				getWidget().setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(Character.toUpperCase((char) k.getKeyCode()) + ""), //$NON-NLS-1$
+						k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCommandModifier() ? ModifierValue.DOWN : ModifierValue.ANY, ModifierValue.ANY));
 			}
-			
-//			new KeyCharacterCombination
+
+			// new KeyCharacterCombination
 		}
-		
+
 		private void updateEnabledState() {
 			getWidget().setDisable(!(this.handled && this.enabled));
 		}

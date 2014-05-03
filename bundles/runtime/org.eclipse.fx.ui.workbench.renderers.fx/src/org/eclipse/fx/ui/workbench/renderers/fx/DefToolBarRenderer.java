@@ -41,7 +41,7 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 		private ToggleGroup group;
 		private ToolBar toolbar;
 		private InvalidationListener orientationSync;
-		
+
 		@Override
 		protected ToolBar createWidget() {
 			ToolBar b = new ToolBar();
@@ -49,10 +49,10 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 			b.parentProperty().addListener(this.orientationSync);
 			return b;
 		}
-		
+
 		private void syncOrientation(Observable o) {
-			if( getDomElement() != null && ((EObject)getDomElement()).eContainer() instanceof MTrimBar ) {
-				MTrimBar bar = (MTrimBar) ((EObject)getDomElement()).eContainer();
+			if (getDomElement() != null && ((EObject) getDomElement()).eContainer() instanceof MTrimBar) {
+				MTrimBar bar = (MTrimBar) ((EObject) getDomElement()).eContainer();
 				switch (bar.getSide()) {
 				case LEFT:
 				case RIGHT:
@@ -64,11 +64,11 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 				}
 			}
 		}
-		
+
 		@Override
 		protected void doCleanup() {
 			super.doCleanup();
-			if( this.toolbar != null && this.orientationSync != null ) {
+			if (this.toolbar != null && this.orientationSync != null) {
 				this.toolbar.parentProperty().removeListener(this.orientationSync);
 			}
 		}
@@ -80,8 +80,8 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 
 		@Override
 		public void addChild(WWidget<MToolBarElement> itemWidget) {
-			if( itemWidget.getWidget() instanceof Toggle ) {
-				if( this.group == null ) {
+			if (itemWidget.getWidget() instanceof Toggle) {
+				if (this.group == null) {
 					this.group = new ToggleGroup();
 				}
 				this.group.getToggles().add((Toggle) itemWidget.getWidget());
@@ -91,20 +91,20 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 
 		@Override
 		public void addChild(int idx, WWidget<MToolBarElement> widget) {
-			if( widget.getWidget() instanceof Toggle ) {
-				if( this.group == null ) {
+			if (widget.getWidget() instanceof Toggle) {
+				if (this.group == null) {
 					this.group = new ToggleGroup();
 				}
 				this.group.getToggles().add((Toggle) widget.getWidget());
 			}
-			
+
 			getWidget().getItems().add(idx, (Node) widget.getWidget());
 		}
 
 		@Override
 		public void removeChild(WWidget<MToolBarElement> widget) {
-			if( widget.getWidget() instanceof Toggle ) {
-				((Toggle)widget.getWidget()).setToggleGroup(null);
+			if (widget.getWidget() instanceof Toggle) {
+				((Toggle) widget.getWidget()).setToggleGroup(null);
 			}
 			getWidget().getItems().remove((Node) widget.getWidget());
 		}

@@ -40,60 +40,63 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 	protected Class<? extends WArea<SplitPane>> getWidgetClass(MArea area) {
 		return WAreaImpl.class;
 	}
-	
+
 	static class WAreaImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MArea> implements WArea<SplitPane> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		private ChangeListener<Number> listener = new ChangeListener<Number>() {
 			boolean queueing;
-			
+
 			@SuppressWarnings("unqualified-field-access")
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				if( ! this.queueing ) {
+				if (!this.queueing) {
 					this.queueing = true;
-					Platform.runLater(() -> {recalcWeight(); queueing = false;});
+					Platform.runLater(() -> {
+						recalcWeight();
+						queueing = false;
+					});
 				}
 			}
 		};
-		
+
 		void recalcWeight() {
 			double prev = 0;
 			int idx = 0;
-			for( double d : getWidget().getDividerPositions() ) {
-				this.items.get(idx++).getDomElement().setContainerData((d - prev)*10+""); //$NON-NLS-1$
+			for (double d : getWidget().getDividerPositions()) {
+				this.items.get(idx++).getDomElement().setContainerData((d - prev) * 10 + ""); //$NON-NLS-1$
 				prev = d;
 			}
-			this.items.get(this.items.size()-1).getDomElement().setContainerData((1.0-prev)*10+""); //$NON-NLS-1$
+			this.items.get(this.items.size() - 1).getDomElement().setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$
 		}
-		
+
 		@Override
 		protected void bindProperties(final SplitPane widget) {
 			super.bindProperties(widget);
 			widget.getDividers().addListener(this::handleDeviderChange);
-			for( Divider d : widget.getDividers() ) {
+			for (Divider d : widget.getDividers()) {
 				d.positionProperty().addListener(this.listener);
 			}
 		}
-		
+
 		private void handleDeviderChange(javafx.collections.ListChangeListener.Change<? extends Divider> c) {
-			while( c.next() ) {
-				for( Divider d : c.getAddedSubList() ) {
+			while (c.next()) {
+				for (Divider d : c.getAddedSubList()) {
 					d.positionProperty().addListener(this.listener);
 				}
-				
-				for( Divider d : c.getRemoved() ) {
-					d.positionProperty().removeListener(this.listener);	
+
+				for (Divider d : c.getRemoved()) {
+					d.positionProperty().removeListener(this.listener);
 				}
 			}
 		}
-		
+
 		@Override
 		protected SplitPane createWidget() {
 			SplitPane p = new SplitPane();
 			return p;
 		}
-		
+
 		@Inject
 		void setOrientation(@Named(UIEvents.GenericTile.HORIZONTAL) boolean horizontal) {
 			getWidget().setOrientation(horizontal ? Orientation.HORIZONTAL : Orientation.VERTICAL);
@@ -111,31 +114,31 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 			this.items.add(widget);
 			updateDividers();
 		}
-		
+
 		@Override
 		public void addItems(int index, List<WLayoutedWidget<MPartSashContainerElement>> list) {
 			SplitPane p = getWidget();
 			List<Node> l = new ArrayList<Node>();
-			for( WLayoutedWidget<MPartSashContainerElement> i : list ) {
+			for (WLayoutedWidget<MPartSashContainerElement> i : list) {
 				l.add((Node) i.getStaticLayoutNode());
 			}
 			p.getItems().addAll(index, l);
 			this.items.addAll(index, list);
 			updateDividers();
 		}
-		
+
 		@Override
 		public void addItems(List<WLayoutedWidget<MPartSashContainerElement>> list) {
 			SplitPane p = getWidget();
 			List<Node> l = new ArrayList<Node>();
-			for( WLayoutedWidget<MPartSashContainerElement> i : list ) {
+			for (WLayoutedWidget<MPartSashContainerElement> i : list) {
 				l.add((Node) i.getStaticLayoutNode());
 			}
 			p.getItems().addAll(l);
 			this.items.addAll(list);
 			updateDividers();
 		}
-		
+
 		@Override
 		public void removeItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			SplitPane p = getWidget();
@@ -143,32 +146,32 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 			this.items.remove(widget);
 			updateDividers();
 		}
-		
+
 		@Override
 		protected void doCleanup() {
 			super.doCleanup();
 			this.items.clear();
 		}
-		
+
 		private void updateDividers() {
-			if( this.items.size() <= 1 ) {
+			if (this.items.size() <= 1) {
 				return;
 			}
-			
+
 			double total = 0;
-			
-			for( WLayoutedWidget<MPartSashContainerElement> w : this.items ) {
+
+			for (WLayoutedWidget<MPartSashContainerElement> w : this.items) {
 				total += w.getWeight();
 			}
-			
+
 			double[] deviders = new double[this.items.size() - 1];
 			for (int i = 0; i < this.items.size() - 1; i++) {
 				deviders[i] = (i == 0 ? 0 : deviders[i - 1]) + (this.items.get(i).getWeight() / total);
 			}
-			
+
 			getWidget().setDividerPositions(deviders);
 		}
-		
+
 		@Override
 		public int getItemCount() {
 			return getWidget().getItems().size();

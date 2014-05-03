@@ -42,15 +42,16 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
  */
 public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 	private static final String TOOLBAR_MENU_FLOAT_TAG = "Part-ToolBarMenu-Floating"; //$NON-NLS-1$
-//	private static final String TOOLBAR_MENU_COLLAPSIBLE_TAG = "Part-ToolBarMenu-Collapsible";
+	// private static final String TOOLBAR_MENU_COLLAPSIBLE_TAG =
+	// "Part-ToolBarMenu-Collapsible";
 	private static final String TOOLBAR_MENU_BOTTOM_TAG = "Part-ToolBarMenu-Bottom"; //$NON-NLS-1$
 
 	private static final String TOOL_BAR_FULL_SPAN_TAG = "Part-Toolbar-FullSpan"; //$NON-NLS-1$
-	
+
 	private static final String CSS_CLASS_PART_CONTENT = "part-content"; //$NON-NLS-1$
 	private static final String CSS_CLASS_VIEW_TOOLBAR_CONTAINER = "view-toolbar-container"; //$NON-NLS-1$
 	private static final String CSS_CLASS_VIEW_TOOLBAR = "view-toolbar"; //$NON-NLS-1$
-	
+
 	@Override
 	protected Class<? extends WPart<Pane, Node, Node>> getWidgetClass(MPart part) {
 		return PartImpl.class;
@@ -58,36 +59,36 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 
 	@Override
 	protected boolean requiresFocus(WPart<Pane, Node, Node> widget) {
-//		Node n = (Node) widget.getWidget();
-//
-//		do {
-//			if (n.getUserData() == widget) {
-//				return false;
-//			}
-//		} while ((n = n.getParent()) != null);
-		
+		// Node n = (Node) widget.getWidget();
+		//
+		// do {
+		// if (n.getUserData() == widget) {
+		// return false;
+		// }
+		// } while ((n = n.getParent()) != null);
+
 		// By default return true see bug 431391
 		return true;
 	}
-	
+
 	@Override
 	public void focus(MUIElement element) {
 		super.focus(element);
-		if (element.getWidget() instanceof WPart)
-		{
+		if (element.getWidget() instanceof WPart) {
 			@SuppressWarnings("unchecked")
 			WPart<BorderPane, Node, Node> part = ((WPart<BorderPane, Node, Node>) element.getWidget());
-			if (part==null) return;
+			if (part == null)
+				return;
 			Node node = (Node) part.getWidget();
 			node.requestFocus();
 		}
-		
+
 	}
 
 	static class PartImpl extends WLayoutedWidgetImpl<Pane, AnchorPane, MPart> implements WPart<Pane, Node, Node> {
 		@Inject
 		EPartService service;
-		
+
 		@Inject
 		IEclipseContext context;
 
@@ -98,12 +99,12 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		StackPane toolbarGroup;
 		Group menuGroup;
 		private WMenu<Node> viewMenuWidget;
-		
+
 		@Override
 		protected Pane createWidget() {
 			Pane tmp = CustomContainerSupport.createContainerPane(this.logger, this.context);
 			final Pane p = tmp == null ? new BorderPane() : tmp;
-			
+
 			p.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 				@Override
@@ -111,19 +112,18 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					event.consume();
 					MPart domElement = getDomElement();
 					PartImpl.this.service.activate(domElement, true);
-					if (!checkFocusControl() && (domElement.getObject()!=null)) {
-//						ContextInjectionFactory.invoke(domElement.getObject(), Focus.class, domElement.getContext(), null);
-//						if (!checkFocusControl()) {
-//							p.requestFocus();
-//						}
+					if (!checkFocusControl() && (domElement.getObject() != null)) {
+						// ContextInjectionFactory.invoke(domElement.getObject(),
+						// Focus.class, domElement.getContext(), null);
+						// if (!checkFocusControl()) {
+						// p.requestFocus();
+						// }
 						p.requestFocus();
 					}
 				}
 			});
 			return p;
 		}
-		
-		
 
 		boolean checkFocusControl() {
 			Parent check = getWidget();
@@ -153,12 +153,13 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				this.menuGroup = new Group();
 				this.menuGroup.setVisible(false);
 				this.menuGroup.setManaged(false);
-				
+
 				this.expandGroup = new StackPane();
-				//FIXME This should be moved to css
+				// FIXME This should be moved to css
 				this.expandGroup.setStyle("-fx-background-color: gray");
 				this.expandGroup.setOpacity(0.5);
-				Node handler = new HandleGroup();//new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("/icons/format-line-spacing-normal.png")));
+				Node handler = new HandleGroup();// new ImageView(new
+													// Image(getClass().getClassLoader().getResourceAsStream("/icons/format-line-spacing-normal.png")));
 				handler.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 					@Override
@@ -167,18 +168,19 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					}
 				});
 				this.expandGroup.getChildren().add(handler);
-				
-//				expandView = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("/icons/vcs-update-required.png")));
-//				expandView.setManaged(false);
-//				expandView.setVisible(false);
-				
+
+				// expandView = new ImageView(new
+				// Image(getClass().getClassLoader().getResourceAsStream("/icons/vcs-update-required.png")));
+				// expandView.setManaged(false);
+				// expandView.setVisible(false);
+
 				this.contentArea = new AnchorPane() {
 					@Override
 					protected void layoutChildren() {
 						super.layoutChildren();
-						
-						if( PartImpl.this.menuGroup.isVisible() ) {
-							PartImpl.this.menuGroup.relocate(PartImpl.this.contentArea.getWidth()-20,0);
+
+						if (PartImpl.this.menuGroup.isVisible()) {
+							PartImpl.this.menuGroup.relocate(PartImpl.this.contentArea.getWidth() - 20, 0);
 						}
 					}
 				};
@@ -188,11 +190,11 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				AnchorPane.setLeftAnchor(this.dataArea, Double.valueOf(0.0));
 				AnchorPane.setBottomAnchor(this.dataArea, Double.valueOf(0.0));
 				AnchorPane.setRightAnchor(this.dataArea, Double.valueOf(0.0));
-				
-//				AnchorPane.setTopAnchor(expandGroup, 0.0);
-//				AnchorPane.setLeftAnchor(expandGroup, 0.0);
-//				AnchorPane.setRightAnchor(expandGroup, 1.0);
-				
+
+				// AnchorPane.setTopAnchor(expandGroup, 0.0);
+				// AnchorPane.setLeftAnchor(expandGroup, 0.0);
+				// AnchorPane.setRightAnchor(expandGroup, 1.0);
+
 				this.contentArea.getChildren().addAll(this.dataArea, this.menuGroup);
 				Node n = getWidget();
 				if (n != null) {
@@ -209,14 +211,14 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 			if (this.toolbarGroup == null) {
 				// Ensure that everything is initialized!!!
 				getStaticLayoutNode();
-				
+
 				this.toolbarGroup = new StackPane();
-				
+
 				if (getDomElement().getTags().contains(TOOL_BAR_FULL_SPAN_TAG)) {
 					final BorderPane p = new BorderPane();
 					p.setCenter(this.toolbarGroup);
 					p.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
-					if( getDomElement().getTags().contains(TOOLBAR_MENU_FLOAT_TAG) ) {
+					if (getDomElement().getTags().contains(TOOLBAR_MENU_FLOAT_TAG)) {
 						AnchorPane.setLeftAnchor(p, Double.valueOf(0.0));
 						AnchorPane.setRightAnchor(p, Double.valueOf(0.0));
 						AnchorPane.setTopAnchor(p, Double.valueOf(0.0));
@@ -234,8 +236,8 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 						if (getDomElement().getTags().contains(TOOLBAR_MENU_BOTTOM_TAG)) {
 							this.dataArea.setBottom(p);
 						} else {
-							this.dataArea.setTop(p);	
-						}	
+							this.dataArea.setTop(p);
+						}
 					}
 				} else {
 					BorderPane p = new BorderPane();
@@ -244,7 +246,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					if (getDomElement().getTags().contains(TOOLBAR_MENU_BOTTOM_TAG)) {
 						this.dataArea.setBottom(p);
 					} else {
-						this.dataArea.setTop(p);	
+						this.dataArea.setTop(p);
 					}
 				}
 			}
@@ -265,12 +267,12 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 
 					@Override
 					public void handle(MouseEvent event) {
-						if( getDomElement().getTags().contains(TOOLBAR_MENU_FLOAT_TAG) ) {
+						if (getDomElement().getTags().contains(TOOLBAR_MENU_FLOAT_TAG)) {
 							PartImpl.this.toolbarGroup.getParent().setVisible(false);
 						}
 					}
 				});
-				
+
 				n.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR);
 				this.toolbarGroup.getChildren().setAll(n);
 			}
@@ -288,30 +290,30 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				this.menuGroup.getChildren().setAll((Node) widget.getWidget());
 				this.contentArea.requestLayout();
 			}
-			
+
 			this.viewMenuWidget = widget;
 		}
-		
+
 		@Override
 		public WMenu<Node> getMenu() {
 			return this.viewMenuWidget;
 		}
 	}
-	
+
 	static class HandleGroup extends Group {
 		@Override
 		public double minHeight(double width) {
 			return 11;
 		}
-		
+
 		@Override
 		public double maxWidth(double height) {
 			return 20;
 		}
-		
+
 		public HandleGroup() {
 			{
-				Rectangle r = new Rectangle(16,1);
+				Rectangle r = new Rectangle(16, 1);
 				r.setFill(Color.WHITE);
 				r.setStroke(Color.BLACK);
 				r.setLayoutX(0);
@@ -319,9 +321,9 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				r.setStrokeType(StrokeType.OUTSIDE);
 				getChildren().add(r);
 			}
-			
+
 			{
-				Rectangle r = new Rectangle(16,1);
+				Rectangle r = new Rectangle(16, 1);
 				r.setFill(Color.WHITE);
 				r.setStroke(Color.BLACK);
 				r.setLayoutX(0);
@@ -329,9 +331,9 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				r.setStrokeType(StrokeType.OUTSIDE);
 				getChildren().add(r);
 			}
-			
+
 			{
-				Rectangle r = new Rectangle(16,1);
+				Rectangle r = new Rectangle(16, 1);
 				r.setFill(Color.WHITE);
 				r.setStroke(Color.BLACK);
 				r.setLayoutX(0);

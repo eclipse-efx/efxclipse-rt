@@ -19,7 +19,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseToolBarSeparatorRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBarSeparator;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
-
 /**
  * default renderer for a toolbar separtor
  */
@@ -56,6 +55,6 @@ public class DefToolBarSeparatorRenderer extends BaseToolBarSeparatorRenderer<Se
 		protected void setUserData(WWidgetImpl<Separator, MToolBarSeparator> widget) {
 			getWidget().setUserData(widget);
 		}
-		
+
 	}
 }

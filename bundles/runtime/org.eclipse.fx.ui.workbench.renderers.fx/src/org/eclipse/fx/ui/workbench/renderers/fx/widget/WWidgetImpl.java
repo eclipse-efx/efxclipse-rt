@@ -183,8 +183,11 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 
 	/**
 	 * Fire a change event
-	 * @param propertyName the property modified
-	 * @param newValue the new value
+	 * 
+	 * @param propertyName
+	 *            the property modified
+	 * @param newValue
+	 *            the new value
 	 */
 	protected final void fireChange(String propertyName, Object newValue) {
 		if (this.propertyChangeHandler != null) {
