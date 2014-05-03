@@ -14,8 +14,17 @@ import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 
-@SuppressWarnings("restriction")
+/**
+ * Move part on the first position in the stack
+ */
 public class MoveToFirst {
+	/**
+	 * Move to the first position
+	 * 
+	 * @param part
+	 *            the part
+	 */
+	@SuppressWarnings("static-method")
 	public void move(final MPart part) {
 		final MElementContainer<MUIElement> parent = part.getParent();
 		parent.getChildren().remove(part);

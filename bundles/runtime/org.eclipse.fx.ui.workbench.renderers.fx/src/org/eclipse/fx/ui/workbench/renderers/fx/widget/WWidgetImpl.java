@@ -25,109 +25,139 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 
-
-public abstract class WWidgetImpl<N,M extends MUIElement> implements WWidget<M> {
+/**
+ * Base class for all widgets
+ * 
+ * @param <N>
+ *            the native type
+ * @param <M>
+ *            the model type
+ */
+public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M> {
 	private N nativeWidget;
 	private M domElement;
-	private List<WCallback<Boolean, Void>> activationCallbacks = new ArrayList<WCallback<Boolean,Void>>();
+	private List<WCallback<Boolean, Void>> activationCallbacks = new ArrayList<WCallback<Boolean, Void>>();
 	private boolean active;
+	/**
+	 * The current widget state
+	 */
 	protected WidgetState state = WidgetState.IN_SETUP;
-	
+
 	private WPropertyChangeHandler<? extends WWidget<M>> propertyChangeHandler;
-	
+
+	/**
+	 * @return the widget
+	 */
 	protected abstract N createWidget();
-	
-	public WWidgetImpl() {
-		
-	}
-	
+
 	@Override
 	public void setWidgetState(WidgetState state) {
 		this.state = state;
 	}
-	
+
 	@Override
 	public WidgetState getWidgetState() {
 		return this.state;
 	}
-	
+
 	@Override
 	public void activate() {
 		this.active = true;
-		if( activationCallbacks != null ) {
-			for( WCallback<Boolean, Void> c : activationCallbacks ) {
+		if (this.activationCallbacks != null) {
+			for (WCallback<Boolean, Void> c : this.activationCallbacks) {
 				c.call(Boolean.TRUE);
-			}	
+			}
 		}
 	}
-	
+
 	@Override
 	public void deactivate() {
 		this.active = false;
-		if( activationCallbacks != null ) {
-			for( WCallback<Boolean, Void> c : activationCallbacks ) {
+		if (this.activationCallbacks != null) {
+			for (WCallback<Boolean, Void> c : this.activationCallbacks) {
 				c.call(Boolean.FALSE);
-			}	
+			}
 		}
 	}
-	
+
 	@Override
 	public boolean isActive() {
-		return active;
+		return this.active;
 	}
-	
+
+	@Override
 	public void registerActivationCallback(WCallback<Boolean, Void> callback) {
 		// Could be that we are already disposed at this point
-		if( activationCallbacks != null ) {
-			activationCallbacks.add(callback);	
+		if (this.activationCallbacks != null) {
+			this.activationCallbacks.add(callback);
 		}
 	}
-	
+
+	/**
+	 * Initialize the widget (called by DI)
+	 */
 	@PostConstruct
 	protected void init() {
 		getWidget(); // ensure that the widget is created
 	}
-	
+
 	@PreDestroy
 	void destroy() {
-		if( nativeWidget != null ) {
+		if (this.nativeWidget != null) {
 			setUserData(null);
 		}
-		propertyChangeHandler = null;
-		domElement = null;
-		activationCallbacks.clear();
-		activationCallbacks = null;
+		this.propertyChangeHandler = null;
+		this.domElement = null;
+		this.activationCallbacks.clear();
+		this.activationCallbacks = null;
 		doCleanup();
 	}
-	
+
+	/**
+	 * Cleanup code to run
+	 */
 	protected void doCleanup() {
-		
+		// empty by default
 	}
-	
+
 	@Override
 	public final void setDomElement(M domElement) {
 		this.domElement = domElement;
 	}
-	
+
 	@Override
 	public M getDomElement() {
-		return domElement;
+		return this.domElement;
 	}
-	
-	
+
+	@Override
 	public N getWidget() {
-		if( nativeWidget == null ) {
-			nativeWidget = createWidget();
-			bindProperties(nativeWidget);
+		if (this.nativeWidget == null) {
+			this.nativeWidget = createWidget();
+			bindProperties(this.nativeWidget);
 			setUserData(this);
 		}
-		return nativeWidget;
+		return this.nativeWidget;
 	}
-	
+
+	/**
+	 * Setup property bindings
+	 * 
+	 * @param widget
+	 *            the widget
+	 */
 	protected void bindProperties(N widget) {
-		
+		// empty by default
 	}
-	
+
+	/**
+	 * Bind a property and fire change events
+	 * 
+	 * @param propertyName
+	 *            the property to bound to
+	 * @param value
+	 *            the property to attach a listener
+	 */
 	protected void bindProperty(final String propertyName, ObservableValue<? extends Object> value) {
 		value.addListener(new ChangeListener<Object>() {
 
@@ -137,17 +167,29 @@ public abstract class WWidgetImpl<N,M extends MUIElement> implements WWidget<M> 
 			}
 		});
 	}
-	
-	protected abstract void setUserData(WWidgetImpl<N,M> widget);
-	
+
+	/**
+	 * Associate user data with the widget
+	 * 
+	 * @param widget
+	 *            the widget
+	 */
+	protected abstract void setUserData(WWidgetImpl<N, M> widget);
+
+	@Override
 	public void setPropertyChangeHandler(WPropertyChangeHandler<? extends WWidget<M>> propertyChangeHandler) {
 		this.propertyChangeHandler = propertyChangeHandler;
 	}
-	
-	protected void fireChange(String propertyName, Object newValue) {
-		if( propertyChangeHandler != null ) {
+
+	/**
+	 * Fire a change event
+	 * @param propertyName the property modified
+	 * @param newValue the new value
+	 */
+	protected final void fireChange(String propertyName, Object newValue) {
+		if (this.propertyChangeHandler != null) {
 			WPropertyChangeEvent<WWidget<M>> e = new WPropertyChangeEvent<WWidget<M>>(this, propertyName, newValue);
-			propertyChangeHandler.propertyObjectChanged(e);
+			this.propertyChangeHandler.propertyObjectChanged(e);
 		}
 	}
 }

@@ -15,18 +15,30 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
-import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicFactoryImpl;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
 
-@SuppressWarnings("restriction")
+/**
+ * Pin the part to the bottom
+ */
 public class PinToBottom {
-	public void pin(MPart part) {
+
+	/**
+	 * Pin it
+	 * 
+	 * @param part
+	 *            the part
+	 * @param modelService
+	 *            the model service
+	 */
+	@SuppressWarnings("static-method")
+	public void pin(MPart part, EModelService modelService) {
 		MElementContainer<MUIElement> parent = part.getParent();
-		MPartSashContainer sashContainer = (MPartSashContainer) ((MUIElement)parent.getParent());
+		MPartSashContainer sashContainer = (MPartSashContainer) ((MUIElement) parent.getParent());
 		parent.getChildren().remove(part);
-		
-		MPartStack stack = BasicFactoryImpl.eINSTANCE.createPartStack();
+
+		MPartStack stack = modelService.createModelElement(MPartStack.class);
 		stack.getChildren().add(part);
-		stack.setContainerData("0.3");
+		stack.setContainerData("0.3"); //$NON-NLS-1$
 		stack.setSelectedElement(part);
 		sashContainer.getChildren().add(stack);
 	}

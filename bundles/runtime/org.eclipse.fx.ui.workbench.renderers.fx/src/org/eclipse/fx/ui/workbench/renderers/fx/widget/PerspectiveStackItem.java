@@ -12,23 +12,37 @@ package org.eclipse.fx.ui.workbench.renderers.fx.widget;
 
 import javafx.scene.Node;
 
+/**
+ * Implementation of a perspective stack item
+ */
 public class PerspectiveStackItem {
 	private Node content;
 	private Runnable runnable;
-	
+
+	/**
+	 * @return the content
+	 */
 	public Node getContent() {
-		if( content == null ) {
-			if( runnable != null ) {
-				runnable.run();
+		if (this.content == null) {
+			if (this.runnable != null) {
+				this.runnable.run();
 			}
 		}
-		return content;
+		return this.content;
 	}
 
+	/**
+	 * @param runnable
+	 *            callback to run on init
+	 */
 	public void setInitRunnable(Runnable runnable) {
 		this.runnable = runnable;
 	}
 
+	/**
+	 * @param content
+	 *            the cotent node
+	 */
 	public void setContent(Node content) {
 		this.content = content;
 	}

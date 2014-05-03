@@ -14,8 +14,14 @@ import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 
-@SuppressWarnings("restriction")
+/**
+ * Move part to last position
+ */
 public class MoveToLast {
+	/**
+	 * @param part the part to move
+	 */
+	@SuppressWarnings("static-method")
 	public void move(MPart part) {
 		MElementContainer<MUIElement> parent = part.getParent();
 		parent.getChildren().remove(part);

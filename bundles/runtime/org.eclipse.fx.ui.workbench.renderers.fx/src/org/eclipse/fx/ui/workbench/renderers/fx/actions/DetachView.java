@@ -13,9 +13,20 @@ package org.eclipse.fx.ui.workbench.renderers.fx.actions;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 
-@SuppressWarnings("restriction")
+/**
+ * Action to detach a view
+ */
 public class DetachView {
-	public void detach(MPart part,  EModelService modelService) {
+	/**
+	 * Detach the view
+	 * 
+	 * @param part
+	 *            the part to detach
+	 * @param modelService
+	 *            the model service
+	 */
+	@SuppressWarnings("static-method")
+	public void detach(MPart part, EModelService modelService) {
 		modelService.detach(part, 20, 20, 400, 400);
 	}
 }

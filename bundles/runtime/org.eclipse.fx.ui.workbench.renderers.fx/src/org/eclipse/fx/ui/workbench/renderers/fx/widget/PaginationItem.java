@@ -12,13 +12,23 @@ package org.eclipse.fx.ui.workbench.renderers.fx.widget;
 
 import javafx.scene.Node;
 
+/**
+ * Pagination item
+ */
 public class PaginationItem {
 	private Node content;
-	
+
+	/**
+	 * @param content
+	 *            the content
+	 */
 	public void setContent(Node content) {
 		this.content = content;
 	}
-	
+
+	/**
+	 * @return the current content
+	 */
 	public Node getContent() {
 		return content;
 	}

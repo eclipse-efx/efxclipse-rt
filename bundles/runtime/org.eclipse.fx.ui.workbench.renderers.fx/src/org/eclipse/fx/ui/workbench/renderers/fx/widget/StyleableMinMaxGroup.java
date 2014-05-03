@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.WritableValue;
 import javafx.css.CssMetaData;
 import javafx.css.StyleConverter;
 import javafx.css.Styleable;
@@ -23,14 +24,13 @@ import javafx.css.StyleableStringProperty;
 import javafx.scene.layout.StackPane;
 
 /**
- * @author tomschindl
- *
+ * A min-max group implementation
  */
 public class StyleableMinMaxGroup extends MinMaxGroup {
 	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
 	
-	private static final CssMetaData<StyleableMinMaxGroup,String> MAXIMIZE_GRAPHIC = 
-            new CssMetaData<StyleableMinMaxGroup,String>("-fx-graphic",
+	static final CssMetaData<StyleableMinMaxGroup,String> MAXIMIZE_GRAPHIC = 
+            new CssMetaData<StyleableMinMaxGroup,String>("-fx-graphic", //$NON-NLS-1$
                 StringConverter.INSTANCE) {
 
             @Override
@@ -39,10 +39,9 @@ public class StyleableMinMaxGroup extends MinMaxGroup {
                 return n.maximizeGraphic == null || !n.maximizeGraphic.isBound();
             }
 
-			@SuppressWarnings("unchecked")
 			@Override
             public StyleableProperty<String> getStyleableProperty(StyleableMinMaxGroup n) {
-                return (StyleableProperty<String>)n.maximizeUrlProperty();
+                return (StyleableProperty<String>)(WritableValue<String>)n.maximizeUrlProperty();
             }
         };
 	
@@ -59,31 +58,31 @@ public class StyleableMinMaxGroup extends MinMaxGroup {
 	
 	private StringProperty maximizeUrl;
 	
-	private StringProperty maximizeUrlProperty() {
-		if( maximizeUrl == null ) {
-			maximizeUrl = new StyleableStringProperty() {
+	/**
+	 * @return url to maximize icon property
+	 */
+	public StringProperty maximizeUrlProperty() {
+		if( this.maximizeUrl == null ) {
+			this.maximizeUrl = new StyleableStringProperty() {
 
 				@Override
 				public CssMetaData<? extends Styleable, String> getCssMetaData() {
-					// TODO Auto-generated method stub
-					return null;
+					return MAXIMIZE_GRAPHIC;
 				}
 
 				@Override
 				public Object getBean() {
-					// TODO Auto-generated method stub
-					return null;
+					return StyleableMinMaxGroup.this;
 				}
 
 				@Override
 				public String getName() {
-					// TODO Auto-generated method stub
-					return null;
+					return "maximizeUrl"; //$NON-NLS-1$
 				}
 				
 			};
 		}
-		return maximizeUrl;
+		return this.maximizeUrl;
 	}
 	
 	

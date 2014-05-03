@@ -22,16 +22,18 @@ import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.fx.ui.services.PopupMenuService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 
-@SuppressWarnings("restriction")
+/**
+ * Popup menu service implementation
+ */
 public class PartPopupMenuServiceImpl implements PopupMenuService<Control> {
 	@Inject
 	private MPart part;
 
 	@Override
 	public void registerContextMenu(Control widget, String id) {
-		for (MMenu mmenu : part.getMenus()) {
+		for (MMenu mmenu : this.part.getMenus()) {
 			if (id.equals(mmenu.getElementId()) && mmenu instanceof MPopupMenu) {
-				ContextMenu menu = registerMenu(widget, (MPopupMenu) mmenu, part);
+				ContextMenu menu = registerMenu(widget, (MPopupMenu) mmenu, this.part);
 				if (menu != null) {
 					widget.setContextMenu(menu);
 				}
@@ -39,9 +41,10 @@ public class PartPopupMenuServiceImpl implements PopupMenuService<Control> {
 		}
 	}
 
-	private ContextMenu registerMenu(Control widget, MPopupMenu menu, MPart part) {
+	@SuppressWarnings("unchecked")
+	private static ContextMenu registerMenu(Control widget, MPopupMenu menu, MPart part) {
 		if( menu.getWidget() != null ) {
-			WPopupMenu<ContextMenu> c = (WPopupMenu<ContextMenu>) menu.getWidget();
+			WPopupMenu<ContextMenu> c = (WPopupMenu<ContextMenu>) menu.getWidget(); 
 			return (ContextMenu) c.getWidget();
 		}
 		
