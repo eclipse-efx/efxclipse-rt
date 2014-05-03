@@ -48,7 +48,7 @@ import org.osgi.service.event.EventAdmin;
 @SuppressWarnings("restriction")
 public class E4Application extends AbstractE4Application {
 
-        private static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(E4Application.class);
+	private static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(E4Application.class);
 
 	private E4Workbench workbench;
 	private Location instanceLocation;
@@ -56,61 +56,67 @@ public class E4Application extends AbstractE4Application {
 	private static final String EXIT_CODE = "e4.osgi.exit.code"; //$NON-NLS-1$
 
 	static E4Application SELF;
-	
+
 	IApplicationContext applicationContext;
 	Object returnValue;
 	protected EventAdmin eventAdmin;
 	private Stage primaryStage;
 	private Application application;
-	
+
 	/**
-         * Gets the {@link E4Application}.
-         * <p>
-         * The {@link E4Application} is not available prior to calling the {@link #start(IApplicationContext)}
-         * by the equinox's launcher.
-         *
-         * @return the instance of the {@link E4Application}.
-         */
-        public static E4Application getE4Application() {
-                return SELF;
-        }
+	 * Gets the {@link E4Application}.
+	 * <p>
+	 * The {@link E4Application} is not available prior to calling the
+	 * {@link #start(IApplicationContext)} by the equinox's launcher.
+	 *
+	 * @return the instance of the {@link E4Application}.
+	 */
+	public static E4Application getE4Application() {
+		return SELF;
+	}
 
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
 		SELF = this;
 		this.applicationContext = context;
 		this.applicationContext.applicationRunning();
-		
+
 		Bundle b = FrameworkUtil.getBundle(AbstractJFXApplication.class);
 		BundleContext bundleContext = b.getBundleContext();
 		ServiceReference<EventAdmin> ref = bundleContext.getServiceReference(EventAdmin.class);
-		if( ref != null ) {
+		if (ref != null) {
 			this.eventAdmin = bundleContext.getService(ref);
 		}
-		
-		// Looks like OS-X wants to have the context class loader to locate FX-Classes
+
+		// Looks like OS-X wants to have the context class loader to locate
+		// FX-Classes
 		Thread.currentThread().setContextClassLoader(Application.class.getClassLoader());
-		
+
 		launchE4JavaFxApplication();
-		
+
 		try {
 			return this.returnValue == null ? IApplication.EXIT_OK : this.returnValue;
 		} finally {
 			this.returnValue = null;
 		}
 	}
-	
-        /**
-         * Binds the given {@link Application} to the {@link E4Workbench} and launches the application.
-         * <p>
-         * If the {@link E4Workbench} has not been initialized yet then the
-         * {@link #initE4Workbench(IApplicationContext, Application, Stage) initE4Workbench} method will be called before
-         * launching the application.
-         *
-         * @param context the {@link IApplicationContext}.
-         * @param jfxApplication the {@link Application}.
-         * @param primaryStage the primary stage associated with the given {@link Application}.
-         */
+
+	/**
+	 * Binds the given {@link Application} to the {@link E4Workbench} and
+	 * launches the application.
+	 * <p>
+	 * If the {@link E4Workbench} has not been initialized yet then the
+	 * {@link #initE4Workbench(IApplicationContext, Application, Stage)
+	 * initE4Workbench} method will be called before launching the application.
+	 *
+	 * @param context
+	 *            the {@link IApplicationContext}.
+	 * @param jfxApplication
+	 *            the {@link Application}.
+	 * @param primaryStage
+	 *            the primary stage associated with the given
+	 *            {@link Application}.
+	 */
 	public void jfxStart(IApplicationContext context, Application jfxApplication, Stage primaryStage) {
 		if (workbench == null) {
 			initE4Workbench(context, jfxApplication, primaryStage);
@@ -132,7 +138,7 @@ public class E4Application extends AbstractE4Application {
 			postJfxStarted(context);
 		}
 	}
-	
+
 	@Override
 	protected void preLifecycle(IEclipseContext appContext) {
 		super.preLifecycle(appContext);
@@ -147,21 +153,21 @@ public class E4Application extends AbstractE4Application {
 	public Object jfxStop() {
 		Object returnCode = null;
 		try {
-			if( workbenchContext != null && workbench != null ) {
+			if (workbenchContext != null && workbench != null) {
 				returnCode = workbenchContext.get(EXIT_CODE);
 				// Save the model into the targetURI
 				if (getLifecycleManager() != null) {
 					ContextInjectionFactory.invoke(getLifecycleManager(), PreSave.class, workbenchContext, null);
 				}
 				saveModel();
-				workbench.close();	
+				workbench.close();
 			}
 		} finally {
 			if (instanceLocation != null)
 				instanceLocation.release();
 		}
-		
-		if( returnCode != null ) {
+
+		if (returnCode != null) {
 			return returnCode;
 		} else {
 			return IApplication.EXIT_OK;
@@ -176,53 +182,65 @@ public class E4Application extends AbstractE4Application {
 	/**
 	 * Initializes the {@link E4Workbench}.
 	 * <p>
-	 * By calling this method the {@link E4Workbench} is initialized but the UI is not displayed yet. By combining
-	 * calling this method and the {@link #jfxStart(IApplicationContext, Application, Stage) jfxStart} method the 
-	 * developer can create a custom initializer which might do additional actions between creating {@link IWorkbench}
-	 * and showing the UI.
+	 * By calling this method the {@link E4Workbench} is initialized but the UI
+	 * is not displayed yet. By combining calling this method and the
+	 * {@link #jfxStart(IApplicationContext, Application, Stage) jfxStart}
+	 * method the developer can create a custom initializer which might do
+	 * additional actions between creating {@link IWorkbench} and showing the
+	 * UI.
 	 *
-	 * @param context the {@link IApplicationContext}.
-	 * @param jfxApplication the application which is going to be launched.
-	 * @param primaryStage the primary stage.
+	 * @param context
+	 *            the {@link IApplicationContext}.
+	 * @param jfxApplication
+	 *            the application which is going to be launched.
+	 * @param primaryStage
+	 *            the primary stage.
 	 */
 	public void initE4Workbench(final IApplicationContext context, Application jfxApplication, final Stage primaryStage) {
-	    this.primaryStage = primaryStage;
-            this.application = jfxApplication;
-	    
-            final IEclipseContext workbenchContext = createApplicationContext();
+		this.primaryStage = primaryStage;
+		this.application = jfxApplication;
 
-	    // It is the very first time when the javaFX Application appears. It will be used to render the UI.
-	    // Add following objects to the context since they might be needed by life-cycle manager and
-	    // @PostContextCreate implementations.
-	    workbenchContext.set(Application.class, jfxApplication);
-	    workbenchContext.set("primaryStage", primaryStage);
-	    workbench = createE4Workbench(context, workbenchContext);
+		final IEclipseContext workbenchContext = createApplicationContext();
+
+		// It is the very first time when the javaFX Application appears. It
+		// will be used to render the UI.
+		// Add following objects to the context since they might be needed by
+		// life-cycle manager and
+		// @PostContextCreate implementations.
+		workbenchContext.set(Application.class, jfxApplication);
+		workbenchContext.set("primaryStage", primaryStage);
+		workbench = createE4Workbench(context, workbenchContext);
 	}
 
-        /**
-         * @return the {@link IApplicationContext}.
-         */
-        public IApplicationContext getApplicationContext() {
-                return applicationContext;
-        }
+	/**
+	 * @return the {@link IApplicationContext}.
+	 */
+	public IApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
 
 	/**
-	 * Launches the JavaFX application by calling the {@link Application#launch(Class, String...)} method.
+	 * Launches the JavaFX application by calling the
+	 * {@link Application#launch(Class, String...)} method.
 	 * <p>
-	 * <b>NOTE</b>: this method is intended to be overridden by subclasses of the {@link E4Application} that would like
-	 * provide a custom application launcher.
+	 * <b>NOTE</b>: this method is intended to be overridden by subclasses of
+	 * the {@link E4Application} that would like provide a custom application
+	 * launcher.
 	 * 
-	 * @throws Exception when the application could not be started.
+	 * @throws Exception
+	 *             when the application could not be started.
 	 */
 	protected void launchE4JavaFxApplication() throws Exception {
 		Application.launch(getJfxApplicationClass());
 	}
 
 	/**
-	 * Gets the class which should be launched. It must be a subclass of the JavaFX's {@link Application}.
+	 * Gets the class which should be launched. It must be a subclass of the
+	 * JavaFX's {@link Application}.
 	 * <p>
-	 * <b>NOTE</b>: this method is intended to be overridden by subclasses of the {@link E4Application} that would like
-	 * to provide a custom implementation of the {@link Application} class.
+	 * <b>NOTE</b>: this method is intended to be overridden by subclasses of
+	 * the {@link E4Application} that would like to provide a custom
+	 * implementation of the {@link Application} class.
 	 *
 	 * @return the Class which should be launched.
 	 */
@@ -233,7 +251,8 @@ public class E4Application extends AbstractE4Application {
 	/**
 	 * Performs additional actions just after staring the application.
 	 *
-	 * @param context the {@link IApplicationContext}.
+	 * @param context
+	 *            the {@link IApplicationContext}.
 	 */
 	protected void postJfxStarted(final IApplicationContext context) {
 		context.applicationRunning();
@@ -252,7 +271,7 @@ public class E4Application extends AbstractE4Application {
 					runnable.run();
 				} else {
 					RunnableFuture<?> task = new FutureTask<Void>(runnable, null);
-					
+
 					javafx.application.Platform.runLater(task);
 
 					try {
@@ -301,8 +320,10 @@ public class E4Application extends AbstractE4Application {
 	/**
 	 * Sends the event.
 	 *
-	 * @param topic the topic.
-	 * @param map the payload data.
+	 * @param topic
+	 *            the topic.
+	 * @param map
+	 *            the payload data.
 	 */
 	protected void sendEvent(final String topic, final Map<String, Object> map) {
 		if (eventAdmin != null) {

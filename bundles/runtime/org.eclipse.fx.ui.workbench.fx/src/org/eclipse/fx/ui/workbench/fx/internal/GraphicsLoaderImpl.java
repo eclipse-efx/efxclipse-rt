@@ -33,89 +33,89 @@ import org.eclipse.fx.ui.services.resources.ImageProvider;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 
 public class GraphicsLoaderImpl implements GraphicsLoader {
-		
+
 	private WeakHashMap<URI, WeakReference<Image>> imageCache = new WeakHashMap<>();
-	
+
 	@Inject
 	private ProviderComponent providerComponent;
-	
+
 	@Inject
 	@Optional
 	private ThemeManager themeManager;
-	
+
 	@Inject
 	@Log
 	private Logger logger;
-	
+
 	public void setProviderComponent(ProviderComponent providerComponent) {
 		this.providerComponent = providerComponent;
 	}
-	
+
 	public void unsetProviderComponent(ProviderComponent providerComponent) {
-		if( this.providerComponent == providerComponent ) {
+		if (this.providerComponent == providerComponent) {
 			this.providerComponent = null;
 		}
 	}
-	
+
 	@Override
 	public Image getImage(URI uri) {
 		Map<String, String> map = new HashMap<>();
-		if( themeManager != null && themeManager.getCurrentTheme() != null ) {
-			map.put("themeId", themeManager.getCurrentTheme().getId());	
+		if (themeManager != null && themeManager.getCurrentTheme() != null) {
+			map.put("themeId", themeManager.getCurrentTheme().getId());
 		}
-		
-		uri = replaceDynamicValues(uri,map);
-		
+
+		uri = replaceDynamicValues(uri, map);
+
 		WeakReference<Image> r = imageCache.get(uri);
 		Image img = null;
-		if( r != null ) {
+		if (r != null) {
 			img = r.get();
 		}
-		
-		if( img == null ) {
+
+		if (img == null) {
 			ImageProvider pv = providerComponent.getImageProvider(uri);
-			if( pv != null ) {
+			if (pv != null) {
 				try {
 					img = pv.getImage(uri);
-					
-					if( img != null ) {
+
+					if (img != null) {
 						imageCache.put(uri, new WeakReference<Image>(img));
 					}
 				} catch (IOException e) {
-					logger.error("Unable to load image from '"+uri+"'", e);
+					logger.error("Unable to load image from '" + uri + "'", e);
 				}
 			}
 		}
-		
+
 		return img;
 	}
-	
+
 	@Override
 	public Node getGraphicsNode(URI uri) {
 		Map<String, String> map = new HashMap<>();
-		if( themeManager != null && themeManager.getCurrentTheme() != null ) {
-			map.put("themeId", themeManager.getCurrentTheme().getId());	
+		if (themeManager != null && themeManager.getCurrentTheme() != null) {
+			map.put("themeId", themeManager.getCurrentTheme().getId());
 		}
-		
-		uri = replaceDynamicValues(uri,map);
+
+		uri = replaceDynamicValues(uri, map);
 		GraphicNodeProvider graphicNodeProvider = providerComponent.getGraphicNodeProvider(uri);
-		
-		if( graphicNodeProvider == null ) {
+
+		if (graphicNodeProvider == null) {
 			Image img = getImage(uri);
-			if( img != null ) {
+			if (img != null) {
 				return new ImageView(img);
 			}
 		} else {
 			try {
 				return graphicNodeProvider.getGraphicNode(uri);
 			} catch (IOException e) {
-				logger.error("Unable to load graphic node from '"+uri+"'", e);
+				logger.error("Unable to load graphic node from '" + uri + "'", e);
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	private URI replaceDynamicValues(URI uri, Map<String, String> dynamicMap) {
 		String s = uri.toString();
 		s = StrSubstitutor.replace(s, dynamicMap);

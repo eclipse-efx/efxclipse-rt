@@ -17,70 +17,69 @@ import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.core.log.LoggerFactory;
 
-
 @SuppressWarnings("restriction")
-public class LoggerProviderImpl implements ILoggerProvider{
+public class LoggerProviderImpl implements ILoggerProvider {
 	@Inject
 	LoggerFactory factory;
-	
+
 	@Override
 	public Logger getClassLogger(Class<?> clazz) {
 		final org.eclipse.fx.core.log.Logger logger = factory.createLogger(clazz.getName());
 		return new Logger() {
-			
+
 			@Override
 			public void warn(Throwable t, String message) {
 				logger.warning(message, t);
 			}
-			
+
 			@Override
 			public void trace(Throwable t, String message) {
 				logger.trace(message, t);
 			}
-			
+
 			@Override
 			public boolean isWarnEnabled() {
 				return logger.isEnabled(Level.WARNING);
 			}
-			
+
 			@Override
 			public boolean isTraceEnabled() {
 				return logger.isEnabled(Level.TRACE);
 			}
-			
+
 			@Override
 			public boolean isInfoEnabled() {
 				return logger.isEnabled(Level.INFO);
 			}
-			
+
 			@Override
 			public boolean isErrorEnabled() {
 				return logger.isEnabled(Level.ERROR);
 			}
-			
+
 			@Override
 			public boolean isDebugEnabled() {
 				return logger.isEnabled(Level.DEBUG);
 			}
-			
+
 			@Override
 			public void info(Throwable t, String message) {
 				logger.info(message, t);
 			}
-			
+
 			@Override
 			public void error(Throwable t, String message) {
 				logger.error(message, t);
 			}
-			
+
 			@Override
 			public void debug(Throwable t, String message) {
 				logger.debug(message, t);
 			}
-			
+
 			@Override
 			public void debug(Throwable t) {
-				logger.debug("",t);
+				logger.debug("", t);
 			}
 		};
 	}

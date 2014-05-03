@@ -23,7 +23,7 @@ public class Activator implements BundleActivator {
 	private BundleContext context;
 	private ServiceTracker locationTracker;
 	private static Activator activator;
-	
+
 	/**
 	 * Get the default activator.
 	 * 

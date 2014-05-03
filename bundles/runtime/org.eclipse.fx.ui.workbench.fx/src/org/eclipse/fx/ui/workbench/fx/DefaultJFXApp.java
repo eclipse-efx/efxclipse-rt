@@ -16,30 +16,35 @@ import javafx.stage.Stage;
 import org.eclipse.fx.core.databinding.JFXRealm;
 
 /**
- * The {@link DefaultJFXApp} is a default JavaFX {@link Application} class used for bootstrap.
+ * The {@link DefaultJFXApp} is a default JavaFX {@link Application} class used
+ * for bootstrap.
  * <p>
- * The {@link DefaultJFXApp} is intended to be subclassed by components that would like to provide a custom
- * implementation of the JavaFX {@link Application}.
+ * The {@link DefaultJFXApp} is intended to be subclassed by components that
+ * would like to provide a custom implementation of the JavaFX
+ * {@link Application}.
  */
 public class DefaultJFXApp extends Application {
 
 	protected final E4Application e4Application;
 
 	/**
-	 * Creates an instance of the {@link DefaultJFXApp} and initializes it using the {@link E4Application} given by 
-	 * the {@link E4Application#getE4Application()}.
+	 * Creates an instance of the {@link DefaultJFXApp} and initializes it using
+	 * the {@link E4Application} given by the
+	 * {@link E4Application#getE4Application()}.
 	 */
 	public DefaultJFXApp() {
 		this(E4Application.getE4Application());
 	}
 
 	/**
-	 * Creates an instance of the {@link DefaultJFXApp} and initializer is using the given
-	 * {@link E4Application}.
+	 * Creates an instance of the {@link DefaultJFXApp} and initializer is using
+	 * the given {@link E4Application}.
 	 * 
-	 * @param application the {@link E4Application}.
+	 * @param application
+	 *            the {@link E4Application}.
 	 * 
-	 * @throws NullPointerException if the given {@link E4Application} is null.
+	 * @throws NullPointerException
+	 *             if the given {@link E4Application} is null.
 	 */
 	public DefaultJFXApp(final E4Application e4Application) {
 		if (e4Application == null) {
