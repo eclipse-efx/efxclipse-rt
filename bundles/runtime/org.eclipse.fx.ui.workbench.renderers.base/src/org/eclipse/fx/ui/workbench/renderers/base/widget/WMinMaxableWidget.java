@@ -45,7 +45,7 @@ public interface WMinMaxableWidget {
 	 *            the callback
 	 */
 	public void setMinMaxCallback(@NonNull WCallback<WMinMaxState, Void> minMaxCallback);
-	
+
 	/**
 	 * 
 	 * @param state

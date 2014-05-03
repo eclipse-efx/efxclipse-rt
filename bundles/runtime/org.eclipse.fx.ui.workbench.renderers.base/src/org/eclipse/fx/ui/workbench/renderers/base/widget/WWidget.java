@@ -128,7 +128,8 @@ public interface WWidget<M extends MUIElement> {
 	/**
 	 * Register a callback to get informed when this widget gets activated
 	 * 
-	 * @param callback the callback
+	 * @param callback
+	 *            the callback
 	 */
 	public void registerActivationCallback(@NonNull WCallback<Boolean, Void> callback);
 }

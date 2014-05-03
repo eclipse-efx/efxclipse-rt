@@ -25,7 +25,7 @@ public interface WLayoutedWidget<M extends MUIElement> extends WWidget<M> {
 	 */
 	@NonNull
 	public Object getStaticLayoutNode();
-	
+
 	/**
 	 * @return the weight when layouted
 	 */

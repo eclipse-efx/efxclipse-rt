@@ -37,9 +37,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 
 /**
@@ -136,51 +137,49 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 		final IEclipseContext context = setupRenderingContext(element);
 
 		W widget = ContextInjectionFactory.make(getWidgetClass(element), context);
-		widget.setPropertyChangeHandler(new WPropertyChangeHandler<W>() {
-
-			@Override
-			public void propertyObjectChanged(WPropertyChangeEvent<W> event) {
-				// There is already a modification in process
-				if (inUIModification(element) || inContextModification(element)) {
-					return;
-				}
-
-				try {
-					BaseRenderer.this.uiModification.put(element, Boolean.TRUE);
-
-					EAttribute attribute = BaseRenderer.this.attributeMap.get(event.propertyname);
-					EObject eo = (EObject) element;
-
-					if (attribute == null) {
-						EStructuralFeature f = eo.eClass().getEStructuralFeature(event.propertyname);
-						if (f instanceof EAttribute) {
-							attribute = (EAttribute) f;
-							BaseRenderer.this.attributeMap.put(event.propertyname, attribute);
-						}
-					}
-
-					if (attribute != null) {
-						if (attribute.getEType().getInstanceClass() == int.class) {
-							Object v = event.newValue;
-							if (v == null) {
-								eo.eSet(attribute, Integer.valueOf(0));
-							} else {
-								eo.eSet(attribute, Integer.valueOf(((Number) v).intValue()));
-							}
-						} else {
-							eo.eSet(attribute, event.newValue);
-						}
-					}
-				} finally {
-					BaseRenderer.this.uiModification.remove(element);
-				}
-			}
-
-		});
+		// Bug 433845
+		widget.setPropertyChangeHandler((WPropertyChangeEvent<W> e) -> propertyObjectChanged(element, e));
 		initWidget(element, widget);
 		initDefaultEventListeners(this._context.get(IEventBroker.class));
 
 		return widget;
+	}
+
+	private void propertyObjectChanged(M element, @NonNull WPropertyChangeEvent<W> event) {
+		// There is already a modification in process
+		if (inUIModification(element) || inContextModification(element)) {
+			return;
+		}
+
+		try {
+			BaseRenderer.this.uiModification.put(element, Boolean.TRUE);
+
+			EAttribute attribute = BaseRenderer.this.attributeMap.get(event.propertyname);
+			EObject eo = (EObject) element;
+
+			if (attribute == null) {
+				EStructuralFeature f = eo.eClass().getEStructuralFeature(event.propertyname);
+				if (f instanceof EAttribute) {
+					attribute = (EAttribute) f;
+					BaseRenderer.this.attributeMap.put(event.propertyname, attribute);
+				}
+			}
+
+			if (attribute != null) {
+				if (attribute.getEType().getInstanceClass() == int.class) {
+					Object v = event.newValue;
+					if (v == null) {
+						eo.eSet(attribute, Integer.valueOf(0));
+					} else {
+						eo.eSet(attribute, Integer.valueOf(((Number) v).intValue()));
+					}
+				} else {
+					eo.eSet(attribute, event.newValue);
+				}
+			}
+		} finally {
+			BaseRenderer.this.uiModification.remove(element);
+		}
 	}
 
 	private void initDefaultEventListeners(IEventBroker broker) {

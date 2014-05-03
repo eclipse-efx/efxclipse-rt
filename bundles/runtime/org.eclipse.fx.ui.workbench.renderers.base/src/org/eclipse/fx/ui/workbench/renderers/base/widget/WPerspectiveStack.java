@@ -77,7 +77,7 @@ public interface WPerspectiveStack<N, I, IC> extends WLayoutedWidget<MPerspectiv
 	/**
 	 * @return the class type representing the stack item
 	 */
-	@NonNull 
+	@NonNull
 	public Class<? extends WStackItem<I, IC>> getStackItemClass();
 
 	/**
@@ -126,7 +126,7 @@ public interface WPerspectiveStack<N, I, IC> extends WLayoutedWidget<MPerspectiv
 	/**
 	 * @return all stack items
 	 */
-	@NonNull 
+	@NonNull
 	public List<WStackItem<I, IC>> getItems();
 
 	/**
@@ -152,7 +152,7 @@ public interface WPerspectiveStack<N, I, IC> extends WLayoutedWidget<MPerspectiv
 	 *            the callback to invoke
 	 */
 	public void setKeySelectedItemCallback(@NonNull WCallback<WStackItem<I, IC>, Void> selectedItemCallback);
-	
+
 	/**
 	 * @return number of items
 	 */

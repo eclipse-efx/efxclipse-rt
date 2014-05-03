@@ -54,10 +54,10 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	 * Context key used to store rendererd elements
 	 */
 	public static final String SHARED_ELEMENTS_MAP = "EFX.RENDERING.SHARED_ELEMENTS_MAP"; //$NON-NLS-1$
-	
+
 	@NonNull
 	private final IEclipseContext context;
-	
+
 	@Nullable
 	private BaseWindowRenderer<?> windowRenderer;
 	@Nullable

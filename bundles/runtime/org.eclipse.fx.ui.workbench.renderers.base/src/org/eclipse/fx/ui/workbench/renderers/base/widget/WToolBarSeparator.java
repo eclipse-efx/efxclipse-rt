@@ -19,5 +19,5 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolBarSeparator;
  *            the native widget
  */
 public interface WToolBarSeparator<N> extends WWidget<MToolBarSeparator> {
-	//no extra methods
+	// no extra methods
 }

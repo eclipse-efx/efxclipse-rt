@@ -31,12 +31,12 @@ public interface WPropertyChangeHandler<W extends WWidget<?>> {
 		/**
 		 * Name of the property
 		 */
-		@NonNull 
+		@NonNull
 		public final String propertyname;
 		/**
 		 * The widget
 		 */
-		@NonNull 
+		@NonNull
 		public final W widget;
 		/**
 		 * The new value

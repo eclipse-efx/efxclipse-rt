@@ -39,7 +39,7 @@ public interface WPart<N, T, M> extends WLayoutedWidget<MPart> {
 	 *            the widget
 	 */
 	public void setMenu(@Nullable WMenu<M> widget);
-	
+
 	/**
 	 * @return the current menu
 	 */

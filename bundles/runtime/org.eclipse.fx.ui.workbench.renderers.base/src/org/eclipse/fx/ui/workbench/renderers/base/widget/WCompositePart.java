@@ -9,5 +9,5 @@ import org.eclipse.e4.ui.model.application.ui.basic.MCompositePart;
  *            the native widget
  */
 public interface WCompositePart<N> extends WLayoutedWidget<MCompositePart> {
-	//no extra methods yet
+	// no extra methods yet
 }

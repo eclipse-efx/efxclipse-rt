@@ -19,5 +19,5 @@ import org.eclipse.e4.ui.model.application.ui.menu.MMenuSeparator;
  *            the native widget
  */
 public interface WMenuSeparator<N> extends WMenuElement<MMenuSeparator> {
-	//no extra methods
+	// no extra methods
 }
