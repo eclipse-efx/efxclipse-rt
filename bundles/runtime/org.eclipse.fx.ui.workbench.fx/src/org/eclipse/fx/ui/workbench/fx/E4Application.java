@@ -45,6 +45,9 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
+/**
+ * default e4 application
+ */
 @SuppressWarnings("restriction")
 public class E4Application extends AbstractE4Application {
 
@@ -53,15 +56,16 @@ public class E4Application extends AbstractE4Application {
 	private E4Workbench workbench;
 	private Location instanceLocation;
 	private IEclipseContext workbenchContext;
+	
 	private static final String EXIT_CODE = "e4.osgi.exit.code"; //$NON-NLS-1$
-
+	private static final String PRIMARY_STAGE_KEY = "primaryStage"; //$NON-NLS-1$
+	private static final String EVENT_TOPIC_LAUNCHED = "efxapp/applicationLaunched"; //$NON-NLS-1$
+	
 	static E4Application SELF;
 
 	IApplicationContext applicationContext;
 	Object returnValue;
 	protected EventAdmin eventAdmin;
-	private Stage primaryStage;
-	private Application application;
 
 	/**
 	 * Gets the {@link E4Application}.
@@ -118,20 +122,20 @@ public class E4Application extends AbstractE4Application {
 	 *            {@link Application}.
 	 */
 	public void jfxStart(IApplicationContext context, Application jfxApplication, Stage primaryStage) {
-		if (workbench == null) {
+		if (this.workbench == null) {
 			initE4Workbench(context, jfxApplication, primaryStage);
 		}
 
-		instanceLocation = (Location) workbench.getContext().get(E4Workbench.INSTANCE_LOCATION);
+		this.instanceLocation = (Location) this.workbench.getContext().get(E4Workbench.INSTANCE_LOCATION);
 
 		try {
-			if (!checkInstanceLocation(instanceLocation))
+			if (!checkInstanceLocation(this.instanceLocation))
 				return;
 
-			workbenchContext = workbench.getContext();
+			this.workbenchContext = this.workbench.getContext();
 
 			// Create and run the UI (if any)
-			workbench.createAndRunUI(workbench.getApplication());
+			this.workbench.createAndRunUI(this.workbench.getApplication());
 
 			return;
 		} finally {
@@ -153,18 +157,18 @@ public class E4Application extends AbstractE4Application {
 	public Object jfxStop() {
 		Object returnCode = null;
 		try {
-			if (workbenchContext != null && workbench != null) {
-				returnCode = workbenchContext.get(EXIT_CODE);
+			if (this.workbenchContext != null && this.workbench != null) {
+				returnCode = this.workbenchContext.get(EXIT_CODE);
 				// Save the model into the targetURI
 				if (getLifecycleManager() != null) {
-					ContextInjectionFactory.invoke(getLifecycleManager(), PreSave.class, workbenchContext, null);
+					ContextInjectionFactory.invoke(getLifecycleManager(), PreSave.class, this.workbenchContext, null);
 				}
 				saveModel();
-				workbench.close();
+				this.workbench.close();
 			}
 		} finally {
-			if (instanceLocation != null)
-				instanceLocation.release();
+			if (this.instanceLocation != null)
+				this.instanceLocation.release();
 		}
 
 		if (returnCode != null) {
@@ -197,9 +201,6 @@ public class E4Application extends AbstractE4Application {
 	 *            the primary stage.
 	 */
 	public void initE4Workbench(final IApplicationContext context, Application jfxApplication, final Stage primaryStage) {
-		this.primaryStage = primaryStage;
-		this.application = jfxApplication;
-
 		final IEclipseContext workbenchContext = createApplicationContext();
 
 		// It is the very first time when the javaFX Application appears. It
@@ -208,15 +209,15 @@ public class E4Application extends AbstractE4Application {
 		// life-cycle manager and
 		// @PostContextCreate implementations.
 		workbenchContext.set(Application.class, jfxApplication);
-		workbenchContext.set("primaryStage", primaryStage);
-		workbench = createE4Workbench(context, workbenchContext);
+		workbenchContext.set(PRIMARY_STAGE_KEY, primaryStage);
+		this.workbench = createE4Workbench(context, workbenchContext);
 	}
 
 	/**
 	 * @return the {@link IApplicationContext}.
 	 */
 	public IApplicationContext getApplicationContext() {
-		return applicationContext;
+		return this.applicationContext;
 	}
 
 	/**
@@ -244,6 +245,7 @@ public class E4Application extends AbstractE4Application {
 	 *
 	 * @return the Class which should be launched.
 	 */
+	@SuppressWarnings("static-method")
 	protected Class<? extends Application> getJfxApplicationClass() {
 		return DefaultJFXApp.class;
 	}
@@ -258,7 +260,7 @@ public class E4Application extends AbstractE4Application {
 		context.applicationRunning();
 
 		final Map<String, Object> map = new HashMap<String, Object>();
-		sendEvent("efxapp/applicationLaunched", map);
+		sendEvent(EVENT_TOPIC_LAUNCHED, map);
 	}
 
 	@Override
@@ -299,12 +301,13 @@ public class E4Application extends AbstractE4Application {
 	@Override
 	protected Realm createRealm(IEclipseContext appContext) {
 		JFXRealm.createDefault();
-		return JFXRealm.getDefault();
+		return Realm.getDefault();
 	}
 
 	@Override
-	protected IResourceUtilities createResourceUtility(final IEclipseContext appContext) {
+	protected IResourceUtilities<Image> createResourceUtility(final IEclipseContext appContext) {
 		return new IResourceUtilities<Image>() {
+			@Override
 			public Image imageDescriptorFromURI(URI iconPath) {
 				GraphicsLoader l = appContext.get(GraphicsLoader.class);
 				return l.getImage(iconPath);
@@ -326,10 +329,10 @@ public class E4Application extends AbstractE4Application {
 	 *            the payload data.
 	 */
 	protected void sendEvent(final String topic, final Map<String, Object> map) {
-		if (eventAdmin != null) {
-			eventAdmin.sendEvent(new Event(topic, map));
+		if (this.eventAdmin != null) {
+			this.eventAdmin.sendEvent(new Event(topic, map));
 		} else {
-			LOGGER.warningf("Could not send the %s event. EventAdmin is missing.", topic);
+			LOGGER.warningf("Could not send the %s event. EventAdmin is missing.", topic); //$NON-NLS-1$
 		}
 	}
 }

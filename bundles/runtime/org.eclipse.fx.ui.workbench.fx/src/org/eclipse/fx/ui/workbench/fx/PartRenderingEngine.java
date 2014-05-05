@@ -41,17 +41,24 @@ import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
+import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
 import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.fx.key.KeyBindingDispatcher;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+/**
+ * Rendering engine for javafx
+ */
 @SuppressWarnings("restriction")
 public class PartRenderingEngine implements IPresentationEngine {
-	public static final String engineURI = "bundleclass://org.eclipse.fx.ui.workbench.fx/" + "org.eclipse.fx.ui.workbench.fx.PartRenderingEngine";
+	/**
+	 * URL of the engine
+	 */
+	public static final String engineURI = "bundleclass://org.eclipse.fx.ui.workbench.fx/org.eclipse.fx.ui.workbench.fx.PartRenderingEngine"; //$NON-NLS-1$
 
-	private static final String defaultFactoryUrl = "bundleclass://org.eclipse.fx.ui.workbench.renderers.fx/" + "org.eclipse.fx.ui.workbench.renderers.fx.DefWorkbenchRendererFactory";
+	private static final String defaultFactoryUrl = "bundleclass://org.eclipse.fx.ui.workbench.renderers.fx/org.eclipse.fx.ui.workbench.renderers.fx.DefWorkbenchRendererFactory"; //$NON-NLS-1$
 
 	private final RendererFactory factory;
 
@@ -66,9 +73,12 @@ public class PartRenderingEngine implements IPresentationEngine {
 	private final IEventBroker eventBroker;
 
 	@Inject
-	public PartRenderingEngine(@Named(E4Workbench.RENDERER_FACTORY_URI) @Optional String factoryUrl, IEclipseContext context, EModelService modelService, IEventBroker eventBroker, ThemeManager themeManager) {
-		if (factoryUrl == null) {
+	PartRenderingEngine(@Named(E4Workbench.RENDERER_FACTORY_URI) @Optional String _factoryUrl, IEclipseContext context, EModelService modelService, IEventBroker eventBroker, ThemeManager themeManager) {
+		final String factoryUrl;
+		if (_factoryUrl == null) {
 			factoryUrl = defaultFactoryUrl;
+		} else {
+			factoryUrl = _factoryUrl;
 		}
 		IContributionFactory contribFactory = context.get(IContributionFactory.class);
 		this.factory = (RendererFactory) contribFactory.create(factoryUrl, context);
@@ -82,14 +92,15 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 		setupEventListener(eventBroker);
 
-		if (context.get(E4Application.THEME_ID) != null) {
-			themeManager.setCurrentThemeId((String) context.get(E4Application.THEME_ID));
+		if (context.get(AbstractE4Application.THEME_ID) != null) {
+			themeManager.setCurrentThemeId((String) context.get(AbstractE4Application.THEME_ID));
 		}
 	}
 
 	void setupEventListener(IEventBroker eventBroker) {
 		EventHandler tbrEventHandler = new EventHandler() {
 
+			@Override
 			public void handleEvent(Event event) {
 				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
 
@@ -127,6 +138,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, childrenHandler);
 	}
 
+	@Override
 	public Object createGui(MUIElement element, Object parentWidget, IEclipseContext parentContext) {
 		if (!element.isToBeRendered()) {
 			return null;
@@ -186,15 +198,15 @@ public class PartRenderingEngine implements IPresentationEngine {
 	}
 
 	private AbstractRenderer<MUIElement, Object> getRenderer(MUIElement uiElement) {
-		return factory.getRenderer(uiElement);
+		return this.factory.getRenderer(uiElement);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "static-method" })
 	protected <R extends AbstractRenderer<? extends M, Object>, M extends MUIElement> R getRendererFor(M element) {
 		return (R) element.getRenderer();
 	}
 
-	private IEclipseContext createContext(MContext model, IEclipseContext parentContext) {
+	private static IEclipseContext createContext(MContext model, IEclipseContext parentContext) {
 		IEclipseContext lclContext = parentContext.createChild(getContextName((MApplicationElement) model));
 		populateModelInterfaces(model, lclContext, model.getClass().getInterfaces());
 		model.setContext(lclContext);
@@ -219,26 +231,26 @@ public class PartRenderingEngine implements IPresentationEngine {
 		}
 	}
 
-	private String getContextName(MApplicationElement element) {
+	private static String getContextName(MApplicationElement element) {
 		StringBuilder builder = new StringBuilder(element.getClass().getSimpleName());
 		String elementId = element.getElementId();
 		if (elementId != null && elementId.length() != 0) {
-			builder.append(" (").append(elementId).append(") ");
+			builder.append(" (").append(elementId).append(") "); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		builder.append("Context");
+		builder.append("Context"); //$NON-NLS-1$
 		return builder.toString();
 	}
 
+	@Override
 	public Object createGui(MUIElement element) {
-
 		// Obtain the necessary parent context
 		IEclipseContext parentContext = null;
 		if (element.getCurSharedRef() != null) {
 			MPlaceholder ph = element.getCurSharedRef();
 			parentContext = getContext(ph.getParent());
-		} else if (parentContext == null && element.getParent() != null) {
+		} else if (element.getParent() != null) {
 			parentContext = getContext(element.getParent());
-		} else if (parentContext == null && element.getParent() == null) {
+		} else if (element.getParent() == null) {
 			parentContext = getContext((MUIElement) ((EObject) element).eContainer());
 		}
 
@@ -249,9 +261,10 @@ public class PartRenderingEngine implements IPresentationEngine {
 		if (parent instanceof MContext) {
 			return ((MContext) parent).getContext();
 		}
-		return modelService.getContainingContext(parent);
+		return this.modelService.getContainingContext(parent);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public void removeGui(MUIElement element) {
 		MUIElement container = (element.getCurSharedRef() != null) ? element.getCurSharedRef() : (MUIElement) ((EObject) element).eContainer();
@@ -270,7 +283,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 					try {
 						parentRenderer.hideChild(container, element);
 					} catch (Throwable t) {
-						log.error(t.getMessage(), t);
+						this.log.error(t.getMessage(), t);
 					}
 
 				}
@@ -339,7 +352,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 		}
 	}
 
-	private void clearContext(MContext contextME) {
+	private static void clearContext(MContext contextME) {
 		MContext ctxt = (MContext) contextME;
 		IEclipseContext lclContext = ctxt.getContext();
 		if (lclContext != null) {
@@ -354,25 +367,26 @@ public class PartRenderingEngine implements IPresentationEngine {
 		}
 	}
 
+	@Override
 	public Object run(MApplicationElement uiRoot, IEclipseContext appContext) {
-		app = (MApplication) uiRoot;
-		MWindow selected = app.getSelectedElement();
+		this.app = (MApplication) uiRoot;
+		MWindow selected = this.app.getSelectedElement();
 		if (selected == null) {
-			for (MWindow window : app.getChildren()) {
+			for (MWindow window : this.app.getChildren()) {
 				createGui(window);
 			}
-			if (eventBroker != null)
-				eventBroker.post(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, app);
+			if (this.eventBroker != null)
+				this.eventBroker.post(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, this.app);
 		} else {
 			// render the selected one first
 			createGui(selected);
-			for (MWindow window : app.getChildren()) {
+			for (MWindow window : this.app.getChildren()) {
 				if (selected != window) {
 					createGui(window);
 				}
 			}
-			if (eventBroker != null)
-				eventBroker.post(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, app);
+			if (this.eventBroker != null)
+				this.eventBroker.post(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, this.app);
 			// focus the selected part
 			MUIElement element = selected;
 			while ((element != null) && (!(element instanceof MPart))) {
@@ -387,9 +401,10 @@ public class PartRenderingEngine implements IPresentationEngine {
 		return null;
 	}
 
+	@Override
 	public void stop() {
-		if (app != null) {
-			for (MWindow w : app.getChildren()) {
+		if (this.app != null) {
+			for (MWindow w : this.app.getChildren()) {
 				AbstractRenderer<MUIElement, Object> r = getRenderer(w);
 				if (r != null) {
 					removeGui(w);
@@ -422,9 +437,9 @@ public class PartRenderingEngine implements IPresentationEngine {
 				renderer.focus(element);
 			}
 		} catch (InjectionException e) {
-			log.errorf("Failed to grant focus to element (%s)", element.getElementId(), e); //$NON-NLS-1$
+			this.log.errorf("Failed to grant focus to element (%s)", element.getElementId(), e); //$NON-NLS-1$
 		} catch (RuntimeException e) {
-			log.errorf("Failed to grant focus via DI to element (%s)", element.getElementId(), e); //$NON-NLS-1$
+			this.log.errorf("Failed to grant focus via DI to element (%s)", element.getElementId(), e); //$NON-NLS-1$
 		}
 	}
 }
