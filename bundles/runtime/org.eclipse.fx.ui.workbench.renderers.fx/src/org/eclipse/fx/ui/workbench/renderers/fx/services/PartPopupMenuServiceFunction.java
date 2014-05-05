@@ -13,7 +13,6 @@ package org.eclipse.fx.ui.workbench.renderers.fx.services;
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.fx.ui.services.PopupMenuService;
 
 /**
  * Context function to create a {@link PopupMenuService}

@@ -18,27 +18,34 @@ import javax.inject.Inject;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MPopupMenu;
+import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
-import org.eclipse.fx.ui.services.PopupMenuService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 
 /**
  * Popup menu service implementation
  */
-public class PartPopupMenuServiceImpl implements PopupMenuService<Control> {
+public class PartPopupMenuServiceImpl implements EMenuService {
 	@Inject
 	private MPart part;
 
 	@Override
-	public void registerContextMenu(Control widget, String id) {
+	public boolean registerContextMenu(Object w, String id) {
+		if( ! (w instanceof Control) ) {
+			return false;
+		}
+		
+		Control widget = (Control) w;
 		for (MMenu mmenu : this.part.getMenus()) {
 			if (id.equals(mmenu.getElementId()) && mmenu instanceof MPopupMenu) {
 				ContextMenu menu = registerMenu(widget, (MPopupMenu) mmenu, this.part);
 				if (menu != null) {
 					widget.setContextMenu(menu);
+					return true;
 				}
 			}
 		}
+		return false;
 	}
 
 	@SuppressWarnings("unchecked")

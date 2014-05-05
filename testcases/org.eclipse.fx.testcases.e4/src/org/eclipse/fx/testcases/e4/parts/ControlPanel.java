@@ -38,6 +38,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MHandledToolItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
+import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -45,7 +46,6 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.fx.ui.services.Constants;
-import org.eclipse.fx.ui.services.PopupMenuService;
 import org.osgi.service.event.Event;
 
 @SuppressWarnings("restriction")
@@ -66,7 +66,7 @@ public class ControlPanel {
 	
 	@SuppressWarnings("rawtypes")
 	@Inject
-	public ControlPanel(BorderPane p, final MApplication application, final MWindow window, @Optional final MPerspective perspective, final EPartService partService, final EModelService modelService, PopupMenuService<Control> menuService, final IEventBroker broker) {
+	public ControlPanel(BorderPane p, final MApplication application, final MWindow window, @Optional final MPerspective perspective, final EPartService partService, final EModelService modelService, EMenuService menuService, final IEventBroker broker) {
 		broker.subscribe(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, new org.osgi.service.event.EventHandler() {
 			
 			@Override
