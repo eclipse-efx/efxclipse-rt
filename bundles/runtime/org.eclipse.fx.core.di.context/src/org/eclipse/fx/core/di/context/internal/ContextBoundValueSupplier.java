@@ -13,14 +13,11 @@ package org.eclipse.fx.core.di.context.internal;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import javax.inject.Inject;
-
 import org.eclipse.e4.core.di.IInjector;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.di.Requestor;
-import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.fx.core.di.ContextBoundValue;
 import org.eclipse.fx.core.di.ContextValue;
 
@@ -29,8 +26,6 @@ import org.eclipse.fx.core.di.ContextValue;
  */
 @SuppressWarnings("restriction")
 public class ContextBoundValueSupplier extends ExtendedObjectSupplier {
-	@Inject
-	AdapterService adapterService;
 	
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
