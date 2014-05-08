@@ -65,6 +65,11 @@ public class MeasureGC implements DrawableGC {
 	public void setTransform(Transform transform) {
 		// Not applicable
 	}
+	
+	@Override
+	public void getTransform(Transform transform) {
+		// Not applicable
+	}
 
 	@Override
 	public void setForeground(Color color) {
