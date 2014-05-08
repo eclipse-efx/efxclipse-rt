@@ -319,9 +319,9 @@ public class GC extends Resource {
 //		
 //	}
 //	
-//	public void getTransform (Transform transform) {
-//		
-//	}
+	public void getTransform (Transform transform) {
+		gc.getTransform(transform);
+	}
 //	
 //	public boolean getXORMode() {
 //		
@@ -430,10 +430,10 @@ public class GC extends Resource {
 //		
 //	}
 //	
-//	public void setTextAntialias(int antialias) {
-//		
-//	}
-//	
+	public void setTextAntialias(int antialias) {
+		// keep the API method, but JavaFX will always antialias text
+	}
+	
 	public void setTransform(Transform transform) {
 		gc.setTransform(transform);
 	}

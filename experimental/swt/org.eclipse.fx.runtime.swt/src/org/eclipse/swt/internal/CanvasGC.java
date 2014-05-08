@@ -27,7 +27,6 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Affine;
-import javafx.scene.transform.Translate;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -56,7 +55,6 @@ public class CanvasGC implements DrawableGC {
 	
 	private javafx.scene.paint.Color defaultBackground = javafx.scene.paint.Color.BLACK;
 	private javafx.scene.paint.Color defaultForeground = javafx.scene.paint.Color.BLACK;
-	private Affine defaultTransform = new Affine();
 	
 	//TODO Need to pass those values
 	private Font receiverFont;
@@ -138,6 +136,11 @@ public class CanvasGC implements DrawableGC {
 	@Override
 	public void setTransform(Transform transform) {
 		canvas.getGraphicsContext2D().setTransform(transform.internal_getNativeObject());
+	}
+	
+	@Override
+	public void getTransform(Transform transform) {
+		canvas.getGraphicsContext2D().getTransform(transform.internal_getNativeObject());		
 	}
 	
 	@Override
@@ -580,15 +583,13 @@ public class CanvasGC implements DrawableGC {
 	
 	@Override
 	public void drawShape(int xDelta, int yDelta, Shape shape) {
+		Affine oldTransform = canvas.getGraphicsContext2D().getTransform();
 		Affine transform = canvas.getGraphicsContext2D().getTransform();
-		Translate translate = Affine.translate(xDelta, yDelta);
+		transform.appendTranslation(xDelta, yDelta);
 		
-		canvas.getGraphicsContext2D().setTransform(
-				translate.getMxx(),translate.getMyx(),
-				translate.getMxy(),translate.getMyy(),
-				translate.getTx(),translate.getTy());
-		path(shape.getPathIterator(null), true);
 		canvas.getGraphicsContext2D().setTransform(transform);
+		path(shape.getPathIterator(null), true);
+		canvas.getGraphicsContext2D().setTransform(oldTransform);
 	}
 	
 	@Override

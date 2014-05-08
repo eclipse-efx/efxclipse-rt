@@ -146,6 +146,11 @@ public abstract class Device implements Drawable {
 		}
 		
 		@Override
+		public void getTransform(Transform transform) {
+			Util.logNotImplemented();
+		}
+		
+		@Override
 		public void setForeground(Color color) {
 			Util.logNotImplemented();
 		}
