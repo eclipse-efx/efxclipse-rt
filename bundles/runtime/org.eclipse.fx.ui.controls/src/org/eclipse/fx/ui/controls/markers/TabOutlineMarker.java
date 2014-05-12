@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.sun.javafx.css.converters.PaintConverter;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.css.CssMetaData;
 import javafx.css.Styleable;
@@ -29,6 +27,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.StrokeType;
 
+import com.sun.javafx.css.converters.PaintConverter;
+
 public class TabOutlineMarker extends Group {
 	private Bounds containerBounds;
 	private Bounds referenceBounds;
@@ -36,6 +36,7 @@ public class TabOutlineMarker extends Group {
 
 	public TabOutlineMarker(Bounds containerBounds, Bounds referenceBounds, boolean before) {
 		updateBounds(containerBounds, referenceBounds, before);
+		getStyleClass().add("tab-outline-marker");
 	}
 
 	public void updateBounds(Bounds containerBounds, Bounds referenceBounds, boolean before) {

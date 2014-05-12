@@ -32,6 +32,7 @@ import com.sun.javafx.css.converters.PaintConverter;
 
 public class PositionMarker extends Group {
 	public PositionMarker() {
+		setMouseTransparent(true);
 		getStyleClass().add("position-marker");
 		Circle outer = new Circle(8);
 		outer.setFill(Color.WHITE);
