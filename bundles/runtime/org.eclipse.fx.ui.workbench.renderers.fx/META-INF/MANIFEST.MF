@@ -29,7 +29,8 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="0.10.1",
  org.eclipse.fx.ui.keybindings;bundle-version="0.9.0",
  org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)";resolution:=optional,
  org.eclipse.osgi.services;bundle-version="3.4.0",
- org.eclipse.e4.ui.services;bundle-version="1.1.0"
+ org.eclipse.e4.ui.services;bundle-version="1.1.0",
+ org.eclipse.fx.ui.controls;bundle-version="1.0.0"
 Import-Package: javafx.application,
  javafx.beans;version="2.0.0",
  javafx.beans.property,
@@ -46,13 +47,13 @@ Import-Package: javafx.application,
  javafx.scene.layout,
  javafx.scene.paint;version="2.2.0",
  javafx.scene.shape;version="2.2.0",
+ javafx.scene.transform;version="2.2.0",
  javafx.stage,
  javafx.util,
  javax.annotation;version="1.0.0",
  javax.inject;version="1.0.0"
-Service-Component: OSGI-INF/popupfunction.xml
+Service-Component: OSGI-INF/popupfunction.xml,
+ OSGI-INF/defaultdndfeedback.xml
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.fx.ui.workbench.renderers.fx,
- org.eclipse.fx.ui.workbench.renderers.fx.actions,
- org.eclipse.fx.ui.workbench.renderers.fx.services,
  org.eclipse.fx.ui.workbench.renderers.fx.widget

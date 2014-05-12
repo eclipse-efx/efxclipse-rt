@@ -352,6 +352,14 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			} else {
 				s = new Scene(this.rootPane, this.mWindow.getWidth(), this.mWindow.getHeight());
 			}
+			
+			// Add a css which sets defaults
+			{
+				URL url = getClass().getClassLoader().getResource("css/efx-default.css");
+				if( url != null ) {
+					s.getStylesheets().add(url.toExternalForm());				
+				}				
+			}
 
 			s.focusOwnerProperty().addListener(this::handleFocusOwner);
 

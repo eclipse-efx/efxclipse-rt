@@ -56,7 +56,8 @@ import org.osgi.service.event.EventHandler;
  *            the native item content widget type
  */
 public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStack, WStack<N, I, IC>> {
-	// private static final String MAP_ITEM_KEY = "fx.rendering.stackitem";
+	private static final String MAP_ITEM_KEY = "fx.rendering.stackitem"; //$NON-NLS-1$
+	public final static String MAP_MOVE = "fx.rendering.stackitem.move"; //$NON-NLS-1$
 
 	@Inject
 	RendererFactory factory;
@@ -252,6 +253,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	private WStackItem<I, IC> createStackItem(WStack<N, I, IC> stack, final MStackElement e, AbstractRenderer<MStackElement, ?> renderer) {
 		IEclipseContext context = renderer.setupRenderingContext(e);
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
+		e.getTransientData().put(MAP_ITEM_KEY, item);
 		item.setDomElement(e);
 		item.setInitCallback(new WCallback<WStackItem<I, IC>, IC>() {
 
@@ -261,6 +263,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				BaseStackRenderer.this.inLazyInit = true;
 				try {
 					WLayoutedWidget<MStackElement> widget = engineCreateWidget(e);
+					
 					if (widget != null) {
 						return (IC) widget.getStaticLayoutNode();
 					}
@@ -290,7 +293,11 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 				AbstractRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 				WStack<N, I, IC> stack = getWidget(parent);
-				WStackItem<I, IC> item = createStackItem(getWidget(parent), element, renderer);
+				WStackItem<I, IC> item;
+				item = (WStackItem<I, IC>) element.getTransientData().get(MAP_ITEM_KEY);
+				if( item == null || ! getWidget(parent).getStackItemClass().isAssignableFrom(item.getClass()) ) {
+					item = createStackItem(getWidget(parent), element, renderer);	
+				}
 
 				stack.addItems(idx, Collections.singletonList(item));
 			}
@@ -314,6 +321,9 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		for (MStackElement element : list) {
 			if (element.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG)) {
 				removeOnHideList.add(element);
+			}
+			if( ! element.getTransientData().containsKey(MAP_MOVE) ) {
+				element.getTransientData().remove(MAP_ITEM_KEY);
 			}
 		}
 		parent.getChildren().removeAll(removeOnHideList);

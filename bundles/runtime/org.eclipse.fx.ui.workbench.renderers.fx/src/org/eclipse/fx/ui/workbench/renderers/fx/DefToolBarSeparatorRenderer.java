@@ -45,6 +45,16 @@ public class DefToolBarSeparatorRenderer extends BaseToolBarSeparatorRenderer<Se
 		public void setStyleId(String id) {
 			getWidget().setId(id);
 		}
+		
+		@Override
+		public void removeStyleClasses(List<String> classnames) {
+			getWidget().getStyleClass().removeAll(classnames);
+		}
+
+		@Override
+		public void removeStyleClasses(String... classnames) {
+			getWidget().getStyleClass().removeAll(classnames);
+		}
 
 		@Override
 		protected Separator createWidget() {

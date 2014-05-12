@@ -8,13 +8,29 @@ import javafx.scene.shape.Polyline;
 import javafx.scene.shape.StrokeType;
 
 public class TabOutlineMarker extends Group {
+	private Bounds containerBounds;
+	private Bounds referenceBounds;
+	private boolean before;
+	
 	public TabOutlineMarker(Bounds containerBounds, Bounds referenceBounds, boolean before) {
+		updateBounds(containerBounds, referenceBounds, before);
+	}
+	
+	public void updateBounds(Bounds containerBounds, Bounds referenceBounds, boolean before) {
+		if( containerBounds.equals(this.containerBounds) && referenceBounds.equals(this.referenceBounds) && before == this.before ) {
+			return;
+		}
+		
+		this.containerBounds = containerBounds;
+		this.referenceBounds = referenceBounds;
+		this.before = before;
+		
 		Polyline pl = new Polyline();
 		
 		if( before ) {
-			referenceBounds = new BoundingBox(referenceBounds.getMinX()-referenceBounds.getWidth()/2, referenceBounds.getMinY(),referenceBounds.getWidth(), referenceBounds.getHeight());
+			referenceBounds = new BoundingBox(Math.max(0,referenceBounds.getMinX()-referenceBounds.getWidth()/2), referenceBounds.getMinY(),referenceBounds.getWidth(), referenceBounds.getHeight());
 		} else {
-			referenceBounds = new BoundingBox(referenceBounds.getMaxX()-referenceBounds.getWidth()/2, referenceBounds.getMinY(),referenceBounds.getWidth(), referenceBounds.getHeight());
+			referenceBounds = new BoundingBox(Math.max(0,referenceBounds.getMaxX()-referenceBounds.getWidth()/2), referenceBounds.getMinY(),referenceBounds.getWidth(), referenceBounds.getHeight());
 		}
 		
 		pl.getPoints().addAll(
@@ -66,6 +82,6 @@ public class TabOutlineMarker extends Group {
 		pl.setStroke(Color.ORANGE);
 		pl.setStrokeWidth(3);
 		pl.setStrokeType(StrokeType.INSIDE);
-		getChildren().add(pl);
+		getChildren().setAll(pl);
 	}
 }
