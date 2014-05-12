@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+	id="org.eclipse.fx.testcases.dnd.app.feature"
+	label="DnDSample Application Feature"
+	version="1.0.0.qualifier"
+	provider-name="${BundleProject_bundleVendor}"
+	>
+		<description url="http://www.efxclipse.org">
+			TODO FILL WITH CONTENT
+		</description>
+
+		<copyright url="http://www.efxclipse.org">
+			TODO FILL WITH CONTENT
+		</copyright>
+
+		<license url="http://www.efxclipse.org">
+			TODO FILL WITH CONTENT
+		</license>
+
+   		<plugin id="org.eclipse.fx.testcases.dnd.app" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.keybindings" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.keybindings.e4" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.keybindings.generic" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.core.databinding" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.databinding" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.core" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.di" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.dialogs" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.javafx" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.osgi" install-size="0" version="0.0.0" unpack="false" fragment="true"/>
+   		<plugin id="org.eclipse.fx.osgi.util" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.panes" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.services" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.theme" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.workbench.base" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.workbench.fx" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.workbench.fx.controls" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.workbench.renderers.base" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.workbench.renderers.fx" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.fx.ui.lifecycle" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="com.ibm.icu" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="javax.annotation" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="javax.inject" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="javax.xml" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.apache.commons.logging" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.apache.commons.lang" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.core.commands" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.core.contenttype" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.core.databinding" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.core.databinding.observable" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.core.databinding.property" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.core.expressions" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.core.filesystem" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.core.jobs" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.core.resources" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.core.runtime" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.e4.core.commands" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.e4.core.contexts" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.e4.core.di" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.e4.core.di.extensions" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.e4.core.services" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.e4.ui.di" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.e4.ui.model.workbench" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.e4.ui.services" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.e4.ui.workbench" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.emf.common" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.emf.databinding" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.emf.ecore" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.emf.ecore.change" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.emf.ecore.xmi" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.equinox.app" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.equinox.common" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.equinox.concurrent" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.equinox.ds" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.equinox.event" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.equinox.launcher" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.equinox.preferences" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.equinox.registry" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.equinox.util" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.osgi" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.osgi.services" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.eclipse.equinox.console" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.apache.felix.gogo.command" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.apache.felix.gogo.runtime" install-size="0" version="0.0.0" unpack="false" />
+   		<plugin id="org.apache.felix.gogo.shell" install-size="0" version="0.0.0" unpack="false" />
+
+
+</feature>

@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>DnDSample - jemmy tests</name>
+	<groupId>org.eclipse.fx.testcases.dnd</groupId>
+	<artifactId>org.eclipse.fx.testcases.dnd.app.jemmy</artifactId>
+	<packaging>eclipse-test-plugin</packaging>
+
+	<parent>
+		<groupId>org.eclipse.fx.testcases.dnd</groupId>
+		<artifactId>org.eclipse.fx.testcases.dnd.app.releng</artifactId>
+		<relativePath>../org.eclipse.fx.testcases.dnd.app.releng/pom.xml</relativePath>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<testSuite>org.eclipse.fx.testcases.dnd.app.jemmy</testSuite>
+					<testClass>org.eclipse.fx.testcases.dnd.app.jemmy.TestSuite</testClass>
+					<useUIHarness>false</useUIHarness>
+					<useUIThread>false</useUIThread>
+					<argLine>-Xms40m -Xmx512m -Defxclipse.osgi.hook.debug=true -Dosgi.framework.extensions=org.eclipse.fx.osgi -Dtest.jemmy.product=org.eclipse.fx.testcases.dnd.app.product</argLine>
+					<appArgLine>-consoleLog -nosplash</appArgLine>
+					<application>org.eclipse.pde.junit.runtime.coretestapplication</application>
+					<dependencies>
+						<dependency>
+							<type>eclipse-feature</type>
+							<artifactId>org.eclipse.fx.testcases.dnd.app.feature</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+					</dependencies>
+					<frameworkExtensions>
+						<frameworkExtension>
+							<groupId>org.eclipse.fx.runtime</groupId>
+							<artifactId>org.eclipse.fx.osgi</artifactId>
+							<version>${efx-version}</version>
+						</frameworkExtension>
+					</frameworkExtensions>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<resolver>p2</resolver>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>
