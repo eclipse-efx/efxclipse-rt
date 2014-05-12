@@ -51,6 +51,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 	private static final String CSS_CLASS_PART_CONTENT = "part-content"; //$NON-NLS-1$
 	private static final String CSS_CLASS_VIEW_TOOLBAR_CONTAINER = "view-toolbar-container"; //$NON-NLS-1$
 	private static final String CSS_CLASS_VIEW_TOOLBAR = "view-toolbar"; //$NON-NLS-1$
+	private static final String CSS_CLASS_PART_EXPAND_GROUNP = "part-expand-group"; //$NON-NLS-1$
 
 	@Override
 	protected Class<? extends WPart<Pane, Node, Node>> getWidgetClass(MPart part) {
@@ -155,8 +156,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				this.menuGroup.setManaged(false);
 
 				this.expandGroup = new StackPane();
-				// FIXME This should be moved to css
-				this.expandGroup.setStyle("-fx-background-color: gray");
+				this.expandGroup.getStyleClass().add(CSS_CLASS_PART_EXPAND_GROUNP);
 				this.expandGroup.setOpacity(0.5);
 				Node handler = new HandleGroup();// new ImageView(new
 													// Image(getClass().getClassLoader().getResourceAsStream("/icons/format-line-spacing-normal.png")));
