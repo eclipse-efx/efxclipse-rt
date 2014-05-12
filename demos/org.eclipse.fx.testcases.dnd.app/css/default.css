@@ -1,1 +1,8 @@
 /* Main CSS-File */
+.tab-outline-marker {
+	-fx-fill: green;
+}
+
+.position-marker {
+	-fx-fill: darkmagenta;
+}
