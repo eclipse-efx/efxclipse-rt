@@ -156,7 +156,7 @@ public abstract class AbstractE4Application implements IApplication {
 	 *            the application context
 	 * @return the workbench instance
 	 */
-	@NonNull
+	@Nullable
 	public E4Workbench createE4Workbench(IApplicationContext applicationContext, IEclipseContext appContext) {
 		ContextInjectionFactory.setDefault(appContext);
 
