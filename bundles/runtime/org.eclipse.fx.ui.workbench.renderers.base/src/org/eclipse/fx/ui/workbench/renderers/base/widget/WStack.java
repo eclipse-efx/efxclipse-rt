@@ -68,7 +68,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 		 * @param callback
 		 *            the callback
 		 */
-		public void setInitCallback(@NonNull WCallback<WStackItem<I, IC>, IC> callback);
+		public void setInitCallback(@NonNull WCallback<WStackItem<I, IC>, @Nullable IC> callback);
 
 		/**
 		 * Set a callback to invoke when the tab is closed and veto it if
