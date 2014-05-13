@@ -11,8 +11,9 @@
 package org.eclipse.fx.ui.workbench.base.rendering;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.jdt.annotation.Nullable;
 
-@SuppressWarnings("restriction")
 public interface RendererFactory {
+	@Nullable
 	public <R extends AbstractRenderer<?, ?>> R getRenderer(MUIElement modelObject);
 }
