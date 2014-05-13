@@ -138,6 +138,11 @@ public class DnDSupporter {
 				Tab tab = (Tab) field.get(referenceNode);
 				MStackElement reference = ((WStackItem<?, ?>)tab.getUserData()).getDomElement();
 				
+				if( reference == null ) {
+					cleanup();
+					return;
+				}
+				
 				boolean noMove = false;
 				if( reference == DRAG_DATA.item ) {
 					noMove = true;
@@ -209,6 +214,10 @@ public class DnDSupporter {
 				field.setAccessible(true);
 				Tab tab = (Tab) field.get(referenceNode);
 				MStackElement reference = ((WStackItem<?, ?>)tab.getUserData()).getDomElement();
+				if(reference == null) {
+					cleanup();
+					return;
+				}
 				
 				boolean noMove = false;
 				if( reference == DRAG_DATA.item ) {
@@ -283,6 +292,9 @@ public class DnDSupporter {
 				
 				WStackItem<?, ?> item = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) t.getUserData();
 				MStackElement itemElement = item.getDomElement();
+				if( itemElement == null ) {
+					return;
+				}
 				MPartStack itemContainer = (MPartStack)(MUIElement)itemElement.getParent();
 				DragData dragData = new DragData(itemContainer, itemElement);
 				if( dragStartCallback.call(dragData).booleanValue() ) {
