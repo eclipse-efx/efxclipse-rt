@@ -203,12 +203,13 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 
 		@Override
 		public void setAccelerator(KeySequence sequence) {
-
-			if (sequence.getKeyStrokes().length == 1) {
+			if (sequence != null && sequence.getKeyStrokes().length == 1) {
 				KeyStroke k = sequence.getKeyStrokes()[0];
 
 				getWidget().setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(Character.toUpperCase((char) k.getKeyCode()) + ""), //$NON-NLS-1$
 						k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCommandModifier() ? ModifierValue.DOWN : ModifierValue.ANY, ModifierValue.ANY));
+			} else {
+				getWidget().setAccelerator(null);
 			}
 
 			// new KeyCharacterCombination
