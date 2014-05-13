@@ -30,7 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public class FXBeanObservableValueDecorator extends DecoratingObservableValue
 		implements IJFXBeanObservable {
-	@NonNull
+	@Nullable
 	private PropertyDescriptor propertyDescriptor;
 
 	/**
@@ -59,7 +59,7 @@ public class FXBeanObservableValueDecorator extends DecoratingObservableValue
 	}
 
 	@Override
-	@NonNull
+	@Nullable
 	public PropertyDescriptor getPropertyDescriptor() {
 		return this.propertyDescriptor;
 	}
