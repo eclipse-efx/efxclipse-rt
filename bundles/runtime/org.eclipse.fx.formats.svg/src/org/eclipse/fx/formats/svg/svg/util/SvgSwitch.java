@@ -99,6 +99,7 @@ import org.eclipse.fx.formats.svg.svg.____ATTRIBUTES____;
 import org.eclipse.fx.formats.svg.svg.____DATATYPES____;
 import org.eclipse.fx.formats.svg.svg.____ELEMENTES____;
 import org.eclipse.fx.formats.svg.svg.____ENUMS____;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * <!-- begin-user-doc -->
@@ -113,7 +114,7 @@ import org.eclipse.fx.formats.svg.svg.____ENUMS____;
  * @see org.eclipse.fx.formats.svg.svg.SvgPackage
  * @generated
  */
-public class SvgSwitch<T1> extends Switch<T1> {
+public class SvgSwitch<@Nullable T1> extends Switch<T1> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
