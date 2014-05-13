@@ -10,14 +10,14 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.eclipse.e4.ui.model.application.ui.SideValue;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
@@ -79,7 +79,8 @@ public class DefTrimBarRenderer extends BaseTrimBarRenderer<Pane> {
 		@Override
 		public void addChild(WLayoutedWidget<MTrimElement> trimElementWidget) {
 			Node n = (Node) trimElementWidget.getStaticLayoutNode();
-			if (trimElementWidget.getDomElement().getTags().contains(TAG_FILLSPACE)) {
+			MTrimElement element = trimElementWidget.getDomElement();
+			if (element != null && element.getTags().contains(TAG_FILLSPACE)) {
 				if (isVertical()) {
 					VBox.setVgrow(n, Priority.ALWAYS);
 				} else {
@@ -92,7 +93,8 @@ public class DefTrimBarRenderer extends BaseTrimBarRenderer<Pane> {
 		@Override
 		public void addChild(int idx, WLayoutedWidget<MTrimElement> trimElementWidget) {
 			Node n = (Node) trimElementWidget.getStaticLayoutNode();
-			if (trimElementWidget.getDomElement().getTags().contains(TAG_FILLSPACE)) {
+			MTrimElement element = trimElementWidget.getDomElement();
+			if (element != null && element.getTags().contains(TAG_FILLSPACE)) {
 				if (isVertical()) {
 					VBox.setVgrow(n, Priority.ALWAYS);
 				} else {
