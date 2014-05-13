@@ -4,7 +4,7 @@ Bundle-Name: Controls
 Bundle-SymbolicName: org.eclipse.fx.ui.controls
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)";resolution:=optional
+Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional
 Export-Package: org.eclipse.fx.ui.controls.markers,
  org.eclipse.fx.ui.controls.styledtext
 Import-Package: com.sun.javafx;version="2.2.0",
