@@ -592,7 +592,11 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					PagninationItemImpl item = (PagninationItemImpl) PaginationWidgetImpl.this.items.get(param.intValue());
 					item.handleSelection();
 					PaginationWidgetImpl.this.mouseSelectedItemCallback.call(item);
-					return item.getNativeItem().getContent();
+					PaginationItem nativeItem = item.getNativeItem();
+					if( nativeItem != null ) {
+						return nativeItem.getContent();	
+					}
+					return null;
 				}
 			});
 			p.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
