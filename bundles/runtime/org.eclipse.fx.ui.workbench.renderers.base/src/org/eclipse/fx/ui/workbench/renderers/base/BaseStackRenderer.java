@@ -42,6 +42,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -255,7 +256,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
 		e.getTransientData().put(MAP_ITEM_KEY, item);
 		item.setDomElement(e);
-		item.setInitCallback(new WCallback<WStackItem<I, IC>, IC>() {
+		item.setInitCallback(new WCallback<WStackItem<I, IC>, @Nullable IC>() {
 
 			@SuppressWarnings("unchecked")
 			@Override
@@ -334,7 +335,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		ArrayList<WStackItem<I, IC>> resultList = new ArrayList<WStackItem<I, IC>>();
 		for (WStackItem<I, IC> item : parentWidget.getItems()) {
 			MStackElement domElement = item.getDomElement();
-			if (list.contains(domElement) && (domElement.isToBeRendered()) && (domElement.isVisible())) {
+			if (domElement != null && list.contains(domElement) && (domElement.isToBeRendered()) && (domElement.isVisible())) {
 				resultList.add(item);
 			}
 		}
