@@ -20,6 +20,7 @@ import org.eclipse.fx.ui.di.FXMLBuilder;
 import org.eclipse.fx.ui.di.FXMLLoader;
 import org.eclipse.fx.ui.di.FXMLLoaderFactory;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -43,13 +44,13 @@ public class FXMLLoaderSupplier extends ExtendedObjectSupplier {
 		return new FXMLLoaderFactory() {
 
 			@Override
-			public <N> FXMLBuilder<N> loadRequestorRelative(String relativePath) {
+			public <N> FXMLBuilder<N> loadRequestorRelative(@NonNull String relativePath) {
 				return InjectingFXMLLoader.create(context, requestingClass,
 						relativePath, extended);
 			}
 
 			@Override
-			public <N> FXMLBuilder<N> loadBundleRelative(String relativePath) {
+			public <N> FXMLBuilder<N> loadBundleRelative(@NonNull String relativePath) {
 				return InjectingFXMLLoader.create(context,
 						FrameworkUtil.getBundle(requestingClass), relativePath,
 						extended);
