@@ -73,7 +73,7 @@ public interface WWidget<M extends MUIElement> {
 	 * @param domElement
 	 *            the dom element
 	 */
-	public void setDomElement(@NonNull M domElement);
+	public void setDomElement(@Nullable M domElement);
 
 	/**
 	 * @return access the associated application model element
