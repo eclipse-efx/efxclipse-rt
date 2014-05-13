@@ -63,7 +63,7 @@ public interface WPerspectiveStack<N, I, IC> extends WLayoutedWidget<MPerspectiv
 		 * @param callback
 		 *            the callback to invoke
 		 */
-		public void setInitCallback(@NonNull WCallback<WStackItem<I, IC>, IC> callback);
+		public void setInitCallback(@NonNull WCallback<WStackItem<I, IC>, @Nullable IC> callback);
 
 		/**
 		 * Callback to invoke when the perspective is closed and to veto it
