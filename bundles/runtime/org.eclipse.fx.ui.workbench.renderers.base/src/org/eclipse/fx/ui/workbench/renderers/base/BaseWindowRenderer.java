@@ -237,8 +237,9 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 				// Set the render flag for other windows
 				// TODO What do we do with: other top-level windows, ...
-				if (!((MApplicationElement) param.getDomElement().getParent() instanceof MApplication)) {
-					param.getDomElement().setToBeRendered(false);
+				MWindow element = param.getDomElement();
+				if (element != null && !((MApplicationElement) element.getParent() instanceof MApplication)) {
+					element.setToBeRendered(false);
 				}
 				return Boolean.TRUE;
 			}
@@ -257,6 +258,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	 *            the window widget to use for parenting
 	 * @return the result
 	 */
+	//FIXME use a java.util.List
 	@NonNull
 	protected abstract Save[] promptToSave(@NonNull MWindow element, @NonNull Collection<MPart> dirtyParts, @NonNull WWindow<N> widget);
 
