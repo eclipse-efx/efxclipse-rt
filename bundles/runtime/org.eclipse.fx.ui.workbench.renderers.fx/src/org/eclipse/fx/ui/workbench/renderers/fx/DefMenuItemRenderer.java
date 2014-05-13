@@ -37,6 +37,7 @@ import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * default renderer for {@link MMenuItem}
@@ -137,6 +138,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 			return item;
 		}
 
+		@NonNull
 		private MenuItem internalCreateWidget() {
 			switch (this.type) {
 			case CHECK:
