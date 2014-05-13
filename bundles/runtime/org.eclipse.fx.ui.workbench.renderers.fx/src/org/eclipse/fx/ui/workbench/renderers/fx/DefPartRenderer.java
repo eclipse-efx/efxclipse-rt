@@ -112,14 +112,16 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				public void handle(MouseEvent event) {
 					event.consume();
 					MPart domElement = getDomElement();
-					PartImpl.this.service.activate(domElement, true);
-					if (!checkFocusControl() && (domElement.getObject() != null)) {
-						// ContextInjectionFactory.invoke(domElement.getObject(),
-						// Focus.class, domElement.getContext(), null);
-						// if (!checkFocusControl()) {
-						// p.requestFocus();
-						// }
-						p.requestFocus();
+					if( domElement != null ) {
+						PartImpl.this.service.activate(domElement, true);
+						if (!checkFocusControl() && (domElement.getObject() != null)) {
+							// ContextInjectionFactory.invoke(domElement.getObject(),
+							// Focus.class, domElement.getContext(), null);
+							// if (!checkFocusControl()) {
+							// p.requestFocus();
+							// }
+							p.requestFocus();
+						}						
 					}
 				}
 			});
@@ -213,12 +215,12 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				getStaticLayoutNode();
 
 				this.toolbarGroup = new StackPane();
-
-				if (getDomElement().getTags().contains(TOOL_BAR_FULL_SPAN_TAG)) {
+				MPart element = getDomElement();
+				if (element != null && element.getTags().contains(TOOL_BAR_FULL_SPAN_TAG)) {
 					final BorderPane p = new BorderPane();
 					p.setCenter(this.toolbarGroup);
 					p.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
-					if (getDomElement().getTags().contains(TOOLBAR_MENU_FLOAT_TAG)) {
+					if (element.getTags().contains(TOOLBAR_MENU_FLOAT_TAG)) {
 						AnchorPane.setLeftAnchor(p, Double.valueOf(0.0));
 						AnchorPane.setRightAnchor(p, Double.valueOf(0.0));
 						AnchorPane.setTopAnchor(p, Double.valueOf(0.0));
@@ -233,7 +235,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 							}
 						});
 					} else {
-						if (getDomElement().getTags().contains(TOOLBAR_MENU_BOTTOM_TAG)) {
+						if (element.getTags().contains(TOOLBAR_MENU_BOTTOM_TAG)) {
 							this.dataArea.setBottom(p);
 						} else {
 							this.dataArea.setTop(p);
@@ -243,7 +245,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					BorderPane p = new BorderPane();
 					p.setRight(this.toolbarGroup);
 					p.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
-					if (getDomElement().getTags().contains(TOOLBAR_MENU_BOTTOM_TAG)) {
+					if (element != null && element.getTags().contains(TOOLBAR_MENU_BOTTOM_TAG)) {
 						this.dataArea.setBottom(p);
 					} else {
 						this.dataArea.setTop(p);
@@ -267,7 +269,8 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 
 					@Override
 					public void handle(MouseEvent event) {
-						if (getDomElement().getTags().contains(TOOLBAR_MENU_FLOAT_TAG)) {
+						MPart element = getDomElement();
+						if (element != null && element.getTags().contains(TOOLBAR_MENU_FLOAT_TAG)) {
 							PartImpl.this.toolbarGroup.getParent().setVisible(false);
 						}
 					}
