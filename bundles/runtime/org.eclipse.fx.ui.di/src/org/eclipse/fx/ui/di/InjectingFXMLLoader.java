@@ -24,6 +24,7 @@ import org.eclipse.fx.core.fxml.ExtendedFXMLLoader;
 import org.eclipse.fx.osgi.util.OSGiFXMLLoader;
 import org.eclipse.fx.osgi.util.OSGiFXMLLoader.FXMLData;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleWiring;
@@ -35,7 +36,10 @@ import org.osgi.framework.wiring.BundleWiring;
  *            the root node
  */
 public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
+	@Nullable
 	ResourceBundle resourceBundle;
+	
+	@Nullable
 	BuilderFactory builderFactory;
 
 	/**
