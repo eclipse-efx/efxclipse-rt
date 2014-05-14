@@ -39,12 +39,14 @@ import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
+import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupporter;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupport;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -80,6 +82,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		@Inject
 		DnDFeedbackService dndFeedback;
+		
+		private final MPartStack domainElement;
+		
+		@Inject
+		public StackWidgetImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartStack domainElement) {
+			this.domainElement = domainElement;
+		}
 		
 		@Override
 		protected Pane createStaticPane() {
@@ -143,20 +152,31 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			// }
 			// }
 		}
-
+		
 		@Override
 		protected TabPane createWidget() {
+			DnDSupport dnd = new DnDSupport(
+					(param) -> StackWidgetImpl.this.dragStartCallback,
+					(param) -> StackWidgetImpl.this.droppedCallback,
+					StackWidgetImpl.this.dndFeedback,
+					domainElement);
 			
-			TabPane p = new TabPane() {
-				@Override
-				protected Skin<?> createDefaultSkin() {
-					Skin<?> skin = super.createDefaultSkin();
-					DnDSupporter.hookTabPane(skin, getDomElement(), StackWidgetImpl.this.dndFeedback,
-							(param) -> StackWidgetImpl.this.dragStartCallback,
-							(param) -> StackWidgetImpl.this.droppedCallback);
-					return skin;
-				}
-			};
+			DnDTabPane p = new DnDTabPane();
+			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_START, dnd::handleDragStart);
+			p.addEventHandler(DnDTabPane.DND_TABPANE_DROPPED, dnd::handleDropped);
+			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_FEEDBACK, dnd::handleFeedback);
+			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_FINISHED, dnd::handleFinished);
+			
+//			TabPane p = new TabPane() {
+//				@Override
+//				protected Skin<?> createDefaultSkin() {
+//					Skin<?> skin = super.createDefaultSkin();
+//					DnDSupporter.hookTabPane(skin, getDomElement(), StackWidgetImpl.this.dndFeedback,
+//							(param) -> StackWidgetImpl.this.dragStartCallback,
+//							(param) -> StackWidgetImpl.this.droppedCallback);
+//					return skin;
+//				}
+//			};
 
 			// ContextMenu m = new ContextMenu();
 			//
