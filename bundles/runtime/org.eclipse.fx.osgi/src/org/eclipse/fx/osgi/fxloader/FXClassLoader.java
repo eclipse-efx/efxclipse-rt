@@ -80,6 +80,7 @@ public class FXClassLoader extends ClassLoaderHook {
 		
 		private ClasspathManager classpathManager;
 		boolean implicitExitSet;
+		boolean inImplicitResolve;
 		
 		
 		public FXModuleClassloader(final boolean isSWT, final URLClassLoader fxClassloader,
@@ -93,41 +94,45 @@ public class FXClassLoader extends ClassLoaderHook {
 				@Override
 				public Class<?> findLocalClass(String classname)
 						throws ClassNotFoundException {
-					if(isSWT && ! FXModuleClassloader.this.implicitExitSet && "javafx.embed.swt.FXCanvas".equals(classname) ) { //$NON-NLS-1$					
+					if(isSWT && ! FXModuleClassloader.this.inImplicitResolve && ! FXModuleClassloader.this.implicitExitSet && "javafx.embed.swt.FXCanvas".equals(classname) ) { //$NON-NLS-1$					
 						try {
-							if( FXClassloaderConfigurator.DEBUG ) {
-								System.err.println("FXModuleClassloader#findLocalClass - Someone is trying to load FXCanvas. Need to check for GTK3"); //$NON-NLS-1$
-							}
-
-							// Check for GTK3
-							String value = (String) loadClass("org.eclipse.swt.SWT").getDeclaredMethod("getPlatform").invoke(null); //$NON-NLS-1$ //$NON-NLS-2$
-							if( "gtk".equals(value) ) { //$NON-NLS-1$
+							FXModuleClassloader.this.inImplicitResolve = true;
+							try {
 								if( FXClassloaderConfigurator.DEBUG ) {
-									System.err.println("FXModuleClassloader#findLocalClass - We are on GTK need to take a closer look"); //$NON-NLS-1$
+									System.err.println("FXModuleClassloader#findLocalClass - Someone is trying to load FXCanvas. Need to check for GTK3"); //$NON-NLS-1$
 								}
-								Boolean b = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3").get(null);  //$NON-NLS-1$//$NON-NLS-2$
-								if( b.booleanValue() ) {
+
+								// Check for GTK3
+								String value = (String) loadClass("org.eclipse.swt.SWT").getDeclaredMethod("getPlatform").invoke(null); //$NON-NLS-1$ //$NON-NLS-2$
+								if( "gtk".equals(value) ) { //$NON-NLS-1$
 									if( FXClassloaderConfigurator.DEBUG ) {
-										System.err.println("FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
+										System.err.println("FXModuleClassloader#findLocalClass - We are on GTK need to take a closer look"); //$NON-NLS-1$
 									}
-									throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
+									Boolean b = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3").get(null);  //$NON-NLS-1$//$NON-NLS-2$
+									if( b.booleanValue() ) {
+										if( FXClassloaderConfigurator.DEBUG ) {
+											System.err.println("FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
+										}
+										throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
+									}
 								}
+							} catch (Throwable e) {
+								System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
+								e.printStackTrace();
 							}
 							
-							if( FXClassloaderConfigurator.DEBUG ) {
-								System.err.println("FXModuleClassloader#findLocalClass - We need to disable implicit exiting when running in embedded mode"); //$NON-NLS-1$
+							try {
+								if( FXClassloaderConfigurator.DEBUG ) {
+									System.err.println("FXModuleClassloader#findLocalClass - We need to disable implicit exiting when running in embedded mode"); //$NON-NLS-1$
+								}
+								loadClass("javafx.application.Platform").getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE); //$NON-NLS-1$ //$NON-NLS-2$
+								FXModuleClassloader.this.implicitExitSet = true;
+							} catch (Throwable e) {
+								System.err.println("FXModuleClassloader#findLocalClass - Unable to setImplicitExit to false"); //$NON-NLS-1$
+								e.printStackTrace();
 							}
-						} catch (Throwable e) {
-							System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
-							e.printStackTrace();
-						}
-						
-						try {
-							loadClass("javafx.application.Platform").getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE); //$NON-NLS-1$ //$NON-NLS-2$
-							FXModuleClassloader.this.implicitExitSet = true;
-						} catch (Throwable e) {
-							System.err.println("FXModuleClassloader#findLocalClass - Unable to setImplicitExit to false"); //$NON-NLS-1$
-							e.printStackTrace();
+						} finally {
+							FXModuleClassloader.this.inImplicitResolve = false;
 						}
 					}
 					
