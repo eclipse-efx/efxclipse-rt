@@ -31,7 +31,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @param <T>
  *            the cell value type
  */
-public abstract class PropertyTableCellFactory<S, T> implements
+public interface PropertyTableCellFactory<S, T> extends
 		Callback<TableColumn<S, T>, TableCell<S, T>> {
 	/**
 	 * Create a factory who uses the given property for the text
@@ -44,13 +44,7 @@ public abstract class PropertyTableCellFactory<S, T> implements
 	@NonNull
 	public static <S, T> PropertyTableCellFactory<S, T> textFactory(
 			@NonNull final IValueProperty property) {
-		return new PropertyTableCellFactory<S, T>() {
-
-			@Override
-			public TableCell<S, T> call(TableColumn<S, T> param) {
-				return textCell(property);
-			}
-		};
+		return (param) -> textCell(property);
 	}
 
 	/**
@@ -67,13 +61,7 @@ public abstract class PropertyTableCellFactory<S, T> implements
 	@NonNull
 	public static <S, T> PropertyTableCellFactory<S, T> textFactory(
 			@NonNull final String template, @NonNull final IValueProperty... property) {
-		return new PropertyTableCellFactory<S, T>() {
-
-			@Override
-			public TableCell<S, T> call(TableColumn<S, T> param) {
-				return textCell(template, property);
-			}
-		};
+		return (param) -> textCell(template, property);
 	}
 
 	/**

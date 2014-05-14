@@ -30,7 +30,7 @@ import javafx.util.Callback;
  * @param <O>
  *            the type
  */
-public abstract class PropertyListCellFaytory<O> implements
+public interface PropertyListCellFaytory<O> extends
 		Callback<ListView<O>, ListCell<O>> {
 	/**
 	 * Create a factory who uses the given property as the cells text content
@@ -43,13 +43,7 @@ public abstract class PropertyListCellFaytory<O> implements
 	@NonNull
 	public static <O> PropertyListCellFaytory<O> textFactory(
 			@NonNull final IValueProperty textProperty) {
-		return new PropertyListCellFaytory<O>() {
-
-			@Override
-			public ListCell<O> call(ListView<O> param) {
-				return textCell(textProperty);
-			}
-		};
+		return (param) -> textCell(textProperty);
 	}
 
 	/**
@@ -65,14 +59,7 @@ public abstract class PropertyListCellFaytory<O> implements
 	@NonNull
 	public static <O> PropertyListCellFaytory<O> textFactory(
 			@NonNull final String template, @NonNull final IValueProperty... textProperties) {
-		return new PropertyListCellFaytory<O>() {
-
-			@Override
-			public ListCell<O> call(ListView<O> param) {
-				return textCell(template, textProperties);
-			}
-
-		};
+		return (param) -> textCell(template, textProperties);
 	}
 
 	/**
