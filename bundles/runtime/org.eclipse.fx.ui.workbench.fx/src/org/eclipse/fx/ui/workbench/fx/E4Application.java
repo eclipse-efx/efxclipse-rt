@@ -129,7 +129,7 @@ public class E4Application extends AbstractE4Application {
 		this.instanceLocation = (Location) this.workbench.getContext().get(E4Workbench.INSTANCE_LOCATION);
 
 		try {
-			if (!checkInstanceLocation(this.instanceLocation))
+			if (!checkInstanceLocation(this.instanceLocation, this.workbench.getContext()))
 				return;
 
 			this.workbenchContext = this.workbench.getContext();

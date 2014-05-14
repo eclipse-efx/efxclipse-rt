@@ -493,7 +493,14 @@ public abstract class AbstractE4Application implements IApplication {
 	 * @return <code>true</code> if the location is fine
 	 */
 	@SuppressWarnings("static-method")
-	protected boolean checkInstanceLocation(Location instanceLocation) {
+	protected boolean checkInstanceLocation(Location instanceLocation, IEclipseContext context) {
+		// Eclipse has been run with -data @none or -data @noDefault options so
+		// we don't need to validate the location
+		if (instanceLocation == null
+				&& Boolean.FALSE.equals(context.get(IWorkbench.PERSIST_STATE))) {
+			return true;
+		}
+				
 		if (instanceLocation == null) {
 			// MessageDialog
 			// .openError(
