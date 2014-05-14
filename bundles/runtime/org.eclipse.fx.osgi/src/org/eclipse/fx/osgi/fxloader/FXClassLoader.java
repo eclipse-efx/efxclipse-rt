@@ -393,9 +393,15 @@ public class FXClassLoader extends ClassLoaderHook {
 			try {
 				if( ! this.implicitExitSet && "javafx.embed.swt.FXCanvas".equals(name) ) { //$NON-NLS-1$
 					try {
-						Class<?> platformClass = loadClass("javafx.application.Platform"); //$NON-NLS-1$
-						Method method = platformClass.getDeclaredMethod("setImplicitExit", boolean.class); //$NON-NLS-1$
-						method.invoke(null, Boolean.FALSE);
+						// Check for GTK3
+						String value = (String) loadClass("org.eclipse.swt.SWT").getDeclaredMethod("getPlatform").invoke(null); //$NON-NLS-1$ //$NON-NLS-2$
+						if( "gtk".equals(value) ) { //$NON-NLS-1$
+							Boolean b = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3").get(null);  //$NON-NLS-1$//$NON-NLS-2$
+							if( b.booleanValue() ) {
+								throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
+							}
+						}
+						loadClass("javafx.application.Platform").getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE); //$NON-NLS-1$ //$NON-NLS-2$
 						this.implicitExitSet = true;
 					} catch (Throwable e) {
 						System.err.println("Unable to setImplicitExit to false"); //$NON-NLS-1$
