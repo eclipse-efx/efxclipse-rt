@@ -12,17 +12,15 @@ package org.eclipse.fx.ui.databinding;
 
 import java.text.MessageFormat;
 
-import org.eclipse.core.databinding.observable.value.ComputedValue;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.fx.core.databinding.AdapterFactory;
-import org.eclipse.fx.core.databinding.ObservableWritableValue;
-import org.eclipse.jdt.annotation.NonNull;
-
 import javafx.scene.control.Cell;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
+
+import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.fx.ui.databinding.internal.TemplateTextOnlyPropertyListCell;
+import org.eclipse.fx.ui.databinding.internal.TextOnlyPropertyListCell;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Factory for list cells
@@ -91,103 +89,5 @@ public interface PropertyListCellFaytory<O> extends
 			@NonNull IValueProperty... textProperties) {
 		return new TemplateTextOnlyPropertyListCell<>(template, textProperties);
 	}
-
-	static class TextOnlyPropertyListCell<O> extends ListCell<O> {
-		private IObservableValue currentObservable;
-		@NonNull
-		private IValueProperty textProperty;
-
-		public TextOnlyPropertyListCell(@NonNull IValueProperty textProperty) {
-			this.textProperty = textProperty;
-		}
-
-		@Override
-		protected void updateItem(O item, boolean empty) {
-			super.updateItem(item, empty);
-
-			IObservableValue oldObservable = this.currentObservable;
-			textProperty().unbind();
-
-			if (item != null && !empty) {
-				this.currentObservable = this.textProperty.observe(item);
-				ObservableWritableValue<String> adapt = AdapterFactory
-						.<String> adapt(this.currentObservable);
-				textProperty().bind(adapt);
-			} else {
-				setText(null);
-			}
-
-			if (oldObservable != null) {
-				oldObservable.dispose();
-			}
-		}
-	}
-
-	static class TemplateTextOnlyPropertyListCell<O> extends ListCell<O> {
-		private IObservableValue currentObservable;
-		@NonNull 
-		private IValueProperty[] properties;
-		@NonNull
-		private String template;
-
-		public TemplateTextOnlyPropertyListCell(@NonNull String template,
-				@NonNull IValueProperty... properties) {
-			this.template = template;
-			this.properties = properties;
-		}
-
-		@Override
-		protected void updateItem(O item, boolean empty) {
-			super.updateItem(item, empty);
-
-			IObservableValue oldObservable = this.currentObservable;
-			textProperty().unbind();
-
-			if (item != null && !empty) {
-				this.currentObservable = new TemplateComputedValue(item, this.template,
-						this.properties);
-				ObservableWritableValue<String> adapt = AdapterFactory
-						.<String> adapt(this.currentObservable);
-				textProperty().bind(adapt);
-			} else {
-				setText(null);
-			}
-
-			if (oldObservable != null)
-				oldObservable.dispose();
-		}
-	}
-
-	static class TemplateComputedValue extends ComputedValue {
-		@NonNull
-		private IObservableValue[] values;
-		@NonNull 
-		private String template;
-
-		public TemplateComputedValue(@NonNull Object o, @NonNull String template,
-				@NonNull IValueProperty[] properties) {
-			this.template = template;
-			this.values = new IObservableValue[properties.length];
-			for (int i = 0; i < this.values.length; i++) {
-				this.values[i] = properties[i].observe(o);
-			}
-		}
-
-		@Override
-		protected Object calculate() {
-			Object[] v = new Object[this.values.length];
-			for (int i = 0; i < this.values.length; i++) {
-				v[i] = this.values[i].getValue();
-			}
-			return MessageFormat.format(this.template, v);
-		}
-
-		@Override
-		public synchronized void dispose() {
-			super.dispose();
-			for (IObservableValue v : this.values) {
-				v.dispose();
-			}
-		}
-	}
+	
 }
