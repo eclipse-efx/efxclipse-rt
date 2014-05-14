@@ -101,7 +101,7 @@ public class DnDAddon {
 		}
 	}
 	
-	private Boolean droppedHandler(DropData d) {
+	private Void droppedHandler(DropData d) {
 		MElementContainer<MUIElement> sourceContainer = d.sourceElement.getParent();
 		MElementContainer<MUIElement> targetContainer = d.reference.getParent();
 		
@@ -154,7 +154,7 @@ public class DnDAddon {
 		};
 		timer.schedule(t, 200);
 		
-		return Boolean.TRUE;
+		return null;
 	}
 	
 	private Boolean dragStartHandler(DragData d) {

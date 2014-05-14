@@ -29,7 +29,7 @@ import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane.TabPaneFeedb
 @SuppressWarnings("javadoc")
 public class DnDSupport {
 	private final WCallback<Void, WCallback<DragData, Boolean>> dragStartCallbackProvider;
-	private final WCallback<Void, WCallback<DropData, Boolean>> dropCallbackProvider;
+	private final WCallback<Void, WCallback<DropData, Void>> dropCallbackProvider;
 	private final DnDFeedbackService feedbackService;
 	private final MPartStack stack;
 	
@@ -37,7 +37,7 @@ public class DnDSupport {
 
 	public DnDSupport(
 			WCallback<Void, WCallback<DragData, Boolean>> dragStartCallbackProvider,
-			WCallback<Void, WCallback<DropData, Boolean>> dropCallbackProvider,
+			WCallback<Void, WCallback<DropData, Void>> dropCallbackProvider,
 			DnDFeedbackService feedbackService,
 			MPartStack stack) {
 		this.dragStartCallbackProvider = dragStartCallbackProvider;
@@ -65,14 +65,11 @@ public class DnDSupport {
 	}
 	
 	public void handleDropped(TabPaneDroppedEvent event) {
-		WCallback<DropData, Boolean> call = this.dropCallbackProvider.call(null);
+		WCallback<DropData, Void> call = this.dropCallbackProvider.call(null);
 		if( call != null ) {
 			WStackItem<?, ?> referenceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) event.targetTab.getUserData();
 			WStackItem<?, ?> sourceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) event.sourceTab.getUserData();
-			
-			if( ! call.call(new DropData(referenceItem.getDomElement(), sourceItem.getDomElement(), event.type == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE)).booleanValue() ) {
-				event.consume();
-			}
+			call.call(new DropData(referenceItem.getDomElement(), sourceItem.getDomElement(), event.type == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE));
 		}
 	}
 	

@@ -356,19 +356,15 @@ public class DnDTabPane extends TabPane {
 				if( ! noMove ) {
 					TabPaneDroppedEvent dropped = new TabPaneDroppedEvent(this, DRAGGED_TAB, tab, type);
 					Event.fireEvent(this, dropped);
-					
-					if( dropped.isConsumed() ) {
-						event.setDropCompleted(false);
-					} else {
-						event.setDropCompleted(true);
-					}
+					event.setDropCompleted(true);
+				} else {
+					event.setDropCompleted(false);
 				}
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			event.acceptTransferModes(TransferMode.MOVE);
 	        event.consume();
 		}
 	}
