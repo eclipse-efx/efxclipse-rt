@@ -391,16 +391,31 @@ public class FXClassLoader extends ClassLoaderHook {
 		@Override
 		public Class<?> loadClass(String name) throws ClassNotFoundException {
 			try {
-				if( ! this.implicitExitSet && "javafx.embed.swt.FXCanvas".equals(name) ) { //$NON-NLS-1$
+				if( ! this.implicitExitSet && "javafx.embed.swt.FXCanvas".equals(name) ) { //$NON-NLS-1$					
 					try {
+						if( FXClassloaderConfigurator.DEBUG ) {
+							System.err.println("Someone is trying to load FXCanvas. Need to check for GTK3"); //$NON-NLS-1$
+						}
+
 						// Check for GTK3
 						String value = (String) loadClass("org.eclipse.swt.SWT").getDeclaredMethod("getPlatform").invoke(null); //$NON-NLS-1$ //$NON-NLS-2$
 						if( "gtk".equals(value) ) { //$NON-NLS-1$
+							if( FXClassloaderConfigurator.DEBUG ) {
+								System.err.println("We are on GTK need to take a closer look"); //$NON-NLS-1$
+							}
 							Boolean b = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3").get(null);  //$NON-NLS-1$//$NON-NLS-2$
 							if( b.booleanValue() ) {
+								if( FXClassloaderConfigurator.DEBUG ) {
+									System.err.println("We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
+								}
 								throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
 							}
 						}
+						
+						if( FXClassloaderConfigurator.DEBUG ) {
+							System.err.println("We need to disable implicit exiting when running in embedded mode"); //$NON-NLS-1$
+						}
+						
 						loadClass("javafx.application.Platform").getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE); //$NON-NLS-1$ //$NON-NLS-2$
 						this.implicitExitSet = true;
 					} catch (Throwable e) {
