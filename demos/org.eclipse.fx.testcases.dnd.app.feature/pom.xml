@@ -1,0 +1,16 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>DnDSample - application feature</name>
+	<groupId>org.eclipse.fx.testcases.dnd</groupId>
+	<artifactId>org.eclipse.fx.testcases.dnd.app.feature</artifactId>
+	<packaging>eclipse-feature</packaging>
+
+	<parent>
+		<groupId>org.eclipse.fx.testcases.dnd</groupId>
+		<artifactId>org.eclipse.fx.testcases.dnd.app.releng</artifactId>
+		<relativePath>../org.eclipse.fx.testcases.dnd.app.releng/pom.xml</relativePath>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+</project>

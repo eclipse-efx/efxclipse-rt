@@ -184,6 +184,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 
 	private void initDefaultEventListeners(IEventBroker broker) {
 		registerEventListener(broker, UIEvents.ApplicationElement.TOPIC_PERSISTEDSTATE);
+		registerEventListener(broker, UIEvents.ApplicationElement.TOPIC_TAGS);
 	}
 
 	@Override
@@ -262,7 +263,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 		if (!(changedObj instanceof MUIElement)) {
 			return;
 		}
-
+		
 		Object newValue = event.getProperty(UIEvents.EventTags.NEW_VALUE);
 		String attributeName = event.getProperty(UIEvents.EventTags.ATTNAME).toString();
 
@@ -277,11 +278,19 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 		if (inContextModification(e)) {
 			return;
 		}
-
+		
 		try {
 			BaseRenderer.this.contextModification.put(e, Boolean.TRUE);
 
 			if (changedObj instanceof MUIElement) {
+				if( event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.ApplicationElement.TAGS) ) {
+					MUIElement m = (MUIElement) changedObj;
+					if( m.getWidget() != null ) {
+						((WWidget<?>)m.getWidget()).removeStyleClasses(m.getTags());
+						((WWidget<?>)m.getWidget()).addStyleClasses(m.getTags());
+					}
+				}
+				
 				if (e.getRenderer() == BaseRenderer.this) {
 					IEclipseContext ctx = (IEclipseContext) e.getTransientData().get(RENDERING_CONTEXT_KEY);
 					if (ctx != null) {

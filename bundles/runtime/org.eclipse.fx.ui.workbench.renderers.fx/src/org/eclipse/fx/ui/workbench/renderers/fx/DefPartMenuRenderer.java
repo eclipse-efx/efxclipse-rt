@@ -59,6 +59,16 @@ public class DefPartMenuRenderer extends BasePartMenuRenderer<Control> {
 		public void addStyleClasses(String... classnames) {
 			getWidget().getStyleClass().addAll(classnames);
 		}
+		
+		@Override
+		public void removeStyleClasses(List<String> classnames) {
+			getWidget().getStyleClass().removeAll(classnames);
+		}
+
+		@Override
+		public void removeStyleClasses(String... classnames) {
+			getWidget().getStyleClass().removeAll(classnames);
+		}
 
 		@Override
 		public void setStyleId(String id) {

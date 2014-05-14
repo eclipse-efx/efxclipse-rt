@@ -51,8 +51,9 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 		}
 
 		private void syncOrientation(Observable o) {
-			if (getDomElement() != null && ((EObject) getDomElement()).eContainer() instanceof MTrimBar) {
-				MTrimBar bar = (MTrimBar) ((EObject) getDomElement()).eContainer();
+			MToolBar element = getDomElement();
+			if (element != null && ((EObject) element).eContainer() instanceof MTrimBar) {
+				MTrimBar bar = (MTrimBar) ((EObject) element).eContainer();
 				switch (bar.getSide()) {
 				case LEFT:
 				case RIGHT:

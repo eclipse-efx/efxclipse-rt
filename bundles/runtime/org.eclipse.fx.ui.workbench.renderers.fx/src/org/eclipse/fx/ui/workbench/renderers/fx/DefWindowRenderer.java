@@ -93,6 +93,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.Messages;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.Bundle;
 
@@ -106,7 +107,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	Messages messages;
 
 	@Override
-	protected Save[] promptToSave(MWindow element, Collection<MPart> dirtyParts, WWindow<Stage> widget) {
+	@NonNull
+	protected Save[] promptToSave(@NonNull MWindow element, @NonNull Collection<MPart> dirtyParts, @NonNull WWindow<Stage> widget) {
 		Save[] response = new Save[dirtyParts.size()];
 		GraphicsLoader graphicsLoader = getModelContext(element).get(GraphicsLoader.class);
 
@@ -123,7 +125,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		return response;
 	}
-
+	
 	@Override
 	protected Save promptToSave(MWindow element, MPart dirtyPart, WWindow<Stage> widget) {
 		QuestionCancelResult r = MessageDialog.openQuestionCancelDialog((Stage) widget.getWidget(), this.messages.DefWindowRenderer_promptToSave_Title, this.messages.DefWindowRenderer_promptToSave_Message(dirtyPart.getLocalizedLabel()));
@@ -352,6 +354,14 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			} else {
 				s = new Scene(this.rootPane, this.mWindow.getWidth(), this.mWindow.getHeight());
 			}
+			
+			// Add a css which sets defaults
+			{
+				URL url = getClass().getClassLoader().getResource("css/efx-default.css");
+				if( url != null ) {
+					s.getStylesheets().add(url.toExternalForm());				
+				}				
+			}
 
 			s.focusOwnerProperty().addListener(this::handleFocusOwner);
 
@@ -529,9 +539,18 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		public void setMainMenu(WLayoutedWidget<MMenu> menuWidget) {
 			if (this.decoratorPane == null) {
-				this.rootPane.setTop((Node) menuWidget.getStaticLayoutNode());
+				if( menuWidget == null ) {
+					this.rootPane.setTop(null);
+				} else {
+					this.rootPane.setTop((Node) menuWidget.getStaticLayoutNode());	
+				}
 			} else {
-				this.decoratorPane.setBottom((Node) menuWidget.getStaticLayoutNode());
+				if( menuWidget == null ) {
+					this.decoratorPane.setBottom(null);
+				} else {
+					this.decoratorPane.setBottom((Node) menuWidget.getStaticLayoutNode());	
+				}
+				
 			}
 		}
 
@@ -749,23 +768,42 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Override
 		public void setBottomTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			this.trimPane.setBottom((Node) trimBar.getStaticLayoutNode());
+			if( trimBar == null ) {
+				this.trimPane.setBottom(null);
+			} else {
+				this.trimPane.setBottom((Node) trimBar.getStaticLayoutNode());	
+			}
+			
 		}
 
 		@Override
 		public void setLeftTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			this.trimPane.setLeft((Node) trimBar.getStaticLayoutNode());
+			if( trimBar == null ) {
+				this.trimPane.setLeft(null);
+			} else {
+				this.trimPane.setLeft((Node) trimBar.getStaticLayoutNode());	
+			}
+			
 		}
 
 		@Override
 		public void setRightTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			this.trimPane.setRight((Node) trimBar.getStaticLayoutNode());
+			if( trimBar == null ) {
+				this.trimPane.setRight(null);
+			} else {
+				this.trimPane.setRight((Node) trimBar.getStaticLayoutNode());	
+			}
+			
 		}
 
 		@Override
 		public void setTopTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			Node g = (Node) trimBar.getStaticLayoutNode();
-			this.trimPane.setTop(g);
+			if( trimBar == null ) {
+				this.trimPane.setTop(null);
+			} else {
+				Node g = (Node) trimBar.getStaticLayoutNode();
+				this.trimPane.setTop(g);				
+			}
 		}
 
 		@Override

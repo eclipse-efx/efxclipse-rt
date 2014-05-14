@@ -130,18 +130,27 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		@Override
 		public void selectItem(int idx) {
 			WStackItem<PerspectiveStackItem, Node> item = this.items.get(idx);
-			Node node = item.getNativeItem().getContent();
-			if (getWidget().getCenter() != null && this.perspectiveSwitch != null) {
-				AnimationDelegate<BorderPane, Node> a = this.perspectiveSwitch.getDelegate(this.items.get(this.currentIndex).getDomElement(), item.getDomElement());
-				if (a == null) {
-					getWidget().setCenter(node);
+			PerspectiveStackItem nativeItem = item.getNativeItem();
+			if( nativeItem != null ) {
+				Node node = nativeItem.getContent();
+				if (getWidget().getCenter() != null && this.perspectiveSwitch != null) {
+					MPerspective curDomElement = this.items.get(this.currentIndex).getDomElement();
+					MPerspective nexDomElement = item.getDomElement();
+					if( curDomElement != null && nexDomElement != null ) {
+						AnimationDelegate<BorderPane, Node> a = this.perspectiveSwitch.getDelegate(curDomElement, nexDomElement);
+						if (a == null) {
+							getWidget().setCenter(node);
+						} else {
+							a.animate(getWidget(), node);
+						}	
+					} else {
+						getWidget().setCenter(node);
+					}
 				} else {
-					a.animate(getWidget(), node);
+					getWidget().setCenter(node);
 				}
-			} else {
-				getWidget().setCenter(node);
+				this.currentIndex = idx;				
 			}
-			this.currentIndex = idx;
 		}
 
 		@Override

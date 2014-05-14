@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.ui.workbench.renderers.fx.services;
+package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;

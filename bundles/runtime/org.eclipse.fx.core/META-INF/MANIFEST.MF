@@ -47,4 +47,4 @@ Bundle-Vendor: %Bundle-Vendor
 Service-Component: OSGI-INF/services/jlogger.xml,
  OSGI-INF/services/adapterservice.xml
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)";resolution:=optional
+Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional

@@ -42,5 +42,5 @@ public interface FXMLLoaderFactory {
 	 * @return the builder
 	 */
 	@NonNull
-	public <N> FXMLBuilder<N> loadRequestorRelative(@Nullable String relativePath);
+	public <N> FXMLBuilder<N> loadRequestorRelative(@NonNull String relativePath);
 }

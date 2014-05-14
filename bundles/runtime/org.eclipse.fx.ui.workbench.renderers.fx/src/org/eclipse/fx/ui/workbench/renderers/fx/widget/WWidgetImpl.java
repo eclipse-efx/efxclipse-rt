@@ -24,6 +24,8 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Base class for all widgets
@@ -35,12 +37,15 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
  */
 public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M> {
 	private N nativeWidget;
+
+	@Nullable
 	private M domElement;
 	private List<WCallback<Boolean, Void>> activationCallbacks = new ArrayList<WCallback<Boolean, Void>>();
 	private boolean active;
 	/**
 	 * The current widget state
 	 */
+	@NonNull
 	protected WidgetState state = WidgetState.IN_SETUP;
 
 	private WPropertyChangeHandler<? extends WWidget<M>> propertyChangeHandler;
@@ -48,6 +53,7 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 	/**
 	 * @return the widget
 	 */
+	@NonNull
 	protected abstract N createWidget();
 
 	@Override
@@ -132,12 +138,13 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 
 	@Override
 	public N getWidget() {
-		if (this.nativeWidget == null) {
-			this.nativeWidget = createWidget();
+		N widget = this.nativeWidget;
+		if (widget == null) {
+			widget = this.nativeWidget = createWidget();
 			bindProperties(this.nativeWidget);
 			setUserData(this);
 		}
-		return this.nativeWidget;
+		return widget;
 	}
 
 	/**
@@ -158,7 +165,7 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 	 * @param value
 	 *            the property to attach a listener
 	 */
-	protected void bindProperty(final String propertyName, ObservableValue<? extends Object> value) {
+	protected void bindProperty(@NonNull final String propertyName, @NonNull ObservableValue<? extends Object> value) {
 		value.addListener(new ChangeListener<Object>() {
 
 			@Override
@@ -189,7 +196,7 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 	 * @param newValue
 	 *            the new value
 	 */
-	protected final void fireChange(String propertyName, Object newValue) {
+	protected final void fireChange(@NonNull String propertyName, @Nullable Object newValue) {
 		if (this.propertyChangeHandler != null) {
 			WPropertyChangeEvent<WWidget<M>> e = new WPropertyChangeEvent<WWidget<M>>(this, propertyName, newValue);
 			this.propertyChangeHandler.propertyObjectChanged(e);

@@ -8,14 +8,15 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.ui.workbench.renderers.fx.services;
+package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.ui.services.EMenuService;
 
 /**
- * Context function to create a {@link PopupMenuService}
+ * Context function to create a {@link EMenuService}
  */
 public class PartPopupMenuServiceFunction extends ContextFunction {
 

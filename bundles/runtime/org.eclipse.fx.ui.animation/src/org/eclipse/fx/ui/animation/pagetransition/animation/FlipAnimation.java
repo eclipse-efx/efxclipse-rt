@@ -27,6 +27,7 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Flip between 2 nodes
@@ -80,7 +81,7 @@ public class FlipAnimation extends CenterSwitchAnimation {
 	}
 	
 	@Override
-	protected Animation createAndPrepareAnimation(Node area, Node newNode) {
+	protected Animation createAndPrepareAnimation(Node area, @Nullable Node newNode) {
 		ScaleTransition zoomOut = new ScaleTransition(Duration.millis(300));
 		zoomOut.setToX(0.7);
 		zoomOut.setToY(0.7);

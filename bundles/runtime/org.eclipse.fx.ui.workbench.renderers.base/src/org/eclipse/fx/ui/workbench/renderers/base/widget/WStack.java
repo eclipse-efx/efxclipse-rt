@@ -27,7 +27,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @param <IC>
  *            the native stack item content widget
  */
-public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxableWidget {
+public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxableWidget, WDragSourceWidget, WDragTargetWidget {
 	/**
 	 * Tag to use a pagination control
 	 */
@@ -68,7 +68,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 		 * @param callback
 		 *            the callback
 		 */
-		public void setInitCallback(@NonNull WCallback<WStackItem<I, IC>, IC> callback);
+		public void setInitCallback(@NonNull WCallback<WStackItem<I, IC>, @Nullable IC> callback);
 
 		/**
 		 * Set a callback to invoke when the tab is closed and veto it if
@@ -158,10 +158,9 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 *            the callback
 	 */
 	public void setKeySelectedItemCallback(@NonNull WCallback<WStackItem<I, IC>, Void> selectedItemCallback);
-
+	
 	/**
 	 * @return the number of items
 	 */
 	public int getItemCount();
-
 }

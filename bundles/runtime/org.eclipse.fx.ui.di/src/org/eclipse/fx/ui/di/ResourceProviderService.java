@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import javafx.scene.image.Image;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -30,5 +31,5 @@ public interface ResourceProviderService {
 	 *             in case something goes wrong
 	 */
 	@Nullable
-	public Image getImage(String key) throws IOException;
+	public Image getImage(@NonNull String key) throws IOException;
 }

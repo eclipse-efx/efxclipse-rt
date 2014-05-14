@@ -86,7 +86,7 @@ public class ExtendedFXMLLoader {
 	public static <T> T load(@NonNull ClassLoader cl,
 			@Nullable ResourceBundle resourceBundle, T root, @NonNull String path)
 			throws IOException {
-		return ExtendedFXMLLoader.<T, Object> loadWithController(cl,
+		return ExtendedFXMLLoader.<T,T, Object> loadWithController(cl,
 				resourceBundle, root, null, path).getNode();
 	}
 	
@@ -108,7 +108,7 @@ public class ExtendedFXMLLoader {
 			@Nullable ResourceBundle resourceBundle,
 			@Nullable Callback<Class<?>, Object> controllerFactory,
 			@NonNull String path) throws IOException {
-		return loadWithController(cl, resourceBundle, null, controllerFactory, path);
+		return ExtendedFXMLLoader.<N,N,C>loadWithController(cl, resourceBundle, null, controllerFactory, path);
 	}
 
 	/**
@@ -129,8 +129,8 @@ public class ExtendedFXMLLoader {
 	 */
 	@SuppressWarnings("unchecked")
 	@NonNull
-	public static <N, C> Data<N, C> loadWithController(@NonNull ClassLoader cl,
-			@Nullable ResourceBundle resourceBundle, @Nullable N root,
+	public static <N, D extends N, C> Data<N, C> loadWithController(@NonNull ClassLoader cl,
+			@Nullable ResourceBundle resourceBundle, @Nullable D root,
 			@Nullable Callback<Class<?>, Object> controllerFactory,
 			@NonNull String path) throws IOException {
 		try {

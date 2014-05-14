@@ -64,10 +64,17 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 			double prev = 0;
 			int idx = 0;
 			for (double d : getWidget().getDividerPositions()) {
-				this.items.get(idx++).getDomElement().setContainerData((d - prev) * 10 + ""); //$NON-NLS-1$
+				MPartSashContainerElement element = this.items.get(idx++).getDomElement();
+				if( element != null ) {
+					element.setContainerData((d - prev) * 10 + ""); //$NON-NLS-1$	
+				}
+				
 				prev = d;
 			}
-			this.items.get(this.items.size() - 1).getDomElement().setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$
+			MPartSashContainerElement element = this.items.get(this.items.size() - 1).getDomElement();
+			if( element != null ) {
+				element.setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$	
+			}
 		}
 
 		@Override

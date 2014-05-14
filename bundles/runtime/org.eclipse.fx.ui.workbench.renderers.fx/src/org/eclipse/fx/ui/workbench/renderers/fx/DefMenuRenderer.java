@@ -96,7 +96,17 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		public void addStyleClasses(String... classnames) {
 			getWidget().getStyleClass().addAll(classnames);
 		}
+		
+		@Override
+		public void removeStyleClasses(List<String> classnames) {
+			getWidget().getStyleClass().removeAll(classnames);
+		}
 
+		@Override
+		public void removeStyleClasses(String... classnames) {
+			getWidget().getStyleClass().removeAll(classnames);
+		}
+		
 		@Override
 		public void setStyleId(String id) {
 			getWidget().setId(id);

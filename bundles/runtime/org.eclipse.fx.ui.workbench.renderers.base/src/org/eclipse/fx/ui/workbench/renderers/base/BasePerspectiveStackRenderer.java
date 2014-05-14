@@ -38,6 +38,8 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspectiveStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspectiveStack.WStackItem;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -209,11 +211,11 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		}
 	}
 
-	private WStackItem<I, IC> createStackItem(WPerspectiveStack<N, I, IC> stack, final MPerspective e, AbstractRenderer<MPerspective, ?> renderer) {
+	private WStackItem<I, IC> createStackItem(WPerspectiveStack<N, I, IC> stack, @NonNull final MPerspective e, AbstractRenderer<MPerspective, ?> renderer) {
 		IEclipseContext context = renderer.setupRenderingContext(e);
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
 		item.setDomElement(e);
-		item.setInitCallback(new WCallback<WStackItem<I, IC>, IC>() {
+		item.setInitCallback(new WCallback<WStackItem<I, IC>, @Nullable IC>() {
 
 			@SuppressWarnings("unchecked")
 			@Override

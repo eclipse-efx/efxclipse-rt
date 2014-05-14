@@ -28,7 +28,7 @@ public interface ResourceService {
 	 * @param <T>
 	 *            the type of resource
 	 */
-	public interface IPooledResource<T> {
+	public interface IPooledResource<@Nullable T> {
 		/**
 		 * @return the native resource
 		 */

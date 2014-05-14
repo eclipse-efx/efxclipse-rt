@@ -73,7 +73,7 @@ public interface WWidget<M extends MUIElement> {
 	 * @param domElement
 	 *            the dom element
 	 */
-	public void setDomElement(@NonNull M domElement);
+	public void setDomElement(@Nullable M domElement);
 
 	/**
 	 * @return access the associated application model element
@@ -97,6 +97,23 @@ public interface WWidget<M extends MUIElement> {
 	 */
 	public void addStyleClasses(@NonNull String... classnames);
 
+	/**
+	 * Add a list of style class names used for a CSS class-Selector in your css
+	 * 
+	 * @param classnames
+	 *            list of classnames
+	 */
+	public void removeStyleClasses(@NonNull List<String> classnames);
+
+	/**
+	 * A styleclass names used for a CSS class-Selector in your css
+	 * 
+	 * @param classnames
+	 *            the classnames to add
+	 */
+	public void removeStyleClasses(@NonNull String... classnames);
+	
+	
 	/**
 	 * Set a style id used for an CSS ID-Selector in your css
 	 * 

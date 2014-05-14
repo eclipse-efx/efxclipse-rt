@@ -99,6 +99,16 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	}
 
 	@Override
+	public void removeStyleClasses(List<String> classnames) {
+		getWidgetNode().getStyleClass().removeAll(classnames);
+	}
+
+	@Override
+	public void removeStyleClasses(String... classnames) {
+		getWidgetNode().getStyleClass().removeAll(classnames);
+	}
+	
+	@Override
 	public void setStyleId(String id) {
 		getWidgetNode().setId(id);
 	}

@@ -43,7 +43,7 @@ public interface FXMLBuilder<N> {
 	 * @return the builder instance
 	 */
 	@NonNull
-	FXMLBuilder<N> builderFactory(BuilderFactory builderFactory);
+	FXMLBuilder<N> builderFactory(@NonNull BuilderFactory builderFactory);
 
 	/**
 	 * Load the FXML-Document

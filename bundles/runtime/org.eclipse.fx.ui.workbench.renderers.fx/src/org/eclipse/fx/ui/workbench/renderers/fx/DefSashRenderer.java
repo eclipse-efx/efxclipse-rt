@@ -93,12 +93,16 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			Node n = (Node) widget.getStaticLayoutNode();
 
 			GridLayoutPane p = getWidget();
-			if (getDomElement().isHorizontal()) {
+			MPartSashContainer element = getDomElement();
+			if ( element != null && element.isHorizontal()) {
 				p.setNumColumns(p.getNumColumns() + 1);
 			}
 
-			GridData gd = toGridData(widget.getDomElement().getPersistedState());
-			GridLayoutPane.setConstraint(n, gd);
+			MPartSashContainerElement domElement2 = widget.getDomElement();
+			if( domElement2 != null ) {
+				GridData gd = toGridData(domElement2.getPersistedState());
+				GridLayoutPane.setConstraint(n, gd);				
+			}
 			p.getChildren().add(n);
 		}
 
@@ -114,13 +118,17 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 
 			for (WLayoutedWidget<MPartSashContainerElement> w : list) {
 				Node n = (Node) w.getStaticLayoutNode();
-
-				GridData gd = toGridData(w.getDomElement().getPersistedState());
-				GridLayoutPane.setConstraint(n, gd);
+				
+				MPartSashContainerElement element = w.getDomElement();
+				if( element != null ) {
+					GridData gd = toGridData(element.getPersistedState());
+					GridLayoutPane.setConstraint(n, gd);					
+				}
 				nodeList.add(n);
 			}
 
-			if (getDomElement().isHorizontal()) {
+			MPartSashContainer element = getDomElement();
+			if (element != null && element.isHorizontal()) {
 				p.setNumColumns(p.getNumColumns() + nodeList.size());
 			}
 
@@ -134,13 +142,17 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 
 			for (WLayoutedWidget<MPartSashContainerElement> w : list) {
 				Node n = (Node) w.getStaticLayoutNode();
-
-				GridData gd = toGridData(w.getDomElement().getPersistedState());
-				GridLayoutPane.setConstraint(n, gd);
+				
+				MPartSashContainerElement element = w.getDomElement();
+				if( element != null ) {
+					GridData gd = toGridData(element.getPersistedState());
+					GridLayoutPane.setConstraint(n, gd);					
+				}
 				nodeList.add(n);
 			}
 
-			if (getDomElement().isHorizontal()) {
+			MPartSashContainer element = getDomElement();
+			if (element != null && element.isHorizontal()) {
 				p.setNumColumns(p.getNumColumns() + nodeList.size());
 			}
 
@@ -209,10 +221,16 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 				return;
 			}
 			for (double d : getWidget().getDividerPositions()) {
-				this.items.get(idx++).getDomElement().setContainerData((d - prev) * 10 + ""); //$NON-NLS-1$
+				MPartSashContainerElement element = this.items.get(idx++).getDomElement();
+				if( element != null ) {
+					element.setContainerData((d - prev) * 10 + ""); //$NON-NLS-1$	
+				}
 				prev = d;
 			}
-			this.items.get(this.items.size() - 1).getDomElement().setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$
+			MPartSashContainerElement element = this.items.get(this.items.size() - 1).getDomElement();
+			if( element != null ) {
+				element.setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$	
+			}
 		}
 
 		@Override

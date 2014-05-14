@@ -25,6 +25,8 @@ import javax.inject.Inject;
 import org.eclipse.fx.osgi.util.LoggerCreator;
 import org.eclipse.fx.ui.di.ResourceProviderService;
 import org.eclipse.fx.ui.di.ResourceService;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -35,14 +37,16 @@ import org.osgi.framework.ServiceReference;
  * Resource service implementation
  */
 public class ResourceServiceImpl implements ResourceService {
-	static class PooledResource<T> implements IPooledResource<T> {
+	static class PooledResource<@Nullable T> implements IPooledResource<T> {
 		int count;
+		@Nullable
 		private T resource;
+		@NonNull
 		private String id;
 		private ResourceServiceImpl resourceService;
 
-		PooledResource(ResourceServiceImpl resourceService, String id,
-				T resource) {
+		PooledResource(@NonNull ResourceServiceImpl resourceService, @NonNull String id,
+				@Nullable T resource) {
 			this.id = id;
 			this.count = 1;
 			this.resourceService = resourceService;
@@ -65,7 +69,6 @@ public class ResourceServiceImpl implements ResourceService {
 			if (this.count == 0) {
 				this.resourceService.removePooledResource(this);
 				this.resource = null;
-				this.id = null;
 				this.resourceService = null;
 			}
 		}
@@ -94,7 +97,11 @@ public class ResourceServiceImpl implements ResourceService {
 				this.pooledImages.add(image);
 			}
 
-			return image.getResource();
+			Image r = image.getResource();
+			if( r == null ) {
+				throw new IOException("Image could not be loaded"); //$NON-NLS-1$
+			}
+			return r;
 		}
 
 		@Override
@@ -130,12 +137,13 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public IPooledResource<Image> getImage(String key) throws IOException {
+	public IPooledResource<Image> getImage(@NonNull String key) throws IOException {
 		return loadResource(key);
 	}
 
 	@SuppressWarnings("unchecked")
-	private <R> PooledResource<R> loadResource(String key) throws IOException {
+	@NonNull
+	private <R> IPooledResource<@Nullable R> loadResource(@NonNull String key) throws IOException {
 		PooledResource<R> resource = null;
 
 		resource = (PooledResource<R>) this.imagePool.get(key);
@@ -144,7 +152,6 @@ public class ResourceServiceImpl implements ResourceService {
 			resource.count++;
 		} else {
 			resource = new PooledResource<R>(this, key, (R) lookupResource(key));
-
 			this.imagePool.put(key, (PooledResource<Image>) resource);
 		}
 
@@ -152,7 +159,7 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <R> R lookupResource(String key) throws IOException {
+	private <R> R lookupResource(@NonNull String key) throws IOException {
 		ResourceProviderService provider = lookupOSGI(key);
 		if (provider != null) {
 			return (R) provider.getImage(key);

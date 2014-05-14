@@ -21,6 +21,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
+import javafx.scene.control.Skin;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyEvent;
@@ -39,11 +40,14 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
+import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupporter;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * default renderer for {@link MPartStack}
@@ -64,6 +68,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
+		WCallback<DragData, Boolean> dragStartCallback;
+		WCallback<DropData, Boolean> droppedCallback;
+		
 		// private WCallback<WMinMaxState, Void> minMaxCallback;
 		// private MinMaxGroup minMaxGroup;
 		boolean inKeyTraversal;
@@ -71,6 +78,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		// @Inject
 		// private EModelService modelService;
 
+		@Inject
+		DnDFeedbackService dndFeedback;
+		
 		@Override
 		protected Pane createStaticPane() {
 			return new StackPane() {
@@ -136,7 +146,17 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		@Override
 		protected TabPane createWidget() {
-			TabPane p = new TabPane();
+			
+			TabPane p = new TabPane() {
+				@Override
+				protected Skin<?> createDefaultSkin() {
+					Skin<?> skin = super.createDefaultSkin();
+					DnDSupporter.hookTabPane(skin, getDomElement(), StackWidgetImpl.this.dndFeedback,
+							(param) -> StackWidgetImpl.this.dragStartCallback,
+							(param) -> StackWidgetImpl.this.droppedCallback);
+					return skin;
+				}
+			};
 
 			// ContextMenu m = new ContextMenu();
 			//
@@ -251,7 +271,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					} else {
 						cb = StackWidgetImpl.this.keySelectedItemCallback;
 					}
-
+					
 					if (cb != null) {
 						if (w.tab.getContent() != null && !w.tab.getContent().isVisible()) {
 							// At the moment the visibility changes the content
@@ -312,7 +332,11 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		@Override
 		public void addItems(int index, List<WStackItem<Object, Node>> items) {
-			getWidget().getTabs().addAll(index, extractTabs(items));
+			if( index >= getWidget().getTabs().size() ) {
+				addItems(items);
+			} else {
+				getWidget().getTabs().addAll(index, extractTabs(items));	
+			}
 		}
 
 		private static final List<Tab> extractTabs(List<WStackItem<Object, Node>> items) {
@@ -349,6 +373,18 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			}
 			getWidget().getTabs().removeAll(l);
 		}
+		
+		@Override
+		public void setDragStartCallback(@NonNull WCallback<DragData, Boolean> dragStackCallback) {
+			this.dragStartCallback = dragStackCallback;
+		}
+
+		@Override
+		public void setDragDroppedCallback(@NonNull WCallback<DropData, Boolean> droppedCallback) {
+			this.droppedCallback = droppedCallback;
+		}
+		
+		
 	}
 
 	static class StackItemImpl implements WStackItem<Object, Node> {
@@ -556,7 +592,11 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					PagninationItemImpl item = (PagninationItemImpl) PaginationWidgetImpl.this.items.get(param.intValue());
 					item.handleSelection();
 					PaginationWidgetImpl.this.mouseSelectedItemCallback.call(item);
-					return item.getNativeItem().getContent();
+					PaginationItem nativeItem = item.getNativeItem();
+					if( nativeItem != null ) {
+						return nativeItem.getContent();	
+					}
+					return null;
 				}
 			});
 			p.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
@@ -570,6 +610,16 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				}
 			});
 			return p;
+		}
+		
+		@Override
+		public void setDragStartCallback(WCallback<DragData, Boolean> dragStackCallback) {
+			// not implemented yet
+		}
+
+		@Override
+		public void setDragDroppedCallback(WCallback<DropData, Boolean> callback) {
+			// not implemented yet
 		}
 
 	}
