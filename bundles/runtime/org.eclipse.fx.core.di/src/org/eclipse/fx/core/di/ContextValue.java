@@ -32,5 +32,5 @@ public @interface ContextValue {
 	 * @return the key in the context binding to
 	 */
 	@NonNull
-	String contextKey();
+	String value();
 }
