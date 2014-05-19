@@ -134,6 +134,7 @@ public abstract class AdapterFactoryCellFactory {
 	 * @param adapterFactory
 	 *            the adapter factory
 	 */
+	@SuppressWarnings({ "null", "unused" })
 	public AdapterFactoryCellFactory(@NonNull AdapterFactory adapterFactory) {
 		super();
 
@@ -220,22 +221,22 @@ public abstract class AdapterFactoryCellFactory {
 		return null;
 	}
 
-	static void applyItemProviderStyle(@NonNull Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
+	static void applyItemProviderStyle(@Nullable Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		applyItemProviderLabel(item, cell, adapterFactory);
 		applyItemProviderColor(item, cell, adapterFactory);
 		applyItemProviderFont(item, cell, adapterFactory);
 	}
 
-	static void applyItemProviderFont(@NonNull Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
+	static void applyItemProviderFont(@Nullable Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		IItemFontProvider fontProvider = (IItemFontProvider) adapterFactory.adapt(item, IItemFontProvider.class);
 		if (fontProvider != null) {
-			Font font = fontFromObject(fontProvider.getFont(item));
-			if (font != null)
-				cell.setFont(font);
+			cell.setFont(fontFromObject(fontProvider.getFont(item)));
+		} else {
+			cell.setFont(null);
 		}
 	}
 
-	static Font fontFromObject(@NonNull Object object) {
+	static Font fontFromObject(@Nullable Object object) {
 
 		if (object instanceof URI) {
 			URI fontURI = (URI) object;
@@ -284,27 +285,25 @@ public abstract class AdapterFactoryCellFactory {
 		return null;
 	}
 
-	static void applyItemProviderLabel(@NonNull Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
+	static void applyItemProviderLabel(@Nullable Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		IItemLabelProvider labelProvider = (IItemLabelProvider) adapterFactory.adapt(item, IItemLabelProvider.class);
 
 		if (labelProvider != null) {
 			cell.setText(labelProvider.getText(item));
-
-			if (item != null) {
-				Node image = graphicFromObject(labelProvider.getImage(item));
-				if (image != null)
-					cell.setGraphic(image);
-			}
+			cell.setGraphic(graphicFromObject(labelProvider.getImage(item)));
+		} else {
+			cell.setText(null);
+			cell.setGraphic(null);
 		}
 	}
 
-	static void applyTableItemProviderStyle(@NonNull Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
+	static void applyTableItemProviderStyle(@Nullable Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		applyTableItemProviderLabel(item, columnIndex, cell, adapterFactory);
 		applyTableItemProviderColor(item, columnIndex, cell, adapterFactory);
 		applyTableItemProviderFont(item, columnIndex, cell, adapterFactory);
 	}
 
-	static void applyTableItemProviderLabel(@NonNull Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
+	static void applyTableItemProviderLabel(@Nullable Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		ITableItemLabelProvider labelProvider = (ITableItemLabelProvider) adapterFactory.adapt(item, ITableItemLabelProvider.class);
 		if (labelProvider != null) {
 			cell.setText(labelProvider.getColumnText(item, columnIndex));
@@ -318,29 +317,31 @@ public abstract class AdapterFactoryCellFactory {
 		}
 	}
 
-	static void applyTableItemProviderColor(@NonNull Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
+	static void applyTableItemProviderColor(@Nullable Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		ITableItemColorProvider colorProvider = (ITableItemColorProvider) adapterFactory.adapt(item, ITableItemColorProvider.class);
 		if (colorProvider != null) {
-			Color foreground = colorFromObject(colorProvider.getForeground(item, columnIndex));
-			if (foreground != null)
-				cell.setTextFill(foreground);
-
+			cell.setTextFill(colorFromObject(colorProvider.getForeground(item, columnIndex)));
 			String background = cssColorFromObject(colorProvider.getBackground(item, columnIndex));
-			if (background != null)
+			if (background != null) {
 				cell.setStyle("-fx-background-color: " + background); //$NON-NLS-1$
+			} else {
+				cell.setStyle(null);
+			}
+		} else {
+			cell.setTextFill(null);
 		}
 	}
 
-	static void applyTableItemProviderFont(@NonNull Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
+	static void applyTableItemProviderFont(@Nullable Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		ITableItemFontProvider fontProvider = (ITableItemFontProvider) adapterFactory.adapt(item, ITableItemFontProvider.class);
 		if (fontProvider != null) {
-			Font font = fontFromObject(fontProvider.getFont(item, columnIndex));
-			if (font != null)
-				cell.setFont(font);
+			cell.setFont(fontFromObject(fontProvider.getFont(item, columnIndex)));
+		} else {
+			cell.setFont(null);
 		}
 	}
 
-	static Node graphicFromObject(@NonNull Object object) {
+	static Node graphicFromObject(@Nullable Object object) {
 		if (object instanceof Node) {
 			return (Node) object;
 		} else if (object instanceof URL) {
@@ -361,20 +362,23 @@ public abstract class AdapterFactoryCellFactory {
 		return null;
 	}
 
-	static void applyItemProviderColor(@NonNull Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
+	static void applyItemProviderColor(@Nullable Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		IItemColorProvider colorProvider = (IItemColorProvider) adapterFactory.adapt(item, IItemColorProvider.class);
 		if (colorProvider != null) {
-			Color foreground = colorFromObject(colorProvider.getForeground(item));
-			if (foreground != null)
-				cell.setTextFill(foreground);
-
+			cell.setTextFill(colorFromObject(colorProvider.getForeground(item)));
 			String background = cssColorFromObject(colorProvider.getBackground(item));
-			if (background != null)
+			if (background != null) {
 				cell.setStyle("-fx-background-color: " + background); //$NON-NLS-1$
+			} else {
+				cell.setStyle(null);
+			}
+		} else {
+			cell.setTextFill(null);
+			cell.setStyle(null);
 		}
 	}
 
-	static Color colorFromObject(@NonNull Object object) {
+	static Color colorFromObject(@Nullable Object object) {
 		URI colorURI = toColorURI(object);
 
 		if (colorURI != null) {
@@ -391,7 +395,7 @@ public abstract class AdapterFactoryCellFactory {
 		return null;
 	}
 
-	static String cssColorFromObject(@NonNull Object object) {
+	static String cssColorFromObject(@Nullable Object object) {
 		URI colorURI = toColorURI(object);
 
 		if (colorURI != null)
@@ -400,7 +404,7 @@ public abstract class AdapterFactoryCellFactory {
 		return null;
 	}
 
-	static URI toColorURI(@NonNull Object object) {
+	static URI toColorURI(@Nullable Object object) {
 		if (object instanceof URI) {
 			URI colorURI = (URI) object;
 
