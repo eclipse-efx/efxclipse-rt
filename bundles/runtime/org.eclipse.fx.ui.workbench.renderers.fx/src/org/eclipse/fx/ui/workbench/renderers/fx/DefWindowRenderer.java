@@ -418,7 +418,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				this.applicationContext.set(Constants.APP_FOCUS_NODE, this.stage.getScene().getFocusOwner());
 			}
 
-			activate();
+			if( ! isActive() ) {
+				activate();
+				this.eventBroker.send(Constants.WINDOW_ACTIVATED, getDomElement());
+			}
 		}
 
 		private void handleFocusOwner(ObservableValue<? extends Node> observable, Node oldValue, Node _newValue) {
@@ -712,19 +715,19 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				AnimationDelegate<Stage> delegate = this.windowTransitionService.getShowDelegate(this.mWindow);
 				if (delegate != null) {
 					delegate.animate(this.stage, () -> {
-						activate();	
+						activateWindow();	
 						this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 					});
 				} else {
 					getWidget().show();
 					// force activation of the stage see 435273
-					activate();
+					activateWindow();
 					this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 				}
 			} else {
 				getWidget().show();
 				// force activation of the stage see 435273
-				activate();
+				activateWindow();
 				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}
 			
@@ -738,7 +741,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if( this.windows.size() > 0 ) {
 				this.stage.requestFocus();
 				// force activation of the stage see 435273
-				activate();
+				activateWindow();
 			}
 		}
 

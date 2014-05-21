@@ -17,6 +17,7 @@ public final class Constants {
 	public static final String ROOT_TOPIC = "org/eclipse/fx";
 	public static final String WINDOW_SHOWN = ROOT_TOPIC + "/MWindow/Shown";
 	public static final String WINDOW_HIDDEN = ROOT_TOPIC + "/MWindow/Hidden";
+	public static final String WINDOW_ACTIVATED = ROOT_TOPIC + "/MWindow/Activated";
 	
 	public static final String PERSPECTIVE_SHOWN = ROOT_TOPIC + "/MPerspective/Shown";
 	public static final String PERSPECTIVE_HIDDEN = ROOT_TOPIC + "/MPerspective/Hidden";
