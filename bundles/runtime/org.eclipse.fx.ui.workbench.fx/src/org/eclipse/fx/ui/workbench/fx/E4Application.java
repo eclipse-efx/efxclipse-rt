@@ -92,10 +92,6 @@ public class E4Application extends AbstractE4Application {
 			this.eventAdmin = bundleContext.getService(ref);
 		}
 
-		// Looks like OS-X wants to have the context class loader to locate
-		// FX-Classes
-		Thread.currentThread().setContextClassLoader(Application.class.getClassLoader());
-
 		launchE4JavaFxApplication();
 
 		try {
