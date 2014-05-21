@@ -267,7 +267,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.fx.ui.controls"
          download-size="0"
@@ -281,7 +281,6 @@ This Agreement is governed by the laws of the State of New York and the intellec
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
 
    <plugin
          id="org.eclipse.fx.ui.animation.source"
@@ -2207,6 +2206,13 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
    <plugin
          id="org.eclipse.fx.core.di.context.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.annotation"
          download-size="0"
          install-size="0"
          version="0.0.0"
