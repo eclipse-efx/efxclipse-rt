@@ -404,12 +404,16 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		private void handledFocus(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 			if (newValue.booleanValue()) {
-				if (this.stage.getScene() != null) {
-					this.applicationContext.set(Constants.APP_FOCUS_NODE, this.stage.getScene().getFocusOwner());
-				}
-
-				activate();
+				activateWindow();
 			}
+		}
+		
+		private void activateWindow() {
+			if (this.stage.getScene() != null) {
+				this.applicationContext.set(Constants.APP_FOCUS_NODE, this.stage.getScene().getFocusOwner());
+			}
+
+			activate();
 		}
 
 		private void handleFocusOwner(ObservableValue<? extends Node> observable, Node oldValue, Node _newValue) {
@@ -705,13 +709,25 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					delegate.animate(this.stage);
 				} else {
 					getWidget().show();
+					// force activation of the stage see 435273
+					activate();
 				}
 			} else {
 				getWidget().show();
+				// force activation of the stage see 435273
+				activate();
 			}
-
+			
+			// I don't think sub-windows should be activated
 			for (WWindow<Stage> c : this.windows) {
 				c.show();
+			}
+			
+			// Force the focus back on ourselves
+			if( this.windows.size() > 0 ) {
+				this.stage.requestFocus();
+				// force activation of the stage see 435273
+				activate();
 			}
 		}
 
