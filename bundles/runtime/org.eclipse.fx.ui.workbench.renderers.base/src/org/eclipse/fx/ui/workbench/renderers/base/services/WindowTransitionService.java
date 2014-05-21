@@ -33,8 +33,10 @@ public interface WindowTransitionService<C> {
 		 * 
 		 * @param window
 		 *            the window to animate
+		 * @param finished
+		 *            callback invoked when the animation is finished
 		 */
-		public void animate(@NonNull C window);
+		public void animate(@NonNull C window, @NonNull Runnable finished);
 	}
 
 	/**

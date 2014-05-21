@@ -20,8 +20,10 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.renderers.base.BasePerspectiveStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.services.PerspectiveTransitionService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.PerspectiveTransitionService.AnimationDelegate;
@@ -45,7 +47,7 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		private PerspectiveStackItem item;
 		private MPerspective domElement;
 		WCallback<WStackItem<PerspectiveStackItem, Node>, Node> initCallback;
-
+		
 		@PostConstruct
 		void init() {
 			getWidget();
@@ -107,6 +109,9 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		@Optional
 		private PerspectiveTransitionService<BorderPane, Node> perspectiveSwitch;
 
+		@Inject
+		IEventBroker eventBroker;
+		
 		@Override
 		public Class<? extends WStackItem<PerspectiveStackItem, Node>> getStackItemClass() {
 			return PerspectiveStackItemImpl.class;
@@ -133,21 +138,28 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 			PerspectiveStackItem nativeItem = item.getNativeItem();
 			if( nativeItem != null ) {
 				Node node = nativeItem.getContent();
+				MPerspective curDomElement = this.items.get(this.currentIndex).getDomElement();
+				MPerspective nexDomElement = item.getDomElement();
 				if (getWidget().getCenter() != null && this.perspectiveSwitch != null) {
-					MPerspective curDomElement = this.items.get(this.currentIndex).getDomElement();
-					MPerspective nexDomElement = item.getDomElement();
 					if( curDomElement != null && nexDomElement != null ) {
 						AnimationDelegate<BorderPane, Node> a = this.perspectiveSwitch.getDelegate(curDomElement, nexDomElement);
 						if (a == null) {
 							getWidget().setCenter(node);
 						} else {
-							a.animate(getWidget(), node);
+							a.animate(getWidget(), node, () -> {
+								this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
+								this.eventBroker.send(Constants.PERSPECTIVE_SHOWN, nexDomElement);
+							});
 						}	
 					} else {
 						getWidget().setCenter(node);
+						this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
+						this.eventBroker.send(Constants.PERSPECTIVE_SHOWN, nexDomElement);
 					}
 				} else {
 					getWidget().setCenter(node);
+					this.eventBroker.send(Constants.PERSPECTIVE_HIDDEN, curDomElement);
+					this.eventBroker.send(Constants.PERSPECTIVE_SHOWN, nexDomElement);
 				}
 				this.currentIndex = idx;				
 			}

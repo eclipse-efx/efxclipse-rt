@@ -51,7 +51,9 @@ public interface PerspectiveTransitionService<P, C> {
 		 *            the container
 		 * @param control
 		 *            the native control to be shown
+		 * @param finished
+		 *            callback invoked when the animation is finished
 		 */
-		public void animate(@NonNull P container, @NonNull C control);
+		public void animate(@NonNull P container, @NonNull C control, @NonNull Runnable finished);
 	}
 }

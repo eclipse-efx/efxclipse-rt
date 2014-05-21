@@ -58,6 +58,7 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.core.services.nls.Translation;
 import org.eclipse.e4.core.services.translation.TranslationService;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -66,6 +67,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindowElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
+import org.eclipse.e4.ui.services.internal.events.EventBroker;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
 import org.eclipse.emf.common.util.URI;
@@ -190,6 +192,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Inject
 		private GraphicsLoader graphicsLoader;
+		
+		@Inject
+		private IEventBroker eventBroker;
 
 		boolean initDone;
 
@@ -706,21 +711,27 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if (this.windowTransitionService != null) {
 				AnimationDelegate<Stage> delegate = this.windowTransitionService.getShowDelegate(this.mWindow);
 				if (delegate != null) {
-					delegate.animate(this.stage);
+					delegate.animate(this.stage, () -> {
+						activate();	
+						this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
+					});
 				} else {
 					getWidget().show();
 					// force activation of the stage see 435273
 					activate();
+					this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 				}
 			} else {
 				getWidget().show();
 				// force activation of the stage see 435273
 				activate();
+				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}
 			
 			// I don't think sub-windows should be activated
 			for (WWindow<Stage> c : this.windows) {
 				c.show();
+				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}
 			
 			// Force the focus back on ourselves
@@ -736,12 +747,16 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if (this.windowTransitionService != null) {
 				AnimationDelegate<Stage> delegate = this.windowTransitionService.getShowDelegate(this.mWindow);
 				if (delegate != null) {
-					delegate.animate(this.stage);
+					delegate.animate(this.stage, () -> {
+						this.eventBroker.send(Constants.WINDOW_HIDDEN, this.mWindow);
+					});
 				} else {
 					getWidget().hide();
+					this.eventBroker.send(Constants.WINDOW_HIDDEN, this.mWindow);
 				}
 			} else {
 				getWidget().hide();
+				this.eventBroker.send(Constants.WINDOW_HIDDEN, this.mWindow);
 			}
 		}
 
