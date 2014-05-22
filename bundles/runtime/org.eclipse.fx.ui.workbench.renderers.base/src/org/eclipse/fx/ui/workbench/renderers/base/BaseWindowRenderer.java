@@ -127,7 +127,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 		@Override
 		public Save[] promptToSave(Collection<MPart> dirtyParts) {
-			return BaseWindowRenderer.this.promptToSave(this.element, dirtyParts, this.widget);
+			return BaseWindowRenderer.this.promptToSave(this.element, dirtyParts, this.widget).toArray(new Save[0]);
 		}
 
 		@Override
@@ -258,9 +258,8 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	 *            the window widget to use for parenting
 	 * @return the result
 	 */
-	//FIXME use a java.util.List
 	@NonNull
-	protected abstract Save[] promptToSave(@NonNull MWindow element, @NonNull Collection<MPart> dirtyParts, @NonNull WWindow<N> widget);
+	protected abstract List<@NonNull Save> promptToSave(@NonNull MWindow element, @NonNull Collection<MPart> dirtyParts, @NonNull WWindow<N> widget);
 
 	/**
 	 * Show a prompt to inform the user that <b>one</b> part is dirty
