@@ -29,13 +29,13 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.ui.workbench.renderers.base.BasePartRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.CustomContainerSupport;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * default renderer for {@link MPart}
@@ -91,6 +91,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		EPartService service;
 
 		@Inject
+		@NonNull
 		IEclipseContext context;
 
 		AnchorPane contentArea;
@@ -130,7 +131,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 
 		boolean checkFocusControl() {
 			Parent check = getWidget();
-			if (check == null || check.getScene() == null) {
+			if (check.getScene() == null) {
 				return false;
 			}
 
@@ -199,12 +200,8 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 
 				this.contentArea.getChildren().addAll(this.dataArea, this.menuGroup);
 				Node n = getWidget();
-				if (n != null) {
-					n.getStyleClass().add(CSS_CLASS_PART_CONTENT);
-					this.dataArea.setCenter(n);
-				} else {
-					this.logger.log(Level.ERROR, "No widget node to attach"); //$NON-NLS-1$
-				}
+				n.getStyleClass().add(CSS_CLASS_PART_CONTENT);
+				this.dataArea.setCenter(n);
 			}
 			return this.contentArea;
 		}
