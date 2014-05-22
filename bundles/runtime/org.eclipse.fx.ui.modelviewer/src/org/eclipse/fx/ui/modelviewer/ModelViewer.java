@@ -58,7 +58,7 @@ public class ModelViewer {
 	private DelegateLookup lookup = new DelegateLookup();
 	
 	@Inject
-	@ContextValue(contextKey="delegateLookup")
+	@ContextValue("delegateLookup")
 	ContextBoundValue<DelegateLookup> lookupSlot;
 	
 	@PostConstruct
