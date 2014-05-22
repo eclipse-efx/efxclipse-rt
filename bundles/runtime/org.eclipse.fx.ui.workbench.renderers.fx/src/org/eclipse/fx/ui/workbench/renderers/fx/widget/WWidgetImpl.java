@@ -198,8 +198,8 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 	 */
 	protected final void fireChange(@NonNull String propertyName, @Nullable Object newValue) {
 		if (this.propertyChangeHandler != null) {
-			WPropertyChangeEvent<WWidget<M>> e = new WPropertyChangeEvent<WWidget<M>>(this, propertyName, newValue);
-			this.propertyChangeHandler.propertyObjectChanged(e);
+			WPropertyChangeEvent<@NonNull WWidget<M>> e = new WPropertyChangeEvent<@NonNull WWidget<M>>(this, propertyName, newValue);
+			this.propertyChangeHandler.propertyObjectChanged(e); 
 		}
 	}
 }
