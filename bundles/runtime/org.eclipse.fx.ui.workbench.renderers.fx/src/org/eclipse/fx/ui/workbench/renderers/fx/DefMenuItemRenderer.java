@@ -63,6 +63,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 			this.type = type;
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		protected void bindProperties(MenuItem widget) {
 			super.bindProperties(widget);
@@ -101,40 +102,38 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		@Override
 		protected MenuItem createWidget() {
 			final MenuItem item = internalCreateWidget();
-			if (item != null) {
-				item.setMnemonicParsing(true);
-				final AtomicBoolean skip = new AtomicBoolean(false);
-				item.setOnMenuValidation(new EventHandler<Event>() {
+			item.setMnemonicParsing(true);
+			final AtomicBoolean skip = new AtomicBoolean(false);
+			item.setOnMenuValidation(new EventHandler<Event>() {
 
-					@Override
-					public void handle(Event event) {
-						if (!item.isDisable()) {
-							skip.set(true);
-						}
+				@Override
+				public void handle(Event event) {
+					if (!item.isDisable()) {
+						skip.set(true);
 					}
-				});
-				item.setOnAction(new EventHandler<ActionEvent>() {
+				}
+			});
+			item.setOnAction(new EventHandler<ActionEvent>() {
 
-					@Override
-					public void handle(ActionEvent event) {
-						// Always skip when called through a keyevent
-						if (skip.get()) {
-							skip.set(false);
-							return;
-						}
-
-						if (MenuItemImpl.this.runnable != null) {
-							Platform.runLater(new Runnable() {
-
-								@Override
-								public void run() {
-									MenuItemImpl.this.runnable.run();
-								}
-							});
-						}
+				@Override
+				public void handle(ActionEvent event) {
+					// Always skip when called through a keyevent
+					if (skip.get()) {
+						skip.set(false);
+						return;
 					}
-				});
-			}
+
+					if (MenuItemImpl.this.runnable != null) {
+						Platform.runLater(new Runnable() {
+
+							@Override
+							public void run() {
+								MenuItemImpl.this.runnable.run();
+							}
+						});
+					}
+				}
+			});
 			return item;
 		}
 
