@@ -32,6 +32,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspectiveStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspectiveStack.WStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PerspectiveStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * default renderer for {@link MPerspectiveStack}
@@ -102,7 +103,8 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 	}
 
 	static class PerspectiveStackImpl extends WLayoutedWidgetImpl<BorderPane, BorderPane, MPerspectiveStack> implements WPerspectiveStack<BorderPane, PerspectiveStackItem, Node> {
-		private List<WStackItem<PerspectiveStackItem, Node>> items = new ArrayList<WStackItem<PerspectiveStackItem, Node>>();
+		@NonNull
+		private List<@NonNull WStackItem<PerspectiveStackItem, Node>> items = new ArrayList<>();
 		private int currentIndex;
 
 		@Inject
@@ -123,12 +125,12 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		}
 
 		@Override
-		public void addItems(List<WStackItem<PerspectiveStackItem, Node>> items) {
+		public void addItems(List<@NonNull WStackItem<PerspectiveStackItem, Node>> items) {
 			this.items.addAll(items);
 		}
 
 		@Override
-		public void addItems(int index, List<WStackItem<PerspectiveStackItem, Node>> items) {
+		public void addItems(int index, List<@NonNull WStackItem<PerspectiveStackItem, Node>> items) {
 			this.items.addAll(index, items);
 		}
 
@@ -138,6 +140,10 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 			PerspectiveStackItem nativeItem = item.getNativeItem();
 			if( nativeItem != null ) {
 				Node node = nativeItem.getContent();
+				if( node == null ) {
+					return;
+				}
+				
 				MPerspective curDomElement = this.items.get(this.currentIndex).getDomElement();
 				MPerspective nexDomElement = item.getDomElement();
 				if (getWidget().getCenter() != null && this.perspectiveSwitch != null) {

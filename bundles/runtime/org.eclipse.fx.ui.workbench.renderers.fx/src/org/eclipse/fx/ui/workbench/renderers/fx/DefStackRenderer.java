@@ -21,7 +21,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
-import javafx.scene.control.Skin;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyEvent;
@@ -159,7 +158,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					(param) -> StackWidgetImpl.this.dragStartCallback,
 					(param) -> StackWidgetImpl.this.droppedCallback,
 					StackWidgetImpl.this.dndFeedback,
-					domainElement);
+					this.domainElement);
 			
 			DnDTabPane p = new DnDTabPane();
 			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_START, dnd::handleDragStart);
@@ -346,12 +345,12 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public void addItems(List<WStackItem<Object, Node>> items) {
+		public void addItems(List<@NonNull WStackItem<Object, Node>> items) {
 			getWidget().getTabs().addAll(extractTabs(items));
 		}
 
 		@Override
-		public void addItems(int index, List<WStackItem<Object, Node>> items) {
+		public void addItems(int index, List<@NonNull WStackItem<Object, Node>> items) {
 			if( index >= getWidget().getTabs().size() ) {
 				addItems(items);
 			} else {
@@ -373,7 +372,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public List<WStackItem<Object, Node>> getItems() {
+		public List<@NonNull WStackItem<Object, Node>> getItems() {
 			List<WStackItem<Object, Node>> rv = new ArrayList<WStackItem<Object, Node>>();
 			for (Tab t : getWidget().getTabs()) {
 				@SuppressWarnings("unchecked")
