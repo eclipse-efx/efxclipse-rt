@@ -73,6 +73,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 			this.checkbox = domElement.getTags().contains(TAG_CHECKBOX);
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		protected void bindProperties(ButtonBase widget) {
 			super.bindProperties(widget);
@@ -169,9 +170,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		@Override
 		protected ButtonBase createWidget() {
 			ButtonBase b = internalCreateWidget();
-			if (b != null) {
-				b.setOnAction(this::handleOnAction);
-			}
+			b.setOnAction(this::handleOnAction);
 			return b; 
 		}
 
