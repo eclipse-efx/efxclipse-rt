@@ -114,7 +114,13 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	@NonNull
 	protected List<@NonNull Save> promptToSave(@NonNull MWindow element, @NonNull Collection<MPart> dirtyParts, @NonNull WWindow<Stage> widget) {
 		Save[] response = new Save[dirtyParts.size()];
-		GraphicsLoader graphicsLoader = getModelContext(element).get(GraphicsLoader.class);
+		IEclipseContext modelContext = getModelContext(element);
+		if( modelContext == null ) {
+			getLogger().error("Model context should not be null at this point"); //$NON-NLS-1$
+			Arrays.fill(response, Save.CANCEL);
+			return Arrays.asList(response);
+		}
+		GraphicsLoader graphicsLoader = modelContext.get(GraphicsLoader.class);
 
 		MultiMessageDialog d = new MultiMessageDialog((Stage) widget.getWidget(), dirtyParts, graphicsLoader);
 		if (d.open() == Dialog.OK_BUTTON) {
