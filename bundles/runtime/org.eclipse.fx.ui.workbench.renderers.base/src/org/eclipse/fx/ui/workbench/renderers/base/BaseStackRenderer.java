@@ -35,7 +35,7 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.ui.lifecycle.ELifecycleService;
 import org.eclipse.fx.ui.lifecycle.annotations.PreClose;
-import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
+import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
@@ -226,7 +226,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 		for (MStackElement e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
-			AbstractRenderer<MStackElement, ?> renderer = this.factory.getRenderer(e);
+			ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(e);
 			if (renderer != null && e.isToBeRendered() && e.isVisible()) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
@@ -257,7 +257,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	}
 
 	@NonNull
-	private WStackItem<I, IC> createStackItem(WStack<N, I, IC> stack, final MStackElement e, AbstractRenderer<MStackElement, ?> renderer) {
+	private WStackItem<I, IC> createStackItem(WStack<N, I, IC> stack, final MStackElement e, ElementRenderer<MStackElement, ?> renderer) {
 		IEclipseContext context = renderer.setupRenderingContext(e);
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
 		e.getTransientData().put(MAP_ITEM_KEY, item);
@@ -300,7 +300,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			if (element.isToBeRendered() && element.isVisible()) {
 				int idx = getRenderedIndex(parent, element);
 
-				AbstractRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
+				ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 				WStack<N, I, IC> stack = getWidget(parent);
 				@SuppressWarnings("unchecked")
 				WStackItem<I, IC> item = (WStackItem<I, IC>) element.getTransientData().get(MAP_ITEM_KEY);
@@ -417,7 +417,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 
 		int idx = getRenderedIndex(parentElement, element);
-		AbstractRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
+		ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 		stack.addItems(idx, Collections.singletonList(createStackItem(stack, (MStackElement) element, renderer)));
 	}
 

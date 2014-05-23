@@ -31,7 +31,7 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
-import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
+import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
@@ -176,7 +176,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 
 		for (MPerspective e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
-			AbstractRenderer<MPerspective, ?> renderer = this.factory.getRenderer(e);
+			ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(e);
 			if (renderer != null && e.isToBeRendered() && e.isVisible()) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
@@ -211,7 +211,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		}
 	}
 
-	private WStackItem<I, IC> createStackItem(WPerspectiveStack<N, I, IC> stack, @NonNull final MPerspective e, AbstractRenderer<MPerspective, ?> renderer) {
+	private WStackItem<I, IC> createStackItem(WPerspectiveStack<N, I, IC> stack, @NonNull final MPerspective e, ElementRenderer<MPerspective, ?> renderer) {
 		IEclipseContext context = renderer.setupRenderingContext(e);
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
 		item.setDomElement(e);
@@ -251,7 +251,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 			if (element.isToBeRendered() && element.isVisible()) {
 				int idx = getRenderedIndex(parent, element);
 
-				AbstractRenderer<MPerspective, ?> renderer = this.factory.getRenderer(element);
+				ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(element);
 				WPerspectiveStack<N, I, IC> stack = getWidget(parent);
 				WStackItem<I, IC> item = createStackItem(getWidget(parent), element, renderer);
 
@@ -313,7 +313,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		}
 
 		int idx = getRenderedIndex(parentElement, element);
-		AbstractRenderer<MPerspective, ?> renderer = this.factory.getRenderer(element);
+		ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(element);
 		stack.addItems(idx, Collections.singletonList(createStackItem(stack, (MPerspective) element, renderer)));
 	}
 

@@ -40,7 +40,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
 import org.eclipse.e4.ui.model.application.ui.menu.impl.MenuPackageImpl;
 import org.eclipse.e4.ui.workbench.UIEvents.UIElement;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
+import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -115,7 +115,7 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <R extends AbstractRenderer<?, ?>> R getRenderer(MUIElement modelObject) {
+	public <R extends ElementRenderer<?, ?>> R getRenderer(MUIElement modelObject) {
 		if (modelObject instanceof MPopupMenu) {
 			if (this.popupMenuRenderer == null) {
 				this.popupMenuRenderer = make(getPopupMenuRendererClass());
@@ -232,7 +232,7 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	 * @return a new instance of the given renderer class.
 	 */
 	@NonNull
-	protected <@NonNull R extends AbstractRenderer<?, ?>> R make(Class<R> rendererClass) {
+	protected <@NonNull R extends ElementRenderer<?, ?>> R make(Class<R> rendererClass) {
 		return ContextInjectionFactory.make(rendererClass, this.context);
 	}
 

@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
-import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
+import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
@@ -51,7 +51,7 @@ import org.osgi.service.event.Event;
  * @param <W>
  *            the abstracted widget type
  */
-public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> extends AbstractRenderer<M, W> {
+public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> implements ElementRenderer<M, W> {
 	private static final String RENDERING_CONTEXT_KEY = "fx.rendering.context"; //$NON-NLS-1$
 
 	/**
@@ -541,5 +541,11 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 			widget.activate();
 		}
 
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public W getWidget(M element) {
+		return (W) element.getWidget();
 	}
 }
