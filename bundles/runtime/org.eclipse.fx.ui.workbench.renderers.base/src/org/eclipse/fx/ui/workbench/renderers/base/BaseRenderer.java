@@ -258,6 +258,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		broker.subscribe(topic, this::handleEvent);
 	}
 
+	@SuppressWarnings("null")
 	void handleEvent(Event event) {
 		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
 		if (!(changedObj instanceof MUIElement)) {
@@ -342,7 +343,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		// nothing todo
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "all" })
 	@Override
 	public void destroyWidget(M element) {
 		if (element.getTransientData().containsKey(RENDERING_CONTEXT_KEY)) {
@@ -363,6 +364,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		me.setWidget(null);
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public void bindWidget(M me, W widget) {
 		widget.setDomElement(me);
@@ -375,12 +377,14 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			widget.addStyleClasses("M" + e.getName()); //$NON-NLS-1$
 		}
 
-		if (me.getElementId() != null) {
-			widget.setStyleId(Util.toCSSId(me.getElementId()));
+		String elementId = me.getElementId();
+		if (elementId != null) {
+			widget.setStyleId(Util.toCSSId(elementId));
 		}
 		me.setWidget(widget);
 	}
 
+	@SuppressWarnings("all")
 	@Override
 	public void postProcess(M element) {
 		if (element.getWidget() instanceof WWidget<?>) {
@@ -388,6 +392,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		}
 	}
 
+	@SuppressWarnings("all")
 	@Override
 	public void preDestroy(M element) {
 		if (element.getWidget() instanceof WWidget<?>) {
@@ -409,7 +414,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the widget class
 	 * @return the widget class
 	 */
-	protected abstract Class<? extends W> getWidgetClass(M element);
+	@NonNull
+	protected abstract Class<@NonNull ? extends W> getWidgetClass(M element);
 
 	/**
 	 * Create a widget for the model element through the
