@@ -643,4 +643,9 @@ public class CanvasGC implements DrawableGC {
 	public void dispose() {
 		resetClip();
 	}
+	
+	@Override
+	public int getTextAntialias() {
+		return SWT.DEFAULT;
+	}
 }

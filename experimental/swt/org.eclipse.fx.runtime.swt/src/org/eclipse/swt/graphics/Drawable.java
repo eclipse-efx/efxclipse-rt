@@ -66,6 +66,7 @@ public interface Drawable {
 		public void setForegroundPattern(Pattern pattern);
 		public void drawOval(int x, int y, int width, int height);
 		public void getTransform(Transform transform);
+		public int getTextAntialias();
 	}
 	
 	public DrawableGC internal_new_GC();

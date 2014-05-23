@@ -343,6 +343,12 @@ public abstract class Device implements Drawable {
 		public void drawOval(int x, int y, int width, int height) {
 			Util.logNotImplemented();
 		}
+		
+		@Override
+		public int getTextAntialias() {
+			Util.logNotImplemented();
+			return SWT.DEFAULT;
+		}
 	}
 	
 	public Color getSystemColor (int id) {

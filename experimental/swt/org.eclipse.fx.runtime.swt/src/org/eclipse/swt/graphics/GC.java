@@ -314,11 +314,11 @@ public class GC extends Resource {
 	public int getStyle () {
 		return style;
 	}
-//	
-//	public int getTextAntialias() {
-//		
-//	}
-//	
+	
+	public int getTextAntialias() {
+		return gc.getTextAntialias();
+	}
+	
 	public void getTransform (Transform transform) {
 		gc.getTransform(transform);
 	}

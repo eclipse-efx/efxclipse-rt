@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.swt.internal;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Drawable.DrawableGC;
 import org.eclipse.swt.graphics.Font;
@@ -259,5 +260,10 @@ public class MeasureGC implements DrawableGC {
 	@Override
 	public void drawOval(int x, int y, int width, int height) {
 		// Not applicable
+	}
+	
+	@Override
+	public int getTextAntialias() {
+		return SWT.DEFAULT;
 	}
 }
