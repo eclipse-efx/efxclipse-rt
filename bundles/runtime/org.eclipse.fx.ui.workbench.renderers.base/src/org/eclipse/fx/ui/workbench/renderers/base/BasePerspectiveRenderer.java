@@ -112,7 +112,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 			MWindow window = findParent((EObject) element);
 			WWindow<?> topLevel = (WWindow<?>) window.getWidget();
 			for (MWindow w : element.getWindows()) {
-				topLevel.addChild(engineCreateWidget(w));
+				topLevel.addChildWindow(engineCreateWidget(w));
 			}
 		}
 	}
@@ -149,7 +149,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 			if (w != null) {
 				WWindow ww = (WWindow) element.getWidget();
 				if (ww != null) {
-					w.addChild(ww);
+					w.addChildWindow(ww);
 				}
 			}
 		}
@@ -175,7 +175,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 			if (w != null) {
 				WWindow ww = (WWindow) changedObj.getWidget();
 				if (ww != null) {
-					w.removeChild(ww);
+					w.removeChildWindow(ww);
 				}
 			}
 		}

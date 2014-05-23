@@ -679,7 +679,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 
 		@Override
-		public void addChild(WWindow<Stage> widget) {
+		public void addChildWindow(WWindow<Stage> widget) {
 			this.windows.add(widget);
 			if (this.initDone && this.stage.isShowing()) {
 				Stage s = (Stage) widget.getWidget();
@@ -688,7 +688,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 
 		@Override
-		public void removeChild(@NonNull WWindow<Stage> widget) {
+		public void removeChildWindow(@NonNull WWindow<Stage> widget) {
 			Stage s = (Stage) widget.getWidget();
 			s.hide();
 			this.windows.remove(widget);

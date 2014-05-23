@@ -339,7 +339,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 					@SuppressWarnings("unchecked")
 					WWindow<N> ww = (WWindow<N>) w.getWidget();
 					if( ww != null ) {
-						windowWidget.addChild(ww);
+						windowWidget.addChildWindow(ww);
 					} else {
 						this.logger.error("Widget for element '"+w+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
@@ -386,7 +386,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				@SuppressWarnings("unchecked")
 				WWindow<N> ww = (WWindow<N>) element.getWidget();
 				if( ww != null ) {
-					window.addChild(ww);	
+					window.addChildWindow(ww);	
 				} else {
 					this.logger.error("Widget for element '"+element+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
@@ -413,7 +413,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				@SuppressWarnings("unchecked")
 				WWindow<N> ww = (WWindow<N>) changedObj.getWidget();
 				if( ww != null ) {
-					window.removeChild(ww);	
+					window.removeChildWindow(ww);	
 				} else {
 					this.logger.error("Widget for element '"+changedObj+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
