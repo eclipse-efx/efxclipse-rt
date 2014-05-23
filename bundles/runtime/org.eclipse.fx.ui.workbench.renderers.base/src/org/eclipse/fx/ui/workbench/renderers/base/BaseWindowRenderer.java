@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.InjectionException;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Persist;
@@ -44,6 +45,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -248,7 +250,12 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				return Boolean.TRUE;
 			}
 		});
-		getModelContext(element).set(ISaveHandler.class, new DefaultSaveHandler(element, widget));
+		IEclipseContext modelContext = getModelContext(element);
+		if( modelContext != null ) {
+			modelContext.set(ISaveHandler.class, new DefaultSaveHandler(element, widget));	
+		} else {
+			getLogger().error("The model context is null which is not expected at this point"); //$NON-NLS-1$
+		}
 	}
 
 	/**

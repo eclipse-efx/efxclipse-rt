@@ -54,6 +54,10 @@ public abstract class BaseMenuItemRenderer<N> extends BaseItemRenderer<MMenuItem
 
 		if (element instanceof MHandledMenuItem) {
 			IEclipseContext lclContext = getModelContext(element);
+			if( lclContext == null ) {
+				getLogger().error("The model context should not be null at this point"); //$NON-NLS-1$
+				return;
+			}
 			EBindingService service = lclContext.get(EBindingService.class);
 			ParameterizedCommand command = generateParameterizedCommand((MHandledMenuItem) element, lclContext);
 			Collection<TriggerSequence> sequences = service.getSequencesFor(command);

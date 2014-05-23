@@ -379,6 +379,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 		IEclipseContext partContext = part.getContext();
 		IEclipseContext parentContext = getContextForParent(part);
+		if( parentContext == null ) {
+			getLogger().error("The parent context is unknown. This is impossible."); //$NON-NLS-1$
+			return false;
+		}
 		// a part may not have a context if it hasn't been rendered
 		IEclipseContext context = (partContext == null ? parentContext : partContext).createChild();
 		if (partContext == null) {

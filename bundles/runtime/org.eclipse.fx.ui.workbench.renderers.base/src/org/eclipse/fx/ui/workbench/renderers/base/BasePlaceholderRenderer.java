@@ -25,6 +25,7 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Base renderer for {@link MPlaceholder}
@@ -64,7 +65,13 @@ public abstract class BasePlaceholderRenderer<N> extends BaseRenderer<MPlacehold
 		WLayoutedWidget<MUIElement> refWidget = (WLayoutedWidget<MUIElement>) ref.getWidget();
 		if (refWidget == null) {
 			ref.setToBeRendered(true);
-			refWidget = engineCreateWidget(ref, getContextForParent(ref));
+			IEclipseContext contextForParent = getContextForParent(ref);
+			if( contextForParent != null ) {
+				refWidget = engineCreateWidget(ref, contextForParent);	
+			} else {
+				getLogger().error("Could not find context for reference '"+ref+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+			
 		}
 
 		widget.setContent(refWidget);
