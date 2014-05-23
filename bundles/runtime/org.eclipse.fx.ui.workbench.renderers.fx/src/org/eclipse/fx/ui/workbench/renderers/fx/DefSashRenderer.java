@@ -37,6 +37,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseSashRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * default renderer for sash
@@ -219,8 +220,14 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 
 		void recalcWeight() {
-			BaseRenderer<?, ?> r = (BaseRenderer<?, ?>) getDomElement().getRenderer();
-			r.syncUIModifications(getDomElement(), this::doRecalcWeight);
+			@Nullable
+			MPartSashContainer domElement = getDomElement();
+			if( domElement != null ) {
+				BaseRenderer<?, ?> r = (BaseRenderer<?, ?>) domElement.getRenderer();
+				r.syncUIModifications(domElement, this::doRecalcWeight);	
+			} else {
+				this.logger.error("The domain object should not be null at this point"); //$NON-NLS-1$
+			}
 		}
 		
 		void doRecalcWeight() {
