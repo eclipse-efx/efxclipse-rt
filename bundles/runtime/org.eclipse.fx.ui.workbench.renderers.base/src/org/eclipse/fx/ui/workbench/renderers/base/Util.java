@@ -3,6 +3,7 @@ package org.eclipse.fx.ui.workbench.renderers.base;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 
 /**
@@ -32,7 +33,9 @@ public class Util {
 	 *            the id
 	 * @return the valid css id
 	 */
-	public static String toCSSId(String id) {
+	@SuppressWarnings("null")
+	@NonNull
+	public static String toCSSId(@NonNull String id) {
 		return id.replace('.', '-');
 	}
 }

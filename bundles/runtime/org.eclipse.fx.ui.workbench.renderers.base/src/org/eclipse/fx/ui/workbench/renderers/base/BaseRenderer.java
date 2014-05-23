@@ -41,6 +41,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 
 /**
@@ -133,15 +134,21 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	}
 
 	@Override
-	public final W createWidget(final M element) {
+	@NonNull
+	public final W createWidget(final @NonNull M element) {
 		final IEclipseContext context = setupRenderingContext(element);
 
 		W widget = ContextInjectionFactory.make(getWidgetClass(element), context);
 		// Bug 433845
 		widget.setPropertyChangeHandler((WPropertyChangeEvent<W> e) -> propertyObjectChanged(element, e));
 		initWidget(element, widget);
-		initDefaultEventListeners(this._context.get(IEventBroker.class));
-
+		IEventBroker broker = this._context.get(IEventBroker.class);
+		if( broker != null ) {
+			initDefaultEventListeners(broker);	
+		} else {
+			this.logger.error("No event broker was found. Most things will not operate appropiately!"); //$NON-NLS-1$
+		}
+		
 		return widget;
 	}
 
@@ -182,13 +189,14 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		}
 	}
 
-	private void initDefaultEventListeners(IEventBroker broker) {
+	@SuppressWarnings("null")
+	private void initDefaultEventListeners(@NonNull IEventBroker broker) {
 		registerEventListener(broker, UIEvents.ApplicationElement.TOPIC_PERSISTEDSTATE);
 		registerEventListener(broker, UIEvents.ApplicationElement.TOPIC_TAGS);
 	}
 
 	@Override
-	public final IEclipseContext setupRenderingContext(M element) {
+	public final IEclipseContext setupRenderingContext(@NonNull M element) {
 		IEclipseContext context = (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
 		if (context == null) {
 			context = this._context.createChild("Element RenderingContext"); //$NON-NLS-1$
@@ -204,11 +212,16 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 				} else {
 					eo = (EObject) element;
 				}
-
-				initContext(eo, context);
-				if (element instanceof MPlaceholder) {
-					initContext((EObject) element, context);
+				
+				if( eo != null ) {
+					initContext(eo, context);
+					if (element instanceof MPlaceholder) {
+						initContext((EObject) element, context);
+					}
+				} else {
+					throw new IllegalStateException("The placeholder reference of '"+element+"' is null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
+				
 			} finally {
 				this.contextModification.remove(element);
 			}
@@ -225,7 +238,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the context
 	 */
 	@SuppressWarnings("static-method")
-	protected void initContext(EObject eo, IEclipseContext context) {
+	protected void initContext(@NonNull EObject eo, @NonNull IEclipseContext context) {
 		for (EAttribute e : eo.eClass().getEAllAttributes()) {
 			context.set(e.getName(), eo.eGet(e));
 		}
@@ -254,7 +267,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @param topic
 	 *            the topic
 	 */
-	protected void registerEventListener(IEventBroker broker, String topic) {
+	protected void registerEventListener(@NonNull IEventBroker broker, @NonNull String topic) {
 		broker.subscribe(topic, this::handleEvent);
 	}
 
@@ -327,7 +340,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @param context
 	 *            the context
 	 */
-	protected void initRenderingContext(M element, IEclipseContext context) {
+	protected void initRenderingContext(@NonNull M element, @NonNull IEclipseContext context) {
 		// nothing todo
 	}
 
@@ -345,7 +358,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@SuppressWarnings({ "unchecked", "all" })
 	@Override
-	public void destroyWidget(M element) {
+	public void destroyWidget(@NonNull M element) {
 		if (element.getTransientData().containsKey(RENDERING_CONTEXT_KEY)) {
 			if (element.getWidget() instanceof WWidget<?>) {
 				((WWidget<?>) element.getWidget()).setWidgetState(WidgetState.DISPOSED);
@@ -359,14 +372,14 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		}
 	}
 
-	private void unbindWidget(M me, W widget) {
+	private void unbindWidget(@NonNull M me, @NonNull W widget) {
 		widget.setDomElement(null);
 		me.setWidget(null);
 	}
 
 	@SuppressWarnings("null")
 	@Override
-	public void bindWidget(M me, W widget) {
+	public void bindWidget(@NonNull M me, @NonNull W widget) {
 		widget.setDomElement(me);
 		widget.addStyleClasses(me.getTags());
 
@@ -386,7 +399,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@SuppressWarnings("all")
 	@Override
-	public void postProcess(M element) {
+	public void postProcess(@NonNull M element) {
 		if (element.getWidget() instanceof WWidget<?>) {
 			((WWidget<?>) element.getWidget()).setWidgetState(WidgetState.CREATED);
 		}
@@ -394,7 +407,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@SuppressWarnings("all")
 	@Override
-	public void preDestroy(M element) {
+	public void preDestroy(@NonNull M element) {
 		if (element.getWidget() instanceof WWidget<?>) {
 			((WWidget<?>) element.getWidget()).setWidgetState(WidgetState.IN_TEAR_DOWN);
 		}
@@ -403,8 +416,13 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	/**
 	 * @return get the presentation engine
 	 */
+	@NonNull
 	protected IPresentationEngine getPresentationEngine() {
-		return this._context.get(IPresentationEngine.class);
+		IPresentationEngine p = this._context.get(IPresentationEngine.class);
+		if(p == null) {
+			throw new IllegalStateException("IPresentationEngine not available"); //$NON-NLS-1$
+		}
+		return p;
 	}
 
 	/**
@@ -415,7 +433,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @return the widget class
 	 */
 	@NonNull
-	protected abstract Class<@NonNull ? extends W> getWidgetClass(M element);
+	protected abstract Class<@NonNull ? extends W> getWidgetClass(@NonNull M element);
 
 	/**
 	 * Create a widget for the model element through the
@@ -426,7 +444,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @return the widget
 	 */
 	@SuppressWarnings("unchecked")
-	protected <LW extends WWidget<PM>, PM extends MUIElement> LW engineCreateWidget(PM pm) {
+	@Nullable
+	protected <LW extends WWidget<PM>, PM extends MUIElement> LW engineCreateWidget(@NonNull PM pm) {
 		return (LW) getPresentationEngine().createGui(pm);
 	}
 
@@ -441,7 +460,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @return the widget
 	 */
 	@SuppressWarnings("unchecked")
-	protected <LW extends WWidget<PM>, PM extends MUIElement> LW engineCreateWidget(PM pm, IEclipseContext context) {
+	@Nullable
+	protected <LW extends WWidget<PM>, PM extends MUIElement> LW engineCreateWidget(@NonNull PM pm, @NonNull IEclipseContext context) {
 		return (LW) getPresentationEngine().createGui(pm, null, context);
 	}
 
@@ -452,7 +472,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the element
 	 * @return the context
 	 */
-	protected IEclipseContext getRenderingContext(M element) {
+	@Nullable
+	protected IEclipseContext getRenderingContext(@NonNull M element) {
 		return (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
 	}
 
@@ -464,12 +485,14 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the element
 	 * @return the context
 	 */
-	protected IEclipseContext getContextForParent(MUIElement element) {
+	@Nullable
+	protected IEclipseContext getContextForParent(@NonNull MUIElement element) {
 		return this.modelService.getContainingContext(element);
 	}
 
 	@Override
-	public IEclipseContext getModelContext(MUIElement part) {
+	@Nullable
+	public IEclipseContext getModelContext(@NonNull MUIElement part) {
 		if (part instanceof MContext) {
 			return ((MContext) part).getContext();
 		}
@@ -485,7 +508,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @param requiresFocus
 	 *            true of focus is required
 	 */
-	protected void activate(MPart element, boolean requiresFocus) {
+	protected void activate(@NonNull MPart element, boolean requiresFocus) {
 		IEclipseContext curContext = getModelContext(element);
 		if (curContext != null) {
 			EPartService ps = (EPartService) curContext.get(EPartService.class.getName());
@@ -495,7 +518,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	}
 
 	@Override
-	public final void processContent(M element) {
+	public final void processContent(@NonNull M element) {
 		try {
 			this.contentProcessing.put(element, Boolean.TRUE);
 			doProcessContent(element);
@@ -514,7 +537,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @return the index or <code>-1</code>
 	 */
 	@SuppressWarnings("static-method")
-	protected int getRenderedIndex(MUIElement parent, MUIElement element) {
+	protected int getRenderedIndex(@NonNull MUIElement parent, @NonNull MUIElement element) {
 		EObject eElement = (EObject) element;
 
 		EObject container = eElement.eContainer();
@@ -538,10 +561,10 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @param element
 	 *            the element
 	 */
-	protected abstract void doProcessContent(M element);
+	protected abstract void doProcessContent(@NonNull M element);
 
 	@Override
-	public void focus(MUIElement element) {
+	public void focus(@NonNull MUIElement element) {
 		if (element.getWidget() instanceof WWidget) {
 			WWidget<?> widget = (WWidget<?>) element.getWidget();
 			widget.activate();
@@ -551,7 +574,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public W getWidget(M element) {
+	public W getWidget(@NonNull M element) {
 		return (W) element.getWidget();
 	}
 }

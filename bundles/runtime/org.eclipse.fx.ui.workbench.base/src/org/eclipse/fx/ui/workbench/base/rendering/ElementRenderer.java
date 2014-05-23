@@ -23,28 +23,29 @@ import org.eclipse.jdt.annotation.NonNull;
  *            the control/widget type
  */
 public interface ElementRenderer<M extends MUIElement, C> {
+	@NonNull
 	public C createWidget(@NonNull M element);
 
-	public IEclipseContext setupRenderingContext(M element);
+	public IEclipseContext setupRenderingContext(@NonNull M element);
 
-	public void bindWidget(M element, C widget);
+	public void bindWidget(@NonNull M element, @NonNull C widget);
 
-	public void processContent(M element);
+	public void processContent(@NonNull M element);
 
-	public void postProcess(M element);
+	public void postProcess(@NonNull M element);
 
-	public void childRendered(M parentElement, MUIElement element);
+	public void childRendered(@NonNull M parentElement, @NonNull MUIElement element);
 
-	public void preDestroy(M element);
+	public void preDestroy(@NonNull M element);
 
-	public void hideChild(M container, MUIElement changedObj);
+	public void hideChild(@NonNull M container, @NonNull MUIElement changedObj);
 
-	public void destroyWidget(M element);
+	public void destroyWidget(@NonNull M element);
 
-	public IEclipseContext getModelContext(MUIElement part);
+	public IEclipseContext getModelContext(@NonNull MUIElement part);
 
-	public void focus(MUIElement element);
+	public void focus(@NonNull MUIElement element);
 
-	public C getWidget(M element);
+	public C getWidget(@NonNull M element);
 
 }
