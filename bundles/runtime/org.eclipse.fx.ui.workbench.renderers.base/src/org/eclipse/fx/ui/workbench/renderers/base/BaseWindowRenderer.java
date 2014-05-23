@@ -62,10 +62,12 @@ import org.osgi.service.event.EventHandler;
 public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindow<N>> {
 	// derived from SWT implementation
 	private class DefaultSaveHandler implements ISaveHandler {
+		@NonNull
 		private MWindow element;
+		@NonNull
 		private WWindow<N> widget;
 
-		DefaultSaveHandler(MWindow element, WWindow<N> widget) {
+		DefaultSaveHandler(@NonNull MWindow element, @NonNull WWindow<N> widget) {
 			this.element = element;
 			this.widget = widget;
 		}
@@ -125,11 +127,13 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 			return true;
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		public Save[] promptToSave(Collection<MPart> dirtyParts) {
 			return BaseWindowRenderer.this.promptToSave(this.element, dirtyParts, this.widget).toArray(new Save[0]);
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		public Save promptToSave(MPart dirtyPart) {
 			return BaseWindowRenderer.this.promptToSave(this.element, dirtyPart, this.widget);
@@ -208,7 +212,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	}
 
 	@Override
-	protected void initWidget(final MWindow element, final WWindow<N> widget) {
+	protected void initWidget(@NonNull final MWindow element, @NonNull final WWindow<N> widget) {
 		widget.registerActivationCallback(new WCallback<Boolean, Void>() {
 
 			@Override
@@ -272,18 +276,17 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	 *            the window widget to use for parenting
 	 * @return the result
 	 */
-	protected abstract Save promptToSave(MWindow element, MPart dirtyPart, WWindow<N> widget);
+	protected abstract Save promptToSave(@NonNull MWindow element, @NonNull MPart dirtyPart, @NonNull WWindow<N> widget);
 
+	@SuppressWarnings("null")
 	@Override
 	public void doProcessContent(MWindow element) {
 		WWindow<N> windowWidget = getWidget(element);
 
 		Object nativeWidget = windowWidget.getWidget();
 
-		if (nativeWidget != null) {
-			element.getContext().set(nativeWidget.getClass().getName(), nativeWidget);
-		}
-
+		element.getContext().set(nativeWidget.getClass().getName(), nativeWidget);
+		
 		if (element.getMainMenu() != null) {
 			WLayoutedWidget<MMenu> menuWidget = engineCreateWidget(element.getMainMenu());
 			if (menuWidget != null) {
@@ -323,6 +326,8 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				WLayoutedWidget<MWindowElement> widget = engineCreateWidget(e);
 				if (widget != null) {
 					windowWidget.addChild(widget);
+				} else {
+					this.logger.error("Widget for element '"+e+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
 		}
@@ -333,7 +338,11 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				if (widget != null) {
 					@SuppressWarnings("unchecked")
 					WWindow<N> ww = (WWindow<N>) w.getWidget();
-					windowWidget.addChild(ww);
+					if( ww != null ) {
+						windowWidget.addChild(ww);
+					} else {
+						this.logger.error("Widget for element '"+w+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+					}
 				}
 			}
 		}
@@ -365,14 +374,22 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				int idx = getRenderedIndex(parentElement, element);
 				@SuppressWarnings("unchecked")
 				WLayoutedWidget<MWindowElement> widget = (WLayoutedWidget<MWindowElement>) element.getWidget();
-				window.addChild(idx, widget);
+				if( widget != null ) {
+					window.addChild(idx, widget);	
+				} else {
+					this.logger.error("Widget for element '"+element+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
 			}
 		} else if (element instanceof MWindow) {
 			WWindow<N> window = getWidget(parentElement);
 			if (window != null) {
 				@SuppressWarnings("unchecked")
 				WWindow<N> ww = (WWindow<N>) element.getWidget();
-				window.addChild(ww);
+				if( ww != null ) {
+					window.addChild(ww);	
+				} else {
+					this.logger.error("Widget for element '"+element+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
 			}
 		}
 	}
@@ -384,14 +401,22 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 			if (window != null) {
 				@SuppressWarnings("unchecked")
 				WLayoutedWidget<MWindowElement> widget = (WLayoutedWidget<MWindowElement>) changedObj.getWidget();
-				window.removeChild(widget);
+				if( widget != null ) {
+					window.removeChild(widget);
+				} else {
+					this.logger.error("Widget for element '"+changedObj+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
 			}
 		} else if (changedObj instanceof MWindow) {
 			WWindow<N> window = getWidget(container);
 			if (window != null) {
 				@SuppressWarnings("unchecked")
 				WWindow<N> ww = (WWindow<N>) changedObj.getWidget();
-				window.removeChild(ww);
+				if( ww != null ) {
+					window.removeChild(ww);	
+				} else {
+					this.logger.error("Widget for element '"+changedObj+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
 			}
 		}
 	}

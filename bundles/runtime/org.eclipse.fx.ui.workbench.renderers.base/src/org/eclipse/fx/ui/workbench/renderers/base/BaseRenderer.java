@@ -338,7 +338,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> e
 	 * @param widget
 	 *            the widget
 	 */
-	protected void initWidget(M element, W widget) {
+	protected void initWidget(@NonNull M element, @NonNull W widget) {
 		// nothing todo
 	}
 
