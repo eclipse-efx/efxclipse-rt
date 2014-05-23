@@ -286,6 +286,11 @@ public class MeasureGC implements DrawableGC {
 	
 	@Override
 	public void setLineDash(int[] dashes) {
-		Util.logNotImplemented();
+		// Not applicable
+	}
+	
+	@Override
+	public int[] getLineDash() {
+		return null;
 	}
 }
