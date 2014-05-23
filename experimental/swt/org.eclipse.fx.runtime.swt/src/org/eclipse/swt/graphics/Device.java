@@ -178,6 +178,12 @@ public abstract class Device implements Drawable {
 		}
 		
 		@Override
+		public int getLineWidth() {
+			Util.logNotImplemented();
+			return 0;
+		}
+		
+		@Override
 		public void drawLine(int x1, int y1, int x2, int y2) {
 			Util.logNotImplemented();
 		}
@@ -322,6 +328,12 @@ public abstract class Device implements Drawable {
 		@Override
 		public void setLineStyle(int lineStyle) {
 			Util.logNotImplemented();
+		}
+		
+		@Override
+		public int getLineStyle() {
+			Util.logNotImplemented();
+			return 0;
 		}
 		
 		@Override

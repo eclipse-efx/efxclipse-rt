@@ -303,14 +303,14 @@ public class GC extends Resource {
 //		
 //	}
 //	
-//	public int getLineStyle() {
-//		
-//	}
-//	
-//	public int getLineWidth() {
-//		
-//	}
-//	
+	public int getLineStyle() {
+		return gc.getLineStyle();
+	}
+	
+	public int getLineWidth() {
+		return gc.getLineWidth();
+	}
+	
 	public int getStyle () {
 		return style;
 	}

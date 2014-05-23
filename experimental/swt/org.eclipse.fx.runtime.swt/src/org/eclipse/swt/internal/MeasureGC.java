@@ -97,6 +97,11 @@ public class MeasureGC implements DrawableGC {
 	public void setLineWidth(int lineWidth) {
 		// Not applicable
 	}
+	
+	@Override
+	public int getLineWidth() {
+		return 0;
+	}
 
 	@Override
 	public void drawLine(int x1, int y1, int x2, int y2) {
@@ -240,6 +245,12 @@ public class MeasureGC implements DrawableGC {
 	@Override
 	public void setLineStyle(int lineStyle) {
 		// Not applicable
+	}
+	
+	@Override
+	public int getLineStyle() {
+		// Not applicable
+		return SWT.LINE_SOLID;
 	}
 
 	@Override

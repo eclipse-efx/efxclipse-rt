@@ -66,6 +66,7 @@ public class CanvasGC implements DrawableGC {
 	private Color backgroundColor;
 	
 	private boolean activeClip;
+	private int lineStyle = SWT.LINE_SOLID;
 	
 	public CanvasGC(Canvas canvas, Font receiverFont, Color receiverBackground, Color receiverForeground) {
 		this.canvas = canvas;
@@ -220,6 +221,11 @@ public class CanvasGC implements DrawableGC {
 	@Override
 	public void setLineWidth(int lineWidth) {
 		canvas.getGraphicsContext2D().setLineWidth(lineWidth);
+	}
+	
+	@Override
+	public int getLineWidth() {
+		return (int) canvas.getGraphicsContext2D().getLineWidth();
 	}
 	
 	@Override
@@ -594,6 +600,7 @@ public class CanvasGC implements DrawableGC {
 	
 	@Override
 	public void setLineStyle(int lineStyle) {
+		this.lineStyle = lineStyle;
 //		switch (lineStyle) {
 //		case SWT.LINE_SOLID:
 //			break;
@@ -611,6 +618,11 @@ public class CanvasGC implements DrawableGC {
 //			break;
 //		}
 		Util.logNotImplemented();
+	}
+	
+	@Override
+	public int getLineStyle() {
+		return lineStyle;
 	}
 	
 	@Override

@@ -67,6 +67,8 @@ public interface Drawable {
 		public void drawOval(int x, int y, int width, int height);
 		public void getTransform(Transform transform);
 		public int getTextAntialias();
+		public int getLineWidth();
+		public int getLineStyle();
 	}
 	
 	public DrawableGC internal_new_GC();
