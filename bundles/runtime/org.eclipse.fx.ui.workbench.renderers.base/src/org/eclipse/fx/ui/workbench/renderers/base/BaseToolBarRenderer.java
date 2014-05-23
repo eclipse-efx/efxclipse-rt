@@ -109,7 +109,12 @@ public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToo
 		WToolBar<N> toolbar = getWidget(parentElement);
 		@SuppressWarnings("unchecked")
 		WWidget<MToolBarElement> widget = (WWidget<MToolBarElement>) element.getWidget();
-		toolbar.addChild(idx, widget);
+		if( widget != null ) {
+			toolbar.addChild(idx, widget);	
+		} else {
+			this.logger.error("The widget for element '"+element+"' should not be null.");  //$NON-NLS-1$//$NON-NLS-2$
+		}
+		
 	}
 
 	@Override
