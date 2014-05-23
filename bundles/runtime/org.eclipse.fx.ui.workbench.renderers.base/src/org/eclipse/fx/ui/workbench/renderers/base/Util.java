@@ -20,7 +20,7 @@ public class Util {
 	 *            the property
 	 * @return collection of elements
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "null" })
 	@NonNull 
 	public static <E> Collection<@NonNull E> asCollection(Event event, String propertyName) {
 		Object o = event.getProperty(propertyName);
