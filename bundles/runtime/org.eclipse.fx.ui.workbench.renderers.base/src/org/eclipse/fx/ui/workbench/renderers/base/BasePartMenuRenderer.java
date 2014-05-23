@@ -63,6 +63,7 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 		// TODO Should we do this creation lazy????
 		WMenu<N> menu = getWidget(element);
 		for (MMenuElement e : element.getChildren()) {
+			@SuppressWarnings("null")
 			WMenuElement<MMenuElement> widget = engineCreateWidget(e);
 			if (widget != null && e.isVisible()) {
 				menu.addElement(widget);
@@ -106,7 +107,11 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 		WMenu<N> menu = getWidget(parentElement);
 		@SuppressWarnings("unchecked")
 		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
-		menu.addElement(idx, menuElement);
+		if( menuElement != null ) {
+			menu.addElement(idx, menuElement);
+		} else {
+			getLogger().error("The widget of element '"+element+"' is null");  //$NON-NLS-1$//$NON-NLS-2$
+		}
 	}
 
 	@Override

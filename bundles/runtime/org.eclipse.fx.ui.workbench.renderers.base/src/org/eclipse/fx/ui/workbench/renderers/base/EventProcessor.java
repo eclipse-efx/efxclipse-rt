@@ -17,6 +17,7 @@ import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -42,7 +43,7 @@ public class EventProcessor {
 		 * @param elements
 		 *            the child elements
 		 */
-		public void handleChildrenAddition(M parent, Collection<C> elements);
+		public void handleChildrenAddition(@NonNull M parent, @NonNull Collection<@NonNull C> elements);
 
 		/**
 		 * Called when children are removed
@@ -52,7 +53,7 @@ public class EventProcessor {
 		 * @param elements
 		 *            the child elements
 		 */
-		public void handleChildrenRemove(M parent, Collection<C> elements);
+		public void handleChildrenRemove(@NonNull M parent, @NonNull Collection<@NonNull C> elements);
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class EventProcessor {
 	public static <C extends MUIElement, M extends MElementContainer<C>, R extends BaseRenderer<M, ?> & ChildrenHandler<M, C>> void attachChildProcessor(IEventBroker eventBroker, final R renderer) {
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, new EventHandler() {
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "null" })
 			@Override
 			public void handleEvent(Event event) {
 				Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);

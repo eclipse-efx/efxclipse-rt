@@ -21,7 +21,8 @@ public class Util {
 	 * @return collection of elements
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E> Collection<E> asCollection(Event event, String propertyName) {
+	@NonNull 
+	public static <E> Collection<@NonNull E> asCollection(Event event, String propertyName) {
 		Object o = event.getProperty(propertyName);
 		return o instanceof Collection<?> ? (Collection<E>) o : Collections.singleton((E) o);
 	}
