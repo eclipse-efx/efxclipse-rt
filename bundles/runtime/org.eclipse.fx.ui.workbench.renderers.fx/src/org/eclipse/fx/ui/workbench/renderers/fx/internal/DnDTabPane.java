@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
 import java.lang.reflect.Field;
@@ -26,12 +36,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
-/**
- * 
- */
+@SuppressWarnings("javadoc")
 public class DnDTabPane extends TabPane {
 	private static Tab DRAGGED_TAB;
-	private static final DataFormat TAB_MOVE = new DataFormat("DnDTabPane:tabMove");
+	private static final DataFormat TAB_MOVE = new DataFormat("DnDTabPane:tabMove"); //$NON-NLS-1$
+	
 	
 	public static final EventType<TabPaneDragStartEvent> DND_TABPANE_DRAG_START = new EventType<> (Event.ANY, "DND_TABPANE_DRAG_START"); //$NON-NLS-1$
 	public static final EventType<TabPaneDroppedEvent> DND_TABPANE_DROPPED = new EventType<> (Event.ANY, "DND_TABPANE_DROPPED"); //$NON-NLS-1$
@@ -115,7 +124,7 @@ public class DnDTabPane extends TabPane {
 		AFTER
 	}
 	
-	private BooleanProperty dndEnabled = new SimpleBooleanProperty(this, "dndEnabled", true);
+	private BooleanProperty dndEnabled = new SimpleBooleanProperty(this, "dndEnabled", true); //$NON-NLS-1$
 	
 	
 	@Override
