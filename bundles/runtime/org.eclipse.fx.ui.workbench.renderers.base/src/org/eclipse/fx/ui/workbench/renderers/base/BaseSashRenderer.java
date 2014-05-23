@@ -106,6 +106,18 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 				}
 			}
 		});
+		eventBroker.subscribe(UIEvents.UIElement.TOPIC_CONTAINERDATA, new EventHandler() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
+				if( changedObj.getParent() != null && changedObj.getParent().getRenderer() == BaseSashRenderer.this ) {
+					if( !inUIModification(changedObj.getParent()) ) {
+						getWidget((MPartSashContainer)(MUIElement)changedObj.getParent()).updateLayout();
+					}
+				}
+			}
+		});
 	}
 
 	@Override

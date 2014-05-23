@@ -151,6 +151,20 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		
 		return widget;
 	}
+	
+	public void syncUIModifications(MUIElement element, Runnable codeBlock) {
+		if( inUIModification(element) ) {
+			codeBlock.run();
+			return;
+		}
+		
+		try {
+			BaseRenderer.this.uiModification.put(element, Boolean.TRUE);
+			codeBlock.run();
+		} finally {
+			BaseRenderer.this.uiModification.remove(element);
+		}
+	}
 
 	private void propertyObjectChanged(M element, @NonNull WPropertyChangeEvent<W> event) {
 		// There is already a modification in process
@@ -193,6 +207,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	private void initDefaultEventListeners(@NonNull IEventBroker broker) {
 		registerEventListener(broker, UIEvents.ApplicationElement.TOPIC_PERSISTEDSTATE);
 		registerEventListener(broker, UIEvents.ApplicationElement.TOPIC_TAGS);
+		registerEventListener(broker, UIEvents.UIElement.TOPIC_CONTAINERDATA);
 	}
 
 	@Override

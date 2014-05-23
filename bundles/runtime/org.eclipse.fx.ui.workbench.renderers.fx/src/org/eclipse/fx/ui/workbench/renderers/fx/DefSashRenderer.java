@@ -32,6 +32,7 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.ui.panes.GridData;
 import org.eclipse.fx.ui.panes.GridData.Alignment;
 import org.eclipse.fx.ui.panes.GridLayoutPane;
+import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseSashRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
@@ -182,6 +183,11 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			return p;
 		}
 
+		@Override
+		public void updateLayout() {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 
 	static class WResizableSashImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MPartSashContainer> implements WSash<Node> {
@@ -206,8 +212,18 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 				}
 			}
 		};
+		
+		@Override
+		public void updateLayout() {
+			updateDividers();
+		}
 
 		void recalcWeight() {
+			BaseRenderer<?, ?> r = (BaseRenderer<?, ?>) getDomElement().getRenderer();
+			r.syncUIModifications(getDomElement(), this::doRecalcWeight);
+		}
+		
+		void doRecalcWeight() {
 			if (this.state != WidgetState.CREATED) {
 				return;
 			}
