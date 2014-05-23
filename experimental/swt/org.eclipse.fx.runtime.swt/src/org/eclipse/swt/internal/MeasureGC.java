@@ -262,6 +262,12 @@ public class MeasureGC implements DrawableGC {
 	public void setBackgroundPattern(Pattern pattern) {
 		// Not applicable
 	}
+	
+	@Override
+	public Pattern getBackgroundPattern() {
+		// Not applicable
+		return null;
+	}
 
 	@Override
 	public void setForegroundPattern(Pattern pattern) {
@@ -276,5 +282,10 @@ public class MeasureGC implements DrawableGC {
 	@Override
 	public int getTextAntialias() {
 		return SWT.DEFAULT;
+	}
+	
+	@Override
+	public void setLineDash(int[] dashes) {
+		Util.logNotImplemented();
 	}
 }

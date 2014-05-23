@@ -342,6 +342,12 @@ public abstract class Device implements Drawable {
 		}
 		
 		@Override
+		public Pattern getBackgroundPattern() {
+			Util.logNotImplemented();
+			return null;
+		}
+		
+		@Override
 		public void setForegroundPattern(Pattern pattern) {
 			Util.logNotImplemented();
 		}
@@ -360,6 +366,11 @@ public abstract class Device implements Drawable {
 		public int getTextAntialias() {
 			Util.logNotImplemented();
 			return SWT.DEFAULT;
+		}
+		
+		@Override
+		public void setLineDash(int[] dashes) {
+			Util.logNotImplemented();
 		}
 	}
 	

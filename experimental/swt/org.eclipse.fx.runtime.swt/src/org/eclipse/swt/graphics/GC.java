@@ -198,11 +198,11 @@ public class GC extends Resource {
 	public Color getBackground() {
 		return gc.getBackground();
 	}
-//	
-//	public Pattern getBackgroundPattern() {	
-//		
-//	}
-//	
+	
+	public Pattern getBackgroundPattern() {	
+		return gc.getBackgroundPattern();
+	}
+	
 	public boolean getAdvanced() {
 		return true;
 	}
@@ -409,11 +409,11 @@ public class GC extends Resource {
 	public void setLineCap(int cap) {
 		gc.setLineCap(cap);
 	}
-//	
-//	public void setLineDash(int[] dashes) {
-//		
-//	}
-//	
+	
+	public void setLineDash(int[] dashes) {
+		gc.setLineDash(dashes);
+	}
+	
 	public void setLineJoin(int join) {
 		gc.setLineJoin(join);
 	}

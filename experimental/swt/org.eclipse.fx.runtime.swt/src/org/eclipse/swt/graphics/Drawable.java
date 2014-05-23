@@ -69,6 +69,8 @@ public interface Drawable {
 		public int getTextAntialias();
 		public int getLineWidth();
 		public int getLineStyle();
+		public Pattern getBackgroundPattern();
+		public void setLineDash(int[] dashes);
 	}
 	
 	public DrawableGC internal_new_GC();

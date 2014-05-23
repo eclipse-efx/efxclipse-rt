@@ -67,6 +67,7 @@ public class CanvasGC implements DrawableGC {
 	
 	private boolean activeClip;
 	private int lineStyle = SWT.LINE_SOLID;
+	private Pattern backgroundPattern;
 	
 	public CanvasGC(Canvas canvas, Font receiverFont, Color receiverBackground, Color receiverForeground) {
 		this.canvas = canvas;
@@ -627,6 +628,7 @@ public class CanvasGC implements DrawableGC {
 	
 	@Override
 	public void setBackgroundPattern(Pattern pattern) {
+		this.backgroundPattern = pattern;
 		if( pattern == null ) {
 			canvas.getGraphicsContext2D().setFill(defaultBackground);
 		} else {
@@ -636,6 +638,11 @@ public class CanvasGC implements DrawableGC {
 				canvas.getGraphicsContext2D().setFill(new LinearGradient(pattern.internal_getX1(), pattern.internal_getY1(), pattern.internal_getX2(), pattern.internal_getY2(), false, CycleMethod.NO_CYCLE));
 			}				
 		}
+	}
+	
+	@Override
+	public Pattern getBackgroundPattern() {
+		return backgroundPattern;
 	}
 	
 	@Override
@@ -659,5 +666,10 @@ public class CanvasGC implements DrawableGC {
 	@Override
 	public int getTextAntialias() {
 		return SWT.DEFAULT;
+	}
+	
+	@Override
+	public void setLineDash(int[] dashes) {
+		Util.logNotImplemented();
 	}
 }
