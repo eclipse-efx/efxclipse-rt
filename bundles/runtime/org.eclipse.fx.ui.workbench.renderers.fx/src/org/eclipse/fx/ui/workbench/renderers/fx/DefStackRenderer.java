@@ -49,6 +49,7 @@ import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * default renderer for {@link MPartStack}
@@ -65,7 +66,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 	}
 
-	static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
+	static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> { 
 
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
@@ -339,6 +340,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			return StackItemImpl.class;
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		public void addItem(WStackItem<Object, Node> item) {
 			addItems(Collections.singletonList(item));
@@ -371,6 +373,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			getWidget().getSelectionModel().select(idx);
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		public List<@NonNull WStackItem<Object, Node>> getItems() {
 			List<WStackItem<Object, Node>> rv = new ArrayList<WStackItem<Object, Node>>();
@@ -517,7 +520,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 	}
 
 	static class PaginationWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
-		List<WStackItem<Object, Node>> items = new ArrayList<WStack.WStackItem<Object, Node>>();
+		@NonNull
+		List<@NonNull WStackItem<Object, Node>> items = new ArrayList<>();
+		@Nullable
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 
 		@Override
@@ -549,13 +554,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public void addItems(List<WStackItem<Object, Node>> items) {
+		public void addItems(List<@NonNull WStackItem<Object, Node>> items) {
 			this.items.addAll(items);
 			getWidget().setPageCount(this.items.size());
 		}
 
 		@Override
-		public void addItems(int index, List<WStack.WStackItem<Object, Node>> items) {
+		public void addItems(int index, @NonNull List<@NonNull WStackItem<Object, Node>> items) {
 			this.items.addAll(index, items);
 			getWidget().setPageCount(this.items.size());
 		}
@@ -571,7 +576,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public List<WStackItem<Object, Node>> getItems() {
+		public List<@NonNull WStackItem<Object, Node>> getItems() {
 			return this.items;
 		}
 
@@ -610,7 +615,12 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				public Node call(Integer param) {
 					PagninationItemImpl item = (PagninationItemImpl) PaginationWidgetImpl.this.items.get(param.intValue());
 					item.handleSelection();
-					PaginationWidgetImpl.this.mouseSelectedItemCallback.call(item);
+					
+					WCallback<WStackItem<Object, Node>, Void> cb = PaginationWidgetImpl.this.mouseSelectedItemCallback;
+					if( cb != null ) {
+						cb.call(item);	
+					}
+					
 					PaginationItem nativeItem = item.getNativeItem();
 					if( nativeItem != null ) {
 						return nativeItem.getContent();	
@@ -623,8 +633,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 					final PagninationItemImpl item = (PagninationItemImpl) PaginationWidgetImpl.this.items.get(newValue.intValue());
-					if (PaginationWidgetImpl.this.mouseSelectedItemCallback != null) {
-						PaginationWidgetImpl.this.mouseSelectedItemCallback.call(item);
+					WCallback<WStackItem<Object, Node>, Void> cb = PaginationWidgetImpl.this.mouseSelectedItemCallback;
+					if ( cb != null) {
+						cb.call(item);
 					}
 				}
 			});
