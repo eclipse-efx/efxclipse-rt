@@ -275,7 +275,7 @@ public class CanvasGC implements DrawableGC {
 		//TODO Deal with flags
 		TextLayoutFactory factory = Toolkit.getToolkit().getTextLayoutFactory();
 		TextLayout layout = factory.createLayout();
-		layout.setContent(string, getFont().internal_getNativeObject().impl_getNativeFont());
+		layout.setContent(string, canvas.getGraphicsContext2D().getFont().impl_getNativeFont());
 		BaseBounds b = layout.getBounds();
 				
 		return new Point((int)Math.ceil(b.getWidth()), (int)Math.ceil(b.getHeight()));
@@ -400,7 +400,7 @@ public class CanvasGC implements DrawableGC {
 	public Point stringExtent(String string) {
 		TextLayoutFactory factory = Toolkit.getToolkit().getTextLayoutFactory();
 		TextLayout layout = factory.createLayout();
-		layout.setContent(string, getFont().internal_getNativeObject().impl_getNativeFont());
+		layout.setContent(string, canvas.getGraphicsContext2D().getFont().impl_getNativeFont());
 		BaseBounds b = layout.getBounds();
 				
 		return new Point((int)Math.ceil(b.getWidth()), (int)Math.ceil(b.getHeight()));
@@ -439,6 +439,7 @@ public class CanvasGC implements DrawableGC {
 	}
 	
 	private void setClipping(PathIterator pathIterator) {
+		//FIXME Many clipping calls make Canvas unusable slow!!!
 		resetClip();
 		if( pathIterator == null ) {
 			return;
@@ -671,5 +672,10 @@ public class CanvasGC implements DrawableGC {
 	@Override
 	public void setLineDash(int[] dashes) {
 		Util.logNotImplemented();
+	}
+	
+	public int[] getLineDash() {
+		Util.logNotImplemented();
+		return null;
 	}
 }
