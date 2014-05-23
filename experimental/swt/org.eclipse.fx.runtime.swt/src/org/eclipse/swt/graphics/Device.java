@@ -372,6 +372,11 @@ public abstract class Device implements Drawable {
 		public void setLineDash(int[] dashes) {
 			Util.logNotImplemented();
 		}
+		
+		@Override
+		public int[] getLineDash() {
+			return null;
+		}
 	}
 	
 	public Color getSystemColor (int id) {

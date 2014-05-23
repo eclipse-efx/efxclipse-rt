@@ -71,6 +71,7 @@ public interface Drawable {
 		public int getLineStyle();
 		public Pattern getBackgroundPattern();
 		public void setLineDash(int[] dashes);
+		public int[] getLineDash();
 	}
 	
 	public DrawableGC internal_new_GC();

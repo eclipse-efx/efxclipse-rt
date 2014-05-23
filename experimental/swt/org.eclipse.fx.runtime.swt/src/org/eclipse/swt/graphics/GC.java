@@ -295,9 +295,9 @@ public class GC extends Resource {
 //		
 //	}
 //	
-//	public int[] getLineDash() {
-//		
-//	}
+	public int[] getLineDash() {
+		return gc.getLineDash();
+	}
 //	
 //	public int getLineJoin() {
 //		
