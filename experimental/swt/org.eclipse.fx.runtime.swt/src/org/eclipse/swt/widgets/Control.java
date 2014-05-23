@@ -371,13 +371,15 @@ public abstract class Control extends Widget implements Drawable {
 	// //
 	// // }
 	//
-	// public boolean dragDetect (MouseEvent event) {
-	//
-	// }
-	//
-	// public boolean dragDetect (Event event) {
-	//
-	// }
+	 public boolean dragDetect (org.eclipse.swt.events.MouseEvent event) {
+		 Util.logNotImplemented();
+		 return false;
+	 }
+	
+	 public boolean dragDetect (Event event) {
+		 Util.logNotImplemented();
+		 return false;	
+	 }
 	//
 	// public boolean forceFocus () {
 	//
