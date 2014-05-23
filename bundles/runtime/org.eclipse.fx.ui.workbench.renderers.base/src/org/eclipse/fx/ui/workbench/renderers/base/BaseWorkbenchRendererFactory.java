@@ -105,8 +105,9 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	 * @param context
 	 *            the context
 	 */
+	@SuppressWarnings("null")
 	@Inject
-	public BaseWorkbenchRendererFactory(IEclipseContext context) {
+	public BaseWorkbenchRendererFactory(@NonNull IEclipseContext context) {
 		this.context = context.createChild();
 		this.context.set(RendererFactory.class, this);
 		this.context.set(SHARED_ELEMENTS_MAP, new HashMap<UIElement, Set<MPlaceholder>>());
@@ -117,12 +118,12 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	public <R extends AbstractRenderer<?, ?>> R getRenderer(MUIElement modelObject) {
 		if (modelObject instanceof MPopupMenu) {
 			if (this.popupMenuRenderer == null) {
-				this.popupMenuRenderer = ContextInjectionFactory.make(getPopupMenuRendererClass(), this.context);
+				this.popupMenuRenderer = make(getPopupMenuRendererClass());
 			}
 			return (R) this.popupMenuRenderer;
 		} else if (modelObject instanceof MArea) {
 			if (this.areaRenderer == null) {
-				this.areaRenderer = ContextInjectionFactory.make(getAreaRendererClass(), this.context);
+				this.areaRenderer = make(getAreaRendererClass());
 			}
 			return (R) this.areaRenderer;
 		} else if (modelObject instanceof MWindow) {
@@ -231,7 +232,7 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	 * @return a new instance of the given renderer class.
 	 */
 	@NonNull
-	protected <R extends AbstractRenderer<?, ?>> R make(Class<R> rendererClass) {
+	protected <@NonNull R extends AbstractRenderer<?, ?>> R make(Class<R> rendererClass) {
 		return ContextInjectionFactory.make(rendererClass, this.context);
 	}
 
@@ -239,119 +240,119 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	 * @return the window renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseWindowRenderer<?>> getWindowRendererClass();
+	protected abstract Class<@NonNull ? extends BaseWindowRenderer<?>> getWindowRendererClass();
 
 	/**
 	 * @return the sash renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseSashRenderer<?>> getSashRendererClass();
+	protected abstract Class<@NonNull ? extends BaseSashRenderer<?>> getSashRendererClass();
 
 	/**
 	 * @return the menubar renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseMenuBarRenderer<?>> getMenuBarRendererClass();
+	protected abstract Class<@NonNull ? extends BaseMenuBarRenderer<?>> getMenuBarRendererClass();
 
 	/**
 	 * @return the trimbar renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseTrimBarRenderer<?>> getTrimBarRendererClass();
+	protected abstract Class<@NonNull ? extends BaseTrimBarRenderer<?>> getTrimBarRendererClass();
 
 	/**
 	 * @return the toolbar renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseToolBarRenderer<?>> getToolBarRendererClass();
+	protected abstract Class<@NonNull ? extends BaseToolBarRenderer<?>> getToolBarRendererClass();
 
 	/**
 	 * @return the tool item renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseToolItemRenderer<?>> getToolItemRendererClass();
+	protected abstract Class<@NonNull ? extends BaseToolItemRenderer<?>> getToolItemRendererClass();
 
 	/**
 	 * @return the stack renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseStackRenderer<?, ?, ?>> getStackRendererClass();
+	protected abstract Class<@NonNull ? extends BaseStackRenderer<?, ?, ?>> getStackRendererClass();
 
 	/**
 	 * @return the part renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BasePartRenderer<?, ?, ?>> getPartRendererClass();
+	protected abstract Class<@NonNull ? extends BasePartRenderer<?, ?, ?>> getPartRendererClass();
 
 	/**
 	 * @return the menu renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseMenuRenderer<?>> getMenuRendererClass();
+	protected abstract Class<@NonNull ? extends BaseMenuRenderer<?>> getMenuRendererClass();
 
 	/**
 	 * @return the menu item renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseMenuItemRenderer<?>> getMenuItemRendererClass();
+	protected abstract Class<@NonNull ? extends BaseMenuItemRenderer<?>> getMenuItemRendererClass();
 
 	/**
 	 * @return the menu separator renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseMenuSeparatorRenderer<?>> getMenuSeparatorRendererClass();
+	protected abstract Class<@NonNull ? extends BaseMenuSeparatorRenderer<?>> getMenuSeparatorRendererClass();
 
 	/**
 	 * @return the tool item menu renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseMenuRenderer<?>> getToolItemMenuRendererClass();
+	protected abstract Class<@NonNull ? extends BaseMenuRenderer<?>> getToolItemMenuRendererClass();
 
 	/**
 	 * @return the perspective stack renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BasePerspectiveStackRenderer<?, ?, ?>> getPerspectiveStackRendererClass();
+	protected abstract Class<@NonNull ? extends BasePerspectiveStackRenderer<?, ?, ?>> getPerspectiveStackRendererClass();
 
 	/**
 	 * @return the perspective renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BasePerspectiveRenderer<?>> getPerspectiveRendererClass();
+	protected abstract Class<@NonNull ? extends BasePerspectiveRenderer<?>> getPerspectiveRendererClass();
 
 	/**
 	 * @return the placeholder renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BasePlaceholderRenderer<?>> getPlaceholderRendererClass();
+	protected abstract Class<@NonNull ? extends BasePlaceholderRenderer<?>> getPlaceholderRendererClass();
 
 	/**
 	 * @return the toolcontrol renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseToolControlRenderer<?>> getToolcontrolRendererClass();
+	protected abstract Class<@NonNull ? extends BaseToolControlRenderer<?>> getToolcontrolRendererClass();
 
 	/**
 	 * @return the toolbar separator renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseToolBarSeparatorRenderer<?>> getToolBarSeparatorRendererClass();
+	protected abstract Class<@NonNull ? extends BaseToolBarSeparatorRenderer<?>> getToolBarSeparatorRendererClass();
 
 	/**
 	 * @return the area renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BaseAreaRenderer<?>> getAreaRendererClass();
+	protected abstract Class<@NonNull ? extends BaseAreaRenderer<?>> getAreaRendererClass();
 
 	/**
 	 * @return the popup menu renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BasePopupMenuRenderer<?>> getPopupMenuRendererClass();
+	protected abstract Class<@NonNull ? extends BasePopupMenuRenderer<?>> getPopupMenuRendererClass();
 
 	/**
 	 * @return the part menu renderer class
 	 */
 	@NonNull
-	protected abstract Class<? extends BasePartMenuRenderer<?>> getPartMenuRenderer();
+	protected abstract Class<@NonNull ? extends BasePartMenuRenderer<?>> getPartMenuRenderer();
 }
