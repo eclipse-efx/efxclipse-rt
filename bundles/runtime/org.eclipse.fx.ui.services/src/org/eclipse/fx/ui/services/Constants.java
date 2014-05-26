@@ -10,15 +10,51 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.services;
 
+import org.eclipse.jdt.annotation.NonNull;
+
+/**
+ * Various constants
+ */
 public final class Constants {
-	public static final String WINDOW_FOCUS_NODE = "efx_WINDOW_FOCUS_NODE";
-	public static final String APP_FOCUS_NODE 	 = "efx_APP_FOCUS_NODE";
+	/**
+	 * Context key with the windows focus node
+	 */
+	@NonNull
+	public static final String WINDOW_FOCUS_NODE = "efx_WINDOW_FOCUS_NODE"; //$NON-NLS-1$
+	/**
+	 * Context key with the applications focus node
+	 */
+	@NonNull
+	public static final String APP_FOCUS_NODE 	 = "efx_APP_FOCUS_NODE"; //$NON-NLS-1$
 	
-	public static final String ROOT_TOPIC = "org/eclipse/fx";
-	public static final String WINDOW_SHOWN = ROOT_TOPIC + "/MWindow/Shown";
-	public static final String WINDOW_HIDDEN = ROOT_TOPIC + "/MWindow/Hidden";
-	public static final String WINDOW_ACTIVATED = ROOT_TOPIC + "/MWindow/Activated";
-	
-	public static final String PERSPECTIVE_SHOWN = ROOT_TOPIC + "/MPerspective/Shown";
-	public static final String PERSPECTIVE_HIDDEN = ROOT_TOPIC + "/MPerspective/Hidden";
+	/**
+	 * Root topic for fx specific events
+	 */
+	@NonNull
+	public static final String ROOT_TOPIC = "org/eclipse/fx"; //$NON-NLS-1$
+	/**
+	 * Event sent when a window is fully shown
+	 */
+	@NonNull
+	public static final String WINDOW_SHOWN = ROOT_TOPIC + "/MWindow/Shown"; //$NON-NLS-1$
+	/**
+	 * Event sent when a window is fully hidden
+	 */
+	@NonNull
+	public static final String WINDOW_HIDDEN = ROOT_TOPIC + "/MWindow/Hidden"; //$NON-NLS-1$
+	/**
+	 * Event sent when a window is activated 
+	 */
+	@NonNull
+	public static final String WINDOW_ACTIVATED = ROOT_TOPIC + "/MWindow/Activated"; //$NON-NLS-1$
+	/**
+	 * Event sent when a perspective is fully shown
+	 */
+	@NonNull
+	public static final String PERSPECTIVE_SHOWN = ROOT_TOPIC + "/MPerspective/Shown"; //$NON-NLS-1$
+	/**
+	 * Event sent when a perspective is fully hidden
+	 */
+	@NonNull
+	public static final String PERSPECTIVE_HIDDEN = ROOT_TOPIC + "/MPerspective/Hidden"; //$NON-NLS-1$
 }
