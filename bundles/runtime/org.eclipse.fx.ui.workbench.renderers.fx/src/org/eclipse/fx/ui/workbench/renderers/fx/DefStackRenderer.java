@@ -70,8 +70,8 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
-		WCallback<DragData, Boolean> dragStartCallback;
-		WCallback<DropData, Void> droppedCallback;
+		WCallback<@NonNull DragData, @NonNull Boolean> dragStartCallback;
+		WCallback<@NonNull DropData, @Nullable Void> droppedCallback;
 		
 		// private WCallback<WMinMaxState, Void> minMaxCallback;
 		// private MinMaxGroup minMaxGroup;
@@ -397,12 +397,12 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 		
 		@Override
-		public void setDragStartCallback(@NonNull WCallback<DragData, Boolean> dragStackCallback) {
+		public void setDragStartCallback(@NonNull WCallback<@NonNull DragData, @NonNull Boolean> dragStackCallback) {
 			this.dragStartCallback = dragStackCallback;
 		}
 
 		@Override
-		public void setDragDroppedCallback(@NonNull WCallback<DropData, Void> droppedCallback) {
+		public void setDragDroppedCallback(@NonNull WCallback<@NonNull DropData, @Nullable Void> droppedCallback) {
 			this.droppedCallback = droppedCallback;
 		}
 		
@@ -643,12 +643,12 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 		
 		@Override
-		public void setDragStartCallback(WCallback<DragData, Boolean> dragStackCallback) {
+		public void setDragStartCallback(@NonNull WCallback<@NonNull DragData, @NonNull Boolean> dragStackCallback) {
 			// not implemented yet
 		}
 
 		@Override
-		public void setDragDroppedCallback(WCallback<DropData, Void> callback) {
+		public void setDragDroppedCallback(@NonNull WCallback<@NonNull DropData, @Nullable Void> callback) {
 			// not implemented yet
 		}
 
