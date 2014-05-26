@@ -26,6 +26,7 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
+import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -45,15 +46,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-/**
- * @author tomschindl
- *
- * @param <N>
- */
 /**
  * Base renderer for {@link MWindow}
  * 
@@ -156,8 +151,9 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	@Log
 	Logger logger;
 
+	@SuppressWarnings("null")
 	@PostConstruct
-	void init(IEventBroker eventBroker) {
+	void init(@NonNull IEventBroker eventBroker) {
 		registerEventListener(eventBroker, UIEvents.Window.TOPIC_X);
 		registerEventListener(eventBroker, UIEvents.Window.TOPIC_Y);
 		registerEventListener(eventBroker, UIEvents.Window.TOPIC_WIDTH);
@@ -195,21 +191,26 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		});
 	}
 
-	void handleWindowAdd(MWindow element) {
+	void handleWindowAdd(@NonNull MWindow element) {
 		engineCreateWidget(element);
 	}
 
-	void handleWindowRemove(MWindow element) {
+	void handleWindowRemove(@NonNull MWindow element) {
 		// Nothing to do here
 	}
 
-	void handleChildAdd(MWindowElement element) {
+	void handleChildAdd(@NonNull MWindowElement element) {
 		engineCreateWidget(element);
 	}
 
 	void handleChildRemove(MWindowElement element) {
 		if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
-			hideChild((MWindow) (MUIElement) element.getParent(), element);
+			MElementContainer<MUIElement> parent = element.getParent();
+			if( parent != null ) {
+				hideChild((MWindow) (MUIElement) parent, element);	
+			} else {
+				getLogger().error("Unable to find parent for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			}
 		}
 	}
 

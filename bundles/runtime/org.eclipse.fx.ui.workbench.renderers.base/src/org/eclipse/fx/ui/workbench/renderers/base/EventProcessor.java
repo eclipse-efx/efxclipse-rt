@@ -67,7 +67,7 @@ public class EventProcessor {
 	public static <C extends MUIElement, M extends MElementContainer<C>, R extends BaseRenderer<M, ?> & ChildrenHandler<M, C>> void attachChildProcessor(IEventBroker eventBroker, final R renderer) {
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, new EventHandler() {
 
-			@SuppressWarnings({ "unchecked", "null" })
+			@SuppressWarnings({ "unchecked" })
 			@Override
 			public void handleEvent(Event event) {
 				Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);

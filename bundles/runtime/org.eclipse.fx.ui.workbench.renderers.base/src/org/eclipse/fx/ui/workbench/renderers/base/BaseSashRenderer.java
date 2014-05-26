@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
@@ -111,9 +112,10 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 			@Override
 			public void handleEvent(Event event) {
 				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
-				if( changedObj.getParent() != null && changedObj.getParent().getRenderer() == BaseSashRenderer.this ) {
-					if( !inUIModification(changedObj.getParent()) ) {
-						getWidget((MPartSashContainer)(MUIElement)changedObj.getParent()).updateLayout();
+				if( changedObj != null && changedObj.getParent() != null && changedObj.getParent().getRenderer() == BaseSashRenderer.this ) {
+					MElementContainer<MUIElement> parent = changedObj.getParent();
+					if( parent != null && !inUIModification(parent) ) {
+						getWidget((MPartSashContainer)(MUIElement)parent).updateLayout();
 					}
 				}
 			}
@@ -172,7 +174,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		}
 	}
 
-	void handleChildrenAddition(MPartSashContainer parent, Collection<MPartSashContainerElement> elements) {
+	void handleChildrenAddition(@NonNull MPartSashContainer parent, Collection<MPartSashContainerElement> elements) {
 		Iterator<MPartSashContainerElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MPartSashContainerElement element = (MPartSashContainerElement) iterator.next();
@@ -188,7 +190,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 
 	}
 
-	void handleChildrenRemove(MPartSashContainer parent, Collection<MPartSashContainerElement> elements) {
+	void handleChildrenRemove(@NonNull MPartSashContainer parent, Collection<MPartSashContainerElement> elements) {
 		Iterator<MPartSashContainerElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MPartSashContainerElement element = (MPartSashContainerElement) iterator.next();

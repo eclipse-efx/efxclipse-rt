@@ -28,10 +28,8 @@ import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspective;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -81,7 +79,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		});
 	}
 
-	void handleWindowAdd(MWindow window) {
+	void handleWindowAdd(@NonNull MWindow window) {
 		engineCreateWidget(window);
 	}
 
@@ -89,7 +87,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		// Nothing to be done
 	}
 
-	void handleChildAdd(MPartSashContainerElement element) {
+	void handleChildAdd(@NonNull MPartSashContainerElement element) {
 		engineCreateWidget(element);
 	}
 
@@ -152,7 +150,12 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		}
 
 		if (element instanceof MPartSashContainerElement) {
-			getWidget(parentElement).addItem(getRenderedIndex(parentElement, element), (WLayoutedWidget<MPartSashContainerElement>) element.getWidget());
+			WLayoutedWidget<MPartSashContainerElement> widget = (WLayoutedWidget<MPartSashContainerElement>) element.getWidget();
+			if( widget != null ) {
+				getWidget(parentElement).addItem(getRenderedIndex(parentElement, element), widget);	
+			} else {
+				getLogger().error("Expected widget from '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			}
 		} else if (element instanceof MWindow) {
 			MWindow parent = findParent((EObject) parentElement);
 			WWindow<?> w = (WWindow<?>) parent.getWidget();

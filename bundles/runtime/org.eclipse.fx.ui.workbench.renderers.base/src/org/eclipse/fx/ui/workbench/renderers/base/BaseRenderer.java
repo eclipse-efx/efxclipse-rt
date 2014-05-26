@@ -118,7 +118,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the element to check
 	 * @return <code>true</code> if the elements context is currently modified
 	 */
-	protected boolean inContextModification(MUIElement element) {
+	protected boolean inContextModification(@NonNull MUIElement element) {
 		return this.contextModification.get(element) == Boolean.TRUE;
 	}
 
@@ -129,7 +129,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the element to check
 	 * @return <code>true</code> if the elements ui is currently modified
 	 */
-	protected boolean inUIModification(MUIElement element) {
+	protected boolean inUIModification(@NonNull MUIElement element) {
 		return this.uiModification.get(element) == Boolean.TRUE;
 	}
 
@@ -143,21 +143,29 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		widget.setPropertyChangeHandler((WPropertyChangeEvent<W> e) -> propertyObjectChanged(element, e));
 		initWidget(element, widget);
 		IEventBroker broker = this._context.get(IEventBroker.class);
-		if( broker != null ) {
-			initDefaultEventListeners(broker);	
+		if (broker != null) {
+			initDefaultEventListeners(broker);
 		} else {
 			this.logger.error("No event broker was found. Most things will not operate appropiately!"); //$NON-NLS-1$
 		}
-		
+
 		return widget;
 	}
-	
-	public void syncUIModifications(MUIElement element, Runnable codeBlock) {
-		if( inUIModification(element) ) {
+
+	/**
+	 * Run code without informing the UI about updates
+	 * 
+	 * @param element
+	 *            the element the code is executed on
+	 * @param codeBlock
+	 *            the code to run
+	 */
+	public void syncUIModifications(@NonNull MUIElement element, @NonNull Runnable codeBlock) {
+		if (inUIModification(element)) {
 			codeBlock.run();
 			return;
 		}
-		
+
 		try {
 			BaseRenderer.this.uiModification.put(element, Boolean.TRUE);
 			codeBlock.run();
@@ -166,7 +174,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		}
 	}
 
-	private void propertyObjectChanged(M element, @NonNull WPropertyChangeEvent<W> event) {
+	private void propertyObjectChanged(@NonNull M element, @NonNull WPropertyChangeEvent<W> event) {
 		// There is already a modification in process
 		if (inUIModification(element) || inContextModification(element)) {
 			return;
@@ -227,16 +235,16 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 				} else {
 					eo = (EObject) element;
 				}
-				
-				if( eo != null ) {
+
+				if (eo != null) {
 					initContext(eo, context);
 					if (element instanceof MPlaceholder) {
 						initContext((EObject) element, context);
 					}
 				} else {
-					throw new IllegalStateException("The placeholder reference of '"+element+"' is null"); //$NON-NLS-1$ //$NON-NLS-2$
+					throw new IllegalStateException("The placeholder reference of '" + element + "' is null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
-				
+
 			} finally {
 				this.contextModification.remove(element);
 			}
@@ -292,7 +300,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		if (!(changedObj instanceof MUIElement)) {
 			return;
 		}
-		
+
 		Object newValue = event.getProperty(UIEvents.EventTags.NEW_VALUE);
 		String attributeName = event.getProperty(UIEvents.EventTags.ATTNAME).toString();
 
@@ -307,19 +315,19 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		if (inContextModification(e)) {
 			return;
 		}
-		
+
 		try {
 			BaseRenderer.this.contextModification.put(e, Boolean.TRUE);
 
 			if (changedObj instanceof MUIElement) {
-				if( event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.ApplicationElement.TAGS) ) {
+				if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.ApplicationElement.TAGS)) {
 					MUIElement m = (MUIElement) changedObj;
-					if( m.getWidget() != null ) {
-						((WWidget<?>)m.getWidget()).removeStyleClasses(m.getTags());
-						((WWidget<?>)m.getWidget()).addStyleClasses(m.getTags());
+					if (m.getWidget() != null) {
+						((WWidget<?>) m.getWidget()).removeStyleClasses(m.getTags());
+						((WWidget<?>) m.getWidget()).addStyleClasses(m.getTags());
 					}
 				}
-				
+
 				if (e.getRenderer() == BaseRenderer.this) {
 					IEclipseContext ctx = (IEclipseContext) e.getTransientData().get(RENDERING_CONTEXT_KEY);
 					if (ctx != null) {
@@ -434,7 +442,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	@NonNull
 	protected IPresentationEngine getPresentationEngine() {
 		IPresentationEngine p = this._context.get(IPresentationEngine.class);
-		if(p == null) {
+		if (p == null) {
 			throw new IllegalStateException("IPresentationEngine not available"); //$NON-NLS-1$
 		}
 		return p;
@@ -586,7 +594,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		}
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public W getWidget(@NonNull M element) {

@@ -140,7 +140,8 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		});
 	}
 
-	MPart getPart(MUIElement tmp) {
+	@Nullable
+	MPart getPart(@NonNull MUIElement tmp) {
 		MUIElement element = tmp;
 		if (element instanceof MPlaceholder) {
 			return (MPart) ((MPlaceholder) element).getRef();
@@ -151,7 +152,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			if ((element == null) && !container.getChildren().isEmpty()) {
 				element = container.getChildren().get(0);
 			}
-			return getPart(element);
+			if( element != null ) {
+				return getPart(element);	
+			}
+			return null;
 		} else {
 			return (MPart) element;
 		}
@@ -165,8 +169,14 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 			@Override
 			public Void call(WStackItem<I, IC> param) {
-				if (param.getDomElement() != null) {
-					activatationJob(element, getPart(param.getDomElement()), true);
+				MStackElement domElement = param.getDomElement();
+				if (domElement != null) {
+					MPart part = getPart(domElement);
+					if( part != null ) {
+						activatationJob(element, part, true);	
+					} else {
+						getLogger().error("Unable to find part to activate for '"+domElement+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+					}
 				}
 
 				return null;
@@ -176,8 +186,14 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 			@Override
 			public Void call(WStackItem<I, IC> param) {
-				if (param.getDomElement() != null) {
-					activatationJob(element, getPart(param.getDomElement()), false);
+				MStackElement domElement = param.getDomElement();
+				if (domElement != null) {
+					MPart part = getPart(domElement);
+					if( part != null ) {
+						activatationJob(element, part, false);	
+					} else {
+						getLogger().error("Unable to find part to activate for '"+domElement+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+					}
 				}
 
 				return null;
@@ -188,21 +204,27 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 			@Override
 			public Void call(Boolean param) {
-				if (param.booleanValue() && element.getSelectedElement() != null) {
-					activatationJob(element, getPart(element.getSelectedElement()), true);
+				MStackElement selectedElement = element.getSelectedElement();
+				if (param.booleanValue() && selectedElement != null) {
+					MPart part = getPart(selectedElement);
+					if( part != null ) {
+						activatationJob(element, part, true);	
+					} else {
+						getLogger().error("Unable to find part to activate for '"+selectedElement+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+					}
 				}
 				return null;
 			}
 		});
 	}
 
-	void activatationJob(MPartStack stackToActivate, final MPart p, final boolean focus) {
+	void activatationJob(@NonNull MPartStack stackToActivate, final @NonNull MPart p, final boolean focus) {
 		if (shouldActivate(stackToActivate)) {
 			activate(p, focus);
 		}
 	}
 
-	private boolean shouldActivate(MPartStack stackToActivate) {
+	private boolean shouldActivate(@NonNull MPartStack stackToActivate) {
 		if (inContentProcessing(stackToActivate)) {
 			return false;
 		}
@@ -257,7 +279,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	}
 
 	@NonNull
-	private WStackItem<I, IC> createStackItem(WStack<N, I, IC> stack, final MStackElement e, ElementRenderer<MStackElement, ?> renderer) {
+	private WStackItem<I, IC> createStackItem(@NonNull WStack<N, I, IC> stack, final @NonNull MStackElement e, @NonNull ElementRenderer<MStackElement, ?> renderer) {
 		IEclipseContext context = renderer.setupRenderingContext(e);
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
 		e.getTransientData().put(MAP_ITEM_KEY, item);
@@ -301,14 +323,18 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				int idx = getRenderedIndex(parent, element);
 
 				ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
-				WStack<N, I, IC> stack = getWidget(parent);
-				@SuppressWarnings("unchecked")
-				WStackItem<I, IC> item = (WStackItem<I, IC>) element.getTransientData().get(MAP_ITEM_KEY);
-				if( item == null || ! getWidget(parent).getStackItemClass().isAssignableFrom(item.getClass()) ) {
-					item = createStackItem(getWidget(parent), element, renderer);	
-				}
+				if( renderer != null ) {
+					WStack<N, I, IC> stack = getWidget(parent);
+					@SuppressWarnings("unchecked")
+					WStackItem<I, IC> item = (WStackItem<I, IC>) element.getTransientData().get(MAP_ITEM_KEY);
+					if( item == null || ! getWidget(parent).getStackItemClass().isAssignableFrom(item.getClass()) ) {
+						item = createStackItem(getWidget(parent), element, renderer);	
+					}
 
-				stack.addItems(idx, Collections.singletonList(item));
+					stack.addItems(idx, Collections.singletonList(item));					
+				} else {
+					getLogger().error("Could not find renderer for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+				}
 			}
 		}
 	}
@@ -351,7 +377,13 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		return resultList;
 	}
 
-	void handleSelectedElement(MPartStack parent, MStackElement oldElement, MStackElement newElement) {
+	void handleSelectedElement(final @NonNull MPartStack parent, @Nullable final MStackElement oldElement, @Nullable final MStackElement _newElement) {
+		MStackElement newElement = _newElement;
+		
+		if( newElement == null ) {
+			return;
+		}
+		
 		WStack<N, I, IC> stack = getWidget(parent);
 		int idx = 0;
 		for (WStackItem<I, IC> i : stack.getItems()) {
@@ -371,8 +403,13 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		showElementRecursive(newElement);
 	}
 
-	boolean handleStackItemClose(MStackElement e, WStackItem<I, IC> item) {
+	boolean handleStackItemClose(@NonNull MStackElement e, @NonNull WStackItem<I, IC> item) {
 		MPart part = getPart(e);
+		if( part == null ) {
+			getLogger().error("Unable to extract part from '"+e+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return true;
+		}
+		
 		if (!part.isCloseable()) {
 			return false;
 		}
@@ -420,9 +457,14 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			}
 		}
 
-		int idx = getRenderedIndex(parentElement, element);
 		ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
-		stack.addItems(idx, Collections.singletonList(createStackItem(stack, (MStackElement) element, renderer)));
+		if( renderer != null ) {
+			int idx = getRenderedIndex(parentElement, element);
+			stack.addItems(idx, Collections.singletonList(createStackItem(stack, (MStackElement) element, renderer)));	
+		} else {
+			getLogger().error("Could not find renderer for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		}
+		
 	}
 
 	@SuppressWarnings("null")
@@ -452,9 +494,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 	}
 
-	private void showElementRecursive(MUIElement tmp) {
+	@SuppressWarnings("null")
+	private void showElementRecursive(@NonNull MUIElement tmp) {
 		MUIElement element = tmp;
-		if (element == null || !element.isToBeRendered()) {
+		if (!element.isToBeRendered()) {
 			return;
 		}
 

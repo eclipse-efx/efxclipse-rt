@@ -63,6 +63,7 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 		// TODO Should we do this creation lazy????
 		WPopupMenu<N> menu = getWidget(element);
 		for (MMenuElement e : element.getChildren()) {
+			@SuppressWarnings("null")
 			WMenuElement<MMenuElement> widget = engineCreateWidget(e);
 			if (widget != null && e.isVisible()) {
 				menu.addElement(widget);
