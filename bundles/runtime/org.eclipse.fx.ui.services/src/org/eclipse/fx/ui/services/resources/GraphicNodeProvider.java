@@ -16,9 +16,33 @@ import java.util.List;
 import javafx.scene.Node;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Provider who translates a url into a node
+ */
 public interface GraphicNodeProvider {
+	/**
+	 * @return the name
+	 */
+	@NonNull
 	public String getName();
-	public List<String> getFileSuffix();
+
+	/**
+	 * @return the file suffixes supported
+	 */
+	@NonNull
+	public List<@NonNull String> getFileSuffix();
+
+	/**
+	 * Load the graphic node
+	 * 
+	 * @param uri
+	 *            the uri
+	 * @return the node
+	 * @throws IOException
+	 *             if loading fails
+	 */
+	@NonNull
 	public Node getGraphicNode(URI uri) throws IOException;
 }
