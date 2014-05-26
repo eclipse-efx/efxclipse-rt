@@ -21,7 +21,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
-import javafx.scene.control.Skin;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyEvent;
@@ -39,15 +38,18 @@ import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
+import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupporter;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupport;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * default renderer for {@link MPartStack}
@@ -64,12 +66,12 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 	}
 
-	static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
+	static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> { 
 
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
 		WCallback<DragData, Boolean> dragStartCallback;
-		WCallback<DropData, Boolean> droppedCallback;
+		WCallback<DropData, Void> droppedCallback;
 		
 		// private WCallback<WMinMaxState, Void> minMaxCallback;
 		// private MinMaxGroup minMaxGroup;
@@ -80,6 +82,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		@Inject
 		DnDFeedbackService dndFeedback;
+		
+		private final MPartStack domainElement;
+		
+		@Inject
+		public StackWidgetImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartStack domainElement) {
+			this.domainElement = domainElement;
+		}
 		
 		@Override
 		protected Pane createStaticPane() {
@@ -143,20 +152,31 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			// }
 			// }
 		}
-
+		
 		@Override
 		protected TabPane createWidget() {
+			DnDSupport dnd = new DnDSupport(
+					(param) -> StackWidgetImpl.this.dragStartCallback,
+					(param) -> StackWidgetImpl.this.droppedCallback,
+					StackWidgetImpl.this.dndFeedback,
+					this.domainElement);
 			
-			TabPane p = new TabPane() {
-				@Override
-				protected Skin<?> createDefaultSkin() {
-					Skin<?> skin = super.createDefaultSkin();
-					DnDSupporter.hookTabPane(skin, getDomElement(), StackWidgetImpl.this.dndFeedback,
-							(param) -> StackWidgetImpl.this.dragStartCallback,
-							(param) -> StackWidgetImpl.this.droppedCallback);
-					return skin;
-				}
-			};
+			DnDTabPane p = new DnDTabPane();
+			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_START, dnd::handleDragStart);
+			p.addEventHandler(DnDTabPane.DND_TABPANE_DROPPED, dnd::handleDropped);
+			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_FEEDBACK, dnd::handleFeedback);
+			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_FINISHED, dnd::handleFinished);
+			
+//			TabPane p = new TabPane() {
+//				@Override
+//				protected Skin<?> createDefaultSkin() {
+//					Skin<?> skin = super.createDefaultSkin();
+//					DnDSupporter.hookTabPane(skin, getDomElement(), StackWidgetImpl.this.dndFeedback,
+//							(param) -> StackWidgetImpl.this.dragStartCallback,
+//							(param) -> StackWidgetImpl.this.droppedCallback);
+//					return skin;
+//				}
+//			};
 
 			// ContextMenu m = new ContextMenu();
 			//
@@ -320,18 +340,19 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			return StackItemImpl.class;
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		public void addItem(WStackItem<Object, Node> item) {
 			addItems(Collections.singletonList(item));
 		}
 
 		@Override
-		public void addItems(List<WStackItem<Object, Node>> items) {
+		public void addItems(List<@NonNull WStackItem<Object, Node>> items) {
 			getWidget().getTabs().addAll(extractTabs(items));
 		}
 
 		@Override
-		public void addItems(int index, List<WStackItem<Object, Node>> items) {
+		public void addItems(int index, List<@NonNull WStackItem<Object, Node>> items) {
 			if( index >= getWidget().getTabs().size() ) {
 				addItems(items);
 			} else {
@@ -352,8 +373,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			getWidget().getSelectionModel().select(idx);
 		}
 
+		@SuppressWarnings("null")
 		@Override
-		public List<WStackItem<Object, Node>> getItems() {
+		public List<@NonNull WStackItem<Object, Node>> getItems() {
 			List<WStackItem<Object, Node>> rv = new ArrayList<WStackItem<Object, Node>>();
 			for (Tab t : getWidget().getTabs()) {
 				@SuppressWarnings("unchecked")
@@ -380,7 +402,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public void setDragDroppedCallback(@NonNull WCallback<DropData, Boolean> droppedCallback) {
+		public void setDragDroppedCallback(@NonNull WCallback<DropData, Void> droppedCallback) {
 			this.droppedCallback = droppedCallback;
 		}
 		
@@ -498,7 +520,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 	}
 
 	static class PaginationWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
-		List<WStackItem<Object, Node>> items = new ArrayList<WStack.WStackItem<Object, Node>>();
+		@NonNull
+		List<@NonNull WStackItem<Object, Node>> items = new ArrayList<>();
+		@Nullable
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 
 		@Override
@@ -530,13 +554,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public void addItems(List<WStackItem<Object, Node>> items) {
+		public void addItems(List<@NonNull WStackItem<Object, Node>> items) {
 			this.items.addAll(items);
 			getWidget().setPageCount(this.items.size());
 		}
 
 		@Override
-		public void addItems(int index, List<WStack.WStackItem<Object, Node>> items) {
+		public void addItems(int index, @NonNull List<@NonNull WStackItem<Object, Node>> items) {
 			this.items.addAll(index, items);
 			getWidget().setPageCount(this.items.size());
 		}
@@ -552,7 +576,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public List<WStackItem<Object, Node>> getItems() {
+		public List<@NonNull WStackItem<Object, Node>> getItems() {
 			return this.items;
 		}
 
@@ -591,7 +615,12 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				public Node call(Integer param) {
 					PagninationItemImpl item = (PagninationItemImpl) PaginationWidgetImpl.this.items.get(param.intValue());
 					item.handleSelection();
-					PaginationWidgetImpl.this.mouseSelectedItemCallback.call(item);
+					
+					WCallback<WStackItem<Object, Node>, Void> cb = PaginationWidgetImpl.this.mouseSelectedItemCallback;
+					if( cb != null ) {
+						cb.call(item);	
+					}
+					
 					PaginationItem nativeItem = item.getNativeItem();
 					if( nativeItem != null ) {
 						return nativeItem.getContent();	
@@ -604,8 +633,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 					final PagninationItemImpl item = (PagninationItemImpl) PaginationWidgetImpl.this.items.get(newValue.intValue());
-					if (PaginationWidgetImpl.this.mouseSelectedItemCallback != null) {
-						PaginationWidgetImpl.this.mouseSelectedItemCallback.call(item);
+					WCallback<WStackItem<Object, Node>, Void> cb = PaginationWidgetImpl.this.mouseSelectedItemCallback;
+					if ( cb != null) {
+						cb.call(item);
 					}
 				}
 			});
@@ -618,7 +648,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		public void setDragDroppedCallback(WCallback<DropData, Boolean> callback) {
+		public void setDragDroppedCallback(WCallback<DropData, Void> callback) {
 			// not implemented yet
 		}
 

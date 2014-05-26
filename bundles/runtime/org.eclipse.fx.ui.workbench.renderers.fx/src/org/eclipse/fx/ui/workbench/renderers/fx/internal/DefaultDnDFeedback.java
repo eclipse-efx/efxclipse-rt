@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 BestSolution.at and others.
+ * Copyright (c) 2014 BestSolution.at and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,6 +21,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 
+/**
+ * Feedback for DnD
+ */
 public class DefaultDnDFeedback implements DnDFeedbackService {
 
 	@Override

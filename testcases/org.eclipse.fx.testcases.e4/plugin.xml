@@ -19,6 +19,10 @@
                value="org.eclipse.fx.testcases.e4/Application.e4xmi"
                name="applicationXMI">
          </property>
+         <property
+               name="lifeCycleURI"
+               value="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.lifecycle.ApplicationLifecycle">
+         </property>
       </product>
    </extension>
    <extension

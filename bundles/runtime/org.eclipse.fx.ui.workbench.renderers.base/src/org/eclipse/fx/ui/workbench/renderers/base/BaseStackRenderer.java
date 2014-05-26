@@ -35,13 +35,14 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.ui.lifecycle.ELifecycleService;
 import org.eclipse.fx.ui.lifecycle.annotations.PreClose;
-import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
+import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
@@ -58,6 +59,9 @@ import org.osgi.service.event.EventHandler;
  */
 public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStack, WStack<N, I, IC>> {
 	private static final String MAP_ITEM_KEY = "fx.rendering.stackitem"; //$NON-NLS-1$
+	/**
+	 * Transient tag to inform about a move operation
+	 */
 	public final static String MAP_MOVE = "fx.rendering.stackitem.move"; //$NON-NLS-1$
 
 	@Inject
@@ -157,7 +161,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	protected void initWidget(final MPartStack element, final WStack<N, I, IC> widget) {
 		super.initWidget(element, widget);
 		// widget.setMinMaxState(WMinMaxState.MAXIMIZED);
-		widget.setMouseSelectedItemCallback(new WCallback<WStackItem<I, IC>, Void>() {
+		widget.setMouseSelectedItemCallback(new WCallback<@NonNull WStackItem<I, IC>, Void>() {
 
 			@Override
 			public Void call(WStackItem<I, IC> param) {
@@ -168,7 +172,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				return null;
 			}
 		});
-		widget.setKeySelectedItemCallback(new WCallback<WStackItem<I, IC>, Void>() {
+		widget.setKeySelectedItemCallback(new WCallback<@NonNull WStackItem<I, IC>, Void>() {
 
 			@Override
 			public Void call(WStackItem<I, IC> param) {
@@ -213,15 +217,16 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		return true;
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public void doProcessContent(MPartStack element) {
 		WStack<N, I, IC> stack = getWidget(element);
-		List<WStackItem<I, IC>> items = new ArrayList<WStackItem<I, IC>>();
+		List<@NonNull WStackItem<I, IC>> items = new ArrayList<>();
 		WStackItem<I, IC> initalItem = null;
 
 		for (MStackElement e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
-			AbstractRenderer<MStackElement, ?> renderer = this.factory.getRenderer(e);
+			ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(e);
 			if (renderer != null && e.isToBeRendered() && e.isVisible()) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
@@ -251,12 +256,13 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		stack.selectItem(stack.getItems().indexOf(initalItem));
 	}
 
-	private WStackItem<I, IC> createStackItem(WStack<N, I, IC> stack, final MStackElement e, AbstractRenderer<MStackElement, ?> renderer) {
+	@NonNull
+	private WStackItem<I, IC> createStackItem(WStack<N, I, IC> stack, final MStackElement e, ElementRenderer<MStackElement, ?> renderer) {
 		IEclipseContext context = renderer.setupRenderingContext(e);
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
 		e.getTransientData().put(MAP_ITEM_KEY, item);
 		item.setDomElement(e);
-		item.setInitCallback(new WCallback<WStackItem<I, IC>, @Nullable IC>() {
+		item.setInitCallback(new WCallback<@NonNull WStackItem<I, IC>, @Nullable IC>() {
 
 			@SuppressWarnings("unchecked")
 			@Override
@@ -274,7 +280,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				}
 			}
 		});
-		item.setOnCloseCallback(new WCallback<WStack.WStackItem<I, IC>, Boolean>() {
+		item.setOnCloseCallback(new WCallback<@NonNull WStackItem<I, IC>, Boolean>() {
 
 			@Override
 			public Boolean call(WStackItem<I, IC> param) {
@@ -285,6 +291,8 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		return item;
 	}
 
+	
+	@SuppressWarnings("null")
 	void handleChildrenAddition(MPartStack parent, Collection<MStackElement> elements) {
 		Iterator<MStackElement> i = elements.iterator();
 		while (i.hasNext()) {
@@ -292,10 +300,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			if (element.isToBeRendered() && element.isVisible()) {
 				int idx = getRenderedIndex(parent, element);
 
-				AbstractRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
+				ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 				WStack<N, I, IC> stack = getWidget(parent);
-				WStackItem<I, IC> item;
-				item = (WStackItem<I, IC>) element.getTransientData().get(MAP_ITEM_KEY);
+				@SuppressWarnings("unchecked")
+				WStackItem<I, IC> item = (WStackItem<I, IC>) element.getTransientData().get(MAP_ITEM_KEY);
 				if( item == null || ! getWidget(parent).getStackItemClass().isAssignableFrom(item.getClass()) ) {
 					item = createStackItem(getWidget(parent), element, renderer);	
 				}
@@ -316,7 +324,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 		WStack<N, I, IC> parentWidget = getWidget(parent);
 		// build the stack item list out of the model
-		List<WStackItem<I, IC>> items = transmuteList(parentWidget, list);
+		List<@NonNull WStackItem<I, IC>> items = transmuteList(parentWidget, list);
 		parentWidget.removeItems(items);
 		ArrayList<MStackElement> removeOnHideList = new ArrayList<MStackElement>();
 		for (MStackElement element : list) {
@@ -330,9 +338,9 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		parent.getChildren().removeAll(removeOnHideList);
 	}
 
-	private List<WStackItem<I, IC>> transmuteList(WStack<N, I, IC> parentWidget, ArrayList<MStackElement> list) {
-
-		ArrayList<WStackItem<I, IC>> resultList = new ArrayList<WStackItem<I, IC>>();
+	@NonNull
+	private List<@NonNull WStackItem<I, IC>> transmuteList(WStack<N, I, IC> parentWidget, ArrayList<MStackElement> list) {
+		ArrayList<@NonNull WStackItem<I, IC>> resultList = new ArrayList<>();
 		for (WStackItem<I, IC> item : parentWidget.getItems()) {
 			MStackElement domElement = item.getDomElement();
 			if (domElement != null && list.contains(domElement) && (domElement.isToBeRendered()) && (domElement.isVisible())) {
@@ -371,6 +379,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 		IEclipseContext partContext = part.getContext();
 		IEclipseContext parentContext = getContextForParent(part);
+		if( parentContext == null ) {
+			getLogger().error("The parent context is unknown. This is impossible."); //$NON-NLS-1$
+			return false;
+		}
 		// a part may not have a context if it hasn't been rendered
 		IEclipseContext context = (partContext == null ? parentContext : partContext).createChild();
 		if (partContext == null) {
@@ -394,6 +406,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public void childRendered(MPartStack parentElement, MUIElement element) {
 		if (element == null || this.inLazyInit || inContentProcessing(parentElement) || !element.isVisible()) {
@@ -408,10 +421,11 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 
 		int idx = getRenderedIndex(parentElement, element);
-		AbstractRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
+		ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 		stack.addItems(idx, Collections.singletonList(createStackItem(stack, (MStackElement) element, renderer)));
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public void hideChild(MPartStack container, MUIElement changedObj) {
 		WStack<N, I, IC> stack = getWidget(container);

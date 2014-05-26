@@ -33,6 +33,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseToolItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Default renderer for tool items
@@ -72,6 +73,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 			this.checkbox = domElement.getTags().contains(TAG_CHECKBOX);
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		protected void bindProperties(ButtonBase widget) {
 			super.bindProperties(widget);
@@ -168,10 +170,8 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		@Override
 		protected ButtonBase createWidget() {
 			ButtonBase b = internalCreateWidget();
-			if (b != null) {
-				b.setOnAction(this::handleOnAction);
-			}
-			return b;
+			b.setOnAction(this::handleOnAction);
+			return b; 
 		}
 
 		void handleOnAction(ActionEvent e) {
@@ -179,7 +179,8 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 				this.onActionCallback.run();
 			}
 		}
-
+		
+		@NonNull
 		private ButtonBase internalCreateWidget() {
 			switch (this.type) {
 			case CHECK:
@@ -188,19 +189,16 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 				} else {
 					return new ToggleButton();
 				}
-			case PUSH:
+			case RADIO:
+				return new RadioButton();
+			default:
 				if (this.menuButton) {
 					SplitMenuButton b = new SplitMenuButton();
 					return b;
 				} else {
 					return new Button();
 				}
-			case RADIO:
-				return new RadioButton();
-			default:
-				break;
 			}
-			return null;
 		}
 
 		@Override

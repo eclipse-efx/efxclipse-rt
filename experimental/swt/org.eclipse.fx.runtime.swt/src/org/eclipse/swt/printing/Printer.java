@@ -12,11 +12,16 @@
 package org.eclipse.swt.printing;
 
 import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.internal.Util;
 
 public class Printer extends Device {
 
+	public Printer() {
+		Util.logNotImplemented();
+	}
+	
 	public Printer(PrinterData data) {
 		Util.logNotImplemented();
 	}
@@ -45,12 +50,28 @@ public class Printer extends Device {
 		Util.logNotImplemented();
 	}
 
-	public void startJob(String string) {
+	public boolean startJob(String string) {
 		Util.logNotImplemented();
+		return false;
 	}
 
 	public void endJob() {
 		Util.logNotImplemented();
+	}
+
+	public Point getDPI() {
+		Util.logNotImplemented();
+		return null;
+	}
+
+	public Rectangle computeTrim(int i, int j, int k, int l) {
+		Util.logNotImplemented();
+		return null;
+	}
+
+	public PrinterData getPrinterData() {
+		Util.logNotImplemented();
+		return null;
 	}
 	
 	

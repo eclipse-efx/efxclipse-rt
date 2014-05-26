@@ -33,6 +33,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseToolItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseTrimBarRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseWindowRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseWorkbenchRendererFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Default factory for renderers
@@ -46,7 +47,7 @@ public class DefWorkbenchRendererFactory extends BaseWorkbenchRendererFactory {
 	 *            the DI context
 	 */
 	@Inject
-	public DefWorkbenchRendererFactory(IEclipseContext context) {
+	public DefWorkbenchRendererFactory(@NonNull IEclipseContext context) {
 		super(context);
 	}
 

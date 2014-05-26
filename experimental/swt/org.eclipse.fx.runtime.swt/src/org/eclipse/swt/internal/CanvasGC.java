@@ -66,6 +66,8 @@ public class CanvasGC implements DrawableGC {
 	private Color backgroundColor;
 	
 	private boolean activeClip;
+	private int lineStyle = SWT.LINE_SOLID;
+	private Pattern backgroundPattern;
 	
 	public CanvasGC(Canvas canvas, Font receiverFont, Color receiverBackground, Color receiverForeground) {
 		this.canvas = canvas;
@@ -223,6 +225,11 @@ public class CanvasGC implements DrawableGC {
 	}
 	
 	@Override
+	public int getLineWidth() {
+		return (int) canvas.getGraphicsContext2D().getLineWidth();
+	}
+	
+	@Override
 	public void drawLine(int x1, int y1, int x2, int y2) {
 		canvas.getGraphicsContext2D().strokeLine(x1, y1, x2, y2);
 		snapshot();
@@ -268,7 +275,7 @@ public class CanvasGC implements DrawableGC {
 		//TODO Deal with flags
 		TextLayoutFactory factory = Toolkit.getToolkit().getTextLayoutFactory();
 		TextLayout layout = factory.createLayout();
-		layout.setContent(string, getFont().internal_getNativeObject().impl_getNativeFont());
+		layout.setContent(string, canvas.getGraphicsContext2D().getFont().impl_getNativeFont());
 		BaseBounds b = layout.getBounds();
 				
 		return new Point((int)Math.ceil(b.getWidth()), (int)Math.ceil(b.getHeight()));
@@ -393,7 +400,7 @@ public class CanvasGC implements DrawableGC {
 	public Point stringExtent(String string) {
 		TextLayoutFactory factory = Toolkit.getToolkit().getTextLayoutFactory();
 		TextLayout layout = factory.createLayout();
-		layout.setContent(string, getFont().internal_getNativeObject().impl_getNativeFont());
+		layout.setContent(string, canvas.getGraphicsContext2D().getFont().impl_getNativeFont());
 		BaseBounds b = layout.getBounds();
 				
 		return new Point((int)Math.ceil(b.getWidth()), (int)Math.ceil(b.getHeight()));
@@ -432,6 +439,7 @@ public class CanvasGC implements DrawableGC {
 	}
 	
 	private void setClipping(PathIterator pathIterator) {
+		//FIXME Many clipping calls make Canvas unusable slow!!!
 		resetClip();
 		if( pathIterator == null ) {
 			return;
@@ -594,6 +602,7 @@ public class CanvasGC implements DrawableGC {
 	
 	@Override
 	public void setLineStyle(int lineStyle) {
+		this.lineStyle = lineStyle;
 //		switch (lineStyle) {
 //		case SWT.LINE_SOLID:
 //			break;
@@ -614,7 +623,13 @@ public class CanvasGC implements DrawableGC {
 	}
 	
 	@Override
+	public int getLineStyle() {
+		return lineStyle;
+	}
+	
+	@Override
 	public void setBackgroundPattern(Pattern pattern) {
+		this.backgroundPattern = pattern;
 		if( pattern == null ) {
 			canvas.getGraphicsContext2D().setFill(defaultBackground);
 		} else {
@@ -624,6 +639,11 @@ public class CanvasGC implements DrawableGC {
 				canvas.getGraphicsContext2D().setFill(new LinearGradient(pattern.internal_getX1(), pattern.internal_getY1(), pattern.internal_getX2(), pattern.internal_getY2(), false, CycleMethod.NO_CYCLE));
 			}				
 		}
+	}
+	
+	@Override
+	public Pattern getBackgroundPattern() {
+		return backgroundPattern;
 	}
 	
 	@Override
@@ -642,5 +662,20 @@ public class CanvasGC implements DrawableGC {
 	@Override
 	public void dispose() {
 		resetClip();
+	}
+	
+	@Override
+	public int getTextAntialias() {
+		return SWT.DEFAULT;
+	}
+	
+	@Override
+	public void setLineDash(int[] dashes) {
+		Util.logNotImplemented();
+	}
+	
+	public int[] getLineDash() {
+		Util.logNotImplemented();
+		return null;
 	}
 }

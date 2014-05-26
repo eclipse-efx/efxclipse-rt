@@ -96,7 +96,7 @@ public interface WWindow<N> extends WWidget<MWindow> {
 	 * @param widget
 	 *            the window
 	 */
-	public void addChild(@NonNull WWindow<N> widget);
+	public void addChildWindow(@NonNull WWindow<N> widget);
 
 	/**
 	 * Remove the given child window
@@ -104,7 +104,7 @@ public interface WWindow<N> extends WWidget<MWindow> {
 	 * @param widget
 	 *            the window
 	 */
-	public void removeChild(@NonNull WWindow<N> widget);
+	public void removeChildWindow(@NonNull WWindow<N> widget);
 
 	/**
 	 * Add a callback to veto the closing of the window

@@ -13,11 +13,8 @@ package org.eclipse.fx.ui.databinding;
 import java.text.MessageFormat;
 
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.util.Callback;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.jdt.annotation.NonNull;
@@ -37,13 +34,7 @@ public class TableUtil {
 	 */
 	public static <S> void setupColumn(@NonNull TableColumn<S, S> column,
 			@NonNull IValueProperty property) {
-		column.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<S, S>, ObservableValue<S>>() {
-
-			@Override
-			public ObservableValue<S> call(CellDataFeatures<S, S> param) {
-				return new SimpleObjectProperty<S>(param.getValue());
-			}
-		});
+		column.setCellValueFactory((param) -> new SimpleObjectProperty<S>(param.getValue()));
 		column.setCellFactory(PropertyTableCellFactory
 				.<S, S> textFactory(property));
 	}
@@ -62,13 +53,7 @@ public class TableUtil {
 	 */
 	public static <S> void setupColumn(@NonNull TableColumn<S, S> column,
 			@NonNull String template, @NonNull IValueProperty... property) {
-		column.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<S, S>, ObservableValue<S>>() {
-
-			@Override
-			public ObservableValue<S> call(CellDataFeatures<S, S> param) {
-				return new SimpleObjectProperty<S>(param.getValue());
-			}
-		});
+		column.setCellValueFactory((param) -> new SimpleObjectProperty<S>(param.getValue()));
 		column.setCellFactory(PropertyTableCellFactory.<S, S> textFactory(
 				template, property));
 	}

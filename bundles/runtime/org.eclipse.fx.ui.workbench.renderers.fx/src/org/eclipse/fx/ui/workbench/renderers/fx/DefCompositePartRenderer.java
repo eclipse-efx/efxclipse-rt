@@ -35,8 +35,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 
 		@Override
 		protected SplitPane createWidget() {
-			// TODO Auto-generated method stub
-			return null;
+			throw new UnsupportedOperationException();
 		}
 
 	}

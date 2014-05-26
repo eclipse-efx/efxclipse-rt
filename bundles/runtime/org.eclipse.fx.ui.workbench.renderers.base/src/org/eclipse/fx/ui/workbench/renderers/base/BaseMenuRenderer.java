@@ -37,6 +37,7 @@ import org.eclipse.fx.ui.lifecycle.annotations.PreShow;
 import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Base renderer for {@link MMenu} representing a menu
@@ -77,9 +78,15 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 		});
 		widget.setHidingCallback(new Runnable() {
 
+			@SuppressWarnings("null")
 			@Override
 			public void run() {
-				IEclipseContext context = getModelContext(element).createChild("lifecycle"); //$NON-NLS-1$
+				IEclipseContext modelContext = getModelContext(element);
+				if( modelContext == null ) {
+					getLogger().error("Model context is null"); //$NON-NLS-1$
+					return;
+				}
+				IEclipseContext context = modelContext.createChild("lifecycle"); //$NON-NLS-1$
 				context.set(MMenu.class, element);
 				BaseMenuRenderer.this.lifecycleService.validateAnnotation(PreClose.class, element, context);
 
@@ -111,8 +118,14 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 		});
 	}
 
-	void handleShowing(MMenu element) {
-		IEclipseContext context = getModelContext(element).createChild("lifecycle"); //$NON-NLS-1$
+	@SuppressWarnings("null")
+	void handleShowing(@NonNull MMenu element) {
+		IEclipseContext modelContext = getModelContext(element);
+		if( modelContext == null ) {
+			getLogger().error("The model context is null"); //$NON-NLS-1$
+			return;
+		}
+		IEclipseContext context = modelContext.createChild("lifecycle"); //$NON-NLS-1$
 		context.set(MMenu.class, element);
 		this.lifecycleService.validateAnnotation(PreShow.class, element, context);
 
@@ -174,7 +187,7 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 	}
 
 	@Override
-	public void handleChildrenRemove(MMenu parent, Collection<MMenuElement> elements) {
+	public void handleChildrenRemove(@NonNull MMenu parent, @NonNull Collection<@NonNull MMenuElement> elements) {
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
@@ -207,7 +220,7 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 	}
 
 	@Override
-	public void childRendered(MMenu parentElement, MUIElement element) {
+	public void childRendered(@NonNull MMenu parentElement, @NonNull MUIElement element) {
 		if (inContentProcessing(parentElement)) {
 			return;
 		}
@@ -216,7 +229,12 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 		WMenu<N> menu = getWidget(parentElement);
 		@SuppressWarnings("unchecked")
 		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
-		menu.addElement(idx, menuElement);
+		if( menuElement != null ) {
+			menu.addElement(idx, menuElement);	
+		} else {
+			getLogger().error("The widget of the element '"+element+"' is null");  //$NON-NLS-1$//$NON-NLS-2$
+		}
+		
 	}
 
 	@Override

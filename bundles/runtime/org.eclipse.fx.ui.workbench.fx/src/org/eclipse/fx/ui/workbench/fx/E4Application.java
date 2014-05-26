@@ -92,10 +92,6 @@ public class E4Application extends AbstractE4Application {
 			this.eventAdmin = bundleContext.getService(ref);
 		}
 
-		// Looks like OS-X wants to have the context class loader to locate
-		// FX-Classes
-		Thread.currentThread().setContextClassLoader(Application.class.getClassLoader());
-
 		launchE4JavaFxApplication();
 
 		try {
@@ -123,13 +119,15 @@ public class E4Application extends AbstractE4Application {
 	 */
 	public void jfxStart(IApplicationContext context, Application jfxApplication, Stage primaryStage) {
 		if (this.workbench == null) {
-			initE4Workbench(context, jfxApplication, primaryStage);
+			if( ! initE4Workbench(context, jfxApplication, primaryStage) ) {
+				return;
+			}
 		}
 
 		this.instanceLocation = (Location) this.workbench.getContext().get(E4Workbench.INSTANCE_LOCATION);
 
 		try {
-			if (!checkInstanceLocation(this.instanceLocation))
+			if (!checkInstanceLocation(this.instanceLocation, this.workbench.getContext()))
 				return;
 
 			this.workbenchContext = this.workbench.getContext();
@@ -199,8 +197,9 @@ public class E4Application extends AbstractE4Application {
 	 *            the application which is going to be launched.
 	 * @param primaryStage
 	 *            the primary stage.
+	 * @return <code>true</code> if the workbench was initialized successfully
 	 */
-	public void initE4Workbench(final IApplicationContext context, Application jfxApplication, final Stage primaryStage) {
+	public boolean initE4Workbench(final IApplicationContext context, Application jfxApplication, final Stage primaryStage) {
 		final IEclipseContext workbenchContext = createApplicationContext();
 
 		// It is the very first time when the javaFX Application appears. It
@@ -211,6 +210,7 @@ public class E4Application extends AbstractE4Application {
 		workbenchContext.set(Application.class, jfxApplication);
 		workbenchContext.set(PRIMARY_STAGE_KEY, primaryStage);
 		this.workbench = createE4Workbench(context, workbenchContext);
+		return this.workbench != null;
 	}
 
 	/**

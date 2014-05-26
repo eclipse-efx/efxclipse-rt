@@ -32,10 +32,12 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.ui.panes.GridData;
 import org.eclipse.fx.ui.panes.GridData.Alignment;
 import org.eclipse.fx.ui.panes.GridLayoutPane;
+import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseSashRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * default renderer for sash
@@ -182,6 +184,11 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			return p;
 		}
 
+		@Override
+		public void updateLayout() {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 
 	static class WResizableSashImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MPartSashContainer> implements WSash<Node> {
@@ -206,8 +213,24 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 				}
 			}
 		};
+		
+		@Override
+		public void updateLayout() {
+			updateDividers();
+		}
 
 		void recalcWeight() {
+			@Nullable
+			MPartSashContainer domElement = getDomElement();
+			if( domElement != null ) {
+				BaseRenderer<?, ?> r = (BaseRenderer<?, ?>) domElement.getRenderer();
+				r.syncUIModifications(domElement, this::doRecalcWeight);	
+			} else {
+				this.logger.error("The domain object should not be null at this point"); //$NON-NLS-1$
+			}
+		}
+		
+		void doRecalcWeight() {
 			if (this.state != WidgetState.CREATED) {
 				return;
 			}

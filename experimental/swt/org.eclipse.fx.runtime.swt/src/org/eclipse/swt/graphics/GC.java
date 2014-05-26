@@ -198,11 +198,11 @@ public class GC extends Resource {
 	public Color getBackground() {
 		return gc.getBackground();
 	}
-//	
-//	public Pattern getBackgroundPattern() {	
-//		
-//	}
-//	
+	
+	public Pattern getBackgroundPattern() {	
+		return gc.getBackgroundPattern();
+	}
+	
 	public boolean getAdvanced() {
 		return true;
 	}
@@ -295,30 +295,30 @@ public class GC extends Resource {
 //		
 //	}
 //	
-//	public int[] getLineDash() {
-//		
-//	}
+	public int[] getLineDash() {
+		return gc.getLineDash();
+	}
 //	
 //	public int getLineJoin() {
 //		
 //	}
 //	
-//	public int getLineStyle() {
-//		
-//	}
-//	
-//	public int getLineWidth() {
-//		
-//	}
-//	
+	public int getLineStyle() {
+		return gc.getLineStyle();
+	}
+	
+	public int getLineWidth() {
+		return gc.getLineWidth();
+	}
+	
 	public int getStyle () {
 		return style;
 	}
-//	
-//	public int getTextAntialias() {
-//		
-//	}
-//	
+	
+	public int getTextAntialias() {
+		return gc.getTextAntialias();
+	}
+	
 	public void getTransform (Transform transform) {
 		gc.getTransform(transform);
 	}
@@ -409,11 +409,11 @@ public class GC extends Resource {
 	public void setLineCap(int cap) {
 		gc.setLineCap(cap);
 	}
-//	
-//	public void setLineDash(int[] dashes) {
-//		
-//	}
-//	
+	
+	public void setLineDash(int[] dashes) {
+		gc.setLineDash(dashes);
+	}
+	
 	public void setLineJoin(int join) {
 		gc.setLineJoin(join);
 	}

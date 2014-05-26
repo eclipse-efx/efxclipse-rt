@@ -66,7 +66,7 @@ public class ControlPanel {
 	
 	@SuppressWarnings("rawtypes")
 	@Inject
-	public ControlPanel(BorderPane p, final MApplication application, final MWindow window, @Optional final MPerspective perspective, final EPartService partService, final EModelService modelService, EMenuService menuService, final IEventBroker broker) {
+	public ControlPanel(BorderPane p, final MApplication application, final MWindow window, @Optional final MPerspective perspective, final EPartService partService, final EModelService modelService, EMenuService menuService, final IEventBroker broker, final MPart self) {
 		broker.subscribe(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, new org.osgi.service.event.EventHandler() {
 			
 			@Override
@@ -556,6 +556,17 @@ public class ControlPanel {
 				public void handle(ActionEvent event) {
 					System.gc();
 					broker.send("MyTopic", "Hello World");
+				}
+			});
+			box.getChildren().add(button);
+		}
+		
+		{
+			Button button = new Button("Modify container data");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					self.setContainerData("5");
 				}
 			});
 			box.getChildren().add(button);

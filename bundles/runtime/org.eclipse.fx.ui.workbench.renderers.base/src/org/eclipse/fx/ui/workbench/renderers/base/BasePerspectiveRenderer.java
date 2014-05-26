@@ -28,7 +28,10 @@ import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspective;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -110,9 +113,16 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 
 		if (!element.getWindows().isEmpty()) {
 			MWindow window = findParent((EObject) element);
-			WWindow<?> topLevel = (WWindow<?>) window.getWidget();
+			@SuppressWarnings("unchecked")
+			WWindow<N> topLevel = (WWindow<N>) window.getWidget();
 			for (MWindow w : element.getWindows()) {
-				topLevel.addChild(engineCreateWidget(w));
+				@SuppressWarnings("null")
+				WWindow<N> ww = engineCreateWidget(w);
+				if( ww != null ) {
+					topLevel.addChildWindow(ww);	
+				} else {
+					getLogger().error("No widget was created for element '"+w+"'");  //$NON-NLS-1$//$NON-NLS-2$
+				}
 			}
 		}
 	}
@@ -149,7 +159,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 			if (w != null) {
 				WWindow ww = (WWindow) element.getWidget();
 				if (ww != null) {
-					w.addChild(ww);
+					w.addChildWindow(ww);
 				}
 			}
 		}
@@ -175,7 +185,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 			if (w != null) {
 				WWindow ww = (WWindow) changedObj.getWidget();
 				if (ww != null) {
-					w.removeChild(ww);
+					w.removeChildWindow(ww);
 				}
 			}
 		}

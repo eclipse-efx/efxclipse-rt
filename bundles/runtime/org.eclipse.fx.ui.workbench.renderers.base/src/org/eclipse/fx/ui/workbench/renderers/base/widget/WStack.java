@@ -68,7 +68,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 		 * @param callback
 		 *            the callback
 		 */
-		public void setInitCallback(@NonNull WCallback<WStackItem<I, IC>, @Nullable IC> callback);
+		public void setInitCallback(@NonNull WCallback<@NonNull WStackItem<I, IC>, @Nullable IC> callback);
 
 		/**
 		 * Set a callback to invoke when the tab is closed and veto it if
@@ -77,7 +77,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 		 * @param callback
 		 *            the callback
 		 */
-		public void setOnCloseCallback(@NonNull WCallback<WStackItem<I, IC>, Boolean> callback);
+		public void setOnCloseCallback(@NonNull WCallback<@NonNull WStackItem<I, IC>, Boolean> callback);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 * @param items
 	 *            the items to append
 	 */
-	public void addItems(@NonNull List<WStackItem<I, IC>> items);
+	public void addItems(@NonNull List<@NonNull WStackItem<I, IC>> items);
 
 	/**
 	 * Insert stack items at the given index
@@ -110,7 +110,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 * @param items
 	 *            the items to add
 	 */
-	public void addItems(int index, @NonNull List<WStackItem<I, IC>> items);
+	public void addItems(int index, @NonNull List<@NonNull WStackItem<I, IC>> items);
 
 	/**
 	 * Select the item at a given index
@@ -133,7 +133,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 * @return all items
 	 */
 	@NonNull
-	public List<WStackItem<I, IC>> getItems();
+	public List<@NonNull WStackItem<I, IC>> getItems();
 
 	/**
 	 * Remove items
@@ -141,7 +141,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 * @param items
 	 *            the items to remove
 	 */
-	public void removeItems(@NonNull List<WStackItem<I, IC>> items);
+	public void removeItems(@NonNull List<@NonNull WStackItem<I, IC>> items);
 
 	/**
 	 * Set the callback to be used when the item is selected by the mouse
@@ -149,7 +149,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 * @param selectedItemCallback
 	 *            the callback
 	 */
-	public void setMouseSelectedItemCallback(@NonNull WCallback<WStackItem<I, IC>, Void> selectedItemCallback);
+	public void setMouseSelectedItemCallback(@NonNull WCallback<@NonNull WStackItem<I, IC>, Void> selectedItemCallback);
 
 	/**
 	 * Set the callback to be used when the item is selected by the keyboard
@@ -157,7 +157,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 * @param selectedItemCallback
 	 *            the callback
 	 */
-	public void setKeySelectedItemCallback(@NonNull WCallback<WStackItem<I, IC>, Void> selectedItemCallback);
+	public void setKeySelectedItemCallback(@NonNull WCallback<@NonNull WStackItem<I, IC>, Void> selectedItemCallback);
 	
 	/**
 	 * @return the number of items

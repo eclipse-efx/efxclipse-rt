@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
@@ -58,6 +59,7 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.core.services.nls.Translation;
 import org.eclipse.e4.core.services.translation.TranslationService;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -104,13 +106,21 @@ import org.osgi.framework.Bundle;
 public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	@Inject
 	@Translation
+	@NonNull
 	Messages messages;
 
+	@SuppressWarnings("null")
 	@Override
 	@NonNull
-	protected Save[] promptToSave(@NonNull MWindow element, @NonNull Collection<MPart> dirtyParts, @NonNull WWindow<Stage> widget) {
+	protected List<@NonNull Save> promptToSave(@NonNull MWindow element, @NonNull Collection<MPart> dirtyParts, @NonNull WWindow<Stage> widget) {
 		Save[] response = new Save[dirtyParts.size()];
-		GraphicsLoader graphicsLoader = getModelContext(element).get(GraphicsLoader.class);
+		IEclipseContext modelContext = getModelContext(element);
+		if( modelContext == null ) {
+			getLogger().error("Model context should not be null at this point"); //$NON-NLS-1$
+			Arrays.fill(response, Save.CANCEL);
+			return Arrays.asList(response);
+		}
+		GraphicsLoader graphicsLoader = modelContext.get(GraphicsLoader.class);
 
 		MultiMessageDialog d = new MultiMessageDialog((Stage) widget.getWidget(), dirtyParts, graphicsLoader);
 		if (d.open() == Dialog.OK_BUTTON) {
@@ -123,11 +133,11 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			Arrays.fill(response, Save.CANCEL);
 		}
 
-		return response;
+		return Arrays.asList(response);
 	}
 	
 	@Override
-	protected Save promptToSave(MWindow element, MPart dirtyPart, WWindow<Stage> widget) {
+	protected Save promptToSave(MWindow element, MPart dirtyPart, WWindow<Stage> widget) { 
 		QuestionCancelResult r = MessageDialog.openQuestionCancelDialog((Stage) widget.getWidget(), this.messages.DefWindowRenderer_promptToSave_Title, this.messages.DefWindowRenderer_promptToSave_Message(dirtyPart.getLocalizedLabel()));
 
 		switch (r) {
@@ -175,12 +185,14 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		IEclipseContext modelContext;
 
+		@NonNull
 		MWindow mWindow;
 
 		@Inject
 		TranslationService translationService;
 
 		@Inject
+		@NonNull
 		BundleLocalization localizationService; // FIXME We should get rid of
 												// this
 
@@ -190,6 +202,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Inject
 		private GraphicsLoader graphicsLoader;
+		
+		@Inject
+		private IEventBroker eventBroker;
 
 		boolean initDone;
 
@@ -230,7 +245,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		 *            the logger
 		 */
 		@Inject
-		public WWindowImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MWindow mWindow, @Optional KeyBindingDispatcher dispatcher, MApplication application, @Log Logger logger) {
+		public WWindowImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MWindow mWindow, @Optional KeyBindingDispatcher dispatcher, MApplication application, @Log Logger logger) {
 			this.mWindow = mWindow;
 
 			this.applicationContext = application.getContext();
@@ -295,7 +310,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Override
 		protected Stage createWidget() {
-			this.stage = new Stage();
+			Stage stage = new Stage();
+			this.stage = stage;
 			MWindow parent = findParent((EObject) this.mWindow);
 			if (parent != null) {
 				this.stage.initOwner((Window) ((WWindow<?>) parent.getWidget()).getWidget());
@@ -357,7 +373,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			
 			// Add a css which sets defaults
 			{
-				URL url = getClass().getClassLoader().getResource("css/efx-default.css");
+				URL url = getClass().getClassLoader().getResource("css/efx-default.css"); //$NON-NLS-1$
 				if( url != null ) {
 					s.getStylesheets().add(url.toExternalForm());				
 				}				
@@ -387,7 +403,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			this.modelContext.set(Stage.class, this.stage);
 			this.modelContext.set(Scene.class, s);
 
-			return this.stage;
+			return stage;
 		}
 
 		private void handleOnCloseRequest(WindowEvent event) {
@@ -404,11 +420,18 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		private void handledFocus(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 			if (newValue.booleanValue()) {
-				if (this.stage.getScene() != null) {
-					this.applicationContext.set(Constants.APP_FOCUS_NODE, this.stage.getScene().getFocusOwner());
-				}
+				activateWindow();
+			}
+		}
+		
+		private void activateWindow() {
+			if (this.stage.getScene() != null) {
+				this.applicationContext.set(Constants.APP_FOCUS_NODE, this.stage.getScene().getFocusOwner());
+			}
 
+			if( ! isActive() ) {
 				activate();
+				this.eventBroker.send(Constants.WINDOW_ACTIVATED, getDomElement());
 			}
 		}
 
@@ -494,26 +517,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 						}
 
 						InjectingFXMLLoader<Node> loader = InjectingFXMLLoader.create(this.context, b, sb.toString());
-						loader.resourceBundle(this.localizationService.getLocalization(b, Locale.getDefault().toString()));
-
-						// FIXME We should make the localization service smarter
-						// final String contributorURI =
-						// URI.createPlatformPluginURI(uri.segment(1),
-						// true).toString();
-						// loader = loader.resourceBundle(new ResourceBundle() {
-						//
-						// @Override
-						// protected Object handleGetObject(String key) {
-						// return translationService.translate("%" + key,
-						// contributorURI);
-						// }
-						//
-						// @Override
-						// public Enumeration<String> getKeys() {
-						// // TODO Can we do this???
-						// return Collections.emptyEnumeration();
-						// }
-						// });
+						ResourceBundle resourceBundle = this.localizationService.getLocalization(b, Locale.getDefault().toString());
+						if( resourceBundle != null ) {
+							loader.resourceBundle(resourceBundle);	
+						}
 
 						return (Node) loader.load();
 					} catch (IOException e) {
@@ -527,6 +534,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			return null;
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		protected void bindProperties(Stage widget) {
 			super.bindProperties(widget);
@@ -677,7 +685,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 
 		@Override
-		public void addChild(WWindow<Stage> widget) {
+		public void addChildWindow(WWindow<Stage> widget) {
 			this.windows.add(widget);
 			if (this.initDone && this.stage.isShowing()) {
 				Stage s = (Stage) widget.getWidget();
@@ -686,11 +694,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 
 		@Override
-		public void removeChild(WWindow<Stage> widget) {
-			if (widget.getWidget() != null) {
-				Stage s = (Stage) widget.getWidget();
-				s.hide();
-			}
+		public void removeChildWindow(@NonNull WWindow<Stage> widget) {
+			Stage s = (Stage) widget.getWidget();
+			s.hide();
 			this.windows.remove(widget);
 		}
 
@@ -702,16 +708,34 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if (this.windowTransitionService != null) {
 				AnimationDelegate<Stage> delegate = this.windowTransitionService.getShowDelegate(this.mWindow);
 				if (delegate != null) {
-					delegate.animate(this.stage);
+					delegate.animate(getWidget(), () -> {
+						activateWindow();	
+						this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
+					});
 				} else {
 					getWidget().show();
+					// force activation of the stage see 435273
+					activateWindow();
+					this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 				}
 			} else {
 				getWidget().show();
+				// force activation of the stage see 435273
+				activateWindow();
+				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}
-
+			
+			// I don't think sub-windows should be activated
 			for (WWindow<Stage> c : this.windows) {
 				c.show();
+				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
+			}
+			
+			// Force the focus back on ourselves
+			if( this.windows.size() > 0 ) {
+				this.stage.requestFocus();
+				// force activation of the stage see 435273
+				activateWindow();
 			}
 		}
 
@@ -720,12 +744,16 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if (this.windowTransitionService != null) {
 				AnimationDelegate<Stage> delegate = this.windowTransitionService.getShowDelegate(this.mWindow);
 				if (delegate != null) {
-					delegate.animate(this.stage);
+					delegate.animate(getWidget(), () -> {
+						this.eventBroker.send(Constants.WINDOW_HIDDEN, this.mWindow);
+					});
 				} else {
 					getWidget().hide();
+					this.eventBroker.send(Constants.WINDOW_HIDDEN, this.mWindow);
 				}
 			} else {
 				getWidget().hide();
+				this.eventBroker.send(Constants.WINDOW_HIDDEN, this.mWindow);
 			}
 		}
 

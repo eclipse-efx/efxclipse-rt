@@ -27,6 +27,7 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -105,6 +106,18 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 				}
 			}
 		});
+		eventBroker.subscribe(UIEvents.UIElement.TOPIC_CONTAINERDATA, new EventHandler() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
+				if( changedObj.getParent() != null && changedObj.getParent().getRenderer() == BaseSashRenderer.this ) {
+					if( !inUIModification(changedObj.getParent()) ) {
+						getWidget((MPartSashContainer)(MUIElement)changedObj.getParent()).updateLayout();
+					}
+				}
+			}
+		});
 	}
 
 	@Override
@@ -124,6 +137,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		sash.addItems(list);
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public void childRendered(MPartSashContainer parentElement, MUIElement element) {
 		if (inContentProcessing(parentElement)) {
@@ -134,8 +148,13 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		WSash<N> sash = getWidget(parentElement);
 
 		@SuppressWarnings("unchecked")
-		List<WLayoutedWidget<MPartSashContainerElement>> l = Collections.singletonList((WLayoutedWidget<MPartSashContainerElement>) element.getWidget());
-		sash.addItems(idx, l);
+		WLayoutedWidget<MPartSashContainerElement> w = (WLayoutedWidget<MPartSashContainerElement>) element.getWidget();
+		if( w != null ) {
+			List<@NonNull WLayoutedWidget<MPartSashContainerElement>> l = Collections.singletonList(w);
+			sash.addItems(idx, l);	
+		} else {
+			this.logger.error("The widget for element '"+element+"' should not be null");  //$NON-NLS-1$//$NON-NLS-2$
+		}
 	}
 
 	@Override

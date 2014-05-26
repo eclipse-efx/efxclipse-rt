@@ -71,8 +71,14 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 		WTrimBar<N> trimBar = getWidget(parentElement);
 		@SuppressWarnings("unchecked")
 		WLayoutedWidget<MTrimElement> widget = (WLayoutedWidget<MTrimElement>) element.getWidget();
-		if (widget instanceof WToolBar || widget instanceof WToolControl) {
-			trimBar.addChild(idx, widget);
+		if( widget != null ) {
+			if (widget instanceof WToolBar || widget instanceof WToolControl) {
+				trimBar.addChild(idx, widget);
+			} else {
+				this.logger.warning("Widget '"+widget+"' is not of type 'WToolBar' or 'WToolControl'"); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		} else {
+			this.logger.error("Widget for element '"+element+"' should not be null");  //$NON-NLS-1$//$NON-NLS-2$
 		}
 	}
 

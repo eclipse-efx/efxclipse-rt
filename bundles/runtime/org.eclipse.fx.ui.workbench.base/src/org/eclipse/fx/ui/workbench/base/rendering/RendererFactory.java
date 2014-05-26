@@ -15,5 +15,5 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public interface RendererFactory {
 	@Nullable
-	public <R extends AbstractRenderer<?, ?>> R getRenderer(MUIElement modelObject);
+	public <R extends ElementRenderer<?, ?>> R getRenderer(MUIElement modelObject);
 }

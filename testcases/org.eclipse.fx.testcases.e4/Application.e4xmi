@@ -189,8 +189,8 @@
     </trimBars>
     <trimBars xmi:id="_s3Z_EL5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.trimbar.0" side="Left">
       <children xsi:type="menu:ToolBar" xmi:id="_upiEAL5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.toolbar.5">
-        <children xsi:type="menu:DirectToolItem" xmi:id="_ve_FUL5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.directtoolitem.9" label="V1"/>
-        <children xsi:type="menu:DirectToolItem" xmi:id="_w4yJ0L5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.directtoolitem.10" label="V2"/>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_ve_FUL5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.directtoolitem.9" label="V1" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
+        <children xsi:type="menu:DirectToolItem" xmi:id="_w4yJ0L5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.directtoolitem.10" label="V2" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
       </children>
     </trimBars>
   </children>

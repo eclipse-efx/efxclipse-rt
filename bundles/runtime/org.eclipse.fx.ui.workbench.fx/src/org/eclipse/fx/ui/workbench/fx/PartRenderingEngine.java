@@ -42,7 +42,7 @@ import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
-import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
+import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.fx.key.KeyBindingDispatcher;
 import org.osgi.service.event.Event;
@@ -154,7 +154,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 		Object widget = createWidget(element);
 		if (widget != null) {
-			AbstractRenderer<MUIElement, Object> r = getRendererFor(element);
+			ElementRenderer<MUIElement, Object> r = getRendererFor(element);
 			r.processContent(element);
 			r.postProcess(element);
 
@@ -162,7 +162,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 			if (parent instanceof MUIElement) {
 				MUIElement parentElement = (MUIElement) parent;
-				AbstractRenderer<MUIElement, Object> parentRenderer = getRendererFor(parentElement);
+				ElementRenderer<MUIElement, Object> parentRenderer = getRendererFor(parentElement);
 				if (parentRenderer != null) {
 					parentRenderer.childRendered(parentElement, element);
 				}
@@ -183,7 +183,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	}
 
 	private Object createWidget(MUIElement element) {
-		AbstractRenderer<MUIElement, Object> renderer = getRenderer(element);
+		ElementRenderer<MUIElement, Object> renderer = getRenderer(element);
 		if (renderer != null) {
 			// Remember which renderer is responsible for this widget
 			element.setRenderer(renderer);
@@ -197,12 +197,12 @@ public class PartRenderingEngine implements IPresentationEngine {
 		return null;
 	}
 
-	private AbstractRenderer<MUIElement, Object> getRenderer(MUIElement uiElement) {
+	private ElementRenderer<MUIElement, Object> getRenderer(MUIElement uiElement) {
 		return this.factory.getRenderer(uiElement);
 	}
 
 	@SuppressWarnings({ "unchecked", "static-method" })
-	protected <R extends AbstractRenderer<? extends M, Object>, M extends MUIElement> R getRendererFor(M element) {
+	protected <R extends ElementRenderer<? extends M, Object>, M extends MUIElement> R getRendererFor(M element) {
 		return (R) element.getRenderer();
 	}
 
@@ -270,8 +270,8 @@ public class PartRenderingEngine implements IPresentationEngine {
 		MUIElement container = (element.getCurSharedRef() != null) ? element.getCurSharedRef() : (MUIElement) ((EObject) element).eContainer();
 
 		if (container != null || element instanceof MWindow) {
-			AbstractRenderer<MUIElement, Object> parentRenderer = (AbstractRenderer<MUIElement, Object>) (container == null ? null : getRendererFor(container));
-			AbstractRenderer<MUIElement, Object> renderer = getRendererFor(element);
+			ElementRenderer<MUIElement, Object> parentRenderer = (ElementRenderer<MUIElement, Object>) (container == null ? null : getRendererFor(container));
+			ElementRenderer<MUIElement, Object> renderer = getRendererFor(element);
 
 			if (renderer != null) {
 				renderer.preDestroy(element);
@@ -405,7 +405,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	public void stop() {
 		if (this.app != null) {
 			for (MWindow w : this.app.getChildren()) {
-				AbstractRenderer<MUIElement, Object> r = getRenderer(w);
+				ElementRenderer<MUIElement, Object> r = getRenderer(w);
 				if (r != null) {
 					removeGui(w);
 				}
@@ -416,7 +416,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	@Override
 	public void focusGui(MUIElement element) {
 		@SuppressWarnings("unchecked")
-		AbstractRenderer<MUIElement, Object> renderer = (AbstractRenderer<MUIElement, Object>) element.getRenderer();
+		ElementRenderer<MUIElement, Object> renderer = (ElementRenderer<MUIElement, Object>) element.getRenderer();
 		if (renderer == null || element.getWidget() == null)
 			return;
 

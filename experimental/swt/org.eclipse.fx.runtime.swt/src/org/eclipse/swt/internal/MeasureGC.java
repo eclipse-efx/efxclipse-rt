@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.swt.internal;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Drawable.DrawableGC;
 import org.eclipse.swt.graphics.Font;
@@ -95,6 +96,11 @@ public class MeasureGC implements DrawableGC {
 	@Override
 	public void setLineWidth(int lineWidth) {
 		// Not applicable
+	}
+	
+	@Override
+	public int getLineWidth() {
+		return 0;
 	}
 
 	@Override
@@ -240,6 +246,12 @@ public class MeasureGC implements DrawableGC {
 	public void setLineStyle(int lineStyle) {
 		// Not applicable
 	}
+	
+	@Override
+	public int getLineStyle() {
+		// Not applicable
+		return SWT.LINE_SOLID;
+	}
 
 	@Override
 	public void dispose() {
@@ -250,6 +262,12 @@ public class MeasureGC implements DrawableGC {
 	public void setBackgroundPattern(Pattern pattern) {
 		// Not applicable
 	}
+	
+	@Override
+	public Pattern getBackgroundPattern() {
+		// Not applicable
+		return null;
+	}
 
 	@Override
 	public void setForegroundPattern(Pattern pattern) {
@@ -259,5 +277,20 @@ public class MeasureGC implements DrawableGC {
 	@Override
 	public void drawOval(int x, int y, int width, int height) {
 		// Not applicable
+	}
+	
+	@Override
+	public int getTextAntialias() {
+		return SWT.DEFAULT;
+	}
+	
+	@Override
+	public void setLineDash(int[] dashes) {
+		// Not applicable
+	}
+	
+	@Override
+	public int[] getLineDash() {
+		return null;
 	}
 }

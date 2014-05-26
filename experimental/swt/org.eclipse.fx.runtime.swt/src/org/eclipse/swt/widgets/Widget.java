@@ -374,5 +374,9 @@ public abstract class Widget {
 	
 	public boolean isListening (int eventType) {
 		return eventTable != null && eventTable.hooks (eventType);
-	}	
+	}
+	
+	protected void checkSubclass() {
+		//TODO Call and implement
+	}
 }

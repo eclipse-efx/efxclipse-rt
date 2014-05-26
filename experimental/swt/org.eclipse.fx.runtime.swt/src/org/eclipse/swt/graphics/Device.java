@@ -178,6 +178,12 @@ public abstract class Device implements Drawable {
 		}
 		
 		@Override
+		public int getLineWidth() {
+			Util.logNotImplemented();
+			return 0;
+		}
+		
+		@Override
 		public void drawLine(int x1, int y1, int x2, int y2) {
 			Util.logNotImplemented();
 		}
@@ -325,8 +331,20 @@ public abstract class Device implements Drawable {
 		}
 		
 		@Override
+		public int getLineStyle() {
+			Util.logNotImplemented();
+			return 0;
+		}
+		
+		@Override
 		public void setBackgroundPattern(Pattern pattern) {
 			Util.logNotImplemented();
+		}
+		
+		@Override
+		public Pattern getBackgroundPattern() {
+			Util.logNotImplemented();
+			return null;
 		}
 		
 		@Override
@@ -342,6 +360,22 @@ public abstract class Device implements Drawable {
 		@Override
 		public void drawOval(int x, int y, int width, int height) {
 			Util.logNotImplemented();
+		}
+		
+		@Override
+		public int getTextAntialias() {
+			Util.logNotImplemented();
+			return SWT.DEFAULT;
+		}
+		
+		@Override
+		public void setLineDash(int[] dashes) {
+			Util.logNotImplemented();
+		}
+		
+		@Override
+		public int[] getLineDash() {
+			return null;
 		}
 	}
 	

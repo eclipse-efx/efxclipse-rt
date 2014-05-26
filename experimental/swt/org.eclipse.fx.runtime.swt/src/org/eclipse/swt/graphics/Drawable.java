@@ -66,6 +66,12 @@ public interface Drawable {
 		public void setForegroundPattern(Pattern pattern);
 		public void drawOval(int x, int y, int width, int height);
 		public void getTransform(Transform transform);
+		public int getTextAntialias();
+		public int getLineWidth();
+		public int getLineStyle();
+		public Pattern getBackgroundPattern();
+		public void setLineDash(int[] dashes);
+		public int[] getLineDash();
 	}
 	
 	public DrawableGC internal_new_GC();

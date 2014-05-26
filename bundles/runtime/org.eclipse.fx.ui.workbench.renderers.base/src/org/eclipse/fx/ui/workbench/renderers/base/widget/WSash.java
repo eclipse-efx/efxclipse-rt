@@ -102,4 +102,9 @@ public interface WSash<N> extends WLayoutedWidget<MPartSashContainer> {
 	 *            the widget
 	 */
 	public void removeItem(@NonNull WLayoutedWidget<MPartSashContainerElement> widget);
+	
+	/**
+	 * Update the layout
+	 */
+	public void updateLayout();
 }

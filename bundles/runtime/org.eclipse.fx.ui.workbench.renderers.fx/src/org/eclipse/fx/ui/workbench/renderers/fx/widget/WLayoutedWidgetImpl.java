@@ -24,8 +24,8 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
-import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Base implementation for all {@link WLayoutedWidget} implementations
@@ -52,14 +52,18 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	 */
 	@Inject
 	@Log
+	@NonNull
 	protected Logger logger;
 
 	@Override
+	@NonNull
 	public Node getStaticLayoutNode() {
-		if (this.staticLayoutGroup == null) {
-			this.staticLayoutGroup = createStaticLayoutNode();
+		Node staticLayoutGroup = this.staticLayoutGroup;
+		if (staticLayoutGroup == null) {
+			staticLayoutGroup = createStaticLayoutNode();
+			this.staticLayoutGroup = staticLayoutGroup;
 		}
-		return this.staticLayoutGroup;
+		return staticLayoutGroup;
 	}
 
 	/**
@@ -67,13 +71,14 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	 * 
 	 * @return the layout node
 	 */
+	@NonNull
 	protected Node createStaticLayoutNode() {
 		Pane staticLayoutGroup = createStaticPane();
 		Node n = getWidgetNode();
 		if (n != null) {
 			staticLayoutGroup.getChildren().add(n);
 		} else {
-			this.logger.log(Level.ERROR, "No widget node to attach"); //$NON-NLS-1$
+			this.logger.error("No widget node to attach"); //$NON-NLS-1$
 		}
 		return staticLayoutGroup;
 	}
@@ -84,6 +89,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	 * @return the layout pane
 	 */
 	@SuppressWarnings("static-method")
+	@NonNull
 	protected Pane createStaticPane() {
 		return new StackPane();
 	}
@@ -123,6 +129,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 		return this.weight;
 	}
 
+	@SuppressWarnings("null")
 	@Inject
 	void setContainerData(@Named(UIEvents.UIElement.CONTAINERDATA) @Optional String data) {
 		if (data != null) {

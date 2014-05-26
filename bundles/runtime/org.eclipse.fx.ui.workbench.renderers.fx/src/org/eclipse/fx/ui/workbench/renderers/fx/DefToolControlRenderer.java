@@ -23,6 +23,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.CustomContainerSupport;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * default renderer for tool control
@@ -39,6 +40,7 @@ public class DefToolControlRenderer extends BaseToolControlRenderer<Parent> {
 	 */
 	public static class WToolControlImpl extends WLayoutedWidgetImpl<Parent, Parent, MToolControl> implements WToolControl<Parent> {
 		@Inject
+		@NonNull
 		IEclipseContext context;
 
 		@Override

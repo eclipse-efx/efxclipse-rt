@@ -12,17 +12,24 @@ package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
 import java.text.MessageFormat;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * Translations
  */
 @SuppressWarnings("javadoc")
 public class Messages {
-	public String DefWindowRenderer_promptToSave_Title;
-	public String DefWindowRenderer_promptToSave_Message;
+	@NonNull
+	public String DefWindowRenderer_promptToSave_Title = "DefWindowRenderer_promptToSave_Title"; //$NON-NLS-1$
+	@NonNull
+	public String DefWindowRenderer_promptToSave_Message = "DefWindowRenderer_promptToSave_Message"; //$NON-NLS-1$
+	@NonNull
+	public String DefWindowRenderer_MultiMessageDialog_Title = "DefWindowRenderer_MultiMessageDialog_Title"; //$NON-NLS-1$
+	@NonNull
+	public String DefWindowRenderer_MultiMessageDialog_Message = "DefWindowRenderer_MultiMessageDialog_Message"; //$NON-NLS-1$
 
-	public String DefWindowRenderer_MultiMessageDialog_Title;
-	public String DefWindowRenderer_MultiMessageDialog_Message;
-
+	@SuppressWarnings("null")
+	@NonNull
 	public String DefWindowRenderer_promptToSave_Message(String partName) {
 		return MessageFormat.format(this.DefWindowRenderer_promptToSave_Message, partName);
 	}

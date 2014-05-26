@@ -44,7 +44,7 @@ public class ContextBoundValueTestCase {
 		 * 
 		 */
 		@Inject
-		@ContextValue(contextKey="simpleValue")
+		@ContextValue("simpleValue")
 		public ContextBoundValue<String> value;
 	}
 	
@@ -57,7 +57,7 @@ public class ContextBoundValueTestCase {
 		 * 
 		 */
 		@Inject
-		@ContextValue(contextKey="simpleValue")
+		@ContextValue("simpleValue")
 		public ContextBoundValue<String> value;
 		
 		/**
@@ -87,7 +87,7 @@ public class ContextBoundValueTestCase {
 		 * 
 		 */
 		@Inject
-		@ContextValue(contextKey="simpleValue")
+		@ContextValue("simpleValue")
 		public IObservableValue value;
 	}
 	

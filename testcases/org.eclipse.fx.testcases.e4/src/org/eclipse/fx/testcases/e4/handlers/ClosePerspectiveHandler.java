@@ -12,7 +12,7 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.ui.lifecycle.ELifecycleService;
 import org.eclipse.fx.ui.lifecycle.annotations.PreClose;
-import org.eclipse.fx.ui.workbench.base.rendering.AbstractRenderer;
+import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 
 public class ClosePerspectiveHandler {

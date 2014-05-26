@@ -15,6 +15,7 @@ import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Base renderer for {@link MToolControl}
@@ -31,7 +32,12 @@ public abstract class BaseToolControlRenderer<N> extends BaseRenderer<MToolContr
 		WToolControl<N> widget = getWidget(element);
 
 		Class<?> cl = widget.getWidget().getClass();
-		IEclipseContext context = getModelContext(element).createChild("ToolControl"); //$NON-NLS-1$
+		IEclipseContext modelContext = getModelContext(element);
+		if( modelContext == null ) {
+			getLogger().error("The model context is null - impossible to proceed"); //$NON-NLS-1$
+			return;
+		}
+		IEclipseContext context = modelContext.createChild("ToolControl"); //$NON-NLS-1$
 		do {
 			context.set(cl.getName(), widget.getWidget());
 			cl = cl.getSuperclass();

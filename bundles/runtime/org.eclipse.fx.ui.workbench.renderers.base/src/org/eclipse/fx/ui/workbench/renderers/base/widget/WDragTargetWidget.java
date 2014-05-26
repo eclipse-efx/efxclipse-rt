@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public interface WDragTargetWidget {
 	
-	public void setDragDroppedCallback(@NonNull WCallback<DropData, Boolean> callback);
+	public void setDragDroppedCallback(@NonNull WCallback<DropData, Void> callback);
 	
 	public enum DropType {
 		BEFORE,
