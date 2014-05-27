@@ -50,8 +50,8 @@ public class Label extends Control {
 	public Point computeSize(int wHint, int hHint, boolean flushCache) {
 		checkWidget ();
 		forceSizeProcessing();
-		int width = (int) internal_getNativeObject().prefWidth(javafx.scene.control.Control.USE_COMPUTED_SIZE);
-		int height = (int) internal_getNativeObject().prefHeight(javafx.scene.control.Control.USE_COMPUTED_SIZE);
+		int width = (int) Math.ceil(internal_getNativeObject().prefWidth(javafx.scene.control.Control.USE_COMPUTED_SIZE));
+		int height = (int) Math.ceil(internal_getNativeObject().prefHeight(javafx.scene.control.Control.USE_COMPUTED_SIZE));
 
 		if (wHint != SWT.DEFAULT)
 			width = wHint;
