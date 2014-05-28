@@ -230,9 +230,8 @@ public abstract class AdapterFactoryCellFactory {
 	static void applyItemProviderFont(@Nullable Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		IItemFontProvider fontProvider = (IItemFontProvider) adapterFactory.adapt(item, IItemFontProvider.class);
 		if (fontProvider != null) {
-			cell.setFont(fontFromObject(fontProvider.getFont(item)));
-		} else {
-			cell.setFont(null);
+			Font font = fontFromObject(fontProvider.getFont(item));
+			cell.setFont(font == null ?  Font.getDefault() : font);
 		}
 	}
 
@@ -320,24 +319,29 @@ public abstract class AdapterFactoryCellFactory {
 	static void applyTableItemProviderColor(@Nullable Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		ITableItemColorProvider colorProvider = (ITableItemColorProvider) adapterFactory.adapt(item, ITableItemColorProvider.class);
 		if (colorProvider != null) {
+			//FIXME need to reset to original in NULL
 			cell.setTextFill(colorFromObject(colorProvider.getForeground(item, columnIndex)));
 			String background = cssColorFromObject(colorProvider.getBackground(item, columnIndex));
 			if (background != null) {
 				cell.setStyle("-fx-background-color: " + background); //$NON-NLS-1$
 			} else {
-				cell.setStyle(null);
+				//FIXME need to reset to original in NULL
+				// cell.setStyle(null);
 			}
 		} else {
-			cell.setTextFill(null);
+			//FIXME need to reset to original in NULL
+			// cell.setTextFill(null);
 		}
 	}
 
 	static void applyTableItemProviderFont(@Nullable Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		ITableItemFontProvider fontProvider = (ITableItemFontProvider) adapterFactory.adapt(item, ITableItemFontProvider.class);
 		if (fontProvider != null) {
-			cell.setFont(fontFromObject(fontProvider.getFont(item, columnIndex)));
+			Font font = fontFromObject(fontProvider.getFont(item, columnIndex));
+			//FIXME need to reset to original on NULL
+			cell.setFont(font == null ? Font.getDefault() : font);
 		} else {
-			cell.setFont(null);
+			//FIXME need to reset to original in NULL
 		}
 	}
 
@@ -365,16 +369,19 @@ public abstract class AdapterFactoryCellFactory {
 	static void applyItemProviderColor(@Nullable Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		IItemColorProvider colorProvider = (IItemColorProvider) adapterFactory.adapt(item, IItemColorProvider.class);
 		if (colorProvider != null) {
+			//FIXME need to reset to original in NULL
 			cell.setTextFill(colorFromObject(colorProvider.getForeground(item)));
 			String background = cssColorFromObject(colorProvider.getBackground(item));
 			if (background != null) {
 				cell.setStyle("-fx-background-color: " + background); //$NON-NLS-1$
 			} else {
-				cell.setStyle(null);
+				//FIXME need to reset to original in NULL
+//				cell.setStyle(null);
 			}
 		} else {
-			cell.setTextFill(null);
-			cell.setStyle(null);
+			//FIXME need to reset to original in NULL
+//			cell.setTextFill(null);
+//			cell.setStyle(null);
 		}
 	}
 
