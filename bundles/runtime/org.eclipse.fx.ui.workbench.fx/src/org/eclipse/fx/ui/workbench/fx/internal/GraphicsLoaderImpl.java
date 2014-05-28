@@ -30,8 +30,13 @@ import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.services.resources.ImageProvider;
+import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Graphics loader implementation
+ */
 public class GraphicsLoaderImpl implements GraphicsLoader {
 
 	private WeakHashMap<URI, WeakReference<Image>> imageCache = new WeakHashMap<>();
@@ -47,10 +52,22 @@ public class GraphicsLoaderImpl implements GraphicsLoader {
 	@Log
 	private Logger logger;
 
+	/**
+	 * Set a provider
+	 * 
+	 * @param providerComponent
+	 *            the provider
+	 */
 	public void setProviderComponent(ProviderComponent providerComponent) {
 		this.providerComponent = providerComponent;
 	}
 
+	/**
+	 * Unset the provider
+	 * 
+	 * @param providerComponent
+	 *            the provider
+	 */
 	public void unsetProviderComponent(ProviderComponent providerComponent) {
 		if (this.providerComponent == providerComponent) {
 			this.providerComponent = null;
@@ -58,31 +75,31 @@ public class GraphicsLoaderImpl implements GraphicsLoader {
 	}
 
 	@Override
-	public Image getImage(URI uri) {
-		Map<String, String> map = new HashMap<>();
-		if (themeManager != null && themeManager.getCurrentTheme() != null) {
-			map.put("themeId", themeManager.getCurrentTheme().getId());
+	public Image getImage(URI _uri) {
+		Map<@NonNull String, @NonNull String> map = new HashMap<>();
+		if (this.themeManager != null && this.themeManager.getCurrentTheme() != null) {
+			Theme currentTheme = this.themeManager.getCurrentTheme();
+			if (currentTheme != null) {
+				map.put("themeId", currentTheme.getId()); //$NON-NLS-1$
+			}
 		}
 
-		uri = replaceDynamicValues(uri, map);
+		URI uri = replaceDynamicValues(_uri, map);
 
-		WeakReference<Image> r = imageCache.get(uri);
+		WeakReference<Image> r = this.imageCache.get(uri);
 		Image img = null;
 		if (r != null) {
 			img = r.get();
 		}
 
 		if (img == null) {
-			ImageProvider pv = providerComponent.getImageProvider(uri);
+			ImageProvider pv = this.providerComponent.getImageProvider(uri);
 			if (pv != null) {
 				try {
 					img = pv.getImage(uri);
-
-					if (img != null) {
-						imageCache.put(uri, new WeakReference<Image>(img));
-					}
+					this.imageCache.put(uri, new WeakReference<Image>(img));
 				} catch (IOException e) {
-					logger.error("Unable to load image from '" + uri + "'", e);
+					this.logger.error("Unable to load image from '" + uri + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
 		}
@@ -91,14 +108,17 @@ public class GraphicsLoaderImpl implements GraphicsLoader {
 	}
 
 	@Override
-	public Node getGraphicsNode(URI uri) {
-		Map<String, String> map = new HashMap<>();
-		if (themeManager != null && themeManager.getCurrentTheme() != null) {
-			map.put("themeId", themeManager.getCurrentTheme().getId());
+	public Node getGraphicsNode(URI _uri) {
+		Map<@NonNull String, @NonNull String> map = new HashMap<>();
+		if (this.themeManager != null && this.themeManager.getCurrentTheme() != null) {
+			Theme currentTheme = this.themeManager.getCurrentTheme();
+			if (currentTheme != null) {
+				map.put("themeId", currentTheme.getId()); //$NON-NLS-1$
+			}
 		}
 
-		uri = replaceDynamicValues(uri, map);
-		GraphicNodeProvider graphicNodeProvider = providerComponent.getGraphicNodeProvider(uri);
+		URI uri = replaceDynamicValues(_uri, map);
+		GraphicNodeProvider graphicNodeProvider = this.providerComponent.getGraphicNodeProvider(uri);
 
 		if (graphicNodeProvider == null) {
 			Image img = getImage(uri);
@@ -109,14 +129,16 @@ public class GraphicsLoaderImpl implements GraphicsLoader {
 			try {
 				return graphicNodeProvider.getGraphicNode(uri);
 			} catch (IOException e) {
-				logger.error("Unable to load graphic node from '" + uri + "'", e);
+				this.logger.error("Unable to load graphic node from '" + uri + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 
 		return null;
 	}
 
-	private URI replaceDynamicValues(URI uri, Map<String, String> dynamicMap) {
+	@SuppressWarnings("null")
+	@NonNull
+	private static URI replaceDynamicValues(@NonNull URI uri, @NonNull Map<@NonNull String, @NonNull String> dynamicMap) {
 		String s = uri.toString();
 		s = StrSubstitutor.replace(s, dynamicMap);
 		return URI.createURI(s);
