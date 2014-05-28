@@ -295,13 +295,13 @@ public abstract class AdapterFactoryCellFactory {
 			cell.setText(labelProvider.getText(item));
 			Node graphic = graphicFromObject(labelProvider.getImage(item));
 			if (graphic == null) {
-				resetPropertyState(cell.graphicProperty(), null);
+				resetPropertyState(cell,cell.graphicProperty(), null);
 			} else {
 				cell.setGraphic(graphic);
 			}
 		} else {
 			cell.setText(null);
-			resetPropertyState(cell.graphicProperty(), null);
+			resetPropertyState(cell,cell.graphicProperty(), null);
 		}
 	}
 
@@ -318,7 +318,7 @@ public abstract class AdapterFactoryCellFactory {
 			Object columnImage = labelProvider.getColumnImage(item, columnIndex);
 			Node graphic = graphicFromObject(columnImage);
 			if (graphic == null) {
-				resetPropertyState(cell.graphicProperty(), null);
+				resetPropertyState(cell,cell.graphicProperty(), null);
 			} else {
 				cell.setGraphic(graphic);
 			}
@@ -326,7 +326,7 @@ public abstract class AdapterFactoryCellFactory {
 		} else {
 			// clear the cell if there is no item
 			cell.setText(null);
-			resetPropertyState(cell.graphicProperty(), null);
+			resetPropertyState(cell,cell.graphicProperty(), null);
 		}
 	}
 
@@ -335,7 +335,7 @@ public abstract class AdapterFactoryCellFactory {
 		if (colorProvider != null) {
 			Color color = colorFromObject(colorProvider.getForeground(item, columnIndex));
 			if (color == null) {
-				resetPropertyState(cell.textFillProperty(), Color.BLACK);
+				resetPropertyState(cell,cell.textFillProperty(), Color.BLACK);
 			} else {
 				cell.setTextFill(color);
 			}
@@ -347,7 +347,7 @@ public abstract class AdapterFactoryCellFactory {
 				cell.setStyle(null);
 			}
 		} else {
-			resetPropertyState(cell.textFillProperty(), Color.BLACK);
+			resetPropertyState(cell,cell.textFillProperty(), Color.BLACK);
 			cell.setStyle(null);
 		}
 	}
@@ -357,28 +357,32 @@ public abstract class AdapterFactoryCellFactory {
 		if (fontProvider != null) {
 			Font font = fontFromObject(fontProvider.getFont(item, columnIndex));
 			if (font == null) {
-				resetPropertyState(cell.fontProperty(), Font.getDefault());
+				resetPropertyState(cell,cell.fontProperty(), Font.getDefault());
 			} else {
 				cell.setFont(font);
 			}
 		} else {
-			resetPropertyState(cell.fontProperty(), Font.getDefault());
+			resetPropertyState(cell,cell.fontProperty(), Font.getDefault());
 		}
 	}
 
 	/**
 	 * Reset the property state
 	 * 
+	 * @param cell
+	 *            the cell
+	 * 
 	 * @param property
 	 *            the property
 	 * @param defaultValue
 	 *            the default value
 	 */
-	protected static <T> void resetPropertyState(ObjectProperty<T> property, T defaultValue) {
+	protected static <T> void resetPropertyState(Cell<?> cell, ObjectProperty<T> property, T defaultValue) {
 		if (property instanceof StyleableProperty) {
 			@SuppressWarnings("unchecked")
 			StyleableProperty<T> styleableProperty = (StyleableProperty<T>) property;
 			styleableProperty.applyStyle(null, defaultValue);
+			cell.applyCss();
 		} else {
 			property.set(defaultValue);
 		}
@@ -410,7 +414,7 @@ public abstract class AdapterFactoryCellFactory {
 		if (colorProvider != null) {
 			Color color = colorFromObject(colorProvider.getForeground(item));
 			if (color == null) {
-				resetPropertyState(cell.textFillProperty(), Color.BLACK);
+				resetPropertyState(cell, cell.textFillProperty(), Color.BLACK);
 			} else {
 				cell.setTextFill(color);
 			}
@@ -422,7 +426,7 @@ public abstract class AdapterFactoryCellFactory {
 				cell.setStyle(null);
 			}
 		} else {
-			resetPropertyState(cell.textFillProperty(), Color.BLACK);
+			resetPropertyState(cell,cell.textFillProperty(), Color.BLACK);
 			cell.setStyle(null);
 		}
 	}
