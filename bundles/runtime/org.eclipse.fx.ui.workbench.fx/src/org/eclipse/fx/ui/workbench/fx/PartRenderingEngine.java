@@ -265,7 +265,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "null" })
 	public void removeGui(MUIElement element) {
 		MUIElement container = (element.getCurSharedRef() != null) ? element.getCurSharedRef() : (MUIElement) ((EObject) element).eContainer();
 
@@ -279,7 +279,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 			// Check if the control is already rendered
 			if (renderer != null) {
-				if (parentRenderer != null) {
+				if (parentRenderer != null && container != null) {
 					try {
 						parentRenderer.hideChild(container, element);
 					} catch (Throwable t) {
