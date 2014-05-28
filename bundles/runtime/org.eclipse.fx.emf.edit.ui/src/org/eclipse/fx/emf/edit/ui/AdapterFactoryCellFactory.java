@@ -14,6 +14,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.css.StyleableProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Cell;
 import javafx.scene.image.ImageView;
@@ -41,7 +43,8 @@ import org.eclipse.jdt.annotation.Nullable;
 public abstract class AdapterFactoryCellFactory {
 
 	/**
-	 * A listener interface for callbacks that process newly created {@link Cell}s
+	 * A listener interface for callbacks that process newly created
+	 * {@link Cell}s
 	 */
 	public interface ICellCreationListener {
 
@@ -54,8 +57,8 @@ public abstract class AdapterFactoryCellFactory {
 	}
 
 	/**
-	 * A listener interface for callbacks that process {@link Cell}s being updated during
-	 * {@link Cell#updateItem}.
+	 * A listener interface for callbacks that process {@link Cell}s being
+	 * updated during {@link Cell#updateItem}.
 	 */
 	public interface ICellUpdateListener {
 
@@ -72,10 +75,11 @@ public abstract class AdapterFactoryCellFactory {
 	}
 
 	/**
-	 * An interface for providers that handle cell editing. The {@link Cell}s created by the factory will
-	 * delegate calls to their editing methods to the first handler in
-	 * <code>AdapterFactoryCellFactory#cellEditHandlers<code> that returns <code>true</code> for
-	 * {@link ICellEditHandler#canEdit(Cell)} .
+	 * An interface for providers that handle cell editing. The {@link Cell}s
+	 * created by the factory will delegate calls to their editing methods to
+	 * the first handler in
+	 * <code>AdapterFactoryCellFactory#cellEditHandlers<code> that returns <code>true</code>
+	 * for {@link ICellEditHandler#canEdit(Cell)} .
 	 */
 	public interface ICellEditHandler {
 
@@ -231,7 +235,7 @@ public abstract class AdapterFactoryCellFactory {
 		IItemFontProvider fontProvider = (IItemFontProvider) adapterFactory.adapt(item, IItemFontProvider.class);
 		if (fontProvider != null) {
 			Font font = fontFromObject(fontProvider.getFont(item));
-			cell.setFont(font == null ?  Font.getDefault() : font);
+			cell.setFont(font == null ? Font.getDefault() : font);
 		}
 	}
 
@@ -289,10 +293,15 @@ public abstract class AdapterFactoryCellFactory {
 
 		if (labelProvider != null) {
 			cell.setText(labelProvider.getText(item));
-			cell.setGraphic(graphicFromObject(labelProvider.getImage(item)));
+			Node graphic = graphicFromObject(labelProvider.getImage(item));
+			if (graphic == null) {
+				resetPropertyState(cell.graphicProperty(), null);
+			} else {
+				cell.setGraphic(graphic);
+			}
 		} else {
 			cell.setText(null);
-			cell.setGraphic(null);
+			resetPropertyState(cell.graphicProperty(), null);
 		}
 	}
 
@@ -308,29 +317,38 @@ public abstract class AdapterFactoryCellFactory {
 			cell.setText(labelProvider.getColumnText(item, columnIndex));
 			Object columnImage = labelProvider.getColumnImage(item, columnIndex);
 			Node graphic = graphicFromObject(columnImage);
-			cell.setGraphic(graphic);
+			if (graphic == null) {
+				resetPropertyState(cell.graphicProperty(), null);
+			} else {
+				cell.setGraphic(graphic);
+			}
+
 		} else {
 			// clear the cell if there is no item
 			cell.setText(null);
-			cell.setGraphic(null);
+			resetPropertyState(cell.graphicProperty(), null);
 		}
 	}
 
 	static void applyTableItemProviderColor(@Nullable Object item, int columnIndex, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		ITableItemColorProvider colorProvider = (ITableItemColorProvider) adapterFactory.adapt(item, ITableItemColorProvider.class);
 		if (colorProvider != null) {
-			//FIXME need to reset to original in NULL
-			cell.setTextFill(colorFromObject(colorProvider.getForeground(item, columnIndex)));
+			Color color = colorFromObject(colorProvider.getForeground(item, columnIndex));
+			if (color == null) {
+				resetPropertyState(cell.textFillProperty(), Color.BLACK);
+			} else {
+				cell.setTextFill(color);
+			}
+
 			String background = cssColorFromObject(colorProvider.getBackground(item, columnIndex));
 			if (background != null) {
 				cell.setStyle("-fx-background-color: " + background); //$NON-NLS-1$
 			} else {
-				//FIXME need to reset to original in NULL
-				// cell.setStyle(null);
+				cell.setStyle(null);
 			}
 		} else {
-			//FIXME need to reset to original in NULL
-			// cell.setTextFill(null);
+			resetPropertyState(cell.textFillProperty(), Color.BLACK);
+			cell.setStyle(null);
 		}
 	}
 
@@ -338,10 +356,31 @@ public abstract class AdapterFactoryCellFactory {
 		ITableItemFontProvider fontProvider = (ITableItemFontProvider) adapterFactory.adapt(item, ITableItemFontProvider.class);
 		if (fontProvider != null) {
 			Font font = fontFromObject(fontProvider.getFont(item, columnIndex));
-			//FIXME need to reset to original on NULL
-			cell.setFont(font == null ? Font.getDefault() : font);
+			if (font == null) {
+				resetPropertyState(cell.fontProperty(), Font.getDefault());
+			} else {
+				cell.setFont(font);
+			}
 		} else {
-			//FIXME need to reset to original in NULL
+			resetPropertyState(cell.fontProperty(), Font.getDefault());
+		}
+	}
+
+	/**
+	 * Reset the property state
+	 * 
+	 * @param property
+	 *            the property
+	 * @param defaultValue
+	 *            the default value
+	 */
+	protected static <T> void resetPropertyState(ObjectProperty<T> property, T defaultValue) {
+		if (property instanceof StyleableProperty) {
+			@SuppressWarnings("unchecked")
+			StyleableProperty<T> styleableProperty = (StyleableProperty<T>) property;
+			styleableProperty.applyStyle(null, defaultValue);
+		} else {
+			property.set(defaultValue);
 		}
 	}
 
@@ -369,19 +408,22 @@ public abstract class AdapterFactoryCellFactory {
 	static void applyItemProviderColor(@Nullable Object item, @NonNull Cell<?> cell, @NonNull AdapterFactory adapterFactory) {
 		IItemColorProvider colorProvider = (IItemColorProvider) adapterFactory.adapt(item, IItemColorProvider.class);
 		if (colorProvider != null) {
-			//FIXME need to reset to original in NULL
-			cell.setTextFill(colorFromObject(colorProvider.getForeground(item)));
+			Color color = colorFromObject(colorProvider.getForeground(item));
+			if (color == null) {
+				resetPropertyState(cell.textFillProperty(), Color.BLACK);
+			} else {
+				cell.setTextFill(color);
+			}
+
 			String background = cssColorFromObject(colorProvider.getBackground(item));
 			if (background != null) {
 				cell.setStyle("-fx-background-color: " + background); //$NON-NLS-1$
 			} else {
-				//FIXME need to reset to original in NULL
-//				cell.setStyle(null);
+				cell.setStyle(null);
 			}
 		} else {
-			//FIXME need to reset to original in NULL
-//			cell.setTextFill(null);
-//			cell.setStyle(null);
+			resetPropertyState(cell.textFillProperty(), Color.BLACK);
+			cell.setStyle(null);
 		}
 	}
 
