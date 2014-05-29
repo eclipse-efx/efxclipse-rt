@@ -91,9 +91,12 @@ public class PartRenderingEngine implements IPresentationEngine {
 		}
 
 		setupEventListener(eventBroker);
-
-		if (context.get(AbstractE4Application.THEME_ID) != null) {
-			themeManager.setCurrentThemeId((String) context.get(AbstractE4Application.THEME_ID));
+		
+		Object object = context.get(AbstractE4Application.THEME_ID);
+		if (object != null && object instanceof String) {
+			themeManager.setCurrentThemeId((String) object);
+		} else {
+			this.log.info("No current theme is set"); //$NON-NLS-1$
 		}
 	}
 
@@ -188,10 +191,8 @@ public class PartRenderingEngine implements IPresentationEngine {
 			// Remember which renderer is responsible for this widget
 			element.setRenderer(renderer);
 			Object newWidget = renderer.createWidget(element);
-			if (newWidget != null) {
-				renderer.bindWidget(element, newWidget);
-				return newWidget;
-			}
+			renderer.bindWidget(element, newWidget);
+			return newWidget;
 		}
 
 		return null;
