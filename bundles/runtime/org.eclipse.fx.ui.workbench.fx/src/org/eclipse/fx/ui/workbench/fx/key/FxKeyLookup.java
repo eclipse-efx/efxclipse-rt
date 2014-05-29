@@ -27,7 +27,7 @@ import org.osgi.framework.FrameworkUtil;
  * 
  * @since 3.1
  */
-final class FxKeyLookup implements KeyLookup {
+public final class FxKeyLookup implements KeyLookup {
 
 	/**
 	 * The look-up table for modifier keys. This is a map of formal name (
