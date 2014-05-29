@@ -13,17 +13,20 @@ package org.eclipse.fx.ui.workbench.fx.key;
 import org.eclipse.fx.ui.keybindings.KeyLookup;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.keybindings.service.BindingFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.scene.input.KeyEvent;
 
-public class FxKeySupport {
+class FxKeySupport {
 
-	public static int convertEventToUnmodifiedAccelerator(KeyEvent event) {
+	@SuppressWarnings("deprecation")
+	static int convertEventToUnmodifiedAccelerator(KeyEvent event) {
 		int modifiers = getStateMask(event) & FxKeyLookup.MODIFIER_MASK;
 		return modifiers + event.getCode().impl_getCode();
 	}
 
-	public static final int convertEventToUnshiftedModifiedAccelerator(final KeyEvent event) {
+	@SuppressWarnings("deprecation")
+	static final int convertEventToUnshiftedModifiedAccelerator(final KeyEvent event) {
 		// Disregard alphabetic key strokes.
 		if (Character.isLetter(event.getCharacter().charAt(0))) {
 			return convertEventToUnmodifiedAccelerator(event);
@@ -35,14 +38,15 @@ public class FxKeySupport {
 		// return modifiers + toUpperCase(character);
 	}
 
-	public static final int convertEventToModifiedAccelerator(final KeyEvent event) {
+	@SuppressWarnings("deprecation")
+	static final int convertEventToModifiedAccelerator(final KeyEvent event) {
 		int modifiers = getStateMask(event) & FxKeyLookup.MODIFIER_MASK;
 		return modifiers + event.getCode().impl_getCode();
 		// char character = topKey(event);
 		// return modifiers + toUpperCase(character);
 	}
 
-	public static int getStateMask(KeyEvent event) {
+	private static int getStateMask(KeyEvent event) {
 		int rv = 0;
 		if (event.isAltDown()) {
 			rv |= FxKeyLookup.ALT;
@@ -59,7 +63,7 @@ public class FxKeySupport {
 		return rv;
 	}
 
-	public static KeyStroke convertAcceleratorToKeyStroke(BindingFactory factory, KeyLookup lookup, int accelerator) {
+	static @NonNull KeyStroke convertAcceleratorToKeyStroke(@NonNull BindingFactory factory, @NonNull KeyLookup lookup, int accelerator) {
 		final int modifierKeys = accelerator & FxKeyLookup.MODIFIER_MASK;
 		final int naturalKey;
 		if (accelerator == modifierKeys) {
