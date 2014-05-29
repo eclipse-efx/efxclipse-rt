@@ -29,6 +29,7 @@ public class Label extends Control {
 	private javafx.scene.control.Label control;
 	private Separator separator;
 	private Image image;
+	private String text = "";
 	
 	public Label(Composite parent, int style) {
 		super(parent,style);
@@ -43,6 +44,7 @@ public class Label extends Control {
 		} else {
 			control = new javafx.scene.control.Label();
 			control.setWrapText((style & SWT.WRAP) == SWT.WRAP);
+			control.setMnemonicParsing(true);
 			return control;
 		}
 	}
@@ -79,7 +81,7 @@ public class Label extends Control {
 	public String getText () {
 		checkWidget ();
 		if ((style & SWT.SEPARATOR) != 0) return "";
-		return notNullString(control.getText());
+		return text;
 	}
 	
 	public void setAlignment (int alignment) {
@@ -108,7 +110,8 @@ public class Label extends Control {
 		checkWidget ();
 		if (string == null) error (SWT.ERROR_NULL_ARGUMENT);
 		if ((style & SWT.SEPARATOR) != 0) return;
-		control.setText(string);
+		this.text = string;
+		control.setText(Util.fixMnemonic(string));
 	}
 	
 	public Image getImage () {
