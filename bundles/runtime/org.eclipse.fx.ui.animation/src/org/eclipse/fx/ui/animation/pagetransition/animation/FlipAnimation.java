@@ -35,7 +35,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class FlipAnimation extends CenterSwitchAnimation {
 
 	@Override
-	public void animate(final BorderPane pane, final Node newNode) {
+	public void animate(final BorderPane pane, final Node newNode, Runnable postAnimation) {
 		pane.setDepthTest(DepthTest.DISABLE);
 		final Node curNode = pane.getCenter();
 		
@@ -73,6 +73,9 @@ public class FlipAnimation extends CenterSwitchAnimation {
 				
 				if (FlipAnimation.this.imageView != null) {
 					pane.getChildren().remove(FlipAnimation.this.imageView);
+				}
+				if( postAnimation != null ) {
+					postAnimation.run();	
 				}
 			}
 		});

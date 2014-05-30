@@ -71,8 +71,8 @@ public class PerspectiveAnimationAddon {
 				
 				return new AnimationDelegate<BorderPane, Node>() {
 					@Override
-					public void animate(BorderPane container, Node control) {
-						animations.get(animation).animate(container, control);
+					public void animate(BorderPane container, Node control, Runnable r) {
+						animations.get(animation).animate(container, control, r);
 					}
 				};
 			}
