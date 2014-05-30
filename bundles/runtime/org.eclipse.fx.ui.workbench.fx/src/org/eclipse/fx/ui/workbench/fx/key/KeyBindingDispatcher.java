@@ -278,12 +278,12 @@ public class KeyBindingDispatcher {
 		}
 	}
 
-	private boolean press(List<KeyStroke> potentialKeyStrokes, KeyEvent event) {
+	private boolean press(@NonNull List<@NonNull KeyStroke> potentialKeyStrokes, @NonNull KeyEvent event) {
 		KeySequence errorSequence = null;
 		Collection<Binding> errorMatch = null;
 
 		KeySequence sequenceBeforeKeyStroke = this.state;
-		for (Iterator<KeyStroke> iterator = potentialKeyStrokes.iterator(); iterator.hasNext();) {
+		for (Iterator<@NonNull KeyStroke> iterator = potentialKeyStrokes.iterator(); iterator.hasNext();) {
 			KeySequence sequenceAfterKeyStroke = this.factory.getKeySequenceInstance(sequenceBeforeKeyStroke, iterator.next());
 
 			if (isPartialMatch(sequenceAfterKeyStroke)) {
