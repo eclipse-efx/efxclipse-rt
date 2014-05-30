@@ -128,17 +128,28 @@ public class E4Application extends AbstractE4Application {
 				return;
 			}
 		}
+		
+		E4Workbench workbench = this.workbench;
+		if( workbench == null ) {
+			throw new IllegalStateException("Not workbench instance yet available"); //$NON-NLS-1$
+		}
+		
+		IEclipseContext wbContext = workbench.getContext();
+		if( wbContext == null ) {
+			throw new IllegalStateException("The workbench has no context assigned"); //$NON-NLS-1$
+		}
+		
 
-		this.instanceLocation = (Location) this.workbench.getContext().get(E4Workbench.INSTANCE_LOCATION);
+		this.instanceLocation = (Location) wbContext.get(E4Workbench.INSTANCE_LOCATION);
 
 		try {
-			if (!checkInstanceLocation(this.instanceLocation, this.workbench.getContext()))
+			if (!checkInstanceLocation(this.instanceLocation, wbContext))
 				return;
 
 			this.workbenchContext = this.workbench.getContext();
 
 			// Create and run the UI (if any)
-			this.workbench.createAndRunUI(this.workbench.getApplication());
+			workbench.createAndRunUI(this.workbench.getApplication());
 
 			return;
 		} finally {

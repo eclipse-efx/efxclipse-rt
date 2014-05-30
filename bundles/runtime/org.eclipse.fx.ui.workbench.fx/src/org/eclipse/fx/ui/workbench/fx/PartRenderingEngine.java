@@ -58,8 +58,10 @@ public class PartRenderingEngine implements IPresentationEngine {
 	/**
 	 * URL of the engine
 	 */
+	@NonNull
 	public static final String engineURI = "bundleclass://org.eclipse.fx.ui.workbench.fx/org.eclipse.fx.ui.workbench.fx.PartRenderingEngine"; //$NON-NLS-1$
 
+	@NonNull
 	private static final String defaultFactoryUrl = "bundleclass://org.eclipse.fx.ui.workbench.renderers.fx/org.eclipse.fx.ui.workbench.renderers.fx.DefWorkbenchRendererFactory"; //$NON-NLS-1$
 
 	@NonNull
