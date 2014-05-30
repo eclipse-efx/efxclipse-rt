@@ -782,6 +782,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				String[] split = iconUri.split(";"); //$NON-NLS-1$
 				List<Image> images = new ArrayList<>();
 				for (String uri : split) {
+					@SuppressWarnings("null")
 					Image img = this.graphicsLoader.getImage(URI.createURI(uri));
 					if (img != null) {
 						images.add(img);
@@ -944,6 +945,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		TableCell<Row, MPart> createTextCell(TableColumn<Row, MPart> param) {
 			return new TableCell<DefWindowRenderer.Row, MPart>() {
+				@SuppressWarnings("null")
 				@Override
 				protected void updateItem(MPart item, boolean empty) {
 					super.updateItem(item, empty);
