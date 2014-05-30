@@ -175,6 +175,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 			updateEnabledState();
 		}
 
+		@SuppressWarnings("null")
 		@Inject
 		public void setIconURI(@Named(UIEvents.UILabel.ICONURI) String uri) {
 			if (uri == null) {
