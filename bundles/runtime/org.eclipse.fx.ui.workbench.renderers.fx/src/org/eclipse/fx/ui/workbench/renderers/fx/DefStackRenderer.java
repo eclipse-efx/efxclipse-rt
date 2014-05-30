@@ -81,12 +81,14 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		// private EModelService modelService;
 
 		@Inject
+		@NonNull
 		DnDFeedbackService dndFeedback;
 		
+		@NonNull
 		private final MPartStack domainElement;
 		
 		@Inject
-		public StackWidgetImpl(@Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartStack domainElement) {
+		public StackWidgetImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartStack domainElement) {
 			this.domainElement = domainElement;
 		}
 		
@@ -494,6 +496,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			getWidget().setClosable(closeable);
 		}
 
+		@SuppressWarnings("null")
 		@Inject
 		public void setIcon(@Named(UIEvents.UILabel.ICONURI) @Optional String iconUri) {
 			if (iconUri != null) {
