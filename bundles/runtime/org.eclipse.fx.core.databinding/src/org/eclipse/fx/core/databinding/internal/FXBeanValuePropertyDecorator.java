@@ -20,6 +20,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.databinding.property.value.ValueProperty;
 import org.eclipse.fx.core.databinding.IJFXBeanValueProperty;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
+import org.eclipse.jdt.annotation.NonNull;
 
 
 /**
@@ -28,16 +29,18 @@ import org.eclipse.fx.core.databinding.JFXBeanProperties;
  */
 public class FXBeanValuePropertyDecorator extends ValueProperty implements
 		IJFXBeanValueProperty {
+	@NonNull
 	private final IValueProperty delegate;
 	
+	@NonNull
 	private final PropertyDescriptor propertyDescriptor;
 
 	/**
 	 * @param delegate
 	 * @param propertyDescriptor
 	 */
-	public FXBeanValuePropertyDecorator(IValueProperty delegate,
-			PropertyDescriptor propertyDescriptor) {
+	public FXBeanValuePropertyDecorator(@NonNull IValueProperty delegate,
+			@NonNull PropertyDescriptor propertyDescriptor) {
 		this.delegate = delegate;
 		this.propertyDescriptor = propertyDescriptor;
 	}
@@ -73,6 +76,7 @@ public class FXBeanValuePropertyDecorator extends ValueProperty implements
 		return value(JFXBeanProperties.value(beanClass, propertyName, valueType));
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public IJFXBeanValueProperty value(IJFXBeanValueProperty property) {
 		return new FXBeanValuePropertyDecorator(super.value(property),
@@ -123,18 +127,21 @@ public class FXBeanValuePropertyDecorator extends ValueProperty implements
 				property.getPropertyDescriptor());
 	}*/
 
+	@SuppressWarnings("null")
 	@Override
 	public IObservableValue observe(Object source) {
 		return new FXBeanObservableValueDecorator(this.delegate.observe(source),
 				this.propertyDescriptor);
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public IObservableValue observe(Realm realm, Object source) {
 		return new FXBeanObservableValueDecorator(
 				this.delegate.observe(realm, source), this.propertyDescriptor);
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public IObservableValue observeDetail(IObservableValue master) {
 		return new FXBeanObservableValueDecorator(this.delegate.observeDetail(master),

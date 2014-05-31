@@ -39,7 +39,7 @@ public class AnonymousFXBeanValueProperty extends DelegatingValueProperty {
 	 * @param propertyName
 	 * @param valueType
 	 */
-	public AnonymousFXBeanValueProperty(String propertyName, @Nullable Class<?> valueType) {
+	public AnonymousFXBeanValueProperty(@NonNull String propertyName, @Nullable Class<?> valueType) {
 		super(valueType);
 		this.propertyName = propertyName;
 		this.delegates = new HashMap<Class<?>,IValueProperty>();
