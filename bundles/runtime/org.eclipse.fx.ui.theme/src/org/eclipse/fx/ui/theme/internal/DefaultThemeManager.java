@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javafx.scene.Scene;
 
@@ -22,79 +23,94 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.RegistryFactory;
-import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
 
 
+/**
+ * Default implementation of a theme manager
+ */
 public class DefaultThemeManager implements ThemeManager {
-	static final String ATT_ID = "id";
-	static final String ATT_NAME = "name";
-	static final String ATT_THEME_ID = "themeId";
-	static final String ATT_BASETYLESHEET = "basestylesheet";
-	static final String ATT_RESOURCE = "resource";
+	static final String ATT_ID = "id"; //$NON-NLS-1$
+	static final String ATT_NAME = "name"; //$NON-NLS-1$
+	static final String ATT_THEME_ID = "themeId"; //$NON-NLS-1$
+	static final String ATT_BASETYLESHEET = "basestylesheet"; //$NON-NLS-1$
+	static final String ATT_RESOURCE = "resource"; //$NON-NLS-1$
 
 	static class ThemeImpl implements Theme {
-		private final IConfigurationElement element;
-		private final List<IConfigurationElement> stylesheetElements = new ArrayList<IConfigurationElement>();
-		private final List<URL> resolvedUrls = new ArrayList<URL>();
+		private static int THEME_COUNT = 0;
+		
+		private final @NonNull IConfigurationElement element;
+		private final @NonNull List<@NonNull IConfigurationElement> stylesheetElements = new ArrayList<>();
+		private final @NonNull List<@NonNull URL> resolvedUrls = new ArrayList<>();
 
-		public ThemeImpl(IConfigurationElement element) {
+		public ThemeImpl(@NonNull IConfigurationElement element) {
 			this.element = element;
 		}
 
-		void addStylesheet(IConfigurationElement stylesheet) {
+		void addStylesheet(@NonNull IConfigurationElement stylesheet) {
 			this.resolvedUrls.clear();
 			this.stylesheetElements.add(stylesheet);
 		}
 
 		@Override
 		public String getId() {
-			return this.element.getAttribute(ATT_ID);
+			String attribute = this.element.getAttribute(ATT_ID);
+			if(attribute == null) {
+				getLogger().error("The theme has to have an ID"); //$NON-NLS-1$
+				attribute = UUID.randomUUID().toString() + ""; //$NON-NLS-1$
+			}
+			return attribute;
 		}
 
 		@Override
 		public String getName() {
-			return this.element.getAttribute(ATT_NAME);
+			String attribute = this.element.getAttribute(ATT_NAME);
+			if( attribute == null ) {
+				getLogger().warning("The theme should have a name"); //$NON-NLS-1$
+				attribute = "Automatic theme " + THEME_COUNT++; //$NON-NLS-1$
+			}
+			return attribute;
 		}
 
 		@Override
-		public List<URL> getStylesheetURL() {
-			if (resolvedUrls.isEmpty()) {
-				URL url = getUrl(element, ATT_BASETYLESHEET);
+		public List<@NonNull URL> getStylesheetURL() {
+			if (this.resolvedUrls.isEmpty()) {
+				URL url = getUrl(this.element, ATT_BASETYLESHEET);
 
 				if (url != null) {
-					resolvedUrls.add(url);
+					this.resolvedUrls.add(url);
 				} else {
-					getLogger().error("Unable to load base stylesheet '"+element.getAttribute(ATT_BASETYLESHEET)+"'");
+					getLogger().error("Unable to load base stylesheet '"+this.element.getAttribute(ATT_BASETYLESHEET)+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 
-				for (IConfigurationElement e : stylesheetElements) {
+				for (IConfigurationElement e : this.stylesheetElements) {
 					url = getUrl(e, ATT_RESOURCE);
 					if (url != null) {
-						resolvedUrls.add(url);
+						this.resolvedUrls.add(url);
 					} else {
-						getLogger().error("Unable to load stylesheet '"+e.getAttribute(ATT_RESOURCE)+"'");
+						getLogger().error("Unable to load stylesheet '"+e.getAttribute(ATT_RESOURCE)+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				}
 
 			}
-			return resolvedUrls;
+			return this.resolvedUrls;
 		}
 
-		private URL getUrl(IConfigurationElement e, String attributeName) {
+		private static URL getUrl(IConfigurationElement e, String attributeName) {
 			String resource = e.getAttribute(attributeName);
 			String contributer = e.getDeclaringExtension().getContributor().getName();
 			
-			if( resource.startsWith("platform:") ) {
+			if( resource.startsWith("platform:") ) { //$NON-NLS-1$
 				try {
 					return FileLocator.find(new URL(resource));
 				} catch (MalformedURLException e1) {
-					getLogger().error("Unable to find css stylesheet file "+resource+"", e1);
+					getLogger().error("Unable to find css stylesheet file "+resource+"", e1); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				return null;
 			} else {
@@ -104,22 +120,25 @@ public class DefaultThemeManager implements ThemeManager {
 		}
 	}
 
-	private final List<Theme> themes = new ArrayList<Theme>();
+	private final @NonNull List<@NonNull Theme> themes = new ArrayList<>();
 	private String currentThemeId;
-	private List<Scene> managedScenes = new ArrayList<Scene>();
+	List<Scene> managedScenes = new ArrayList<Scene>();
 
+	/**
+	 * Create a new theme manager instance
+	 */
 	public DefaultThemeManager() {
 		IExtensionRegistry registry = RegistryFactory.getRegistry();
-		for (IConfigurationElement e : registry.getConfigurationElementsFor("org.eclipse.fx.ui.theme")) {
-			if (e.getName().equals("theme")) {
-				themes.add(new ThemeImpl(e));
+		for (IConfigurationElement e : registry.getConfigurationElementsFor("org.eclipse.fx.ui.theme")) { //$NON-NLS-1$
+			if (e.getName().equals("theme")) { //$NON-NLS-1$
+				this.themes.add(new ThemeImpl(e));
 			}
 		}
 
-		for (IConfigurationElement e : registry.getConfigurationElementsFor("org.eclipse.fx.ui.theme")) {
-			if (e.getName().equals("stylesheet")) {
+		for (IConfigurationElement e : registry.getConfigurationElementsFor("org.eclipse.fx.ui.theme")) { //$NON-NLS-1$
+			if (e.getName().equals("stylesheet")) { //$NON-NLS-1$
 				String themeId = e.getAttribute(ATT_THEME_ID);
-				for (Theme t : themes) {
+				for (Theme t : this.themes) {
 					if (t.getId().equals(themeId) || themeId == null || themeId.isEmpty()) {
 						((ThemeImpl)t).addStylesheet(e);
 					}
@@ -131,38 +150,38 @@ public class DefaultThemeManager implements ThemeManager {
 
 	@Override
 	public Theme getCurrentTheme() {
-		if( themes.isEmpty() ) {
+		if( this.themes.isEmpty() ) {
 			return null;
-		} else if (themes.size() == 1) {
-			return themes.get(0);
+		} else if (this.themes.size() == 1) {
+			return this.themes.get(0);
 		} else {
 			String id = getCurrentThemeId();
 			if (id != null) {
-				for (Theme t : themes) {
+				for (Theme t : this.themes) {
 					if (t.getId().equals(id)) {
 						return t;
 					}
 				}
 			}
 
-			themes.get(0);
+			this.themes.get(0);
 		}
 
 		return null;
 	}
 
 	@Override
-	public List<Theme> getAvailableThemes() {
-		return themes;
+	public List<@NonNull Theme> getAvailableThemes() {
+		return this.themes;
 	}
 
 	@Override
 	public void setCurrentThemeId(String id) {
-		for (Theme t : themes) {
+		for (Theme t : this.themes) {
 			if (t.getId().equals(id)) {
-				currentThemeId = id;
+				this.currentThemeId = id;
 				
-				for( Scene scene : managedScenes ) {
+				for( Scene scene : this.managedScenes ) {
 					List<Theme> availableThemes = getAvailableThemes();
 					for (Theme theme : availableThemes) {
 						for (URL url : theme.getStylesheetURL()) {
@@ -171,17 +190,9 @@ public class DefaultThemeManager implements ThemeManager {
 					}
 					for (Theme theme : availableThemes) {
 						for (URL url : theme.getStylesheetURL()) {
-							if (theme.getId().equals(currentThemeId)) {
+							if (theme.getId().equals(this.currentThemeId)) {
 								scene.getStylesheets().add(url.toExternalForm());
 							}
-						}
-					}
-					
-					if( Util.isFX2() ) {
-						try {
-							ReflectiveInvoke.onStyleManagerClass(scene);
-						} catch (Exception e) {
-							getLogger().error("Unable to reload styles", e);
 						}
 					}
 				}
@@ -189,15 +200,16 @@ public class DefaultThemeManager implements ThemeManager {
 				return;
 			}
 		}
-		throw new IllegalArgumentException("Theme with id '" + id + "' is not known.");
+		throw new IllegalArgumentException("Theme with id '" + id + "' is not known."); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private String getCurrentThemeId() {
-		return currentThemeId;
+		return this.currentThemeId;
 	}
 	
 	private static Logger LOGGER;
 	
+	@SuppressWarnings("null")
 	static Logger getLogger() {
 		if( LOGGER == null ) {
 			ServiceReference<LoggerFactory> ref = Activator.getContext().getServiceReference(LoggerFactory.class);
@@ -208,12 +220,12 @@ public class DefaultThemeManager implements ThemeManager {
 	
 	@Override
 	public Registration registerScene(final Scene scene) {
-		managedScenes.add(scene);
+		this.managedScenes.add(scene);
 		return new Registration() {
 			
 			@Override
 			public void dispose() {
-				managedScenes.remove(scene);
+				DefaultThemeManager.this.managedScenes.remove(scene);
 			}
 		};
 	}
