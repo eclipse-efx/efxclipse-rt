@@ -114,39 +114,18 @@ public class DnDAddon {
 					List<MUIElement> children = targetContainer.getChildren();
 					children.remove(d.sourceElement);
 					
-					//WAIT for adding for a second looks like a bug in JavaFX
-					this.timer.schedule(new TimerTask() {
-						
-						@Override
-						public void run() {
-							int idx = targetContainer.getChildren().indexOf(d.reference);
-							
-							if( d.dropType == DropType.AFTER ) {
-								idx += 1;
-							}
-							
-							if( idx > targetContainer.getChildren().size() ) {
-								targetContainer.getChildren().add(d.sourceElement);
-							} else {
-								targetContainer.getChildren().add(idx, d.sourceElement);
-							}
-						}
-					}, 200);
+					int idx = targetContainer.getChildren().indexOf(d.reference);
 					
-					TimerTask t = new TimerTask() {
-						
-						@Override
-						public void run() {
-							DnDAddon.this.synchronize.asyncExec(new Runnable() {
-								
-								@Override
-								public void run() {
-									targetContainer.setSelectedElement(d.sourceElement);
-								}
-							});
-						}
-					};
-					this.timer.schedule(t, 300);
+					if( d.dropType == DropType.AFTER ) {
+						idx += 1;
+					}
+					
+					if( idx > targetContainer.getChildren().size() ) {
+						targetContainer.getChildren().add(d.sourceElement);
+					} else {
+						targetContainer.getChildren().add(idx, d.sourceElement);
+					}
+					
 				} finally {
 					d.sourceElement.getTransientData().put(BaseStackRenderer.MAP_MOVE, Boolean.TRUE);
 					targetContainer.getTags().remove(CSS_CLASS_STACK_MOVE);
@@ -162,22 +141,22 @@ public class DnDAddon {
 				} else {
 					targetContainer.getChildren().add(d.sourceElement);
 				}
-				
-				TimerTask t = new TimerTask() {
-					
-					@Override
-					public void run() {
-						DnDAddon.this.synchronize.asyncExec(new Runnable() {
-							
-							@Override
-							public void run() {
-								targetContainer.setSelectedElement(d.sourceElement);
-							}
-						});
-					}
-				};
-				this.timer.schedule(t, 200);
 			}
+			
+			TimerTask t = new TimerTask() {
+				
+				@Override
+				public void run() {
+					DnDAddon.this.synchronize.asyncExec(new Runnable() {
+						
+						@Override
+						public void run() {
+							targetContainer.setSelectedElement(d.sourceElement);
+						}
+					});
+				}
+			};
+			this.timer.schedule(t, 200);
 		}
 		
 		return null;

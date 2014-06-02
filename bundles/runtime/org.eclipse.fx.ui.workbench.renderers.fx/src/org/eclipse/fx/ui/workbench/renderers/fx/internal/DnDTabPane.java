@@ -14,6 +14,8 @@ import java.lang.reflect.Field;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.css.StyleOrigin;
+import javafx.css.StyleableProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -46,6 +48,10 @@ public class DnDTabPane extends TabPane {
 	public static final EventType<TabPaneDroppedEvent> DND_TABPANE_DROPPED = new EventType<> (Event.ANY, "DND_TABPANE_DROPPED"); //$NON-NLS-1$
 	public static final EventType<TabPaneDragFinishedEvent> DND_TABPANE_DRAG_FINISHED = new EventType<> (Event.ANY, "DND_TABPANE_DRAG_FINISHED"); //$NON-NLS-1$
 	public static final EventType<TabPaneFeedbackDragEvent> DND_TABPANE_DRAG_FEEDBACK = new EventType<> (Event.ANY, "DND_TABPANE_DRAG_FEEDBACK"); //$NON-NLS-1$
+	
+	private Object noneEnum;
+	private StyleableProperty<Object> openAnimation;
+	private StyleableProperty<Object> closeAnimation;
 	
 	public static class TabPaneDragStartEvent extends Event {
 		/**
@@ -134,6 +140,7 @@ public class DnDTabPane extends TabPane {
 		return skin;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void hookTabFolderSkin(Skin<?> skin) {
 		try {
 			Field f_tabHeaderArea = skin.getClass().getDeclaredField("tabHeaderArea"); //$NON-NLS-1$
@@ -169,6 +176,27 @@ public class DnDTabPane extends TabPane {
 			tabHeaderArea.addEventHandler(DragEvent.DRAG_OVER, (e) -> tabPane_handleDragOver(tabHeaderArea, headersRegion, e));
 			tabHeaderArea.addEventHandler(DragEvent.DRAG_DROPPED, (e) -> tabPane_handleDragDropped(tabHeaderArea, headersRegion, e));
 			tabHeaderArea.addEventHandler(DragEvent.DRAG_EXITED, this::tabPane_handleDragDone);
+			
+			Field field = skin.getClass().getDeclaredField("openTabAnimation"); //$NON-NLS-1$
+			field.setAccessible(true);
+			this.openAnimation = (StyleableProperty<Object>) field.get(skin);
+			
+			field = skin.getClass().getDeclaredField("closeTabAnimation"); //$NON-NLS-1$
+			field.setAccessible(true);
+			this.closeAnimation = (StyleableProperty<Object>) field.get(skin);
+			
+			for( Class<?> cl : skin.getClass().getDeclaredClasses() ) {
+				if( "TabAnimation".equals(cl.getSimpleName()) ) {
+					for( Enum<?> enumConstant : (Enum<?>[]) cl.getEnumConstants()){
+						if( "NONE".equals(enumConstant.name())) {
+							this.noneEnum = enumConstant;
+							break;
+						}
+					}
+					break;
+				}
+				
+			}
 		} catch (Throwable t) {
 //			// TODO Auto-generated catch block
 			t.printStackTrace();
@@ -363,9 +391,21 @@ public class DnDTabPane extends TabPane {
 				
 				
 				if( ! noMove ) {
-					TabPaneDroppedEvent dropped = new TabPaneDroppedEvent(this, DRAGGED_TAB, tab, type);
-					Event.fireEvent(this, dropped);
-					event.setDropCompleted(true);
+					StyleOrigin openOrigin = openAnimation.getStyleOrigin();
+					StyleOrigin closeOrigin = closeAnimation.getStyleOrigin();
+					Object openValue = openAnimation.getValue();
+					Object closeValue = closeAnimation.getValue();
+					try {
+						openAnimation.setValue(noneEnum);
+						closeAnimation.setValue(noneEnum);
+						TabPaneDroppedEvent dropped = new TabPaneDroppedEvent(this, DRAGGED_TAB, tab, type);
+						Event.fireEvent(this, dropped);
+						event.setDropCompleted(true);	
+					} finally {
+						openAnimation.applyStyle(openOrigin, openValue);
+						closeAnimation.applyStyle(closeOrigin, closeValue);
+					}
+					
 				} else {
 					event.setDropCompleted(false);
 				}
