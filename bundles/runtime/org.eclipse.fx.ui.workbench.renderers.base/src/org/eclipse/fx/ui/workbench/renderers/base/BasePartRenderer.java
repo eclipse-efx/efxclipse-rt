@@ -103,6 +103,11 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 	@Override
 	public void doProcessContent(@NonNull MPart element) {
 		WPart<N, T, M> widget = getWidget(element);
+		if( widget == null ) {
+			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
+		
 		MToolBar mToolBar = element.getToolbar();
 		if (mToolBar != null) {
 			WToolBar<T> toolbar = engineCreateWidget(mToolBar);

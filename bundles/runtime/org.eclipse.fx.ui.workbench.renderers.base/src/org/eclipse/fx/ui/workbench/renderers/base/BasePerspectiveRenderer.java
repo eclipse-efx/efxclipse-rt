@@ -30,6 +30,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspective;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -97,7 +98,6 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 
 	@Override
 	protected void doProcessContent(MPerspective element) {
-		element.getChildren();
 		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 		for (MPartSashContainerElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
@@ -107,8 +107,14 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 				}
 			}
 		}
-		getWidget(element).addItems(list);
-
+		@Nullable
+		WPerspective<N> widget = getWidget(element);
+		if( widget == null ) {
+			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		} else {
+			widget.addItems(list);
+		}
+		
 		if (!element.getWindows().isEmpty()) {
 			MWindow window = findParent((EObject) element);
 			@SuppressWarnings("unchecked")
@@ -152,7 +158,12 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		if (element instanceof MPartSashContainerElement) {
 			WLayoutedWidget<MPartSashContainerElement> widget = (WLayoutedWidget<MPartSashContainerElement>) element.getWidget();
 			if( widget != null ) {
-				getWidget(parentElement).addItem(getRenderedIndex(parentElement, element), widget);	
+				WPerspective<N> wPerspective = getWidget(parentElement);
+				if( wPerspective != null ) {
+					wPerspective.addItem(getRenderedIndex(parentElement, element), widget);	
+				} else {
+					getLogger().error("No widget found for '"+parentElement+"'");  //$NON-NLS-1$//$NON-NLS-2$
+				}
 			} else {
 				getLogger().error("Expected widget from '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
 			}
