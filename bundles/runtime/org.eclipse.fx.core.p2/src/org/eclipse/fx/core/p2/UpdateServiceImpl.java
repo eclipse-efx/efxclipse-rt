@@ -109,6 +109,7 @@ public class UpdateServiceImpl implements UpdateService {
 		if( updateOperation != null ) {
 			Job job = updateOperation.getProvisioningJob(new NullProgressMonitor());
 			job.addJobChangeListener(new JobChangeAdapter() {
+				@SuppressWarnings("null")
 				@Override
 				public void done(IJobChangeEvent event) {
 					IStatus s = event.getResult();
@@ -121,6 +122,7 @@ public class UpdateServiceImpl implements UpdateService {
 		
 	}
 
+	@SuppressWarnings("all")
 	@NonNull
 	static State fromStatus(IStatus s) {
 		switch (s.getSeverity()) {
@@ -135,6 +137,7 @@ public class UpdateServiceImpl implements UpdateService {
 		}
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public void checkUpdate(final Callback<UpdateCheckData> callback) {
 		try {
@@ -153,7 +156,7 @@ public class UpdateServiceImpl implements UpdateService {
 			};
 			o.schedule();
 		} catch (ProvisionException e) {
-			getLogger().error(e.getMessage(), e);
+			getLogger().error("Unable to provision", e); //$NON-NLS-1$
 			callback.call(new P2UpdateCheckRV(null, State.ERROR, "Failure while try to collect updateable units", Boolean.FALSE, e)); //$NON-NLS-1$
 		}
 	}
