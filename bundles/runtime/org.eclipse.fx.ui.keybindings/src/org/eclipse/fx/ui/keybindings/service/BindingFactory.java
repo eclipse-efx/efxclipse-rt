@@ -17,17 +17,73 @@ import org.eclipse.fx.ui.keybindings.KeySequence;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.keybindings.ParseException;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
+import org.eclipse.jdt.annotation.NonNull;
 
-
+/**
+ * Factory to create {@link KeySequence}, {@link Binding} and {@link KeyStroke}
+ * instances
+ */
 public interface BindingFactory {
 
-	KeySequence getKeySequenceInstance(KeyLookup keylookup, String sequence) throws ParseException;
+	/**
+	 * Create a key sequence from the string representation
+	 * 
+	 * @param keylookup
+	 *            the key lookup
+	 * @param sequence
+	 *            the sequence string
+	 * @return the key sequence
+	 * @throws ParseException
+	 *             if the string can not be parsed
+	 */
+	@NonNull
+	KeySequence getKeySequenceInstance(@NonNull KeyLookup keylookup, @NonNull String sequence) throws ParseException;
 
+	/**
+	 * @return a default sequence
+	 */
+	@NonNull
 	KeySequence getKeySequenceInstance();
-	
-	KeySequence getKeySequenceInstance(KeySequence keySequence, KeyStroke stroke);
-	
-	Binding createKeyBinding(TriggerSequence sequence, ParameterizedCommand command, String schemeId, String contextId);
 
-	KeyStroke getKeyStrokeInstance(KeyLookup lookup, int modifierKeys, int naturalKey);	
+	/**
+	 * Create a sequence from a stroke
+	 * 
+	 * @param keySequence
+	 *            the original sequence
+	 * @param stroke
+	 *            the stroke
+	 * @return the new sequence
+	 */
+	@NonNull
+	KeySequence getKeySequenceInstance(@NonNull KeySequence keySequence, @NonNull KeyStroke stroke);
+
+	/**
+	 * Create a binding between the sequence and the command
+	 * 
+	 * @param sequence
+	 *            the sequence
+	 * @param command
+	 *            the command
+	 * @param schemeId
+	 *            the scheme
+	 * @param contextId
+	 *            the context id
+	 * @return the binding
+	 */
+	@NonNull
+	Binding createKeyBinding(@NonNull TriggerSequence sequence, @NonNull ParameterizedCommand command, @NonNull String schemeId, @NonNull String contextId);
+
+	/**
+	 * Create a keystroke from basic data
+	 * 
+	 * @param lookup
+	 *            the lookup or keys
+	 * @param modifierKeys
+	 *            the modifier mask
+	 * @param naturalKey
+	 *            the natural key value
+	 * @return the stroke
+	 */
+	@NonNull
+	KeyStroke getKeyStrokeInstance(@NonNull KeyLookup lookup, int modifierKeys, int naturalKey);
 }

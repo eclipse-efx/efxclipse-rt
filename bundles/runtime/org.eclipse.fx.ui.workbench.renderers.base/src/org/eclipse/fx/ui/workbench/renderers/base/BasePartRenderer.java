@@ -20,6 +20,7 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
+import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
@@ -46,8 +47,9 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 	 */
 	public static final String VIEW_MENU_TAG = "ViewMenu"; //$NON-NLS-1$
 
+	@SuppressWarnings("null")
 	@PostConstruct
-	void init(IEventBroker eventBroker) {
+	void init(@NonNull IEventBroker eventBroker) {
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_ICONURI);
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LABEL);
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_TOOLTIP);
@@ -99,11 +101,11 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 	protected abstract boolean requiresFocus(@NonNull WPart<N, T, M> widget);
 
 	@Override
-	public void doProcessContent(MPart element) {
+	public void doProcessContent(@NonNull MPart element) {
 		WPart<N, T, M> widget = getWidget(element);
-
-		if (element.getToolbar() != null) {
-			WToolBar<T> toolbar = engineCreateWidget(element.getToolbar());
+		MToolBar mToolBar = element.getToolbar();
+		if (mToolBar != null) {
+			WToolBar<T> toolbar = engineCreateWidget(mToolBar);
 			widget.setToolbar(toolbar);
 		}
 
@@ -127,7 +129,7 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 
 	}
 
-	void handleMenuAddition(MPart parent, Collection<MMenu> elements) {
+	void handleMenuAddition(@NonNull MPart parent, Collection<MMenu> elements) {
 		WPart<N, T, M> widget = getWidget(parent);
 		if (widget == null) {
 			return;
@@ -145,7 +147,7 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 		}
 	}
 
-	void handleMenuRemove(MPart parent, Collection<MMenu> elements) {
+	void handleMenuRemove(@NonNull MPart parent, Collection<MMenu> elements) {
 		WPart<N, T, M> widget = getWidget(parent);
 		if (widget == null) {
 			return;

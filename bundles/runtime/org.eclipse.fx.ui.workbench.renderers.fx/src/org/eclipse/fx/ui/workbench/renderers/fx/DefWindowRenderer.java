@@ -376,7 +376,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				URL url = getClass().getClassLoader().getResource("css/efx-default.css"); //$NON-NLS-1$
 				if( url != null ) {
 					s.getStylesheets().add(url.toExternalForm());				
-				}				
+				} else {
+					this.logger.error("Unable to load css 'css/efx-default.css'"); //$NON-NLS-1$
+				}
 			}
 
 			s.focusOwnerProperty().addListener(this::handleFocusOwner);
@@ -782,6 +784,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				String[] split = iconUri.split(";"); //$NON-NLS-1$
 				List<Image> images = new ArrayList<>();
 				for (String uri : split) {
+					@SuppressWarnings("null")
 					Image img = this.graphicsLoader.getImage(URI.createURI(uri));
 					if (img != null) {
 						images.add(img);
@@ -944,6 +947,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		TableCell<Row, MPart> createTextCell(TableColumn<Row, MPart> param) {
 			return new TableCell<DefWindowRenderer.Row, MPart>() {
+				@SuppressWarnings("null")
 				@Override
 				protected void updateItem(MPart item, boolean empty) {
 					super.updateItem(item, empty);

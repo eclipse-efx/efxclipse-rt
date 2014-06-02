@@ -23,17 +23,22 @@ import org.eclipse.fx.osgi.util.OSGiFXMLLoader;
 import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;
 import org.osgi.framework.Bundle;
 
+/**
+ * FXML node provider
+ */
 public class FXMLGraphicsNodeProvider implements GraphicNodeProvider {
 	@Override
 	public String getName() {
-		return "fx.fxml-graphic-provider";
+		return "fx.fxml-graphic-provider"; //$NON-NLS-1$
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public List<String> getFileSuffix() {
-		return Arrays.asList("fxml");
+		return Arrays.asList("fxml"); //$NON-NLS-1$
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public Node getGraphicNode(URI uri) throws IOException {
 		if( uri.isPlatformPlugin() ) {
@@ -42,13 +47,13 @@ public class FXMLGraphicsNodeProvider implements GraphicNodeProvider {
 				StringBuilder sb = new StringBuilder();
 				for (int i = 2; i < uri.segmentCount(); i++) {
 					if (sb.length() != 0) {
-						sb.append("/");
+						sb.append("/"); //$NON-NLS-1$
 					}
 					sb.append(uri.segment(i));
 				}
 				return OSGiFXMLLoader.load(b, sb.toString(), null, null);	
 			} else {
-				throw new IOException("Unknown bundle '"+uri.segment(1)+"'");
+				throw new IOException("Unknown bundle '"+uri.segment(1)+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		} else {
 			return FXMLLoader.load(new URL(uri.toString()));

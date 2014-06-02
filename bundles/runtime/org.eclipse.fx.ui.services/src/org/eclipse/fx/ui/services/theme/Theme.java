@@ -13,8 +13,25 @@ package org.eclipse.fx.ui.services.theme;
 import java.net.URL;
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
+
+/**
+ * A theme definition
+ */
 public interface Theme {
+	/**
+	 * @return unique theme id
+	 */
+	@NonNull
 	public String getId();
+	/**
+	 * @return human readable name
+	 */
+	@NonNull
 	public String getName();
-	public List<URL> getStylesheetURL();
+	/**
+	 * @return the stylesheets
+	 */
+	@NonNull
+	public List<@NonNull URL> getStylesheetURL();
 }

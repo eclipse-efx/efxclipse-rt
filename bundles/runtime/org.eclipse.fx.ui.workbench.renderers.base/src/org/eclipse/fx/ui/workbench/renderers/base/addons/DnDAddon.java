@@ -34,6 +34,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropD
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMinMaxableWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 
 /**
@@ -103,61 +104,88 @@ public class DnDAddon {
 	
 	private Void droppedHandler(DropData d) {
 		MElementContainer<MUIElement> sourceContainer = d.sourceElement.getParent();
-		MElementContainer<MUIElement> targetContainer = d.reference.getParent();
-		
-		if( sourceContainer == targetContainer ) {
-			try {
-				targetContainer.getTags().add(CSS_CLASS_STACK_MOVE);
-				d.sourceElement.getTransientData().put(BaseStackRenderer.MAP_MOVE, Boolean.TRUE);
-				List<MUIElement> children = targetContainer.getChildren();
-				children.remove(d.sourceElement);
+		if( d.reference != null ) {
+			MElementContainer<MUIElement> targetContainer = d.reference.getParent();
+			
+			if( sourceContainer == targetContainer ) {
+				try {
+					targetContainer.getTags().add(CSS_CLASS_STACK_MOVE);
+					d.sourceElement.getTransientData().put(BaseStackRenderer.MAP_MOVE, Boolean.TRUE);
+					List<MUIElement> children = targetContainer.getChildren();
+					children.remove(d.sourceElement);
+					
+					//WAIT for adding for a second looks like a bug in JavaFX
+					this.timer.schedule(new TimerTask() {
+						
+						@Override
+						public void run() {
+							int idx = targetContainer.getChildren().indexOf(d.reference);
+							
+							if( d.dropType == DropType.AFTER ) {
+								idx += 1;
+							}
+							
+							if( idx > targetContainer.getChildren().size() ) {
+								targetContainer.getChildren().add(d.sourceElement);
+							} else {
+								targetContainer.getChildren().add(idx, d.sourceElement);
+							}
+						}
+					}, 200);
+					
+					TimerTask t = new TimerTask() {
+						
+						@Override
+						public void run() {
+							DnDAddon.this.synchronize.asyncExec(new Runnable() {
+								
+								@Override
+								public void run() {
+									targetContainer.setSelectedElement(d.sourceElement);
+								}
+							});
+						}
+					};
+					this.timer.schedule(t, 300);
+				} finally {
+					d.sourceElement.getTransientData().put(BaseStackRenderer.MAP_MOVE, Boolean.TRUE);
+					targetContainer.getTags().remove(CSS_CLASS_STACK_MOVE);
+				}
+			} else {
 				int idx = targetContainer.getChildren().indexOf(d.reference);
-				
 				if( d.dropType == DropType.AFTER ) {
 					idx += 1;
 				}
 				
-				if( idx > targetContainer.getChildren().size() ) {
-					targetContainer.getChildren().add(d.sourceElement);
-				} else {
+				if( idx < targetContainer.getChildren().size() ) {
 					targetContainer.getChildren().add(idx, d.sourceElement);
+				} else {
+					targetContainer.getChildren().add(d.sourceElement);
 				}
-			} finally {
-				d.sourceElement.getTransientData().put(BaseStackRenderer.MAP_MOVE, Boolean.TRUE);
-				targetContainer.getTags().remove(CSS_CLASS_STACK_MOVE);
-			}
-		} else {
-			int idx = targetContainer.getChildren().indexOf(d.reference);
-			if( d.dropType == DropType.AFTER ) {
-				idx += 1;
-			}
-			
-			if( idx < targetContainer.getChildren().size() ) {
-				targetContainer.getChildren().add(idx, d.sourceElement);
-			} else {
-				targetContainer.getChildren().add(d.sourceElement);
-			}
-		}
-		
-		TimerTask t = new TimerTask() {
-			
-			@Override
-			public void run() {
-				synchronize.asyncExec(new Runnable() {
+				
+				TimerTask t = new TimerTask() {
 					
 					@Override
 					public void run() {
-						targetContainer.setSelectedElement(d.sourceElement);
+						DnDAddon.this.synchronize.asyncExec(new Runnable() {
+							
+							@Override
+							public void run() {
+								targetContainer.setSelectedElement(d.sourceElement);
+							}
+						});
 					}
-				});
+				};
+				this.timer.schedule(t, 200);
 			}
-		};
-		timer.schedule(t, 200);
+		}
 		
 		return null;
 	}
 	
-	private Boolean dragStartHandler(DragData d) {
+	@SuppressWarnings("null")
+	@NonNull
+	private Boolean dragStartHandler(@NonNull DragData d) {
 		return Boolean.TRUE;
 	}
 	

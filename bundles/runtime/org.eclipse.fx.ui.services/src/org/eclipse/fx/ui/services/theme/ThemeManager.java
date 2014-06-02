@@ -12,18 +12,54 @@ package org.eclipse.fx.ui.services.theme;
 
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.scene.Scene;
 
+/**
+ * Manager of themes
+ */
 public interface ThemeManager {
+	/**
+	 * @return the current theme
+	 */
+	@Nullable
 	public Theme getCurrentTheme();
 
-	public List<Theme> getAvailableThemes();
+	/**
+	 * @return available themes
+	 */
+	@NonNull
+	public List<@NonNull Theme> getAvailableThemes();
 
-	public void setCurrentThemeId(String id) throws IllegalArgumentException;
+	/**
+	 * Set the current theme id
+	 * 
+	 * @param id
+	 *            the id of the theme
+	 * @throws IllegalArgumentException
+	 *             if the theme is not known
+	 */
+	public void setCurrentThemeId(@NonNull String id) throws IllegalArgumentException;
 
-	public Registration registerScene(Scene scene);
+	/**
+	 * Register a scene
+	 * 
+	 * @param scene
+	 *            the scene
+	 * @return the registration
+	 */
+	@NonNull
+	public Registration registerScene(@NonNull Scene scene);
 	
+	/**
+	 * Registration
+	 */
 	public interface Registration {
+		/**
+		 * A registration
+		 */
 		public void dispose();
 	}
 }

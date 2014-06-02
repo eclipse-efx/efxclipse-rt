@@ -125,6 +125,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		 * @param uri
 		 *            the icon uri
 		 */
+		@SuppressWarnings("null")
 		@Inject
 		public void setIconURI(@Named(UIEvents.UILabel.ICONURI) String uri) {
 			if (uri == null) {

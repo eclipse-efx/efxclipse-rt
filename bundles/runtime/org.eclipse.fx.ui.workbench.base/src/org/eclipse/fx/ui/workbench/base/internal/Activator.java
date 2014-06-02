@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.base.internal;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -18,10 +19,13 @@ import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.util.tracker.ServiceTracker;
 
+/**
+ * the bundles activator
+ */
 public class Activator implements BundleActivator {
 
 	private BundleContext context;
-	private ServiceTracker locationTracker;
+	private ServiceTracker<Location,Location> locationTracker;
 	private static Activator activator;
 
 	/**
@@ -37,7 +41,7 @@ public class Activator implements BundleActivator {
 	 * @return this bundles context
 	 */
 	public BundleContext getContext() {
-		return context;
+		return this.context;
 	}
 
 	@Override
@@ -52,28 +56,31 @@ public class Activator implements BundleActivator {
 		activator = null;
 	}
 
-	public Bundle getBundle() {
-		if (context == null)
+	/**
+	 * @return get the bundle
+	 */
+	public @Nullable Bundle getBundle() {
+		if (this.context == null)
 			return null;
-		return context.getBundle();
+		return this.context.getBundle();
 	}
 
 	/**
 	 * @return the instance Location service
 	 */
 	public Location getInstanceLocation() {
-		if (locationTracker == null) {
+		if (this.locationTracker == null) {
 			Filter filter = null;
 			try {
-				filter = context.createFilter(Location.INSTANCE_FILTER);
+				filter = this.context.createFilter(Location.INSTANCE_FILTER);
 			} catch (InvalidSyntaxException e) {
 				// ignore this. It should never happen as we have tested the
 				// above format
 			}
-			locationTracker = new ServiceTracker(context, filter, null);
-			locationTracker.open();
+			this.locationTracker = new ServiceTracker<>(this.context, filter, null);
+			this.locationTracker.open();
 		}
-		return (Location) locationTracker.getService();
+		return (Location) this.locationTracker.getService();
 	}
 
 }

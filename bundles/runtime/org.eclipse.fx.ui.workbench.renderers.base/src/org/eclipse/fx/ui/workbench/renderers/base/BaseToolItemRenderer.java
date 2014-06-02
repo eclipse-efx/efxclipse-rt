@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolItem;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
@@ -70,8 +71,9 @@ public abstract class BaseToolItemRenderer<N> extends BaseItemRenderer<MToolItem
 
 	@Override
 	public void doProcessContent(MToolItem element) {
-		if (element.getMenu() != null) {
-			engineCreateWidget(element.getMenu());
+		MMenu menu = element.getMenu();
+		if (menu != null) {
+			engineCreateWidget(menu);
 		}
 	}
 

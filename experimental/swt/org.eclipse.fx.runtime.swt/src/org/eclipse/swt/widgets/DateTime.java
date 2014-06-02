@@ -11,6 +11,10 @@
  *******************************************************************************/
 package org.eclipse.swt.widgets;
 
+import java.time.LocalDate;
+
+import javafx.event.ActionEvent;
+import javafx.scene.control.DatePicker;
 import javafx.scene.layout.Region;
 
 import org.eclipse.swt.SWT;
@@ -18,7 +22,8 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.internal.Util;
 
 public class DateTime extends Composite {
-
+	private DatePicker datePicker;
+	
 	public DateTime(Composite parent, int style) {
 		super(parent, style);
 	}
@@ -31,13 +36,28 @@ public class DateTime extends Composite {
 	
 	@Override
 	protected Region createWidget() {
-		// TODO Auto-generated method stub
+		if( (style & SWT.DATE) == SWT.DATE ) {
+			datePicker = new DatePicker();
+			datePicker.addEventHandler(ActionEvent.ACTION, (e) -> {
+				internal_sendEvent(SWT.Selection, new Event(), true);
+			});
+			return datePicker;
+		}
 		return super.createWidget();
 	}
 	
+	@Override
+	public DatePicker internal_getNativeObject() {
+		return datePicker;
+	}
+	
+	@Override
+	public Region internal_getNativeControl() {
+		return datePicker;
+	}
+	
 	public int getDay () {
-		Util.logNotImplemented();
-		return 0;
+		return datePicker.getValue().getDayOfMonth();
 	}
 	
 	public int getHours () {
@@ -51,8 +71,7 @@ public class DateTime extends Composite {
 	}
 	
 	public int getMonth () {
-		Util.logNotImplemented();
-		return 0;
+		return datePicker.getValue().getMonthValue()-1;
 	}
 	
 	public int getSeconds () {
@@ -61,8 +80,7 @@ public class DateTime extends Composite {
 	}
 	
 	public int getYear () {
-		Util.logNotImplemented();
-		return 0;
+		return datePicker.getValue().getYear();
 	}
 	
 	public void removeSelectionListener (SelectionListener listener) {
@@ -71,11 +89,11 @@ public class DateTime extends Composite {
 	}
 	
 	public void setDate (int year, int month, int day) {
-		Util.logNotImplemented();
+		datePicker.setValue(LocalDate.of(year, month+1, day));
 	}
 	
 	public void setDay (int day) {
-		Util.logNotImplemented();
+		datePicker.setValue(datePicker.getValue().withDayOfMonth(day));
 	}
 	
 	public void setHours (int hours) {
@@ -87,7 +105,7 @@ public class DateTime extends Composite {
 	}
 	
 	public void setMonth (int month) {
-		Util.logNotImplemented();
+		datePicker.setValue(datePicker.getValue().withMonth(month+1));
 	}
 	
 	public void setSeconds (int seconds) {
@@ -99,6 +117,6 @@ public class DateTime extends Composite {
 	}
 	
 	public void setYear (int year) {
-		Util.logNotImplemented();
+		datePicker.setValue(datePicker.getValue().withYear(year));
 	}
 }

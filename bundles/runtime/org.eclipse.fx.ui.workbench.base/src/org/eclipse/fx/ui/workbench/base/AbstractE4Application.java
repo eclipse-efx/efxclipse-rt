@@ -95,15 +95,17 @@ public abstract class AbstractE4Application implements IApplication {
 	private Object lcManager;
 	private IModelResourceHandler handler;
 
+	private static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(AbstractE4Application.class);
+
 	/**
 	 * Create a synchronizer instance who synchronizes between UI and none-UI
 	 * threads
 	 * 
-	 * @param context the context
+	 * @param context
+	 *            the context
 	 * @return the instance
 	 */
-	@NonNull
-	protected abstract UISynchronize createSynchronizer(IEclipseContext context);
+	protected abstract @NonNull UISynchronize createSynchronizer(@NonNull IEclipseContext context);
 
 	/**
 	 * Create a databinding realm
@@ -112,8 +114,7 @@ public abstract class AbstractE4Application implements IApplication {
 	 *            the context
 	 * @return the realm
 	 */
-	@NonNull
-	protected abstract Realm createRealm(IEclipseContext context);
+	protected abstract @NonNull Realm createRealm(@NonNull IEclipseContext context);
 
 	/**
 	 * Create the utility to handle resources
@@ -122,8 +123,7 @@ public abstract class AbstractE4Application implements IApplication {
 	 *            the context
 	 * @return the instance
 	 */
-	@NonNull
-	protected abstract IResourceUtilities<?> createResourceUtility(IEclipseContext context);
+	protected abstract @NonNull IResourceUtilities<?> createResourceUtility(@NonNull IEclipseContext context);
 
 	/**
 	 * Get the uri of the presentation engine
@@ -132,9 +132,8 @@ public abstract class AbstractE4Application implements IApplication {
 	 *            the context
 	 * @return the uri
 	 */
-	protected abstract String getDefaultPresentationEngineURI(IEclipseContext context);
+	protected abstract @NonNull String getDefaultPresentationEngineURI(@NonNull IEclipseContext context);
 
-	private static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(AbstractE4Application.class);
 
 	/**
 	 * Extract an application arguments
@@ -156,6 +155,7 @@ public abstract class AbstractE4Application implements IApplication {
 	 *            the application context
 	 * @return the workbench instance
 	 */
+	@SuppressWarnings("null")
 	@Nullable
 	public E4Workbench createE4Workbench(IApplicationContext applicationContext, IEclipseContext appContext) {
 		ContextInjectionFactory.setDefault(appContext);
@@ -277,7 +277,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 		Location instanceLocation = Activator.getDefault().getInstanceLocation();
 
-		String appModelPath = getArgValue(IWorkbench.XMI_URI_ARG, appContext, false);
+		String appModelPath = getArgValue(IWorkbench.XMI_URI_ARG, appContext, false, eclipseContext);
 		Assert.isNotNull(appModelPath, IWorkbench.XMI_URI_ARG + " argument missing"); //$NON-NLS-1$
 		final URI initialWorkbenchDefinitionInstance = URI.createPlatformPluginURI(appModelPath, true);
 
@@ -286,7 +286,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 		// Save and restore
 		boolean saveAndRestore;
-		String value = getArgValue(IWorkbench.PERSIST_STATE, appContext, false);
+		String value = getArgValue(IWorkbench.PERSIST_STATE, appContext, false, eclipseContext);
 
 		saveAndRestore = value == null || Boolean.parseBoolean(value);
 
@@ -294,17 +294,19 @@ public abstract class AbstractE4Application implements IApplication {
 
 		// Persisted state
 		boolean clearPersistedState;
-		value = getArgValue(IWorkbench.CLEAR_PERSISTED_STATE, appContext, true);
+		value = getArgValue(IWorkbench.CLEAR_PERSISTED_STATE, appContext, true, eclipseContext);
 		clearPersistedState = value != null && Boolean.parseBoolean(value);
 		eclipseContext.set(IWorkbench.CLEAR_PERSISTED_STATE, Boolean.valueOf(clearPersistedState));
 
 		// Delta save and restore
 		boolean deltaRestore;
-		value = getArgValue(E4Workbench.DELTA_RESTORE, appContext, false);
+		// E4Workbench.DELTA_RESTORE
+		String deltaRestoreKey = "deltaRestore"; //$NON-NLS-1$
+		value = getArgValue(deltaRestoreKey, appContext, false, eclipseContext);
 		deltaRestore = value == null || Boolean.parseBoolean(value);
-		eclipseContext.set(E4Workbench.DELTA_RESTORE, Boolean.valueOf(deltaRestore));
+		eclipseContext.set(deltaRestoreKey, Boolean.valueOf(deltaRestore));
 
-		String resourceHandler = getArgValue(IWorkbench.MODEL_RESOURCE_HANDLER, appContext, false);
+		String resourceHandler = getArgValue(IWorkbench.MODEL_RESOURCE_HANDLER, appContext, false, eclipseContext);
 
 		if (resourceHandler == null) {
 			resourceHandler = "bundleclass://org.eclipse.e4.ui.workbench/" + ResourceHandler.class.getName(); //$NON-NLS-1$
@@ -318,6 +320,14 @@ public abstract class AbstractE4Application implements IApplication {
 		theApp = (MApplication) resource.getContents().get(0);
 
 		return theApp;
+	}
+
+	private static String getArgValue(String argName, IApplicationContext applicationContext, boolean singledCmdArgValue, IEclipseContext eclipseContext) {
+		Object value = eclipseContext.get(argName);
+		if (value != null) {
+			return value.toString();
+		}
+		return getArgValue(argName, applicationContext, singledCmdArgValue);
 	}
 
 	/**
@@ -490,17 +500,18 @@ public abstract class AbstractE4Application implements IApplication {
 	 * 
 	 * @param instanceLocation
 	 *            the location to check
+	 * @param context
+	 *            the context
 	 * @return <code>true</code> if the location is fine
 	 */
 	@SuppressWarnings("static-method")
-	protected boolean checkInstanceLocation(Location instanceLocation, IEclipseContext context) {
+	protected boolean checkInstanceLocation(@Nullable Location instanceLocation, @NonNull IEclipseContext context) {
 		// Eclipse has been run with -data @none or -data @noDefault options so
 		// we don't need to validate the location
-		if (instanceLocation == null
-				&& Boolean.FALSE.equals(context.get(IWorkbench.PERSIST_STATE))) {
+		if (instanceLocation == null && Boolean.FALSE.equals(context.get(IWorkbench.PERSIST_STATE))) {
 			return true;
 		}
-				
+
 		if (instanceLocation == null) {
 			// MessageDialog
 			// .openError(

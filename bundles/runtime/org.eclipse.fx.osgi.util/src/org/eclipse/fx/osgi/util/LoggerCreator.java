@@ -29,6 +29,8 @@ public class LoggerCreator {
 	 *            the clazz
 	 * @return the logger created
 	 */
+	@SuppressWarnings("null")
+	@NonNull
 	public static Logger createLogger(@NonNull Class<?> clazz) {
 		Bundle b = FrameworkUtil.getBundle(clazz);
 		BundleContext ctx = null;

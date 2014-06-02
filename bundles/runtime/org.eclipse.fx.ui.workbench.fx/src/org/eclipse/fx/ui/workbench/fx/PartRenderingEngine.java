@@ -45,6 +45,8 @@ import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.fx.key.KeyBindingDispatcher;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -56,24 +58,35 @@ public class PartRenderingEngine implements IPresentationEngine {
 	/**
 	 * URL of the engine
 	 */
+	@NonNull
 	public static final String engineURI = "bundleclass://org.eclipse.fx.ui.workbench.fx/org.eclipse.fx.ui.workbench.fx.PartRenderingEngine"; //$NON-NLS-1$
 
+	@NonNull
 	private static final String defaultFactoryUrl = "bundleclass://org.eclipse.fx.ui.workbench.renderers.fx/org.eclipse.fx.ui.workbench.renderers.fx.DefWorkbenchRendererFactory"; //$NON-NLS-1$
 
+	@NonNull
 	private final RendererFactory factory;
 
+	@NonNull
 	private final EModelService modelService;
 
 	private MApplication app;
 
 	@Inject
 	@Log
-	private Logger log;
+	@NonNull
+	private Logger logger;
 
+	@NonNull
 	private final IEventBroker eventBroker;
 
 	@Inject
-	PartRenderingEngine(@Named(E4Workbench.RENDERER_FACTORY_URI) @Optional String _factoryUrl, IEclipseContext context, EModelService modelService, IEventBroker eventBroker, ThemeManager themeManager) {
+	PartRenderingEngine(
+			@Nullable @Named(E4Workbench.RENDERER_FACTORY_URI) @Optional String _factoryUrl, 
+			@NonNull IEclipseContext context, 
+			@NonNull EModelService modelService, 
+			@NonNull IEventBroker eventBroker, 
+			@NonNull ThemeManager themeManager) {
 		final String factoryUrl;
 		if (_factoryUrl == null) {
 			factoryUrl = defaultFactoryUrl;
@@ -81,7 +94,11 @@ public class PartRenderingEngine implements IPresentationEngine {
 			factoryUrl = _factoryUrl;
 		}
 		IContributionFactory contribFactory = context.get(IContributionFactory.class);
-		this.factory = (RendererFactory) contribFactory.create(factoryUrl, context);
+		RendererFactory factory = (RendererFactory) contribFactory.create(factoryUrl, context);
+		if( factory == null ) {
+			throw new IllegalStateException("No renderer factory was created"); //$NON-NLS-1$
+		}
+		this.factory = factory;
 		this.modelService = modelService;
 		this.eventBroker = eventBroker;
 
@@ -91,9 +108,12 @@ public class PartRenderingEngine implements IPresentationEngine {
 		}
 
 		setupEventListener(eventBroker);
-
-		if (context.get(AbstractE4Application.THEME_ID) != null) {
-			themeManager.setCurrentThemeId((String) context.get(AbstractE4Application.THEME_ID));
+		
+		Object object = context.get(AbstractE4Application.THEME_ID);
+		if (object != null && object instanceof String) {
+			themeManager.setCurrentThemeId((String) object);
+		} else {
+			this.logger.info("No current theme is set"); //$NON-NLS-1$
 		}
 	}
 
@@ -188,10 +208,8 @@ public class PartRenderingEngine implements IPresentationEngine {
 			// Remember which renderer is responsible for this widget
 			element.setRenderer(renderer);
 			Object newWidget = renderer.createWidget(element);
-			if (newWidget != null) {
-				renderer.bindWidget(element, newWidget);
-				return newWidget;
-			}
+			renderer.bindWidget(element, newWidget);
+			return newWidget;
 		}
 
 		return null;
@@ -265,7 +283,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "null" })
 	public void removeGui(MUIElement element) {
 		MUIElement container = (element.getCurSharedRef() != null) ? element.getCurSharedRef() : (MUIElement) ((EObject) element).eContainer();
 
@@ -279,11 +297,11 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 			// Check if the control is already rendered
 			if (renderer != null) {
-				if (parentRenderer != null) {
+				if (parentRenderer != null && container != null) {
 					try {
 						parentRenderer.hideChild(container, element);
 					} catch (Throwable t) {
-						this.log.error(t.getMessage(), t);
+						this.logger.error(t.getMessage(), t);
 					}
 
 				}
@@ -375,8 +393,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 			for (MWindow window : this.app.getChildren()) {
 				createGui(window);
 			}
-			if (this.eventBroker != null)
-				this.eventBroker.post(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, this.app);
+			this.eventBroker.post(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, this.app);
 		} else {
 			// render the selected one first
 			createGui(selected);
@@ -385,8 +402,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 					createGui(window);
 				}
 			}
-			if (this.eventBroker != null)
-				this.eventBroker.post(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, this.app);
+			this.eventBroker.post(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, this.app);
 			// focus the selected part
 			MUIElement element = selected;
 			while ((element != null) && (!(element instanceof MPart))) {
@@ -437,9 +453,9 @@ public class PartRenderingEngine implements IPresentationEngine {
 				renderer.focus(element);
 			}
 		} catch (InjectionException e) {
-			this.log.errorf("Failed to grant focus to element (%s)", element.getElementId(), e); //$NON-NLS-1$
+			this.logger.errorf("Failed to grant focus to element (%s)", element.getElementId(), e); //$NON-NLS-1$
 		} catch (RuntimeException e) {
-			this.log.errorf("Failed to grant focus via DI to element (%s)", element.getElementId(), e); //$NON-NLS-1$
+			this.logger.errorf("Failed to grant focus via DI to element (%s)", element.getElementId(), e); //$NON-NLS-1$
 		}
 	}
 }

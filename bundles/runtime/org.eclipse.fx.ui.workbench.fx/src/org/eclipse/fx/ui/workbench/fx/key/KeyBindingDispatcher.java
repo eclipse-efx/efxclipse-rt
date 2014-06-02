@@ -36,14 +36,25 @@ import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.keybindings.service.BindingFactory;
 import org.eclipse.fx.ui.services.commands.NativeStrategy;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * Dispatch key bindings to commands
+ */
 @SuppressWarnings("restriction")
 public class KeyBindingDispatcher {
+
+	/**
+	 * Filter for key events
+	 */
 	public class KeyDownFilter implements EventHandler<KeyEvent> {
 		private transient boolean enabled = true;
 
+		@SuppressWarnings("null")
+		@Override
 		public void handle(KeyEvent event) {
-			if (!enabled) {
+			if (!this.enabled) {
 				return;
 			}
 
@@ -56,7 +67,7 @@ public class KeyBindingDispatcher {
 		 * @return Whether the key filter is enabled.
 		 */
 		public final boolean isEnabled() {
-			return enabled;
+			return this.enabled;
 		}
 
 		/**
@@ -70,28 +81,49 @@ public class KeyBindingDispatcher {
 		}
 	}
 
+	@NonNull
 	private final IEclipseContext context;
+	@NonNull
 	private final EventHandler<KeyEvent> keyHandler = new KeyDownFilter();
+	@Nullable
 	private EBindingService bindingService;
+	@NonNull
 	private KeySequence state;
 
-	private long startTime;
+	// private long startTime;
 
+	@NonNull
 	private final BindingFactory factory;
+	
+	@NonNull
 	private final KeyLookup lookup;
 
+	@Nullable
 	private EHandlerService handlerService;
 
+	/**
+	 * Create a new dispatcher
+	 * 
+	 * @param context
+	 *            the context
+	 * @param factory
+	 *            the binding factory
+	 * @param lookup
+	 *            the key lookup
+	 */
 	@Inject
-	public KeyBindingDispatcher(IEclipseContext context, BindingFactory factory, KeyLookup lookup) {
+	public KeyBindingDispatcher(@NonNull IEclipseContext context, @NonNull BindingFactory factory, @NonNull KeyLookup lookup) {
 		this.context = context;
 		this.factory = factory;
 		this.lookup = lookup;
 		this.state = factory.getKeySequenceInstance();
 	}
 
-	public EventHandler<KeyEvent> getKeyHandler() {
-		return keyHandler;
+	/**
+	 * @return the handler to attache
+	 */
+	public @NonNull EventHandler<KeyEvent> getKeyHandler() {
+		return this.keyHandler;
 	}
 
 	private static boolean isModifierKey(KeyEvent event) {
@@ -110,7 +142,7 @@ public class KeyBindingDispatcher {
 		return event.isAltDown() || event.isControlDown() || event.isMetaDown() || event.isShiftDown();
 	}
 
-	private void filterKeySequenceBindings(KeyEvent event) {
+	void filterKeySequenceBindings(@NonNull KeyEvent event) {
 		/*
 		 * Only process key strokes containing natural keys to trigger key
 		 * bindings.
@@ -120,7 +152,7 @@ public class KeyBindingDispatcher {
 		}
 
 		// Allow special key out-of-order processing.
-		List<KeyStroke> keyStrokes = generatePossibleKeyStrokes(event);
+		List<@NonNull KeyStroke> keyStrokes = generatePossibleKeyStrokes(event);
 
 		// if (isOutOfOrderKey(keyStrokes)) {
 		// // Widget widget = event.widget;
@@ -180,8 +212,8 @@ public class KeyBindingDispatcher {
 		// }
 	}
 
-	public List<KeyStroke> generatePossibleKeyStrokes(KeyEvent event) {
-		final List<KeyStroke> keyStrokes = new ArrayList<KeyStroke>(3);
+	private @NonNull List<@NonNull KeyStroke> generatePossibleKeyStrokes(@NonNull KeyEvent event) {
+		final List<@NonNull KeyStroke> keyStrokes = new ArrayList<>(3);
 
 		/*
 		 * If this is not a keyboard event, then there are no key strokes. This
@@ -202,7 +234,7 @@ public class KeyBindingDispatcher {
 
 		// Add each unique key stroke to the list for consideration.
 		final int firstAccelerator = FxKeySupport.convertEventToUnmodifiedAccelerator(event);
-		keyStrokes.add(FxKeySupport.convertAcceleratorToKeyStroke(factory, lookup, firstAccelerator));
+		keyStrokes.add(FxKeySupport.convertAcceleratorToKeyStroke(this.factory, this.lookup, firstAccelerator));
 
 		// We shouldn't allow delete to undergo shift resolution.
 		if (event.getCode() == KeyCode.DELETE) {
@@ -211,18 +243,18 @@ public class KeyBindingDispatcher {
 
 		final int secondAccelerator = FxKeySupport.convertEventToUnshiftedModifiedAccelerator(event);
 		if (secondAccelerator != firstAccelerator) {
-			keyStrokes.add(FxKeySupport.convertAcceleratorToKeyStroke(factory, lookup, secondAccelerator));
+			keyStrokes.add(FxKeySupport.convertAcceleratorToKeyStroke(this.factory, this.lookup, secondAccelerator));
 		}
 
 		final int thirdAccelerator = FxKeySupport.convertEventToModifiedAccelerator(event);
 		if ((thirdAccelerator != secondAccelerator) && (thirdAccelerator != firstAccelerator)) {
-			keyStrokes.add(FxKeySupport.convertAcceleratorToKeyStroke(factory, lookup, thirdAccelerator));
+			keyStrokes.add(FxKeySupport.convertAcceleratorToKeyStroke(this.factory, this.lookup, thirdAccelerator));
 		}
 
 		return keyStrokes;
 	}
 
-	void processKeyEvent(List<KeyStroke> keyStrokes, KeyEvent event) {
+	void processKeyEvent(@NonNull List<@NonNull KeyStroke> keyStrokes, @NonNull KeyEvent event) {
 		// Dispatch the keyboard shortcut, if any.
 		boolean eatKey = false;
 
@@ -246,13 +278,13 @@ public class KeyBindingDispatcher {
 		}
 	}
 
-	public boolean press(List<KeyStroke> potentialKeyStrokes, KeyEvent event) {
+	private boolean press(@NonNull List<@NonNull KeyStroke> potentialKeyStrokes, @NonNull KeyEvent event) {
 		KeySequence errorSequence = null;
 		Collection<Binding> errorMatch = null;
 
-		KeySequence sequenceBeforeKeyStroke = state;
-		for (Iterator<KeyStroke> iterator = potentialKeyStrokes.iterator(); iterator.hasNext();) {
-			KeySequence sequenceAfterKeyStroke = factory.getKeySequenceInstance(sequenceBeforeKeyStroke, iterator.next());
+		KeySequence sequenceBeforeKeyStroke = this.state;
+		for (Iterator<@NonNull KeyStroke> iterator = potentialKeyStrokes.iterator(); iterator.hasNext();) {
+			KeySequence sequenceAfterKeyStroke = this.factory.getKeySequenceInstance(sequenceBeforeKeyStroke, iterator.next());
 
 			if (isPartialMatch(sequenceAfterKeyStroke)) {
 				incrementState(sequenceAfterKeyStroke);
@@ -293,7 +325,7 @@ public class KeyBindingDispatcher {
 		return !sequenceBeforeKeyStroke.isEmpty();
 	}
 
-	private ParameterizedCommand getPerfectMatch(KeySequence keySequence) {
+	private @Nullable ParameterizedCommand getPerfectMatch(KeySequence keySequence) {
 		Binding perfectMatch = getBindingService().getPerfectMatch(keySequence);
 		return perfectMatch == null ? null : perfectMatch.getParameterizedCommand();
 	}
@@ -307,26 +339,31 @@ public class KeyBindingDispatcher {
 	}
 
 	private void resetState(boolean clearRememberedState) {
-		startTime = Long.MAX_VALUE;
-		state = factory.getKeySequenceInstance();
+		// this.startTime = Long.MAX_VALUE;
+		this.state = this.factory.getKeySequenceInstance();
 		// closeMultiKeyAssistShell();
 		// if (keyAssistDialog != null && clearRememberedState) {
 		// keyAssistDialog.clearRememberedState();
 		// }
 	}
 
-	private EBindingService getBindingService() {
+	private @NonNull EBindingService getBindingService() {
+		EBindingService bindingService = this.bindingService;
 		if (bindingService == null) {
-			bindingService = (EBindingService) context.get(EBindingService.class.getName());
+			bindingService = (EBindingService) this.context.get(EBindingService.class.getName());
+			if( bindingService == null ) {
+				throw new IllegalStateException("EBindingService service must not be null"); //$NON-NLS-1$
+			}
+			this.bindingService = bindingService;
 		}
 		return bindingService;
 	}
 
-	private void incrementState(final KeySequence sequence) {
-		state = sequence;
+	private void incrementState(@NonNull final KeySequence sequence) {
+		this.state = sequence;
 		// Record the starting time.
-		startTime = System.currentTimeMillis();
-		final long myStartTime = startTime;
+		// this.startTime = System.currentTimeMillis();
+		// final long myStartTime = startTime;
 		// final Display display = getDisplay();
 		// display.timerExec(DELAY, new Runnable() {
 		// public void run() {
@@ -350,7 +387,7 @@ public class KeyBindingDispatcher {
 		// keyAssistDialog.open(bindings);
 	}
 
-	public final boolean executeCommand(final ParameterizedCommand parameterizedCommand, final Event trigger) throws CommandException {
+	private final boolean executeCommand(final ParameterizedCommand parameterizedCommand, final Event trigger) throws CommandException {
 
 		// Reset the key binding state (close window, clear status line, etc.)
 		resetState(false);
@@ -368,7 +405,7 @@ public class KeyBindingDispatcher {
 		try {
 			// commandEnabled = handlerService.canExecute(parameterizedCommand,
 			// staticContext);
-			commandHandled = HandlerServiceImpl.lookUpHandler(context, command.getId()) != null;
+			commandHandled = HandlerServiceImpl.lookUpHandler(this.context, command.getId()) != null;
 
 			try {
 				Object o = handlerService.executeHandler(parameterizedCommand, staticContext);
@@ -393,9 +430,14 @@ public class KeyBindingDispatcher {
 		return (commandDefined && commandHandled);
 	}
 
-	private EHandlerService getHandlerService() {
+	private @NonNull EHandlerService getHandlerService() {
+		EHandlerService handlerService = this.handlerService;
 		if (handlerService == null) {
-			handlerService = (EHandlerService) context.get(EHandlerService.class.getName());
+			handlerService = (EHandlerService) this.context.get(EHandlerService.class.getName());
+			if( handlerService == null ) {
+				throw new IllegalStateException("EHandlerService must not be null"); //$NON-NLS-1$
+			}
+			this.handlerService = handlerService;
 		}
 		return handlerService;
 	}

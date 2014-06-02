@@ -104,121 +104,145 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void trace(String message) {
 			log(Level.TRACE, message);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void debug(String message) {
 			log(Level.DEBUG, message);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void info(String message) {
 			log(Level.INFO,message);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void warning(String message) {
 			log(Level.WARNING,message);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void error(String message) {
 			log(Level.ERROR,message);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void fatal(String message) {
 			log(Level.FATAL,message);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void trace(String message, Throwable t) {
 			log(Level.TRACE,message,t);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void debug(String message, Throwable t) {
 			log(Level.DEBUG,message,t);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void info(String message, Throwable t) {
 			log(Level.INFO,message,t);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void warning(String message, Throwable t) {
 			log(Level.WARNING,message,t);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void error(String message, Throwable t) {
 			log(Level.ERROR,message,t);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void fatal(String message, Throwable t) {
 			log(Level.FATAL,message,t);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void tracef(String pattern, Object... args) {
 			logf(Level.TRACE, pattern, args);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void debugf(String pattern, Object... args) {
 			logf(Level.DEBUG,pattern,args);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void infof(String pattern, Object... args) {
 			logf(Level.INFO,pattern,args);
 		}
-
+		
+		@SuppressWarnings("all")
 		@Override
 		public void warningf(String pattern, Object... args) {
 			logf(Level.WARNING,pattern,args);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void errorf(String pattern, Object... args) {
 			logf(Level.ERROR,pattern,args);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void fatalf(String pattern, Object... args) {
 			logf(Level.FATAL,pattern,args);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void tracef(String pattern, Throwable t, Object... args) {
 			logf(Level.TRACE,pattern,t,args);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void debugf(String pattern, Throwable t, Object... args) {
 			logf(Level.DEBUG,pattern,t,args);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void infof(String pattern, Throwable t, Object... args) {
 			logf(Level.INFO,pattern,t,args);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void warningf(String pattern, Throwable t, Object... args) {
 			logf(Level.WARNING,pattern,t,args);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void errorf(String pattern, Throwable t, Object... args) {
 			logf(Level.ERROR,pattern,t,args);
 		}
 
+		@SuppressWarnings("all")
 		@Override
 		public void fatalf(String pattern, Throwable t, Object... args) {
 			logf(Level.FATAL,pattern,t,args);

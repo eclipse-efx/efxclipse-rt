@@ -37,16 +37,17 @@ public abstract class CenterSwitchAnimation {
 	 *            the pane the animation is happening on
 	 * @param newNode
 	 *            the new node
+	 * @param animationFinished
+	 *            runnable to run when finished
 	 */
-	public void animate(final BorderPane pane, final Node newNode) {
+	public void animate(final BorderPane pane, final Node newNode, Runnable animationFinished) {
 
 		final Node curNode = pane.getCenter();
 
 		pane.setCenter(null);
 
 		Bounds b = curNode.getBoundsInParent();
-		newNode.resizeRelocate(b.getMinX(), b.getMinY(), b.getWidth(),
-				b.getHeight());
+		newNode.resizeRelocate(b.getMinX(), b.getMinY(), b.getWidth(), b.getHeight());
 
 		pane.getChildren().add(0, newNode);
 		pane.getChildren().add(1, curNode);
@@ -67,8 +68,11 @@ public abstract class CenterSwitchAnimation {
 				resetProperties(curNode, newNode);
 
 				if (CenterSwitchAnimation.this.imageView != null) {
-					pane.getChildren().remove(
-							CenterSwitchAnimation.this.imageView);
+					pane.getChildren().remove(CenterSwitchAnimation.this.imageView);
+				}
+				
+				if( animationFinished != null ) {
+					animationFinished.run();	
 				}
 			}
 		});
@@ -87,8 +91,7 @@ public abstract class CenterSwitchAnimation {
 	 * @return the animation
 	 */
 	@NonNull
-	protected abstract Animation createAndPrepareAnimation(
-			@NonNull Node curNode, @NonNull Node newNode);
+	protected abstract Animation createAndPrepareAnimation(@NonNull Node curNode, @NonNull Node newNode);
 
 	/**
 	 * Reset properties to their default after the animation has finished
@@ -98,6 +101,5 @@ public abstract class CenterSwitchAnimation {
 	 * @param newNode
 	 *            the new node (node moved in)
 	 */
-	protected abstract void resetProperties(@NonNull Node curNode,
-			@NonNull Node newNode);
+	protected abstract void resetProperties(@NonNull Node curNode, @NonNull Node newNode);
 }

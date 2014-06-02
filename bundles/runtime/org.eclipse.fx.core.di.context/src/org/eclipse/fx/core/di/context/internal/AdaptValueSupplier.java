@@ -37,7 +37,7 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 	
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
-		Requestor r = (Requestor) requestor;
+		Requestor<?> r = (Requestor<?>) requestor;
 		Class<?> desiredClass = getDesiredClass(descriptor.getDesiredType());
 		
 		final String key;

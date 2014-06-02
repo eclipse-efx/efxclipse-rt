@@ -121,7 +121,7 @@ public class ConfigurationPartControler implements Initializable {
 					if(! "<NONE>".equals(newValue) ) {
 						CenterSwitchAnimation a = transitionService.getAnimations().get(newValue);
 						if( a != null ) {
-							a.animate(switchPreview, switchPreview.getCenter() == view1 ? view2 : view1);
+							a.animate(switchPreview, switchPreview.getCenter() == view1 ? view2 : view1, null);
 							updateTransitionPreference(newValue);
 						} else {
 							updateTransitionPreference(null);

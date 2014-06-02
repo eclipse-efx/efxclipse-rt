@@ -27,6 +27,7 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WArea;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -112,6 +113,7 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		for (MPartSashContainerElement e : element.getChildren()) {
+			@SuppressWarnings("null")
 			WLayoutedWidget<MPartSashContainerElement> widget = engineCreateWidget(e);
 			if (widget != null) {
 				list.add(widget);
@@ -121,6 +123,7 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 		sash.addItems(list);
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public void childRendered(MArea parentElement, MUIElement element) {
 		if (inContentProcessing(parentElement)) {
@@ -150,7 +153,7 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 		}
 	}
 
-	void handleChildrenAddition(MArea parent, Collection<MUIElement> elements) {
+	void handleChildrenAddition(@NonNull MArea parent, @NonNull Collection<@NonNull MUIElement> elements) {
 
 		Iterator<MUIElement> i = elements.iterator();
 		MUIElement element;
@@ -167,7 +170,7 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 		}
 	}
 
-	void handleChildrenRemove(MArea parent, Collection<MUIElement> elements) {
+	void handleChildrenRemove(@NonNull MArea parent, @NonNull Collection<@NonNull MUIElement> elements) {
 		Iterator<MUIElement> i = elements.iterator();
 		MUIElement element;
 		while (i.hasNext()) {

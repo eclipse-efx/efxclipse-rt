@@ -17,6 +17,10 @@ import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.core.log.LoggerFactory;
 
+/**
+ * Implementation of an {@link ILoggerProvider} routing informations to the
+ * {@link org.eclipse.fx.core.log.Logger}
+ */
 @SuppressWarnings("restriction")
 public class LoggerProviderImpl implements ILoggerProvider {
 	@Inject
@@ -24,17 +28,31 @@ public class LoggerProviderImpl implements ILoggerProvider {
 
 	@Override
 	public Logger getClassLogger(Class<?> clazz) {
-		final org.eclipse.fx.core.log.Logger logger = factory.createLogger(clazz.getName());
+		@SuppressWarnings("null")
+		final org.eclipse.fx.core.log.Logger logger = this.factory.createLogger(clazz.getName());
 		return new Logger() {
 
 			@Override
 			public void warn(Throwable t, String message) {
-				logger.warning(message, t);
+				if( message != null && t != null ) {
+					logger.warning(message, t);
+				} else if( message == null && t != null ) {
+					logger.error("", t); //$NON-NLS-1$
+				} else {
+					logger.error("<no message & no throwable>"); //$NON-NLS-1$
+				}
 			}
 
 			@Override
 			public void trace(Throwable t, String message) {
-				logger.trace(message, t);
+				if( message != null && t != null ) {
+					logger.trace(message, t);
+				} else if( message == null && t != null ) {
+					logger.trace("", t); //$NON-NLS-1$
+				} else {
+					logger.trace("<no message & no throwable>");//$NON-NLS-1$
+				}
+				
 			}
 
 			@Override
@@ -64,22 +82,44 @@ public class LoggerProviderImpl implements ILoggerProvider {
 
 			@Override
 			public void info(Throwable t, String message) {
-				logger.info(message, t);
+				if( message != null && t != null ) {
+					logger.info(message, t);	
+				} else if( message == null && t != null ) {
+					logger.info("", t); //$NON-NLS-1$
+				} else {
+					logger.info("<no message & no throwable>"); //$NON-NLS-1$
+				}
 			}
 
 			@Override
 			public void error(Throwable t, String message) {
-				logger.error(message, t);
+				if( message != null && t != null ) {
+					logger.error(message, t);
+				} else if( message == null && t != null ) {
+					logger.error("",t); //$NON-NLS-1$
+				} else {
+					logger.error("<no message & no throwable>");	 //$NON-NLS-1$
+				}
 			}
 
 			@Override
 			public void debug(Throwable t, String message) {
-				logger.debug(message, t);
+				if( message != null && t != null ) {
+					logger.debug(message, t);	
+				} else if( message == null && t != null ) {
+					logger.error("", t); //$NON-NLS-1$
+				} else {
+					logger.error("<no message & no throwable>");	 //$NON-NLS-1$
+				}
 			}
 
 			@Override
 			public void debug(Throwable t) {
-				logger.debug("", t);
+				if( t != null ) {
+					logger.debug("", t); //$NON-NLS-1$	
+				} else {
+					logger.debug("<no throwable>"); //$NON-NLS-1$					
+				}
 			}
 		};
 	}

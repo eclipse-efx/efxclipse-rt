@@ -12,27 +12,81 @@ package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * Mixin implemented by widget who act as drag target
+ */
 public interface WDragTargetWidget {
-	
-	public void setDragDroppedCallback(@NonNull WCallback<DropData, Void> callback);
-	
+	/**
+	 * Callback to invoke when element is dropped
+	 * 
+	 * @param callback
+	 *            the callback
+	 */
+	public void setDragDroppedCallback(@NonNull WCallback<@NonNull DropData, @Nullable Void> callback);
+
+	/**
+	 * The drop type
+	 */
 	public enum DropType {
+		/**
+		 * Before the reference element
+		 */
 		BEFORE,
+		/**
+		 * After the reference element
+		 */
 		AFTER,
-		
+		/**
+		 * Split on the left
+		 */
 		SPLIT_LEFT,
+		/**
+		 * Split on the right
+		 */
 		SPLIT_RIGHT,
+		/**
+		 * Split on the top
+		 */
 		SPLIT_TOP,
+		/**
+		 * split on the bottom
+		 */
 		SPLIT_BOTTOM
 	}
-	
+
+	/**
+	 * Drop data
+	 */
 	public static class DropData {
+		/**
+		 * The reference element
+		 */
+		@Nullable
 		public final MUIElement reference;
+		/**
+		 * The source element
+		 */
+		@NonNull
 		public final MUIElement sourceElement;
+		/**
+		 * The drop type
+		 */
+		@NonNull
 		public final DropType dropType;
-		
-		public DropData(MUIElement reference, MUIElement sourceElement, DropType dropType) {
+
+		/**
+		 * Create new drop data
+		 * 
+		 * @param reference
+		 *            the reference
+		 * @param sourceElement
+		 *            the source element
+		 * @param dropType
+		 *            the drop type
+		 */
+		public DropData(@Nullable MUIElement reference, @NonNull MUIElement sourceElement, @NonNull DropType dropType) {
 			this.reference = reference;
 			this.sourceElement = sourceElement;
 			this.dropType = dropType;

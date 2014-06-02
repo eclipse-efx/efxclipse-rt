@@ -10,7 +10,17 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.services.commands;
 
+/**
+ * Allows to specify if the key is event is blocked even if the command is not
+ * executable
+ */
 public enum NativeStrategy {
+	/**
+	 * block and don't proceed with native handling
+	 */
 	BLOCK,
+	/**
+	 * proceed with native event handling
+	 */
 	PROCEED
 }

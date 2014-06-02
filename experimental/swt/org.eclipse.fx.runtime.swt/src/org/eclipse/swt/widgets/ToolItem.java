@@ -15,6 +15,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBase;
@@ -68,7 +69,10 @@ public class ToolItem extends Item {
 		} else if( (style & SWT.RADIO) == SWT.RADIO ) {
 			nativeControl = new RadioButton();
 		} else if( (style & SWT.SEPARATOR) == SWT.SEPARATOR ) {
-			nativeControl = new StackPane(new Separator()); 
+			//TODO Why stackpane wrapper??
+			Separator separator = new Separator();
+			separator.setOrientation(Orientation.VERTICAL);
+			nativeControl = new StackPane(separator); 
 		} else if( (style & SWT.DROP_DOWN) == SWT.DROP_DOWN ) {
 			MenuButton m = new MenuButton();
 			m.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {

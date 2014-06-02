@@ -37,6 +37,7 @@ import org.eclipse.fx.osgi.util.LoggerCreator;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
 import org.eclipse.fx.ui.workbench.fx.internal.GraphicsLoaderImpl;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -51,7 +52,7 @@ import org.osgi.service.event.EventAdmin;
 @SuppressWarnings("restriction")
 public class E4Application extends AbstractE4Application {
 
-	private static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(E4Application.class);
+	static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(E4Application.class);
 
 	private E4Workbench workbench;
 	private Location instanceLocation;
@@ -75,8 +76,12 @@ public class E4Application extends AbstractE4Application {
 	 *
 	 * @return the instance of the {@link E4Application}.
 	 */
-	public static E4Application getE4Application() {
-		return SELF;
+	public static @NonNull E4Application getE4Application() {
+		E4Application self = SELF;
+		if( self == null ) {
+			throw new IllegalStateException("Application not yet initialized"); //$NON-NLS-1$
+		}
+		return self;
 	}
 
 	@Override
@@ -123,17 +128,28 @@ public class E4Application extends AbstractE4Application {
 				return;
 			}
 		}
+		
+		E4Workbench workbench = this.workbench;
+		if( workbench == null ) {
+			throw new IllegalStateException("Not workbench instance yet available"); //$NON-NLS-1$
+		}
+		
+		IEclipseContext wbContext = workbench.getContext();
+		if( wbContext == null ) {
+			throw new IllegalStateException("The workbench has no context assigned"); //$NON-NLS-1$
+		}
+		
 
-		this.instanceLocation = (Location) this.workbench.getContext().get(E4Workbench.INSTANCE_LOCATION);
+		this.instanceLocation = (Location) wbContext.get(E4Workbench.INSTANCE_LOCATION);
 
 		try {
-			if (!checkInstanceLocation(this.instanceLocation, this.workbench.getContext()))
+			if (!checkInstanceLocation(this.instanceLocation, wbContext))
 				return;
 
 			this.workbenchContext = this.workbench.getContext();
 
 			// Create and run the UI (if any)
-			this.workbench.createAndRunUI(this.workbench.getApplication());
+			workbench.createAndRunUI(this.workbench.getApplication());
 
 			return;
 		} finally {
@@ -149,14 +165,15 @@ public class E4Application extends AbstractE4Application {
 
 	/**
 	 * Stops the application.
-	 *
-	 * @return the exit code.
 	 */
-	public Object jfxStop() {
+	public void jfxStop() {
 		Object returnCode = null;
 		try {
 			if (this.workbenchContext != null && this.workbench != null) {
 				returnCode = this.workbenchContext.get(EXIT_CODE);
+				if (returnCode == null && this.workbench.isRestart()) {
+					returnCode = IApplication.EXIT_RESTART;
+				}
 				// Save the model into the targetURI
 				if (getLifecycleManager() != null) {
 					ContextInjectionFactory.invoke(getLifecycleManager(), PreSave.class, this.workbenchContext, null);
@@ -170,9 +187,7 @@ public class E4Application extends AbstractE4Application {
 		}
 
 		if (returnCode != null) {
-			return returnCode;
-		} else {
-			return IApplication.EXIT_OK;
+			this.returnValue = returnCode;
 		}
 	}
 
@@ -279,12 +294,8 @@ public class E4Application extends AbstractE4Application {
 					try {
 						// wait for task to complete
 						task.get();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ExecutionException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} catch (InterruptedException | ExecutionException e) {
+						LOGGER.error("Unable to wait until the task is completed", e); //$NON-NLS-1$
 					} finally {
 						task.cancel(true);
 					}
@@ -300,8 +311,7 @@ public class E4Application extends AbstractE4Application {
 
 	@Override
 	protected Realm createRealm(IEclipseContext appContext) {
-		JFXRealm.createDefault();
-		return Realm.getDefault();
+		return JFXRealm.createDefault();
 	}
 
 	@Override
@@ -309,6 +319,9 @@ public class E4Application extends AbstractE4Application {
 		return new IResourceUtilities<Image>() {
 			@Override
 			public Image imageDescriptorFromURI(URI iconPath) {
+				if( iconPath == null ) {
+					return null;
+				}
 				GraphicsLoader l = appContext.get(GraphicsLoader.class);
 				return l.getImage(iconPath);
 			}

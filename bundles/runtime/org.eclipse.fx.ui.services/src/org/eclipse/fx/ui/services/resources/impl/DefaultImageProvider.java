@@ -21,16 +21,20 @@ import javafx.scene.image.Image;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.ui.services.resources.ImageProvider;
 
+/**
+ * A default image provider
+ */
 public class DefaultImageProvider implements ImageProvider {
 
 	@Override
 	public String getName() {
-		return "fx.default-image-provider";
+		return "fx.default-image-provider"; //$NON-NLS-1$
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	public List<String> getFileSuffix() {
-		return Arrays.asList("png","gif","jpg","*");
+		return Arrays.asList("png","gif","jpg","*"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	@Override

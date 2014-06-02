@@ -48,9 +48,6 @@ public class DefaultJFXApp extends Application {
 	 *             if the given {@link E4Application} is null.
 	 */
 	public DefaultJFXApp(@NonNull final E4Application e4Application) {
-		if (e4Application == null) {
-			throw new NullPointerException("The E4Application cannot be null."); //$NON-NLS-1$
-		}
 		this.e4Application = e4Application;
 	}
 

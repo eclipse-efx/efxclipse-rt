@@ -15,7 +15,6 @@ import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Base renderer for {@link MToolControl}
