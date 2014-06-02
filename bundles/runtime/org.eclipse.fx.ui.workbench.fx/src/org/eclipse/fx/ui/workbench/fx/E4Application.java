@@ -171,6 +171,9 @@ public class E4Application extends AbstractE4Application {
 		try {
 			if (this.workbenchContext != null && this.workbench != null) {
 				returnCode = this.workbenchContext.get(EXIT_CODE);
+				if (returnCode == null && this.workbench.isRestart()) {
+					returnCode = IApplication.EXIT_RESTART;
+				}
 				// Save the model into the targetURI
 				if (getLifecycleManager() != null) {
 					ContextInjectionFactory.invoke(getLifecycleManager(), PreSave.class, this.workbenchContext, null);
