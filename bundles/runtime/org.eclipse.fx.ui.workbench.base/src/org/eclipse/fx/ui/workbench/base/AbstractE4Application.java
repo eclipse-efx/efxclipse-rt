@@ -277,7 +277,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 		Location instanceLocation = Activator.getDefault().getInstanceLocation();
 
-		String appModelPath = getArgValue(IWorkbench.XMI_URI_ARG, appContext, false);
+		String appModelPath = getArgValue(IWorkbench.XMI_URI_ARG, appContext, false, eclipseContext);
 		Assert.isNotNull(appModelPath, IWorkbench.XMI_URI_ARG + " argument missing"); //$NON-NLS-1$
 		final URI initialWorkbenchDefinitionInstance = URI.createPlatformPluginURI(appModelPath, true);
 
@@ -286,7 +286,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 		// Save and restore
 		boolean saveAndRestore;
-		String value = getArgValue(IWorkbench.PERSIST_STATE, appContext, false);
+		String value = getArgValue(IWorkbench.PERSIST_STATE, appContext, false, eclipseContext);
 
 		saveAndRestore = value == null || Boolean.parseBoolean(value);
 
@@ -294,7 +294,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 		// Persisted state
 		boolean clearPersistedState;
-		value = getArgValue(IWorkbench.CLEAR_PERSISTED_STATE, appContext, true);
+		value = getArgValue(IWorkbench.CLEAR_PERSISTED_STATE, appContext, true, eclipseContext);
 		clearPersistedState = value != null && Boolean.parseBoolean(value);
 		eclipseContext.set(IWorkbench.CLEAR_PERSISTED_STATE, Boolean.valueOf(clearPersistedState));
 
@@ -302,11 +302,11 @@ public abstract class AbstractE4Application implements IApplication {
 		boolean deltaRestore;
 		// E4Workbench.DELTA_RESTORE
 		String deltaRestoreKey = "deltaRestore"; //$NON-NLS-1$
-		value = getArgValue(deltaRestoreKey, appContext, false);
+		value = getArgValue(deltaRestoreKey, appContext, false, eclipseContext);
 		deltaRestore = value == null || Boolean.parseBoolean(value);
 		eclipseContext.set(deltaRestoreKey, Boolean.valueOf(deltaRestore));
 
-		String resourceHandler = getArgValue(IWorkbench.MODEL_RESOURCE_HANDLER, appContext, false);
+		String resourceHandler = getArgValue(IWorkbench.MODEL_RESOURCE_HANDLER, appContext, false, eclipseContext);
 
 		if (resourceHandler == null) {
 			resourceHandler = "bundleclass://org.eclipse.e4.ui.workbench/" + ResourceHandler.class.getName(); //$NON-NLS-1$
@@ -320,6 +320,14 @@ public abstract class AbstractE4Application implements IApplication {
 		theApp = (MApplication) resource.getContents().get(0);
 
 		return theApp;
+	}
+
+	private static String getArgValue(String argName, IApplicationContext applicationContext, boolean singledCmdArgValue, IEclipseContext eclipseContext) {
+		Object value = eclipseContext.get(argName);
+		if (value != null) {
+			return value.toString();
+		}
+		return getArgValue(argName, applicationContext, singledCmdArgValue);
 	}
 
 	/**
