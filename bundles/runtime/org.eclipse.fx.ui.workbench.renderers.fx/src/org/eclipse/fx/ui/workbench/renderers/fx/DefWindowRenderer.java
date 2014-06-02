@@ -376,7 +376,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				URL url = getClass().getClassLoader().getResource("css/efx-default.css"); //$NON-NLS-1$
 				if( url != null ) {
 					s.getStylesheets().add(url.toExternalForm());				
-				}				
+				} else {
+					this.logger.error("Unable to load css 'css/efx-default.css'"); //$NON-NLS-1$
+				}
 			}
 
 			s.focusOwnerProperty().addListener(this::handleFocusOwner);
