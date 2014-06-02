@@ -165,10 +165,8 @@ public class E4Application extends AbstractE4Application {
 
 	/**
 	 * Stops the application.
-	 *
-	 * @return the exit code.
 	 */
-	public Object jfxStop() {
+	public void jfxStop() {
 		Object returnCode = null;
 		try {
 			if (this.workbenchContext != null && this.workbench != null) {
@@ -186,9 +184,7 @@ public class E4Application extends AbstractE4Application {
 		}
 
 		if (returnCode != null) {
-			return returnCode;
-		} else {
-			return IApplication.EXIT_OK;
+			this.returnValue = returnCode;
 		}
 	}
 
