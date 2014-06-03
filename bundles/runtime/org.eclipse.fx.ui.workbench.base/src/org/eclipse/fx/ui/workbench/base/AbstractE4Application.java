@@ -72,8 +72,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.osgi.util.LoggerCreator;
+import org.eclipse.fx.ui.services.restart.RestartService;
 import org.eclipse.fx.ui.workbench.base.internal.Activator;
 import org.eclipse.fx.ui.workbench.base.internal.LoggerProviderImpl;
+import org.eclipse.fx.ui.workbench.base.restart.RestartPreferenceUtil;
+import org.eclipse.fx.ui.workbench.base.restart.RestartServiceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.osgi.service.datalocation.Location;
@@ -98,8 +101,7 @@ public abstract class AbstractE4Application implements IApplication {
 	private static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(AbstractE4Application.class);
 
 	/**
-	 * Create a synchronizer instance who synchronizes between UI and none-UI
-	 * threads
+	 * Create a synchronizer instance who synchronizes between UI and none-UI threads
 	 * 
 	 * @param context
 	 *            the context
@@ -133,7 +135,6 @@ public abstract class AbstractE4Application implements IApplication {
 	 * @return the uri
 	 */
 	protected abstract @NonNull String getDefaultPresentationEngineURI(@NonNull IEclipseContext context);
-
 
 	/**
 	 * Extract an application arguments
@@ -228,9 +229,13 @@ public abstract class AbstractE4Application implements IApplication {
 
 		preCreateWorkbench(appContext);
 
-		// Instantiate the Workbench (which is responsible for
-		// 'running' the UI (if any)...
-		return new E4Workbench(appModel, appContext);
+		// Instantiate the Workbench (which is responsible for 'running' the UI (if any)...
+		E4Workbench workbench = new E4Workbench(appModel, appContext);
+		
+		// Workbench dependendent services
+		appContext.set(RestartService.class, ContextInjectionFactory.make(RestartServiceImpl.class, appContext));
+
+		return workbench;
 	}
 
 	/**
@@ -296,6 +301,10 @@ public abstract class AbstractE4Application implements IApplication {
 		boolean clearPersistedState;
 		value = getArgValue(IWorkbench.CLEAR_PERSISTED_STATE, appContext, true, eclipseContext);
 		clearPersistedState = value != null && Boolean.parseBoolean(value);
+		RestartPreferenceUtil restartUtil = ContextInjectionFactory.make(RestartPreferenceUtil.class, eclipseContext);
+		if (!clearPersistedState) {
+			clearPersistedState = restartUtil.isClearPersistedStateOnRestart();
+		}
 		eclipseContext.set(IWorkbench.CLEAR_PERSISTED_STATE, Boolean.valueOf(clearPersistedState));
 
 		// Delta save and restore
@@ -318,6 +327,10 @@ public abstract class AbstractE4Application implements IApplication {
 
 		Resource resource = this.handler.loadMostRecentModel();
 		theApp = (MApplication) resource.getContents().get(0);
+
+		// Reset the restart-flag in the preferences regardless of it being used or not, otherwise it would
+		// hang around if -clearPersistedState was also set
+		restartUtil.setClearPersistedStateOnRestart(false);
 
 		return theApp;
 	}
