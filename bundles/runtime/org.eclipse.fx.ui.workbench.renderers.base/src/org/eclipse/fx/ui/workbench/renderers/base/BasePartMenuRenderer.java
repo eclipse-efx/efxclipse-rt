@@ -62,6 +62,10 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 	public void doProcessContent(MMenu element) {
 		// TODO Should we do this creation lazy????
 		WMenu<N> menu = getWidget(element);
+		if( menu == null ) {
+			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 		for (MMenuElement e : element.getChildren()) {
 			@SuppressWarnings("null")
 			WMenuElement<MMenuElement> widget = engineCreateWidget(e);
@@ -105,6 +109,10 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 
 		int idx = getRenderedIndex(parentElement, element);
 		WMenu<N> menu = getWidget(parentElement);
+		if( menu == null ) {
+			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 		@SuppressWarnings("unchecked")
 		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
 		if( menuElement != null ) {

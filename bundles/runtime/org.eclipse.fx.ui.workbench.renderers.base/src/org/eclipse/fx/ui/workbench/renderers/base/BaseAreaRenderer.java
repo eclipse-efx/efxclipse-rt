@@ -110,6 +110,10 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 	@Override
 	public void doProcessContent(MArea element) {
 		WArea<N> sash = getWidget(element);
+		if( sash == null ) {
+			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		for (MPartSashContainerElement e : element.getChildren()) {
@@ -132,6 +136,10 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 
 		int idx = getRenderedIndex(parentElement, element);
 		WArea<N> sash = getWidget(parentElement);
+		if( sash == null ) {
+			getLogger().error("No widget found for '"+parentElement+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 
 		@SuppressWarnings("unchecked")
 		List<WLayoutedWidget<MPartSashContainerElement>> l = Collections.singletonList((WLayoutedWidget<MPartSashContainerElement>) element.getWidget());

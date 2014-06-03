@@ -42,6 +42,10 @@ public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBa
 	@Override
 	public void doProcessContent(MMenu element) {
 		WMenuBar<N> menuBar = getWidget(element);
+		if( menuBar == null ) {
+			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 		for (MMenuElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				Object widget = engineCreateWidget(e);
@@ -61,6 +65,10 @@ public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBa
 
 		int idx = getRenderedIndex(parentElement, element);
 		WMenuBar<N> menu = getWidget(parentElement);
+		if( menu == null ) {
+			getLogger().error("No widget for '"+menu+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 		Object widget = (WMenuElement<MMenuElement>) element.getWidget();
 		if (widget instanceof WMenu) {
 			menu.addElement(idx, (WMenu<MMenuElement>) widget);
