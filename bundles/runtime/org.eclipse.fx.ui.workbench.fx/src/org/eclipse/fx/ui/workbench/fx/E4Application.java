@@ -34,6 +34,7 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.core.databinding.JFXRealm;
 import org.eclipse.fx.osgi.util.AbstractJFXApplication;
 import org.eclipse.fx.osgi.util.LoggerCreator;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
 import org.eclipse.fx.ui.workbench.fx.internal.GraphicsLoaderImpl;
@@ -60,7 +61,6 @@ public class E4Application extends AbstractE4Application {
 	
 	private static final String EXIT_CODE = "e4.osgi.exit.code"; //$NON-NLS-1$
 	private static final String PRIMARY_STAGE_KEY = "primaryStage"; //$NON-NLS-1$
-	private static final String EVENT_TOPIC_LAUNCHED = "efxapp/applicationLaunched"; //$NON-NLS-1$
 	
 	static E4Application SELF;
 
@@ -275,7 +275,7 @@ public class E4Application extends AbstractE4Application {
 		context.applicationRunning();
 
 		final Map<String, Object> map = new HashMap<String, Object>();
-		sendEvent(EVENT_TOPIC_LAUNCHED, map);
+		sendEvent(Constants.APPLICATION_LAUNCHED, map);
 	}
 
 	@Override
