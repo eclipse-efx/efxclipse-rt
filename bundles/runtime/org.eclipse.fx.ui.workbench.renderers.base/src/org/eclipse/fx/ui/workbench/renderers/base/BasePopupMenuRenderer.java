@@ -62,6 +62,10 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 	public void doProcessContent(MPopupMenu element) {
 		// TODO Should we do this creation lazy????
 		WPopupMenu<N> menu = getWidget(element);
+		if( menu == null ) {
+			getLogger().error("Could not find widget for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 		for (MMenuElement e : element.getChildren()) {
 			@SuppressWarnings("null")
 			WMenuElement<MMenuElement> widget = engineCreateWidget(e);
@@ -103,8 +107,13 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 			return;
 		}
 
-		int idx = getRenderedIndex(parentElement, element);
 		WPopupMenu<N> menu = getWidget(parentElement);
+		if( menu == null ) {
+			getLogger().error("Could not find widget for '"+parentElement+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
+		
+		int idx = getRenderedIndex(parentElement, element);
 		@SuppressWarnings("unchecked")
 		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
 		menu.addElement(idx, menuElement);

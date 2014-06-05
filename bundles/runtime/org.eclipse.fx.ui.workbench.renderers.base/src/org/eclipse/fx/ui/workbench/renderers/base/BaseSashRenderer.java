@@ -29,6 +29,7 @@ import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -115,7 +116,13 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 				if( changedObj != null && changedObj.getParent() != null && changedObj.getParent().getRenderer() == BaseSashRenderer.this ) {
 					MElementContainer<MUIElement> parent = changedObj.getParent();
 					if( parent != null && !inUIModification(parent) ) {
-						getWidget((MPartSashContainer)(MUIElement)parent).updateLayout();
+						@Nullable
+						WSash<N> widget = getWidget((MPartSashContainer)(MUIElement)parent);
+						if( widget != null ) {
+							widget.updateLayout();	
+						} else {
+							getLogger().error("Could not find widget for '"+parent+"'");  //$NON-NLS-1$//$NON-NLS-2$
+						}
 					}
 				}
 			}
@@ -125,6 +132,10 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 	@Override
 	public void doProcessContent(MPartSashContainer element) {
 		WSash<N> sash = getWidget(element);
+		if( sash == null ) {
+			getLogger().error("Could not find widget for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		for (MPartSashContainerElement e : element.getChildren()) {
@@ -148,6 +159,10 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 
 		int idx = getRenderedIndex(parentElement, element);
 		WSash<N> sash = getWidget(parentElement);
+		if( sash == null ) {
+			getLogger().error("Could not find widget for '"+parentElement+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 
 		@SuppressWarnings("unchecked")
 		WLayoutedWidget<MPartSashContainerElement> w = (WLayoutedWidget<MPartSashContainerElement>) element.getWidget();

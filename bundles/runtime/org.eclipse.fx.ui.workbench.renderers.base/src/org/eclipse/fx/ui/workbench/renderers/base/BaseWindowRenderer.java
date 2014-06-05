@@ -291,6 +291,11 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	public void doProcessContent(MWindow element) {
 		WWindow<N> windowWidget = getWidget(element);
 
+		if( windowWidget == null ) {
+			getLogger().error("Could not find widget for '"+element+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			return;
+		}
+		
 		Object nativeWidget = windowWidget.getWidget();
 
 		element.getContext().set(nativeWidget.getClass().getName(), nativeWidget);

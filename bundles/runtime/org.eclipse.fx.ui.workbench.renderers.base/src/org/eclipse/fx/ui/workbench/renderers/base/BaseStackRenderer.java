@@ -243,6 +243,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	@Override
 	public void doProcessContent(MPartStack element) {
 		WStack<N, I, IC> stack = getWidget(element);
+		if( stack == null ) {
+			getLogger().error("Could not find widget for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 		List<@NonNull WStackItem<I, IC>> items = new ArrayList<>();
 		WStackItem<I, IC> initalItem = null;
 
@@ -316,6 +320,13 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	
 	@SuppressWarnings("null")
 	void handleChildrenAddition(MPartStack parent, Collection<MStackElement> elements) {
+		WStack<N, I, IC> widget = getWidget(parent);
+		
+		if( widget == null ) {
+			getLogger().error("Could not find widget for '"+parent+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
+		
 		Iterator<MStackElement> i = elements.iterator();
 		while (i.hasNext()) {
 			MStackElement element = (MStackElement) i.next();
@@ -324,11 +335,13 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 				ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 				if( renderer != null ) {
-					WStack<N, I, IC> stack = getWidget(parent);
+					
+					
+					WStack<N, I, IC> stack = widget;
 					@SuppressWarnings("unchecked")
 					WStackItem<I, IC> item = (WStackItem<I, IC>) element.getTransientData().get(MAP_ITEM_KEY);
-					if( item == null || ! getWidget(parent).getStackItemClass().isAssignableFrom(item.getClass()) ) {
-						item = createStackItem(getWidget(parent), element, renderer);	
+					if( item == null || ! widget.getStackItemClass().isAssignableFrom(item.getClass()) ) {
+						item = createStackItem(widget, element, renderer);	
 					}
 
 					stack.addItems(idx, Collections.singletonList(item));					
@@ -339,7 +352,13 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 	}
 
-	void handleChildrenRemove(MPartStack parent, Collection<MStackElement> elements) {
+	void handleChildrenRemove(@NonNull MPartStack parent, Collection<MStackElement> elements) {
+		WStack<N, I, IC> parentWidget = getWidget(parent);
+		if( parentWidget == null ) {
+			getLogger().error("Could not find widget for '"+parent+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			return;
+		}
+		
 		// more performant group removal
 		ArrayList<MStackElement> list = new ArrayList<MStackElement>(elements);
 		MStackElement selectedElement = parent.getSelectedElement();
@@ -348,7 +367,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			list.add(selectedElement);// remove and add the selected element to
 										// the end
 		}
-		WStack<N, I, IC> parentWidget = getWidget(parent);
+		
 		// build the stack item list out of the model
 		List<@NonNull WStackItem<I, IC>> items = transmuteList(parentWidget, list);
 		parentWidget.removeItems(items);
@@ -385,6 +404,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 		
 		WStack<N, I, IC> stack = getWidget(parent);
+		if( stack == null ) {
+			getLogger().error("Could not find widget for '"+parent+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			return;
+		}
 		int idx = 0;
 		for (WStackItem<I, IC> i : stack.getItems()) {
 			if (i.getDomElement() == newElement) {
@@ -451,6 +474,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 
 		WStack<N, I, IC> stack = getWidget(parentElement);
+		if( stack ==  null ) {
+			getLogger().error("Could not find widget for '"+parentElement+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			return;
+		}
 		for (WStackItem<I, IC> i : stack.getItems()) {
 			if (i.getDomElement() == element) {
 				return;

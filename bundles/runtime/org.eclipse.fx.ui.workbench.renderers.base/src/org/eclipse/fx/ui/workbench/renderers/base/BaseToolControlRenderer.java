@@ -29,6 +29,10 @@ public abstract class BaseToolControlRenderer<N> extends BaseRenderer<MToolContr
 	@Override
 	protected void doProcessContent(MToolControl element) {
 		WToolControl<N> widget = getWidget(element);
+		if( widget == null ) {
+			getLogger().error("Could not find widget for '"+element+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			return;
+		}
 
 		Class<?> cl = widget.getWidget().getClass();
 		IEclipseContext modelContext = getModelContext(element);

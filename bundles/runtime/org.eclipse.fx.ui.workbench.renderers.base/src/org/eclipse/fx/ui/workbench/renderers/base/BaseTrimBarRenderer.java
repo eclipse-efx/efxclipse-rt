@@ -47,6 +47,10 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 	@Override
 	public void doProcessContent(MTrimBar element) {
 		WTrimBar<N> trimBar = getWidget(element);
+		if( trimBar == null ) {
+			getLogger().error("Could not find widget for '"+element+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			return;
+		}
 		for (MTrimElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WLayoutedWidget<MTrimElement> trimElementWidget = engineCreateWidget(e);
@@ -67,8 +71,12 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 			return;
 		}
 
-		int idx = getRenderedIndex(parentElement, element);
 		WTrimBar<N> trimBar = getWidget(parentElement);
+		if( trimBar == null ) {
+			getLogger().error("Could not find widget for '"+parentElement+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			return;
+		}
+		int idx = getRenderedIndex(parentElement, element);
 		@SuppressWarnings("unchecked")
 		WLayoutedWidget<MTrimElement> widget = (WLayoutedWidget<MTrimElement>) element.getWidget();
 		if( widget != null ) {

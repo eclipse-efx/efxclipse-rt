@@ -285,6 +285,10 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		hideElementRecursive(oldElement);
 		if (newElement != null) {
 			WPerspectiveStack<N, I, IC> stack = getWidget(parent);
+			if( stack == null ) {
+				getLogger().error("Could not find widget for '"+parent+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
 			int idx = 0;
 			for (WStackItem<I, IC> i : stack.getItems()) {
 				if (i.getDomElement() == newElement) {
@@ -317,6 +321,10 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		}
 
 		WPerspectiveStack<N, I, IC> stack = getWidget(parentElement);
+		if( stack == null ) {
+			getLogger().error("No widget found for '"+parentElement+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 		for (WStackItem<I, IC> i : stack.getItems()) {
 			if (i.getDomElement() == element) {
 				return;

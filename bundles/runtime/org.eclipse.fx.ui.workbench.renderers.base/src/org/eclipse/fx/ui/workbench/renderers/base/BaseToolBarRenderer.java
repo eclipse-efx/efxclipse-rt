@@ -85,6 +85,10 @@ public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToo
 	@Override
 	public void doProcessContent(MToolBar element) {
 		WToolBar<N> toolbar = getWidget(element);
+		if( toolbar == null ) {
+			getLogger().error("Could not find widget for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			return;
+		}
 		for (MToolBarElement item : element.getChildren()) {
 			if (item.isToBeRendered()) {
 				WWidget<MToolBarElement> itemWidget = engineCreateWidget(item);
@@ -105,8 +109,12 @@ public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToo
 			return;
 		}
 
-		int idx = getRenderedIndex(parentElement, element);
 		WToolBar<N> toolbar = getWidget(parentElement);
+		if( toolbar == null ) {
+			getLogger().error("Could not find widget for '"+parentElement+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+			return;
+		}
+		int idx = getRenderedIndex(parentElement, element);
 		@SuppressWarnings("unchecked")
 		WWidget<MToolBarElement> widget = (WWidget<MToolBarElement>) element.getWidget();
 		if( widget != null ) {
