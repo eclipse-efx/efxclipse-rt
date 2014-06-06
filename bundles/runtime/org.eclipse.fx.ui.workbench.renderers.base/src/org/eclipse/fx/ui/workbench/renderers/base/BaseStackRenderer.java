@@ -280,6 +280,13 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 
 		stack.selectItem(stack.getItems().indexOf(initalItem));
+		
+		// Ensure an element is selected see 436659
+		if( element.getSelectedElement() == null ) {
+			if( ! stack.getItems().isEmpty() ) {
+				element.setSelectedElement(stack.getItems().get(0).getDomElement());
+			}
+		}
 	}
 
 	@NonNull
@@ -348,6 +355,13 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				} else {
 					getLogger().error("Could not find renderer for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
 				}
+			}
+		}
+		
+		// Ensure an element is selected see 436659
+		if( parent.getSelectedElement() == null ) {
+			if( ! widget.getItems().isEmpty() ) {
+				parent.setSelectedElement(widget.getItems().get(0).getDomElement());
 			}
 		}
 	}
