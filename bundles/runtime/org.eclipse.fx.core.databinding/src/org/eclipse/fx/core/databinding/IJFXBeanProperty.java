@@ -14,6 +14,7 @@ import java.beans.PropertyDescriptor;
 
 import org.eclipse.core.databinding.property.IProperty;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Root interface of all JavaFX properties
@@ -22,6 +23,6 @@ public interface IJFXBeanProperty extends IProperty {
 	/**
 	 * @return the descriptor
 	 */
-	@NonNull
+	@Nullable
 	public PropertyDescriptor getPropertyDescriptor();
 }

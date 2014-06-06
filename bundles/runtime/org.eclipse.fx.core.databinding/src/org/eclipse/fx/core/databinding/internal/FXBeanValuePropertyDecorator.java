@@ -21,6 +21,7 @@ import org.eclipse.core.databinding.property.value.ValueProperty;
 import org.eclipse.fx.core.databinding.IJFXBeanValueProperty;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 
 /**
@@ -32,7 +33,7 @@ public class FXBeanValuePropertyDecorator extends ValueProperty implements
 	@NonNull
 	private final IValueProperty delegate;
 	
-	@NonNull
+	@Nullable
 	private final PropertyDescriptor propertyDescriptor;
 
 	/**
@@ -40,7 +41,7 @@ public class FXBeanValuePropertyDecorator extends ValueProperty implements
 	 * @param propertyDescriptor
 	 */
 	public FXBeanValuePropertyDecorator(@NonNull IValueProperty delegate,
-			@NonNull PropertyDescriptor propertyDescriptor) {
+			@Nullable PropertyDescriptor propertyDescriptor) {
 		this.delegate = delegate;
 		this.propertyDescriptor = propertyDescriptor;
 	}

@@ -38,7 +38,7 @@ public class FXBeanObservableValueDecorator extends DecoratingObservableValue
 	 * @param propertyDescriptor
 	 */
 	public FXBeanObservableValueDecorator(@NonNull IObservableValue decorated,
-			@NonNull PropertyDescriptor propertyDescriptor) {
+			@Nullable PropertyDescriptor propertyDescriptor) {
 		super(decorated, true);
 		this.propertyDescriptor = propertyDescriptor;
 	}
