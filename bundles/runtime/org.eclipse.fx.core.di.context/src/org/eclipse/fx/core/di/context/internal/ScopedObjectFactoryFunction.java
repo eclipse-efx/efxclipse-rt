@@ -14,6 +14,7 @@ import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Context function to create requested object factory
@@ -35,6 +36,20 @@ public class ScopedObjectFactoryFunction extends ContextFunction {
 		public <C> C newInstance(Class<C> c) {
 			return ContextInjectionFactory.make(c, this.context);
 		}
+
+		@Override
+		public @NonNull ScopedObjectFactory createChild(@NonNull String name) {
+			return new ScopedObjectFactoryImpl(this.context.createChild(name));
+		}
 		
+		@Override
+		public <O> void put(@NonNull Class<@NonNull O> key, @NonNull O value) {
+			this.context.set(key, value);
+		}
+		
+		@Override
+		public void put(@NonNull String key, @NonNull Object value) {
+			this.context.set(key, value);
+		}
 	}
 }

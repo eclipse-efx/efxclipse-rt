@@ -10,9 +10,11 @@
  *******************************************************************************/
 package org.eclipse.fx.core.di;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
- * An object factory is bound to the local context and is able to create instances using a the backing DI
- * container
+ * An object factory is bound to the local context and is able to create
+ * instances using a the backing DI container
  */
 public interface ScopedObjectFactory {
 	/**
@@ -22,5 +24,35 @@ public interface ScopedObjectFactory {
 	 *            the class
 	 * @return the instance
 	 */
-	public <C> C newInstance(Class<C> c);
+	public <C> C newInstance(@NonNull Class<@NonNull C> c);
+
+	/**
+	 * Create a child of the scoped object factory
+	 * 
+	 * @param name
+	 *            the name
+	 * 
+	 * @return the child
+	 */
+	public @NonNull ScopedObjectFactory createChild(@NonNull String name);
+
+	/**
+	 * Push a new value
+	 * 
+	 * @param key
+	 *            the key
+	 * @param value
+	 *            the value
+	 */
+	public void put(@NonNull String key, @NonNull Object value);
+
+	/**
+	 * Push a new value
+	 * 
+	 * @param key
+	 *            the key
+	 * @param value
+	 *            the value
+	 */
+	public <O> void put(@NonNull Class<@NonNull O> key, @NonNull O value);	
 }
