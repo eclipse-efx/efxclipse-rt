@@ -78,7 +78,7 @@ public class Shell extends Decorations {
 	}
 
 	public Shell(Stage stage) {
-		super(Display.getCurrent(),SWT.NONE);
+		super(Display.getDefault(),SWT.NONE);
 		this.stage = stage;
 	}
 	
