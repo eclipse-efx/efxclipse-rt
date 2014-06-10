@@ -51,6 +51,7 @@ public class FX_SWT {
 		private static Map<Stage, Shell> SHELL_MAP = new HashMap<>();
 		FXSWTEmbed(Display display, int style) {
 			super(display, style);
+			internal_getNativeObject().getStylesheets().add(getClass().getClassLoader().getResource("org/eclipse/swt/internal/swt.css").toExternalForm());
 		}
 		
 		@Override

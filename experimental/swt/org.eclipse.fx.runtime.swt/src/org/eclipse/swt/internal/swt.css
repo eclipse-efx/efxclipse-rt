@@ -82,3 +82,15 @@
 .styled-text-line:filled:hover {
 	-fx-background-color: transparent;
 }
+
+.swt-table-column.left.table-cell {
+	-fx-alignment: center-left;
+}
+
+.swt-table-column.center.table-cell {
+	-fx-alignment: center;
+}
+
+.swt-table-column.right.table-cell {
+	-fx-alignment: center-right;
+}

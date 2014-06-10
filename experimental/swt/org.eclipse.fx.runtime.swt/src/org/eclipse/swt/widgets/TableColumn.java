@@ -22,6 +22,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.TableCell;
@@ -91,6 +92,7 @@ public class TableColumn extends Item {
 	@Override
 	protected javafx.scene.control.TableColumn<TableItem, CellItem> createWidget() {
 		column = new javafx.scene.control.TableColumn<TableItem, CellItem>();
+		column.getStyleClass().addAll("swt-table-column", getStyleAsString(getStyle()));
 		column.setCellValueFactory(new Callback<CellDataFeatures<TableItem,CellItem>, ObservableValue<CellItem>>() {
 			
 			@Override
@@ -98,6 +100,8 @@ public class TableColumn extends Item {
 				return new SimpleObjectProperty<TableColumn.CellItem>(new CellItem(index,param.getValue())); 
 			}
 		});
+		
+		
 		column.setCellFactory(new Callback<javafx.scene.control.TableColumn<TableItem, CellItem>, TableCell<TableItem,CellItem>>() {
 			
 			@Override
@@ -109,6 +113,18 @@ public class TableColumn extends Item {
 			}
 		});
 		return column;
+	}
+	
+	private static String getStyleAsString(int style) {
+		String alignStyle = "left";
+		if( (style & SWT.LEFT) == SWT.LEFT ) {
+			alignStyle = "left";
+		} else if( (style & SWT.RIGHT) == SWT.RIGHT ) {
+			alignStyle = "right";
+		} else if( (style & SWT.RIGHT) == SWT.RIGHT ) {
+			alignStyle = "center";
+		}
+		return alignStyle;
 	}
 	
 	public void addControlListener(ControlListener listener) {
@@ -169,8 +185,10 @@ public class TableColumn extends Item {
 	}
 	
 	public void setAlignment (int alignment) {
+		column.getStyleClass().remove(getStyleAsString(getStyle()));
 		style &= ~(SWT.LEFT|SWT.CENTER|SWT.RIGHT);
 		style |= alignment;
+		column.getStyleClass().remove(getStyleAsString(getStyle()));
 	}
 	
 	@Override
