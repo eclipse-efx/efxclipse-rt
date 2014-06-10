@@ -13,8 +13,11 @@ package org.eclipse.fx.core.di.context.internal;
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.InjectionException;
+import org.eclipse.fx.core.di.Invoke;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Context function to create requested object factory
@@ -50,6 +53,17 @@ public class ScopedObjectFactoryFunction extends ContextFunction {
 		@Override
 		public void put(@NonNull String key, @NonNull Object value) {
 			this.context.set(key, value);
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		public <O> @Nullable O invoke(@NonNull Object instance) throws IllegalStateException {
+			try {
+				return (@Nullable O) ContextInjectionFactory.invoke(instance, Invoke.class, this.context);	
+			} catch(@SuppressWarnings("restriction") InjectionException e) {
+				throw new IllegalStateException(e);
+			}
+			
 		}
 	}
 }

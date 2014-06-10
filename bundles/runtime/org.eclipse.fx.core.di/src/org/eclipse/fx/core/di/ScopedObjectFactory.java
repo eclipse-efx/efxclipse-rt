@@ -11,6 +11,7 @@
 package org.eclipse.fx.core.di;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * An object factory is bound to the local context and is able to create
@@ -54,5 +55,16 @@ public interface ScopedObjectFactory {
 	 * @param value
 	 *            the value
 	 */
-	public <O> void put(@NonNull Class<@NonNull O> key, @NonNull O value);	
+	public <O> void put(@NonNull Class<@NonNull O> key, @NonNull O value);
+
+	/**
+	 * Invoke a method annotated with {@link Invoke}
+	 * 
+	 * @param instance
+	 *            the instance on which the method is invoked
+	 * @return the return value
+	 * @throws IllegalStateException
+	 *             in case there's no method that could be invoked
+	 */
+	public <O> @Nullable O invoke(@NonNull Object instance) throws IllegalStateException;
 }
