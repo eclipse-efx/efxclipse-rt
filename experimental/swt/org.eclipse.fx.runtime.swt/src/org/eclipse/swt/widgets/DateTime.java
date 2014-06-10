@@ -38,6 +38,7 @@ public class DateTime extends Composite {
 	protected Region createWidget() {
 		if( (style & SWT.DATE) == SWT.DATE ) {
 			datePicker = new DatePicker();
+			datePicker.setValue(LocalDate.now());
 			datePicker.addEventHandler(ActionEvent.ACTION, (e) -> {
 				internal_sendEvent(SWT.Selection, new Event(), true);
 			});
