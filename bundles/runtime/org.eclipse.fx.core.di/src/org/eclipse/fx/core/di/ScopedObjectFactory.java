@@ -67,4 +67,9 @@ public interface ScopedObjectFactory {
 	 *             in case there's no method that could be invoked
 	 */
 	public <O> @Nullable O invoke(@NonNull Object instance) throws IllegalStateException;
+	
+	/**
+	 * Dispose the factory
+	 */
+	public void dispose();
 }

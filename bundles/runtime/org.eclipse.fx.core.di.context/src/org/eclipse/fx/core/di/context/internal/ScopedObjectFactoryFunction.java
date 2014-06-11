@@ -65,5 +65,10 @@ public class ScopedObjectFactoryFunction extends ContextFunction {
 			}
 			
 		}
+		
+		@Override
+		public void dispose() {
+			this.context.dispose();
+		}
 	}
 }
