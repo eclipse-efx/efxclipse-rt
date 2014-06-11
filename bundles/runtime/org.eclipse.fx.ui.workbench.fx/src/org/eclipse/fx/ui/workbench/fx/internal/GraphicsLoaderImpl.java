@@ -24,7 +24,7 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;
@@ -141,6 +141,6 @@ public class GraphicsLoaderImpl implements GraphicsLoader {
 	private static URI replaceDynamicValues(@NonNull URI uri, @NonNull Map<@NonNull String, @NonNull String> dynamicMap) {
 		String s = uri.toString();
 		s = StrSubstitutor.replace(s, dynamicMap);
-		return URI.createURI(s);
+		return uri.createURI(s);
 	}
 }

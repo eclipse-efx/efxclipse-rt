@@ -13,7 +13,7 @@ package org.eclipse.fx.ui.services.resources;
 import java.io.IOException;
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.core.URI;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.scene.image.Image;

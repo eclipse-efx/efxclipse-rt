@@ -29,6 +29,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
+import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseToolItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolItem;
@@ -131,7 +132,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 			if (uri == null) {
 				getWidget().setGraphic(null);
 			} else {
-				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(URI.createURI(uri)));
+				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));
 			}
 		}
 

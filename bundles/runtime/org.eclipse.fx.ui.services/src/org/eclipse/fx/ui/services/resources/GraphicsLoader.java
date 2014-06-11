@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.core.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -102,6 +102,9 @@ public interface GraphicsLoader {
 		@Nullable
 		public static String suffix(@NonNull URI uri) {
 			String last = uri.lastSegment();
+			if( last == null ) {
+				return null;
+			}
 			int idx = last.lastIndexOf('.');
 			if (idx != -1) {
 				return last.substring(idx + 1).toLowerCase();

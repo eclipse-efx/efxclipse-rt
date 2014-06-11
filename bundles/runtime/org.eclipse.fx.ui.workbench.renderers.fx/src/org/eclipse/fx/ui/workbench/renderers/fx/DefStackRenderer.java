@@ -38,6 +38,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
+import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
@@ -500,7 +501,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@Inject
 		public void setIcon(@Named(UIEvents.UILabel.ICONURI) @Optional String iconUri) {
 			if (iconUri != null) {
-				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(URI.createURI(iconUri)));
+				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(iconUri))));
 			} else {
 				getWidget().setGraphic(null);
 			}

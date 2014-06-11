@@ -18,7 +18,7 @@ import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.core.URI;
 import org.eclipse.fx.osgi.util.OSGiFXMLLoader;
 import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;
 import org.osgi.framework.Bundle;

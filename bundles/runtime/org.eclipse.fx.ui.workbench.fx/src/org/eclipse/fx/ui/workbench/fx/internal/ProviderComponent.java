@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;

@@ -34,6 +34,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.ui.keybindings.KeySequence;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
+import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
@@ -181,7 +182,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 			if (uri == null) {
 				getWidget().setGraphic(null);
 			} else {
-				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(URI.createURI(uri)));
+				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));
 			}
 		}
 

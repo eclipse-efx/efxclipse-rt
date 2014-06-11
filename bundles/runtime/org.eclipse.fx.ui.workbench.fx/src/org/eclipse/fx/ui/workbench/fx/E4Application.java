@@ -323,7 +323,7 @@ public class E4Application extends AbstractE4Application {
 					return null;
 				}
 				GraphicsLoader l = appContext.get(GraphicsLoader.class);
-				return l.getImage(iconPath);
+				return l.getImage(new EMFUri(iconPath));
 			}
 		};
 	}

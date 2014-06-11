@@ -84,6 +84,7 @@ import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.services.theme.ThemeManager.Registration;
+import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.fx.key.KeyBindingDispatcher;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseWindowRenderer;
@@ -785,7 +786,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				List<Image> images = new ArrayList<>();
 				for (String uri : split) {
 					@SuppressWarnings("null")
-					Image img = this.graphicsLoader.getImage(URI.createURI(uri));
+					Image img = this.graphicsLoader.getImage(new EMFUri(URI.createURI(uri)));
 					if (img != null) {
 						images.add(img);
 					}
@@ -955,7 +956,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 						setText(item.getLocalizedLabel());
 						String uri = item.getIconURI();
 						if (uri != null) {
-							setGraphic(MultiMessageDialog.this.graphicsLoader.getGraphicsNode(URI.createURI(uri)));
+							setGraphic(MultiMessageDialog.this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));
 						}
 					}
 				}

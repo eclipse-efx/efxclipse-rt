@@ -18,7 +18,7 @@ import java.util.List;
 
 import javafx.scene.image.Image;
 
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.core.URI;
 import org.eclipse.fx.ui.services.resources.ImageProvider;
 
 /**
