@@ -11,14 +11,14 @@
 package org.eclipse.fx.testcases.e4.handlers;
 
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.e4.ui.workbench.IWorkbench;
+import org.eclipse.fx.ui.services.restart.RestartService;
 
 @SuppressWarnings("restriction")
 public class ExitHandler {
 	
 	@Execute
-	void close(IWorkbench workbench) {
-		workbench.close();
+	public void execute(RestartService restartService) {
+		restartService.shutdown();
 	}
 
 }

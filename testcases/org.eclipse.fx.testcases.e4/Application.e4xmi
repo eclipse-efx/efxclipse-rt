@@ -7,17 +7,20 @@
       <children xsi:type="advanced:Perspective" xmi:id="_m-PVAO6wEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.perspective.0" label="P 0">
         <tags>EFX_LC:bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.lifecycle.LifeCycle</tags>
         <children xsi:type="basic:PartSashContainer" xmi:id="_A7Q9oOL-EeGP-5z69KadAQ" horizontal="true">
-          <children xsi:type="basic:Part" xmi:id="_A7Q9oeL-EeGP-5z69KadAQ" containerData="10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ControlPanel" label="Control Stack" iconURI="">
-            <tags>Part-Toolbar-FullSpan</tags>
-            <tags>Part-ToolBarMenu-Bottom</tags>
-            <menus xsi:type="menu:PopupMenu" xmi:id="_l9uLYCTjEeKY8NYIo6jIvQ" elementId="org.eclipse.fx.testcases.e4.popupmenu.0">
-              <children xsi:type="menu:HandledMenuItem" xmi:id="_oWARYCTjEeKY8NYIo6jIvQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.7" label="Switch Perspective 2" command="_kCbZQO6yEeG4lfn-YKJbJw">
-                <parameters xmi:id="_tPAAoCTjEeKY8NYIo6jIvQ" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.2"/>
-              </children>
-            </menus>
-            <toolbar xmi:id="_FMzQEIEGEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.toolbar.0">
-              <children xsi:type="menu:DirectToolItem" xmi:id="_GVO3wIEGEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.directtoolitem.5" label="Hello World" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler2"/>
-            </toolbar>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_EYg3gPIdEeOji_iSrDmK-Q" elementId="org.eclipse.fx.testcases.e4.partsashcontainer.3" containerData="10">
+            <children xsi:type="basic:Part" xmi:id="_A7Q9oeL-EeGP-5z69KadAQ" containerData="90" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ControlPanel" label="Control Stack" iconURI="">
+              <tags>Part-Toolbar-FullSpan</tags>
+              <tags>Part-ToolBarMenu-Bottom</tags>
+              <menus xsi:type="menu:PopupMenu" xmi:id="_l9uLYCTjEeKY8NYIo6jIvQ" elementId="org.eclipse.fx.testcases.e4.popupmenu.0">
+                <children xsi:type="menu:HandledMenuItem" xmi:id="_oWARYCTjEeKY8NYIo6jIvQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.7" label="Switch Perspective 2" command="_kCbZQO6yEeG4lfn-YKJbJw">
+                  <parameters xmi:id="_tPAAoCTjEeKY8NYIo6jIvQ" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.2"/>
+                </children>
+              </menus>
+              <toolbar xmi:id="_FMzQEIEGEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.toolbar.0">
+                <children xsi:type="menu:DirectToolItem" xmi:id="_GVO3wIEGEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.directtoolitem.5" label="Hello World" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler2"/>
+              </toolbar>
+            </children>
+            <children xsi:type="basic:Part" xmi:id="_F1HYYPIdEeOji_iSrDmK-Q" elementId="org.eclipse.fx.testcases.e4.part.21" containerData="10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.StartCountPart" label="Start Count"/>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_A7Q9ouL-EeGP-5z69KadAQ" elementId="content.stack" containerData="70">
             <children xsi:type="basic:Part" xmi:id="_ZHcNwOL-EeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C0" iconURI="platform:/plugin/org.eclipse.fx.testcases.e4/icons/folder.png" closeable="true">
@@ -115,6 +118,7 @@
         <children xsi:type="menu:DirectMenuItem" xmi:id="_VdrD0ER8EeKso-cEr7pQbw" elementId="org.eclipse.fx.testcases.e4.directmenuitem.4" label="Event Sending" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.EventSender"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_N4FhcIfmEeKsYN0U3N_L9Q" elementId="org.eclipse.fx.testcases.e4.directmenuitem.7" label="Exit" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.ExitHandler"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_3n7coIfmEeKsYN0U3N_L9Q" elementId="org.eclipse.fx.testcases.e4.directmenuitem.8" label="Restart" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.RestartHandler"/>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_O6iooPIZEeOjuvJ_FxLtnA" elementId="org.eclipse.fx.testcases.e4.directmenuitem.15" label="Restart with cleared persisted state" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.CleanRestartHandler"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_Y2UZcMg4EeKo1rUjbZCXsQ" elementId="org.eclipse.fx.testcases.e4.directmenuitem.11" label="Dynamic Window" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DynamicWinHandler"/>
         <children xsi:type="menu:DynamicMenuContribution" xmi:id="_yP8EsOHBEeKlH9jWGqiIew" elementId="org.eclipse.fx.testcases.e4.dynamicmenucontribution.0" label="Test" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.contributions.DMContribution"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_uPNeUOJ-EeKZGIZ9VF1S7Q" elementId="org.eclipse.fx.testcases.e4.directmenuitem.13" label="Register dynamic lifecycle" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.RegisterDynamicLifecycle"/>
