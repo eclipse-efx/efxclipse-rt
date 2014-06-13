@@ -75,6 +75,7 @@ public class StyledTextArea extends Control {
 //	private int lastTextChangeReplaceCharCount;
 	
 	public StyledTextArea() {
+		getStylesheets().add(getClass().getResource("styledtextarea.css").toExternalForm());
 		contentProperty.set(new DefaultContent());
 		setFocusTraversable(true);
 	}
