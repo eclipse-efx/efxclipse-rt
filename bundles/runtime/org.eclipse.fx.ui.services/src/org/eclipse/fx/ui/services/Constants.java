@@ -61,6 +61,6 @@ public final class Constants {
 	 * Event sent when the application has been launched
 	 */
 	@NonNull
-	public static final String APPLICATION_LAUNCHED = ROOT_TOPIC + "E4Application/Launched"; //$NON-NLS-1$
+	public static final String APPLICATION_LAUNCHED = ROOT_TOPIC + "/E4Application/Launched"; //$NON-NLS-1$
 	
 }
