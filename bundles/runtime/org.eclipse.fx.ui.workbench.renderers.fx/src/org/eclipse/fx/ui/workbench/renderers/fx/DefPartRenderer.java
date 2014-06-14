@@ -80,10 +80,33 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 			WPart<BorderPane, Node, Node> part = ((WPart<BorderPane, Node, Node>) element.getWidget());
 			if (part == null)
 				return;
-			Node node = (Node) part.getWidget();
-			node.requestFocus();
+			if( ! checkFocusControl((Node) part.getWidget()) ) {
+				Node node = (Node) part.getWidget();
+				node.requestFocus();	
+			}
 		}
 
+	}
+	
+	public static boolean checkFocusControl(Node check) {
+		if (check.getScene() == null) {
+			return false;
+		}
+
+		Node n = check.getScene().getFocusOwner();
+
+		if (n == null) {
+			return false;
+		}
+
+		while (n.getParent() != null) {
+			if (n.getParent() == check) {
+				return true;
+			}
+			n = n.getParent();
+
+		}
+		return false;
 	}
 
 	static class PartImpl extends WLayoutedWidgetImpl<Pane, AnchorPane, MPart> implements WPart<Pane, Node, Node> {
@@ -115,7 +138,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					MPart domElement = getDomElement();
 					if( domElement != null ) {
 						PartImpl.this.service.activate(domElement, true);
-						if (!checkFocusControl() && (domElement.getObject() != null)) {
+						if (!checkFocusControl(getWidget()) && (domElement.getObject() != null)) {
 							// ContextInjectionFactory.invoke(domElement.getObject(),
 							// Focus.class, domElement.getContext(), null);
 							// if (!checkFocusControl()) {
@@ -127,28 +150,6 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				}
 			});
 			return p;
-		}
-
-		boolean checkFocusControl() {
-			Parent check = getWidget();
-			if (check.getScene() == null) {
-				return false;
-			}
-
-			Node n = check.getScene().getFocusOwner();
-
-			if (n == null) {
-				return false;
-			}
-
-			while (n.getParent() != null) {
-				if (n.getParent() == check) {
-					return true;
-				}
-				n = n.getParent();
-
-			}
-			return false;
 		}
 
 		@Override
