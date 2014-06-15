@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_JIaJEPNlEeOKm6R57HGa4g">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_R9qSgPNlEeOKm6R57HGa4g" featurename="children" parentElementId="org.eclipse.fx.code.compensator.app.perspectivestack.0">
+    <elements xsi:type="advanced:Perspective" xmi:id="_Zg4MUPNlEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.freeedit.perspective.0" label="Free edit">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_ejlRMPNlEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.freeedit.partsashcontainer.0" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_fgaF0PNlEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.freeedit.partstack.0" containerData="20">
+          <children xsi:type="basic:Part" xmi:id="_iX7skPNlEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.freeedit.part.0" contributionURI="bundleclass://org.eclipse.fx.code.compensator.freeedit/org.eclipse.fx.code.compensator.freeedit.FileList" label="Files" iconURI="platform:/plugin/org.eclipse.fx.code.compensator.freeedit/icons/22/view-list-tree.png"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_f6c9gPNlEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.freeedit.partstack.1" containerData="60"/>
+        <children xsi:type="basic:PartStack" xmi:id="_gQ-nIPNlEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.freeedit.partstack.2" containerData="20">
+          <children xsi:type="basic:Part" xmi:id="_tzdUsPNlEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.freeedit.part.1" contributionURI="bundleclass://org.eclipse.fx.code.compensator.freeedit/org.eclipse.fx.code.compensator.freeedit.FileOutline" label="Outline" iconURI="platform:/plugin/org.eclipse.fx.code.compensator.freeedit/icons/22/code-class.png"/>
+        </children>
+      </children>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>

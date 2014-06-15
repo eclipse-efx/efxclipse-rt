@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.code.compensator.editor.contrib">
+   <implementation class="org.eclipse.fx.code.compensator.editor.contrib.ServiceCollector"/>
+   <service>
+      <provide interface="org.eclipse.fx.code.compensator.editor.contrib.ServiceCollector"/>
+   </service>
+   <reference bind="addInputFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.InputFactory" name="InputFactory" policy="dynamic" unbind="removeInputFactory"/>
+   <reference bind="addDocumentFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.DocumentFactory" name="DocumentFactory" policy="dynamic" unbind="removeDocumentFactory"/>
+   <reference bind="addPartitionerFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.PartitionerFactory" name="PartitionerFactory" policy="dynamic" unbind="removePartitionerFactory"/>
+   <reference bind="addSourceViewerConfigurationFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory" name="SourceViewerConfigurationFactory" policy="dynamic" unbind="removeSourceViewerConfigurationFactory"/>
+</scr:component>

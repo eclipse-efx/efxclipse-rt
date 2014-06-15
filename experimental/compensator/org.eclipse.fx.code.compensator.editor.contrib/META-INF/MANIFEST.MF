@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Contrib
+Bundle-SymbolicName: org.eclipse.fx.code.compensator.editor.contrib
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.fx.code.compensator.editor;bundle-version="1.0.0",
+ org.eclipse.e4.core.contexts;bundle-version="1.3.100",
+ org.eclipse.e4.ui.model.workbench;bundle-version="1.1.0",
+ org.eclipse.text;bundle-version="3.5.300",
+ org.eclipse.fx.text;bundle-version="1.0.0",
+ org.eclipse.fx.text.ui;bundle-version="1.0.0",
+ org.eclipse.fx.code.compensator.model;bundle-version="0.1.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.10.0"
+Service-Component: OSGI-INF/services/servicecollector.xml,OSGI-INF/services/inputcf.xml,OSGI-INF/services/documentcf.xml,OSGI-INF/services/partitionercf.xml,OSGI-INF/services/sourceconfigcf.xml,
+ OSGI-INF/services/workbenchmodelcf.xml
+Bundle-ActivationPolicy: lazy

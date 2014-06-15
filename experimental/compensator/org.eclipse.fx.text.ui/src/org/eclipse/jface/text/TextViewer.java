@@ -1,0 +1,621 @@
+/*******************************************************************************
+ * Copyright (c) 2000, 2014 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *     Tom Eicher (Avaloq Evolution AG) - block selection mode
+ *     Markus Schorn <markus.schorn@windriver.com> - shift with trailing empty line - https://bugs.eclipse.org/325438
+ *******************************************************************************/
+package org.eclipse.jface.text;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javafx.scene.layout.AnchorPane;
+
+import org.eclipse.fx.ui.controls.styledtext.StyleRange;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.jface.text.projection.ChildDocument;
+import org.eclipse.jface.text.projection.ChildDocumentManager;
+import org.eclipse.jface.viewers.Viewer;
+
+public class TextViewer extends Viewer implements
+	ITextViewer, ITextViewerExtension, ITextViewerExtension2, ITextViewerExtension4, ITextViewerExtension6, ITextViewerExtension7, ITextViewerExtension8
+	/*,
+	IEditingSupportRegistry, ITextOperationTarget, ITextOperationTargetExtension,
+	IWidgetTokenOwner, IWidgetTokenOwnerExtension, IPostSelectionProvider*/ {
+	private StyledTextArea fTextWidget;
+	private IDocument fVisibleDocument;
+	private VisibleDocumentListener fVisibleDocumentListener= new VisibleDocumentListener();
+	private ISlaveDocumentManager fSlaveDocumentManager;
+	private IDocumentInformationMapping fInformationMapping;
+	private IDocumentAdapter fDocumentAdapter;
+	private WidgetCommand fWidgetCommand= new WidgetCommand();
+	protected List fTextListeners;
+	private int fRedrawCounter= 0;
+	private IRegion fLastSentSelectionChange;
+	private String fPartitioning;
+	private IDocument fDocument;
+	private boolean fReplaceTextPresentation;
+	private DocumentRewriteSessionListener fDocumentRewriteSessionListener= new DocumentRewriteSessionListener();
+	private IRewriteTarget fRewriteTarget;
+	private ViewerState fViewerState;
+	private List fTextInputListeners;
+	protected Position fMarkPosition;
+	private final String MARK_POSITION_CATEGORY="__mark_category_" + hashCode(); //$NON-NLS-1$
+	private final IPositionUpdater fMarkPositionUpdater= new DefaultPositionUpdater(MARK_POSITION_CATEGORY);
+	private List fTextPresentationListeners;
+	
+	public TextViewer() {
+		createControl();
+	}
+	
+	protected void createControl() {
+		fTextWidget = createTextWidget();
+		AnchorPane.setLeftAnchor(fTextWidget, 0.0);
+		AnchorPane.setRightAnchor(fTextWidget, 0.0);
+		AnchorPane.setTopAnchor(fTextWidget, 0.0);
+		AnchorPane.setBottomAnchor(fTextWidget, 0.0);
+		getChildren().add(fTextWidget);
+	}
+	
+	protected StyledTextArea getTextWidget() {
+		return fTextWidget;
+	}
+	
+	protected StyledTextArea createTextWidget() {
+		StyledTextArea styledText= new StyledTextArea();
+//		styledText.setLeftMargin(Math.max(styledText.getLeftMargin(), 2));
+		return styledText;
+	}
+	
+	public void setInput(Object input) {
+
+		IDocument document= null;
+		if (input instanceof IDocument)
+			document= (IDocument) input;
+
+		setDocument(document);
+	}
+	
+	public Object getInput() {
+		return getDocument();
+	}
+	
+	public void setDocumentPartitioning(String partitioning) {
+		fPartitioning= partitioning;
+	}
+	
+	/**
+	 * Sets this viewer's visible document. The visible document represents the
+	 * visible region of the viewer's input document.
+	 *
+	 * @param document the visible document
+	 */
+	protected void setVisibleDocument(IDocument document) {
+		if (fVisibleDocument == document && fVisibleDocument instanceof ChildDocument) {
+			// optimization for new child documents
+			return;
+		}
+
+		if (fVisibleDocument != null) {
+			if (fVisibleDocumentListener != null)
+				fVisibleDocument.removeDocumentListener(fVisibleDocumentListener);
+			if (fVisibleDocument != document)
+				freeSlaveDocument(fVisibleDocument);
+		}
+
+		fVisibleDocument= document;
+		initializeDocumentInformationMapping(fVisibleDocument);
+
+		initializeWidgetContents();
+		
+//TODO needs porting
+//		fFindReplaceDocumentAdapter= null;
+		if (fVisibleDocument != null && fVisibleDocumentListener != null)
+			fVisibleDocument.addDocumentListener(fVisibleDocumentListener);
+	}
+	
+	public IDocument getDocument() {
+		return fDocument;
+	}
+	
+	public void setDocument(IDocument document) {
+		fReplaceTextPresentation= true;
+		fireInputDocumentAboutToBeChanged(fDocument, document);
+
+		IDocument oldDocument= fDocument;
+		fDocument= document;
+
+		setVisibleDocument(fDocument);
+//TODO needs porting
+//		resetPlugins();
+		inputChanged(fDocument, oldDocument);
+
+		fireInputDocumentChanged(oldDocument, fDocument);
+		fLastSentSelectionChange= null;
+		fReplaceTextPresentation= false;
+	}
+	
+	public IRegion getVisibleRegion() {
+
+		IDocument document= getVisibleDocument();
+		if (document instanceof ChildDocument) {
+			Position p= ((ChildDocument) document).getParentDocumentRange();
+			return new Region(p.getOffset(), p.getLength());
+		}
+
+		return new Region(0, document == null ? 0 : document.getLength());
+	}
+	
+	protected void fireInputDocumentAboutToBeChanged(IDocument oldInput, IDocument newInput) {
+		List listener= fTextInputListeners;
+		if (listener != null) {
+			for (int i= 0; i < listener.size(); i++) {
+				ITextInputListener l= (ITextInputListener) listener.get(i);
+				l.inputDocumentAboutToBeChanged(oldInput, newInput);
+			}
+		}
+	}
+	
+	protected void fireInputDocumentChanged(IDocument oldInput, IDocument newInput) {
+		List listener= fTextInputListeners;
+		if (listener != null) {
+			for (int i= 0; i < listener.size(); i++) {
+				ITextInputListener l= (ITextInputListener) listener.get(i);
+				l.inputDocumentChanged(oldInput, newInput);
+			}
+		}
+	}
+	
+	protected IDocument getVisibleDocument() {
+		return fVisibleDocument;
+	}
+	
+	protected void freeSlaveDocument(IDocument slave) {
+		ISlaveDocumentManager manager= getSlaveDocumentManager();
+		if (manager != null && manager.isSlaveDocument(slave))
+			manager.freeSlaveDocument(slave);
+	}
+	
+	protected ISlaveDocumentManager getSlaveDocumentManager() {
+		if (fSlaveDocumentManager == null)
+			fSlaveDocumentManager= createSlaveDocumentManager();
+		return fSlaveDocumentManager;
+	}
+	
+	protected ISlaveDocumentManager createSlaveDocumentManager() {
+		return new ChildDocumentManager();
+	}
+	
+	protected void initializeDocumentInformationMapping(IDocument visibleDocument) {
+		ISlaveDocumentManager manager= getSlaveDocumentManager();
+		fInformationMapping= manager == null ? null : manager.createMasterSlaveMapping(visibleDocument);
+	}
+	
+	protected void inputChanged(Object newInput, Object oldInput) {
+
+		IDocument oldDocument= (IDocument) oldInput;
+		if (oldDocument != null) {
+
+			if (fMarkPosition != null && !fMarkPosition.isDeleted())
+				oldDocument.removePosition(fMarkPosition);
+
+			try {
+				oldDocument.removePositionUpdater(fMarkPositionUpdater);
+				oldDocument.removePositionCategory(MARK_POSITION_CATEGORY);
+
+			} catch (BadPositionCategoryException e) {
+			}
+		}
+
+		fMarkPosition= null;
+
+		if (oldDocument instanceof IDocumentExtension4) {
+			IDocumentExtension4 document= (IDocumentExtension4) oldDocument;
+			document.removeDocumentRewriteSessionListener(fDocumentRewriteSessionListener);
+		}
+
+//		super.inputChanged(newInput, oldInput);
+
+		if (newInput instanceof IDocumentExtension4) {
+			IDocumentExtension4 document= (IDocumentExtension4) newInput;
+			document.addDocumentRewriteSessionListener(fDocumentRewriteSessionListener);
+		}
+
+		IDocument newDocument= (IDocument) newInput;
+		if (newDocument != null) {
+			newDocument.addPositionCategory(MARK_POSITION_CATEGORY);
+			newDocument.addPositionUpdater(fMarkPositionUpdater);
+		}
+	}
+	
+	private void initializeWidgetContents() {
+
+		if (fTextWidget != null && fVisibleDocument != null) {
+
+			// set widget content
+			if (fDocumentAdapter == null)
+				fDocumentAdapter= createDocumentAdapter();
+
+			fDocumentAdapter.setDocument(fVisibleDocument);
+			fTextWidget.setContent(fDocumentAdapter);
+			System.err.println(fDocumentAdapter);
+
+			// invalidate presentation
+			invalidateTextPresentation();
+		}
+	}
+
+	protected IDocumentAdapter createDocumentAdapter() {
+		return new DefaultDocumentAdapter();
+	}
+	
+	public final void invalidateTextPresentation() {
+		if (fVisibleDocument != null) {
+			fWidgetCommand.event= null;
+			fWidgetCommand.start= 0;
+			fWidgetCommand.length= fVisibleDocument.getLength();
+			fWidgetCommand.text= fVisibleDocument.get();
+			updateTextListeners(fWidgetCommand);
+		}
+	}
+	
+	protected void updateTextListeners(WidgetCommand cmd) {
+		List textListeners= fTextListeners;
+		if (textListeners != null) {
+			textListeners= new ArrayList(textListeners);
+			DocumentEvent event= cmd.event;
+			if (event instanceof SlaveDocumentEvent)
+				event= ((SlaveDocumentEvent) event).getMasterEvent();
+
+			TextEvent e= new TextEvent(cmd.start, cmd.length, cmd.text, cmd.preservedText, event, redraws());
+			for (int i= 0; i < textListeners.size(); i++) {
+				ITextListener l= (ITextListener) textListeners.get(i);
+				l.textChanged(e);
+			}
+		}
+	}
+	
+	protected final boolean redraws() {
+		return fRedrawCounter <= 0;
+	}
+
+	protected void handleVisibleDocumentAboutToBeChanged(DocumentEvent event) {
+	}
+	
+	protected void handleVisibleDocumentChanged(DocumentEvent event) {
+	}
+
+	public void addTextListener(ITextListener listener) {
+
+		Assert.isNotNull(listener);
+
+		if (fTextListeners == null)
+			fTextListeners= new ArrayList();
+
+		if (!fTextListeners.contains(listener))
+			fTextListeners.add(listener);
+	}
+	
+	public void removeTextListener(ITextListener listener) {
+		Assert.isNotNull(listener);
+
+		if (fTextListeners != null) {
+			fTextListeners.remove(listener);
+			if (fTextListeners.size() == 0)
+				fTextListeners= null;
+		}
+	}
+	
+	public void addTextInputListener(ITextInputListener listener) {
+
+		Assert.isNotNull(listener);
+
+		if (fTextInputListeners == null)
+			fTextInputListeners= new ArrayList();
+
+		if (!fTextInputListeners.contains(listener))
+			fTextInputListeners.add(listener);
+	}
+	
+	public void removeTextInputListener(ITextInputListener listener) {
+
+		Assert.isNotNull(listener);
+
+		if (fTextInputListeners != null) {
+			fTextInputListeners.remove(listener);
+			if (fTextInputListeners.size() == 0)
+				fTextInputListeners= null;
+		}
+	}
+	
+	public void changeTextPresentation(TextPresentation presentation, boolean controlRedraw) {
+
+		if (presentation == null || !redraws())
+			return;
+
+		if (fTextWidget == null)
+			return;
+
+
+		/*
+		 * Call registered text presentation listeners
+		 * and let them apply their presentation.
+		 */
+		if (fTextPresentationListeners != null) {
+			ArrayList listeners= new ArrayList(fTextPresentationListeners);
+			for (int i= 0, size= listeners.size(); i < size; i++) {
+				ITextPresentationListener listener= (ITextPresentationListener)listeners.get(i);
+				listener.applyTextPresentation(presentation);
+			}
+		}
+
+		if (presentation.isEmpty())
+			return;
+
+		if (controlRedraw)
+			fTextWidget.setRedraw(false);
+
+		if (fReplaceTextPresentation)
+			applyTextPresentation(presentation);
+		else
+			addPresentation(presentation);
+
+		if (controlRedraw)
+			fTextWidget.setRedraw(true);
+	}
+	
+	private void addPresentation(TextPresentation presentation) {
+
+		StyleRange range= presentation.getDefaultStyleRange();
+		if (range != null) {
+
+			range= modelStyleRange2WidgetStyleRange(range);
+			if (range != null)
+				fTextWidget.setStyleRange(range);
+
+			ArrayList ranges= new ArrayList(presentation.getDenumerableRanges());
+			Iterator e= presentation.getNonDefaultStyleRangeIterator();
+			while (e.hasNext()) {
+				range= (StyleRange) e.next();
+				range= modelStyleRange2WidgetStyleRange(range);
+				if (range != null)
+					ranges.add(range);
+			}
+
+			if (!ranges.isEmpty())
+				fTextWidget.replaceStyleRanges(0, 0, (StyleRange[])ranges.toArray(new StyleRange[ranges.size()]));
+
+		} else {
+			IRegion region= modelRange2WidgetRange(presentation.getCoverage());
+			if (region == null)
+				return;
+
+			List list= new ArrayList(presentation.getDenumerableRanges());
+			Iterator e= presentation.getAllStyleRangeIterator();
+			while (e.hasNext()) {
+				range= (StyleRange) e.next();
+				range= modelStyleRange2WidgetStyleRange(range);
+				if (range != null)
+					list.add(range);
+			}
+
+			if (!list.isEmpty()) {
+				StyleRange[] ranges= new StyleRange[list.size()];
+				list.toArray(ranges);
+				fTextWidget.replaceStyleRanges(region.getOffset(), region.getLength(), ranges);
+			}
+		}
+	}
+	
+	private void applyTextPresentation(TextPresentation presentation) {
+		List list= new ArrayList(presentation.getDenumerableRanges());
+		Iterator e= presentation.getAllStyleRangeIterator();
+		while (e.hasNext()) {
+			StyleRange range= (StyleRange) e.next();
+			range= modelStyleRange2WidgetStyleRange(range);
+			if (range != null)
+				list.add(range);
+		}
+
+		if (!list.isEmpty()) {
+			StyleRange[] ranges= new StyleRange[list.size()];
+			list.toArray(ranges);
+			fTextWidget.setStyleRanges(ranges);
+		}
+	}
+	
+	protected StyleRange modelStyleRange2WidgetStyleRange(StyleRange range) {
+		IRegion region= modelRange2WidgetRange(new Region(range.start, range.length));
+		if (region != null) {
+			StyleRange result= (StyleRange) range.clone();
+			result.start= region.getOffset();
+			result.length= region.getLength();
+			return result;
+		}
+		return null;
+	}
+	
+	public IRegion modelRange2WidgetRange(IRegion modelRange) {
+		if (fInformationMapping == null)
+			return modelRange;
+
+		try {
+
+			if (modelRange.getLength() < 0) {
+				Region reversed= new Region(modelRange.getOffset() + modelRange.getLength(), -modelRange.getLength());
+				IRegion result= fInformationMapping.toImageRegion(reversed);
+				if (result != null)
+					return new Region(result.getOffset() + result.getLength(), -result.getLength());
+			}
+			return fInformationMapping.toImageRegion(modelRange);
+
+		} catch (BadLocationException x) {
+		}
+
+		return null;
+	}
+	
+	public IRewriteTarget getRewriteTarget() {
+		if (fRewriteTarget == null)
+			fRewriteTarget= new RewriteTarget();
+		return fRewriteTarget;
+	}
+	
+	public final void setRedraw(boolean redraw) {
+//TODO needs porting
+//		setRedraw(redraw, -1);
+	}
+
+	class VisibleDocumentListener implements IDocumentListener {
+
+		public void documentAboutToBeChanged(DocumentEvent e) {
+			if (e.getDocument() == getVisibleDocument())
+				fWidgetCommand.setEvent(e);
+			handleVisibleDocumentAboutToBeChanged(e);
+		}
+
+		public void documentChanged(DocumentEvent e) {
+			if (fWidgetCommand.event == e)
+				updateTextListeners(fWidgetCommand);
+			fLastSentSelectionChange= null;
+			handleVisibleDocumentChanged(e);
+		}
+	}
+	
+	/**
+	 * Represents a replace command that brings the text viewer's text widget
+	 * back in synchronization with text viewer's document after the document
+	 * has been changed.
+	 */
+	protected class WidgetCommand {
+
+		/** The document event encapsulated by this command. */
+		public DocumentEvent event;
+		/** The start of the event. */
+		public int start;
+		/** The length of the event. */
+		public int length;
+		/** The inserted and replaced text segments of <code>event</code>. */
+		public String text;
+		/** The replaced text segments of <code>event</code>. */
+		public String preservedText;
+
+		/**
+		 * Translates a document event into the presentation coordinates of this text viewer.
+		 *
+		 * @param e the event to be translated
+		 */
+		public void setEvent(DocumentEvent e) {
+
+			event= e;
+
+			start= e.getOffset();
+			length= e.getLength();
+			text= e.getText();
+
+			if (length != 0) {
+				try {
+
+					if (e instanceof SlaveDocumentEvent) {
+						SlaveDocumentEvent slave= (SlaveDocumentEvent) e;
+						DocumentEvent master= slave.getMasterEvent();
+						if (master != null)
+							preservedText= master.getDocument().get(master.getOffset(), master.getLength());
+					} else {
+						preservedText= e.getDocument().get(e.getOffset(), e.getLength());
+					}
+
+				} catch (BadLocationException x) {
+					preservedText= null;
+//					if (TRACE_ERRORS)
+//						System.out.println(JFaceTextMessages.getString("TextViewer.error.bad_location.WidgetCommand.setEvent")); //$NON-NLS-1$
+				}
+			} else
+				preservedText= null;
+		}
+	}
+	
+	private class DocumentRewriteSessionListener implements IDocumentRewriteSessionListener {
+
+		/*
+		 * @see org.eclipse.jface.text.IDocumentRewriteSessionListener#documentRewriteSessionChanged(org.eclipse.jface.text.DocumentRewriteSessionEvent)
+		 */
+		public void documentRewriteSessionChanged(DocumentRewriteSessionEvent event) {
+			IRewriteTarget target= TextViewer.this.getRewriteTarget();
+			final boolean toggleRedraw;
+//			if (REDRAW_BUG_158746)
+//				toggleRedraw= true;
+//			else
+				toggleRedraw= event.getSession().getSessionType() != DocumentRewriteSessionType.UNRESTRICTED_SMALL;
+			final boolean viewportStabilize= !toggleRedraw;
+			if (DocumentRewriteSessionEvent.SESSION_START == event.getChangeType()) {
+				if (toggleRedraw)
+					target.setRedraw(false);
+				target.beginCompoundChange();
+				if (viewportStabilize && fViewerState == null)
+					fViewerState= new ViewerState();
+			} else if (DocumentRewriteSessionEvent.SESSION_STOP == event.getChangeType()) {
+				if (viewportStabilize && fViewerState != null) {
+					fViewerState.restore(true);
+					fViewerState= null;
+				}
+				target.endCompoundChange();
+				if (toggleRedraw)
+					target.setRedraw(true);
+			}
+		}
+	}
+	
+	/**
+	 * The viewer's rewrite target.
+	 * @since 2.0
+	 */
+	class RewriteTarget implements IRewriteTarget {
+
+		/*
+		 * @see org.eclipse.jface.text.IRewriteTarget#beginCompoundChange()
+		 */
+		public void beginCompoundChange() {
+//TODO needs porting			
+//			if (fUndoManager != null)
+//				fUndoManager.beginCompoundChange();
+		}
+
+		/*
+		 * @see org.eclipse.jface.text.IRewriteTarget#endCompoundChange()
+		 */
+		public void endCompoundChange() {
+//TODO needs porting			
+//			if (fUndoManager != null)
+//				fUndoManager.endCompoundChange();
+		}
+
+		/*
+		 * @see org.eclipse.jface.text.IRewriteTarget#getDocument()
+		 */
+		public IDocument getDocument() {
+			return TextViewer.this.getDocument();
+		}
+
+		/*
+		 * @see org.eclipse.jface.text.IRewriteTarget#setRedraw(boolean)
+		 */
+		public void setRedraw(boolean redraw) {
+			TextViewer.this.setRedraw(redraw);
+		}
+	}
+	
+	private final class ViewerState {
+//TODO needs porting	
+		public void restore(boolean restoreViewport) {
+			
+		}
+	}
+}
