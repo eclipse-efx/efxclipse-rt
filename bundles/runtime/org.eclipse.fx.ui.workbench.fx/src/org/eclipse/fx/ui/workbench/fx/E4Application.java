@@ -61,6 +61,7 @@ public class E4Application extends AbstractE4Application {
 	
 	private static final String EXIT_CODE = "e4.osgi.exit.code"; //$NON-NLS-1$
 	private static final String PRIMARY_STAGE_KEY = "primaryStage"; //$NON-NLS-1$
+	private static final String CREATE_WORKBENCH_ON_NON_UI_THREAD_ARG = "createWorkbenchOnNonUIThread"; //$NON-NLS-1$
 	
 	static E4Application SELF;
 
@@ -123,37 +124,55 @@ public class E4Application extends AbstractE4Application {
 	 *            {@link Application}.
 	 */
 	public void jfxStart(IApplicationContext context, Application jfxApplication, Stage primaryStage) {
-		if (this.workbench == null) {
-			if( ! initE4Workbench(context, jfxApplication, primaryStage) ) {
-				return;
+		
+		Runnable startRunnable = new Runnable() {
+			@Override
+			public void run() {
+				if (E4Application.this.workbench == null) {
+					if(! initE4Workbench(context, jfxApplication, primaryStage) ) {
+						return;
+					}
+				}
+				
+				E4Workbench workbench = E4Application.this.workbench;
+				if( workbench == null ) {
+					throw new IllegalStateException("Not workbench instance yet available"); //$NON-NLS-1$
+				}
+				
+				IEclipseContext wbContext = workbench.getContext();
+				if( wbContext == null ) {
+					throw new IllegalStateException("The workbench has no context assigned"); //$NON-NLS-1$
+				}
+				
+				UISynchronize uiSync = workbench.getContext().get(UISynchronize.class);
+				uiSync.syncExec(new Runnable(){
+					@Override
+					public void run() {
+						
+						E4Application.this.instanceLocation = (Location) wbContext.get(E4Workbench.INSTANCE_LOCATION);
+						
+						try {
+							if (!checkInstanceLocation(E4Application.this.instanceLocation, wbContext))
+								return;
+
+							E4Application.this.workbenchContext = E4Application.this.workbench.getContext();
+							
+							// Create and run the UI (if any)
+							workbench.createAndRunUI(E4Application.this.workbench.getApplication());
+
+						} finally {
+							postJfxStarted(context);
+						}
+					}
+				});
 			}
-		}
+		};
 		
-		E4Workbench workbench = this.workbench;
-		if( workbench == null ) {
-			throw new IllegalStateException("Not workbench instance yet available"); //$NON-NLS-1$
-		}
-		
-		IEclipseContext wbContext = workbench.getContext();
-		if( wbContext == null ) {
-			throw new IllegalStateException("The workbench has no context assigned"); //$NON-NLS-1$
-		}
-		
-
-		this.instanceLocation = (Location) wbContext.get(E4Workbench.INSTANCE_LOCATION);
-
-		try {
-			if (!checkInstanceLocation(this.instanceLocation, wbContext))
-				return;
-
-			this.workbenchContext = this.workbench.getContext();
-
-			// Create and run the UI (if any)
-			workbench.createAndRunUI(this.workbench.getApplication());
-
-			return;
-		} finally {
-			postJfxStarted(context);
+		if (getArgValue(CREATE_WORKBENCH_ON_NON_UI_THREAD_ARG, context, true) != null) {
+			Thread t = new Thread(startRunnable);
+			t.start();
+		} else {
+			startRunnable.run();
 		}
 	}
 

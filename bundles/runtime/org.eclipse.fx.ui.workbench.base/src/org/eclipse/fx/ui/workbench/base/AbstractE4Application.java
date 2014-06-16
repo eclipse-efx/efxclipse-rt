@@ -486,7 +486,7 @@ public abstract class AbstractE4Application implements IApplication {
 		windowContext.set(SelectionAggregator.class, selectionAggregator);
 	}
 
-	private static String getArgValue(String argName, IApplicationContext applicationContext, boolean singledCmdArgValue) {
+	protected static String getArgValue(String argName, IApplicationContext applicationContext, boolean singledCmdArgValue) {
 		// Is it in the arg list ?
 		if (argName == null || argName.length() == 0)
 			return null;
