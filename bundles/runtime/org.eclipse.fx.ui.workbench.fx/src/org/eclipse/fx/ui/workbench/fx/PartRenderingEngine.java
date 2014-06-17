@@ -453,9 +453,9 @@ public class PartRenderingEngine implements IPresentationEngine {
 				renderer.focus(element);
 			}
 		} catch (InjectionException e) {
-			this.logger.errorf("Failed to grant focus to element (%s)", element.getElementId(), e); //$NON-NLS-1$
+			this.logger.errorf("Failed to grant focus to element (%s)", e, element.getElementId()); //$NON-NLS-1$
 		} catch (RuntimeException e) {
-			this.logger.errorf("Failed to grant focus via DI to element (%s)", element.getElementId(), e); //$NON-NLS-1$
+			this.logger.errorf("Failed to grant focus via DI to element (%s)", e, element.getElementId()); //$NON-NLS-1$
 		}
 	}
 }
