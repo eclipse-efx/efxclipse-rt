@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.runtime.Assert;
@@ -37,7 +38,6 @@ import org.eclipse.e4.core.services.log.ILoggerProvider;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.core.services.translation.TranslationProviderFactory;
 import org.eclipse.e4.core.services.translation.TranslationService;
-import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.internal.workbench.ActiveChildLookupFunction;
 import org.eclipse.e4.ui.internal.workbench.ActivePartLookupFunction;
 import org.eclipse.e4.ui.internal.workbench.E4Workbench;
@@ -73,6 +73,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.osgi.util.LoggerCreator;
 import org.eclipse.fx.ui.services.restart.RestartService;
+import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.base.internal.Activator;
 import org.eclipse.fx.ui.workbench.base.internal.LoggerProviderImpl;
 import org.eclipse.fx.ui.workbench.base.restart.RestartPreferenceUtil;
@@ -146,7 +147,7 @@ public abstract class AbstractE4Application implements IApplication {
 	protected static String[] getApplicationArguments(IApplicationContext applicationContext) {
 		return (String[]) applicationContext.getArguments().get(IApplicationContext.APPLICATION_ARGS);
 	}
-
+	
 	/**
 	 * Create the workbench instance
 	 * 
@@ -158,10 +159,13 @@ public abstract class AbstractE4Application implements IApplication {
 	 */
 	@SuppressWarnings("null")
 	@Nullable
-	public E4Workbench createE4Workbench(IApplicationContext applicationContext, IEclipseContext appContext) {
+	public E4Workbench createE4Workbench(IApplicationContext applicationContext, final IEclipseContext appContext) {
 		ContextInjectionFactory.setDefault(appContext);
 
-		appContext.set(UISynchronize.class, createSynchronizer(appContext));
+		@NonNull
+		UISynchronize uiSync = createSynchronizer(appContext);
+		appContext.set(org.eclipse.e4.ui.di.UISynchronize.class, (org.eclipse.e4.ui.di.UISynchronize)uiSync);
+		appContext.set(UISynchronize.class, uiSync);
 		appContext.set(Realm.class, createRealm(appContext));
 		appContext.set(IApplicationContext.class, applicationContext);
 		appContext.set(IResourceUtilities.class, createResourceUtility(appContext));
@@ -182,8 +186,13 @@ public abstract class AbstractE4Application implements IApplication {
 		if (lifeCycleURI != null) {
 			this.lcManager = factory.create(lifeCycleURI, appContext);
 			if (this.lcManager != null) {
-				// Let the manager manipulate the appContext if desired
-				Boolean rv = (Boolean) ContextInjectionFactory.invoke(this.lcManager, PostContextCreate.class, appContext, Boolean.TRUE);
+				Boolean rv = uiSync.syncExec(new Callable<Boolean>() {
+					@Override
+					public Boolean call() throws Exception {
+						return (Boolean)ContextInjectionFactory.invoke(AbstractE4Application.this.lcManager, PostContextCreate.class, appContext, Boolean.TRUE);
+					}
+				}, null);
+				
 				if (rv != null && !rv.booleanValue()) {
 					return null;
 				}
@@ -237,7 +246,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 		return workbench;
 	}
-
+	
 	/**
 	 * save the model
 	 */

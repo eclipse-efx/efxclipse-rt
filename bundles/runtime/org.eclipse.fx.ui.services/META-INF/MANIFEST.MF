@@ -8,6 +8,7 @@ Export-Package: org.eclipse.fx.ui.services,
  org.eclipse.fx.ui.services.commands,
  org.eclipse.fx.ui.services.resources,
  org.eclipse.fx.ui.services.restart,
+ org.eclipse.fx.ui.services.sync,
  org.eclipse.fx.ui.services.theme
 Bundle-Vendor: %Bundle-Vendor
 Import-Package: javafx.scene;version="2.0.0",

@@ -12,9 +12,6 @@ package org.eclipse.fx.ui.workbench.fx;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.RunnableFuture;
 
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -23,7 +20,6 @@ import javafx.stage.Stage;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.internal.workbench.E4Workbench;
 import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.IWorkbench;
@@ -36,8 +32,10 @@ import org.eclipse.fx.osgi.util.AbstractJFXApplication;
 import org.eclipse.fx.osgi.util.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
+import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
 import org.eclipse.fx.ui.workbench.fx.internal.GraphicsLoaderImpl;
+import org.eclipse.fx.ui.workbench.fx.internal.UISynchronizeImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.osgi.framework.Bundle;
@@ -299,33 +297,7 @@ public class E4Application extends AbstractE4Application {
 
 	@Override
 	protected UISynchronize createSynchronizer(IEclipseContext appContext) {
-		return new UISynchronize() {
-
-			@Override
-			public void syncExec(final Runnable runnable) {
-				if (javafx.application.Platform.isFxApplicationThread()) {
-					runnable.run();
-				} else {
-					RunnableFuture<?> task = new FutureTask<Void>(runnable, null);
-
-					javafx.application.Platform.runLater(task);
-
-					try {
-						// wait for task to complete
-						task.get();
-					} catch (InterruptedException | ExecutionException e) {
-						LOGGER.error("Unable to wait until the task is completed", e); //$NON-NLS-1$
-					} finally {
-						task.cancel(true);
-					}
-				}
-			}
-
-			@Override
-			public void asyncExec(Runnable runnable) {
-				javafx.application.Platform.runLater(runnable);
-			}
-		};
+		return ContextInjectionFactory.make(UISynchronizeImpl.class, appContext);
 	}
 
 	@Override
