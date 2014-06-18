@@ -1,23 +1,38 @@
 package org.eclipse.fx.testcases.e4.lifecycle;
 
-import java.net.URL;
-
-import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
-import org.eclipse.fx.ui.dialogs.TitleAreaDialog;
+import org.eclipse.fx.ui.services.sync.UISynchronize;
+import org.eclipse.fx.ui.services.sync.UISynchronize.BlockCondition;
 
+@SuppressWarnings("restriction")
 public class ApplicationLifecycle {
 	@PostContextCreate
-	boolean showStartUp() {
-		TitleAreaDialog d = new TitleAreaDialog(null,"Application Lifecycle","Application Lifecycle","Sample for @PostContextCreate",(URL)null) {
-			
-			@Override
-			protected Node createDialogContent() {
-				return new Label("Proceed?");
-			}
-		};
-		return d.open() == TitleAreaDialog.OK_BUTTON;
+	boolean showStartUp(UISynchronize sync) {
+		BlockCondition<Boolean> c = new BlockCondition<Boolean>();
+		Stage s = new Stage();
+		HBox hBox = new HBox();
+		{
+			Button b = new Button("Proceed");
+			b.setOnAction((e) -> c.release(Boolean.TRUE));
+			hBox.getChildren().add(b);
+		}
+		
+		{
+			Button b = new Button("Cancel");
+			b.setOnAction((e) -> c.release(Boolean.FALSE));
+			hBox.getChildren().add(b);
+		}
+		
+		s.setScene(new Scene(hBox,200,200));
+		s.show();
+		Boolean rv = sync.block(c);
+		s.close();
+		
+		return rv;
 	}
 }

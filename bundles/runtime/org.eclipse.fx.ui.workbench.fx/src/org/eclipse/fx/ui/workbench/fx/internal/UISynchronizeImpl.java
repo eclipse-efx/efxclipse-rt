@@ -15,17 +15,24 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
+import org.eclipse.fx.core.Callback;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+import com.sun.javafx.tk.Toolkit;
 
 /**
  * Implementation of the UISynchronize service for JavaFX
  */
+@SuppressWarnings("restriction")
 public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implements UISynchronize {
 	
 	@Inject
@@ -83,5 +90,19 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 		javafx.application.Platform.runLater(runnable);
 	}
 	
+	@Override
+	public <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition) {
+		AtomicReference<@Nullable T> rv = new AtomicReference<>();
+		blockCondition.subscribeUnblockedCallback(new Callback<T>() {
+
+			@Override
+			public void call(@Nullable T value) {
+				rv.set(value);
+				Toolkit.getToolkit().exitNestedEventLoop(blockCondition, null);
+			}
+		});
+		Toolkit.getToolkit().enterNestedEventLoop(blockCondition);
+		return rv.get();
+	}
 }
 
