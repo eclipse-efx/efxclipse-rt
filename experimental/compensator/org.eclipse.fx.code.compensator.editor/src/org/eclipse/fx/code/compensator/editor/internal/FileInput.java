@@ -32,7 +32,7 @@ public class FileInput implements Input<String>, ContentTypeProvider {
 			StringBuilder b = new StringBuilder();
 			String line;
 			while( (line = reader.readLine()) != null ) {
-				b.append(line);
+				b.append(line+"\n");
 			}
 			reader.close();
 			return b.toString();
