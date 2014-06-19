@@ -85,6 +85,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		rootContainer.setSpacing(0);
 
 		lineRuler = new LineRuler();
+		lineRuler.visibleProperty().bind(getSkinnable().lineRulerVisibleProperty());
+		lineRuler.managedProperty().bind(getSkinnable().lineRulerVisibleProperty());
 		rootContainer.getChildren().add(lineRuler);
 		
 		contentView = new ListView<Line>() {
@@ -609,7 +611,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		
 		public void setDomainElement(Line line) {
 			if( line != this.line ) {
-				lineText.setText(lineList.indexOf(line)+"");
+				lineText.setText(lineList.indexOf(line)+1+"");
 				rootContainer.layout();
 			}
 		}

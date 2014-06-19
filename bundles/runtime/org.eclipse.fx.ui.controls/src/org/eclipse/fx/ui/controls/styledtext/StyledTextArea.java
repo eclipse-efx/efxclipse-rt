@@ -63,6 +63,7 @@ public class StyledTextArea extends Control {
 	
 	private StyledTextRenderer renderer = new StyledTextRenderer();
 	private IntegerProperty caretOffsetProperty = new SimpleIntegerProperty(this, "caretOffset", -1);
+	private BooleanProperty lineRulerVisible = new SimpleBooleanProperty(this, "lineRulerVisible");
 	
 //	private int lastTextChangeStart;
 //
@@ -111,6 +112,18 @@ public class StyledTextArea extends Control {
 	@Override
 	protected Skin<?> createDefaultSkin() {
 		return new StyledTextSkin(this);
+	}
+	
+	public BooleanProperty lineRulerVisibleProperty() {
+		return lineRulerVisible;
+	}
+	
+	public void setLineRulerVisible(boolean lineRulerVisible) {
+		this.lineRulerVisible.set(lineRulerVisible);
+	}
+	
+	public boolean isLineRulerVisible() {
+		return this.lineRulerVisible.get();
 	}
 	
 	public IntegerProperty caretOffsetProperty() {
