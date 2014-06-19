@@ -224,7 +224,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 //		Event.fireEvent(getControl(), event.copyFor(getControl(), getControl()));
 	}
 	
-	public void mousePressed(MouseEvent event, Set<LineCell> visibleCells) {
+	public void mousePressed(MouseEvent event, List<LineCell> visibleCells) {
 		Point2D p = new Point2D(event.getX(), event.getY());
 		for( LineCell cell : visibleCells ) {
 			if( cell.getBoundsInParent().contains(p) ) {

@@ -30,7 +30,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.IndexedCell;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -48,6 +50,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -67,7 +70,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	
 	private ObservableList<Line> lineList = FXCollections.observableArrayList();
 	
-	private Set<LineCell> visibleCells = new HashSet<>();
+//	private Set<LineCell> visibleCells = new HashSet<>();
 	private Map<LineCell, LineInfo> lineInfoMap = new HashMap<>();
 
 	private Font boldFont;
@@ -75,20 +78,21 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	private Font boldItalicFont;
 	
 	private Font italicFont;
+	private HBox rootContainer;
 	
 	public StyledTextSkin(StyledTextArea styledText) {
 		super(styledText, new StyledTextBehavior(styledText));
 
-		HBox b = new HBox();
-		b.setSpacing(0);
+		rootContainer = new HBox();
+		rootContainer.setSpacing(0);
 
 		lineRuler = new LineRuler();
-		b.getChildren().add(lineRuler);
+		rootContainer.getChildren().add(lineRuler);
 		
 		contentView = new ListView<Line>() {
 			@Override
 			protected Skin<?> createDefaultSkin() {
-				return new MyListViewSkin<Line>(this);
+				return new MyListViewSkin(this);
 			}
 		};
 		contentView.getStyleClass().add("styled-text-area");
@@ -118,7 +122,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 			@Override
 			public void handle(MouseEvent event) {
-				getBehavior().mousePressed(event, visibleCells);
+				getBehavior().mousePressed(event, getCurrentVisibleCells());
 				// The consuming does not help because it looks like the
 				// selection change happens earlier => should be push a new ListViewBehavior?
 				event.consume();
@@ -134,8 +138,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		HBox.setHgrow(contentView,Priority.ALWAYS);
 		
 //		b.getChildren().addAll(lineView);
-		b.getChildren().addAll(contentView);
-		getChildren().addAll(b);
+		rootContainer.getChildren().addAll(contentView);
+		getChildren().addAll(rootContainer);
 		
 		styledText.caretOffsetProperty().addListener(new ChangeListener<Number>() {
 
@@ -144,7 +148,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					Number oldValue, Number newValue) {
 				int lineIndex = getSkinnable().getContent().getLineAtOffset(newValue.intValue());
 				Line lineObject = lineList.get(lineIndex);
-				for( LineCell c : visibleCells ) {
+				getFlow().show(lineIndex);
+				for( LineCell c : getCurrentVisibleCells() ) {
 					if( c.domainElement == lineObject ) {
 						// Adjust the selection
 						if( contentView.getSelectionModel().getSelectedItem() != c.domainElement ) {
@@ -156,18 +161,26 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						
 						flow.requestLayout();
 						
-						break;
+						return;
 					}
 				}
+				
 			}
 		});
+	}
+	
+	private MyVirtualFlow getFlow() {
+		if( contentView == null || contentView.getSkin() == null ) {
+			return null;
+		}
+		return ((MyListViewSkin)contentView.getSkin()).getFlow();
 	}
 	
 	public double getLineHeight(int caretPosition) {
 		int lineIndex = getSkinnable().getContent().getLineAtOffset(caretPosition);
 		Line lineObject = lineList.get(lineIndex);
 		
-		for( LineCell c : visibleCells ) {
+		for( LineCell c : getCurrentVisibleCells() ) {
 			if( c.domainElement == lineObject ) {
 				return c.getHeight();
 			}
@@ -183,7 +196,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		
 		int lineIndex = getSkinnable().getContent().getLineAtOffset(caretPosition);
 		Line lineObject = lineList.get(lineIndex);
-		for( LineCell c : visibleCells ) {
+		for( LineCell c : getCurrentVisibleCells() ) {
 			if( c.domainElement == lineObject ) {
 				RegionImpl container = (RegionImpl)c.getGraphic();
 				TextFlow flow = (TextFlow)container.getChildren().get(0);
@@ -262,9 +275,16 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	}
 	
 	public void redraw() {
-		for( LineCell l : visibleCells ) {
+		for( LineCell l : getCurrentVisibleCells() ) {
 			l.update();
 		}
+	}
+	
+	List<LineCell> getCurrentVisibleCells() {
+		if( contentView == null || contentView.getSkin() == null ) {
+			return Collections.emptyList();
+		}
+		return ((MyListViewSkin)contentView.getSkin()).getFlow().getCells();
 	}
 	
 	Font getFontByStyle(int style) {
@@ -376,7 +396,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			
 			int lineIndex = getSkinnable().getContent().getLineAtOffset(caretPosition);
 			Line lineObject = lineList.get(lineIndex);
-			for( LineCell c : visibleCells ) {
+			for( LineCell c : getCurrentVisibleCells() ) {
 				if( c.domainElement == lineObject ) {
 					RegionImpl container = (RegionImpl)c.getGraphic();
 					TextFlow flow = (TextFlow)container.getChildren().get(0);
@@ -415,7 +435,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		protected void updateItem(Line arg0, boolean arg1) {
 			if( ! arg1 ) {
 				domainElement = arg0;
-				visibleCells.add(this);
 				LineInfo lineInfo = lineInfoMap.get(this);
 				if( lineInfo == null ) {
 					lineInfo = new LineInfo();
@@ -483,7 +502,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			} else {
 				setGraphic(null);
 				domainElement = null;
-				visibleCells.remove(this);
 				LineInfo lineInfo = lineInfoMap.remove(this);
 				if( lineInfo != null ) {
 					lineRuler.getChildren().remove(lineInfo);
@@ -576,18 +594,38 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	}
 	
 	class LineInfo extends HBox {
-		private Label l;
+		private Label markerLabel;
+		private Label lineText;
 		private Line line;
 		
 		public LineInfo() {
-			l = new Label();
-			getChildren().add(l);
+			markerLabel = new Label();
+			markerLabel.setPrefWidth(20);
+			lineText = new Label();
+			lineText.setMaxWidth(Double.MAX_VALUE);
+			lineText.setMaxHeight(Double.MAX_VALUE);
+			lineText.setPrefWidth(-1);
+			lineText.setAlignment(Pos.CENTER_RIGHT);
+			HBox.setHgrow(lineText, Priority.ALWAYS);
+			getChildren().addAll(markerLabel, lineText);
 		}
 		
 		public void setDomainElement(Line line) {
 			if( line != this.line ) {
-				l.setText(lineList.indexOf(line)+"");
+				lineText.setText(lineList.indexOf(line)+"");
+				rootContainer.layout();
 			}
+		}
+		
+		@Override
+		protected void layoutChildren() {
+			super.layoutChildren();
+		}
+		
+		@Override
+		protected double computePrefWidth(double height) {
+			// TODO Auto-generated method stub
+			return super.computePrefWidth(height);
 		}
 	}
 	
@@ -595,30 +633,62 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		@Override
 		protected void layoutChildren() {
 			super.layoutChildren();
-			for( LineCell c : visibleCells ) {
+			Set<Node> children = new HashSet<Node>(getChildren());
+			List<LineInfo> layouted = new ArrayList<>();
+			double maxWidth = 0;
+			for( LineCell c : ((MyListViewSkin)contentView.getSkin()).getFlow().getCells() ) {
 				LineInfo lineInfo = lineInfoMap.get(c);
 				if( lineInfo != null ) {
+					layouted.add(lineInfo);
+					maxWidth = Math.max(maxWidth, lineInfo.getWidth());
 					lineInfo.relocate(0, c.getLayoutY());
+					lineInfo.resize(lineInfo.prefWidth(-1), c.getHeight());
+					lineInfo.setVisible(true);
+					children.remove(lineInfo);
 				}
 			}
+			
+			for( LineInfo l : layouted ) {
+				System.err.println("WIDHT: " + maxWidth);
+				l.resize(maxWidth, l.getHeight());
+			}
+			
+			for( Node n : children ) {
+				n.setVisible(false);
+			}			
 		}
 	}
 
-	class MyListViewSkin<T> extends ListViewSkin<T>{
+	class MyListViewSkin extends ListViewSkin<Line>{
+		private MyVirtualFlow flow;
 
-		public MyListViewSkin(ListView<T> listView) {
+		public MyListViewSkin(ListView<Line> listView) {
 			super(listView);
 		}
 		
+		public MyVirtualFlow getFlow() {
+			return flow;
+		}
+		
+		@SuppressWarnings("unchecked")
 		@Override
-		protected VirtualFlow<ListCell<T>> createVirtualFlow() {
-			return new VirtualFlow<ListCell<T>>() {
-				@Override
-				protected void positionCell(ListCell<T> cell, double position) {
-					super.positionCell(cell, position);
-					lineRuler.requestLayout();
-				}
-			};
+		protected VirtualFlow<ListCell<Line>> createVirtualFlow() {
+			this.flow = new MyVirtualFlow();
+			return (VirtualFlow<ListCell<Line>>) ((VirtualFlow<?>)flow);
+		}
+		
+	}
+	
+	class MyVirtualFlow extends VirtualFlow<LineCell> {
+		@Override
+		protected void positionCell(LineCell cell, double position) {
+			super.positionCell(cell, position);
+			lineRuler.requestLayout();
+		}
+		
+		@Override
+		public List<LineCell> getCells() {
+			return super.getCells();
 		}
 	}
 }
