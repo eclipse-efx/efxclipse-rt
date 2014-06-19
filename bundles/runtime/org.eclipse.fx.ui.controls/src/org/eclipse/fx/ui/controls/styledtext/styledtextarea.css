@@ -9,3 +9,7 @@
 .list-cell:filled:hover {
 	-fx-background-color: transparent;
 }
+
+.sheet {
+	-fx-cursor: text;
+}

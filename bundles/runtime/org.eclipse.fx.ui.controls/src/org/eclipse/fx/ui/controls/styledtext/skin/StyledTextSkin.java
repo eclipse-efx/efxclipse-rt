@@ -18,10 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.fx.ui.controls.styledtext.StyleRange;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
-import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.binding.BooleanBinding;
@@ -35,11 +31,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Skin;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -52,15 +52,23 @@ import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
+import org.eclipse.fx.ui.controls.styledtext.StyleRange;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
+
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
+import com.sun.javafx.scene.control.skin.ListViewSkin;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 @SuppressWarnings("restriction")
 public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextBehavior> {
-	private ListView<Line> listView;
+	private ListView<Line> contentView;
+	private StackPane lineRuler;
 	
 	private ObservableList<Line> lineList = FXCollections.observableArrayList();
 	
 	private Set<LineCell> visibleCells = new HashSet<>();
+	private Map<LineCell, LineInfo> lineInfoMap = new HashMap<>();
 
 	private Font boldFont;
 	
@@ -70,22 +78,43 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	
 	public StyledTextSkin(StyledTextArea styledText) {
 		super(styledText, new StyledTextBehavior(styledText));
+
+		HBox b = new HBox();
+		b.setSpacing(0);
+
+		lineRuler = new LineRuler();
+		b.getChildren().add(lineRuler);
 		
-		listView = new ListView<>();
-		listView.getStyleClass().add("styled-text-area");
-		listView.setFocusTraversable(false);
+		contentView = new ListView<Line>() {
+			@Override
+			protected Skin<?> createDefaultSkin() {
+				return new MyListViewSkin<Line>(this);
+			}
+		};
+		contentView.getStyleClass().add("styled-text-area");
+//		listView.setFocusTraversable(false);
+		contentView.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable,
+					Boolean oldValue, Boolean newValue) {
+				if( newValue ) {
+					getSkinnable().requestFocus();
+				}
+			}
+		});
 //		listView.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 //		});
-		listView.setCellFactory(new Callback<ListView<Line>, ListCell<Line>>() {
+		contentView.setCellFactory(new Callback<ListView<Line>, ListCell<Line>>() {
 			
 			@Override
 			public ListCell<Line> call(ListView<Line> arg0) {
 				return new LineCell();
 			}
 		});
-		listView.setMinHeight(0);
-		listView.setMinWidth(0);
-		listView.setOnMousePressed(new EventHandler<MouseEvent>() {
+		contentView.setMinHeight(0);
+		contentView.setMinWidth(0);
+		contentView.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
@@ -98,8 +127,15 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		
 		recalculateItems();
 		
-		listView.setItems(lineList);
-		getChildren().addAll(listView);
+		
+		
+		contentView.setItems(lineList);
+		
+		HBox.setHgrow(contentView,Priority.ALWAYS);
+		
+//		b.getChildren().addAll(lineView);
+		b.getChildren().addAll(contentView);
+		getChildren().addAll(b);
 		
 		styledText.caretOffsetProperty().addListener(new ChangeListener<Number>() {
 
@@ -111,8 +147,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				for( LineCell c : visibleCells ) {
 					if( c.domainElement == lineObject ) {
 						// Adjust the selection
-						if( listView.getSelectionModel().getSelectedItem() != c.domainElement ) {
-							listView.getSelectionModel().select(lineObject);
+						if( contentView.getSelectionModel().getSelectedItem() != c.domainElement ) {
+							contentView.getSelectionModel().select(lineObject);
 						}
 						
 						RegionImpl container = (RegionImpl)c.getGraphic();
@@ -151,7 +187,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			if( c.domainElement == lineObject ) {
 				RegionImpl container = (RegionImpl)c.getGraphic();
 				TextFlow flow = (TextFlow)container.getChildren().get(0);
-				System.err.println("STARTING SCAN");
+//				System.err.println("STARTING SCAN");
 				Text textNode = null;
 				int relativePos = 0;
 				for( int i = flow.getChildren().size()-1; i >= 0; i-- ) {
@@ -169,13 +205,13 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					textNode.setImpl_caretPosition(relativePos);
 					PathElement[] elements = textNode.getImpl_caretShape();
 					double xShift = textNode.getLayoutX();
-					System.err.println(textNode.getText() + " ====> " + xShift);
+//					System.err.println(textNode.getText() + " ====> " + xShift);
 					for( PathElement e : elements ) {
 						if( e instanceof MoveTo ) {
 							xShift +=((MoveTo)e).getX();
 						}
 					}
-					System.err.println("==> " + xShift);
+//					System.err.println("==> " + xShift);
 					
 					Point2D rv = new Point2D(xShift, c.getLayoutY());
 					return rv;
@@ -202,11 +238,11 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	}
 	
 	protected double computeMinHeight(double arg0) {
-		return listView.minHeight(arg0);
+		return contentView.minHeight(arg0);
 	}
 	
 	protected double computeMinWidth(double arg0) {
-		return listView.minWidth(arg0);
+		return contentView.minWidth(arg0);
 	}
 	
 	public void recalculateItems() {
@@ -380,6 +416,18 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			if( ! arg1 ) {
 				domainElement = arg0;
 				visibleCells.add(this);
+				LineInfo lineInfo = lineInfoMap.get(this);
+				if( lineInfo == null ) {
+					lineInfo = new LineInfo();
+					lineInfo.setDomainElement(domainElement);
+					lineInfoMap.put(this, lineInfo);
+					lineRuler.getChildren().add(lineInfo);
+					lineRuler.requestLayout();
+//					System.err.println("ADDING NEW LINE OBJECT!!!!");
+				} else {
+					lineInfo.setDomainElement(domainElement);
+					lineRuler.requestLayout();
+				}
 				
 				RegionImpl stack = (RegionImpl) getGraphic();
 				TextFlow flow;
@@ -436,6 +484,10 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				setGraphic(null);
 				domainElement = null;
 				visibleCells.remove(this);
+				LineInfo lineInfo = lineInfoMap.remove(this);
+				if( lineInfo != null ) {
+					lineRuler.getChildren().remove(lineInfo);
+				}
 			}
 			super.updateItem(arg0, arg1);
 		}
@@ -474,13 +526,13 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			List<Segment> segments = new ArrayList<>();
 			
 			String line = getSkinnable().getContent().getLine(idx);
-			System.err.println("LINE: " + line);
+//			System.err.println("LINE: " + line);
 			if( line != null ) {
 				int start = getSkinnable().getContent().getOffsetAtLine(idx);
 				int length = line.length();
 				
 				StyleRange[] ranges = getSkinnable().getStyleRanges(start, length, true);
-				System.err.println("RANGES: " + ranges);
+//				System.err.println("RANGES: " + ranges);
 				if( ranges == null ) {
 					return Collections.emptyList();
 				}
@@ -502,7 +554,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					lastIndex = end;
 				}
 				
-				System.err.println("SEGEMENTS: " + segments);
+//				System.err.println("SEGEMENTS: " + segments);
 			}
 			
 			return segments;
@@ -522,5 +574,51 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	static String removeLineending(String s) {
 		return s.replace("\n","").replace("\r", "");
 	}
+	
+	class LineInfo extends HBox {
+		private Label l;
+		private Line line;
+		
+		public LineInfo() {
+			l = new Label();
+			getChildren().add(l);
+		}
+		
+		public void setDomainElement(Line line) {
+			if( line != this.line ) {
+				l.setText(lineList.indexOf(line)+"");
+			}
+		}
+	}
+	
+	class LineRuler extends StackPane {
+		@Override
+		protected void layoutChildren() {
+			super.layoutChildren();
+			for( LineCell c : visibleCells ) {
+				LineInfo lineInfo = lineInfoMap.get(c);
+				if( lineInfo != null ) {
+					lineInfo.relocate(0, c.getLayoutY());
+				}
+			}
+		}
+	}
 
+	class MyListViewSkin<T> extends ListViewSkin<T>{
+
+		public MyListViewSkin(ListView<T> listView) {
+			super(listView);
+		}
+		
+		@Override
+		protected VirtualFlow<ListCell<T>> createVirtualFlow() {
+			return new VirtualFlow<ListCell<T>>() {
+				@Override
+				protected void positionCell(ListCell<T> cell, double position) {
+					super.positionCell(cell, position);
+					lineRuler.requestLayout();
+				}
+			};
+		}
+	}
 }
