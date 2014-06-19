@@ -10,12 +10,12 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.java;
 
+import org.eclipse.fx.code.compensator.editor.java.scanner.IJavaColorConstants;
+import org.eclipse.fx.code.compensator.editor.java.scanner.IJavaPartitions;
 import org.eclipse.fx.code.compensator.editor.java.scanner.JavaCodeScanner;
 import org.eclipse.fx.code.compensator.editor.java.scanner.JavaCommentScanner;
 import org.eclipse.fx.code.compensator.editor.java.scanner.JavaDocScanner;
 import org.eclipse.fx.code.compensator.editor.java.scanner.SingleTokenJavaScanner;
-import org.eclipse.jdt.ui.text.IJavaColorConstants;
-import org.eclipse.jdt.ui.text.IJavaPartitions;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;

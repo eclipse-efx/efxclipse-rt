@@ -14,14 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.internal.ui.javaeditor.SemanticHighlightings;
-import org.eclipse.jdt.internal.ui.text.CombinedWordRule;
-import org.eclipse.jdt.internal.ui.text.ISourceVersionDependent;
-import org.eclipse.jdt.internal.ui.text.JavaWhitespaceDetector;
-import org.eclipse.jdt.internal.ui.text.JavaWordDetector;
-import org.eclipse.jdt.ui.PreferenceConstants;
-import org.eclipse.jdt.ui.text.IJavaColorConstants;
+import org.eclipse.jface.text.rules.CombinedWordRule;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
@@ -32,14 +25,8 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 
 public class JavaCodeScanner extends AbstractJavaScanner {
-	
 	private static final String INTERFACE= "interface";  //$NON-NLS-1$
 	private static final String RETURN= "return"; //$NON-NLS-1$
-	
-	private static final String ANNOTATION_BASE_KEY= PreferenceConstants.EDITOR_SEMANTIC_HIGHLIGHTING_PREFIX + SemanticHighlightings.ANNOTATION;
-	static final String ANNOTATION_COLOR_KEY= ANNOTATION_BASE_KEY + PreferenceConstants.EDITOR_SEMANTIC_HIGHLIGHTING_COLOR_SUFFIX;
-	
-	private List<ISourceVersionDependent> fVersionDependentRules= new ArrayList<ISourceVersionDependent>(3);
 	
 	private static String[] fgJava14Keywords= { "assert" }; //$NON-NLS-1$
 	private static String[] fgJava15Keywords= { "enum" }; //$NON-NLS-1$
@@ -87,35 +74,13 @@ public class JavaCodeScanner extends AbstractJavaScanner {
 		// Add generic whitespace rule.
 		rules.add(new WhitespaceRule(new JavaWhitespaceDetector(), defaultToken));
 
-//		String version= getPreferenceStore().getString(SOURCE_VERSION);
-		String version = JavaCore.VERSION_1_8;
-		
-		token= getToken(ANNOTATION_COLOR_KEY);
-		AnnotationRule atInterfaceRule= new AnnotationRule(getToken(IJavaColorConstants.JAVA_KEYWORD), token, JavaCore.VERSION_1_5, version);
+		token= getToken(IJavaColorConstants.ANNOTATION);
+		AnnotationRule atInterfaceRule= new AnnotationRule(getToken(IJavaColorConstants.JAVA_KEYWORD), token);
 		rules.add(atInterfaceRule);
-		fVersionDependentRules.add(atInterfaceRule);
 
 		// Add word rule for new keywords, see bug 4077
 		JavaWordDetector wordDetector= new JavaWordDetector();
 		CombinedWordRule combinedWordRule= new CombinedWordRule(wordDetector, defaultToken);
-
-		VersionedWordMatcher j14Matcher= new VersionedWordMatcher(defaultToken, JavaCore.VERSION_1_4, version);
-
-		token= getToken(IJavaColorConstants.JAVA_KEYWORD);
-		for (int i=0; i<fgJava14Keywords.length; i++)
-			j14Matcher.addWord(fgJava14Keywords[i], token);
-
-		combinedWordRule.addWordMatcher(j14Matcher);
-		fVersionDependentRules.add(j14Matcher);
-
-		VersionedWordMatcher j15Matcher= new VersionedWordMatcher(defaultToken, JavaCore.VERSION_1_5, version);
-		
-		token= getToken(IJavaColorConstants.JAVA_KEYWORD);
-		for (int i=0; i<fgJava15Keywords.length; i++)
-			j15Matcher.addWord(fgJava15Keywords[i], token);
-
-		combinedWordRule.addWordMatcher(j15Matcher);
-		fVersionDependentRules.add(j15Matcher);
 
 		// Add rule for operators
 		token= getToken(IJavaColorConstants.JAVA_OPERATOR);
@@ -134,6 +99,11 @@ public class JavaCodeScanner extends AbstractJavaScanner {
 		// Add word rule for keywords, types, and constants.
 		CombinedWordRule.WordMatcher wordRule= new CombinedWordRule.WordMatcher();
 		token= getToken(IJavaColorConstants.JAVA_KEYWORD);
+		
+		for (int i=0; i<fgJava14Keywords.length; i++)
+			wordRule.addWord(fgJava14Keywords[i], token);
+		for (int i=0; i<fgJava15Keywords.length; i++)
+			wordRule.addWord(fgJava15Keywords[i], token);
 		for (int i=0; i<fgKeywords.length; i++)
 			wordRule.addWord(fgKeywords[i], token);
 		for (int i=0; i<fgTypes.length; i++)
@@ -158,7 +128,7 @@ public class JavaCodeScanner extends AbstractJavaScanner {
 	 *
 	 * @since 3.1
 	 */
-	private static class AnnotationRule implements IRule, ISourceVersionDependent {
+	private static class AnnotationRule implements IRule {
 		/**
 		 * A resettable scanner supports marking a position in a scanner and
 		 * unreading back to the marked position.
@@ -235,8 +205,6 @@ public class JavaCodeScanner extends AbstractJavaScanner {
 		private final IWordDetector fWordDetector= new JavaWordDetector();
 		private final IToken fInterfaceToken;
 		private final IToken fAtToken;
-		private final String fVersion;
-		private boolean fIsVersionMatch;
 
 		/**
 		 * Creates a new rule.
@@ -250,20 +218,15 @@ public class JavaCodeScanner extends AbstractJavaScanner {
 		 * @param currentVersion the current
 		 *        <code>JavaCore.COMPILER_SOURCE</code> version
 		 */
-		public AnnotationRule(IToken interfaceToken, Token atToken, String version, String currentVersion) {
+		public AnnotationRule(IToken interfaceToken, Token atToken) {
 			fInterfaceToken= interfaceToken;
 			fAtToken= atToken;
-			fVersion= version;
-			setSourceVersion(currentVersion);
 		}
 
 		/*
 		 * @see org.eclipse.jface.text.rules.IRule#evaluate(org.eclipse.jface.text.rules.ICharacterScanner)
 		 */
 		public IToken evaluate(ICharacterScanner scanner) {
-			if (!fIsVersionMatch)
-				return Token.UNDEFINED;
-
 			ResettableScanner resettable= new ResettableScanner(scanner);
 			if (resettable.read() == '@')
 				return readAnnotation(resettable);
@@ -311,46 +274,6 @@ public class JavaCodeScanner extends AbstractJavaScanner {
 			return true;
 		}
 
-		/*
-		 * @see org.eclipse.jdt.internal.ui.text.ISourceVersionDependent#setSourceVersion(java.lang.String)
-		 */
-		public void setSourceVersion(String version) {
-			fIsVersionMatch= fVersion.compareTo(version) <= 0;
-		}
-
-	}
-	
-	private static class VersionedWordMatcher extends CombinedWordRule.WordMatcher implements ISourceVersionDependent {
-
-		private final IToken fDefaultToken;
-		private final String fVersion;
-		private boolean fIsVersionMatch;
-
-		public VersionedWordMatcher(IToken defaultToken, String version, String currentVersion) {
-			fDefaultToken= defaultToken;
-			fVersion= version;
-			setSourceVersion(currentVersion);
-		}
-
-		/*
-		 * @see org.eclipse.jdt.internal.ui.text.ISourceVersionDependent#setSourceVersion(java.lang.String)
-		 */
-		public void setSourceVersion(String version) {
-			fIsVersionMatch= fVersion.compareTo(version) <= 0;
-		}
-
-		/*
-		 * @see org.eclipse.jdt.internal.ui.text.CombinedWordRule.WordMatcher#evaluate(org.eclipse.jface.text.rules.ICharacterScanner, org.eclipse.jdt.internal.ui.text.CombinedWordRule.CharacterBuffer)
-		 */
-		@Override
-		public IToken evaluate(ICharacterScanner scanner, CombinedWordRule.CharacterBuffer word) {
-			IToken token= super.evaluate(scanner, word);
-
-			if (fIsVersionMatch || token.isUndefined())
-				return token;
-
-			return fDefaultToken;
-		}
 	}
 	
 	private static final class OperatorRule implements IRule {

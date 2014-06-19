@@ -13,8 +13,6 @@ package org.eclipse.fx.code.compensator.editor.java.scanner;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.internal.ui.text.JavaWhitespaceDetector;
-import org.eclipse.jdt.ui.text.IJavaColorConstants;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.rules.ICharacterScanner;

@@ -17,10 +17,9 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.jdt.internal.ui.text.CombinedWordRule;
-import org.eclipse.jdt.internal.ui.text.CombinedWordRule.CharacterBuffer;
-import org.eclipse.jdt.internal.ui.text.CombinedWordRule.WordMatcher;
-import org.eclipse.jdt.ui.text.IJavaColorConstants;
+import org.eclipse.jface.text.rules.CombinedWordRule;
+import org.eclipse.jface.text.rules.CombinedWordRule.CharacterBuffer;
+import org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;

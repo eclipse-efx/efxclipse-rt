@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.jdt.ui.text;
+package org.eclipse.fx.code.compensator.editor.java.scanner;
 
 /**
  * Color keys used for syntax highlighting Java
@@ -180,4 +180,6 @@ public interface IJavaColorConstants {
 	 * @since 3.1
 	 */
 	String PROPERTIES_FILE_COLORING_ARGUMENT= "pf_coloring_argument"; //$NON-NLS-1$
+	
+	public static final String ANNOTATION="java_annotation"; //$NON-NLS-1$
 }

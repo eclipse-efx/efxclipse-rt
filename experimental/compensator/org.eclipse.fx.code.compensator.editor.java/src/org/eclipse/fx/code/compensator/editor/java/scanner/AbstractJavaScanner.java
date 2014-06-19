@@ -14,7 +14,6 @@ import java.util.List;
 
 import javafx.scene.paint.Color;
 
-import org.eclipse.jdt.ui.text.IJavaColorConstants;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.BufferedRuleBasedScanner;
 import org.eclipse.jface.text.rules.IRule;
@@ -46,7 +45,7 @@ public abstract class AbstractJavaScanner extends BufferedRuleBasedScanner {
 			return new Token(new TextAttribute(Color.rgb(42, 0, 255)));
 		case IJavaColorConstants.JAVA_DEFAULT:
 			return new Token(new TextAttribute(Color.rgb(0,0,0)));
-		case JavaCodeScanner.ANNOTATION_COLOR_KEY:
+		case IJavaColorConstants.ANNOTATION:
 			return new Token(new TextAttribute(Color.rgb(200, 200, 200)));
 		case IJavaColorConstants.JAVA_KEYWORD:
 			return new Token(new TextAttribute(Color.rgb(127, 0, 85)));

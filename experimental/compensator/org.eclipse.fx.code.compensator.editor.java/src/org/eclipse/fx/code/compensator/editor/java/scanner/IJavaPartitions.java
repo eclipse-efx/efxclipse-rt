@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.jdt.ui.text;
+package org.eclipse.fx.code.compensator.editor.java.scanner;
 
 /**
  * Definition of Java partitioning and its partitions.

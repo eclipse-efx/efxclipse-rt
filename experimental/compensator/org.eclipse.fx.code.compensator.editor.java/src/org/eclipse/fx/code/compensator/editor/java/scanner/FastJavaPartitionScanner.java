@@ -8,16 +8,15 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.jdt.internal.ui.text;
+package org.eclipse.fx.code.compensator.editor.java.scanner;
 
 
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.rules.BufferedDocumentScanner;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
-
-import org.eclipse.jdt.ui.text.IJavaPartitions;
 
 
 /**

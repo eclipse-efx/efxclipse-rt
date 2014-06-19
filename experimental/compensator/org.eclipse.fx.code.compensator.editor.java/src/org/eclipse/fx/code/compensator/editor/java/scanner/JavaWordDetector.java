@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.jdt.internal.ui.text;
+package org.eclipse.fx.code.compensator.editor.java.scanner;
 
 
 import org.eclipse.jface.text.rules.IWordDetector;
