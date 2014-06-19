@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
@@ -22,13 +24,16 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.internal.workbench.ContributionsAnalyzer;
 import org.eclipse.e4.ui.model.application.MContribution;
 import org.eclipse.e4.ui.model.application.commands.MParameter;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MItem;
+import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -42,6 +47,14 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings("restriction")
 public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M>> extends BaseRenderer<M, W> {
 
+	@SuppressWarnings("null")
+	@PostConstruct
+	void init(@NonNull IEventBroker broker) {
+		registerEventListener(broker, UIEvents.UILabel.TOPIC_ICONURI);
+		registerEventListener(broker, UIEvents.UILabel.TOPIC_LABEL);
+		registerEventListener(broker, UIEvents.UILabel.TOPIC_TOOLTIP);
+	}
+	
 	/**
 	 * Generate a parameterized command for the given {@link MHandledItem}
 	 * 

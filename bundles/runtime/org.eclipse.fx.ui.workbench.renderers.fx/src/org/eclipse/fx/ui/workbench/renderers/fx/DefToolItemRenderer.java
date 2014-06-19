@@ -20,6 +20,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -106,6 +107,21 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		@Inject
 		public void setLabel(@Named(ATTRIBUTE_localizedLabel) String label) {
 			getWidget().setText(label);
+		}
+
+		/**
+		 * Update the tooltip
+		 * 
+		 * @param tooltip
+		 *            the tooltip
+		 */
+		@Inject
+		public void setTooltip(@Named(ATTRIBUTE_localizedTooltip) String tooltip) {
+			if (tooltip != null && !tooltip.isEmpty()) {
+				getWidget().setTooltip(new Tooltip(tooltip));
+			} else {
+				getWidget().setTooltip(null);
+			}
 		}
 
 		/**
