@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -490,6 +491,15 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		public void setLabel(@Named(ATTRIBUTE_localizedLabel) @Optional String label) {
 			this.label = label;
 			getWidget().setText(this.dirty ? "*" + notNull(label) : notNull(label)); //$NON-NLS-1$
+		}
+
+		@Inject
+		public void setTooltip(@Named(ATTRIBUTE_localizedTooltip) @Optional String tooltip) {
+			if (tooltip != null && !tooltip.isEmpty()) {
+				getWidget().setTooltip(new Tooltip(tooltip));
+			} else {
+				getWidget().setTooltip(null);
+			}
 		}
 
 		@Inject
