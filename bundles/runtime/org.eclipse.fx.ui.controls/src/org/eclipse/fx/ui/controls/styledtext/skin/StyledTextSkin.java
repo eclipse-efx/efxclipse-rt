@@ -32,7 +32,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.IndexedCell;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -50,7 +49,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -604,7 +602,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			lineText = new Label();
 			lineText.setMaxWidth(Double.MAX_VALUE);
 			lineText.setMaxHeight(Double.MAX_VALUE);
-			lineText.setPrefWidth(-1);
 			lineText.setAlignment(Pos.CENTER_RIGHT);
 			HBox.setHgrow(lineText, Priority.ALWAYS);
 			getChildren().addAll(markerLabel, lineText);
@@ -615,17 +612,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				lineText.setText(lineList.indexOf(line)+"");
 				rootContainer.layout();
 			}
-		}
-		
-		@Override
-		protected void layoutChildren() {
-			super.layoutChildren();
-		}
-		
-		@Override
-		protected double computePrefWidth(double height) {
-			// TODO Auto-generated method stub
-			return super.computePrefWidth(height);
 		}
 	}
 	
@@ -642,14 +628,13 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					layouted.add(lineInfo);
 					maxWidth = Math.max(maxWidth, lineInfo.getWidth());
 					lineInfo.relocate(0, c.getLayoutY());
-					lineInfo.resize(lineInfo.prefWidth(-1), c.getHeight());
+					lineInfo.resize(lineInfo.getWidth(), c.getHeight());
 					lineInfo.setVisible(true);
 					children.remove(lineInfo);
 				}
 			}
 			
 			for( LineInfo l : layouted ) {
-				System.err.println("WIDHT: " + maxWidth);
 				l.resize(maxWidth, l.getHeight());
 			}
 			
