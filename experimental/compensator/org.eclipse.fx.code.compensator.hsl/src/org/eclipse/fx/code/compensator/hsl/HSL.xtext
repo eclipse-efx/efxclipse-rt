@@ -1,0 +1,109 @@
+grammar org.eclipse.fx.code.compensator.hsl.HSL with org.eclipse.xtext.common.Terminals
+
+generate hSL "http://www.eclipse.org/fx/code/compensator/hsl/HSL"
+
+Model:
+	name=ID '{'
+		partitions+=Partition+
+		scanner+=Scanner+
+		partitioner=Partitioner
+	'}'
+;
+
+Partition:
+	'partition' name=ID
+;
+
+Partitioner:
+	RulePartitioner | JSParitioner
+;
+
+RulePartitioner:
+	'rule-partitioner' '{'
+		rules += ParitionRule+
+	'}'
+;
+
+JSParitioner:
+	'js-partitioner' fileURI=STRING
+;
+
+Scanner:
+	'scanner' partition=[Partition|ID] '{'
+		tokens+=ScannerToken*
+		keywordGroups +=KeywordGroup*
+		rules += ScannerRule+
+	'}'
+;
+
+ScannerToken:
+	default?='default'? 'token' name=ID ('{' 
+		('fgcolor' ':' fgColor=Color)? 
+		('bgcolor' ':' bgColor=Color)? 
+		('font' ':' font=Font)?
+	'}')?
+;
+
+KeywordGroup:
+	'keywords' token=[ScannerToken|ID] '[' keywords+=Keyword (',' keywords+=Keyword)* ']'
+;
+
+Keyword:
+	name=STRING ('since' version=STRING)?
+;
+
+ScannerRule:
+	ScannerSingleLineRule | ScannerMultiLineRule | ScannerCharacterRule | ScannerJSRule | ScannerWhitespaceRule
+;
+
+ParitionRule:
+	PartitionSingleLineRule | PartitionMultiLineRule | PartitionJSRule
+;
+
+ScannerSingleLineRule:
+	'single-line' token=[ScannerToken|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? 
+;
+
+PartitionSingleLineRule:
+	'single-line' parition=[Partition|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? 
+;
+
+ScannerMultiLineRule:
+	'multi-line' token=[ScannerToken|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
+;
+
+PartitionMultiLineRule:
+	'multi-line' token=[Partition|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
+;
+
+ScannerCharacterRule:
+	'character-rule' token=[ScannerToken|ID] '[' characters+=STRING (',' ) characters+=STRING ']'
+;
+
+ScannerJSRule:
+	'javascript-rule' token=[ScannerToken|ID] fileURI=STRING
+;
+
+PartitionJSRule:
+	'javascript-rule' token=[Partition|ID] fileURI=STRING
+;
+
+ScannerWhitespaceRule:
+	'whitespace-rule' (token=[ScannerToken|ID])? ('[' characters+=STRING (',' characters+=STRING )* ']') | ('#{' jsMethod=ANY_OTHER '}#')
+;
+
+Color:
+	RGBColor
+;
+
+RGBColor:
+	'rgb' '(' r=INT ',' g=INT ',' b=INT ')'
+;
+
+Font:
+	name=ID size=INT attributes+=FontType*
+;
+
+enum FontType:
+	bold | italic | underline | strike_through='strike-through'  
+;

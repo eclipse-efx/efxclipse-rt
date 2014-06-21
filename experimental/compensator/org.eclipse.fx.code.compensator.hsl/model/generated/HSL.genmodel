@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.fx.code.compensator.hsl/src-gen" editDirectory="/org.eclipse.fx.code.compensator.hsl.edit/src"
+    editorDirectory="/org.eclipse.fx.code.compensator.hsl.editor/src" modelPluginID="org.eclipse.fx.code.compensator.hsl"
+    forceOverwrite="true" modelName="HSL" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.fx.code.compensator.hsl.edit"
+    editorPluginID="org.eclipse.fx.code.compensator.hsl.editor" runtimeVersion="2.10">
+  <genPackages prefix="HSL" basePackage="org.eclipse.fx.code.compensator.hsl" disposableProviderFactory="true"
+      fileExtensions="hsl" ecorePackage="HSL.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="HSL.ecore#//FontType">
+      <genEnumLiterals ecoreEnumLiteral="HSL.ecore#//FontType/bold"/>
+      <genEnumLiterals ecoreEnumLiteral="HSL.ecore#//FontType/italic"/>
+      <genEnumLiterals ecoreEnumLiteral="HSL.ecore#//FontType/underline"/>
+      <genEnumLiterals ecoreEnumLiteral="HSL.ecore#//FontType/strike_through"/>
+    </genEnums>
+    <genClasses ecoreClass="HSL.ecore#//Model">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Model/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Model/partitions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Model/scanner"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Model/partitioner"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//Partition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Partition/name"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//Partitioner"/>
+    <genClasses ecoreClass="HSL.ecore#//RulePartitioner">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//RulePartitioner/rules"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//JSParitioner">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//JSParitioner/fileURI"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//Scanner">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//Scanner/partition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Scanner/tokens"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Scanner/keywordGroups"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Scanner/rules"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//ScannerToken">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerToken/default"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerToken/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//ScannerToken/fgColor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//ScannerToken/bgColor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//ScannerToken/font"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//KeywordGroup">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//KeywordGroup/token"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//KeywordGroup/keywords"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//Keyword">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Keyword/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Keyword/version"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//ScannerRule">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//ScannerRule/token"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//ParitionRule"/>
+    <genClasses ecoreClass="HSL.ecore#//ScannerSingleLineRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerSingleLineRule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerSingleLineRule/endSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerSingleLineRule/escapeSeq"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//PartitionSingleLineRule">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//PartitionSingleLineRule/parition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//PartitionSingleLineRule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//PartitionSingleLineRule/endSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//PartitionSingleLineRule/escapeSeq"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//ScannerMultiLineRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerMultiLineRule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerMultiLineRule/endSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerMultiLineRule/escapeSeq"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//PartitionMultiLineRule">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//PartitionMultiLineRule/token"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//PartitionMultiLineRule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//PartitionMultiLineRule/endSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//PartitionMultiLineRule/escapeSeq"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//ScannerCharacterRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerCharacterRule/characters"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//ScannerJSRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerJSRule/fileURI"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//PartitionJSRule">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//PartitionJSRule/token"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//PartitionJSRule/fileURI"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//ScannerWhitespaceRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerWhitespaceRule/characters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerWhitespaceRule/jsMethod"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//Color"/>
+    <genClasses ecoreClass="HSL.ecore#//RGBColor">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//RGBColor/r"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//RGBColor/g"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//RGBColor/b"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//Font">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Font/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Font/size"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Font/attributes"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
