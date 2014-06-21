@@ -7,7 +7,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.fx.code.compensator.editor;bundle-version="1.0.0",
  org.eclipse.fx.text;bundle-version="1.0.0",
  org.eclipse.fx.text.ui;bundle-version="1.0.0",
- org.eclipse.fx.ui.controls;bundle-version="1.0.0"
+ org.eclipse.fx.ui.controls;bundle-version="1.0.0",
+ org.eclipse.emf.common;bundle-version="2.10.0",
+ org.eclipse.emf.ecore
 Service-Component: OSGI-INF/services/xmlcomponent.xml
 Bundle-ActivationPolicy: lazy
 Import-Package: javafx.animation;version="2.2.0",
