@@ -43,12 +43,11 @@ public abstract class BaseMenuItemRenderer<N> extends BaseItemRenderer<MMenuItem
 	protected void initWidget(final MMenuItem element, WMenuItem<N> widget) {
 		super.initWidget(element, widget);
 
-		final IEclipseContext modelContext = getModelContext(element);
 		widget.setOnActionCallback(new Runnable() {
 
 			@Override
 			public void run() {
-				executeAction(element, modelContext);
+				executeAction(element, getModelContext(element));
 			}
 		});
 
