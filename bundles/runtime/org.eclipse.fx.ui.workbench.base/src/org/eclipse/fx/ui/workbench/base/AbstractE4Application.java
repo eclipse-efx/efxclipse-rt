@@ -72,6 +72,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.osgi.util.LoggerCreator;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.restart.RestartService;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.base.internal.Activator;
@@ -169,7 +170,7 @@ public abstract class AbstractE4Application implements IApplication {
 		appContext.set(Realm.class, createRealm(appContext));
 		appContext.set(IApplicationContext.class, applicationContext);
 		appContext.set(IResourceUtilities.class, createResourceUtility(appContext));
-
+		
 		// Check if DS is running
 		if (!appContext.containsKey("org.eclipse.e4.ui.workbench.modeling.EModelService")) { //$NON-NLS-1$
 			throw new IllegalStateException("Core services not available. Please make sure that a declarative service implementation (such as the bundle 'org.eclipse.equinox.ds') is available!"); //$NON-NLS-1$
@@ -198,6 +199,16 @@ public abstract class AbstractE4Application implements IApplication {
 				}
 			}
 		}
+		String toolItemTimer = getArgValue(Constants.TOOLITEM_TIMER, applicationContext, false);
+		if( toolItemTimer != null ) {
+			try {
+				appContext.set(Constants.TOOLITEM_TIMER, Long.valueOf(toolItemTimer));	
+			} catch(NumberFormatException e) {
+				LOGGER.error("Unable to parse '"+Constants.TOOLITEM_TIMER+"' value '"+toolItemTimer+"'", e);   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+			}
+			
+		}
+		
 		// Create the app model and its context
 		MApplication appModel = loadApplicationModel(applicationContext, appContext);
 		appModel.setContext(appContext);

@@ -23,6 +23,10 @@
                name="lifeCycleURI"
                value="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.lifecycle.ApplicationLifecycle">
          </property>
+         <property
+               name="efx_TOOLITEM_TIMER_dummy"
+               value="400">
+         </property>
       </product>
    </extension>
    <extension

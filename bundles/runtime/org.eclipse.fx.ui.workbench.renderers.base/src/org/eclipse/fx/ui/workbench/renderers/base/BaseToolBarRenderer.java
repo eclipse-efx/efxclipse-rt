@@ -16,11 +16,19 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBarElement;
+import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.e4.ui.workbench.Selector;
+import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.fx.core.di.ScopedObjectFactory;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
@@ -33,53 +41,80 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
  */
 public abstract class BaseToolBarRenderer<N> extends BaseRenderer<MToolBar, WToolBar<N>> implements ChildrenHandler<MToolBar, MToolBarElement> {
 	List<MToolBarElement> widgets = new ArrayList<MToolBarElement>();
-	private Thread syncThread;
-
-	/**
-	 * Create an instance
-	 */
-	public BaseToolBarRenderer() {
-		this.syncThread = new Thread("ToolItem Enablement Sync") { //$NON-NLS-1$
-			@SuppressWarnings("unchecked")
-			@Override
-			public void run() {
-				while (true) {
-					MToolBarElement[] iterationCopy;
-
-					// not ideal because we'll probably check items are already
-					// removed
-					// from the ui
-					synchronized (BaseToolBarRenderer.this.widgets) {
-						iterationCopy = BaseToolBarRenderer.this.widgets.toArray(new MToolBarElement[0]);
-					}
-
-					for (int i = 0; i < iterationCopy.length; i++) {
-						MToolBarElement e = iterationCopy[i];
-						if (e.getRenderer() instanceof BaseItemRenderer<?, ?>) {
-							final MToolBarElement tmp = e;
-							final BaseItemRenderer<MToolBarElement, ?> r = (BaseItemRenderer<MToolBarElement, ?>) tmp.getRenderer();
-							if (tmp.getRenderer() != null) {
-								r.checkEnablement(tmp);
-							}
-						}
-					}
-
-					try {
-						Thread.sleep(400);
-					} catch (InterruptedException e) {
-						getLogger().error("Failed to sleep", e); //$NON-NLS-1$
-					}
-				}
-			}
-		};
-		this.syncThread.setDaemon(true);
-		this.syncThread.start();
-	}
-
+	
+	@Inject
+	IEclipseContext context;
+	
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
+		Object value = this.context.get(Constants.TOOLITEM_TIMER);
+		Selector noop = m -> true;
+		if( value != null && value instanceof Number ) {
+			Thread syncThread = new Thread("ToolItem Enablement Sync") { //$NON-NLS-1$
+				@Override
+				public void run() {
+					while (true) {
+						checkExecute(noop);
+						try {
+							Thread.sleep(((Number)value).longValue());
+						} catch (InterruptedException e) {
+							getLogger().error("Failed to sleep", e); //$NON-NLS-1$
+						}
+					}
+				}
+			};
+			syncThread.setDaemon(true);
+			syncThread.start();
+		}
+		
 		EventProcessor.attachChildProcessor(eventBroker, this);
 		EventProcessor.attachVisibleProcessor(eventBroker, this);
+		eventBroker.subscribe(ScopedObjectFactory.KEYMODIFED_TOPIC, e -> checkExecute(m -> true));
+		eventBroker.subscribe(UIEvents.REQUEST_ENABLEMENT_UPDATE_TOPIC, e -> {
+			Object d = e.getProperty(IEventBroker.DATA);
+			if( d instanceof Selector ) {
+				checkExecute((Selector) d);
+			} else if( UIEvents.ALL_ELEMENT_ID.equals(d)) {
+				checkExecute(m -> true);
+			} else if( d != null ) {
+				checkExecute(m -> d.equals(m.getElementId()));
+			}
+		});	
+		this.context.runAndTrack(new RunAndTrack() {
+			
+			@Override
+			public boolean changed(IEclipseContext context) {
+				context.get(IServiceConstants.ACTIVE_CONTEXTS);
+				context.get(IServiceConstants.ACTIVE_SELECTION);
+				context.get(IServiceConstants.ACTIVE_PART);
+				checkExecute(noop);
+				return true;
+			}
+		});
+		
+	}
+	
+	void checkExecute(Selector selector) {
+		MToolBarElement[] iterationCopy;
+
+		// not ideal because we'll probably check items are already
+		// removed
+		// from the ui
+		synchronized (BaseToolBarRenderer.this.widgets) {
+			iterationCopy = BaseToolBarRenderer.this.widgets.toArray(new MToolBarElement[0]);
+		}
+		
+		for (int i = 0; i < iterationCopy.length; i++) {
+			MToolBarElement e = iterationCopy[i];
+			if (e.getRenderer() instanceof BaseItemRenderer<?, ?> && selector.select(e)) {
+				final MToolBarElement tmp = e;
+				@SuppressWarnings("unchecked")
+				final BaseItemRenderer<MToolBarElement, ?> r = (BaseItemRenderer<MToolBarElement, ?>) tmp.getRenderer();
+				if (tmp.getRenderer() != null) {
+					r.checkEnablement(tmp);
+				}
+			}
+		}
 	}
 
 	@Override

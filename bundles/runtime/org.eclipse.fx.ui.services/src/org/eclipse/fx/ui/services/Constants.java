@@ -28,6 +28,12 @@ public final class Constants {
 	public static final String APP_FOCUS_NODE 	 = "efx_APP_FOCUS_NODE"; //$NON-NLS-1$
 	
 	/**
+	 * Context key with the timer value used for tool item check
+	 */
+	@NonNull
+	public static final String TOOLITEM_TIMER = "efx_TOOLITEM_TIMER"; //$NON-NLS-1$
+	
+	/**
 	 * Root topic for fx specific events
 	 */
 	@NonNull
