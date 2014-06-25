@@ -19,6 +19,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public interface ScopedObjectFactory {
 	/**
+	 * EventBroker topic published when key is modified
+	 */
+	public static String KEYMODIFED_TOPIC = "org/eclipse/fx/context/key"; //$NON-NLS-1$
+	
+	/**
 	 * Create a new instance of the class
 	 * 
 	 * @param c

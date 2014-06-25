@@ -10,10 +10,13 @@
  *******************************************************************************/
 package org.eclipse.fx.core.di.context.internal;
 
+import java.util.Collections;
+
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.InjectionException;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.fx.core.di.Invoke;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
 import org.eclipse.jdt.annotation.NonNull;
@@ -22,17 +25,21 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * Context function to create requested object factory
  */
+@SuppressWarnings("restriction")
 public class ScopedObjectFactoryFunction extends ContextFunction {
 	@Override
 	public Object compute(IEclipseContext context, String contextKey) {
-		return new ScopedObjectFactoryImpl(context);
+		IEventBroker eventBroker = context.get(IEventBroker.class);
+		return new ScopedObjectFactoryImpl(context,eventBroker);
 	}
 	
 	static class ScopedObjectFactoryImpl implements ScopedObjectFactory {
 		private final IEclipseContext context;
+		private final IEventBroker eventBroker;
 		
-		ScopedObjectFactoryImpl(IEclipseContext context) {
+		ScopedObjectFactoryImpl(IEclipseContext context, IEventBroker eventBroker) {
 			this.context = context;
+			this.eventBroker = eventBroker;
 		}
 		
 		@Override
@@ -42,17 +49,24 @@ public class ScopedObjectFactoryFunction extends ContextFunction {
 
 		@Override
 		public @NonNull ScopedObjectFactory createChild(@NonNull String name) {
-			return new ScopedObjectFactoryImpl(this.context.createChild(name));
+			return new ScopedObjectFactoryImpl(this.context.createChild(name),this.eventBroker);
 		}
 		
+		@SuppressWarnings("null")
 		@Override
 		public <O> void put(@NonNull Class<@NonNull O> key, @NonNull O value) {
 			this.context.set(key, value);
+			if( this.eventBroker != null ) {
+				this.eventBroker.send(ScopedObjectFactory.KEYMODIFED_TOPIC, Collections.singletonMap(key.toString(), value));
+			}
 		}
 		
 		@Override
 		public void put(@NonNull String key, @NonNull Object value) {
 			this.context.set(key, value);
+			if( this.eventBroker != null ) {
+				this.eventBroker.send(ScopedObjectFactory.KEYMODIFED_TOPIC, Collections.singletonMap(key, value));
+			}
 		}
 		
 		@SuppressWarnings("unchecked")
@@ -60,7 +74,7 @@ public class ScopedObjectFactoryFunction extends ContextFunction {
 		public <O> @Nullable O invoke(@NonNull Object instance) throws IllegalStateException {
 			try {
 				return (@Nullable O) ContextInjectionFactory.invoke(instance, Invoke.class, this.context);	
-			} catch(@SuppressWarnings("restriction") InjectionException e) {
+			} catch(InjectionException e) {
 				throw new IllegalStateException(e);
 			}
 			

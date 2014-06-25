@@ -11,6 +11,7 @@
 package org.eclipse.fx.core.di.context.internal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PreDestroy;
@@ -18,11 +19,14 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.contexts.RunAndTrack;
+import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.fx.core.Callback;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
 import org.eclipse.fx.core.di.ContextBoundValue;
+import org.eclipse.fx.core.di.ScopedObjectFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -45,6 +49,11 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	private AdapterService adapterService;
 	@Nullable
 	private T value;
+	
+	@Inject
+	@Optional
+	@Nullable
+	IEventBroker eventBroker;
 
 	/**
 	 * Create a new bound value
@@ -98,6 +107,9 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	@Override
 	public void publish(@Nullable T value) {
 		this.context.modify(this.contextKey, value);
+		if( this.eventBroker != null ) {
+			this.eventBroker.send(ScopedObjectFactory.KEYMODIFED_TOPIC, Collections.singletonMap(this.contextKey, value));
+		}
 	}
 
 	@Override
