@@ -105,6 +105,9 @@ import org.osgi.framework.Bundle;
  */
 @SuppressWarnings("restriction")
 public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
+	private static final String CSS_TRIM_CONTAINER = "window-trim-container"; //$NON-NLS-1$
+	private static final String CSS_CONTENT_CONTAINER = "window-content-container"; //$NON-NLS-1$
+	
 	@Inject
 	@Translation
 	@NonNull
@@ -345,8 +348,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			};
 
 			this.trimPane = new BorderPane();
+			this.contentPane.getStyleClass().add(CSS_TRIM_CONTAINER);
 			this.rootPane.setCenter(this.trimPane);
 			this.contentPane = new FillLayoutPane();
+			this.contentPane.getStyleClass().add(CSS_CONTENT_CONTAINER);
 			this.trimPane.setCenter(this.contentPane);
 
 			if (this.decorationFXML != null) {
