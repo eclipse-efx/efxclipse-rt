@@ -10,49 +10,67 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.panes;
 
+import static org.eclipse.fx.ui.panes.AbstractLayoutPane.FX_DEFAULT;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.WritableBooleanValue;
 import javafx.scene.Node;
-import static org.eclipse.fx.ui.panes.AbstractLayoutPane.*;
 
+/**
+ * Constraints for grid elements
+ */
 public class GridData {
+	
+	/**
+	 * The alignment of the item in the cell
+	 */
 	public enum Alignment {
+		/**
+		 * At the beginning
+		 */
 		BEGINNING,
+		/**
+		 * At the center
+		 */
 		CENTER,
+		/**
+		 * At the end
+		 */
 		END,
+		/**
+		 * Fill the cell
+		 */
 		FILL
 	}
 	
-	private ObjectProperty<Alignment> verticalAlignment = new SimpleObjectProperty<Alignment>(this, "verticalAlignment", Alignment.CENTER);
+	private ObjectProperty<Alignment> verticalAlignment = new SimpleObjectProperty<Alignment>(this, "verticalAlignment", Alignment.CENTER); //$NON-NLS-1$
 
-	private ObjectProperty<Alignment> horizontalAlignment = new SimpleObjectProperty<Alignment>(this, "horizontalAlignment", Alignment.BEGINNING);
+	private ObjectProperty<Alignment> horizontalAlignment = new SimpleObjectProperty<Alignment>(this, "horizontalAlignment", Alignment.BEGINNING); //$NON-NLS-1$
 
-	private IntegerProperty widthHint = new SimpleIntegerProperty(this, "widthHint", FX_DEFAULT);
+	private IntegerProperty widthHint = new SimpleIntegerProperty(this, "widthHint", FX_DEFAULT); //$NON-NLS-1$
 
-	private IntegerProperty heightHint = new SimpleIntegerProperty(this, "heightHint", FX_DEFAULT);
+	private IntegerProperty heightHint = new SimpleIntegerProperty(this, "heightHint", FX_DEFAULT); //$NON-NLS-1$
 
-	private IntegerProperty horizontalIndent = new SimpleIntegerProperty(this, "horizontalIndent");
+	private IntegerProperty horizontalIndent = new SimpleIntegerProperty(this, "horizontalIndent"); //$NON-NLS-1$
 
-	private IntegerProperty verticalIndent = new SimpleIntegerProperty(this, "verticalIndent");
+	private IntegerProperty verticalIndent = new SimpleIntegerProperty(this, "verticalIndent"); //$NON-NLS-1$
 
-	private IntegerProperty horizontalSpan = new SimpleIntegerProperty(this, "horizontalSpan", 1);
+	private IntegerProperty horizontalSpan = new SimpleIntegerProperty(this, "horizontalSpan", 1); //$NON-NLS-1$
 
-	private IntegerProperty verticalSpan = new SimpleIntegerProperty(this, "verticalSpan", 1);
+	private IntegerProperty verticalSpan = new SimpleIntegerProperty(this, "verticalSpan", 1); //$NON-NLS-1$
 
-	private BooleanProperty grabExcessHorizontalSpace = new SimpleBooleanProperty(this, "grabExcessHorizontalSpace", false);
+	private BooleanProperty grabExcessHorizontalSpace = new SimpleBooleanProperty(this, "grabExcessHorizontalSpace", false); //$NON-NLS-1$
 
-	private BooleanProperty grabExcessVerticalSpace = new SimpleBooleanProperty(this, "grabExcessVerticalSpace", false);
+	private BooleanProperty grabExcessVerticalSpace = new SimpleBooleanProperty(this, "grabExcessVerticalSpace", false); //$NON-NLS-1$
 
-	private IntegerProperty minimumWidth = new SimpleIntegerProperty(this, "minimumWidth", 0);
+	private IntegerProperty minimumWidth = new SimpleIntegerProperty(this, "minimumWidth", 0); //$NON-NLS-1$
 
-	private IntegerProperty minimumHeight = new SimpleIntegerProperty(this, "minimumHeight", 0);
+	private IntegerProperty minimumHeight = new SimpleIntegerProperty(this, "minimumHeight", 0); //$NON-NLS-1$
 
-	private BooleanProperty exclude = new SimpleBooleanProperty(this, "exclude", false);
+	private BooleanProperty exclude = new SimpleBooleanProperty(this, "exclude", false); //$NON-NLS-1$
 
 	/**
 	 * Style bit for <code>new GridData(int)</code>. Position the control at the
@@ -171,23 +189,23 @@ public class GridData {
 	public GridData(int style) {
 		super();
 		if ((style & VERTICAL_ALIGN_BEGINNING) != 0)
-			verticalAlignment.set(Alignment.BEGINNING);
+			this.verticalAlignment.set(Alignment.BEGINNING);
 		if ((style & VERTICAL_ALIGN_CENTER) != 0)
-			verticalAlignment.set(Alignment.CENTER);
+			this.verticalAlignment.set(Alignment.CENTER);
 		if ((style & VERTICAL_ALIGN_FILL) != 0)
-			verticalAlignment.set(Alignment.FILL);
+			this.verticalAlignment.set(Alignment.FILL);
 		if ((style & VERTICAL_ALIGN_END) != 0)
-			verticalAlignment.set(Alignment.END);
+			this.verticalAlignment.set(Alignment.END);
 		if ((style & HORIZONTAL_ALIGN_BEGINNING) != 0)
-			horizontalAlignment.set(Alignment.BEGINNING);
+			this.horizontalAlignment.set(Alignment.BEGINNING);
 		if ((style & HORIZONTAL_ALIGN_CENTER) != 0)
-			horizontalAlignment.set(Alignment.CENTER);
+			this.horizontalAlignment.set(Alignment.CENTER);
 		if ((style & HORIZONTAL_ALIGN_FILL) != 0)
-			horizontalAlignment.set(Alignment.FILL);
+			this.horizontalAlignment.set(Alignment.FILL);
 		if ((style & HORIZONTAL_ALIGN_END) != 0)
-			horizontalAlignment.set(Alignment.END);
-		grabExcessHorizontalSpace.set((style & GRAB_HORIZONTAL) != 0);
-		grabExcessVerticalSpace.set((style & GRAB_VERTICAL) != 0);
+			this.horizontalAlignment.set(Alignment.END);
+		this.grabExcessHorizontalSpace.set((style & GRAB_HORIZONTAL) != 0);
+		this.grabExcessVerticalSpace.set((style & GRAB_VERTICAL) != 0);
 	}
 
 	/**
@@ -267,36 +285,36 @@ public class GridData {
 	}
 
 	void computeSize(Node control, int wHint, int hHint, boolean flushCache) {
-		if (cacheWidth != -1 && cacheHeight != -1)
+		if (this.cacheWidth != -1 && this.cacheHeight != -1)
 			return;
 		
 		if (wHint == this.widthHint.get() && hHint == this.heightHint.get()) {
-			if (defaultWidth == -1 || defaultHeight == -1 || wHint != defaultWhint || hHint != defaultHhint) {
+			if (this.defaultWidth == -1 || this.defaultHeight == -1 || wHint != this.defaultWhint || hHint != this.defaultHhint) {
 				// Point size = control.computeSize (wHint, hHint, flushCache);
-				defaultWhint = wHint;
-				defaultHhint = hHint;
-				defaultWidth = wHint == -1 ? control.prefWidth(hHint) : defaultWhint;
-				defaultHeight = hHint == -1 ? control.prefHeight(wHint) : defaultHhint;
+				this.defaultWhint = wHint;
+				this.defaultHhint = hHint;
+				this.defaultWidth = wHint == -1 ? control.prefWidth(hHint) : this.defaultWhint;
+				this.defaultHeight = hHint == -1 ? control.prefHeight(wHint) : this.defaultHhint;
 			}
-			cacheWidth = defaultWidth;
-			cacheHeight = defaultHeight;
+			this.cacheWidth = this.defaultWidth;
+			this.cacheHeight = this.defaultHeight;
 			return;
 		}
-		if (currentWidth == -1 || currentHeight == -1 || wHint != currentWhint || hHint != currentHhint) {
+		if (this.currentWidth == -1 || this.currentHeight == -1 || wHint != this.currentWhint || hHint != this.currentHhint) {
 			// Point size = control.computeSize (wHint, hHint, flushCache);
-			currentWhint = wHint;
-			currentHhint = hHint;
-			currentWidth = control.getLayoutBounds().getWidth();
-			currentHeight = control.getLayoutBounds().getHeight();
+			this.currentWhint = wHint;
+			this.currentHhint = hHint;
+			this.currentWidth = control.getLayoutBounds().getWidth();
+			this.currentHeight = control.getLayoutBounds().getHeight();
 		}
-		cacheWidth = currentWidth;
-		cacheHeight = currentHeight;
+		this.cacheWidth = this.currentWidth;
+		this.cacheHeight = this.currentHeight;
 	}
 
 	void flushCache() {
-		cacheWidth = cacheHeight = -1;
-		defaultWidth = defaultHeight = -1;
-		currentWidth = currentHeight = -1;
+		this.cacheWidth = this.cacheHeight = -1;
+		this.defaultWidth = this.defaultHeight = -1;
+		this.currentWidth = this.currentHeight = -1;
 	}
 
 	String getName() {
