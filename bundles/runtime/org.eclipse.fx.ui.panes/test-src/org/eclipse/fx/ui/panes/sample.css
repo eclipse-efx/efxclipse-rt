@@ -1,6 +1,7 @@
 .test-css {
-	-fx-margin-width: 20px;
+	/*-fx-margin-width: 20px;
 	-fx-margin-height: 20px;
 	-fx-spacing: 10px;
-	-fx-horizontal: false;
+	-fx-horizontal: false;*/
+	-fx-padding: 30 45 10 20;
 }
