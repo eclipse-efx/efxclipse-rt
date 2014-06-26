@@ -38,7 +38,7 @@ import com.sun.javafx.css.converters.SizeConverter;
  */
 @SuppressWarnings("restriction")
 public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> {
-	private static final CssMetaData<FillLayoutPane, Number> MARGIN_WIDTH = new CssMetaData<FillLayoutPane, Number>("-fx-margin-width", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<FillLayoutPane, Number> MARGIN_WIDTH = new CssMetaData<FillLayoutPane, Number>("-fx-inner-margin-width", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(FillLayoutPane node) {
@@ -52,7 +52,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 		}
 	};
 
-	private static final CssMetaData<FillLayoutPane, Number> MARGIN_HEIGHT = new CssMetaData<FillLayoutPane, Number>("-fx-margin-height", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
+	private static final CssMetaData<FillLayoutPane, Number> MARGIN_HEIGHT = new CssMetaData<FillLayoutPane, Number>("-fx-inner-margin-height", SizeConverter.getInstance(), Integer.valueOf(0)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(FillLayoutPane node) {
@@ -116,47 +116,15 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 		return getClassCssMetaData();
 	}
 
-	/**
-	 * type specifies how controls will be positioned within the layout.
-	 * 
-	 * The default value is HORIZONTAL.
-	 * 
-	 * Possible values are:
-	 * <ul>
-	 * <li>HORIZONTAL: Position the controls horizontally from left to right</li>
-	 * <li>VERTICAL: Position the controls vertically from top to bottom</li>
-	 * </ul>
-	 */
 	@NonNull
 	private final BooleanProperty horizontal = new SimpleStyleableBooleanProperty(HORIZONTAL, this, "horizontal", true); //$NON-NLS-1$
 
-	/**
-	 * marginWidth specifies the number of pixels of horizontal margin that will
-	 * be placed along the left and right edges of the layout.
-	 * 
-	 * The default value is 0.
-	 * 
-	 */
 	@NonNull
 	private final IntegerProperty marginWidth = new SimpleStyleableIntegerProperty(MARGIN_WIDTH, this, "marginWidth", Integer.valueOf(0)); //$NON-NLS-1$
 
-	/**
-	 * marginHeight specifies the number of pixels of vertical margin that will
-	 * be placed along the top and bottom edges of the layout.
-	 * 
-	 * The default value is 0.
-	 * 
-	 */
 	@NonNull
 	private final IntegerProperty marginHeight = new SimpleStyleableIntegerProperty(MARGIN_HEIGHT, this, "marginHeight", Integer.valueOf(0)); //$NON-NLS-1$
 
-	/**
-	 * spacing specifies the number of pixels between the edge of one cell and
-	 * the edge of its neighbouring cell.
-	 * 
-	 * The default value is 0.
-	 * 
-	 */
 	@NonNull
 	private final IntegerProperty spacing = new SimpleStyleableIntegerProperty(SPACING, this, "spacing", Integer.valueOf(0)); //$NON-NLS-1$
 
@@ -192,7 +160,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 		}
 	}
 
-	private static WeakHashMap<Node, FillData> CONSTRAINTS = new WeakHashMap<Node, FillData>();
+	private final static WeakHashMap<Node, FillData> CONSTRAINTS = new WeakHashMap<Node, FillData>();
 
 	/**
 	 * Set a constraint object for the node
@@ -202,7 +170,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * @param data
 	 *            the fill data
 	 */
-	public static void setConstraint(@NonNull Node n, @NonNull FillData data) {
+	public final static void setConstraint(@NonNull Node n, @NonNull FillData data) {
 		CONSTRAINTS.put(n, data);
 	}
 
@@ -213,7 +181,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 *            the node
 	 * @return the constraint or <code>null</code>
 	 */
-	public static @Nullable FillData getConstraint(@NonNull Node n) {
+	public final static @Nullable FillData getConstraint(@NonNull Node n) {
 		return CONSTRAINTS.get(n);
 	}
 
@@ -223,14 +191,14 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * @param horizontal
 	 *            <code>true</code> to layout next to each other
 	 */
-	public void setHorizontal(boolean horizontal) {
+	public final void setHorizontal(boolean horizontal) {
 		this.horizontal.set(horizontal);
 	}
 
 	/**
 	 * @return the current value
 	 */
-	public boolean isHorizontal() {
+	public final boolean isHorizontal() {
 		return this.horizontal.get();
 	}
 
@@ -238,7 +206,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * @return the property, <code>true</code> if children an layouted next to
 	 *         each other
 	 */
-	public @NonNull BooleanProperty horizontalProperty() {
+	public final @NonNull BooleanProperty horizontalProperty() {
 		return this.horizontal;
 	}
 
@@ -248,7 +216,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * @param marginWidth
 	 *            the width
 	 */
-	public void setMarginWidth(int marginWidth) {
+	public final void setMarginWidth(int marginWidth) {
 		this.marginWidth.set(marginWidth);
 	}
 
@@ -257,21 +225,21 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * 
 	 * @return the current value
 	 */
-	public int getMarginWidth() {
+	public final int getMarginWidth() {
 		return this.marginWidth.get();
 	}
 
 	/**
 	 * @return Margin left on the left and right border of the container
 	 */
-	public @NonNull IntegerProperty marginWidthProperty() {
+	public final @NonNull IntegerProperty marginWidthProperty() {
 		return this.marginWidth;
 	}
 
 	/**
 	 * @return the margin left on top and bottom of the container
 	 */
-	public @NonNull IntegerProperty marginHeightProperty() {
+	public final @NonNull IntegerProperty marginHeightProperty() {
 		return this.marginHeight;
 	}
 
@@ -281,28 +249,28 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * @param marginHeight
 	 *            the margin
 	 */
-	public void setMarginHeight(int marginHeight) {
+	public final void setMarginHeight(int marginHeight) {
 		this.marginHeight.set(marginHeight);
 	}
 
 	/**
 	 * @return the margin left on top and bottom of the container
 	 */
-	public int getMarginHeight() {
+	public final int getMarginHeight() {
 		return this.marginHeight.get();
 	}
 
 	/**
 	 * @return the spacing between children
 	 */
-	public @NonNull IntegerProperty spacingProperty() {
+	public final @NonNull IntegerProperty spacingProperty() {
 		return this.spacing;
 	}
 
 	/**
 	 * @return the spacing between children
 	 */
-	public int getSpacing() {
+	public final int getSpacing() {
 		return this.spacing.get();
 	}
 
@@ -312,7 +280,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * @param spacing
 	 *            the spacing
 	 */
-	public void setSpacing(int spacing) {
+	public final void setSpacing(int spacing) {
 		this.spacing.set(spacing);
 	}
 
