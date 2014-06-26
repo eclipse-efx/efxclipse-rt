@@ -26,6 +26,9 @@ import javafx.css.StyleableProperty;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import com.sun.javafx.css.converters.BooleanConverter;
 import com.sun.javafx.css.converters.SizeConverter;
 
@@ -39,7 +42,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 		@Override
 		public boolean isSettable(FillLayoutPane node) {
-			return node.marginWidthProperty() == null || !node.marginWidthProperty().isBound();
+			return !node.marginWidthProperty().isBound();
 		}
 
 		@SuppressWarnings("unchecked")
@@ -53,7 +56,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 		@Override
 		public boolean isSettable(FillLayoutPane node) {
-			return node.marginHeightProperty() == null || !node.marginHeightProperty().isBound();
+			return !node.marginHeightProperty().isBound();
 		}
 
 		@SuppressWarnings("unchecked")
@@ -67,7 +70,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 		@Override
 		public boolean isSettable(FillLayoutPane node) {
-			return node.spacingProperty() == null || !node.spacingProperty().isBound();
+			return !node.spacingProperty().isBound();
 		}
 
 		@SuppressWarnings("unchecked")
@@ -81,7 +84,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 		@Override
 		public boolean isSettable(FillLayoutPane node) {
-			return node.horizontalProperty() == null || !node.horizontalProperty().isBound();
+			return !node.horizontalProperty().isBound();
 		}
 
 		@SuppressWarnings("unchecked")
@@ -124,7 +127,8 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * <li>VERTICAL: Position the controls vertically from top to bottom</li>
 	 * </ul>
 	 */
-	private BooleanProperty horizontal = new SimpleStyleableBooleanProperty(HORIZONTAL, this, "horizontal", true); //$NON-NLS-1$
+	@NonNull
+	private final BooleanProperty horizontal = new SimpleStyleableBooleanProperty(HORIZONTAL, this, "horizontal", true); //$NON-NLS-1$
 
 	/**
 	 * marginWidth specifies the number of pixels of horizontal margin that will
@@ -132,9 +136,9 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * 
 	 * The default value is 0.
 	 * 
-	 * @since 3.0
 	 */
-	private IntegerProperty marginWidth = new SimpleStyleableIntegerProperty(MARGIN_WIDTH, this, "marginWidth", Integer.valueOf(0)); //$NON-NLS-1$
+	@NonNull
+	private final IntegerProperty marginWidth = new SimpleStyleableIntegerProperty(MARGIN_WIDTH, this, "marginWidth", Integer.valueOf(0)); //$NON-NLS-1$
 
 	/**
 	 * marginHeight specifies the number of pixels of vertical margin that will
@@ -142,9 +146,9 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * 
 	 * The default value is 0.
 	 * 
-	 * @since 3.0
 	 */
-	private IntegerProperty marginHeight = new SimpleStyleableIntegerProperty(MARGIN_HEIGHT, this, "marginHeight", Integer.valueOf(0)); //$NON-NLS-1$
+	@NonNull
+	private final IntegerProperty marginHeight = new SimpleStyleableIntegerProperty(MARGIN_HEIGHT, this, "marginHeight", Integer.valueOf(0)); //$NON-NLS-1$
 
 	/**
 	 * spacing specifies the number of pixels between the edge of one cell and
@@ -152,9 +156,9 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * 
 	 * The default value is 0.
 	 * 
-	 * @since 3.0
 	 */
-	private IntegerProperty spacing = new SimpleStyleableIntegerProperty(SPACING, this, "spacing", Integer.valueOf(0)); //$NON-NLS-1$
+	@NonNull
+	private final IntegerProperty spacing = new SimpleStyleableIntegerProperty(SPACING, this, "spacing", Integer.valueOf(0)); //$NON-NLS-1$
 
 	static class FillData {
 
@@ -190,64 +194,132 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 
 	private static WeakHashMap<Node, FillData> CONSTRAINTS = new WeakHashMap<Node, FillData>();
 
-	public static void setConstraint(Node n, FillData griddata) {
-		CONSTRAINTS.put(n, griddata);
+	/**
+	 * Set a constraint object for the node
+	 * 
+	 * @param n
+	 *            the node
+	 * @param data
+	 *            the fill data
+	 */
+	public static void setConstraint(@NonNull Node n, @NonNull FillData data) {
+		CONSTRAINTS.put(n, data);
 	}
 
-	public static FillData getConstraint(Node n) {
+	/**
+	 * Access the constraint object for the node
+	 * 
+	 * @param n
+	 *            the node
+	 * @return the constraint or <code>null</code>
+	 */
+	public static @Nullable FillData getConstraint(@NonNull Node n) {
 		return CONSTRAINTS.get(n);
 	}
 
+	/**
+	 * Define how controls are layouted
+	 * 
+	 * @param horizontal
+	 *            <code>true</code> to layout next to each other
+	 */
 	public void setHorizontal(boolean horizontal) {
 		this.horizontal.set(horizontal);
 	}
 
+	/**
+	 * @return the current value
+	 */
 	public boolean isHorizontal() {
 		return this.horizontal.get();
 	}
 
-	public BooleanProperty horizontalProperty() {
-		return horizontal;
+	/**
+	 * @return the property, <code>true</code> if children an layouted next to
+	 *         each other
+	 */
+	public @NonNull BooleanProperty horizontalProperty() {
+		return this.horizontal;
 	}
 
+	/**
+	 * Margin left on the left and right border of the container
+	 * 
+	 * @param marginWidth
+	 *            the width
+	 */
 	public void setMarginWidth(int marginWidth) {
 		this.marginWidth.set(marginWidth);
 	}
 
+	/**
+	 * Margin left on the left and right border of the container
+	 * 
+	 * @return the current value
+	 */
 	public int getMarginWidth() {
 		return this.marginWidth.get();
 	}
 
-	public IntegerProperty marginHeightProperty() {
-		return marginHeight;
+	/**
+	 * @return Margin left on the left and right border of the container
+	 */
+	public @NonNull IntegerProperty marginWidthProperty() {
+		return this.marginWidth;
 	}
 
+	/**
+	 * @return the margin left on top and bottom of the container
+	 */
+	public @NonNull IntegerProperty marginHeightProperty() {
+		return this.marginHeight;
+	}
+
+	/**
+	 * The margin left on top and bottom of the container
+	 * 
+	 * @param marginHeight
+	 *            the margin
+	 */
 	public void setMarginHeight(int marginHeight) {
 		this.marginHeight.set(marginHeight);
 	}
 
+	/**
+	 * @return the margin left on top and bottom of the container
+	 */
 	public int getMarginHeight() {
 		return this.marginHeight.get();
 	}
 
-	public IntegerProperty marginWidthProperty() {
-		return marginWidth;
+	/**
+	 * @return the spacing between children
+	 */
+	public @NonNull IntegerProperty spacingProperty() {
+		return this.spacing;
 	}
 
+	/**
+	 * @return the spacing between children
+	 */
 	public int getSpacing() {
-		return spacing.get();
+		return this.spacing.get();
 	}
 
+	/**
+	 * The spacing between children
+	 * 
+	 * @param spacing
+	 *            the spacing
+	 */
 	public void setSpacing(int spacing) {
 		this.spacing.set(spacing);
 	}
 
-	public IntegerProperty spacingProperty() {
-		return this.spacing;
-	}
-
+	@Override
 	protected Size computeSize(double wHint, double hHint, boolean flushCache) {
-		Node[] children = getChildren().toArray(new Node[0]);
+		@SuppressWarnings("null")
+		@NonNull Node[] children = getChildren().toArray(new Node[0]);
 		int count = children.length;
 		double maxWidth = 0, maxHeight = 0;
 		for (int i = 0; i < count; i++) {
@@ -285,8 +357,8 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 			height = hHint;
 		return new Size(width, height);
 	}
-
-	Size computeChildSize(Node control, double wHint, double hHint, boolean flushCache) {
+ 
+	static Size computeChildSize(@NonNull Node control, double wHint, double hHint, boolean flushCache) {
 		FillData data = getConstraint(control);
 		if (data == null) {
 			data = new FillData();
