@@ -11,16 +11,100 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.panes;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.WeakHashMap;
 
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.WritableBooleanValue;
-import javafx.beans.value.WritableIntegerValue;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.css.CssMetaData;
+import javafx.css.SimpleStyleableBooleanProperty;
+import javafx.css.SimpleStyleableIntegerProperty;
+import javafx.css.Styleable;
+import javafx.css.StyleableProperty;
 import javafx.geometry.Bounds;
+import javafx.scene.Group;
 import javafx.scene.Node;
 
+import com.sun.javafx.css.converters.BooleanConverter;
+import com.sun.javafx.css.converters.SizeConverter;
+
 public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> {
+	private static final CssMetaData<FillLayoutPane, Number> MARGIN_WIDTH = new CssMetaData<FillLayoutPane, Number>("-fx-margin-width", SizeConverter.getInstance(), 0) {
+
+		@Override
+		public boolean isSettable(FillLayoutPane node) {
+			return node.marginWidthProperty() == null || !node.marginWidthProperty().isBound();
+		}
+
+		@Override
+		public StyleableProperty<Number> getStyleableProperty(FillLayoutPane node) {
+			return (StyleableProperty<Number>) node.marginWidthProperty();
+		}
+	};
+
+	private static final CssMetaData<FillLayoutPane, Number> MARGIN_HEIGHT = new CssMetaData<FillLayoutPane, Number>("-fx-margin-height", SizeConverter.getInstance(), 0) {
+
+		@Override
+		public boolean isSettable(FillLayoutPane node) {
+			return node.marginHeightProperty() == null || !node.marginHeightProperty().isBound();
+		}
+
+		@Override
+		public StyleableProperty<Number> getStyleableProperty(FillLayoutPane node) {
+			return (StyleableProperty<Number>) node.marginHeightProperty();
+		}
+	};
+	
+	private static final CssMetaData<FillLayoutPane, Number> SPACING = new CssMetaData<FillLayoutPane, Number>("-fx-spacing", SizeConverter.getInstance(), 0) {
+
+		@Override
+		public boolean isSettable(FillLayoutPane node) {
+			return node.spacingProperty() == null || !node.spacingProperty().isBound();
+		}
+
+		@Override
+		public StyleableProperty<Number> getStyleableProperty(FillLayoutPane node) {
+			return (StyleableProperty<Number>) node.spacingProperty();
+		}
+	};
+	
+	private static final CssMetaData<FillLayoutPane, Boolean> HORIZONTAL = new CssMetaData<FillLayoutPane, Boolean>("-fx-horizontal", BooleanConverter.getInstance(), true) {
+
+		@Override
+		public boolean isSettable(FillLayoutPane node) {
+			return node.horizontalProperty() == null || !node.horizontalProperty().isBound();
+		}
+
+		@Override
+		public StyleableProperty<Boolean> getStyleableProperty(FillLayoutPane node) {
+			return (StyleableProperty<Boolean>) node.horizontalProperty();
+		}
+	};
+	
+	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
+    
+    static {
+
+        final List<CssMetaData<? extends Styleable, ?>> styleables =
+            new ArrayList<CssMetaData<? extends Styleable, ?>>(AbstractLayoutPane.getClassCssMetaData());
+        styleables.add(MARGIN_WIDTH);
+        styleables.add(MARGIN_HEIGHT);
+        styleables.add(SPACING);
+        styleables.add(HORIZONTAL);
+        STYLEABLES = Collections.unmodifiableList(styleables);
+    }
+    
+    public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+        return STYLEABLES;
+    }
+
+    @Override
+    public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
+        return getClassCssMetaData();
+    }
+
 	/**
 	 * type specifies how controls will be positioned within the layout.
 	 * 
@@ -32,8 +116,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * <li>VERTICAL: Position the controls vertically from top to bottom</li>
 	 * </ul>
 	 */
-	private WritableBooleanValue horizontal = new SimpleBooleanProperty(this,
-			"horizontal", true);
+	private BooleanProperty horizontal = new SimpleStyleableBooleanProperty(HORIZONTAL, this, "horizontal", true); //$NON-NLS-1$
 
 	/**
 	 * marginWidth specifies the number of pixels of horizontal margin that will
@@ -43,8 +126,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * 
 	 * @since 3.0
 	 */
-	private WritableIntegerValue marginWidth = new SimpleIntegerProperty(this,
-			"marginWidth", 0);
+	private IntegerProperty marginWidth = new SimpleStyleableIntegerProperty(MARGIN_WIDTH, this, "marginWidth", Integer.valueOf(0)); //$NON-NLS-1$
 
 	/**
 	 * marginHeight specifies the number of pixels of vertical margin that will
@@ -54,8 +136,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * 
 	 * @since 3.0
 	 */
-	private WritableIntegerValue marginHeight = new SimpleIntegerProperty(this,
-			"marginHeight", 0);
+	private IntegerProperty marginHeight = new SimpleStyleableIntegerProperty(MARGIN_HEIGHT, this, "marginHeight", Integer.valueOf(0)); //$NON-NLS-1$
 
 	/**
 	 * spacing specifies the number of pixels between the edge of one cell and
@@ -65,17 +146,14 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * 
 	 * @since 3.0
 	 */
-	private WritableIntegerValue spacing = new SimpleIntegerProperty(this,
-			"spacing", 0);
+	private IntegerProperty spacing = new SimpleStyleableIntegerProperty(SPACING, this, "spacing", Integer.valueOf(0)); //$NON-NLS-1$
 
 	static class FillData {
 
 		double defaultWidth = -1, defaultHeight = -1;
-		double currentWhint, currentHhint, currentWidth = -1,
-				currentHeight = -1;
+		double currentWhint, currentHhint, currentWidth = -1, currentHeight = -1;
 
-		Size computeSize(Node control, double wHint, double hHint,
-				boolean flushCache) {
+		Size computeSize(Node control, double wHint, double hHint, boolean flushCache) {
 			if (flushCache)
 				flushCache();
 			if (wHint == FX_DEFAULT && hHint == FX_DEFAULT) {
@@ -86,8 +164,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 				}
 				return new Size(defaultWidth, defaultHeight);
 			}
-			if (currentWidth == -1 || currentHeight == -1
-					|| wHint != currentWhint || hHint != currentHhint) {
+			if (currentWidth == -1 || currentHeight == -1 || wHint != currentWhint || hHint != currentHhint) {
 				// Point size = control.computeSize (wHint, hHint, flushCache);
 				currentWhint = wHint;
 				currentHhint = hHint;
@@ -104,53 +181,63 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	}
 
 	private static WeakHashMap<Node, FillData> CONSTRAINTS = new WeakHashMap<Node, FillData>();
-	
+
 	public static void setConstraint(Node n, FillData griddata) {
 		CONSTRAINTS.put(n, griddata);
 	}
-	
+
 	public static FillData getConstraint(Node n) {
 		return CONSTRAINTS.get(n);
 	}
 
-		
 	public void setHorizontal(boolean horizontal) {
 		this.horizontal.set(horizontal);
 	}
-	
+
 	public boolean isHorizontal() {
 		return this.horizontal.get();
 	}
-	
-	public WritableBooleanValue horizontalProperty() {
+
+	public BooleanProperty horizontalProperty() {
 		return horizontal;
 	}
-	
+
 	public void setMarginWidth(int marginWidth) {
 		this.marginWidth.set(marginWidth);
 	}
-	
+
 	public int getMarginWidth() {
 		return this.marginWidth.get();
 	}
-	
-	public WritableIntegerValue marginHeightProperty() {
+
+	public IntegerProperty marginHeightProperty() {
 		return marginHeight;
 	}
-	
+
 	public void setMarginHeight(int marginHeight) {
 		this.marginHeight.set(marginHeight);
 	}
-	
+
 	public int getMarginHeight() {
 		return this.marginHeight.get();
 	}
-	
-	public WritableIntegerValue marginWidthProperty() {
+
+	public IntegerProperty marginWidthProperty() {
 		return marginWidth;
 	}
 	
+	public int getSpacing() {
+		return spacing.get();
+	}
 	
+	public void setSpacing(int spacing) {
+		this.spacing.set(spacing);
+	}
+	
+	public IntegerProperty spacingProperty() {
+		return this.spacing;
+	}
+
 	protected Size computeSize(double wHint, double hHint, boolean flushCache) {
 		Node[] children = getChildren().toArray(new Node[0]);
 		int count = children.length;
@@ -160,12 +247,10 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 			double w = wHint, h = hHint;
 			if (count > 0) {
 				if (horizontal.get() && wHint != FX_DEFAULT) {
-					w = Math.max(0, (wHint - (count - 1) * spacing.get())
-							/ count);
+					w = Math.max(0, (wHint - (count - 1) * spacing.get()) / count);
 				}
 				if (!horizontal.get() && hHint != FX_DEFAULT) {
-					h = Math.max(0, (hHint - (count - 1) * spacing.get())
-							/ count);
+					h = Math.max(0, (hHint - (count - 1) * spacing.get()) / count);
 				}
 			}
 			Size size = computeChildSize(child, w, h, flushCache);
@@ -193,8 +278,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 		return new Size(width, height);
 	}
 
-	Size computeChildSize(Node control, double wHint, double hHint,
-			boolean flushCache) {
+	Size computeChildSize(Node control, double wHint, double hHint, boolean flushCache) {
 		FillData data = getConstraint(control);
 		if (data == null) {
 			data = new FillData();
@@ -207,7 +291,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 			// TEMPORARY CODE
 			int trimX, trimY;
 			trimX = trimY = 0;
-			//FIXME
+			// FIXME
 			// if (control instanceof Scrollable) {
 			// Rectangle rect = ((Scrollable) control).computeTrim(0, 0, 0, 0);
 			// trimX = rect.width;
@@ -215,10 +299,8 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 			// } else {
 			// trimX = trimY = control.getBorderWidth() * 2;
 			// }
-			double w = wHint == FX_DEFAULT ? wHint : Math
-					.max(0, wHint - trimX);
-			double h = hHint == FX_DEFAULT ? hHint : Math
-					.max(0, hHint - trimY);
+			double w = wHint == FX_DEFAULT ? wHint : Math.max(0, wHint - trimX);
+			double h = hHint == FX_DEFAULT ? hHint : Math.max(0, hHint - trimY);
 			size = data.computeSize(control, w, h, flushCache);
 		}
 		return size;
@@ -227,24 +309,26 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	@Override
 	protected void layoutChildren() {
 		super.layoutChildren();
-		
+
 		Bounds rect = getLayoutBounds();
-		Node [] children = getChildren ().toArray(new Node[0]);
+		Node[] children = getChildren().toArray(new Node[0]);
 		int count = children.length;
-		if (count == 0) return;
+		if (count == 0)
+			return;
 		double width = rect.getWidth() - marginWidth.get() * 2;
 		double height = rect.getHeight() - marginHeight.get() * 2;
 		if (horizontal.get()) {
 			width -= (count - 1) * spacing.get();
 			double x = rect.getMinX() + marginWidth.get(), extra = width % count;
 			double y = rect.getMinY() + marginHeight.get(), cellWidth = width / count;
-			for (int i=0; i<count; i++) {
-				Node child = children [i];
+			for (int i = 0; i < count; i++) {
+				Node child = children[i];
 				double childWidth = cellWidth;
 				if (i == 0) {
 					childWidth += extra / 2;
 				} else {
-					if (i == count - 1) childWidth += (extra + 1) / 2;
+					if (i == count - 1)
+						childWidth += (extra + 1) / 2;
 				}
 				child.resizeRelocate(x, y, childWidth, height);
 				x += childWidth + spacing.get();
@@ -253,15 +337,16 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 			height -= (count - 1) * spacing.get();
 			double x = rect.getMinX() + marginWidth.get(), cellHeight = height / count;
 			double y = rect.getMinY() + marginHeight.get(), extra = height % count;
-			for (int i=0; i<count; i++) {
-				Node child = children [i];
+			for (int i = 0; i < count; i++) {
+				Node child = children[i];
 				double childHeight = cellHeight;
 				if (i == 0) {
 					childHeight += extra / 2;
 				} else {
-					if (i == count - 1) childHeight += (extra + 1) / 2;
+					if (i == count - 1)
+						childHeight += (extra + 1) / 2;
 				}
-				child.resizeRelocate (x, y, width, childHeight);
+				child.resizeRelocate(x, y, width, childHeight);
 				y += childHeight + spacing.get();
 			}
 		}
