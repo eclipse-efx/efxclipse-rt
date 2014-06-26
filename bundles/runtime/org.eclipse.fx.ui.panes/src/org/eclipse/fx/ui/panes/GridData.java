@@ -16,6 +16,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.WritableBooleanValue;
 import javafx.scene.Node;
 import static org.eclipse.fx.ui.panes.AbstractLayoutPane.*;
 
@@ -27,209 +28,31 @@ public class GridData {
 		FILL
 	}
 	
-	/**
-	 * verticalAlignment specifies how controls will be positioned vertically
-	 * within a cell.
-	 * 
-	 * The default value is CENTER.
-	 * 
-	 * Possible values are:
-	 * <ul>
-	 * <li>SWT.BEGINNING (or SWT.TOP): Position the control at the top of the
-	 * cell</li>
-	 * <li>SWT.CENTER: Position the control in the vertical center of the cell</li>
-	 * <li>SWT.END (or SWT.BOTTOM): Position the control at the bottom of the
-	 * cell</li>
-	 * <li>SWT.FILL: Resize the control to fill the cell vertically</li>
-	 * </ul>
-	 */
-	public ObjectProperty<Alignment> verticalAlignment = new SimpleObjectProperty<Alignment>(this, "verticalAlignment", Alignment.CENTER);
+	private ObjectProperty<Alignment> verticalAlignment = new SimpleObjectProperty<Alignment>(this, "verticalAlignment", Alignment.CENTER);
 
-	/**
-	 * horizontalAlignment specifies how controls will be positioned
-	 * horizontally within a cell.
-	 * 
-	 * The default value is BEGINNING.
-	 * 
-	 * Possible values are:
-	 * <ul>
-	 * <li>SWT.BEGINNING (or SWT.LEFT): Position the control at the left of the
-	 * cell</li>
-	 * <li>SWT.CENTER: Position the control in the horizontal center of the cell
-	 * </li>
-	 * <li>SWT.END (or SWT.RIGHT): Position the control at the right of the cell
-	 * </li>
-	 * <li>SWT.FILL: Resize the control to fill the cell horizontally</li>
-	 * </ul>
-	 */
-	public ObjectProperty<Alignment> horizontalAlignment = new SimpleObjectProperty<Alignment>(this, "horizontalAlignment", Alignment.BEGINNING);
+	private ObjectProperty<Alignment> horizontalAlignment = new SimpleObjectProperty<Alignment>(this, "horizontalAlignment", Alignment.BEGINNING);
 
-	/**
-	 * widthHint specifies the preferred width in pixels. This value is the
-	 * wHint passed into Control.computeSize(int, int, boolean) to determine the
-	 * preferred size of the control.
-	 * 
-	 * The default value is SWT.DEFAULT.
-	 * 
-	 * @see Control#computeSize(int, int, boolean)
-	 */
-	public IntegerProperty widthHint = new SimpleIntegerProperty(this, "widthHint", FX_DEFAULT);
+	private IntegerProperty widthHint = new SimpleIntegerProperty(this, "widthHint", FX_DEFAULT);
 
-	/**
-	 * heightHint specifies the preferred height in pixels. This value is the
-	 * hHint passed into Control.computeSize(int, int, boolean) to determine the
-	 * preferred size of the control.
-	 * 
-	 * The default value is SWT.DEFAULT.
-	 * 
-	 * @see Control#computeSize(int, int, boolean)
-	 */
-	public IntegerProperty heightHint = new SimpleIntegerProperty(this, "heightHint", FX_DEFAULT);
+	private IntegerProperty heightHint = new SimpleIntegerProperty(this, "heightHint", FX_DEFAULT);
 
-	/**
-	 * horizontalIndent specifies the number of pixels of indentation that will
-	 * be placed along the left side of the cell.
-	 * 
-	 * The default value is 0.
-	 */
-	public IntegerProperty horizontalIndent = new SimpleIntegerProperty(this, "horizontalIndent");
+	private IntegerProperty horizontalIndent = new SimpleIntegerProperty(this, "horizontalIndent");
 
-	/**
-	 * verticalIndent specifies the number of pixels of indentation that will be
-	 * placed along the top side of the cell.
-	 * 
-	 * The default value is 0.
-	 * 
-	 * @since 3.1
-	 */
-	public IntegerProperty verticalIndent = new SimpleIntegerProperty(this, "verticalIndent");
+	private IntegerProperty verticalIndent = new SimpleIntegerProperty(this, "verticalIndent");
 
-	/**
-	 * horizontalSpan specifies the number of column cells that the control will
-	 * take up.
-	 * 
-	 * The default value is 1.
-	 */
-	public IntegerProperty horizontalSpan = new SimpleIntegerProperty(this, "horizontalSpan", 1);
+	private IntegerProperty horizontalSpan = new SimpleIntegerProperty(this, "horizontalSpan", 1);
 
-	/**
-	 * verticalSpan specifies the number of row cells that the control will take
-	 * up.
-	 * 
-	 * The default value is 1.
-	 */
-	public IntegerProperty verticalSpan = new SimpleIntegerProperty(this, "verticalSpan", 1);
+	private IntegerProperty verticalSpan = new SimpleIntegerProperty(this, "verticalSpan", 1);
 
-	/**
-	 * <p>
-	 * grabExcessHorizontalSpace specifies whether the width of the cell changes
-	 * depending on the size of the parent Composite. If
-	 * grabExcessHorizontalSpace is <code>true</code>, the following rules apply
-	 * to the width of the cell:
-	 * </p>
-	 * <ul>
-	 * <li>If extra horizontal space is available in the parent, the cell will
-	 * grow to be wider than its preferred width. The new width will be
-	 * "preferred width + delta" where delta is the extra horizontal space
-	 * divided by the number of grabbing columns.</li>
-	 * <li>If there is not enough horizontal space available in the parent, the
-	 * cell will shrink until it reaches its minimum width as specified by
-	 * GridData.minimumWidth. The new width will be the maximum of
-	 * "minimumWidth" and "preferred width - delta", where delta is the amount
-	 * of space missing divided by the number of grabbing columns.</li>
-	 * <li>If the parent is packed, the cell will be its preferred width as
-	 * specified by GridData.widthHint.</li>
-	 * <li>If the control spans multiple columns and there are no other grabbing
-	 * controls in any of the spanned columns, the last column in the span will
-	 * grab the extra space. If there is at least one other grabbing control in
-	 * the span, the grabbing will be spread over the columns already marked as
-	 * grabExcessHorizontalSpace.</li>
-	 * </ul>
-	 * 
-	 * <p>
-	 * The default value is false.
-	 * </p>
-	 * 
-	 * @see GridData#minimumWidth
-	 * @see GridData#widthHint
-	 */
-	public BooleanProperty grabExcessHorizontalSpace = new SimpleBooleanProperty(this, "grabExcessHorizontalSpace", false);
+	private BooleanProperty grabExcessHorizontalSpace = new SimpleBooleanProperty(this, "grabExcessHorizontalSpace", false);
 
-	/**
-	 * <p>
-	 * grabExcessVerticalSpace specifies whether the height of the cell changes
-	 * depending on the size of the parent Composite. If grabExcessVerticalSpace
-	 * is <code>true</code>, the following rules apply to the height of the
-	 * cell:
-	 * </p>
-	 * <ul>
-	 * <li>If extra vertical space is available in the parent, the cell will
-	 * grow to be taller than its preferred height. The new height will be
-	 * "preferred height + delta" where delta is the extra vertical space
-	 * divided by the number of grabbing rows.</li>
-	 * <li>If there is not enough vertical space available in the parent, the
-	 * cell will shrink until it reaches its minimum height as specified by
-	 * GridData.minimumHeight. The new height will be the maximum of
-	 * "minimumHeight" and "preferred height - delta", where delta is the amount
-	 * of space missing divided by the number of grabbing rows.</li>
-	 * <li>If the parent is packed, the cell will be its preferred height as
-	 * specified by GridData.heightHint.</li>
-	 * <li>If the control spans multiple rows and there are no other grabbing
-	 * controls in any of the spanned rows, the last row in the span will grab
-	 * the extra space. If there is at least one other grabbing control in the
-	 * span, the grabbing will be spread over the rows already marked as
-	 * grabExcessVerticalSpace.</li>
-	 * </ul>
-	 * 
-	 * <p>
-	 * The default value is false.
-	 * </p>
-	 * 
-	 * @see GridData#minimumHeight
-	 * @see GridData#heightHint
-	 */
-	public BooleanProperty grabExcessVerticalSpace = new SimpleBooleanProperty(this, "grabExcessVerticalSpace", false);
+	private BooleanProperty grabExcessVerticalSpace = new SimpleBooleanProperty(this, "grabExcessVerticalSpace", false);
 
-	/**
-	 * minimumWidth specifies the minimum width in pixels. This value applies
-	 * only if grabExcessHorizontalSpace is true. A value of SWT.DEFAULT means
-	 * that the minimum width will be the result of Control.computeSize(int,
-	 * int, boolean) where wHint is determined by GridData.widthHint.
-	 * 
-	 * The default value is 0.
-	 * 
-	 * @since 3.1
-	 * @see Control#computeSize(int, int, boolean)
-	 * @see GridData#widthHint
-	 */
-	public IntegerProperty minimumWidth = new SimpleIntegerProperty(this, "minimumWidth", 0);
+	private IntegerProperty minimumWidth = new SimpleIntegerProperty(this, "minimumWidth", 0);
 
-	/**
-	 * minimumHeight specifies the minimum height in pixels. This value applies
-	 * only if grabExcessVerticalSpace is true. A value of SWT.DEFAULT means
-	 * that the minimum height will be the result of Control.computeSize(int,
-	 * int, boolean) where hHint is determined by GridData.heightHint.
-	 * 
-	 * The default value is 0.
-	 * 
-	 * @since 3.1
-	 * @see Control#computeSize(int, int, boolean)
-	 * @see GridData#heightHint
-	 */
-	public IntegerProperty minimumHeight = new SimpleIntegerProperty(this, "minimumHeight", 0);
+	private IntegerProperty minimumHeight = new SimpleIntegerProperty(this, "minimumHeight", 0);
 
-	/**
-	 * exclude informs the layout to ignore this control when sizing and
-	 * positioning controls. If this value is <code>true</code>, the size and
-	 * position of the control will not be managed by the layout. If this value
-	 * is <code>false</code>, the size and position of the control will be
-	 * computed and assigned.
-	 * 
-	 * The default value is <code>false</code>.
-	 * 
-	 * @since 3.1
-	 */
-	public BooleanProperty exclude = new SimpleBooleanProperty(this, "exclude", false);
+	private BooleanProperty exclude = new SimpleBooleanProperty(this, "exclude", false);
 
 	/**
 	 * Style bit for <code>new GridData(int)</code>. Position the control at the
@@ -498,15 +321,15 @@ public class GridData {
 	}
 
 	// ----
-	public void setGrabHorizontalSpace(boolean value) {
+	public void setGrabExcessHorizontalSpace(boolean value) {
 		grabExcessHorizontalSpace.set(value);
 	}
 
-	public boolean isGrabHorizontalSpace() {
+	public boolean isGrabExcessHorizontalSpace() {
 		return grabExcessHorizontalSpace.get();
 	}
 
-	public BooleanProperty grabHorizontalSpaceProperty() {
+	public BooleanProperty grabExcessHorizontalSpaceProperty() {
 		return grabExcessHorizontalSpace;
 	}
 
@@ -550,15 +373,15 @@ public class GridData {
 	}
 
 	// ----
-	public void setHorizontalIdent(int value) {
+	public void setHorizontalIndent(int value) {
 		horizontalIndent.set(value);
 	}
 
-	public int getHorizontalIdent() {
+	public int getHorizontalnIdent() {
 		return horizontalIndent.get();
 	}
 
-	public IntegerProperty horizontalIdentProperty() {
+	public IntegerProperty horizontalIndentProperty() {
 		return horizontalIndent;
 	}
 
@@ -727,5 +550,7 @@ public class GridData {
 		string += "}";
 		return string;
 	}
+
+	
 
 }

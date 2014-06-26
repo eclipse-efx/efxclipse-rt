@@ -58,33 +58,33 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		private static GridData toGridData(Map<String, String> dataMap) {
 			GridData gd = new GridData();
 			if (dataMap.containsKey(WSash.FIXED_LAYOUT_WIDTH)) {
-				gd.widthHint.set(Integer.parseInt(dataMap.get(WSash.FIXED_LAYOUT_WIDTH)));
+				gd.widthHintProperty().set(Integer.parseInt(dataMap.get(WSash.FIXED_LAYOUT_WIDTH)));
 				if (!dataMap.containsKey(WSash.FIXED_LAYOUT_HEIGHT)) {
-					gd.grabExcessVerticalSpace.set(true);
-					gd.verticalAlignment.set(Alignment.FILL);
+					gd.grabExcessVerticalSpaceProperty().set(true);
+					gd.verticalAlignmentProperty().set(Alignment.FILL);
 				}
 			} else {
-				gd.horizontalAlignment.set(Alignment.FILL);
+				gd.horizontalAlignmentProperty().set(Alignment.FILL);
 			}
 
 			if (dataMap.containsKey(WSash.FIXED_LAYOUT_HEIGHT)) {
-				gd.heightHint.set(Integer.parseInt(dataMap.get(WSash.FIXED_LAYOUT_HEIGHT)));
+				gd.heightHintProperty().set(Integer.parseInt(dataMap.get(WSash.FIXED_LAYOUT_HEIGHT)));
 				if (!dataMap.containsKey(WSash.FIXED_LAYOUT_WIDTH)) {
-					gd.grabExcessHorizontalSpace.set(true);
-					gd.horizontalAlignment.set(Alignment.FILL);
+					gd.grabExcessHorizontalSpaceProperty().set(true);
+					gd.horizontalAlignmentProperty().set(Alignment.FILL);
 				}
 			} else {
-				gd.verticalAlignment.set(Alignment.FILL);
+				gd.verticalAlignmentProperty().set(Alignment.FILL);
 			}
 
 			if (dataMap.containsKey(WSash.FIXED_LAYOUT_GRAB_HORIZONTAL)) {
-				gd.grabExcessHorizontalSpace.set(Boolean.parseBoolean(dataMap.get(WSash.FIXED_LAYOUT_GRAB_HORIZONTAL)));
-				gd.horizontalAlignment.set(Alignment.FILL);
+				gd.grabExcessHorizontalSpaceProperty().set(Boolean.parseBoolean(dataMap.get(WSash.FIXED_LAYOUT_GRAB_HORIZONTAL)));
+				gd.horizontalAlignmentProperty().set(Alignment.FILL);
 			}
 
 			if (dataMap.containsKey(WSash.FIXED_LAYOUT_GRAB_VERTICAL)) {
-				gd.grabExcessVerticalSpace.set(Boolean.parseBoolean(dataMap.get(WSash.FIXED_LAYOUT_GRAB_VERTICAL)));
-				gd.verticalAlignment.set(Alignment.FILL);
+				gd.grabExcessVerticalSpaceProperty().set(Boolean.parseBoolean(dataMap.get(WSash.FIXED_LAYOUT_GRAB_VERTICAL)));
+				gd.verticalAlignmentProperty().set(Alignment.FILL);
 			}
 
 			return gd;

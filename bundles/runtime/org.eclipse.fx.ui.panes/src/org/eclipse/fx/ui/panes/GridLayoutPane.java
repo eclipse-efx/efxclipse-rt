@@ -248,7 +248,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		for (int i = 0; i < children.length; i++) {
 			Node control = children[i];
 			GridData data = getConstraint(control);
-			if (data == null || !data.exclude.get()) {
+			if (data == null || !data.excludeProperty().get()) {
 				children[count++] = children[i];
 			}
 		}
@@ -267,10 +267,10 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 			if (flushCache)
 				data.flushCache();
 
-			data.computeSize(child, data.widthHint.get(), data.heightHint.get(), flushCache);
+			data.computeSize(child, data.widthHintProperty().get(), data.heightHintProperty().get(), flushCache);
 
-			if (data.grabExcessHorizontalSpace.get() && data.minimumWidth.get() > 0) {
-				if (data.cacheWidth < data.minimumWidth.get()) {
+			if (data.grabExcessHorizontalSpaceProperty().get() && data.minimumWidthProperty().get() > 0) {
+				if (data.cacheWidth < data.minimumWidthProperty().get()) {
 					int trim = 0;
 					// TEMPORARY CODE
 					// FIXME
@@ -282,11 +282,11 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 					// trim = child.getBorderWidth () * 2;
 					// }
 					data.cacheWidth = data.cacheHeight = FX_DEFAULT;
-					data.computeSize(child, Math.max(0, data.minimumWidth.get() - trim), data.heightHint.get(), false);
+					data.computeSize(child, Math.max(0, data.minimumWidthProperty().get() - trim), data.heightHintProperty().get(), false);
 				}
 			}
-			if (data.grabExcessVerticalSpace.get() && data.minimumHeight.get() > 0) {
-				data.cacheHeight = Math.max(data.cacheHeight, data.minimumHeight.get());
+			if (data.grabExcessVerticalSpaceProperty().get() && data.minimumHeightProperty().get() > 0) {
+				data.cacheHeight = Math.max(data.cacheHeight, data.minimumHeightProperty().get());
 			}
 		}
 
@@ -299,8 +299,8 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 			if (data == null) {
 				data = new GridData();
 			}
-			int hSpan = Math.max(1, Math.min(data.horizontalSpan.get(), columnCount));
-			int vSpan = Math.max(1, data.verticalSpan.get());
+			int hSpan = Math.max(1, Math.min(data.horizontalSpanProperty().get(), columnCount));
+			int vSpan = Math.max(1, data.verticalSpanProperty().get());
 			while (true) {
 				int lastRow = row + vSpan;
 				if (lastRow >= grid.length) {
@@ -351,18 +351,18 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 			for (int i = 0; i < rowCount; i++) {
 				GridData data = getData(grid, i, j, rowCount, columnCount, true);
 				if (data != null) {
-					int hSpan = Math.max(1, Math.min(data.horizontalSpan.get(), columnCount));
+					int hSpan = Math.max(1, Math.min(data.horizontalSpanProperty().get(), columnCount));
 					if (hSpan == 1) {
-						double w = data.cacheWidth + data.horizontalIndent.get();
+						double w = data.cacheWidth + data.horizontalIndentProperty().get();
 						widths[j] = Math.max(widths[j], w);
-						if (data.grabExcessHorizontalSpace.get()) {
+						if (data.grabExcessHorizontalSpaceProperty().get()) {
 							if (!expandColumn[j])
 								expandCount++;
 							expandColumn[j] = true;
 						}
-						if (!data.grabExcessHorizontalSpace.get() || data.minimumWidth.get() != 0) {
-							w = !data.grabExcessHorizontalSpace.get() || data.minimumWidth.get() == FX_DEFAULT ? data.cacheWidth : data.minimumWidth.get();
-							w += data.horizontalIndent.get();
+						if (!data.grabExcessHorizontalSpaceProperty().get() || data.minimumWidthProperty().get() != 0) {
+							w = !data.grabExcessHorizontalSpaceProperty().get() || data.minimumWidthProperty().get() == FX_DEFAULT ? data.cacheWidth : data.minimumWidthProperty().get();
+							w += data.horizontalIndentProperty().get();
 							minWidths[j] = Math.max(minWidths[j], w);
 						}
 					}
@@ -371,7 +371,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 			for (int i = 0; i < rowCount; i++) {
 				GridData data = getData(grid, i, j, rowCount, columnCount, false);
 				if (data != null) {
-					int hSpan = Math.max(1, Math.min(data.horizontalSpan.get(), columnCount));
+					int hSpan = Math.max(1, Math.min(data.horizontalSpanProperty().get(), columnCount));
 					if (hSpan > 1) {
 						int spanWidth = 0, spanMinWidth = 0, spanExpandCount = 0;
 						for (int k = 0; k < hSpan; k++) {
@@ -380,11 +380,11 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 							if (expandColumn[j - k])
 								spanExpandCount++;
 						}
-						if (data.grabExcessHorizontalSpace.get() && spanExpandCount == 0) {
+						if (data.grabExcessHorizontalSpaceProperty().get() && spanExpandCount == 0) {
 							expandCount++;
 							expandColumn[j] = true;
 						}
-						double w = data.cacheWidth + data.horizontalIndent.get() - spanWidth - (hSpan - 1) * this.horizontalSpacing.get();
+						double w = data.cacheWidth + data.horizontalIndentProperty().get() - spanWidth - (hSpan - 1) * this.horizontalSpacing.get();
 						if (w > 0) {
 							if (this.makeColumnsEqualWidth.get()) {
 								double equalWidth = (w + spanWidth) / hSpan;
@@ -412,9 +412,9 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 								}
 							}
 						}
-						if (!data.grabExcessHorizontalSpace.get() || data.minimumWidth.get() != 0) {
-							w = !data.grabExcessHorizontalSpace.get() || data.minimumWidth.get() == FX_DEFAULT ? data.cacheWidth : data.minimumWidth.get();
-							w += data.horizontalIndent.get() - spanMinWidth - (hSpan - 1) * this.horizontalSpacing.get();
+						if (!data.grabExcessHorizontalSpaceProperty().get() || data.minimumWidthProperty().get() != 0) {
+							w = !data.grabExcessHorizontalSpaceProperty().get() || data.minimumWidthProperty().get() == FX_DEFAULT ? data.cacheWidth : data.minimumWidthProperty().get();
+							w += data.horizontalIndentProperty().get() - spanMinWidth - (hSpan - 1) * this.horizontalSpacingProperty().get();
 							if (w > 0) {
 								if (spanExpandCount == 0) {
 									minWidths[j] += w;
@@ -477,17 +477,17 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 						for (int i = 0; i < rowCount; i++) {
 							GridData data = getData(grid, i, j, rowCount, columnCount, false);
 							if (data != null) {
-								int hSpan = Math.max(1, Math.min(data.horizontalSpan.get(), columnCount));
+								int hSpan = Math.max(1, Math.min(data.horizontalSpanProperty().get(), columnCount));
 								if (hSpan > 1) {
-									if (!data.grabExcessHorizontalSpace.get() || data.minimumWidth.get() != 0) {
+									if (!data.grabExcessHorizontalSpaceProperty().get() || data.minimumWidthProperty().get() != 0) {
 										int spanWidth = 0, spanExpandCount = 0;
 										for (int k = 0; k < hSpan; k++) {
 											spanWidth += widths[j - k];
 											if (expandColumn[j - k])
 												spanExpandCount++;
 										}
-										double w = !data.grabExcessHorizontalSpace.get() || data.minimumWidth.get() == FX_DEFAULT ? data.cacheWidth : data.minimumWidth.get();
-										w += data.horizontalIndent.get() - spanWidth - (hSpan - 1) * this.horizontalSpacing.get();
+										double w = !data.grabExcessHorizontalSpaceProperty().get() || data.minimumWidthProperty().get() == FX_DEFAULT ? data.cacheWidth : data.minimumWidthProperty().get();
+										w += data.horizontalIndentProperty().get() - spanWidth - (hSpan - 1) * this.horizontalSpacing.get();
 										if (w > 0) {
 											if (spanExpandCount == 0) {
 												widths[j] += w;
@@ -530,16 +530,16 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 				for (int i = 0; i < rowCount; i++) {
 					GridData data = getData(grid, i, j, rowCount, columnCount, false);
 					if (data != null) {
-						if (data.heightHint.get() == FX_DEFAULT) {
+						if (data.heightHintProperty().get() == FX_DEFAULT) {
 							Node child = grid[i][j];
 							// TEMPORARY CODE
-							int hSpan = Math.max(1, Math.min(data.horizontalSpan.get(), columnCount));
+							int hSpan = Math.max(1, Math.min(data.horizontalSpanProperty().get(), columnCount));
 							int currentWidth = 0;
 							for (int k = 0; k < hSpan; k++) {
 								currentWidth += widths[j - k];
 							}
-							currentWidth += (hSpan - 1) * this.horizontalSpacing.get() - data.horizontalIndent.get();
-							if ((currentWidth != data.cacheWidth && data.horizontalAlignment.get() == Alignment.FILL) || (data.cacheWidth > currentWidth)) {
+							currentWidth += (hSpan - 1) * this.horizontalSpacing.get() - data.horizontalIndentProperty().get();
+							if ((currentWidth != data.cacheWidth && data.horizontalAlignmentProperty().get() == Alignment.FILL) || (data.cacheWidth > currentWidth)) {
 								int trim = 0;
 								// FIXME
 								// if (child instanceof Scrollable) {
@@ -550,9 +550,9 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 								// trim = child.getBorderWidth () * 2;
 								// }
 								data.cacheWidth = data.cacheHeight = FX_DEFAULT;
-								data.computeSize(child, Math.max(0, currentWidth - trim), data.heightHint.get(), false);
-								if (data.grabExcessVerticalSpace.get() && data.minimumHeight.get() > 0) {
-									data.cacheHeight = Math.max(data.cacheHeight, data.minimumHeight.get());
+								data.computeSize(child, Math.max(0, currentWidth - trim), data.heightHintProperty().get(), false);
+								if (data.grabExcessVerticalSpaceProperty().get() && data.minimumHeightProperty().get() > 0) {
+									data.cacheHeight = Math.max(data.cacheHeight, data.minimumHeightProperty().get());
 								}
 								if (flush == null)
 									flush = new GridData[count];
@@ -574,18 +574,18 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 			for (int j = 0; j < columnCount; j++) {
 				GridData data = getData(grid, i, j, rowCount, columnCount, true);
 				if (data != null) {
-					int vSpan = Math.max(1, Math.min(data.verticalSpan.get(), rowCount));
+					int vSpan = Math.max(1, Math.min(data.verticalSpanProperty().get(), rowCount));
 					if (vSpan == 1) {
-						double h = data.cacheHeight + data.verticalIndent.get();
+						double h = data.cacheHeight + data.verticalIndentProperty().get();
 						heights[i] = Math.max(heights[i], h);
-						if (data.grabExcessVerticalSpace.get()) {
+						if (data.grabExcessVerticalSpaceProperty().get()) {
 							if (!expandRow[i])
 								expandCount++;
 							expandRow[i] = true;
 						}
-						if (!data.grabExcessVerticalSpace.get() || data.minimumHeight.get() != 0) {
-							h = !data.grabExcessVerticalSpace.get() || data.minimumHeight.get() == FX_DEFAULT ? data.cacheHeight : data.minimumHeight.get();
-							h += data.verticalIndent.get();
+						if (!data.grabExcessVerticalSpaceProperty().get() || data.minimumHeightProperty().get() != 0) {
+							h = !data.grabExcessVerticalSpaceProperty().get() || data.minimumHeightProperty().get() == FX_DEFAULT ? data.cacheHeight : data.minimumHeightProperty().get();
+							h += data.verticalIndentProperty().get();
 							minHeights[i] = Math.max(minHeights[i], h);
 						}
 					}
@@ -594,7 +594,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 			for (int j = 0; j < columnCount; j++) {
 				GridData data = getData(grid, i, j, rowCount, columnCount, false);
 				if (data != null) {
-					int vSpan = Math.max(1, Math.min(data.verticalSpan.get(), rowCount));
+					int vSpan = Math.max(1, Math.min(data.verticalSpanProperty().get(), rowCount));
 					if (vSpan > 1) {
 						int spanHeight = 0, spanMinHeight = 0, spanExpandCount = 0;
 						for (int k = 0; k < vSpan; k++) {
@@ -603,11 +603,11 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 							if (expandRow[i - k])
 								spanExpandCount++;
 						}
-						if (data.grabExcessVerticalSpace.get() && spanExpandCount == 0) {
+						if (data.grabExcessVerticalSpaceProperty().get() && spanExpandCount == 0) {
 							expandCount++;
 							expandRow[i] = true;
 						}
-						double h = data.cacheHeight + data.verticalIndent.get() - spanHeight - (vSpan - 1) * this.verticalSpacing.get();
+						double h = data.cacheHeight + data.verticalIndentProperty().get() - spanHeight - (vSpan - 1) * this.verticalSpacing.get();
 						if (h > 0) {
 							if (spanExpandCount == 0) {
 								heights[i] += h;
@@ -624,9 +624,9 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 									heights[last] += remainder;
 							}
 						}
-						if (!data.grabExcessVerticalSpace.get() || data.minimumHeight.get() != 0) {
-							h = !data.grabExcessVerticalSpace.get() || data.minimumHeight.get() == FX_DEFAULT ? data.cacheHeight : data.minimumHeight.get();
-							h += data.verticalIndent.get() - spanMinHeight - (vSpan - 1) * this.verticalSpacing.get();
+						if (!data.grabExcessVerticalSpaceProperty().get() || data.minimumHeightProperty().get() != 0) {
+							h = !data.grabExcessVerticalSpaceProperty().get() || data.minimumHeightProperty().get() == FX_DEFAULT ? data.cacheHeight : data.minimumHeightProperty().get();
+							h += data.verticalIndentProperty().get() - spanMinHeight - (vSpan - 1) * this.verticalSpacing.get();
 							if (h > 0) {
 								if (spanExpandCount == 0) {
 									minHeights[i] += h;
@@ -676,17 +676,17 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 					for (int j = 0; j < columnCount; j++) {
 						GridData data = getData(grid, i, j, rowCount, columnCount, false);
 						if (data != null) {
-							int vSpan = Math.max(1, Math.min(data.verticalSpan.get(), rowCount));
+							int vSpan = Math.max(1, Math.min(data.verticalSpanProperty().get(), rowCount));
 							if (vSpan > 1) {
-								if (!data.grabExcessVerticalSpace.get() || data.minimumHeight.get() != 0) {
+								if (!data.grabExcessVerticalSpaceProperty().get() || data.minimumHeightProperty().get() != 0) {
 									int spanHeight = 0, spanExpandCount = 0;
 									for (int k = 0; k < vSpan; k++) {
 										spanHeight += heights[i - k];
 										if (expandRow[i - k])
 											spanExpandCount++;
 									}
-									double h = !data.grabExcessVerticalSpace.get() || data.minimumHeight.get() == FX_DEFAULT ? data.cacheHeight : data.minimumHeight.get();
-									h += data.verticalIndent.get() - spanHeight - (vSpan - 1) * this.verticalSpacing.get();
+									double h = !data.grabExcessVerticalSpaceProperty().get() || data.minimumHeightProperty().get() == FX_DEFAULT ? data.cacheHeight : data.minimumHeightProperty().get();
+									h += data.verticalIndentProperty().get() - spanHeight - (vSpan - 1) * this.verticalSpacing.get();
 									if (h > 0) {
 										if (spanExpandCount == 0) {
 											heights[i] += h;
@@ -728,8 +728,8 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 				for (int j = 0; j < columnCount; j++) {
 					GridData data = getData(grid, i, j, rowCount, columnCount, true);
 					if (data != null) {
-						int hSpan = Math.max(1, Math.min(data.horizontalSpan.get(), columnCount));
-						int vSpan = Math.max(1, data.verticalSpan.get());
+						int hSpan = Math.max(1, Math.min(data.horizontalSpanProperty().get(), columnCount));
+						int vSpan = Math.max(1, data.verticalSpanProperty().get());
 						int cellWidth = 0, cellHeight = 0;
 						for (int k = 0; k < hSpan; k++) {
 							cellWidth += widths[j + k];
@@ -738,34 +738,34 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 							cellHeight += heights[i + k];
 						}
 						cellWidth += this.horizontalSpacing.get() * (hSpan - 1);
-						double childX = gridX + data.horizontalIndent.get();
+						double childX = gridX + data.horizontalIndentProperty().get();
 						double childWidth = Math.min(data.cacheWidth, cellWidth);
-						switch (data.horizontalAlignment.get()) {
+						switch (data.horizontalAlignmentProperty().get()) {
 						case CENTER:
-							childX += Math.max(0, (cellWidth - data.horizontalIndent.get() - childWidth) / 2);
+							childX += Math.max(0, (cellWidth - data.horizontalIndentProperty().get() - childWidth) / 2);
 							break;
 						case END:
-							childX += Math.max(0, cellWidth - data.horizontalIndent.get() - childWidth);
+							childX += Math.max(0, cellWidth - data.horizontalIndentProperty().get() - childWidth);
 							break;
 						case FILL:
-							childWidth = cellWidth - data.horizontalIndent.get();
+							childWidth = cellWidth - data.horizontalIndentProperty().get();
 							break;
 						case BEGINNING:
 							// Nothing todo
 							break;
 						}
 						cellHeight += this.verticalSpacing.get() * (vSpan - 1);
-						double childY = gridY + data.verticalIndent.get();
+						double childY = gridY + data.verticalIndentProperty().get();
 						double childHeight = Math.min(data.cacheHeight, cellHeight);
-						switch (data.verticalAlignment.get()) {
+						switch (data.verticalAlignmentProperty().get()) {
 						case CENTER:
-							childY += Math.max(0, (cellHeight - data.verticalIndent.get() - childHeight) / 2);
+							childY += Math.max(0, (cellHeight - data.verticalIndentProperty().get() - childHeight) / 2);
 							break;
 						case END:
-							childY += Math.max(0, cellHeight - data.verticalIndent.get() - childHeight);
+							childY += Math.max(0, cellHeight - data.verticalIndentProperty().get() - childHeight);
 							break;
 						case FILL:
-							childHeight = cellHeight - data.verticalIndent.get();
+							childHeight = cellHeight - data.verticalIndentProperty().get();
 							break;
 						case BEGINNING:
 							// Nothing todo
@@ -825,8 +825,8 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 			if (data == null) {
 				data = new GridData();
 			}
-			int hSpan = Math.max(1, Math.min(data.horizontalSpan.get(), columnCount));
-			int vSpan = Math.max(1, data.verticalSpan.get());
+			int hSpan = Math.max(1, Math.min(data.horizontalSpanProperty().get(), columnCount));
+			int vSpan = Math.max(1, data.verticalSpanProperty().get());
 			int i = first ? row + vSpan - 1 : row - vSpan + 1;
 			int j = first ? column + hSpan - 1 : column - hSpan + 1;
 			if (0 <= i && i < rowCount) {
