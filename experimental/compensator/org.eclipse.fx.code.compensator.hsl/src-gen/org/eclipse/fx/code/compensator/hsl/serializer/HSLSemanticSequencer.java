@@ -238,7 +238,7 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (name=ID partitions+=Partition+ damagers+=Damager+ partitioner=Partitioner)
+	 *     (name=ID partitions+=Partition+ damagers+=Damager+ partitioner=Partitioner contentTypes+=STRING+)
 	 */
 	protected void sequence_Model(EObject context, Model semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

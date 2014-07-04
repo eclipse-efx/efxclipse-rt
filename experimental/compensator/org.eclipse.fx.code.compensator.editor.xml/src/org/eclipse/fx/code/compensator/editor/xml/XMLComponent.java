@@ -50,7 +50,7 @@ public class XMLComponent implements PartitionerFactory, SourceViewerConfigurati
 	public boolean applies(Input<?> input) {
 		if( input instanceof ContentTypeProvider ) {
 			String contentType = ((ContentTypeProvider) input).getContentType();
-			return ContentTypeProvider.XML.equals(contentType);
+			return model.getContentTypes().contains(contentType);
 		}
 		return false;
 	}

@@ -18,6 +18,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Model/partitions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Model/damagers"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Model/partitioner"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Model/contentTypes"/>
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//Partition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Partition/name"/>

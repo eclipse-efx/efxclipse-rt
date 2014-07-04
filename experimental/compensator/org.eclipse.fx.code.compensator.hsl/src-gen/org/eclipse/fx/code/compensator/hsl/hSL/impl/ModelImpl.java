@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -35,6 +36,7 @@ import org.eclipse.fx.code.compensator.hsl.hSL.Partitioner;
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ModelImpl#getPartitions <em>Partitions</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ModelImpl#getDamagers <em>Damagers</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ModelImpl#getPartitioner <em>Partitioner</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ModelImpl#getContentTypes <em>Content Types</em>}</li>
  * </ul>
  * </p>
  *
@@ -91,6 +93,16 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * @ordered
    */
   protected Partitioner partitioner;
+
+  /**
+   * The cached value of the '{@link #getContentTypes() <em>Content Types</em>}' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getContentTypes()
+   * @generated
+   * @ordered
+   */
+  protected EList<String> contentTypes;
 
   /**
    * <!-- begin-user-doc -->
@@ -217,6 +229,20 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<String> getContentTypes()
+  {
+    if (contentTypes == null)
+    {
+      contentTypes = new EDataTypeEList<String>(String.class, this, HSLPackage.MODEL__CONTENT_TYPES);
+    }
+    return contentTypes;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -250,6 +276,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return getDamagers();
       case HSLPackage.MODEL__PARTITIONER:
         return getPartitioner();
+      case HSLPackage.MODEL__CONTENT_TYPES:
+        return getContentTypes();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -279,6 +307,10 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
       case HSLPackage.MODEL__PARTITIONER:
         setPartitioner((Partitioner)newValue);
         return;
+      case HSLPackage.MODEL__CONTENT_TYPES:
+        getContentTypes().clear();
+        getContentTypes().addAll((Collection<? extends String>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -305,6 +337,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
       case HSLPackage.MODEL__PARTITIONER:
         setPartitioner((Partitioner)null);
         return;
+      case HSLPackage.MODEL__CONTENT_TYPES:
+        getContentTypes().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -327,6 +362,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return damagers != null && !damagers.isEmpty();
       case HSLPackage.MODEL__PARTITIONER:
         return partitioner != null;
+      case HSLPackage.MODEL__CONTENT_TYPES:
+        return contentTypes != null && !contentTypes.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -344,6 +381,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", contentTypes: ");
+    result.append(contentTypes);
     result.append(')');
     return result.toString();
   }

@@ -20,4 +20,4 @@ XML {
 		multi-line __xml_comment "<!--" => "-->"
 		javascript-rule __xml_tag "tag-rule.js"
 	}
-}
+} for "text/xml"

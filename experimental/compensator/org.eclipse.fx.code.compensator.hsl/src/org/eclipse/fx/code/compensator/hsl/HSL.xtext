@@ -7,7 +7,7 @@ Model:
 		partitions+=Partition+
 		damagers+=Damager+
 		partitioner=Partitioner
-	'}'
+	'}' 'for' contentTypes+=STRING+
 ;
 
 Partition:

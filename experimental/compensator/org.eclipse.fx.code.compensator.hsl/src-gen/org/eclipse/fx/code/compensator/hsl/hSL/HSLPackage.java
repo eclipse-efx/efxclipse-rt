@@ -104,13 +104,22 @@ public interface HSLPackage extends EPackage
   int MODEL__PARTITIONER = 3;
 
   /**
+   * The feature id for the '<em><b>Content Types</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL__CONTENT_TYPES = 4;
+
+  /**
    * The number of structural features of the '<em>Model</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL_FEATURE_COUNT = 4;
+  int MODEL_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.PartitionImpl <em>Partition</em>}' class.
@@ -1074,6 +1083,17 @@ public interface HSLPackage extends EPackage
   EReference getModel_Partitioner();
 
   /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.fx.code.compensator.hsl.hSL.Model#getContentTypes <em>Content Types</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Content Types</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.Model#getContentTypes()
+   * @see #getModel()
+   * @generated
+   */
+  EAttribute getModel_ContentTypes();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.compensator.hsl.hSL.Partition <em>Partition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1861,6 +1881,14 @@ public interface HSLPackage extends EPackage
      * @generated
      */
     EReference MODEL__PARTITIONER = eINSTANCE.getModel_Partitioner();
+
+    /**
+     * The meta object literal for the '<em><b>Content Types</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MODEL__CONTENT_TYPES = eINSTANCE.getModel_ContentTypes();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.PartitionImpl <em>Partition</em>}' class.

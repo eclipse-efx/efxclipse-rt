@@ -339,6 +339,16 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getModel_ContentTypes()
+  {
+    return (EAttribute)modelEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPartition()
   {
     return partitionEClass;
@@ -1049,6 +1059,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     createEReference(modelEClass, MODEL__PARTITIONS);
     createEReference(modelEClass, MODEL__DAMAGERS);
     createEReference(modelEClass, MODEL__PARTITIONER);
+    createEAttribute(modelEClass, MODEL__CONTENT_TYPES);
 
     partitionEClass = createEClass(PARTITION);
     createEAttribute(partitionEClass, PARTITION__NAME);
@@ -1193,6 +1204,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     initEReference(getModel_Partitions(), this.getPartition(), null, "partitions", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModel_Damagers(), this.getDamager(), null, "damagers", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModel_Partitioner(), this.getPartitioner(), null, "partitioner", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getModel_ContentTypes(), ecorePackage.getEString(), "contentTypes", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(partitionEClass, Partition.class, "Partition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPartition_Name(), ecorePackage.getEString(), "name", null, 0, 1, Partition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

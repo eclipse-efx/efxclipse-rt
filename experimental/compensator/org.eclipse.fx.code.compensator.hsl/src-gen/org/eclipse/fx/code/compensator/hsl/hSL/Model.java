@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.Model#getPartitions <em>Partitions</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.Model#getDamagers <em>Damagers</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.Model#getPartitioner <em>Partitioner</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.Model#getContentTypes <em>Content Types</em>}</li>
  * </ul>
  * </p>
  *
@@ -110,5 +111,21 @@ public interface Model extends EObject
    * @generated
    */
   void setPartitioner(Partitioner value);
+
+  /**
+   * Returns the value of the '<em><b>Content Types</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Content Types</em>' attribute list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Content Types</em>' attribute list.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getModel_ContentTypes()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getContentTypes();
 
 } // Model

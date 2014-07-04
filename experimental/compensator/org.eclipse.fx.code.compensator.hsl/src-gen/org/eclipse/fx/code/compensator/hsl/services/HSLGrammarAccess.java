@@ -31,12 +31,15 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPartitionerAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cPartitionerPartitionerParserRuleCall_4_0 = (RuleCall)cPartitionerAssignment_4.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Keyword cForKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cContentTypesAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cContentTypesSTRINGTerminalRuleCall_7_0 = (RuleCall)cContentTypesAssignment_7.eContents().get(0);
 		
 		//Model:
-		//	name=ID "{" partitions+=Partition+ damagers+=Damager+ partitioner=Partitioner "}";
+		//	name=ID "{" partitions+=Partition+ damagers+=Damager+ partitioner=Partitioner "}" "for" contentTypes+=STRING+;
 		public ParserRule getRule() { return rule; }
 
-		//name=ID "{" partitions+=Partition+ damagers+=Damager+ partitioner=Partitioner "}"
+		//name=ID "{" partitions+=Partition+ damagers+=Damager+ partitioner=Partitioner "}" "for" contentTypes+=STRING+
 		public Group getGroup() { return cGroup; }
 
 		//name=ID
@@ -68,6 +71,15 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+
+		//"for"
+		public Keyword getForKeyword_6() { return cForKeyword_6; }
+
+		//contentTypes+=STRING+
+		public Assignment getContentTypesAssignment_7() { return cContentTypesAssignment_7; }
+
+		//STRING
+		public RuleCall getContentTypesSTRINGTerminalRuleCall_7_0() { return cContentTypesSTRINGTerminalRuleCall_7_0; }
 	}
 
 	public class PartitionElements extends AbstractParserRuleElementFinder {
@@ -1248,7 +1260,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Model:
-	//	name=ID "{" partitions+=Partition+ damagers+=Damager+ partitioner=Partitioner "}";
+	//	name=ID "{" partitions+=Partition+ damagers+=Damager+ partitioner=Partitioner "}" "for" contentTypes+=STRING+;
 	public ModelElements getModelAccess() {
 		return (pModel != null) ? pModel : (pModel = new ModelElements());
 	}

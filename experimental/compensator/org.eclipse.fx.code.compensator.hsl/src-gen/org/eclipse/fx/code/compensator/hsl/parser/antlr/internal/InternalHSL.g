@@ -158,7 +158,29 @@ ruleModel returns [EObject current=null]
     {
     	newLeafNode(otherlv_5, grammarAccess.getModelAccess().getRightCurlyBracketKeyword_5());
     }
+	otherlv_6='for' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getModelAccess().getForKeyword_6());
+    }
+(
+(
+		lv_contentTypes_7_0=RULE_STRING
+		{
+			newLeafNode(lv_contentTypes_7_0, grammarAccess.getModelAccess().getContentTypesSTRINGTerminalRuleCall_7_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getModelRule());
+	        }
+       		addWithLastConsumed(
+       			$current, 
+       			"contentTypes",
+        		lv_contentTypes_7_0, 
+        		"STRING");
+	    }
+
 )
+)+)
 ;
 
 
