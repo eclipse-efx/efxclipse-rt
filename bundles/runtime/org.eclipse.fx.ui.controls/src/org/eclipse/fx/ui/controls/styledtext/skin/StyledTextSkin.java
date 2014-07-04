@@ -20,8 +20,11 @@ import java.util.Set;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -442,11 +445,11 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					lineInfoMap.put(this, lineInfo);
 					lineRuler.getChildren().add(lineInfo);
 					lineRuler.requestLayout();
-//					System.err.println("ADDING NEW LINE OBJECT!!!!");
 				} else {
 					lineInfo.setDomainElement(domainElement);
 					lineRuler.requestLayout();
 				}
+				lineInfo.setLayoutY(getLayoutY());
 				
 				RegionImpl stack = (RegionImpl) getGraphic();
 				TextFlow flow;
@@ -504,6 +507,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				domainElement = null;
 				LineInfo lineInfo = lineInfoMap.remove(this);
 				if( lineInfo != null ) {
+					lineInfo.setDomainElement(null);
 					lineRuler.getChildren().remove(lineInfo);
 				}
 			}
@@ -610,9 +614,14 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		}
 		
 		public void setDomainElement(Line line) {
-			if( line != this.line ) {
-				lineText.setText(lineList.indexOf(line)+1+"");
-				rootContainer.layout();
+			if( line == null ) {
+				setVisible(false);
+			} else {
+				setVisible(true);
+				if( line != this.line ) {
+					lineText.setText(lineList.indexOf(line)+1+"");
+					rootContainer.layout();
+				}
 			}
 		}
 	}
@@ -670,6 +679,11 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		@Override
 		protected void positionCell(LineCell cell, double position) {
 			super.positionCell(cell, position);
+			LineInfo lineInfo = lineInfoMap.get(cell);
+			if( lineInfo != null ) {
+				lineInfo.setDomainElement(cell.domainElement);
+				lineInfo.setLayoutY(cell.getLayoutY());
+			}
 			lineRuler.requestLayout();
 		}
 		
