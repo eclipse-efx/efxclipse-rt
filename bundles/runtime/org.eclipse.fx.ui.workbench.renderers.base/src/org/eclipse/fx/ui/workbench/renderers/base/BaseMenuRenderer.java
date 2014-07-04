@@ -28,7 +28,6 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MDynamicMenuContribution;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.lifecycle.ELifecycleService;
@@ -246,24 +245,10 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 		}
 		
 	}
-
+	
 	@Override
-	protected int getRenderedIndex(MUIElement parent, MUIElement element) {
-		EObject eElement = (EObject) element;
-
-		EObject container = eElement.eContainer();
-		@SuppressWarnings("unchecked")
-		List<MUIElement> list = (List<MUIElement>) container.eGet(eElement.eContainmentFeature());
-		int idx = 0;
-		for (MUIElement u : list) {
-			if (u.isToBeRendered() && u.isVisible() && !(u instanceof MDynamicMenuContribution)) {
-				if (u == element) {
-					return idx;
-				}
-				idx++;
-			}
-		}
-		return -1;
+	protected boolean isAndRenderedVisible(MUIElement u) {
+		return super.isAndRenderedVisible(u) && !(u instanceof MDynamicMenuContribution);
 	}
 
 	@Override

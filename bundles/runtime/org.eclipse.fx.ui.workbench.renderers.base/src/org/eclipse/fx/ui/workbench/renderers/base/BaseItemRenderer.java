@@ -46,7 +46,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @SuppressWarnings("restriction")
 public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M>> extends BaseRenderer<M, W> {
-
+	/**
+	 * Key used to store the visible when result
+	 */
+	public static final String VISIBLE_WHEN_RESULT = "VISIBLE_WHEN_RESULT"; //$NON-NLS-1$
+	
 	@SuppressWarnings("null")
 	@PostConstruct
 	void init(@NonNull IEventBroker broker) {
@@ -54,7 +58,7 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 		registerEventListener(broker, UIEvents.UILabel.TOPIC_LABEL);
 		registerEventListener(broker, UIEvents.UILabel.TOPIC_TOOLTIP);
 	}
-	
+
 	/**
 	 * Generate a parameterized command for the given {@link MHandledItem}
 	 * 
@@ -215,5 +219,5 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 	 * @param element
 	 *            the model element
 	 */
-	public abstract void checkEnablement(M element);
+	public abstract void checkEnablement(M element);	
 }

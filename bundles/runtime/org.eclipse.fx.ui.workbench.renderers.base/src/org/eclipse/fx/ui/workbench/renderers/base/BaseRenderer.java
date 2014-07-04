@@ -17,11 +17,14 @@ import java.util.Map.Entry;
 
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.commands.ExpressionContext;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.internal.workbench.ContributionsAnalyzer;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
+import org.eclipse.e4.ui.model.application.ui.MCoreExpression;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.MUILabel;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
@@ -52,6 +55,7 @@ import org.osgi.service.event.Event;
  * @param <W>
  *            the abstracted widget type
  */
+@SuppressWarnings("restriction")
 public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> implements ElementRenderer<M, W> {
 	private static final String RENDERING_CONTEXT_KEY = "fx.rendering.context"; //$NON-NLS-1$
 
@@ -551,6 +555,24 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	}
 
 	/**
+	 * Check the visible when expression
+	 * 
+	 * @param item
+	 *            the item
+	 * @param context
+	 *            the context
+	 * @return <code>true</code> if visible
+	 */
+	public static boolean checkVisibleWhen(MUIElement item, IEclipseContext context) {
+		if (item.getVisibleWhen() != null && item.getVisibleWhen() instanceof MCoreExpression) {
+			ExpressionContext exprContext = new ExpressionContext(context);
+			return ContributionsAnalyzer.isVisible((MCoreExpression) item.getVisibleWhen(), exprContext);
+		}
+
+		return true;
+	}
+
+	/**
 	 * Get the rendering index of the element
 	 * 
 	 * @param parent
@@ -559,8 +581,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the element
 	 * @return the index or <code>-1</code>
 	 */
-	@SuppressWarnings("static-method")
-	protected int getRenderedIndex(@NonNull MUIElement parent, @NonNull MUIElement element) {
+	protected final int getRenderedIndex(@NonNull MUIElement parent, @NonNull MUIElement element) {
 		EObject eElement = (EObject) element;
 
 		EObject container = eElement.eContainer();
@@ -568,7 +589,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		List<MUIElement> list = (List<MUIElement>) container.eGet(eElement.eContainmentFeature());
 		int idx = 0;
 		for (MUIElement u : list) {
-			if (u.isToBeRendered() && u.isVisible()) {
+			if (isAndRenderedVisible(u)) {
 				if (u == element) {
 					return idx;
 				}
@@ -576,6 +597,17 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			}
 		}
 		return -1;
+	}
+
+	/**
+	 * Check if the item is visible and to be rendered
+	 * 
+	 * @param u
+	 *            the element
+	 * @return <code>true</code> if item is to be shown
+	 */
+	protected boolean isAndRenderedVisible(MUIElement u) {
+		return u.isToBeRendered() && u.isVisible() && checkVisibleWhen(u, getModelContext(u));
 	}
 
 	/**
