@@ -348,7 +348,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			};
 
 			this.trimPane = new BorderPane();
-			this.contentPane.getStyleClass().add(CSS_TRIM_CONTAINER);
+			this.trimPane.getStyleClass().add(CSS_TRIM_CONTAINER);
 			this.rootPane.setCenter(this.trimPane);
 			this.contentPane = new FillLayoutPane();
 			this.contentPane.getStyleClass().add(CSS_CONTENT_CONTAINER);
