@@ -11,7 +11,5 @@ Export-Package: org.eclipse.fx.code.compensator.model.workbench,
  org.eclipse.fx.code.compensator.model.workbench.impl,
  org.eclipse.fx.code.compensator.model.workbench.util
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.xtext.xbase.lib;resolution:=optional;visibility:=reexport,
- org.eclipse.emf.ecore.xcore.lib;resolution:=optional;visibility:=reexport
+ org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
