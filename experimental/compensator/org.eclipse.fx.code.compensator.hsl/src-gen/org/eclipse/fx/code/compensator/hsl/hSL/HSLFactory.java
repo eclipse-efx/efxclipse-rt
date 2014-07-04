@@ -68,13 +68,31 @@ public interface HSLFactory extends EFactory
   JSParitioner createJSParitioner();
 
   /**
-   * Returns a new object of class '<em>Scanner</em>'.
+   * Returns a new object of class '<em>Damager</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Scanner</em>'.
+   * @return a new object of class '<em>Damager</em>'.
    * @generated
    */
-  Scanner createScanner();
+  Damager createDamager();
+
+  /**
+   * Returns a new object of class '<em>JS Damager</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>JS Damager</em>'.
+   * @generated
+   */
+  JSDamager createJSDamager();
+
+  /**
+   * Returns a new object of class '<em>Rule Damager</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Rule Damager</em>'.
+   * @generated
+   */
+  RuleDamager createRuleDamager();
 
   /**
    * Returns a new object of class '<em>Scanner Token</em>'.

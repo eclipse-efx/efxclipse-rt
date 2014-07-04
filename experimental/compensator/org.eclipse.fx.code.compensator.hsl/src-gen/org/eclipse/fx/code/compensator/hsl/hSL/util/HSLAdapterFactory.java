@@ -100,9 +100,19 @@ public class HSLAdapterFactory extends AdapterFactoryImpl
         return createJSParitionerAdapter();
       }
       @Override
-      public Adapter caseScanner(Scanner object)
+      public Adapter caseDamager(Damager object)
       {
-        return createScannerAdapter();
+        return createDamagerAdapter();
+      }
+      @Override
+      public Adapter caseJSDamager(JSDamager object)
+      {
+        return createJSDamagerAdapter();
+      }
+      @Override
+      public Adapter caseRuleDamager(RuleDamager object)
+      {
+        return createRuleDamagerAdapter();
       }
       @Override
       public Adapter caseScannerToken(ScannerToken object)
@@ -282,16 +292,46 @@ public class HSLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.compensator.hsl.hSL.Scanner <em>Scanner</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.compensator.hsl.hSL.Damager <em>Damager</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.Scanner
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.Damager
    * @generated
    */
-  public Adapter createScannerAdapter()
+  public Adapter createDamagerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.compensator.hsl.hSL.JSDamager <em>JS Damager</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.JSDamager
+   * @generated
+   */
+  public Adapter createJSDamagerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.compensator.hsl.hSL.RuleDamager <em>Rule Damager</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.RuleDamager
+   * @generated
+   */
+  public Adapter createRuleDamagerAdapter()
   {
     return null;
   }

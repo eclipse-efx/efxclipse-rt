@@ -20,7 +20,7 @@ import org.eclipse.fx.code.compensator.hsl.hSL.PartitionMultiLineRule;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.PartitionMultiLineRuleImpl#getToken <em>Token</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.PartitionMultiLineRuleImpl#getParition <em>Parition</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.PartitionMultiLineRuleImpl#getStartSeq <em>Start Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.PartitionMultiLineRuleImpl#getEndSeq <em>End Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.PartitionMultiLineRuleImpl#getEscapeSeq <em>Escape Seq</em>}</li>
@@ -32,14 +32,14 @@ import org.eclipse.fx.code.compensator.hsl.hSL.PartitionMultiLineRule;
 public class PartitionMultiLineRuleImpl extends ParitionRuleImpl implements PartitionMultiLineRule
 {
   /**
-   * The cached value of the '{@link #getToken() <em>Token</em>}' reference.
+   * The cached value of the '{@link #getParition() <em>Parition</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getToken()
+   * @see #getParition()
    * @generated
    * @ordered
    */
-  protected Partition token;
+  protected Partition parition;
 
   /**
    * The default value of the '{@link #getStartSeq() <em>Start Seq</em>}' attribute.
@@ -127,19 +127,19 @@ public class PartitionMultiLineRuleImpl extends ParitionRuleImpl implements Part
    * <!-- end-user-doc -->
    * @generated
    */
-  public Partition getToken()
+  public Partition getParition()
   {
-    if (token != null && token.eIsProxy())
+    if (parition != null && parition.eIsProxy())
     {
-      InternalEObject oldToken = (InternalEObject)token;
-      token = (Partition)eResolveProxy(oldToken);
-      if (token != oldToken)
+      InternalEObject oldParition = (InternalEObject)parition;
+      parition = (Partition)eResolveProxy(oldParition);
+      if (parition != oldParition)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HSLPackage.PARTITION_MULTI_LINE_RULE__TOKEN, oldToken, token));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HSLPackage.PARTITION_MULTI_LINE_RULE__PARITION, oldParition, parition));
       }
     }
-    return token;
+    return parition;
   }
 
   /**
@@ -147,9 +147,9 @@ public class PartitionMultiLineRuleImpl extends ParitionRuleImpl implements Part
    * <!-- end-user-doc -->
    * @generated
    */
-  public Partition basicGetToken()
+  public Partition basicGetParition()
   {
-    return token;
+    return parition;
   }
 
   /**
@@ -157,12 +157,12 @@ public class PartitionMultiLineRuleImpl extends ParitionRuleImpl implements Part
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setToken(Partition newToken)
+  public void setParition(Partition newParition)
   {
-    Partition oldToken = token;
-    token = newToken;
+    Partition oldParition = parition;
+    parition = newParition;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.PARTITION_MULTI_LINE_RULE__TOKEN, oldToken, token));
+      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.PARTITION_MULTI_LINE_RULE__PARITION, oldParition, parition));
   }
 
   /**
@@ -244,9 +244,9 @@ public class PartitionMultiLineRuleImpl extends ParitionRuleImpl implements Part
   {
     switch (featureID)
     {
-      case HSLPackage.PARTITION_MULTI_LINE_RULE__TOKEN:
-        if (resolve) return getToken();
-        return basicGetToken();
+      case HSLPackage.PARTITION_MULTI_LINE_RULE__PARITION:
+        if (resolve) return getParition();
+        return basicGetParition();
       case HSLPackage.PARTITION_MULTI_LINE_RULE__START_SEQ:
         return getStartSeq();
       case HSLPackage.PARTITION_MULTI_LINE_RULE__END_SEQ:
@@ -267,8 +267,8 @@ public class PartitionMultiLineRuleImpl extends ParitionRuleImpl implements Part
   {
     switch (featureID)
     {
-      case HSLPackage.PARTITION_MULTI_LINE_RULE__TOKEN:
-        setToken((Partition)newValue);
+      case HSLPackage.PARTITION_MULTI_LINE_RULE__PARITION:
+        setParition((Partition)newValue);
         return;
       case HSLPackage.PARTITION_MULTI_LINE_RULE__START_SEQ:
         setStartSeq((String)newValue);
@@ -293,8 +293,8 @@ public class PartitionMultiLineRuleImpl extends ParitionRuleImpl implements Part
   {
     switch (featureID)
     {
-      case HSLPackage.PARTITION_MULTI_LINE_RULE__TOKEN:
-        setToken((Partition)null);
+      case HSLPackage.PARTITION_MULTI_LINE_RULE__PARITION:
+        setParition((Partition)null);
         return;
       case HSLPackage.PARTITION_MULTI_LINE_RULE__START_SEQ:
         setStartSeq(START_SEQ_EDEFAULT);
@@ -319,8 +319,8 @@ public class PartitionMultiLineRuleImpl extends ParitionRuleImpl implements Part
   {
     switch (featureID)
     {
-      case HSLPackage.PARTITION_MULTI_LINE_RULE__TOKEN:
-        return token != null;
+      case HSLPackage.PARTITION_MULTI_LINE_RULE__PARITION:
+        return parition != null;
       case HSLPackage.PARTITION_MULTI_LINE_RULE__START_SEQ:
         return START_SEQ_EDEFAULT == null ? startSeq != null : !START_SEQ_EDEFAULT.equals(startSeq);
       case HSLPackage.PARTITION_MULTI_LINE_RULE__END_SEQ:

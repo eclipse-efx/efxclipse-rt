@@ -70,7 +70,9 @@ public class HSLFactoryImpl extends EFactoryImpl implements HSLFactory
       case HSLPackage.PARTITIONER: return createPartitioner();
       case HSLPackage.RULE_PARTITIONER: return createRulePartitioner();
       case HSLPackage.JS_PARITIONER: return createJSParitioner();
-      case HSLPackage.SCANNER: return createScanner();
+      case HSLPackage.DAMAGER: return createDamager();
+      case HSLPackage.JS_DAMAGER: return createJSDamager();
+      case HSLPackage.RULE_DAMAGER: return createRuleDamager();
       case HSLPackage.SCANNER_TOKEN: return createScannerToken();
       case HSLPackage.KEYWORD_GROUP: return createKeywordGroup();
       case HSLPackage.KEYWORD: return createKeyword();
@@ -186,10 +188,32 @@ public class HSLFactoryImpl extends EFactoryImpl implements HSLFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Scanner createScanner()
+  public Damager createDamager()
   {
-    ScannerImpl scanner = new ScannerImpl();
-    return scanner;
+    DamagerImpl damager = new DamagerImpl();
+    return damager;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public JSDamager createJSDamager()
+  {
+    JSDamagerImpl jsDamager = new JSDamagerImpl();
+    return jsDamager;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RuleDamager createRuleDamager()
+  {
+    RuleDamagerImpl ruleDamager = new RuleDamagerImpl();
+    return ruleDamager;
   }
 
   /**

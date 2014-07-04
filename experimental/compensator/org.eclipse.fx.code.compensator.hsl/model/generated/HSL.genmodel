@@ -16,7 +16,7 @@
     <genClasses ecoreClass="HSL.ecore#//Model">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Model/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Model/partitions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Model/scanner"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Model/damagers"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Model/partitioner"/>
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//Partition">
@@ -29,11 +29,16 @@
     <genClasses ecoreClass="HSL.ecore#//JSParitioner">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//JSParitioner/fileURI"/>
     </genClasses>
-    <genClasses ecoreClass="HSL.ecore#//Scanner">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//Scanner/partition"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Scanner/tokens"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Scanner/keywordGroups"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//Scanner/rules"/>
+    <genClasses ecoreClass="HSL.ecore#//Damager">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//Damager/partition"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//JSDamager">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//JSDamager/fileURI"/>
+    </genClasses>
+    <genClasses ecoreClass="HSL.ecore#//RuleDamager">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//RuleDamager/tokens"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//RuleDamager/keywordGroups"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//RuleDamager/rules"/>
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//ScannerToken">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerToken/default"/>
@@ -71,7 +76,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerMultiLineRule/escapeSeq"/>
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//PartitionMultiLineRule">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//PartitionMultiLineRule/token"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//PartitionMultiLineRule/parition"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//PartitionMultiLineRule/startSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//PartitionMultiLineRule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//PartitionMultiLineRule/escapeSeq"/>
@@ -88,7 +93,7 @@
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//ScannerWhitespaceRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerWhitespaceRule/characters"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerWhitespaceRule/jsMethod"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerWhitespaceRule/jsDetector"/>
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//Color"/>
     <genClasses ecoreClass="HSL.ecore#//RGBColor">

@@ -11,10 +11,12 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.fx.code.compensator.hsl.hSL.Color;
+import org.eclipse.fx.code.compensator.hsl.hSL.Damager;
 import org.eclipse.fx.code.compensator.hsl.hSL.Font;
 import org.eclipse.fx.code.compensator.hsl.hSL.FontType;
 import org.eclipse.fx.code.compensator.hsl.hSL.HSLFactory;
 import org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage;
+import org.eclipse.fx.code.compensator.hsl.hSL.JSDamager;
 import org.eclipse.fx.code.compensator.hsl.hSL.JSParitioner;
 import org.eclipse.fx.code.compensator.hsl.hSL.Keyword;
 import org.eclipse.fx.code.compensator.hsl.hSL.KeywordGroup;
@@ -26,8 +28,8 @@ import org.eclipse.fx.code.compensator.hsl.hSL.PartitionMultiLineRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.PartitionSingleLineRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.Partitioner;
 import org.eclipse.fx.code.compensator.hsl.hSL.RGBColor;
+import org.eclipse.fx.code.compensator.hsl.hSL.RuleDamager;
 import org.eclipse.fx.code.compensator.hsl.hSL.RulePartitioner;
-import org.eclipse.fx.code.compensator.hsl.hSL.Scanner;
 import org.eclipse.fx.code.compensator.hsl.hSL.ScannerCharacterRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.ScannerJSRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.ScannerMultiLineRule;
@@ -84,7 +86,21 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass scannerEClass = null;
+  private EClass damagerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass jsDamagerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass ruleDamagerEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -303,7 +319,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModel_Scanner()
+  public EReference getModel_Damagers()
   {
     return (EReference)modelEClass.getEStructuralFeatures().get(2);
   }
@@ -393,9 +409,9 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getScanner()
+  public EClass getDamager()
   {
-    return scannerEClass;
+    return damagerEClass;
   }
 
   /**
@@ -403,9 +419,9 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getScanner_Partition()
+  public EReference getDamager_Partition()
   {
-    return (EReference)scannerEClass.getEStructuralFeatures().get(0);
+    return (EReference)damagerEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -413,9 +429,9 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getScanner_Tokens()
+  public EClass getJSDamager()
   {
-    return (EReference)scannerEClass.getEStructuralFeatures().get(1);
+    return jsDamagerEClass;
   }
 
   /**
@@ -423,9 +439,9 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getScanner_KeywordGroups()
+  public EAttribute getJSDamager_FileURI()
   {
-    return (EReference)scannerEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)jsDamagerEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -433,9 +449,39 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getScanner_Rules()
+  public EClass getRuleDamager()
   {
-    return (EReference)scannerEClass.getEStructuralFeatures().get(3);
+    return ruleDamagerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRuleDamager_Tokens()
+  {
+    return (EReference)ruleDamagerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRuleDamager_KeywordGroups()
+  {
+    return (EReference)ruleDamagerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRuleDamager_Rules()
+  {
+    return (EReference)ruleDamagerEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -733,7 +779,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPartitionMultiLineRule_Token()
+  public EReference getPartitionMultiLineRule_Parition()
   {
     return (EReference)partitionMultiLineRuleEClass.getEStructuralFeatures().get(0);
   }
@@ -863,7 +909,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getScannerWhitespaceRule_JsMethod()
+  public EAttribute getScannerWhitespaceRule_JsDetector()
   {
     return (EAttribute)scannerWhitespaceRuleEClass.getEStructuralFeatures().get(1);
   }
@@ -1001,7 +1047,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     modelEClass = createEClass(MODEL);
     createEAttribute(modelEClass, MODEL__NAME);
     createEReference(modelEClass, MODEL__PARTITIONS);
-    createEReference(modelEClass, MODEL__SCANNER);
+    createEReference(modelEClass, MODEL__DAMAGERS);
     createEReference(modelEClass, MODEL__PARTITIONER);
 
     partitionEClass = createEClass(PARTITION);
@@ -1015,11 +1061,16 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     jsParitionerEClass = createEClass(JS_PARITIONER);
     createEAttribute(jsParitionerEClass, JS_PARITIONER__FILE_URI);
 
-    scannerEClass = createEClass(SCANNER);
-    createEReference(scannerEClass, SCANNER__PARTITION);
-    createEReference(scannerEClass, SCANNER__TOKENS);
-    createEReference(scannerEClass, SCANNER__KEYWORD_GROUPS);
-    createEReference(scannerEClass, SCANNER__RULES);
+    damagerEClass = createEClass(DAMAGER);
+    createEReference(damagerEClass, DAMAGER__PARTITION);
+
+    jsDamagerEClass = createEClass(JS_DAMAGER);
+    createEAttribute(jsDamagerEClass, JS_DAMAGER__FILE_URI);
+
+    ruleDamagerEClass = createEClass(RULE_DAMAGER);
+    createEReference(ruleDamagerEClass, RULE_DAMAGER__TOKENS);
+    createEReference(ruleDamagerEClass, RULE_DAMAGER__KEYWORD_GROUPS);
+    createEReference(ruleDamagerEClass, RULE_DAMAGER__RULES);
 
     scannerTokenEClass = createEClass(SCANNER_TOKEN);
     createEAttribute(scannerTokenEClass, SCANNER_TOKEN__DEFAULT);
@@ -1058,7 +1109,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     createEAttribute(scannerMultiLineRuleEClass, SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ);
 
     partitionMultiLineRuleEClass = createEClass(PARTITION_MULTI_LINE_RULE);
-    createEReference(partitionMultiLineRuleEClass, PARTITION_MULTI_LINE_RULE__TOKEN);
+    createEReference(partitionMultiLineRuleEClass, PARTITION_MULTI_LINE_RULE__PARITION);
     createEAttribute(partitionMultiLineRuleEClass, PARTITION_MULTI_LINE_RULE__START_SEQ);
     createEAttribute(partitionMultiLineRuleEClass, PARTITION_MULTI_LINE_RULE__END_SEQ);
     createEAttribute(partitionMultiLineRuleEClass, PARTITION_MULTI_LINE_RULE__ESCAPE_SEQ);
@@ -1075,7 +1126,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
 
     scannerWhitespaceRuleEClass = createEClass(SCANNER_WHITESPACE_RULE);
     createEAttribute(scannerWhitespaceRuleEClass, SCANNER_WHITESPACE_RULE__CHARACTERS);
-    createEAttribute(scannerWhitespaceRuleEClass, SCANNER_WHITESPACE_RULE__JS_METHOD);
+    createEAttribute(scannerWhitespaceRuleEClass, SCANNER_WHITESPACE_RULE__JS_DETECTOR);
 
     colorEClass = createEClass(COLOR);
 
@@ -1124,6 +1175,8 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     // Add supertypes to classes
     rulePartitionerEClass.getESuperTypes().add(this.getPartitioner());
     jsParitionerEClass.getESuperTypes().add(this.getPartitioner());
+    jsDamagerEClass.getESuperTypes().add(this.getDamager());
+    ruleDamagerEClass.getESuperTypes().add(this.getDamager());
     scannerSingleLineRuleEClass.getESuperTypes().add(this.getScannerRule());
     partitionSingleLineRuleEClass.getESuperTypes().add(this.getParitionRule());
     scannerMultiLineRuleEClass.getESuperTypes().add(this.getScannerRule());
@@ -1138,7 +1191,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModel_Partitions(), this.getPartition(), null, "partitions", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getModel_Scanner(), this.getScanner(), null, "scanner", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModel_Damagers(), this.getDamager(), null, "damagers", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModel_Partitioner(), this.getPartitioner(), null, "partitioner", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(partitionEClass, Partition.class, "Partition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1152,11 +1205,16 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     initEClass(jsParitionerEClass, JSParitioner.class, "JSParitioner", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getJSParitioner_FileURI(), ecorePackage.getEString(), "fileURI", null, 0, 1, JSParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(scannerEClass, Scanner.class, "Scanner", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getScanner_Partition(), this.getPartition(), null, "partition", null, 0, 1, Scanner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScanner_Tokens(), this.getScannerToken(), null, "tokens", null, 0, -1, Scanner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScanner_KeywordGroups(), this.getKeywordGroup(), null, "keywordGroups", null, 0, -1, Scanner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScanner_Rules(), this.getScannerRule(), null, "rules", null, 0, -1, Scanner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(damagerEClass, Damager.class, "Damager", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDamager_Partition(), this.getPartition(), null, "partition", null, 0, 1, Damager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(jsDamagerEClass, JSDamager.class, "JSDamager", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getJSDamager_FileURI(), ecorePackage.getEString(), "fileURI", null, 0, 1, JSDamager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(ruleDamagerEClass, RuleDamager.class, "RuleDamager", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRuleDamager_Tokens(), this.getScannerToken(), null, "tokens", null, 0, -1, RuleDamager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRuleDamager_KeywordGroups(), this.getKeywordGroup(), null, "keywordGroups", null, 0, -1, RuleDamager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRuleDamager_Rules(), this.getScannerRule(), null, "rules", null, 0, -1, RuleDamager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scannerTokenEClass, ScannerToken.class, "ScannerToken", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScannerToken_Default(), ecorePackage.getEBoolean(), "default", null, 0, 1, ScannerToken.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1195,7 +1253,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     initEAttribute(getScannerMultiLineRule_EscapeSeq(), ecorePackage.getEString(), "escapeSeq", null, 0, 1, ScannerMultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(partitionMultiLineRuleEClass, PartitionMultiLineRule.class, "PartitionMultiLineRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPartitionMultiLineRule_Token(), this.getPartition(), null, "token", null, 0, 1, PartitionMultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPartitionMultiLineRule_Parition(), this.getPartition(), null, "parition", null, 0, 1, PartitionMultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPartitionMultiLineRule_StartSeq(), ecorePackage.getEString(), "startSeq", null, 0, 1, PartitionMultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPartitionMultiLineRule_EndSeq(), ecorePackage.getEString(), "endSeq", null, 0, 1, PartitionMultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPartitionMultiLineRule_EscapeSeq(), ecorePackage.getEString(), "escapeSeq", null, 0, 1, PartitionMultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1212,7 +1270,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
 
     initEClass(scannerWhitespaceRuleEClass, ScannerWhitespaceRule.class, "ScannerWhitespaceRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScannerWhitespaceRule_Characters(), ecorePackage.getEString(), "characters", null, 0, -1, ScannerWhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getScannerWhitespaceRule_JsMethod(), ecorePackage.getEString(), "jsMethod", null, 0, 1, ScannerWhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getScannerWhitespaceRule_JsDetector(), ecorePackage.getEString(), "jsDetector", null, 0, 1, ScannerWhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(colorEClass, Color.class, "Color", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

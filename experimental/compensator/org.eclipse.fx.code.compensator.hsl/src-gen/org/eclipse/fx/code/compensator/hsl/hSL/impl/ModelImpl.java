@@ -18,11 +18,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.fx.code.compensator.hsl.hSL.Damager;
 import org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage;
 import org.eclipse.fx.code.compensator.hsl.hSL.Model;
 import org.eclipse.fx.code.compensator.hsl.hSL.Partition;
 import org.eclipse.fx.code.compensator.hsl.hSL.Partitioner;
-import org.eclipse.fx.code.compensator.hsl.hSL.Scanner;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +33,7 @@ import org.eclipse.fx.code.compensator.hsl.hSL.Scanner;
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ModelImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ModelImpl#getPartitions <em>Partitions</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ModelImpl#getScanner <em>Scanner</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ModelImpl#getDamagers <em>Damagers</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ModelImpl#getPartitioner <em>Partitioner</em>}</li>
  * </ul>
  * </p>
@@ -73,14 +73,14 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   protected EList<Partition> partitions;
 
   /**
-   * The cached value of the '{@link #getScanner() <em>Scanner</em>}' containment reference list.
+   * The cached value of the '{@link #getDamagers() <em>Damagers</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getScanner()
+   * @see #getDamagers()
    * @generated
    * @ordered
    */
-  protected EList<Scanner> scanner;
+  protected EList<Damager> damagers;
 
   /**
    * The cached value of the '{@link #getPartitioner() <em>Partitioner</em>}' containment reference.
@@ -155,13 +155,13 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Scanner> getScanner()
+  public EList<Damager> getDamagers()
   {
-    if (scanner == null)
+    if (damagers == null)
     {
-      scanner = new EObjectContainmentEList<Scanner>(Scanner.class, this, HSLPackage.MODEL__SCANNER);
+      damagers = new EObjectContainmentEList<Damager>(Damager.class, this, HSLPackage.MODEL__DAMAGERS);
     }
-    return scanner;
+    return damagers;
   }
 
   /**
@@ -224,8 +224,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     {
       case HSLPackage.MODEL__PARTITIONS:
         return ((InternalEList<?>)getPartitions()).basicRemove(otherEnd, msgs);
-      case HSLPackage.MODEL__SCANNER:
-        return ((InternalEList<?>)getScanner()).basicRemove(otherEnd, msgs);
+      case HSLPackage.MODEL__DAMAGERS:
+        return ((InternalEList<?>)getDamagers()).basicRemove(otherEnd, msgs);
       case HSLPackage.MODEL__PARTITIONER:
         return basicSetPartitioner(null, msgs);
     }
@@ -246,8 +246,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return getName();
       case HSLPackage.MODEL__PARTITIONS:
         return getPartitions();
-      case HSLPackage.MODEL__SCANNER:
-        return getScanner();
+      case HSLPackage.MODEL__DAMAGERS:
+        return getDamagers();
       case HSLPackage.MODEL__PARTITIONER:
         return getPartitioner();
     }
@@ -272,9 +272,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         getPartitions().clear();
         getPartitions().addAll((Collection<? extends Partition>)newValue);
         return;
-      case HSLPackage.MODEL__SCANNER:
-        getScanner().clear();
-        getScanner().addAll((Collection<? extends Scanner>)newValue);
+      case HSLPackage.MODEL__DAMAGERS:
+        getDamagers().clear();
+        getDamagers().addAll((Collection<? extends Damager>)newValue);
         return;
       case HSLPackage.MODEL__PARTITIONER:
         setPartitioner((Partitioner)newValue);
@@ -299,8 +299,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
       case HSLPackage.MODEL__PARTITIONS:
         getPartitions().clear();
         return;
-      case HSLPackage.MODEL__SCANNER:
-        getScanner().clear();
+      case HSLPackage.MODEL__DAMAGERS:
+        getDamagers().clear();
         return;
       case HSLPackage.MODEL__PARTITIONER:
         setPartitioner((Partitioner)null);
@@ -323,8 +323,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case HSLPackage.MODEL__PARTITIONS:
         return partitions != null && !partitions.isEmpty();
-      case HSLPackage.MODEL__SCANNER:
-        return scanner != null && !scanner.isEmpty();
+      case HSLPackage.MODEL__DAMAGERS:
+        return damagers != null && !damagers.isEmpty();
       case HSLPackage.MODEL__PARTITIONER:
         return partitioner != null;
     }

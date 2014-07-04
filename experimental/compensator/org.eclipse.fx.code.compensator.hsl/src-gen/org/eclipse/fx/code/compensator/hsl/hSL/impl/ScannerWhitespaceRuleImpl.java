@@ -25,7 +25,7 @@ import org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ScannerWhitespaceRuleImpl#getCharacters <em>Characters</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ScannerWhitespaceRuleImpl#getJsMethod <em>Js Method</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ScannerWhitespaceRuleImpl#getJsDetector <em>Js Detector</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,24 +44,24 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
   protected EList<String> characters;
 
   /**
-   * The default value of the '{@link #getJsMethod() <em>Js Method</em>}' attribute.
+   * The default value of the '{@link #getJsDetector() <em>Js Detector</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getJsMethod()
+   * @see #getJsDetector()
    * @generated
    * @ordered
    */
-  protected static final String JS_METHOD_EDEFAULT = null;
+  protected static final String JS_DETECTOR_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getJsMethod() <em>Js Method</em>}' attribute.
+   * The cached value of the '{@link #getJsDetector() <em>Js Detector</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getJsMethod()
+   * @see #getJsDetector()
    * @generated
    * @ordered
    */
-  protected String jsMethod = JS_METHOD_EDEFAULT;
+  protected String jsDetector = JS_DETECTOR_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -103,9 +103,9 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getJsMethod()
+  public String getJsDetector()
   {
-    return jsMethod;
+    return jsDetector;
   }
 
   /**
@@ -113,12 +113,12 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setJsMethod(String newJsMethod)
+  public void setJsDetector(String newJsDetector)
   {
-    String oldJsMethod = jsMethod;
-    jsMethod = newJsMethod;
+    String oldJsDetector = jsDetector;
+    jsDetector = newJsDetector;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.SCANNER_WHITESPACE_RULE__JS_METHOD, oldJsMethod, jsMethod));
+      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.SCANNER_WHITESPACE_RULE__JS_DETECTOR, oldJsDetector, jsDetector));
   }
 
   /**
@@ -133,8 +133,8 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
     {
       case HSLPackage.SCANNER_WHITESPACE_RULE__CHARACTERS:
         return getCharacters();
-      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_METHOD:
-        return getJsMethod();
+      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_DETECTOR:
+        return getJsDetector();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -154,8 +154,8 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
         getCharacters().clear();
         getCharacters().addAll((Collection<? extends String>)newValue);
         return;
-      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_METHOD:
-        setJsMethod((String)newValue);
+      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_DETECTOR:
+        setJsDetector((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -174,8 +174,8 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
       case HSLPackage.SCANNER_WHITESPACE_RULE__CHARACTERS:
         getCharacters().clear();
         return;
-      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_METHOD:
-        setJsMethod(JS_METHOD_EDEFAULT);
+      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_DETECTOR:
+        setJsDetector(JS_DETECTOR_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -193,8 +193,8 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
     {
       case HSLPackage.SCANNER_WHITESPACE_RULE__CHARACTERS:
         return characters != null && !characters.isEmpty();
-      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_METHOD:
-        return JS_METHOD_EDEFAULT == null ? jsMethod != null : !JS_METHOD_EDEFAULT.equals(jsMethod);
+      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_DETECTOR:
+        return JS_DETECTOR_EDEFAULT == null ? jsDetector != null : !JS_DETECTOR_EDEFAULT.equals(jsDetector);
     }
     return super.eIsSet(featureID);
   }
@@ -212,8 +212,8 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (characters: ");
     result.append(characters);
-    result.append(", jsMethod: ");
-    result.append(jsMethod);
+    result.append(", jsDetector: ");
+    result.append(jsDetector);
     result.append(')');
     return result.toString();
   }

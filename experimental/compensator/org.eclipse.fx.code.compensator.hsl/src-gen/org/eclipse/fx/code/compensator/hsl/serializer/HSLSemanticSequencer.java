@@ -5,6 +5,7 @@ import com.google.inject.Provider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.code.compensator.hsl.hSL.Font;
 import org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage;
+import org.eclipse.fx.code.compensator.hsl.hSL.JSDamager;
 import org.eclipse.fx.code.compensator.hsl.hSL.JSParitioner;
 import org.eclipse.fx.code.compensator.hsl.hSL.Keyword;
 import org.eclipse.fx.code.compensator.hsl.hSL.KeywordGroup;
@@ -14,8 +15,8 @@ import org.eclipse.fx.code.compensator.hsl.hSL.PartitionJSRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.PartitionMultiLineRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.PartitionSingleLineRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.RGBColor;
+import org.eclipse.fx.code.compensator.hsl.hSL.RuleDamager;
 import org.eclipse.fx.code.compensator.hsl.hSL.RulePartitioner;
-import org.eclipse.fx.code.compensator.hsl.hSL.Scanner;
 import org.eclipse.fx.code.compensator.hsl.hSL.ScannerCharacterRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.ScannerJSRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.ScannerMultiLineRule;
@@ -45,6 +46,13 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case HSLPackage.FONT:
 				if(context == grammarAccess.getFontRule()) {
 					sequence_Font(context, (Font) semanticObject); 
+					return; 
+				}
+				else break;
+			case HSLPackage.JS_DAMAGER:
+				if(context == grammarAccess.getDamagerRule() ||
+				   context == grammarAccess.getJSDamagerRule()) {
+					sequence_JSDamager(context, (JSDamager) semanticObject); 
 					return; 
 				}
 				else break;
@@ -107,16 +115,17 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 					return; 
 				}
 				else break;
+			case HSLPackage.RULE_DAMAGER:
+				if(context == grammarAccess.getDamagerRule() ||
+				   context == grammarAccess.getRuleDamagerRule()) {
+					sequence_RuleDamager(context, (RuleDamager) semanticObject); 
+					return; 
+				}
+				else break;
 			case HSLPackage.RULE_PARTITIONER:
 				if(context == grammarAccess.getPartitionerRule() ||
 				   context == grammarAccess.getRulePartitionerRule()) {
 					sequence_RulePartitioner(context, (RulePartitioner) semanticObject); 
-					return; 
-				}
-				else break;
-			case HSLPackage.SCANNER:
-				if(context == grammarAccess.getScannerRule()) {
-					sequence_Scanner(context, (Scanner) semanticObject); 
 					return; 
 				}
 				else break;
@@ -176,6 +185,25 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
+	 *     (partition=[Partition|ID] fileURI=STRING)
+	 */
+	protected void sequence_JSDamager(EObject context, JSDamager semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, HSLPackage.Literals.DAMAGER__PARTITION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, HSLPackage.Literals.DAMAGER__PARTITION));
+			if(transientValues.isValueTransient(semanticObject, HSLPackage.Literals.JS_DAMAGER__FILE_URI) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, HSLPackage.Literals.JS_DAMAGER__FILE_URI));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getJSDamagerAccess().getPartitionPartitionIDTerminalRuleCall_1_0_1(), semanticObject.getPartition());
+		feeder.accept(grammarAccess.getJSDamagerAccess().getFileURISTRINGTerminalRuleCall_2_0(), semanticObject.getFileURI());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     fileURI=STRING
 	 */
 	protected void sequence_JSParitioner(EObject context, JSParitioner semanticObject) {
@@ -210,7 +238,7 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (name=ID partitions+=Partition+ scanner+=Scanner+ partitioner=Partitioner)
+	 *     (name=ID partitions+=Partition+ damagers+=Damager+ partitioner=Partitioner)
 	 */
 	protected void sequence_Model(EObject context, Model semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -238,7 +266,7 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (token=[Partition|ID] startSeq=STRING endSeq=STRING escapeSeq=STRING?)
+	 *     (parition=[Partition|ID] startSeq=STRING endSeq=STRING escapeSeq=STRING?)
 	 */
 	protected void sequence_PartitionMultiLineRule(EObject context, PartitionMultiLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -289,6 +317,15 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		feeder.accept(grammarAccess.getRGBColorAccess().getGINTTerminalRuleCall_4_0(), semanticObject.getG());
 		feeder.accept(grammarAccess.getRGBColorAccess().getBINTTerminalRuleCall_6_0(), semanticObject.getB());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (partition=[Partition|ID] tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule+)
+	 */
+	protected void sequence_RuleDamager(EObject context, RuleDamager semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -358,18 +395,9 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     ((token=[ScannerToken|ID]? characters+=STRING characters+=STRING*) | jsMethod=ANY_OTHER)
+	 *     ((token=[ScannerToken|ID]? characters+=STRING characters+=STRING*) | jsDetector=ANY_OTHER)
 	 */
 	protected void sequence_ScannerWhitespaceRule(EObject context, ScannerWhitespaceRule semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (partition=[Partition|ID] tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule+)
-	 */
-	protected void sequence_Scanner(EObject context, Scanner semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

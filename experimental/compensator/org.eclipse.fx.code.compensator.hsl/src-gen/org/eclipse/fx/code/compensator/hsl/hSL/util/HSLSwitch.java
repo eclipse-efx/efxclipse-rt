@@ -109,10 +109,26 @@ public class HSLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case HSLPackage.SCANNER:
+      case HSLPackage.DAMAGER:
       {
-        Scanner scanner = (Scanner)theEObject;
-        T result = caseScanner(scanner);
+        Damager damager = (Damager)theEObject;
+        T result = caseDamager(damager);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case HSLPackage.JS_DAMAGER:
+      {
+        JSDamager jsDamager = (JSDamager)theEObject;
+        T result = caseJSDamager(jsDamager);
+        if (result == null) result = caseDamager(jsDamager);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case HSLPackage.RULE_DAMAGER:
+      {
+        RuleDamager ruleDamager = (RuleDamager)theEObject;
+        T result = caseRuleDamager(ruleDamager);
+        if (result == null) result = caseDamager(ruleDamager);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -322,17 +338,49 @@ public class HSLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Scanner</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Damager</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scanner</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Damager</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseScanner(Scanner object)
+  public T caseDamager(Damager object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>JS Damager</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>JS Damager</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJSDamager(JSDamager object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Rule Damager</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Rule Damager</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRuleDamager(RuleDamager object)
   {
     return null;
   }

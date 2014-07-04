@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.Model#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.Model#getPartitions <em>Partitions</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.Model#getScanner <em>Scanner</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.Model#getDamagers <em>Damagers</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.Model#getPartitioner <em>Partitioner</em>}</li>
  * </ul>
  * </p>
@@ -70,20 +70,20 @@ public interface Model extends EObject
   EList<Partition> getPartitions();
 
   /**
-   * Returns the value of the '<em><b>Scanner</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.fx.code.compensator.hsl.hSL.Scanner}.
+   * Returns the value of the '<em><b>Damagers</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.fx.code.compensator.hsl.hSL.Damager}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Scanner</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Damagers</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Scanner</em>' containment reference list.
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getModel_Scanner()
+   * @return the value of the '<em>Damagers</em>' containment reference list.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getModel_Damagers()
    * @model containment="true"
    * @generated
    */
-  EList<Scanner> getScanner();
+  EList<Damager> getDamagers();
 
   /**
    * Returns the value of the '<em><b>Partitioner</b></em>' containment reference.

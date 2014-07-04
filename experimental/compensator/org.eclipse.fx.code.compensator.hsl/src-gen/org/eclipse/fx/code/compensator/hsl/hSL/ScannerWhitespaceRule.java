@@ -13,7 +13,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getCharacters <em>Characters</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getJsMethod <em>Js Method</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getJsDetector <em>Js Detector</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,29 +40,29 @@ public interface ScannerWhitespaceRule extends ScannerRule
   EList<String> getCharacters();
 
   /**
-   * Returns the value of the '<em><b>Js Method</b></em>' attribute.
+   * Returns the value of the '<em><b>Js Detector</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Js Method</em>' attribute isn't clear,
+   * If the meaning of the '<em>Js Detector</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Js Method</em>' attribute.
-   * @see #setJsMethod(String)
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getScannerWhitespaceRule_JsMethod()
+   * @return the value of the '<em>Js Detector</em>' attribute.
+   * @see #setJsDetector(String)
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getScannerWhitespaceRule_JsDetector()
    * @model
    * @generated
    */
-  String getJsMethod();
+  String getJsDetector();
 
   /**
-   * Sets the value of the '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getJsMethod <em>Js Method</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getJsDetector <em>Js Detector</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Js Method</em>' attribute.
-   * @see #getJsMethod()
+   * @param value the new value of the '<em>Js Detector</em>' attribute.
+   * @see #getJsDetector()
    * @generated
    */
-  void setJsMethod(String value);
+  void setJsDetector(String value);
 
 } // ScannerWhitespaceRule
