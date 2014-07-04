@@ -10,16 +10,20 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.expressions.ExpressionInfo;
 import org.eclipse.e4.core.commands.ExpressionContext;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.internal.workbench.ContributionsAnalyzer;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
@@ -39,6 +43,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
@@ -97,6 +102,19 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	@Log
 	Logger logger;
 
+	@NonNull
+	final Map<@NonNull MUIElement, @NonNull ActiveLeafRunAndTrack> visibleWhenElements = new HashMap<>();
+
+	/**
+	 * Transient data key used to remember the calculated visibility which is
+	 * built from
+	 * <ul>
+	 * <li>{@link MUIElement#getVisibleWhen()}</li>
+	 * <li>{@link MUIElement#isVisible()}</li>
+	 * </ul>
+	 */
+	public static final String CALCULATED_VISIBILITY = "efx_calculated_visibility"; //$NON-NLS-1$
+
 	/**
 	 * @return the logger
 	 */
@@ -151,6 +169,18 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			initDefaultEventListeners(broker);
 		} else {
 			this.logger.error("No event broker was found. Most things will not operate appropiately!"); //$NON-NLS-1$
+		}
+
+		element.getTransientData().put(CALCULATED_VISIBILITY, Boolean.valueOf(element.isVisible() && checkVisibleWhen(element, getModelContext(element))));
+
+		if (element.getVisibleWhen() != null) {
+			ActiveLeafRunAndTrack rat = new ActiveLeafRunAndTrack(element, this._context.get(IEventBroker.class));
+			this.visibleWhenElements.put(element, rat);
+
+			IEclipseContext modelContext = getModelContext(element);
+			if (modelContext != null) {
+				modelContext.runAndTrack(rat);
+			}
 		}
 
 		return widget;
@@ -220,6 +250,27 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		registerEventListener(broker, UIEvents.ApplicationElement.TOPIC_PERSISTEDSTATE);
 		registerEventListener(broker, UIEvents.ApplicationElement.TOPIC_TAGS);
 		registerEventListener(broker, UIEvents.UIElement.TOPIC_CONTAINERDATA);
+
+		broker.subscribe(UIEvents.UIElement.TOPIC_VISIBLEWHEN, this::handleVisibleWhen);
+	}
+
+	private void handleVisibleWhen(Event event) {
+		Object element = event.getProperty(UIEvents.EventTags.ELEMENT);
+
+		if (element instanceof MUIElement) {
+			MUIElement e = (MUIElement) element;
+
+			if (e.getRenderer() == this) {
+				if (e.getVisibleWhen() == null) {
+					this.visibleWhenElements.remove(e);
+				} else {
+					this.visibleWhenElements.put(e, new ActiveLeafRunAndTrack(e,this._context.get(IEventBroker.class)));
+				}
+			}
+
+			IEventBroker broker = this._context.get(IEventBroker.class);
+			broker.send(Constants.UPDATE_VISIBLE_WHEN_RESULT, e);
+		}
 	}
 
 	@Override
@@ -395,7 +446,10 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			IEclipseContext ctx = (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
 			ctx.dispose();
 			element.getTransientData().remove(RENDERING_CONTEXT_KEY);
+		}
 
+		if (element.getVisibleWhen() != null) {
+			this.visibleWhenElements.remove(element);
 		}
 	}
 
@@ -519,11 +573,11 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@Override
 	@Nullable
-	public IEclipseContext getModelContext(@NonNull MUIElement part) {
-		if (part instanceof MContext) {
-			return ((MContext) part).getContext();
+	public IEclipseContext getModelContext(@NonNull MUIElement element) {
+		if (element instanceof MContext) {
+			return ((MContext) element).getContext();
 		}
-		return getContextForParent(part);
+		return getContextForParent(element);
 	}
 
 	/**
@@ -565,7 +619,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 */
 	public static boolean checkVisibleWhen(MUIElement item, IEclipseContext context) {
 		if (item.getVisibleWhen() != null && item.getVisibleWhen() instanceof MCoreExpression) {
-			ExpressionContext exprContext = new ExpressionContext(context);
+			ExpressionContext exprContext = new ExpressionContext(context.getActiveLeaf());
 			return ContributionsAnalyzer.isVisible((MCoreExpression) item.getVisibleWhen(), exprContext);
 		}
 
@@ -589,7 +643,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		List<MUIElement> list = (List<MUIElement>) container.eGet(eElement.eContainmentFeature());
 		int idx = 0;
 		for (MUIElement u : list) {
-			if (isAndRenderedVisible(u)) {
+			if (isChildAndRenderedVisible(u)) {
 				if (u == element) {
 					return idx;
 				}
@@ -606,7 +660,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the element
 	 * @return <code>true</code> if item is to be shown
 	 */
-	protected boolean isAndRenderedVisible(MUIElement u) {
+	protected boolean isChildAndRenderedVisible(MUIElement u) {
 		return u.isToBeRendered() && u.isVisible() && checkVisibleWhen(u, getModelContext(u));
 	}
 
@@ -631,5 +685,58 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	@Override
 	public W getWidget(@NonNull M element) {
 		return (W) element.getWidget();
+	}
+
+	// /**
+	// * Update all visible when elements
+	// */
+	// protected void updateVisibleWhen() {
+	// for( MUIElement e : this.visibleWhenElements.keySet() ) {
+	// getModelContext(e);
+	// }
+	//
+	// }
+
+	class ActiveLeafRunAndTrack extends RunAndTrack {
+		RunAndTrack currentActiveLeafRAT;
+
+		final MUIElement element;
+		final HashSet<String> variables;
+		final IEventBroker broker;
+		
+		public ActiveLeafRunAndTrack(MUIElement element, IEventBroker broker) {
+			this.element = element;
+			this.broker = broker;
+			ExpressionInfo info = new ExpressionInfo();
+			ContributionsAnalyzer.collectInfo(info, element.getVisibleWhen());
+			this.variables = new HashSet<String>(Arrays.asList(info.getAccessedVariableNames()));
+		}
+
+		@Override
+		public boolean changed(IEclipseContext context) {
+			if (BaseRenderer.this.visibleWhenElements.get(this.element) == this) {
+				this.currentActiveLeafRAT = new RunAndTrack() {
+
+					@Override
+					public boolean changed(IEclipseContext context) {
+						if (ActiveLeafRunAndTrack.this.currentActiveLeafRAT == this) {
+							for(String v : ActiveLeafRunAndTrack.this.variables) {
+								context.get(v);
+							}
+							ActiveLeafRunAndTrack.this.broker.send(Constants.UPDATE_VISIBLE_WHEN_RESULT, ActiveLeafRunAndTrack.this.element);
+							return true;
+						} else {
+							return false;
+						}
+					}
+
+				};
+				context.getActiveLeaf().runAndTrack(this.currentActiveLeafRAT);
+				return true;
+			} else {
+				this.currentActiveLeafRAT = null;
+				return false;
+			}
+		}
 	}
 }

@@ -253,7 +253,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		for (MStackElement e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
 			ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(e);
-			if (renderer != null && e.isToBeRendered() && e.isVisible()) {
+			if (renderer != null && isChildAndRenderedVisible(e)) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
 
@@ -337,7 +337,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		Iterator<MStackElement> i = elements.iterator();
 		while (i.hasNext()) {
 			MStackElement element = (MStackElement) i.next();
-			if (element.isToBeRendered() && element.isVisible()) {
+			if (isChildAndRenderedVisible(element)) {
 				int idx = getRenderedIndex(parent, element);
 
 				ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);

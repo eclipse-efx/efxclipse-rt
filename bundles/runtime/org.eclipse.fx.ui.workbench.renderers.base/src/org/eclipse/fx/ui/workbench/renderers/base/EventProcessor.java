@@ -17,6 +17,7 @@ import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
@@ -104,14 +105,61 @@ public class EventProcessor {
 						if (((MUIElement) parent).getRenderer() == renderer) {
 							String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
 							if (UIEvents.EventTypes.SET.equals(eventType)) {
-								Boolean newValue = (Boolean) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-								if (newValue.booleanValue()) {
+								Boolean current = (Boolean) changedObj.getTransientData().get(BaseRenderer.CALCULATED_VISIBILITY);
+								boolean visibleWhen = BaseRenderer.checkVisibleWhen(changedObj, renderer.getModelContext(changedObj));
+								if( current == null ) {
+									//FIXME Need to inform that the initial visibility is not yet calculated
+									current = Boolean.valueOf(! changedObj.isVisible() && visibleWhen);
+								}
+								
+								boolean newVisibility = changedObj.isVisible() && visibleWhen;
+								
+								if( current.booleanValue() != newVisibility ) {
+									changedObj.getTransientData().put(BaseRenderer.CALCULATED_VISIBILITY, Boolean.valueOf(newVisibility));
+									
+									if (newVisibility) {
+										// TODO Is childRendered not dangerous to
+										// call
+										// here??
+										renderer.childRendered((M) parent, changedObj);
+									} else {
+										renderer.hideChild((M) parent, changedObj);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+		eventBroker.subscribe(Constants.UPDATE_VISIBLE_WHEN_RESULT, new EventHandler() {
+			
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handleEvent(Event event) {
+				MUIElement element = (MUIElement) event.getProperty(IEventBroker.DATA);
+				if (element.isToBeRendered()) {
+					EObject parent = ((EObject) element).eContainer();
+					if (parent instanceof MUIElement) {
+						if (((MUIElement) parent).getRenderer() == renderer) {
+							Boolean current = (Boolean) element.getTransientData().get(BaseRenderer.CALCULATED_VISIBILITY);
+							boolean visibleWhen = BaseRenderer.checkVisibleWhen(element, renderer.getModelContext(element));
+							
+							if( current == null ) {
+								current = Boolean.valueOf(element.isVisible());
+							}
+							
+							boolean newVisibility = element.isVisible() && visibleWhen;
+							if( current.booleanValue() != newVisibility ) {
+								element.getTransientData().put(BaseRenderer.CALCULATED_VISIBILITY, Boolean.valueOf(newVisibility));
+								
+								if (newVisibility) {
 									// TODO Is childRendered not dangerous to
 									// call
 									// here??
-									renderer.childRendered((M) parent, changedObj);
+									renderer.childRendered((M) parent, element);
 								} else {
-									renderer.hideChild((M) parent, changedObj);
+									renderer.hideChild((M) parent, element);
 								}
 							}
 						}

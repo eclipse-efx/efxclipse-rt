@@ -183,7 +183,7 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 		for (MMenuElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WMenuElement<MMenuElement> widget = engineCreateWidget(e);
-				if (widget != null && e.isVisible()) {
+				if (widget != null && isChildAndRenderedVisible(e)) {
 					menu.addElement(widget);
 				}
 			}
@@ -247,8 +247,8 @@ public abstract class BaseMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> 
 	}
 	
 	@Override
-	protected boolean isAndRenderedVisible(MUIElement u) {
-		return super.isAndRenderedVisible(u) && !(u instanceof MDynamicMenuContribution);
+	protected boolean isChildAndRenderedVisible(MUIElement u) {
+		return super.isChildAndRenderedVisible(u) && !(u instanceof MDynamicMenuContribution);
 	}
 
 	@Override

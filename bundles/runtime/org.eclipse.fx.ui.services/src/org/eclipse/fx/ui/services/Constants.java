@@ -68,5 +68,9 @@ public final class Constants {
 	 */
 	@NonNull
 	public static final String APPLICATION_LAUNCHED = ROOT_TOPIC + "/E4Application/Launched"; //$NON-NLS-1$
-	
+	/**
+	 * Event sent when the result of a visible when is modified
+	 */
+	@NonNull
+	public static final String UPDATE_VISIBLE_WHEN_RESULT = ROOT_TOPIC + "/MUIElement/UpdateVisibleWhenResult"; //$NON-NLS-1$	
 }
