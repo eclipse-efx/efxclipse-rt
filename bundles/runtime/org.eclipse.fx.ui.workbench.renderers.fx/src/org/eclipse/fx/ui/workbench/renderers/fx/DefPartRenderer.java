@@ -13,7 +13,6 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -80,15 +79,15 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 			WPart<BorderPane, Node, Node> part = ((WPart<BorderPane, Node, Node>) element.getWidget());
 			if (part == null)
 				return;
-			if( ! checkFocusControl((Node) part.getWidget()) ) {
+			if (!checkFocusControl((Node) part.getWidget())) {
 				Node node = (Node) part.getWidget();
-				node.requestFocus();	
+				node.requestFocus();
 			}
 		}
 
 	}
-	
-	public static boolean checkFocusControl(Node check) {
+
+	static boolean checkFocusControl(Node check) {
 		if (check.getScene() == null) {
 			return false;
 		}
@@ -136,7 +135,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				public void handle(MouseEvent event) {
 					event.consume();
 					MPart domElement = getDomElement();
-					if( domElement != null ) {
+					if (domElement != null) {
 						PartImpl.this.service.activate(domElement, true);
 						if (!checkFocusControl(getWidget()) && (domElement.getObject() != null)) {
 							// ContextInjectionFactory.invoke(domElement.getObject(),
@@ -145,7 +144,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 							// p.requestFocus();
 							// }
 							p.requestFocus();
-						}						
+						}
 					}
 				}
 			});
