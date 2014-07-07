@@ -116,6 +116,11 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	public static final String CALCULATED_VISIBILITY = "efx_calculated_visibility"; //$NON-NLS-1$
 
 	/**
+	 * Constant used to remember the current state of the visible when expression
+	 */
+	public static final String CURRENT_VISIBLE_WHEN = "efx_current_visible_when"; //$NON-NLS-1$
+
+	/**
 	 * @return the logger
 	 */
 	protected Logger getLogger() {
@@ -264,7 +269,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 				if (e.getVisibleWhen() == null) {
 					this.visibleWhenElements.remove(e);
 				} else {
-					this.visibleWhenElements.put(e, new ActiveLeafRunAndTrack(e,this._context.get(IEventBroker.class)));
+					this.visibleWhenElements.put(e, new ActiveLeafRunAndTrack(e, this._context.get(IEventBroker.class)));
 				}
 			}
 
@@ -620,9 +625,30 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	public static boolean checkVisibleWhen(MUIElement item, IEclipseContext context) {
 		if (item.getVisibleWhen() != null && item.getVisibleWhen() instanceof MCoreExpression) {
 			ExpressionContext exprContext = new ExpressionContext(context.getActiveLeaf());
-			return ContributionsAnalyzer.isVisible((MCoreExpression) item.getVisibleWhen(), exprContext);
+			boolean value = ContributionsAnalyzer.isVisible((MCoreExpression) item.getVisibleWhen(), exprContext);
+			item.getTransientData().put(CURRENT_VISIBLE_WHEN, Boolean.valueOf(value));
+			return value;
 		}
 
+		return true;
+	}
+
+	/**
+	 * Get the last calculated visible when state or calculates one
+	 * 
+	 * @param item
+	 *            the item
+	 * @param context
+	 *            the context
+	 * @return the current visible when status
+	 */
+	public static boolean getVisibleWhen(MUIElement item, IEclipseContext context) {
+		if (item.getVisibleWhen() != null) {
+			if (item.getTransientData().get(CURRENT_VISIBLE_WHEN) != null) {
+				return ((Boolean) item.getTransientData().get(CURRENT_VISIBLE_WHEN)).booleanValue();
+			}
+			return checkVisibleWhen(item, context);
+		}
 		return true;
 	}
 
@@ -661,7 +687,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @return <code>true</code> if item is to be shown
 	 */
 	protected boolean isChildAndRenderedVisible(MUIElement u) {
-		return u.isToBeRendered() && u.isVisible() && checkVisibleWhen(u, getModelContext(u));
+		return u.isToBeRendered() && u.isVisible() && getVisibleWhen(u, getModelContext(u));
 	}
 
 	/**
@@ -703,7 +729,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		final MUIElement element;
 		final HashSet<String> variables;
 		final IEventBroker broker;
-		
+
 		public ActiveLeafRunAndTrack(MUIElement element, IEventBroker broker) {
 			this.element = element;
 			this.broker = broker;
@@ -720,7 +746,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 					@Override
 					public boolean changed(IEclipseContext context) {
 						if (ActiveLeafRunAndTrack.this.currentActiveLeafRAT == this) {
-							for(String v : ActiveLeafRunAndTrack.this.variables) {
+							for (String v : ActiveLeafRunAndTrack.this.variables) {
 								context.get(v);
 							}
 							ActiveLeafRunAndTrack.this.broker.send(Constants.UPDATE_VISIBLE_WHEN_RESULT, ActiveLeafRunAndTrack.this.element);
