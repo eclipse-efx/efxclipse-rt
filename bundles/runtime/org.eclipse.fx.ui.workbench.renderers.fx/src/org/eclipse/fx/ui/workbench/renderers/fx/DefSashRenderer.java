@@ -37,6 +37,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseSashRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -55,7 +56,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 
 	static class WFixedSashImpl extends WLayoutedWidgetImpl<GridLayoutPane, Node, MPartSashContainer> implements WSash<Node> {
 
-		private static GridData toGridData(Map<String, String> dataMap) {
+		private static @NonNull GridData toGridData(Map<String, String> dataMap) {
 			GridData gd = new GridData();
 			if (dataMap.containsKey(WSash.FIXED_LAYOUT_WIDTH)) {
 				gd.widthHintProperty().set(Integer.parseInt(dataMap.get(WSash.FIXED_LAYOUT_WIDTH)));
