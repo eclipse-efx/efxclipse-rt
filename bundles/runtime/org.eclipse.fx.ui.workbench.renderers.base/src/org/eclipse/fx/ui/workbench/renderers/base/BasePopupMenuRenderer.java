@@ -69,7 +69,7 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 		for (MMenuElement e : element.getChildren()) {
 			@SuppressWarnings("null")
 			WMenuElement<MMenuElement> widget = engineCreateWidget(e);
-			if (widget != null && e.isVisible()) {
+			if (widget != null && isChildAndRenderedVisible(e)) {
 				menu.addElement(widget);
 			}
 		}
