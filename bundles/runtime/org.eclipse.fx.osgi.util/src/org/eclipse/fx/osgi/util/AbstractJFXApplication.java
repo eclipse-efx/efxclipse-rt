@@ -20,6 +20,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.core.databinding.JFXRealm;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -32,7 +33,8 @@ import org.osgi.service.event.EventAdmin;
  */
 public abstract class AbstractJFXApplication implements IApplication {
 	static AbstractJFXApplication SELF;
-
+	
+	@Nullable
 	IApplicationContext applicationContext;
 	Object returnValue;
 	EventAdmin eventAdmin;
@@ -44,6 +46,7 @@ public abstract class AbstractJFXApplication implements IApplication {
 		private AbstractJFXApplication osgiApp = SELF;
 		private IApplicationContext applicationContext;
 
+		@SuppressWarnings("null")
 		@Override
 		public void start(final Stage primaryStage) throws Exception {
 			this.applicationContext = this.osgiApp.applicationContext;
@@ -71,7 +74,7 @@ public abstract class AbstractJFXApplication implements IApplication {
 	public final Object start(IApplicationContext context) throws Exception {
 		SELF = this;
 		this.applicationContext = context;
-		this.applicationContext.applicationRunning();
+		context.applicationRunning();
 
 		Bundle b = FrameworkUtil.getBundle(AbstractJFXApplication.class);
 		BundleContext bundleContext = b.getBundleContext();
