@@ -35,6 +35,7 @@ import com.sun.javafx.css.converters.SizeConverter;
  */
 @SuppressWarnings("restriction")
 public class GridLayoutPane extends AbstractLayoutPane<GridData> {
+	@NonNull
 	private static final String LAYOUT_KEY = "gridData"; //$NON-NLS-1$
 	
 	private static final CssMetaData<GridLayoutPane, Number> NUM_COLUMNS = new CssMetaData<GridLayoutPane, Number>("-fx-columns", SizeConverter.getInstance(), Integer.valueOf(1)) { //$NON-NLS-1$
@@ -236,6 +237,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 		calculateLayout(true, getLayoutBounds().getMinX(), getLayoutBounds().getMinY(), getLayoutBounds().getWidth(), getLayoutBounds().getHeight(), true);
 	}
 
+	@NonNull
 	private Size calculateLayout(boolean move, double x, double y, double width, double height, boolean flushCache) {
 		if (getNumColumns() < 1) {
 			return new Size(getInnerMarginLeft() + getInnerMarginRight(), getInnerMarginTop() + getInnerMarginBottom());

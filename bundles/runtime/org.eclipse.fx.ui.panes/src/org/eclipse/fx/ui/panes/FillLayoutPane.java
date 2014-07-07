@@ -159,6 +159,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 		}
 	}
 
+	@NonNull
 	private static final String LAYOUT_KEY = "fillData"; //$NON-NLS-1$
 	
 	/**
