@@ -14,7 +14,6 @@ package org.eclipse.fx.ui.panes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.WeakHashMap;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -160,8 +159,8 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 		}
 	}
 
-	private final static WeakHashMap<Node, FillData> CONSTRAINTS = new WeakHashMap<Node, FillData>();
-
+	private static final String LAYOUT_KEY = "fillData"; //$NON-NLS-1$
+	
 	/**
 	 * Set a constraint object for the node
 	 * 
@@ -171,7 +170,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 *            the fill data
 	 */
 	public final static void setConstraint(@NonNull Node n, @NonNull FillData data) {
-		CONSTRAINTS.put(n, data);
+		setConstraint(n, LAYOUT_KEY, data);
 	}
 
 	/**
@@ -182,7 +181,7 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 	 * @return the constraint or <code>null</code>
 	 */
 	public final static @Nullable FillData getConstraint(@NonNull Node n) {
-		return CONSTRAINTS.get(n);
+		return (FillData) getConstraint(n, LAYOUT_KEY);
 	}
 
 	/**
