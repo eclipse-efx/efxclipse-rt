@@ -10,13 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.animation.pagetransition.animation;
 
-
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
-import javafx.animation.ParallelTransitionBuilder;
-import javafx.animation.ScaleTransitionBuilder;
-import javafx.animation.SequentialTransitionBuilder;
-import javafx.animation.TranslateTransitionBuilder;
+import javafx.animation.ParallelTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
@@ -25,48 +24,43 @@ import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 /**
  * Zoom and slide animations
  */
-@SuppressWarnings("deprecation")
 public class ZoomSlideAnimation extends CenterSwitchAnimation {
 
 	@Override
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
 		double deltaX = -curNode.getBoundsInLocal().getWidth();
 		newNode.setTranslateX(-deltaX);
-		
-		
-		TranslateTransitionBuilder slide = TranslateTransitionBuilder.create()
-			.interpolator(Interpolator.EASE_BOTH)
-			.byX(deltaX)
-			.duration(new Duration(300));
-		
-		ScaleTransitionBuilder zoomOut = ScaleTransitionBuilder.create()
-			.duration(new Duration(300))
-			.toX(0.7)
-			.toY(0.7)
-			.interpolator(Interpolator.EASE_BOTH);
-		ScaleTransitionBuilder zoomIn = ScaleTransitionBuilder.create()
-			.duration(new Duration(300))
-			.toX(1)
-			.toY(1)
-			.interpolator(Interpolator.EASE_BOTH);
-		
-		return SequentialTransitionBuilder.create()
-			.children(
-				ParallelTransitionBuilder.create().children(
-					zoomOut.node(curNode).build(),
-					zoomOut.node(newNode).build()
-				).build(),
-				ParallelTransitionBuilder.create().children(
-					slide.node(curNode).build(),
-					slide.node(newNode).build()
-				).build(),
-				ParallelTransitionBuilder.create().children(
-					zoomIn.node(curNode).build(),
-					zoomIn.node(newNode).build()
-				).build()
-			)
-			.build();
-			
+
+		return new SequentialTransition(
+		// zoom out
+				new ParallelTransition(zoomOut(curNode), zoomOut(newNode)),
+				// slide
+				new ParallelTransition(slide(curNode, deltaX), slide(newNode, deltaX)),
+				// zoom in
+				new ParallelTransition(zoomIn(curNode), zoomIn(newNode)));
+	}
+
+	private static TranslateTransition slide(Node n, double deltaX) {
+		TranslateTransition t = new TranslateTransition(Duration.millis(300), n);
+		t.setInterpolator(Interpolator.EASE_BOTH);
+		t.setByX(deltaX);
+		return t;
+	}
+
+	private static ScaleTransition zoomIn(Node n) {
+		ScaleTransition zoomIn = new ScaleTransition(Duration.millis(300), n);
+		zoomIn.setToX(1);
+		zoomIn.setToY(1);
+		zoomIn.setInterpolator(Interpolator.EASE_BOTH);
+		return zoomIn;
+	}
+
+	private static ScaleTransition zoomOut(Node n) {
+		ScaleTransition zoomIn = new ScaleTransition(Duration.millis(300), n);
+		zoomIn.setToX(0.7);
+		zoomIn.setToY(0.7);
+		zoomIn.setInterpolator(Interpolator.EASE_BOTH);
+		return zoomIn;
 	}
 
 	@Override
@@ -77,7 +71,7 @@ public class ZoomSlideAnimation extends CenterSwitchAnimation {
 		curNode.setTranslateX(0);
 		curNode.setScaleX(1);
 		curNode.setScaleY(1);
-		
+
 		curNode.setEffect(null);
 		newNode.setEffect(null);
 	}

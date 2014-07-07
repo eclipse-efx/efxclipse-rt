@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.animation.pagetransition.animation;
 
-
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
@@ -28,20 +27,20 @@ public class SlideAnimation extends CenterSwitchAnimation {
 	@Override
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
 		newNode.setOpacity(1);
-		
+
 		double deltaX = -curNode.getBoundsInLocal().getWidth();
 		newNode.setTranslateX(-deltaX);
-		
+
 		return new ParallelTransition(createTransition(curNode, deltaX), createTransition(newNode, deltaX));
 	}
 
 	private static TranslateTransition createTransition(Node n, double deltaX) {
-		TranslateTransition t = new TranslateTransition(Duration.millis(1000),n);
+		TranslateTransition t = new TranslateTransition(Duration.millis(1000), n);
 		t.setInterpolator(Interpolator.EASE_BOTH);
 		t.setByX(deltaX);
 		return t;
 	}
-	
+
 	@Override
 	protected void resetProperties(Node curNode, Node newNode) {
 		newNode.setTranslateX(0);

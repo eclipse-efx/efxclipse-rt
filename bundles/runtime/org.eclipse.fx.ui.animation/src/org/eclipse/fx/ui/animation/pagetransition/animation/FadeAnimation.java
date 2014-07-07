@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.animation.pagetransition.animation;
 
-
 import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 
 import javafx.animation.Animation;
@@ -26,13 +25,13 @@ public class FadeAnimation extends CenterSwitchAnimation {
 
 	@Override
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
-		FadeTransition t = new FadeTransition(Duration.millis(1000),curNode);
+		FadeTransition t = new FadeTransition(Duration.millis(1000), curNode);
 		t.setInterpolator(Interpolator.EASE_BOTH);
 		t.setFromValue(1.0);
 		t.setToValue(0.0);
 		return t;
 	}
-	
+
 	@Override
 	protected void resetProperties(Node curNode, Node newNode) {
 		curNode.setOpacity(1);
