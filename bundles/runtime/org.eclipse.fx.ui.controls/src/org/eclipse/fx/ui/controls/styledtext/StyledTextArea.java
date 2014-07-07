@@ -397,7 +397,7 @@ public class StyledTextArea extends Control {
 					newRanges[j++] = newStyles[i].length;
 				}
 			}
-			if (ranges != null) {
+			if (ranges != null && newRanges != null) {
 				int rangeCount = styleCount << 1;
 				int start = newRanges[0];
 				int modifyStart = getRangeIndex(start, -1, rangeCount), modifyEnd;
