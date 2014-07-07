@@ -161,6 +161,7 @@
         <children xsi:type="menu:DirectMenuItem" xmi:id="_HrhKkOHEEeKlH9jWGqiIew" elementId="org.eclipse.fx.testcases.e4.directmenuitem.12" label="Close perspective" iconURI="platform:/plugin/org.eclipse.fx.testcases.e4/css/images/window-close-over.png" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.ClosePerspectiveHandler"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_X6bdoC_uEeOp1Ym1-ovQ6w" elementId="org.eclipse.fx.testcases.e4.menu.8" label="Bla">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_l5SGMAWqEeSPs-6CmzeIRA" coreExpressionId="org.eclipse.fx.testcases.e4.definition1"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_ZWjdYC_uEeOp1Ym1-ovQ6w" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.11" label="CMD 0" command="_FEZr8OUcEeGP-5z69KadAQ"/>
         <children xsi:type="menu:DynamicMenuContribution" xmi:id="_euWogC_uEeOp1Ym1-ovQ6w" elementId="org.eclipse.fx.testcases.e4.dynamicmenucontribution.2" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.contributions.DMContribution"/>
       </children>
