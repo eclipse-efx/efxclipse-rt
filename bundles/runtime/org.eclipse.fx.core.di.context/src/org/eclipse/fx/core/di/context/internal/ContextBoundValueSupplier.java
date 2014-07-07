@@ -27,22 +27,26 @@ import org.eclipse.fx.core.di.ContextValue;
 @SuppressWarnings("restriction")
 public class ContextBoundValueSupplier extends ExtendedObjectSupplier {
 	
+	@SuppressWarnings("null")
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
 		ContextValue qualifier = descriptor.getQualifier(ContextValue.class);
-		Requestor r = (Requestor) requestor;
+		if( qualifier == null ) {
+			return IInjector.NOT_A_VALUE;
+		}
+		Class<?> desiredClass = getDesiredClass(descriptor.getDesiredType());
+		if( desiredClass == null ) {
+			return IInjector.NOT_A_VALUE;
+		}
+		
+		Requestor<?> r = (Requestor<?>) requestor;
 		EclipseContextBoundValue<?> c = r.getInjector().make(EclipseContextBoundValue.class, r.getPrimarySupplier());
 		c.setContextKey(qualifier.value());
-		
-		Class<?> desiredClass = getDesiredClass(descriptor.getDesiredType());
 		
 		if( desiredClass == ContextBoundValue.class) {
 			return c;
 		} else {
-			if( desiredClass != null ) {
-				return c.adaptTo(desiredClass);	
-			}
-			return IInjector.NOT_A_VALUE;
+			return c.adaptTo(desiredClass);
 		}
 	}
 

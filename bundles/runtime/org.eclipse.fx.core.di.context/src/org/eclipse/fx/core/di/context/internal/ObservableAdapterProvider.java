@@ -41,7 +41,7 @@ public class ObservableAdapterProvider implements AdapterProvider<ContextBoundVa
 		return true;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "null" })
 	@Override
 	public IObservableValue adapt(final ContextBoundValue sourceObject, Class<IObservableValue> targetType, ValueAccess... valueAccess) {
 		Realm r = null;

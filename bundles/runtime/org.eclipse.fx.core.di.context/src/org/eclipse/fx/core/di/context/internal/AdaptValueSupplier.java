@@ -28,6 +28,7 @@ import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.adapter.Adapt;
 import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Supplier working for {@link Adapt}
@@ -35,10 +36,14 @@ import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
 @SuppressWarnings("restriction")
 public class AdaptValueSupplier extends ExtendedObjectSupplier {
 	
+	@SuppressWarnings("null")
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
 		Requestor<?> r = (Requestor<?>) requestor;
 		Class<?> desiredClass = getDesiredClass(descriptor.getDesiredType());
+		if( desiredClass == null ) {
+			return IInjector.NOT_A_VALUE;
+		}
 		
 		final String key;
 		if( descriptor.hasQualifier(Named.class) ) {
@@ -72,7 +77,7 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 		return IInjector.NOT_A_VALUE;
 	}
 
-	private static Class<?> getDesiredClass(Type desiredType) {
+	private static @Nullable Class<?> getDesiredClass(Type desiredType) {
 		if (desiredType instanceof Class<?>)
 			return (Class<?>) desiredType;
 		if (desiredType instanceof ParameterizedType) {
@@ -108,6 +113,7 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 			return (O) this.context.get(key);
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		public <O> O getValue(Class<O> key) {
 			return this.context.get(key);
