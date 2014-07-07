@@ -16,40 +16,13 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import static org.eclipse.fx.ui.panes.AbstractLayoutPane.*;
 
+/**
+ * Row data constraint
+ */
 public class RowData {
-	/**
-	 * width specifies the desired width in pixels. This value is the wHint
-	 * passed into Control.computeSize(int, int, boolean) to determine the
-	 * preferred size of the control.
-	 * 
-	 * The default value is SWT.DEFAULT.
-	 * 
-	 * @see org.eclipse.swt.widgets.Control#computeSize(int, int, boolean)
-	 */
-	public IntegerProperty width = new SimpleIntegerProperty(this, "width", FX_DEFAULT);
-	/**
-	 * height specifies the preferred height in pixels. This value is the hHint
-	 * passed into Control.computeSize(int, int, boolean) to determine the
-	 * preferred size of the control.
-	 * 
-	 * The default value is SWT.DEFAULT.
-	 * 
-	 * @see org.eclipse.swt.widgets.Control#computeSize(int, int, boolean)
-	 */
-	public IntegerProperty height = new SimpleIntegerProperty(this, "height", FX_DEFAULT);
-
-	/**
-	 * exclude informs the layout to ignore this control when sizing and
-	 * positioning controls. If this value is <code>true</code>, the size and
-	 * position of the control will not be managed by the layout. If this value
-	 * is <code>false</code>, the size and position of the control will be
-	 * computed and assigned.
-	 * 
-	 * The default value is <code>false</code>.
-	 * 
-	 * @since 3.1
-	 */
-	public BooleanProperty exclude = new SimpleBooleanProperty(this, "exclude", false);
+	private IntegerProperty width = new SimpleIntegerProperty(this, "width", FX_DEFAULT); //$NON-NLS-1$
+	private IntegerProperty height = new SimpleIntegerProperty(this, "height", FX_DEFAULT); //$NON-NLS-1$
+	private BooleanProperty exclude = new SimpleBooleanProperty(this, "exclude", false); //$NON-NLS-1$
 
 	/**
 	 * Constructs a new instance of RowData using default values.
@@ -59,8 +32,8 @@ public class RowData {
 
 	/**
 	 * Constructs a new instance of RowData according to the parameters. A value
-	 * of SWT.DEFAULT indicates that no minimum width or no minimum height is
-	 * specified.
+	 * of {@link AbstractLayoutPane#FX_DEFAULT} indicates that no minimum width
+	 * or no minimum height is specified.
 	 * 
 	 * @param width
 	 *            a minimum width for the control
@@ -80,43 +53,77 @@ public class RowData {
 		return string.substring(index + 1, string.length());
 	}
 
-	// ----
+	/**
+	 * Exclude the element from layouting
+	 * 
+	 * @param value
+	 *            <code>true</code> to exclude
+	 */
 	public void setExclude(boolean value) {
-		exclude.set(value);
+		excludeProperty().set(value);
 	}
 
+	/**
+	 * @return <code>true</code> when excluded
+	 */
 	public boolean isExclude() {
-		return exclude.get();
+		return excludeProperty().get();
 	}
 
+	/**
+	 * @return the exclude property
+	 */
 	public BooleanProperty excludeProperty() {
-		return exclude;
+		return this.exclude;
 	}
 
-	// ----
+	/**
+	 * Set the height to use
+	 * 
+	 * @param value
+	 *            the new height or {@link AbstractLayoutPane#FX_DEFAULT} for
+	 *            the default
+	 */
 	public void setHeight(int value) {
-		height.set(value);
+		heightProperty().set(value);
 	}
 
+	/**
+	 * @return the current height
+	 */
 	public int getHeight() {
-		return height.get();
+		return heightProperty().get();
 	}
 
+	/**
+	 * @return the height property
+	 */
 	public IntegerProperty heightProperty() {
-		return height;
+		return this.height;
 	}
 
-	// ----
+	/**
+	 * Set a new width
+	 * 
+	 * @param value
+	 *            the new width or {@link AbstractLayoutPane#FX_DEFAULT}
+	 */
 	public void setWidth(int value) {
-		width.set(value);
+		widthProperty().set(value);
 	}
 
+	/**
+	 * @return the current width
+	 */
 	public int getWidth() {
-		return width.get();
+		return widthProperty().get();
 	}
 
+	/**
+	 * @return the width property
+	 */
 	public IntegerProperty widthProperty() {
-		return width;
+		return this.width;
 	}
 
 	/**
@@ -125,16 +132,17 @@ public class RowData {
 	 * 
 	 * @return a string representation of the RowData object
 	 */
+	@Override
 	public String toString() {
-		String string = getName() + " {";
-		if (width.get() != FX_DEFAULT)
-			string += "width=" + width + " ";
-		if (height.get() != FX_DEFAULT)
-			string += "height=" + height + " ";
-		if (exclude.get())
-			string += "exclude=" + exclude + " ";
+		String string = getName() + " {"; //$NON-NLS-1$
+		if (getWidth() != FX_DEFAULT)
+			string += "width=" + getWidth() + " "; //$NON-NLS-1$ //$NON-NLS-2$
+		if (getHeight() != FX_DEFAULT)
+			string += "height=" + getHeight() + " "; //$NON-NLS-1$ //$NON-NLS-2$
+		if (isExclude())
+			string += "exclude=" + isExclude() + " "; //$NON-NLS-1$ //$NON-NLS-2$
 		string = string.trim();
-		string += "}";
+		string += "}"; //$NON-NLS-1$
 		return string;
 	}
 }
