@@ -315,6 +315,22 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			layoutVertical(true, isWrap(), clientArea.getHeight(), true);
 		}
 	}
+	
+	private int getInnerMarginLeft() {
+		return (int) Math.ceil(getMarginWidth() + getMarginLeft() + getPadding().getLeft());
+	}
+
+	private int getInnerMarginRight() {
+		return (int) Math.ceil(getMarginWidth() + getMarginRight() + getPadding().getRight());
+	}
+
+	private int getInnerMarginTop() {
+		return (int) Math.ceil(getMarginHeight() + getMarginTop() + getPadding().getTop());
+	}
+
+	private int getInnerMarginBottom() {
+		return (int) Math.ceil(getMarginHeight() + getMarginBottom() + getPadding().getBottom());
+	}
 
 	Size layoutHorizontal(boolean move, boolean wrap, double width, boolean flushCache) {
 		@SuppressWarnings("null")
@@ -329,7 +345,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			}
 		}
 		if (count == 0) {
-			return new Size(getMarginLeft() + getMarginWidth() * 2 + getMarginRight(), getMarginTop() + getMarginHeight() * 2 + getMarginBottom());
+			return new Size(getInnerMarginLeft() + getInnerMarginRight(), getInnerMarginTop() + getInnerMarginBottom());
 		}
 		double childWidth = 0, childHeight = 0, maxHeight = 0;
 		if (!isPack()) {
@@ -354,7 +370,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			bounds = new Bounds[count];
 			wraps = new double[count];
 		}
-		double maxX = 0, x = getMarginLeft() + getMarginWidth(), y = getMarginTop() + getMarginHeight();
+		double maxX = 0, x = getInnerMarginLeft(), y = getInnerMarginTop();
 		for (int i = 0; i < count; i++) {
 			Node child = children[i];
 			if (isPack()) {
@@ -370,7 +386,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 					}
 				}
 
-				x = getMarginLeft() + getMarginWidth();
+				x = getInnerMarginLeft();
 				y += getSpacing() + maxHeight;
 				if (isPack())
 					maxHeight = 0;
@@ -391,9 +407,9 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			x += getSpacing() + childWidth;
 			maxX = Math.max(maxX, x);
 		}
-		maxX = Math.max(clientX + getMarginLeft() + getMarginWidth(), maxX - getSpacing());
+		maxX = Math.max(clientX + getInnerMarginLeft(), maxX - getSpacing());
 		if (!wrapped)
-			maxX += getMarginRight() + getMarginWidth();
+			maxX += getInnerMarginRight();
 		if (move && (isJustify() || isFill() || isCenter())) {
 			double space = 0, margin = 0;
 			if (!wrapped) {
@@ -468,7 +484,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 				}
 			}
 		}
-		return new Size(maxX, y + maxHeight + getMarginBottom() + getMarginHeight());
+		return new Size(maxX, y + maxHeight + getInnerMarginBottom());
 	}
 
 	Size layoutVertical(boolean move, boolean wrap, double height, boolean flushCache) {
@@ -484,7 +500,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			}
 		}
 		if (count == 0) {
-			return new Size(getMarginLeft() + getMarginWidth() * 2 + getMarginRight(), getMarginTop() + getMarginHeight() * 2 + getMarginBottom());
+			return new Size(getInnerMarginLeft() + getInnerMarginRight(), getInnerMarginTop() + getInnerMarginBottom());
 		}
 		double childWidth = 0, childHeight = 0, maxWidth = 0;
 		if (!isPack()) {
@@ -509,7 +525,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			bounds = new Bounds[count];
 			wraps = new double[count];
 		}
-		double maxY = 0, x = getMarginLeft() + getMarginWidth(), y = getMarginTop() + getMarginHeight();
+		double maxY = 0, x = getInnerMarginLeft(), y = getInnerMarginBottom();
 		for (int i = 0; i < count; i++) {
 			Node child = children[i];
 			if (isPack()) {
@@ -526,7 +542,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 				}
 
 				x += getSpacing() + maxWidth;
-				y = getMarginTop() + getMarginHeight();
+				y = getInnerMarginTop();
 				if (isPack())
 					maxWidth = 0;
 			}
@@ -546,9 +562,9 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			y += getSpacing() + childHeight;
 			maxY = Math.max(maxY, y);
 		}
-		maxY = Math.max(clientY + getMarginTop() + getMarginHeight(), maxY - getSpacing());
+		maxY = Math.max(clientY + getInnerMarginTop(), maxY - getSpacing());
 		if (!wrapped)
-			maxY += getMarginBottom() + getMarginHeight();
+			maxY += getInnerMarginBottom();
 		if (move && (isJustify() || isFill() || isCenter())) {
 			double space = 0, margin = 0;
 			if (!wrapped) {
@@ -623,7 +639,7 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 				}
 			}
 		}
-		return new Size(x + maxWidth + getMarginRight() + getMarginWidth(), maxY);
+		return new Size(x + maxWidth + getInnerMarginRight(), maxY);
 	}
 
 	private static Bounds changeX(Bounds original, double amount) {
