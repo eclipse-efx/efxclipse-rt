@@ -36,5 +36,17 @@
             id="default.theme">
       </theme>
    </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="org.eclipse.fx.testcases.e4.definition1">
+         <with
+               variable="test_2">
+            <equals
+                  value="1">
+            </equals>
+         </with>
+      </definition>
+   </extension>
 
 </plugin>

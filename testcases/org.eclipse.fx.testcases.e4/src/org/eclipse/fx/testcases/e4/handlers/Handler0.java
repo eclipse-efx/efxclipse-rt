@@ -22,7 +22,7 @@ public class Handler0 {
 		if( v == null ) {
 			v = Integer.valueOf(0);
 		} else {
-			v = Integer.valueOf(v.intValue()+1);
+			v = Integer.valueOf((v.intValue()+1) % 2);
 		}
 		application.getContext().get(ScopedObjectFactory.class).put("test", v);
 //		application.getContext().set("test", v);

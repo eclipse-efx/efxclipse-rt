@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_A7QWkOL-EeGP-5z69KadAQ" elementId="org.eclipse.e4.ide.application" bindingContexts="_A7QWkeL-EeGP-5z69KadAQ">
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_A7QWkOL-EeGP-5z69KadAQ" elementId="org.eclipse.e4.ide.application" bindingContexts="_A7QWkeL-EeGP-5z69KadAQ">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_A7QWoOL-EeGP-5z69KadAQ" label="org.eclipse.fx.testcases.e4" x="0" y="0" width="1024" height="800">
     <persistedState key="fx.stage.decoration" value="platform:/plugin/org.eclipse.fx.testcases.e4/org/eclipse/fx/testcases/e4/decoration/TopArea.fxml"/>
     <persistedState key="efx.window.fullscreen" value="false"/>
@@ -110,6 +110,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_pBaAsORqEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.2" label="Radio - HI 2" type="Radio" command="_FEZr8OUcEeGP-5z69KadAQ"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_rnWvQORqEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.3" label="Radio - HI 3" type="Radio" command="_FEZr8OUcEeGP-5z69KadAQ"/>
         <children xsi:type="menu:Menu" xmi:id="_yWJigORqEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.menu.2" label="M1-1">
+          <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_xmWmwAWpEeSPs-6CmzeIRA" coreExpressionId="org.eclipse.fx.testcases.e4.definition1"/>
           <children xsi:type="menu:DirectMenuItem" xmi:id="_1-PqkORqEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.directmenuitem.0" label="Push - DI 0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
           <children xsi:type="menu:DirectMenuItem" xmi:id="_4k8nEORqEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.directmenuitem.1" label="Check - DI 1" type="Check" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
           <children xsi:type="menu:DirectMenuItem" xmi:id="_7Pm2gORqEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.directmenuitem.2" label="Radio - DI 2" type="Radio" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
@@ -127,6 +128,12 @@
         </children>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_PeGl8E4IEeORU9_aphRSog" elementId="org.eclipse.fx.testcases.e4.directmenuitem.hideshow" visible="false" label="Hide/Show Test"/>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_hyZusGgdEeOUgLXBh1syGQ" elementId="org.eclipse.fx.testcases.e4.directmenuitem.14" label="Open Dialog" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DialogTest"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_wC1D0Py8EeO-UZpK2iB2xg" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.12" label="Empty Expression Item">
+          <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_6UdzUANtEeS-UZpK2iB2xg"/>
+        </children>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="__QfhEANwEeS-UZpK2iB2xg" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.13" label="Sample Expression">
+          <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_A09kgANxEeS-UZpK2iB2xg" coreExpressionId="org.eclipse.fx.testcases.e4.definition1"/>
+        </children>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_d-oDwO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.menu.3" label="Switch">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_jYdPMO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.4" label="Perspective 0" command="_kCbZQO6yEeG4lfn-YKJbJw">

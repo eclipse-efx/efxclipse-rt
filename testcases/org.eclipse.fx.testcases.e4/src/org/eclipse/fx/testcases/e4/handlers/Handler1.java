@@ -15,7 +15,7 @@ public class Handler1 {
 		if( v == null ) {
 			v = Integer.valueOf(0);
 		} else {
-			v = Integer.valueOf(v.intValue()+1);
+			v = Integer.valueOf((v.intValue()+1)%2);
 		}
 		application.getContext().set("test_2", v);
 		broker.send(UIEvents.REQUEST_ENABLEMENT_UPDATE_TOPIC, UIEvents.ALL_ELEMENT_ID);
