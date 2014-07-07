@@ -23,6 +23,7 @@ import org.osgi.service.prefs.BackingStoreException;
 /**
  * Extended service for internal purposes
  */
+@SuppressWarnings("restriction")
 @Creatable
 public class RestartPreferenceUtil {
 
@@ -30,7 +31,7 @@ public class RestartPreferenceUtil {
 
 	@Inject
 	@Preference
-	protected IEclipsePreferences node;
+	private IEclipsePreferences node;
 
 	@Inject
 	@Optional
