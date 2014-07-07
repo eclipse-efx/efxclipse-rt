@@ -10,11 +10,16 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.panes;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.css.CssMetaData;
 import javafx.css.SimpleStyleableBooleanProperty;
 import javafx.css.SimpleStyleableIntegerProperty;
+import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -213,6 +218,36 @@ public class RowLayoutPane extends AbstractLayoutPane<RowData> {
 			return (StyleableProperty<Boolean>) node.horizontalProperty();
 		}
 	};
+	
+	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
+
+	static {
+		@SuppressWarnings("static-access")
+		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(AbstractLayoutPane.getClassCssMetaData());
+		styleables.add(CENTER);
+		styleables.add(FILL);
+		styleables.add(HORIZONTAL);
+		styleables.add(JUSTIFY);
+		styleables.add(MARGIN_BOTTOM);
+		styleables.add(MARGIN_HEIGHT);
+		styleables.add(MARGIN_LEFT);
+		styleables.add(MARGIN_RIGHT);
+		styleables.add(MARGIN_TOP);
+		styleables.add(PACK);
+		styleables.add(SPACING);
+		styleables.add(WRAP);
+		
+		STYLEABLES = Collections.unmodifiableList(styleables);
+	}
+
+	public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+		return STYLEABLES;
+	}
+	
+	@Override
+	public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
+		return getClassCssMetaData();
+	}
 
 	@NonNull
 	private final IntegerProperty marginWidth = new SimpleStyleableIntegerProperty(MARGIN_WIDTH, this, "marginWidth", Integer.valueOf(0)); //$NON-NLS-1$
