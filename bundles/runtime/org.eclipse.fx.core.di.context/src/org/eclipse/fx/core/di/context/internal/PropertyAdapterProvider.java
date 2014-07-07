@@ -57,6 +57,10 @@ public class PropertyAdapterProvider implements AdapterProvider<ContextBoundValu
 
 			@Override
 			public void call(Object value) {
+				if (rv.get() == null && value == null)
+					return;
+				if (rv.get() != null && rv.get().equals(value))
+					return;
 				rv.set(value);
 			}
 		});
