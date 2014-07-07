@@ -53,9 +53,9 @@ public class E4Application extends AbstractE4Application {
 
 	static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(E4Application.class);
 
-	private E4Workbench workbench;
-	private Location instanceLocation;
-	private IEclipseContext workbenchContext;
+	E4Workbench workbench;
+	Location instanceLocation;
+	IEclipseContext workbenchContext;
 	
 	private static final String EXIT_CODE = "e4.osgi.exit.code"; //$NON-NLS-1$
 	private static final String PRIMARY_STAGE_KEY = "primaryStage"; //$NON-NLS-1$
@@ -295,6 +295,7 @@ public class E4Application extends AbstractE4Application {
 		sendEvent(Constants.APPLICATION_LAUNCHED, map);
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	protected UISynchronize createSynchronizer(IEclipseContext appContext) {
 		return ContextInjectionFactory.make(UISynchronizeImpl.class, appContext);
