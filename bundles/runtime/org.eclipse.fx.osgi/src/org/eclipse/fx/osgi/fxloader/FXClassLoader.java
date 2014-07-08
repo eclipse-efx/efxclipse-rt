@@ -383,16 +383,7 @@ public class FXClassLoader extends ClassLoaderHook {
 					}
 					return this.lastResortLoader.loadClass(name);
 				} catch (ClassNotFoundException tmp) {
-					throw c;
-				}
-			} catch (NoClassDefFoundError c) {
-				try {
-					if (FXClassloaderConfigurator.DEBUG) {
-						System.err.println("FXClassLoader.SWTFXClassloader#findClass - NoClassDefFoundError thrown");
-						System.err.println("FXClassLoader.SWTFXClassloader#findClass - Loading " + name + " with last resort");
-					}
-					return this.lastResortLoader.loadClass(name);
-				} catch (ClassNotFoundException tmp) {
+					System.err.println("FXClassLoader.SWTFXClassloader#findClass - Even last resort was unable to load " + name);
 					throw c;
 				}
 			}
