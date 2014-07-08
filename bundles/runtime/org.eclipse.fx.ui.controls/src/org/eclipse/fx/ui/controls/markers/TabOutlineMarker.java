@@ -16,8 +16,8 @@ import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.css.CssMetaData;
+import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.Styleable;
-import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleableProperty;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -27,19 +27,51 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.StrokeType;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.sun.javafx.css.converters.PaintConverter;
 
+/**
+ * Marks a Tab-Position
+ */
+@SuppressWarnings("restriction")
 public class TabOutlineMarker extends Group {
+	@NonNull
 	private Bounds containerBounds;
+	@NonNull
 	private Bounds referenceBounds;
 	private boolean before;
 
-	public TabOutlineMarker(Bounds containerBounds, Bounds referenceBounds, boolean before) {
+	/**
+	 * Create a new tab outline
+	 * 
+	 * @param containerBounds
+	 *            the bounds of the container
+	 * @param referenceBounds
+	 *            the bounds of the reference tab
+	 * @param before
+	 *            <code>true</code> to mark the insert point before reference
+	 *            bounds
+	 */
+	public TabOutlineMarker(@NonNull Bounds containerBounds, @NonNull Bounds referenceBounds, boolean before) {
+		this.containerBounds = containerBounds;
+		this.referenceBounds = referenceBounds;
 		updateBounds(containerBounds, referenceBounds, before);
-		getStyleClass().add("tab-outline-marker");
+		getStyleClass().add("tab-outline-marker"); //$NON-NLS-1$
 	}
 
-	public void updateBounds(Bounds containerBounds, Bounds referenceBounds, boolean before) {
+	/**
+	 * Update the tab outline
+	 * 
+	 * @param containerBounds
+	 *            the bounds of the container
+	 * @param referenceBounds
+	 *            the bounds of the reference tab
+	 * @param before
+	 *            <code>true</code> to mark the insert point before reference
+	 *            bounds
+	 */
+	public void updateBounds(@NonNull Bounds containerBounds, @NonNull Bounds referenceBounds, boolean before) {
 		if (containerBounds.equals(this.containerBounds) && referenceBounds.equals(this.referenceBounds) && before == this.before) {
 			return;
 		}
@@ -50,98 +82,130 @@ public class TabOutlineMarker extends Group {
 
 		Polyline pl = new Polyline();
 
+		Bounds _referenceBounds = referenceBounds;
+
 		if (before) {
-			referenceBounds = new BoundingBox(Math.max(0, referenceBounds.getMinX() - referenceBounds.getWidth() / 2), referenceBounds.getMinY(), referenceBounds.getWidth(), referenceBounds.getHeight());
+			_referenceBounds = new BoundingBox(Math.max(0, _referenceBounds.getMinX() - _referenceBounds.getWidth() / 2), _referenceBounds.getMinY(), _referenceBounds.getWidth(), _referenceBounds.getHeight());
 		} else {
-			referenceBounds = new BoundingBox(Math.max(0, referenceBounds.getMaxX() - referenceBounds.getWidth() / 2), referenceBounds.getMinY(), referenceBounds.getWidth(), referenceBounds.getHeight());
+			_referenceBounds = new BoundingBox(Math.max(0, _referenceBounds.getMaxX() - _referenceBounds.getWidth() / 2), _referenceBounds.getMinY(), _referenceBounds.getWidth(), _referenceBounds.getHeight());
 		}
 
 		pl.getPoints().addAll(
-				// -----------------
-				// top
-				// -----------------
-				// start
-				0.0, referenceBounds.getMaxY(),
+		// -----------------
+		// top
+		// -----------------
+		// start
+				Double.valueOf(0.0), Double.valueOf(_referenceBounds.getMaxY()),
 
 				// tab start
-				referenceBounds.getMinX(), referenceBounds.getMaxY(),
+				Double.valueOf(_referenceBounds.getMinX()), Double.valueOf(_referenceBounds.getMaxY()),
 
 				// // tab start top
-				referenceBounds.getMinX(), referenceBounds.getMinY(),
+				Double.valueOf(_referenceBounds.getMinX()), Double.valueOf(_referenceBounds.getMinY()),
 
 				// tab end right
-				referenceBounds.getMaxX(), referenceBounds.getMinY(),
+				Double.valueOf(_referenceBounds.getMaxX()), Double.valueOf(_referenceBounds.getMinY()),
 
 				// tab end bottom
-				referenceBounds.getMaxX(), referenceBounds.getMaxY(),
+				Double.valueOf(_referenceBounds.getMaxX()), Double.valueOf(_referenceBounds.getMaxY()),
 
 				// end
-				containerBounds.getMaxX(), referenceBounds.getMaxY(),
+				Double.valueOf(containerBounds.getMaxX()), Double.valueOf(_referenceBounds.getMaxY()),
 
 				// -----------------
 				// right
 				// -----------------
-				containerBounds.getMaxX(), containerBounds.getMaxY(),
+				Double.valueOf(containerBounds.getMaxX()), Double.valueOf(containerBounds.getMaxY()),
 
 				// -----------------
 				// bottom
 				// -----------------
-				containerBounds.getMinX(), containerBounds.getMaxY(),
+				Double.valueOf(containerBounds.getMinX()), Double.valueOf(containerBounds.getMaxY()),
 
 				// -----------------
 				// left
 				// -----------------
-				containerBounds.getMinX(), referenceBounds.getMaxY());
+				Double.valueOf(containerBounds.getMinX()), Double.valueOf(_referenceBounds.getMaxY()));
 		pl.strokeProperty().bind(fillProperty());
 		pl.setStrokeWidth(3);
 		pl.setStrokeType(StrokeType.INSIDE);
 		getChildren().setAll(pl);
 	}
 
-	private ObjectProperty<Paint> fill;
+	@SuppressWarnings("null")
+	@NonNull
+	private final ObjectProperty<@NonNull Paint> fill = new SimpleStyleableObjectProperty<>(FILL, this, "fill", Color.ORANGE); //$NON-NLS-1$
 
-	public ObjectProperty<Paint> fillProperty() {
-		if (fill == null) {
-			fill = new StyleableObjectProperty<Paint>(Color.ORANGE) {
-
-				@Override
-				public CssMetaData<? extends Styleable, Paint> getCssMetaData() {
-					return FILL;
-				}
-
-				@Override
-				public Object getBean() {
-					return TabOutlineMarker.this;
-				}
-
-				@Override
-				public String getName() {
-					return "fill";
-				}
-
-			};
-		}
-		return fill;
+	/**
+	 * The fill property
+	 * <p>
+	 * <table>
+	 * <tr>
+	 * <td>The default value is {@link Color#ORANGE}</td>
+	 * <td><div style=
+	 * "background-color: orange; border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
+	 * ></div></td>
+	 * </tr>
+	 * </table>
+	 * </p>
+	 * 
+	 * @return the property
+	 */
+	public @NonNull ObjectProperty<@NonNull Paint> fillProperty() {
+		return this.fill;
 	}
 
-	public void setFill(Paint fill) {
+	/**
+	 * Set a new fill
+	 * <p>
+	 * <table>
+	 * <tr>
+	 * <td>The default value is {@link Color#ORANGE}</td>
+	 * <td><div style=
+	 * "background-color: orange; border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
+	 * ></div></td>
+	 * </tr>
+	 * </table>
+	 * </p>
+	 * 
+	 * @param fill
+	 *            the fill
+	 */
+	public void setFill(@NonNull Paint fill) {
 		fillProperty().set(fill);
 	}
 
-	public Paint getFill() {
+	/**
+	 * Get the current fill
+	 * <p>
+	 * <table>
+	 * <tr>
+	 * <td>The default value is {@link Color#ORANGE}</td>
+	 * <td><div style=
+	 * "background-color: orange; border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
+	 * ></div></td>
+	 * </tr>
+	 * </table>
+	 * </p>
+	 * 
+	 * @return the current fill
+	 */
+	public @NonNull Paint getFill() {
 		return fillProperty().get();
 	}
 
-	private static final CssMetaData<TabOutlineMarker, Paint> FILL = new CssMetaData<TabOutlineMarker, Paint>("-fx-fill", PaintConverter.getInstance(), Color.rgb(0, 139, 255)) {
+	@SuppressWarnings("null")
+	private static final CssMetaData<TabOutlineMarker, @NonNull Paint> FILL = new CssMetaData<TabOutlineMarker, @NonNull Paint>("-fx-fill", PaintConverter.getInstance(), Color.ORANGE) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(TabOutlineMarker node) {
-			return node.fill == null || !node.fill.isBound();
+			return !node.fillProperty().isBound();
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
-		public StyleableProperty<Paint> getStyleableProperty(TabOutlineMarker node) {
-			return (StyleableProperty<Paint>) node.fillProperty();
+		public StyleableProperty<@NonNull Paint> getStyleableProperty(TabOutlineMarker node) {
+			return (StyleableProperty<@NonNull Paint>) node.fillProperty();
 		}
 
 	};
@@ -149,6 +213,7 @@ public class TabOutlineMarker extends Group {
 	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
 
 	static {
+		@SuppressWarnings("static-access")
 		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(Group.getClassCssMetaData());
 		styleables.add(FILL);
 		STYLEABLES = Collections.unmodifiableList(styleables);
