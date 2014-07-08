@@ -83,8 +83,9 @@ public class PositionMarker extends Group {
 		setEffect(new DropShadow(3, Color.BLACK));
 	}
 
+	@SuppressWarnings("null")
 	@NonNull
-	private final ObjectProperty<Paint> fill = new SimpleStyleableObjectProperty<Paint>(FILL, this, "fill", Color.rgb(0, 139, 255)); //$NON-NLS-1$
+	private final ObjectProperty<@NonNull Paint> fill = new SimpleStyleableObjectProperty<>(FILL, this, "fill", Color.rgb(0, 139, 255)); //$NON-NLS-1$
 
 	/**
 	 * The property
@@ -101,7 +102,7 @@ public class PositionMarker extends Group {
 	 * 
 	 * @return the fill property of the marker
 	 */
-	public @NonNull ObjectProperty<Paint> fillProperty() {
+	public @NonNull ObjectProperty<@NonNull Paint> fillProperty() {
 		return this.fill;
 	}
 
@@ -140,11 +141,12 @@ public class PositionMarker extends Group {
 	 * 
 	 * @return the current fill
 	 */
-	public Paint getFill() {
+	public @NonNull Paint getFill() {
 		return fillProperty().get();
 	}
 
-	private static final CssMetaData<PositionMarker, Paint> FILL = new CssMetaData<PositionMarker, Paint>("-fx-fill", PaintConverter.getInstance(), Color.rgb(0, 139, 255)) { //$NON-NLS-1$
+	@SuppressWarnings("null")
+	private static final CssMetaData<PositionMarker, @NonNull Paint> FILL = new CssMetaData<PositionMarker, @NonNull Paint>("-fx-fill", PaintConverter.getInstance(), Color.rgb(0, 139, 255)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(PositionMarker node) {
@@ -153,8 +155,8 @@ public class PositionMarker extends Group {
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public StyleableProperty<Paint> getStyleableProperty(PositionMarker node) {
-			return (StyleableProperty<Paint>) node.fillProperty();
+		public StyleableProperty<@NonNull Paint> getStyleableProperty(PositionMarker node) {
+			return (StyleableProperty<@NonNull Paint>) node.fillProperty();
 		}
 
 	};
