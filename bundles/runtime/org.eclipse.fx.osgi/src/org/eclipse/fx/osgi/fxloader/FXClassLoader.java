@@ -362,14 +362,35 @@ public class FXClassLoader extends ClassLoaderHook {
 				ClassLoader primaryLoader) {
 			this.lastResortLoader = lastResortLoader;
 			this.primaryLoader = primaryLoader;
+			if (FXClassloaderConfigurator.DEBUG) {
+				System.err.println("FXClassLoader.SWTFXClassloader#init - Primary Loader " + primaryLoader);
+				System.err.println("FXClassLoader.SWTFXClassloader#init - Lastresort Loader " + lastResortLoader);
+			}
 		}
 
 		@Override
 		protected Class<?> findClass(String name) throws ClassNotFoundException {
 			try {
+				if (FXClassloaderConfigurator.DEBUG) {
+					System.err.println("FXClassLoader.SWTFXClassloader#findClass - Loading " + name + " with primary");
+				}
 				return this.primaryLoader.loadClass(name);
 			} catch (ClassNotFoundException c) {
 				try {
+					if (FXClassloaderConfigurator.DEBUG) {
+						System.err.println("FXClassLoader.SWTFXClassloader#findClass - ClassNotFoundException thrown");
+						System.err.println("FXClassLoader.SWTFXClassloader#findClass - Loading " + name + " with last resort");
+					}
+					return this.lastResortLoader.loadClass(name);
+				} catch (ClassNotFoundException tmp) {
+					throw c;
+				}
+			} catch (NoClassDefFoundError c) {
+				try {
+					if (FXClassloaderConfigurator.DEBUG) {
+						System.err.println("FXClassLoader.SWTFXClassloader#findClass - NoClassDefFoundError thrown");
+						System.err.println("FXClassLoader.SWTFXClassloader#findClass - Loading " + name + " with last resort");
+					}
 					return this.lastResortLoader.loadClass(name);
 				} catch (ClassNotFoundException tmp) {
 					throw c;
