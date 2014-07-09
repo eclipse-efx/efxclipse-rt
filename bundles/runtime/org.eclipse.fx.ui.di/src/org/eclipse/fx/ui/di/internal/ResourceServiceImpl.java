@@ -168,6 +168,7 @@ public class ResourceServiceImpl implements ResourceService {
 		throw new IOException("No provider known for '" + key + "'."); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
+	@SuppressWarnings("null")
 	private ResourceProviderService lookupOSGI(String key) {
 		try {
 			Collection<ServiceReference<ResourceProviderService>> refs = this.context
