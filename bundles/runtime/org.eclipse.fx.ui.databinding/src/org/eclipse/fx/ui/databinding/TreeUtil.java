@@ -81,10 +81,11 @@ public class TreeUtil {
 //			return super.getChildren().isEmpty();
 //		}
 
+		@SuppressWarnings("null")
 		private void loadChildren() {
 			this.hasLoadedChildren = true;
 			if (this.list != null) {
-				final ObservableList<TreeItem<T>> itemList = getChildren();
+				final ObservableList<@NonNull TreeItem<@NonNull T>> itemList = getChildren();
 				this.list.addListChangeListener(new IListChangeListener() {
 
 					@Override
@@ -110,14 +111,14 @@ public class TreeUtil {
 								}
 							}
 
-							@SuppressWarnings("unchecked")
+							@SuppressWarnings({ "unchecked" })
 							@Override
 							public void handleAdd(int index, Object element) {
 								if (itemList.size() > index) {
-									itemList.add(index, new TreeItemImpl<T>(
+									itemList.add(index, new TreeItemImpl<@NonNull T>(
 											(T) element, TreeItemImpl.this.factory));
 								} else {
-									itemList.add(new TreeItemImpl<T>(
+									itemList.add(new TreeItemImpl<@NonNull T>(
 											(T) element, TreeItemImpl.this.factory));
 								}
 							}
@@ -127,7 +128,7 @@ public class TreeUtil {
 				for (Object o : this.list) {
 					@SuppressWarnings("unchecked")
 					T t = (T) o;
-					itemList.add(new TreeItemImpl<T>(t, this.factory));
+					itemList.add(new TreeItemImpl<@NonNull T>(t, this.factory));
 				}
 			}
 		}
