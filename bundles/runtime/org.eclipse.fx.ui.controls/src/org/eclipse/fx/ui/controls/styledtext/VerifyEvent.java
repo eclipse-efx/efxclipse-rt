@@ -1,13 +1,13 @@
 /*******************************************************************************
-* Copyright (c) 2014 BestSolution.at and others.
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-* 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
-*******************************************************************************/
+ * Copyright (c) 2014 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext;
 
 import javafx.event.EventTarget;
@@ -16,9 +16,14 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * Key event sent
+ */
 public class VerifyEvent extends InputEvent {
-	 public static final EventType<VerifyEvent> VERIFY =
-	            new EventType<VerifyEvent>(InputEvent.ANY, "VERIFY");
+	/**
+	 * the event type
+	 */
+	public static final EventType<VerifyEvent> VERIFY = new EventType<VerifyEvent>(InputEvent.ANY, "VERIFY"); //$NON-NLS-1$
 	/**
 	 * 
 	 */
@@ -29,46 +34,77 @@ public class VerifyEvent extends InputEvent {
 	private boolean shiftDown;
 	private boolean controlDown;
 	private boolean altDown;
-	private boolean metaDown; 
-	
+	private boolean metaDown;
+
+	/**
+	 * The event
+	 * 
+	 * @param source
+	 *            the source
+	 * @param target
+	 *            the target
+	 * @param event
+	 *            the key
+	 */
 	public VerifyEvent(Object source, EventTarget target, KeyEvent event) {
-		super(source,target,VERIFY);
+		super(source, target, VERIFY);
 		boolean isKeyTyped = event.getEventType() == KeyEvent.KEY_TYPED;
-		
+
 		this.character = isKeyTyped ? event.getCharacter() : KeyEvent.CHAR_UNDEFINED;
-        this.text = isKeyTyped ? "" : event.getText();
-        this.code = isKeyTyped ? KeyCode.UNDEFINED : event.getCode();
-        this.shiftDown = event.isShiftDown();
-        this.controlDown = event.isControlDown();
-        this.altDown = event.isAltDown();
-        this.metaDown = event.isMetaDown();
+		this.text = isKeyTyped ? "" : event.getText(); //$NON-NLS-1$
+		this.code = isKeyTyped ? KeyCode.UNDEFINED : event.getCode();
+		this.shiftDown = event.isShiftDown();
+		this.controlDown = event.isControlDown();
+		this.altDown = event.isAltDown();
+		this.metaDown = event.isMetaDown();
 	}
 
+	/**
+	 * @return the character
+	 */
 	public String getCharacter() {
-		return character;
+		return this.character;
 	}
-	
+
+	/**
+	 * @return the text
+	 */
 	public String getText() {
-		return text;
+		return this.text;
 	}
-	
+
+	/**
+	 * @return the key code
+	 */
 	public KeyCode getCode() {
-		return code;
+		return this.code;
 	}
-	
+
+	/**
+	 * @return <code>true</code> when shift key is down
+	 */
 	public boolean isShiftDown() {
-		return shiftDown;
+		return this.shiftDown;
 	}
 	
+	/**
+	 * @return <code>true</code> when control key is down
+	 */
 	public boolean isControlDown() {
-		return controlDown;
+		return this.controlDown;
 	}
 	
+	/**
+	 * @return <code>true</code> when alt key is down
+	 */
 	public boolean isAltDown() {
-		return altDown;
+		return this.altDown;
 	}
-	
+
+	/**
+	 * @return <code>true</code> when meta key is down
+	 */
 	public boolean isMetaDown() {
-		return metaDown;
+		return this.metaDown;
 	}
 }
