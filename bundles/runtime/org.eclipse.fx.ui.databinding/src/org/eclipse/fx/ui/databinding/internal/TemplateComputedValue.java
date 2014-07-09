@@ -11,6 +11,9 @@
 package org.eclipse.fx.ui.databinding.internal;
 
 import java.text.MessageFormat;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.databinding.observable.value.ComputedValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -22,7 +25,7 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public final class TemplateComputedValue extends ComputedValue {
 	@NonNull
-	private IObservableValue[] values;
+	private List<@NonNull IObservableValue> values;
 	@NonNull
 	private String template;
 
@@ -39,26 +42,18 @@ public final class TemplateComputedValue extends ComputedValue {
 	@SuppressWarnings("null")
 	public TemplateComputedValue(@NonNull Object o, @NonNull String template, @NonNull IValueProperty[] properties) {
 		this.template = template;
-		this.values = new IObservableValue[properties.length];
-		for (int i = 0; i < this.values.length; i++) {
-			this.values[i] = properties[i].observe(o);
-		}
+		this.values = Stream.of(properties).map((p) -> p.observe(o)).collect(Collectors.toList());
 	}
 
 	@Override
 	protected Object calculate() {
-		Object[] v = new Object[this.values.length];
-		for (int i = 0; i < this.values.length; i++) {
-			v[i] = this.values[i].getValue();
-		}
+		Object[] v = this.values.stream().map((o) -> o.getValue()).toArray();
 		return MessageFormat.format(this.template, v);
 	}
 
 	@Override
 	public synchronized void dispose() {
 		super.dispose();
-		for (IObservableValue v : this.values) {
-			v.dispose();
-		}
+		this.values.forEach((v) -> v.dispose());
 	}
 }
