@@ -29,7 +29,6 @@ import org.eclipse.fx.ui.keybindings.TriggerSequence;
 /**
  * manage tables of bindings that can be used to look up commands from keys.
  */
-@SuppressWarnings("restriction")
 public class BindingTableManager {
 	private static final String BINDING_TABLE_PREFIX = "bindingTable:"; //$NON-NLS-1$
 
