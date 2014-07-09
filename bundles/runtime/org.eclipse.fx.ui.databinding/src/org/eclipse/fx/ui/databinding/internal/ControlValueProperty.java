@@ -44,11 +44,20 @@ public abstract class ControlValueProperty extends SimpleValueProperty implement
 	
 	@Override
 	public IJFXControlValueObservable observe(Realm realm, Object source) {
+		if( realm == null ) {
+			throw new IllegalArgumentException("Realm can not be null"); //$NON-NLS-1$
+		}
+		if( source == null ) {
+			throw new IllegalArgumentException("Source can not be null"); //$NON-NLS-1$
+		}
 		return observe(realm, (Control)source);
 	}
 	
 	@Override
 	public IJFXControlValueObservable observe(Object source) {
+		if( source == null ) {
+			throw new IllegalArgumentException("Source can not be null"); //$NON-NLS-1$
+		}
 		return observe((Control)source);
 	}
 }
