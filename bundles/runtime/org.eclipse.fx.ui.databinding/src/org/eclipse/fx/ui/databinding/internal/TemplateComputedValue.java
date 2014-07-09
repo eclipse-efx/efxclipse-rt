@@ -36,6 +36,7 @@ public final class TemplateComputedValue extends ComputedValue {
 	 * @param properties
 	 *            the properties
 	 */
+	@SuppressWarnings("null")
 	public TemplateComputedValue(@NonNull Object o, @NonNull String template, @NonNull IValueProperty[] properties) {
 		this.template = template;
 		this.values = new IObservableValue[properties.length];
