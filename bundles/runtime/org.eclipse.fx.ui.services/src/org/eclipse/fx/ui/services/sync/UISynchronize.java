@@ -81,33 +81,49 @@ public interface UISynchronize {
 	 *            the type
 	 */
 	public static class BlockCondition<T> {
-		private List<Callback<T>> callbacks = new ArrayList<>();
+		List<Callback<T>> callbacks = new ArrayList<>();
 		private boolean isBlocked = true;
 
+		/**
+		 * Subscribe to unblocking
+		 * 
+		 * @param r
+		 *            the callback
+		 * @return the subscription
+		 */
 		public Subscription subscribeUnblockedCallback(Callback<T> r) {
-			if (!isBlocked) {
+			if (!this.isBlocked) {
 				throw new IllegalStateException();
 			}
-			callbacks.add(r);
+			this.callbacks.add(r);
 			return new Subscription() {
 
 				@Override
 				public void dispose() {
-					callbacks.remove(r);
+					BlockCondition.this.callbacks.remove(r);
 				}
 			};
 		}
 
+		/**
+		 * @return check if still blocked
+		 */
 		public boolean isBlocked() {
-			return isBlocked;
+			return this.isBlocked;
 		}
 
+		/**
+		 * Release the lock and pass value
+		 * 
+		 * @param value
+		 *            the value to pass
+		 */
 		public void release(T value) {
-			for (Callback<T> r : callbacks) {
+			for (Callback<T> r : this.callbacks) {
 				r.call(value);
 			}
-			callbacks.clear();
-			isBlocked = false;
+			this.callbacks.clear();
+			this.isBlocked = false;
 		}
 	}
 
