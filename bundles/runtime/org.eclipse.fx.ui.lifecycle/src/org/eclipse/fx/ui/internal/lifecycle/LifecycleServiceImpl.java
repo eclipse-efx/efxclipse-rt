@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.internal.lifecycle;
 
+import java.lang.annotation.Annotation;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -20,62 +20,75 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.fx.ui.lifecycle.ELifecycleService;
 import org.eclipse.fx.ui.lifecycle.LifecycleAddon;
+import org.eclipse.jdt.annotation.NonNull;
 
-public class LifecycleServiceImpl implements ELifecycleService{
+/**
+ * Implementation of a {@link ELifecycleService}
+ */
+@SuppressWarnings("restriction")
+public class LifecycleServiceImpl implements ELifecycleService {
 
 	@Inject
 	private EModelService modelService;
-	
+
 	@Inject
 	private MApplication app;
 
 	@Inject
 	private IContributionFactory factory;
 
+	@Override
 	public void registerLifecycleURI(MUIElement element, String lifecycleURI) {
-		Set<Object> contributions = (Set<Object>) element.getTransientData().get(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY);
+		@SuppressWarnings("unchecked")
+		Set<@NonNull Object> contributions = (Set<@NonNull Object>) element.getTransientData().get(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY);
 		if (contributions == null) {
-			contributions = new HashSet<Object>();
+			contributions = new HashSet<>();
 			element.getTransientData().put(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY, contributions);
 		}
-		
-		Object object = factory.create(lifecycleURI, app.getContext());
-		contributions.add(object);
-		
-	}
 
-	public boolean validateAnnotation(Class annotationClass, MUIElement element, IEclipseContext context) {
-		return validateLifecycleAnnotation(annotationClass, getContextForParent(element), context, element);
-	}
-	
-	private boolean validateLifecycleAnnotation(Class clazz, IEclipseContext parentContext,
-			IEclipseContext partContext, MUIElement part) {
-				Set<Object> set = (Set<Object>) part.getTransientData().get(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY);
-				if (set!=null){
-					for (Object object : set) {
-						Object invokeResult = ContextInjectionFactory.invoke(object, clazz, parentContext, partContext,true);
-						if (invokeResult!=null){//supports void methods
-							boolean res = (boolean)invokeResult;
-							if (!res) return false;
-						}
-					}
-				}
-			return true;
+		Object object = this.factory.create(lifecycleURI, this.app.getContext());
+		if (object != null) {
+			contributions.add(object);
 		}
-	private IEclipseContext getContextForParent(MUIElement element) {
-		return modelService.getContainingContext(element);
 	}
 
 	@Override
-	public void unregisterLifecycleContribution(MUIElement element,
-			Object contribution) {
-		Set<Object> objects = (Set<Object>) element.getTransientData().get(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY);
-		if (objects!=null) objects.remove(contribution);
+	public boolean validateAnnotation(Class<? extends Annotation> annotationClass, MUIElement element, IEclipseContext context) {
+		return validateLifecycleAnnotation(annotationClass, getContextForParent(element), context, element);
+	}
+
+	private static boolean validateLifecycleAnnotation(Class<? extends Annotation> clazz, IEclipseContext parentContext, IEclipseContext partContext, MUIElement part) {
+		@SuppressWarnings("unchecked")
+		Set<@NonNull Object> set = (Set<@NonNull Object>) part.getTransientData().get(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY);
+		if (set != null) {
+			for (Object object : set) {
+				Object invokeResult = ContextInjectionFactory.invoke(object, clazz, parentContext, partContext, Boolean.TRUE);
+				if (invokeResult != null && invokeResult instanceof Boolean) {// supports
+																				// void
+																				// methods
+					boolean res = ((Boolean) invokeResult).booleanValue();
+					if (!res)
+						return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	private IEclipseContext getContextForParent(MUIElement element) {
+		return this.modelService.getContainingContext(element);
+	}
+
+	@Override
+	public void unregisterLifecycleContribution(MUIElement element, Object contribution) {
+		@SuppressWarnings("unchecked")
+		Set<@NonNull Object> objects = (Set<@NonNull Object>) element.getTransientData().get(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY);
+		if (objects != null)
+			objects.remove(contribution);
 	}
 
 }

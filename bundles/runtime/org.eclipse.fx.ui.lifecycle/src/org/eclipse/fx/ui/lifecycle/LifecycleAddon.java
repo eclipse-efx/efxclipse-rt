@@ -21,37 +21,46 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-
 //when we are ready to ditch the tag-based stuff we simply swap the addon
+/**
+ * Addon to add so that lifecycle stuff is initialized
+ */
 public class LifecycleAddon {
-	
+
 	@Inject
 	MApplication app;
-	
-//	@Inject
-//	EModelService modelService;
-	
+
+	// @Inject
+	// EModelService modelService;
+
 	@Inject
 	ELifecycleService lifecycleService;
 
-	public static final String LIFECYCLE_TRANSIENT_KEY="EFX_LIFECYCLE";
-
-	public static final String LIFECYCLE_TAG_PREFIX = "EFX_LC:";
+	/**
+	 * Key used to store the lifecycle instances inside the transient map
+	 */
+	public static final String LIFECYCLE_TRANSIENT_KEY = "EFX_LIFECYCLE"; //$NON-NLS-1$
 	
+	/**
+	 * Tag prefix to use
+	 */
+	public static final String LIFECYCLE_TAG_PREFIX = "EFX_LC:"; //$NON-NLS-1$
+
+	@SuppressWarnings("null")
 	@PostConstruct
-	public void postConstruct(){
-		TreeIterator<EObject> it = EcoreUtil.getAllContents((EObject)app, true);
-		while( it.hasNext() ) {
+	void postConstruct() {
+		TreeIterator<EObject> it = EcoreUtil.getAllContents((EObject) this.app, true);
+		while (it.hasNext()) {
 			EObject e = it.next();
-			if( e instanceof MUIElement ) {
+			if (e instanceof MUIElement) {
 				MUIElement element = (MUIElement) e;
 				List<String> tags = element.getTags();
-				for (String tag: tags) {
+				for (String tag : tags) {
 					if (tag.startsWith(LIFECYCLE_TAG_PREFIX)) {
-						lifecycleService.registerLifecycleURI(element,tag.substring(LIFECYCLE_TAG_PREFIX.length()));
+						this.lifecycleService.registerLifecycleURI(element, tag.substring(LIFECYCLE_TAG_PREFIX.length()));
 					}
 				}
 			}
-		}		
+		}
 	}
 }

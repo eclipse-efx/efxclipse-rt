@@ -14,13 +14,42 @@ import java.lang.annotation.Annotation;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Service to register lifecycle handlers on model elements
+ */
 public interface ELifecycleService {
-	
-	public void registerLifecycleURI(MUIElement element, String lifecycleURI);
+	/**
+	 * Register a life-cycle handler
+	 * 
+	 * @param element
+	 *            the model element
+	 * @param lifecycleURI
+	 *            the uri
+	 */
+	public void registerLifecycleURI(@NonNull MUIElement element, @NonNull String lifecycleURI);
 
-	public void unregisterLifecycleContribution(MUIElement element, Object contribution);
-	
-	public boolean validateAnnotation(Class<? extends Annotation> annotationClass, MUIElement element, IEclipseContext context);
+	/**
+	 * Unregister a life-cycle handler
+	 * 
+	 * @param element
+	 *            the element
+	 * @param contribution
+	 */
+	public void unregisterLifecycleContribution(@NonNull MUIElement element, @NonNull Object contribution);
+
+	/**
+	 * Validate an annotation
+	 * 
+	 * @param annotationClass
+	 *            the annotation class
+	 * @param element
+	 *            the element
+	 * @param context
+	 *            the context
+	 * @return <code>true</code> if validation succeeded
+	 */
+	public boolean validateAnnotation(@NonNull Class<? extends Annotation> annotationClass, @NonNull MUIElement element, @NonNull IEclipseContext context);
 
 }

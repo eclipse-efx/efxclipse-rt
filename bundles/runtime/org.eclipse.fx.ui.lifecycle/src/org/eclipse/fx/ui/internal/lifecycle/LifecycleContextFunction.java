@@ -13,7 +13,11 @@ package org.eclipse.fx.ui.internal.lifecycle;
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.fx.ui.lifecycle.ELifecycleService;
 
+/**
+ * Context function creating a {@link ELifecycleService}
+ */
 public class LifecycleContextFunction extends ContextFunction {
 	
 	@Override
