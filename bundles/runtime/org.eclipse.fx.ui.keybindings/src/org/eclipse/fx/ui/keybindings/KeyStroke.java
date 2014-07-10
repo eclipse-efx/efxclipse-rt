@@ -10,16 +10,33 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.keybindings;
 
+/**
+ * A key stroke
+ */
 public interface KeyStroke extends Trigger {
-
+	/**
+	 * @return has an alt key modifier
+	 */
 	boolean hasAltModifier();
 
+	/**
+	 * @return has a control key modifier
+	 */
 	boolean hasCtrlModifier();
 
+	/**
+	 * @return has a shift modifier
+	 */
 	boolean hasShiftModifier();
-
-	boolean hasCommandModifier(); 
 	
+	/**
+	 * @return has a command modifier
+	 */
+	boolean hasCommandModifier();
+	
+	/**
+	 * @return the key code
+	 */
 	int getKeyCode();
 
 }

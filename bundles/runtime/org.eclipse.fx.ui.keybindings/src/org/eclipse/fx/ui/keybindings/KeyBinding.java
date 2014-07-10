@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.keybindings;
 
+/**
+ * a keybinding
+ */
 public interface KeyBinding extends Binding {
-
+	// nothing todo
 }

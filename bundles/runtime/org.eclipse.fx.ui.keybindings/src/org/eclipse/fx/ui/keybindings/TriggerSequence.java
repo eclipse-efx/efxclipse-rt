@@ -10,15 +10,33 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.keybindings;
 
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * A trigger sequence
+ */
 public interface TriggerSequence {
 
+	/**
+	 * @return the triggers
+	 */
+	@NonNull
 	Trigger[] getTriggers();
 
+	/**
+	 * @return prefix sequence
+	 */
+	@NonNull
 	TriggerSequence[] getPrefixes();
 
+	/**
+	 * @return formated value
+	 */
 	String format();
 
+	/**
+	 * @return check if empty
+	 */
 	boolean isEmpty();
 
 }

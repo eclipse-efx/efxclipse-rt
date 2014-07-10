@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.keybindings;
 
+/**
+ * A trigger
+ */
 public interface Trigger extends Comparable<Trigger> {
-
+	// nothing todo
 }
