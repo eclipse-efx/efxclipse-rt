@@ -18,6 +18,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseCompositePartRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCompositePart;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 
+/**
+ * Renderer for a composite part
+ */
 public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 
 	@Override
