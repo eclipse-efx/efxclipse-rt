@@ -39,6 +39,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 	@Log
 	Logger logger;
 	
+	@SuppressWarnings("all")
 	@Override
 	public <V> V syncExec(final Callable<V> callable, V defaultValue) {
 		if (javafx.application.Platform.isFxApplicationThread()) {
@@ -61,6 +62,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 		return defaultValue;
 	}
 
+	@SuppressWarnings("all")
 	@Override
 	public void syncExec(final Runnable runnable) {
 		if (javafx.application.Platform.isFxApplicationThread()) {
