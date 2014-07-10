@@ -15,6 +15,7 @@ public class DatePickerValueProperty extends ControlPropertyValueProperty<LocalD
 		return LocalDate.class;
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	protected Property<LocalDate> getProperty(Object source) {
 		DatePicker p = (DatePicker) source;

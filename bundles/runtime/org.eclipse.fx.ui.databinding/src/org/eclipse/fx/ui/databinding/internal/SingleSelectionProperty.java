@@ -27,10 +27,14 @@ public class SingleSelectionProperty extends ControlReadOnlyPropertyValuePropert
 		return null;
 	} 
 
+	@SuppressWarnings("null")
 	@Override
 	protected ReadOnlyProperty<Object> getProperty(Object source) {
 		SelectionModel<Object> model = getSelectionModel(source);
-		return model == null ? null : model.selectedItemProperty();
+		if( model == null ) {
+			throw new IllegalStateException("Unable to find selection model for '"+source+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		}
+		return model.selectedItemProperty();
 	}
 	
 	@SuppressWarnings("unchecked")
