@@ -185,6 +185,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private boolean fullscreen;
 
 		@Inject
+		@NonNull
 		IEclipseContext context;
 
 		IEclipseContext modelContext;
@@ -524,6 +525,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 							sb.append(uri.segment(i));
 						}
 
+						@SuppressWarnings("null")
 						InjectingFXMLLoader<Node> loader = InjectingFXMLLoader.create(this.context, b, sb.toString());
 						ResourceBundle resourceBundle = this.localizationService.getLocalization(b, Locale.getDefault().toString());
 						if( resourceBundle != null ) {

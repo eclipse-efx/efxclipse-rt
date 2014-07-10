@@ -186,9 +186,9 @@ public class DnDTabPane extends TabPane {
 			this.closeAnimation = (StyleableProperty<Object>) field.get(skin);
 			
 			for( Class<?> cl : skin.getClass().getDeclaredClasses() ) {
-				if( "TabAnimation".equals(cl.getSimpleName()) ) {
+				if( "TabAnimation".equals(cl.getSimpleName()) ) { //$NON-NLS-1$
 					for( Enum<?> enumConstant : (Enum<?>[]) cl.getEnumConstants()){
-						if( "NONE".equals(enumConstant.name())) {
+						if( "NONE".equals(enumConstant.name())) { //$NON-NLS-1$
 							this.noneEnum = enumConstant;
 							break;
 						}
@@ -391,19 +391,19 @@ public class DnDTabPane extends TabPane {
 				
 				
 				if( ! noMove ) {
-					StyleOrigin openOrigin = openAnimation.getStyleOrigin();
-					StyleOrigin closeOrigin = closeAnimation.getStyleOrigin();
-					Object openValue = openAnimation.getValue();
-					Object closeValue = closeAnimation.getValue();
+					StyleOrigin openOrigin = this.openAnimation.getStyleOrigin();
+					StyleOrigin closeOrigin = this.closeAnimation.getStyleOrigin();
+					Object openValue = this.openAnimation.getValue();
+					Object closeValue = this.closeAnimation.getValue();
 					try {
-						openAnimation.setValue(noneEnum);
-						closeAnimation.setValue(noneEnum);
+						this.openAnimation.setValue(this.noneEnum);
+						this.closeAnimation.setValue(this.noneEnum);
 						TabPaneDroppedEvent dropped = new TabPaneDroppedEvent(this, DRAGGED_TAB, tab, type);
 						Event.fireEvent(this, dropped);
 						event.setDropCompleted(true);	
 					} finally {
-						openAnimation.applyStyle(openOrigin, openValue);
-						closeAnimation.applyStyle(closeOrigin, closeValue);
+						this.openAnimation.applyStyle(openOrigin, openValue);
+						this.closeAnimation.applyStyle(closeOrigin, closeValue);
 					}
 					
 				} else {
