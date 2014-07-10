@@ -11,21 +11,44 @@
 package org.eclipse.fx.ui.mobile;
 
 import org.eclipse.fx.ui.mobile.animations.TransitionDelegate;
+import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * Transition type
+ */
 public enum TransitionType {
+	/**
+	 * No transition
+	 */
 	NONE(null),
+	/**
+	 * slide to the left
+	 */
 	SLIDE_LEFT(TransitionDelegate.slideLeft()),
+	/**
+	 * slide to the right
+	 */
 	SLIDE_RIGHT(TransitionDelegate.slideRight()),
+	/**
+	 * fade
+	 */
 	FADE(TransitionDelegate.fade()),
+	/**
+	 * zoom slide
+	 */
 	ZOOM_SLIDE(TransitionDelegate.zoomSlide());
 	
+	@Nullable
 	private final TransitionDelegate delegate;
 	
-	private TransitionType(TransitionDelegate delegate) {
+	private TransitionType(@Nullable TransitionDelegate delegate) {
 		this.delegate = delegate;
 	}
 	
-	public TransitionDelegate getDelegate() {
-		return delegate;
+	/**
+	 * @return the delegate
+	 */
+	public @Nullable TransitionDelegate getDelegate() {
+		return this.delegate;
 	}
 }

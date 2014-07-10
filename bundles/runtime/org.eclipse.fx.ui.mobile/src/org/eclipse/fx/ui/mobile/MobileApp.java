@@ -13,12 +13,26 @@ package org.eclipse.fx.ui.mobile;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import javafx.scene.layout.Region;
 
+/**
+ * Basic entry point for applications
+ */
 public abstract class MobileApp {
-	public List<String> getInitialStylesheets() {
+	/**
+	 * @return the initial stylesheets
+	 */
+	@SuppressWarnings({ "null", "static-method" })
+	public @NonNull List<@NonNull String> getInitialStylesheets() {
 		return Collections.emptyList();
 	}
-		
+
+	/**
+	 * Create the main UI
+	 * 
+	 * @return the root region
+	 */
 	public abstract Region createUI();
 }
