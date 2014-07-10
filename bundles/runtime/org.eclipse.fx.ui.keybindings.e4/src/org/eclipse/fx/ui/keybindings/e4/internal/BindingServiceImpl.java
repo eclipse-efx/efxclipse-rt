@@ -33,6 +33,7 @@ import org.eclipse.fx.ui.keybindings.ParseException;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.keybindings.service.BindingFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  *
@@ -57,6 +58,7 @@ public class BindingServiceImpl implements EBindingService {
 	@Inject
 	private BindingFactory factory;
 
+	@NonNull
 	private ContextSet contextSet = ContextSet.EMPTY;
 	
 	@Inject
@@ -134,6 +136,9 @@ public class BindingServiceImpl implements EBindingService {
 
 	@Override
 	public Collection<Binding> getConflictsFor(TriggerSequence sequence) {
+		if( sequence == null ) {
+			throw new IllegalArgumentException("Sequence most not be null"); //$NON-NLS-1$
+		}
 		return this.manager.getConflictsFor(this.contextSet, sequence);
 	}
 
@@ -144,16 +149,26 @@ public class BindingServiceImpl implements EBindingService {
 
 	@Override
 	public Binding getPerfectMatch(TriggerSequence trigger) {
+		if( trigger == null ) {
+			throw new IllegalArgumentException("Trigger most not be null"); //$NON-NLS-1$
+		}
 		return this.manager.getPerfectMatch(this.contextSet, trigger);
 	}
 
 	@Override
 	public boolean isPartialMatch(TriggerSequence keySequence) {
+		if( keySequence == null ) {
+			throw new IllegalArgumentException("Sequence most not be null"); //$NON-NLS-1$
+		}
+
 		return this.manager.isPartialMatch(this.contextSet, keySequence);
 	}
 
 	@Override
 	public TriggerSequence getBestSequenceFor(ParameterizedCommand command) {
+		if( command == null ) {
+			throw new IllegalArgumentException("Command most not be null"); //$NON-NLS-1$
+		}
 		Binding binding = this.manager.getBestSequenceFor(this.contextSet, command);
 		return binding == null ? null : binding.getTriggerSequence();
 	}
@@ -161,6 +176,9 @@ public class BindingServiceImpl implements EBindingService {
 	@Override
 	public Collection<TriggerSequence> getSequencesFor(
 			ParameterizedCommand command) {
+		if( command == null ) {
+			throw new IllegalArgumentException("Command most not be null"); //$NON-NLS-1$
+		}
 		Collection<Binding> bindings = this.manager.getSequencesFor(this.contextSet,
 				command);
 		ArrayList<TriggerSequence> sequences = new ArrayList<TriggerSequence>(
@@ -173,6 +191,9 @@ public class BindingServiceImpl implements EBindingService {
 
 	@Override
 	public Collection<Binding> getBindingsFor(ParameterizedCommand command) {
+		if( command == null ) {
+			throw new IllegalArgumentException("Command most not be null"); //$NON-NLS-1$
+		}
 		return this.manager.getBindingsFor(this.contextSet, command);
 	}
 
@@ -183,6 +204,9 @@ public class BindingServiceImpl implements EBindingService {
 
 	@Override
 	public Collection<Binding> getPartialMatches(TriggerSequence sequence) {
+		if( sequence == null ) {
+			throw new IllegalArgumentException("Sequence most not be null"); //$NON-NLS-1$
+		}
 		return this.manager.getPartialMatches(this.contextSet, sequence);
 	}
 
@@ -202,11 +226,14 @@ public class BindingServiceImpl implements EBindingService {
 			}
 			return;
 		}
-		ArrayList<Context> contexts = new ArrayList<Context>();
+		ArrayList<@NonNull Context> contexts = new ArrayList<>();
 		for (String id : set) {
-			contexts.add(this.contextManager.getContext(id));
+			Context ctx = this.contextManager.getContext(id);
+			if( ctx != null ) {
+				contexts.add(ctx);	
+			}
 		}
-		this.contextSet = this.manager.createContextSet(contexts);
+		this.contextSet = BindingTableManager.createContextSet(contexts);
 		this.contextManager.setActiveContextIds(set);
 	}
 
