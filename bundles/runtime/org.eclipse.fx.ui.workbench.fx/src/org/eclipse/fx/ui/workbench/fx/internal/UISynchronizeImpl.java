@@ -22,7 +22,6 @@ import javax.inject.Inject;
 import org.eclipse.fx.core.Callback;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
-import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -39,7 +38,6 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 	@Log
 	Logger logger;
 	
-	@SuppressWarnings("all")
 	@Override
 	public <V> V syncExec(final Callable<V> callable, V defaultValue) {
 		if (javafx.application.Platform.isFxApplicationThread()) {
@@ -54,7 +52,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 			try {
 				return task.get();
 			} catch (InterruptedException | ExecutionException e) {
-				this.logger.log(Level.ERROR, "Unable to wait until the task is completed", e); //$NON-NLS-1$
+				this.logger.error("Unable to wait until the task is completed", e); //$NON-NLS-1$
 			} finally {
 				task.cancel(true);
 			}
@@ -62,7 +60,6 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 		return defaultValue;
 	}
 
-	@SuppressWarnings("all")
 	@Override
 	public void syncExec(final Runnable runnable) {
 		if (javafx.application.Platform.isFxApplicationThread()) {
@@ -73,7 +70,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 			try {
 				task.get(); // wait for task to complete
 			} catch (InterruptedException | ExecutionException e) {
-				this.logger.log(Level.ERROR, "Unable to wait until the task is completed", e); //$NON-NLS-1$
+				this.logger.error("Unable to wait until the task is completed", e); //$NON-NLS-1$
 			} finally {
 				task.cancel(true);
 			}
