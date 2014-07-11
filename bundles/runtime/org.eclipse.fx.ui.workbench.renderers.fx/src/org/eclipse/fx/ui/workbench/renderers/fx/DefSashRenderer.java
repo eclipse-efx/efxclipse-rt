@@ -182,6 +182,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			p.setMarginHeight(0);
 			p.setHorizontalSpacing(0);
 			p.setVerticalSpacing(0);
+			p.setNumColumns(0); 
 			return p;
 		}
 
