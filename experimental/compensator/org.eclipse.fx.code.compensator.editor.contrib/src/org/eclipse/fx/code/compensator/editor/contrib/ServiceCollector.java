@@ -54,7 +54,6 @@ public class ServiceCollector {
 	}
 	
 	public void addSourceViewerConfigurationFactory(SourceViewerConfigurationFactory provider) {
-		System.err.println("REGISTERING source provider: " + provider);
 		configurationProvider.add(provider);
 	}
 	
