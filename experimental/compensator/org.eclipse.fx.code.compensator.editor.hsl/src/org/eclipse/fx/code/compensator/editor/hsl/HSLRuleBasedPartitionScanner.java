@@ -1,12 +1,5 @@
 package org.eclipse.fx.code.compensator.editor.hsl;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-
 import org.eclipse.fx.code.compensator.editor.hsl.internal.JavaScriptHelper;
 import org.eclipse.fx.code.compensator.hsl.hSL.ParitionRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.PartitionJSRule;
@@ -33,18 +26,6 @@ public class HSLRuleBasedPartitionScanner extends RuleBasedPartitionScanner {
 				pr[i] = new MultiLineRule(mr.getStartSeq(), mr.getEndSeq(), new Token(mr.getParition().getName()), mr.getEscapeSeq() != null ? mr.getEscapeSeq().charAt(0) : 0, false);
 			} else if( r instanceof PartitionJSRule ) {
 				pr[i] = JavaScriptHelper.loadScript(cl, r, ((PartitionJSRule) r).getFileURI());
-//				PartitionJSRule js = (PartitionJSRule) r;
-//				ScriptEngineManager mgr = new ScriptEngineManager(cl);
-//				ScriptEngine engine = mgr.getEngineByName("nashorn");
-//				try( InputStreamReader reader = new InputStreamReader(cl.getResourceAsStream(js.getFileURI())) ) {
-//					pr[i] = (IPredicateRule) engine.eval(reader);
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (ScriptException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 			}
 			i++;
 		}
