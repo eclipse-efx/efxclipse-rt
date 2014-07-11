@@ -320,7 +320,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	 */
 	public void redraw() {
 		for (LineCell l : getCurrentVisibleCells()) {
-			l.update();
+			if( l != null )
+				l.update();
 		}
 	}
 
