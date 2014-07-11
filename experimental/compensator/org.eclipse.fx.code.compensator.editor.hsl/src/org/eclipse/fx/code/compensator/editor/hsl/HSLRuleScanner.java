@@ -30,6 +30,7 @@ import org.eclipse.jface.text.rules.WhitespaceRule;
 
 public class HSLRuleScanner extends RuleBasedScanner {
 	public HSLRuleScanner(RuleDamager scanner) {
+		System.err.println("SCANNER");
 		Map<String, IToken> tokenMap = new HashMap<String, IToken>();
 		for( ScannerToken st : scanner.getTokens() ) {
 			Token token = new Token(new TextAttribute(createColor(st.getFgColor()), createColor(st.getFgColor()), 0, createFont(st.getFont())));
@@ -46,12 +47,17 @@ public class HSLRuleScanner extends RuleBasedScanner {
 			if( ru instanceof ScannerSingleLineRule ) {
 				ScannerSingleLineRule sru = (ScannerSingleLineRule) ru;
 				System.err.println("SL-TOKEN: " + ru + " ===> " + tokenMap.get(sru.getToken().getName()));
-				rules[i] = new SingleLineRule(
-						sru.getStartSeq(), 
-						sru.getEndSeq(), 
-						tokenMap.get(sru.getToken().getName()), 
-						sru.getEscapeSeq() != null ? sru.getEscapeSeq().charAt(0) : 0, 
-						false);
+				if( i == 0 && scanner.getPartition().getName().equals("__dftl_partition_content_type") ) {
+					System.err.println("==============> SELF");
+					rules[i] = new SingleLineRule("<?","?>",tokenMap.get(sru.getToken().getName()));
+				} else {
+					rules[i] = new SingleLineRule(
+							sru.getStartSeq(), 
+							sru.getEndSeq(), 
+							tokenMap.get(sru.getToken().getName()), 
+							sru.getEscapeSeq() != null ? sru.getEscapeSeq().charAt(0) : 0, 
+							false);					
+				}
 			} else if( ru instanceof ScannerMultiLineRule ) {
 				throw new UnsupportedOperationException();
 			} else if( ru instanceof ScannerWhitespaceRule ) {

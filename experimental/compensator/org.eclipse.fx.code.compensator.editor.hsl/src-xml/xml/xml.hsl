@@ -18,6 +18,6 @@ XML {
 	js-damager __xml_comment "xml-comment-damager.js"
 	rule-partitioner {
 		multi-line __xml_comment "<!--" => "-->"
-		javascript-rule __xml_tag "tag-rule.js"
+		javascript-rule __xml_tag "xml-tag-rule.js"
 	}
 } for "text/xml"

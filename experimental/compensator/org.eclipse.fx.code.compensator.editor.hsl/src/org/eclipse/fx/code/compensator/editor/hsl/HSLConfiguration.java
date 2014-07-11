@@ -7,6 +7,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.eclipse.fx.code.compensator.editor.hsl.internal.JavaScriptHelper;
 import org.eclipse.fx.code.compensator.hsl.hSL.Damager;
 import org.eclipse.fx.code.compensator.hsl.hSL.JSDamager;
 import org.eclipse.fx.code.compensator.hsl.hSL.Model;
@@ -40,19 +41,9 @@ public class HSLConfiguration extends SourceViewerConfiguration {
 				reconciler.setRepairer(dr, rs.getPartition().getName());
 			} else {
 				JSDamager js = (JSDamager) sc;
-				ScriptEngineManager m = new ScriptEngineManager(cl);
-				ScriptEngine engine = m.getEngineByName("nashorn");
-				try(InputStreamReader r = new InputStreamReader(cl.getResourceAsStream(js.getFileURI()))) {
-					Object o = engine.eval(r);
-					reconciler.setDamager((IPresentationDamager) o, js.getPartition().getName());
-					reconciler.setRepairer((IPresentationRepairer) o, js.getPartition().getName());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ScriptException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				Object o = JavaScriptHelper.loadScript(cl, js, js.getFileURI());
+				reconciler.setDamager((IPresentationDamager) o, js.getPartition().getName());
+				reconciler.setRepairer((IPresentationRepairer) o, js.getPartition().getName());
 			}
 		}
 
