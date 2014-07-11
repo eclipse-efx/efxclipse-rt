@@ -101,6 +101,23 @@
           <tags>content_a</tags>
         </children>
       </children>
+      <children xsi:type="advanced:Perspective" xmi:id="_iCfngAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.perspective.6" label="Layout Sample">
+        <tags>myperspective</tags>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_kWd1QAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.partsashcontainer.4" horizontal="true">
+          <tags>mysash</tags>
+          <tags>fx_fixedLayout</tags>
+          <children xsi:type="basic:Part" xmi:id="_lkcEQAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.22">
+            <persistedState key="fx_layout_grab_horizontal" value="true"/>
+            <persistedState key="fx_layout_grab_vertical" value="true"/>
+            <tags>mypart</tags>
+          </children>
+          <children xsi:type="basic:Part" xmi:id="_l-Ky4AjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.23">
+            <persistedState key="fx_layout_grab_horizontal" value="true"/>
+            <persistedState key="fx_layout_grab_vertical" value="true"/>
+            <tags>mypart</tags>
+          </children>
+        </children>
+      </children>
     </children>
     <mainMenu xmi:id="_W8hHoORZEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.menu.0">
       <children xsi:type="menu:Menu" xmi:id="_Xwuy0ORZEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.menu.1" label="M1">
@@ -153,6 +170,9 @@
         </children>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_MrnaMIfZEeKsYN0U3N_L9Q" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.10" label="Perspective 5" command="_kCbZQO6yEeG4lfn-YKJbJw">
           <parameters xmi:id="_PsE6gIfZEeKsYN0U3N_L9Q" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.5"/>
+        </children>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_SnxwgAjwEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.14" label="Layout perspective" command="_kCbZQO6yEeG4lfn-YKJbJw">
+          <parameters xmi:id="_WMZGwAjwEeS-OoJT2xrBFg" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.6"/>
         </children>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_xS050MayEeKo1rUjbZCXsQ" elementId="org.eclipse.fx.testcases.e4.menu.6" label="Multiple close">
