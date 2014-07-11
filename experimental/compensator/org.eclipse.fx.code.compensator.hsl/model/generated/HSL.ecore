@@ -17,6 +17,13 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Partitioner"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JavaLikeParitioner" eSuperTypes="#//Partitioner">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleLineParition" eType="#//Partition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="multiLineParition" eType="#//Partition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="javaDocParition" eType="#//Partition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="characterParition" eType="#//Partition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stringParition" eType="#//Partition"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RulePartitioner" eSuperTypes="#//Partitioner">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//ParitionRule" containment="true"/>

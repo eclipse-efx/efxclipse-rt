@@ -169,6 +169,70 @@ public interface HSLPackage extends EPackage
   int PARTITIONER_FEATURE_COUNT = 0;
 
   /**
+   * The meta object id for the '{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl <em>Java Like Paritioner</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getJavaLikeParitioner()
+   * @generated
+   */
+  int JAVA_LIKE_PARITIONER = 3;
+
+  /**
+   * The feature id for the '<em><b>Single Line Parition</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION = PARTITIONER_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Multi Line Parition</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION = PARTITIONER_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Java Doc Parition</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JAVA_LIKE_PARITIONER__JAVA_DOC_PARITION = PARTITIONER_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Character Parition</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JAVA_LIKE_PARITIONER__CHARACTER_PARITION = PARTITIONER_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>String Parition</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JAVA_LIKE_PARITIONER__STRING_PARITION = PARTITIONER_FEATURE_COUNT + 4;
+
+  /**
+   * The number of structural features of the '<em>Java Like Paritioner</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JAVA_LIKE_PARITIONER_FEATURE_COUNT = PARTITIONER_FEATURE_COUNT + 5;
+
+  /**
    * The meta object id for the '{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.RulePartitionerImpl <em>Rule Partitioner</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -176,7 +240,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getRulePartitioner()
    * @generated
    */
-  int RULE_PARTITIONER = 3;
+  int RULE_PARTITIONER = 4;
 
   /**
    * The feature id for the '<em><b>Rules</b></em>' containment reference list.
@@ -204,7 +268,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getJSParitioner()
    * @generated
    */
-  int JS_PARITIONER = 4;
+  int JS_PARITIONER = 5;
 
   /**
    * The feature id for the '<em><b>File URI</b></em>' attribute.
@@ -232,7 +296,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getDamager()
    * @generated
    */
-  int DAMAGER = 5;
+  int DAMAGER = 6;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -260,7 +324,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getJSDamager()
    * @generated
    */
-  int JS_DAMAGER = 6;
+  int JS_DAMAGER = 7;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -297,7 +361,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getRuleDamager()
    * @generated
    */
-  int RULE_DAMAGER = 7;
+  int RULE_DAMAGER = 8;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -352,7 +416,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getScannerToken()
    * @generated
    */
-  int SCANNER_TOKEN = 8;
+  int SCANNER_TOKEN = 9;
 
   /**
    * The feature id for the '<em><b>Default</b></em>' attribute.
@@ -416,7 +480,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getKeywordGroup()
    * @generated
    */
-  int KEYWORD_GROUP = 9;
+  int KEYWORD_GROUP = 10;
 
   /**
    * The feature id for the '<em><b>Token</b></em>' reference.
@@ -453,7 +517,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getKeyword()
    * @generated
    */
-  int KEYWORD = 10;
+  int KEYWORD = 11;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -490,7 +554,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getScannerRule()
    * @generated
    */
-  int SCANNER_RULE = 11;
+  int SCANNER_RULE = 12;
 
   /**
    * The feature id for the '<em><b>Token</b></em>' reference.
@@ -518,7 +582,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getParitionRule()
    * @generated
    */
-  int PARITION_RULE = 12;
+  int PARITION_RULE = 13;
 
   /**
    * The number of structural features of the '<em>Parition Rule</em>' class.
@@ -537,7 +601,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getScannerSingleLineRule()
    * @generated
    */
-  int SCANNER_SINGLE_LINE_RULE = 13;
+  int SCANNER_SINGLE_LINE_RULE = 14;
 
   /**
    * The feature id for the '<em><b>Token</b></em>' reference.
@@ -592,7 +656,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getPartitionSingleLineRule()
    * @generated
    */
-  int PARTITION_SINGLE_LINE_RULE = 14;
+  int PARTITION_SINGLE_LINE_RULE = 15;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -647,7 +711,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getScannerMultiLineRule()
    * @generated
    */
-  int SCANNER_MULTI_LINE_RULE = 15;
+  int SCANNER_MULTI_LINE_RULE = 16;
 
   /**
    * The feature id for the '<em><b>Token</b></em>' reference.
@@ -702,7 +766,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getPartitionMultiLineRule()
    * @generated
    */
-  int PARTITION_MULTI_LINE_RULE = 16;
+  int PARTITION_MULTI_LINE_RULE = 17;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -757,7 +821,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getScannerCharacterRule()
    * @generated
    */
-  int SCANNER_CHARACTER_RULE = 17;
+  int SCANNER_CHARACTER_RULE = 18;
 
   /**
    * The feature id for the '<em><b>Token</b></em>' reference.
@@ -794,7 +858,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getScannerJSRule()
    * @generated
    */
-  int SCANNER_JS_RULE = 18;
+  int SCANNER_JS_RULE = 19;
 
   /**
    * The feature id for the '<em><b>Token</b></em>' reference.
@@ -831,7 +895,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getPartitionJSRule()
    * @generated
    */
-  int PARTITION_JS_RULE = 19;
+  int PARTITION_JS_RULE = 20;
 
   /**
    * The feature id for the '<em><b>Token</b></em>' reference.
@@ -868,7 +932,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getScannerWhitespaceRule()
    * @generated
    */
-  int SCANNER_WHITESPACE_RULE = 20;
+  int SCANNER_WHITESPACE_RULE = 21;
 
   /**
    * The feature id for the '<em><b>Token</b></em>' reference.
@@ -914,7 +978,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getColor()
    * @generated
    */
-  int COLOR = 21;
+  int COLOR = 22;
 
   /**
    * The number of structural features of the '<em>Color</em>' class.
@@ -933,7 +997,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getRGBColor()
    * @generated
    */
-  int RGB_COLOR = 22;
+  int RGB_COLOR = 23;
 
   /**
    * The feature id for the '<em><b>R</b></em>' attribute.
@@ -979,7 +1043,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getFont()
    * @generated
    */
-  int FONT = 23;
+  int FONT = 24;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1025,7 +1089,7 @@ public interface HSLPackage extends EPackage
    * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getFontType()
    * @generated
    */
-  int FONT_TYPE = 24;
+  int FONT_TYPE = 25;
 
 
   /**
@@ -1123,6 +1187,71 @@ public interface HSLPackage extends EPackage
    * @generated
    */
   EClass getPartitioner();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner <em>Java Like Paritioner</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Java Like Paritioner</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner
+   * @generated
+   */
+  EClass getJavaLikeParitioner();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getSingleLineParition <em>Single Line Parition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Single Line Parition</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getSingleLineParition()
+   * @see #getJavaLikeParitioner()
+   * @generated
+   */
+  EReference getJavaLikeParitioner_SingleLineParition();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getMultiLineParition <em>Multi Line Parition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Multi Line Parition</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getMultiLineParition()
+   * @see #getJavaLikeParitioner()
+   * @generated
+   */
+  EReference getJavaLikeParitioner_MultiLineParition();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getJavaDocParition <em>Java Doc Parition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Java Doc Parition</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getJavaDocParition()
+   * @see #getJavaLikeParitioner()
+   * @generated
+   */
+  EReference getJavaLikeParitioner_JavaDocParition();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getCharacterParition <em>Character Parition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Character Parition</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getCharacterParition()
+   * @see #getJavaLikeParitioner()
+   * @generated
+   */
+  EReference getJavaLikeParitioner_CharacterParition();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getStringParition <em>String Parition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>String Parition</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getStringParition()
+   * @see #getJavaLikeParitioner()
+   * @generated
+   */
+  EReference getJavaLikeParitioner_StringParition();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.compensator.hsl.hSL.RulePartitioner <em>Rule Partitioner</em>}'.
@@ -1917,6 +2046,56 @@ public interface HSLPackage extends EPackage
      * @generated
      */
     EClass PARTITIONER = eINSTANCE.getPartitioner();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl <em>Java Like Paritioner</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl
+     * @see org.eclipse.fx.code.compensator.hsl.hSL.impl.HSLPackageImpl#getJavaLikeParitioner()
+     * @generated
+     */
+    EClass JAVA_LIKE_PARITIONER = eINSTANCE.getJavaLikeParitioner();
+
+    /**
+     * The meta object literal for the '<em><b>Single Line Parition</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION = eINSTANCE.getJavaLikeParitioner_SingleLineParition();
+
+    /**
+     * The meta object literal for the '<em><b>Multi Line Parition</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION = eINSTANCE.getJavaLikeParitioner_MultiLineParition();
+
+    /**
+     * The meta object literal for the '<em><b>Java Doc Parition</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference JAVA_LIKE_PARITIONER__JAVA_DOC_PARITION = eINSTANCE.getJavaLikeParitioner_JavaDocParition();
+
+    /**
+     * The meta object literal for the '<em><b>Character Parition</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference JAVA_LIKE_PARITIONER__CHARACTER_PARITION = eINSTANCE.getJavaLikeParitioner_CharacterParition();
+
+    /**
+     * The meta object literal for the '<em><b>String Parition</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference JAVA_LIKE_PARITIONER__STRING_PARITION = eINSTANCE.getJavaLikeParitioner_StringParition();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.RulePartitionerImpl <em>Rule Partitioner</em>}' class.

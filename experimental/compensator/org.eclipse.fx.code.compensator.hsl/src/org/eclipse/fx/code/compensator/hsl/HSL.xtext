@@ -15,7 +15,17 @@ Partition:
 ;
 
 Partitioner:
-	RulePartitioner | JSParitioner
+	RulePartitioner | JavaLikeParitioner | JSParitioner
+;
+
+JavaLikeParitioner:
+	'java-like-partitioner' '{'
+		singleLineParition=[Partition|ID]
+		multiLineParition=[Partition|ID]
+		javaDocParition=[Partition|ID]
+		characterParition=[Partition|ID]
+		stringParition=[Partition|ID]
+	'}'
 ;
 
 RulePartitioner:

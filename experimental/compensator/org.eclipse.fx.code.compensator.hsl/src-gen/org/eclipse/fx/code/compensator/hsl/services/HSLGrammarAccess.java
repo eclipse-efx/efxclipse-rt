@@ -110,20 +110,110 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Partitioner");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cRulePartitionerParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cJSParitionerParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cJavaLikeParitionerParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cJSParitionerParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Partitioner:
-		//	RulePartitioner | JSParitioner;
+		//	RulePartitioner | JavaLikeParitioner | JSParitioner;
 		public ParserRule getRule() { return rule; }
 
-		//RulePartitioner | JSParitioner
+		//RulePartitioner | JavaLikeParitioner | JSParitioner
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//RulePartitioner
 		public RuleCall getRulePartitionerParserRuleCall_0() { return cRulePartitionerParserRuleCall_0; }
 
+		//JavaLikeParitioner
+		public RuleCall getJavaLikeParitionerParserRuleCall_1() { return cJavaLikeParitionerParserRuleCall_1; }
+
 		//JSParitioner
-		public RuleCall getJSParitionerParserRuleCall_1() { return cJSParitionerParserRuleCall_1; }
+		public RuleCall getJSParitionerParserRuleCall_2() { return cJSParitionerParserRuleCall_2; }
+	}
+
+	public class JavaLikeParitionerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "JavaLikeParitioner");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cJavaLikePartitionerKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cSingleLineParitionAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cSingleLineParitionPartitionCrossReference_2_0 = (CrossReference)cSingleLineParitionAssignment_2.eContents().get(0);
+		private final RuleCall cSingleLineParitionPartitionIDTerminalRuleCall_2_0_1 = (RuleCall)cSingleLineParitionPartitionCrossReference_2_0.eContents().get(1);
+		private final Assignment cMultiLineParitionAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cMultiLineParitionPartitionCrossReference_3_0 = (CrossReference)cMultiLineParitionAssignment_3.eContents().get(0);
+		private final RuleCall cMultiLineParitionPartitionIDTerminalRuleCall_3_0_1 = (RuleCall)cMultiLineParitionPartitionCrossReference_3_0.eContents().get(1);
+		private final Assignment cJavaDocParitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final CrossReference cJavaDocParitionPartitionCrossReference_4_0 = (CrossReference)cJavaDocParitionAssignment_4.eContents().get(0);
+		private final RuleCall cJavaDocParitionPartitionIDTerminalRuleCall_4_0_1 = (RuleCall)cJavaDocParitionPartitionCrossReference_4_0.eContents().get(1);
+		private final Assignment cCharacterParitionAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final CrossReference cCharacterParitionPartitionCrossReference_5_0 = (CrossReference)cCharacterParitionAssignment_5.eContents().get(0);
+		private final RuleCall cCharacterParitionPartitionIDTerminalRuleCall_5_0_1 = (RuleCall)cCharacterParitionPartitionCrossReference_5_0.eContents().get(1);
+		private final Assignment cStringParitionAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final CrossReference cStringParitionPartitionCrossReference_6_0 = (CrossReference)cStringParitionAssignment_6.eContents().get(0);
+		private final RuleCall cStringParitionPartitionIDTerminalRuleCall_6_0_1 = (RuleCall)cStringParitionPartitionCrossReference_6_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		
+		//JavaLikeParitioner:
+		//	"java-like-partitioner" "{" singleLineParition=[Partition] multiLineParition=[Partition] javaDocParition=[Partition]
+		//	characterParition=[Partition] stringParition=[Partition] "}";
+		public ParserRule getRule() { return rule; }
+
+		//"java-like-partitioner" "{" singleLineParition=[Partition] multiLineParition=[Partition] javaDocParition=[Partition]
+		//characterParition=[Partition] stringParition=[Partition] "}"
+		public Group getGroup() { return cGroup; }
+
+		//"java-like-partitioner"
+		public Keyword getJavaLikePartitionerKeyword_0() { return cJavaLikePartitionerKeyword_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+
+		//singleLineParition=[Partition]
+		public Assignment getSingleLineParitionAssignment_2() { return cSingleLineParitionAssignment_2; }
+
+		//[Partition]
+		public CrossReference getSingleLineParitionPartitionCrossReference_2_0() { return cSingleLineParitionPartitionCrossReference_2_0; }
+
+		//ID
+		public RuleCall getSingleLineParitionPartitionIDTerminalRuleCall_2_0_1() { return cSingleLineParitionPartitionIDTerminalRuleCall_2_0_1; }
+
+		//multiLineParition=[Partition]
+		public Assignment getMultiLineParitionAssignment_3() { return cMultiLineParitionAssignment_3; }
+
+		//[Partition]
+		public CrossReference getMultiLineParitionPartitionCrossReference_3_0() { return cMultiLineParitionPartitionCrossReference_3_0; }
+
+		//ID
+		public RuleCall getMultiLineParitionPartitionIDTerminalRuleCall_3_0_1() { return cMultiLineParitionPartitionIDTerminalRuleCall_3_0_1; }
+
+		//javaDocParition=[Partition]
+		public Assignment getJavaDocParitionAssignment_4() { return cJavaDocParitionAssignment_4; }
+
+		//[Partition]
+		public CrossReference getJavaDocParitionPartitionCrossReference_4_0() { return cJavaDocParitionPartitionCrossReference_4_0; }
+
+		//ID
+		public RuleCall getJavaDocParitionPartitionIDTerminalRuleCall_4_0_1() { return cJavaDocParitionPartitionIDTerminalRuleCall_4_0_1; }
+
+		//characterParition=[Partition]
+		public Assignment getCharacterParitionAssignment_5() { return cCharacterParitionAssignment_5; }
+
+		//[Partition]
+		public CrossReference getCharacterParitionPartitionCrossReference_5_0() { return cCharacterParitionPartitionCrossReference_5_0; }
+
+		//ID
+		public RuleCall getCharacterParitionPartitionIDTerminalRuleCall_5_0_1() { return cCharacterParitionPartitionIDTerminalRuleCall_5_0_1; }
+
+		//stringParition=[Partition]
+		public Assignment getStringParitionAssignment_6() { return cStringParitionAssignment_6; }
+
+		//[Partition]
+		public CrossReference getStringParitionPartitionCrossReference_6_0() { return cStringParitionPartitionCrossReference_6_0; }
+
+		//ID
+		public RuleCall getStringParitionPartitionIDTerminalRuleCall_6_0_1() { return cStringParitionPartitionIDTerminalRuleCall_6_0_1; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
 	}
 
 	public class RulePartitionerElements extends AbstractParserRuleElementFinder {
@@ -1198,6 +1288,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	private ModelElements pModel;
 	private PartitionElements pPartition;
 	private PartitionerElements pPartitioner;
+	private JavaLikeParitionerElements pJavaLikeParitioner;
 	private RulePartitionerElements pRulePartitioner;
 	private JSParitionerElements pJSParitioner;
 	private DamagerElements pDamager;
@@ -1280,13 +1371,24 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partitioner:
-	//	RulePartitioner | JSParitioner;
+	//	RulePartitioner | JavaLikeParitioner | JSParitioner;
 	public PartitionerElements getPartitionerAccess() {
 		return (pPartitioner != null) ? pPartitioner : (pPartitioner = new PartitionerElements());
 	}
 	
 	public ParserRule getPartitionerRule() {
 		return getPartitionerAccess().getRule();
+	}
+
+	//JavaLikeParitioner:
+	//	"java-like-partitioner" "{" singleLineParition=[Partition] multiLineParition=[Partition] javaDocParition=[Partition]
+	//	characterParition=[Partition] stringParition=[Partition] "}";
+	public JavaLikeParitionerElements getJavaLikeParitionerAccess() {
+		return (pJavaLikeParitioner != null) ? pJavaLikeParitioner : (pJavaLikeParitioner = new JavaLikeParitionerElements());
+	}
+	
+	public ParserRule getJavaLikeParitionerRule() {
+		return getJavaLikeParitionerAccess().getRule();
 	}
 
 	//RulePartitioner:

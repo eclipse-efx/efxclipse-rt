@@ -24,6 +24,13 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Partition/name"/>
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//Partitioner"/>
+    <genClasses ecoreClass="HSL.ecore#//JavaLikeParitioner">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//JavaLikeParitioner/singleLineParition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//JavaLikeParitioner/multiLineParition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//JavaLikeParitioner/javaDocParition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//JavaLikeParitioner/characterParition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//JavaLikeParitioner/stringParition"/>
+    </genClasses>
     <genClasses ecoreClass="HSL.ecore#//RulePartitioner">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//RulePartitioner/rules"/>
     </genClasses>

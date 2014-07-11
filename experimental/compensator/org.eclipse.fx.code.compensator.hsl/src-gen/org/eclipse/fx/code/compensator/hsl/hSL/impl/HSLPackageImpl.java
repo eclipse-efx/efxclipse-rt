@@ -18,6 +18,7 @@ import org.eclipse.fx.code.compensator.hsl.hSL.HSLFactory;
 import org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage;
 import org.eclipse.fx.code.compensator.hsl.hSL.JSDamager;
 import org.eclipse.fx.code.compensator.hsl.hSL.JSParitioner;
+import org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner;
 import org.eclipse.fx.code.compensator.hsl.hSL.Keyword;
 import org.eclipse.fx.code.compensator.hsl.hSL.KeywordGroup;
 import org.eclipse.fx.code.compensator.hsl.hSL.Model;
@@ -66,6 +67,13 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * @generated
    */
   private EClass partitionerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass javaLikeParitionerEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -372,6 +380,66 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
   public EClass getPartitioner()
   {
     return partitionerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getJavaLikeParitioner()
+  {
+    return javaLikeParitionerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getJavaLikeParitioner_SingleLineParition()
+  {
+    return (EReference)javaLikeParitionerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getJavaLikeParitioner_MultiLineParition()
+  {
+    return (EReference)javaLikeParitionerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getJavaLikeParitioner_JavaDocParition()
+  {
+    return (EReference)javaLikeParitionerEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getJavaLikeParitioner_CharacterParition()
+  {
+    return (EReference)javaLikeParitionerEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getJavaLikeParitioner_StringParition()
+  {
+    return (EReference)javaLikeParitionerEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1066,6 +1134,13 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
 
     partitionerEClass = createEClass(PARTITIONER);
 
+    javaLikeParitionerEClass = createEClass(JAVA_LIKE_PARITIONER);
+    createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION);
+    createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION);
+    createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__JAVA_DOC_PARITION);
+    createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__CHARACTER_PARITION);
+    createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__STRING_PARITION);
+
     rulePartitionerEClass = createEClass(RULE_PARTITIONER);
     createEReference(rulePartitionerEClass, RULE_PARTITIONER__RULES);
 
@@ -1184,6 +1259,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    javaLikeParitionerEClass.getESuperTypes().add(this.getPartitioner());
     rulePartitionerEClass.getESuperTypes().add(this.getPartitioner());
     jsParitionerEClass.getESuperTypes().add(this.getPartitioner());
     jsDamagerEClass.getESuperTypes().add(this.getDamager());
@@ -1210,6 +1286,13 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     initEAttribute(getPartition_Name(), ecorePackage.getEString(), "name", null, 0, 1, Partition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(partitionerEClass, Partitioner.class, "Partitioner", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(javaLikeParitionerEClass, JavaLikeParitioner.class, "JavaLikeParitioner", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getJavaLikeParitioner_SingleLineParition(), this.getPartition(), null, "singleLineParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getJavaLikeParitioner_MultiLineParition(), this.getPartition(), null, "multiLineParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getJavaLikeParitioner_JavaDocParition(), this.getPartition(), null, "javaDocParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getJavaLikeParitioner_CharacterParition(), this.getPartition(), null, "characterParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getJavaLikeParitioner_StringParition(), this.getPartition(), null, "stringParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(rulePartitionerEClass, RulePartitioner.class, "RulePartitioner", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRulePartitioner_Rules(), this.getParitionRule(), null, "rules", null, 0, -1, RulePartitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

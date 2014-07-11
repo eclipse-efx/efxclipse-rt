@@ -256,12 +256,120 @@ rulePartitioner returns [EObject current=null]
 
     |
     { 
-        newCompositeNode(grammarAccess.getPartitionerAccess().getJSParitionerParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getPartitionerAccess().getJavaLikeParitionerParserRuleCall_1()); 
     }
-    this_JSParitioner_1=ruleJSParitioner
+    this_JavaLikeParitioner_1=ruleJavaLikeParitioner
     { 
-        $current = $this_JSParitioner_1.current; 
+        $current = $this_JavaLikeParitioner_1.current; 
         afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getPartitionerAccess().getJSParitionerParserRuleCall_2()); 
+    }
+    this_JSParitioner_2=ruleJSParitioner
+    { 
+        $current = $this_JSParitioner_2.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleJavaLikeParitioner
+entryRuleJavaLikeParitioner returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getJavaLikeParitionerRule()); }
+	 iv_ruleJavaLikeParitioner=ruleJavaLikeParitioner 
+	 { $current=$iv_ruleJavaLikeParitioner.current; } 
+	 EOF 
+;
+
+// Rule JavaLikeParitioner
+ruleJavaLikeParitioner returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='java-like-partitioner' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getJavaLikeParitionerAccess().getJavaLikePartitionerKeyword_0());
+    }
+	otherlv_1='{' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getJavaLikeParitionerAccess().getLeftCurlyBracketKeyword_1());
+    }
+(
+(
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getJavaLikeParitionerRule());
+	        }
+        }
+	otherlv_2=RULE_ID
+	{
+		newLeafNode(otherlv_2, grammarAccess.getJavaLikeParitionerAccess().getSingleLineParitionPartitionCrossReference_2_0()); 
+	}
+
+)
+)(
+(
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getJavaLikeParitionerRule());
+	        }
+        }
+	otherlv_3=RULE_ID
+	{
+		newLeafNode(otherlv_3, grammarAccess.getJavaLikeParitionerAccess().getMultiLineParitionPartitionCrossReference_3_0()); 
+	}
+
+)
+)(
+(
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getJavaLikeParitionerRule());
+	        }
+        }
+	otherlv_4=RULE_ID
+	{
+		newLeafNode(otherlv_4, grammarAccess.getJavaLikeParitionerAccess().getJavaDocParitionPartitionCrossReference_4_0()); 
+	}
+
+)
+)(
+(
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getJavaLikeParitionerRule());
+	        }
+        }
+	otherlv_5=RULE_ID
+	{
+		newLeafNode(otherlv_5, grammarAccess.getJavaLikeParitionerAccess().getCharacterParitionPartitionCrossReference_5_0()); 
+	}
+
+)
+)(
+(
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getJavaLikeParitionerRule());
+	        }
+        }
+	otherlv_6=RULE_ID
+	{
+		newLeafNode(otherlv_6, grammarAccess.getJavaLikeParitionerAccess().getStringParitionPartitionCrossReference_6_0()); 
+	}
+
+)
+)	otherlv_7='}' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getJavaLikeParitionerAccess().getRightCurlyBracketKeyword_7());
     }
 )
 ;
