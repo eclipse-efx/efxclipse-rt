@@ -20,8 +20,8 @@ import org.eclipse.fx.code.compensator.hsl.hSL.Partition;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl#getSingleLineParition <em>Single Line Parition</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl#getMultiLineParition <em>Multi Line Parition</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl#getSingleLineDocParition <em>Single Line Doc Parition</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl#getMultiLineDocParition <em>Multi Line Doc Parition</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl#getJavaDocParition <em>Java Doc Parition</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl#getCharacterParition <em>Character Parition</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.JavaLikeParitionerImpl#getStringParition <em>String Parition</em>}</li>
@@ -33,24 +33,24 @@ import org.eclipse.fx.code.compensator.hsl.hSL.Partition;
 public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeParitioner
 {
   /**
-   * The cached value of the '{@link #getSingleLineParition() <em>Single Line Parition</em>}' reference.
+   * The cached value of the '{@link #getSingleLineDocParition() <em>Single Line Doc Parition</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSingleLineParition()
+   * @see #getSingleLineDocParition()
    * @generated
    * @ordered
    */
-  protected Partition singleLineParition;
+  protected Partition singleLineDocParition;
 
   /**
-   * The cached value of the '{@link #getMultiLineParition() <em>Multi Line Parition</em>}' reference.
+   * The cached value of the '{@link #getMultiLineDocParition() <em>Multi Line Doc Parition</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMultiLineParition()
+   * @see #getMultiLineDocParition()
    * @generated
    * @ordered
    */
-  protected Partition multiLineParition;
+  protected Partition multiLineDocParition;
 
   /**
    * The cached value of the '{@link #getJavaDocParition() <em>Java Doc Parition</em>}' reference.
@@ -108,19 +108,19 @@ public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeP
    * <!-- end-user-doc -->
    * @generated
    */
-  public Partition getSingleLineParition()
+  public Partition getSingleLineDocParition()
   {
-    if (singleLineParition != null && singleLineParition.eIsProxy())
+    if (singleLineDocParition != null && singleLineDocParition.eIsProxy())
     {
-      InternalEObject oldSingleLineParition = (InternalEObject)singleLineParition;
-      singleLineParition = (Partition)eResolveProxy(oldSingleLineParition);
-      if (singleLineParition != oldSingleLineParition)
+      InternalEObject oldSingleLineDocParition = (InternalEObject)singleLineDocParition;
+      singleLineDocParition = (Partition)eResolveProxy(oldSingleLineDocParition);
+      if (singleLineDocParition != oldSingleLineDocParition)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION, oldSingleLineParition, singleLineParition));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION, oldSingleLineDocParition, singleLineDocParition));
       }
     }
-    return singleLineParition;
+    return singleLineDocParition;
   }
 
   /**
@@ -128,9 +128,9 @@ public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeP
    * <!-- end-user-doc -->
    * @generated
    */
-  public Partition basicGetSingleLineParition()
+  public Partition basicGetSingleLineDocParition()
   {
-    return singleLineParition;
+    return singleLineDocParition;
   }
 
   /**
@@ -138,12 +138,12 @@ public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeP
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSingleLineParition(Partition newSingleLineParition)
+  public void setSingleLineDocParition(Partition newSingleLineDocParition)
   {
-    Partition oldSingleLineParition = singleLineParition;
-    singleLineParition = newSingleLineParition;
+    Partition oldSingleLineDocParition = singleLineDocParition;
+    singleLineDocParition = newSingleLineDocParition;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION, oldSingleLineParition, singleLineParition));
+      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION, oldSingleLineDocParition, singleLineDocParition));
   }
 
   /**
@@ -151,19 +151,19 @@ public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeP
    * <!-- end-user-doc -->
    * @generated
    */
-  public Partition getMultiLineParition()
+  public Partition getMultiLineDocParition()
   {
-    if (multiLineParition != null && multiLineParition.eIsProxy())
+    if (multiLineDocParition != null && multiLineDocParition.eIsProxy())
     {
-      InternalEObject oldMultiLineParition = (InternalEObject)multiLineParition;
-      multiLineParition = (Partition)eResolveProxy(oldMultiLineParition);
-      if (multiLineParition != oldMultiLineParition)
+      InternalEObject oldMultiLineDocParition = (InternalEObject)multiLineDocParition;
+      multiLineDocParition = (Partition)eResolveProxy(oldMultiLineDocParition);
+      if (multiLineDocParition != oldMultiLineDocParition)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION, oldMultiLineParition, multiLineParition));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION, oldMultiLineDocParition, multiLineDocParition));
       }
     }
-    return multiLineParition;
+    return multiLineDocParition;
   }
 
   /**
@@ -171,9 +171,9 @@ public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeP
    * <!-- end-user-doc -->
    * @generated
    */
-  public Partition basicGetMultiLineParition()
+  public Partition basicGetMultiLineDocParition()
   {
-    return multiLineParition;
+    return multiLineDocParition;
   }
 
   /**
@@ -181,12 +181,12 @@ public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeP
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setMultiLineParition(Partition newMultiLineParition)
+  public void setMultiLineDocParition(Partition newMultiLineDocParition)
   {
-    Partition oldMultiLineParition = multiLineParition;
-    multiLineParition = newMultiLineParition;
+    Partition oldMultiLineDocParition = multiLineDocParition;
+    multiLineDocParition = newMultiLineDocParition;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION, oldMultiLineParition, multiLineParition));
+      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION, oldMultiLineDocParition, multiLineDocParition));
   }
 
   /**
@@ -328,12 +328,12 @@ public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeP
   {
     switch (featureID)
     {
-      case HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION:
-        if (resolve) return getSingleLineParition();
-        return basicGetSingleLineParition();
-      case HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION:
-        if (resolve) return getMultiLineParition();
-        return basicGetMultiLineParition();
+      case HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION:
+        if (resolve) return getSingleLineDocParition();
+        return basicGetSingleLineDocParition();
+      case HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION:
+        if (resolve) return getMultiLineDocParition();
+        return basicGetMultiLineDocParition();
       case HSLPackage.JAVA_LIKE_PARITIONER__JAVA_DOC_PARITION:
         if (resolve) return getJavaDocParition();
         return basicGetJavaDocParition();
@@ -357,11 +357,11 @@ public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeP
   {
     switch (featureID)
     {
-      case HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION:
-        setSingleLineParition((Partition)newValue);
+      case HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION:
+        setSingleLineDocParition((Partition)newValue);
         return;
-      case HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION:
-        setMultiLineParition((Partition)newValue);
+      case HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION:
+        setMultiLineDocParition((Partition)newValue);
         return;
       case HSLPackage.JAVA_LIKE_PARITIONER__JAVA_DOC_PARITION:
         setJavaDocParition((Partition)newValue);
@@ -386,11 +386,11 @@ public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeP
   {
     switch (featureID)
     {
-      case HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION:
-        setSingleLineParition((Partition)null);
+      case HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION:
+        setSingleLineDocParition((Partition)null);
         return;
-      case HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION:
-        setMultiLineParition((Partition)null);
+      case HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION:
+        setMultiLineDocParition((Partition)null);
         return;
       case HSLPackage.JAVA_LIKE_PARITIONER__JAVA_DOC_PARITION:
         setJavaDocParition((Partition)null);
@@ -415,10 +415,10 @@ public class JavaLikeParitionerImpl extends PartitionerImpl implements JavaLikeP
   {
     switch (featureID)
     {
-      case HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION:
-        return singleLineParition != null;
-      case HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION:
-        return multiLineParition != null;
+      case HSLPackage.JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION:
+        return singleLineDocParition != null;
+      case HSLPackage.JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION:
+        return multiLineDocParition != null;
       case HSLPackage.JAVA_LIKE_PARITIONER__JAVA_DOC_PARITION:
         return javaDocParition != null;
       case HSLPackage.JAVA_LIKE_PARITIONER__CHARACTER_PARITION:

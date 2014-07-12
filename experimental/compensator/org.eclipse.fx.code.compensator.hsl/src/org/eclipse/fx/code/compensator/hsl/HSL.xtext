@@ -20,11 +20,11 @@ Partitioner:
 
 JavaLikeParitioner:
 	'java-like-partitioner' '{'
-		singleLineParition=[Partition|ID]
-		multiLineParition=[Partition|ID]
-		javaDocParition=[Partition|ID]
-		characterParition=[Partition|ID]
-		stringParition=[Partition|ID]
+		'singlelinedoc' singleLineDocParition=[Partition|ID]
+		'multilinedoc' multiLineDocParition=[Partition|ID]
+		'javadoc' javaDocParition=[Partition|ID]
+		'char' characterParition=[Partition|ID]
+		'string' stringParition=[Partition|ID]
 	'}'
 ;
 
@@ -48,9 +48,9 @@ JSDamager:
 
 RuleDamager:
 	'rule-damager' partition=[Partition|ID] '{'
-		tokens+=ScannerToken*
-		keywordGroups +=KeywordGroup*
-		rules += ScannerRule+
+		tokens			+=ScannerToken*
+		keywordGroups 	+=KeywordGroup*
+		rules 			+= ScannerRule*
 	'}'
 ;
 
@@ -95,7 +95,7 @@ PartitionMultiLineRule:
 ;
 
 ScannerCharacterRule:
-	'character-rule' token=[ScannerToken|ID] '[' characters+=STRING (',' ) characters+=STRING ']'
+	'character-rule' token=[ScannerToken|ID] '[' characters+=STRING (',' characters+=STRING)* ']'
 ;
 
 ScannerJSRule:
@@ -107,7 +107,7 @@ PartitionJSRule:
 ;
 
 ScannerWhitespaceRule:
-	'whitespace-rule' (token=[ScannerToken|ID])? ('[' characters+=STRING (',' characters+=STRING )* ']') | ('#{' jsDetector=ANY_OTHER '}#')
+	'whitespace-rule' (token=[ScannerToken|ID])? (('[' characters+=STRING (',' characters+=STRING )* ']') | javawhitespace?='javawhitespace' | fileURI=STRING)
 ;
 
 Color:

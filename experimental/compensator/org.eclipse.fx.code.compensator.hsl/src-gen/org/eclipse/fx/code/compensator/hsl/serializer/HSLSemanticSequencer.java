@@ -229,8 +229,8 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	/**
 	 * Constraint:
 	 *     (
-	 *         singleLineParition=[Partition|ID] 
-	 *         multiLineParition=[Partition|ID] 
+	 *         singleLineDocParition=[Partition|ID] 
+	 *         multiLineDocParition=[Partition|ID] 
 	 *         javaDocParition=[Partition|ID] 
 	 *         characterParition=[Partition|ID] 
 	 *         stringParition=[Partition|ID]
@@ -238,10 +238,10 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 */
 	protected void sequence_JavaLikeParitioner(EObject context, JavaLikeParitioner semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION));
-			if(transientValues.isValueTransient(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION));
+			if(transientValues.isValueTransient(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION));
+			if(transientValues.isValueTransient(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION));
 			if(transientValues.isValueTransient(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__JAVA_DOC_PARITION) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__JAVA_DOC_PARITION));
 			if(transientValues.isValueTransient(semanticObject, HSLPackage.Literals.JAVA_LIKE_PARITIONER__CHARACTER_PARITION) == ValueTransient.YES)
@@ -251,11 +251,11 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getJavaLikeParitionerAccess().getSingleLineParitionPartitionIDTerminalRuleCall_2_0_1(), semanticObject.getSingleLineParition());
-		feeder.accept(grammarAccess.getJavaLikeParitionerAccess().getMultiLineParitionPartitionIDTerminalRuleCall_3_0_1(), semanticObject.getMultiLineParition());
-		feeder.accept(grammarAccess.getJavaLikeParitionerAccess().getJavaDocParitionPartitionIDTerminalRuleCall_4_0_1(), semanticObject.getJavaDocParition());
-		feeder.accept(grammarAccess.getJavaLikeParitionerAccess().getCharacterParitionPartitionIDTerminalRuleCall_5_0_1(), semanticObject.getCharacterParition());
-		feeder.accept(grammarAccess.getJavaLikeParitionerAccess().getStringParitionPartitionIDTerminalRuleCall_6_0_1(), semanticObject.getStringParition());
+		feeder.accept(grammarAccess.getJavaLikeParitionerAccess().getSingleLineDocParitionPartitionIDTerminalRuleCall_3_0_1(), semanticObject.getSingleLineDocParition());
+		feeder.accept(grammarAccess.getJavaLikeParitionerAccess().getMultiLineDocParitionPartitionIDTerminalRuleCall_5_0_1(), semanticObject.getMultiLineDocParition());
+		feeder.accept(grammarAccess.getJavaLikeParitionerAccess().getJavaDocParitionPartitionIDTerminalRuleCall_7_0_1(), semanticObject.getJavaDocParition());
+		feeder.accept(grammarAccess.getJavaLikeParitionerAccess().getCharacterParitionPartitionIDTerminalRuleCall_9_0_1(), semanticObject.getCharacterParition());
+		feeder.accept(grammarAccess.getJavaLikeParitionerAccess().getStringParitionPartitionIDTerminalRuleCall_11_0_1(), semanticObject.getStringParition());
 		feeder.finish();
 	}
 	
@@ -364,7 +364,7 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (partition=[Partition|ID] tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule+)
+	 *     (partition=[Partition|ID] tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule*)
 	 */
 	protected void sequence_RuleDamager(EObject context, RuleDamager semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -382,7 +382,7 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (token=[ScannerToken|ID] characters+=STRING characters+=STRING)
+	 *     (token=[ScannerToken|ID] characters+=STRING characters+=STRING*)
 	 */
 	protected void sequence_ScannerCharacterRule(EObject context, ScannerCharacterRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -437,7 +437,7 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     ((token=[ScannerToken|ID]? characters+=STRING characters+=STRING*) | jsDetector=ANY_OTHER)
+	 *     (token=[ScannerToken|ID]? ((characters+=STRING characters+=STRING*) | javawhitespace?='javawhitespace' | fileURI=STRING))
 	 */
 	protected void sequence_ScannerWhitespaceRule(EObject context, ScannerWhitespaceRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

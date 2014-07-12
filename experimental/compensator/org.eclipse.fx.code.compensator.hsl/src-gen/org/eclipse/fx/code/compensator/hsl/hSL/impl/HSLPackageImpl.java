@@ -397,7 +397,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getJavaLikeParitioner_SingleLineParition()
+  public EReference getJavaLikeParitioner_SingleLineDocParition()
   {
     return (EReference)javaLikeParitionerEClass.getEStructuralFeatures().get(0);
   }
@@ -407,7 +407,7 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getJavaLikeParitioner_MultiLineParition()
+  public EReference getJavaLikeParitioner_MultiLineDocParition()
   {
     return (EReference)javaLikeParitionerEClass.getEStructuralFeatures().get(1);
   }
@@ -987,9 +987,19 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getScannerWhitespaceRule_JsDetector()
+  public EAttribute getScannerWhitespaceRule_Javawhitespace()
   {
     return (EAttribute)scannerWhitespaceRuleEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getScannerWhitespaceRule_FileURI()
+  {
+    return (EAttribute)scannerWhitespaceRuleEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1135,8 +1145,8 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     partitionerEClass = createEClass(PARTITIONER);
 
     javaLikeParitionerEClass = createEClass(JAVA_LIKE_PARITIONER);
-    createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION);
-    createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION);
+    createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION);
+    createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION);
     createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__JAVA_DOC_PARITION);
     createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__CHARACTER_PARITION);
     createEReference(javaLikeParitionerEClass, JAVA_LIKE_PARITIONER__STRING_PARITION);
@@ -1212,7 +1222,8 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
 
     scannerWhitespaceRuleEClass = createEClass(SCANNER_WHITESPACE_RULE);
     createEAttribute(scannerWhitespaceRuleEClass, SCANNER_WHITESPACE_RULE__CHARACTERS);
-    createEAttribute(scannerWhitespaceRuleEClass, SCANNER_WHITESPACE_RULE__JS_DETECTOR);
+    createEAttribute(scannerWhitespaceRuleEClass, SCANNER_WHITESPACE_RULE__JAVAWHITESPACE);
+    createEAttribute(scannerWhitespaceRuleEClass, SCANNER_WHITESPACE_RULE__FILE_URI);
 
     colorEClass = createEClass(COLOR);
 
@@ -1288,8 +1299,8 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     initEClass(partitionerEClass, Partitioner.class, "Partitioner", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(javaLikeParitionerEClass, JavaLikeParitioner.class, "JavaLikeParitioner", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getJavaLikeParitioner_SingleLineParition(), this.getPartition(), null, "singleLineParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getJavaLikeParitioner_MultiLineParition(), this.getPartition(), null, "multiLineParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getJavaLikeParitioner_SingleLineDocParition(), this.getPartition(), null, "singleLineDocParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getJavaLikeParitioner_MultiLineDocParition(), this.getPartition(), null, "multiLineDocParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getJavaLikeParitioner_JavaDocParition(), this.getPartition(), null, "javaDocParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getJavaLikeParitioner_CharacterParition(), this.getPartition(), null, "characterParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getJavaLikeParitioner_StringParition(), this.getPartition(), null, "stringParition", null, 0, 1, JavaLikeParitioner.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1365,7 +1376,8 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
 
     initEClass(scannerWhitespaceRuleEClass, ScannerWhitespaceRule.class, "ScannerWhitespaceRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScannerWhitespaceRule_Characters(), ecorePackage.getEString(), "characters", null, 0, -1, ScannerWhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getScannerWhitespaceRule_JsDetector(), ecorePackage.getEString(), "jsDetector", null, 0, 1, ScannerWhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getScannerWhitespaceRule_Javawhitespace(), ecorePackage.getEBoolean(), "javawhitespace", null, 0, 1, ScannerWhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getScannerWhitespaceRule_FileURI(), ecorePackage.getEString(), "fileURI", null, 0, 1, ScannerWhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(colorEClass, Color.class, "Color", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

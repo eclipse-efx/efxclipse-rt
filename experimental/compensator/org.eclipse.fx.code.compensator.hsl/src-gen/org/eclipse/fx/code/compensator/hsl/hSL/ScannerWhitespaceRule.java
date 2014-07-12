@@ -13,7 +13,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getCharacters <em>Characters</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getJsDetector <em>Js Detector</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#isJavawhitespace <em>Javawhitespace</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getFileURI <em>File URI</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,29 +41,55 @@ public interface ScannerWhitespaceRule extends ScannerRule
   EList<String> getCharacters();
 
   /**
-   * Returns the value of the '<em><b>Js Detector</b></em>' attribute.
+   * Returns the value of the '<em><b>Javawhitespace</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Js Detector</em>' attribute isn't clear,
+   * If the meaning of the '<em>Javawhitespace</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Js Detector</em>' attribute.
-   * @see #setJsDetector(String)
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getScannerWhitespaceRule_JsDetector()
+   * @return the value of the '<em>Javawhitespace</em>' attribute.
+   * @see #setJavawhitespace(boolean)
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getScannerWhitespaceRule_Javawhitespace()
    * @model
    * @generated
    */
-  String getJsDetector();
+  boolean isJavawhitespace();
 
   /**
-   * Sets the value of the '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getJsDetector <em>Js Detector</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#isJavawhitespace <em>Javawhitespace</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Js Detector</em>' attribute.
-   * @see #getJsDetector()
+   * @param value the new value of the '<em>Javawhitespace</em>' attribute.
+   * @see #isJavawhitespace()
    * @generated
    */
-  void setJsDetector(String value);
+  void setJavawhitespace(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>File URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>File URI</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>File URI</em>' attribute.
+   * @see #setFileURI(String)
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getScannerWhitespaceRule_FileURI()
+   * @model
+   * @generated
+   */
+  String getFileURI();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getFileURI <em>File URI</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>File URI</em>' attribute.
+   * @see #getFileURI()
+   * @generated
+   */
+  void setFileURI(String value);
 
 } // ScannerWhitespaceRule

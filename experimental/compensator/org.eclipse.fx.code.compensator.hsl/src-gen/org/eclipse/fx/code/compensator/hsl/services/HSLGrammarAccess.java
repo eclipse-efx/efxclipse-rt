@@ -135,30 +135,37 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cJavaLikePartitionerKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cSingleLineParitionAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cSingleLineParitionPartitionCrossReference_2_0 = (CrossReference)cSingleLineParitionAssignment_2.eContents().get(0);
-		private final RuleCall cSingleLineParitionPartitionIDTerminalRuleCall_2_0_1 = (RuleCall)cSingleLineParitionPartitionCrossReference_2_0.eContents().get(1);
-		private final Assignment cMultiLineParitionAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final CrossReference cMultiLineParitionPartitionCrossReference_3_0 = (CrossReference)cMultiLineParitionAssignment_3.eContents().get(0);
-		private final RuleCall cMultiLineParitionPartitionIDTerminalRuleCall_3_0_1 = (RuleCall)cMultiLineParitionPartitionCrossReference_3_0.eContents().get(1);
-		private final Assignment cJavaDocParitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final CrossReference cJavaDocParitionPartitionCrossReference_4_0 = (CrossReference)cJavaDocParitionAssignment_4.eContents().get(0);
-		private final RuleCall cJavaDocParitionPartitionIDTerminalRuleCall_4_0_1 = (RuleCall)cJavaDocParitionPartitionCrossReference_4_0.eContents().get(1);
-		private final Assignment cCharacterParitionAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final CrossReference cCharacterParitionPartitionCrossReference_5_0 = (CrossReference)cCharacterParitionAssignment_5.eContents().get(0);
-		private final RuleCall cCharacterParitionPartitionIDTerminalRuleCall_5_0_1 = (RuleCall)cCharacterParitionPartitionCrossReference_5_0.eContents().get(1);
-		private final Assignment cStringParitionAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final CrossReference cStringParitionPartitionCrossReference_6_0 = (CrossReference)cStringParitionAssignment_6.eContents().get(0);
-		private final RuleCall cStringParitionPartitionIDTerminalRuleCall_6_0_1 = (RuleCall)cStringParitionPartitionCrossReference_6_0.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Keyword cSinglelinedocKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cSingleLineDocParitionAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cSingleLineDocParitionPartitionCrossReference_3_0 = (CrossReference)cSingleLineDocParitionAssignment_3.eContents().get(0);
+		private final RuleCall cSingleLineDocParitionPartitionIDTerminalRuleCall_3_0_1 = (RuleCall)cSingleLineDocParitionPartitionCrossReference_3_0.eContents().get(1);
+		private final Keyword cMultilinedocKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cMultiLineDocParitionAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final CrossReference cMultiLineDocParitionPartitionCrossReference_5_0 = (CrossReference)cMultiLineDocParitionAssignment_5.eContents().get(0);
+		private final RuleCall cMultiLineDocParitionPartitionIDTerminalRuleCall_5_0_1 = (RuleCall)cMultiLineDocParitionPartitionCrossReference_5_0.eContents().get(1);
+		private final Keyword cJavadocKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cJavaDocParitionAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final CrossReference cJavaDocParitionPartitionCrossReference_7_0 = (CrossReference)cJavaDocParitionAssignment_7.eContents().get(0);
+		private final RuleCall cJavaDocParitionPartitionIDTerminalRuleCall_7_0_1 = (RuleCall)cJavaDocParitionPartitionCrossReference_7_0.eContents().get(1);
+		private final Keyword cCharKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cCharacterParitionAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final CrossReference cCharacterParitionPartitionCrossReference_9_0 = (CrossReference)cCharacterParitionAssignment_9.eContents().get(0);
+		private final RuleCall cCharacterParitionPartitionIDTerminalRuleCall_9_0_1 = (RuleCall)cCharacterParitionPartitionCrossReference_9_0.eContents().get(1);
+		private final Keyword cStringKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		private final Assignment cStringParitionAssignment_11 = (Assignment)cGroup.eContents().get(11);
+		private final CrossReference cStringParitionPartitionCrossReference_11_0 = (CrossReference)cStringParitionAssignment_11.eContents().get(0);
+		private final RuleCall cStringParitionPartitionIDTerminalRuleCall_11_0_1 = (RuleCall)cStringParitionPartitionCrossReference_11_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_12 = (Keyword)cGroup.eContents().get(12);
 		
 		//JavaLikeParitioner:
-		//	"java-like-partitioner" "{" singleLineParition=[Partition] multiLineParition=[Partition] javaDocParition=[Partition]
-		//	characterParition=[Partition] stringParition=[Partition] "}";
+		//	"java-like-partitioner" "{" "singlelinedoc" singleLineDocParition=[Partition] "multilinedoc"
+		//	multiLineDocParition=[Partition] "javadoc" javaDocParition=[Partition] "char" characterParition=[Partition] "string"
+		//	stringParition=[Partition] "}";
 		public ParserRule getRule() { return rule; }
 
-		//"java-like-partitioner" "{" singleLineParition=[Partition] multiLineParition=[Partition] javaDocParition=[Partition]
-		//characterParition=[Partition] stringParition=[Partition] "}"
+		//"java-like-partitioner" "{" "singlelinedoc" singleLineDocParition=[Partition] "multilinedoc"
+		//multiLineDocParition=[Partition] "javadoc" javaDocParition=[Partition] "char" characterParition=[Partition] "string"
+		//stringParition=[Partition] "}"
 		public Group getGroup() { return cGroup; }
 
 		//"java-like-partitioner"
@@ -167,53 +174,68 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
 
-		//singleLineParition=[Partition]
-		public Assignment getSingleLineParitionAssignment_2() { return cSingleLineParitionAssignment_2; }
+		//"singlelinedoc"
+		public Keyword getSinglelinedocKeyword_2() { return cSinglelinedocKeyword_2; }
+
+		//singleLineDocParition=[Partition]
+		public Assignment getSingleLineDocParitionAssignment_3() { return cSingleLineDocParitionAssignment_3; }
 
 		//[Partition]
-		public CrossReference getSingleLineParitionPartitionCrossReference_2_0() { return cSingleLineParitionPartitionCrossReference_2_0; }
+		public CrossReference getSingleLineDocParitionPartitionCrossReference_3_0() { return cSingleLineDocParitionPartitionCrossReference_3_0; }
 
 		//ID
-		public RuleCall getSingleLineParitionPartitionIDTerminalRuleCall_2_0_1() { return cSingleLineParitionPartitionIDTerminalRuleCall_2_0_1; }
+		public RuleCall getSingleLineDocParitionPartitionIDTerminalRuleCall_3_0_1() { return cSingleLineDocParitionPartitionIDTerminalRuleCall_3_0_1; }
 
-		//multiLineParition=[Partition]
-		public Assignment getMultiLineParitionAssignment_3() { return cMultiLineParitionAssignment_3; }
+		//"multilinedoc"
+		public Keyword getMultilinedocKeyword_4() { return cMultilinedocKeyword_4; }
+
+		//multiLineDocParition=[Partition]
+		public Assignment getMultiLineDocParitionAssignment_5() { return cMultiLineDocParitionAssignment_5; }
 
 		//[Partition]
-		public CrossReference getMultiLineParitionPartitionCrossReference_3_0() { return cMultiLineParitionPartitionCrossReference_3_0; }
+		public CrossReference getMultiLineDocParitionPartitionCrossReference_5_0() { return cMultiLineDocParitionPartitionCrossReference_5_0; }
 
 		//ID
-		public RuleCall getMultiLineParitionPartitionIDTerminalRuleCall_3_0_1() { return cMultiLineParitionPartitionIDTerminalRuleCall_3_0_1; }
+		public RuleCall getMultiLineDocParitionPartitionIDTerminalRuleCall_5_0_1() { return cMultiLineDocParitionPartitionIDTerminalRuleCall_5_0_1; }
+
+		//"javadoc"
+		public Keyword getJavadocKeyword_6() { return cJavadocKeyword_6; }
 
 		//javaDocParition=[Partition]
-		public Assignment getJavaDocParitionAssignment_4() { return cJavaDocParitionAssignment_4; }
+		public Assignment getJavaDocParitionAssignment_7() { return cJavaDocParitionAssignment_7; }
 
 		//[Partition]
-		public CrossReference getJavaDocParitionPartitionCrossReference_4_0() { return cJavaDocParitionPartitionCrossReference_4_0; }
+		public CrossReference getJavaDocParitionPartitionCrossReference_7_0() { return cJavaDocParitionPartitionCrossReference_7_0; }
 
 		//ID
-		public RuleCall getJavaDocParitionPartitionIDTerminalRuleCall_4_0_1() { return cJavaDocParitionPartitionIDTerminalRuleCall_4_0_1; }
+		public RuleCall getJavaDocParitionPartitionIDTerminalRuleCall_7_0_1() { return cJavaDocParitionPartitionIDTerminalRuleCall_7_0_1; }
+
+		//"char"
+		public Keyword getCharKeyword_8() { return cCharKeyword_8; }
 
 		//characterParition=[Partition]
-		public Assignment getCharacterParitionAssignment_5() { return cCharacterParitionAssignment_5; }
+		public Assignment getCharacterParitionAssignment_9() { return cCharacterParitionAssignment_9; }
 
 		//[Partition]
-		public CrossReference getCharacterParitionPartitionCrossReference_5_0() { return cCharacterParitionPartitionCrossReference_5_0; }
+		public CrossReference getCharacterParitionPartitionCrossReference_9_0() { return cCharacterParitionPartitionCrossReference_9_0; }
 
 		//ID
-		public RuleCall getCharacterParitionPartitionIDTerminalRuleCall_5_0_1() { return cCharacterParitionPartitionIDTerminalRuleCall_5_0_1; }
+		public RuleCall getCharacterParitionPartitionIDTerminalRuleCall_9_0_1() { return cCharacterParitionPartitionIDTerminalRuleCall_9_0_1; }
+
+		//"string"
+		public Keyword getStringKeyword_10() { return cStringKeyword_10; }
 
 		//stringParition=[Partition]
-		public Assignment getStringParitionAssignment_6() { return cStringParitionAssignment_6; }
+		public Assignment getStringParitionAssignment_11() { return cStringParitionAssignment_11; }
 
 		//[Partition]
-		public CrossReference getStringParitionPartitionCrossReference_6_0() { return cStringParitionPartitionCrossReference_6_0; }
+		public CrossReference getStringParitionPartitionCrossReference_11_0() { return cStringParitionPartitionCrossReference_11_0; }
 
 		//ID
-		public RuleCall getStringParitionPartitionIDTerminalRuleCall_6_0_1() { return cStringParitionPartitionIDTerminalRuleCall_6_0_1; }
+		public RuleCall getStringParitionPartitionIDTerminalRuleCall_11_0_1() { return cStringParitionPartitionIDTerminalRuleCall_11_0_1; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
+		public Keyword getRightCurlyBracketKeyword_12() { return cRightCurlyBracketKeyword_12; }
 	}
 
 	public class RulePartitionerElements extends AbstractParserRuleElementFinder {
@@ -345,10 +367,10 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//RuleDamager:
-		//	"rule-damager" partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule+ "}";
+		//	"rule-damager" partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"rule-damager" partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule+ "}"
+		//"rule-damager" partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule* "}"
 		public Group getGroup() { return cGroup; }
 
 		//"rule-damager"
@@ -378,7 +400,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		//KeywordGroup
 		public RuleCall getKeywordGroupsKeywordGroupParserRuleCall_4_0() { return cKeywordGroupsKeywordGroupParserRuleCall_4_0; }
 
-		//rules+=ScannerRule+
+		//rules+=ScannerRule*
 		public Assignment getRulesAssignment_5() { return cRulesAssignment_5; }
 
 		//ScannerRule
@@ -928,16 +950,17 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftSquareBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cCharactersAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cCharactersSTRINGTerminalRuleCall_3_0 = (RuleCall)cCharactersAssignment_3.eContents().get(0);
-		private final Keyword cCommaKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cCharactersAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cCharactersSTRINGTerminalRuleCall_5_0 = (RuleCall)cCharactersAssignment_5.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cCharactersAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cCharactersSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cCharactersAssignment_4_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//ScannerCharacterRule:
-		//	"character-rule" token=[ScannerToken] "[" characters+=STRING "," characters+=STRING "]";
+		//	"character-rule" token=[ScannerToken] "[" characters+=STRING ("," characters+=STRING)* "]";
 		public ParserRule getRule() { return rule; }
 
-		//"character-rule" token=[ScannerToken] "[" characters+=STRING "," characters+=STRING "]"
+		//"character-rule" token=[ScannerToken] "[" characters+=STRING ("," characters+=STRING)* "]"
 		public Group getGroup() { return cGroup; }
 
 		//"character-rule"
@@ -961,17 +984,20 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getCharactersSTRINGTerminalRuleCall_3_0() { return cCharactersSTRINGTerminalRuleCall_3_0; }
 
+		//("," characters+=STRING)*
+		public Group getGroup_4() { return cGroup_4; }
+
 		//","
-		public Keyword getCommaKeyword_4() { return cCommaKeyword_4; }
+		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
 
 		//characters+=STRING
-		public Assignment getCharactersAssignment_5() { return cCharactersAssignment_5; }
+		public Assignment getCharactersAssignment_4_1() { return cCharactersAssignment_4_1; }
 
 		//STRING
-		public RuleCall getCharactersSTRINGTerminalRuleCall_5_0() { return cCharactersSTRINGTerminalRuleCall_5_0; }
+		public RuleCall getCharactersSTRINGTerminalRuleCall_4_1_0() { return cCharactersSTRINGTerminalRuleCall_4_1_0; }
 
 		//"]"
-		public Keyword getRightSquareBracketKeyword_6() { return cRightSquareBracketKeyword_6; }
+		public Keyword getRightSquareBracketKeyword_5() { return cRightSquareBracketKeyword_5; }
 	}
 
 	public class ScannerJSRuleElements extends AbstractParserRuleElementFinder {
@@ -1048,92 +1074,88 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class ScannerWhitespaceRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ScannerWhitespaceRule");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Keyword cWhitespaceRuleKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Assignment cTokenAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final CrossReference cTokenScannerTokenCrossReference_0_1_0 = (CrossReference)cTokenAssignment_0_1.eContents().get(0);
-		private final RuleCall cTokenScannerTokenIDTerminalRuleCall_0_1_0_1 = (RuleCall)cTokenScannerTokenCrossReference_0_1_0.eContents().get(1);
-		private final Group cGroup_0_2 = (Group)cGroup_0.eContents().get(2);
-		private final Keyword cLeftSquareBracketKeyword_0_2_0 = (Keyword)cGroup_0_2.eContents().get(0);
-		private final Assignment cCharactersAssignment_0_2_1 = (Assignment)cGroup_0_2.eContents().get(1);
-		private final RuleCall cCharactersSTRINGTerminalRuleCall_0_2_1_0 = (RuleCall)cCharactersAssignment_0_2_1.eContents().get(0);
-		private final Group cGroup_0_2_2 = (Group)cGroup_0_2.eContents().get(2);
-		private final Keyword cCommaKeyword_0_2_2_0 = (Keyword)cGroup_0_2_2.eContents().get(0);
-		private final Assignment cCharactersAssignment_0_2_2_1 = (Assignment)cGroup_0_2_2.eContents().get(1);
-		private final RuleCall cCharactersSTRINGTerminalRuleCall_0_2_2_1_0 = (RuleCall)cCharactersAssignment_0_2_2_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_0_2_3 = (Keyword)cGroup_0_2.eContents().get(3);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Keyword cNumberSignLeftCurlyBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cJsDetectorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cJsDetectorANY_OTHERTerminalRuleCall_1_1_0 = (RuleCall)cJsDetectorAssignment_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketNumberSignKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cWhitespaceRuleKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cTokenAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cTokenScannerTokenCrossReference_1_0 = (CrossReference)cTokenAssignment_1.eContents().get(0);
+		private final RuleCall cTokenScannerTokenIDTerminalRuleCall_1_0_1 = (RuleCall)cTokenScannerTokenCrossReference_1_0.eContents().get(1);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cCharactersAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cCharactersSTRINGTerminalRuleCall_2_0_1_0 = (RuleCall)cCharactersAssignment_2_0_1.eContents().get(0);
+		private final Group cGroup_2_0_2 = (Group)cGroup_2_0.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0_2_0 = (Keyword)cGroup_2_0_2.eContents().get(0);
+		private final Assignment cCharactersAssignment_2_0_2_1 = (Assignment)cGroup_2_0_2.eContents().get(1);
+		private final RuleCall cCharactersSTRINGTerminalRuleCall_2_0_2_1_0 = (RuleCall)cCharactersAssignment_2_0_2_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2_0_3 = (Keyword)cGroup_2_0.eContents().get(3);
+		private final Assignment cJavawhitespaceAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final Keyword cJavawhitespaceJavawhitespaceKeyword_2_1_0 = (Keyword)cJavawhitespaceAssignment_2_1.eContents().get(0);
+		private final Assignment cFileURIAssignment_2_2 = (Assignment)cAlternatives_2.eContents().get(2);
+		private final RuleCall cFileURISTRINGTerminalRuleCall_2_2_0 = (RuleCall)cFileURIAssignment_2_2.eContents().get(0);
 		
 		//ScannerWhitespaceRule:
-		//	"whitespace-rule" token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]") | "#{"
-		//	jsDetector=ANY_OTHER "}#";
+		//	"whitespace-rule" token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]" |
+		//	javawhitespace?="javawhitespace" | fileURI=STRING);
 		public ParserRule getRule() { return rule; }
 
-		//"whitespace-rule" token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]") | "#{"
-		//jsDetector=ANY_OTHER "}#"
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//"whitespace-rule" token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]")
-		public Group getGroup_0() { return cGroup_0; }
+		//"whitespace-rule" token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]" |
+		//javawhitespace?="javawhitespace" | fileURI=STRING)
+		public Group getGroup() { return cGroup; }
 
 		//"whitespace-rule"
-		public Keyword getWhitespaceRuleKeyword_0_0() { return cWhitespaceRuleKeyword_0_0; }
+		public Keyword getWhitespaceRuleKeyword_0() { return cWhitespaceRuleKeyword_0; }
 
 		//token=[ScannerToken]?
-		public Assignment getTokenAssignment_0_1() { return cTokenAssignment_0_1; }
+		public Assignment getTokenAssignment_1() { return cTokenAssignment_1; }
 
 		//[ScannerToken]
-		public CrossReference getTokenScannerTokenCrossReference_0_1_0() { return cTokenScannerTokenCrossReference_0_1_0; }
+		public CrossReference getTokenScannerTokenCrossReference_1_0() { return cTokenScannerTokenCrossReference_1_0; }
 
 		//ID
-		public RuleCall getTokenScannerTokenIDTerminalRuleCall_0_1_0_1() { return cTokenScannerTokenIDTerminalRuleCall_0_1_0_1; }
+		public RuleCall getTokenScannerTokenIDTerminalRuleCall_1_0_1() { return cTokenScannerTokenIDTerminalRuleCall_1_0_1; }
+
+		//"[" characters+=STRING ("," characters+=STRING)* "]" | javawhitespace?="javawhitespace" | fileURI=STRING
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//"[" characters+=STRING ("," characters+=STRING)* "]"
-		public Group getGroup_0_2() { return cGroup_0_2; }
+		public Group getGroup_2_0() { return cGroup_2_0; }
 
 		//"["
-		public Keyword getLeftSquareBracketKeyword_0_2_0() { return cLeftSquareBracketKeyword_0_2_0; }
+		public Keyword getLeftSquareBracketKeyword_2_0_0() { return cLeftSquareBracketKeyword_2_0_0; }
 
 		//characters+=STRING
-		public Assignment getCharactersAssignment_0_2_1() { return cCharactersAssignment_0_2_1; }
+		public Assignment getCharactersAssignment_2_0_1() { return cCharactersAssignment_2_0_1; }
 
 		//STRING
-		public RuleCall getCharactersSTRINGTerminalRuleCall_0_2_1_0() { return cCharactersSTRINGTerminalRuleCall_0_2_1_0; }
+		public RuleCall getCharactersSTRINGTerminalRuleCall_2_0_1_0() { return cCharactersSTRINGTerminalRuleCall_2_0_1_0; }
 
 		//("," characters+=STRING)*
-		public Group getGroup_0_2_2() { return cGroup_0_2_2; }
+		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
 
 		//","
-		public Keyword getCommaKeyword_0_2_2_0() { return cCommaKeyword_0_2_2_0; }
+		public Keyword getCommaKeyword_2_0_2_0() { return cCommaKeyword_2_0_2_0; }
 
 		//characters+=STRING
-		public Assignment getCharactersAssignment_0_2_2_1() { return cCharactersAssignment_0_2_2_1; }
+		public Assignment getCharactersAssignment_2_0_2_1() { return cCharactersAssignment_2_0_2_1; }
 
 		//STRING
-		public RuleCall getCharactersSTRINGTerminalRuleCall_0_2_2_1_0() { return cCharactersSTRINGTerminalRuleCall_0_2_2_1_0; }
+		public RuleCall getCharactersSTRINGTerminalRuleCall_2_0_2_1_0() { return cCharactersSTRINGTerminalRuleCall_2_0_2_1_0; }
 
 		//"]"
-		public Keyword getRightSquareBracketKeyword_0_2_3() { return cRightSquareBracketKeyword_0_2_3; }
+		public Keyword getRightSquareBracketKeyword_2_0_3() { return cRightSquareBracketKeyword_2_0_3; }
 
-		//"#{" jsDetector=ANY_OTHER "}#"
-		public Group getGroup_1() { return cGroup_1; }
+		//javawhitespace?="javawhitespace"
+		public Assignment getJavawhitespaceAssignment_2_1() { return cJavawhitespaceAssignment_2_1; }
 
-		//"#{"
-		public Keyword getNumberSignLeftCurlyBracketKeyword_1_0() { return cNumberSignLeftCurlyBracketKeyword_1_0; }
+		//"javawhitespace"
+		public Keyword getJavawhitespaceJavawhitespaceKeyword_2_1_0() { return cJavawhitespaceJavawhitespaceKeyword_2_1_0; }
 
-		//jsDetector=ANY_OTHER
-		public Assignment getJsDetectorAssignment_1_1() { return cJsDetectorAssignment_1_1; }
+		//fileURI=STRING
+		public Assignment getFileURIAssignment_2_2() { return cFileURIAssignment_2_2; }
 
-		//ANY_OTHER
-		public RuleCall getJsDetectorANY_OTHERTerminalRuleCall_1_1_0() { return cJsDetectorANY_OTHERTerminalRuleCall_1_1_0; }
-
-		//"}#"
-		public Keyword getRightCurlyBracketNumberSignKeyword_1_2() { return cRightCurlyBracketNumberSignKeyword_1_2; }
+		//STRING
+		public RuleCall getFileURISTRINGTerminalRuleCall_2_2_0() { return cFileURISTRINGTerminalRuleCall_2_2_0; }
 	}
 
 	public class ColorElements extends AbstractParserRuleElementFinder {
@@ -1381,8 +1403,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JavaLikeParitioner:
-	//	"java-like-partitioner" "{" singleLineParition=[Partition] multiLineParition=[Partition] javaDocParition=[Partition]
-	//	characterParition=[Partition] stringParition=[Partition] "}";
+	//	"java-like-partitioner" "{" "singlelinedoc" singleLineDocParition=[Partition] "multilinedoc"
+	//	multiLineDocParition=[Partition] "javadoc" javaDocParition=[Partition] "char" characterParition=[Partition] "string"
+	//	stringParition=[Partition] "}";
 	public JavaLikeParitionerElements getJavaLikeParitionerAccess() {
 		return (pJavaLikeParitioner != null) ? pJavaLikeParitioner : (pJavaLikeParitioner = new JavaLikeParitionerElements());
 	}
@@ -1432,7 +1455,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RuleDamager:
-	//	"rule-damager" partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule+ "}";
+	//	"rule-damager" partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule* "}";
 	public RuleDamagerElements getRuleDamagerAccess() {
 		return (pRuleDamager != null) ? pRuleDamager : (pRuleDamager = new RuleDamagerElements());
 	}
@@ -1533,7 +1556,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScannerCharacterRule:
-	//	"character-rule" token=[ScannerToken] "[" characters+=STRING "," characters+=STRING "]";
+	//	"character-rule" token=[ScannerToken] "[" characters+=STRING ("," characters+=STRING)* "]";
 	public ScannerCharacterRuleElements getScannerCharacterRuleAccess() {
 		return (pScannerCharacterRule != null) ? pScannerCharacterRule : (pScannerCharacterRule = new ScannerCharacterRuleElements());
 	}
@@ -1563,8 +1586,8 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScannerWhitespaceRule:
-	//	"whitespace-rule" token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]") | "#{"
-	//	jsDetector=ANY_OTHER "}#";
+	//	"whitespace-rule" token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]" |
+	//	javawhitespace?="javawhitespace" | fileURI=STRING);
 	public ScannerWhitespaceRuleElements getScannerWhitespaceRuleAccess() {
 		return (pScannerWhitespaceRule != null) ? pScannerWhitespaceRule : (pScannerWhitespaceRule = new ScannerWhitespaceRuleElements());
 	}

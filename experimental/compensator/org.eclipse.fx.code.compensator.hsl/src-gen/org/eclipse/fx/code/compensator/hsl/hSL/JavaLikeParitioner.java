@@ -11,8 +11,8 @@ package org.eclipse.fx.code.compensator.hsl.hSL;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getSingleLineParition <em>Single Line Parition</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getMultiLineParition <em>Multi Line Parition</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getSingleLineDocParition <em>Single Line Doc Parition</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getMultiLineDocParition <em>Multi Line Doc Parition</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getJavaDocParition <em>Java Doc Parition</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getCharacterParition <em>Character Parition</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getStringParition <em>String Parition</em>}</li>
@@ -26,56 +26,56 @@ package org.eclipse.fx.code.compensator.hsl.hSL;
 public interface JavaLikeParitioner extends Partitioner
 {
   /**
-   * Returns the value of the '<em><b>Single Line Parition</b></em>' reference.
+   * Returns the value of the '<em><b>Single Line Doc Parition</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Single Line Parition</em>' reference isn't clear,
+   * If the meaning of the '<em>Single Line Doc Parition</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Single Line Parition</em>' reference.
-   * @see #setSingleLineParition(Partition)
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getJavaLikeParitioner_SingleLineParition()
+   * @return the value of the '<em>Single Line Doc Parition</em>' reference.
+   * @see #setSingleLineDocParition(Partition)
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getJavaLikeParitioner_SingleLineDocParition()
    * @model
    * @generated
    */
-  Partition getSingleLineParition();
+  Partition getSingleLineDocParition();
 
   /**
-   * Sets the value of the '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getSingleLineParition <em>Single Line Parition</em>}' reference.
+   * Sets the value of the '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getSingleLineDocParition <em>Single Line Doc Parition</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Single Line Parition</em>' reference.
-   * @see #getSingleLineParition()
+   * @param value the new value of the '<em>Single Line Doc Parition</em>' reference.
+   * @see #getSingleLineDocParition()
    * @generated
    */
-  void setSingleLineParition(Partition value);
+  void setSingleLineDocParition(Partition value);
 
   /**
-   * Returns the value of the '<em><b>Multi Line Parition</b></em>' reference.
+   * Returns the value of the '<em><b>Multi Line Doc Parition</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Multi Line Parition</em>' reference isn't clear,
+   * If the meaning of the '<em>Multi Line Doc Parition</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Multi Line Parition</em>' reference.
-   * @see #setMultiLineParition(Partition)
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getJavaLikeParitioner_MultiLineParition()
+   * @return the value of the '<em>Multi Line Doc Parition</em>' reference.
+   * @see #setMultiLineDocParition(Partition)
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.HSLPackage#getJavaLikeParitioner_MultiLineDocParition()
    * @model
    * @generated
    */
-  Partition getMultiLineParition();
+  Partition getMultiLineDocParition();
 
   /**
-   * Sets the value of the '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getMultiLineParition <em>Multi Line Parition</em>}' reference.
+   * Sets the value of the '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getMultiLineDocParition <em>Multi Line Doc Parition</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Multi Line Parition</em>' reference.
-   * @see #getMultiLineParition()
+   * @param value the new value of the '<em>Multi Line Doc Parition</em>' reference.
+   * @see #getMultiLineDocParition()
    * @generated
    */
-  void setMultiLineParition(Partition value);
+  void setMultiLineDocParition(Partition value);
 
   /**
    * Returns the value of the '<em><b>Java Doc Parition</b></em>' reference.

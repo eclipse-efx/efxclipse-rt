@@ -302,20 +302,11 @@ ruleJavaLikeParitioner returns [EObject current=null]
     {
     	newLeafNode(otherlv_1, grammarAccess.getJavaLikeParitionerAccess().getLeftCurlyBracketKeyword_1());
     }
+	otherlv_2='singlelinedoc' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getJavaLikeParitionerAccess().getSinglelinedocKeyword_2());
+    }
 (
-(
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getJavaLikeParitionerRule());
-	        }
-        }
-	otherlv_2=RULE_ID
-	{
-		newLeafNode(otherlv_2, grammarAccess.getJavaLikeParitionerAccess().getSingleLineParitionPartitionCrossReference_2_0()); 
-	}
-
-)
-)(
 (
 		{
 			if ($current==null) {
@@ -324,24 +315,15 @@ ruleJavaLikeParitioner returns [EObject current=null]
         }
 	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getJavaLikeParitionerAccess().getMultiLineParitionPartitionCrossReference_3_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getJavaLikeParitionerAccess().getSingleLineDocParitionPartitionCrossReference_3_0()); 
 	}
 
 )
-)(
+)	otherlv_4='multilinedoc' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getJavaLikeParitionerAccess().getMultilinedocKeyword_4());
+    }
 (
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getJavaLikeParitionerRule());
-	        }
-        }
-	otherlv_4=RULE_ID
-	{
-		newLeafNode(otherlv_4, grammarAccess.getJavaLikeParitionerAccess().getJavaDocParitionPartitionCrossReference_4_0()); 
-	}
-
-)
-)(
 (
 		{
 			if ($current==null) {
@@ -350,26 +332,64 @@ ruleJavaLikeParitioner returns [EObject current=null]
         }
 	otherlv_5=RULE_ID
 	{
-		newLeafNode(otherlv_5, grammarAccess.getJavaLikeParitionerAccess().getCharacterParitionPartitionCrossReference_5_0()); 
+		newLeafNode(otherlv_5, grammarAccess.getJavaLikeParitionerAccess().getMultiLineDocParitionPartitionCrossReference_5_0()); 
 	}
 
 )
-)(
+)	otherlv_6='javadoc' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getJavaLikeParitionerAccess().getJavadocKeyword_6());
+    }
+(
 (
 		{
 			if ($current==null) {
 	            $current = createModelElement(grammarAccess.getJavaLikeParitionerRule());
 	        }
         }
-	otherlv_6=RULE_ID
+	otherlv_7=RULE_ID
 	{
-		newLeafNode(otherlv_6, grammarAccess.getJavaLikeParitionerAccess().getStringParitionPartitionCrossReference_6_0()); 
+		newLeafNode(otherlv_7, grammarAccess.getJavaLikeParitionerAccess().getJavaDocParitionPartitionCrossReference_7_0()); 
 	}
 
 )
-)	otherlv_7='}' 
+)	otherlv_8='char' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getJavaLikeParitionerAccess().getRightCurlyBracketKeyword_7());
+    	newLeafNode(otherlv_8, grammarAccess.getJavaLikeParitionerAccess().getCharKeyword_8());
+    }
+(
+(
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getJavaLikeParitionerRule());
+	        }
+        }
+	otherlv_9=RULE_ID
+	{
+		newLeafNode(otherlv_9, grammarAccess.getJavaLikeParitionerAccess().getCharacterParitionPartitionCrossReference_9_0()); 
+	}
+
+)
+)	otherlv_10='string' 
+    {
+    	newLeafNode(otherlv_10, grammarAccess.getJavaLikeParitionerAccess().getStringKeyword_10());
+    }
+(
+(
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getJavaLikeParitionerRule());
+	        }
+        }
+	otherlv_11=RULE_ID
+	{
+		newLeafNode(otherlv_11, grammarAccess.getJavaLikeParitionerAccess().getStringParitionPartitionCrossReference_11_0()); 
+	}
+
+)
+)	otherlv_12='}' 
+    {
+    	newLeafNode(otherlv_12, grammarAccess.getJavaLikeParitionerAccess().getRightCurlyBracketKeyword_12());
     }
 )
 ;
@@ -657,7 +677,7 @@ ruleRuleDamager returns [EObject current=null]
 	    }
 
 )
-)+	otherlv_6='}' 
+)*	otherlv_6='}' 
     {
     	newLeafNode(otherlv_6, grammarAccess.getRuleDamagerAccess().getRightCurlyBracketKeyword_6());
     }
@@ -1548,15 +1568,15 @@ ruleScannerCharacterRule returns [EObject current=null]
 	    }
 
 )
-)	otherlv_4=',' 
+)(	otherlv_4=',' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getScannerCharacterRuleAccess().getCommaKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getScannerCharacterRuleAccess().getCommaKeyword_4_0());
     }
 (
 (
 		lv_characters_5_0=RULE_STRING
 		{
-			newLeafNode(lv_characters_5_0, grammarAccess.getScannerCharacterRuleAccess().getCharactersSTRINGTerminalRuleCall_5_0()); 
+			newLeafNode(lv_characters_5_0, grammarAccess.getScannerCharacterRuleAccess().getCharactersSTRINGTerminalRuleCall_4_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1570,9 +1590,9 @@ ruleScannerCharacterRule returns [EObject current=null]
 	    }
 
 )
-)	otherlv_6=']' 
+))*	otherlv_6=']' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getScannerCharacterRuleAccess().getRightSquareBracketKeyword_6());
+    	newLeafNode(otherlv_6, grammarAccess.getScannerCharacterRuleAccess().getRightSquareBracketKeyword_5());
     }
 )
 ;
@@ -1707,9 +1727,9 @@ ruleScannerWhitespaceRule returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((	otherlv_0='whitespace-rule' 
+(	otherlv_0='whitespace-rule' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getScannerWhitespaceRuleAccess().getWhitespaceRuleKeyword_0_0());
+    	newLeafNode(otherlv_0, grammarAccess.getScannerWhitespaceRuleAccess().getWhitespaceRuleKeyword_0());
     }
 (
 (
@@ -1720,19 +1740,19 @@ ruleScannerWhitespaceRule returns [EObject current=null]
         }
 	otherlv_1=RULE_ID
 	{
-		newLeafNode(otherlv_1, grammarAccess.getScannerWhitespaceRuleAccess().getTokenScannerTokenCrossReference_0_1_0()); 
+		newLeafNode(otherlv_1, grammarAccess.getScannerWhitespaceRuleAccess().getTokenScannerTokenCrossReference_1_0()); 
 	}
 
 )
-)?(	otherlv_2='[' 
+)?((	otherlv_2='[' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getScannerWhitespaceRuleAccess().getLeftSquareBracketKeyword_0_2_0());
+    	newLeafNode(otherlv_2, grammarAccess.getScannerWhitespaceRuleAccess().getLeftSquareBracketKeyword_2_0_0());
     }
 (
 (
 		lv_characters_3_0=RULE_STRING
 		{
-			newLeafNode(lv_characters_3_0, grammarAccess.getScannerWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_0_2_1_0()); 
+			newLeafNode(lv_characters_3_0, grammarAccess.getScannerWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_2_0_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1748,13 +1768,13 @@ ruleScannerWhitespaceRule returns [EObject current=null]
 )
 )(	otherlv_4=',' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getScannerWhitespaceRuleAccess().getCommaKeyword_0_2_2_0());
+    	newLeafNode(otherlv_4, grammarAccess.getScannerWhitespaceRuleAccess().getCommaKeyword_2_0_2_0());
     }
 (
 (
 		lv_characters_5_0=RULE_STRING
 		{
-			newLeafNode(lv_characters_5_0, grammarAccess.getScannerWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_0_2_2_1_0()); 
+			newLeafNode(lv_characters_5_0, grammarAccess.getScannerWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_2_0_2_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1770,18 +1790,30 @@ ruleScannerWhitespaceRule returns [EObject current=null]
 )
 ))*	otherlv_6=']' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getScannerWhitespaceRuleAccess().getRightSquareBracketKeyword_0_2_3());
+    	newLeafNode(otherlv_6, grammarAccess.getScannerWhitespaceRuleAccess().getRightSquareBracketKeyword_2_0_3());
     }
-))
-    |(	otherlv_7='#{' 
+)
+    |(
+(
+		lv_javawhitespace_7_0=	'javawhitespace' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getScannerWhitespaceRuleAccess().getNumberSignLeftCurlyBracketKeyword_1_0());
+        newLeafNode(lv_javawhitespace_7_0, grammarAccess.getScannerWhitespaceRuleAccess().getJavawhitespaceJavawhitespaceKeyword_2_1_0());
     }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScannerWhitespaceRuleRule());
+	        }
+       		setWithLastConsumed($current, "javawhitespace", true, "javawhitespace");
+	    }
+
+)
+)
+    |(
 (
-(
-		lv_jsDetector_8_0=RULE_ANY_OTHER
+		lv_fileURI_8_0=RULE_STRING
 		{
-			newLeafNode(lv_jsDetector_8_0, grammarAccess.getScannerWhitespaceRuleAccess().getJsDetectorANY_OTHERTerminalRuleCall_1_1_0()); 
+			newLeafNode(lv_fileURI_8_0, grammarAccess.getScannerWhitespaceRuleAccess().getFileURISTRINGTerminalRuleCall_2_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1789,17 +1821,13 @@ ruleScannerWhitespaceRule returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"jsDetector",
-        		lv_jsDetector_8_0, 
-        		"ANY_OTHER");
+       			"fileURI",
+        		lv_fileURI_8_0, 
+        		"STRING");
 	    }
 
 )
-)	otherlv_9='}#' 
-    {
-    	newLeafNode(otherlv_9, grammarAccess.getScannerWhitespaceRuleAccess().getRightCurlyBracketNumberSignKeyword_1_2());
-    }
-))
+)))
 ;
 
 

@@ -179,22 +179,22 @@ public interface HSLPackage extends EPackage
   int JAVA_LIKE_PARITIONER = 3;
 
   /**
-   * The feature id for the '<em><b>Single Line Parition</b></em>' reference.
+   * The feature id for the '<em><b>Single Line Doc Parition</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION = PARTITIONER_FEATURE_COUNT + 0;
+  int JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION = PARTITIONER_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Multi Line Parition</b></em>' reference.
+   * The feature id for the '<em><b>Multi Line Doc Parition</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION = PARTITIONER_FEATURE_COUNT + 1;
+  int JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION = PARTITIONER_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Java Doc Parition</b></em>' reference.
@@ -953,13 +953,22 @@ public interface HSLPackage extends EPackage
   int SCANNER_WHITESPACE_RULE__CHARACTERS = SCANNER_RULE_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Js Detector</b></em>' attribute.
+   * The feature id for the '<em><b>Javawhitespace</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_WHITESPACE_RULE__JS_DETECTOR = SCANNER_RULE_FEATURE_COUNT + 1;
+  int SCANNER_WHITESPACE_RULE__JAVAWHITESPACE = SCANNER_RULE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>File URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_WHITESPACE_RULE__FILE_URI = SCANNER_RULE_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Scanner Whitespace Rule</em>' class.
@@ -968,7 +977,7 @@ public interface HSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_WHITESPACE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 2;
+  int SCANNER_WHITESPACE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ColorImpl <em>Color</em>}' class.
@@ -1199,26 +1208,26 @@ public interface HSLPackage extends EPackage
   EClass getJavaLikeParitioner();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getSingleLineParition <em>Single Line Parition</em>}'.
+   * Returns the meta object for the reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getSingleLineDocParition <em>Single Line Doc Parition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Single Line Parition</em>'.
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getSingleLineParition()
+   * @return the meta object for the reference '<em>Single Line Doc Parition</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getSingleLineDocParition()
    * @see #getJavaLikeParitioner()
    * @generated
    */
-  EReference getJavaLikeParitioner_SingleLineParition();
+  EReference getJavaLikeParitioner_SingleLineDocParition();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getMultiLineParition <em>Multi Line Parition</em>}'.
+   * Returns the meta object for the reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getMultiLineDocParition <em>Multi Line Doc Parition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Multi Line Parition</em>'.
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getMultiLineParition()
+   * @return the meta object for the reference '<em>Multi Line Doc Parition</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getMultiLineDocParition()
    * @see #getJavaLikeParitioner()
    * @generated
    */
-  EReference getJavaLikeParitioner_MultiLineParition();
+  EReference getJavaLikeParitioner_MultiLineDocParition();
 
   /**
    * Returns the meta object for the reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner#getJavaDocParition <em>Java Doc Parition</em>}'.
@@ -1830,15 +1839,26 @@ public interface HSLPackage extends EPackage
   EAttribute getScannerWhitespaceRule_Characters();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getJsDetector <em>Js Detector</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#isJavawhitespace <em>Javawhitespace</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Js Detector</em>'.
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getJsDetector()
+   * @return the meta object for the attribute '<em>Javawhitespace</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#isJavawhitespace()
    * @see #getScannerWhitespaceRule()
    * @generated
    */
-  EAttribute getScannerWhitespaceRule_JsDetector();
+  EAttribute getScannerWhitespaceRule_Javawhitespace();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getFileURI <em>File URI</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>File URI</em>'.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule#getFileURI()
+   * @see #getScannerWhitespaceRule()
+   * @generated
+   */
+  EAttribute getScannerWhitespaceRule_FileURI();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.compensator.hsl.hSL.Color <em>Color</em>}'.
@@ -2058,20 +2078,20 @@ public interface HSLPackage extends EPackage
     EClass JAVA_LIKE_PARITIONER = eINSTANCE.getJavaLikeParitioner();
 
     /**
-     * The meta object literal for the '<em><b>Single Line Parition</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Single Line Doc Parition</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference JAVA_LIKE_PARITIONER__SINGLE_LINE_PARITION = eINSTANCE.getJavaLikeParitioner_SingleLineParition();
+    EReference JAVA_LIKE_PARITIONER__SINGLE_LINE_DOC_PARITION = eINSTANCE.getJavaLikeParitioner_SingleLineDocParition();
 
     /**
-     * The meta object literal for the '<em><b>Multi Line Parition</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Multi Line Doc Parition</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference JAVA_LIKE_PARITIONER__MULTI_LINE_PARITION = eINSTANCE.getJavaLikeParitioner_MultiLineParition();
+    EReference JAVA_LIKE_PARITIONER__MULTI_LINE_DOC_PARITION = eINSTANCE.getJavaLikeParitioner_MultiLineDocParition();
 
     /**
      * The meta object literal for the '<em><b>Java Doc Parition</b></em>' reference feature.
@@ -2566,12 +2586,20 @@ public interface HSLPackage extends EPackage
     EAttribute SCANNER_WHITESPACE_RULE__CHARACTERS = eINSTANCE.getScannerWhitespaceRule_Characters();
 
     /**
-     * The meta object literal for the '<em><b>Js Detector</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Javawhitespace</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SCANNER_WHITESPACE_RULE__JS_DETECTOR = eINSTANCE.getScannerWhitespaceRule_JsDetector();
+    EAttribute SCANNER_WHITESPACE_RULE__JAVAWHITESPACE = eINSTANCE.getScannerWhitespaceRule_Javawhitespace();
+
+    /**
+     * The meta object literal for the '<em><b>File URI</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_WHITESPACE_RULE__FILE_URI = eINSTANCE.getScannerWhitespaceRule_FileURI();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ColorImpl <em>Color</em>}' class.
