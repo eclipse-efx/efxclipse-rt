@@ -28,7 +28,7 @@ public class JavaScriptHelper {
 		uri = uri.trimSegments(1);
 		uri = uri.appendSegment(jsURL);
 		
-		ScriptEngineManager mgr = new ScriptEngineManager(cl);
+		ScriptEngineManager mgr = new ScriptEngineManager();
 		ScriptEngine engine = mgr.getEngineByName("nashorn");
 		System.err.println(" ======================> " + uri);
 		try( InputStreamReader reader = new InputStreamReader(uri.isPlatform() ? cl.getResourceAsStream(getPluginPath(uri)) : new FileInputStream(new File(uri.toFileString()))) ) {

@@ -13,6 +13,7 @@ import org.eclipse.fx.code.compensator.editor.hsl.HSLRuleBasedPartitionScanner;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
 import org.eclipse.fx.code.compensator.hsl.HSLStandaloneSetup;
+import org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner;
 import org.eclipse.fx.code.compensator.hsl.hSL.Model;
 import org.eclipse.fx.code.compensator.hsl.hSL.Partitioner;
 import org.eclipse.fx.code.compensator.hsl.hSL.RulePartitioner;
@@ -20,6 +21,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.rules.IPartitionTokenScanner;
+import org.eclipse.jface.text.source.FastJavaLikePartitionScanner;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
 public class HSLComponent implements PartitionerFactory, SourceViewerConfigurationFactory {
@@ -30,6 +32,7 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 		HSLStandaloneSetup.doSetup();
 		rs = new ResourceSetImpl();
 		registerHslConfig(URI.createPlatformPluginURI("/org.eclipse.fx.code.compensator.editor.hsl/xml/xml.hsl", true));
+		registerHslConfig(URI.createPlatformPluginURI("/org.eclipse.fx.code.compensator.editor.hsl/groovy/groovy.hsl", true));
 	}
 	
 	@Override
@@ -64,7 +67,6 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 	
 	private Model getModelForInput(Input<?> input) {
 		if( input instanceof ContentTypeProvider ) {
-			System.err.println("SEARCH FOR  " + input);
 			return contentTypeMappings.get(((ContentTypeProvider) input).getContentType());
 		}
 		return null;
@@ -88,6 +90,14 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 		IPartitionTokenScanner scanner = null;
 		if( partitioner instanceof RulePartitioner ) {
 			scanner = new HSLRuleBasedPartitionScanner(getClass().getClassLoader(), (RulePartitioner) m.getPartitioner());
+		} else if( partitioner instanceof JavaLikeParitioner ) {
+			JavaLikeParitioner jp = (JavaLikeParitioner) partitioner;
+			scanner = new FastJavaLikePartitionScanner(
+					jp.getSingleLineDocParition().getName(), 
+					jp.getMultiLineDocParition().getName(), 
+					jp.getJavaDocParition().getName(), 
+					jp.getCharacterParition().getName(), 
+					jp.getStringParition().getName());
 		}
 		
 		if( scanner != null ) {

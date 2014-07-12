@@ -3,13 +3,18 @@ package org.eclipse.fx.code.compensator.editor.hsl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import netscape.javascript.JSObject;
 
+import org.eclipse.fx.code.compensator.editor.hsl.internal.JavaScriptHelper;
 import org.eclipse.fx.code.compensator.hsl.hSL.FontType;
+import org.eclipse.fx.code.compensator.hsl.hSL.Keyword;
+import org.eclipse.fx.code.compensator.hsl.hSL.KeywordGroup;
 import org.eclipse.fx.code.compensator.hsl.hSL.RGBColor;
 import org.eclipse.fx.code.compensator.hsl.hSL.RuleDamager;
 import org.eclipse.fx.code.compensator.hsl.hSL.ScannerCharacterRule;
@@ -20,27 +25,32 @@ import org.eclipse.fx.code.compensator.hsl.hSL.ScannerSingleLineRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.ScannerToken;
 import org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule;
 import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.jface.text.rules.CombinedWordRule;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.IWhitespaceDetector;
+import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
+import org.eclipse.jface.text.source.CharacterRule;
+import org.eclipse.jface.text.source.JavaLikeWordDetector;
 
 public class HSLRuleScanner extends RuleBasedScanner {
 	public HSLRuleScanner(RuleDamager scanner) {
-		System.err.println("SCANNER");
+		Token defaultToken = null;
 		Map<String, IToken> tokenMap = new HashMap<String, IToken>();
 		for( ScannerToken st : scanner.getTokens() ) {
 			Token token = new Token(new TextAttribute(createColor(st.getFgColor()), createColor(st.getFgColor()), 0, createFont(st.getFont())));
 			if( st.isDefault() ) {
+				defaultToken = token;
 				setDefaultReturnToken(token);
 			}
 			tokenMap.put(st.getName(), token);
 		}
 		
-		IRule[] rules = new IRule[scanner.getRules().size()];
+		IRule[] rules = new IRule[scanner.getRules().size()+(!scanner.getKeywordGroups().isEmpty() ? 1 : 0)];
 		
 		int i = 0;
 		for( ScannerRule ru : scanner.getRules() ) {
@@ -53,17 +63,54 @@ public class HSLRuleScanner extends RuleBasedScanner {
 							sru.getEscapeSeq() != null ? sru.getEscapeSeq().charAt(0) : 0, 
 							false);					
 			} else if( ru instanceof ScannerMultiLineRule ) {
-				throw new UnsupportedOperationException();
+				ScannerMultiLineRule sml = (ScannerMultiLineRule) ru;
+				rules[i] = new MultiLineRule(
+						sml.getStartSeq(), 
+						sml.getEndSeq(), 
+						tokenMap.get(sml.getToken().getName()), 
+						sml.getEscapeSeq() != null ? sml.getEscapeSeq().charAt(0) : 0,
+						false);
 			} else if( ru instanceof ScannerWhitespaceRule ) {
 				ScannerWhitespaceRule wru = (ScannerWhitespaceRule) ru;
-				rules[i] = new WhitespaceRule(wru.getJsDetector() != null ? new JSWSDectector() : new FixedCharacterWSDetector(wru.getCharacters()));
+				if( wru.isJavawhitespace() ) {
+					rules[i] = new WhitespaceRule(new IWhitespaceDetector() {
+						
+						@Override
+						public boolean isWhitespace(char c) {
+							return Character.isWhitespace(c);
+						}
+					});
+				} else {
+					rules[i] = new WhitespaceRule(wru.getFileURI() != null ? new JSWSDectector() : new FixedCharacterWSDetector(wru.getCharacters()));	
+				}
 			} else if( ru instanceof ScannerCharacterRule ) {
-				throw new UnsupportedOperationException();
+				ScannerCharacterRule scr = (ScannerCharacterRule) ru;
+				char[] c = new char[scr.getCharacters().size()];
+				for( int j = 0; j < c.length; j++ ) {
+					c[j] = scr.getCharacters().get(0).charAt(0);
+				}
+				rules[i] = new CharacterRule(tokenMap.get(scr.getToken().getName()), c);
 			} else if( ru instanceof ScannerJSRule ) {
-				throw new UnsupportedOperationException();
+				ScannerJSRule sjr = (ScannerJSRule) ru;
+				Function<IToken, IRule> f = JavaScriptHelper.loadScript(getClass().getClassLoader(), ru, sjr.getFileURI());
+				rules[i] = f.apply(tokenMap.get(sjr.getToken().getName()));
 			}
 			i++;
 		}
+		
+		if( ! scanner.getKeywordGroups().isEmpty() ) {
+			JavaLikeWordDetector wordDetector= new JavaLikeWordDetector();
+			CombinedWordRule combinedWordRule= new CombinedWordRule(wordDetector, defaultToken);
+			for( KeywordGroup kg : scanner.getKeywordGroups() ) {
+				CombinedWordRule.WordMatcher wordRule= new CombinedWordRule.WordMatcher();
+				for( Keyword k : kg.getKeywords() ) {
+					wordRule.addWord(k.getName(), tokenMap.get(kg.getToken().getName()));
+				}
+				combinedWordRule.addWordMatcher(wordRule);
+			}			
+			rules[i] = combinedWordRule;
+		}
+		
 		setRules(rules);
 	}
 	

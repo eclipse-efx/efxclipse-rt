@@ -47,6 +47,11 @@ JS {
 	}
 	rule-damager __groovy_string {
 		default token groovy_string { fgcolor : rgb(42, 0, 255) }
+		token groovy_variable { fgcolor : rgb(255, 0, 0) }
+		javascript-rule groovy_variable "groovy-string-variable-rule.js"
+	}
+	rule-damager __groovy_character {
+		default token groovy_char { fgcolor : rgb(42, 0, 255) }
 	}
 	java-like-partitioner {
 		singlelinedoc __groovy_singleline_comment

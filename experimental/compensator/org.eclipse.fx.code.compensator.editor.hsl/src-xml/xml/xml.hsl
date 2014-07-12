@@ -1,12 +1,12 @@
-XML {
+XML2 {
 	partition __dftl_partition_content_type
 	partition __xml_comment
 	partition __xml_tag
 	rule-damager __xml_tag {
 		default token default_tagtoken { fgcolor : rgb(0, 0, 128) }
-		token string { fgcolor : rgb(0, 128, 0) }
-		single-line string "\"" => "\"" escaped by '\\'
-		single-line string "'"  => "'" escaped by '\\'
+		token xml_string { fgcolor : rgb(0, 128, 0) }
+		single-line xml_string "\"" => "\"" escaped by '\\'
+		single-line xml_string "'"  => "'" escaped by '\\'
 		whitespace-rule [" ", "\t", "\n", "\r"]	
 	}
 	rule-damager __dftl_partition_content_type {
