@@ -5,7 +5,7 @@
          id="org.eclipse.fx.code.compensator.freeedit.fragment"
          point="org.eclipse.e4.workbench.model">
       <fragment
-            apply="notexists"
+            apply="initial"
             uri="fragment.e4xmi">
       </fragment>
    </extension>
