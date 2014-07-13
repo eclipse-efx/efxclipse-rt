@@ -70,6 +70,7 @@ public class TextViewer extends Viewer implements
 	
 	protected StyledTextArea createTextWidget() {
 		StyledTextArea styledText= new StyledTextArea();
+		styledText.setLineRulerVisible(true);
 //		styledText.setLeftMargin(Math.max(styledText.getLeftMargin(), 2));
 		return styledText;
 	}
@@ -359,16 +360,16 @@ public class TextViewer extends Viewer implements
 		if (presentation.isEmpty())
 			return;
 
-		if (controlRedraw)
-			fTextWidget.setRedraw(false);
+//		if (controlRedraw)
+//			fTextWidget.setRedraw(false);
 
 		if (fReplaceTextPresentation)
 			applyTextPresentation(presentation);
 		else
 			addPresentation(presentation);
 
-		if (controlRedraw)
-			fTextWidget.setRedraw(true);
+//		if (controlRedraw)
+//			fTextWidget.setRedraw(true);
 	}
 	
 	private void addPresentation(TextPresentation presentation) {
