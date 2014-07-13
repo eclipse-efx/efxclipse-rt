@@ -99,7 +99,7 @@ public interface EBindingService {
 	 *            a string definition
 	 * @return a trigger sequence
 	 */
-	@NonNull
+	@Nullable
 	TriggerSequence createSequence(@NonNull String sequence);
 
 	/**
@@ -109,7 +109,7 @@ public interface EBindingService {
 	 *            the sequence
 	 * @return the bindings
 	 */
-	@NonNull
+	@Nullable
 	Collection<@NonNull Binding> getConflictsFor(@NonNull TriggerSequence sequence);
 
 	/**
