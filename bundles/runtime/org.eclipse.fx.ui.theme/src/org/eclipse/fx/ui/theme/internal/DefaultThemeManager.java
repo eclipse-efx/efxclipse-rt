@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javafx.beans.InvalidationListener;
 import javafx.scene.Scene;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -174,6 +175,10 @@ public class DefaultThemeManager implements ThemeManager {
 	public List<@NonNull Theme> getAvailableThemes() {
 		return this.themes;
 	}
+	
+	private static String getCSSClassname(String id) {
+		return id.replace('.', '-');
+	}
 
 	@Override
 	public void setCurrentThemeId(String id) {
@@ -185,12 +190,19 @@ public class DefaultThemeManager implements ThemeManager {
 					List<Theme> availableThemes = getAvailableThemes();
 					for (Theme theme : availableThemes) {
 						for (URL url : theme.getStylesheetURL()) {
+							if( scene.getRoot() != null ) {
+								scene.getRoot().getStyleClass().remove(getCSSClassname(theme.getId()));	
+							}
 							scene.getStylesheets().remove(url.toExternalForm());
 						}
 					}
 					for (Theme theme : availableThemes) {
 						for (URL url : theme.getStylesheetURL()) {
 							if (theme.getId().equals(this.currentThemeId)) {
+								if( scene.getRoot() != null ) {
+									scene.getRoot().getStyleClass().remove(getCSSClassname(theme.getId()));
+									scene.getRoot().getStyleClass().add(getCSSClassname(theme.getId()));
+								}
 								scene.getStylesheets().add(url.toExternalForm());
 							}
 						}
@@ -221,10 +233,18 @@ public class DefaultThemeManager implements ThemeManager {
 	@Override
 	public Registration registerScene(final Scene scene) {
 		this.managedScenes.add(scene);
+		InvalidationListener l = (o) -> {
+			if( scene.getRoot() != null && this.currentThemeId != null ) {
+				scene.getRoot().getStyleClass().remove(getCSSClassname(this.currentThemeId));
+				scene.getRoot().getStyleClass().add(getCSSClassname(this.currentThemeId));
+			}
+		};
+		scene.rootProperty().addListener(l);
 		return new Registration() {
 			
 			@Override
 			public void dispose() {
+				scene.rootProperty().removeListener(l);
 				DefaultThemeManager.this.managedScenes.remove(scene);
 			}
 		};
