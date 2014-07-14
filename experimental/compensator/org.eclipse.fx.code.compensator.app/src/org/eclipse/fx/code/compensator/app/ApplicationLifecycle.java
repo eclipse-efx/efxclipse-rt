@@ -8,12 +8,22 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.code.compensator.editor.services;
+package org.eclipse.fx.code.compensator.app;
 
-import org.eclipse.fx.code.compensator.editor.ContentAssist;
-import org.eclipse.fx.code.compensator.editor.Input;
+import java.io.IOException;
 
-public interface ContentAssistFactory {
-	public boolean applies(Input<?> input);
-	public ContentAssist getContentAssist();
+import org.eclipse.e4.ui.workbench.lifecycle.PreSave;
+import org.eclipse.fx.code.compensator.model.workbench.Workbench;
+
+@SuppressWarnings("restriction")
+public class ApplicationLifecycle {
+	@PreSave
+	public void shutdown(Workbench workbench) {
+		try {
+			workbench.eResource().save(null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

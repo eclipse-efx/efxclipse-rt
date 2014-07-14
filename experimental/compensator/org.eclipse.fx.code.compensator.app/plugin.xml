@@ -8,6 +8,10 @@
 		<property name="applicationXMI" value="org.eclipse.fx.code.compensator.app/Application.e4xmi" />
 		
 		<property name="cssTheme" value="theme.default" />
+  <property
+        name="lifeCycleURI"
+        value="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.ApplicationLifecycle">
+  </property>
 		
 	</product>
 	
