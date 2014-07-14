@@ -46,9 +46,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.PathElement;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
@@ -75,11 +72,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	// private Set<LineCell> visibleCells = new HashSet<>();
 	Map<LineCell, LineInfo> lineInfoMap = new HashMap<>();
 
-	private Font boldFont;
-
-	private Font boldItalicFont;
-
-	private Font italicFont;
 	HBox rootContainer;
 
 	/**
@@ -332,43 +324,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		return ((MyListViewSkin) this.contentView.getSkin()).getFlow().getCells();
 	}
 
-	Font getFontByStyle(int style) {
-		switch (style) {
-		case StyleRange.BOLD:
-			if (this.boldFont != null)
-				return this.boldFont;
-			return this.boldFont = createFont(style);
-		case StyleRange.ITALIC:
-			if (this.italicFont != null)
-				return this.italicFont;
-			return this.italicFont = createFont(style);
-		case StyleRange.BOLD | StyleRange.ITALIC:
-			if (this.boldItalicFont != null)
-				return this.boldItalicFont;
-			return this.boldItalicFont = createFont(style);
-		default:
-			return getSkinnable().fontProperty().get();
-		}
-	}
-
-	Font createFont(int style) {
-		switch (style) {
-		case StyleRange.BOLD: {
-			Font f = Font.font(getSkinnable().getFont().getFamily(), FontWeight.BOLD, getSkinnable().getFont().getSize());
-			return f;
-		}
-		case StyleRange.ITALIC: {
-			Font f = Font.font(getSkinnable().getFont().getFamily(), FontPosture.ITALIC, getSkinnable().getFont().getSize());
-			return f;
-		}
-		case StyleRange.BOLD | StyleRange.ITALIC: {
-			Font f = Font.font(getSkinnable().getFont().getFamily(), FontWeight.BOLD, FontPosture.ITALIC, getSkinnable().getFont().getSize());
-			return f;
-		}
-		}
-		return null;
-	}
-
 	/**
 	 * A line cell
 	 */
@@ -534,13 +489,17 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				for (final Segment seg : arg0.getSegments()) {
 					final Text t = new Text(seg.text);
 					t.setUserData(Integer.valueOf(seg.style.start));
+					if( seg.style.stylename != null ) {
+						t.getStyleClass().setAll("source-segment",seg.style.stylename); //$NON-NLS-1$
+					} else {
+						t.getStyleClass().setAll("source-segment"); //$NON-NLS-1$
+					}
+					
 					if (seg.style.foreground != null) {
 						t.setFill(seg.style.foreground);
 					}
 					if (seg.style.font != null) {
 						t.setFont(seg.style.font);
-					} else {
-						t.setFont(getFontByStyle(seg.style.fontStyle));
 					}
 
 					if (seg.style.underline) {
@@ -552,6 +511,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 				if (texts.isEmpty()) {
 					Text t = new Text(""); //$NON-NLS-1$
+					t.getStyleClass().setAll("source-segment");  //$NON-NLS-1$
 					t.setUserData(Integer.valueOf(arg0.getLineOffset()));
 					texts.add(t);
 				}
@@ -637,7 +597,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					if (lastIndex != -1 && lastIndex != begin) {
 						Segment seg = new Segment();
 						seg.text = line.substring(lastIndex, begin);
-						seg.style = new StyleRange();
+						seg.style = new StyleRange((String)null);
 						segments.add(seg);
 					}
 					Segment seg = new Segment();
@@ -677,6 +637,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			this.markerLabel = new Label();
 			this.markerLabel.setPrefWidth(20);
 			this.lineText = new Label();
+			this.lineText.getStyleClass().add("line-ruler-text"); //$NON-NLS-1$
 			this.lineText.setMaxWidth(Double.MAX_VALUE);
 			this.lineText.setMaxHeight(Double.MAX_VALUE);
 			this.lineText.setAlignment(Pos.CENTER_RIGHT);

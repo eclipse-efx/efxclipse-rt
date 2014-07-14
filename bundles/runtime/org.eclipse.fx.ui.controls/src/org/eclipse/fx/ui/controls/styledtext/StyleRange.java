@@ -71,9 +71,13 @@ public class StyleRange extends TextStyle implements Cloneable {
 	/**
 	 * Create a new style range with no styles
 	 * 
+	 * @param stylename
+	 *            the css stylename
+	 * 
 	 * @since 3.2
 	 */
-	public StyleRange() {
+	public StyleRange(String stylename) {
+		super(stylename);
 	}
 
 	/**
@@ -90,6 +94,9 @@ public class StyleRange extends TextStyle implements Cloneable {
 
 	/**
 	 * Create a new style range.
+	 * 
+	 * @param stylename
+	 *            the css stylename
 	 *
 	 * @param start
 	 *            start offset of the style
@@ -100,14 +107,18 @@ public class StyleRange extends TextStyle implements Cloneable {
 	 * @param background
 	 *            background color of the style, null if none
 	 */
-	public StyleRange(int start, int length, Color foreground, Color background) {
-		super(null, foreground, background);
+	public StyleRange(String stylename, int start, int length,
+			Color foreground, Color background) {
+		super(stylename, null, foreground, background);
 		this.start = start;
 		this.length = length;
 	}
 
 	/**
 	 * Create a new style range.
+	 * 
+	 * @param stylename
+	 *            the css stylename
 	 *
 	 * @param start
 	 *            start offset of the style
@@ -121,8 +132,9 @@ public class StyleRange extends TextStyle implements Cloneable {
 	 *            font style of the style, may be SWT.NORMAL, SWT.ITALIC or
 	 *            SWT.BOLD
 	 */
-	public StyleRange(int start, int length, Color foreground, Color background, int fontStyle) {
-		this(start, length, foreground, background);
+	public StyleRange(String stylename, int start, int length,
+			Color foreground, Color background, int fontStyle) {
+		this(stylename, start, length, foreground, background);
 		this.fontStyle = fontStyle;
 	}
 
@@ -182,6 +194,8 @@ public class StyleRange extends TextStyle implements Cloneable {
 		if (this.rise != 0)
 			return false;
 		// if (metrics != null) return false;
+		if (this.stylename != null)
+			return false;
 		if (this.foreground != null)
 			return false;
 		if (this.background != null)

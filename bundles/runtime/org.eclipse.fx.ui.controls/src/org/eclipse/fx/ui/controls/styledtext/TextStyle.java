@@ -220,7 +220,7 @@ public class TextStyle {
 	 * <code>SWT.BORDER_DASH</code>,<code>SWT.BORDER_DOT</code> or
 	 * <code>SWT.NONE</code>.
 	 * </p>
-	 *  
+	 * 
 	 * @since 3.4
 	 */
 	public int borderStyle;
@@ -257,16 +257,28 @@ public class TextStyle {
 	public Object data;
 
 	/**
+	 * The css stylename to use
+	 */
+	public String stylename;
+
+	/**
 	 * Create an empty text style.
+	 * 
+	 * @param stylename
+	 *            the css stylename
 	 *
 	 * @since 3.4
 	 */
-	public TextStyle() {
+	public TextStyle(String stylename) {
+		this.stylename = stylename;
 	}
 
 	/**
 	 * Create a new text style with the specified font, foreground and
 	 * background.
+	 * 
+	 * @param stylename
+	 *            the css stylename
 	 *
 	 * @param font
 	 *            the font of the style, <code>null</code> if none
@@ -275,13 +287,15 @@ public class TextStyle {
 	 * @param background
 	 *            the background color of the style, <code>null</code> if none
 	 */
-	public TextStyle(Font font, Color foreground, Color background) {
+	public TextStyle(String stylename, Font font, Color foreground,
+			Color background) {
 		// if (font != null && font.isDisposed()) SWT.error
 		// (SWT.ERROR_INVALID_ARGUMENT);
 		// if (foreground != null && foreground.isDisposed()) SWT.error
 		// (SWT.ERROR_INVALID_ARGUMENT);
 		// if (background != null && background.isDisposed()) SWT.error
 		// (SWT.ERROR_INVALID_ARGUMENT);
+		this.stylename = stylename;
 		this.font = font;
 		this.foreground = foreground;
 		this.background = background;
@@ -298,6 +312,7 @@ public class TextStyle {
 	public TextStyle(TextStyle style) {
 		if (style == null)
 			throw new IllegalStateException();
+		this.stylename = style.stylename;
 		this.font = style.font;
 		this.foreground = style.foreground;
 		this.background = style.background;
@@ -333,6 +348,14 @@ public class TextStyle {
 		if (!(object instanceof TextStyle))
 			return false;
 		TextStyle style = (TextStyle) object;
+
+		if (this.stylename != null) {
+			if (!this.stylename.equals(style.stylename))
+				return false;
+		} else if (style.stylename != null) {
+			return false;
+		}
+
 		if (this.foreground != null) {
 			if (!this.foreground.equals(style.foreground))
 				return false;
@@ -396,6 +419,8 @@ public class TextStyle {
 	@Override
 	public int hashCode() {
 		int hash = 0;
+		if (this.stylename != null)
+			hash ^= this.stylename.hashCode();
 		if (this.foreground != null)
 			hash ^= this.foreground.hashCode();
 		if (this.background != null)
@@ -496,6 +521,12 @@ public class TextStyle {
 	public String toString() {
 		StringBuffer buffer = new StringBuffer("TextStyle {"); //$NON-NLS-1$
 		int startLength = buffer.length();
+		if (this.stylename != null) {
+			if (buffer.length() > startLength)
+				buffer.append(", "); //$NON-NLS-1$
+			buffer.append("stylename="); //$NON-NLS-1$
+			buffer.append(this.stylename);
+		}
 		if (this.font != null) {
 			if (buffer.length() > startLength)
 				buffer.append(", "); //$NON-NLS-1$

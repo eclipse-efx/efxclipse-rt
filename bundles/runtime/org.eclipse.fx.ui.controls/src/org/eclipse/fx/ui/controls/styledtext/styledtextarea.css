@@ -1,3 +1,13 @@
+.source-segment {
+	-fx-font-family: Courier;
+	-fx-font-size: 15;
+}
+
+.line-ruler-text {
+	-fx-font-family: Courier;
+	-fx-font-size: 15;
+}
+
 .list-cell:filled:focused:selected {
 	-fx-background-color: #e8f2fe;
 }

@@ -23,8 +23,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
@@ -635,6 +633,8 @@ public class StyledTextArea extends Control {
 					modifyStart = modifyEnd += grow;
 				}
 			}
+			
+			System.err.println("DONE"); //$NON-NLS-1$
 		}
 
 		int[] getRanges(int start, int length) {
@@ -1466,46 +1466,6 @@ public class StyledTextArea extends Control {
 		return this.editableProperty;
 	}
 
-	@SuppressWarnings("null")
-	@NonNull
-	private ObjectProperty<@NonNull Font> fontProperty = new SimpleObjectProperty<>(this, "fontProperty", Font.font("Courier", FontWeight.NORMAL, 15)); //$NON-NLS-1$ //$NON-NLS-2$
-
-	/**
-	 * Set the font used to render
-	 * <p>
-	 * Default is Courier 15
-	 * </p>
-	 * 
-	 * @param font
-	 *            the font
-	 */
-	public void setFont(@NonNull Font font) {
-		fontProperty().set(font);
-	}
-
-	/**
-	 * Get the current font
-	 * <p>
-	 * Default is Courier 15
-	 * </p>
-	 * 
-	 * @return the font
-	 */
-	public @NonNull Font getFont() {
-		return fontProperty().get();
-	}
-
-	/**
-	 * The default font
-	 * <p>
-	 * Default is Courier 15
-	 * </p>
-	 * 
-	 * @return the property
-	 */
-	public @NonNull ObjectProperty<@NonNull Font> fontProperty() {
-		return this.fontProperty;
-	}
 
 	/**
 	 * Check the location at the given offset
