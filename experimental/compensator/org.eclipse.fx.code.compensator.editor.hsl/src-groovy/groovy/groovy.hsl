@@ -1,4 +1,4 @@
-JS {
+Groovy {
 	partition __dftl_partition_content_type
 	partition __groovy_javadoc
 	partition __groovy_multiline_comment
@@ -6,13 +6,13 @@ JS {
 	partition __groovy_string
 	partition __groovy_character
 	rule-damager __dftl_partition_content_type {
-		default token groovy_default { fgcolor : rgb(0, 0, 0) }
-		token groovy_string { fgcolor : rgb(42, 0, 255) }
-		token groovy_operator { fgcolor : rgb(0, 0, 0) }
-		token groovy_bracket { fgcolor : rgb(0, 0, 0) }
-		token groovy_keyword_return { fgcolor : rgb(127, 0, 85) }
-		token groovy_keyword_type { fgcolor : rgb(127, 0, 85) }
-		token groovy_keyword { fgcolor : rgb(127, 0, 85) }
+		default token groovy_default
+		token groovy_string
+		token groovy_operator
+		token groovy_bracket 
+		token groovy_keyword_return 
+		token groovy_keyword_type 
+		token groovy_keyword 
 		keywords groovy_keyword_return [ "return" ]
 		keywords groovy_keyword_type [ "boolean", "byte", "char", "short", "int", "long", "double", "float" ]
 		keywords groovy_keyword [ 
@@ -34,24 +34,24 @@ JS {
 		character-rule groovy_bracket [ '(', ')', '{', '}', '[', ']' ]
 	}
 	rule-damager __groovy_javadoc {
-		default token groovy_doc_default { fgcolor : rgb( 63, 95, 191 ) }
+		default token groovy_doc_default 
 		//TODO not fully ported
 	}
 	rule-damager __groovy_singleline_comment {
-		default token groovy_single_line_comment { fgcolor : rgb(63, 127, 95) }
+		default token groovy_single_line_comment 
 		//TODO not fully ported
 	}
 	rule-damager __groovy_multiline_comment {
-		default token groovy_multi_line_comment { fgcolor : rgb(63, 127, 95) }
+		default token groovy_multi_line_comment 
 		//TODO not fully ported
 	}
 	rule-damager __groovy_string {
-		default token groovy_string { fgcolor : rgb(42, 0, 255) }
-		token groovy_variable { fgcolor : rgb(255, 0, 0) }
-		javascript-rule groovy_variable "groovy-string-variable-rule.js"
+		default token groovy_string 
+		token groovy_var_interpolation 
+		javascript-rule groovy_var_interpolation "groovy-string-variable-rule.js"
 	}
 	rule-damager __groovy_character {
-		default token groovy_char { fgcolor : rgb(42, 0, 255) }
+		default token groovy_char 
 	}
 	java-like-partitioner {
 		singlelinedoc __groovy_singleline_comment

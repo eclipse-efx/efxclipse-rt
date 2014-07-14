@@ -1,0 +1,15 @@
+.default_tagtoken {
+	-fx-fill: rgb(0, 0, 128);
+}
+
+.xml_string {
+	-fx-fill: rgb(0, 128, 0);
+}
+
+.default_xmltoken {
+	-fx-fill: rgb(0, 0, 0);
+}
+
+.proc_instruction {
+	-fx-fill: rgb(128, 128, 128);
+}

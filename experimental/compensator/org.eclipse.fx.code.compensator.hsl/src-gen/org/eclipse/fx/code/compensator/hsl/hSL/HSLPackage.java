@@ -437,40 +437,13 @@ public interface HSLPackage extends EPackage
   int SCANNER_TOKEN__NAME = 1;
 
   /**
-   * The feature id for the '<em><b>Fg Color</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCANNER_TOKEN__FG_COLOR = 2;
-
-  /**
-   * The feature id for the '<em><b>Bg Color</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCANNER_TOKEN__BG_COLOR = 3;
-
-  /**
-   * The feature id for the '<em><b>Font</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCANNER_TOKEN__FONT = 4;
-
-  /**
    * The number of structural features of the '<em>Scanner Token</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_TOKEN_FEATURE_COUNT = 5;
+  int SCANNER_TOKEN_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.KeywordGroupImpl <em>Keyword Group</em>}' class.
@@ -1422,39 +1395,6 @@ public interface HSLPackage extends EPackage
   EAttribute getScannerToken_Name();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerToken#getFgColor <em>Fg Color</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Fg Color</em>'.
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.ScannerToken#getFgColor()
-   * @see #getScannerToken()
-   * @generated
-   */
-  EReference getScannerToken_FgColor();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerToken#getBgColor <em>Bg Color</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Bg Color</em>'.
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.ScannerToken#getBgColor()
-   * @see #getScannerToken()
-   * @generated
-   */
-  EReference getScannerToken_BgColor();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.compensator.hsl.hSL.ScannerToken#getFont <em>Font</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Font</em>'.
-   * @see org.eclipse.fx.code.compensator.hsl.hSL.ScannerToken#getFont()
-   * @see #getScannerToken()
-   * @generated
-   */
-  EReference getScannerToken_Font();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.compensator.hsl.hSL.KeywordGroup <em>Keyword Group</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2248,30 +2188,6 @@ public interface HSLPackage extends EPackage
      * @generated
      */
     EAttribute SCANNER_TOKEN__NAME = eINSTANCE.getScannerToken_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Fg Color</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SCANNER_TOKEN__FG_COLOR = eINSTANCE.getScannerToken_FgColor();
-
-    /**
-     * The meta object literal for the '<em><b>Bg Color</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SCANNER_TOKEN__BG_COLOR = eINSTANCE.getScannerToken_BgColor();
-
-    /**
-     * The meta object literal for the '<em><b>Font</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SCANNER_TOKEN__FONT = eINSTANCE.getScannerToken_Font();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.KeywordGroupImpl <em>Keyword Group</em>}' class.

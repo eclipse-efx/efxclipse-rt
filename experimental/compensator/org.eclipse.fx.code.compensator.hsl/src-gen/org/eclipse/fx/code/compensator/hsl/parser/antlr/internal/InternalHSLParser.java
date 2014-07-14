@@ -22,9 +22,8 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalHSLParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'{'", "'}'", "'for'", "'partition'", "'java-like-partitioner'", "'singlelinedoc'", "'multilinedoc'", "'javadoc'", "'char'", "'string'", "'rule-partitioner'", "'js-partitioner'", "'js-damager'", "'rule-damager'", "'default'", "'token'", "'fgcolor'", "':'", "'bgcolor'", "'font'", "'keywords'", "'['", "','", "']'", "'since'", "'single-line'", "'=>'", "'escaped'", "'by'", "'multi-line'", "'character-rule'", "'javascript-rule'", "'whitespace-rule'", "'javawhitespace'", "'rgb'", "'('", "')'", "'bold'", "'italic'", "'underline'", "'strike-through'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'{'", "'}'", "'for'", "'partition'", "'java-like-partitioner'", "'singlelinedoc'", "'multilinedoc'", "'javadoc'", "'char'", "'string'", "'rule-partitioner'", "'js-partitioner'", "'js-damager'", "'rule-damager'", "'default'", "'token'", "'keywords'", "'['", "','", "']'", "'since'", "'single-line'", "'=>'", "'escaped'", "'by'", "'multi-line'", "'character-rule'", "'javascript-rule'", "'whitespace-rule'", "'javawhitespace'", "'rgb'", "'('", "')'", "'bold'", "'italic'", "'underline'", "'strike-through'"
     };
-    public static final int T__50=50;
     public static final int T__19=19;
     public static final int T__15=15;
     public static final int T__16=16;
@@ -34,7 +33,6 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
     public static final int T__12=12;
     public static final int T__13=13;
     public static final int T__14=14;
-    public static final int T__51=51;
     public static final int RULE_ID=4;
     public static final int T__26=26;
     public static final int T__27=27;
@@ -63,8 +61,6 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
     public static final int T__32=32;
     public static final int RULE_WS=9;
     public static final int RULE_ANY_OTHER=10;
-    public static final int T__48=48;
-    public static final int T__49=49;
     public static final int T__44=44;
     public static final int T__45=45;
     public static final int T__46=46;
@@ -969,7 +965,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                 int alt5=2;
                 int LA5_0 = input.LA(1);
 
-                if ( (LA5_0==36||LA5_0==40||LA5_0==42) ) {
+                if ( (LA5_0==32||LA5_0==36||LA5_0==38) ) {
                     alt5=1;
                 }
 
@@ -1538,7 +1534,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==31) ) {
+                if ( (LA8_0==27) ) {
                     alt8=1;
                 }
 
@@ -1587,7 +1583,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                 int alt9=2;
                 int LA9_0 = input.LA(1);
 
-                if ( (LA9_0==36||(LA9_0>=40 && LA9_0<=43)) ) {
+                if ( (LA9_0==32||(LA9_0>=36 && LA9_0<=39)) ) {
                     alt9=1;
                 }
 
@@ -1691,36 +1687,22 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScannerToken"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:701:1: ruleScannerToken returns [EObject current=null] : ( ( (lv_default_0_0= 'default' ) )? otherlv_1= 'token' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= '{' (otherlv_4= 'fgcolor' otherlv_5= ':' ( (lv_fgColor_6_0= ruleColor ) ) )? (otherlv_7= 'bgcolor' otherlv_8= ':' ( (lv_bgColor_9_0= ruleColor ) ) )? (otherlv_10= 'font' otherlv_11= ':' ( (lv_font_12_0= ruleFont ) ) )? otherlv_13= '}' )? ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:701:1: ruleScannerToken returns [EObject current=null] : ( ( (lv_default_0_0= 'default' ) )? otherlv_1= 'token' ( (lv_name_2_0= RULE_ID ) ) ) ;
     public final EObject ruleScannerToken() throws RecognitionException {
         EObject current = null;
 
         Token lv_default_0_0=null;
         Token otherlv_1=null;
         Token lv_name_2_0=null;
-        Token otherlv_3=null;
-        Token otherlv_4=null;
-        Token otherlv_5=null;
-        Token otherlv_7=null;
-        Token otherlv_8=null;
-        Token otherlv_10=null;
-        Token otherlv_11=null;
-        Token otherlv_13=null;
-        EObject lv_fgColor_6_0 = null;
-
-        EObject lv_bgColor_9_0 = null;
-
-        EObject lv_font_12_0 = null;
-
 
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:704:28: ( ( ( (lv_default_0_0= 'default' ) )? otherlv_1= 'token' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= '{' (otherlv_4= 'fgcolor' otherlv_5= ':' ( (lv_fgColor_6_0= ruleColor ) ) )? (otherlv_7= 'bgcolor' otherlv_8= ':' ( (lv_bgColor_9_0= ruleColor ) ) )? (otherlv_10= 'font' otherlv_11= ':' ( (lv_font_12_0= ruleFont ) ) )? otherlv_13= '}' )? ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:705:1: ( ( (lv_default_0_0= 'default' ) )? otherlv_1= 'token' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= '{' (otherlv_4= 'fgcolor' otherlv_5= ':' ( (lv_fgColor_6_0= ruleColor ) ) )? (otherlv_7= 'bgcolor' otherlv_8= ':' ( (lv_bgColor_9_0= ruleColor ) ) )? (otherlv_10= 'font' otherlv_11= ':' ( (lv_font_12_0= ruleFont ) ) )? otherlv_13= '}' )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:704:28: ( ( ( (lv_default_0_0= 'default' ) )? otherlv_1= 'token' ( (lv_name_2_0= RULE_ID ) ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:705:1: ( ( (lv_default_0_0= 'default' ) )? otherlv_1= 'token' ( (lv_name_2_0= RULE_ID ) ) )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:705:1: ( ( (lv_default_0_0= 'default' ) )? otherlv_1= 'token' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= '{' (otherlv_4= 'fgcolor' otherlv_5= ':' ( (lv_fgColor_6_0= ruleColor ) ) )? (otherlv_7= 'bgcolor' otherlv_8= ':' ( (lv_bgColor_9_0= ruleColor ) ) )? (otherlv_10= 'font' otherlv_11= ':' ( (lv_font_12_0= ruleFont ) ) )? otherlv_13= '}' )? )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:705:2: ( (lv_default_0_0= 'default' ) )? otherlv_1= 'token' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= '{' (otherlv_4= 'fgcolor' otherlv_5= ':' ( (lv_fgColor_6_0= ruleColor ) ) )? (otherlv_7= 'bgcolor' otherlv_8= ':' ( (lv_bgColor_9_0= ruleColor ) ) )? (otherlv_10= 'font' otherlv_11= ':' ( (lv_font_12_0= ruleFont ) ) )? otherlv_13= '}' )?
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:705:1: ( ( (lv_default_0_0= 'default' ) )? otherlv_1= 'token' ( (lv_name_2_0= RULE_ID ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:705:2: ( (lv_default_0_0= 'default' ) )? otherlv_1= 'token' ( (lv_name_2_0= RULE_ID ) )
             {
             // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:705:2: ( (lv_default_0_0= 'default' ) )?
             int alt10=2;
@@ -1785,199 +1767,6 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:742:2: (otherlv_3= '{' (otherlv_4= 'fgcolor' otherlv_5= ':' ( (lv_fgColor_6_0= ruleColor ) ) )? (otherlv_7= 'bgcolor' otherlv_8= ':' ( (lv_bgColor_9_0= ruleColor ) ) )? (otherlv_10= 'font' otherlv_11= ':' ( (lv_font_12_0= ruleFont ) ) )? otherlv_13= '}' )?
-            int alt14=2;
-            int LA14_0 = input.LA(1);
-
-            if ( (LA14_0==11) ) {
-                alt14=1;
-            }
-            switch (alt14) {
-                case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:742:4: otherlv_3= '{' (otherlv_4= 'fgcolor' otherlv_5= ':' ( (lv_fgColor_6_0= ruleColor ) ) )? (otherlv_7= 'bgcolor' otherlv_8= ':' ( (lv_bgColor_9_0= ruleColor ) ) )? (otherlv_10= 'font' otherlv_11= ':' ( (lv_font_12_0= ruleFont ) ) )? otherlv_13= '}'
-                    {
-                    otherlv_3=(Token)match(input,11,FOLLOW_11_in_ruleScannerToken1595); 
-
-                        	newLeafNode(otherlv_3, grammarAccess.getScannerTokenAccess().getLeftCurlyBracketKeyword_3_0());
-                        
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:746:1: (otherlv_4= 'fgcolor' otherlv_5= ':' ( (lv_fgColor_6_0= ruleColor ) ) )?
-                    int alt11=2;
-                    int LA11_0 = input.LA(1);
-
-                    if ( (LA11_0==27) ) {
-                        alt11=1;
-                    }
-                    switch (alt11) {
-                        case 1 :
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:746:3: otherlv_4= 'fgcolor' otherlv_5= ':' ( (lv_fgColor_6_0= ruleColor ) )
-                            {
-                            otherlv_4=(Token)match(input,27,FOLLOW_27_in_ruleScannerToken1608); 
-
-                                	newLeafNode(otherlv_4, grammarAccess.getScannerTokenAccess().getFgcolorKeyword_3_1_0());
-                                
-                            otherlv_5=(Token)match(input,28,FOLLOW_28_in_ruleScannerToken1620); 
-
-                                	newLeafNode(otherlv_5, grammarAccess.getScannerTokenAccess().getColonKeyword_3_1_1());
-                                
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:754:1: ( (lv_fgColor_6_0= ruleColor ) )
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:755:1: (lv_fgColor_6_0= ruleColor )
-                            {
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:755:1: (lv_fgColor_6_0= ruleColor )
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:756:3: lv_fgColor_6_0= ruleColor
-                            {
-                             
-                            	        newCompositeNode(grammarAccess.getScannerTokenAccess().getFgColorColorParserRuleCall_3_1_2_0()); 
-                            	    
-                            pushFollow(FOLLOW_ruleColor_in_ruleScannerToken1641);
-                            lv_fgColor_6_0=ruleColor();
-
-                            state._fsp--;
-
-
-                            	        if (current==null) {
-                            	            current = createModelElementForParent(grammarAccess.getScannerTokenRule());
-                            	        }
-                                   		set(
-                                   			current, 
-                                   			"fgColor",
-                                    		lv_fgColor_6_0, 
-                                    		"Color");
-                            	        afterParserOrEnumRuleCall();
-                            	    
-
-                            }
-
-
-                            }
-
-
-                            }
-                            break;
-
-                    }
-
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:772:4: (otherlv_7= 'bgcolor' otherlv_8= ':' ( (lv_bgColor_9_0= ruleColor ) ) )?
-                    int alt12=2;
-                    int LA12_0 = input.LA(1);
-
-                    if ( (LA12_0==29) ) {
-                        alt12=1;
-                    }
-                    switch (alt12) {
-                        case 1 :
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:772:6: otherlv_7= 'bgcolor' otherlv_8= ':' ( (lv_bgColor_9_0= ruleColor ) )
-                            {
-                            otherlv_7=(Token)match(input,29,FOLLOW_29_in_ruleScannerToken1656); 
-
-                                	newLeafNode(otherlv_7, grammarAccess.getScannerTokenAccess().getBgcolorKeyword_3_2_0());
-                                
-                            otherlv_8=(Token)match(input,28,FOLLOW_28_in_ruleScannerToken1668); 
-
-                                	newLeafNode(otherlv_8, grammarAccess.getScannerTokenAccess().getColonKeyword_3_2_1());
-                                
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:780:1: ( (lv_bgColor_9_0= ruleColor ) )
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:781:1: (lv_bgColor_9_0= ruleColor )
-                            {
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:781:1: (lv_bgColor_9_0= ruleColor )
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:782:3: lv_bgColor_9_0= ruleColor
-                            {
-                             
-                            	        newCompositeNode(grammarAccess.getScannerTokenAccess().getBgColorColorParserRuleCall_3_2_2_0()); 
-                            	    
-                            pushFollow(FOLLOW_ruleColor_in_ruleScannerToken1689);
-                            lv_bgColor_9_0=ruleColor();
-
-                            state._fsp--;
-
-
-                            	        if (current==null) {
-                            	            current = createModelElementForParent(grammarAccess.getScannerTokenRule());
-                            	        }
-                                   		set(
-                                   			current, 
-                                   			"bgColor",
-                                    		lv_bgColor_9_0, 
-                                    		"Color");
-                            	        afterParserOrEnumRuleCall();
-                            	    
-
-                            }
-
-
-                            }
-
-
-                            }
-                            break;
-
-                    }
-
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:798:4: (otherlv_10= 'font' otherlv_11= ':' ( (lv_font_12_0= ruleFont ) ) )?
-                    int alt13=2;
-                    int LA13_0 = input.LA(1);
-
-                    if ( (LA13_0==30) ) {
-                        alt13=1;
-                    }
-                    switch (alt13) {
-                        case 1 :
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:798:6: otherlv_10= 'font' otherlv_11= ':' ( (lv_font_12_0= ruleFont ) )
-                            {
-                            otherlv_10=(Token)match(input,30,FOLLOW_30_in_ruleScannerToken1704); 
-
-                                	newLeafNode(otherlv_10, grammarAccess.getScannerTokenAccess().getFontKeyword_3_3_0());
-                                
-                            otherlv_11=(Token)match(input,28,FOLLOW_28_in_ruleScannerToken1716); 
-
-                                	newLeafNode(otherlv_11, grammarAccess.getScannerTokenAccess().getColonKeyword_3_3_1());
-                                
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:806:1: ( (lv_font_12_0= ruleFont ) )
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:807:1: (lv_font_12_0= ruleFont )
-                            {
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:807:1: (lv_font_12_0= ruleFont )
-                            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:808:3: lv_font_12_0= ruleFont
-                            {
-                             
-                            	        newCompositeNode(grammarAccess.getScannerTokenAccess().getFontFontParserRuleCall_3_3_2_0()); 
-                            	    
-                            pushFollow(FOLLOW_ruleFont_in_ruleScannerToken1737);
-                            lv_font_12_0=ruleFont();
-
-                            state._fsp--;
-
-
-                            	        if (current==null) {
-                            	            current = createModelElementForParent(grammarAccess.getScannerTokenRule());
-                            	        }
-                                   		set(
-                                   			current, 
-                                   			"font",
-                                    		lv_font_12_0, 
-                                    		"Font");
-                            	        afterParserOrEnumRuleCall();
-                            	    
-
-                            }
-
-
-                            }
-
-
-                            }
-                            break;
-
-                    }
-
-                    otherlv_13=(Token)match(input,12,FOLLOW_12_in_ruleScannerToken1751); 
-
-                        	newLeafNode(otherlv_13, grammarAccess.getScannerTokenAccess().getRightCurlyBracketKeyword_3_4());
-                        
-
-                    }
-                    break;
-
-            }
-
 
             }
 
@@ -1999,7 +1788,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleKeywordGroup"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:836:1: entryRuleKeywordGroup returns [EObject current=null] : iv_ruleKeywordGroup= ruleKeywordGroup EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:750:1: entryRuleKeywordGroup returns [EObject current=null] : iv_ruleKeywordGroup= ruleKeywordGroup EOF ;
     public final EObject entryRuleKeywordGroup() throws RecognitionException {
         EObject current = null;
 
@@ -2007,17 +1796,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:837:2: (iv_ruleKeywordGroup= ruleKeywordGroup EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:838:2: iv_ruleKeywordGroup= ruleKeywordGroup EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:751:2: (iv_ruleKeywordGroup= ruleKeywordGroup EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:752:2: iv_ruleKeywordGroup= ruleKeywordGroup EOF
             {
              newCompositeNode(grammarAccess.getKeywordGroupRule()); 
-            pushFollow(FOLLOW_ruleKeywordGroup_in_entryRuleKeywordGroup1789);
+            pushFollow(FOLLOW_ruleKeywordGroup_in_entryRuleKeywordGroup1618);
             iv_ruleKeywordGroup=ruleKeywordGroup();
 
             state._fsp--;
 
              current =iv_ruleKeywordGroup; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleKeywordGroup1799); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleKeywordGroup1628); 
 
             }
 
@@ -2035,7 +1824,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleKeywordGroup"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:845:1: ruleKeywordGroup returns [EObject current=null] : (otherlv_0= 'keywords' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_keywords_3_0= ruleKeyword ) ) (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )* otherlv_6= ']' ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:759:1: ruleKeywordGroup returns [EObject current=null] : (otherlv_0= 'keywords' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_keywords_3_0= ruleKeyword ) ) (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )* otherlv_6= ']' ) ;
     public final EObject ruleKeywordGroup() throws RecognitionException {
         EObject current = null;
 
@@ -2052,28 +1841,28 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:848:28: ( (otherlv_0= 'keywords' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_keywords_3_0= ruleKeyword ) ) (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )* otherlv_6= ']' ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:849:1: (otherlv_0= 'keywords' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_keywords_3_0= ruleKeyword ) ) (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )* otherlv_6= ']' )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:762:28: ( (otherlv_0= 'keywords' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_keywords_3_0= ruleKeyword ) ) (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )* otherlv_6= ']' ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:763:1: (otherlv_0= 'keywords' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_keywords_3_0= ruleKeyword ) ) (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )* otherlv_6= ']' )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:849:1: (otherlv_0= 'keywords' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_keywords_3_0= ruleKeyword ) ) (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )* otherlv_6= ']' )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:849:3: otherlv_0= 'keywords' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_keywords_3_0= ruleKeyword ) ) (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )* otherlv_6= ']'
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:763:1: (otherlv_0= 'keywords' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_keywords_3_0= ruleKeyword ) ) (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )* otherlv_6= ']' )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:763:3: otherlv_0= 'keywords' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_keywords_3_0= ruleKeyword ) ) (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )* otherlv_6= ']'
             {
-            otherlv_0=(Token)match(input,31,FOLLOW_31_in_ruleKeywordGroup1836); 
+            otherlv_0=(Token)match(input,27,FOLLOW_27_in_ruleKeywordGroup1665); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getKeywordGroupAccess().getKeywordsKeyword_0());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:853:1: ( (otherlv_1= RULE_ID ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:854:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:767:1: ( (otherlv_1= RULE_ID ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:768:1: (otherlv_1= RULE_ID )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:854:1: (otherlv_1= RULE_ID )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:855:3: otherlv_1= RULE_ID
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:768:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:769:3: otherlv_1= RULE_ID
             {
 
             			if (current==null) {
             	            current = createModelElement(grammarAccess.getKeywordGroupRule());
             	        }
                     
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleKeywordGroup1856); 
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleKeywordGroup1685); 
 
             		newLeafNode(otherlv_1, grammarAccess.getKeywordGroupAccess().getTokenScannerTokenCrossReference_1_0()); 
             	
@@ -2083,20 +1872,20 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,32,FOLLOW_32_in_ruleKeywordGroup1868); 
+            otherlv_2=(Token)match(input,28,FOLLOW_28_in_ruleKeywordGroup1697); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getKeywordGroupAccess().getLeftSquareBracketKeyword_2());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:870:1: ( (lv_keywords_3_0= ruleKeyword ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:871:1: (lv_keywords_3_0= ruleKeyword )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:784:1: ( (lv_keywords_3_0= ruleKeyword ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:785:1: (lv_keywords_3_0= ruleKeyword )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:871:1: (lv_keywords_3_0= ruleKeyword )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:872:3: lv_keywords_3_0= ruleKeyword
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:785:1: (lv_keywords_3_0= ruleKeyword )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:786:3: lv_keywords_3_0= ruleKeyword
             {
              
             	        newCompositeNode(grammarAccess.getKeywordGroupAccess().getKeywordsKeywordParserRuleCall_3_0()); 
             	    
-            pushFollow(FOLLOW_ruleKeyword_in_ruleKeywordGroup1889);
+            pushFollow(FOLLOW_ruleKeyword_in_ruleKeywordGroup1718);
             lv_keywords_3_0=ruleKeyword();
 
             state._fsp--;
@@ -2118,35 +1907,35 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:888:2: (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )*
-            loop15:
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:802:2: (otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) ) )*
+            loop11:
             do {
-                int alt15=2;
-                int LA15_0 = input.LA(1);
+                int alt11=2;
+                int LA11_0 = input.LA(1);
 
-                if ( (LA15_0==33) ) {
-                    alt15=1;
+                if ( (LA11_0==29) ) {
+                    alt11=1;
                 }
 
 
-                switch (alt15) {
+                switch (alt11) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:888:4: otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) )
+            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:802:4: otherlv_4= ',' ( (lv_keywords_5_0= ruleKeyword ) )
             	    {
-            	    otherlv_4=(Token)match(input,33,FOLLOW_33_in_ruleKeywordGroup1902); 
+            	    otherlv_4=(Token)match(input,29,FOLLOW_29_in_ruleKeywordGroup1731); 
 
             	        	newLeafNode(otherlv_4, grammarAccess.getKeywordGroupAccess().getCommaKeyword_4_0());
             	        
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:892:1: ( (lv_keywords_5_0= ruleKeyword ) )
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:893:1: (lv_keywords_5_0= ruleKeyword )
+            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:806:1: ( (lv_keywords_5_0= ruleKeyword ) )
+            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:807:1: (lv_keywords_5_0= ruleKeyword )
             	    {
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:893:1: (lv_keywords_5_0= ruleKeyword )
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:894:3: lv_keywords_5_0= ruleKeyword
+            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:807:1: (lv_keywords_5_0= ruleKeyword )
+            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:808:3: lv_keywords_5_0= ruleKeyword
             	    {
             	     
             	    	        newCompositeNode(grammarAccess.getKeywordGroupAccess().getKeywordsKeywordParserRuleCall_4_1_0()); 
             	    	    
-            	    pushFollow(FOLLOW_ruleKeyword_in_ruleKeywordGroup1923);
+            	    pushFollow(FOLLOW_ruleKeyword_in_ruleKeywordGroup1752);
             	    lv_keywords_5_0=ruleKeyword();
 
             	    state._fsp--;
@@ -2173,11 +1962,11 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop15;
+            	    break loop11;
                 }
             } while (true);
 
-            otherlv_6=(Token)match(input,34,FOLLOW_34_in_ruleKeywordGroup1937); 
+            otherlv_6=(Token)match(input,30,FOLLOW_30_in_ruleKeywordGroup1766); 
 
                 	newLeafNode(otherlv_6, grammarAccess.getKeywordGroupAccess().getRightSquareBracketKeyword_5());
                 
@@ -2202,7 +1991,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleKeyword"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:922:1: entryRuleKeyword returns [EObject current=null] : iv_ruleKeyword= ruleKeyword EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:836:1: entryRuleKeyword returns [EObject current=null] : iv_ruleKeyword= ruleKeyword EOF ;
     public final EObject entryRuleKeyword() throws RecognitionException {
         EObject current = null;
 
@@ -2210,17 +1999,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:923:2: (iv_ruleKeyword= ruleKeyword EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:924:2: iv_ruleKeyword= ruleKeyword EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:837:2: (iv_ruleKeyword= ruleKeyword EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:838:2: iv_ruleKeyword= ruleKeyword EOF
             {
              newCompositeNode(grammarAccess.getKeywordRule()); 
-            pushFollow(FOLLOW_ruleKeyword_in_entryRuleKeyword1973);
+            pushFollow(FOLLOW_ruleKeyword_in_entryRuleKeyword1802);
             iv_ruleKeyword=ruleKeyword();
 
             state._fsp--;
 
              current =iv_ruleKeyword; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleKeyword1983); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleKeyword1812); 
 
             }
 
@@ -2238,7 +2027,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleKeyword"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:931:1: ruleKeyword returns [EObject current=null] : ( ( (lv_name_0_0= RULE_STRING ) ) (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )? ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:845:1: ruleKeyword returns [EObject current=null] : ( ( (lv_name_0_0= RULE_STRING ) ) (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )? ) ;
     public final EObject ruleKeyword() throws RecognitionException {
         EObject current = null;
 
@@ -2249,19 +2038,19 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:934:28: ( ( ( (lv_name_0_0= RULE_STRING ) ) (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )? ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:935:1: ( ( (lv_name_0_0= RULE_STRING ) ) (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:848:28: ( ( ( (lv_name_0_0= RULE_STRING ) ) (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )? ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:849:1: ( ( (lv_name_0_0= RULE_STRING ) ) (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )? )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:935:1: ( ( (lv_name_0_0= RULE_STRING ) ) (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )? )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:935:2: ( (lv_name_0_0= RULE_STRING ) ) (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )?
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:849:1: ( ( (lv_name_0_0= RULE_STRING ) ) (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:849:2: ( (lv_name_0_0= RULE_STRING ) ) (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )?
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:935:2: ( (lv_name_0_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:936:1: (lv_name_0_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:849:2: ( (lv_name_0_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:850:1: (lv_name_0_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:936:1: (lv_name_0_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:937:3: lv_name_0_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:850:1: (lv_name_0_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:851:3: lv_name_0_0= RULE_STRING
             {
-            lv_name_0_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleKeyword2025); 
+            lv_name_0_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleKeyword1854); 
 
             			newLeafNode(lv_name_0_0, grammarAccess.getKeywordAccess().getNameSTRINGTerminalRuleCall_0_0()); 
             		
@@ -2281,28 +2070,28 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:953:2: (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )?
-            int alt16=2;
-            int LA16_0 = input.LA(1);
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:867:2: (otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) ) )?
+            int alt12=2;
+            int LA12_0 = input.LA(1);
 
-            if ( (LA16_0==35) ) {
-                alt16=1;
+            if ( (LA12_0==31) ) {
+                alt12=1;
             }
-            switch (alt16) {
+            switch (alt12) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:953:4: otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:867:4: otherlv_1= 'since' ( (lv_version_2_0= RULE_STRING ) )
                     {
-                    otherlv_1=(Token)match(input,35,FOLLOW_35_in_ruleKeyword2043); 
+                    otherlv_1=(Token)match(input,31,FOLLOW_31_in_ruleKeyword1872); 
 
                         	newLeafNode(otherlv_1, grammarAccess.getKeywordAccess().getSinceKeyword_1_0());
                         
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:957:1: ( (lv_version_2_0= RULE_STRING ) )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:958:1: (lv_version_2_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:871:1: ( (lv_version_2_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:872:1: (lv_version_2_0= RULE_STRING )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:958:1: (lv_version_2_0= RULE_STRING )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:959:3: lv_version_2_0= RULE_STRING
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:872:1: (lv_version_2_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:873:3: lv_version_2_0= RULE_STRING
                     {
-                    lv_version_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleKeyword2060); 
+                    lv_version_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleKeyword1889); 
 
                     			newLeafNode(lv_version_2_0, grammarAccess.getKeywordAccess().getVersionSTRINGTerminalRuleCall_1_1_0()); 
                     		
@@ -2349,7 +2138,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScannerRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:983:1: entryRuleScannerRule returns [EObject current=null] : iv_ruleScannerRule= ruleScannerRule EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:897:1: entryRuleScannerRule returns [EObject current=null] : iv_ruleScannerRule= ruleScannerRule EOF ;
     public final EObject entryRuleScannerRule() throws RecognitionException {
         EObject current = null;
 
@@ -2357,17 +2146,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:984:2: (iv_ruleScannerRule= ruleScannerRule EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:985:2: iv_ruleScannerRule= ruleScannerRule EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:898:2: (iv_ruleScannerRule= ruleScannerRule EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:899:2: iv_ruleScannerRule= ruleScannerRule EOF
             {
              newCompositeNode(grammarAccess.getScannerRuleRule()); 
-            pushFollow(FOLLOW_ruleScannerRule_in_entryRuleScannerRule2103);
+            pushFollow(FOLLOW_ruleScannerRule_in_entryRuleScannerRule1932);
             iv_ruleScannerRule=ruleScannerRule();
 
             state._fsp--;
 
              current =iv_ruleScannerRule; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerRule2113); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerRule1942); 
 
             }
 
@@ -2385,7 +2174,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScannerRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:992:1: ruleScannerRule returns [EObject current=null] : (this_ScannerSingleLineRule_0= ruleScannerSingleLineRule | this_ScannerMultiLineRule_1= ruleScannerMultiLineRule | this_ScannerCharacterRule_2= ruleScannerCharacterRule | this_ScannerJSRule_3= ruleScannerJSRule | this_ScannerWhitespaceRule_4= ruleScannerWhitespaceRule ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:906:1: ruleScannerRule returns [EObject current=null] : (this_ScannerSingleLineRule_0= ruleScannerSingleLineRule | this_ScannerMultiLineRule_1= ruleScannerMultiLineRule | this_ScannerCharacterRule_2= ruleScannerCharacterRule | this_ScannerJSRule_3= ruleScannerJSRule | this_ScannerWhitespaceRule_4= ruleScannerWhitespaceRule ) ;
     public final EObject ruleScannerRule() throws RecognitionException {
         EObject current = null;
 
@@ -2403,52 +2192,52 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:995:28: ( (this_ScannerSingleLineRule_0= ruleScannerSingleLineRule | this_ScannerMultiLineRule_1= ruleScannerMultiLineRule | this_ScannerCharacterRule_2= ruleScannerCharacterRule | this_ScannerJSRule_3= ruleScannerJSRule | this_ScannerWhitespaceRule_4= ruleScannerWhitespaceRule ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:996:1: (this_ScannerSingleLineRule_0= ruleScannerSingleLineRule | this_ScannerMultiLineRule_1= ruleScannerMultiLineRule | this_ScannerCharacterRule_2= ruleScannerCharacterRule | this_ScannerJSRule_3= ruleScannerJSRule | this_ScannerWhitespaceRule_4= ruleScannerWhitespaceRule )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:909:28: ( (this_ScannerSingleLineRule_0= ruleScannerSingleLineRule | this_ScannerMultiLineRule_1= ruleScannerMultiLineRule | this_ScannerCharacterRule_2= ruleScannerCharacterRule | this_ScannerJSRule_3= ruleScannerJSRule | this_ScannerWhitespaceRule_4= ruleScannerWhitespaceRule ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:910:1: (this_ScannerSingleLineRule_0= ruleScannerSingleLineRule | this_ScannerMultiLineRule_1= ruleScannerMultiLineRule | this_ScannerCharacterRule_2= ruleScannerCharacterRule | this_ScannerJSRule_3= ruleScannerJSRule | this_ScannerWhitespaceRule_4= ruleScannerWhitespaceRule )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:996:1: (this_ScannerSingleLineRule_0= ruleScannerSingleLineRule | this_ScannerMultiLineRule_1= ruleScannerMultiLineRule | this_ScannerCharacterRule_2= ruleScannerCharacterRule | this_ScannerJSRule_3= ruleScannerJSRule | this_ScannerWhitespaceRule_4= ruleScannerWhitespaceRule )
-            int alt17=5;
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:910:1: (this_ScannerSingleLineRule_0= ruleScannerSingleLineRule | this_ScannerMultiLineRule_1= ruleScannerMultiLineRule | this_ScannerCharacterRule_2= ruleScannerCharacterRule | this_ScannerJSRule_3= ruleScannerJSRule | this_ScannerWhitespaceRule_4= ruleScannerWhitespaceRule )
+            int alt13=5;
             switch ( input.LA(1) ) {
+            case 32:
+                {
+                alt13=1;
+                }
+                break;
             case 36:
                 {
-                alt17=1;
+                alt13=2;
                 }
                 break;
-            case 40:
+            case 37:
                 {
-                alt17=2;
+                alt13=3;
                 }
                 break;
-            case 41:
+            case 38:
                 {
-                alt17=3;
+                alt13=4;
                 }
                 break;
-            case 42:
+            case 39:
                 {
-                alt17=4;
-                }
-                break;
-            case 43:
-                {
-                alt17=5;
+                alt13=5;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 17, 0, input);
+                    new NoViableAltException("", 13, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt17) {
+            switch (alt13) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:997:5: this_ScannerSingleLineRule_0= ruleScannerSingleLineRule
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:911:5: this_ScannerSingleLineRule_0= ruleScannerSingleLineRule
                     {
                      
                             newCompositeNode(grammarAccess.getScannerRuleAccess().getScannerSingleLineRuleParserRuleCall_0()); 
                         
-                    pushFollow(FOLLOW_ruleScannerSingleLineRule_in_ruleScannerRule2160);
+                    pushFollow(FOLLOW_ruleScannerSingleLineRule_in_ruleScannerRule1989);
                     this_ScannerSingleLineRule_0=ruleScannerSingleLineRule();
 
                     state._fsp--;
@@ -2461,12 +2250,12 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1007:5: this_ScannerMultiLineRule_1= ruleScannerMultiLineRule
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:921:5: this_ScannerMultiLineRule_1= ruleScannerMultiLineRule
                     {
                      
                             newCompositeNode(grammarAccess.getScannerRuleAccess().getScannerMultiLineRuleParserRuleCall_1()); 
                         
-                    pushFollow(FOLLOW_ruleScannerMultiLineRule_in_ruleScannerRule2187);
+                    pushFollow(FOLLOW_ruleScannerMultiLineRule_in_ruleScannerRule2016);
                     this_ScannerMultiLineRule_1=ruleScannerMultiLineRule();
 
                     state._fsp--;
@@ -2479,12 +2268,12 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1017:5: this_ScannerCharacterRule_2= ruleScannerCharacterRule
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:931:5: this_ScannerCharacterRule_2= ruleScannerCharacterRule
                     {
                      
                             newCompositeNode(grammarAccess.getScannerRuleAccess().getScannerCharacterRuleParserRuleCall_2()); 
                         
-                    pushFollow(FOLLOW_ruleScannerCharacterRule_in_ruleScannerRule2214);
+                    pushFollow(FOLLOW_ruleScannerCharacterRule_in_ruleScannerRule2043);
                     this_ScannerCharacterRule_2=ruleScannerCharacterRule();
 
                     state._fsp--;
@@ -2497,12 +2286,12 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1027:5: this_ScannerJSRule_3= ruleScannerJSRule
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:941:5: this_ScannerJSRule_3= ruleScannerJSRule
                     {
                      
                             newCompositeNode(grammarAccess.getScannerRuleAccess().getScannerJSRuleParserRuleCall_3()); 
                         
-                    pushFollow(FOLLOW_ruleScannerJSRule_in_ruleScannerRule2241);
+                    pushFollow(FOLLOW_ruleScannerJSRule_in_ruleScannerRule2070);
                     this_ScannerJSRule_3=ruleScannerJSRule();
 
                     state._fsp--;
@@ -2515,12 +2304,12 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1037:5: this_ScannerWhitespaceRule_4= ruleScannerWhitespaceRule
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:951:5: this_ScannerWhitespaceRule_4= ruleScannerWhitespaceRule
                     {
                      
                             newCompositeNode(grammarAccess.getScannerRuleAccess().getScannerWhitespaceRuleParserRuleCall_4()); 
                         
-                    pushFollow(FOLLOW_ruleScannerWhitespaceRule_in_ruleScannerRule2268);
+                    pushFollow(FOLLOW_ruleScannerWhitespaceRule_in_ruleScannerRule2097);
                     this_ScannerWhitespaceRule_4=ruleScannerWhitespaceRule();
 
                     state._fsp--;
@@ -2553,7 +2342,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleParitionRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1053:1: entryRuleParitionRule returns [EObject current=null] : iv_ruleParitionRule= ruleParitionRule EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:967:1: entryRuleParitionRule returns [EObject current=null] : iv_ruleParitionRule= ruleParitionRule EOF ;
     public final EObject entryRuleParitionRule() throws RecognitionException {
         EObject current = null;
 
@@ -2561,17 +2350,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1054:2: (iv_ruleParitionRule= ruleParitionRule EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1055:2: iv_ruleParitionRule= ruleParitionRule EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:968:2: (iv_ruleParitionRule= ruleParitionRule EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:969:2: iv_ruleParitionRule= ruleParitionRule EOF
             {
              newCompositeNode(grammarAccess.getParitionRuleRule()); 
-            pushFollow(FOLLOW_ruleParitionRule_in_entryRuleParitionRule2303);
+            pushFollow(FOLLOW_ruleParitionRule_in_entryRuleParitionRule2132);
             iv_ruleParitionRule=ruleParitionRule();
 
             state._fsp--;
 
              current =iv_ruleParitionRule; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleParitionRule2313); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleParitionRule2142); 
 
             }
 
@@ -2589,7 +2378,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParitionRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1062:1: ruleParitionRule returns [EObject current=null] : (this_PartitionSingleLineRule_0= rulePartitionSingleLineRule | this_PartitionMultiLineRule_1= rulePartitionMultiLineRule | this_PartitionJSRule_2= rulePartitionJSRule ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:976:1: ruleParitionRule returns [EObject current=null] : (this_PartitionSingleLineRule_0= rulePartitionSingleLineRule | this_PartitionMultiLineRule_1= rulePartitionMultiLineRule | this_PartitionJSRule_2= rulePartitionJSRule ) ;
     public final EObject ruleParitionRule() throws RecognitionException {
         EObject current = null;
 
@@ -2603,42 +2392,42 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1065:28: ( (this_PartitionSingleLineRule_0= rulePartitionSingleLineRule | this_PartitionMultiLineRule_1= rulePartitionMultiLineRule | this_PartitionJSRule_2= rulePartitionJSRule ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1066:1: (this_PartitionSingleLineRule_0= rulePartitionSingleLineRule | this_PartitionMultiLineRule_1= rulePartitionMultiLineRule | this_PartitionJSRule_2= rulePartitionJSRule )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:979:28: ( (this_PartitionSingleLineRule_0= rulePartitionSingleLineRule | this_PartitionMultiLineRule_1= rulePartitionMultiLineRule | this_PartitionJSRule_2= rulePartitionJSRule ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:980:1: (this_PartitionSingleLineRule_0= rulePartitionSingleLineRule | this_PartitionMultiLineRule_1= rulePartitionMultiLineRule | this_PartitionJSRule_2= rulePartitionJSRule )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1066:1: (this_PartitionSingleLineRule_0= rulePartitionSingleLineRule | this_PartitionMultiLineRule_1= rulePartitionMultiLineRule | this_PartitionJSRule_2= rulePartitionJSRule )
-            int alt18=3;
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:980:1: (this_PartitionSingleLineRule_0= rulePartitionSingleLineRule | this_PartitionMultiLineRule_1= rulePartitionMultiLineRule | this_PartitionJSRule_2= rulePartitionJSRule )
+            int alt14=3;
             switch ( input.LA(1) ) {
+            case 32:
+                {
+                alt14=1;
+                }
+                break;
             case 36:
                 {
-                alt18=1;
+                alt14=2;
                 }
                 break;
-            case 40:
+            case 38:
                 {
-                alt18=2;
-                }
-                break;
-            case 42:
-                {
-                alt18=3;
+                alt14=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 18, 0, input);
+                    new NoViableAltException("", 14, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt18) {
+            switch (alt14) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1067:5: this_PartitionSingleLineRule_0= rulePartitionSingleLineRule
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:981:5: this_PartitionSingleLineRule_0= rulePartitionSingleLineRule
                     {
                      
                             newCompositeNode(grammarAccess.getParitionRuleAccess().getPartitionSingleLineRuleParserRuleCall_0()); 
                         
-                    pushFollow(FOLLOW_rulePartitionSingleLineRule_in_ruleParitionRule2360);
+                    pushFollow(FOLLOW_rulePartitionSingleLineRule_in_ruleParitionRule2189);
                     this_PartitionSingleLineRule_0=rulePartitionSingleLineRule();
 
                     state._fsp--;
@@ -2651,12 +2440,12 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1077:5: this_PartitionMultiLineRule_1= rulePartitionMultiLineRule
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:991:5: this_PartitionMultiLineRule_1= rulePartitionMultiLineRule
                     {
                      
                             newCompositeNode(grammarAccess.getParitionRuleAccess().getPartitionMultiLineRuleParserRuleCall_1()); 
                         
-                    pushFollow(FOLLOW_rulePartitionMultiLineRule_in_ruleParitionRule2387);
+                    pushFollow(FOLLOW_rulePartitionMultiLineRule_in_ruleParitionRule2216);
                     this_PartitionMultiLineRule_1=rulePartitionMultiLineRule();
 
                     state._fsp--;
@@ -2669,12 +2458,12 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1087:5: this_PartitionJSRule_2= rulePartitionJSRule
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1001:5: this_PartitionJSRule_2= rulePartitionJSRule
                     {
                      
                             newCompositeNode(grammarAccess.getParitionRuleAccess().getPartitionJSRuleParserRuleCall_2()); 
                         
-                    pushFollow(FOLLOW_rulePartitionJSRule_in_ruleParitionRule2414);
+                    pushFollow(FOLLOW_rulePartitionJSRule_in_ruleParitionRule2243);
                     this_PartitionJSRule_2=rulePartitionJSRule();
 
                     state._fsp--;
@@ -2707,7 +2496,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScannerSingleLineRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1103:1: entryRuleScannerSingleLineRule returns [EObject current=null] : iv_ruleScannerSingleLineRule= ruleScannerSingleLineRule EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1017:1: entryRuleScannerSingleLineRule returns [EObject current=null] : iv_ruleScannerSingleLineRule= ruleScannerSingleLineRule EOF ;
     public final EObject entryRuleScannerSingleLineRule() throws RecognitionException {
         EObject current = null;
 
@@ -2715,17 +2504,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1104:2: (iv_ruleScannerSingleLineRule= ruleScannerSingleLineRule EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1105:2: iv_ruleScannerSingleLineRule= ruleScannerSingleLineRule EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1018:2: (iv_ruleScannerSingleLineRule= ruleScannerSingleLineRule EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1019:2: iv_ruleScannerSingleLineRule= ruleScannerSingleLineRule EOF
             {
              newCompositeNode(grammarAccess.getScannerSingleLineRuleRule()); 
-            pushFollow(FOLLOW_ruleScannerSingleLineRule_in_entryRuleScannerSingleLineRule2449);
+            pushFollow(FOLLOW_ruleScannerSingleLineRule_in_entryRuleScannerSingleLineRule2278);
             iv_ruleScannerSingleLineRule=ruleScannerSingleLineRule();
 
             state._fsp--;
 
              current =iv_ruleScannerSingleLineRule; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerSingleLineRule2459); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerSingleLineRule2288); 
 
             }
 
@@ -2743,7 +2532,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScannerSingleLineRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1112:1: ruleScannerSingleLineRule returns [EObject current=null] : (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1026:1: ruleScannerSingleLineRule returns [EObject current=null] : (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) ;
     public final EObject ruleScannerSingleLineRule() throws RecognitionException {
         EObject current = null;
 
@@ -2759,28 +2548,28 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1115:28: ( (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1116:1: (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1029:28: ( (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1030:1: (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1116:1: (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1116:3: otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1030:1: (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1030:3: otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
             {
-            otherlv_0=(Token)match(input,36,FOLLOW_36_in_ruleScannerSingleLineRule2496); 
+            otherlv_0=(Token)match(input,32,FOLLOW_32_in_ruleScannerSingleLineRule2325); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getScannerSingleLineRuleAccess().getSingleLineKeyword_0());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1120:1: ( (otherlv_1= RULE_ID ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1121:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1034:1: ( (otherlv_1= RULE_ID ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1035:1: (otherlv_1= RULE_ID )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1121:1: (otherlv_1= RULE_ID )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1122:3: otherlv_1= RULE_ID
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1035:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1036:3: otherlv_1= RULE_ID
             {
 
             			if (current==null) {
             	            current = createModelElement(grammarAccess.getScannerSingleLineRuleRule());
             	        }
                     
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleScannerSingleLineRule2516); 
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleScannerSingleLineRule2345); 
 
             		newLeafNode(otherlv_1, grammarAccess.getScannerSingleLineRuleAccess().getTokenScannerTokenCrossReference_1_0()); 
             	
@@ -2790,13 +2579,13 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1133:2: ( (lv_startSeq_2_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1134:1: (lv_startSeq_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1047:2: ( (lv_startSeq_2_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1048:1: (lv_startSeq_2_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1134:1: (lv_startSeq_2_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1135:3: lv_startSeq_2_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1048:1: (lv_startSeq_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1049:3: lv_startSeq_2_0= RULE_STRING
             {
-            lv_startSeq_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2533); 
+            lv_startSeq_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2362); 
 
             			newLeafNode(lv_startSeq_2_0, grammarAccess.getScannerSingleLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_2_0()); 
             		
@@ -2816,17 +2605,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,37,FOLLOW_37_in_ruleScannerSingleLineRule2550); 
+            otherlv_3=(Token)match(input,33,FOLLOW_33_in_ruleScannerSingleLineRule2379); 
 
                 	newLeafNode(otherlv_3, grammarAccess.getScannerSingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1155:1: ( (lv_endSeq_4_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1156:1: (lv_endSeq_4_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1069:1: ( (lv_endSeq_4_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1070:1: (lv_endSeq_4_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1156:1: (lv_endSeq_4_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1157:3: lv_endSeq_4_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1070:1: (lv_endSeq_4_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1071:3: lv_endSeq_4_0= RULE_STRING
             {
-            lv_endSeq_4_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2567); 
+            lv_endSeq_4_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2396); 
 
             			newLeafNode(lv_endSeq_4_0, grammarAccess.getScannerSingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_0()); 
             		
@@ -2846,32 +2635,32 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1173:2: (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
-            int alt19=2;
-            int LA19_0 = input.LA(1);
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1087:2: (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
+            int alt15=2;
+            int LA15_0 = input.LA(1);
 
-            if ( (LA19_0==38) ) {
-                alt19=1;
+            if ( (LA15_0==34) ) {
+                alt15=1;
             }
-            switch (alt19) {
+            switch (alt15) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1173:4: otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1087:4: otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) )
                     {
-                    otherlv_5=(Token)match(input,38,FOLLOW_38_in_ruleScannerSingleLineRule2585); 
+                    otherlv_5=(Token)match(input,34,FOLLOW_34_in_ruleScannerSingleLineRule2414); 
 
                         	newLeafNode(otherlv_5, grammarAccess.getScannerSingleLineRuleAccess().getEscapedKeyword_5_0());
                         
-                    otherlv_6=(Token)match(input,39,FOLLOW_39_in_ruleScannerSingleLineRule2597); 
+                    otherlv_6=(Token)match(input,35,FOLLOW_35_in_ruleScannerSingleLineRule2426); 
 
                         	newLeafNode(otherlv_6, grammarAccess.getScannerSingleLineRuleAccess().getByKeyword_5_1());
                         
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1181:1: ( (lv_escapeSeq_7_0= RULE_STRING ) )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1182:1: (lv_escapeSeq_7_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1095:1: ( (lv_escapeSeq_7_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1096:1: (lv_escapeSeq_7_0= RULE_STRING )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1182:1: (lv_escapeSeq_7_0= RULE_STRING )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1183:3: lv_escapeSeq_7_0= RULE_STRING
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1096:1: (lv_escapeSeq_7_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1097:3: lv_escapeSeq_7_0= RULE_STRING
                     {
-                    lv_escapeSeq_7_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2614); 
+                    lv_escapeSeq_7_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2443); 
 
                     			newLeafNode(lv_escapeSeq_7_0, grammarAccess.getScannerSingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
                     		
@@ -2918,7 +2707,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePartitionSingleLineRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1207:1: entryRulePartitionSingleLineRule returns [EObject current=null] : iv_rulePartitionSingleLineRule= rulePartitionSingleLineRule EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1121:1: entryRulePartitionSingleLineRule returns [EObject current=null] : iv_rulePartitionSingleLineRule= rulePartitionSingleLineRule EOF ;
     public final EObject entryRulePartitionSingleLineRule() throws RecognitionException {
         EObject current = null;
 
@@ -2926,17 +2715,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1208:2: (iv_rulePartitionSingleLineRule= rulePartitionSingleLineRule EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1209:2: iv_rulePartitionSingleLineRule= rulePartitionSingleLineRule EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1122:2: (iv_rulePartitionSingleLineRule= rulePartitionSingleLineRule EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1123:2: iv_rulePartitionSingleLineRule= rulePartitionSingleLineRule EOF
             {
              newCompositeNode(grammarAccess.getPartitionSingleLineRuleRule()); 
-            pushFollow(FOLLOW_rulePartitionSingleLineRule_in_entryRulePartitionSingleLineRule2657);
+            pushFollow(FOLLOW_rulePartitionSingleLineRule_in_entryRulePartitionSingleLineRule2486);
             iv_rulePartitionSingleLineRule=rulePartitionSingleLineRule();
 
             state._fsp--;
 
              current =iv_rulePartitionSingleLineRule; 
-            match(input,EOF,FOLLOW_EOF_in_entryRulePartitionSingleLineRule2667); 
+            match(input,EOF,FOLLOW_EOF_in_entryRulePartitionSingleLineRule2496); 
 
             }
 
@@ -2954,7 +2743,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePartitionSingleLineRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1216:1: rulePartitionSingleLineRule returns [EObject current=null] : (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1130:1: rulePartitionSingleLineRule returns [EObject current=null] : (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) ;
     public final EObject rulePartitionSingleLineRule() throws RecognitionException {
         EObject current = null;
 
@@ -2970,28 +2759,28 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1219:28: ( (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1220:1: (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1133:28: ( (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1134:1: (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1220:1: (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1220:3: otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1134:1: (otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1134:3: otherlv_0= 'single-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
             {
-            otherlv_0=(Token)match(input,36,FOLLOW_36_in_rulePartitionSingleLineRule2704); 
+            otherlv_0=(Token)match(input,32,FOLLOW_32_in_rulePartitionSingleLineRule2533); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getPartitionSingleLineRuleAccess().getSingleLineKeyword_0());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1224:1: ( (otherlv_1= RULE_ID ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1225:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1138:1: ( (otherlv_1= RULE_ID ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1139:1: (otherlv_1= RULE_ID )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1225:1: (otherlv_1= RULE_ID )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1226:3: otherlv_1= RULE_ID
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1139:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1140:3: otherlv_1= RULE_ID
             {
 
             			if (current==null) {
             	            current = createModelElement(grammarAccess.getPartitionSingleLineRuleRule());
             	        }
                     
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_rulePartitionSingleLineRule2724); 
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_rulePartitionSingleLineRule2553); 
 
             		newLeafNode(otherlv_1, grammarAccess.getPartitionSingleLineRuleAccess().getParitionPartitionCrossReference_1_0()); 
             	
@@ -3001,13 +2790,13 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1237:2: ( (lv_startSeq_2_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1238:1: (lv_startSeq_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1151:2: ( (lv_startSeq_2_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1152:1: (lv_startSeq_2_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1238:1: (lv_startSeq_2_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1239:3: lv_startSeq_2_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1152:1: (lv_startSeq_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1153:3: lv_startSeq_2_0= RULE_STRING
             {
-            lv_startSeq_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2741); 
+            lv_startSeq_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2570); 
 
             			newLeafNode(lv_startSeq_2_0, grammarAccess.getPartitionSingleLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_2_0()); 
             		
@@ -3027,17 +2816,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,37,FOLLOW_37_in_rulePartitionSingleLineRule2758); 
+            otherlv_3=(Token)match(input,33,FOLLOW_33_in_rulePartitionSingleLineRule2587); 
 
                 	newLeafNode(otherlv_3, grammarAccess.getPartitionSingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1259:1: ( (lv_endSeq_4_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1260:1: (lv_endSeq_4_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1173:1: ( (lv_endSeq_4_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1174:1: (lv_endSeq_4_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1260:1: (lv_endSeq_4_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1261:3: lv_endSeq_4_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1174:1: (lv_endSeq_4_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1175:3: lv_endSeq_4_0= RULE_STRING
             {
-            lv_endSeq_4_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2775); 
+            lv_endSeq_4_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2604); 
 
             			newLeafNode(lv_endSeq_4_0, grammarAccess.getPartitionSingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_0()); 
             		
@@ -3057,32 +2846,32 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1277:2: (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
-            int alt20=2;
-            int LA20_0 = input.LA(1);
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1191:2: (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
+            int alt16=2;
+            int LA16_0 = input.LA(1);
 
-            if ( (LA20_0==38) ) {
-                alt20=1;
+            if ( (LA16_0==34) ) {
+                alt16=1;
             }
-            switch (alt20) {
+            switch (alt16) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1277:4: otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1191:4: otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) )
                     {
-                    otherlv_5=(Token)match(input,38,FOLLOW_38_in_rulePartitionSingleLineRule2793); 
+                    otherlv_5=(Token)match(input,34,FOLLOW_34_in_rulePartitionSingleLineRule2622); 
 
                         	newLeafNode(otherlv_5, grammarAccess.getPartitionSingleLineRuleAccess().getEscapedKeyword_5_0());
                         
-                    otherlv_6=(Token)match(input,39,FOLLOW_39_in_rulePartitionSingleLineRule2805); 
+                    otherlv_6=(Token)match(input,35,FOLLOW_35_in_rulePartitionSingleLineRule2634); 
 
                         	newLeafNode(otherlv_6, grammarAccess.getPartitionSingleLineRuleAccess().getByKeyword_5_1());
                         
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1285:1: ( (lv_escapeSeq_7_0= RULE_STRING ) )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1286:1: (lv_escapeSeq_7_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1199:1: ( (lv_escapeSeq_7_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1200:1: (lv_escapeSeq_7_0= RULE_STRING )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1286:1: (lv_escapeSeq_7_0= RULE_STRING )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1287:3: lv_escapeSeq_7_0= RULE_STRING
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1200:1: (lv_escapeSeq_7_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1201:3: lv_escapeSeq_7_0= RULE_STRING
                     {
-                    lv_escapeSeq_7_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2822); 
+                    lv_escapeSeq_7_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2651); 
 
                     			newLeafNode(lv_escapeSeq_7_0, grammarAccess.getPartitionSingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
                     		
@@ -3129,7 +2918,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScannerMultiLineRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1311:1: entryRuleScannerMultiLineRule returns [EObject current=null] : iv_ruleScannerMultiLineRule= ruleScannerMultiLineRule EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1225:1: entryRuleScannerMultiLineRule returns [EObject current=null] : iv_ruleScannerMultiLineRule= ruleScannerMultiLineRule EOF ;
     public final EObject entryRuleScannerMultiLineRule() throws RecognitionException {
         EObject current = null;
 
@@ -3137,17 +2926,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1312:2: (iv_ruleScannerMultiLineRule= ruleScannerMultiLineRule EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1313:2: iv_ruleScannerMultiLineRule= ruleScannerMultiLineRule EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1226:2: (iv_ruleScannerMultiLineRule= ruleScannerMultiLineRule EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1227:2: iv_ruleScannerMultiLineRule= ruleScannerMultiLineRule EOF
             {
              newCompositeNode(grammarAccess.getScannerMultiLineRuleRule()); 
-            pushFollow(FOLLOW_ruleScannerMultiLineRule_in_entryRuleScannerMultiLineRule2865);
+            pushFollow(FOLLOW_ruleScannerMultiLineRule_in_entryRuleScannerMultiLineRule2694);
             iv_ruleScannerMultiLineRule=ruleScannerMultiLineRule();
 
             state._fsp--;
 
              current =iv_ruleScannerMultiLineRule; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerMultiLineRule2875); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerMultiLineRule2704); 
 
             }
 
@@ -3165,7 +2954,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScannerMultiLineRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1320:1: ruleScannerMultiLineRule returns [EObject current=null] : (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1234:1: ruleScannerMultiLineRule returns [EObject current=null] : (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) ;
     public final EObject ruleScannerMultiLineRule() throws RecognitionException {
         EObject current = null;
 
@@ -3181,28 +2970,28 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1323:28: ( (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1324:1: (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1237:28: ( (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1238:1: (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1324:1: (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1324:3: otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1238:1: (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1238:3: otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
             {
-            otherlv_0=(Token)match(input,40,FOLLOW_40_in_ruleScannerMultiLineRule2912); 
+            otherlv_0=(Token)match(input,36,FOLLOW_36_in_ruleScannerMultiLineRule2741); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getScannerMultiLineRuleAccess().getMultiLineKeyword_0());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1328:1: ( (otherlv_1= RULE_ID ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1329:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1242:1: ( (otherlv_1= RULE_ID ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1243:1: (otherlv_1= RULE_ID )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1329:1: (otherlv_1= RULE_ID )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1330:3: otherlv_1= RULE_ID
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1243:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1244:3: otherlv_1= RULE_ID
             {
 
             			if (current==null) {
             	            current = createModelElement(grammarAccess.getScannerMultiLineRuleRule());
             	        }
                     
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleScannerMultiLineRule2932); 
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleScannerMultiLineRule2761); 
 
             		newLeafNode(otherlv_1, grammarAccess.getScannerMultiLineRuleAccess().getTokenScannerTokenCrossReference_1_0()); 
             	
@@ -3212,13 +3001,13 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1341:2: ( (lv_startSeq_2_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1342:1: (lv_startSeq_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1255:2: ( (lv_startSeq_2_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1256:1: (lv_startSeq_2_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1342:1: (lv_startSeq_2_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1343:3: lv_startSeq_2_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1256:1: (lv_startSeq_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1257:3: lv_startSeq_2_0= RULE_STRING
             {
-            lv_startSeq_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule2949); 
+            lv_startSeq_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule2778); 
 
             			newLeafNode(lv_startSeq_2_0, grammarAccess.getScannerMultiLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_2_0()); 
             		
@@ -3238,17 +3027,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,37,FOLLOW_37_in_ruleScannerMultiLineRule2966); 
+            otherlv_3=(Token)match(input,33,FOLLOW_33_in_ruleScannerMultiLineRule2795); 
 
                 	newLeafNode(otherlv_3, grammarAccess.getScannerMultiLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1363:1: ( (lv_endSeq_4_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1364:1: (lv_endSeq_4_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1277:1: ( (lv_endSeq_4_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1278:1: (lv_endSeq_4_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1364:1: (lv_endSeq_4_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1365:3: lv_endSeq_4_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1278:1: (lv_endSeq_4_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1279:3: lv_endSeq_4_0= RULE_STRING
             {
-            lv_endSeq_4_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule2983); 
+            lv_endSeq_4_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule2812); 
 
             			newLeafNode(lv_endSeq_4_0, grammarAccess.getScannerMultiLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_0()); 
             		
@@ -3268,32 +3057,32 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1381:2: (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
-            int alt21=2;
-            int LA21_0 = input.LA(1);
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1295:2: (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
+            int alt17=2;
+            int LA17_0 = input.LA(1);
 
-            if ( (LA21_0==38) ) {
-                alt21=1;
+            if ( (LA17_0==34) ) {
+                alt17=1;
             }
-            switch (alt21) {
+            switch (alt17) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1381:4: otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1295:4: otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) )
                     {
-                    otherlv_5=(Token)match(input,38,FOLLOW_38_in_ruleScannerMultiLineRule3001); 
+                    otherlv_5=(Token)match(input,34,FOLLOW_34_in_ruleScannerMultiLineRule2830); 
 
                         	newLeafNode(otherlv_5, grammarAccess.getScannerMultiLineRuleAccess().getEscapedKeyword_5_0());
                         
-                    otherlv_6=(Token)match(input,39,FOLLOW_39_in_ruleScannerMultiLineRule3013); 
+                    otherlv_6=(Token)match(input,35,FOLLOW_35_in_ruleScannerMultiLineRule2842); 
 
                         	newLeafNode(otherlv_6, grammarAccess.getScannerMultiLineRuleAccess().getByKeyword_5_1());
                         
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1389:1: ( (lv_escapeSeq_7_0= RULE_STRING ) )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1390:1: (lv_escapeSeq_7_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1303:1: ( (lv_escapeSeq_7_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1304:1: (lv_escapeSeq_7_0= RULE_STRING )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1390:1: (lv_escapeSeq_7_0= RULE_STRING )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1391:3: lv_escapeSeq_7_0= RULE_STRING
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1304:1: (lv_escapeSeq_7_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1305:3: lv_escapeSeq_7_0= RULE_STRING
                     {
-                    lv_escapeSeq_7_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule3030); 
+                    lv_escapeSeq_7_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule2859); 
 
                     			newLeafNode(lv_escapeSeq_7_0, grammarAccess.getScannerMultiLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
                     		
@@ -3340,7 +3129,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePartitionMultiLineRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1415:1: entryRulePartitionMultiLineRule returns [EObject current=null] : iv_rulePartitionMultiLineRule= rulePartitionMultiLineRule EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1329:1: entryRulePartitionMultiLineRule returns [EObject current=null] : iv_rulePartitionMultiLineRule= rulePartitionMultiLineRule EOF ;
     public final EObject entryRulePartitionMultiLineRule() throws RecognitionException {
         EObject current = null;
 
@@ -3348,17 +3137,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1416:2: (iv_rulePartitionMultiLineRule= rulePartitionMultiLineRule EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1417:2: iv_rulePartitionMultiLineRule= rulePartitionMultiLineRule EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1330:2: (iv_rulePartitionMultiLineRule= rulePartitionMultiLineRule EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1331:2: iv_rulePartitionMultiLineRule= rulePartitionMultiLineRule EOF
             {
              newCompositeNode(grammarAccess.getPartitionMultiLineRuleRule()); 
-            pushFollow(FOLLOW_rulePartitionMultiLineRule_in_entryRulePartitionMultiLineRule3073);
+            pushFollow(FOLLOW_rulePartitionMultiLineRule_in_entryRulePartitionMultiLineRule2902);
             iv_rulePartitionMultiLineRule=rulePartitionMultiLineRule();
 
             state._fsp--;
 
              current =iv_rulePartitionMultiLineRule; 
-            match(input,EOF,FOLLOW_EOF_in_entryRulePartitionMultiLineRule3083); 
+            match(input,EOF,FOLLOW_EOF_in_entryRulePartitionMultiLineRule2912); 
 
             }
 
@@ -3376,7 +3165,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePartitionMultiLineRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1424:1: rulePartitionMultiLineRule returns [EObject current=null] : (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1338:1: rulePartitionMultiLineRule returns [EObject current=null] : (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) ;
     public final EObject rulePartitionMultiLineRule() throws RecognitionException {
         EObject current = null;
 
@@ -3392,28 +3181,28 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1427:28: ( (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1428:1: (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1341:28: ( (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1342:1: (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1428:1: (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1428:3: otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1342:1: (otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )? )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1342:3: otherlv_0= 'multi-line' ( (otherlv_1= RULE_ID ) ) ( (lv_startSeq_2_0= RULE_STRING ) ) otherlv_3= '=>' ( (lv_endSeq_4_0= RULE_STRING ) ) (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
             {
-            otherlv_0=(Token)match(input,40,FOLLOW_40_in_rulePartitionMultiLineRule3120); 
+            otherlv_0=(Token)match(input,36,FOLLOW_36_in_rulePartitionMultiLineRule2949); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getPartitionMultiLineRuleAccess().getMultiLineKeyword_0());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1432:1: ( (otherlv_1= RULE_ID ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1433:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1346:1: ( (otherlv_1= RULE_ID ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1347:1: (otherlv_1= RULE_ID )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1433:1: (otherlv_1= RULE_ID )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1434:3: otherlv_1= RULE_ID
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1347:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1348:3: otherlv_1= RULE_ID
             {
 
             			if (current==null) {
             	            current = createModelElement(grammarAccess.getPartitionMultiLineRuleRule());
             	        }
                     
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_rulePartitionMultiLineRule3140); 
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_rulePartitionMultiLineRule2969); 
 
             		newLeafNode(otherlv_1, grammarAccess.getPartitionMultiLineRuleAccess().getParitionPartitionCrossReference_1_0()); 
             	
@@ -3423,13 +3212,13 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1445:2: ( (lv_startSeq_2_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1446:1: (lv_startSeq_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1359:2: ( (lv_startSeq_2_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1360:1: (lv_startSeq_2_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1446:1: (lv_startSeq_2_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1447:3: lv_startSeq_2_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1360:1: (lv_startSeq_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1361:3: lv_startSeq_2_0= RULE_STRING
             {
-            lv_startSeq_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule3157); 
+            lv_startSeq_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule2986); 
 
             			newLeafNode(lv_startSeq_2_0, grammarAccess.getPartitionMultiLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_2_0()); 
             		
@@ -3449,17 +3238,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,37,FOLLOW_37_in_rulePartitionMultiLineRule3174); 
+            otherlv_3=(Token)match(input,33,FOLLOW_33_in_rulePartitionMultiLineRule3003); 
 
                 	newLeafNode(otherlv_3, grammarAccess.getPartitionMultiLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1467:1: ( (lv_endSeq_4_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1468:1: (lv_endSeq_4_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1381:1: ( (lv_endSeq_4_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1382:1: (lv_endSeq_4_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1468:1: (lv_endSeq_4_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1469:3: lv_endSeq_4_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1382:1: (lv_endSeq_4_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1383:3: lv_endSeq_4_0= RULE_STRING
             {
-            lv_endSeq_4_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule3191); 
+            lv_endSeq_4_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule3020); 
 
             			newLeafNode(lv_endSeq_4_0, grammarAccess.getPartitionMultiLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_0()); 
             		
@@ -3479,32 +3268,32 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1485:2: (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
-            int alt22=2;
-            int LA22_0 = input.LA(1);
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1399:2: (otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) ) )?
+            int alt18=2;
+            int LA18_0 = input.LA(1);
 
-            if ( (LA22_0==38) ) {
-                alt22=1;
+            if ( (LA18_0==34) ) {
+                alt18=1;
             }
-            switch (alt22) {
+            switch (alt18) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1485:4: otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1399:4: otherlv_5= 'escaped' otherlv_6= 'by' ( (lv_escapeSeq_7_0= RULE_STRING ) )
                     {
-                    otherlv_5=(Token)match(input,38,FOLLOW_38_in_rulePartitionMultiLineRule3209); 
+                    otherlv_5=(Token)match(input,34,FOLLOW_34_in_rulePartitionMultiLineRule3038); 
 
                         	newLeafNode(otherlv_5, grammarAccess.getPartitionMultiLineRuleAccess().getEscapedKeyword_5_0());
                         
-                    otherlv_6=(Token)match(input,39,FOLLOW_39_in_rulePartitionMultiLineRule3221); 
+                    otherlv_6=(Token)match(input,35,FOLLOW_35_in_rulePartitionMultiLineRule3050); 
 
                         	newLeafNode(otherlv_6, grammarAccess.getPartitionMultiLineRuleAccess().getByKeyword_5_1());
                         
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1493:1: ( (lv_escapeSeq_7_0= RULE_STRING ) )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1494:1: (lv_escapeSeq_7_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1407:1: ( (lv_escapeSeq_7_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1408:1: (lv_escapeSeq_7_0= RULE_STRING )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1494:1: (lv_escapeSeq_7_0= RULE_STRING )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1495:3: lv_escapeSeq_7_0= RULE_STRING
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1408:1: (lv_escapeSeq_7_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1409:3: lv_escapeSeq_7_0= RULE_STRING
                     {
-                    lv_escapeSeq_7_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule3238); 
+                    lv_escapeSeq_7_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule3067); 
 
                     			newLeafNode(lv_escapeSeq_7_0, grammarAccess.getPartitionMultiLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
                     		
@@ -3551,7 +3340,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScannerCharacterRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1519:1: entryRuleScannerCharacterRule returns [EObject current=null] : iv_ruleScannerCharacterRule= ruleScannerCharacterRule EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1433:1: entryRuleScannerCharacterRule returns [EObject current=null] : iv_ruleScannerCharacterRule= ruleScannerCharacterRule EOF ;
     public final EObject entryRuleScannerCharacterRule() throws RecognitionException {
         EObject current = null;
 
@@ -3559,17 +3348,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1520:2: (iv_ruleScannerCharacterRule= ruleScannerCharacterRule EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1521:2: iv_ruleScannerCharacterRule= ruleScannerCharacterRule EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1434:2: (iv_ruleScannerCharacterRule= ruleScannerCharacterRule EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1435:2: iv_ruleScannerCharacterRule= ruleScannerCharacterRule EOF
             {
              newCompositeNode(grammarAccess.getScannerCharacterRuleRule()); 
-            pushFollow(FOLLOW_ruleScannerCharacterRule_in_entryRuleScannerCharacterRule3281);
+            pushFollow(FOLLOW_ruleScannerCharacterRule_in_entryRuleScannerCharacterRule3110);
             iv_ruleScannerCharacterRule=ruleScannerCharacterRule();
 
             state._fsp--;
 
              current =iv_ruleScannerCharacterRule; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerCharacterRule3291); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerCharacterRule3120); 
 
             }
 
@@ -3587,7 +3376,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScannerCharacterRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1528:1: ruleScannerCharacterRule returns [EObject current=null] : (otherlv_0= 'character-rule' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1442:1: ruleScannerCharacterRule returns [EObject current=null] : (otherlv_0= 'character-rule' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) ;
     public final EObject ruleScannerCharacterRule() throws RecognitionException {
         EObject current = null;
 
@@ -3602,28 +3391,28 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1531:28: ( (otherlv_0= 'character-rule' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1532:1: (otherlv_0= 'character-rule' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1445:28: ( (otherlv_0= 'character-rule' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1446:1: (otherlv_0= 'character-rule' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1532:1: (otherlv_0= 'character-rule' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1532:3: otherlv_0= 'character-rule' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']'
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1446:1: (otherlv_0= 'character-rule' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1446:3: otherlv_0= 'character-rule' ( (otherlv_1= RULE_ID ) ) otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']'
             {
-            otherlv_0=(Token)match(input,41,FOLLOW_41_in_ruleScannerCharacterRule3328); 
+            otherlv_0=(Token)match(input,37,FOLLOW_37_in_ruleScannerCharacterRule3157); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getScannerCharacterRuleAccess().getCharacterRuleKeyword_0());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1536:1: ( (otherlv_1= RULE_ID ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1537:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1450:1: ( (otherlv_1= RULE_ID ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1451:1: (otherlv_1= RULE_ID )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1537:1: (otherlv_1= RULE_ID )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1538:3: otherlv_1= RULE_ID
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1451:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1452:3: otherlv_1= RULE_ID
             {
 
             			if (current==null) {
             	            current = createModelElement(grammarAccess.getScannerCharacterRuleRule());
             	        }
                     
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleScannerCharacterRule3348); 
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleScannerCharacterRule3177); 
 
             		newLeafNode(otherlv_1, grammarAccess.getScannerCharacterRuleAccess().getTokenScannerTokenCrossReference_1_0()); 
             	
@@ -3633,17 +3422,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,32,FOLLOW_32_in_ruleScannerCharacterRule3360); 
+            otherlv_2=(Token)match(input,28,FOLLOW_28_in_ruleScannerCharacterRule3189); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getScannerCharacterRuleAccess().getLeftSquareBracketKeyword_2());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1553:1: ( (lv_characters_3_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1554:1: (lv_characters_3_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1467:1: ( (lv_characters_3_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1468:1: (lv_characters_3_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1554:1: (lv_characters_3_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1555:3: lv_characters_3_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1468:1: (lv_characters_3_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1469:3: lv_characters_3_0= RULE_STRING
             {
-            lv_characters_3_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerCharacterRule3377); 
+            lv_characters_3_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerCharacterRule3206); 
 
             			newLeafNode(lv_characters_3_0, grammarAccess.getScannerCharacterRuleAccess().getCharactersSTRINGTerminalRuleCall_3_0()); 
             		
@@ -3663,32 +3452,32 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1571:2: (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )*
-            loop23:
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1485:2: (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )*
+            loop19:
             do {
-                int alt23=2;
-                int LA23_0 = input.LA(1);
+                int alt19=2;
+                int LA19_0 = input.LA(1);
 
-                if ( (LA23_0==33) ) {
-                    alt23=1;
+                if ( (LA19_0==29) ) {
+                    alt19=1;
                 }
 
 
-                switch (alt23) {
+                switch (alt19) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1571:4: otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) )
+            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1485:4: otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) )
             	    {
-            	    otherlv_4=(Token)match(input,33,FOLLOW_33_in_ruleScannerCharacterRule3395); 
+            	    otherlv_4=(Token)match(input,29,FOLLOW_29_in_ruleScannerCharacterRule3224); 
 
             	        	newLeafNode(otherlv_4, grammarAccess.getScannerCharacterRuleAccess().getCommaKeyword_4_0());
             	        
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1575:1: ( (lv_characters_5_0= RULE_STRING ) )
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1576:1: (lv_characters_5_0= RULE_STRING )
+            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1489:1: ( (lv_characters_5_0= RULE_STRING ) )
+            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1490:1: (lv_characters_5_0= RULE_STRING )
             	    {
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1576:1: (lv_characters_5_0= RULE_STRING )
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1577:3: lv_characters_5_0= RULE_STRING
+            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1490:1: (lv_characters_5_0= RULE_STRING )
+            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1491:3: lv_characters_5_0= RULE_STRING
             	    {
-            	    lv_characters_5_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerCharacterRule3412); 
+            	    lv_characters_5_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerCharacterRule3241); 
 
             	    			newLeafNode(lv_characters_5_0, grammarAccess.getScannerCharacterRuleAccess().getCharactersSTRINGTerminalRuleCall_4_1_0()); 
             	    		
@@ -3713,11 +3502,11 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop23;
+            	    break loop19;
                 }
             } while (true);
 
-            otherlv_6=(Token)match(input,34,FOLLOW_34_in_ruleScannerCharacterRule3431); 
+            otherlv_6=(Token)match(input,30,FOLLOW_30_in_ruleScannerCharacterRule3260); 
 
                 	newLeafNode(otherlv_6, grammarAccess.getScannerCharacterRuleAccess().getRightSquareBracketKeyword_5());
                 
@@ -3742,7 +3531,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScannerJSRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1605:1: entryRuleScannerJSRule returns [EObject current=null] : iv_ruleScannerJSRule= ruleScannerJSRule EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1519:1: entryRuleScannerJSRule returns [EObject current=null] : iv_ruleScannerJSRule= ruleScannerJSRule EOF ;
     public final EObject entryRuleScannerJSRule() throws RecognitionException {
         EObject current = null;
 
@@ -3750,17 +3539,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1606:2: (iv_ruleScannerJSRule= ruleScannerJSRule EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1607:2: iv_ruleScannerJSRule= ruleScannerJSRule EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1520:2: (iv_ruleScannerJSRule= ruleScannerJSRule EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1521:2: iv_ruleScannerJSRule= ruleScannerJSRule EOF
             {
              newCompositeNode(grammarAccess.getScannerJSRuleRule()); 
-            pushFollow(FOLLOW_ruleScannerJSRule_in_entryRuleScannerJSRule3467);
+            pushFollow(FOLLOW_ruleScannerJSRule_in_entryRuleScannerJSRule3296);
             iv_ruleScannerJSRule=ruleScannerJSRule();
 
             state._fsp--;
 
              current =iv_ruleScannerJSRule; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerJSRule3477); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerJSRule3306); 
 
             }
 
@@ -3778,7 +3567,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScannerJSRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1614:1: ruleScannerJSRule returns [EObject current=null] : (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1528:1: ruleScannerJSRule returns [EObject current=null] : (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) ) ;
     public final EObject ruleScannerJSRule() throws RecognitionException {
         EObject current = null;
 
@@ -3789,28 +3578,28 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1617:28: ( (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1618:1: (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1531:28: ( (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1532:1: (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1618:1: (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1618:3: otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1532:1: (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1532:3: otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) )
             {
-            otherlv_0=(Token)match(input,42,FOLLOW_42_in_ruleScannerJSRule3514); 
+            otherlv_0=(Token)match(input,38,FOLLOW_38_in_ruleScannerJSRule3343); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getScannerJSRuleAccess().getJavascriptRuleKeyword_0());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1622:1: ( (otherlv_1= RULE_ID ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1623:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1536:1: ( (otherlv_1= RULE_ID ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1537:1: (otherlv_1= RULE_ID )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1623:1: (otherlv_1= RULE_ID )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1624:3: otherlv_1= RULE_ID
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1537:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1538:3: otherlv_1= RULE_ID
             {
 
             			if (current==null) {
             	            current = createModelElement(grammarAccess.getScannerJSRuleRule());
             	        }
                     
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleScannerJSRule3534); 
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleScannerJSRule3363); 
 
             		newLeafNode(otherlv_1, grammarAccess.getScannerJSRuleAccess().getTokenScannerTokenCrossReference_1_0()); 
             	
@@ -3820,13 +3609,13 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1635:2: ( (lv_fileURI_2_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1636:1: (lv_fileURI_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1549:2: ( (lv_fileURI_2_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1550:1: (lv_fileURI_2_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1636:1: (lv_fileURI_2_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1637:3: lv_fileURI_2_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1550:1: (lv_fileURI_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1551:3: lv_fileURI_2_0= RULE_STRING
             {
-            lv_fileURI_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerJSRule3551); 
+            lv_fileURI_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerJSRule3380); 
 
             			newLeafNode(lv_fileURI_2_0, grammarAccess.getScannerJSRuleAccess().getFileURISTRINGTerminalRuleCall_2_0()); 
             		
@@ -3867,7 +3656,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePartitionJSRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1661:1: entryRulePartitionJSRule returns [EObject current=null] : iv_rulePartitionJSRule= rulePartitionJSRule EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1575:1: entryRulePartitionJSRule returns [EObject current=null] : iv_rulePartitionJSRule= rulePartitionJSRule EOF ;
     public final EObject entryRulePartitionJSRule() throws RecognitionException {
         EObject current = null;
 
@@ -3875,17 +3664,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1662:2: (iv_rulePartitionJSRule= rulePartitionJSRule EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1663:2: iv_rulePartitionJSRule= rulePartitionJSRule EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1576:2: (iv_rulePartitionJSRule= rulePartitionJSRule EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1577:2: iv_rulePartitionJSRule= rulePartitionJSRule EOF
             {
              newCompositeNode(grammarAccess.getPartitionJSRuleRule()); 
-            pushFollow(FOLLOW_rulePartitionJSRule_in_entryRulePartitionJSRule3592);
+            pushFollow(FOLLOW_rulePartitionJSRule_in_entryRulePartitionJSRule3421);
             iv_rulePartitionJSRule=rulePartitionJSRule();
 
             state._fsp--;
 
              current =iv_rulePartitionJSRule; 
-            match(input,EOF,FOLLOW_EOF_in_entryRulePartitionJSRule3602); 
+            match(input,EOF,FOLLOW_EOF_in_entryRulePartitionJSRule3431); 
 
             }
 
@@ -3903,7 +3692,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePartitionJSRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1670:1: rulePartitionJSRule returns [EObject current=null] : (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1584:1: rulePartitionJSRule returns [EObject current=null] : (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) ) ;
     public final EObject rulePartitionJSRule() throws RecognitionException {
         EObject current = null;
 
@@ -3914,28 +3703,28 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1673:28: ( (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1674:1: (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1587:28: ( (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1588:1: (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1674:1: (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1674:3: otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1588:1: (otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1588:3: otherlv_0= 'javascript-rule' ( (otherlv_1= RULE_ID ) ) ( (lv_fileURI_2_0= RULE_STRING ) )
             {
-            otherlv_0=(Token)match(input,42,FOLLOW_42_in_rulePartitionJSRule3639); 
+            otherlv_0=(Token)match(input,38,FOLLOW_38_in_rulePartitionJSRule3468); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getPartitionJSRuleAccess().getJavascriptRuleKeyword_0());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1678:1: ( (otherlv_1= RULE_ID ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1679:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1592:1: ( (otherlv_1= RULE_ID ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1593:1: (otherlv_1= RULE_ID )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1679:1: (otherlv_1= RULE_ID )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1680:3: otherlv_1= RULE_ID
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1593:1: (otherlv_1= RULE_ID )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1594:3: otherlv_1= RULE_ID
             {
 
             			if (current==null) {
             	            current = createModelElement(grammarAccess.getPartitionJSRuleRule());
             	        }
                     
-            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_rulePartitionJSRule3659); 
+            otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_rulePartitionJSRule3488); 
 
             		newLeafNode(otherlv_1, grammarAccess.getPartitionJSRuleAccess().getTokenPartitionCrossReference_1_0()); 
             	
@@ -3945,13 +3734,13 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1691:2: ( (lv_fileURI_2_0= RULE_STRING ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1692:1: (lv_fileURI_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1605:2: ( (lv_fileURI_2_0= RULE_STRING ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1606:1: (lv_fileURI_2_0= RULE_STRING )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1692:1: (lv_fileURI_2_0= RULE_STRING )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1693:3: lv_fileURI_2_0= RULE_STRING
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1606:1: (lv_fileURI_2_0= RULE_STRING )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1607:3: lv_fileURI_2_0= RULE_STRING
             {
-            lv_fileURI_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionJSRule3676); 
+            lv_fileURI_2_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePartitionJSRule3505); 
 
             			newLeafNode(lv_fileURI_2_0, grammarAccess.getPartitionJSRuleAccess().getFileURISTRINGTerminalRuleCall_2_0()); 
             		
@@ -3992,7 +3781,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScannerWhitespaceRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1717:1: entryRuleScannerWhitespaceRule returns [EObject current=null] : iv_ruleScannerWhitespaceRule= ruleScannerWhitespaceRule EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1631:1: entryRuleScannerWhitespaceRule returns [EObject current=null] : iv_ruleScannerWhitespaceRule= ruleScannerWhitespaceRule EOF ;
     public final EObject entryRuleScannerWhitespaceRule() throws RecognitionException {
         EObject current = null;
 
@@ -4000,17 +3789,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1718:2: (iv_ruleScannerWhitespaceRule= ruleScannerWhitespaceRule EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1719:2: iv_ruleScannerWhitespaceRule= ruleScannerWhitespaceRule EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1632:2: (iv_ruleScannerWhitespaceRule= ruleScannerWhitespaceRule EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1633:2: iv_ruleScannerWhitespaceRule= ruleScannerWhitespaceRule EOF
             {
              newCompositeNode(grammarAccess.getScannerWhitespaceRuleRule()); 
-            pushFollow(FOLLOW_ruleScannerWhitespaceRule_in_entryRuleScannerWhitespaceRule3717);
+            pushFollow(FOLLOW_ruleScannerWhitespaceRule_in_entryRuleScannerWhitespaceRule3546);
             iv_ruleScannerWhitespaceRule=ruleScannerWhitespaceRule();
 
             state._fsp--;
 
              current =iv_ruleScannerWhitespaceRule; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerWhitespaceRule3727); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleScannerWhitespaceRule3556); 
 
             }
 
@@ -4028,7 +3817,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScannerWhitespaceRule"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1726:1: ruleScannerWhitespaceRule returns [EObject current=null] : (otherlv_0= 'whitespace-rule' ( (otherlv_1= RULE_ID ) )? ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) ) ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1640:1: ruleScannerWhitespaceRule returns [EObject current=null] : (otherlv_0= 'whitespace-rule' ( (otherlv_1= RULE_ID ) )? ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) ) ) ;
     public final EObject ruleScannerWhitespaceRule() throws RecognitionException {
         EObject current = null;
 
@@ -4045,36 +3834,36 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1729:28: ( (otherlv_0= 'whitespace-rule' ( (otherlv_1= RULE_ID ) )? ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) ) ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1730:1: (otherlv_0= 'whitespace-rule' ( (otherlv_1= RULE_ID ) )? ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1643:28: ( (otherlv_0= 'whitespace-rule' ( (otherlv_1= RULE_ID ) )? ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1644:1: (otherlv_0= 'whitespace-rule' ( (otherlv_1= RULE_ID ) )? ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) ) )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1730:1: (otherlv_0= 'whitespace-rule' ( (otherlv_1= RULE_ID ) )? ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1730:3: otherlv_0= 'whitespace-rule' ( (otherlv_1= RULE_ID ) )? ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1644:1: (otherlv_0= 'whitespace-rule' ( (otherlv_1= RULE_ID ) )? ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1644:3: otherlv_0= 'whitespace-rule' ( (otherlv_1= RULE_ID ) )? ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) )
             {
-            otherlv_0=(Token)match(input,43,FOLLOW_43_in_ruleScannerWhitespaceRule3764); 
+            otherlv_0=(Token)match(input,39,FOLLOW_39_in_ruleScannerWhitespaceRule3593); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getScannerWhitespaceRuleAccess().getWhitespaceRuleKeyword_0());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1734:1: ( (otherlv_1= RULE_ID ) )?
-            int alt24=2;
-            int LA24_0 = input.LA(1);
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1648:1: ( (otherlv_1= RULE_ID ) )?
+            int alt20=2;
+            int LA20_0 = input.LA(1);
 
-            if ( (LA24_0==RULE_ID) ) {
-                alt24=1;
+            if ( (LA20_0==RULE_ID) ) {
+                alt20=1;
             }
-            switch (alt24) {
+            switch (alt20) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1735:1: (otherlv_1= RULE_ID )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1649:1: (otherlv_1= RULE_ID )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1735:1: (otherlv_1= RULE_ID )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1736:3: otherlv_1= RULE_ID
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1649:1: (otherlv_1= RULE_ID )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1650:3: otherlv_1= RULE_ID
                     {
 
                     			if (current==null) {
                     	            current = createModelElement(grammarAccess.getScannerWhitespaceRuleRule());
                     	        }
                             
-                    otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleScannerWhitespaceRule3784); 
+                    otherlv_1=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleScannerWhitespaceRule3613); 
 
                     		newLeafNode(otherlv_1, grammarAccess.getScannerWhitespaceRuleAccess().getTokenScannerTokenCrossReference_1_0()); 
                     	
@@ -4087,49 +3876,49 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1747:3: ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) )
-            int alt26=3;
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1661:3: ( (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' ) | ( (lv_javawhitespace_7_0= 'javawhitespace' ) ) | ( (lv_fileURI_8_0= RULE_STRING ) ) )
+            int alt22=3;
             switch ( input.LA(1) ) {
-            case 32:
+            case 28:
                 {
-                alt26=1;
+                alt22=1;
                 }
                 break;
-            case 44:
+            case 40:
                 {
-                alt26=2;
+                alt22=2;
                 }
                 break;
             case RULE_STRING:
                 {
-                alt26=3;
+                alt22=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 26, 0, input);
+                    new NoViableAltException("", 22, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt26) {
+            switch (alt22) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1747:4: (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1661:4: (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1747:4: (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1747:6: otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']'
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1661:4: (otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1661:6: otherlv_2= '[' ( (lv_characters_3_0= RULE_STRING ) ) (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )* otherlv_6= ']'
                     {
-                    otherlv_2=(Token)match(input,32,FOLLOW_32_in_ruleScannerWhitespaceRule3799); 
+                    otherlv_2=(Token)match(input,28,FOLLOW_28_in_ruleScannerWhitespaceRule3628); 
 
                         	newLeafNode(otherlv_2, grammarAccess.getScannerWhitespaceRuleAccess().getLeftSquareBracketKeyword_2_0_0());
                         
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1751:1: ( (lv_characters_3_0= RULE_STRING ) )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1752:1: (lv_characters_3_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1665:1: ( (lv_characters_3_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1666:1: (lv_characters_3_0= RULE_STRING )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1752:1: (lv_characters_3_0= RULE_STRING )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1753:3: lv_characters_3_0= RULE_STRING
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1666:1: (lv_characters_3_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1667:3: lv_characters_3_0= RULE_STRING
                     {
-                    lv_characters_3_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3816); 
+                    lv_characters_3_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3645); 
 
                     			newLeafNode(lv_characters_3_0, grammarAccess.getScannerWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_2_0_1_0()); 
                     		
@@ -4149,32 +3938,32 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1769:2: (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )*
-                    loop25:
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1683:2: (otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) ) )*
+                    loop21:
                     do {
-                        int alt25=2;
-                        int LA25_0 = input.LA(1);
+                        int alt21=2;
+                        int LA21_0 = input.LA(1);
 
-                        if ( (LA25_0==33) ) {
-                            alt25=1;
+                        if ( (LA21_0==29) ) {
+                            alt21=1;
                         }
 
 
-                        switch (alt25) {
+                        switch (alt21) {
                     	case 1 :
-                    	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1769:4: otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) )
+                    	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1683:4: otherlv_4= ',' ( (lv_characters_5_0= RULE_STRING ) )
                     	    {
-                    	    otherlv_4=(Token)match(input,33,FOLLOW_33_in_ruleScannerWhitespaceRule3834); 
+                    	    otherlv_4=(Token)match(input,29,FOLLOW_29_in_ruleScannerWhitespaceRule3663); 
 
                     	        	newLeafNode(otherlv_4, grammarAccess.getScannerWhitespaceRuleAccess().getCommaKeyword_2_0_2_0());
                     	        
-                    	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1773:1: ( (lv_characters_5_0= RULE_STRING ) )
-                    	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1774:1: (lv_characters_5_0= RULE_STRING )
+                    	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1687:1: ( (lv_characters_5_0= RULE_STRING ) )
+                    	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1688:1: (lv_characters_5_0= RULE_STRING )
                     	    {
-                    	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1774:1: (lv_characters_5_0= RULE_STRING )
-                    	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1775:3: lv_characters_5_0= RULE_STRING
+                    	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1688:1: (lv_characters_5_0= RULE_STRING )
+                    	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1689:3: lv_characters_5_0= RULE_STRING
                     	    {
-                    	    lv_characters_5_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3851); 
+                    	    lv_characters_5_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3680); 
 
                     	    			newLeafNode(lv_characters_5_0, grammarAccess.getScannerWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_2_0_2_1_0()); 
                     	    		
@@ -4199,11 +3988,11 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop25;
+                    	    break loop21;
                         }
                     } while (true);
 
-                    otherlv_6=(Token)match(input,34,FOLLOW_34_in_ruleScannerWhitespaceRule3870); 
+                    otherlv_6=(Token)match(input,30,FOLLOW_30_in_ruleScannerWhitespaceRule3699); 
 
                         	newLeafNode(otherlv_6, grammarAccess.getScannerWhitespaceRuleAccess().getRightSquareBracketKeyword_2_0_3());
                         
@@ -4214,15 +4003,15 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1796:6: ( (lv_javawhitespace_7_0= 'javawhitespace' ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1710:6: ( (lv_javawhitespace_7_0= 'javawhitespace' ) )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1796:6: ( (lv_javawhitespace_7_0= 'javawhitespace' ) )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1797:1: (lv_javawhitespace_7_0= 'javawhitespace' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1710:6: ( (lv_javawhitespace_7_0= 'javawhitespace' ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1711:1: (lv_javawhitespace_7_0= 'javawhitespace' )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1797:1: (lv_javawhitespace_7_0= 'javawhitespace' )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1798:3: lv_javawhitespace_7_0= 'javawhitespace'
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1711:1: (lv_javawhitespace_7_0= 'javawhitespace' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1712:3: lv_javawhitespace_7_0= 'javawhitespace'
                     {
-                    lv_javawhitespace_7_0=(Token)match(input,44,FOLLOW_44_in_ruleScannerWhitespaceRule3895); 
+                    lv_javawhitespace_7_0=(Token)match(input,40,FOLLOW_40_in_ruleScannerWhitespaceRule3724); 
 
                             newLeafNode(lv_javawhitespace_7_0, grammarAccess.getScannerWhitespaceRuleAccess().getJavawhitespaceJavawhitespaceKeyword_2_1_0());
                         
@@ -4242,15 +4031,15 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1812:6: ( (lv_fileURI_8_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1726:6: ( (lv_fileURI_8_0= RULE_STRING ) )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1812:6: ( (lv_fileURI_8_0= RULE_STRING ) )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1813:1: (lv_fileURI_8_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1726:6: ( (lv_fileURI_8_0= RULE_STRING ) )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1727:1: (lv_fileURI_8_0= RULE_STRING )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1813:1: (lv_fileURI_8_0= RULE_STRING )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1814:3: lv_fileURI_8_0= RULE_STRING
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1727:1: (lv_fileURI_8_0= RULE_STRING )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1728:3: lv_fileURI_8_0= RULE_STRING
                     {
-                    lv_fileURI_8_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3931); 
+                    lv_fileURI_8_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3760); 
 
                     			newLeafNode(lv_fileURI_8_0, grammarAccess.getScannerWhitespaceRuleAccess().getFileURISTRINGTerminalRuleCall_2_2_0()); 
                     		
@@ -4296,87 +4085,8 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleScannerWhitespaceRule"
 
 
-    // $ANTLR start "entryRuleColor"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1838:1: entryRuleColor returns [EObject current=null] : iv_ruleColor= ruleColor EOF ;
-    public final EObject entryRuleColor() throws RecognitionException {
-        EObject current = null;
-
-        EObject iv_ruleColor = null;
-
-
-        try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1839:2: (iv_ruleColor= ruleColor EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1840:2: iv_ruleColor= ruleColor EOF
-            {
-             newCompositeNode(grammarAccess.getColorRule()); 
-            pushFollow(FOLLOW_ruleColor_in_entryRuleColor3973);
-            iv_ruleColor=ruleColor();
-
-            state._fsp--;
-
-             current =iv_ruleColor; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleColor3983); 
-
-            }
-
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleColor"
-
-
-    // $ANTLR start "ruleColor"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1847:1: ruleColor returns [EObject current=null] : this_RGBColor_0= ruleRGBColor ;
-    public final EObject ruleColor() throws RecognitionException {
-        EObject current = null;
-
-        EObject this_RGBColor_0 = null;
-
-
-         enterRule(); 
-            
-        try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1850:28: (this_RGBColor_0= ruleRGBColor )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1852:5: this_RGBColor_0= ruleRGBColor
-            {
-             
-                    newCompositeNode(grammarAccess.getColorAccess().getRGBColorParserRuleCall()); 
-                
-            pushFollow(FOLLOW_ruleRGBColor_in_ruleColor4029);
-            this_RGBColor_0=ruleRGBColor();
-
-            state._fsp--;
-
-             
-                    current = this_RGBColor_0; 
-                    afterParserOrEnumRuleCall();
-                
-
-            }
-
-             leaveRule(); 
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleColor"
-
-
     // $ANTLR start "entryRuleRGBColor"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1868:1: entryRuleRGBColor returns [EObject current=null] : iv_ruleRGBColor= ruleRGBColor EOF ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1754:1: entryRuleRGBColor returns [EObject current=null] : iv_ruleRGBColor= ruleRGBColor EOF ;
     public final EObject entryRuleRGBColor() throws RecognitionException {
         EObject current = null;
 
@@ -4384,17 +4094,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1869:2: (iv_ruleRGBColor= ruleRGBColor EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1870:2: iv_ruleRGBColor= ruleRGBColor EOF
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1755:2: (iv_ruleRGBColor= ruleRGBColor EOF )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1756:2: iv_ruleRGBColor= ruleRGBColor EOF
             {
              newCompositeNode(grammarAccess.getRGBColorRule()); 
-            pushFollow(FOLLOW_ruleRGBColor_in_entryRuleRGBColor4063);
+            pushFollow(FOLLOW_ruleRGBColor_in_entryRuleRGBColor3804);
             iv_ruleRGBColor=ruleRGBColor();
 
             state._fsp--;
 
              current =iv_ruleRGBColor; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleRGBColor4073); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleRGBColor3814); 
 
             }
 
@@ -4412,7 +4122,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleRGBColor"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1877:1: ruleRGBColor returns [EObject current=null] : (otherlv_0= 'rgb' otherlv_1= '(' ( (lv_r_2_0= RULE_INT ) ) otherlv_3= ',' ( (lv_g_4_0= RULE_INT ) ) otherlv_5= ',' ( (lv_b_6_0= RULE_INT ) ) otherlv_7= ')' ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1763:1: ruleRGBColor returns [EObject current=null] : (otherlv_0= 'rgb' otherlv_1= '(' ( (lv_r_2_0= RULE_INT ) ) otherlv_3= ',' ( (lv_g_4_0= RULE_INT ) ) otherlv_5= ',' ( (lv_b_6_0= RULE_INT ) ) otherlv_7= ')' ) ;
     public final EObject ruleRGBColor() throws RecognitionException {
         EObject current = null;
 
@@ -4428,27 +4138,27 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1880:28: ( (otherlv_0= 'rgb' otherlv_1= '(' ( (lv_r_2_0= RULE_INT ) ) otherlv_3= ',' ( (lv_g_4_0= RULE_INT ) ) otherlv_5= ',' ( (lv_b_6_0= RULE_INT ) ) otherlv_7= ')' ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1881:1: (otherlv_0= 'rgb' otherlv_1= '(' ( (lv_r_2_0= RULE_INT ) ) otherlv_3= ',' ( (lv_g_4_0= RULE_INT ) ) otherlv_5= ',' ( (lv_b_6_0= RULE_INT ) ) otherlv_7= ')' )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1766:28: ( (otherlv_0= 'rgb' otherlv_1= '(' ( (lv_r_2_0= RULE_INT ) ) otherlv_3= ',' ( (lv_g_4_0= RULE_INT ) ) otherlv_5= ',' ( (lv_b_6_0= RULE_INT ) ) otherlv_7= ')' ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1767:1: (otherlv_0= 'rgb' otherlv_1= '(' ( (lv_r_2_0= RULE_INT ) ) otherlv_3= ',' ( (lv_g_4_0= RULE_INT ) ) otherlv_5= ',' ( (lv_b_6_0= RULE_INT ) ) otherlv_7= ')' )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1881:1: (otherlv_0= 'rgb' otherlv_1= '(' ( (lv_r_2_0= RULE_INT ) ) otherlv_3= ',' ( (lv_g_4_0= RULE_INT ) ) otherlv_5= ',' ( (lv_b_6_0= RULE_INT ) ) otherlv_7= ')' )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1881:3: otherlv_0= 'rgb' otherlv_1= '(' ( (lv_r_2_0= RULE_INT ) ) otherlv_3= ',' ( (lv_g_4_0= RULE_INT ) ) otherlv_5= ',' ( (lv_b_6_0= RULE_INT ) ) otherlv_7= ')'
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1767:1: (otherlv_0= 'rgb' otherlv_1= '(' ( (lv_r_2_0= RULE_INT ) ) otherlv_3= ',' ( (lv_g_4_0= RULE_INT ) ) otherlv_5= ',' ( (lv_b_6_0= RULE_INT ) ) otherlv_7= ')' )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1767:3: otherlv_0= 'rgb' otherlv_1= '(' ( (lv_r_2_0= RULE_INT ) ) otherlv_3= ',' ( (lv_g_4_0= RULE_INT ) ) otherlv_5= ',' ( (lv_b_6_0= RULE_INT ) ) otherlv_7= ')'
             {
-            otherlv_0=(Token)match(input,45,FOLLOW_45_in_ruleRGBColor4110); 
+            otherlv_0=(Token)match(input,41,FOLLOW_41_in_ruleRGBColor3851); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getRGBColorAccess().getRgbKeyword_0());
                 
-            otherlv_1=(Token)match(input,46,FOLLOW_46_in_ruleRGBColor4122); 
+            otherlv_1=(Token)match(input,42,FOLLOW_42_in_ruleRGBColor3863); 
 
                 	newLeafNode(otherlv_1, grammarAccess.getRGBColorAccess().getLeftParenthesisKeyword_1());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1889:1: ( (lv_r_2_0= RULE_INT ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1890:1: (lv_r_2_0= RULE_INT )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1775:1: ( (lv_r_2_0= RULE_INT ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1776:1: (lv_r_2_0= RULE_INT )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1890:1: (lv_r_2_0= RULE_INT )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1891:3: lv_r_2_0= RULE_INT
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1776:1: (lv_r_2_0= RULE_INT )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1777:3: lv_r_2_0= RULE_INT
             {
-            lv_r_2_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleRGBColor4139); 
+            lv_r_2_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleRGBColor3880); 
 
             			newLeafNode(lv_r_2_0, grammarAccess.getRGBColorAccess().getRINTTerminalRuleCall_2_0()); 
             		
@@ -4468,17 +4178,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,33,FOLLOW_33_in_ruleRGBColor4156); 
+            otherlv_3=(Token)match(input,29,FOLLOW_29_in_ruleRGBColor3897); 
 
                 	newLeafNode(otherlv_3, grammarAccess.getRGBColorAccess().getCommaKeyword_3());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1911:1: ( (lv_g_4_0= RULE_INT ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1912:1: (lv_g_4_0= RULE_INT )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1797:1: ( (lv_g_4_0= RULE_INT ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1798:1: (lv_g_4_0= RULE_INT )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1912:1: (lv_g_4_0= RULE_INT )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1913:3: lv_g_4_0= RULE_INT
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1798:1: (lv_g_4_0= RULE_INT )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1799:3: lv_g_4_0= RULE_INT
             {
-            lv_g_4_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleRGBColor4173); 
+            lv_g_4_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleRGBColor3914); 
 
             			newLeafNode(lv_g_4_0, grammarAccess.getRGBColorAccess().getGINTTerminalRuleCall_4_0()); 
             		
@@ -4498,17 +4208,17 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,33,FOLLOW_33_in_ruleRGBColor4190); 
+            otherlv_5=(Token)match(input,29,FOLLOW_29_in_ruleRGBColor3931); 
 
                 	newLeafNode(otherlv_5, grammarAccess.getRGBColorAccess().getCommaKeyword_5());
                 
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1933:1: ( (lv_b_6_0= RULE_INT ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1934:1: (lv_b_6_0= RULE_INT )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1819:1: ( (lv_b_6_0= RULE_INT ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1820:1: (lv_b_6_0= RULE_INT )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1934:1: (lv_b_6_0= RULE_INT )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1935:3: lv_b_6_0= RULE_INT
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1820:1: (lv_b_6_0= RULE_INT )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1821:3: lv_b_6_0= RULE_INT
             {
-            lv_b_6_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleRGBColor4207); 
+            lv_b_6_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleRGBColor3948); 
 
             			newLeafNode(lv_b_6_0, grammarAccess.getRGBColorAccess().getBINTTerminalRuleCall_6_0()); 
             		
@@ -4528,7 +4238,7 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_7=(Token)match(input,47,FOLLOW_47_in_ruleRGBColor4224); 
+            otherlv_7=(Token)match(input,43,FOLLOW_43_in_ruleRGBColor3965); 
 
                 	newLeafNode(otherlv_7, grammarAccess.getRGBColorAccess().getRightParenthesisKeyword_7());
                 
@@ -4552,184 +4262,8 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleRGBColor"
 
 
-    // $ANTLR start "entryRuleFont"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1963:1: entryRuleFont returns [EObject current=null] : iv_ruleFont= ruleFont EOF ;
-    public final EObject entryRuleFont() throws RecognitionException {
-        EObject current = null;
-
-        EObject iv_ruleFont = null;
-
-
-        try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1964:2: (iv_ruleFont= ruleFont EOF )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1965:2: iv_ruleFont= ruleFont EOF
-            {
-             newCompositeNode(grammarAccess.getFontRule()); 
-            pushFollow(FOLLOW_ruleFont_in_entryRuleFont4260);
-            iv_ruleFont=ruleFont();
-
-            state._fsp--;
-
-             current =iv_ruleFont; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleFont4270); 
-
-            }
-
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleFont"
-
-
-    // $ANTLR start "ruleFont"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1972:1: ruleFont returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) ( (lv_size_1_0= RULE_INT ) ) ( (lv_attributes_2_0= ruleFontType ) )* ) ;
-    public final EObject ruleFont() throws RecognitionException {
-        EObject current = null;
-
-        Token lv_name_0_0=null;
-        Token lv_size_1_0=null;
-        Enumerator lv_attributes_2_0 = null;
-
-
-         enterRule(); 
-            
-        try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1975:28: ( ( ( (lv_name_0_0= RULE_ID ) ) ( (lv_size_1_0= RULE_INT ) ) ( (lv_attributes_2_0= ruleFontType ) )* ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1976:1: ( ( (lv_name_0_0= RULE_ID ) ) ( (lv_size_1_0= RULE_INT ) ) ( (lv_attributes_2_0= ruleFontType ) )* )
-            {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1976:1: ( ( (lv_name_0_0= RULE_ID ) ) ( (lv_size_1_0= RULE_INT ) ) ( (lv_attributes_2_0= ruleFontType ) )* )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1976:2: ( (lv_name_0_0= RULE_ID ) ) ( (lv_size_1_0= RULE_INT ) ) ( (lv_attributes_2_0= ruleFontType ) )*
-            {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1976:2: ( (lv_name_0_0= RULE_ID ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1977:1: (lv_name_0_0= RULE_ID )
-            {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1977:1: (lv_name_0_0= RULE_ID )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1978:3: lv_name_0_0= RULE_ID
-            {
-            lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleFont4312); 
-
-            			newLeafNode(lv_name_0_0, grammarAccess.getFontAccess().getNameIDTerminalRuleCall_0_0()); 
-            		
-
-            	        if (current==null) {
-            	            current = createModelElement(grammarAccess.getFontRule());
-            	        }
-                   		setWithLastConsumed(
-                   			current, 
-                   			"name",
-                    		lv_name_0_0, 
-                    		"ID");
-            	    
-
-            }
-
-
-            }
-
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1994:2: ( (lv_size_1_0= RULE_INT ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1995:1: (lv_size_1_0= RULE_INT )
-            {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1995:1: (lv_size_1_0= RULE_INT )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1996:3: lv_size_1_0= RULE_INT
-            {
-            lv_size_1_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleFont4334); 
-
-            			newLeafNode(lv_size_1_0, grammarAccess.getFontAccess().getSizeINTTerminalRuleCall_1_0()); 
-            		
-
-            	        if (current==null) {
-            	            current = createModelElement(grammarAccess.getFontRule());
-            	        }
-                   		setWithLastConsumed(
-                   			current, 
-                   			"size",
-                    		lv_size_1_0, 
-                    		"INT");
-            	    
-
-            }
-
-
-            }
-
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2012:2: ( (lv_attributes_2_0= ruleFontType ) )*
-            loop27:
-            do {
-                int alt27=2;
-                int LA27_0 = input.LA(1);
-
-                if ( ((LA27_0>=48 && LA27_0<=51)) ) {
-                    alt27=1;
-                }
-
-
-                switch (alt27) {
-            	case 1 :
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2013:1: (lv_attributes_2_0= ruleFontType )
-            	    {
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2013:1: (lv_attributes_2_0= ruleFontType )
-            	    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2014:3: lv_attributes_2_0= ruleFontType
-            	    {
-            	     
-            	    	        newCompositeNode(grammarAccess.getFontAccess().getAttributesFontTypeEnumRuleCall_2_0()); 
-            	    	    
-            	    pushFollow(FOLLOW_ruleFontType_in_ruleFont4360);
-            	    lv_attributes_2_0=ruleFontType();
-
-            	    state._fsp--;
-
-
-            	    	        if (current==null) {
-            	    	            current = createModelElementForParent(grammarAccess.getFontRule());
-            	    	        }
-            	           		add(
-            	           			current, 
-            	           			"attributes",
-            	            		lv_attributes_2_0, 
-            	            		"FontType");
-            	    	        afterParserOrEnumRuleCall();
-            	    	    
-
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop27;
-                }
-            } while (true);
-
-
-            }
-
-
-            }
-
-             leaveRule(); 
-        }
-         
-            catch (RecognitionException re) { 
-                recover(input,re); 
-                appendSkippedTokens();
-            } 
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleFont"
-
-
     // $ANTLR start "ruleFontType"
-    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2038:1: ruleFontType returns [Enumerator current=null] : ( (enumLiteral_0= 'bold' ) | (enumLiteral_1= 'italic' ) | (enumLiteral_2= 'underline' ) | (enumLiteral_3= 'strike-through' ) ) ;
+    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1851:1: ruleFontType returns [Enumerator current=null] : ( (enumLiteral_0= 'bold' ) | (enumLiteral_1= 'italic' ) | (enumLiteral_2= 'underline' ) | (enumLiteral_3= 'strike-through' ) ) ;
     public final Enumerator ruleFontType() throws RecognitionException {
         Enumerator current = null;
 
@@ -4740,47 +4274,47 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2040:28: ( ( (enumLiteral_0= 'bold' ) | (enumLiteral_1= 'italic' ) | (enumLiteral_2= 'underline' ) | (enumLiteral_3= 'strike-through' ) ) )
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2041:1: ( (enumLiteral_0= 'bold' ) | (enumLiteral_1= 'italic' ) | (enumLiteral_2= 'underline' ) | (enumLiteral_3= 'strike-through' ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1853:28: ( ( (enumLiteral_0= 'bold' ) | (enumLiteral_1= 'italic' ) | (enumLiteral_2= 'underline' ) | (enumLiteral_3= 'strike-through' ) ) )
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1854:1: ( (enumLiteral_0= 'bold' ) | (enumLiteral_1= 'italic' ) | (enumLiteral_2= 'underline' ) | (enumLiteral_3= 'strike-through' ) )
             {
-            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2041:1: ( (enumLiteral_0= 'bold' ) | (enumLiteral_1= 'italic' ) | (enumLiteral_2= 'underline' ) | (enumLiteral_3= 'strike-through' ) )
-            int alt28=4;
+            // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1854:1: ( (enumLiteral_0= 'bold' ) | (enumLiteral_1= 'italic' ) | (enumLiteral_2= 'underline' ) | (enumLiteral_3= 'strike-through' ) )
+            int alt23=4;
             switch ( input.LA(1) ) {
-            case 48:
+            case 44:
                 {
-                alt28=1;
+                alt23=1;
                 }
                 break;
-            case 49:
+            case 45:
                 {
-                alt28=2;
+                alt23=2;
                 }
                 break;
-            case 50:
+            case 46:
                 {
-                alt28=3;
+                alt23=3;
                 }
                 break;
-            case 51:
+            case 47:
                 {
-                alt28=4;
+                alt23=4;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 28, 0, input);
+                    new NoViableAltException("", 23, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt28) {
+            switch (alt23) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2041:2: (enumLiteral_0= 'bold' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1854:2: (enumLiteral_0= 'bold' )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2041:2: (enumLiteral_0= 'bold' )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2041:4: enumLiteral_0= 'bold'
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1854:2: (enumLiteral_0= 'bold' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1854:4: enumLiteral_0= 'bold'
                     {
-                    enumLiteral_0=(Token)match(input,48,FOLLOW_48_in_ruleFontType4411); 
+                    enumLiteral_0=(Token)match(input,44,FOLLOW_44_in_ruleFontType4017); 
 
                             current = grammarAccess.getFontTypeAccess().getBoldEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_0, grammarAccess.getFontTypeAccess().getBoldEnumLiteralDeclaration_0()); 
@@ -4792,12 +4326,12 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2047:6: (enumLiteral_1= 'italic' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1860:6: (enumLiteral_1= 'italic' )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2047:6: (enumLiteral_1= 'italic' )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2047:8: enumLiteral_1= 'italic'
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1860:6: (enumLiteral_1= 'italic' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1860:8: enumLiteral_1= 'italic'
                     {
-                    enumLiteral_1=(Token)match(input,49,FOLLOW_49_in_ruleFontType4428); 
+                    enumLiteral_1=(Token)match(input,45,FOLLOW_45_in_ruleFontType4034); 
 
                             current = grammarAccess.getFontTypeAccess().getItalicEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_1, grammarAccess.getFontTypeAccess().getItalicEnumLiteralDeclaration_1()); 
@@ -4809,12 +4343,12 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2053:6: (enumLiteral_2= 'underline' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1866:6: (enumLiteral_2= 'underline' )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2053:6: (enumLiteral_2= 'underline' )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2053:8: enumLiteral_2= 'underline'
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1866:6: (enumLiteral_2= 'underline' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1866:8: enumLiteral_2= 'underline'
                     {
-                    enumLiteral_2=(Token)match(input,50,FOLLOW_50_in_ruleFontType4445); 
+                    enumLiteral_2=(Token)match(input,46,FOLLOW_46_in_ruleFontType4051); 
 
                             current = grammarAccess.getFontTypeAccess().getUnderlineEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_2, grammarAccess.getFontTypeAccess().getUnderlineEnumLiteralDeclaration_2()); 
@@ -4826,12 +4360,12 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2059:6: (enumLiteral_3= 'strike-through' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1872:6: (enumLiteral_3= 'strike-through' )
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2059:6: (enumLiteral_3= 'strike-through' )
-                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:2059:8: enumLiteral_3= 'strike-through'
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1872:6: (enumLiteral_3= 'strike-through' )
+                    // ../org.eclipse.fx.code.compensator.hsl/src-gen/org/eclipse/fx/code/compensator/hsl/parser/antlr/internal/InternalHSL.g:1872:8: enumLiteral_3= 'strike-through'
                     {
-                    enumLiteral_3=(Token)match(input,51,FOLLOW_51_in_ruleFontType4462); 
+                    enumLiteral_3=(Token)match(input,47,FOLLOW_47_in_ruleFontType4068); 
 
                             current = grammarAccess.getFontTypeAccess().getStrike_throughEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
                             newLeafNode(enumLiteral_3, grammarAccess.getFontTypeAccess().getStrike_throughEnumLiteralDeclaration_3()); 
@@ -4903,8 +4437,8 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleRulePartitioner_in_entryRuleRulePartitioner810 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleRulePartitioner820 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_21_in_ruleRulePartitioner857 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleRulePartitioner869 = new BitSet(new long[]{0x0000051000000000L});
-    public static final BitSet FOLLOW_ruleParitionRule_in_ruleRulePartitioner890 = new BitSet(new long[]{0x0000051000001000L});
+    public static final BitSet FOLLOW_11_in_ruleRulePartitioner869 = new BitSet(new long[]{0x0000005100000000L});
+    public static final BitSet FOLLOW_ruleParitionRule_in_ruleRulePartitioner890 = new BitSet(new long[]{0x0000005100001000L});
     public static final BitSet FOLLOW_12_in_ruleRulePartitioner903 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleJSParitioner_in_entryRuleJSParitioner939 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleJSParitioner949 = new BitSet(new long[]{0x0000000000000002L});
@@ -4923,144 +4457,125 @@ public class InternalHSLParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_EOF_in_entryRuleRuleDamager1298 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_24_in_ruleRuleDamager1335 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleRuleDamager1355 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleRuleDamager1367 = new BitSet(new long[]{0x00000F1086001000L});
-    public static final BitSet FOLLOW_ruleScannerToken_in_ruleRuleDamager1388 = new BitSet(new long[]{0x00000F1086001000L});
-    public static final BitSet FOLLOW_ruleKeywordGroup_in_ruleRuleDamager1410 = new BitSet(new long[]{0x00000F1080001000L});
-    public static final BitSet FOLLOW_ruleScannerRule_in_ruleRuleDamager1432 = new BitSet(new long[]{0x00000F1000001000L});
+    public static final BitSet FOLLOW_11_in_ruleRuleDamager1367 = new BitSet(new long[]{0x000000F10E001000L});
+    public static final BitSet FOLLOW_ruleScannerToken_in_ruleRuleDamager1388 = new BitSet(new long[]{0x000000F10E001000L});
+    public static final BitSet FOLLOW_ruleKeywordGroup_in_ruleRuleDamager1410 = new BitSet(new long[]{0x000000F108001000L});
+    public static final BitSet FOLLOW_ruleScannerRule_in_ruleRuleDamager1432 = new BitSet(new long[]{0x000000F100001000L});
     public static final BitSet FOLLOW_12_in_ruleRuleDamager1445 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleScannerToken_in_entryRuleScannerToken1481 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleScannerToken1491 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_25_in_ruleScannerToken1534 = new BitSet(new long[]{0x0000000004000000L});
     public static final BitSet FOLLOW_26_in_ruleScannerToken1560 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerToken1577 = new BitSet(new long[]{0x0000000000000802L});
-    public static final BitSet FOLLOW_11_in_ruleScannerToken1595 = new BitSet(new long[]{0x0000000068001000L});
-    public static final BitSet FOLLOW_27_in_ruleScannerToken1608 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_ruleScannerToken1620 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_ruleColor_in_ruleScannerToken1641 = new BitSet(new long[]{0x0000000060001000L});
-    public static final BitSet FOLLOW_29_in_ruleScannerToken1656 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_ruleScannerToken1668 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_ruleColor_in_ruleScannerToken1689 = new BitSet(new long[]{0x0000000040001000L});
-    public static final BitSet FOLLOW_30_in_ruleScannerToken1704 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_28_in_ruleScannerToken1716 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleFont_in_ruleScannerToken1737 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleScannerToken1751 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleKeywordGroup_in_entryRuleKeywordGroup1789 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleKeywordGroup1799 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_ruleKeywordGroup1836 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleKeywordGroup1856 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_32_in_ruleKeywordGroup1868 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleKeyword_in_ruleKeywordGroup1889 = new BitSet(new long[]{0x0000000600000000L});
-    public static final BitSet FOLLOW_33_in_ruleKeywordGroup1902 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleKeyword_in_ruleKeywordGroup1923 = new BitSet(new long[]{0x0000000600000000L});
-    public static final BitSet FOLLOW_34_in_ruleKeywordGroup1937 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleKeyword_in_entryRuleKeyword1973 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleKeyword1983 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleKeyword2025 = new BitSet(new long[]{0x0000000800000002L});
-    public static final BitSet FOLLOW_35_in_ruleKeyword2043 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleKeyword2060 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerRule_in_entryRuleScannerRule2103 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleScannerRule2113 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerSingleLineRule_in_ruleScannerRule2160 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerMultiLineRule_in_ruleScannerRule2187 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerCharacterRule_in_ruleScannerRule2214 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerJSRule_in_ruleScannerRule2241 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerWhitespaceRule_in_ruleScannerRule2268 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleParitionRule_in_entryRuleParitionRule2303 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleParitionRule2313 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePartitionSingleLineRule_in_ruleParitionRule2360 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePartitionMultiLineRule_in_ruleParitionRule2387 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePartitionJSRule_in_ruleParitionRule2414 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerSingleLineRule_in_entryRuleScannerSingleLineRule2449 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleScannerSingleLineRule2459 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_ruleScannerSingleLineRule2496 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerSingleLineRule2516 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2533 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleScannerSingleLineRule2550 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2567 = new BitSet(new long[]{0x0000004000000002L});
-    public static final BitSet FOLLOW_38_in_ruleScannerSingleLineRule2585 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_39_in_ruleScannerSingleLineRule2597 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2614 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePartitionSingleLineRule_in_entryRulePartitionSingleLineRule2657 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePartitionSingleLineRule2667 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_rulePartitionSingleLineRule2704 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_rulePartitionSingleLineRule2724 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2741 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_rulePartitionSingleLineRule2758 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2775 = new BitSet(new long[]{0x0000004000000002L});
-    public static final BitSet FOLLOW_38_in_rulePartitionSingleLineRule2793 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_39_in_rulePartitionSingleLineRule2805 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2822 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerMultiLineRule_in_entryRuleScannerMultiLineRule2865 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleScannerMultiLineRule2875 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_ruleScannerMultiLineRule2912 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerMultiLineRule2932 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule2949 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleScannerMultiLineRule2966 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule2983 = new BitSet(new long[]{0x0000004000000002L});
-    public static final BitSet FOLLOW_38_in_ruleScannerMultiLineRule3001 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_39_in_ruleScannerMultiLineRule3013 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule3030 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePartitionMultiLineRule_in_entryRulePartitionMultiLineRule3073 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePartitionMultiLineRule3083 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_rulePartitionMultiLineRule3120 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_rulePartitionMultiLineRule3140 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule3157 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_rulePartitionMultiLineRule3174 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule3191 = new BitSet(new long[]{0x0000004000000002L});
-    public static final BitSet FOLLOW_38_in_rulePartitionMultiLineRule3209 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_39_in_rulePartitionMultiLineRule3221 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule3238 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerCharacterRule_in_entryRuleScannerCharacterRule3281 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleScannerCharacterRule3291 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_ruleScannerCharacterRule3328 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerCharacterRule3348 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_32_in_ruleScannerCharacterRule3360 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerCharacterRule3377 = new BitSet(new long[]{0x0000000600000000L});
-    public static final BitSet FOLLOW_33_in_ruleScannerCharacterRule3395 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerCharacterRule3412 = new BitSet(new long[]{0x0000000600000000L});
-    public static final BitSet FOLLOW_34_in_ruleScannerCharacterRule3431 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerJSRule_in_entryRuleScannerJSRule3467 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleScannerJSRule3477 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_ruleScannerJSRule3514 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerJSRule3534 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerJSRule3551 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePartitionJSRule_in_entryRulePartitionJSRule3592 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePartitionJSRule3602 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_rulePartitionJSRule3639 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_rulePartitionJSRule3659 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionJSRule3676 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScannerWhitespaceRule_in_entryRuleScannerWhitespaceRule3717 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleScannerWhitespaceRule3727 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_43_in_ruleScannerWhitespaceRule3764 = new BitSet(new long[]{0x0000100100000030L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerWhitespaceRule3784 = new BitSet(new long[]{0x0000100100000020L});
-    public static final BitSet FOLLOW_32_in_ruleScannerWhitespaceRule3799 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3816 = new BitSet(new long[]{0x0000000600000000L});
-    public static final BitSet FOLLOW_33_in_ruleScannerWhitespaceRule3834 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3851 = new BitSet(new long[]{0x0000000600000000L});
-    public static final BitSet FOLLOW_34_in_ruleScannerWhitespaceRule3870 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_ruleScannerWhitespaceRule3895 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3931 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleColor_in_entryRuleColor3973 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleColor3983 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRGBColor_in_ruleColor4029 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleRGBColor_in_entryRuleRGBColor4063 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleRGBColor4073 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_ruleRGBColor4110 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_ruleRGBColor4122 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleRGBColor4139 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_33_in_ruleRGBColor4156 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleRGBColor4173 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_33_in_ruleRGBColor4190 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleRGBColor4207 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_ruleRGBColor4224 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleFont_in_entryRuleFont4260 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleFont4270 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleFont4312 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleFont4334 = new BitSet(new long[]{0x000F000000000002L});
-    public static final BitSet FOLLOW_ruleFontType_in_ruleFont4360 = new BitSet(new long[]{0x000F000000000002L});
-    public static final BitSet FOLLOW_48_in_ruleFontType4411 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_ruleFontType4428 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_ruleFontType4445 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_51_in_ruleFontType4462 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerToken1577 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleKeywordGroup_in_entryRuleKeywordGroup1618 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleKeywordGroup1628 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_ruleKeywordGroup1665 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleKeywordGroup1685 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_ruleKeywordGroup1697 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_ruleKeyword_in_ruleKeywordGroup1718 = new BitSet(new long[]{0x0000000060000000L});
+    public static final BitSet FOLLOW_29_in_ruleKeywordGroup1731 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_ruleKeyword_in_ruleKeywordGroup1752 = new BitSet(new long[]{0x0000000060000000L});
+    public static final BitSet FOLLOW_30_in_ruleKeywordGroup1766 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleKeyword_in_entryRuleKeyword1802 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleKeyword1812 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleKeyword1854 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_31_in_ruleKeyword1872 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleKeyword1889 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerRule_in_entryRuleScannerRule1932 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleScannerRule1942 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerSingleLineRule_in_ruleScannerRule1989 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerMultiLineRule_in_ruleScannerRule2016 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerCharacterRule_in_ruleScannerRule2043 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerJSRule_in_ruleScannerRule2070 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerWhitespaceRule_in_ruleScannerRule2097 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleParitionRule_in_entryRuleParitionRule2132 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleParitionRule2142 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePartitionSingleLineRule_in_ruleParitionRule2189 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePartitionMultiLineRule_in_ruleParitionRule2216 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePartitionJSRule_in_ruleParitionRule2243 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerSingleLineRule_in_entryRuleScannerSingleLineRule2278 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleScannerSingleLineRule2288 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_ruleScannerSingleLineRule2325 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerSingleLineRule2345 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2362 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_33_in_ruleScannerSingleLineRule2379 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2396 = new BitSet(new long[]{0x0000000400000002L});
+    public static final BitSet FOLLOW_34_in_ruleScannerSingleLineRule2414 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_35_in_ruleScannerSingleLineRule2426 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerSingleLineRule2443 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePartitionSingleLineRule_in_entryRulePartitionSingleLineRule2486 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePartitionSingleLineRule2496 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rulePartitionSingleLineRule2533 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_rulePartitionSingleLineRule2553 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2570 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_33_in_rulePartitionSingleLineRule2587 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2604 = new BitSet(new long[]{0x0000000400000002L});
+    public static final BitSet FOLLOW_34_in_rulePartitionSingleLineRule2622 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_35_in_rulePartitionSingleLineRule2634 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionSingleLineRule2651 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerMultiLineRule_in_entryRuleScannerMultiLineRule2694 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleScannerMultiLineRule2704 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_ruleScannerMultiLineRule2741 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerMultiLineRule2761 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule2778 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_33_in_ruleScannerMultiLineRule2795 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule2812 = new BitSet(new long[]{0x0000000400000002L});
+    public static final BitSet FOLLOW_34_in_ruleScannerMultiLineRule2830 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_35_in_ruleScannerMultiLineRule2842 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerMultiLineRule2859 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePartitionMultiLineRule_in_entryRulePartitionMultiLineRule2902 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePartitionMultiLineRule2912 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_rulePartitionMultiLineRule2949 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_rulePartitionMultiLineRule2969 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule2986 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_33_in_rulePartitionMultiLineRule3003 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule3020 = new BitSet(new long[]{0x0000000400000002L});
+    public static final BitSet FOLLOW_34_in_rulePartitionMultiLineRule3038 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_35_in_rulePartitionMultiLineRule3050 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionMultiLineRule3067 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerCharacterRule_in_entryRuleScannerCharacterRule3110 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleScannerCharacterRule3120 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_37_in_ruleScannerCharacterRule3157 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerCharacterRule3177 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_ruleScannerCharacterRule3189 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerCharacterRule3206 = new BitSet(new long[]{0x0000000060000000L});
+    public static final BitSet FOLLOW_29_in_ruleScannerCharacterRule3224 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerCharacterRule3241 = new BitSet(new long[]{0x0000000060000000L});
+    public static final BitSet FOLLOW_30_in_ruleScannerCharacterRule3260 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerJSRule_in_entryRuleScannerJSRule3296 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleScannerJSRule3306 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_ruleScannerJSRule3343 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerJSRule3363 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerJSRule3380 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePartitionJSRule_in_entryRulePartitionJSRule3421 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePartitionJSRule3431 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_rulePartitionJSRule3468 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_rulePartitionJSRule3488 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rulePartitionJSRule3505 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScannerWhitespaceRule_in_entryRuleScannerWhitespaceRule3546 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleScannerWhitespaceRule3556 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_ruleScannerWhitespaceRule3593 = new BitSet(new long[]{0x0000010010000030L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleScannerWhitespaceRule3613 = new BitSet(new long[]{0x0000010010000020L});
+    public static final BitSet FOLLOW_28_in_ruleScannerWhitespaceRule3628 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3645 = new BitSet(new long[]{0x0000000060000000L});
+    public static final BitSet FOLLOW_29_in_ruleScannerWhitespaceRule3663 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3680 = new BitSet(new long[]{0x0000000060000000L});
+    public static final BitSet FOLLOW_30_in_ruleScannerWhitespaceRule3699 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_ruleScannerWhitespaceRule3724 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleScannerWhitespaceRule3760 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleRGBColor_in_entryRuleRGBColor3804 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleRGBColor3814 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_ruleRGBColor3851 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_42_in_ruleRGBColor3863 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleRGBColor3880 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_ruleRGBColor3897 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleRGBColor3914 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_29_in_ruleRGBColor3931 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleRGBColor3948 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_43_in_ruleRGBColor3965 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_44_in_ruleFontType4017 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_45_in_ruleFontType4034 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_ruleFontType4051 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_ruleFontType4068 = new BitSet(new long[]{0x0000000000000002L});
 
 }

@@ -49,11 +49,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="ScannerToken">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fgColor" eType="#//Color"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bgColor" eType="#//Color"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="font" eType="#//Font" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="KeywordGroup">
     <eStructuralFeatures xsi:type="ecore:EReference" name="token" eType="#//ScannerToken"/>

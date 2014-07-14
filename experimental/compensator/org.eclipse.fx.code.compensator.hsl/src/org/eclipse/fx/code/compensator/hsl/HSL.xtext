@@ -55,11 +55,7 @@ RuleDamager:
 ;
 
 ScannerToken:
-	default?='default'? 'token' name=ID ('{' 
-		('fgcolor' ':' fgColor=Color)? 
-		('bgcolor' ':' bgColor=Color)? 
-		('font' ':' font=Font)?
-	'}')?
+	default?='default'? 'token' name=ID
 ;
 
 KeywordGroup:

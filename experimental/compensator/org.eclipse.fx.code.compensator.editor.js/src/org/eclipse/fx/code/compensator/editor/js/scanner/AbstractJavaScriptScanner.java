@@ -42,31 +42,31 @@ public abstract class AbstractJavaScriptScanner extends BufferedRuleBasedScanner
 	protected Token getToken(String key) {
 		switch (key) {
 		case IJavaScriptColorConstants.JAVA_STRING:
-			return new Token(new TextAttribute(Color.rgb(42, 0, 255)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVA_STRING));
 		case IJavaScriptColorConstants.JAVA_DEFAULT:
-			return new Token(new TextAttribute(Color.rgb(0,0,0)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVA_DEFAULT));
 		case IJavaScriptColorConstants.ANNOTATION:
-			return new Token(new TextAttribute(Color.rgb(200, 200, 200)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.ANNOTATION));
 		case IJavaScriptColorConstants.JAVA_KEYWORD:
-			return new Token(new TextAttribute(Color.rgb(127, 0, 85)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVA_KEYWORD));
 		case IJavaScriptColorConstants.JAVA_OPERATOR:
-			return new Token(new TextAttribute(Color.rgb(0, 0, 0)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVA_OPERATOR));
 		case IJavaScriptColorConstants.JAVA_BRACKET:
-			return new Token(new TextAttribute(Color.rgb(0, 0, 0)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVA_BRACKET));
 		case IJavaScriptColorConstants.JAVA_KEYWORD_RETURN:
-			return new Token(new TextAttribute(Color.rgb(127, 0, 85)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVA_KEYWORD_RETURN));
 		case IJavaScriptColorConstants.TASK_TAG:
-			return new Token(new TextAttribute(Color.rgb(127, 159, 191)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.TASK_TAG));
 		case IJavaScriptColorConstants.JAVADOC_LINK:
-			return new Token(new TextAttribute(Color.rgb(63, 63, 191)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVADOC_LINK));
 		case IJavaScriptColorConstants.JAVADOC_DEFAULT:
-			return new Token(new TextAttribute(Color.rgb(63, 95, 191)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVADOC_DEFAULT));
 		case IJavaScriptColorConstants.JAVA_MULTI_LINE_COMMENT:
-			return new Token(new TextAttribute(Color.rgb(63, 127, 95)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVA_MULTI_LINE_COMMENT));
 		case IJavaScriptColorConstants.JAVA_SINGLE_LINE_COMMENT:
-			return new Token(new TextAttribute(Color.rgb(63, 127, 95)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVA_SINGLE_LINE_COMMENT));
 		case IJavaScriptColorConstants.JAVADOC_TAG:
-			return new Token(new TextAttribute(Color.rgb(127, 127, 159)));
+			return new Token(new TextAttribute(IJavaScriptColorConstants.JAVADOC_TAG));
 		default:
 			throw new IllegalStateException("Unknown key '"+ key+"'");
 		}

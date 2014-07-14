@@ -51,9 +51,6 @@
     <genClasses ecoreClass="HSL.ecore#//ScannerToken">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerToken/default"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerToken/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//ScannerToken/fgColor"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//ScannerToken/bgColor"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//ScannerToken/font"/>
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//KeywordGroup">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//KeywordGroup/token"/>

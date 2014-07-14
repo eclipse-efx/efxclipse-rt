@@ -61,6 +61,7 @@ var f = function() {
 		createPresentation : function(presentation, region) {
 			presentation.addStyleRange( 
 				new StyleRange(
+					"xml_comment",
 					region.getOffset(),
 					region.getLength(),
 					Color.rgb(128, 0, 0),

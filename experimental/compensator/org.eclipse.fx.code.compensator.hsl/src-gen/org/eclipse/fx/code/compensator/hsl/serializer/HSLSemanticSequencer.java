@@ -428,7 +428,7 @@ public class HSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (default?='default'? name=ID (fgColor=Color? bgColor=Color? font=Font?)?)
+	 *     (default?='default'? name=ID)
 	 */
 	protected void sequence_ScannerToken(EObject context, ScannerToken semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -10,6 +10,8 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.java;
 
+import java.net.URL;
+
 import org.eclipse.fx.code.compensator.editor.java.scanner.IJavaColorConstants;
 import org.eclipse.fx.code.compensator.editor.java.scanner.IJavaPartitions;
 import org.eclipse.fx.code.compensator.editor.java.scanner.JavaCodeScanner;
@@ -100,5 +102,10 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 
 	private ITokenScanner getCodeScanner() {
 		return fCodeScanner;
+	}
+	
+	@Override
+	public URL getDefaultStylesheet() {
+		return getClass().getClassLoader().getResource("css/highlight.css");
 	}
 }

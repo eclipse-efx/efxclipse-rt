@@ -597,36 +597,6 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getScannerToken_FgColor()
-  {
-    return (EReference)scannerTokenEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getScannerToken_BgColor()
-  {
-    return (EReference)scannerTokenEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getScannerToken_Font()
-  {
-    return (EReference)scannerTokenEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getKeywordGroup()
   {
     return keywordGroupEClass;
@@ -1171,9 +1141,6 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     scannerTokenEClass = createEClass(SCANNER_TOKEN);
     createEAttribute(scannerTokenEClass, SCANNER_TOKEN__DEFAULT);
     createEAttribute(scannerTokenEClass, SCANNER_TOKEN__NAME);
-    createEReference(scannerTokenEClass, SCANNER_TOKEN__FG_COLOR);
-    createEReference(scannerTokenEClass, SCANNER_TOKEN__BG_COLOR);
-    createEReference(scannerTokenEClass, SCANNER_TOKEN__FONT);
 
     keywordGroupEClass = createEClass(KEYWORD_GROUP);
     createEReference(keywordGroupEClass, KEYWORD_GROUP__TOKEN);
@@ -1325,9 +1292,6 @@ public class HSLPackageImpl extends EPackageImpl implements HSLPackage
     initEClass(scannerTokenEClass, ScannerToken.class, "ScannerToken", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScannerToken_Default(), ecorePackage.getEBoolean(), "default", null, 0, 1, ScannerToken.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScannerToken_Name(), ecorePackage.getEString(), "name", null, 0, 1, ScannerToken.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScannerToken_FgColor(), this.getColor(), null, "fgColor", null, 0, 1, ScannerToken.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScannerToken_BgColor(), this.getColor(), null, "bgColor", null, 0, 1, ScannerToken.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScannerToken_Font(), this.getFont(), null, "font", null, 0, 1, ScannerToken.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(keywordGroupEClass, KeywordGroup.class, "KeywordGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getKeywordGroup_Token(), this.getScannerToken(), null, "token", null, 0, 1, KeywordGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

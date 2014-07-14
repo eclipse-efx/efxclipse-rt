@@ -739,93 +739,7 @@ ruleScannerToken returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_3='{' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getScannerTokenAccess().getLeftCurlyBracketKeyword_3_0());
-    }
-(	otherlv_4='fgcolor' 
-    {
-    	newLeafNode(otherlv_4, grammarAccess.getScannerTokenAccess().getFgcolorKeyword_3_1_0());
-    }
-	otherlv_5=':' 
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getScannerTokenAccess().getColonKeyword_3_1_1());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getScannerTokenAccess().getFgColorColorParserRuleCall_3_1_2_0()); 
-	    }
-		lv_fgColor_6_0=ruleColor		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getScannerTokenRule());
-	        }
-       		set(
-       			$current, 
-       			"fgColor",
-        		lv_fgColor_6_0, 
-        		"Color");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))?(	otherlv_7='bgcolor' 
-    {
-    	newLeafNode(otherlv_7, grammarAccess.getScannerTokenAccess().getBgcolorKeyword_3_2_0());
-    }
-	otherlv_8=':' 
-    {
-    	newLeafNode(otherlv_8, grammarAccess.getScannerTokenAccess().getColonKeyword_3_2_1());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getScannerTokenAccess().getBgColorColorParserRuleCall_3_2_2_0()); 
-	    }
-		lv_bgColor_9_0=ruleColor		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getScannerTokenRule());
-	        }
-       		set(
-       			$current, 
-       			"bgColor",
-        		lv_bgColor_9_0, 
-        		"Color");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))?(	otherlv_10='font' 
-    {
-    	newLeafNode(otherlv_10, grammarAccess.getScannerTokenAccess().getFontKeyword_3_3_0());
-    }
-	otherlv_11=':' 
-    {
-    	newLeafNode(otherlv_11, grammarAccess.getScannerTokenAccess().getColonKeyword_3_3_1());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getScannerTokenAccess().getFontFontParserRuleCall_3_3_2_0()); 
-	    }
-		lv_font_12_0=ruleFont		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getScannerTokenRule());
-	        }
-       		set(
-       			$current, 
-       			"font",
-        		lv_font_12_0, 
-        		"Font");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))?	otherlv_13='}' 
-    {
-    	newLeafNode(otherlv_13, grammarAccess.getScannerTokenAccess().getRightCurlyBracketKeyword_3_4());
-    }
-)?)
+))
 ;
 
 
@@ -1834,34 +1748,6 @@ ruleScannerWhitespaceRule returns [EObject current=null]
 
 
 
-// Entry rule entryRuleColor
-entryRuleColor returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getColorRule()); }
-	 iv_ruleColor=ruleColor 
-	 { $current=$iv_ruleColor.current; } 
-	 EOF 
-;
-
-// Rule Color
-ruleColor returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-
-    { 
-        newCompositeNode(grammarAccess.getColorAccess().getRGBColorParserRuleCall()); 
-    }
-    this_RGBColor_0=ruleRGBColor
-    { 
-        $current = $this_RGBColor_0.current; 
-        afterParserOrEnumRuleCall();
-    }
-
-;
-
-
-
 
 
 // Entry rule entryRuleRGBColor
@@ -1956,79 +1842,6 @@ ruleRGBColor returns [EObject current=null]
 ;
 
 
-
-
-
-// Entry rule entryRuleFont
-entryRuleFont returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getFontRule()); }
-	 iv_ruleFont=ruleFont 
-	 { $current=$iv_ruleFont.current; } 
-	 EOF 
-;
-
-// Rule Font
-ruleFont returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		lv_name_0_0=RULE_ID
-		{
-			newLeafNode(lv_name_0_0, grammarAccess.getFontAccess().getNameIDTerminalRuleCall_0_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getFontRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"name",
-        		lv_name_0_0, 
-        		"ID");
-	    }
-
-)
-)(
-(
-		lv_size_1_0=RULE_INT
-		{
-			newLeafNode(lv_size_1_0, grammarAccess.getFontAccess().getSizeINTTerminalRuleCall_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getFontRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"size",
-        		lv_size_1_0, 
-        		"INT");
-	    }
-
-)
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getFontAccess().getAttributesFontTypeEnumRuleCall_2_0()); 
-	    }
-		lv_attributes_2_0=ruleFontType		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getFontRule());
-	        }
-       		add(
-       			$current, 
-       			"attributes",
-        		lv_attributes_2_0, 
-        		"FontType");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)*)
-;
 
 
 

@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import netscape.javascript.JSObject;
 
 import org.eclipse.fx.code.compensator.editor.hsl.internal.JavaScriptHelper;
 import org.eclipse.fx.code.compensator.hsl.hSL.FontType;
@@ -42,7 +41,12 @@ public class HSLRuleScanner extends RuleBasedScanner {
 		Token defaultToken = null;
 		Map<String, IToken> tokenMap = new HashMap<String, IToken>();
 		for( ScannerToken st : scanner.getTokens() ) {
-			Token token = new Token(new TextAttribute(createColor(st.getFgColor()), createColor(st.getFgColor()), 0, createFont(st.getFont())));
+			Token token = new Token(new TextAttribute(st.getName()));
+//			if( "default_tagtoken".equals(st.getName()) ) {
+//				token = new Token(new TextAttribute(st.getName(),Color.rgb(255, 0, 0)));
+//			} else if( "xml_string".equals(st.getName()) ) {
+//				token = new Token(new TextAttribute(st.getName(),Color.rgb(0, 255, 0)));
+//			}
 			if( st.isDefault() ) {
 				defaultToken = token;
 				setDefaultReturnToken(token);

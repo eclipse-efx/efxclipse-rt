@@ -418,32 +418,12 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTokenKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLeftCurlyBracketKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
-		private final Keyword cFgcolorKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
-		private final Keyword cColonKeyword_3_1_1 = (Keyword)cGroup_3_1.eContents().get(1);
-		private final Assignment cFgColorAssignment_3_1_2 = (Assignment)cGroup_3_1.eContents().get(2);
-		private final RuleCall cFgColorColorParserRuleCall_3_1_2_0 = (RuleCall)cFgColorAssignment_3_1_2.eContents().get(0);
-		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
-		private final Keyword cBgcolorKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
-		private final Keyword cColonKeyword_3_2_1 = (Keyword)cGroup_3_2.eContents().get(1);
-		private final Assignment cBgColorAssignment_3_2_2 = (Assignment)cGroup_3_2.eContents().get(2);
-		private final RuleCall cBgColorColorParserRuleCall_3_2_2_0 = (RuleCall)cBgColorAssignment_3_2_2.eContents().get(0);
-		private final Group cGroup_3_3 = (Group)cGroup_3.eContents().get(3);
-		private final Keyword cFontKeyword_3_3_0 = (Keyword)cGroup_3_3.eContents().get(0);
-		private final Keyword cColonKeyword_3_3_1 = (Keyword)cGroup_3_3.eContents().get(1);
-		private final Assignment cFontAssignment_3_3_2 = (Assignment)cGroup_3_3.eContents().get(2);
-		private final RuleCall cFontFontParserRuleCall_3_3_2_0 = (RuleCall)cFontAssignment_3_3_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_3_4 = (Keyword)cGroup_3.eContents().get(4);
 		
 		//ScannerToken:
-		//	default?="default"? "token" name=ID ("{" ("fgcolor" ":" fgColor=Color)? ("bgcolor" ":" bgColor=Color)? ("font" ":"
-		//	font=Font)? "}")?;
+		//	default?="default"? "token" name=ID;
 		public ParserRule getRule() { return rule; }
 
-		//default?="default"? "token" name=ID ("{" ("fgcolor" ":" fgColor=Color)? ("bgcolor" ":" bgColor=Color)? ("font" ":"
-		//font=Font)? "}")?
+		//default?="default"? "token" name=ID
 		public Group getGroup() { return cGroup; }
 
 		//default?="default"?
@@ -460,60 +440,6 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
-
-		//("{" ("fgcolor" ":" fgColor=Color)? ("bgcolor" ":" bgColor=Color)? ("font" ":" font=Font)? "}")?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_3_0() { return cLeftCurlyBracketKeyword_3_0; }
-
-		//("fgcolor" ":" fgColor=Color)?
-		public Group getGroup_3_1() { return cGroup_3_1; }
-
-		//"fgcolor"
-		public Keyword getFgcolorKeyword_3_1_0() { return cFgcolorKeyword_3_1_0; }
-
-		//":"
-		public Keyword getColonKeyword_3_1_1() { return cColonKeyword_3_1_1; }
-
-		//fgColor=Color
-		public Assignment getFgColorAssignment_3_1_2() { return cFgColorAssignment_3_1_2; }
-
-		//Color
-		public RuleCall getFgColorColorParserRuleCall_3_1_2_0() { return cFgColorColorParserRuleCall_3_1_2_0; }
-
-		//("bgcolor" ":" bgColor=Color)?
-		public Group getGroup_3_2() { return cGroup_3_2; }
-
-		//"bgcolor"
-		public Keyword getBgcolorKeyword_3_2_0() { return cBgcolorKeyword_3_2_0; }
-
-		//":"
-		public Keyword getColonKeyword_3_2_1() { return cColonKeyword_3_2_1; }
-
-		//bgColor=Color
-		public Assignment getBgColorAssignment_3_2_2() { return cBgColorAssignment_3_2_2; }
-
-		//Color
-		public RuleCall getBgColorColorParserRuleCall_3_2_2_0() { return cBgColorColorParserRuleCall_3_2_2_0; }
-
-		//("font" ":" font=Font)?
-		public Group getGroup_3_3() { return cGroup_3_3; }
-
-		//"font"
-		public Keyword getFontKeyword_3_3_0() { return cFontKeyword_3_3_0; }
-
-		//":"
-		public Keyword getColonKeyword_3_3_1() { return cColonKeyword_3_3_1; }
-
-		//font=Font
-		public Assignment getFontAssignment_3_3_2() { return cFontAssignment_3_3_2; }
-
-		//Font
-		public RuleCall getFontFontParserRuleCall_3_3_2_0() { return cFontFontParserRuleCall_3_3_2_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_3_4() { return cRightCurlyBracketKeyword_3_4; }
 	}
 
 	public class KeywordGroupElements extends AbstractParserRuleElementFinder {
@@ -1465,8 +1391,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScannerToken:
-	//	default?="default"? "token" name=ID ("{" ("fgcolor" ":" fgColor=Color)? ("bgcolor" ":" bgColor=Color)? ("font" ":"
-	//	font=Font)? "}")?;
+	//	default?="default"? "token" name=ID;
 	public ScannerTokenElements getScannerTokenAccess() {
 		return (pScannerToken != null) ? pScannerToken : (pScannerToken = new ScannerTokenElements());
 	}

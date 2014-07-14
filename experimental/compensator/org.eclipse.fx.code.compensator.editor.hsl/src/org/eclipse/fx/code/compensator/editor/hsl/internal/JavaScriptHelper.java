@@ -30,7 +30,7 @@ public class JavaScriptHelper {
 		
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		ScriptEngine engine = mgr.getEngineByName("nashorn");
-		System.err.println(" ======================> " + uri);
+//		System.err.println(" ======================> " + uri);
 		try( InputStreamReader reader = new InputStreamReader(uri.isPlatform() ? cl.getResourceAsStream(getPluginPath(uri)) : new FileInputStream(new File(uri.toFileString()))) ) {
 			return (O) engine.eval(reader);
 		} catch (IOException e) {
