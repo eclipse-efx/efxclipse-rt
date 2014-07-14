@@ -60,6 +60,8 @@ public class TextAttribute {
 	 */
 	private int fHashCode;
 
+	private String stylename;
+	
 	/**
 	 * Creates a text attribute with the given colors and style.
 	 *
@@ -67,7 +69,8 @@ public class TextAttribute {
 	 * @param background the background color, <code>null</code> if none
 	 * @param style the style
 	 */
-	public TextAttribute(Color foreground, Color background, int style) {
+	public TextAttribute(String stylename, Color foreground, Color background, int style) {
+		this.stylename = stylename;
 		this.foreground= foreground;
 		this.background= background;
 		this.style= style;
@@ -82,7 +85,8 @@ public class TextAttribute {
 	 * @param font the font, <code>null</code> if none
 	 * @since 3.3
 	 */
-	public TextAttribute(Color foreground, Color background, int style, Font font) {
+	public TextAttribute(String stylename, Color foreground, Color background, int style, Font font) {
+		this.stylename = stylename;
 		this.foreground= foreground;
 		this.background= background;
 		this.style= style;
@@ -95,8 +99,16 @@ public class TextAttribute {
 	 *
 	 * @param foreground the foreground color, <code>null</code> if none
 	 */
-	public TextAttribute(Color foreground) {
-		this(foreground, null, StyleRange.NORMAL);
+	public TextAttribute(String stylename, Color foreground) {
+		this(stylename, foreground, null, StyleRange.NORMAL);
+	}
+	
+	public TextAttribute(String stylename) {
+		this.stylename = stylename;
+	}
+	
+	public String getStylename() {
+		return stylename;
 	}
 
 	/*
@@ -111,7 +123,7 @@ public class TextAttribute {
 			return false;
 		TextAttribute a= (TextAttribute)object;
 
-		return (a.style == style && equals(a.foreground, foreground) && equals(a.background, background) && equals(a.font, font));
+		return (equals(a.stylename,stylename) && a.style == style && equals(a.foreground, foreground) && equals(a.background, background) && equals(a.font, font));
 	}
 
 	/**
@@ -135,6 +147,7 @@ public class TextAttribute {
 		 if (fHashCode == 0) {
 			 int multiplier= 37; // some prime
 			 fHashCode= 13; // some random value
+			 fHashCode= multiplier * fHashCode + (stylename == null ? 0 : stylename.hashCode());
 			 fHashCode= multiplier * fHashCode + (font == null ? 0 : font.hashCode());
 			 fHashCode= multiplier * fHashCode + (background == null ? 0 : background.hashCode());
 			 fHashCode= multiplier * fHashCode + (foreground == null ? 0 : foreground.hashCode());

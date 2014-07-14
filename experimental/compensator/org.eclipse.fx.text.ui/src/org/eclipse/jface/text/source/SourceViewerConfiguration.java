@@ -10,12 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jface.text.source;
 
+import java.net.URL;
+
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.reconciler.IReconciler;
 
-public class SourceViewerConfiguration {
+public abstract class SourceViewerConfiguration {
 	public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
 		return IDocumentExtension3.DEFAULT_PARTITIONING;
 	}
@@ -25,6 +27,8 @@ public class SourceViewerConfiguration {
 		reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
 		return reconciler;
 	}
+	
+	public abstract URL getDefaultStylesheet();
 	
 	public IReconciler getReconciler(ISourceViewer sourceViewer) {
 		return null;

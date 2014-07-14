@@ -74,7 +74,7 @@ public class DefaultDamagerRepairer implements IPresentationDamager, IPresentati
 		Assert.isNotNull(scanner);
 
 		fScanner= scanner;
-		fDefaultTextAttribute= new TextAttribute(null);
+		fDefaultTextAttribute= new TextAttribute(null,null);
 	}
 
 	/*
@@ -219,7 +219,8 @@ public class DefaultDamagerRepairer implements IPresentationDamager, IPresentati
 		if (attr != null) {
 			int style= attr.getStyle();
 			int fontStyle= style & (StyleRange.ITALIC | StyleRange.BOLD | StyleRange.NORMAL);
-			StyleRange styleRange= new StyleRange(offset, length, attr.getForeground(), attr.getBackground(), fontStyle);
+			System.err.println("ADDING RANGE: " + attr + " => " + attr.getStylename());
+			StyleRange styleRange= new StyleRange(attr.getStylename(), offset, length, attr.getForeground(), attr.getBackground(), fontStyle);
 			styleRange.strikeout= (style & TextAttribute.STRIKETHROUGH) != 0;
 			styleRange.underline= (style & TextAttribute.UNDERLINE) != 0;
 			styleRange.font= attr.getFont();

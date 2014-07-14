@@ -25,7 +25,11 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 	public void configure(SourceViewerConfiguration configuration) {
 		if (getTextWidget() == null)
 			return;
-
+		
+		if( configuration.getDefaultStylesheet() != null ) {
+			getTextWidget().getStylesheets().add(configuration.getDefaultStylesheet().toExternalForm());	
+		}
+		
 		setDocumentPartitioning(configuration.getConfiguredDocumentPartitioning(this));
 
 		// install content type independent plug-ins
