@@ -51,10 +51,6 @@ public class HSLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getJSDamagerAccess().getGroup(), "rule__JSDamager__Group__0");
 					put(grammarAccess.getRuleDamagerAccess().getGroup(), "rule__RuleDamager__Group__0");
 					put(grammarAccess.getScannerTokenAccess().getGroup(), "rule__ScannerToken__Group__0");
-					put(grammarAccess.getScannerTokenAccess().getGroup_3(), "rule__ScannerToken__Group_3__0");
-					put(grammarAccess.getScannerTokenAccess().getGroup_3_1(), "rule__ScannerToken__Group_3_1__0");
-					put(grammarAccess.getScannerTokenAccess().getGroup_3_2(), "rule__ScannerToken__Group_3_2__0");
-					put(grammarAccess.getScannerTokenAccess().getGroup_3_3(), "rule__ScannerToken__Group_3_3__0");
 					put(grammarAccess.getKeywordGroupAccess().getGroup(), "rule__KeywordGroup__Group__0");
 					put(grammarAccess.getKeywordGroupAccess().getGroup_4(), "rule__KeywordGroup__Group_4__0");
 					put(grammarAccess.getKeywordAccess().getGroup(), "rule__Keyword__Group__0");
@@ -97,9 +93,6 @@ public class HSLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRuleDamagerAccess().getRulesAssignment_5(), "rule__RuleDamager__RulesAssignment_5");
 					put(grammarAccess.getScannerTokenAccess().getDefaultAssignment_0(), "rule__ScannerToken__DefaultAssignment_0");
 					put(grammarAccess.getScannerTokenAccess().getNameAssignment_2(), "rule__ScannerToken__NameAssignment_2");
-					put(grammarAccess.getScannerTokenAccess().getFgColorAssignment_3_1_2(), "rule__ScannerToken__FgColorAssignment_3_1_2");
-					put(grammarAccess.getScannerTokenAccess().getBgColorAssignment_3_2_2(), "rule__ScannerToken__BgColorAssignment_3_2_2");
-					put(grammarAccess.getScannerTokenAccess().getFontAssignment_3_3_2(), "rule__ScannerToken__FontAssignment_3_3_2");
 					put(grammarAccess.getKeywordGroupAccess().getTokenAssignment_1(), "rule__KeywordGroup__TokenAssignment_1");
 					put(grammarAccess.getKeywordGroupAccess().getKeywordsAssignment_3(), "rule__KeywordGroup__KeywordsAssignment_3");
 					put(grammarAccess.getKeywordGroupAccess().getKeywordsAssignment_4_1(), "rule__KeywordGroup__KeywordsAssignment_4_1");
