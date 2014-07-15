@@ -72,5 +72,10 @@ public final class Constants {
 	 * Event sent when the result of a visible when is modified
 	 */
 	@NonNull
-	public static final String UPDATE_VISIBLE_WHEN_RESULT = ROOT_TOPIC + "/MUIElement/UpdateVisibleWhenResult"; //$NON-NLS-1$	
+	public static final String UPDATE_VISIBLE_WHEN_RESULT = ROOT_TOPIC + "/MUIElement/UpdateVisibleWhenResult"; //$NON-NLS-1$
+	/**
+	 * Event sent when the theme is changed
+	 */
+	@NonNull
+	public static final String THEME_CHANGED = ROOT_TOPIC + "/Theme/modified"; //$NON-NLS-1$
 }
