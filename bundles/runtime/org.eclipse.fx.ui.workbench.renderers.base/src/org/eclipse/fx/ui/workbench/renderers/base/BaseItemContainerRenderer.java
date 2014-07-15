@@ -42,17 +42,18 @@ public abstract class BaseItemContainerRenderer<M extends MElementContainer<I>, 
 		EventProcessor.attachVisibleProcessor(eventBroker, this);
 
 		Selector noop = m -> true;
-		eventBroker.subscribe(ScopedObjectFactory.KEYMODIFED_TOPIC, e -> checkExecute(m -> true));
+		eventBroker.subscribe(ScopedObjectFactory.KEYMODIFED_TOPIC, e -> checkExecute(noop));
 		eventBroker.subscribe(UIEvents.REQUEST_ENABLEMENT_UPDATE_TOPIC, e -> {
 			Object d = e.getProperty(IEventBroker.DATA);
 			if (d instanceof Selector) {
 				checkExecute((Selector) d);
 			} else if (UIEvents.ALL_ELEMENT_ID.equals(d)) {
-				checkExecute(m -> true);
+				checkExecute(noop);
 			} else if (d != null) {
 				checkExecute(m -> d.equals(m.getElementId()));
 			}
 		});
+		eventBroker.subscribe(UIEvents.Dirtyable.TOPIC_DIRTY, e -> checkExecute(noop));
 		this.context.runAndTrack(new RunAndTrack() {
 
 			@Override
