@@ -67,8 +67,20 @@ public abstract class BaseItemContainerRenderer<M extends MElementContainer<I>, 
 		});
 		do_init(eventBroker);
 	}
+	
+	/**
+	 * @return <code>true</code> if the enablement check is disabled currently
+	 */
+	@SuppressWarnings("static-method")
+	protected boolean skipEnablementCheck() {
+		return false;
+	}
 
 	void checkExecute(Selector selector) {
+		if( skipEnablementCheck() ) {
+			return;
+		}
+		
 		List<I> iterationCopy;
 
 		// not ideal because we'll probably check items are already
