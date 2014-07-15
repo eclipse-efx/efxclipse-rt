@@ -151,6 +151,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="__QfhEANwEeS-UZpK2iB2xg" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.13" label="Sample Expression">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_A09kgANxEeS-UZpK2iB2xg" coreExpressionId="org.eclipse.fx.testcases.e4.definition1"/>
         </children>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_p-vFcAxJEeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.directmenuitem.16" label="Disable Delayed" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DisableDelayed"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_d-oDwO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.menu.3" label="Switch">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_jYdPMO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.4" label="Perspective 0" command="_kCbZQO6yEeG4lfn-YKJbJw">
