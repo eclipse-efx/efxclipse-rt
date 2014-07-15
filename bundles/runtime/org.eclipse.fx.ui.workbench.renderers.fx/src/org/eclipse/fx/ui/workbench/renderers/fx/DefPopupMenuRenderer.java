@@ -38,6 +38,7 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 	static class ContextMenuImpl extends WWidgetImpl<ContextMenu, MPopupMenu> implements WPopupMenu<ContextMenu> {
 		private ToggleGroup group;
 		Runnable showingCallback;
+		Runnable hidingCallback;
 
 		@Override
 		protected ContextMenu createWidget() {
@@ -51,12 +52,26 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 					}
 				}
 			});
+			m.setOnHiding(new EventHandler<WindowEvent>() {
+
+				@Override
+				public void handle(WindowEvent event) {
+					if (ContextMenuImpl.this.hidingCallback != null) {
+						ContextMenuImpl.this.hidingCallback.run();
+					}
+				}
+			});
 			return m;
 		}
 
 		@Override
 		public void setShowingCallback(Runnable showingCallback) {
 			this.showingCallback = showingCallback;
+		}
+		
+		@Override
+		public void setHidingCallback(Runnable hidingCallback) {
+			this.hidingCallback = hidingCallback;
 		}
 
 		@Override

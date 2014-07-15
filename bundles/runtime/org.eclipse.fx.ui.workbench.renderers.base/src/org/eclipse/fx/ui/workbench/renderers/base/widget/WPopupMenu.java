@@ -48,6 +48,14 @@ public interface WPopupMenu<N> extends WMenuElement<MPopupMenu> {
 	void setShowingCallback(Runnable showingCallback);
 
 	/**
+	 * Callback to invoke when the menu is hidden
+	 * 
+	 * @param hidingCallback
+	 *            the callback
+	 */
+	void setHidingCallback(Runnable hidingCallback);
+
+	/**
 	 * Remove a widget
 	 * 
 	 * @param widget

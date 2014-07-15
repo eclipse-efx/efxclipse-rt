@@ -67,7 +67,7 @@ public abstract class BaseItemContainerRenderer<M extends MElementContainer<I>, 
 		});
 		do_init(eventBroker);
 	}
-	
+
 	/**
 	 * @return <code>true</code> if the enablement check is disabled currently
 	 */
@@ -76,11 +76,22 @@ public abstract class BaseItemContainerRenderer<M extends MElementContainer<I>, 
 		return false;
 	}
 
+	/**
+	 * Check if the given item is currently show
+	 * 
+	 * @param item
+	 *            the item
+	 * @return <code>true</code> if the item is currently visible on screen
+	 */
+	protected boolean isShowing(I item) {
+		return true;
+	}
+
 	void checkExecute(Selector selector) {
-		if( skipEnablementCheck() ) {
+		if (skipEnablementCheck()) {
 			return;
 		}
-		
+
 		List<I> iterationCopy;
 
 		// not ideal because we'll probably check items are already
@@ -91,6 +102,9 @@ public abstract class BaseItemContainerRenderer<M extends MElementContainer<I>, 
 		}
 
 		for (I e : iterationCopy) {
+			if (!isShowing(e)) {
+				continue;
+			}
 			if (e instanceof MItem && e.getRenderer() instanceof BaseItemRenderer<?, ?> && selector.select(e)) {
 				final MItem tmp = (MItem) e;
 				@SuppressWarnings("unchecked")

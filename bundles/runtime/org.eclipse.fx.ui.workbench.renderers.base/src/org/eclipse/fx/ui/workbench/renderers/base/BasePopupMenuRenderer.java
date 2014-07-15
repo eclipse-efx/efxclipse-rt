@@ -11,17 +11,19 @@
 package org.eclipse.fx.ui.workbench.renderers.base;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
-
-import javax.annotation.PostConstruct;
+import java.util.Set;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MPopupMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Base renderer for {@link MPopupMenu}
@@ -29,26 +31,28 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
  * @param <N>
  *            the native widget type
  */
-public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, WPopupMenu<N>> implements ChildrenHandler<MPopupMenu, MMenuElement> {
-	@PostConstruct
-	void init(IEventBroker eventBroker) {
-		EventProcessor.attachChildProcessor(eventBroker, this);
-		EventProcessor.attachVisibleProcessor(eventBroker, this);
+public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer<MPopupMenu, MMenuElement, WPopupMenu<N>> implements ChildrenHandler<MPopupMenu, MMenuElement> {
+	private Set<MMenu> currentVisibleMenus = new HashSet<>();
+	
+	@Override
+	protected void do_init(@NonNull IEventBroker broker) {
+		// nothing to do
 	}
-
+	
 	@Override
 	protected void initWidget(final MPopupMenu element, WPopupMenu<N> widget) {
 		super.initWidget(element, widget);
-		widget.setShowingCallback(new Runnable() {
-
-			@Override
-			public void run() {
-				handleShowing(element);
-			}
-		});
+		widget.setShowingCallback(() -> handleShowing(element) );
+		widget.setHidingCallback(() -> handleHiding(element));
 	}
 
-	static void handleShowing(MPopupMenu element) {
+	void handleHiding(MPopupMenu element) {
+		this.currentVisibleMenus.remove(element);
+	}
+	
+	void handleShowing(MPopupMenu element) {
+		this.currentVisibleMenus.add(element);
+		//FIXME We need to deal with dynamics!!!!
 		for (MMenuElement e : element.getChildren()) {
 			if (e.getRenderer() instanceof BaseItemRenderer) {
 				@SuppressWarnings("unchecked")
@@ -58,6 +62,8 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 		}
 	}
 
+	
+	
 	@Override
 	public void doProcessContent(MPopupMenu element) {
 		// TODO Should we do this creation lazy????
@@ -102,7 +108,7 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 	}
 
 	@Override
-	public void childRendered(MPopupMenu parentElement, MUIElement element) {
+	public void do_childRendered(MPopupMenu parentElement, MUIElement element) {
 		if (inContentProcessing(parentElement)) {
 			return;
 		}
@@ -120,7 +126,7 @@ public abstract class BasePopupMenuRenderer<N> extends BaseRenderer<MPopupMenu, 
 	}
 
 	@Override
-	public void hideChild(MPopupMenu container, MUIElement changedObj) {
+	public void do_hideChild(MPopupMenu container, MUIElement changedObj) {
 		WPopupMenu<N> menu = getWidget(container);
 
 		if (menu == null) {
