@@ -15,6 +15,7 @@
                 <children xsi:type="menu:HandledMenuItem" xmi:id="_oWARYCTjEeKY8NYIo6jIvQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.7" label="Switch Perspective 2" command="_kCbZQO6yEeG4lfn-YKJbJw">
                   <parameters xmi:id="_tPAAoCTjEeKY8NYIo6jIvQ" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.2"/>
                 </children>
+                <children xsi:type="menu:DynamicMenuContribution" xmi:id="_-V0ocAxLEeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.dynamicmenucontribution.3" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.contributions.DMContribution"/>
               </menus>
               <toolbar xmi:id="_FMzQEIEGEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.toolbar.0">
                 <children xsi:type="menu:DirectToolItem" xmi:id="_GVO3wIEGEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.directtoolitem.5" label="Hello World" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler2"/>
