@@ -181,7 +181,8 @@ public class DefaultThemeManager implements ThemeManager {
 		return this.themes;
 	}
 	
-	private static String getCSSClassname(String id) {
+	@SuppressWarnings("null")
+	private static @NonNull String getCSSClassname(@NonNull String id) {
 		return id.replace('.', '-');
 	}
 
@@ -262,11 +263,18 @@ public class DefaultThemeManager implements ThemeManager {
 	public Registration registerScene(final Scene scene) {
 		this.managedScenes.add(scene);
 		InvalidationListener l = (o) -> {
-			if( scene.getRoot() != null && this.currentThemeId != null ) {
-				scene.getRoot().getStyleClass().remove(getCSSClassname(this.currentThemeId));
-				scene.getRoot().getStyleClass().add(getCSSClassname(this.currentThemeId));
+			String themeId = this.currentThemeId;
+			if( scene.getRoot() != null && themeId != null ) {
+				scene.getRoot().getStyleClass().remove(getCSSClassname(themeId));
+				scene.getRoot().getStyleClass().add(getCSSClassname(themeId));
 			}
 		};
+		String themeId = this.currentThemeId;
+		if( themeId != null ) {
+			scene.getRoot().getStyleClass().remove(getCSSClassname(themeId));
+			scene.getRoot().getStyleClass().add(getCSSClassname(themeId));			
+		}
+
 		scene.rootProperty().addListener(l);
 		return new Registration() {
 			
