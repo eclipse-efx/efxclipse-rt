@@ -42,7 +42,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.PathElement;
@@ -474,10 +473,9 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						}
 					};
 					Path caretPath = new Path();
+					caretPath.getStyleClass().add("text-caret"); //$NON-NLS-1$
 					caretPath.setManaged(false);
-					caretPath.setStrokeWidth(1);
-					caretPath.setFill((Color.BLACK));
-					caretPath.setStroke((Color.BLACK));
+					caretPath.setStrokeWidth(2);
 					caretPath.visibleProperty().bind(this.caretVisible);
 					stack = new RegionImpl(flow, caretPath);
 					setGraphic(stack);
@@ -517,7 +515,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				}
 
 				flow.getChildren().setAll(texts);
-				stack.requestLayout();
 			} else {
 				setGraphic(null);
 				this.domainElement = null;
@@ -651,8 +648,16 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			} else {
 				setVisible(true);
 				if (line != this.line) {
-					this.lineText.setText(StyledTextSkin.this.lineList.indexOf(line) + 1 + ""); //$NON-NLS-1$
-					StyledTextSkin.this.rootContainer.layout();
+					String newText = StyledTextSkin.this.lineList.indexOf(line) + 1 + ""; //$NON-NLS-1$
+					String oldText = this.lineText.getText();
+					if( oldText == null ) {
+						oldText = ""; //$NON-NLS-1$
+					}
+					this.lineText.setText(newText);
+					if( newText.length() != oldText.length() ) {
+						StyledTextSkin.this.rootContainer.layout();	
+					}
+					StyledTextSkin.this.lineRuler.layout();	
 				}
 			}
 		}
