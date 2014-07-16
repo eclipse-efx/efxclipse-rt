@@ -219,7 +219,6 @@ public class DefaultDamagerRepairer implements IPresentationDamager, IPresentati
 		if (attr != null) {
 			int style= attr.getStyle();
 			int fontStyle= style & (StyleRange.ITALIC | StyleRange.BOLD | StyleRange.NORMAL);
-			System.err.println("ADDING RANGE: " + attr + " => " + attr.getStylename());
 			StyleRange styleRange= new StyleRange(attr.getStylename(), offset, length, attr.getForeground(), attr.getBackground(), fontStyle);
 			styleRange.strikeout= (style & TextAttribute.STRIKETHROUGH) != 0;
 			styleRange.underline= (style & TextAttribute.UNDERLINE) != 0;
