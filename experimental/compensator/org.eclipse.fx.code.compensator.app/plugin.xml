@@ -7,7 +7,7 @@
 		
 		<property name="applicationXMI" value="org.eclipse.fx.code.compensator.app/Application.e4xmi" />
 		
-		<property name="cssTheme" value="theme.default" />
+		<property name="cssTheme" value="default" />
   <property
         name="lifeCycleURI"
         value="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.ApplicationLifecycle">
@@ -17,7 +17,15 @@
 	
 </extension>
 <extension  point="org.eclipse.fx.ui.theme">
-	<theme id="theme.default" basestylesheet="css/default.css" />
+	<theme
+       basestylesheet="css/default.css"
+       id="default"
+       name="Default Theme"/>
+ <theme
+       basestylesheet="css/dark-default.css"
+       id="dark"
+       name="Dark Theme">
+ </theme>
 	
 </extension>
 </plugin>

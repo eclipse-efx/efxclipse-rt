@@ -13,3 +13,7 @@
 .proc_instruction {
 	-fx-fill: rgb(128, 128, 128);
 }
+
+.xml_comment {
+	-fx-fill: rgb(128, 0, 0);
+}

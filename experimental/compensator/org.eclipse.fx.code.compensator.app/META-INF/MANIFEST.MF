@@ -21,7 +21,9 @@ Require-Bundle: org.eclipse.fx.ui.workbench.fx,
  org.eclipse.e4.ui.services,
  javax.inject,
  org.eclipse.fx.code.compensator.model;bundle-version="0.1.0",
- org.eclipse.fx.code.compensator.editor;bundle-version="1.0.0"
+ org.eclipse.fx.code.compensator.editor;bundle-version="1.0.0",
+ org.eclipse.fx.ui.services;bundle-version="1.0.0",
+ org.eclipse.equinox.preferences;bundle-version="3.5.200"
 Import-Package: javafx.animation;version="2.0.0",
  javafx.application;version="2.0.0",
  javafx.beans;version="2.0.0",

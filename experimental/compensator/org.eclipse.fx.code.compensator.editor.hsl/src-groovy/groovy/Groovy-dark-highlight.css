@@ -1,0 +1,50 @@
+.groovy_default {
+	-fx-fill: #b8c4d1;
+}
+
+.groovy_operator {
+	-fx-fill: #b8c4d1;
+}
+
+.groovy_bracket {
+	-fx-fill: #b8c4d1;
+}
+
+.groovy_keyword_return {
+	-fx-fill: #d78b40;
+	-fx-font-weight: bold;
+}
+
+.groovy_keyword_type {
+	-fx-fill: #d78b40;
+	-fx-font-weight: bold;
+}
+
+.groovy_keyword {
+	-fx-fill: #d78b40;
+	-fx-font-weight: bold;
+}
+
+.groovy_doc_default {
+	-fx-fill: #74a567;
+}
+
+.groovy_single_line_comment {
+	-fx-fill: #929292;
+}
+
+.groovy_multi_line_comment {
+	-fx-fill: #929292;
+}
+
+.groovy_string {
+	-fx-fill: #7c986c;
+}
+
+.groovy_var_interpolation {
+	-fx-fill: #99bcc8;
+}
+
+.groovy_char {
+	-fx-fill: #7c986c;
+}

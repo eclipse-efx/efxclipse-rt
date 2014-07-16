@@ -1,0 +1,19 @@
+.default_tagtoken {
+	-fx-fill: #d1ba77;
+}
+
+.xml_string {
+	-fx-fill: #acc670;
+}
+
+.default_xmltoken {
+	-fx-fill: #b5c0cb;
+}
+
+.proc_instruction {
+	-fx-fill: #bcbdb9;
+}
+
+.xml_comment {
+	-fx-fill: #8c8983;
+}

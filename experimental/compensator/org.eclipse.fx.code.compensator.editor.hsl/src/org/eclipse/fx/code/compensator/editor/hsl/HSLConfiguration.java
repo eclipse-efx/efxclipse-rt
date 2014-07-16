@@ -11,13 +11,11 @@
 package org.eclipse.fx.code.compensator.editor.hsl;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.script.ScriptException;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyProperty;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.code.compensator.editor.hsl.internal.JavaScriptHelper;
@@ -64,10 +62,32 @@ public class HSLConfiguration extends SourceViewerConfiguration {
 	}
 	
 	@Override
-	public URL getDefaultStylesheet() {
+	public void setThemeId(String themeId) {
+		super.setThemeId(themeId);
+		URL url = _getDefaultStylesheet(themeId);
+		// ensure initialized!!!
+		getDefaultStylesheet();
+		if( url != null ) {
+			defaultStylesheet.set(url);
+		} else {
+			defaultStylesheet.set(_getDefaultStylesheet(null));			
+		}
+	}
+	
+	private ReadOnlyObjectWrapper<URL> defaultStylesheet;
+	
+	@Override
+	public ReadOnlyProperty<URL> getDefaultStylesheet() {
+		if( defaultStylesheet == null ) {
+			defaultStylesheet = new ReadOnlyObjectWrapper<>(this, "defaultStylesheet", _getDefaultStylesheet(null));
+		}
+		return defaultStylesheet.getReadOnlyProperty();
+	}
+	
+	private URL _getDefaultStylesheet(String themeId) {
 		URI uri = model.eResource().getURI();
 		uri = uri.trimSegments(1);
-		uri = uri.appendSegment(model.getName()+"-highlight.css");
+		uri = uri.appendSegment(model.getName()+(themeId != null ? "-"+themeId : "")+"-highlight.css");
 		
 		if( uri.isPlatform() ) {
 			System.err.println(cl.getResource(getPluginPath(uri)));

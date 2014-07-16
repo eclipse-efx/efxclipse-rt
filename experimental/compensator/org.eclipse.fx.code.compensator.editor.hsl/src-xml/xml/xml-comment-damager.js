@@ -64,7 +64,7 @@ var f = function() {
 					"xml_comment",
 					region.getOffset(),
 					region.getLength(),
-					Color.rgb(128, 0, 0),
+					null,
 					null
 				)
 			);
