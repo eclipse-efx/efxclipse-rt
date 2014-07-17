@@ -237,6 +237,11 @@
         <children xsi:type="menu:DirectToolItem" xmi:id="_w4yJ0L5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.directtoolitem.10" label="V2" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
       </children>
     </trimBars>
+    <trimBars xmi:id="_W56f0A3tEeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.trimbar.1" side="Bottom">
+      <children xsi:type="menu:ToolBar" xmi:id="_YRFHEA3tEeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.toolbar.6">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_aERjAA3tEeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.directtoolitem.test" label="Test"/>
+      </children>
+    </trimBars>
   </children>
   <handlers xmi:id="_H2FJYOUcEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.Handler0" command="_FEZr8OUcEeGP-5z69KadAQ"/>
   <handlers xmi:id="_0_q1EOqiEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.Handler1" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
