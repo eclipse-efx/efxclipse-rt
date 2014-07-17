@@ -102,21 +102,30 @@
         <children xsi:type="basic:Part" xmi:id="__HnCoIfYEeKsYN0U3N_L9Q" elementId="org.eclipse.fx.testcases.e4.part.14" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="Panel 14">
           <tags>content_a</tags>
         </children>
+        <children xsi:type="basic:PartStack" xmi:id="_36dDAA21EeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.partstack.1">
+          <children xsi:type="basic:CompositePart" xmi:id="_bkSXUA24EeSBX93V23L1Jg" elementId="blabla.compositepart.0">
+            <children xsi:type="basic:Part" xmi:id="_igVKIA29EeSeqfMy71kzOA" elementId="blabla.part.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="Composite Child 1"/>
+            <children xsi:type="basic:Part" xmi:id="_ExZxMA2_EeSyeeom7M5Hsg" elementId="blabla.part.1" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="Composite Child 2"/>
+          </children>
+          <children xsi:type="basic:Part" xmi:id="_2a_P0A2_EeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.part.simplePart" label="Simple Part"/>
+        </children>
       </children>
       <children xsi:type="advanced:Perspective" xmi:id="_iCfngAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.perspective.6" label="Layout Sample">
         <tags>myperspective</tags>
         <children xsi:type="basic:PartSashContainer" xmi:id="_kWd1QAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.partsashcontainer.4" horizontal="true">
           <tags>mysash</tags>
           <tags>fx_fixedLayout</tags>
-          <children xsi:type="basic:Part" xmi:id="_lkcEQAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.22">
-            <persistedState key="fx_layout_grab_horizontal" value="true"/>
-            <persistedState key="fx_layout_grab_vertical" value="true"/>
-            <tags>mypart</tags>
-          </children>
-          <children xsi:type="basic:Part" xmi:id="_l-Ky4AjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.23">
-            <persistedState key="fx_layout_grab_horizontal" value="true"/>
-            <persistedState key="fx_layout_grab_vertical" value="true"/>
-            <tags>mypart</tags>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_1LeUQA21EeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.partsashcontainer.5">
+            <children xsi:type="basic:Part" xmi:id="_lkcEQAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.22">
+              <persistedState key="fx_layout_grab_horizontal" value="true"/>
+              <persistedState key="fx_layout_grab_vertical" value="true"/>
+              <tags>mypart</tags>
+            </children>
+            <children xsi:type="basic:Part" xmi:id="_l-Ky4AjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.23">
+              <persistedState key="fx_layout_grab_horizontal" value="true"/>
+              <persistedState key="fx_layout_grab_vertical" value="true"/>
+              <tags>mypart</tags>
+            </children>
           </children>
         </children>
       </children>

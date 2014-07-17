@@ -6,6 +6,7 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
 
 @SuppressWarnings("restriction")
@@ -16,8 +17,8 @@ public class Handler0 {
 	}
 	
 	@Execute
-	public void execute(MApplication application) {
-		System.err.println("Executing H0");
+	public void execute(MApplication application, @Optional MPart part) {
+		System.err.println("Executing H0" + part);
 		Integer v = (Integer) application.getContext().get("test");
 		if( v == null ) {
 			v = Integer.valueOf(0);

@@ -6,12 +6,14 @@ import java.util.TimerTask;
 import javafx.application.Platform;
 
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 
 public class DisableDelayed {
 	@Execute
-	public void execute(MApplication application, IEventBroker broker) {
+	public void execute(MApplication application, IEventBroker broker, @Optional MPart part) {
 		Timer t = new Timer(true);
 		t.schedule(new TimerTask() {
 			
@@ -21,8 +23,8 @@ public class DisableDelayed {
 					
 					@Override
 					public void run() {
-						new Handler0().execute(application);
-						new Handler1().execute(application, broker);
+						new Handler0().execute(application, part);
+						new Handler1().execute(application, broker, part);
 					}
 				});
 			}

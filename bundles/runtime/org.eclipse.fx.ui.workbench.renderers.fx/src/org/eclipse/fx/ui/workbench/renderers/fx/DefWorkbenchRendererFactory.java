@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseAreaRenderer;
+import org.eclipse.fx.ui.workbench.renderers.base.BaseCompositePartRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuBarRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuRenderer;
@@ -147,7 +148,12 @@ public class DefWorkbenchRendererFactory extends BaseWorkbenchRendererFactory {
 	}
 
 	@Override
-	protected Class<? extends BasePartMenuRenderer<?>> getPartMenuRenderer() {
+	protected Class<? extends BasePartMenuRenderer<?>> getPartMenuRendererClass() {
 		return DefPartMenuRenderer.class;
+	}
+	
+	@Override
+	protected Class<? extends BaseCompositePartRenderer<?>> getCompositePartRendererClass() {
+		return DefCompositePartRenderer.class;
 	}
 }

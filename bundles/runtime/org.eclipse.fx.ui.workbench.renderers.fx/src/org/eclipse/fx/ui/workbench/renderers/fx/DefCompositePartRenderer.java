@@ -10,13 +10,35 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.SplitPane.Divider;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MCompositePart;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
+import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.fx.ui.panes.GridData;
+import org.eclipse.fx.ui.panes.GridLayoutPane;
+import org.eclipse.fx.ui.panes.GridData.Alignment;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseCompositePartRenderer;
+import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCompositePart;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Renderer for a composite part
@@ -24,22 +46,337 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 
 	@Override
-	protected Class<? extends WCompositePart<Node>> getWidgetClass(MCompositePart element) {
-		return CompositePartWidgetImpl.class;
+	protected Class<? extends WCompositePart<Node>> getWidgetClass(MCompositePart container) {
+		if (container.getTags().contains(WCompositePart.TAG_FIXED_LAYOUT)) {
+			return WFixedSashImpl.class;
+		} else {
+			return WResizableSashImpl.class;
+		}
 	}
 
-	static class CompositePartWidgetImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MCompositePart> implements WCompositePart<Node> {
+	static class WFixedSashImpl extends WLayoutedWidgetImpl<GridLayoutPane, Node, MCompositePart> implements WCompositePart<Node> {
+
+		private static @NonNull GridData toGridData(Map<String, String> dataMap) {
+			GridData gd = new GridData();
+			if (dataMap.containsKey(WCompositePart.FIXED_LAYOUT_WIDTH)) {
+				gd.widthHintProperty().set(Integer.parseInt(dataMap.get(WCompositePart.FIXED_LAYOUT_WIDTH)));
+				if (!dataMap.containsKey(WCompositePart.FIXED_LAYOUT_HEIGHT)) {
+					gd.grabExcessVerticalSpaceProperty().set(true);
+					gd.verticalAlignmentProperty().set(Alignment.FILL);
+				}
+			} else {
+				gd.horizontalAlignmentProperty().set(Alignment.FILL);
+			}
+
+			if (dataMap.containsKey(WCompositePart.FIXED_LAYOUT_HEIGHT)) {
+				gd.heightHintProperty().set(Integer.parseInt(dataMap.get(WCompositePart.FIXED_LAYOUT_HEIGHT)));
+				if (!dataMap.containsKey(WCompositePart.FIXED_LAYOUT_WIDTH)) {
+					gd.grabExcessHorizontalSpaceProperty().set(true);
+					gd.horizontalAlignmentProperty().set(Alignment.FILL);
+				}
+			} else {
+				gd.verticalAlignmentProperty().set(Alignment.FILL);
+			}
+
+			if (dataMap.containsKey(WCompositePart.FIXED_LAYOUT_GRAB_HORIZONTAL)) {
+				gd.grabExcessHorizontalSpaceProperty().set(Boolean.parseBoolean(dataMap.get(WCompositePart.FIXED_LAYOUT_GRAB_HORIZONTAL)));
+				gd.horizontalAlignmentProperty().set(Alignment.FILL);
+			}
+
+			if (dataMap.containsKey(WCompositePart.FIXED_LAYOUT_GRAB_VERTICAL)) {
+				gd.grabExcessVerticalSpaceProperty().set(Boolean.parseBoolean(dataMap.get(WCompositePart.FIXED_LAYOUT_GRAB_VERTICAL)));
+				gd.verticalAlignmentProperty().set(Alignment.FILL);
+			}
+
+			return gd;
+		}
 
 		@Override
-		protected SplitPane getWidgetNode() {
+		public void addItem(WLayoutedWidget<MPartSashContainerElement> widget) {
+			Node n = (Node) widget.getStaticLayoutNode();
+
+			GridLayoutPane p = getWidget();
+			MCompositePart element = getDomElement();
+			if ( element != null && element.isHorizontal()) {
+				p.setNumColumns(p.getNumColumns() + 1);
+			}
+
+			MPartSashContainerElement domElement2 = widget.getDomElement();
+			if( domElement2 != null ) {
+				GridData gd = toGridData(domElement2.getPersistedState());
+				GridLayoutPane.setConstraint(n, gd);				
+			}
+			p.getChildren().add(n);
+		}
+
+		@Override
+		public int getItemCount() {
+			return getWidget().getChildren().size();
+		}
+
+		@Override
+		public void addItems(List<WLayoutedWidget<MPartSashContainerElement>> list) {
+			List<Node> nodeList = new ArrayList<Node>();
+			GridLayoutPane p = getWidget();
+
+			for (WLayoutedWidget<MPartSashContainerElement> w : list) {
+				Node n = (Node) w.getStaticLayoutNode();
+				
+				MPartSashContainerElement element = w.getDomElement();
+				if( element != null ) {
+					GridData gd = toGridData(element.getPersistedState());
+					GridLayoutPane.setConstraint(n, gd);					
+				}
+				nodeList.add(n);
+			}
+
+			MCompositePart element = getDomElement();
+			if (element != null && element.isHorizontal()) {
+				p.setNumColumns(p.getNumColumns() + nodeList.size());
+			}
+
+			p.getChildren().addAll(nodeList);
+		}
+
+		@Override
+		public void addItems(int index, List<WLayoutedWidget<MPartSashContainerElement>> list) {
+			List<Node> nodeList = new ArrayList<Node>();
+			GridLayoutPane p = getWidget();
+
+			for (WLayoutedWidget<MPartSashContainerElement> w : list) {
+				Node n = (Node) w.getStaticLayoutNode();
+				
+				MPartSashContainerElement element = w.getDomElement();
+				if( element != null ) {
+					GridData gd = toGridData(element.getPersistedState());
+					GridLayoutPane.setConstraint(n, gd);					
+				}
+				nodeList.add(n);
+			}
+
+			MCompositePart element = getDomElement();
+			if (element != null && element.isHorizontal()) {
+				p.setNumColumns(p.getNumColumns() + nodeList.size());
+			}
+
+			p.getChildren().addAll(index, nodeList);
+		}
+
+		@Override
+		public void removeItem(WLayoutedWidget<MPartSashContainerElement> widget) {
+			Node n = (Node) widget.getStaticLayoutNode();
+			GridLayoutPane p = getWidget();
+			p.setNumColumns(p.getNumColumns() - 1);
+			p.getChildren().remove(n);
+		}
+
+		@Override
+		protected GridLayoutPane getWidgetNode() {
+			return getWidget();
+		}
+
+		@Override
+		protected GridLayoutPane createWidget() {
+			GridLayoutPane p = new GridLayoutPane();
+			p.setMarginWidth(0);
+			p.setMarginHeight(0);
+			p.setHorizontalSpacing(0);
+			p.setVerticalSpacing(0);
+			p.setNumColumns(0); 
+			return p;
+		}
+
+		@Override
+		public void updateLayout() {
 			// TODO Auto-generated method stub
-			return null;
+			
+		}
+	}
+
+	static class WResizableSashImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MCompositePart> implements WCompositePart<Node> {
+		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
+
+		ChangeListener<Number> listener = new ChangeListener<Number>() {
+			boolean queueing;
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if (!this.queueing) {
+					this.queueing = true;
+					Platform.runLater(new Runnable() {
+
+						@SuppressWarnings("unqualified-field-access")
+						@Override
+						public void run() {
+							recalcWeight();
+							queueing = false;
+						}
+					});
+				}
+			}
+		};
+		
+		@Override
+		public void updateLayout() {
+			updateDividers();
+		}
+
+		void recalcWeight() {
+			@Nullable
+			MCompositePart domElement = getDomElement();
+			if( domElement != null ) {
+				BaseRenderer<?, ?> r = (BaseRenderer<?, ?>) domElement.getRenderer();
+				r.syncUIModifications(domElement, this::doRecalcWeight);	
+			} else {
+				this.logger.error("The domain object should not be null at this point"); //$NON-NLS-1$
+			}
+		}
+		
+		void doRecalcWeight() {
+			if (this.state != WidgetState.CREATED) {
+				return;
+			}
+
+			// FIXME We should not do recalcs when we are in teardown of the
+			// widget
+			double prev = 0;
+			int idx = 0;
+			// No items nothing to recalculate
+			if (this.items.isEmpty()) {
+				return;
+			}
+			for (double d : getWidget().getDividerPositions()) {
+				MPartSashContainerElement element = this.items.get(idx++).getDomElement();
+				if( element != null ) {
+					element.setContainerData((d - prev) * 10 + ""); //$NON-NLS-1$	
+				}
+				prev = d;
+			}
+			MPartSashContainerElement element = this.items.get(this.items.size() - 1).getDomElement();
+			if( element != null ) {
+				element.setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$	
+			}
+		}
+
+		@Override
+		protected void bindProperties(final SplitPane widget) {
+			super.bindProperties(widget);
+			widget.getDividers().addListener(new ListChangeListener<Divider>() {
+
+				@Override
+				public void onChanged(javafx.collections.ListChangeListener.Change<? extends Divider> c) {
+					while (c.next()) {
+						for (Divider d : c.getAddedSubList()) {
+							d.positionProperty().addListener(WResizableSashImpl.this.listener);
+						}
+
+						for (Divider d : c.getRemoved()) {
+							d.positionProperty().removeListener(WResizableSashImpl.this.listener);
+						}
+					}
+				}
+			});
+			for (Divider d : widget.getDividers()) {
+				d.positionProperty().addListener(this.listener);
+			}
 		}
 
 		@Override
 		protected SplitPane createWidget() {
-			throw new UnsupportedOperationException();
+			SplitPane p = new SplitPane();
+			return p;
 		}
 
+		@Inject
+		void setOrientation(@Named(UIEvents.GenericTile.HORIZONTAL) boolean horizontal) {
+			getWidget().setOrientation(horizontal ? Orientation.HORIZONTAL : Orientation.VERTICAL);
+		}
+
+		@Override
+		protected SplitPane getWidgetNode() {
+			return getWidget();
+		}
+
+		@Override
+		public void addItem(WLayoutedWidget<MPartSashContainerElement> widget) {
+			SplitPane p = getWidget();
+			p.getItems().add((Node) widget.getStaticLayoutNode());
+			this.items.add(widget);
+			updateDividers();
+		}
+
+		@Override
+		public void addItems(int index, List<WLayoutedWidget<MPartSashContainerElement>> list) {
+			SplitPane p = getWidget();
+			List<Node> l = new ArrayList<Node>();
+			for (WLayoutedWidget<MPartSashContainerElement> i : list) {
+				l.add((Node) i.getStaticLayoutNode());
+			}
+			p.getItems().addAll(index, l);
+			this.items.addAll(index, list);
+			updateDividers();
+		}
+
+		@Override
+		public void addItems(List<WLayoutedWidget<MPartSashContainerElement>> list) {
+			SplitPane p = getWidget();
+			List<Node> l = new ArrayList<Node>();
+			for (WLayoutedWidget<MPartSashContainerElement> i : list) {
+				l.add((Node) i.getStaticLayoutNode());
+			}
+			p.getItems().addAll(l);
+			this.items.addAll(list);
+			updateDividers();
+		}
+
+		@Override
+		public void setWidgetState(WidgetState state) {
+			super.setWidgetState(state);
+			if (state == WidgetState.CREATED) {
+				updateDividers();
+			}
+		}
+
+		@Override
+		public void removeItem(WLayoutedWidget<MPartSashContainerElement> widget) {
+			SplitPane p = getWidget();
+			p.getItems().remove(widget.getStaticLayoutNode());
+			this.items.remove(widget);
+			updateDividers();
+		}
+
+		@Override
+		protected void doCleanup() {
+			super.doCleanup();
+			this.items.clear();
+		}
+
+		private void updateDividers() {
+			if (this.items.size() <= 1) {
+				return;
+			}
+
+			if (this.state != WidgetState.CREATED) {
+				return;
+			}
+
+			double total = 0;
+
+			for (WLayoutedWidget<MPartSashContainerElement> w : this.items) {
+				total += w.getWeight();
+			}
+
+			double[] deviders = new double[this.items.size() - 1];
+			for (int i = 0; i < this.items.size() - 1; i++) {
+				deviders[i] = (i == 0 ? 0 : deviders[i - 1]) + (this.items.get(i).getWeight() / total);
+			}
+
+			getWidget().setDividerPositions(deviders);
+		}
+
+		@Override
+		public int getItemCount() {
+			return getWidget().getItems().size();
+		}
 	}
 }

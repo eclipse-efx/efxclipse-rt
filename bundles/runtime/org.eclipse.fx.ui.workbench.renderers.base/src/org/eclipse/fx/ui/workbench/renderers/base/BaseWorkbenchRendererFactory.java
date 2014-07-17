@@ -22,6 +22,7 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MArea;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
+import org.eclipse.e4.ui.model.application.ui.basic.MCompositePart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
@@ -98,6 +99,8 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	private BasePopupMenuRenderer<?> popupMenuRenderer;
 	@Nullable
 	private BasePartMenuRenderer<?> partMenuRenderer;
+	@Nullable
+	private BaseCompositePartRenderer<?> compositePartRenderer;
 
 	/**
 	 * Create a new instance of the renderer factory
@@ -116,7 +119,12 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R extends ElementRenderer<?, ?>> R getRenderer(MUIElement modelObject) {
-		if (modelObject instanceof MPopupMenu) {
+		if(modelObject instanceof MCompositePart) {
+			if (this.compositePartRenderer == null) {
+				this.compositePartRenderer = make(getCompositePartRendererClass());
+			}
+			return (R) this.compositePartRenderer;
+		} else if (modelObject instanceof MPopupMenu) {
 			if (this.popupMenuRenderer == null) {
 				this.popupMenuRenderer = make(getPopupMenuRendererClass());
 			}
@@ -159,7 +167,7 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 				return (R) this.toolItemMenuRenderer;
 			} else if (((EObject) modelObject).eContainer() instanceof MPart && ((MMenu) modelObject).getTags().contains(BasePartRenderer.VIEW_MENU_TAG)) {
 				if (this.partMenuRenderer == null) {
-					this.partMenuRenderer = make(getPartMenuRenderer());
+					this.partMenuRenderer = make(getPartMenuRendererClass());
 				}
 				return (R) this.partMenuRenderer;
 			} else {
@@ -354,5 +362,10 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	 * @return the part menu renderer class
 	 */
 	@NonNull
-	protected abstract Class<@NonNull ? extends BasePartMenuRenderer<?>> getPartMenuRenderer();
+	protected abstract Class<@NonNull ? extends BasePartMenuRenderer<?>> getPartMenuRendererClass();
+	/**
+	 * @return the composite part renderer class
+	 */
+	@NonNull
+	protected abstract Class<@NonNull ? extends BaseCompositePartRenderer<?>> getCompositePartRendererClass();
 }
