@@ -378,7 +378,8 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 					if (i == count - 1)
 						childWidth += (extra + 1) / 2;
 				}
-				child.resizeRelocate(x, y, childWidth, height);
+				childWidth = Math.max(childWidth, child.minWidth(height));
+				child.resizeRelocate(x, y, childWidth, Math.max(height,child.minHeight(childWidth)));
 				x += childWidth + this.spacing.get();
 			}
 		} else {
@@ -394,7 +395,8 @@ public class FillLayoutPane extends AbstractLayoutPane<FillLayoutPane.FillData> 
 					if (i == count - 1)
 						childHeight += (extra + 1) / 2;
 				}
-				child.resizeRelocate(x, y, width, childHeight);
+				childHeight = Math.max(childHeight, child.minHeight(width));
+				child.resizeRelocate(x, y, Math.max(width,child.minWidth(childHeight)), childHeight);
 				y += childHeight + this.spacing.get();
 			}
 		}
