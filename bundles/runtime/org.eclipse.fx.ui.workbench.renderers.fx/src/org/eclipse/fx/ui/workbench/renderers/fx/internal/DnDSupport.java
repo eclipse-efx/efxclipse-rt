@@ -48,7 +48,7 @@ public class DnDSupport {
 
 	@Nullable
 	private static MarkerFeedback CURRENT_FEEDBACK = null;
-
+	
 	@NonNull
 	private static final Logger LOGGER = LoggerCreator.createLogger(DnDSupport.class);
 

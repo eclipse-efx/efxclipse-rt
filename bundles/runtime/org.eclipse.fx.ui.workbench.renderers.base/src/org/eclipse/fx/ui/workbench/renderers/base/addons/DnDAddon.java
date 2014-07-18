@@ -28,13 +28,14 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget.DragData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WMinMaxableWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 
 /**
@@ -67,7 +68,7 @@ public class DnDAddon {
 			return getTargetWidget(((MPlaceholder) changedElement).getRef());
 		}
 
-		if (changedElement.getWidget() instanceof WMinMaxableWidget) {
+		if (changedElement.getWidget() instanceof WDragTargetWidget) {
 			return (WDragTargetWidget) changedElement.getWidget();
 		}
 		return null;
@@ -78,7 +79,7 @@ public class DnDAddon {
 			return getSourceWidget(((MPlaceholder) changedElement).getRef());
 		}
 
-		if (changedElement.getWidget() instanceof WMinMaxableWidget) {
+		if (changedElement.getWidget() instanceof WDragSourceWidget) {
 			return (WStack<?, ?, ?>) changedElement.getWidget();
 		}
 		return null;
@@ -96,50 +97,62 @@ public class DnDAddon {
 		if (!(changedElement instanceof MPartStack) && !(changedElement instanceof MArea))
 			return;
 		
-		WStack<?, ?, ?> sourceWidget = getSourceWidget(changedElement);
+		WDragSourceWidget sourceWidget = getSourceWidget(changedElement);
 		if( sourceWidget != null ) {
 			sourceWidget.setDragStartCallback(this::dragStartHandler);
 		}
 	}
 	
 	private Void droppedHandler(DropData d) {
-		MElementContainer<MUIElement> sourceContainer = d.sourceElement.getParent();
-		if( d.reference != null ) {
-			MElementContainer<MUIElement> targetContainer = d.reference.getParent();
+		@Nullable
+		MUIElement reference = d.reference;
+//		LEADS to an ArrayIndexOutOfBoundsException
+//		@NonNull
+		MUIElement sourceElement = d.sourceElement;
+		
+		if( d.dropType == DropType.INSERT ) {
+			if( reference != null && reference instanceof MElementContainer<?> ) {
+				@SuppressWarnings("unchecked")
+				MElementContainer<MUIElement> c = (MElementContainer<MUIElement>) reference;
+				c.getChildren().add(sourceElement); 
+			}
+		} else if( reference != null ) {
+			MElementContainer<MUIElement> sourceContainer = sourceElement.getParent();
+			MElementContainer<MUIElement> targetContainer = reference.getParent();
 			
 			if( sourceContainer == targetContainer ) {
 				try {
 					targetContainer.getTags().add(CSS_CLASS_STACK_MOVE);
-					d.sourceElement.getTransientData().put(BaseStackRenderer.MAP_MOVE, Boolean.TRUE);
+					sourceElement.getTransientData().put(BaseStackRenderer.MAP_MOVE, Boolean.TRUE);
 					List<MUIElement> children = targetContainer.getChildren();
-					children.remove(d.sourceElement);
+					children.remove(sourceElement);
 					
-					int idx = targetContainer.getChildren().indexOf(d.reference);
+					int idx = targetContainer.getChildren().indexOf(reference);
 					
 					if( d.dropType == DropType.AFTER ) {
 						idx += 1;
 					}
 					
 					if( idx > targetContainer.getChildren().size() ) {
-						targetContainer.getChildren().add(d.sourceElement);
+						targetContainer.getChildren().add(sourceElement);
 					} else {
-						targetContainer.getChildren().add(idx, d.sourceElement);
+						targetContainer.getChildren().add(idx, sourceElement);
 					}
 					
 				} finally {
-					d.sourceElement.getTransientData().put(BaseStackRenderer.MAP_MOVE, Boolean.TRUE);
+					sourceElement.getTransientData().put(BaseStackRenderer.MAP_MOVE, Boolean.TRUE);
 					targetContainer.getTags().remove(CSS_CLASS_STACK_MOVE);
 				}
 			} else {
-				int idx = targetContainer.getChildren().indexOf(d.reference);
+				int idx = targetContainer.getChildren().indexOf(reference);
 				if( d.dropType == DropType.AFTER ) {
 					idx += 1;
 				}
 				
 				if( idx < targetContainer.getChildren().size() ) {
-					targetContainer.getChildren().add(idx, d.sourceElement);
+					targetContainer.getChildren().add(idx, sourceElement);
 				} else {
-					targetContainer.getChildren().add(d.sourceElement);
+					targetContainer.getChildren().add(sourceElement);
 				}
 			}
 			
@@ -151,7 +164,7 @@ public class DnDAddon {
 						
 						@Override
 						public void run() {
-							targetContainer.setSelectedElement(d.sourceElement);
+							targetContainer.setSelectedElement(sourceElement);
 						}
 					});
 				}

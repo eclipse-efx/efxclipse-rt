@@ -19,7 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @param <M>
  *            the model type
  */
-public interface WLayoutedWidget<M extends MUIElement> extends WWidget<M> {
+public interface WLayoutedWidget<M extends MUIElement> extends WWidget<M>, WDragTargetWidget {
 	/**
 	 * @return the static layout node
 	 */

@@ -73,7 +73,6 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
 		WCallback<@NonNull DragData, @NonNull Boolean> dragStartCallback;
-		WCallback<@NonNull DropData, @Nullable Void> droppedCallback;
 		
 		// private WCallback<WMinMaxState, Void> minMaxCallback;
 		// private MinMaxGroup minMaxGroup;
@@ -161,7 +160,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		protected TabPane createWidget() {
 			DnDSupport dnd = new DnDSupport(
 					(param) -> StackWidgetImpl.this.dragStartCallback,
-					(param) -> StackWidgetImpl.this.droppedCallback,
+					(param) -> StackWidgetImpl.this.getDropCallback(),
 					StackWidgetImpl.this.dndFeedback,
 					this.domainElement);
 			
@@ -404,13 +403,6 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		public void setDragStartCallback(@NonNull WCallback<@NonNull DragData, @NonNull Boolean> dragStackCallback) {
 			this.dragStartCallback = dragStackCallback;
 		}
-
-		@Override
-		public void setDragDroppedCallback(@NonNull WCallback<@NonNull DropData, @Nullable Void> droppedCallback) {
-			this.droppedCallback = droppedCallback;
-		}
-		
-		
 	}
 
 	static class StackItemImpl implements WStackItem<Object, Node> {
@@ -660,12 +652,6 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		public void setDragStartCallback(@NonNull WCallback<@NonNull DragData, @NonNull Boolean> dragStackCallback) {
 			// not implemented yet
 		}
-
-		@Override
-		public void setDragDroppedCallback(@NonNull WCallback<@NonNull DropData, @Nullable Void> callback) {
-			// not implemented yet
-		}
-
 	}
 
 	static class PagninationItemImpl implements WStackItem<Object, Node> {

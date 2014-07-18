@@ -38,10 +38,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
+import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
+
 @SuppressWarnings("javadoc")
 public class DnDTabPane extends TabPane {
 	private static Tab DRAGGED_TAB;
-	private static final DataFormat TAB_MOVE = new DataFormat("DnDTabPane:tabMove"); //$NON-NLS-1$
+	public static final DataFormat TAB_MOVE = new DataFormat("DnDTabPane:tabMove"); //$NON-NLS-1$
 	
 	
 	public static final EventType<TabPaneDragStartEvent> DND_TABPANE_DRAG_START = new EventType<> (Event.ANY, "DND_TABPANE_DRAG_START"); //$NON-NLS-1$
@@ -147,6 +152,7 @@ public class DnDTabPane extends TabPane {
 			f_tabHeaderArea.setAccessible(true);
 			
 			Pane tabHeaderArea = (StackPane) f_tabHeaderArea.get(skin);
+			tabHeaderArea.setOnDragOver((e) -> e.consume());
 			
 			Field f_headersRegion = tabHeaderArea.getClass().getDeclaredField("headersRegion"); //$NON-NLS-1$
 			f_headersRegion.setAccessible(true);
@@ -246,7 +252,11 @@ public class DnDTabPane extends TabPane {
 					db.setDragView(image, image.getWidth(), image.getHeight()*-1);
 					
 					ClipboardContent content = new ClipboardContent();
-		        	content.put(TAB_MOVE, Boolean.TRUE);
+					MStackElement domElement = ((WStackItem<?, ?>)t.getUserData()).getDomElement();
+					if( domElement != null ) {
+						EObject eo = (EObject) domElement;
+						content.put(TAB_MOVE, ((XMIResource)eo.eResource()).getID(eo));
+					}
 		            db.setContent(content);
 				}
 			} catch(Throwable t) {
@@ -260,6 +270,9 @@ public class DnDTabPane extends TabPane {
 		if( DRAGGED_TAB == null ) {
 			return;
 		}
+		
+		// Consume the drag in any case
+		event.consume();
 		
 		double x = event.getX() - headersRegion.getBoundsInParent().getMinX();
 		
@@ -328,7 +341,6 @@ public class DnDTabPane extends TabPane {
 			}
 			
 			event.acceptTransferModes(TransferMode.MOVE);
-	        event.consume();
 		} else {
 			TabPaneFeedbackDragEvent feedbackEvent = new TabPaneFeedbackDragEvent(this, DRAGGED_TAB, null, null, DropType.NONE);
 			Event.fireEvent(this, feedbackEvent);
