@@ -12,6 +12,8 @@ package org.eclipse.fx.ui.workbench.renderers.fx.widget;
 
 import java.util.List;
 
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -23,12 +25,17 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
+import org.eclipse.e4.ui.model.application.ui.MGenericStack;
+import org.eclipse.e4.ui.model.application.ui.MGenericTile;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane;
@@ -51,6 +58,9 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	private double weight = 10;
 	private WCallback<@NonNull DropData, @Nullable Void> dropCallback;
 
+	@Inject
+	DnDFeedbackService feedbackService;
+	
 	/**
 	 * @return the widget node
 	 */
@@ -108,7 +118,16 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 
 			@Nullable
 			M m = getDomElement();
-			if (m instanceof MElementContainer<?>) {
+			
+			if( m instanceof MGenericTile<?> ) {
+				// Tiles are not split
+				e.consume();
+			} else if( m instanceof MPart && isSplit(e) ) {
+				e.consume();
+				if( (MUIElement)m.getParent() instanceof MPartStack ) {
+					e.acceptTransferModes(TransferMode.MOVE);
+				}
+			} else if (m instanceof MElementContainer<?>) {
 				MElementContainer<?> c = (MElementContainer<?>) m;
 				if (c.getChildren().isEmpty()) {
 					e.acceptTransferModes(TransferMode.MOVE);
@@ -116,6 +135,21 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 				}
 			}
 		}
+	}
+	
+	private int SPLIT_PADDING = 20;
+	
+	private boolean isSplit(DragEvent e) {
+		Bounds boundsInLocal = getStaticLayoutNode().getBoundsInLocal();
+		boundsInLocal = new BoundingBox(
+				boundsInLocal.getMinX()+SPLIT_PADDING, 
+				boundsInLocal.getMinY()+SPLIT_PADDING, boundsInLocal.getWidth()-SPLIT_PADDING*2, 
+				boundsInLocal.getHeight()-SPLIT_PADDING*2);
+		return boundsInLocal.contains(e.getX(), e.getY());
+	}
+	
+	private DropType getSplitType(DragEvent e) {
+		return DropType.SPLIT_VERTICAL;
 	}
 
 	private MUIElement findElement(String objectId) {
@@ -151,10 +185,18 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 
 			@Nullable
 			M m = getDomElement();
-			if (m instanceof MElementContainer<?>) {
+			if( m instanceof MGenericTile<?> ) {
+				// Tiles are not split
+				e.consume();
+			} else if( m instanceof MPart && isSplit(e) ) {
+				e.consume();
+				if( (MUIElement)m.getParent() instanceof MPartStack ) {
+					DropData d = new DropData(getDomElement(), draggedElement, getSplitType(e));
+					this.dropCallback.call(d);
+				}
+			} else if (m instanceof MElementContainer<?>) {
 				MElementContainer<?> c = (MElementContainer<?>) m;
 				if (c.getChildren().isEmpty()) {
-					@SuppressWarnings("null")
 					DropData d = new DropData(getDomElement(), draggedElement, DropType.INSERT);
 					this.dropCallback.call(d);
 					e.consume();

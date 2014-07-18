@@ -45,19 +45,11 @@ public interface WDragTargetWidget {
 		/**
 		 * Split on the left
 		 */
-		SPLIT_LEFT,
-		/**
-		 * Split on the right
-		 */
-		SPLIT_RIGHT,
-		/**
-		 * Split on the top
-		 */
-		SPLIT_TOP,
+		SPLIT_VERTICAL,
 		/**
 		 * split on the bottom
 		 */
-		SPLIT_BOTTOM
+		SPLIT_HORIZONTAL
 	}
 
 	/**

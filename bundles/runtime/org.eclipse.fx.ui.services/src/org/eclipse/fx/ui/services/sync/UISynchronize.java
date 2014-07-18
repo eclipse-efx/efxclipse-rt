@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.services.sync;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 import org.eclipse.fx.core.Callback;
@@ -73,6 +74,28 @@ public interface UISynchronize {
 	 * @return the value
 	 */
 	<T> @Nullable T block(@NonNull BlockCondition<T> blockCondition);
+
+	/**
+	 * Schedule the execution of the runnable
+	 * 
+	 * @param delay
+	 *            the delay
+	 * @param runnable
+	 *            the runnable to execute
+	 * @return subscription to cancel the execution
+	 */
+	Subscription scheduleExecution(long delay, Runnable runnable);
+
+	/**
+	 * Schedule the execution of the callable
+	 * 
+	 * @param delay
+	 *            the delay
+	 * @param runnable
+	 *            the callable to execute
+	 * @return future to get informed about the value
+	 */
+	<T> CompletableFuture<T> scheduleExecution(long delay, Callable<T> runnable);
 
 	/**
 	 * A block condition
