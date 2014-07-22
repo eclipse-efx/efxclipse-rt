@@ -32,7 +32,8 @@ public class FileInput implements Input<String>, ContentTypeProvider {
 			StringBuilder b = new StringBuilder();
 			String line;
 			while( (line = reader.readLine()) != null ) {
-				b.append(line+"\n");
+				//FIXME We need to replace TABs for now
+				b.append(line.replaceAll("\t", "    ")+"\n");
 			}
 			reader.close();
 			return b.toString();
