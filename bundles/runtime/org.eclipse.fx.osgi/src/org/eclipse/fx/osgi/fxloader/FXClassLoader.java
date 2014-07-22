@@ -50,24 +50,31 @@ public class FXClassLoader extends ClassLoaderHook {
 	}
 	
 	private static ClassLoader getSWTClassloader(Generation generation) {
-		for( Bundle b : generation.getRevision().getBundle().getBundleContext().getBundles() ) {
-			if( SWT_SYMBOLIC_NAME.equals(b.getSymbolicName()) ) {
-				if ((b.getState() & Bundle.INSTALLED) == 0) {
-					// Ensure the bundle is started else we are unable to
-					// extract the
-					// classloader
-					if ((b.getState() & Bundle.ACTIVE) != 0) {
-						try {
-							b.start();
-						} catch (BundleException e) {
-							e.printStackTrace();
+		try {
+			// Should we better use findProviders() see PackageAdminImpl?
+			for( Bundle b : generation.getBundleInfo().getStorage().getModuleContainer().getFrameworkWiring().getBundle().getBundleContext().getBundles() ) {
+				if( SWT_SYMBOLIC_NAME.equals(b.getSymbolicName()) ) {
+					if ((b.getState() & Bundle.INSTALLED) == 0) {
+						// Ensure the bundle is started else we are unable to
+						// extract the
+						// classloader
+						if ((b.getState() & Bundle.ACTIVE) != 0) {
+							try {
+								b.start();
+							} catch (BundleException e) {
+								e.printStackTrace();
+							}
 						}
+						return b.adapt(BundleWiring.class).getClassLoader();
 					}
-					return b.adapt(BundleWiring.class).getClassLoader();
+					
 				}
-				
 			}
+		} catch(Throwable t) {
+			System.err.println("Failed to access swt classloader"); //$NON-NLS-1$
+			t.printStackTrace();
 		}
+
 		
 		return null;
 	}
