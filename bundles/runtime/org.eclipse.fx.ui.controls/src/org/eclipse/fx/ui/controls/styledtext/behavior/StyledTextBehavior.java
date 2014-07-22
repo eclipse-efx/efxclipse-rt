@@ -221,6 +221,12 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				getControl().setCaretOffset(offset + 4);
 				break;
 			}
+		case V:
+			if( event.isShortcutDown() ) {
+				getControl().paste();
+				event.consume();
+				break;
+			}
 		default:
 			if (event.isMetaDown() || event.isControlDown()) {
 				// exclude meta keys

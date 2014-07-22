@@ -22,6 +22,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
+import javafx.scene.input.Clipboard;
 import javafx.scene.paint.Color;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
@@ -1533,5 +1534,20 @@ public class StyledTextArea extends Control {
 	 */
 	public @NonNull String getText(int start, int end) {
 		return getContent().getTextRange(start, end - start + 1);
+	}
+	
+	/**
+	 * Paste the clipboard content
+	 */
+	public void paste() {
+		final Clipboard clipboard = Clipboard.getSystemClipboard();
+        if (clipboard.hasString()) {
+            final String text = clipboard.getString();
+            if (text != null) {
+            	//TODO Once we have a real selection we need
+            	getContent().replaceTextRange(getCaretOffset(), 0, text);
+            	setCaretOffset(getCaretOffset()+text.length());
+            }
+        }
 	}
 }
