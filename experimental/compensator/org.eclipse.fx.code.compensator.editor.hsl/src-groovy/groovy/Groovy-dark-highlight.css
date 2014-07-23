@@ -1,3 +1,7 @@
+.hover {
+	-fx-background-color: #2b5696;
+}
+
 .groovy_default {
 	-styled-text-color: #b8c4d1;
 }

@@ -1,3 +1,7 @@
+.hover {
+	-fx-background-color: #2b5696;
+}
+
 .default_tagtoken {
 	-styled-text-color: #d1ba77;
 }

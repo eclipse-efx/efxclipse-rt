@@ -1,3 +1,7 @@
+.hover {
+	-fx-background-color: #2b5696;
+}
+
 .java_string {
 	-styled-text-color: #7c986c;
 }
