@@ -260,6 +260,8 @@ public class TextStyle {
 	 * The css stylename to use
 	 */
 	public String stylename;
+	
+	public String hoverStylename;
 
 	/**
 	 * Create an empty text style.

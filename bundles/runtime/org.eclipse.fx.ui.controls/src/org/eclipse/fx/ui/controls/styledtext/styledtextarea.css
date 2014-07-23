@@ -24,6 +24,14 @@
 	-fx-background-color: transparent;
 }
 
+.list-cell {
+	-fx-padding: 0;
+}
+
+.source-segment-container {
+	-fx-padding: 3 0 3 0;
+}
+
 .sheet {
 	-fx-cursor: text;
 }
@@ -31,4 +39,8 @@
 .text-caret {
 	-fx-fill: black;
 	-fx-stroke: black;
+}
+
+.hover {
+	-fx-background-color: lightblue;
 }

@@ -76,6 +76,9 @@ public class StyledTextArea extends Control {
 
 	@NonNull
 	private final BooleanProperty lineRulerVisible = new SimpleBooleanProperty(this, "lineRulerVisible"); //$NON-NLS-1$
+	
+	@NonNull
+	private final ObjectProperty<TextSelection> currentSelection = new SimpleObjectProperty<>(this, "currentSelection"); //$NON-NLS-1$
 
 	// private int lastTextChangeStart;
 	//
@@ -181,7 +184,43 @@ public class StyledTextArea extends Control {
 	 *            the new offset
 	 */
 	public void setCaretOffset(int offset) {
+//		System.err.println("OFFSET: " + offset);
 		caretOffsetProperty().set(offset);
+		clearSelection();
+	}
+	
+	public void setCaretOffset(int offset, boolean selection) {
+		if( selection ) {
+			TextSelection s = getSelection();
+			int lastOffset = getCaretOffset();
+			
+			caretOffsetProperty().set(offset);
+
+			int selectStart = s.offset;
+			int selectionEnd = s.offset + s.length;
+			
+			if( offset > selectionEnd ) {
+				selectStart = s.offset;
+				selectionEnd = offset;
+			} else if( offset < selectionEnd && offset > selectStart ) {
+				if( lastOffset > offset ) {
+					selectStart = s.offset;
+					selectionEnd = offset;
+				} else {
+					selectStart = offset;
+				}
+				
+			} else if( offset < selectStart ) {
+				selectStart = offset;
+			} else {
+				selectStart = offset;
+				selectionEnd = offset;
+			}
+			
+			setSelectionRange(selectStart, selectionEnd - selectStart);
+		} else {
+			setCaretOffset(offset);
+		}
 	}
 
 	/**
@@ -1397,10 +1436,24 @@ public class StyledTextArea extends Control {
 	// public void setRedraw(boolean b) {
 	// // keep empty
 	// }
-	// public TextSelection getSelection() {
-	// // TODO Auto-generated method stub
-	// return new TextSelection(getCaretOffset(), 0);
-	// }
+	
+	/**
+	 * @return the current selection
+	 */
+	public @NonNull TextSelection getSelection() {
+		TextSelection textSelection = this.currentSelection.get();
+		if (textSelection == null) {
+			textSelection = new TextSelection(getCaretOffset(), 0);
+		}
+		return textSelection;
+	}
+	
+	/**
+	 * @return the selection property
+	 */
+	public @NonNull ObjectProperty<TextSelection> selectionProperty() {
+		return this.currentSelection;
+	}
 
 	/**
 	 * Set the current selection
@@ -1408,10 +1461,20 @@ public class StyledTextArea extends Control {
 	 * @param selection
 	 *            the selection
 	 */
-	public void setSelection(TextSelection selection) {
-		if (selection.length == 0) {
+	public void setSelection(@NonNull TextSelection selection) {
+		if( selection.length == 0 ) {
 			setCaretOffset(selection.offset);
+		} else {
+//			this.caretOffsetProperty.set(selection.offset+selection.length);
+			this.currentSelection.set(selection);	
 		}
+	}
+	
+	/**
+	 * Clear the current selection
+	 */
+	public void clearSelection() {
+		this.currentSelection.set(null);
 	}
 
 	/**
