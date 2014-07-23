@@ -1,19 +1,19 @@
 .default_tagtoken {
-	-fx-fill: #d1ba77;
+	-styled-text-color: #d1ba77;
 }
 
 .xml_string {
-	-fx-fill: #acc670;
+	-styled-text-color: #acc670;
 }
 
 .default_xmltoken {
-	-fx-fill: #b5c0cb;
+	-styled-text-color: #b5c0cb;
 }
 
 .proc_instruction {
-	-fx-fill: #bcbdb9;
+	-styled-text-color: #bcbdb9;
 }
 
 .xml_comment {
-	-fx-fill: #8c8983;
+	-styled-text-color: #8c8983;
 }

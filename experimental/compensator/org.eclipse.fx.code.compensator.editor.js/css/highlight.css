@@ -1,53 +1,53 @@
 .java_string {
-	-fx-fill: rgb(42, 0, 255);
+	-styled-text-color: rgb(42, 0, 255);
 }
 
 .java_default {
-	-fx-fill: rgb(0,0,0);
+	-styled-text-color: rgb(0,0,0);
 }
 
 .java_annotation {
-	-fx-fill: rgb(200, 200, 200);
+	-styled-text-color: rgb(200, 200, 200);
 }
 
 .java_keyword {
-	-fx-fill: rgb(127, 0, 85);
+	-styled-text-color: rgb(127, 0, 85);
 	-fx-font-weight: bold;
 }
 
 .java_operator {
-	-fx-fill: rgb(0,0,0);
+	-styled-text-color: rgb(0,0,0);
 }
 
 .java_bracket {
-	-fx-fill: rgb(0,0,0);
+	-styled-text-color: rgb(0,0,0);
 }
 
 .java_keyword_return {
-	-fx-fill: rgb(127, 0, 85);
+	-styled-text-color: rgb(127, 0, 85);
 	-fx-font-weight: bold;
 }
 
 .java_comment_task_tag {
-	-fx-fill: rgb(127, 159, 191);
+	-styled-text-color: rgb(127, 159, 191);
 }
 
 .java_doc_link {
-	-fx-fill: rgb(63, 63, 191);
+	-styled-text-color: rgb(63, 63, 191);
 }
 
 .java_doc_default {
-	-fx-fill: rgb(63, 95, 191);
+	-styled-text-color: rgb(63, 95, 191);
 }
 
 .java_multi_line_comment {
-	-fx-fill: rgb(63, 127, 95);
+	-styled-text-color: rgb(63, 127, 95);
 }
 
 .java_single_line_comment {
-	-fx-fill: rgb(63, 127, 95);
+	-styled-text-color: rgb(63, 127, 95);
 }
 
 .java_doc_tag {
-	-fx-fill: rgb(127, 127, 159);
+	-styled-text-color: rgb(127, 127, 159);
 }

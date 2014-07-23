@@ -1,52 +1,52 @@
 .java_string {
-	-fx-fill: #7c986c;
+	-styled-text-color: #7c986c;
 }
 
 .java_default {
-	-fx-fill: #b8c4d1;
+	-styled-text-color: #b8c4d1;
 }
 
 .java_annotation {
-	-fx-fill: rgb(200, 200, 200);
+	-styled-text-color: rgb(200, 200, 200);
 }
 
 .java_keyword {
-	-fx-fill: #d78b40;
+	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
 .java_operator {
-	-fx-fill: #b8c4d1;
+	-styled-text-color: #b8c4d1;
 }
 
 .java_bracket {
-	-fx-fill: #b8c4d1;
+	-styled-text-color: #b8c4d1;
 }
 
 .java_keyword_return {
-	-fx-fill: #d78b40;
+	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
 .java_comment_task_tag {
-	-fx-fill: rgb(127, 159, 191);
+	-styled-text-color: rgb(127, 159, 191);
 }
 
 .java_doc_link {
-	-fx-fill: #74a567;
+	-styled-text-color: #74a567;
 	-fx-font-weight: bold;
 }
 
 .java_doc_default {
-	-fx-fill: #74a567;
+	-styled-text-color: #74a567;
 }
 
 .java_multi_line_comment {
-	-fx-fill: #929292;
+	-styled-text-color: #929292;
 }
 
 .java_single_line_comment {
-	-fx-fill: #929292;
+	-styled-text-color: #929292;
 }
 
 .java_doc_tag {
