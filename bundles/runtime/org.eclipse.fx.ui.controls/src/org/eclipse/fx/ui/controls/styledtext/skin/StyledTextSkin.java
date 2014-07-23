@@ -42,7 +42,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.PathElement;
@@ -521,10 +520,10 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					TextFlow f = new TextFlow(t);
 					f.setUserData(Integer.valueOf(seg.style.start));
 					if( seg.style.hoverStylename != null ) {
-						f.getStyleClass().setAll("source-segment-container", seg.style.hoverStylename);
+						f.getStyleClass().setAll("source-segment-container", seg.style.hoverStylename); //$NON-NLS-1$
 						texts.add(f);
 					} else {
-						f.getStyleClass().setAll("source-segment-container");
+						f.getStyleClass().setAll("source-segment-container"); //$NON-NLS-1$
 						texts.add(f);
 					}
 				}
@@ -645,7 +644,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					Segment seg = new Segment();
 					seg.text = removeLineending(line.substring(begin, end));
 					seg.style = new StyleRange(r);
-					seg.style.hoverStylename = "hover";
+					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
 					return Collections.singletonList(seg);
 				} else if( selectionStart <= begin && selectionEnd >= begin && selectionEnd <= end ) {
 					// selection start before and ends inside
@@ -654,7 +653,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					Segment seg = new Segment();
 					seg.text = removeLineending(line.substring(begin, selectionEnd));
 					seg.style = new StyleRange(r);
-					seg.style.hoverStylename = "hover";
+					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
 					seg.style.start = r.start;
 					rv.add(seg);
 					
@@ -679,7 +678,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					seg.text = removeLineending(line.substring(selectionStart, end));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start + selectionStart-begin;
-					seg.style.hoverStylename = "hover";
+					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
 					rv.add(seg);
 					
 					return rv;
@@ -698,7 +697,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					seg.text = removeLineending(line.substring(selectionStart, selectionEnd));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start + selectionStart-begin;
-					seg.style.hoverStylename = "hover";
+					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
 					rv.add(seg);
 					
 					seg = new Segment();

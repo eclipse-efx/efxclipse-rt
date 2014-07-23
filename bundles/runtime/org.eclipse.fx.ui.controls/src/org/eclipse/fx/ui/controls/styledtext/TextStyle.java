@@ -261,6 +261,9 @@ public class TextStyle {
 	 */
 	public String stylename;
 	
+	/**
+	 * The style named to used for hovering
+	 */
 	public String hoverStylename;
 
 	/**

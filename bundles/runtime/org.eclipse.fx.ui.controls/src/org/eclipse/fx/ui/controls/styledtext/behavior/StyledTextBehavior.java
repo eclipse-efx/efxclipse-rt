@@ -27,10 +27,8 @@ import javafx.scene.text.TextFlow;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent.ActionType;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
-import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin.LineCell;
-import org.eclipse.jdt.annotation.NonNull;
 
 import com.sun.javafx.scene.control.behavior.BehaviorBase;
 import com.sun.javafx.scene.control.behavior.KeyBinding;
@@ -311,7 +309,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 		Event.fireEvent(getControl(), event.copyFor(getControl(), getControl()));
 	}
 	
-	public void mouseDragged(MouseEvent event, List<LineCell> visibleCells) {
-		
-	}
+//	public void mouseDragged(MouseEvent event, List<LineCell> visibleCells) {
+//		
+//	}
 }

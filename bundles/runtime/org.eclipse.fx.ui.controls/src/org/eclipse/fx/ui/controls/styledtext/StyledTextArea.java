@@ -38,18 +38,22 @@ import org.eclipse.jdt.annotation.Nullable;
 public class StyledTextArea extends Control {
 
 	@NonNull
-	final ObjectProperty<@NonNull StyledTextContent> contentProperty = new SimpleObjectProperty<@NonNull StyledTextContent>(this, "content", new DefaultContent()) { //$NON-NLS-1$
+	final ObjectProperty<@NonNull StyledTextContent> contentProperty = new SimpleObjectProperty<@NonNull StyledTextContent>(
+			this, "content", new DefaultContent()) { //$NON-NLS-1$
 		WeakReference<StyledTextContent> oldContent;
 
 		@Override
 		protected void invalidated() {
 			if (this.oldContent != null && this.oldContent.get() != null) {
-				this.oldContent.get().removeTextChangeListener(StyledTextArea.this.textChangeListener);
+				this.oldContent.get().removeTextChangeListener(
+						StyledTextArea.this.textChangeListener);
 			}
-			StyledTextContent newContent = StyledTextArea.this.contentProperty.get();
+			StyledTextContent newContent = StyledTextArea.this.contentProperty
+					.get();
 
 			this.oldContent = new WeakReference<StyledTextContent>(newContent);
-			newContent.addTextChangeListener(StyledTextArea.this.textChangeListener);
+			newContent
+					.addTextChangeListener(StyledTextArea.this.textChangeListener);
 		}
 	};
 
@@ -74,13 +78,16 @@ public class StyledTextArea extends Control {
 	private final StyledTextRenderer renderer = new StyledTextRenderer();
 
 	@NonNull
-	private final IntegerProperty caretOffsetProperty = new SimpleIntegerProperty(this, "caretOffset", -1); //$NON-NLS-1$
+	private final IntegerProperty caretOffsetProperty = new SimpleIntegerProperty(
+			this, "caretOffset", -1); //$NON-NLS-1$
 
 	@NonNull
-	private final BooleanProperty lineRulerVisible = new SimpleBooleanProperty(this, "lineRulerVisible"); //$NON-NLS-1$
-	
+	private final BooleanProperty lineRulerVisible = new SimpleBooleanProperty(
+			this, "lineRulerVisible"); //$NON-NLS-1$
+
 	@NonNull
-	private final ObjectProperty<TextSelection> currentSelection = new SimpleObjectProperty<>(this, "currentSelection"); //$NON-NLS-1$
+	private final ObjectProperty<TextSelection> currentSelection = new SimpleObjectProperty<>(
+			this, "currentSelection"); //$NON-NLS-1$
 
 	// private int lastTextChangeStart;
 	//
@@ -96,7 +103,8 @@ public class StyledTextArea extends Control {
 	 * Create a new control
 	 */
 	public StyledTextArea() {
-		getStylesheets().add(getClass().getResource("styledtextarea.css").toExternalForm()); //$NON-NLS-1$
+		getStylesheets().add(
+				getClass().getResource("styledtextarea.css").toExternalForm()); //$NON-NLS-1$
 		setFocusTraversable(true);
 	}
 
@@ -115,7 +123,7 @@ public class StyledTextArea extends Control {
 	}
 
 	void handleTextSet(TextChangedEvent event) {
-		//TODO Implement
+		// TODO Implement
 	}
 
 	void handleTextChanged(TextChangedEvent event) {
@@ -186,39 +194,47 @@ public class StyledTextArea extends Control {
 	 *            the new offset
 	 */
 	public void setCaretOffset(int offset) {
-//		System.err.println("OFFSET: " + offset);
+		// System.err.println("OFFSET: " + offset);
 		caretOffsetProperty().set(offset);
 		clearSelection();
 	}
-	
+
+	/**
+	 * Setting the caret offset and updateing the selection if requested
+	 * 
+	 * @param offset
+	 *            the offset
+	 * @param selection
+	 *            <code>true</code> to update the current selection
+	 */
 	public void setCaretOffset(int offset, boolean selection) {
-		if( selection ) {
+		if (selection) {
 			TextSelection s = getSelection();
 			int lastOffset = getCaretOffset();
-			
+
 			caretOffsetProperty().set(offset);
 
 			int selectStart = s.offset;
 			int selectionEnd = s.offset + s.length;
-			
-			if( offset > selectionEnd ) {
+
+			if (offset > selectionEnd) {
 				selectStart = s.offset;
 				selectionEnd = offset;
-			} else if( offset < selectionEnd && offset > selectStart ) {
-				if( lastOffset > offset ) {
+			} else if (offset < selectionEnd && offset > selectStart) {
+				if (lastOffset > offset) {
 					selectStart = s.offset;
 					selectionEnd = offset;
 				} else {
 					selectStart = offset;
 				}
-				
-			} else if( offset < selectStart ) {
+
+			} else if (offset < selectStart) {
 				selectStart = offset;
 			} else {
 				selectStart = offset;
 				selectionEnd = offset;
 			}
-			
+
 			setSelectionRange(selectStart, selectionEnd - selectStart);
 		} else {
 			setCaretOffset(offset);
@@ -271,7 +287,8 @@ public class StyledTextArea extends Control {
 			if (range.isUnstyled()) {
 				setStyleRanges(range.start, range.length, null, null, false);
 			} else {
-				setStyleRanges(range.start, 0, null, new StyleRange[] { range }, false);
+				setStyleRanges(range.start, 0, null,
+						new StyleRange[] { range }, false);
 			}
 		} else {
 			setStyleRanges(0, 0, null, null, true);
@@ -290,7 +307,8 @@ public class StyledTextArea extends Control {
 	 * @param styles
 	 *            the style ranges
 	 */
-	public void setStyleRanges(int start, int length, @Nullable int[] ranges, @Nullable StyleRange[] styles) {
+	public void setStyleRanges(int start, int length, @Nullable int[] ranges,
+			@Nullable StyleRange[] styles) {
 		if (ranges == null || styles == null) {
 			setStyleRanges(start, length, null, null, false);
 		} else {
@@ -306,7 +324,8 @@ public class StyledTextArea extends Control {
 	 * @param styles
 	 *            the style ranges
 	 */
-	public void setStyleRanges(@Nullable int[] ranges, @Nullable StyleRange[] styles) {
+	public void setStyleRanges(@Nullable int[] ranges,
+			@Nullable StyleRange[] styles) {
 		if (ranges == null || styles == null) {
 			setStyleRanges(0, 0, null, null, true);
 		} else {
@@ -334,13 +353,15 @@ public class StyledTextArea extends Control {
 	 * @param ranges
 	 *            the new ranges
 	 */
-	public void replaceStyleRanges(int start, int length, @Nullable StyleRange[] ranges) {
+	public void replaceStyleRanges(int start, int length,
+			@Nullable StyleRange[] ranges) {
 		if (ranges == null)
 			throw new IllegalArgumentException();
 		setStyleRanges(start, length, null, ranges, false);
 	}
 
-	void setStyleRanges(int start, int length, int[] ranges, StyleRange[] styles, boolean reset) {
+	void setStyleRanges(int start, int length, int[] ranges,
+			StyleRange[] styles, boolean reset) {
 		// System.err.println("New styles: " + Arrays.toString(styles));
 
 		int charCount = getContent().getCharCount();
@@ -391,10 +412,12 @@ public class StyledTextArea extends Control {
 		if (styles != null && styles.length > 0) {
 			if (ranges != null) {
 				rangeStart = ranges[0];
-				rangeEnd = ranges[ranges.length - 2] + ranges[ranges.length - 1];
+				rangeEnd = ranges[ranges.length - 2]
+						+ ranges[ranges.length - 1];
 			} else {
 				rangeStart = styles[0].start;
-				rangeEnd = styles[styles.length - 1].start + styles[styles.length - 1].length;
+				rangeEnd = styles[styles.length - 1].start
+						+ styles[styles.length - 1].length;
 			}
 		}
 
@@ -424,8 +447,10 @@ public class StyledTextArea extends Control {
 	 *            include ranges
 	 * @return the ranges
 	 */
-	public StyleRange[] getStyleRanges(int start, int length, boolean includeRanges) {
-		StyleRange[] ranges = this.renderer.getStyleRanges(start, length, includeRanges);
+	public StyleRange[] getStyleRanges(int start, int length,
+			boolean includeRanges) {
+		StyleRange[] ranges = this.renderer.getStyleRanges(start, length,
+				includeRanges);
 		if (ranges != null)
 			return ranges;
 		return new StyleRange[0];
@@ -542,7 +567,8 @@ public class StyledTextArea extends Control {
 					if (index == this.stylesSetCount) {
 						if (this.stylesSetCount == this.stylesSet.length) {
 							StyleRange[] tmpStylesSet = new StyleRange[this.stylesSetCount + 4];
-							System.arraycopy(this.stylesSet, 0, tmpStylesSet, 0, this.stylesSetCount);
+							System.arraycopy(this.stylesSet, 0, tmpStylesSet,
+									0, this.stylesSetCount);
 							this.stylesSet = tmpStylesSet;
 						}
 						this.stylesSet[this.stylesSetCount++] = newStyle;
@@ -555,10 +581,12 @@ public class StyledTextArea extends Control {
 			if (this.styleCount == 0) {
 				if (_newRanges != null) {
 					this.ranges = new int[_newRanges.length];
-					System.arraycopy(_newRanges, 0, this.ranges, 0, this.ranges.length);
+					System.arraycopy(_newRanges, 0, this.ranges, 0,
+							this.ranges.length);
 				}
 				this.styles = new StyleRange[_newStyles.length];
-				System.arraycopy(_newStyles, 0, this.styles, 0, this.styles.length);
+				System.arraycopy(_newStyles, 0, this.styles, 0,
+						this.styles.length);
 				this.styleCount = _newStyles.length;
 				return;
 			}
@@ -582,12 +610,15 @@ public class StyledTextArea extends Control {
 				int modifyStart = getRangeIndex(start, -1, rangeCount), modifyEnd;
 				boolean insert = modifyStart == rangeCount;
 				if (!insert) {
-					int end = _newRanges[_newRanges.length - 2] + _newRanges[_newRanges.length - 1];
+					int end = _newRanges[_newRanges.length - 2]
+							+ _newRanges[_newRanges.length - 1];
 					modifyEnd = getRangeIndex(end, modifyStart - 1, rangeCount);
-					insert = modifyStart == modifyEnd && this.ranges[modifyStart] >= end;
+					insert = modifyStart == modifyEnd
+							&& this.ranges[modifyStart] >= end;
 				}
 				if (insert) {
-					addMerge(_newRanges, _newStyles, _newRanges.length, modifyStart, modifyStart);
+					addMerge(_newRanges, _newStyles, _newRanges.length,
+							modifyStart, modifyStart);
 					return;
 				}
 				modifyEnd = modifyStart;
@@ -600,30 +631,39 @@ public class StyledTextArea extends Control {
 						continue;
 					int modifyLast = 0, mergeCount = 0;
 					while (modifyEnd < rangeCount) {
-						if (newStart >= this.ranges[modifyStart] + this.ranges[modifyStart + 1])
+						if (newStart >= this.ranges[modifyStart]
+								+ this.ranges[modifyStart + 1])
 							modifyStart += 2;
 						if (this.ranges[modifyEnd] + this.ranges[modifyEnd + 1] > newEnd)
 							break;
 						modifyEnd += 2;
 					}
-					if (this.ranges[modifyStart] < newStart && newStart < this.ranges[modifyStart] + this.ranges[modifyStart + 1]) {
+					if (this.ranges[modifyStart] < newStart
+							&& newStart < this.ranges[modifyStart]
+									+ this.ranges[modifyStart + 1]) {
 						mergeStyles[mergeCount >> 1] = this.styles[modifyStart >> 1];
 						mergeRanges[mergeCount] = this.ranges[modifyStart];
-						mergeRanges[mergeCount + 1] = newStart - this.ranges[modifyStart];
+						mergeRanges[mergeCount + 1] = newStart
+								- this.ranges[modifyStart];
 						mergeCount += 2;
 					}
 					mergeStyles[mergeCount >> 1] = _newStyles[i >> 1];
 					mergeRanges[mergeCount] = newStart;
 					mergeRanges[mergeCount + 1] = _newRanges[i + 1];
 					mergeCount += 2;
-					if (modifyEnd < rangeCount && this.ranges[modifyEnd] < newEnd && newEnd < this.ranges[modifyEnd] + this.ranges[modifyEnd + 1]) {
+					if (modifyEnd < rangeCount
+							&& this.ranges[modifyEnd] < newEnd
+							&& newEnd < this.ranges[modifyEnd]
+									+ this.ranges[modifyEnd + 1]) {
 						mergeStyles[mergeCount >> 1] = this.styles[modifyEnd >> 1];
 						mergeRanges[mergeCount] = newEnd;
-						mergeRanges[mergeCount + 1] = this.ranges[modifyEnd] + this.ranges[modifyEnd + 1] - newEnd;
+						mergeRanges[mergeCount + 1] = this.ranges[modifyEnd]
+								+ this.ranges[modifyEnd + 1] - newEnd;
 						mergeCount += 2;
 						modifyLast = 2;
 					}
-					int grow = addMerge(mergeRanges, mergeStyles, mergeCount, modifyStart, modifyEnd + modifyLast);
+					int grow = addMerge(mergeRanges, mergeStyles, mergeCount,
+							modifyStart, modifyEnd + modifyLast);
 					rangeCount += grow;
 					modifyStart = modifyEnd += grow;
 				}
@@ -632,12 +672,16 @@ public class StyledTextArea extends Control {
 				int modifyStart = getRangeIndex(start, -1, this.styleCount), modifyEnd;
 				boolean insert = modifyStart == this.styleCount;
 				if (!insert) {
-					int end = _newStyles[_newStyles.length - 1].start + _newStyles[_newStyles.length - 1].length;
-					modifyEnd = getRangeIndex(end, modifyStart - 1, this.styleCount);
-					insert = modifyStart == modifyEnd && this.styles[modifyStart].start >= end;
+					int end = _newStyles[_newStyles.length - 1].start
+							+ _newStyles[_newStyles.length - 1].length;
+					modifyEnd = getRangeIndex(end, modifyStart - 1,
+							this.styleCount);
+					insert = modifyStart == modifyEnd
+							&& this.styles[modifyStart].start >= end;
 				}
 				if (insert) {
-					addMerge(_newStyles, _newStyles.length, modifyStart, modifyStart);
+					addMerge(_newStyles, _newStyles.length, modifyStart,
+							modifyStart);
 					return;
 				}
 				modifyEnd = modifyStart;
@@ -650,32 +694,39 @@ public class StyledTextArea extends Control {
 						continue;
 					int modifyLast = 0, mergeCount = 0;
 					while (modifyEnd < this.styleCount) {
-						if (newStart >= this.styles[modifyStart].start + this.styles[modifyStart].length)
+						if (newStart >= this.styles[modifyStart].start
+								+ this.styles[modifyStart].length)
 							modifyStart++;
-						if (this.styles[modifyEnd].start + this.styles[modifyEnd].length > newEnd)
+						if (this.styles[modifyEnd].start
+								+ this.styles[modifyEnd].length > newEnd)
 							break;
 						modifyEnd++;
 					}
 					style = this.styles[modifyStart];
-					if (style.start < newStart && newStart < style.start + style.length) {
-						style = mergeStyles[mergeCount++] = (StyleRange) style.clone();
+					if (style.start < newStart
+							&& newStart < style.start + style.length) {
+						style = mergeStyles[mergeCount++] = (StyleRange) style
+								.clone();
 						style.length = newStart - style.start;
 					}
 					mergeStyles[mergeCount++] = newStyle;
 					if (modifyEnd < this.styleCount) {
 						style = this.styles[modifyEnd];
-						if (style.start < newEnd && newEnd < style.start + style.length) {
-							style = mergeStyles[mergeCount++] = (StyleRange) style.clone();
+						if (style.start < newEnd
+								&& newEnd < style.start + style.length) {
+							style = mergeStyles[mergeCount++] = (StyleRange) style
+									.clone();
 							style.length += style.start - newEnd;
 							style.start = newEnd;
 							modifyLast = 1;
 						}
 					}
-					int grow = addMerge(mergeStyles, mergeCount, modifyStart, modifyEnd + modifyLast);
+					int grow = addMerge(mergeStyles, mergeCount, modifyStart,
+							modifyEnd + modifyLast);
 					modifyStart = modifyEnd += grow;
 				}
 			}
-			
+
 			System.err.println("DONE"); //$NON-NLS-1$
 		}
 
@@ -691,18 +742,21 @@ public class StyledTextArea extends Control {
 					return null;
 				if (this.ranges[rangeStart] > end)
 					return null;
-				int rangeEnd = Math.min(rangeCount - 2, getRangeIndex(end, rangeStart - 1, rangeCount));
+				int rangeEnd = Math.min(rangeCount - 2,
+						getRangeIndex(end, rangeStart - 1, rangeCount));
 				if (this.ranges[rangeEnd] > end)
 					rangeEnd = Math.max(rangeStart, rangeEnd - 2);
 				newRanges = new int[rangeEnd - rangeStart + 2];
-				System.arraycopy(this.ranges, rangeStart, newRanges, 0, newRanges.length);
+				System.arraycopy(this.ranges, rangeStart, newRanges, 0,
+						newRanges.length);
 			} else {
 				int rangeStart = getRangeIndex(start, -1, this.styleCount);
 				if (rangeStart >= this.styleCount)
 					return null;
 				if (this.styles[rangeStart].start > end)
 					return null;
-				int rangeEnd = Math.min(this.styleCount - 1, getRangeIndex(end, rangeStart - 1, this.styleCount));
+				int rangeEnd = Math.min(this.styleCount - 1,
+						getRangeIndex(end, rangeStart - 1, this.styleCount));
 				if (this.styles[rangeEnd].start > end)
 					rangeEnd = Math.max(rangeStart, rangeEnd - 1);
 				newRanges = new int[(rangeEnd - rangeStart + 1) << 1];
@@ -716,8 +770,10 @@ public class StyledTextArea extends Control {
 				newRanges[1] = newRanges[0] + newRanges[1] - start;
 				newRanges[0] = start;
 			}
-			if (end < newRanges[newRanges.length - 2] + newRanges[newRanges.length - 1] - 1) {
-				newRanges[newRanges.length - 1] = end - newRanges[newRanges.length - 2] + 1;
+			if (end < newRanges[newRanges.length - 2]
+					+ newRanges[newRanges.length - 1] - 1) {
+				newRanges[newRanges.length - 1] = end
+						- newRanges[newRanges.length - 2] + 1;
 			}
 			return newRanges;
 		}
@@ -740,7 +796,8 @@ public class StyledTextArea extends Control {
 			} else {
 				while (_high - _low > 1) {
 					int index = ((_high + _low) / 2);
-					int end = this.styles[index].start + this.styles[index].length;
+					int end = this.styles[index].start
+							+ this.styles[index].length;
 					if (end > offset) {
 						_high = index;
 					} else {
@@ -878,7 +935,8 @@ public class StyledTextArea extends Control {
 			// }
 		}
 
-		int addMerge(int[] mergeRanges, StyleRange[] mergeStyles, int mergeCount, int modifyStart, int modifyEnd) {
+		int addMerge(int[] mergeRanges, StyleRange[] mergeStyles,
+				int mergeCount, int modifyStart, int modifyEnd) {
 			int _mergeCount = mergeCount;
 			int _modifyEnd = modifyEnd;
 			int rangeCount = this.styleCount << 1;
@@ -891,26 +949,37 @@ public class StyledTextArea extends Control {
 			}
 			int grow = _mergeCount - (_modifyEnd - modifyStart);
 			if (rangeCount + grow >= this.ranges.length) {
-				int[] tmpRanges = new int[this.ranges.length + grow + (GROW << 1)];
+				int[] tmpRanges = new int[this.ranges.length + grow
+						+ (GROW << 1)];
 				System.arraycopy(this.ranges, 0, tmpRanges, 0, modifyStart);
-				StyleRange[] tmpStyles = new StyleRange[this.styles.length + (grow >> 1) + GROW];
+				StyleRange[] tmpStyles = new StyleRange[this.styles.length
+						+ (grow >> 1) + GROW];
 				System.arraycopy(this.styles, 0, tmpStyles, 0, modifyStart >> 1);
 				if (rangeCount > _modifyEnd) {
-					System.arraycopy(this.ranges, _modifyEnd, tmpRanges, modifyStart + _mergeCount, rangeCount - _modifyEnd);
-					System.arraycopy(this.styles, _modifyEnd >> 1, tmpStyles, (modifyStart + _mergeCount) >> 1, this.styleCount - (_modifyEnd >> 1));
+					System.arraycopy(this.ranges, _modifyEnd, tmpRanges,
+							modifyStart + _mergeCount, rangeCount - _modifyEnd);
+					System.arraycopy(this.styles, _modifyEnd >> 1, tmpStyles,
+							(modifyStart + _mergeCount) >> 1, this.styleCount
+									- (_modifyEnd >> 1));
 				}
 				this.ranges = tmpRanges;
 				this.styles = tmpStyles;
 			} else {
 				if (rangeCount > _modifyEnd) {
-					System.arraycopy(this.ranges, _modifyEnd, this.ranges, modifyStart + _mergeCount, rangeCount - _modifyEnd);
-					System.arraycopy(this.styles, _modifyEnd >> 1, this.styles, (modifyStart + _mergeCount) >> 1, this.styleCount - (_modifyEnd >> 1));
+					System.arraycopy(this.ranges, _modifyEnd, this.ranges,
+							modifyStart + _mergeCount, rangeCount - _modifyEnd);
+					System.arraycopy(this.styles, _modifyEnd >> 1, this.styles,
+							(modifyStart + _mergeCount) >> 1, this.styleCount
+									- (_modifyEnd >> 1));
 				}
 			}
 			if (MERGE_STYLES) {
 				int j = modifyStart;
 				for (int i = 0; i < _mergeCount; i += 2) {
-					if (j > 0 && this.ranges[j - 2] + this.ranges[j - 1] == mergeRanges[i] && mergeStyles[i >> 1].similarTo(this.styles[(j - 2) >> 1])) {
+					if (j > 0
+							&& this.ranges[j - 2] + this.ranges[j - 1] == mergeRanges[i]
+							&& mergeStyles[i >> 1]
+									.similarTo(this.styles[(j - 2) >> 1])) {
 						this.ranges[j - 1] += mergeRanges[i + 1];
 					} else {
 						this.styles[j >> 1] = mergeStyles[i >> 1];
@@ -918,25 +987,33 @@ public class StyledTextArea extends Control {
 						this.ranges[j++] = mergeRanges[i + 1];
 					}
 				}
-				if (endStyle != null && this.ranges[j - 2] + this.ranges[j - 1] == endStart && endStyle.similarTo(this.styles[(j - 2) >> 1])) {
+				if (endStyle != null
+						&& this.ranges[j - 2] + this.ranges[j - 1] == endStart
+						&& endStyle.similarTo(this.styles[(j - 2) >> 1])) {
 					this.ranges[j - 1] += endLength;
 					_modifyEnd += 2;
 					_mergeCount += 2;
 				}
 				if (rangeCount > _modifyEnd) {
-					System.arraycopy(this.ranges, modifyStart + _mergeCount, this.ranges, j, rangeCount - _modifyEnd);
-					System.arraycopy(this.styles, (modifyStart + _mergeCount) >> 1, this.styles, j >> 1, this.styleCount - (_modifyEnd >> 1));
+					System.arraycopy(this.ranges, modifyStart + _mergeCount,
+							this.ranges, j, rangeCount - _modifyEnd);
+					System.arraycopy(this.styles,
+							(modifyStart + _mergeCount) >> 1, this.styles,
+							j >> 1, this.styleCount - (_modifyEnd >> 1));
 				}
 				grow = (j - modifyStart) - (_modifyEnd - modifyStart);
 			} else {
-				System.arraycopy(mergeRanges, 0, this.ranges, modifyStart, _mergeCount);
-				System.arraycopy(mergeStyles, 0, this.styles, modifyStart >> 1, _mergeCount >> 1);
+				System.arraycopy(mergeRanges, 0, this.ranges, modifyStart,
+						_mergeCount);
+				System.arraycopy(mergeStyles, 0, this.styles, modifyStart >> 1,
+						_mergeCount >> 1);
 			}
 			this.styleCount += grow >> 1;
 			return grow;
 		}
 
-		int addMerge(StyleRange[] mergeStyles, int mergeCount, int modifyStart, int modifyEnd) {
+		int addMerge(StyleRange[] mergeStyles, int mergeCount, int modifyStart,
+				int modifyEnd) {
 			int _mergeCount = mergeCount;
 			int _modifyEnd = modifyEnd;
 			int grow = _mergeCount - (_modifyEnd - modifyStart);
@@ -944,46 +1021,59 @@ public class StyledTextArea extends Control {
 			if (_modifyEnd < this.styleCount)
 				endStyle = this.styles[_modifyEnd];
 			if (this.styleCount + grow >= this.styles.length) {
-				StyleRange[] tmpStyles = new StyleRange[this.styles.length + grow + GROW];
+				StyleRange[] tmpStyles = new StyleRange[this.styles.length
+						+ grow + GROW];
 				System.arraycopy(this.styles, 0, tmpStyles, 0, modifyStart);
 				if (this.styleCount > _modifyEnd) {
-					System.arraycopy(this.styles, _modifyEnd, tmpStyles, modifyStart + _mergeCount, this.styleCount - _modifyEnd);
+					System.arraycopy(this.styles, _modifyEnd, tmpStyles,
+							modifyStart + _mergeCount, this.styleCount
+									- _modifyEnd);
 				}
 				this.styles = tmpStyles;
 			} else {
 				if (this.styleCount > _modifyEnd) {
-					System.arraycopy(this.styles, _modifyEnd, this.styles, modifyStart + _mergeCount, this.styleCount - _modifyEnd);
+					System.arraycopy(this.styles, _modifyEnd, this.styles,
+							modifyStart + _mergeCount, this.styleCount
+									- _modifyEnd);
 				}
 			}
 			if (MERGE_STYLES) {
 				int j = modifyStart;
 				for (int i = 0; i < _mergeCount; i++) {
 					StyleRange newStyle = mergeStyles[i], style;
-					if (j > 0 && (style = this.styles[j - 1]).start + style.length == newStyle.start && newStyle.similarTo(style)) {
+					if (j > 0
+							&& (style = this.styles[j - 1]).start
+									+ style.length == newStyle.start
+							&& newStyle.similarTo(style)) {
 						style.length += newStyle.length;
 					} else {
 						this.styles[j++] = newStyle;
 					}
 				}
 				StyleRange style = this.styles[j - 1];
-				if (endStyle != null && style.start + style.length == endStyle.start && endStyle.similarTo(style)) {
+				if (endStyle != null
+						&& style.start + style.length == endStyle.start
+						&& endStyle.similarTo(style)) {
 					style.length += endStyle.length;
 					_modifyEnd++;
 					_mergeCount++;
 				}
 				if (this.styleCount > _modifyEnd) {
-					System.arraycopy(this.styles, modifyStart + _mergeCount, this.styles, j, this.styleCount - _modifyEnd);
+					System.arraycopy(this.styles, modifyStart + _mergeCount,
+							this.styles, j, this.styleCount - _modifyEnd);
 				}
 				grow = (j - modifyStart) - (_modifyEnd - modifyStart);
 			} else {
-				System.arraycopy(mergeStyles, 0, this.styles, modifyStart, _mergeCount);
+				System.arraycopy(mergeStyles, 0, this.styles, modifyStart,
+						_mergeCount);
 			}
 			this.styleCount += grow;
 			return grow;
 		}
 
 		void updateRanges(int start, int replaceCharCount, int newCharCount) {
-			if (this.styleCount == 0 || (replaceCharCount == 0 && newCharCount == 0))
+			if (this.styleCount == 0
+					|| (replaceCharCount == 0 && newCharCount == 0))
 				return;
 			if (this.ranges != null) {
 				int rangeCount = this.styleCount << 1;
@@ -993,24 +1083,37 @@ public class StyledTextArea extends Control {
 				int end = start + replaceCharCount;
 				int modifyEnd = getRangeIndex(end, modifyStart - 1, rangeCount);
 				int offset = newCharCount - replaceCharCount;
-				if (modifyStart == modifyEnd && this.ranges[modifyStart] < start && end < this.ranges[modifyEnd] + this.ranges[modifyEnd + 1]) {
+				if (modifyStart == modifyEnd
+						&& this.ranges[modifyStart] < start
+						&& end < this.ranges[modifyEnd]
+								+ this.ranges[modifyEnd + 1]) {
 					if (newCharCount == 0) {
 						this.ranges[modifyStart + 1] -= replaceCharCount;
 						modifyEnd += 2;
 					} else {
 						if (rangeCount + 2 > this.ranges.length) {
-							int[] newRanges = new int[this.ranges.length + (GROW << 1)];
-							System.arraycopy(this.ranges, 0, newRanges, 0, rangeCount);
+							int[] newRanges = new int[this.ranges.length
+									+ (GROW << 1)];
+							System.arraycopy(this.ranges, 0, newRanges, 0,
+									rangeCount);
 							this.ranges = newRanges;
-							StyleRange[] newStyles = new StyleRange[this.styles.length + GROW];
-							System.arraycopy(this.styles, 0, newStyles, 0, this.styleCount);
+							StyleRange[] newStyles = new StyleRange[this.styles.length
+									+ GROW];
+							System.arraycopy(this.styles, 0, newStyles, 0,
+									this.styleCount);
 							this.styles = newStyles;
 						}
-						System.arraycopy(this.ranges, modifyStart + 2, this.ranges, modifyStart + 4, rangeCount - (modifyStart + 2));
-						System.arraycopy(this.styles, (modifyStart + 2) >> 1, this.styles, (modifyStart + 4) >> 1, this.styleCount - ((modifyStart + 2) >> 1));
-						this.ranges[modifyStart + 3] = this.ranges[modifyStart] + this.ranges[modifyStart + 1] - end;
+						System.arraycopy(this.ranges, modifyStart + 2,
+								this.ranges, modifyStart + 4, rangeCount
+										- (modifyStart + 2));
+						System.arraycopy(this.styles, (modifyStart + 2) >> 1,
+								this.styles, (modifyStart + 4) >> 1,
+								this.styleCount - ((modifyStart + 2) >> 1));
+						this.ranges[modifyStart + 3] = this.ranges[modifyStart]
+								+ this.ranges[modifyStart + 1] - end;
 						this.ranges[modifyStart + 2] = start + newCharCount;
-						this.ranges[modifyStart + 1] = start - this.ranges[modifyStart];
+						this.ranges[modifyStart + 1] = start
+								- this.ranges[modifyStart];
 						this.styles[(modifyStart >> 1) + 1] = this.styles[modifyStart >> 1];
 						rangeCount += 2;
 						this.styleCount++;
@@ -1022,12 +1125,19 @@ public class StyledTextArea extends Control {
 						}
 					}
 				} else {
-					if (this.ranges[modifyStart] < start && start < this.ranges[modifyStart] + this.ranges[modifyStart + 1]) {
-						this.ranges[modifyStart + 1] = start - this.ranges[modifyStart];
+					if (this.ranges[modifyStart] < start
+							&& start < this.ranges[modifyStart]
+									+ this.ranges[modifyStart + 1]) {
+						this.ranges[modifyStart + 1] = start
+								- this.ranges[modifyStart];
 						modifyStart += 2;
 					}
-					if (modifyEnd < rangeCount && this.ranges[modifyEnd] < end && end < this.ranges[modifyEnd] + this.ranges[modifyEnd + 1]) {
-						this.ranges[modifyEnd + 1] = this.ranges[modifyEnd] + this.ranges[modifyEnd + 1] - end;
+					if (modifyEnd < rangeCount
+							&& this.ranges[modifyEnd] < end
+							&& end < this.ranges[modifyEnd]
+									+ this.ranges[modifyEnd + 1]) {
+						this.ranges[modifyEnd + 1] = this.ranges[modifyEnd]
+								+ this.ranges[modifyEnd + 1] - end;
 						this.ranges[modifyEnd] = end;
 					}
 					if (offset != 0) {
@@ -1035,8 +1145,11 @@ public class StyledTextArea extends Control {
 							this.ranges[i] += offset;
 						}
 					}
-					System.arraycopy(this.ranges, modifyEnd, this.ranges, modifyStart, rangeCount - modifyEnd);
-					System.arraycopy(this.styles, modifyEnd >> 1, this.styles, modifyStart >> 1, this.styleCount - (modifyEnd >> 1));
+					System.arraycopy(this.ranges, modifyEnd, this.ranges,
+							modifyStart, rangeCount - modifyEnd);
+					System.arraycopy(this.styles, modifyEnd >> 1, this.styles,
+							modifyStart >> 1, this.styleCount
+									- (modifyEnd >> 1));
 					this.styleCount -= (modifyEnd - modifyStart) >> 1;
 				}
 			} else {
@@ -1044,23 +1157,35 @@ public class StyledTextArea extends Control {
 				if (modifyStart == this.styleCount)
 					return;
 				int end = start + replaceCharCount;
-				int modifyEnd = getRangeIndex(end, modifyStart - 1, this.styleCount);
+				int modifyEnd = getRangeIndex(end, modifyStart - 1,
+						this.styleCount);
 				int offset = newCharCount - replaceCharCount;
-				if (modifyStart == modifyEnd && this.styles[modifyStart].start < start && end < this.styles[modifyEnd].start + this.styles[modifyEnd].length) {
+				if (modifyStart == modifyEnd
+						&& this.styles[modifyStart].start < start
+						&& end < this.styles[modifyEnd].start
+								+ this.styles[modifyEnd].length) {
 					if (newCharCount == 0) {
 						this.styles[modifyStart].length -= replaceCharCount;
 						modifyEnd++;
 					} else {
 						if (this.styleCount + 1 > this.styles.length) {
-							StyleRange[] newStyles = new StyleRange[this.styles.length + GROW];
-							System.arraycopy(this.styles, 0, newStyles, 0, this.styleCount);
+							StyleRange[] newStyles = new StyleRange[this.styles.length
+									+ GROW];
+							System.arraycopy(this.styles, 0, newStyles, 0,
+									this.styleCount);
 							this.styles = newStyles;
 						}
-						System.arraycopy(this.styles, modifyStart + 1, this.styles, modifyStart + 2, this.styleCount - (modifyStart + 1));
-						this.styles[modifyStart + 1] = (StyleRange) this.styles[modifyStart].clone();
-						this.styles[modifyStart + 1].length = this.styles[modifyStart].start + this.styles[modifyStart].length - end;
-						this.styles[modifyStart + 1].start = start + newCharCount;
-						this.styles[modifyStart].length = start - this.styles[modifyStart].start;
+						System.arraycopy(this.styles, modifyStart + 1,
+								this.styles, modifyStart + 2, this.styleCount
+										- (modifyStart + 1));
+						this.styles[modifyStart + 1] = (StyleRange) this.styles[modifyStart]
+								.clone();
+						this.styles[modifyStart + 1].length = this.styles[modifyStart].start
+								+ this.styles[modifyStart].length - end;
+						this.styles[modifyStart + 1].start = start
+								+ newCharCount;
+						this.styles[modifyStart].length = start
+								- this.styles[modifyStart].start;
 						this.styleCount++;
 						modifyEnd += 2;
 					}
@@ -1070,12 +1195,19 @@ public class StyledTextArea extends Control {
 						}
 					}
 				} else {
-					if (this.styles[modifyStart].start < start && start < this.styles[modifyStart].start + this.styles[modifyStart].length) {
-						this.styles[modifyStart].length = start - this.styles[modifyStart].start;
+					if (this.styles[modifyStart].start < start
+							&& start < this.styles[modifyStart].start
+									+ this.styles[modifyStart].length) {
+						this.styles[modifyStart].length = start
+								- this.styles[modifyStart].start;
 						modifyStart++;
 					}
-					if (modifyEnd < this.styleCount && this.styles[modifyEnd].start < end && end < this.styles[modifyEnd].start + this.styles[modifyEnd].length) {
-						this.styles[modifyEnd].length = this.styles[modifyEnd].start + this.styles[modifyEnd].length - end;
+					if (modifyEnd < this.styleCount
+							&& this.styles[modifyEnd].start < end
+							&& end < this.styles[modifyEnd].start
+									+ this.styles[modifyEnd].length) {
+						this.styles[modifyEnd].length = this.styles[modifyEnd].start
+								+ this.styles[modifyEnd].length - end;
 						this.styles[modifyEnd].start = end;
 					}
 					if (offset != 0) {
@@ -1083,7 +1215,8 @@ public class StyledTextArea extends Control {
 							this.styles[i].start += offset;
 						}
 					}
-					System.arraycopy(this.styles, modifyEnd, this.styles, modifyStart, this.styleCount - modifyEnd);
+					System.arraycopy(this.styles, modifyEnd, this.styles,
+							modifyStart, this.styleCount - modifyEnd);
 					this.styleCount -= modifyEnd - modifyStart;
 				}
 			}
@@ -1101,7 +1234,8 @@ public class StyledTextArea extends Control {
 					return null;
 				if (this.ranges[rangeStart] > end)
 					return null;
-				int rangeEnd = Math.min(rangeCount - 2, getRangeIndex(end, rangeStart - 1, rangeCount));
+				int rangeEnd = Math.min(rangeCount - 2,
+						getRangeIndex(end, rangeStart - 1, rangeCount));
 				if (this.ranges[rangeEnd] > end)
 					rangeEnd = Math.max(rangeStart, rangeEnd - 2);
 				newStyles = new StyleRange[((rangeEnd - rangeStart) >> 1) + 1];
@@ -1112,7 +1246,8 @@ public class StyledTextArea extends Control {
 						newStyles[j].length = this.ranges[i + 1];
 					}
 				} else {
-					System.arraycopy(this.styles, rangeStart >> 1, newStyles, 0, newStyles.length);
+					System.arraycopy(this.styles, rangeStart >> 1, newStyles,
+							0, newStyles.length);
 				}
 			} else {
 				int rangeStart = getRangeIndex(start, -1, this.styleCount);
@@ -1120,11 +1255,13 @@ public class StyledTextArea extends Control {
 					return null;
 				if (this.styles[rangeStart].start > end)
 					return null;
-				int rangeEnd = Math.min(this.styleCount - 1, getRangeIndex(end, rangeStart - 1, this.styleCount));
+				int rangeEnd = Math.min(this.styleCount - 1,
+						getRangeIndex(end, rangeStart - 1, this.styleCount));
 				if (this.styles[rangeEnd].start > end)
 					rangeEnd = Math.max(rangeStart, rangeEnd - 1);
 				newStyles = new StyleRange[rangeEnd - rangeStart + 1];
-				System.arraycopy(this.styles, rangeStart, newStyles, 0, newStyles.length);
+				System.arraycopy(this.styles, rangeStart, newStyles, 0,
+						newStyles.length);
 			}
 			if (includeRanges || this.ranges == null) {
 				StyleRange style = newStyles[0];
@@ -1135,7 +1272,8 @@ public class StyledTextArea extends Control {
 				}
 				style = newStyles[newStyles.length - 1];
 				if (end < style.start + style.length - 1) {
-					newStyles[newStyles.length - 1] = style = (StyleRange) style.clone();
+					newStyles[newStyles.length - 1] = style = (StyleRange) style
+							.clone();
 					style.length = end - style.start + 1;
 				}
 			}
@@ -1218,7 +1356,8 @@ public class StyledTextArea extends Control {
 
 			if (this.lineCount > 0) {
 				int lastLine = this.lineCount - 1;
-				if (position == this.lines[lastLine][0] + this.lines[lastLine][1])
+				if (position == this.lines[lastLine][0]
+						+ this.lines[lastLine][1])
 					return lastLine;
 			}
 
@@ -1281,7 +1420,8 @@ public class StyledTextArea extends Control {
 		}
 
 		@Override
-		public void replaceTextRange(int start, int replaceLength, String newText) {
+		public void replaceTextRange(int start, int replaceLength,
+				String newText) {
 			// first delete the text to be replaced
 			// delete(start, replaceLength, event.replaceLineCount + 1);
 
@@ -1391,11 +1531,13 @@ public class StyledTextArea extends Control {
 							i++;
 						}
 					}
-					indexedLines = addLineIndex(start, i - start + 1, indexedLines, lineCount);
+					indexedLines = addLineIndex(start, i - start + 1,
+							indexedLines, lineCount);
 					lineCount++;
 					start = i + 1;
 				} else if (ch == '\n') {
-					indexedLines = addLineIndex(start, i - start + 1, indexedLines, lineCount);
+					indexedLines = addLineIndex(start, i - start + 1,
+							indexedLines, lineCount);
 					lineCount++;
 					start = i + 1;
 				}
@@ -1408,7 +1550,8 @@ public class StyledTextArea extends Control {
 			return newLines;
 		}
 
-		int[][] addLineIndex(int start, int length, int[][] linesArray, int count) {
+		int[][] addLineIndex(int start, int length, int[][] linesArray,
+				int count) {
 			int size = linesArray.length;
 			int[][] newLines = linesArray;
 			if (count == size) {
@@ -1438,7 +1581,7 @@ public class StyledTextArea extends Control {
 	// public void setRedraw(boolean b) {
 	// // keep empty
 	// }
-	
+
 	/**
 	 * @return the current selection
 	 */
@@ -1449,7 +1592,7 @@ public class StyledTextArea extends Control {
 		}
 		return textSelection;
 	}
-	
+
 	/**
 	 * @return the selection property
 	 */
@@ -1464,14 +1607,14 @@ public class StyledTextArea extends Control {
 	 *            the selection
 	 */
 	public void setSelection(@NonNull TextSelection selection) {
-		if( selection.length == 0 ) {
+		if (selection.length == 0) {
 			setCaretOffset(selection.offset);
 		} else {
-//			this.caretOffsetProperty.set(selection.offset+selection.length);
-			this.currentSelection.set(selection);	
+			// this.caretOffsetProperty.set(selection.offset+selection.length);
+			this.currentSelection.set(selection);
 		}
 	}
-	
+
 	/**
 	 * Clear the current selection
 	 */
@@ -1492,7 +1635,8 @@ public class StyledTextArea extends Control {
 	}
 
 	@NonNull
-	private final BooleanProperty editableProperty = new SimpleBooleanProperty(this, "editableProperty", true); //$NON-NLS-1$
+	private final BooleanProperty editableProperty = new SimpleBooleanProperty(
+			this, "editableProperty", true); //$NON-NLS-1$
 
 	/**
 	 * Mark the editor editable
@@ -1531,7 +1675,6 @@ public class StyledTextArea extends Control {
 	public @NonNull BooleanProperty editableProperty() {
 		return this.editableProperty;
 	}
-
 
 	/**
 	 * Check the location at the given offset
@@ -1600,29 +1743,33 @@ public class StyledTextArea extends Control {
 	public @NonNull String getText(int start, int end) {
 		return getContent().getTextRange(start, end - start + 1);
 	}
-	
+
 	/**
 	 * Paste the clipboard content
 	 */
 	public void paste() {
 		final Clipboard clipboard = Clipboard.getSystemClipboard();
-        if (clipboard.hasString()) {
-            final String text = clipboard.getString();
-            if (text != null) {
-            	//TODO Once we have a real selection we need
-            	getContent().replaceTextRange(getCaretOffset(), 0, text);
-            	setCaretOffset(getCaretOffset()+text.length());
-            }
-        }
+		if (clipboard.hasString()) {
+			final String text = clipboard.getString();
+			if (text != null) {
+				// TODO Once we have a real selection we need
+				getContent().replaceTextRange(getCaretOffset(), 0, text);
+				setCaretOffset(getCaretOffset() + text.length());
+			}
+		}
 	}
-	
+
 	/**
 	 * Copy the current selection into the clipboard
 	 */
+	@SuppressWarnings("null")
 	public void copy() {
-		if( getSelection().length > 0 ) {
+		if (getSelection().length > 0) {
 			final Clipboard clipboard = Clipboard.getSystemClipboard();
-			clipboard.setContent(Collections.singletonMap(DataFormat.PLAIN_TEXT, getContent().getTextRange(getSelection().offset, getSelection().length)));
+			clipboard.setContent(Collections.singletonMap(
+					DataFormat.PLAIN_TEXT,
+					getContent().getTextRange(getSelection().offset,
+							getSelection().length)));
 		}
 	}
 }
