@@ -1,6 +1,8 @@
 .source-segment {
 	-fx-font-family: Courier;
 	-fx-font-size: 15;
+	-styled-text-color: black;
+	-fx-fill: -styled-text-color;
 }
 
 .line-ruler-text {
