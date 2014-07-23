@@ -1,0 +1,39 @@
+import javafx.scene.layout.Pane
+package org.eclipse.fx.ui.panes {
+	AbstractLayoutPane extends Pane {
+		
+	}
+	FillLayoutPane extends AbstractLayoutPane {
+		-fx-inner-margin-width <javafx.length> default: 0;
+		-fx-inner-margin-height <javafx.length> default: 0;
+		-fx-spacing <javafx.length> default: 0;
+		-fx-horizontal <javafx.boolean> default: true;
+	}
+	GridLayoutPane extends AbstractLayoutPane {
+		-fx-columns @INT default: 1;
+		-fx-columns-equal-width <javafx.boolean> default: false;
+		-fx-inner-margin-width <javafx.length> default: 5;
+		-fx-inner-margin-height <javafx.length> default: 5;
+		-fx-inner-margin-left <javafx.length> default: 0;
+		-fx-inner-margin-top <javafx.length> default: 0;
+		-fx-inner-margin-right <javafx.length> default: 0;
+		-fx-inner-margin-bottom <javafx.length> default: 0;
+		-fx-hspace <javafx.length> default: 5;
+		-fx-vspace <javafx.length> default: 5;
+	}
+	RowLayoutPane extends AbstractLayoutPane {
+		-fx-inner-margin-width <javafx.length> default: 0;
+		-fx-inner-margin-height <javafx.length> default: 0;
+		-fx-inner-margin-left <javafx.length> default: 0;
+		-fx-inner-margin-top <javafx.length> default: 0;
+		-fx-inner-margin-right <javafx.length> default: 0;
+		-fx-inner-margin-bottom <javafx.length> default: 0;
+		-fx-spacing <javafx.length> default: 3;
+		-fx-wrap <javafx.boolean> default: true;
+		-fx-pack <javafx.boolean> default: true;
+		-fx-fill <javafx.boolean> default: false;
+		-fx-center <javafx.boolean> default: false;
+		-fx-justify <javafx.boolean> default: false;
+		-fx-horizontal <javafx.boolean> default: false;
+	}
+}
