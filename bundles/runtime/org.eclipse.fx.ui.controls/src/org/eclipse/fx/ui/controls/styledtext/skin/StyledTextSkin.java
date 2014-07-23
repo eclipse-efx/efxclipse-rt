@@ -447,8 +447,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						p.getElements().clear();
 						p.getElements().addAll(((Text)textNode.getChildren().get(0)).getImpl_caretShape());
 
-						p.setLayoutX(textNode.getLayoutX());
-						p.setLayoutY(textNode.getLayoutY());
+						p.setLayoutX(textNode.getChildren().get(0).getLayoutX() + textNode.getLayoutX());
+						p.setLayoutY(textNode.getChildren().get(0).getLayoutY() + textNode.getLayoutY());
 					}
 
 					break;

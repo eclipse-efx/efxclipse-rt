@@ -12,6 +12,7 @@
 package org.eclipse.fx.ui.controls.styledtext;
 
 import java.lang.ref.WeakReference;
+import java.util.Collections;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -23,6 +24,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.input.Clipboard;
+import javafx.scene.input.DataFormat;
 import javafx.scene.paint.Color;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
@@ -1612,5 +1614,15 @@ public class StyledTextArea extends Control {
             	setCaretOffset(getCaretOffset()+text.length());
             }
         }
+	}
+	
+	/**
+	 * Copy the current selection into the clipboard
+	 */
+	public void copy() {
+		if( getSelection().length > 0 ) {
+			final Clipboard clipboard = Clipboard.getSystemClipboard();
+			clipboard.setContent(Collections.singletonMap(DataFormat.PLAIN_TEXT, getContent().getTextRange(getSelection().offset, getSelection().length)));
+		}
 	}
 }

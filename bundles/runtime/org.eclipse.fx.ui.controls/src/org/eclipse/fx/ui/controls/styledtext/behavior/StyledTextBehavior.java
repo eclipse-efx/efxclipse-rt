@@ -233,6 +233,12 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				event.consume();
 				break;
 			}
+		case C:
+			if( event.isShortcutDown() ) {
+				getControl().copy();
+				event.consume();
+				break;
+			}
 		default:
 			if (event.isMetaDown() || event.isControlDown()) {
 				// exclude meta keys
@@ -288,21 +294,24 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 								int offset = ((Integer) text.getUserData()).intValue() + info.getInsertionIndex();
 								// System.err.println("NEW OFFSET AT: " +
 								// offset);
-								getControl().setCaretOffset(offset);
-								getControl().clearSelection();
+								getControl().setCaretOffset(offset, event.isShiftDown());
 								return;
 							}
 						}
 					}
 
 					int offset = cell.getDomainElement().getLineOffset() + cell.getDomainElement().getLineLength();
-					getControl().setCaretOffset(offset);
-					getControl().clearSelection();
+					getControl().setCaretOffset(offset, event.isShiftDown());
+					
 				}
 				break;
 			}
 		}
 		getControl().requestFocus();
 		Event.fireEvent(getControl(), event.copyFor(getControl(), getControl()));
+	}
+	
+	public void mouseDragged(MouseEvent event, List<LineCell> visibleCells) {
+		
 	}
 }
