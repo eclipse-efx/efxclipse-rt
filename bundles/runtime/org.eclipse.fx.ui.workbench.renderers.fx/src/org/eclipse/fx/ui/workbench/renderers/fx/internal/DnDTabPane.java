@@ -38,11 +38,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
-//import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
-//import org.eclipse.emf.ecore.EObject;
-//import org.eclipse.emf.ecore.xmi.XMIResource;
-//import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
-
 @SuppressWarnings("javadoc")
 public class DnDTabPane extends TabPane {
 	private static Tab DRAGGED_TAB;
