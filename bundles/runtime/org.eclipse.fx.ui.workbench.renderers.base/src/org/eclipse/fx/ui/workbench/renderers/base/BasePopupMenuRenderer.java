@@ -31,12 +31,12 @@ import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MPopupMenu;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
-import org.eclipse.fx.ui.lifecycle.ELifecycleService;
-import org.eclipse.fx.ui.lifecycle.annotations.PreClose;
-import org.eclipse.fx.ui.lifecycle.annotations.PreShow;
 import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
+import org.eclipse.fx.ui.workbench.services.ELifecycleService;
+import org.eclipse.fx.ui.workbench.services.lifecycle.annotation.PreClose;
+import org.eclipse.fx.ui.workbench.services.lifecycle.annotation.PreShow;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
