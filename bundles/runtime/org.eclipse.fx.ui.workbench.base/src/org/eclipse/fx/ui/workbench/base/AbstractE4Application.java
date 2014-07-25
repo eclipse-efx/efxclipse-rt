@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.runtime.Assert;
@@ -50,6 +52,7 @@ import org.eclipse.e4.ui.internal.workbench.SelectionAggregator;
 import org.eclipse.e4.ui.internal.workbench.SelectionServiceImpl;
 import org.eclipse.e4.ui.model.application.MAddon;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicPackageImpl;
 import org.eclipse.e4.ui.model.application.ui.impl.UiPackageImpl;
@@ -79,6 +82,7 @@ import org.eclipse.fx.ui.workbench.base.internal.Activator;
 import org.eclipse.fx.ui.workbench.base.internal.LoggerProviderImpl;
 import org.eclipse.fx.ui.workbench.base.restart.RestartPreferenceUtil;
 import org.eclipse.fx.ui.workbench.base.restart.RestartServiceImpl;
+import org.eclipse.fx.ui.workbench.services.EModelStylingService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.osgi.service.datalocation.Location;
@@ -170,6 +174,26 @@ public abstract class AbstractE4Application implements IApplication {
 		appContext.set(UISynchronize.class, uiSync);
 		appContext.set(Realm.class, createRealm(appContext));
 		appContext.set(IApplicationContext.class, applicationContext);
+		appContext.set(EModelStylingService.class, new EModelStylingService() {
+			private static final String PREFIX = "efx_styleclass:"; //$NON-NLS-1$
+			@Override
+			public void addModelTag(MUIElement element, String... tags) {
+				List<String> cssTags = Stream.of(tags).map(t -> PREFIX + t).collect(Collectors.toList());
+				element.getTags().remove(cssTags);
+				element.getTags().addAll(cssTags);
+			}
+
+			@Override
+			public void removeModelTag(MUIElement element, String... tags) {
+				List<String> cssTags = Stream.of(tags).map(t -> PREFIX + t).collect(Collectors.toList());
+				element.getTags().removeAll(cssTags);
+			}
+
+			@Override
+			public List<String> getModelTags(MUIElement element) {
+				return element.getTags().stream().filter((t) -> t.startsWith(PREFIX)).collect(Collectors.toList());
+			}
+		});
 		appContext.set(IResourceUtilities.class, createResourceUtility(appContext));
 
 		// Check if DS is running
