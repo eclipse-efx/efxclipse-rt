@@ -91,6 +91,14 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			return gd;
 		}
 
+		
+		private final @NonNull MPartSashContainer mPartSashContainer;
+		
+		@Inject
+		public WFixedSashImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartSashContainer mPartSashContainer) {
+			this.mPartSashContainer = mPartSashContainer;
+		}
+
 		@Override
 		public void addItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			Node n = (Node) widget.getStaticLayoutNode();
@@ -166,7 +174,11 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		public void removeItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			Node n = (Node) widget.getStaticLayoutNode();
 			GridLayoutPane p = getWidget();
-			p.setNumColumns(p.getNumColumns() - 1);
+			MPartSashContainer domElement = getDomElement();
+			
+			if( domElement != null && domElement.isHorizontal() ) {
+				p.setNumColumns(p.getNumColumns() - 1);	
+			}
 			p.getChildren().remove(n);
 		}
 
@@ -182,7 +194,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			p.setMarginHeight(0);
 			p.setHorizontalSpacing(0);
 			p.setVerticalSpacing(0);
-			p.setNumColumns(0); 
+			p.setNumColumns(this.mPartSashContainer.isHorizontal() ? 0 : 1); 
 			return p;
 		}
 
