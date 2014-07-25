@@ -268,5 +268,5 @@
   <addons xmi:id="_A7QWmOL-EeGP-5z69KadAQ" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
   <addons xmi:id="_tQtNQOUbEeGP-5z69KadAQ" elementId="org.eclipse.fx.ui.keybindings.e4.model" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingProcessingAddon"/>
   <addons xmi:id="_3c-AUL89EeKIBMNbSVZPsw" elementId="org.eclipse.e4.ui.workbench.addons.HandlerProcessingAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
-  <addons xmi:id="_9h-HsOHDEeKlH9jWGqiIew" elementId="org.eclipse.fx.testcases.e4.addon.0" contributionURI="bundleclass://org.eclipse.fx.ui.lifecycle/org.eclipse.fx.ui.lifecycle.LifecycleAddon"/>
+  <addons xmi:id="_9h-HsOHDEeKlH9jWGqiIew" elementId="org.eclipse.fx.testcases.e4.addon.0" contributionURI="bundleclass://org.eclipse.fx.ui.workbench.services/org.eclipse.fx.ui.workbench.services.lifecycle.LifecycleAddon"/>
 </application:Application>

@@ -10,10 +10,8 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.fx.ui.lifecycle.ELifecycleService;
-import org.eclipse.fx.ui.lifecycle.annotations.PreClose;
-import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
-import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
+import org.eclipse.fx.ui.workbench.services.ELifecycleService;
+import org.eclipse.fx.ui.workbench.services.lifecycle.annotation.PreClose;
 
 public class ClosePerspectiveHandler {
 
