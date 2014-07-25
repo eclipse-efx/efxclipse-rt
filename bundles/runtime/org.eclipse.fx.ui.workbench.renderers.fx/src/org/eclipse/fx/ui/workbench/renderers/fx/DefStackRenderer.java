@@ -38,6 +38,8 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
@@ -164,7 +166,17 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					StackWidgetImpl.this.dndFeedback,
 					this.domainElement);
 			
-			DnDTabPane p = new DnDTabPane();
+			DnDTabPane p = new DnDTabPane() {
+				@Override
+				protected String getClipboardContent(Tab t) {
+					MStackElement domElement = ((WStackItem<?, ?>)t.getUserData()).getDomElement();
+					if( domElement != null ) {
+						EObject eo = (EObject) domElement;
+						return ((XMIResource)eo.eResource()).getID(eo);
+					}
+					return null;
+				}
+			};
 			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_START, dnd::handleDragStart);
 			p.addEventHandler(DnDTabPane.DND_TABPANE_DROPPED, dnd::handleDropped);
 			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_FEEDBACK, dnd::handleFeedback);

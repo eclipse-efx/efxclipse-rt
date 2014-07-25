@@ -38,10 +38,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
-import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.xmi.XMIResource;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
+//import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
+//import org.eclipse.emf.ecore.EObject;
+//import org.eclipse.emf.ecore.xmi.XMIResource;
+//import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 
 @SuppressWarnings("javadoc")
 public class DnDTabPane extends TabPane {
@@ -252,10 +252,9 @@ public class DnDTabPane extends TabPane {
 					db.setDragView(image, image.getWidth(), image.getHeight()*-1);
 					
 					ClipboardContent content = new ClipboardContent();
-					MStackElement domElement = ((WStackItem<?, ?>)t.getUserData()).getDomElement();
-					if( domElement != null ) {
-						EObject eo = (EObject) domElement;
-						content.put(TAB_MOVE, ((XMIResource)eo.eResource()).getID(eo));
+					String data = getClipboardContent(t);
+					if( data != null ) {
+						content.put(TAB_MOVE, content);	
 					}
 		            db.setContent(content);
 				}
@@ -264,6 +263,10 @@ public class DnDTabPane extends TabPane {
 				t.printStackTrace();
 			}	
 		}
+	}
+	
+	protected String getClipboardContent(Tab t) {
+		return System.identityHashCode(t) + ""; //$NON-NLS-1$
 	}
 	
 	void tabPane_handleDragOver(Pane tabHeaderArea, Pane headersRegion, DragEvent event) {
