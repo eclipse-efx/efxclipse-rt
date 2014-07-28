@@ -50,6 +50,7 @@ import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
+import org.eclipse.fx.ui.workbench.services.EModelStylingService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
@@ -87,6 +88,9 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@Inject
 	EModelService modelService;
+	
+	@Inject
+	EModelStylingService modelStylingService;
 
 	// boolean inContentProcessing;
 	//
@@ -389,10 +393,12 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 						if (m.getWidget() != null) {
 							if (UIEvents.isADD(event)) {
 								Collection<String> addedTags = Util.<String>asCollection(event, UIEvents.EventTags.NEW_VALUE);
-								((WWidget<?>) m.getWidget()).addStyleClasses(new ArrayList<String>(addedTags));
+								((WWidget<?>) m.getWidget()).addStyleClasses(
+										this.modelStylingService.getStylesFromTags(new ArrayList<String>(addedTags)));
 							} else if (UIEvents.isREMOVE(event)) {
 								Collection<String> removedTags = Util.<String>asCollection(event, UIEvents.EventTags.OLD_VALUE);
-								((WWidget<?>) m.getWidget()).removeStyleClasses(new ArrayList<String>(removedTags));							
+								((WWidget<?>) m.getWidget()).removeStyleClasses(
+										this.modelStylingService.getStylesFromTags(new ArrayList<String>(removedTags)));
 							}
 						}
 					}
@@ -476,7 +482,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	@Override
 	public void bindWidget(@NonNull M me, @NonNull W widget) {
 		widget.setDomElement(me);
-		widget.addStyleClasses(me.getTags());
+		widget.addStyleClasses(this.modelStylingService.getStyles(me));
 
 		EObject eo = (EObject) me;
 		widget.addStyleClasses("M" + eo.eClass().getName()); //$NON-NLS-1$
