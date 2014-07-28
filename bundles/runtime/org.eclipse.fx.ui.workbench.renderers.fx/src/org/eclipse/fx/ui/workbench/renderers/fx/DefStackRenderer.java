@@ -38,8 +38,6 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
@@ -49,7 +47,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupport;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DndTabPaneFactory;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -166,26 +164,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					StackWidgetImpl.this.dndFeedback,
 					this.domainElement);
 			
-			TabPane p = new TabPane() {
-				@Override
-				protected javafx.scene.control.Skin<?> createDefaultSkin() {
-					return new DnDTabPaneSkin(this) {
-						@Override
-						protected String getClipboardContent(Tab t) {
-							MStackElement domElement = ((WStackItem<?, ?>)t.getUserData()).getDomElement();
-							if( domElement != null ) {
-								EObject eo = (EObject) domElement;
-								return ((XMIResource)eo.eResource()).getID(eo);
-							}
-							return null;
-						}
-					};
-				}
-			};
-			p.addEventHandler(DnDTabPaneSkin.DND_TABPANE_DRAG_START, dnd::handleDragStart);
-			p.addEventHandler(DnDTabPaneSkin.DND_TABPANE_DROPPED, dnd::handleDropped);
-			p.addEventHandler(DnDTabPaneSkin.DND_TABPANE_DRAG_FEEDBACK, dnd::handleFeedback);
-			p.addEventHandler(DnDTabPaneSkin.DND_TABPANE_DRAG_FINISHED, dnd::handleFinished);
+			TabPane p = DndTabPaneFactory.createDndTabPane((s) -> {
+				s.setStartFunction(dnd::handleDragStart);
+				s.setDropConsumer(dnd::handleDropped);
+				s.setFeedbackConsumer(dnd::handleFeedback);
+				s.setDragFinishedConsumer(dnd::handleFinished);	
+			});
+			
 			
 			p.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
+import javafx.scene.control.Tab;
+
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
@@ -23,10 +25,8 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget.DragD
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.DropType;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.TabPaneDragFinishedEvent;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.TabPaneDragStartEvent;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.TabPaneDroppedEvent;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.TabPaneFeedbackDragEvent;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.DroppedData;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.FeedbackData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -48,7 +48,7 @@ public class DnDSupport {
 
 	@Nullable
 	private static MarkerFeedback CURRENT_FEEDBACK = null;
-	
+
 	@NonNull
 	private static final Logger LOGGER = LoggerCreator.createLogger(DnDSupport.class);
 
@@ -75,30 +75,32 @@ public class DnDSupport {
 	/**
 	 * Handle the drag start
 	 * 
-	 * @param event
-	 *            the event
+	 * @param tab
+	 *            the tab
+	 * @return <code>true</code> if drag can start
+	 * 
 	 */
-	public void handleDragStart(TabPaneDragStartEvent event) {
+	@SuppressWarnings("null")
+	public @NonNull Boolean handleDragStart(@NonNull Tab tab) {
 		WCallback<DragData, Boolean> dragStartCallback = this.dragStartCallbackProvider.call(null);
 		if (dragStartCallback != null) {
-			WStackItem<?, ?> item = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) event.tab.getUserData();
+			WStackItem<?, ?> item = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) tab.getUserData();
 			MStackElement itemElement = item.getDomElement();
 			if (itemElement == null) {
-				return;
+				return Boolean.FALSE;
 			}
 			MPartStack itemContainer = (MPartStack) (MUIElement) itemElement.getParent();
 			if (itemContainer != null) {
 				DragData dragData = new DragData(itemContainer, itemElement);
 				if (!dragStartCallback.call(dragData).booleanValue()) {
-					event.consume();
+					return Boolean.TRUE;
 				}
 			} else {
 				LOGGER.error("Stack element '" + itemElement + "' has no container"); //$NON-NLS-1$//$NON-NLS-2$
 			}
 
-		} else {
-			event.consume();
 		}
+		return Boolean.TRUE;
 	}
 
 	/**
@@ -108,14 +110,14 @@ public class DnDSupport {
 	 *            the event
 	 */
 	@SuppressWarnings("all")
-	public void handleDropped(TabPaneDroppedEvent event) {
+	public void handleDropped(DroppedData data) {
 		WCallback<DropData, Void> call = this.dropCallbackProvider.call(null);
 		if (call != null) {
-			WStackItem<?, ?> referenceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) event.targetTab.getUserData();
-			WStackItem<?, ?> sourceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) event.sourceTab.getUserData();
+			WStackItem<?, ?> referenceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.targetTab.getUserData();
+			WStackItem<?, ?> sourceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.draggedTab.getUserData();
 			MStackElement domElement = sourceItem.getDomElement();
 			if (domElement != null) {
-				call.call(new DropData(referenceItem.getDomElement(), domElement, event.type == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE));
+				call.call(new DropData(referenceItem.getDomElement(), domElement, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE));
 			} else {
 				LOGGER.error("Source item '" + sourceItem + "' has no dom element attached"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
@@ -125,36 +127,38 @@ public class DnDSupport {
 	/**
 	 * Handle the feedback event
 	 * 
-	 * @param event
-	 *            the event
+	 * @param data
+	 *            the data
+	 * 
 	 */
-	public void handleFeedback(TabPaneFeedbackDragEvent event) {
-		if (event.dropType == DropType.NONE) {
+	public void handleFeedback(FeedbackData data) {
+		if (data.dropType == DropType.NONE) {
 			cleanup();
 			return;
 		}
 
-		MStackElement reference = ((WStackItem<?, ?>) event.targetTab.getUserData()).getDomElement();
-		MStackElement sourceReference = ((WStackItem<?, ?>) event.sourceTab.getUserData()).getDomElement();
+		MStackElement reference = ((WStackItem<?, ?>) data.targetTab.getUserData()).getDomElement();
+		MStackElement sourceReference = ((WStackItem<?, ?>) data.draggedTab.getUserData()).getDomElement();
 
-		DnDFeedbackData data = new DnDFeedbackData(reference, sourceReference, event.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE, this.stack,
-				new DnDFeedbackService.Region(event.bounds.getMinX(), event.bounds.getMinY(), event.bounds.getWidth(), event.bounds.getHeight()));
+		DnDFeedbackData dndData = new DnDFeedbackData(reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE, this.stack,
+				new DnDFeedbackService.Region(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight()));
 
 		MarkerFeedback f = CURRENT_FEEDBACK;
 		if (f == null || !f.equals(data)) {
 			cleanup();
-			CURRENT_FEEDBACK = this.feedbackService.showFeedback(data);
+			CURRENT_FEEDBACK = this.feedbackService.showFeedback(dndData);
 		}
 	}
 
 	/**
 	 * Handle the finish event
 	 * 
-	 * @param event
-	 *            the event
+	 * @param tab
+	 *            the tab
+	 * 
 	 */
 	@SuppressWarnings("static-method")
-	public void handleFinished(TabPaneDragFinishedEvent event) {
+	public void handleFinished(Tab tab) {
 		cleanup();
 	}
 

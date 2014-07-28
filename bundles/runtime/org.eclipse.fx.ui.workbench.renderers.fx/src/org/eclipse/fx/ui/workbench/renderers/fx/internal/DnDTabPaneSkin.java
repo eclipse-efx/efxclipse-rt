@@ -11,12 +11,12 @@
 package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
 import java.lang.reflect.Field;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import javafx.css.StyleOrigin;
 import javafx.css.StyleableProperty;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
@@ -35,92 +35,96 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DndTabPaneFactory.DragSetup;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import com.sun.javafx.scene.control.skin.TabPaneSkin;
 
 @SuppressWarnings("restriction")
-public class DnDTabPaneSkin extends TabPaneSkin {
+public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 	private static Tab DRAGGED_TAB;
 	public static final DataFormat TAB_MOVE = new DataFormat("DnDTabPane:tabMove"); //$NON-NLS-1$
 
-	public static final EventType<TabPaneDragStartEvent> DND_TABPANE_DRAG_START = new EventType<>(Event.ANY, "DND_TABPANE_DRAG_START"); //$NON-NLS-1$
-	public static final EventType<TabPaneDroppedEvent> DND_TABPANE_DROPPED = new EventType<>(Event.ANY, "DND_TABPANE_DROPPED"); //$NON-NLS-1$
-	public static final EventType<TabPaneDragFinishedEvent> DND_TABPANE_DRAG_FINISHED = new EventType<>(Event.ANY, "DND_TABPANE_DRAG_FINISHED"); //$NON-NLS-1$
-	public static final EventType<TabPaneFeedbackDragEvent> DND_TABPANE_DRAG_FEEDBACK = new EventType<>(Event.ANY, "DND_TABPANE_DRAG_FEEDBACK"); //$NON-NLS-1$
+//	public static final EventType<TabPaneDragStartEvent> DND_TABPANE_DRAG_START = new EventType<>(Event.ANY, "DND_TABPANE_DRAG_START"); //$NON-NLS-1$
+//	public static final EventType<TabPaneDroppedEvent> DND_TABPANE_DROPPED = new EventType<>(Event.ANY, "DND_TABPANE_DROPPED"); //$NON-NLS-1$
+//	public static final EventType<TabPaneDragFinishedEvent> DND_TABPANE_DRAG_FINISHED = new EventType<>(Event.ANY, "DND_TABPANE_DRAG_FINISHED"); //$NON-NLS-1$
+//	public static final EventType<TabPaneFeedbackDragEvent> DND_TABPANE_DRAG_FEEDBACK = new EventType<>(Event.ANY, "DND_TABPANE_DRAG_FEEDBACK"); //$NON-NLS-1$
 
 	private Object noneEnum;
 	private StyleableProperty<Object> openAnimation;
 	private StyleableProperty<Object> closeAnimation;
 
-	public static class TabPaneDragStartEvent extends Event {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		public final Tab tab;
-
-		public TabPaneDragStartEvent(TabPane pane, Tab tab) {
-			super(pane, pane, DND_TABPANE_DRAG_START);
-			this.tab = tab;
-		}
-	}
-
-	public static class TabPaneDragFinishedEvent extends Event {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		public final Tab tab;
-
-		public TabPaneDragFinishedEvent(TabPane pane, Tab tab) {
-			super(pane, pane, DND_TABPANE_DRAG_FINISHED);
-			this.tab = tab;
-		}
-	}
-
-	public static class TabPaneDroppedEvent extends Event {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		public final Tab sourceTab;
-
-		public final Tab targetTab;
-
-		public final DropType type;
-
-		public TabPaneDroppedEvent(TabPane pane, Tab sourceTab, Tab targetTab, DropType type) {
-			super(pane, pane, DND_TABPANE_DROPPED);
-			this.sourceTab = sourceTab;
-			this.targetTab = targetTab;
-			this.type = type;
-		}
-	}
-
-	public static class TabPaneFeedbackDragEvent extends Event {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		public final Tab sourceTab;
-
-		public final Tab targetTab;
-
-		public final DropType dropType;
-
-		public final Bounds bounds;
-
-		public TabPaneFeedbackDragEvent(TabPane pane, Tab sourceTab, Tab targetTab, Bounds bounds, DropType dropType) {
-			super(pane, pane, DND_TABPANE_DRAG_FEEDBACK);
-			this.sourceTab = sourceTab;
-			this.targetTab = targetTab;
-			this.dropType = dropType;
-			this.bounds = bounds;
-		}
-	}
+//	public static class TabPaneDragStartEvent extends Event {
+//		/**
+//		 * 
+//		 */
+//		private static final long serialVersionUID = 1L;
+//
+//		public final Tab tab;
+//
+//		public TabPaneDragStartEvent(TabPane pane, Tab tab) {
+//			super(pane, pane, DND_TABPANE_DRAG_START);
+//			this.tab = tab;
+//		}
+//	}
+//
+//	public static class TabPaneDragFinishedEvent extends Event {
+//		/**
+//		 * 
+//		 */
+//		private static final long serialVersionUID = 1L;
+//
+//		public final Tab tab;
+//
+//		public TabPaneDragFinishedEvent(TabPane pane, Tab tab) {
+//			super(pane, pane, DND_TABPANE_DRAG_FINISHED);
+//			this.tab = tab;
+//		}
+//	}
+//
+//	public static class TabPaneDroppedEvent extends Event {
+//		/**
+//		 * 
+//		 */
+//		private static final long serialVersionUID = 1L;
+//
+//		public final Tab sourceTab;
+//
+//		public final Tab targetTab;
+//
+//		public final DropType type;
+//
+//		public TabPaneDroppedEvent(TabPane pane, Tab sourceTab, Tab targetTab, DropType type) {
+//			super(pane, pane, DND_TABPANE_DROPPED);
+//			this.sourceTab = sourceTab;
+//			this.targetTab = targetTab;
+//			this.type = type;
+//		}
+//	}
+//
+//	public static class TabPaneFeedbackDragEvent extends Event {
+//		/**
+//		 * 
+//		 */
+//		private static final long serialVersionUID = 1L;
+//
+//		public final Tab sourceTab;
+//
+//		public final Tab targetTab;
+//
+//		public final DropType dropType;
+//
+//		public final Bounds bounds;
+//
+//		public TabPaneFeedbackDragEvent(TabPane pane, Tab sourceTab, Tab targetTab, Bounds bounds, DropType dropType) {
+//			super(pane, pane, DND_TABPANE_DRAG_FEEDBACK);
+//			this.sourceTab = sourceTab;
+//			this.targetTab = targetTab;
+//			this.dropType = dropType;
+//			this.bounds = bounds;
+//		}
+//	}
 
 	public enum DropType {
 		NONE, BEFORE, AFTER
@@ -202,10 +206,7 @@ public class DnDTabPaneSkin extends TabPaneSkin {
 			f_tab.setAccessible(true);
 			Tab t = (Tab) f_tab.get(event.getSource());
 
-			TabPaneDragStartEvent dndStartEvent = new TabPaneDragStartEvent(getSkinnable(), t);
-			Event.fireEvent(getSkinnable(), dndStartEvent);
-
-			if (!dndStartEvent.isConsumed()) {
+			if (t != null && efx_canStartDrag(t)) {
 				DRAGGED_TAB = t;
 				Node node = (Node) event.getSource();
 				Dragboard db = node.startDragAndDrop(TransferMode.MOVE);
@@ -320,8 +321,7 @@ public class DnDTabPaneSkin extends TabPaneSkin {
 				}
 
 				if (noMove) {
-					TabPaneFeedbackDragEvent feedbackEvent = new TabPaneFeedbackDragEvent(getSkinnable(), DRAGGED_TAB, null, null, DropType.NONE);
-					Event.fireEvent(getSkinnable(), feedbackEvent);
+					efx_dragFeedback(DRAGGED_TAB, null, null, DropType.NONE);
 					return;
 				}
 
@@ -329,8 +329,7 @@ public class DnDTabPaneSkin extends TabPaneSkin {
 				b = referenceNode.localToScene(b);
 				b = getSkinnable().sceneToLocal(b);
 
-				TabPaneFeedbackDragEvent feedbackEvent = new TabPaneFeedbackDragEvent(getSkinnable(), DRAGGED_TAB, tab, b, type);
-				Event.fireEvent(getSkinnable(), feedbackEvent);
+				efx_dragFeedback(DRAGGED_TAB, tab, b, type);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -338,8 +337,7 @@ public class DnDTabPaneSkin extends TabPaneSkin {
 
 			event.acceptTransferModes(TransferMode.MOVE);
 		} else {
-			TabPaneFeedbackDragEvent feedbackEvent = new TabPaneFeedbackDragEvent(getSkinnable(), DRAGGED_TAB, null, null, DropType.NONE);
-			Event.fireEvent(getSkinnable(), feedbackEvent);
+			efx_dragFeedback(DRAGGED_TAB, null, null, DropType.NONE);
 		}
 	}
 
@@ -405,8 +403,7 @@ public class DnDTabPaneSkin extends TabPaneSkin {
 					try {
 						this.openAnimation.setValue(this.noneEnum);
 						this.closeAnimation.setValue(this.noneEnum);
-						TabPaneDroppedEvent dropped = new TabPaneDroppedEvent(getSkinnable(), DRAGGED_TAB, tab, type);
-						Event.fireEvent(getSkinnable(), dropped);
+						efx_dropped(DRAGGED_TAB, tab, type);
 						event.setDropCompleted(true);
 					} finally {
 						this.openAnimation.applyStyle(openOrigin, openValue);
@@ -430,7 +427,97 @@ public class DnDTabPaneSkin extends TabPaneSkin {
 			return;
 		}
 
-		TabPaneDragFinishedEvent dndStartEvent = new TabPaneDragFinishedEvent(getSkinnable(), DRAGGED_TAB);
-		Event.fireEvent(getSkinnable(), dndStartEvent);
+		efx_dragFinished(DRAGGED_TAB);
 	}
+	
+	private @Nullable Function<@NonNull Tab, @NonNull Boolean> startFunction;
+	private @Nullable Consumer<@NonNull Tab> dragFinishedConsumer;
+	private @Nullable Consumer<@NonNull FeedbackData> feedbackConsumer;
+	private @Nullable Consumer<@NonNull DroppedData> dropConsumer;
+	
+	public void setStartFunction(@Nullable Function<@NonNull Tab, @NonNull Boolean> startFunction) {
+		this.startFunction = startFunction;
+	}
+	
+	public @Nullable Function<@NonNull Tab, @NonNull Boolean> getStartFunction() {
+		return this.startFunction;
+	}
+	
+	public void setDragFinishedConsumer(@Nullable Consumer<@NonNull Tab> dragFinishedConsumer) {
+		this.dragFinishedConsumer = dragFinishedConsumer;
+	}
+	
+	public @Nullable Consumer<@NonNull Tab> getDragFinishedConsumer() {
+		return this.dragFinishedConsumer;
+	}
+	
+	public void setFeedbackConsumer(@Nullable Consumer<@NonNull FeedbackData> feedbackConsumer) {
+		this.feedbackConsumer = feedbackConsumer;
+	}
+	
+	public @Nullable Consumer<@NonNull FeedbackData> getFeedbackConsumer() {
+		return this.feedbackConsumer;
+	}
+	
+	public void setDropConsumer(@Nullable Consumer<@NonNull DroppedData> dropConsumer) {
+		this.dropConsumer = dropConsumer;
+	}
+	
+	public @Nullable Consumer<@NonNull DroppedData> getDropConsumer() {
+		return this.dropConsumer;
+	}
+	
+	public static class FeedbackData {
+		public final Tab draggedTab;
+		public final Tab targetTab;
+		public final Bounds bounds;
+		public final DropType dropType;
+		
+		public FeedbackData(Tab draggedTab, Tab targetTab, Bounds bounds, DropType dropType) {
+			this.draggedTab = draggedTab;
+			this.targetTab = targetTab;
+			this.bounds = bounds;
+			this.dropType = dropType;
+		}
+	}
+	
+	public static class DroppedData {
+		public final Tab draggedTab;
+		public final Tab targetTab;
+		public final DropType dropType;
+		
+		public DroppedData(Tab draggedTab, Tab targetTab, DropType dropType) {
+			this.draggedTab = draggedTab;
+			this.targetTab = targetTab;
+			this.dropType = dropType;
+		}
+	}
+	
+	private boolean efx_canStartDrag(@NonNull Tab tab) {
+		if( this.startFunction != null ) {
+			return this.startFunction.apply(tab).booleanValue();
+		}
+		return true;
+	}
+	
+	private void efx_dragFeedback(Tab draggedTab, Tab targetTab, Bounds bounds, DropType dropType) {
+		if( this.feedbackConsumer != null ) {
+			this.feedbackConsumer.accept(new FeedbackData(draggedTab, targetTab, bounds, dropType));
+		}
+	}
+	
+	private void efx_dropped(Tab draggedTab, Tab targetTab, DropType dropType) {
+		if( this.dropConsumer != null ) {
+			this.dropConsumer.accept(new DroppedData(draggedTab, targetTab, dropType));
+		}
+	}
+	
+	private void efx_dragFinished(@NonNull Tab tab) {
+		if( this.dragFinishedConsumer != null ) {
+			this.dragFinishedConsumer.accept(tab);
+		}
+	}
+	
+	
+	
 }
