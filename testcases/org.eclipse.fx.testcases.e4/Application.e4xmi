@@ -238,9 +238,14 @@
       </children>
     </trimBars>
     <trimBars xmi:id="_W56f0A3tEeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.trimbar.1" side="Bottom">
+      <children xsi:type="menu:ToolControl" xmi:id="_yeLf4BZuEeS6JMmOlvf6LA" elementId="org.eclipse.fx.testcases.e4.toolcontrol.2"/>
       <children xsi:type="menu:ToolBar" xmi:id="_YRFHEA3tEeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.toolbar.6">
         <children xsi:type="menu:DirectToolItem" xmi:id="_aERjAA3tEeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.directtoolitem.test" label="Test"/>
       </children>
+      <children xsi:type="menu:ToolControl" xmi:id="_zz_cQBZuEeS6JMmOlvf6LA" elementId="org.eclipse.fx.testcases.e4.toolcontrol.3" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.tool.SpacerDummy">
+        <tags>fillspace</tags>
+      </children>
+      <children xsi:type="menu:ToolControl" xmi:id="_0fID8BZuEeS6JMmOlvf6LA" elementId="org.eclipse.fx.testcases.e4.toolcontrol.4" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.tool.ProgressControl"/>
     </trimBars>
   </children>
   <handlers xmi:id="_H2FJYOUcEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.Handler0" command="_FEZr8OUcEeGP-5z69KadAQ"/>
