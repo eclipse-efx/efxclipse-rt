@@ -177,21 +177,29 @@ public abstract class AbstractE4Application implements IApplication {
 		appContext.set(EModelStylingService.class, new EModelStylingService() {
 			private static final String PREFIX = "efx_styleclass:"; //$NON-NLS-1$
 			@Override
-			public void addModelTag(MUIElement element, String... tags) {
-				List<String> cssTags = Stream.of(tags).map(t -> PREFIX + t).collect(Collectors.toList());
-				element.getTags().remove(cssTags);
-				element.getTags().addAll(cssTags);
+			public void addStyles(MUIElement element, String... tags) {
+				List<String> toAdd = Stream.of(tags).map(t -> PREFIX + t)
+					.filter(t -> !element.getTags().contains(t))
+					.collect(Collectors.toList());
+				element.getTags().addAll(toAdd);
 			}
 
 			@Override
-			public void removeModelTag(MUIElement element, String... tags) {
+			public void removeStyles(MUIElement element, String... tags) {
 				List<String> cssTags = Stream.of(tags).map(t -> PREFIX + t).collect(Collectors.toList());
 				element.getTags().removeAll(cssTags);
 			}
 
 			@Override
-			public List<String> getModelTags(MUIElement element) {
-				return element.getTags().stream().filter((t) -> t.startsWith(PREFIX)).collect(Collectors.toList());
+			public List<String> getStyles(MUIElement element) {
+				return getStylesFromTags(element.getTags());
+			}
+			
+			@Override
+			public List<String> getStylesFromTags(List<String> tags) {
+				return tags.stream().filter((t) -> t.startsWith(PREFIX))
+						.map(t -> t.substring(PREFIX.length()))
+						.collect(Collectors.toList());
 			}
 		});
 		appContext.set(IResourceUtilities.class, createResourceUtility(appContext));
