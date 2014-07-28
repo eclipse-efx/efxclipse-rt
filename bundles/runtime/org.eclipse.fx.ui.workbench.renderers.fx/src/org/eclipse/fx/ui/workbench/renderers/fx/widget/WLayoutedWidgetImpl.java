@@ -25,7 +25,6 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
-import org.eclipse.e4.ui.model.application.ui.MGenericStack;
 import org.eclipse.e4.ui.model.application.ui.MGenericTile;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -38,7 +37,7 @@ import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -112,7 +111,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	 */
 	protected void handleDragOver(DragEvent e) {
 		if (this.dropCallback != null) {
-			if (!e.getDragboard().hasContent(DnDTabPane.TAB_MOVE)) {
+			if (!e.getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE)) {
 				return;
 			}
 
@@ -172,11 +171,11 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	 */
 	protected void handleDragDropped(DragEvent e) {
 		if (this.dropCallback != null) {
-			if (!e.getDragboard().hasContent(DnDTabPane.TAB_MOVE)) {
+			if (!e.getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE)) {
 				return;
 			}
 
-			String objectId = (String) e.getDragboard().getContent(DnDTabPane.TAB_MOVE);
+			String objectId = (String) e.getDragboard().getContent(DnDTabPaneSkin.TAB_MOVE);
 
 			MUIElement draggedElement = findElement(objectId);
 			if (draggedElement == null) {

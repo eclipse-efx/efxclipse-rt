@@ -49,7 +49,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupport;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -166,113 +166,27 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					StackWidgetImpl.this.dndFeedback,
 					this.domainElement);
 			
-			DnDTabPane p = new DnDTabPane() {
+			TabPane p = new TabPane() {
 				@Override
-				protected String getClipboardContent(Tab t) {
-					MStackElement domElement = ((WStackItem<?, ?>)t.getUserData()).getDomElement();
-					if( domElement != null ) {
-						EObject eo = (EObject) domElement;
-						return ((XMIResource)eo.eResource()).getID(eo);
-					}
-					return null;
+				protected javafx.scene.control.Skin<?> createDefaultSkin() {
+					return new DnDTabPaneSkin(this) {
+						@Override
+						protected String getClipboardContent(Tab t) {
+							MStackElement domElement = ((WStackItem<?, ?>)t.getUserData()).getDomElement();
+							if( domElement != null ) {
+								EObject eo = (EObject) domElement;
+								return ((XMIResource)eo.eResource()).getID(eo);
+							}
+							return null;
+						}
+					};
 				}
 			};
-			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_START, dnd::handleDragStart);
-			p.addEventHandler(DnDTabPane.DND_TABPANE_DROPPED, dnd::handleDropped);
-			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_FEEDBACK, dnd::handleFeedback);
-			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_FINISHED, dnd::handleFinished);
+			p.addEventHandler(DnDTabPaneSkin.DND_TABPANE_DRAG_START, dnd::handleDragStart);
+			p.addEventHandler(DnDTabPaneSkin.DND_TABPANE_DROPPED, dnd::handleDropped);
+			p.addEventHandler(DnDTabPaneSkin.DND_TABPANE_DRAG_FEEDBACK, dnd::handleFeedback);
+			p.addEventHandler(DnDTabPaneSkin.DND_TABPANE_DRAG_FINISHED, dnd::handleFinished);
 			
-//			TabPane p = new TabPane() {
-//				@Override
-//				protected Skin<?> createDefaultSkin() {
-//					Skin<?> skin = super.createDefaultSkin();
-//					DnDSupporter.hookTabPane(skin, getDomElement(), StackWidgetImpl.this.dndFeedback,
-//							(param) -> StackWidgetImpl.this.dragStartCallback,
-//							(param) -> StackWidgetImpl.this.droppedCallback);
-//					return skin;
-//				}
-//			};
-
-			// ContextMenu m = new ContextMenu();
-			//
-			// {
-			// MenuItem item = new MenuItem("Detach");
-			// item.setOnAction(new EventHandler<ActionEvent>() {
-			//
-			// @Override
-			// public void handle(ActionEvent event) {
-			// DetachView d = new DetachView();
-			// d.detach((MPart) getDomElement().getSelectedElement(),
-			// modelService);
-			// }
-			// });
-			// m.getItems().add(item);
-			// }
-			//
-			// {
-			// MenuItem item = new MenuItem("Move To First");
-			// item.setOnAction(new EventHandler<ActionEvent>() {
-			//
-			// @Override
-			// public void handle(ActionEvent event) {
-			// MoveToFirst d = new MoveToFirst();
-			// d.move((MPart) getDomElement().getSelectedElement());
-			// }
-			// });
-			// m.getItems().add(item);
-			// }
-			//
-			// {
-			// MenuItem item = new MenuItem("Move To Last");
-			// item.setOnAction(new EventHandler<ActionEvent>() {
-			//
-			// @Override
-			// public void handle(ActionEvent event) {
-			// MoveToLast d = new MoveToLast();
-			// d.move((MPart) getDomElement().getSelectedElement());
-			// }
-			// });
-			// m.getItems().add(item);
-			// }
-			//
-			// {
-			// MenuItem item = new MenuItem("Pin To Bottom");
-			// item.setOnAction(new EventHandler<ActionEvent>() {
-			//
-			// @Override
-			// public void handle(ActionEvent event) {
-			// PinToBottom d = new PinToBottom();
-			// d.pin((MPart) getDomElement().getSelectedElement());
-			// }
-			// });
-			// m.getItems().add(item);
-			// }
-			//
-			// p.setContextMenu(m);
-			// (FXTabPane)p.minMaxStateProperty().addListener(new
-			// ChangeListener<MinMaxState>() {
-			//
-			// @Override
-			// public void changed(ObservableValue<? extends MinMaxState>
-			// observable, MinMaxState oldValue, MinMaxState newValue) {
-			// if( minMaxCallback != null ) {
-			// switch (newValue) {
-			// case RESTORED:
-			// minMaxCallback.call(WMinMaxState.RESTORED);
-			// break;
-			// case MAXIMIZED:
-			// minMaxCallback.call(WMinMaxState.MAXIMIZED);
-			// break;
-			// case MINIMIZED:
-			// minMaxCallback.call(WMinMaxState.MINIMIZED);
-			// break;
-			// case NONE:
-			// // Nothing to do
-			// break;
-			// }
-			// }
-			// }
-			// });
 			p.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
 				@Override

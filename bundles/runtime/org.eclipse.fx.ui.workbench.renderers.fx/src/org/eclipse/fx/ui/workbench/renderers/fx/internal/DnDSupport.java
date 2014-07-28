@@ -22,11 +22,11 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget.DragData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane.DropType;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane.TabPaneDragFinishedEvent;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane.TabPaneDragStartEvent;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane.TabPaneDroppedEvent;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane.TabPaneFeedbackDragEvent;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.DropType;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.TabPaneDragFinishedEvent;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.TabPaneDragStartEvent;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.TabPaneDroppedEvent;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.TabPaneFeedbackDragEvent;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
