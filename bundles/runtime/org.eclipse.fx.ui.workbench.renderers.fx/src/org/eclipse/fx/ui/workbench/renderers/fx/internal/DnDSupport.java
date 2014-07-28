@@ -15,8 +15,13 @@ import javafx.scene.control.Tab;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.osgi.util.LoggerCreator;
+import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DropType;
+import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DroppedData;
+import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.FeedbackData;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService.DnDFeedbackData;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService.MarkerFeedback;
@@ -24,9 +29,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget.DragData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.DropType;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.DroppedData;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin.FeedbackData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -70,6 +72,27 @@ public class DnDSupport {
 		this.dropCallbackProvider = dropCallbackProvider;
 		this.feedbackService = feedbackService;
 		this.stack = stack;
+	}
+
+	/**
+	 * Function to serialize tab
+	 * 
+	 * @param tab
+	 *            the tab
+	 * @return the tab
+	 */
+	@SuppressWarnings({ "static-method" })
+	public @NonNull String clipboardDataFunction(@NonNull Tab tab) {
+		MStackElement domElement = ((WStackItem<?, ?>) tab.getUserData()).getDomElement();
+		String rv = null;
+		if (domElement != null) {
+			EObject eo = (EObject) domElement;
+			rv = ((XMIResource) eo.eResource()).getID(eo);
+		}
+		if( rv != null ) {
+			return rv;
+		}
+		return System.identityHashCode(tab) + ""; //$NON-NLS-1$
 	}
 
 	/**

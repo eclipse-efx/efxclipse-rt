@@ -38,6 +38,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
@@ -47,7 +48,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupport;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DndTabPaneFactory;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -168,9 +168,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				s.setStartFunction(dnd::handleDragStart);
 				s.setDropConsumer(dnd::handleDropped);
 				s.setFeedbackConsumer(dnd::handleFeedback);
-				s.setDragFinishedConsumer(dnd::handleFinished);	
+				s.setDragFinishedConsumer(dnd::handleFinished);
+				s.setClipboardDataFunction(dnd::clipboardDataFunction);
 			});
-			
 			
 			p.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 

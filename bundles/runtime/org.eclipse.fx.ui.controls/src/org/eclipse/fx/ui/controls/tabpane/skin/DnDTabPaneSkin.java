@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.ui.workbench.renderers.fx.internal;
+package org.eclipse.fx.ui.controls.tabpane.skin;
 
 import java.lang.reflect.Field;
 import java.util.function.Consumer;
@@ -35,107 +35,41 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DndTabPaneFactory.DragSetup;
+import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DragSetup;
+import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DropType;
+import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DroppedData;
+import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.FeedbackData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.sun.javafx.scene.control.skin.TabPaneSkin;
 
+/**
+ * Skin for TabPane which support DnD
+ */
 @SuppressWarnings("restriction")
 public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 	private static Tab DRAGGED_TAB;
+	/**
+	 * Custom data format for move data
+	 */
 	public static final DataFormat TAB_MOVE = new DataFormat("DnDTabPane:tabMove"); //$NON-NLS-1$
-
-//	public static final EventType<TabPaneDragStartEvent> DND_TABPANE_DRAG_START = new EventType<>(Event.ANY, "DND_TABPANE_DRAG_START"); //$NON-NLS-1$
-//	public static final EventType<TabPaneDroppedEvent> DND_TABPANE_DROPPED = new EventType<>(Event.ANY, "DND_TABPANE_DROPPED"); //$NON-NLS-1$
-//	public static final EventType<TabPaneDragFinishedEvent> DND_TABPANE_DRAG_FINISHED = new EventType<>(Event.ANY, "DND_TABPANE_DRAG_FINISHED"); //$NON-NLS-1$
-//	public static final EventType<TabPaneFeedbackDragEvent> DND_TABPANE_DRAG_FEEDBACK = new EventType<>(Event.ANY, "DND_TABPANE_DRAG_FEEDBACK"); //$NON-NLS-1$
 
 	private Object noneEnum;
 	private StyleableProperty<Object> openAnimation;
 	private StyleableProperty<Object> closeAnimation;
 
-//	public static class TabPaneDragStartEvent extends Event {
-//		/**
-//		 * 
-//		 */
-//		private static final long serialVersionUID = 1L;
-//
-//		public final Tab tab;
-//
-//		public TabPaneDragStartEvent(TabPane pane, Tab tab) {
-//			super(pane, pane, DND_TABPANE_DRAG_START);
-//			this.tab = tab;
-//		}
-//	}
-//
-//	public static class TabPaneDragFinishedEvent extends Event {
-//		/**
-//		 * 
-//		 */
-//		private static final long serialVersionUID = 1L;
-//
-//		public final Tab tab;
-//
-//		public TabPaneDragFinishedEvent(TabPane pane, Tab tab) {
-//			super(pane, pane, DND_TABPANE_DRAG_FINISHED);
-//			this.tab = tab;
-//		}
-//	}
-//
-//	public static class TabPaneDroppedEvent extends Event {
-//		/**
-//		 * 
-//		 */
-//		private static final long serialVersionUID = 1L;
-//
-//		public final Tab sourceTab;
-//
-//		public final Tab targetTab;
-//
-//		public final DropType type;
-//
-//		public TabPaneDroppedEvent(TabPane pane, Tab sourceTab, Tab targetTab, DropType type) {
-//			super(pane, pane, DND_TABPANE_DROPPED);
-//			this.sourceTab = sourceTab;
-//			this.targetTab = targetTab;
-//			this.type = type;
-//		}
-//	}
-//
-//	public static class TabPaneFeedbackDragEvent extends Event {
-//		/**
-//		 * 
-//		 */
-//		private static final long serialVersionUID = 1L;
-//
-//		public final Tab sourceTab;
-//
-//		public final Tab targetTab;
-//
-//		public final DropType dropType;
-//
-//		public final Bounds bounds;
-//
-//		public TabPaneFeedbackDragEvent(TabPane pane, Tab sourceTab, Tab targetTab, Bounds bounds, DropType dropType) {
-//			super(pane, pane, DND_TABPANE_DRAG_FEEDBACK);
-//			this.sourceTab = sourceTab;
-//			this.targetTab = targetTab;
-//			this.dropType = dropType;
-//			this.bounds = bounds;
-//		}
-//	}
-
-	public enum DropType {
-		NONE, BEFORE, AFTER
-	}
-	
+	/**
+	 * Create a new skin
+	 * 
+	 * @param tabPane
+	 *            the tab pane
+	 */
 	public DnDTabPaneSkin(TabPane tabPane) {
 		super(tabPane);
 		hookTabFolderSkin();
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	private void hookTabFolderSkin() {
 		try {
@@ -239,7 +173,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 				db.setDragView(image, image.getWidth(), image.getHeight() * -1);
 
 				ClipboardContent content = new ClipboardContent();
-				String data = getClipboardContent(t);
+				String data = efx_getClipboardContent(t);
 				if (data != null) {
 					content.put(TAB_MOVE, data);
 				}
@@ -249,18 +183,6 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 			// // TODO Auto-generated catch block
 			t.printStackTrace();
 		}
-	}
-
-	/**
-	 * Calculate the content to put into the clipboard
-	 * 
-	 * @param t
-	 *            the tab
-	 * @return the content
-	 */
-	@SuppressWarnings("static-method")
-	protected String getClipboardContent(Tab t) {
-		return System.identityHashCode(t) + ""; //$NON-NLS-1$
 	}
 
 	void tabPane_handleDragOver(Pane tabHeaderArea, Pane headersRegion, DragEvent event) {
@@ -423,101 +345,75 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 	}
 
 	void tabPane_handleDragDone(DragEvent event) {
-		if (DRAGGED_TAB == null) {
+		Tab tab = DRAGGED_TAB;
+		if (tab == null) {
 			return;
 		}
 
-		efx_dragFinished(DRAGGED_TAB);
+		efx_dragFinished(tab);
 	}
-	
+
 	private @Nullable Function<@NonNull Tab, @NonNull Boolean> startFunction;
 	private @Nullable Consumer<@NonNull Tab> dragFinishedConsumer;
 	private @Nullable Consumer<@NonNull FeedbackData> feedbackConsumer;
 	private @Nullable Consumer<@NonNull DroppedData> dropConsumer;
-	
+	private @Nullable Function<@NonNull Tab, @NonNull String> clipboardDataFunction;
+
+	@Override
+	public void setClipboardDataFunction(@Nullable Function<@NonNull Tab, @NonNull String> clipboardDataFunction) {
+		this.clipboardDataFunction = clipboardDataFunction;
+	}
+
+	@Override
 	public void setStartFunction(@Nullable Function<@NonNull Tab, @NonNull Boolean> startFunction) {
 		this.startFunction = startFunction;
 	}
-	
-	public @Nullable Function<@NonNull Tab, @NonNull Boolean> getStartFunction() {
-		return this.startFunction;
-	}
-	
+
+	@Override
 	public void setDragFinishedConsumer(@Nullable Consumer<@NonNull Tab> dragFinishedConsumer) {
 		this.dragFinishedConsumer = dragFinishedConsumer;
 	}
-	
-	public @Nullable Consumer<@NonNull Tab> getDragFinishedConsumer() {
-		return this.dragFinishedConsumer;
-	}
-	
+
+	@Override
 	public void setFeedbackConsumer(@Nullable Consumer<@NonNull FeedbackData> feedbackConsumer) {
 		this.feedbackConsumer = feedbackConsumer;
 	}
-	
-	public @Nullable Consumer<@NonNull FeedbackData> getFeedbackConsumer() {
-		return this.feedbackConsumer;
-	}
-	
+
+	@Override
 	public void setDropConsumer(@Nullable Consumer<@NonNull DroppedData> dropConsumer) {
 		this.dropConsumer = dropConsumer;
 	}
-	
-	public @Nullable Consumer<@NonNull DroppedData> getDropConsumer() {
-		return this.dropConsumer;
-	}
-	
-	public static class FeedbackData {
-		public final Tab draggedTab;
-		public final Tab targetTab;
-		public final Bounds bounds;
-		public final DropType dropType;
-		
-		public FeedbackData(Tab draggedTab, Tab targetTab, Bounds bounds, DropType dropType) {
-			this.draggedTab = draggedTab;
-			this.targetTab = targetTab;
-			this.bounds = bounds;
-			this.dropType = dropType;
-		}
-	}
-	
-	public static class DroppedData {
-		public final Tab draggedTab;
-		public final Tab targetTab;
-		public final DropType dropType;
-		
-		public DroppedData(Tab draggedTab, Tab targetTab, DropType dropType) {
-			this.draggedTab = draggedTab;
-			this.targetTab = targetTab;
-			this.dropType = dropType;
-		}
-	}
-	
+
 	private boolean efx_canStartDrag(@NonNull Tab tab) {
-		if( this.startFunction != null ) {
+		if (this.startFunction != null) {
 			return this.startFunction.apply(tab).booleanValue();
 		}
 		return true;
 	}
-	
+
 	private void efx_dragFeedback(Tab draggedTab, Tab targetTab, Bounds bounds, DropType dropType) {
-		if( this.feedbackConsumer != null ) {
+		if (this.feedbackConsumer != null) {
 			this.feedbackConsumer.accept(new FeedbackData(draggedTab, targetTab, bounds, dropType));
 		}
 	}
-	
+
 	private void efx_dropped(Tab draggedTab, Tab targetTab, DropType dropType) {
-		if( this.dropConsumer != null ) {
+		if (this.dropConsumer != null) {
 			this.dropConsumer.accept(new DroppedData(draggedTab, targetTab, dropType));
 		}
 	}
-	
+
 	private void efx_dragFinished(@NonNull Tab tab) {
-		if( this.dragFinishedConsumer != null ) {
+		if (this.dragFinishedConsumer != null) {
 			this.dragFinishedConsumer.accept(tab);
 		}
 	}
-	
-	
-	
+
+	private String efx_getClipboardContent(@NonNull Tab t) {
+		if (this.clipboardDataFunction != null) {
+			return this.clipboardDataFunction.apply(t);
+		}
+		return System.identityHashCode(t) + ""; //$NON-NLS-1$
+	}
+
 }

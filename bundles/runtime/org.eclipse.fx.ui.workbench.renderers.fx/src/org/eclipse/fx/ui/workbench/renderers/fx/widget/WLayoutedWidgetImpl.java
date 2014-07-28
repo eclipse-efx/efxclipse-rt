@@ -34,10 +34,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPaneSkin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -111,7 +111,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	 */
 	protected void handleDragOver(DragEvent e) {
 		if (this.dropCallback != null) {
-			if (!e.getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE)) {
+			if (! DndTabPaneFactory.hasDnDContent(e)) {
 				return;
 			}
 
@@ -171,11 +171,11 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	 */
 	protected void handleDragDropped(DragEvent e) {
 		if (this.dropCallback != null) {
-			if (!e.getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE)) {
+			if (!DndTabPaneFactory.hasDnDContent(e)) {
 				return;
 			}
 
-			String objectId = (String) e.getDragboard().getContent(DnDTabPaneSkin.TAB_MOVE);
+			String objectId = DndTabPaneFactory.getDnDContent(e);
 
 			MUIElement draggedElement = findElement(objectId);
 			if (draggedElement == null) {
