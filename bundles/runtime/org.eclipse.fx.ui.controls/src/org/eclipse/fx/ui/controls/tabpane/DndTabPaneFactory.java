@@ -13,11 +13,17 @@ package org.eclipse.fx.ui.controls.tabpane;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
+import org.eclipse.fx.ui.controls.markers.PositionMarker;
+import org.eclipse.fx.ui.controls.markers.TabOutlineMarker;
 import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -26,9 +32,37 @@ import org.eclipse.jdt.annotation.Nullable;
  * Factory to create a tab pane who support DnD
  */
 public final class DndTabPaneFactory {
+	private static MarkerFeedback CURRENT_FEEDBACK;
+//	private static Map<TabSerializationStrategy<?>, Boolean> SERIALIZERS = new WeakHashMap<>();
+
 	private DndTabPaneFactory() {
 
 	}
+
+//	public static final class TabSerializationStrategy<O> {
+//		private final Function<Tab, String> serializationFunction;
+//		private final Function<String, O> deserializationFunction;
+//		final String prefix = UUID.randomUUID().toString();
+//
+//		public TabSerializationStrategy(Function<Tab, String> serializationFunction, Function<String, O> deserializationFunction) {
+//			this.serializationFunction = serializationFunction;
+//			this.deserializationFunction = deserializationFunction;
+//		}
+//
+//		public final String toString(Tab tab) {
+//			return this.prefix + "#" + this.serializationFunction.apply(tab); //$NON-NLS-1$
+//		}
+//
+//		public final O toData(String data) {
+//			return deserializationFunction.apply(data.substring(prefix.length() + 1));
+//		}
+//	}
+//
+//	public static <O> TabSerializationStrategy<O> register(Function<Tab, String> serializationFunction, Function<String, O> deserializationFunction) {
+//		TabSerializationStrategy<O> t = new TabSerializationStrategy<O>(serializationFunction, deserializationFunction);
+//		SERIALIZERS.put(t, Boolean.TRUE);
+//		return t;
+//	}
 
 	/**
 	 * Create a tab pane and set the drag strategy
@@ -49,6 +83,31 @@ public final class DndTabPaneFactory {
 	}
 
 	/**
+	 * Create a tab pane with a default setup for drag feedback
+	 * 
+	 * @param feedbackType
+	 *            the feedback type
+	 * @param setup
+	 *            consumer to set up the tab pane
+	 * @return a pane containing the TabPane
+	 */
+	public static Pane createDefaultDnDPane(FeedbackType feedbackType, Consumer<TabPane> setup) {
+		StackPane pane = new StackPane();
+		TabPane tabPane = new TabPane() {
+			@Override
+			protected javafx.scene.control.Skin<?> createDefaultSkin() {
+				DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
+				setup(feedbackType, pane, skin);
+
+				return skin;
+			}
+		};
+		setup.accept(tabPane);
+		pane.getChildren().add(tabPane);
+		return pane;
+	}
+
+	/**
 	 * Extract the tab content
 	 * 
 	 * @param e
@@ -59,15 +118,189 @@ public final class DndTabPaneFactory {
 		return e.getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE);
 	}
 
+//	/**
+//	 * Extract the tab content
+//	 * 
+//	 * @param e
+//	 *            the event
+//	 * @param clazz
+//	 *            the type
+//	 * @return the content
+//	 */
+//	public static <O> O getDnDContent(DragEvent e, Class<O> clazz) {
+//		String data = (String) e.getDragboard().getContent(DnDTabPaneSkin.TAB_MOVE);
+//		Object rv = null;
+//		for (TabSerializationStrategy<?> s : SERIALIZERS.keySet()) {
+//			if (data.startsWith(s.prefix + "#")) { //$NON-NLS-1$
+//				rv = s.toData(data);
+//			}
+//		}
+//
+//		if (rv == null) {
+//			return (O) null;
+//		} else {
+//			if (clazz.isAssignableFrom(rv.getClass())) {
+//				return (O) rv;
+//			}
+//		}
+//
+//		return (O) null;
+//	}
+	
 	/**
-	 * Extract the tab content
+	 * Extract the content
 	 * 
 	 * @param e
 	 *            the event
-	 * @return the content
+	 * @return the return value
 	 */
 	public static String getDnDContent(DragEvent e) {
 		return (String) e.getDragboard().getContent(DnDTabPaneSkin.TAB_MOVE);
+	}
+
+	/**
+	 * Setup insert marker
+	 * 
+	 * @param layoutNode
+	 *            the layout node used to position
+	 * @param setup
+	 *            the setup
+	 */
+	@SuppressWarnings("null")
+	static void setup(FeedbackType type, Pane layoutNode, DragSetup setup) {
+		setup.setStartFunction((t) -> Boolean.TRUE);
+		setup.setFeedbackConsumer((d) -> handleFeedback(type, layoutNode, d));
+		setup.setDropConsumer(DndTabPaneFactory::handleDropped);
+		setup.setDragFinishedConsumer(DndTabPaneFactory::handleFinished);
+	}
+
+	private static void handleDropped(DroppedData data) {
+		TabPane targetPane = data.targetTab.getTabPane();
+		data.draggedTab.getTabPane().getTabs().remove(data.draggedTab);
+		int idx = targetPane.getTabs().indexOf(data.targetTab);
+		if (data.dropType == DropType.AFTER) {
+			if (idx + 1 <= targetPane.getTabs().size()) {
+				targetPane.getTabs().add(idx + 1, data.draggedTab);
+			} else {
+				targetPane.getTabs().add(data.draggedTab);
+			}
+		} else {
+			targetPane.getTabs().add(idx, data.draggedTab);
+		}
+		data.draggedTab.getTabPane().getSelectionModel().select(data.draggedTab);
+	}
+
+	private static void handleFeedback(FeedbackType type, Pane layoutNode, FeedbackData data) {
+		if (data.dropType == DropType.NONE) {
+			cleanup();
+			return;
+		}
+
+		MarkerFeedback f = CURRENT_FEEDBACK;
+		if (f == null || !f.equals(data)) {
+			cleanup();
+			if (type == FeedbackType.MARKER) {
+				CURRENT_FEEDBACK = handleMarker(layoutNode, data);
+			} else {
+				CURRENT_FEEDBACK = handleOutline(layoutNode, data);
+			}
+		}
+	}
+
+	private static void handleFinished(Tab tab) {
+		cleanup();
+	}
+
+	static void cleanup() {
+		if (CURRENT_FEEDBACK != null) {
+			CURRENT_FEEDBACK.hide();
+			CURRENT_FEEDBACK = null;
+		}
+	}
+
+	private static MarkerFeedback handleMarker(Pane layoutNode, FeedbackData data) {
+		PositionMarker marker = null;
+		for (Node n : layoutNode.getChildren()) {
+			if (n instanceof PositionMarker) {
+				marker = (PositionMarker) n;
+			}
+		}
+
+		if (marker == null) {
+			marker = new PositionMarker();
+			marker.setManaged(false);
+			layoutNode.getChildren().add(marker);
+		} else {
+			marker.setVisible(true);
+		}
+
+		double w = marker.getBoundsInLocal().getWidth();
+		double h = marker.getBoundsInLocal().getHeight();
+
+		double ratio = data.bounds.getHeight() / h;
+		ratio += 0.1;
+		marker.setScaleX(ratio);
+		marker.setScaleY(ratio);
+
+		double wDiff = w / 2;
+		double hDiff = (h - h * ratio) / 2;
+
+		if (data.dropType == DropType.AFTER) {
+			marker.relocate(data.bounds.getMinX() + data.bounds.getWidth() - wDiff, data.bounds.getMinY() - hDiff);
+		} else {
+			marker.relocate(data.bounds.getMinX() - wDiff, data.bounds.getMinY() - hDiff);
+		}
+
+		final PositionMarker fmarker = marker;
+
+		return new MarkerFeedback(data) {
+
+			@Override
+			public void hide() {
+				fmarker.setVisible(false);
+			}
+		};
+	}
+
+	@SuppressWarnings("null")
+	private static MarkerFeedback handleOutline(Pane layoutNode, FeedbackData data) {
+		TabOutlineMarker marker = null;
+
+		for (Node n : layoutNode.getChildren()) {
+			if (n instanceof TabOutlineMarker) {
+				marker = (TabOutlineMarker) n;
+			}
+		}
+
+		if (marker == null) {
+			marker = new TabOutlineMarker(layoutNode.getBoundsInLocal(), new BoundingBox(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight()), data.dropType == DropType.BEFORE);
+			marker.setManaged(false);
+			marker.setMouseTransparent(true);
+			layoutNode.getChildren().add(marker);
+		} else {
+			marker.updateBounds(layoutNode.getBoundsInLocal(), new BoundingBox(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight()), data.dropType == DropType.BEFORE);
+			marker.setVisible(true);
+		}
+
+		final TabOutlineMarker fmarker = marker;
+
+		return new MarkerFeedback(data) {
+
+			@Override
+			public void hide() {
+				fmarker.setVisible(false);
+			}
+		};
+	}
+
+	private abstract static class MarkerFeedback {
+		public final FeedbackData data;
+
+		public MarkerFeedback(FeedbackData data) {
+			this.data = data;
+		}
+
+		public abstract void hide();
 	}
 
 	/**
@@ -86,6 +319,20 @@ public final class DndTabPaneFactory {
 		 * Dropped after a reference tab
 		 */
 		AFTER
+	}
+
+	/**
+	 * The feedback type to use
+	 */
+	public enum FeedbackType {
+		/**
+		 * Show a marker
+		 */
+		MARKER,
+		/**
+		 * Show an outline
+		 */
+		OUTLINE
 	}
 
 	/**
@@ -127,6 +374,44 @@ public final class DndTabPaneFactory {
 			this.bounds = bounds;
 			this.dropType = dropType;
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((this.bounds == null) ? 0 : this.bounds.hashCode());
+			result = prime * result + this.draggedTab.hashCode();
+			result = prime * result + this.dropType.hashCode();
+			result = prime * result + ((this.targetTab == null) ? 0 : this.targetTab.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			FeedbackData other = (FeedbackData) obj;
+			if (this.bounds == null) {
+				if (other.bounds != null)
+					return false;
+			} else if (!this.bounds.equals(other.bounds))
+				return false;
+			if (!this.draggedTab.equals(other.draggedTab))
+				return false;
+			if (this.dropType != other.dropType)
+				return false;
+			if (this.targetTab == null) {
+				if (other.targetTab != null)
+					return false;
+			} else if (!this.targetTab.equals(other.targetTab))
+				return false;
+			return true;
+		}
+
 	}
 
 	/**

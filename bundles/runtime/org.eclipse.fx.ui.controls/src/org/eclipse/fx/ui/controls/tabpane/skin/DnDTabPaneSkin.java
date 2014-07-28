@@ -185,8 +185,10 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 		}
 	}
 
+	@SuppressWarnings("all")
 	void tabPane_handleDragOver(Pane tabHeaderArea, Pane headersRegion, DragEvent event) {
-		if (DRAGGED_TAB == null) {
+		Tab draggedTab = DRAGGED_TAB;
+		if (draggedTab == null) {
 			return;
 		}
 
@@ -223,12 +225,12 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 				Tab tab = (Tab) field.get(referenceNode);
 
 				boolean noMove = false;
-				if (tab == DRAGGED_TAB) {
+				if (tab == draggedTab) {
 					noMove = true;
 				} else if (type == DropType.BEFORE) {
 					int idx = getSkinnable().getTabs().indexOf(tab);
 					if (idx > 0) {
-						if (getSkinnable().getTabs().get(idx - 1) == DRAGGED_TAB) {
+						if (getSkinnable().getTabs().get(idx - 1) == draggedTab) {
 							noMove = true;
 						}
 					}
@@ -236,14 +238,14 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 					int idx = getSkinnable().getTabs().indexOf(tab);
 
 					if (idx + 1 < getSkinnable().getTabs().size()) {
-						if (getSkinnable().getTabs().get(idx + 1) == DRAGGED_TAB) {
+						if (getSkinnable().getTabs().get(idx + 1) == draggedTab) {
 							noMove = true;
 						}
 					}
 				}
 
 				if (noMove) {
-					efx_dragFeedback(DRAGGED_TAB, null, null, DropType.NONE);
+					efx_dragFeedback(draggedTab, null, null, DropType.NONE);
 					return;
 				}
 
@@ -251,7 +253,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 				b = referenceNode.localToScene(b);
 				b = getSkinnable().sceneToLocal(b);
 
-				efx_dragFeedback(DRAGGED_TAB, tab, b, type);
+				efx_dragFeedback(draggedTab, tab, b, type);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -259,12 +261,14 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 
 			event.acceptTransferModes(TransferMode.MOVE);
 		} else {
-			efx_dragFeedback(DRAGGED_TAB, null, null, DropType.NONE);
+			efx_dragFeedback(draggedTab, null, null, DropType.NONE);
 		}
 	}
 
+	@SuppressWarnings("all")
 	void tabPane_handleDragDropped(Pane tabHeaderArea, Pane headersRegion, DragEvent event) {
-		if (DRAGGED_TAB == null) {
+		Tab draggedTab = DRAGGED_TAB;
+		if (draggedTab == null) {
 			return;
 		}
 
@@ -298,12 +302,15 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 				Tab tab = (Tab) field.get(referenceNode);
 
 				boolean noMove = false;
-				if (tab == DRAGGED_TAB) {
+				if( tab == null ) {
+					event.setDropCompleted(false);
+					return;
+				} else if (tab == draggedTab) {
 					noMove = true;
 				} else if (type == DropType.BEFORE) {
 					int idx = getSkinnable().getTabs().indexOf(tab);
 					if (idx > 0) {
-						if (getSkinnable().getTabs().get(idx - 1) == DRAGGED_TAB) {
+						if (getSkinnable().getTabs().get(idx - 1) == draggedTab) {
 							noMove = true;
 						}
 					}
@@ -311,7 +318,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 					int idx = getSkinnable().getTabs().indexOf(tab);
 
 					if (idx + 1 < getSkinnable().getTabs().size()) {
-						if (getSkinnable().getTabs().get(idx + 1) == DRAGGED_TAB) {
+						if (getSkinnable().getTabs().get(idx + 1) == draggedTab) {
 							noMove = true;
 						}
 					}
@@ -325,7 +332,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 					try {
 						this.openAnimation.setValue(this.noneEnum);
 						this.closeAnimation.setValue(this.noneEnum);
-						efx_dropped(DRAGGED_TAB, tab, type);
+						efx_dropped(draggedTab, tab, type);
 						event.setDropCompleted(true);
 					} finally {
 						this.openAnimation.applyStyle(openOrigin, openValue);
@@ -391,13 +398,13 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 		return true;
 	}
 
-	private void efx_dragFeedback(Tab draggedTab, Tab targetTab, Bounds bounds, DropType dropType) {
+	private void efx_dragFeedback(@NonNull Tab draggedTab, Tab targetTab, Bounds bounds, @NonNull DropType dropType) {
 		if (this.feedbackConsumer != null) {
 			this.feedbackConsumer.accept(new FeedbackData(draggedTab, targetTab, bounds, dropType));
 		}
 	}
 
-	private void efx_dropped(Tab draggedTab, Tab targetTab, DropType dropType) {
+	private void efx_dropped(@NonNull Tab draggedTab, @NonNull Tab targetTab, @NonNull DropType dropType) {
 		if (this.dropConsumer != null) {
 			this.dropConsumer.accept(new DroppedData(draggedTab, targetTab, dropType));
 		}
