@@ -45,4 +45,10 @@ public interface WPart<N, T, M> extends WLayoutedWidget<MPart> {
 	 */
 	@Nullable
 	public WMenu<M> getMenu();
+	
+	/**
+	 * @return the current toolbar
+	 */
+	@Nullable
+	public WToolBar<T> getToolbar();
 }

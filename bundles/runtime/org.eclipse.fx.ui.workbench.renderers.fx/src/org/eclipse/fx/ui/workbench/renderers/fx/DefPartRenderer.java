@@ -35,6 +35,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.CustomContainerSupport;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * default renderer for {@link MPart}
@@ -123,6 +124,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		StackPane toolbarGroup;
 		Group menuGroup;
 		private WMenu<Node> viewMenuWidget;
+		private WToolBar<Node> viewToolbarWidget;
 
 		@Override
 		protected Pane createWidget() {
@@ -258,6 +260,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					this.toolbarGroup.getChildren().clear();
 					this.dataArea.setTop(null);
 					this.dataArea.setBottom(null);
+					this.toolbarGroup = null;
 				}
 			} else {
 				initToolbarMenu();
@@ -276,6 +279,8 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				n.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR);
 				this.toolbarGroup.getChildren().setAll(n);
 			}
+
+			this.viewToolbarWidget = widget;
 		}
 
 		@Override
@@ -297,6 +302,11 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		@Override
 		public WMenu<Node> getMenu() {
 			return this.viewMenuWidget;
+		}
+
+		@Override
+		public @Nullable WToolBar<Node> getToolbar() {
+			return this.viewToolbarWidget;
 		}
 	}
 
