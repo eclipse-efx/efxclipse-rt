@@ -35,7 +35,7 @@ import com.sun.javafx.css.converters.PaintConverter;
  * Marks a Tab-Position
  */
 @SuppressWarnings("restriction")
-public class TabOutlineMarker extends Group {
+public final class TabOutlineMarker extends Group {
 	@NonNull
 	private Bounds containerBounds;
 	@NonNull

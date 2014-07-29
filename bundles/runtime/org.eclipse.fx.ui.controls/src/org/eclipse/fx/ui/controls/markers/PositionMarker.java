@@ -36,7 +36,7 @@ import com.sun.javafx.css.converters.PaintConverter;
  * Marker which can be used to show an insert position {@link TabPane}
  */
 @SuppressWarnings("restriction")
-public class PositionMarker extends Group {
+public final class PositionMarker extends Group {
 	/**
 	 * Create a new marker
 	 */
