@@ -198,7 +198,7 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 		Object rv = contribution.getObject();
 		if (rv == null) {
 			if (contribution.getContributionURI() == null) {
-				getLogger().error("No contribution uri defined"); //$NON-NLS-1$
+				getLogger().error("No contribution uri defined for " + contribution); //$NON-NLS-1$
 				return null;
 			}
 
