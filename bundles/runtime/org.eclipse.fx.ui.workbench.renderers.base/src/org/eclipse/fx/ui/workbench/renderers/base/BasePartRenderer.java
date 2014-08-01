@@ -71,7 +71,7 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 				}
 			}
 		});
-		
+
 		eventBroker.subscribe(UIEvents.Part.TOPIC_TOOLBAR, new EventHandler() {
 
 			@Override
@@ -84,13 +84,13 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 						if (newValue != null) {
 							handleToolbarAddition((MPart) parent, (MToolBar) newValue);
 						} else {
-							handleToolbarRemove((MPart) parent, (MToolBar) event.getProperty(UIEvents.EventTags.OLD_VALUE));	
+							handleToolbarRemove((MPart) parent, (MToolBar) event.getProperty(UIEvents.EventTags.OLD_VALUE));
 						}
 					}
 				}
 			}
 		});
-		
+
 		eventBroker.subscribe(UIEvents.UIElement.TOPIC_VISIBLE, new EventHandler() {
 
 			@Override
@@ -171,11 +171,11 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 	@Override
 	public void doProcessContent(@NonNull MPart element) {
 		WPart<N, T, M> widget = getWidget(element);
-		if( widget == null ) {
-			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		if (widget == null) {
+			getLogger().error("No widget found for '" + element + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
-		
+
 		MToolBar mToolBar = element.getToolbar();
 		if (mToolBar != null) {
 			WToolBar<T> toolbar = engineCreateWidget(mToolBar);
@@ -237,11 +237,11 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 
 	@Override
 	public void childRendered(MPart parentElement, MUIElement element) {
-		if (element == null || inContentProcessing(parentElement) || !element.isVisible()) {
+		if (inContentProcessing(parentElement) || !element.isVisible()) {
 			return;
 		}
-		
-		if (element instanceof MToolBar) {	
+
+		if (element instanceof MToolBar) {
 			handleToolbarAddition(parentElement, (MToolBar) element);
 		} else if (element instanceof MMenu) {
 			handleMenuAddition(parentElement, Collections.singletonList((MMenu) element));
@@ -250,7 +250,7 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 
 	@Override
 	public void hideChild(MPart container, MUIElement changedObj) {
-		if(changedObj instanceof MToolBar) {
+		if (changedObj instanceof MToolBar) {
 			handleToolbarRemove(container, (MToolBar) changedObj);
 		} else if (changedObj instanceof MMenu) {
 			handleMenuRemove(container, Collections.singletonList((MMenu) changedObj));
