@@ -45,6 +45,7 @@ import org.eclipse.fx.ui.keybindings.Binding;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
 import org.eclipse.fx.ui.keybindings.e4.internal.BindingTable;
 import org.eclipse.fx.ui.keybindings.e4.internal.BindingTableManager;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -132,18 +133,17 @@ public class BindingProcessingAddon {
 		}
 	}
 
-	/**
-	 * @param bindingTable
-	 * @param binding
-	 */
 	private void defineBinding(BindingTable bindingTable, Context bindingContext, MKeyBinding binding) {
-		Binding keyBinding = createBinding(bindingContext, binding.getCommand(), binding.getParameters(), binding.getKeySequence(), binding);
-		if (keyBinding != null && !binding.getTags().contains(EBindingService.DELETED_BINDING_TAG)) {
-			bindingTable.addBinding(keyBinding);
+		String keySequence = binding.getKeySequence();
+		if( keySequence != null ) {
+			Binding keyBinding = createBinding(bindingContext, binding.getCommand(), binding.getParameters(), keySequence, binding);
+			if (keyBinding != null && !binding.getTags().contains(EBindingService.DELETED_BINDING_TAG)) {
+				bindingTable.addBinding(keyBinding);
+			}			
 		}
 	}
 
-	private Binding createBinding(Context bindingContext, MCommand cmdModel, List<MParameter> modelParms, String keySequence, MKeyBinding binding) {
+	private Binding createBinding(Context bindingContext, MCommand cmdModel, List<MParameter> modelParms, @NonNull String keySequence, MKeyBinding binding) {
 		Binding keyBinding = null;
 
 		if (binding.getTransientData().get(EBindingService.MODEL_TO_BINDING_KEY) != null) {
@@ -230,13 +230,16 @@ public class BindingProcessingAddon {
 					+ "\' without binding table " + bindingContext.getId());//$NON-NLS-1$
 			return;
 		}
-		Binding keyBinding = createBinding(bindingContext, binding.getCommand(), binding.getParameters(), binding.getKeySequence(), binding);
-		if (keyBinding != null) {
-			if (add) {
-				table.addBinding(keyBinding);
-			} else {
-				table.removeBinding(keyBinding);
-			}
+		String keySequence = binding.getKeySequence();
+		if(  keySequence != null ) {
+			Binding keyBinding = createBinding(bindingContext, binding.getCommand(), binding.getParameters(), keySequence, binding);
+			if (keyBinding != null) {
+				if (add) {
+					table.addBinding(keyBinding);
+				} else {
+					table.removeBinding(keyBinding);
+				}
+			}			
 		}
 	}
 
@@ -257,9 +260,12 @@ public class BindingProcessingAddon {
 					this.bindingTables.addTable(table);
 					List<MKeyBinding> bindings = bt.getBindings();
 					for (MKeyBinding binding : bindings) {
-						Binding keyBinding = createBinding(bindingContext, binding.getCommand(), binding.getParameters(), binding.getKeySequence(), binding);
-						if (keyBinding != null) {
-							table.addBinding(keyBinding);
+						String keySequence = binding.getKeySequence();
+						if( keySequence != null ) {
+							Binding keyBinding = createBinding(bindingContext, binding.getCommand(), binding.getParameters(), keySequence, binding);
+							if (keyBinding != null) {
+								table.addBinding(keyBinding);
+							}							
 						}
 					}
 				}
