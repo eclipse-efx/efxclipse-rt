@@ -143,6 +143,7 @@ public class BindingProcessingAddon {
 		}
 	}
 
+	@SuppressWarnings("null")
 	private Binding createBinding(Context bindingContext, MCommand cmdModel, List<MParameter> modelParms, @NonNull String keySequence, MKeyBinding binding) {
 		Binding keyBinding = null;
 
@@ -181,25 +182,34 @@ public class BindingProcessingAddon {
 				String locale = null;
 				String platform = null;
 
-				Map<String, String> attrs = new HashMap<String, String>();
+				Map<@NonNull String, @NonNull String> attrs = new HashMap<>();
 				List<String> tags = binding.getTags();
 				for (String tag : tags) {
 					// remember to skip the ':' in each tag!
 					if (tag.startsWith(EBindingService.SCHEME_ID_ATTR_TAG)) {
 						schemeId = tag.substring(9);
-						attrs.put(EBindingService.SCHEME_ID_ATTR_TAG, schemeId);
+						if( schemeId != null ) {
+							attrs.put(EBindingService.SCHEME_ID_ATTR_TAG, schemeId);	
+						}
 					} else if (tag.startsWith(EBindingService.LOCALE_ATTR_TAG)) {
 						locale = tag.substring(7);
-						attrs.put(EBindingService.LOCALE_ATTR_TAG, locale);
+						if( locale != null ) {
+							attrs.put(EBindingService.LOCALE_ATTR_TAG, locale);	
+						}
 					} else if (tag.startsWith(EBindingService.PLATFORM_ATTR_TAG)) {
 						platform = tag.substring(9);
-						attrs.put(EBindingService.PLATFORM_ATTR_TAG, platform);
+						if( platform != null ) {
+							attrs.put(EBindingService.PLATFORM_ATTR_TAG, platform);	
+						}
 					} else if (tag.startsWith(EBindingService.TYPE_ATTR_TAG)) {
 						// system bindings won't pass this attr
 						attrs.put(EBindingService.TYPE_ATTR_TAG, "user"); //$NON-NLS-1$
 					}
 				}
-				keyBinding = this.bindingService.createBinding(sequence, cmd, bindingContext.getId(), attrs);
+				String id = bindingContext.getId();
+				if( id != null ) {
+					keyBinding = this.bindingService.createBinding(sequence, cmd, id, attrs);	
+				}
 			} catch (IllegalArgumentException e) {
 				this.logger.error("failed to create: " + binding, e); //$NON-NLS-1$
 				return null;
