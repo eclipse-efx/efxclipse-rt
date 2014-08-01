@@ -10,8 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.viewer;
 
-import java.util.List;
 
 public interface ContentProvider<O,I> {
-	public List<O> getRootElements(I input);
+	public void setInput(I input);
+	public O getRootElement(int index);
+	public int getSize();
 }
