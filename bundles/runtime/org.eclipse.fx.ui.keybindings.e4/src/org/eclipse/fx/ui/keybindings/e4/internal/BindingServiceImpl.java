@@ -69,26 +69,21 @@ public class BindingServiceImpl implements EBindingService {
 	public Binding createBinding(TriggerSequence sequence,
 			ParameterizedCommand command, String contextId,
 			Map<String, String> attributes) {
-		if( command == null ) {
-			return null;
-		}
 		String schemeId = DEFAULT_SCHEME_ID;
 		// String locale = null;
 		// String platform = null;
 		// int bindingType = Binding.SYSTEM;
 
-		if (sequence != null && !sequence.isEmpty() && contextId != null) {
-			if (attributes != null) {
-				String tmp = attributes.get(SCHEME_ID_ATTR_TAG);
-				if (tmp != null && tmp.length() > 0) {
-					schemeId = tmp;
-				}
-				// locale = attributes.get(LOCALE_ATTR_TAG);
-				// platform = attributes.get(PLATFORM_ATTR_TAG);
-				// if (USER_TYPE.equals(attributes.get(TYPE_ATTR_TAG))) {
-				// bindingType = Binding.USER;
-				// }
+		if (!sequence.isEmpty()) {
+			String tmp = attributes.get(SCHEME_ID_ATTR_TAG);
+			if (tmp != null && tmp.length() > 0) {
+				schemeId = tmp;
 			}
+			// locale = attributes.get(LOCALE_ATTR_TAG);
+			// platform = attributes.get(PLATFORM_ATTR_TAG);
+			// if (USER_TYPE.equals(attributes.get(TYPE_ATTR_TAG))) {
+			// bindingType = Binding.USER;
+			// }
 			if( schemeId == null ) {
 				return null;
 			}
@@ -125,7 +120,7 @@ public class BindingServiceImpl implements EBindingService {
 	public TriggerSequence createSequence(String sequence) {
 		try {
 			KeyLookup keylookup = this.keylookup;
-			if( keylookup != null && sequence != null ) {
+			if( keylookup != null ) {
 				return this.factory.getKeySequenceInstance(keylookup, sequence);	
 			}
 		} catch (ParseException e) {
@@ -136,9 +131,6 @@ public class BindingServiceImpl implements EBindingService {
 
 	@Override
 	public Collection<Binding> getConflictsFor(TriggerSequence sequence) {
-		if( sequence == null ) {
-			throw new IllegalArgumentException("Sequence most not be null"); //$NON-NLS-1$
-		}
 		return this.manager.getConflictsFor(this.contextSet, sequence);
 	}
 
@@ -149,26 +141,16 @@ public class BindingServiceImpl implements EBindingService {
 
 	@Override
 	public Binding getPerfectMatch(TriggerSequence trigger) {
-		if( trigger == null ) {
-			throw new IllegalArgumentException("Trigger most not be null"); //$NON-NLS-1$
-		}
 		return this.manager.getPerfectMatch(this.contextSet, trigger);
 	}
 
 	@Override
 	public boolean isPartialMatch(TriggerSequence keySequence) {
-		if( keySequence == null ) {
-			throw new IllegalArgumentException("Sequence most not be null"); //$NON-NLS-1$
-		}
-
 		return this.manager.isPartialMatch(this.contextSet, keySequence);
 	}
 
 	@Override
 	public TriggerSequence getBestSequenceFor(ParameterizedCommand command) {
-		if( command == null ) {
-			throw new IllegalArgumentException("Command most not be null"); //$NON-NLS-1$
-		}
 		Binding binding = this.manager.getBestSequenceFor(this.contextSet, command);
 		return binding == null ? null : binding.getTriggerSequence();
 	}
@@ -176,9 +158,6 @@ public class BindingServiceImpl implements EBindingService {
 	@Override
 	public Collection<TriggerSequence> getSequencesFor(
 			ParameterizedCommand command) {
-		if( command == null ) {
-			throw new IllegalArgumentException("Command most not be null"); //$NON-NLS-1$
-		}
 		Collection<Binding> bindings = this.manager.getSequencesFor(this.contextSet,
 				command);
 		ArrayList<TriggerSequence> sequences = new ArrayList<TriggerSequence>(
@@ -191,9 +170,6 @@ public class BindingServiceImpl implements EBindingService {
 
 	@Override
 	public Collection<Binding> getBindingsFor(ParameterizedCommand command) {
-		if( command == null ) {
-			throw new IllegalArgumentException("Command most not be null"); //$NON-NLS-1$
-		}
 		return this.manager.getBindingsFor(this.contextSet, command);
 	}
 
@@ -204,9 +180,6 @@ public class BindingServiceImpl implements EBindingService {
 
 	@Override
 	public Collection<Binding> getPartialMatches(TriggerSequence sequence) {
-		if( sequence == null ) {
-			throw new IllegalArgumentException("Sequence most not be null"); //$NON-NLS-1$
-		}
 		return this.manager.getPartialMatches(this.contextSet, sequence);
 	}
 
