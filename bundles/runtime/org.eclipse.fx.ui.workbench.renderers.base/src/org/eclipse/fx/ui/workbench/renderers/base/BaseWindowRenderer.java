@@ -26,7 +26,6 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
-import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
@@ -182,7 +181,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
                     if (element instanceof MWindow) {
                         handleWindowRemove(window, (MWindow) element);
                     } else if (element instanceof MWindowElement) {
-                        handleChildRemove((MWindowElement) element);
+                        handleChildRemove(window, (MWindowElement) element);
                     }
                 }
             }
@@ -208,14 +207,9 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	    }
 	}
 
-	void handleChildRemove(MWindowElement element) {
+	void handleChildRemove(@NonNull MWindow window, MWindowElement element) {
 		if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
-			MElementContainer<MUIElement> parent = element.getParent();
-			if( parent != null ) {
-				hideChild((MWindow) (MUIElement) parent, element);	
-			} else {
-				getLogger().error("Unable to find parent for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
-			}
+			hideChild(window, element);
 		}
 	}
 
