@@ -14,7 +14,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -60,9 +59,26 @@ public class PaintEditor extends StackPane {
 
 	@NonNull
 	static final DecimalFormat FORMAT = new DecimalFormat("0.0#"); //$NON-NLS-1$
-	private final ObjectProperty<@Nullable Consumer<@Nullable Paint>> okConsumer = new SimpleObjectProperty<>();
-	private final ObjectProperty<@Nullable Consumer<@Nullable Paint>> applyConsumer = new SimpleObjectProperty<>();
-	private final ObjectProperty<@Nullable Runnable> cancel = new SimpleObjectProperty<>();
+
+	private ObjectProperty<BiConsumer<@NonNull State, @Nullable Paint>> stateConsumer = new SimpleObjectProperty<>();
+	
+	/**
+	 * The different states
+	 */
+	public enum State {
+		/**
+		 * Ok pressed
+		 */
+		OK,
+		/**
+		 * Apply pressed
+		 */
+		APPLY,
+		/**
+		 * Cancel pressed
+		 */
+		CANCEL
+	}
 
 	@NonNull
 	private final TabPane paintTabFolder;
@@ -180,75 +196,41 @@ public class PaintEditor extends StackPane {
 	}
 
 	private void handleApply(ActionEvent e) {
-		Consumer<@Nullable Paint> consumer = this.applyConsumer.get();
+		BiConsumer<@NonNull State, @Nullable Paint> consumer = this.stateConsumer.get();
 		if (consumer != null) {
-			consumer.accept(getPaint());
+			consumer.accept(State.APPLY, getPaint());
 		}
 	}
 
 	private void handleOk(ActionEvent e) {
-		Consumer<@Nullable Paint> consumer = this.okConsumer.get();
+		BiConsumer<@NonNull State, @Nullable Paint> consumer = this.stateConsumer.get();
 		if (consumer != null) {
-			consumer.accept(getPaint());
+			consumer.accept(State.OK, getPaint());
 		}
 	}
 
 	private void handleCancel(ActionEvent e) {
-		Runnable runnable = this.cancel.get();
-		if (runnable != null) {
-			runnable.run();
+		BiConsumer<@NonNull State, @Nullable Paint> consumer = this.stateConsumer.get();
+		if (consumer != null) {
+			consumer.accept(State.CANCEL, null);
 		}
 	}
 
 	/**
-	 * Associate an ok consumer
+	 * Set a state consumer
 	 * 
-	 * @param okConsumer
+	 * @param stateConsumer
 	 *            the consumer
 	 */
-	public void setOkConsumer(@Nullable Consumer<@Nullable Paint> okConsumer) {
-		this.okConsumer.set(okConsumer);
+	public void setStateConsumer(BiConsumer<@NonNull State, @Nullable Paint> stateConsumer) {
+		this.stateConsumer.set(stateConsumer);
 	}
-
+	
 	/**
-	 * Associate an apply consumer
-	 * 
-	 * @param applyConsumer
-	 *            the apply consumer
+	 * @return the current state consumer
 	 */
-	public void setApplyConsumer(@Nullable Consumer<@Nullable Paint> applyConsumer) {
-		this.applyConsumer.set(applyConsumer);
-	}
-
-	/**
-	 * Associate an cancel consumer
-	 * 
-	 * @param r
-	 *            the consumer
-	 */
-	public void setCancel(@Nullable Runnable r) {
-		this.cancel.set(r);
-	}
-
-	/**
-	 * @return the current consumer
-	 */
-	public @Nullable Consumer<@Nullable Paint> getOkConsumer() {
-		return this.okConsumer.get();
-	}
-
-	/**
-	 * @return the curren consumer
-	 */
-	public @Nullable Consumer<@Nullable Paint> getApplyConsumer() {
-		return this.applyConsumer.get();
-	}
-
-	/**
-	 * @return the current callback
-	 */
-	public @Nullable Runnable getCancel() {
-		return this.cancel.get();
+	public BiConsumer<@NonNull State, @Nullable Paint> getStateConsumer() {
+		return this.stateConsumer.get();
 	}
 
 	private Tab createColorTab() {
