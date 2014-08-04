@@ -24,7 +24,12 @@ public interface WDragTargetWidget {
 	 * @param callback
 	 *            the callback
 	 */
-	public void setDragDroppedCallback(@NonNull WCallback<@NonNull DropData, @Nullable Void> callback);
+	public void setDragDroppedCallback(@Nullable WCallback<@NonNull DropData, @Nullable Void> callback);
+	
+	/**
+	 * @return the current callback
+	 */
+	public @Nullable WCallback<@NonNull DropData, @Nullable Void> getDropDroppedCallback();
 
 	/**
 	 * The drop type
@@ -43,13 +48,21 @@ public interface WDragTargetWidget {
 		 */
 		INSERT,
 		/**
-		 * Split on the left
+		 * Split vertical and put the new item above the other
 		 */
-		SPLIT_VERTICAL,
+		SPLIT_TOP,
 		/**
-		 * split on the bottom
+		 * Split vertical and put the new item below the other
 		 */
-		SPLIT_HORIZONTAL
+		SPLIT_BOTTOM,
+		/**
+		 * split horizontal and put the new item left to the other
+		 */
+		SPLIT_LEFT,
+		/**
+		 * split horizontal and put the new item right to the other
+		 */
+		SPLIT_RIGHT
 	}
 
 	/**

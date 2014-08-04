@@ -5,3 +5,12 @@
 .part-expand-group {
 	-fx-background-color: gray
 }
+
+.area-overlay > .area {
+	-fx-border-color: rgba(0,0,0,0.3);
+	-fx-border-width: 3px;
+}
+
+.area-overlay > .area.active {
+	-fx-background-color: rgba(0,0,0,0.3);
+}

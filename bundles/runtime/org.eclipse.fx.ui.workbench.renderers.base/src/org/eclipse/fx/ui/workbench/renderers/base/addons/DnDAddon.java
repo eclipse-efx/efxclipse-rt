@@ -128,8 +128,10 @@ public class DnDAddon {
 				handleInsert(reference, sourceElement);
 			}
 			break;
-		case SPLIT_VERTICAL:
-		case SPLIT_HORIZONTAL:
+		case SPLIT_BOTTOM:
+		case SPLIT_TOP:
+		case SPLIT_LEFT:
+		case SPLIT_RIGHT:
 			if (reference != null) {
 				handleSplit(reference, sourceElement, d.dropType);
 			}
@@ -152,11 +154,11 @@ public class DnDAddon {
 	private void handleSplit(@NonNull MUIElement reference, @NonNull MUIElement sourceElement, @NonNull DropType dropType) {
 		MElementContainer<MUIElement> parent = reference.getParent();
 		if( (MUIElement)parent instanceof MPartStack ) {
-			split(parent, sourceElement, dropType == DropType.SPLIT_HORIZONTAL );
+			split(parent, sourceElement, dropType );
 		}
 	}
 	
-	private void split(MUIElement toSplit, MUIElement child, boolean horizontal) {
+	private void split(MUIElement toSplit, MUIElement child, @NonNull DropType dropType) {
 		// remove the moved element from its parent
 		child.setParent(null);
 		
@@ -178,10 +180,14 @@ public class DnDAddon {
 		
 		container.setToBeRendered(true);
 		container.setVisible(true);
-		container.setHorizontal(horizontal);
-		container.getChildren().add((MPartSashContainerElement) toSplit);
-		container.getChildren().add((MPartSashContainerElement) childContainer);
-//		
+		container.setHorizontal(dropType == DropType.SPLIT_LEFT || dropType == DropType.SPLIT_RIGHT);
+		if( dropType == DropType.SPLIT_TOP || dropType == DropType.SPLIT_LEFT ) {
+			container.getChildren().add((MPartSashContainerElement) childContainer);
+			container.getChildren().add((MPartSashContainerElement) toSplit);	
+		} else {
+			container.getChildren().add((MPartSashContainerElement) toSplit);
+			container.getChildren().add((MPartSashContainerElement) childContainer);
+		}
 		owner.getChildren().add(index, container);
 	}
 

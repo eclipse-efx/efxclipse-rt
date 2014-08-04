@@ -12,11 +12,8 @@ package org.eclipse.fx.ui.workbench.renderers.fx.widget;
 
 import java.util.List;
 
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -24,20 +21,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.e4.ui.model.application.ui.MElementContainer;
-import org.eclipse.e4.ui.model.application.ui.MGenericTile;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.UIEvents;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
-import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.SplitDnDSupport;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -58,8 +49,9 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	private WCallback<@NonNull DropData, @Nullable Void> dropCallback;
 
 	@Inject
+	@NonNull
 	DnDFeedbackService feedbackService;
-	
+
 	/**
 	 * @return the widget node
 	 */
@@ -92,8 +84,11 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@NonNull
 	protected Node createStaticLayoutNode() {
 		Pane staticLayoutGroup = createStaticPane();
-		staticLayoutGroup.addEventHandler(DragEvent.DRAG_OVER, this::handleDragOver);
-		staticLayoutGroup.addEventHandler(DragEvent.DRAG_DROPPED, this::handleDragDropped);
+		
+		SplitDnDSupport<M> dndSupport = new SplitDnDSupport<>(this.feedbackService, this);
+		staticLayoutGroup.addEventHandler(DragEvent.DRAG_OVER, dndSupport::handleDragOver);
+		staticLayoutGroup.addEventHandler(DragEvent.DRAG_EXITED, dndSupport::handleDragExit);
+		staticLayoutGroup.addEventHandler(DragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
 		Node n = getWidgetNode();
 		if (n != null) {
 			staticLayoutGroup.getChildren().add(n);
@@ -103,118 +98,38 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 		return staticLayoutGroup;
 	}
 
-	/**
-	 * Handling the drag over
-	 * 
-	 * @param e
-	 *            the event
-	 */
-	protected void handleDragOver(DragEvent e) {
-		if (this.dropCallback != null) {
-			if (! DndTabPaneFactory.hasDnDContent(e)) {
-				return;
-			}
-
-			@Nullable
-			M m = getDomElement();
-			
-			if( m instanceof MGenericTile<?> ) {
-				// Tiles are not split
-				e.consume();
-			} else if( m instanceof MPart && isSplit(e) ) {
-				e.consume();
-				if( (MUIElement)m.getParent() instanceof MPartStack ) {
-					e.acceptTransferModes(TransferMode.MOVE);
-				}
-			} else if (m instanceof MElementContainer<?>) {
-				MElementContainer<?> c = (MElementContainer<?>) m;
-				if (c.getChildren().isEmpty()) {
-					e.acceptTransferModes(TransferMode.MOVE);
-					e.consume();
-				}
-			}
-		}
-	}
-	
-	private int SPLIT_PADDING = 20;
-	
-	private boolean isSplit(DragEvent e) {
-		Bounds boundsInLocal = getStaticLayoutNode().getBoundsInLocal();
-		boundsInLocal = new BoundingBox(
-				boundsInLocal.getMinX()+SPLIT_PADDING, 
-				boundsInLocal.getMinY()+SPLIT_PADDING, boundsInLocal.getWidth()-SPLIT_PADDING*2, 
-				boundsInLocal.getHeight()-SPLIT_PADDING*2);
-		return boundsInLocal.contains(e.getX(), e.getY());
-	}
-	
-	private DropType getSplitType(DragEvent e) {
-		return DropType.SPLIT_VERTICAL;
-	}
-
-	private MUIElement findElement(String objectId) {
-		EObject eo = (EObject) getDomElement();
-		EObject rv = null;
-		if (eo != null) {
-			rv = ((XMIResource) eo.eResource()).getEObject(objectId);
-		}
-		if (rv instanceof MUIElement) {
-			return (MUIElement) rv;
-		}
-		return null;
-	}
-
-	/**
-	 * Handle the drag
-	 * 
-	 * @param e
-	 *            the event
-	 */
-	protected void handleDragDropped(DragEvent e) {
-		if (this.dropCallback != null) {
-			if (!DndTabPaneFactory.hasDnDContent(e)) {
-				return;
-			}
-
-			String objectId = DndTabPaneFactory.getDnDContent(e);
-
-			MUIElement draggedElement = findElement(objectId);
-			if (draggedElement == null) {
-				return;
-			}
-
-			@Nullable
-			M m = getDomElement();
-			if( m instanceof MGenericTile<?> ) {
-				// Tiles are not split
-				e.consume();
-			} else if( m instanceof MPart && isSplit(e) ) {
-				e.consume();
-				if( (MUIElement)m.getParent() instanceof MPartStack ) {
-					DropData d = new DropData(getDomElement(), draggedElement, getSplitType(e));
-					this.dropCallback.call(d);
-				}
-			} else if (m instanceof MElementContainer<?>) {
-				MElementContainer<?> c = (MElementContainer<?>) m;
-				if (c.getChildren().isEmpty()) {
-					DropData d = new DropData(getDomElement(), draggedElement, DropType.INSERT);
-					this.dropCallback.call(d);
-					e.consume();
-					e.setDropCompleted(true);
-				}
-			}
-		}
-	}
+//	/**
+//	 * Show the split feedback
+//	 * 
+//	 * @param e
+//	 *            the drag event
+//	 */
+//	protected void showSplitFeedback(DragEvent e) {
+//		if (this.splitFeedback == null) {
+//			this.splitFeedback = new AreaOverlay(0.2);
+//			this.splitFeedback.setMouseTransparent(true);
+//			this.splitFeedback.setFocusTraversable(false);
+//			this.splitFeedback.setManaged(false);
+//			Pane p = (Pane) getStaticLayoutNode();
+//			p.getChildren().add(this.splitFeedback);
+//
+//		}
+//		
+//		Bounds boundsInLocal = getStaticLayoutNode().getBoundsInLocal();
+//		this.splitFeedback.setVisible(true);
+//		this.splitFeedback.resizeRelocate(0, 0, boundsInLocal.getWidth(), boundsInLocal.getHeight());
+//
+//		Point2D sceneToLocal = this.splitFeedback.sceneToLocal(e.getSceneX(), e.getSceneY());
+//		this.splitFeedback.updateDraggedArea(sceneToLocal.getX(), sceneToLocal.getY());
+//	}
 
 	@Override
-	public final void setDragDroppedCallback(@NonNull WCallback<@NonNull DropData, @Nullable Void> callback) {
+	public final void setDragDroppedCallback(@Nullable WCallback<@NonNull DropData, @Nullable Void> callback) {
 		this.dropCallback = callback;
 	}
 
-	/**
-	 * Allow access to the drop callback
-	 * @return the callback
-	 */
-	protected @Nullable WCallback<@NonNull DropData, @Nullable Void> getDropCallback() {
+	@Override
+	public @Nullable WCallback<@NonNull DropData, @Nullable Void> getDropDroppedCallback() {
 		return this.dropCallback;
 	}
 

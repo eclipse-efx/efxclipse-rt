@@ -10,11 +10,15 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
+import java.util.Optional;
+
 import javafx.geometry.BoundingBox;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
+import org.eclipse.fx.ui.controls.markers.AreaOverlay;
+import org.eclipse.fx.ui.controls.markers.AreaOverlay.Area;
 import org.eclipse.fx.ui.controls.markers.PositionMarker;
 import org.eclipse.fx.ui.controls.markers.TabOutlineMarker;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
@@ -33,7 +37,13 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 			WLayoutedWidget<?> l = (WLayoutedWidget<?>) widget;
 			Pane pane = (Pane) l.getStaticLayoutNode();
 			
-			if( data.reference instanceof MStackElement ) {
+			if( data.dropType == DropType.SPLIT_BOTTOM ||
+					data.dropType == DropType.SPLIT_TOP ||
+					data.dropType == DropType.SPLIT_RIGHT ||
+					data.dropType == DropType.SPLIT_LEFT
+					) {
+				return handleSplit(pane, data);
+			} else if( data.reference instanceof MStackElement ) {
 				if( data.sourceElement.getParent() == data.feedbackContainerElement ) {
 					return handleReorder(pane, data);
 				} else {
@@ -43,6 +53,49 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 		}
 		
 		return null;
+	}
+	
+	private static MarkerFeedback handleSplit(Pane layoutNode, DnDFeedbackData data) {
+		Optional<Node> first = layoutNode.getChildren().stream().filter(n -> n instanceof AreaOverlay).findFirst();
+		AreaOverlay overlay;
+		if( first.isPresent() ) {
+			overlay = (AreaOverlay) first.get();
+		} else {
+			overlay = new AreaOverlay(0.2);
+			overlay.setManaged(false);
+			overlay.setMouseTransparent(true);
+			layoutNode.getChildren().add(overlay);
+			layoutNode.widthProperty().addListener((o) -> overlay.resizeRelocate(0,0,layoutNode.getWidth(), layoutNode.getHeight()));
+			layoutNode.heightProperty().addListener((o) -> overlay.resizeRelocate(0,0,layoutNode.getWidth(), layoutNode.getHeight()));
+			overlay.resizeRelocate(0,0,layoutNode.getWidth(), layoutNode.getHeight());
+		}
+		
+		overlay.setVisible(true);
+		overlay.updateActiveArea(toArea(data.dropType));
+		
+		return new MarkerFeedback(data) {
+			
+			@Override
+			public void hide() {
+				overlay.setVisible(false);
+			}
+		};
+	}
+	
+	private static Area toArea(DropType type) {
+		switch (type) {
+		case SPLIT_BOTTOM:
+			return Area.BOTTOM;
+		case SPLIT_LEFT:
+			return Area.LEFT;
+		case SPLIT_RIGHT:
+			return Area.RIGHT;
+		case SPLIT_TOP:
+			return Area.TOP;
+		default:
+			break;
+		}
+		return Area.NONE;
 	}
 	
 	private static MarkerFeedback handleReorder(Pane layoutNode, DnDFeedbackData data) {
