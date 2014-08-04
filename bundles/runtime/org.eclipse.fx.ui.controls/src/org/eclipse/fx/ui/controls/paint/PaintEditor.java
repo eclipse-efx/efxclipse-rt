@@ -12,6 +12,7 @@ package org.eclipse.fx.ui.controls.paint;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -29,6 +30,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -61,7 +63,7 @@ public class PaintEditor extends StackPane {
 	static final DecimalFormat FORMAT = new DecimalFormat("0.0#"); //$NON-NLS-1$
 
 	private ObjectProperty<BiConsumer<@NonNull State, @Nullable Paint>> stateConsumer = new SimpleObjectProperty<>();
-	
+
 	/**
 	 * The different states
 	 */
@@ -100,9 +102,12 @@ public class PaintEditor extends StackPane {
 	 * 
 	 * @param defaultPaint
 	 *            the default paint
+	 * @param states
+	 *            the state buttons to show (empty == all buttons are shown)
 	 */
-	public PaintEditor(@Nullable Paint defaultPaint) {
+	public PaintEditor(@Nullable Paint defaultPaint, State... states) {
 		this.paint.set(defaultPaint);
+		List<State> asList = Arrays.asList(states);
 
 		BorderPane pane = new BorderPane();
 
@@ -120,8 +125,9 @@ public class PaintEditor extends StackPane {
 
 		GridLayoutPane buttons = new GridLayoutPane();
 		buttons.setMakeColumnsEqualWidth(true);
-		buttons.setNumColumns(3);
-
+		buttons.setNumColumns(states.length == 0 ? 3 : states.length);
+		
+		if( asList.isEmpty() || asList.contains(State.APPLY) )
 		{
 			Button b = new Button(Messages.getString("PaintEditor.Apply")); //$NON-NLS-1$
 			b.setOnAction(this::handleApply);
@@ -129,6 +135,7 @@ public class PaintEditor extends StackPane {
 			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL, Alignment.CENTER, false, false));
 		}
 
+		if( asList.isEmpty() || asList.contains(State.OK) )
 		{
 			Button b = new Button(Messages.getString("PaintEditor.Ok")); //$NON-NLS-1$
 			b.setOnAction(this::handleOk);
@@ -136,6 +143,7 @@ public class PaintEditor extends StackPane {
 			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL, Alignment.CENTER, false, false));
 		}
 
+		if( asList.isEmpty() || asList.contains(State.CANCEL) )
 		{
 			Button b = new Button(Messages.getString("PaintEditor.Cancel")); //$NON-NLS-1$
 			b.setOnAction(this::handleCancel);
@@ -225,7 +233,7 @@ public class PaintEditor extends StackPane {
 	public void setStateConsumer(BiConsumer<@NonNull State, @Nullable Paint> stateConsumer) {
 		this.stateConsumer.set(stateConsumer);
 	}
-	
+
 	/**
 	 * @return the current state consumer
 	 */
@@ -303,7 +311,8 @@ public class PaintEditor extends StackPane {
 		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.Proportional")), proportional); //$NON-NLS-1$
 		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.CycleMethod")), cycleMethod); //$NON-NLS-1$
 
-		ListView<Stop> colorStops = new ListView<Stop>();
+		ListView<Stop> colorStops = new ListView<>();
+		colorStops.setCellFactory((v) -> new StopCell());
 
 		@Nullable
 		Paint paint = this.paint.get();
@@ -459,7 +468,8 @@ public class PaintEditor extends StackPane {
 		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.Proportional")), proportional); //$NON-NLS-1$
 		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.CycleMethod")), cycleMethod); //$NON-NLS-1$
 
-		ListView<Stop> colorStops = new ListView<Stop>();
+		ListView<Stop> colorStops = new ListView<>();
+		colorStops.setCellFactory((v) -> new StopCell());
 
 		@Nullable
 		Paint paint = this.paint.get();
@@ -559,6 +569,23 @@ public class PaintEditor extends StackPane {
 		t.setContent(p);
 
 		return t;
+	}
+	
+	static class StopCell extends ListCell<Stop> {
+		@Override
+		protected void updateItem(Stop item, boolean empty) {
+			super.updateItem(item, empty);
+			if( item != null && ! empty ) {
+				Rectangle r = new Rectangle(20,20,item.getColor());
+				r.setStrokeWidth(1);
+				r.setStroke(Color.BLACK);
+				setGraphic(r);
+				setText(FORMAT.format(item.getOffset()*100)+"%"); //$NON-NLS-1$
+			} else {
+				setGraphic(null);
+				setText(null);
+			}
+		}
 	}
 
 	static class StopColorPane extends TitledPane {
