@@ -5,10 +5,12 @@ Bundle-SymbolicName: org.eclipse.fx.ui.controls
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
- org.eclipse.fx.ide.css.jfx8;bundle-version="1.0.0";resolution:=optional
+ org.eclipse.fx.ide.css.jfx8;bundle-version="1.0.0";resolution:=optional,
+ org.eclipse.fx.ui.panes;bundle-version="1.0.0"
 Export-Package: org.eclipse.fx.ui.controls.image,
  org.eclipse.fx.ui.controls.image.spi,
  org.eclipse.fx.ui.controls.markers,
+ org.eclipse.fx.ui.controls.paint,
  org.eclipse.fx.ui.controls.styledtext,
  org.eclipse.fx.ui.controls.tabpane
 Import-Package: com.sun.javafx;version="2.2.0",

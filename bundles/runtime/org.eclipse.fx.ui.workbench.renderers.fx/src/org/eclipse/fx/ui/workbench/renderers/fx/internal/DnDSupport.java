@@ -24,7 +24,6 @@ import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DroppedData;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.FeedbackData;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService.DnDFeedbackData;
-import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService.MarkerFeedback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget.DragData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropData;
@@ -35,7 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * Class implementing DnD
  */
-public class DnDSupport {
+public class DnDSupport extends BaseDnDSupport {
 	@NonNull
 	private final WCallback<@Nullable Void, @Nullable WCallback<@NonNull DragData, @NonNull Boolean>> dragStartCallbackProvider;
 
@@ -43,13 +42,7 @@ public class DnDSupport {
 	private final WCallback<@Nullable Void, @Nullable WCallback<@NonNull DropData, @Nullable Void>> dropCallbackProvider;
 
 	@NonNull
-	private final DnDFeedbackService feedbackService;
-
-	@NonNull
 	private final MPartStack stack;
-
-	@Nullable
-	private static MarkerFeedback CURRENT_FEEDBACK = null;
 
 	@NonNull
 	private static final Logger LOGGER = LoggerCreator.createLogger(DnDSupport.class);
@@ -68,9 +61,9 @@ public class DnDSupport {
 	 */
 	public DnDSupport(@NonNull WCallback<@Nullable Void, @Nullable WCallback<@NonNull DragData, @NonNull Boolean>> dragStartCallbackProvider, @NonNull WCallback<@Nullable Void, @Nullable WCallback<@NonNull DropData, @Nullable Void>> dropCallbackProvider, @NonNull DnDFeedbackService feedbackService,
 			@NonNull MPartStack stack) {
+		super(feedbackService);
 		this.dragStartCallbackProvider = dragStartCallbackProvider;
 		this.dropCallbackProvider = dropCallbackProvider;
-		this.feedbackService = feedbackService;
 		this.stack = stack;
 	}
 
@@ -163,14 +156,8 @@ public class DnDSupport {
 		MStackElement reference = ((WStackItem<?, ?>) data.targetTab.getUserData()).getDomElement();
 		MStackElement sourceReference = ((WStackItem<?, ?>) data.draggedTab.getUserData()).getDomElement();
 
-		DnDFeedbackData dndData = new DnDFeedbackData(reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE, this.stack,
-				new DnDFeedbackService.Region(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight()));
-
-		MarkerFeedback f = CURRENT_FEEDBACK;
-		if (f == null || !f.equals(data)) {
-			cleanup();
-			CURRENT_FEEDBACK = this.feedbackService.showFeedback(dndData);
-		}
+		updateFeedback(new DnDFeedbackData(reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE, this.stack,
+				new DnDFeedbackService.Region(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight())));
 	}
 
 	/**
@@ -185,10 +172,5 @@ public class DnDSupport {
 		cleanup();
 	}
 
-	static void cleanup() {
-		if (CURRENT_FEEDBACK != null) {
-			CURRENT_FEEDBACK.hide();
-			CURRENT_FEEDBACK = null;
-		}
-	}
+	
 }

@@ -24,7 +24,6 @@ import org.eclipse.e4.ui.model.application.ui.menu.MPopupMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.BasePopupMenuRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
-import org.eclipse.fx.ui.workbench.renderers.fx.DefMenuRenderer.MenuImpl;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 /**

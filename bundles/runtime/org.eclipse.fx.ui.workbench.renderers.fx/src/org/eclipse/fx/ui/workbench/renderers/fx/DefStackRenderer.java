@@ -160,7 +160,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		protected TabPane createWidget() {
 			DnDSupport dnd = new DnDSupport(
 					(param) -> StackWidgetImpl.this.dragStartCallback,
-					(param) -> StackWidgetImpl.this.getDropCallback(),
+					(param) -> StackWidgetImpl.this.getDropDroppedCallback(),
 					StackWidgetImpl.this.dndFeedback,
 					this.domainElement);
 			
