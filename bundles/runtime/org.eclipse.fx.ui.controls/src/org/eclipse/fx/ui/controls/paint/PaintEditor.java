@@ -19,6 +19,8 @@ import java.util.function.Consumer;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
@@ -39,149 +42,307 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Paint;
+import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 
 import org.eclipse.fx.ui.panes.GridData;
 import org.eclipse.fx.ui.panes.GridData.Alignment;
 import org.eclipse.fx.ui.panes.GridLayoutPane;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * An editor to define paints
+ */
 public class PaintEditor extends StackPane {
-	private static final DecimalFormat FORMAT = new DecimalFormat("0.0#");
-	private ObjectProperty<Consumer<Paint>> okConsumer = new SimpleObjectProperty<>();
-	private ObjectProperty<Consumer<Paint>> applyConsumer = new SimpleObjectProperty<>();
-	private ObjectProperty<Runnable> cancel = new SimpleObjectProperty<>();
-	
-	private Paint defaultPaint;
-	private TabPane paintTabFolder;
+	private static final int PREVIEW_SIZE = 200;
+
+	@NonNull
+	static final DecimalFormat FORMAT = new DecimalFormat("0.0#"); //$NON-NLS-1$
+	private final ObjectProperty<@Nullable Consumer<@Nullable Paint>> okConsumer = new SimpleObjectProperty<>();
+	private final ObjectProperty<@Nullable Consumer<@Nullable Paint>> applyConsumer = new SimpleObjectProperty<>();
+	private final ObjectProperty<@Nullable Runnable> cancel = new SimpleObjectProperty<>();
+
+	@NonNull
+	private final TabPane paintTabFolder;
+
+	@Nullable
 	private Rectangle linearGradientPreview;
-	
-	public PaintEditor(Paint defaultPaint) {
-		this.defaultPaint = defaultPaint;
-		
+
+	@Nullable
+	private Rectangle radialGradientPreview;
+
+	@Nullable
+	private Rectangle solidPreview;
+
+	@NonNull
+	private final ReadOnlyObjectWrapper<@Nullable Paint> paint = new ReadOnlyObjectWrapper<>();
+
+	/**
+	 * Create a new paint editor
+	 * 
+	 * @param defaultPaint
+	 *            the default paint
+	 */
+	public PaintEditor(@Nullable Paint defaultPaint) {
+		this.paint.set(defaultPaint);
+
 		BorderPane pane = new BorderPane();
-		
-		paintTabFolder = new TabPane();
-		paintTabFolder.getTabs().addAll(createLinearTab(), createRadialTab());
-		
-		pane.setCenter(paintTabFolder);
-		
+
+		this.paintTabFolder = new TabPane();
+		this.paintTabFolder.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+		Tab solid = createColorTab();
+		Tab linear = createLinearTab();
+		Tab radial = createRadialTab();
+		this.paintTabFolder.getTabs().addAll(solid, linear, radial);
+
+		pane.setCenter(this.paintTabFolder);
+
 		GridLayoutPane gl = new GridLayoutPane();
 		gl.setNumColumns(1);
-		
+
 		GridLayoutPane buttons = new GridLayoutPane();
 		buttons.setMakeColumnsEqualWidth(true);
 		buttons.setNumColumns(3);
-		
+
 		{
-			Button b = new Button("Apply");
+			Button b = new Button(Messages.getString("PaintEditor.Apply")); //$NON-NLS-1$
 			b.setOnAction(this::handleApply);
 			buttons.getChildren().add(b);
-			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL,Alignment.CENTER,false,false));
+			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL, Alignment.CENTER, false, false));
 		}
-		
+
 		{
-			Button b = new Button("Ok");
+			Button b = new Button(Messages.getString("PaintEditor.Ok")); //$NON-NLS-1$
 			b.setOnAction(this::handleOk);
 			buttons.getChildren().add(b);
-			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL,Alignment.CENTER,false,false));
+			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL, Alignment.CENTER, false, false));
 		}
-		
+
 		{
-			Button b = new Button("Cancel");
+			Button b = new Button(Messages.getString("PaintEditor.Cancel")); //$NON-NLS-1$
 			b.setOnAction(this::handleCancel);
 			buttons.getChildren().add(b);
-			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL,Alignment.CENTER,false,false));
+			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL, Alignment.CENTER, false, false));
 		}
-		
-		GridLayoutPane.setConstraint(buttons, new GridData(Alignment.END,Alignment.CENTER,true,false));
+
+		GridLayoutPane.setConstraint(buttons, new GridData(Alignment.END, Alignment.CENTER, true, false));
 		gl.getChildren().add(buttons);
-		
+
 		pane.setBottom(gl);
-		
+
 		getChildren().add(pane);
-	}
-	
-	public Paint getPaint() {
-		if( paintTabFolder.getSelectionModel().getSelectedIndex() == 0 ) {
-			return linearGradientPreview.getFill();
+
+		if (defaultPaint instanceof LinearGradient) {
+			this.paintTabFolder.getSelectionModel().select(linear);
+		} else if (defaultPaint instanceof RadialGradient) {
+			this.paintTabFolder.getSelectionModel().select(radial);
+		} else {
+			this.paintTabFolder.getSelectionModel().select(solid);
 		}
-		return null;
+
+		// make sure it is still the default
+		this.paint.set(defaultPaint);
+		this.paintTabFolder.getSelectionModel().selectedItemProperty().addListener((o, oldTab, newTab) -> {
+			Rectangle t = null;
+			if (newTab == linear) {
+				t = this.linearGradientPreview;
+			} else if (newTab == radial) {
+				t = this.radialGradientPreview;
+			} else {
+				t = this.solidPreview;
+			}
+
+			if (t != null) {
+				this.paint.set(t.getFill());
+			} else {
+				this.paint.set(null);
+			}
+		});
 	}
-	
+
+	/**
+	 * Get the current paint
+	 * 
+	 * @return the paint
+	 */
+	public @Nullable Paint getPaint() {
+		return this.paint.get();
+	}
+
+	/**
+	 * @return the paint property
+	 */
+	@SuppressWarnings("null")
+	public @NonNull ReadOnlyObjectProperty<@Nullable Paint> getPaintProperty() {
+		return this.paint.getReadOnlyProperty();
+	}
+
 	private void handleApply(ActionEvent e) {
-		if( applyConsumer.get() != null ) {
-			applyConsumer.get().accept(getPaint());
+		Consumer<@Nullable Paint> consumer = this.applyConsumer.get();
+		if (consumer != null) {
+			consumer.accept(getPaint());
 		}
 	}
-	
+
 	private void handleOk(ActionEvent e) {
-		if( okConsumer.get() != null ) {
-			okConsumer.get().accept(getPaint());
+		Consumer<@Nullable Paint> consumer = this.okConsumer.get();
+		if (consumer != null) {
+			consumer.accept(getPaint());
 		}
 	}
-	
+
 	private void handleCancel(ActionEvent e) {
-		if( cancel.get() != null ) {
-			cancel.get().run();
+		Runnable runnable = this.cancel.get();
+		if (runnable != null) {
+			runnable.run();
 		}
 	}
-	
-	public void setOkConsumer(Consumer<Paint> okConsumer) {
+
+	/**
+	 * Associate an ok consumer
+	 * 
+	 * @param okConsumer
+	 *            the consumer
+	 */
+	public void setOkConsumer(@Nullable Consumer<@Nullable Paint> okConsumer) {
 		this.okConsumer.set(okConsumer);
 	}
-	
-	public void setApplyConsumer(Consumer<Paint> applyConsumer) {
+
+	/**
+	 * Associate an apply consumer
+	 * 
+	 * @param applyConsumer
+	 *            the apply consumer
+	 */
+	public void setApplyConsumer(@Nullable Consumer<@Nullable Paint> applyConsumer) {
 		this.applyConsumer.set(applyConsumer);
 	}
-	
-	public void setCancel(Runnable r) {
+
+	/**
+	 * Associate an cancel consumer
+	 * 
+	 * @param r
+	 *            the consumer
+	 */
+	public void setCancel(@Nullable Runnable r) {
 		this.cancel.set(r);
 	}
-	
-	private Tab createLinearTab() {
+
+	/**
+	 * @return the current consumer
+	 */
+	public @Nullable Consumer<@Nullable Paint> getOkConsumer() {
+		return this.okConsumer.get();
+	}
+
+	/**
+	 * @return the curren consumer
+	 */
+	public @Nullable Consumer<@Nullable Paint> getApplyConsumer() {
+		return this.applyConsumer.get();
+	}
+
+	/**
+	 * @return the current callback
+	 */
+	public @Nullable Runnable getCancel() {
+		return this.cancel.get();
+	}
+
+	private Tab createColorTab() {
 		Tab t = new Tab();
-		t.setText("Linear Gradient");
-		
+		t.setText(Messages.getString("PaintEditor.Color")); //$NON-NLS-1$
+
 		GridLayoutPane p = new GridLayoutPane();
 		p.setNumColumns(3);
-		
-		linearGradientPreview = new Rectangle(200, 200);
-		
-		
+
+		Rectangle solidPreview = new Rectangle(PREVIEW_SIZE, PREVIEW_SIZE);
+
+		this.solidPreview = solidPreview;
+
+		GridLayoutPane dataPane = new GridLayoutPane();
+		dataPane.setNumColumns(2);
+
+		ColorPicker picker = new ColorPicker();
+		picker.valueProperty().addListener((o) -> {
+			solidPreview.setFill(picker.getValue());
+			this.paint.set(picker.getValue());
+		});
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.Color")), picker); //$NON-NLS-1$
+
+		Color color = (Color) this.paint.get();
+		if (color instanceof Color) {
+			picker.setValue(color);
+		}
+
+		TitledPane dtp = new TitledPane(Messages.getString("PaintEditor.Data"), dataPane); //$NON-NLS-1$
+		dtp.setCollapsible(false);
+
+		TitledPane pane = new TitledPane(Messages.getString("PaintEditor.Preview"), solidPreview); //$NON-NLS-1$
+		pane.setCollapsible(false);
+
+		GridLayoutPane.setConstraint(dtp, new GridData(Alignment.FILL, Alignment.FILL, true, true));
+		GridLayoutPane.setConstraint(pane, new GridData(Alignment.BEGINNING, Alignment.BEGINNING, false, false));
+
+		p.getChildren().addAll(pane, dtp);
+
+		t.setContent(p);
+
+		return t;
+	}
+
+	private Tab createLinearTab() {
+		Tab t = new Tab();
+		t.setText(Messages.getString("PaintEditor.LinearGradient")); //$NON-NLS-1$
+
+		GridLayoutPane p = new GridLayoutPane();
+		p.setNumColumns(3);
+
+		Rectangle linearGradientPreview = new Rectangle(PREVIEW_SIZE, PREVIEW_SIZE);
+
+		this.linearGradientPreview = linearGradientPreview;
+
 		TextField startX = new TextField();
 		TextField startY = new TextField();
 		TextField endX = new TextField();
 		TextField endY = new TextField();
 		CheckBox proportional = new CheckBox();
 		ChoiceBox<CycleMethod> cycleMethod = new ChoiceBox<>(FXCollections.observableArrayList(CycleMethod.values()));
-		
+
 		GridLayoutPane dataPane = new GridLayoutPane();
 		dataPane.setNumColumns(2);
-		
-		dataPane.getChildren().addAll(new Label("Start X"),startX);
-		dataPane.getChildren().addAll(new Label("Start Y"),startY);
-		dataPane.getChildren().addAll(new Label("End X"),endX);
-		dataPane.getChildren().addAll(new Label("End Y"),endY);
-		dataPane.getChildren().addAll(new Label("Proportional"),proportional);
-		dataPane.getChildren().addAll(new Label("CycleMethod"),cycleMethod);
-		
-		
+
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.StartX")), startX); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.StartY")), startY); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.EndX")), endX); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.EndY")), endY); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.Proportional")), proportional); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.CycleMethod")), cycleMethod); //$NON-NLS-1$
+
 		ListView<Stop> colorStops = new ListView<Stop>();
-		
-		if(!(defaultPaint instanceof LinearGradient)) {
+
+		@Nullable
+		Paint paint = this.paint.get();
+
+		Runnable updateLinear = () -> {
+			linearGradientPreview.setFill(createLinearGradient(startX.getText(), startY.getText(), endX.getText(), endY.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), colorStops.getItems()));
+			this.paint.set(linearGradientPreview.getFill());
+		};
+
+		if (!(paint instanceof LinearGradient)) {
 			startX.setText(FORMAT.format(0));
 			startY.setText(FORMAT.format(0));
 			endX.setText(FORMAT.format(1));
 			endY.setText(FORMAT.format(1));
 			proportional.setSelected(true);
 			cycleMethod.getSelectionModel().select(0);
-			colorStops.setItems(FXCollections.observableArrayList(new Stop(0,Color.WHITE), new Stop(1, Color.BLACK)));
-			linearGradientPreview.setFill(createLinearGradient(startX.getText(), startY.getText(), endX.getText(), endY.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), colorStops.getItems()));
-		}
-		else {
-			linearGradientPreview.setFill(defaultPaint);
-			LinearGradient g = (LinearGradient) this.defaultPaint;
+			colorStops.setItems(FXCollections.observableArrayList(new Stop(0, Color.WHITE), new Stop(1, Color.BLACK)));
+			updateLinear.run();
+		} else if (paint instanceof LinearGradient) {
+			linearGradientPreview.setFill(paint);
+			LinearGradient g = (LinearGradient) paint;
 			startX.setText(FORMAT.format(g.getStartX()));
 			startY.setText(FORMAT.format(g.getStartY()));
 			endX.setText(FORMAT.format(g.getEndY()));
@@ -189,125 +350,303 @@ public class PaintEditor extends StackPane {
 			proportional.setSelected(g.isProportional());
 			cycleMethod.setValue(g.getCycleMethod());
 		}
-		
-		StopColorPane pane = new StopColorPane((oldStop,newStop) -> {
+
+		StopColorPane pane = new StopColorPane((oldStop, newStop) -> {
 			ObservableList<Stop> items = colorStops.getItems();
 			items.set(items.indexOf(oldStop), newStop);
 			colorStops.getSelectionModel().select(newStop);
-			linearGradientPreview.setFill(createLinearGradient(startX.getText(), startY.getText(), endX.getText(), endY.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), items));
+			updateLinear.run();
 		});
-		
-		InvalidationListener l = (o) -> { linearGradientPreview.setFill(createLinearGradient(startX.getText(), startY.getText(), endX.getText(), endY.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), colorStops.getItems())); };
+
+		InvalidationListener l = (o) -> {
+			updateLinear.run();
+		};
 		startX.textProperty().addListener(l);
 		startY.textProperty().addListener(l);
 		endX.textProperty().addListener(l);
 		endY.textProperty().addListener(l);
 		proportional.selectedProperty().addListener(l);
 		cycleMethod.getSelectionModel().selectedItemProperty().addListener(l);
-		
+
 		colorStops.getSelectionModel().selectedItemProperty().addListener((o) -> {
 			Stop item = colorStops.getSelectionModel().getSelectedItem();
-			if( item != null ) {
+			if (item != null) {
 				pane.setStop(item);
 			}
 		});
-		
-		GridLayoutPane.setConstraint(linearGradientPreview, new GridData(Alignment.CENTER,Alignment.CENTER,false,false,1,2));
-		GridLayoutPane.setConstraint(colorStops, new GridData(Alignment.CENTER,Alignment.FILL,false,true,1,2));
-		GridLayoutPane.setConstraint(pane, new GridData(Alignment.FILL,Alignment.BEGINNING,true,false));
-		
-		TitledPane dtp = new TitledPane("Data", dataPane);
-		GridLayoutPane.setConstraint(dtp, new GridData(Alignment.FILL,Alignment.BEGINNING,true,false));
-		p.getChildren().addAll(linearGradientPreview, colorStops, pane, dtp);
-		
+
+		TitledPane previewPane = new TitledPane(Messages.getString("PaintEditor.Preview"), linearGradientPreview); //$NON-NLS-1$
+		previewPane.setCollapsible(false);
+
+		BorderPane colorContainer = new BorderPane(colorStops);
+
+		{
+			Button newColor = new Button(Messages.getString("PaintEditor.New")); //$NON-NLS-1$
+			newColor.setOnAction((e) -> {
+				Stop s = new Stop(0, Color.RED);
+				colorStops.getItems().add(s);
+				colorStops.getSelectionModel().select(s);
+			});
+			GridLayoutPane.setConstraint(newColor, new GridData(Alignment.FILL, Alignment.CENTER, false, false));
+
+			Button removeColor = new Button(Messages.getString("PaintEditor.Remove")); //$NON-NLS-1$
+			removeColor.setOnAction((e) -> {
+				colorStops.getItems().removeAll(colorStops.getSelectionModel().getSelectedItems());
+			});
+			GridLayoutPane.setConstraint(removeColor, new GridData(Alignment.FILL, Alignment.CENTER, false, false));
+
+			GridLayoutPane buttonContainer = new GridLayoutPane();
+			buttonContainer.setNumColumns(2);
+			buttonContainer.setMakeColumnsEqualWidth(true);
+			buttonContainer.getChildren().addAll(newColor, removeColor);
+
+			colorContainer.setBottom(buttonContainer);
+		}
+
+		TitledPane colorStopPane = new TitledPane(Messages.getString("PaintEditor.Colors"), colorContainer); //$NON-NLS-1$
+		colorStopPane.setCollapsible(false);
+
+		GridLayoutPane.setConstraint(previewPane, new GridData(Alignment.BEGINNING, Alignment.BEGINNING, false, false, 1, 2));
+		GridLayoutPane.setConstraint(colorStopPane, new GridData(Alignment.CENTER, Alignment.FILL, false, true, 1, 2));
+		GridLayoutPane.setConstraint(pane, new GridData(Alignment.FILL, Alignment.BEGINNING, true, false));
+
+		TitledPane dtp = new TitledPane(Messages.getString("PaintEditor.Data"), dataPane); //$NON-NLS-1$
+		dtp.setCollapsible(false);
+
+		GridLayoutPane.setConstraint(dtp, new GridData(Alignment.FILL, Alignment.FILL, true, true));
+
+		p.getChildren().addAll(previewPane, colorStopPane, pane, dtp);
+
 		t.setContent(p);
-		
+
 		return t;
 	}
-	
-	private LinearGradient createLinearGradient(String startX, String startY, String endX, String endY, boolean proportional, CycleMethod cycleMethod, List<Stop> stops) {
-		try {
-			double dsx = FORMAT.parse(startX).doubleValue();
-			double dsy = FORMAT.parse(startY).doubleValue();
-			double dex = FORMAT.parse(endX).doubleValue();
-			double dey = FORMAT.parse(endY).doubleValue();
-			
-			return new LinearGradient(dsx, dsy, dex, dey, proportional, cycleMethod, stops);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+
+	private static LinearGradient createLinearGradient(String startX, String startY, String endX, String endY, boolean proportional, CycleMethod cycleMethod, List<Stop> stops) {
+		double dsx = parseSafe(startX, 0);
+		double dsy = parseSafe(startY, 0);
+		double dex = parseSafe(endX, 1);
+		double dey = parseSafe(endY, 1);
+		return new LinearGradient(dsx, dsy, dex, dey, proportional, cycleMethod, stops);
 	}
-	
+
+	private static RadialGradient createRadialGradient(String focusAngle, String focusDistance, String centerX, String centerY, String radius, boolean proportional, CycleMethod cycleMethod, List<Stop> stops) {
+		double dFocusAngle = parseSafe(focusAngle, 0);
+		double dFocusDistance = parseSafe(focusDistance, 0);
+		double dCenterX = parseSafe(centerX, 0.5);
+		double dCenterY = parseSafe(centerY, 0.5);
+		double dRadius = parseSafe(radius, 1);
+		return new RadialGradient(dFocusAngle, dFocusDistance, dCenterX, dCenterY, dRadius, proportional, cycleMethod, stops);
+	}
+
+	static double parseSafe(String value, double defaultVal) {
+		try {
+			return FORMAT.parse(value).doubleValue();
+		} catch (ParseException e) {
+			// skip and return default
+		}
+		return defaultVal;
+	}
+
 	private Tab createRadialTab() {
 		Tab t = new Tab();
-		t.setText("Radial Gradient");
-		
+		t.setText(Messages.getString("PaintEditor.RadialGradient")); //$NON-NLS-1$
+
+		GridLayoutPane p = new GridLayoutPane();
+		p.setNumColumns(3);
+
+		Rectangle radialGradientPreview = new Rectangle(PREVIEW_SIZE, PREVIEW_SIZE);
+		this.radialGradientPreview = radialGradientPreview;
+
+		TextField focusAngle = new TextField();
+		TextField focusDistance = new TextField();
+		TextField centerX = new TextField();
+		TextField centerY = new TextField();
+		TextField radius = new TextField();
+		CheckBox proportional = new CheckBox();
+		ChoiceBox<CycleMethod> cycleMethod = new ChoiceBox<>(FXCollections.observableArrayList(CycleMethod.values()));
+
+		GridLayoutPane dataPane = new GridLayoutPane();
+		dataPane.setNumColumns(2);
+
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.FocusAngle")), focusAngle); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.FocusDistance")), focusDistance); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.CenterX")), centerX); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.CenterY")), centerY); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.Radius")), radius); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.Proportional")), proportional); //$NON-NLS-1$
+		dataPane.getChildren().addAll(new Label(Messages.getString("PaintEditor.CycleMethod")), cycleMethod); //$NON-NLS-1$
+
+		ListView<Stop> colorStops = new ListView<Stop>();
+
+		@Nullable
+		Paint paint = this.paint.get();
+
+		Runnable updateRadial = () -> {
+			radialGradientPreview.setFill(createRadialGradient(focusAngle.getText(), focusDistance.getText(), centerX.getText(), centerY.getText(), radius.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), colorStops.getItems()));
+			this.paint.set(radialGradientPreview.getFill());
+		};
+
+		if (!(paint instanceof RadialGradient)) {
+			focusAngle.setText(FORMAT.format(0));
+			focusDistance.setText(FORMAT.format(0));
+			centerX.setText(FORMAT.format(0.5));
+			centerY.setText(FORMAT.format(0.5));
+			radius.setText(FORMAT.format(1));
+			proportional.setSelected(true);
+			cycleMethod.getSelectionModel().select(0);
+			colorStops.setItems(FXCollections.observableArrayList(new Stop(0, Color.WHITE), new Stop(1, Color.BLACK)));
+			updateRadial.run();
+		} else if (paint instanceof RadialGradient) {
+			radialGradientPreview.setFill(paint);
+			RadialGradient g = (RadialGradient) paint;
+			focusAngle.setText(FORMAT.format(g.getFocusAngle()));
+			focusDistance.setText(FORMAT.format(g.getFocusDistance()));
+			centerX.setText(FORMAT.format(g.getCenterX()));
+			centerY.setText(FORMAT.format(g.getCenterY()));
+			radius.setText(FORMAT.format(g.getRadius()));
+			proportional.setSelected(g.isProportional());
+			cycleMethod.setValue(g.getCycleMethod());
+		}
+
+		StopColorPane pane = new StopColorPane((oldStop, newStop) -> {
+			ObservableList<Stop> items = colorStops.getItems();
+			items.set(items.indexOf(oldStop), newStop);
+			colorStops.getSelectionModel().select(newStop);
+			updateRadial.run();
+		});
+
+		InvalidationListener l = (o) -> {
+			updateRadial.run();
+		};
+		focusAngle.textProperty().addListener(l);
+		focusDistance.textProperty().addListener(l);
+		centerX.textProperty().addListener(l);
+		centerY.textProperty().addListener(l);
+		radius.textProperty().addListener(l);
+		proportional.selectedProperty().addListener(l);
+		cycleMethod.getSelectionModel().selectedItemProperty().addListener(l);
+
+		colorStops.getSelectionModel().selectedItemProperty().addListener((o) -> {
+			Stop item = colorStops.getSelectionModel().getSelectedItem();
+			if (item != null) {
+				pane.setStop(item);
+			}
+		});
+
+		TitledPane previewPane = new TitledPane(Messages.getString("PaintEditor.Preview"), radialGradientPreview); //$NON-NLS-1$
+		previewPane.setCollapsible(false);
+
+		BorderPane colorContainer = new BorderPane(colorStops);
+
+		{
+			Button newColor = new Button(Messages.getString("PaintEditor.New")); //$NON-NLS-1$
+			newColor.setOnAction((e) -> {
+				Stop s = new Stop(0, Color.RED);
+				colorStops.getItems().add(s);
+				colorStops.getSelectionModel().select(s);
+			});
+			GridLayoutPane.setConstraint(newColor, new GridData(Alignment.FILL, Alignment.CENTER, false, false));
+
+			Button removeColor = new Button(Messages.getString("PaintEditor.Remove")); //$NON-NLS-1$
+			removeColor.setOnAction((e) -> {
+				colorStops.getItems().removeAll(colorStops.getSelectionModel().getSelectedItems());
+			});
+			GridLayoutPane.setConstraint(removeColor, new GridData(Alignment.FILL, Alignment.CENTER, false, false));
+
+			GridLayoutPane buttonContainer = new GridLayoutPane();
+			buttonContainer.setNumColumns(2);
+			buttonContainer.setMakeColumnsEqualWidth(true);
+			buttonContainer.getChildren().addAll(newColor, removeColor);
+
+			colorContainer.setBottom(buttonContainer);
+		}
+
+		TitledPane colorStopPane = new TitledPane(Messages.getString("PaintEditor.Colors"), colorContainer); //$NON-NLS-1$
+		colorStopPane.setCollapsible(false);
+
+		GridLayoutPane.setConstraint(previewPane, new GridData(Alignment.BEGINNING, Alignment.BEGINNING, false, false, 1, 2));
+		GridLayoutPane.setConstraint(colorStopPane, new GridData(Alignment.CENTER, Alignment.FILL, false, true, 1, 2));
+		GridLayoutPane.setConstraint(pane, new GridData(Alignment.FILL, Alignment.BEGINNING, true, false));
+
+		TitledPane dtp = new TitledPane(Messages.getString("PaintEditor.Data"), dataPane); //$NON-NLS-1$
+		dtp.setCollapsible(false);
+		GridLayoutPane.setConstraint(dtp, new GridData(Alignment.FILL, Alignment.FILL, true, true));
+		p.getChildren().addAll(previewPane, colorStopPane, pane, dtp);
+
+		t.setContent(p);
+
 		return t;
 	}
-	
+
 	static class StopColorPane extends TitledPane {
-		
-		private ColorPicker picker;
-		private TextField f;
+		@NonNull
+		private final ColorPicker picker;
+
+		@NonNull
+		private final TextField f;
+
 		private Stop stop;
 		private BiConsumer<Stop, Stop> consumer;
 		private boolean inSet;
-		
+
 		public StopColorPane(BiConsumer<Stop, Stop> consumer) {
-			setText("Color Stop");
+			setText(Messages.getString("PaintEditor.ColorStop")); //$NON-NLS-1$
 			this.consumer = consumer;
 			setCollapsible(false);
 			setDisable(true);
-			
+
 			GridLayoutPane p = new GridLayoutPane();
 			p.setNumColumns(2);
-			
+
 			{
-				picker = new ColorPicker();
-				picker.valueProperty().addListener(this::update);
-				GridLayoutPane.setConstraint(picker, new GridData(GridData.FILL_HORIZONTAL));
-				p.getChildren().addAll(new Label("Color"),picker);
+				this.picker = new ColorPicker();
+				this.picker.valueProperty().addListener(this::update);
+				GridLayoutPane.setConstraint(this.picker, new GridData(GridData.FILL_HORIZONTAL));
+				p.getChildren().addAll(new Label(Messages.getString("PaintEditor.Color")), this.picker); //$NON-NLS-1$
 			}
-			
+
 			{
-				f = new TextField();
-				f.textProperty().addListener(this::update);
-				GridLayoutPane.setConstraint(f, new GridData(GridData.FILL_HORIZONTAL));
-				p.getChildren().addAll(new Label("Offset"),f);
+				this.f = new TextField();
+				this.f.textProperty().addListener(this::update);
+				GridLayoutPane.setConstraint(this.f, new GridData(GridData.FILL_HORIZONTAL));
+				p.getChildren().addAll(new Label(Messages.getString("PaintEditor.Offset")), this.f); //$NON-NLS-1$
 			}
-			
+
 			setContent(p);
 		}
-		
+
 		void update(Observable t) {
-			if( inSet ) {
+			if (this.inSet) {
 				return;
 			}
 			try {
-				consumer.accept(stop,new Stop(new DecimalFormat("0.0#").parse(f.getText()).doubleValue(), picker.getValue()));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				this.inSet = true;
+				this.consumer.accept(this.stop, new Stop(parseSafe(this.f.getText(), 0), this.picker.getValue()));
+			} finally {
+				this.inSet = false;
 			}
 		}
-		
+
 		public void setStop(Stop stop) {
 			this.stop = stop;
+			if (this.inSet) {
+				return;
+			}
+
 			try {
-				inSet = true;
-				if( stop != null ) {
-					picker.setValue(stop.getColor());
-					f.setText(new DecimalFormat("0.0#").format(stop.getOffset()));
+				this.inSet = true;
+				if (stop != null) {
+					this.picker.setValue(stop.getColor());
+					this.f.setText(FORMAT.format(stop.getOffset()));
 					setDisable(false);
 				} else {
 					setDisable(true);
 				}
 			} finally {
-				inSet = false;
+				this.inSet = false;
 			}
 		}
-		
+
 	}
 }
