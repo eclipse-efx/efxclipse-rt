@@ -1,0 +1,23 @@
+import javafx.font
+import javafx.paint
+import javafx.scene.control.Control
+
+package org.eclipse.fx.ui.controls.image {
+
+
+	/**
+	 * The FontIconView allows the use of Icon Fonts
+	 */
+	FontIconView extends Control {
+		
+		-fx-font <font>;
+		/**
+		 * 
+		 */
+		-fx-icon @STRING default: null;
+		
+		-fx-icon-fill <paint> default: black;
+	}
+
+
+}
