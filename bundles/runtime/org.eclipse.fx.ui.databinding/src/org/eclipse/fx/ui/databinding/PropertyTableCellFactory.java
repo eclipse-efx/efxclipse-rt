@@ -16,11 +16,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 
-import org.eclipse.core.databinding.observable.value.ComputedValue;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.fx.core.databinding.AdapterFactory;
-import org.eclipse.fx.core.databinding.ObservableWritableValue;
 import org.eclipse.fx.ui.databinding.internal.TemplateTextOnlyPropertyTableCell;
 import org.eclipse.fx.ui.databinding.internal.TextOnlyPropertyTableCell;
 import org.eclipse.jdt.annotation.NonNull;
@@ -74,7 +70,7 @@ public interface PropertyTableCellFactory<S, T> extends
 	 * @return the table cell
 	 */
 	@NonNull
-	public static <S, T> TableCell<S, T> textCell(IValueProperty property) {
+	public static <S, T> TableCell<S, T> textCell(@NonNull IValueProperty property) {
 		return new TextOnlyPropertyTableCell<>(property);
 	}
 
@@ -89,8 +85,8 @@ public interface PropertyTableCellFactory<S, T> extends
 	 * @return the table cell
 	 */
 	@NonNull 
-	public static <S, T> TableCell<S, T> textCell(String template,
-			IValueProperty... property) {
+	public static <S, T> TableCell<S, T> textCell(@NonNull String template,
+			@NonNull IValueProperty... property) {
 		return new TemplateTextOnlyPropertyTableCell<>(template, property);
 	}
 }

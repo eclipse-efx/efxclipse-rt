@@ -19,6 +19,7 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.InjectionException;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
@@ -79,14 +80,16 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 	@NonNull
 	private final IEventBroker eventBroker;
-
+	
 	@Inject
 	PartRenderingEngine(
 			@Nullable @Named(E4Workbench.RENDERER_FACTORY_URI) @Optional String _factoryUrl, 
 			@NonNull IEclipseContext context, 
 			@NonNull EModelService modelService, 
 			@NonNull IEventBroker eventBroker, 
-			@NonNull ThemeManager themeManager) {
+			@NonNull ThemeManager themeManager,
+			@Preference(nodePath="org.eclipse.fx.ui.workbench.fx",value=AbstractE4Application.THEME_ID)
+			String themeId) {
 		final String factoryUrl;
 		if (_factoryUrl == null) {
 			factoryUrl = defaultFactoryUrl;
@@ -109,11 +112,21 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 		setupEventListener(eventBroker);
 		
-		Object object = context.get(AbstractE4Application.THEME_ID);
-		if (object != null && object instanceof String) {
-			themeManager.setCurrentThemeId((String) object);
-		} else {
-			this.logger.info("No current theme is set"); //$NON-NLS-1$
+		if( themeId != null && !themeId.isEmpty()) {
+			try {
+				themeManager.setCurrentThemeId(themeId);	
+			} catch(Throwable t) {
+				this.logger.error("Unknown theme '"+themeId+"'", t);  //$NON-NLS-1$//$NON-NLS-2$
+			}
+		}
+		
+		if( themeManager.getCurrentTheme() == null ) {
+			Object object = context.get(AbstractE4Application.THEME_ID);
+			if (object != null && object instanceof String) {
+				themeManager.setCurrentThemeId((String) object);
+			} else {
+				this.logger.info("No current theme is set"); //$NON-NLS-1$
+			}	
 		}
 	}
 

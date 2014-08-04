@@ -24,6 +24,8 @@ import org.eclipse.fx.ui.keybindings.Binding;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.keybindings.Trigger;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * manage tables of bindings that can be used to look up commands from keys.
@@ -33,12 +35,12 @@ public class BindingTable {
 		private String[] activeSchemeIds;
 
 		private final int compareSchemes(final String schemeId1, final String schemeId2) {
-			if (activeSchemeIds == null || activeSchemeIds.length == 0) {
+			if (this.activeSchemeIds == null || this.activeSchemeIds.length == 0) {
 				return 0;
 			}
 			if (!schemeId2.equals(schemeId1)) {
-				for (int i = 0; i < activeSchemeIds.length; i++) {
-					final String schemePointer = activeSchemeIds[i];
+				for (int i = 0; i < this.activeSchemeIds.length; i++) {
+					final String schemePointer = this.activeSchemeIds[i];
 					if (schemeId2.equals(schemePointer)) {
 						return 1;
 					} else if (schemeId1.equals(schemePointer)) {
@@ -53,6 +55,7 @@ public class BindingTable {
 			this.activeSchemeIds = activeSchemeIds;
 		}
 
+		@Override
 		public int compare(Binding o1, Binding o2) {
 			int rc = compareSchemes(o1.getSchemeId(), o2.getSchemeId());
 			if (rc != 0) {
@@ -60,7 +63,8 @@ public class BindingTable {
 			}
 
 			/*
-			 * Check to see which has the least number of triggers in the trigger sequence.
+			 * Check to see which has the least number of triggers in the
+			 * trigger sequence.
 			 */
 			final Trigger[] bestTriggers = o1.getTriggerSequence().getTriggers();
 			final Trigger[] currentTriggers = o2.getTriggerSequence().getTriggers();
@@ -70,8 +74,9 @@ public class BindingTable {
 			}
 
 			/*
-			 * Compare the number of keys pressed in each trigger sequence. Some types of keys count
-			 * less than others (i.e., some types of modifiers keys are less likely to be chosen).
+			 * Compare the number of keys pressed in each trigger sequence. Some
+			 * types of keys count less than others (i.e., some types of
+			 * modifiers keys are less likely to be chosen).
 			 */
 			compareTo = countStrokes(bestTriggers) - countStrokes(currentTriggers);
 			if (compareTo != 0) {
@@ -79,44 +84,42 @@ public class BindingTable {
 			}
 
 			// If this is still a tie, then just chose the shortest text.
-			return o1.getTriggerSequence().format().length()
-					- o2.getTriggerSequence().format().length();
+			return o1.getTriggerSequence().format().length() - o2.getTriggerSequence().format().length();
 		}
 
-		private final int countStrokes(final Trigger[] triggers) {
+		private final static int countStrokes(final Trigger[] triggers) {
 			int strokeCount = triggers.length;
 			for (int i = 0; i < triggers.length; i++) {
 				final Trigger trigger = triggers[i];
 				if (trigger instanceof KeyStroke) {
 					final KeyStroke keyStroke = (KeyStroke) trigger;
-					if( keyStroke.hasAltModifier() ) {
+					if (keyStroke.hasAltModifier()) {
 						strokeCount += 8;
 					}
-					if( keyStroke.hasCtrlModifier() ) {
+					if (keyStroke.hasCtrlModifier()) {
 						strokeCount += 2;
 					}
-					if( keyStroke.hasShiftModifier() ) {
+					if (keyStroke.hasShiftModifier()) {
 						strokeCount += 4;
 					}
-					if( keyStroke.hasCommandModifier() ) {
+					if (keyStroke.hasCommandModifier()) {
 						strokeCount += 2;
 					}
-					
-					
-//					final int modifierKeys = keyStroke.getModifierKeys();
-//					final IKeyLookup lookup = KeyLookupFactory.getDefault();
-//					if ((modifierKeys & lookup.getAlt()) != 0) {
-//						strokeCount += 8;
-//					}
-//					if ((modifierKeys & lookup.getCtrl()) != 0) {
-//						strokeCount += 2;
-//					}
-//					if ((modifierKeys & lookup.getShift()) != 0) {
-//						strokeCount += 4;
-//					}
-//					if ((modifierKeys & lookup.getCommand()) != 0) {
-//						strokeCount += 2;
-//					}
+
+					// final int modifierKeys = keyStroke.getModifierKeys();
+					// final IKeyLookup lookup = KeyLookupFactory.getDefault();
+					// if ((modifierKeys & lookup.getAlt()) != 0) {
+					// strokeCount += 8;
+					// }
+					// if ((modifierKeys & lookup.getCtrl()) != 0) {
+					// strokeCount += 2;
+					// }
+					// if ((modifierKeys & lookup.getShift()) != 0) {
+					// strokeCount += 4;
+					// }
+					// if ((modifierKeys & lookup.getCommand()) != 0) {
+					// strokeCount += 2;
+					// }
 				} else {
 					strokeCount += 99;
 				}
@@ -126,72 +129,104 @@ public class BindingTable {
 		}
 	}
 
-	public static final BindingComparator BEST_SEQUENCE = new BindingComparator();
+	static final BindingComparator BEST_SEQUENCE = new BindingComparator();
 
-	private Context tableId;
-	private ArrayList<Binding> bindings = new ArrayList<Binding>();
-	private Map<TriggerSequence, Binding> bindingsByTrigger = new HashMap<TriggerSequence, Binding>();
-	private Map<ParameterizedCommand, ArrayList<Binding>> bindingsByCommand = new HashMap<ParameterizedCommand, ArrayList<Binding>>();
-	private Map<TriggerSequence, ArrayList<Binding>> bindingsByPrefix = new HashMap<TriggerSequence, ArrayList<Binding>>();
-	private Map<TriggerSequence, ArrayList<Binding>> conflicts = new HashMap<TriggerSequence, ArrayList<Binding>>();
+	@NonNull
+	private final Context tableId;
+	@NonNull
+	private final ArrayList<@NonNull Binding> bindings = new ArrayList<>();
+	@NonNull
+	private final Map<@NonNull TriggerSequence, @NonNull Binding> bindingsByTrigger = new HashMap<>();
+	@NonNull
+	private final Map<@NonNull ParameterizedCommand, @NonNull ArrayList<@NonNull Binding>> bindingsByCommand = new HashMap<>();
+	@NonNull
+	private final Map<@NonNull TriggerSequence, @NonNull ArrayList<@NonNull Binding>> bindingsByPrefix = new HashMap<>();
+	@NonNull
+	private final Map<@NonNull TriggerSequence, @NonNull ArrayList<@NonNull Binding>> conflicts = new HashMap<>();
 
 	/**
+	 * Create a table
+	 * 
 	 * @param context
 	 */
-	public BindingTable(Context context) {
-		tableId = context;
+	public BindingTable(@NonNull Context context) {
+		this.tableId = context;
 	}
 
-	public Context getTableId() {
-		return tableId;
+	/**
+	 * @return the context
+	 */
+	public @NonNull Context getTableId() {
+		return this.tableId;
 	}
 
-	public String getId() {
-		return tableId.getId();
+	/**
+	 * @return the context id
+	 */
+	@SuppressWarnings("null")
+	public @NonNull String getId() {
+		return this.tableId.getId();
 	}
 
-	public Collection<Binding> getConflicts() {
-		Collection<Binding> conflictsList = new ArrayList<Binding>();
-		for (TriggerSequence key : conflicts.keySet()) {
-			ArrayList<Binding> conflictsForTrigger = conflicts.get(key);
-			if (conflictsForTrigger != null) {
-				conflictsList.addAll(conflictsForTrigger);
-			}
+	/**
+	 * @return get all conflicts
+	 */
+	public @NonNull Collection<@NonNull Binding> getConflicts() {
+		Collection<@NonNull Binding> conflictsList = new ArrayList<>();
+		for (TriggerSequence key : this.conflicts.keySet()) {
+			ArrayList<@NonNull Binding> conflictsForTrigger = this.conflicts.get(key);
+			conflictsList.addAll(conflictsForTrigger);
 		}
 		return conflictsList;
 	}
 
 	// checks both the active bindings and conflicts list
-	public Collection<Binding> getConflictsFor(TriggerSequence triggerSequence) {
-		return conflicts.get(triggerSequence);
+	/**
+	 * Get all conflicts for the sequence
+	 * 
+	 * @param triggerSequence
+	 *            the sequence
+	 * @return the conflicts
+	 */
+	public @Nullable Collection<@NonNull Binding> getConflictsFor(TriggerSequence triggerSequence) {
+		return this.conflicts.get(triggerSequence);
 	}
 
-	public void addBinding(Binding binding) {
+	/**
+	 * 
+	 * @param binding
+	 */
+	@SuppressWarnings({ "unused", "null" })
+	public void addBinding(@NonNull Binding binding) {
 		if (!getId().equals(binding.getContextId())) {
 			throw new IllegalArgumentException("Binding context " + binding.getContextId() //$NON-NLS-1$
 					+ " does not match " + getId()); //$NON-NLS-1$
 		}
 
 		Binding conflict;
-		ArrayList<Binding> conflictsList;
+		ArrayList<@NonNull Binding> conflictsList;
 		boolean isConflict = false;
 
+		TriggerSequence triggerSequence = binding.getTriggerSequence();
+		if (triggerSequence == null) {
+			return;
+		}
+
 		// if this binding conflicts with one other active binding
-		if (bindingsByTrigger.containsKey(binding.getTriggerSequence())) {
+		if (this.bindingsByTrigger.containsKey(triggerSequence)) {
 			// remove the active binding and put it in the conflicts map
-			conflict = bindingsByTrigger.get(binding.getTriggerSequence());
+			conflict = this.bindingsByTrigger.get(triggerSequence);
 			removeBinding(conflict);
-			conflictsList = new ArrayList<Binding>();
+			conflictsList = new ArrayList<>();
 			conflictsList.add(conflict);
-			conflicts.put(binding.getTriggerSequence(), conflictsList);
+			this.conflicts.put(triggerSequence, conflictsList);
 			isConflict = true;
 		}
 		// if this trigger is already in the conflicts map
-		if (conflicts.containsKey(binding.getTriggerSequence())
-				&& conflicts.get(binding.getTriggerSequence()).size() > 0) {
+		if (this.conflicts.containsKey(triggerSequence) && this.conflicts.get(triggerSequence).size() > 0) {
 
 			// add this binding to the conflicts map
-			conflictsList = conflicts.get(binding.getTriggerSequence());
+			conflictsList = this.conflicts.get(triggerSequence);
 			if (!conflictsList.contains(binding)) {
 				conflictsList.add(binding);
 			}
@@ -200,43 +235,50 @@ public class BindingTable {
 
 		// if there are no conflicts, then add to the table
 		if (!isConflict) {
-			bindings.add(binding);
-			bindingsByTrigger.put(binding.getTriggerSequence(), binding);
+			this.bindings.add(binding);
+			this.bindingsByTrigger.put(triggerSequence, binding);
 
-			ArrayList<Binding> sequences = bindingsByCommand.get(binding.getParameterizedCommand());
+			ArrayList<@NonNull Binding> sequences = this.bindingsByCommand.get(binding.getParameterizedCommand());
 			if (sequences == null) {
-				sequences = new ArrayList<Binding>();
-				bindingsByCommand.put(binding.getParameterizedCommand(), sequences);
+				sequences = new ArrayList<>();
+				this.bindingsByCommand.put(binding.getParameterizedCommand(), sequences);
 			}
 			sequences.add(binding);
 			Collections.sort(sequences, BEST_SEQUENCE);
 
-			TriggerSequence[] prefs = binding.getTriggerSequence().getPrefixes();
+			TriggerSequence[] prefs = triggerSequence.getPrefixes();
 			for (int i = 1; i < prefs.length; i++) {
-				ArrayList<Binding> bindings = bindingsByPrefix.get(prefs[i]);
+				ArrayList<Binding> bindings = this.bindingsByPrefix.get(prefs[i]);
 				if (bindings == null) {
-					bindings = new ArrayList<Binding>();
-					bindingsByPrefix.put(prefs[i], bindings);
+					bindings = new ArrayList<>();
+					this.bindingsByPrefix.put(prefs[i], bindings);
 				}
 				bindings.add(binding);
 			}
 		}
 	}
 
-	public void removeBinding(Binding binding) {
+	/**
+	 * Remove a binding
+	 * 
+	 * @param binding
+	 *            the binding
+	 */
+	@SuppressWarnings("null")
+	public void removeBinding(@NonNull Binding binding) {
 		if (!getId().equals(binding.getContextId())) {
 			throw new IllegalArgumentException("Binding context " + binding.getContextId() //$NON-NLS-1$
 					+ " does not match " + getId()); //$NON-NLS-1$
 		}
-		ArrayList<Binding> conflictBindings = conflicts.get(binding.getTriggerSequence());
+		ArrayList<@NonNull Binding> conflictBindings = this.conflicts.get(binding.getTriggerSequence());
 
 		// if this binding is in the conflicts map, then remove it
-		if (!bindingsByTrigger.containsKey(binding.getTriggerSequence())
-				&& conflictBindings != null) {
+		if (!this.bindingsByTrigger.containsKey(binding.getTriggerSequence()) && conflictBindings != null) {
 
 			conflictBindings.remove(binding);
 
-			// if there is only one binding left in the list, then it's not really a conflict
+			// if there is only one binding left in the list, then it's not
+			// really a conflict
 			// binding anymore and can be re-added to the binding table
 			if (conflictBindings.size() == 1) {
 				Binding bindingToReAdd = conflictBindings.remove(0);
@@ -244,48 +286,90 @@ public class BindingTable {
 			}
 
 		} else {
-			bindings.remove(binding);
-			bindingsByTrigger.remove(binding.getTriggerSequence());
-			ArrayList<Binding> sequences = bindingsByCommand.get(binding.getParameterizedCommand());
+			this.bindings.remove(binding);
+			this.bindingsByTrigger.remove(binding.getTriggerSequence());
+			ArrayList<Binding> sequences = this.bindingsByCommand.get(binding.getParameterizedCommand());
 
 			if (sequences != null) {
 				sequences.remove(binding);
 			}
 			TriggerSequence[] prefs = binding.getTriggerSequence().getPrefixes();
 			for (int i = 1; i < prefs.length; i++) {
-				ArrayList<Binding> bindings = bindingsByPrefix.get(prefs[i]);
+				ArrayList<Binding> bindings = this.bindingsByPrefix.get(prefs[i]);
 				bindings.remove(binding);
 			}
 		}
 	}
 
-	public Binding getPerfectMatch(TriggerSequence trigger) {
-		return bindingsByTrigger.get(trigger);
+	/**
+	 * The perfect match for a trigger
+	 * 
+	 * @param trigger
+	 *            the trigger
+	 * @return the match
+	 */
+	public @Nullable Binding getPerfectMatch(@NonNull TriggerSequence trigger) {
+		return this.bindingsByTrigger.get(trigger);
 	}
 
-	public Binding getBestSequenceFor(ParameterizedCommand command) {
-		ArrayList<Binding> sequences = bindingsByCommand.get(command);
+	/**
+	 * The best sequence for the command
+	 * 
+	 * @param command
+	 *            the command
+	 * @return the binding
+	 */
+	@SuppressWarnings("null")
+	public @Nullable Binding getBestSequenceFor(@NonNull ParameterizedCommand command) {
+		ArrayList<Binding> sequences = this.bindingsByCommand.get(command);
 		if (sequences != null && sequences.size() > 0) {
 			return sequences.get(0);
 		}
 		return null;
 	}
 
-	public Collection<Binding> getSequencesFor(ParameterizedCommand command) {
-		ArrayList<Binding> triggers = bindingsByCommand.get(command);
-		return (Collection<Binding>) (triggers == null ? Collections.EMPTY_LIST : triggers.clone());
+	/**
+	 * Get all sequences for the command
+	 * 
+	 * @param command
+	 *            the command
+	 * @return all bindings
+	 */
+	@SuppressWarnings("null")
+	public @NonNull Collection<@NonNull Binding> getSequencesFor(@NonNull ParameterizedCommand command) {
+		ArrayList<Binding> triggers = this.bindingsByCommand.get(command);
+		return (Collection<@NonNull Binding>) (triggers == null ? Collections.<@NonNull Binding> emptyList() : new ArrayList<>(triggers));
 	}
 
-	public Collection<Binding> getPartialMatches(TriggerSequence sequence) {
-		return bindingsByPrefix.get(sequence);
+	/**
+	 * Get partial matches
+	 * 
+	 * @param sequence
+	 *            the sequence
+	 * @return the bindings
+	 */
+	public @Nullable Collection<@NonNull Binding> getPartialMatches(@NonNull TriggerSequence sequence) {
+		return this.bindingsByPrefix.get(sequence);
 	}
 
-	public boolean isPartialMatch(TriggerSequence seq) {
-		return bindingsByPrefix.get(seq) != null;
+	/**
+	 * Check if the sequence is partially matched
+	 * 
+	 * @param seq
+	 *            the sequence
+	 * @return <code>true</code> if there's a partial match
+	 */
+	@SuppressWarnings("null")
+	public boolean isPartialMatch(@NonNull TriggerSequence seq) {
+		return this.bindingsByPrefix.get(seq) != null;
 	}
 
-	public Collection<Binding> getBindings() {
-		return Collections.unmodifiableCollection(bindings);
+	/**
+	 * @return all bindings
+	 */
+	@SuppressWarnings("null")
+	public @NonNull Collection<@NonNull Binding> getBindings() {
+		return Collections.unmodifiableCollection(this.bindings);
 	}
 
 }

@@ -90,6 +90,11 @@ public class HSLAdapterFactory extends AdapterFactoryImpl
         return createPartitionerAdapter();
       }
       @Override
+      public Adapter caseJavaLikeParitioner(JavaLikeParitioner object)
+      {
+        return createJavaLikeParitionerAdapter();
+      }
+      @Override
       public Adapter caseRulePartitioner(RulePartitioner object)
       {
         return createRulePartitionerAdapter();
@@ -257,6 +262,21 @@ public class HSLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPartitionerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner <em>Java Like Paritioner</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner
+   * @generated
+   */
+  public Adapter createJavaLikeParitionerAdapter()
   {
     return null;
   }

@@ -1,0 +1,23 @@
+XML {
+	partition __dftl_partition_content_type
+	partition __xml_comment
+	partition __xml_tag
+	rule-damager __xml_tag {
+		default token default_tagtoken
+		token xml_string
+		single-line xml_string "\"" => "\"" escaped by '\\'
+		single-line xml_string "'"  => "'" escaped by '\\'
+		whitespace-rule [" ", "\t", "\n", "\r"]	
+	}
+	rule-damager __dftl_partition_content_type {
+		default token default_xmltoken
+		token proc_instruction 
+		single-line proc_instruction "<?" => "?>"
+		whitespace-rule [" ", "\t", "\n", "\r"]
+	}
+	js-damager __xml_comment "xml-comment-damager.js"
+	rule-partitioner {
+		multi-line __xml_comment "<!--" => "-->"
+		javascript-rule __xml_tag "xml-tag-rule.js"
+	}
+} for "text/xml"

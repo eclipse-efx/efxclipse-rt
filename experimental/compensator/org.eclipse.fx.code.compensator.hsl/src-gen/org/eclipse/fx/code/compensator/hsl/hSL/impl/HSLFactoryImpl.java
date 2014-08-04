@@ -68,6 +68,7 @@ public class HSLFactoryImpl extends EFactoryImpl implements HSLFactory
       case HSLPackage.MODEL: return createModel();
       case HSLPackage.PARTITION: return createPartition();
       case HSLPackage.PARTITIONER: return createPartitioner();
+      case HSLPackage.JAVA_LIKE_PARITIONER: return createJavaLikeParitioner();
       case HSLPackage.RULE_PARTITIONER: return createRulePartitioner();
       case HSLPackage.JS_PARITIONER: return createJSParitioner();
       case HSLPackage.DAMAGER: return createDamager();
@@ -159,6 +160,17 @@ public class HSLFactoryImpl extends EFactoryImpl implements HSLFactory
   {
     PartitionerImpl partitioner = new PartitionerImpl();
     return partitioner;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public JavaLikeParitioner createJavaLikeParitioner()
+  {
+    JavaLikeParitionerImpl javaLikeParitioner = new JavaLikeParitionerImpl();
+    return javaLikeParitioner;
   }
 
   /**

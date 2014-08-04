@@ -11,7 +11,6 @@
 package org.eclipse.fx.ui.di;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Factory to build an {@link FXMLLoader}

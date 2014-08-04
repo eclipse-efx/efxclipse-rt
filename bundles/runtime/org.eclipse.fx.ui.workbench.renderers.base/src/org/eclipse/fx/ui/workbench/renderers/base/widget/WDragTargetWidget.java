@@ -39,21 +39,17 @@ public interface WDragTargetWidget {
 		 */
 		AFTER,
 		/**
+		 * Insert the element into the reference
+		 */
+		INSERT,
+		/**
 		 * Split on the left
 		 */
-		SPLIT_LEFT,
-		/**
-		 * Split on the right
-		 */
-		SPLIT_RIGHT,
-		/**
-		 * Split on the top
-		 */
-		SPLIT_TOP,
+		SPLIT_VERTICAL,
 		/**
 		 * split on the bottom
 		 */
-		SPLIT_BOTTOM
+		SPLIT_HORIZONTAL
 	}
 
 	/**

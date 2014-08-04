@@ -10,14 +10,22 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.keybindings;
 
+import org.eclipse.jdt.annotation.NonNull;
+
+/**
+ * Exception thrown when parsing of a sequence failed
+ */
 public class ParseException extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	public ParseException(String string) {
+	/**
+	 * Create a new exception
+	 * 
+	 * @param string
+	 *            the error information
+	 */
+	public ParseException(@NonNull String string) {
 		super(string);
 	}
 

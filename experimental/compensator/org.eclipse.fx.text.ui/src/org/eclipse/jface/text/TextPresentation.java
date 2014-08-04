@@ -317,7 +317,7 @@ public class TextPresentation {
 					// Apply style to new default range and add it
 					StyleRange defaultRange= getDefaultStyleRange();
 					if (defaultRange == null)
-						defaultRange= new StyleRange();
+						defaultRange= new StyleRange((String)null);
 
 					defaultRange.start= start;
 					defaultRange.length= currentStart - start;
@@ -440,7 +440,8 @@ public class TextPresentation {
 //TODO No metrics
 //			if (template.metrics != null)
 //				target.metrics= template.metrics;
-
+			target.stylename = template.stylename;
+			
 			if (template.foreground != null || template.underlineStyle == StyleRange.UNDERLINE_LINK)
 				target.foreground= template.foreground;
 			if (template.background != null)
@@ -463,6 +464,7 @@ public class TextPresentation {
 				target.borderColor= template.borderColor;
 
 		} else {
+			target.stylename = template.stylename;
 			target.font= template.font;
 			target.fontStyle= template.fontStyle;
 //			target.metrics= template.metrics;

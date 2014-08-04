@@ -10,8 +10,16 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.keybindings;
 
-public interface KeySequence extends TriggerSequence, Comparable<KeySequence> {
+import org.eclipse.jdt.annotation.NonNull;
 
-	KeyStroke[] getKeyStrokes();
+/**
+ * A key sequence consists of a number of keystrokes
+ */
+public interface KeySequence extends TriggerSequence, Comparable<KeySequence> {
+	
+	/**
+	 * @return the strokes
+	 */
+	@NonNull KeyStroke[] getKeyStrokes();
 
 }

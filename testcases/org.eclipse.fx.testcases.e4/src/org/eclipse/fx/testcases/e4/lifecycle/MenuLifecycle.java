@@ -13,8 +13,8 @@ package org.eclipse.fx.testcases.e4.lifecycle;
 import org.eclipse.e4.ui.model.application.ui.menu.MDirectMenuItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.fx.ui.lifecycle.annotations.PreClose;
-import org.eclipse.fx.ui.lifecycle.annotations.PreShow;
+import org.eclipse.fx.ui.workbench.services.lifecycle.annotation.PreClose;
+import org.eclipse.fx.ui.workbench.services.lifecycle.annotation.PreShow;
 
 public class MenuLifecycle {
 	

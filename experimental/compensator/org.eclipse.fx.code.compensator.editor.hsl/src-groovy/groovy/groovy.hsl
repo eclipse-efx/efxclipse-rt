@@ -1,0 +1,63 @@
+Groovy {
+	partition __dftl_partition_content_type
+	partition __groovy_javadoc
+	partition __groovy_multiline_comment
+	partition __groovy_singleline_comment
+	partition __groovy_string
+	partition __groovy_character
+	rule-damager __dftl_partition_content_type {
+		default token groovy_default
+		token groovy_string
+		token groovy_operator
+		token groovy_bracket 
+		token groovy_keyword_return 
+		token groovy_keyword_type 
+		token groovy_keyword 
+		keywords groovy_keyword_return [ "return" ]
+		keywords groovy_keyword_type [ "boolean", "byte", "char", "short", "int", "long", "double", "float" ]
+		keywords groovy_keyword [ 
+			"abstract", 	"as", 			"assert", 		"break", 		
+			"case",			"catch",		"class", 		"const", 		
+			"continue",		"def",			"default", 		"do", 			
+			"else",			"enum", 		"extends", 		"false",
+			"final",		"finally",		"for",			"goto",		
+			"if",			"implements", 	"import",		"in",			
+			"instanceof",	"interface",	"native",		"new",			
+			"null",			"package",		"private",		"protected",	
+			"public",		"static",		"strictfp",		"super",		
+			"switch",		"synchronized",	"this",			"threadsafe",	
+			"throw",		"throws",		"transient",	"true",			
+			"try",			"void",			"volatile",		"while"]
+		single-line groovy_string "'" => "'" escaped by "\\"
+		whitespace-rule groovy_default javawhitespace
+		character-rule groovy_operator [ ';', '.', '=', '/', '\\', '+', '-', '*', '<', '>', ':', '?', '!', ',', '|', '&', '^', '%', '~' ]
+		character-rule groovy_bracket [ '(', ')', '{', '}', '[', ']' ]
+	}
+	rule-damager __groovy_javadoc {
+		default token groovy_doc_default 
+		//TODO not fully ported
+	}
+	rule-damager __groovy_singleline_comment {
+		default token groovy_single_line_comment 
+		//TODO not fully ported
+	}
+	rule-damager __groovy_multiline_comment {
+		default token groovy_multi_line_comment 
+		//TODO not fully ported
+	}
+	rule-damager __groovy_string {
+		default token groovy_string 
+		token groovy_var_interpolation 
+		javascript-rule groovy_var_interpolation "groovy-string-variable-rule.js"
+	}
+	rule-damager __groovy_character {
+		default token groovy_char 
+	}
+	java-like-partitioner {
+		singlelinedoc __groovy_singleline_comment
+		multilinedoc __groovy_multiline_comment
+		javadoc __groovy_javadoc
+		char __groovy_character
+		string __groovy_string
+	}
+} for "text/groovy"

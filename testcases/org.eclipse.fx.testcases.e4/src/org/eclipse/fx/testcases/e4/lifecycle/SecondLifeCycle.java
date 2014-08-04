@@ -4,8 +4,8 @@ import javafx.stage.Stage;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.fx.ui.dialogs.MessageDialog;
-import org.eclipse.fx.ui.lifecycle.annotations.PreClose;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
+import org.eclipse.fx.ui.workbench.services.lifecycle.annotation.PreClose;
 
 public class SecondLifeCycle {
 

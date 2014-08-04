@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.animation.pagetransition.animation;
 
-
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -38,78 +37,78 @@ public class FlipAnimation extends CenterSwitchAnimation {
 	public void animate(final BorderPane pane, final Node newNode, Runnable postAnimation) {
 		pane.setDepthTest(DepthTest.DISABLE);
 		final Node curNode = pane.getCenter();
-		
+
 		pane.setCenter(null);
-		
+
 		final Group area = new Group();
 		area.setDepthTest(DepthTest.ENABLE);
-		
+
 		Bounds b = curNode.getBoundsInParent();
 		newNode.resizeRelocate(b.getMinX(), b.getMinY(), b.getWidth(), b.getHeight());
 		area.getChildren().add(newNode);
 		area.getChildren().add(curNode);
-		
+
 		newNode.setTranslateZ(0.1);
 		curNode.setTranslateZ(-0.1);
 		newNode.setRotationAxis(Rotate.Y_AXIS);
 		newNode.setRotate(180);
-		
+
 		pane.setCenter(area);
-		
+
 		if (this.imageView != null) {
-			pane.getChildren().add(0,this.imageView);
+			pane.getChildren().add(0, this.imageView);
 		}
-		
+
 		Animation animation = createAndPrepareAnimation(area, null);
-		
+
 		animation.onFinishedProperty().set(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent event) {
 				pane.getChildren().remove(curNode);
 				pane.getChildren().remove(newNode);
 				pane.setCenter(newNode);
 				resetProperties(curNode, newNode);
-				
+
 				if (FlipAnimation.this.imageView != null) {
 					pane.getChildren().remove(FlipAnimation.this.imageView);
 				}
-				if( postAnimation != null ) {
-					postAnimation.run();	
+				if (postAnimation != null) {
+					postAnimation.run();
 				}
 			}
 		});
-		
+
 		animation.play();
 	}
-	
+
 	@Override
 	protected Animation createAndPrepareAnimation(Node area, @Nullable Node newNode) {
 		ScaleTransition zoomOut = new ScaleTransition(Duration.millis(300));
 		zoomOut.setToX(0.7);
 		zoomOut.setToY(0.7);
 		zoomOut.setInterpolator(Interpolator.EASE_BOTH);
-		
+
 		ScaleTransition zoomIn = new ScaleTransition(Duration.millis(300));
 		zoomIn.setToX(1);
 		zoomIn.setToY(1);
 		zoomIn.setInterpolator(Interpolator.EASE_BOTH);
-		
+
 		RotateTransition rt = new RotateTransition(Duration.millis(8000));
 		rt.setAxis(Rotate.Y_AXIS);
 		rt.setByAngle(180);
 		rt.setInterpolator(Interpolator.EASE_BOTH);
-		
+
 		return new SequentialTransition(area, zoomOut, rt, zoomIn);
-				
+
 	}
 
 	@Override
 	protected void resetProperties(Node curNode, Node newNode) {
 		newNode.setTranslateZ(0);
 		curNode.setTranslateZ(0);
-			newNode.setRotate(0);
-			curNode.setRotate(0);
+		newNode.setRotate(0);
+		curNode.setRotate(0);
 	}
 
 }

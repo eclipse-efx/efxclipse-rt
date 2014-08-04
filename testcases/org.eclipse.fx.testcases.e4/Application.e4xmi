@@ -15,6 +15,7 @@
                 <children xsi:type="menu:HandledMenuItem" xmi:id="_oWARYCTjEeKY8NYIo6jIvQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.7" label="Switch Perspective 2" command="_kCbZQO6yEeG4lfn-YKJbJw">
                   <parameters xmi:id="_tPAAoCTjEeKY8NYIo6jIvQ" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.2"/>
                 </children>
+                <children xsi:type="menu:DynamicMenuContribution" xmi:id="_-V0ocAxLEeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.dynamicmenucontribution.3" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.contributions.DMContribution"/>
               </menus>
               <toolbar xmi:id="_FMzQEIEGEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.toolbar.0">
                 <children xsi:type="menu:DirectToolItem" xmi:id="_GVO3wIEGEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.directtoolitem.5" label="Hello World" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler2"/>
@@ -50,6 +51,7 @@
             <children xsi:type="basic:Part" xmi:id="_UXm2oI3yEeOEhJYRfEsdog" elementId="org.eclipse.fx.testcases.e4.part.17" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.TestFXMLBuilder" label="FXMLLoader" closeable="true"/>
             <children xsi:type="basic:Part" xmi:id="_NbT9cI3zEeOEhJYRfEsdog" elementId="org.eclipse.fx.testcases.e4.part.18" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.TestExtendedFXMLBuilder" label="ExtendedFXMLLoader"/>
             <children xsi:type="basic:Part" xmi:id="__dr90LpZEeOpi709HEnsKw" elementId="org.eclipse.fx.testcases.e4.part.20" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.Test_431338" label="Test_431338"/>
+            <children xsi:type="basic:Part" xmi:id="_9_eSAA0cEeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.part.24" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.TestSwingPart" label="Swing Node"/>
           </children>
           <children xsi:type="basic:Part" xmi:id="_txxY4OMsEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.4" toBeRendered="false" containerData="10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C4"/>
           <children xsi:type="basic:Part" xmi:id="_-czbgLpMEeOpi709HEnsKw" elementId="org.eclipse.fx.testcases.e4.part.19" containerData="10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.Test_431391" label="Label Test"/>
@@ -100,6 +102,32 @@
         <children xsi:type="basic:Part" xmi:id="__HnCoIfYEeKsYN0U3N_L9Q" elementId="org.eclipse.fx.testcases.e4.part.14" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="Panel 14">
           <tags>content_a</tags>
         </children>
+        <children xsi:type="basic:PartStack" xmi:id="_36dDAA21EeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.partstack.1">
+          <children xsi:type="basic:CompositePart" xmi:id="_bkSXUA24EeSBX93V23L1Jg" elementId="blabla.compositepart.0">
+            <children xsi:type="basic:Part" xmi:id="_igVKIA29EeSeqfMy71kzOA" elementId="blabla.part.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="Composite Child 1"/>
+            <children xsi:type="basic:Part" xmi:id="_ExZxMA2_EeSyeeom7M5Hsg" elementId="blabla.part.1" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="Composite Child 2"/>
+          </children>
+          <children xsi:type="basic:Part" xmi:id="_2a_P0A2_EeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.part.simplePart" label="Simple Part"/>
+        </children>
+      </children>
+      <children xsi:type="advanced:Perspective" xmi:id="_iCfngAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.perspective.6" label="Layout Sample">
+        <tags>myperspective</tags>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_kWd1QAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.partsashcontainer.4" horizontal="true">
+          <tags>mysash</tags>
+          <tags>fx_fixedLayout</tags>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_1LeUQA21EeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.partsashcontainer.5">
+            <children xsi:type="basic:Part" xmi:id="_lkcEQAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.22">
+              <persistedState key="fx_layout_grab_horizontal" value="true"/>
+              <persistedState key="fx_layout_grab_vertical" value="true"/>
+              <tags>mypart</tags>
+            </children>
+            <children xsi:type="basic:Part" xmi:id="_l-Ky4AjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.23">
+              <persistedState key="fx_layout_grab_horizontal" value="true"/>
+              <persistedState key="fx_layout_grab_vertical" value="true"/>
+              <tags>mypart</tags>
+            </children>
+          </children>
+        </children>
       </children>
     </children>
     <mainMenu xmi:id="_W8hHoORZEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.menu.0">
@@ -134,6 +162,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="__QfhEANwEeS-UZpK2iB2xg" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.13" label="Sample Expression">
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_A09kgANxEeS-UZpK2iB2xg" coreExpressionId="org.eclipse.fx.testcases.e4.definition1"/>
         </children>
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_p-vFcAxJEeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.directmenuitem.16" label="Disable Delayed" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DisableDelayed"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_d-oDwO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.menu.3" label="Switch">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_jYdPMO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.4" label="Perspective 0" command="_kCbZQO6yEeG4lfn-YKJbJw">
@@ -153,6 +182,9 @@
         </children>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_MrnaMIfZEeKsYN0U3N_L9Q" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.10" label="Perspective 5" command="_kCbZQO6yEeG4lfn-YKJbJw">
           <parameters xmi:id="_PsE6gIfZEeKsYN0U3N_L9Q" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.5"/>
+        </children>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_SnxwgAjwEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.14" label="Layout perspective" command="_kCbZQO6yEeG4lfn-YKJbJw">
+          <parameters xmi:id="_WMZGwAjwEeS-OoJT2xrBFg" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.6"/>
         </children>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_xS050MayEeKo1rUjbZCXsQ" elementId="org.eclipse.fx.testcases.e4.menu.6" label="Multiple close">
@@ -205,6 +237,16 @@
         <children xsi:type="menu:DirectToolItem" xmi:id="_w4yJ0L5SEeOCpM9MHb7gVw" elementId="org.eclipse.fx.testcases.e4.directtoolitem.10" label="V2" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler"/>
       </children>
     </trimBars>
+    <trimBars xmi:id="_W56f0A3tEeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.trimbar.1" side="Bottom">
+      <children xsi:type="menu:ToolControl" xmi:id="_yeLf4BZuEeS6JMmOlvf6LA" elementId="org.eclipse.fx.testcases.e4.toolcontrol.2"/>
+      <children xsi:type="menu:ToolBar" xmi:id="_YRFHEA3tEeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.toolbar.6">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_aERjAA3tEeSWdaJj_r118A" elementId="org.eclipse.fx.testcases.e4.directtoolitem.test" label="Test"/>
+      </children>
+      <children xsi:type="menu:ToolControl" xmi:id="_zz_cQBZuEeS6JMmOlvf6LA" elementId="org.eclipse.fx.testcases.e4.toolcontrol.3" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.tool.SpacerDummy">
+        <tags>fillspace</tags>
+      </children>
+      <children xsi:type="menu:ToolControl" xmi:id="_0fID8BZuEeS6JMmOlvf6LA" elementId="org.eclipse.fx.testcases.e4.toolcontrol.4" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.tool.ProgressControl"/>
+    </trimBars>
   </children>
   <handlers xmi:id="_H2FJYOUcEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.Handler0" command="_FEZr8OUcEeGP-5z69KadAQ"/>
   <handlers xmi:id="_0_q1EOqiEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.Handler1" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
@@ -231,5 +273,5 @@
   <addons xmi:id="_A7QWmOL-EeGP-5z69KadAQ" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
   <addons xmi:id="_tQtNQOUbEeGP-5z69KadAQ" elementId="org.eclipse.fx.ui.keybindings.e4.model" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingProcessingAddon"/>
   <addons xmi:id="_3c-AUL89EeKIBMNbSVZPsw" elementId="org.eclipse.e4.ui.workbench.addons.HandlerProcessingAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
-  <addons xmi:id="_9h-HsOHDEeKlH9jWGqiIew" elementId="org.eclipse.fx.testcases.e4.addon.0" contributionURI="bundleclass://org.eclipse.fx.ui.lifecycle/org.eclipse.fx.ui.lifecycle.LifecycleAddon"/>
+  <addons xmi:id="_9h-HsOHDEeKlH9jWGqiIew" elementId="org.eclipse.fx.testcases.e4.addon.0" contributionURI="bundleclass://org.eclipse.fx.ui.workbench.services/org.eclipse.fx.ui.workbench.services.lifecycle.LifecycleAddon"/>
 </application:Application>

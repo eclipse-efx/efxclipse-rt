@@ -21,9 +21,10 @@ Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.1.0",
  org.eclipse.core.runtime;bundle-version="3.10.0",
  org.eclipse.fx.osgi.util;bundle-version="1.0.0",
  org.eclipse.e4.core.di.extensions,
- org.eclipse.fx.ui.services;bundle-version="1.0.0"
-Export-Package: org.eclipse.fx.ui.workbench.base,
- org.eclipse.fx.ui.workbench.base.rendering
+ org.eclipse.fx.ui.services;bundle-version="1.0.0",
+ org.eclipse.fx.ui.workbench.services;bundle-version="1.0.0"
+Export-Package: org.eclipse.fx.ui.workbench.base;x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx",
+ org.eclipse.fx.ui.workbench.base.rendering;x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx"
 Import-Package: javax.annotation;version="1.2.0",
  javax.inject;version="1.0.0"
 Bundle-Activator: org.eclipse.fx.ui.workbench.base.internal.Activator

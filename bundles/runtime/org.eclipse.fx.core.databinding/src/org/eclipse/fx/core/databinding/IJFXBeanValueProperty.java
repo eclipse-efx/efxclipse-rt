@@ -11,6 +11,7 @@
 package org.eclipse.fx.core.databinding;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Single valued property
@@ -23,7 +24,7 @@ public interface IJFXBeanValueProperty extends IJFXBeanProperty, IValueProperty 
 	 *            the name
 	 * @return child property
 	 */
-	public IJFXBeanValueProperty value(String propertyName);
+	public @NonNull IJFXBeanValueProperty value(@NonNull String propertyName);
 
 	/**
 	 * Create a child property with a type
@@ -34,7 +35,7 @@ public interface IJFXBeanValueProperty extends IJFXBeanProperty, IValueProperty 
 	 *            the type
 	 * @return child property
 	 */
-	public IJFXBeanValueProperty value(String propertyName, Class<?> valueType);
+	public @NonNull IJFXBeanValueProperty value(@NonNull String propertyName, Class<?> valueType);
 
 	/**
 	 * Create a child property from a property
@@ -43,5 +44,5 @@ public interface IJFXBeanValueProperty extends IJFXBeanProperty, IValueProperty 
 	 *            the property
 	 * @return the child property
 	 */
-	public IJFXBeanValueProperty value(IJFXBeanValueProperty property);
+	public @NonNull IJFXBeanValueProperty value(@NonNull IJFXBeanValueProperty property);
 }

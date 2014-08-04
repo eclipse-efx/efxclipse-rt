@@ -59,16 +59,18 @@ public abstract class BaseMenuItemRenderer<N> extends BaseItemRenderer<MMenuItem
 			}
 			EBindingService service = lclContext.get(EBindingService.class);
 			ParameterizedCommand command = generateParameterizedCommand((MHandledMenuItem) element, lclContext);
-			Collection<TriggerSequence> sequences = service.getSequencesFor(command);
-			if (!sequences.isEmpty()) {
-				Iterator<TriggerSequence> it = sequences.iterator();
-				while (it.hasNext()) {
-					TriggerSequence s = it.next();
-					if (s instanceof KeySequence) {
-						widget.setAccelerator((KeySequence) s);
-						break;
+			if( command != null ) {
+				Collection<TriggerSequence> sequences = service.getSequencesFor(command);
+				if (!sequences.isEmpty()) {
+					Iterator<TriggerSequence> it = sequences.iterator();
+					while (it.hasNext()) {
+						TriggerSequence s = it.next();
+						if (s instanceof KeySequence) {
+							widget.setAccelerator((KeySequence) s);
+							break;
+						}
 					}
-				}
+				}				
 			}
 		}
 	}

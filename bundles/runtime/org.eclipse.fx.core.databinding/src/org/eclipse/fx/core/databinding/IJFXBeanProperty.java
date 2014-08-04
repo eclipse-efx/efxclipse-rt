@@ -13,7 +13,6 @@ package org.eclipse.fx.core.databinding;
 import java.beans.PropertyDescriptor;
 
 import org.eclipse.core.databinding.property.IProperty;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

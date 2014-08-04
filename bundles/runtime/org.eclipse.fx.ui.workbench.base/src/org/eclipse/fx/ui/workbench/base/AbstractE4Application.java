@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.runtime.Assert;
@@ -50,6 +52,7 @@ import org.eclipse.e4.ui.internal.workbench.SelectionAggregator;
 import org.eclipse.e4.ui.internal.workbench.SelectionServiceImpl;
 import org.eclipse.e4.ui.model.application.MAddon;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicPackageImpl;
 import org.eclipse.e4.ui.model.application.ui.impl.UiPackageImpl;
@@ -79,6 +82,7 @@ import org.eclipse.fx.ui.workbench.base.internal.Activator;
 import org.eclipse.fx.ui.workbench.base.internal.LoggerProviderImpl;
 import org.eclipse.fx.ui.workbench.base.restart.RestartPreferenceUtil;
 import org.eclipse.fx.ui.workbench.base.restart.RestartServiceImpl;
+import org.eclipse.fx.ui.workbench.services.EModelStylingService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.osgi.service.datalocation.Location;
@@ -97,13 +101,14 @@ public abstract class AbstractE4Application implements IApplication {
 	private static final String METADATA_FOLDER = ".metadata"; //$NON-NLS-1$
 	private static final String VERSION_FILENAME = "version.ini"; //$NON-NLS-1$
 
-	private Object lcManager;
+	Object lcManager;
 	private IModelResourceHandler handler;
 
 	private static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(AbstractE4Application.class);
 
 	/**
-	 * Create a synchronizer instance who synchronizes between UI and none-UI threads
+	 * Create a synchronizer instance who synchronizes between UI and none-UI
+	 * threads
 	 * 
 	 * @param context
 	 *            the context
@@ -148,7 +153,7 @@ public abstract class AbstractE4Application implements IApplication {
 	protected static String[] getApplicationArguments(IApplicationContext applicationContext) {
 		return (String[]) applicationContext.getArguments().get(IApplicationContext.APPLICATION_ARGS);
 	}
-	
+
 	/**
 	 * Create the workbench instance
 	 * 
@@ -165,12 +170,40 @@ public abstract class AbstractE4Application implements IApplication {
 
 		@NonNull
 		UISynchronize uiSync = createSynchronizer(appContext);
-		appContext.set(org.eclipse.e4.ui.di.UISynchronize.class, (org.eclipse.e4.ui.di.UISynchronize)uiSync);
+		appContext.set(org.eclipse.e4.ui.di.UISynchronize.class, (org.eclipse.e4.ui.di.UISynchronize) uiSync);
 		appContext.set(UISynchronize.class, uiSync);
 		appContext.set(Realm.class, createRealm(appContext));
 		appContext.set(IApplicationContext.class, applicationContext);
+		appContext.set(EModelStylingService.class, new EModelStylingService() {
+			private static final String PREFIX = "efx_styleclass:"; //$NON-NLS-1$
+			@Override
+			public void addStyles(MUIElement element, String... tags) {
+				List<String> toAdd = Stream.of(tags).map(t -> PREFIX + t)
+					.filter(t -> !element.getTags().contains(t))
+					.collect(Collectors.toList());
+				element.getTags().addAll(toAdd);
+			}
+
+			@Override
+			public void removeStyles(MUIElement element, String... tags) {
+				List<String> cssTags = Stream.of(tags).map(t -> PREFIX + t).collect(Collectors.toList());
+				element.getTags().removeAll(cssTags);
+			}
+
+			@Override
+			public List<String> getStyles(MUIElement element) {
+				return getStylesFromTags(element.getTags());
+			}
+			
+			@Override
+			public List<String> getStylesFromTags(List<String> tags) {
+				return tags.stream().filter((t) -> t.startsWith(PREFIX))
+						.map(t -> t.substring(PREFIX.length()))
+						.collect(Collectors.toList());
+			}
+		});
 		appContext.set(IResourceUtilities.class, createResourceUtility(appContext));
-		
+
 		// Check if DS is running
 		if (!appContext.containsKey("org.eclipse.e4.ui.workbench.modeling.EModelService")) { //$NON-NLS-1$
 			throw new IllegalStateException("Core services not available. Please make sure that a declarative service implementation (such as the bundle 'org.eclipse.equinox.ds') is available!"); //$NON-NLS-1$
@@ -190,25 +223,25 @@ public abstract class AbstractE4Application implements IApplication {
 				Boolean rv = uiSync.syncExec(new Callable<Boolean>() {
 					@Override
 					public Boolean call() throws Exception {
-						return (Boolean)ContextInjectionFactory.invoke(AbstractE4Application.this.lcManager, PostContextCreate.class, appContext, Boolean.TRUE);
+						return (Boolean) ContextInjectionFactory.invoke(AbstractE4Application.this.lcManager, PostContextCreate.class, appContext, Boolean.TRUE);
 					}
 				}, null);
-				
+
 				if (rv != null && !rv.booleanValue()) {
 					return null;
 				}
 			}
 		}
 		String toolItemTimer = getArgValue(Constants.TOOLITEM_TIMER, applicationContext, false);
-		if( toolItemTimer != null ) {
+		if (toolItemTimer != null) {
 			try {
-				appContext.set(Constants.TOOLITEM_TIMER, Long.valueOf(toolItemTimer));	
-			} catch(NumberFormatException e) {
-				LOGGER.error("Unable to parse '"+Constants.TOOLITEM_TIMER+"' value '"+toolItemTimer+"'", e);   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+				appContext.set(Constants.TOOLITEM_TIMER, Long.valueOf(toolItemTimer));
+			} catch (NumberFormatException e) {
+				LOGGER.error("Unable to parse '" + Constants.TOOLITEM_TIMER + "' value '" + toolItemTimer + "'", e); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 			}
-			
+
 		}
-		
+
 		// Create the app model and its context
 		MApplication appModel = loadApplicationModel(applicationContext, appContext);
 		appModel.setContext(appContext);
@@ -249,15 +282,16 @@ public abstract class AbstractE4Application implements IApplication {
 
 		preCreateWorkbench(appContext);
 
-		// Instantiate the Workbench (which is responsible for 'running' the UI (if any)...
+		// Instantiate the Workbench (which is responsible for 'running' the UI
+		// (if any)...
 		E4Workbench workbench = new E4Workbench(appModel, appContext);
-		
+
 		// Workbench dependendent services
 		appContext.set(RestartService.class, ContextInjectionFactory.make(RestartServiceImpl.class, appContext));
 
 		return workbench;
 	}
-	
+
 	/**
 	 * save the model
 	 */
@@ -348,7 +382,8 @@ public abstract class AbstractE4Application implements IApplication {
 		Resource resource = this.handler.loadMostRecentModel();
 		theApp = (MApplication) resource.getContents().get(0);
 
-		// Reset the restart-flag in the preferences regardless of it being used or not, otherwise it would
+		// Reset the restart-flag in the preferences regardless of it being used
+		// or not, otherwise it would
 		// hang around if -clearPersistedState was also set
 		restartUtil.setClearPersistedStateOnRestart(false);
 
@@ -506,7 +541,23 @@ public abstract class AbstractE4Application implements IApplication {
 		windowContext.set(SelectionAggregator.class, selectionAggregator);
 	}
 
-	protected static String getArgValue(String argName, IApplicationContext applicationContext, boolean singledCmdArgValue) {
+	/**
+	 * Try to access the argument value from different sources:
+	 * <ul>
+	 * <li>The application arguments</li>
+	 * <li>The product extension point</li>
+	 * <li>The System-Properties</li>
+	 * </ul>
+	 * 
+	 * @param argName
+	 *            the argument name
+	 * @param applicationContext
+	 *            the application context
+	 * @param singledCmdArgValue
+	 *            <code>true</code> if the argument is single valued
+	 * @return the value or <code>null</code>
+	 */
+	protected static @Nullable String getArgValue(String argName, IApplicationContext applicationContext, boolean singledCmdArgValue) {
 		// Is it in the arg list ?
 		if (argName == null || argName.length() == 0)
 			return null;
@@ -538,7 +589,7 @@ public abstract class AbstractE4Application implements IApplication {
 	 * @return <code>true</code> if the location is fine
 	 */
 	@SuppressWarnings("static-method")
-	protected boolean checkInstanceLocation(@Nullable Location instanceLocation, @NonNull IEclipseContext context) {
+	public boolean checkInstanceLocation(@Nullable Location instanceLocation, @NonNull IEclipseContext context) {
 		// Eclipse has been run with -data @none or -data @noDefault options so
 		// we don't need to validate the location
 		if (instanceLocation == null && Boolean.FALSE.equals(context.get(IWorkbench.PERSIST_STATE))) {

@@ -18,6 +18,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.internal.workbench.E4Workbench;
@@ -33,6 +35,8 @@ import org.eclipse.fx.osgi.util.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
+import org.eclipse.fx.ui.services.theme.Theme;
+import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
 import org.eclipse.fx.ui.workbench.fx.internal.GraphicsLoaderImpl;
 import org.eclipse.fx.ui.workbench.fx.internal.UISynchronizeImpl;
@@ -44,6 +48,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
+import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * default e4 application
@@ -53,9 +58,9 @@ public class E4Application extends AbstractE4Application {
 
 	static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(E4Application.class);
 
-	private E4Workbench workbench;
-	private Location instanceLocation;
-	private IEclipseContext workbenchContext;
+	E4Workbench workbench;
+	Location instanceLocation;
+	IEclipseContext workbenchContext;
 	
 	private static final String EXIT_CODE = "e4.osgi.exit.code"; //$NON-NLS-1$
 	private static final String PRIMARY_STAGE_KEY = "primaryStage"; //$NON-NLS-1$
@@ -195,6 +200,18 @@ public class E4Application extends AbstractE4Application {
 				if (getLifecycleManager() != null) {
 					ContextInjectionFactory.invoke(getLifecycleManager(), PreSave.class, this.workbenchContext, null);
 				}
+				ThemeManager manager = this.workbenchContext.get(ThemeManager.class);
+				Theme theme = manager.getCurrentTheme(); 
+				if( theme != null ) {
+					IEclipsePreferences node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.ui.workbench.fx"); //$NON-NLS-1$
+					node.put(AbstractE4Application.THEME_ID, theme.getId());
+					try {
+						node.flush();
+					} catch (BackingStoreException e) {
+						LOGGER.error("Failed to remember the theme id", e); //$NON-NLS-1$
+					}
+				}
+				
 				saveModel();
 				this.workbench.close();
 			}
@@ -295,6 +312,7 @@ public class E4Application extends AbstractE4Application {
 		sendEvent(Constants.APPLICATION_LAUNCHED, map);
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	protected UISynchronize createSynchronizer(IEclipseContext appContext) {
 		return ContextInjectionFactory.make(UISynchronizeImpl.class, appContext);

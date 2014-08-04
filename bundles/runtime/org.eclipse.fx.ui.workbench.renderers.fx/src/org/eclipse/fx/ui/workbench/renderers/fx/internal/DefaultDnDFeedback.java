@@ -89,6 +89,7 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 		};
 	}
 
+	@SuppressWarnings("null")
 	private static MarkerFeedback handleMove(Pane layoutNode, DnDFeedbackData data) {
 		TabOutlineMarker marker = null;
 		

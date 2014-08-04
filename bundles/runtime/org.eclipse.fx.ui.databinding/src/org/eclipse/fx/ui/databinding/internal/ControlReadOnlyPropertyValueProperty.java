@@ -19,20 +19,28 @@ import org.eclipse.core.databinding.property.INativePropertyListener;
 import org.eclipse.core.databinding.property.IProperty;
 import org.eclipse.core.databinding.property.ISimplePropertyListener;
 import org.eclipse.core.databinding.property.NativePropertyListener;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * @param <O>
  */
 public abstract class ControlReadOnlyPropertyValueProperty<O> extends ControlValueProperty {
-	
+
 	@Override
 	protected Object doGetValue(Object source) {
 		ReadOnlyProperty<O> p = getProperty(source);
-		return p != null ? p.getValue() : null;
+		return p.getValue();
 	}
-	
-	protected abstract ReadOnlyProperty<O> getProperty(Object source);
-	
+
+	/**
+	 * Get the property
+	 * 
+	 * @param source
+	 *            the source
+	 * @return the property
+	 */
+	protected abstract @NonNull ReadOnlyProperty<O> getProperty(Object source);
+
 	@Override
 	public INativePropertyListener adaptListener(ISimplePropertyListener listener) {
 		return new ListenerImpl(this, listener);
@@ -40,7 +48,7 @@ public abstract class ControlReadOnlyPropertyValueProperty<O> extends ControlVal
 
 	class ListenerImpl extends NativePropertyListener implements ChangeListener<Object> {
 		private Object owner;
-		
+
 		public ListenerImpl(IProperty property, ISimplePropertyListener listener) {
 			super(property, listener);
 		}
@@ -54,18 +62,14 @@ public abstract class ControlReadOnlyPropertyValueProperty<O> extends ControlVal
 		protected void doAddTo(Object source) {
 			this.owner = source;
 			ReadOnlyProperty<O> p = getProperty(source);
-			if( p != null ) {
-				p.addListener(this);
-			}
+			p.addListener(this);
 		}
 
 		@Override
 		protected void doRemoveFrom(Object source) {
 			this.owner = null;
 			ReadOnlyProperty<O> p = getProperty(source);
-			if( p != null ) {
-				p.removeListener(this);
-			}
-		}		
+			p.removeListener(this);
+		}
 	}
 }

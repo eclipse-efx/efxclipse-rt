@@ -325,16 +325,16 @@ public class KeyBindingDispatcher {
 		return !sequenceBeforeKeyStroke.isEmpty();
 	}
 
-	private @Nullable ParameterizedCommand getPerfectMatch(KeySequence keySequence) {
+	private @Nullable ParameterizedCommand getPerfectMatch(@NonNull KeySequence keySequence) {
 		Binding perfectMatch = getBindingService().getPerfectMatch(keySequence);
 		return perfectMatch == null ? null : perfectMatch.getParameterizedCommand();
 	}
 
-	private boolean isPartialMatch(KeySequence keySequence) {
+	private boolean isPartialMatch(@NonNull KeySequence keySequence) {
 		return getBindingService().isPartialMatch(keySequence);
 	}
 
-	private boolean isPerfectMatch(KeySequence keySequence) {
+	private boolean isPerfectMatch(@NonNull KeySequence keySequence) {
 		return getBindingService().isPerfectMatch(keySequence);
 	}
 

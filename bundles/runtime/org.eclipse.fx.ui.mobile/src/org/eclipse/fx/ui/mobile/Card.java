@@ -10,22 +10,41 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.mobile;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * A main UI area
+ */
 public class Card extends BorderPane {
-	private StringProperty name = new SimpleStringProperty(this, "name");
-	
-	public void setName(String name) {
+	@NonNull
+	private final StringProperty name = new SimpleStringProperty(this, "name"); //$NON-NLS-1$
+
+	/**
+	 * set the name of the card
+	 * 
+	 * @param name
+	 *            the name
+	 */
+	public void setName(@NonNull String name) {
 		this.name.set(name);
 	}
-	
-	public String getName() {
+
+	/**
+	 * @return the name of the card
+	 */
+	public @Nullable String getName() {
 		return this.name.get();
 	}
-	
-	public StringProperty nameProperty() {
-		return name;
+
+	/**
+	 * @return the string property
+	 */
+	public @NonNull StringProperty nameProperty() {
+		return this.name;
 	}
 }

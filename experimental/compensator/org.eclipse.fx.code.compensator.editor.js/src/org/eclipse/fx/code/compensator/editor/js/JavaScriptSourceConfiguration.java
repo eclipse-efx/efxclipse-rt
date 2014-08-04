@@ -10,6 +10,11 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.js;
 
+import java.net.URL;
+
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyProperty;
+
 import org.eclipse.fx.code.compensator.editor.js.scanner.IJavaScriptColorConstants;
 import org.eclipse.fx.code.compensator.editor.js.scanner.IJavaScriptPartitions;
 import org.eclipse.fx.code.compensator.editor.js.scanner.JavaScriptCodeScanner;
@@ -100,5 +105,23 @@ public class JavaScriptSourceConfiguration extends SourceViewerConfiguration {
 
 	private ITokenScanner getCodeScanner() {
 		return fCodeScanner;
+	}
+	
+	@Override
+	public void setThemeId(String themeId) {
+		super.setThemeId(themeId);
+		URL url = getClass().getClassLoader().getResource("css/"+themeId+"-highlight.css");
+		if( url != null ) {
+			defaultStylesheet.set(url);
+		} else {
+			defaultStylesheet.set(getClass().getClassLoader().getResource("css/highlight.css"));			
+		}
+	}
+	
+	private ReadOnlyObjectWrapper<URL> defaultStylesheet = new ReadOnlyObjectWrapper<>(this, "defaultStylesheet", getClass().getClassLoader().getResource("css/highlight.css"));
+	
+	@Override
+	public ReadOnlyProperty<URL> getDefaultStylesheet() {
+		return defaultStylesheet.getReadOnlyProperty();
 	}
 }

@@ -55,6 +55,9 @@ public class FileList {
 	public void initUI(BorderPane parent) {
 		view = new ListView<>();
 		view.setCellFactory(FileList::listCell);
+		for( Resource r : workbench.getResources() ) {
+			inputList.add(r);
+		}
 		view.setItems(inputList);
 		view.setOnMouseClicked(this::open);
 		parent.setCenter(view);

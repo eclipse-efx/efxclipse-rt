@@ -27,6 +27,8 @@ import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
 import org.eclipse.fx.core.di.ContextBoundValue;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
+import org.eclipse.fx.core.log.Log;
+import org.eclipse.fx.core.log.Logger;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -54,6 +56,10 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	@Optional
 	@Nullable
 	IEventBroker eventBroker;
+	
+	@Inject
+	@Log
+	private Logger logger;
 
 	/**
 	 * Create a new bound value
@@ -93,7 +99,11 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 		this.value = o;
 		if (this.callbacks != null) {
 			for (Callback<?> c : this.callbacks.toArray(new Callback<?>[0])) {
-				((Callback<T>) c).call(o);
+				try {
+					((Callback<T>) c).call(o);	
+				} catch(Throwable t) {
+					this.logger.error("Failed while executing callback", t); //$NON-NLS-1$
+				}
 			}
 		}
 	}
@@ -155,8 +165,9 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 		};
 	}
 
+	@SuppressWarnings("null")
 	@Override
-	public <A> A adaptTo(Class<A> adapt) {
+	public <A> A adaptTo(@NonNull Class<A> adapt) {
 		return this.adapterService.adapt(this, adapt, new ValueAccessImpl(this.context));
 	}
 
@@ -170,7 +181,12 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 		List<Callback<Void>> disposalCallbacks = this.disposalCallbacks;
 		if (disposalCallbacks != null) {
 			for (Callback<?> callback : disposalCallbacks.toArray(new Callback<?>[0])) {
-				callback.call(null);
+				try {
+					callback.call(null);	
+				} catch(Throwable t) {
+					this.logger.error("Failure while executing clean up callback", t); //$NON-NLS-1$
+				}
+				
 			}
 			disposalCallbacks.clear();
 		}
@@ -193,8 +209,9 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 			return (O) this.context.get(key);
 		}
 
+		@SuppressWarnings("null")
 		@Override
-		public <O> O getValue(Class<O> key) {
+		public <O> O getValue(@NonNull Class<O> key) {
 			return this.context.get(key);
 		}
 

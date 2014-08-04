@@ -1,12 +1,16 @@
+/*******************************************************************************
+ * Copyright (c) 2014 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.hsl;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-
+import org.eclipse.fx.code.compensator.editor.hsl.internal.JavaScriptHelper;
 import org.eclipse.fx.code.compensator.hsl.hSL.ParitionRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.PartitionJSRule;
 import org.eclipse.fx.code.compensator.hsl.hSL.PartitionMultiLineRule;
@@ -31,18 +35,7 @@ public class HSLRuleBasedPartitionScanner extends RuleBasedPartitionScanner {
 				PartitionMultiLineRule mr = (PartitionMultiLineRule) r;
 				pr[i] = new MultiLineRule(mr.getStartSeq(), mr.getEndSeq(), new Token(mr.getParition().getName()), mr.getEscapeSeq() != null ? mr.getEscapeSeq().charAt(0) : 0, false);
 			} else if( r instanceof PartitionJSRule ) {
-				PartitionJSRule js = (PartitionJSRule) r;
-				ScriptEngineManager mgr = new ScriptEngineManager(cl);
-				ScriptEngine engine = mgr.getEngineByName("nashorn");
-				try( InputStreamReader reader = new InputStreamReader(cl.getResourceAsStream(js.getFileURI())) ) {
-					pr[i] = (IPredicateRule) engine.eval(reader);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ScriptException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				pr[i] = JavaScriptHelper.loadScript(cl, r, ((PartitionJSRule) r).getFileURI());
 			}
 			i++;
 		}

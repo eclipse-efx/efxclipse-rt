@@ -10,13 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.keybindings.generic;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * <p>
@@ -27,16 +26,17 @@ import java.util.TreeSet;
  */
 public final class Util {
 
-	/**
-	 * An unmodifiable, empty, sorted set. This value is guaranteed to never change and never be
-	 * <code>null</code>.
-	 */
-	public static final SortedSet EMPTY_SORTED_SET = Collections
-			.unmodifiableSortedSet(new TreeSet());
+	// /**
+	// * An unmodifiable, empty, sorted set. This value is guaranteed to never
+	// change and never be
+	// * <code>null</code>.
+	// */
+	// public static final SortedSet EMPTY_SORTED_SET = Collections
+	// .unmodifiableSortedSet(new TreeSet());
 
 	/**
-	 * A common zero-length string. It avoids needing write <code>NON-NLS</code> next to code
-	 * fragments. It's also a bit clearer to read.
+	 * A common zero-length string. It avoids needing write <code>NON-NLS</code>
+	 * next to code fragments. It's also a bit clearer to read.
 	 */
 	public static final String ZERO_LENGTH_STRING = ""; //$NON-NLS-1$
 
@@ -46,30 +46,32 @@ public final class Util {
 	 * @param object
 	 *            The object to check; may be <code>null</code>.
 	 * @param c
-	 *            The class which the object should be; must not be <code>null</code>.
+	 *            The class which the object should be; must not be
+	 *            <code>null</code>.
 	 */
-	public static final void assertInstance(final Object object, final Class c) {
+	public static final void assertInstance(@Nullable final Object object, @NonNull final Class<?> c) {
 		assertInstance(object, c, false);
 	}
 
 	/**
-	 * Verifies the given object is an instance of the given class. It is possible to specify
-	 * whether the object is permitted to be <code>null</code>.
+	 * Verifies the given object is an instance of the given class. It is
+	 * possible to specify whether the object is permitted to be
+	 * <code>null</code>.
 	 * 
 	 * @param object
 	 *            The object to check; may be <code>null</code>.
 	 * @param c
-	 *            The class which the object should be; must not be <code>null</code>.
+	 *            The class which the object should be; must not be
+	 *            <code>null</code>.
 	 * @param allowNull
 	 *            Whether the object is allowed to be <code>null</code>.
 	 */
-	private static final void assertInstance(final Object object, final Class c,
-			final boolean allowNull) {
+	private static final void assertInstance(@Nullable final Object object, @NonNull final Class<?> c, final boolean allowNull) {
 		if (object == null && allowNull) {
 			return;
 		}
 
-		if (object == null || c == null) {
+		if (object == null) {
 			throw new NullPointerException();
 		} else if (!c.isInstance(object)) {
 			throw new IllegalArgumentException();
@@ -77,16 +79,16 @@ public final class Util {
 	}
 
 	/**
-	 * Compares two boolean values. <code>false</code> is considered to be "less than"
-	 * <code>true</code>.
+	 * Compares two boolean values. <code>false</code> is considered to be
+	 * "less than" <code>true</code>.
 	 * 
 	 * @param left
 	 *            The left value to compare
 	 * @param right
 	 *            The right value to compare
-	 * @return <code>-1</code> if the left is <code>false</code> and the right is <code>true</code>.
-	 *         <code>1</code> if the opposite is true. If they are equal, then it returns
-	 *         <code>0</code>.
+	 * @return <code>-1</code> if the left is <code>false</code> and the right
+	 *         is <code>true</code>. <code>1</code> if the opposite is true. If
+	 *         they are equal, then it returns <code>0</code>.
 	 */
 	public static final int compare(final boolean left, final boolean right) {
 		return left == false ? (right == true ? -1 : 0) : 1;
@@ -105,9 +107,17 @@ public final class Util {
 		return left - right;
 	}
 
-
-	public static final <T extends Comparable<T>> int compare(final T[] left,
-			final T[] right) {
+	/**
+	 * Compare two arrays
+	 * 
+	 * @param left
+	 *            the first array
+	 * @param right
+	 *            the 2nd array
+	 * @return <code>-1</code> if left is smaller, <code>0</code> if equal and
+	 *         <code>1</code> if left is bigger
+	 */
+	public static final <T extends Comparable<T>> int compare(final T[] left, final T[] right) {
 		if (left == null && right == null) {
 			return 0;
 		} else if (left == null) {
@@ -141,11 +151,10 @@ public final class Util {
 	 *            The left object to compare; may be <code>null</code>.
 	 * @param right
 	 *            The right object to compare; may be <code>null</code>.
-	 * @return The result of the comparison. <code>null</code> is considered
-	 *         to be the least possible value.
+	 * @return The result of the comparison. <code>null</code> is considered to
+	 *         be the least possible value.
 	 */
-	public static final <T extends Comparable<T>> int compare(final T left,
-			final T right) {
+	public static final <T extends Comparable<T>> int compare(@Nullable final T left, @Nullable final T right) {
 		if (left == null && right == null) {
 			return 0;
 		} else if (left == null) {
@@ -156,21 +165,22 @@ public final class Util {
 			return left.compareTo(right);
 		}
 	}
-	
+
 	/**
-	 * Compares two lists -- account for <code>null</code>. The lists must contain comparable
-	 * objects.
+	 * Compares two lists -- account for <code>null</code>. The lists must
+	 * contain comparable objects.
 	 * 
 	 * @param left
-	 *            The left list to compare; may be <code>null</code>. This list must only contain
-	 *            instances of <code>Comparable</code>.
+	 *            The left list to compare; may be <code>null</code>. This list
+	 *            must only contain instances of <code>Comparable</code>.
 	 * @param right
-	 *            The right list to compare; may be <code>null</code>. This list must only contain
-	 *            instances of <code>Comparable</code>.
-	 * @return The result of the comparison. <code>null</code> is considered to be the least
-	 *         possible value. A shorter list is considered less than a longer list.
+	 *            The right list to compare; may be <code>null</code>. This list
+	 *            must only contain instances of <code>Comparable</code>.
+	 * @return The result of the comparison. <code>null</code> is considered to
+	 *         be the least possible value. A shorter list is considered less
+	 *         than a longer list.
 	 */
-	public static final int compare(final List left, final List right) {
+	public static final <T extends Comparable<T>> int  compare(@Nullable final List<T> left, @Nullable final List<T> right) {
 		if (left == null && right == null) {
 			return 0;
 		} else if (left == null) {
@@ -186,7 +196,7 @@ public final class Util {
 			}
 
 			for (int i = 0; i < l; i++) {
-				int compareTo = compare((Comparable) left.get(i), (Comparable) right.get(i));
+				int compareTo = compare(left.get(i), right.get(i));
 
 				if (compareTo != 0) {
 					return compareTo;
@@ -203,14 +213,14 @@ public final class Util {
 	 * @param left
 	 *            The array to check (larger); may be <code>null</code>.
 	 * @param right
-	 *            The array that should be a subsequence (smaller); may be <code>null</code>.
+	 *            The array that should be a subsequence (smaller); may be
+	 *            <code>null</code>.
 	 * @param equals
 	 *            Whether the two array are allowed to be equal.
-	 * @return <code>true</code> if the second array is a subsequence of the array list, and they
-	 *         share end elements.
+	 * @return <code>true</code> if the second array is a subsequence of the
+	 *         array list, and they share end elements.
 	 */
-	public static final boolean endsWith(final Object[] left, final Object[] right,
-			final boolean equals) {
+	public static final boolean endsWith(final Object[] left, final Object[] right, final boolean equals) {
 		if (left == null || right == null) {
 			return false;
 		}
@@ -232,30 +242,33 @@ public final class Util {
 	}
 
 	/**
-	 * Checks whether the two objects are <code>null</code> -- allowing for <code>null</code>.
+	 * Checks whether the two objects are <code>null</code> -- allowing for
+	 * <code>null</code>.
 	 * 
 	 * @param left
 	 *            The left object to compare; may be <code>null</code>.
 	 * @param right
 	 *            The right object to compare; may be <code>null</code>.
-	 * @return <code>true</code> if the two objects are equivalent; <code>false</code> otherwise.
+	 * @return <code>true</code> if the two objects are equivalent;
+	 *         <code>false</code> otherwise.
 	 */
-	public static final boolean equals(final Object left, final Object right) {
+	public static final boolean equals(@Nullable final Object left, @Nullable final Object right) {
 		return left == null ? right == null : ((right != null) && left.equals(right));
 	}
 
 	/**
-	 * Tests whether two arrays of objects are equal to each other. The arrays must not be
-	 * <code>null</code>, but their elements may be <code>null</code>.
+	 * Tests whether two arrays of objects are equal to each other. The arrays
+	 * must not be <code>null</code>, but their elements may be
+	 * <code>null</code>.
 	 * 
 	 * @param leftArray
-	 *            The left array to compare; may be <code>null</code>, and may be empty and may
-	 *            contain <code>null</code> elements.
+	 *            The left array to compare; may be <code>null</code>, and may
+	 *            be empty and may contain <code>null</code> elements.
 	 * @param rightArray
-	 *            The right array to compare; may be <code>null</code>, and may be empty and may
-	 *            contain <code>null</code> elements.
-	 * @return <code>true</code> if the arrays are equal length and the elements at the same
-	 *         position are equal; <code>false</code> otherwise.
+	 *            The right array to compare; may be <code>null</code>, and may
+	 *            be empty and may contain <code>null</code> elements.
+	 * @return <code>true</code> if the arrays are equal length and the elements
+	 *         at the same position are equal; <code>false</code> otherwise.
 	 */
 	public static final boolean equals(final Object[] leftArray, final Object[] rightArray) {
 		if (leftArray == rightArray) {
@@ -296,24 +309,27 @@ public final class Util {
 	}
 
 	/**
-	 * Provides a hash code for the object -- defending against <code>null</code>.
+	 * Provides a hash code for the object -- defending against
+	 * <code>null</code>.
 	 * 
 	 * @param object
 	 *            The object for which a hash code is required.
-	 * @return <code>object.hashCode</code> or <code>0</code> if <code>object</code> if
-	 *         <code>null</code>.
+	 * @return <code>object.hashCode</code> or <code>0</code> if
+	 *         <code>object</code> if <code>null</code>.
 	 */
-	public static final int hashCode(final Object object) {
+	public static final int hashCode(@Nullable final Object object) {
 		return object != null ? object.hashCode() : 0;
 	}
 
 	/**
-	 * Computes the hash code for an array of objects, but with defense against <code>null</code>.
+	 * Computes the hash code for an array of objects, but with defense against
+	 * <code>null</code>.
 	 * 
 	 * @param objects
-	 *            The array of objects for which a hash code is needed; may be <code>null</code>.
-	 * @return The hash code for <code>objects</code>; or <code>0</code> if <code>objects</code> is
-	 *         <code>null</code>.
+	 *            The array of objects for which a hash code is needed; may be
+	 *            <code>null</code>.
+	 * @return The hash code for <code>objects</code>; or <code>0</code> if
+	 *         <code>objects</code> is <code>null</code>.
 	 */
 	public static final int hashCode(final Object[] objects) {
 		if (objects == null) {
@@ -332,8 +348,8 @@ public final class Util {
 	}
 
 	/**
-	 * Checks whether the second array is a subsequence of the first array, and that they share
-	 * common starting elements.
+	 * Checks whether the second array is a subsequence of the first array, and
+	 * that they share common starting elements.
 	 * 
 	 * @param left
 	 *            The first array to compare (large); may be <code>null</code>.
@@ -341,11 +357,10 @@ public final class Util {
 	 *            The second array to compare (small); may be <code>null</code>.
 	 * @param equals
 	 *            Whether it is allowed for the two arrays to be equivalent.
-	 * @return <code>true</code> if the first arrays starts with the second list; <code>false</code>
-	 *         otherwise.
+	 * @return <code>true</code> if the first arrays starts with the second
+	 *         list; <code>false</code> otherwise.
 	 */
-	public static final boolean startsWith(final Object[] left, final Object[] right,
-			final boolean equals) {
+	public static final boolean startsWith(final Object[] left, final Object[] right, final boolean equals) {
 		if (left == null || right == null) {
 			return false;
 		}
@@ -367,7 +382,8 @@ public final class Util {
 	}
 
 	/**
-	 * Converts an array into a string representation that is suitable for debugging.
+	 * Converts an array into a string representation that is suitable for
+	 * debugging.
 	 * 
 	 * @param array
 	 *            The array to convert; may be <code>null</code>.
@@ -399,16 +415,19 @@ public final class Util {
 	 * Provides a translation of a particular key from the resource bundle.
 	 * 
 	 * @param resourceBundle
-	 *            The key to look up in the resource bundle; should not be <code>null</code>.
+	 *            The key to look up in the resource bundle; should not be
+	 *            <code>null</code>.
 	 * @param key
-	 *            The key to look up in the resource bundle; should not be <code>null</code>.
+	 *            The key to look up in the resource bundle; should not be
+	 *            <code>null</code>.
 	 * @param defaultString
-	 *            The value to return if the resource cannot be found; may be <code>null</code>.
-	 * @return The value of the translated resource at <code>key</code>. If the key cannot be found,
-	 *         then it is simply the <code>defaultString</code>.
+	 *            The value to return if the resource cannot be found; may be
+	 *            <code>null</code>.
+	 * @return The value of the translated resource at <code>key</code>. If the
+	 *         key cannot be found, then it is simply the
+	 *         <code>defaultString</code>.
 	 */
-	public static final String translateString(final ResourceBundle resourceBundle,
-			final String key, final String defaultString) {
+	public static final @Nullable String translateString(@Nullable final ResourceBundle resourceBundle, @Nullable final String key, @Nullable final String defaultString) {
 		if (resourceBundle != null && key != null) {
 			try {
 				final String translatedString = resourceBundle.getString(key);
@@ -436,7 +455,7 @@ public final class Util {
 	 * @return The new string.
 	 * @since 3.4
 	 */
-	public static final String replaceAll(String src, String find, String replacement) {
+	public static final String replaceAll(@NonNull String src, @NonNull String find, @NonNull String replacement) {
 		final int len = src.length();
 		final int findLen = find.length();
 
@@ -473,6 +492,7 @@ public final class Util {
 	 * 
 	 * @since 3.5
 	 */
+	@NonNull
 	public static final String WS_WIN32 = "win32";//$NON-NLS-1$
 
 	/**
@@ -480,6 +500,7 @@ public final class Util {
 	 * 
 	 * @since 3.5
 	 */
+	@NonNull
 	public static final String WS_MOTIF = "motif";//$NON-NLS-1$
 
 	/**
@@ -487,6 +508,7 @@ public final class Util {
 	 * 
 	 * @since 3.5
 	 */
+	@NonNull
 	public static final String WS_GTK = "gtk";//$NON-NLS-1$
 
 	/**
@@ -494,6 +516,7 @@ public final class Util {
 	 * 
 	 * @since 3.5
 	 */
+	@NonNull
 	public static final String WS_PHOTON = "photon";//$NON-NLS-1$
 
 	/**
@@ -501,6 +524,7 @@ public final class Util {
 	 * 
 	 * @since 3.5
 	 */
+	@NonNull
 	public static final String WS_CARBON = "carbon";//$NON-NLS-1$
 
 	/**
@@ -508,6 +532,7 @@ public final class Util {
 	 * 
 	 * @since 3.5
 	 */
+	@NonNull
 	public static final String WS_COCOA = "cocoa";//$NON-NLS-1$
 
 	/**
@@ -515,6 +540,7 @@ public final class Util {
 	 * 
 	 * @since 3.5
 	 */
+	@NonNull
 	public static final String WS_WPF = "wpf";//$NON-NLS-1$
 
 	/**
@@ -522,126 +548,127 @@ public final class Util {
 	 * 
 	 * @since 3.5
 	 */
+	@NonNull
 	public static final String WS_UNKNOWN = "unknown";//$NON-NLS-1$
 
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return <code>true</code> for windows platforms
-//	 * @since 3.5
-//	 */
-//	public static final boolean isWindows() {
-//		final String ws = SWT.getPlatform();
-//		return WS_WIN32.equals(ws) || WS_WPF.equals(ws);
-//	}
-//
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return <code>true</code> for mac platforms
-//	 * @since 3.5
-//	 */
-//	public static final boolean isMac() {
-//		final String ws = SWT.getPlatform();
-//		return WS_CARBON.equals(ws) || WS_COCOA.equals(ws);
-//	}
-//
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return <code>true</code> for linux platform
-//	 * @since 3.5
-//	 */
-//	public static final boolean isLinux() {
-//		final String ws = SWT.getPlatform();
-//		return WS_GTK.equals(ws) || WS_MOTIF.equals(ws);
-//	}
-//
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return <code>true</code> for gtk platforms
-//	 * @since 3.5
-//	 */
-//	public static final boolean isGtk() {
-//		final String ws = SWT.getPlatform();
-//		return WS_GTK.equals(ws);
-//	}
-//
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return <code>true</code> for motif platforms
-//	 * @since 3.5
-//	 */
-//	public static final boolean isMotif() {
-//		final String ws = SWT.getPlatform();
-//		return WS_MOTIF.equals(ws);
-//	}
-//
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return <code>true</code> for photon platforms
-//	 * @since 3.5
-//	 */
-//	public static final boolean isPhoton() {
-//		final String ws = SWT.getPlatform();
-//		return WS_PHOTON.equals(ws);
-//	}
-//
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return <code>true</code> for carbon platforms
-//	 * @since 3.5
-//	 */
-//	public static final boolean isCarbon() {
-//		final String ws = SWT.getPlatform();
-//		return WS_CARBON.equals(ws);
-//	}
-//
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return <code>true</code> for the cocoa platform.
-//	 * @since 3.5
-//	 */
-//	public static final boolean isCocoa() {
-//		final String ws = SWT.getPlatform();
-//		return WS_COCOA.equals(ws);
-//	}
-//
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return <code>true</code> for WPF
-//	 * @since 3.5
-//	 */
-//	public static final boolean isWpf() {
-//		final String ws = SWT.getPlatform();
-//		return WS_WPF.equals(ws);
-//	}
-//
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return <code>true</code> for win32
-//	 * @since 3.5
-//	 */
-//	public static final boolean isWin32() {
-//		final String ws = SWT.getPlatform();
-//		return WS_WIN32.equals(ws);
-//	}
-//
-//	/**
-//	 * Common WS query helper method.
-//	 * 
-//	 * @return the SWT windowing platform string.
-//	 * @see SWT#getPlatform()
-//	 * @since 3.5
-//	 */
-//	public static final String getWS() {
-//		return SWT.getPlatform();
-//	}
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return <code>true</code> for windows platforms
+	// * @since 3.5
+	// */
+	// public static final boolean isWindows() {
+	// final String ws = SWT.getPlatform();
+	// return WS_WIN32.equals(ws) || WS_WPF.equals(ws);
+	// }
+	//
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return <code>true</code> for mac platforms
+	// * @since 3.5
+	// */
+	// public static final boolean isMac() {
+	// final String ws = SWT.getPlatform();
+	// return WS_CARBON.equals(ws) || WS_COCOA.equals(ws);
+	// }
+	//
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return <code>true</code> for linux platform
+	// * @since 3.5
+	// */
+	// public static final boolean isLinux() {
+	// final String ws = SWT.getPlatform();
+	// return WS_GTK.equals(ws) || WS_MOTIF.equals(ws);
+	// }
+	//
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return <code>true</code> for gtk platforms
+	// * @since 3.5
+	// */
+	// public static final boolean isGtk() {
+	// final String ws = SWT.getPlatform();
+	// return WS_GTK.equals(ws);
+	// }
+	//
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return <code>true</code> for motif platforms
+	// * @since 3.5
+	// */
+	// public static final boolean isMotif() {
+	// final String ws = SWT.getPlatform();
+	// return WS_MOTIF.equals(ws);
+	// }
+	//
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return <code>true</code> for photon platforms
+	// * @since 3.5
+	// */
+	// public static final boolean isPhoton() {
+	// final String ws = SWT.getPlatform();
+	// return WS_PHOTON.equals(ws);
+	// }
+	//
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return <code>true</code> for carbon platforms
+	// * @since 3.5
+	// */
+	// public static final boolean isCarbon() {
+	// final String ws = SWT.getPlatform();
+	// return WS_CARBON.equals(ws);
+	// }
+	//
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return <code>true</code> for the cocoa platform.
+	// * @since 3.5
+	// */
+	// public static final boolean isCocoa() {
+	// final String ws = SWT.getPlatform();
+	// return WS_COCOA.equals(ws);
+	// }
+	//
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return <code>true</code> for WPF
+	// * @since 3.5
+	// */
+	// public static final boolean isWpf() {
+	// final String ws = SWT.getPlatform();
+	// return WS_WPF.equals(ws);
+	// }
+	//
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return <code>true</code> for win32
+	// * @since 3.5
+	// */
+	// public static final boolean isWin32() {
+	// final String ws = SWT.getPlatform();
+	// return WS_WIN32.equals(ws);
+	// }
+	//
+	// /**
+	// * Common WS query helper method.
+	// *
+	// * @return the SWT windowing platform string.
+	// * @see SWT#getPlatform()
+	// * @since 3.5
+	// */
+	// public static final String getWS() {
+	// return SWT.getPlatform();
+	// }
 }

@@ -119,3 +119,18 @@
 	-fx-background-color: #0f0;
 	-fx-padding: 10;
 }
+
+.myperspective {
+	-fx-background-color: blue;
+	-fx-padding: 10px;
+}
+
+.mysash {
+	-fx-background-color: green;
+	-fx-hspace: 10;
+	-fx-vspace: 10;
+}
+
+.mypart {
+	-fx-background-color: red;
+}

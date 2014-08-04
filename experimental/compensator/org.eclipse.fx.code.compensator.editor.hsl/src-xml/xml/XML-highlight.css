@@ -1,0 +1,19 @@
+.default_tagtoken {
+	-styled-text-color: rgb(0, 0, 128);
+}
+
+.xml_string {
+	-styled-text-color: rgb(0, 128, 0);
+}
+
+.default_xmltoken {
+	-styled-text-color: rgb(0, 0, 0);
+}
+
+.proc_instruction {
+	-styled-text-color: rgb(128, 128, 128);
+}
+
+.xml_comment {
+	-styled-text-color: rgb(128, 0, 0);
+}

@@ -23,6 +23,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * This {@link TreeCell} factory wraps an {@link AdapterFactory} and delegates calls to its {@link TreeCell}s
@@ -44,7 +45,7 @@ public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory imp
 	 * @param adapterFactory
 	 *            the adapter factory
 	 */
-	public AdapterFactoryTreeCellFactory(AdapterFactory adapterFactory) {
+	public AdapterFactoryTreeCellFactory(@NonNull AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 

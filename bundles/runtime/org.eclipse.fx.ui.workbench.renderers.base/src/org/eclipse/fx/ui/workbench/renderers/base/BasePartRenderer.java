@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.workbench.renderers.base;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.annotation.PostConstruct;
 
@@ -22,6 +23,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
@@ -69,6 +71,72 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 				}
 			}
 		});
+
+		eventBroker.subscribe(UIEvents.Part.TOPIC_TOOLBAR, new EventHandler() {
+
+			@Override
+			public void handleEvent(Event event) {
+				Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
+				MUIElement parent = (MUIElement) changedObj;
+				if (parent.getRenderer() == BasePartRenderer.this) {
+					if (UIEvents.isSET(event)) {
+						Object newValue = event.getProperty(UIEvents.EventTags.NEW_VALUE);
+						if (newValue != null) {
+							handleToolbarAddition((MPart) parent, (MToolBar) newValue);
+						} else {
+							handleToolbarRemove((MPart) parent, (MToolBar) event.getProperty(UIEvents.EventTags.OLD_VALUE));
+						}
+					}
+				}
+			}
+		});
+
+		eventBroker.subscribe(UIEvents.UIElement.TOPIC_VISIBLE, new EventHandler() {
+
+			@Override
+			public void handleEvent(Event event) {
+				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
+				if (changedObj.isToBeRendered()) {
+					MUIElement parent = (MUIElement) ((EObject) changedObj).eContainer();
+					if (parent != null) {
+						if (BasePartRenderer.this == parent.getRenderer()) {
+							MPart part = (MPart) parent;
+							String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
+							if (UIEvents.EventTypes.SET.equals(eventType)) {
+								Boolean newValue = (Boolean) event.getProperty(UIEvents.EventTags.NEW_VALUE);
+								if (newValue.booleanValue()) {
+									childRendered(part, changedObj);
+								} else {
+									hideChild(part, changedObj);
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+	}
+
+	void handleToolbarRemove(@NonNull MPart parent, @NonNull MToolBar toolbar) {
+		WPart<N, T, M> widget = getWidget(parent);
+		if (widget == null) {
+			return;
+		}
+
+		if (widget.getToolbar() == toolbar.getWidget()) {
+			widget.setToolbar(null);
+		}
+	}
+
+	void handleToolbarAddition(@NonNull MPart parent, @NonNull MToolBar toolbar) {
+		WPart<N, T, M> widget = getWidget(parent);
+		if (widget == null) {
+			return;
+		}
+
+		@SuppressWarnings("unchecked")
+		WToolBar<T> wtoolbar = (WToolBar<T>) getPresentationEngine().createGui(toolbar);
+		widget.setToolbar(wtoolbar);
 	}
 
 	@Override
@@ -103,11 +171,11 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 	@Override
 	public void doProcessContent(@NonNull MPart element) {
 		WPart<N, T, M> widget = getWidget(element);
-		if( widget == null ) {
-			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		if (widget == null) {
+			getLogger().error("No widget found for '" + element + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
-		
+
 		MToolBar mToolBar = element.getToolbar();
 		if (mToolBar != null) {
 			WToolBar<T> toolbar = engineCreateWidget(mToolBar);
@@ -169,12 +237,24 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 
 	@Override
 	public void childRendered(MPart parentElement, MUIElement element) {
-		// No children
+		if (inContentProcessing(parentElement) || !element.isVisible()) {
+			return;
+		}
+
+		if (element instanceof MToolBar) {
+			handleToolbarAddition(parentElement, (MToolBar) element);
+		} else if (element instanceof MMenu) {
+			handleMenuAddition(parentElement, Collections.singletonList((MMenu) element));
+		}
 	}
 
 	@Override
 	public void hideChild(MPart container, MUIElement changedObj) {
-		// No children
+		if (changedObj instanceof MToolBar) {
+			handleToolbarRemove(container, (MToolBar) changedObj);
+		} else if (changedObj instanceof MMenu) {
+			handleMenuRemove(container, Collections.singletonList((MMenu) changedObj));
+		}
 	}
 
 }

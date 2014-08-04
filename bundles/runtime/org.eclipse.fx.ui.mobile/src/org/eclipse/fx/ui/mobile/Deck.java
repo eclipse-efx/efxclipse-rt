@@ -10,9 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.mobile;
 
-
-
 import org.eclipse.fx.ui.mobile.animations.TransitionDelegate;
+import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -22,53 +21,80 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * A stack of cards allowing switch from card to card
+ */
 public class Deck extends Region {
-	private ObservableList<Card> cards = FXCollections.observableArrayList();
-	
-	private BorderPane contenArea;
-	
+	@SuppressWarnings("null")
+	@NonNull
+	final ObservableList<@NonNull Card> cards = FXCollections.observableArrayList();
+
+	BorderPane contenArea;
+
+	/**
+	 * Create a new instance
+	 */
 	public Deck() {
-		contenArea = new BorderPane();
-		getChildren().add(contenArea);
-		cards.addListener(new InvalidationListener() {
-			
+		this.contenArea = new BorderPane();
+		getChildren().add(this.contenArea);
+		this.cards.addListener(new InvalidationListener() {
+
 			@Override
 			public void invalidated(Observable observable) {
-				contenArea.setCenter(cards.get(0));
-				cards.removeListener(this);
+				Deck.this.contenArea.setCenter(Deck.this.cards.get(0));
+				Deck.this.cards.removeListener(this);
 			}
 		});
 	}
-	
+
 	@Override
 	protected void layoutChildren() {
 		super.layoutChildren();
-		contenArea.resizeRelocate(getInsets().getLeft(), getInsets().getTop(),getWidth()-getInsets().getLeft(), getHeight()-getInsets().getTop());
-		contenArea.setClip(new Rectangle(getWidth()-getInsets().getLeft(), getHeight()-getInsets().getTop()));
+		this.contenArea.resizeRelocate(getInsets().getLeft(), getInsets().getTop(), getWidth() - getInsets().getLeft(), getHeight() - getInsets().getTop());
+		this.contenArea.setClip(new Rectangle(getWidth() - getInsets().getLeft(), getHeight() - getInsets().getTop()));
 	}
-	
-	public ObservableList<Card> getCards() {
-		return cards;
+
+	/**
+	 * @return the cards
+	 */
+	public @NonNull ObservableList<@NonNull Card> getCards() {
+		return this.cards;
 	}
-	
-	public void moveTo(String name, TransitionType animation) {
+
+	/**
+	 * Switch to another card
+	 * 
+	 * @param name
+	 *            the name of the card
+	 * @param animation
+	 *            the predefined animation
+	 */
+	public void moveTo(@NonNull String name, @NonNull TransitionType animation) {
 		moveTo(name, animation.getDelegate());
 	}
-	
+
+	/**
+	 * Switch to another card
+	 * 
+	 * @param name
+	 *            the name of the card
+	 * @param delegate
+	 *            the delegate to do the switch
+	 */
 	public void moveTo(String name, TransitionDelegate delegate) {
-		for( Card c : cards ) {
-			if( name.equals(c.getName()) ) {
-				if( contenArea.getCenter() != c ) {
-					if( delegate != null ) {
-						delegate.transitionTo(contenArea, (Card) contenArea.getCenter(), c);
+		for (Card c : this.cards) {
+			if (name.equals(c.getName())) {
+				if (this.contenArea.getCenter() != c) {
+					if (delegate != null) {
+						delegate.transitionTo(this.contenArea, (Card) this.contenArea.getCenter(), c);
 					} else {
-						contenArea.setCenter(c);	
-					}	
+						this.contenArea.setCenter(c);
+					}
 				}
-				
+
 				break;
 			}
 		}
 	}
-	
+
 }

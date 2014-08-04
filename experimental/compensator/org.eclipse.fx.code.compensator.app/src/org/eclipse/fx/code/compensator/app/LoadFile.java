@@ -29,7 +29,6 @@ public class LoadFile {
 			{
 				l.forEach((f) -> {
 					try {
-						System.err.println("ATTACHING: " + f);
 						org.eclipse.fx.code.compensator.model.workbench.File wf = WorkbenchFactory.eINSTANCE.createFile();
 						wf.setUrl(f.toURI().toURL().toExternalForm());
 						wb.getResources().add(wf);	

@@ -28,7 +28,11 @@ public class WorkbenchModelContextFunction extends ContextFunction {
 		context = context.get(MApplication.class).getContext();
 		Workbench wb = (Workbench) context.get("LocalWorkbench");
 		if( wb == null ) {
-			File f = new File(System.getProperty("user.home")+"/.compensator/workbench.xmi");
+			File folder = new File(System.getProperty("user.home")+"/.compensator");
+			if( ! folder.exists() ) {
+				folder.mkdirs();
+			}
+			File f = new File(folder, "/workbench.xmi");
 			if( f.exists() ) {
 				try {
 					Resource r = new XMIResourceImpl(URI.createFileURI(f.getAbsolutePath()));
@@ -40,7 +44,9 @@ public class WorkbenchModelContextFunction extends ContextFunction {
 					e.printStackTrace();
 				}
 			} else {
+				XMIResourceImpl r = new XMIResourceImpl(URI.createFileURI(f.getAbsolutePath()));
 				wb = WorkbenchFactory.eINSTANCE.createWorkbench();
+				r.getContents().add(wb);
 				context.set("LocalWorkbench", wb);
 			}
 		}

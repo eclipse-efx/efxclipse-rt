@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -48,6 +50,7 @@ import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
+import org.eclipse.fx.ui.workbench.services.EModelStylingService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
@@ -85,6 +88,9 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@Inject
 	EModelService modelService;
+	
+	@Inject
+	EModelStylingService modelStylingService;
 
 	// boolean inContentProcessing;
 	//
@@ -364,9 +370,9 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		Object newValue = event.getProperty(UIEvents.EventTags.NEW_VALUE);
 		String attributeName = event.getProperty(UIEvents.EventTags.ATTNAME).toString();
 
-		// for now only process set events
+		// for now only process set and tag events
 		// TODO Should we skip none attribute changes???
-		if (!UIEvents.isSET(event)) {
+		if (!UIEvents.isSET(event) && !UIEvents.ApplicationElement.TAGS.equals(attributeName)) {
 			return;
 		}
 
@@ -380,15 +386,24 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			BaseRenderer.this.contextModification.put(e, Boolean.TRUE);
 
 			if (changedObj instanceof MUIElement) {
-				if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.ApplicationElement.TAGS)) {
-					MUIElement m = (MUIElement) changedObj;
-					if (m.getWidget() != null) {
-						((WWidget<?>) m.getWidget()).removeStyleClasses(m.getTags());
-						((WWidget<?>) m.getWidget()).addStyleClasses(m.getTags());
-					}
-				}
-
 				if (e.getRenderer() == BaseRenderer.this) {
+					
+					if (attributeName.equals(UIEvents.ApplicationElement.TAGS)) {
+						MUIElement m = (MUIElement) changedObj;
+						if (m.getWidget() != null) {
+							if (UIEvents.isADD(event)) {
+								Collection<String> addedTags = Util.<String>asCollection(event, UIEvents.EventTags.NEW_VALUE);
+								((WWidget<?>) m.getWidget()).addStyleClasses(
+										this.modelStylingService.getStylesFromTags(new ArrayList<String>(addedTags)));
+							} else if (UIEvents.isREMOVE(event)) {
+								Collection<String> removedTags = Util.<String>asCollection(event, UIEvents.EventTags.OLD_VALUE);
+								((WWidget<?>) m.getWidget()).removeStyleClasses(
+										this.modelStylingService.getStylesFromTags(new ArrayList<String>(removedTags)));
+							}
+						}
+					}
+
+				
 					IEclipseContext ctx = (IEclipseContext) e.getTransientData().get(RENDERING_CONTEXT_KEY);
 					if (ctx != null) {
 						if (attributeName.equals(UIEvents.ApplicationElement.PERSISTEDSTATE) && newValue instanceof Entry) {
@@ -467,7 +482,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	@Override
 	public void bindWidget(@NonNull M me, @NonNull W widget) {
 		widget.setDomElement(me);
-		widget.addStyleClasses(me.getTags());
+		widget.addStyleClasses(this.modelStylingService.getStyles(me));
 
 		EObject eo = (EObject) me;
 		widget.addStyleClasses("M" + eo.eClass().getName()); //$NON-NLS-1$

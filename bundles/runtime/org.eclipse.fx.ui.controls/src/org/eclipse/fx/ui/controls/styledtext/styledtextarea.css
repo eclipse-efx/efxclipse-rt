@@ -1,3 +1,15 @@
+.source-segment {
+	-fx-font-family: Courier;
+	-fx-font-size: 15;
+	-styled-text-color: black;
+	-fx-fill: -styled-text-color;
+}
+
+.line-ruler-text {
+	-fx-font-family: Courier;
+	-fx-font-size: 15;
+}
+
 .list-cell:filled:focused:selected {
 	-fx-background-color: #e8f2fe;
 }
@@ -6,10 +18,31 @@
 	-fx-background-color: transparent; 
 }
 
+.list-cell:even {
+	-fx-background-color: transparent; 
+}
+
 .list-cell:filled:hover {
 	-fx-background-color: transparent;
 }
 
+.list-cell {
+	-fx-padding: 0;
+}
+
+.source-segment-container {
+	-fx-padding: 3 0 3 0;
+}
+
 .sheet {
 	-fx-cursor: text;
+}
+
+.text-caret {
+	-fx-fill: black;
+	-fx-stroke: black;
+}
+
+.hover {
+	-fx-background-color: #b5d5ff;
 }

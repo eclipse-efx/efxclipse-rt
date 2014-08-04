@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.di.internal;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.IInjector;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
@@ -30,30 +31,27 @@ import org.osgi.framework.FrameworkUtil;
 public class FXMLLoaderSupplier extends ExtendedObjectSupplier {
 
 	@Override
-	public Object get(IObjectDescriptor descriptor, IRequestor requestor,
-			boolean track, boolean group) {
-		Requestor req = (Requestor) requestor;
-		ContextObjectSupplier sub = (ContextObjectSupplier) req
-				.getPrimarySupplier();
+	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
+		Requestor<?> req = (Requestor<?>) requestor;
+		ContextObjectSupplier sub = (ContextObjectSupplier) req.getPrimarySupplier();
 		final IEclipseContext context = sub.getContext();
-		final Class<?> requestingClass = requestor.getRequestingObject()
-				.getClass();
-		final boolean extended = descriptor.getQualifier(FXMLLoader.class)
-				.useExtendedLoader();
+		final Class<?> requestingClass = requestor.getRequestingObject().getClass();
+		if( context == null || requestingClass == null ) {
+			return IInjector.NOT_A_VALUE;
+		}
+		final boolean extended = descriptor.getQualifier(FXMLLoader.class).useExtendedLoader();
 
 		return new FXMLLoaderFactory() {
 
 			@Override
 			public <N> FXMLBuilder<N> loadRequestorRelative(@NonNull String relativePath) {
-				return InjectingFXMLLoader.create(context, requestingClass,
-						relativePath, extended);
+				return InjectingFXMLLoader.create(context, requestingClass, relativePath, extended);
 			}
 
+			@SuppressWarnings("null")
 			@Override
 			public <N> FXMLBuilder<N> loadBundleRelative(@NonNull String relativePath) {
-				return InjectingFXMLLoader.create(context,
-						FrameworkUtil.getBundle(requestingClass), relativePath,
-						extended);
+				return InjectingFXMLLoader.create(context, FrameworkUtil.getBundle(requestingClass), relativePath, extended);
 			}
 		};
 	}

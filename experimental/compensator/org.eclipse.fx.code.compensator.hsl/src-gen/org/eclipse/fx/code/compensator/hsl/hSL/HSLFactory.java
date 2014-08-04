@@ -50,6 +50,15 @@ public interface HSLFactory extends EFactory
   Partitioner createPartitioner();
 
   /**
+   * Returns a new object of class '<em>Java Like Paritioner</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Java Like Paritioner</em>'.
+   * @generated
+   */
+  JavaLikeParitioner createJavaLikeParitioner();
+
+  /**
    * Returns a new object of class '<em>Rule Partitioner</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

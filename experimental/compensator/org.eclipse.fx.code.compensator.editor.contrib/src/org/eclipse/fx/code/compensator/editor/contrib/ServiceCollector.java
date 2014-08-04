@@ -62,7 +62,6 @@ public class ServiceCollector {
 	}
 	
 	public <O> Input<O> createInput(String url) {
-		System.err.println("PROVIDER: " + inputProviderList);
 		Optional<Input<O>> map = inputProviderList.stream().filter((p) -> p.applies(url)).findFirst().map((p) -> p.createInput(url));
 		return map.get();
 	}
@@ -73,7 +72,6 @@ public class ServiceCollector {
 	}
 	
 	public IDocumentPartitioner createPartitioner(Input<?> input) {
-		System.err.println("PARTITIONER: " + partitionerProvider);
 		Optional<IDocumentPartitioner> map = partitionerProvider.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createPartitioner(input));
 		return map.get();
 	}

@@ -16,20 +16,40 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.commands.contexts.Context;
 import org.eclipse.core.commands.contexts.ContextManager;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * A collection of contexts
+ */
 public class ContextSet {
-	public static ContextSet EMPTY = new ContextSet(Collections.EMPTY_LIST);
+	/**
+	 * An empty set
+	 */
+	@SuppressWarnings("null")
+	@NonNull
+	public static ContextSet EMPTY = new ContextSet(Collections.emptyList());
 
+	/**
+	 * A context comparator
+	 */
 	public static class CComp implements Comparator<Context> {
 		private ContextManager manager;
 
+		/**
+		 * Create a comparator
+		 * 
+		 * @param manager
+		 *            the context manager to use
+		 */
 		public CComp(ContextManager manager) {
 			this.manager = manager;
 		}
 
+		@Override
 		public int compare(Context o1, Context o2) {
 			if (o1.equals(o2)) {
 				return 0;
@@ -48,7 +68,7 @@ public class ContextSet {
 				String parentId = c.getParentId();
 				while (parentId != null) {
 					l++;
-					Context context = manager.getContext(parentId);
+					Context context = this.manager.getContext(parentId);
 					parentId = context.getParentId();
 				}
 			} catch (NotDefinedException e) {
@@ -61,30 +81,44 @@ public class ContextSet {
 
 	private static Comparator<Context> CONTEXT_COMP = null;
 
+	/**
+	 * Set a default comparator
+	 * 
+	 * @param comp
+	 *            the compartor
+	 */
 	public static void setComparator(Comparator<Context> comp) {
 		CONTEXT_COMP = comp;
 	}
 
+	/**
+	 * @return the current comparator
+	 */
 	public static Comparator<Context> getComparator() {
 		return CONTEXT_COMP;
 	}
 
-	private List<Context> contexts;
+	@NonNull
+	private List<@NonNull Context> contexts;
 
-	public ContextSet(Collection<Context> c) {
-		contexts = new ArrayList<Context>(c);
-		Collections.sort(contexts, CONTEXT_COMP);
-	}
-
-	public List<Context> getContexts() {
-		return contexts;
-	}
-
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Create a new context set
 	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @param c
+	 *            the context set
 	 */
+	public ContextSet(@NonNull Collection<@NonNull Context> c) {
+		this.contexts = new ArrayList<>(c);
+		Collections.sort(this.contexts, CONTEXT_COMP);
+	}
+	
+	/**
+	 * @return the contexts
+	 */
+	public List<@NonNull Context> getContexts() {
+		return this.contexts;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
@@ -93,16 +127,11 @@ public class ContextSet {
 		if (!(o instanceof ContextSet)) {
 			return false;
 		}
-		return contexts.equals(((ContextSet) o).contexts);
+		return this.contexts.equals(((ContextSet) o).contexts);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
-		return contexts.hashCode();
+		return this.contexts.hashCode();
 	}
 }

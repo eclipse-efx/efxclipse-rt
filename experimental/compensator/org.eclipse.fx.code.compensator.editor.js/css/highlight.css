@@ -1,0 +1,53 @@
+.java_string {
+	-styled-text-color: rgb(42, 0, 255);
+}
+
+.java_default {
+	-styled-text-color: rgb(0,0,0);
+}
+
+.java_annotation {
+	-styled-text-color: rgb(200, 200, 200);
+}
+
+.java_keyword {
+	-styled-text-color: rgb(127, 0, 85);
+	-fx-font-weight: bold;
+}
+
+.java_operator {
+	-styled-text-color: rgb(0,0,0);
+}
+
+.java_bracket {
+	-styled-text-color: rgb(0,0,0);
+}
+
+.java_keyword_return {
+	-styled-text-color: rgb(127, 0, 85);
+	-fx-font-weight: bold;
+}
+
+.java_comment_task_tag {
+	-styled-text-color: rgb(127, 159, 191);
+}
+
+.java_doc_link {
+	-styled-text-color: rgb(63, 63, 191);
+}
+
+.java_doc_default {
+	-styled-text-color: rgb(63, 95, 191);
+}
+
+.java_multi_line_comment {
+	-styled-text-color: rgb(63, 127, 95);
+}
+
+.java_single_line_comment {
+	-styled-text-color: rgb(63, 127, 95);
+}
+
+.java_doc_tag {
+	-styled-text-color: rgb(127, 127, 159);
+}

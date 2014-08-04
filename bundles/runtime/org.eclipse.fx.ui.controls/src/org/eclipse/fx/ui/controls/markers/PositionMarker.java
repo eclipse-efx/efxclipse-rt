@@ -10,17 +10,19 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.markers;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.css.CssMetaData;
+import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.Styleable;
-import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleableProperty;
 import javafx.scene.Group;
+import javafx.scene.control.TabPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -30,15 +32,22 @@ import javafx.scene.shape.StrokeLineCap;
 
 import com.sun.javafx.css.converters.PaintConverter;
 
-public class PositionMarker extends Group {
+/**
+ * Marker which can be used to show an insert position {@link TabPane}
+ */
+@SuppressWarnings("restriction")
+public final class PositionMarker extends Group {
+	/**
+	 * Create a new marker
+	 */
 	public PositionMarker() {
 		setMouseTransparent(true);
-		getStyleClass().add("position-marker");
+		getStyleClass().add("position-marker"); //$NON-NLS-1$
 		Circle outer = new Circle(8);
 		outer.setFill(Color.WHITE);
-		
+
 		getChildren().add(outer);
-		
+
 		{
 			Line l = new Line();
 			l.setStartX(0);
@@ -50,15 +59,15 @@ public class PositionMarker extends Group {
 			l.setStroke(Color.WHITE);
 			getChildren().add(l);
 		}
-		
+
 		Circle c = new Circle(6);
 		c.fillProperty().bind(fillProperty());
 		getChildren().add(c);
-		
+
 		Circle inner = new Circle(3);
 		inner.setFill(Color.WHITE);
 		getChildren().add(inner);
-		
+
 		{
 			Line l = new Line();
 			l.setStartX(0);
@@ -67,81 +76,108 @@ public class PositionMarker extends Group {
 			l.setEndY(40);
 			l.setStrokeWidth(3);
 			l.setStrokeLineCap(StrokeLineCap.ROUND);
-			l.strokeProperty().bind(fill);
-			getChildren().add(l);			
+			l.strokeProperty().bind(this.fill);
+			getChildren().add(l);
 		}
-		
+
 		setEffect(new DropShadow(3, Color.BLACK));
 	}
-	
-	private ObjectProperty<Paint> fill;
-	
-	public ObjectProperty<Paint> fillProperty() {
-		if( fill == null ) {
-			fill = new StyleableObjectProperty<Paint>(Color.rgb(0, 139, 255)) {
 
-				@Override
-				public CssMetaData<? extends Styleable, Paint> getCssMetaData() {
-					return FILL;
-				}
+	@SuppressWarnings("null")
+	@NonNull
+	private final ObjectProperty<@NonNull Paint> fill = new SimpleStyleableObjectProperty<>(FILL, this, "fill", Color.rgb(0, 139, 255)); //$NON-NLS-1$
 
-				@Override
-				public Object getBean() {
-					return PositionMarker.this;
-				}
-
-				@Override
-				public String getName() {
-					return "fill";
-				}
-				
-			};
-		}
-		return fill;
+	/**
+	 * The property
+	 * <p>
+	 * <table>
+	 * <tr>
+	 * <td>The default value is Color.rgb(0, 139, 255)</td>
+	 * <td><div style=
+	 * "background-color: rgb(0, 139, 255); border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
+	 * ></div></td>
+	 * </tr>
+	 * </table>
+	 * </p>
+	 * 
+	 * @return the fill property of the marker
+	 */
+	public @NonNull ObjectProperty<@NonNull Paint> fillProperty() {
+		return this.fill;
 	}
-	
-	public void setFill(Paint fill) {
+
+	/**
+	 * Set the fill of the marker
+	 * <p>
+	 * <table>
+	 * <tr>
+	 * <td>The default value is Color.rgb(0, 139, 255)</td>
+	 * <td><div style=
+	 * "background-color: rgb(0, 139, 255); border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
+	 * ></div></td>
+	 * </tr>
+	 * </table>
+	 * </p>
+	 * 
+	 * @param fill
+	 *            the new fill
+	 */
+	public void setFill(@NonNull Paint fill) {
 		fillProperty().set(fill);
 	}
-	
-	public Paint getFill() {
+
+	/**
+	 * Access the current fill
+	 * <p>
+	 * <table>
+	 * <tr>
+	 * <td>The default value is Color.rgb(0, 139, 255)</td>
+	 * <td><div style=
+	 * "background-color: rgb(0, 139, 255); border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
+	 * ></div></td>
+	 * </tr>
+	 * </table>
+	 * </p>
+	 * 
+	 * @return the current fill
+	 */
+	public @NonNull Paint getFill() {
 		return fillProperty().get();
 	}
-	
-	private static final CssMetaData<PositionMarker,Paint> FILL =
-            new CssMetaData<PositionMarker,Paint>("-fx-fill", 
-                PaintConverter.getInstance(), Color.rgb(0, 139, 255)) {
 
-            @Override
-            public boolean isSettable(PositionMarker node) {
-                return node.fill == null || !node.fill.isBound();
-            }
+	@SuppressWarnings("null")
+	private static final CssMetaData<PositionMarker, @NonNull Paint> FILL = new CssMetaData<PositionMarker, @NonNull Paint>("-fx-fill", PaintConverter.getInstance(), Color.rgb(0, 139, 255)) { //$NON-NLS-1$
 
-            @Override
-            public StyleableProperty<Paint> getStyleableProperty(PositionMarker node) {
-                return (StyleableProperty<Paint>)node.fillProperty();
-            }
+		@Override
+		public boolean isSettable(PositionMarker node) {
+			return !node.fillProperty().isBound();
+		}
 
-            
-        };
-        
-     private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
-     
-     static {
+		@SuppressWarnings("unchecked")
+		@Override
+		public StyleableProperty<@NonNull Paint> getStyleableProperty(PositionMarker node) {
+			return (StyleableProperty<@NonNull Paint>) node.fillProperty();
+		}
 
-         final List<CssMetaData<? extends Styleable, ?>> styleables =
-             new ArrayList<CssMetaData<? extends Styleable, ?>>(Group.getClassCssMetaData());
-         styleables.add(FILL);
-         STYLEABLES = Collections.unmodifiableList(styleables);
-     }
-     
-     public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
-         return STYLEABLES;
-     }
+	};
 
-     @Override
-     public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
-         return getClassCssMetaData();
-     }
-        
+	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
+
+	static {
+
+		@SuppressWarnings("static-access")
+		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(Group.getClassCssMetaData());
+		styleables.add(FILL);
+		STYLEABLES = Collections.unmodifiableList(styleables);
+	}
+
+	public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+		return STYLEABLES;
+	}
+
+	@Override
+	public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
+		return getClassCssMetaData();
+	}
+
 }

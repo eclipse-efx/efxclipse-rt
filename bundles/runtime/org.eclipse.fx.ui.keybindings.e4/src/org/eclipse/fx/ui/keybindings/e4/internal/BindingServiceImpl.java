@@ -25,17 +25,19 @@ import org.eclipse.core.commands.contexts.Context;
 import org.eclipse.core.commands.contexts.ContextManager;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.fx.core.log.Log;
+import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.keybindings.Binding;
 import org.eclipse.fx.ui.keybindings.KeyLookup;
 import org.eclipse.fx.ui.keybindings.ParseException;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.keybindings.service.BindingFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  *
  */
-@SuppressWarnings("restriction")
 public class BindingServiceImpl implements EBindingService {
 
 	final static String ACTIVE_CONTEXTS = "activeContexts"; //$NON-NLS-1$
@@ -56,39 +58,36 @@ public class BindingServiceImpl implements EBindingService {
 	@Inject
 	private BindingFactory factory;
 
+	@NonNull
 	private ContextSet contextSet = ContextSet.EMPTY;
+	
+	@Inject
+	@Log
+	Logger logger;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.e4.ui.bindings.EBindingService#createBinding(org.eclipse.
-	 * jface.bindings. TriggerSequence,
-	 * org.eclipse.core.commands.ParameterizedCommand, java.lang.String,
-	 * java.lang.String, java.util.Map)
-	 */
+	@Override
 	public Binding createBinding(TriggerSequence sequence,
 			ParameterizedCommand command, String contextId,
 			Map<String, String> attributes) {
-
 		String schemeId = DEFAULT_SCHEME_ID;
 		// String locale = null;
 		// String platform = null;
 		// int bindingType = Binding.SYSTEM;
 
-		if (sequence != null && !sequence.isEmpty() && contextId != null) {
-			if (attributes != null) {
-				String tmp = attributes.get(SCHEME_ID_ATTR_TAG);
-				if (tmp != null && tmp.length() > 0) {
-					schemeId = tmp;
-				}
-				// locale = attributes.get(LOCALE_ATTR_TAG);
-				// platform = attributes.get(PLATFORM_ATTR_TAG);
-				// if (USER_TYPE.equals(attributes.get(TYPE_ATTR_TAG))) {
-				// bindingType = Binding.USER;
-				// }
+		if (!sequence.isEmpty()) {
+			String tmp = attributes.get(SCHEME_ID_ATTR_TAG);
+			if (tmp != null && tmp.length() > 0) {
+				schemeId = tmp;
 			}
-			return factory.createKeyBinding(sequence, command, schemeId,
+			// locale = attributes.get(LOCALE_ATTR_TAG);
+			// platform = attributes.get(PLATFORM_ATTR_TAG);
+			// if (USER_TYPE.equals(attributes.get(TYPE_ATTR_TAG))) {
+			// bindingType = Binding.USER;
+			// }
+			if( schemeId == null ) {
+				return null;
+			}
+			return this.factory.createKeyBinding(sequence, command, schemeId,
 					contextId);
 			// return factory.createKeyBinding((EKeySequence) sequence, command,
 			// schemeId, contextId, locale,
@@ -97,108 +96,69 @@ public class BindingServiceImpl implements EBindingService {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.e4.ui.bindings.EBindingService#activateBinding(org.eclipse
-	 * .jface.bindings.Binding )
-	 */
+	@Override
 	public void activateBinding(Binding binding) {
 		String contextId = binding.getContextId();
-		BindingTable table = manager.getTable(contextId);
+		BindingTable table = this.manager.getTable(contextId);
 		if (table == null) {
 			return;
 		}
 		table.addBinding(binding);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.e4.ui.bindings.EBindingService#deactivateBinding(org.eclipse
-	 * .jface.bindings.Binding )
-	 */
+	@Override
 	public void deactivateBinding(Binding binding) {
 		String contextId = binding.getContextId();
-		BindingTable table = manager.getTable(contextId);
+		BindingTable table = this.manager.getTable(contextId);
 		if (table == null) {
 			return;
 		}
 		table.removeBinding(binding);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.e4.ui.bindings.EBindingService#createSequence(java.lang.String
-	 * )
-	 */
+	@Override
 	public TriggerSequence createSequence(String sequence) {
 		try {
-			return factory.getKeySequenceInstance(keylookup, sequence);
+			KeyLookup keylookup = this.keylookup;
+			if( keylookup != null ) {
+				return this.factory.getKeySequenceInstance(keylookup, sequence);	
+			}
 		} catch (ParseException e) {
-			// should probably log
+			this.logger.error("Unable to parse key sequence '"+sequence+"'", e);  //$NON-NLS-1$//$NON-NLS-2$
 		}
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.eclipse.e4.ui.bindings.EBindingService#getConflictsFor(org.eclipse
-	 * .e4.ui.bindings. TriggerSequence)
-	 */
+	@Override
 	public Collection<Binding> getConflictsFor(TriggerSequence sequence) {
-		return manager.getConflictsFor(contextSet, sequence);
+		return this.manager.getConflictsFor(this.contextSet, sequence);
 	}
 
+	@Override
 	public Collection<Binding> getAllConflicts() {
-		return manager.getAllConflicts();
+		return this.manager.getAllConflicts();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.eclipse.e4.ui.bindings.EBindingService#getPerfectMatch(org.eclipse
-	 * .e4.ui.bindings. TriggerSequence)
-	 */
+	@Override
 	public Binding getPerfectMatch(TriggerSequence trigger) {
-		return manager.getPerfectMatch(contextSet, trigger);
+		return this.manager.getPerfectMatch(this.contextSet, trigger);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.eclipse.e4.ui.bindings.EBindingService#isPartialMatch(org.eclipse.
-	 * e4.ui.bindings. TriggerSequence)
-	 */
+	@Override
 	public boolean isPartialMatch(TriggerSequence keySequence) {
-		return manager.isPartialMatch(contextSet, keySequence);
+		return this.manager.isPartialMatch(this.contextSet, keySequence);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.eclipse.e4.ui.bindings.EBindingService#getBestSequenceFor(org.eclipse
-	 * .core.commands. ParameterizedCommand)
-	 */
+	@Override
 	public TriggerSequence getBestSequenceFor(ParameterizedCommand command) {
-		Binding binding = manager.getBestSequenceFor(contextSet, command);
+		Binding binding = this.manager.getBestSequenceFor(this.contextSet, command);
 		return binding == null ? null : binding.getTriggerSequence();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.eclipse.e4.ui.bindings.EBindingService#getSequencesFor(org.eclipse
-	 * .core.commands. ParameterizedCommand)
-	 */
+	@Override
 	public Collection<TriggerSequence> getSequencesFor(
 			ParameterizedCommand command) {
-		Collection<Binding> bindings = manager.getSequencesFor(contextSet,
+		Collection<Binding> bindings = this.manager.getSequencesFor(this.contextSet,
 				command);
 		ArrayList<TriggerSequence> sequences = new ArrayList<TriggerSequence>(
 				bindings.size());
@@ -208,56 +168,51 @@ public class BindingServiceImpl implements EBindingService {
 		return sequences;
 	}
 
+	@Override
 	public Collection<Binding> getBindingsFor(ParameterizedCommand command) {
-		return manager.getBindingsFor(contextSet, command);
+		return this.manager.getBindingsFor(this.contextSet, command);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.eclipse.e4.ui.bindings.EBindingService#isPerfectMatch(org.eclipse.
-	 * e4.ui.bindings. TriggerSequence)
-	 */
+	@Override
 	public boolean isPerfectMatch(TriggerSequence sequence) {
 		return getPerfectMatch(sequence) != null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.eclipse.e4.ui.bindings.EBindingService#getPartialMatches(org.eclipse
-	 * .e4.ui.bindings. TriggerSequence)
-	 */
+	@Override
 	public Collection<Binding> getPartialMatches(TriggerSequence sequence) {
-		return manager.getPartialMatches(contextSet, sequence);
+		return this.manager.getPartialMatches(this.contextSet, sequence);
 	}
 
 	/**
 	 * @return the context for this service.
 	 */
 	public IEclipseContext getContext() {
-		return context;
+		return this.context;
 	}
 
 	@Inject
-	public void setContextIds(@Named(ACTIVE_CONTEXTS) @Optional Set<String> set) {
-		if (set == null || set.isEmpty() || contextManager == null) {
-			contextSet = ContextSet.EMPTY;
-			if (contextManager != null) {
-				contextManager.setActiveContextIds(Collections.EMPTY_SET);
+	void setContextIds(@Named(ACTIVE_CONTEXTS) @Optional Set<String> set) {
+		if (set == null || set.isEmpty() || this.contextManager == null) {
+			this.contextSet = ContextSet.EMPTY;
+			if (this.contextManager != null) {
+				this.contextManager.setActiveContextIds(Collections.EMPTY_SET);
 			}
 			return;
 		}
-		ArrayList<Context> contexts = new ArrayList<Context>();
+		ArrayList<@NonNull Context> contexts = new ArrayList<>();
 		for (String id : set) {
-			contexts.add(contextManager.getContext(id));
+			Context ctx = this.contextManager.getContext(id);
+			if( ctx != null ) {
+				contexts.add(ctx);	
+			}
 		}
-		contextSet = manager.createContextSet(contexts);
-		contextManager.setActiveContextIds(set);
+		this.contextSet = BindingTableManager.createContextSet(contexts);
+		this.contextManager.setActiveContextIds(set);
 	}
 
+	@Override
 	public Collection<Binding> getActiveBindings() {
-		return manager.getActiveBindings();
+		return this.manager.getActiveBindings();
 	}
 
 }

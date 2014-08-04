@@ -10,17 +10,17 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.animation.pagetransition.animation;
 
-
 import javafx.animation.Animation;
-import javafx.animation.FadeTransitionBuilder;
+import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
-import javafx.animation.ParallelTransitionBuilder;
-import javafx.animation.PathTransitionBuilder;
-import javafx.animation.ScaleTransitionBuilder;
-import javafx.animation.SequentialTransitionBuilder;
+import javafx.animation.ParallelTransition;
+import javafx.animation.PathTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.shape.CubicCurve;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
 import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
@@ -28,102 +28,94 @@ import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 /**
  * A page change animation
  */
-@SuppressWarnings("deprecation")
 public class PageChangeAnimation extends CenterSwitchAnimation {
 
 	@Override
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
 		Bounds b = curNode.getBoundsInLocal();
-		double cX = b.getMinX() + b.getWidth()/2;
-		double cY = b.getMinY() + b.getHeight()/2;
-		
+		double cX = b.getMinX() + b.getWidth() / 2;
+		double cY = b.getMinY() + b.getHeight() / 2;
+
 		double val = 200;
-		
+
 		CubicCurve cIn = new CubicCurve(cX - val, cY, cX - val, cY - val, cX, cY - val, cX, cY);
 		CubicCurve cOut = new CubicCurve(cX, cY, cX, cY + val, cX + val, cY + val, cX + val, cY + 0);
 
-		PathTransitionBuilder moveOut = PathTransitionBuilder.create()
-				.duration(new Duration(1000))
-				.node(curNode)
-				.path(cOut)
-				;
-		
-		PathTransitionBuilder moveIn = PathTransitionBuilder.create()
-				.duration(new Duration(1000))
-				.node(newNode)
-				.path(cIn)
-				;
-			
-		
-		ScaleTransitionBuilder zoomOut = ScaleTransitionBuilder.create()
-				.duration(new Duration(1000))
-				.toX(0.2)
-				.toY(0.2)
-				.interpolator(Interpolator.EASE_BOTH);
-			ScaleTransitionBuilder zoomIn = ScaleTransitionBuilder.create()
-				.duration(new Duration(1000))
-				.fromX(0.2)
-				.fromY(0.2)
-				.toX(0.7)
-				.toY(0.7)
-				.interpolator(Interpolator.EASE_BOTH);
-			
-			Animation main = ParallelTransitionBuilder.create()
-					.children(
-						zoomOut.node(curNode).build(),
-						zoomIn.node(newNode).build(),
-						moveIn.build(),
-						moveOut.build()
-						,
-						FadeTransitionBuilder.create()
-							.node(curNode)
-							.duration(new Duration(1000))
-							.fromValue(1)
-							.toValue(0)
-							.build(),
-						moveOut.build(),
-						FadeTransitionBuilder.create()
-						.node(newNode)
-						.duration(new Duration(1000))
-						.fromValue(0)
-						.toValue(1)
-						.build()
-					)
-					.build();
-			
-			ScaleTransitionBuilder zoomOut1 = ScaleTransitionBuilder.create()
-					.duration(new Duration(300))
-					.toX(0.7)
-					.toY(0.7)
-					.interpolator(Interpolator.EASE_BOTH);
-				ScaleTransitionBuilder zoomIn1 = ScaleTransitionBuilder.create()
-					.duration(new Duration(300))
-					.toX(1)
-					.toY(1)
-					.interpolator(Interpolator.EASE_BOTH);
-				
-				return SequentialTransitionBuilder.create()
-					.children(
-						ParallelTransitionBuilder.create().children(
-							zoomOut1.node(curNode).build(),
-							zoomOut1.node(newNode).build()
-						).build(),
-						main,
-						ParallelTransitionBuilder.create().children(
-							zoomIn1.node(curNode).build(),
-							zoomIn1.node(newNode).build()
-						).build()
-					)
-					.build();
+		Animation main = new ParallelTransition(
+		// zoom
+				zoomOut(curNode), zoomIn(newNode),
+				// move
+				move(newNode, cIn), move(curNode, cOut),
+				// fade
+				fadeOut(curNode), fadeIn(newNode));
+		return new SequentialTransition(
+		// zoom out
+				new ParallelTransition(zoomOut1(curNode), zoomOut1(newNode)),
+				// main
+				main,
+				// zoom in
+				new ParallelTransition(zoomIn1(curNode), zoomIn1(newNode)));
+	}
+
+	private static final PathTransition move(Node n, Shape path) {
+		return new PathTransition(Duration.millis(1000), path, n);
+	}
+
+	private static final ScaleTransition zoomIn(Node n) {
+		ScaleTransition t = new ScaleTransition(Duration.millis(1000), n);
+		t.setInterpolator(Interpolator.EASE_BOTH);
+		t.setFromX(0.2);
+		t.setFromY(0.2);
+		t.setToX(0.7);
+		t.setToY(0.7);
+		return t;
+	}
+
+	private static final ScaleTransition zoomOut(Node n) {
+		ScaleTransition t = new ScaleTransition(Duration.millis(1000), n);
+		t.setInterpolator(Interpolator.EASE_BOTH);
+		t.setToX(0.2);
+		t.setToY(0.2);
+		return t;
+	}
+
+	private static final FadeTransition fadeOut(Node n) {
+		FadeTransition t = new FadeTransition(Duration.millis(1000), n);
+		t.setFromValue(1);
+		t.setToValue(0);
+		return t;
+	}
+
+	private static final FadeTransition fadeIn(Node n) {
+		FadeTransition t = new FadeTransition(Duration.millis(1000), n);
+		t.setFromValue(0);
+		t.setToValue(1);
+		return t;
+	}
+
+	private static final ScaleTransition zoomOut1(Node n) {
+		ScaleTransition s = new ScaleTransition(Duration.millis(300), n);
+		s.setToX(0.7);
+		s.setToY(0.7);
+		s.setInterpolator(Interpolator.EASE_BOTH);
+		return s;
+	}
+
+	private static final ScaleTransition zoomIn1(Node n) {
+		ScaleTransition s = new ScaleTransition(Duration.millis(300), n);
+		s.setToX(1);
+		s.setToY(1);
+		s.setInterpolator(Interpolator.EASE_BOTH);
+		return s;
 	}
 
 	@Override
 	protected void resetProperties(Node curNode, Node newNode) {
 		newNode.setTranslateZ(0);
 		curNode.setTranslateZ(0);
-			newNode.setRotate(0);
-			curNode.setRotate(0);
-			
+		newNode.setRotate(0);
+		curNode.setRotate(0);
+
 		curNode.setScaleX(1);
 		curNode.setScaleY(1);
 		curNode.setOpacity(1);

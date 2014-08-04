@@ -14,5 +14,6 @@ public interface ContentTypeProvider {
 	public static final String XML = "text/xml";
 	public static final String JAVA = "text/java";
 	public static final String JAVASCRIPT = "text/javascript";
+	public static final String GROOVY = "text/groovy";
 	public String getContentType();
 }

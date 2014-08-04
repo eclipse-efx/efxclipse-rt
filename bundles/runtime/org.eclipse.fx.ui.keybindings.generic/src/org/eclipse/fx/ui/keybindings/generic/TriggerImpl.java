@@ -12,6 +12,9 @@ package org.eclipse.fx.ui.keybindings.generic;
 
 import org.eclipse.fx.ui.keybindings.Trigger;
 
+/**
+ * A trigger implementation
+ */
 public abstract class TriggerImpl implements Trigger {
 	/**
      * Tests whether this object is equal to another object. A handle object is
@@ -22,13 +25,15 @@ public abstract class TriggerImpl implements Trigger {
      * @return <code>true</code> if the objects are equal; <code>false</code>
      *         otherwise.
      */
-    public abstract boolean equals(final Object object);
+    @Override
+	public abstract boolean equals(final Object object);
 
     /**
      * Computes the hash code for this object.
      * 
      * @return The hash code for this object.
      */
-    public abstract int hashCode();
+    @Override
+	public abstract int hashCode();
 
 }

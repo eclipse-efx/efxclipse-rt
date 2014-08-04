@@ -27,7 +27,6 @@ import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.panes.FillLayoutPane;
 import org.eclipse.fx.ui.panes.GridLayoutPane;
 import org.eclipse.fx.ui.panes.RowLayoutPane;
-import org.eclipse.fx.ui.panes.SashLayoutPane;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -47,7 +46,6 @@ public class CustomContainerSupport {
 	private static final String WIDGET_EFX_FILL_TAG = "Container:FillLayoutPane"; //$NON-NLS-1$
 	private static final String WIDGET_EFX_GRID_TAG = "Container:GridLayoutPane"; //$NON-NLS-1$
 	private static final String WIDGET_EFX_ROW_TAG = "Container:RowLayoutPane"; //$NON-NLS-1$
-	private static final String WIDGET_EFX_SASH_TAG = "Container:SashLayoutPane"; //$NON-NLS-1$
 
 	private static final String WIDGET_URLPANE_TAG = "Container:UrlPane:"; //$NON-NLS-1$
 
@@ -82,8 +80,6 @@ public class CustomContainerSupport {
 			tmp = new GridLayoutPane();
 		} else if (tags.contains(WIDGET_EFX_ROW_TAG)) {
 			tmp = new RowLayoutPane();
-		} else if (tags.contains(WIDGET_EFX_SASH_TAG)) {
-			tmp = new SashLayoutPane();
 		}
 
 		if (tmp == null) {

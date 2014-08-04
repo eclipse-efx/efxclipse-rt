@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.core.log4j.slf4jlogger">
+   <implementation class="org.eclipse.fx.core.slf4j.Slf4JLoggerFactory"/>
+   <property name="service.ranking" type="Integer" value="1"/>
+   <service>
+      <provide interface="org.eclipse.fx.core.log.LoggerFactory"/>
+   </service>
+</scr:component>

@@ -13,9 +13,11 @@ package org.eclipse.fx.ui.theme.internal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import javafx.beans.InvalidationListener;
 import javafx.scene.Scene;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -25,11 +27,15 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
+import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventAdmin;
 
 
 /**
@@ -174,23 +180,39 @@ public class DefaultThemeManager implements ThemeManager {
 	public List<@NonNull Theme> getAvailableThemes() {
 		return this.themes;
 	}
+	
+	@SuppressWarnings("null")
+	private static @NonNull String getCSSClassname(@NonNull String id) {
+		return id.replace('.', '-');
+	}
 
 	@Override
 	public void setCurrentThemeId(String id) {
 		for (Theme t : this.themes) {
 			if (t.getId().equals(id)) {
 				this.currentThemeId = id;
+				EventAdmin eventAdmin = getEventAdmin();
+				if( eventAdmin !=  null ) {
+					eventAdmin.sendEvent(new Event(Constants.THEME_CHANGED, Collections.singletonMap("org.eclipse.e4.data", id)));	 //$NON-NLS-1$
+				}
 				
 				for( Scene scene : this.managedScenes ) {
 					List<Theme> availableThemes = getAvailableThemes();
 					for (Theme theme : availableThemes) {
 						for (URL url : theme.getStylesheetURL()) {
+							if( scene.getRoot() != null ) {
+								scene.getRoot().getStyleClass().remove(getCSSClassname(theme.getId()));	
+							}
 							scene.getStylesheets().remove(url.toExternalForm());
 						}
 					}
 					for (Theme theme : availableThemes) {
 						for (URL url : theme.getStylesheetURL()) {
 							if (theme.getId().equals(this.currentThemeId)) {
+								if( scene.getRoot() != null ) {
+									scene.getRoot().getStyleClass().remove(getCSSClassname(theme.getId()));
+									scene.getRoot().getStyleClass().add(getCSSClassname(theme.getId()));
+								}
 								scene.getStylesheets().add(url.toExternalForm());
 							}
 						}
@@ -208,23 +230,57 @@ public class DefaultThemeManager implements ThemeManager {
 	}
 	
 	private static Logger LOGGER;
-	
+
 	@SuppressWarnings("null")
+	@NonNull
 	static Logger getLogger() {
-		if( LOGGER == null ) {
+		Logger logger = LOGGER;
+		if( logger == null ) {
 			ServiceReference<LoggerFactory> ref = Activator.getContext().getServiceReference(LoggerFactory.class);
-			LOGGER = Activator.getContext().getService(ref).createLogger(DefaultThemeManager.class.getName());
+			logger = Activator.getContext().getService(ref).createLogger(DefaultThemeManager.class.getName());
+			LOGGER = logger;
 		}
 		return LOGGER;
+	}
+	
+	private EventAdmin eventAdmin;
+	
+	@Nullable EventAdmin getEventAdmin() {
+		EventAdmin eventAdmin = this.eventAdmin;
+		if( eventAdmin != null ) {
+			return eventAdmin;
+		}
+		
+		ServiceReference<EventAdmin> ref = Activator.getContext().getServiceReference(EventAdmin.class);
+		if( ref != null ) {
+			eventAdmin = Activator.getContext().getService(ref);	
+		}
+		
+		return eventAdmin;
 	}
 	
 	@Override
 	public Registration registerScene(final Scene scene) {
 		this.managedScenes.add(scene);
+		InvalidationListener l = (o) -> {
+			String themeId = this.currentThemeId;
+			if( scene.getRoot() != null && themeId != null ) {
+				scene.getRoot().getStyleClass().remove(getCSSClassname(themeId));
+				scene.getRoot().getStyleClass().add(getCSSClassname(themeId));
+			}
+		};
+		String themeId = this.currentThemeId;
+		if( themeId != null ) {
+			scene.getRoot().getStyleClass().remove(getCSSClassname(themeId));
+			scene.getRoot().getStyleClass().add(getCSSClassname(themeId));			
+		}
+
+		scene.rootProperty().addListener(l);
 		return new Registration() {
 			
 			@Override
 			public void dispose() {
+				scene.rootProperty().removeListener(l);
 				DefaultThemeManager.this.managedScenes.remove(scene);
 			}
 		};

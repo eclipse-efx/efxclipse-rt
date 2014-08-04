@@ -11,18 +11,24 @@
 package org.eclipse.fx.ui.workbench.fx.internal;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 import javax.inject.Inject;
 
 import org.eclipse.fx.core.Callback;
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
-import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -53,7 +59,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 			try {
 				return task.get();
 			} catch (InterruptedException | ExecutionException e) {
-				this.logger.log(Level.ERROR, "Unable to wait until the task is completed", e); //$NON-NLS-1$
+				this.logger.error("Unable to wait until the task is completed", e); //$NON-NLS-1$
 			} finally {
 				task.cancel(true);
 			}
@@ -71,7 +77,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 			try {
 				task.get(); // wait for task to complete
 			} catch (InterruptedException | ExecutionException e) {
-				this.logger.log(Level.ERROR, "Unable to wait until the task is completed", e); //$NON-NLS-1$
+				this.logger.error("Unable to wait until the task is completed", e); //$NON-NLS-1$
 			} finally {
 				task.cancel(true);
 			}
@@ -88,6 +94,43 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 	@Override
 	public void asyncExec(Runnable runnable) {
 		javafx.application.Platform.runLater(runnable);
+	}
+	
+	@Override
+	public Subscription scheduleExecution(long delay, Runnable runnable) {
+		final AtomicBoolean b = new AtomicBoolean(true);
+		Timeline t = new Timeline(new KeyFrame(Duration.millis(delay), (a) -> {
+			if( b.get() ) {
+				runnable.run();	
+			}
+		} ));
+		t.play();
+		return new Subscription() {
+			
+			@Override
+			public void dispose() {
+				b.set(false);
+				t.stop();
+			}
+		};
+	}
+	
+	@Override
+	public <T> CompletableFuture<T> scheduleExecution(long delay, Callable<T> runnable) {
+		CompletableFuture<T> future = new CompletableFuture<T>();
+		
+		Timeline t = new Timeline(new KeyFrame(Duration.millis(delay), (a) -> {
+			try {
+				if( ! future.isCancelled() ) {
+					future.complete(runnable.call());	
+				}
+			} catch (Exception e) {
+				future.completeExceptionally(e);
+			}	
+		} ));
+		t.play();
+		
+		return future;
 	}
 	
 	@Override

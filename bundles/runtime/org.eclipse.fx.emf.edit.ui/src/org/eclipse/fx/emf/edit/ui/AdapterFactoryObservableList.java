@@ -65,12 +65,9 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 	 * @param root
 	 *            the root
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked" })
 	public AdapterFactoryObservableList(@NonNull AdapterFactory adapterFactory, @NonNull final Object root) {
 		super();
-
-		if (adapterFactory == null)
-			throw new IllegalArgumentException("AdapterFactory must not be null."); //$NON-NLS-1$
 
 		this.adapterFactory = adapterFactory;
 		this.root = root;

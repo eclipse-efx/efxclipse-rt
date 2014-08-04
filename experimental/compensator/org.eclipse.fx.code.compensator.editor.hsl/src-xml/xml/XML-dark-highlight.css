@@ -1,0 +1,23 @@
+.hover {
+	-fx-background-color: #2b5696;
+}
+
+.default_tagtoken {
+	-styled-text-color: #d1ba77;
+}
+
+.xml_string {
+	-styled-text-color: #acc670;
+}
+
+.default_xmltoken {
+	-styled-text-color: #b5c0cb;
+}
+
+.proc_instruction {
+	-styled-text-color: #bcbdb9;
+}
+
+.xml_comment {
+	-styled-text-color: #8c8983;
+}

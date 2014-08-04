@@ -46,6 +46,7 @@ public class DIApplication extends AbstractJFXApplication implements
 	@Nullable
 	private String applicationClass;
 
+	@SuppressWarnings("null")
 	@Override
 	protected void jfxStart(IApplicationContext applicationContext,
 			Application jfxApplication, Stage primaryStage) {

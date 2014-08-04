@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.animation.pagetransition.animation;
 
-
 import javafx.animation.Animation;
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
@@ -29,14 +28,14 @@ public class RotateOutAnimation extends CenterSwitchAnimation {
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
 		RotateTransition rt = new RotateTransition(Duration.millis(600), curNode);
 		rt.setByAngle(360);
-		
+
 		ScaleTransition sc = new ScaleTransition(Duration.millis(600), curNode);
 		sc.setToX(0);
 		sc.setToY(0);
-		
+
 		return new ParallelTransition(rt, sc);
 	}
-	
+
 	@Override
 	protected void resetProperties(Node curNode, Node newNode) {
 		curNode.setRotate(0);

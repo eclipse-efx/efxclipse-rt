@@ -27,7 +27,7 @@ public class LoggerSupplier extends ExtendedObjectSupplier {
 
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
-		Requestor req = (Requestor) requestor;
+		Requestor<?> req = (Requestor<?>) requestor;
 		ContextObjectSupplier sub = (ContextObjectSupplier) req
 				.getPrimarySupplier();
 		final IEclipseContext context = sub.getContext();
@@ -36,6 +36,10 @@ public class LoggerSupplier extends ExtendedObjectSupplier {
 		
 		if( loggerName == null || loggerName.isEmpty() ) {
 			loggerName = requestor.getRequestingObjectClass().getName();
+		}
+		
+		if( loggerName == null ) {
+			loggerName = "AnonymousLogger"; //$NON-NLS-1$
 		}
 		
 		return context.get(LoggerFactory.class).createLogger(loggerName);

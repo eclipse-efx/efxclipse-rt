@@ -12,8 +12,6 @@ package org.eclipse.fx.code.compensator.editor.java.scanner;
 
 import java.util.List;
 
-import javafx.scene.paint.Color;
-
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.BufferedRuleBasedScanner;
 import org.eclipse.jface.text.rules.IRule;
@@ -42,31 +40,31 @@ public abstract class AbstractJavaScanner extends BufferedRuleBasedScanner {
 	protected Token getToken(String key) {
 		switch (key) {
 		case IJavaColorConstants.JAVA_STRING:
-			return new Token(new TextAttribute(Color.rgb(42, 0, 255)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVA_STRING));
 		case IJavaColorConstants.JAVA_DEFAULT:
-			return new Token(new TextAttribute(Color.rgb(0,0,0)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVA_DEFAULT));
 		case IJavaColorConstants.ANNOTATION:
-			return new Token(new TextAttribute(Color.rgb(200, 200, 200)));
+			return new Token(new TextAttribute(IJavaColorConstants.ANNOTATION));
 		case IJavaColorConstants.JAVA_KEYWORD:
-			return new Token(new TextAttribute(Color.rgb(127, 0, 85)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVA_KEYWORD));
 		case IJavaColorConstants.JAVA_OPERATOR:
-			return new Token(new TextAttribute(Color.rgb(0, 0, 0)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVA_OPERATOR));
 		case IJavaColorConstants.JAVA_BRACKET:
-			return new Token(new TextAttribute(Color.rgb(0, 0, 0)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVA_BRACKET));
 		case IJavaColorConstants.JAVA_KEYWORD_RETURN:
-			return new Token(new TextAttribute(Color.rgb(127, 0, 85)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVA_KEYWORD_RETURN));
 		case IJavaColorConstants.TASK_TAG:
-			return new Token(new TextAttribute(Color.rgb(127, 159, 191)));
+			return new Token(new TextAttribute(IJavaColorConstants.TASK_TAG));
 		case IJavaColorConstants.JAVADOC_LINK:
-			return new Token(new TextAttribute(Color.rgb(63, 63, 191)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVADOC_LINK));
 		case IJavaColorConstants.JAVADOC_DEFAULT:
-			return new Token(new TextAttribute(Color.rgb(63, 95, 191)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVADOC_DEFAULT));
 		case IJavaColorConstants.JAVA_MULTI_LINE_COMMENT:
-			return new Token(new TextAttribute(Color.rgb(63, 127, 95)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVA_MULTI_LINE_COMMENT));
 		case IJavaColorConstants.JAVA_SINGLE_LINE_COMMENT:
-			return new Token(new TextAttribute(Color.rgb(63, 127, 95)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVA_SINGLE_LINE_COMMENT));
 		case IJavaColorConstants.JAVADOC_TAG:
-			return new Token(new TextAttribute(Color.rgb(127, 127, 159)));
+			return new Token(new TextAttribute(IJavaColorConstants.JAVADOC_TAG));
 		default:
 			throw new IllegalStateException("Unknown key '"+ key+"'");
 		}

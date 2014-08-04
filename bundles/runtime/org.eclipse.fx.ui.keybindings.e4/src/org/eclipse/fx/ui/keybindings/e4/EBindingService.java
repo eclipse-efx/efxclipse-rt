@@ -16,45 +16,179 @@ import java.util.Map;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.fx.ui.keybindings.Binding;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * Service to interact with key bindings
+ */
 public interface EBindingService {
 
+	/**
+	 * The id used in the context
+	 */
 	public static final String DIALOG_CONTEXT_ID = "org.eclipse.ui.contexts.dialog"; //$NON-NLS-1$
+	/**
+	 * Name of the default scheme
+	 */
 	public static final String DEFAULT_SCHEME_ID = "org.eclipse.ui.defaultAcceleratorConfiguration"; //$NON-NLS-1$
+	/**
+	 * Key used to store the binding in the transient map
+	 */
 	public static final String MODEL_TO_BINDING_KEY = "binding"; //$NON-NLS-1$
+	/**
+	 * Tag used for the active scheme
+	 */
 	public static final String ACTIVE_SCHEME_TAG = "activeSchemeId"; //$NON-NLS-1$
+	/**
+	 * Tag prefix for the scheme
+	 */
 	public static final String SCHEME_ID_ATTR_TAG = "schemeId"; //$NON-NLS-1$
+	/**
+	 * Tag prefix for the locale
+	 */
 	public static final String LOCALE_ATTR_TAG = "locale"; //$NON-NLS-1$
+	/**
+	 * Tag prefix for the platform
+	 */
 	public static final String PLATFORM_ATTR_TAG = "platform"; //$NON-NLS-1$
+	/**
+	 * Tag prefix for the type
+	 */
 	public static final String TYPE_ATTR_TAG = "type"; //$NON-NLS-1$
+	/**
+	 * Tag prefix for the deleted
+	 */
 	public static final String DELETED_BINDING_TAG = "deleted"; //$NON-NLS-1$
 
-	Binding createBinding(TriggerSequence sequence, ParameterizedCommand command, String contextId,
-			Map<String, String> attributes);
+	/**
+	 * Create a binding between a sequence and a command
+	 * 
+	 * @param sequence
+	 *            the sequence
+	 * @param command
+	 *            the command
+	 * @param contextId
+	 *            the context id
+	 * @param attributes
+	 *            the attributes
+	 * @return the binding
+	 */
+	Binding createBinding(@NonNull TriggerSequence sequence, @NonNull ParameterizedCommand command, @NonNull String contextId, @NonNull Map<@NonNull String, @NonNull String> attributes);
 
-	void activateBinding(Binding binding);
+	/**
+	 * Activate the binding
+	 * 
+	 * @param binding
+	 *            the binding to activate
+	 */
+	void activateBinding(@NonNull Binding binding);
 
-	void deactivateBinding(Binding binding);
+	/**
+	 * Deactivate the binding
+	 * 
+	 * @param binding
+	 *            the binding to deactivate
+	 */
+	void deactivateBinding(@NonNull Binding binding);
 
-	TriggerSequence createSequence(String sequence);
+	/**
+	 * Create a trigger sequence from a string definition
+	 * 
+	 * @param sequence
+	 *            a string definition
+	 * @return a trigger sequence
+	 */
+	@Nullable
+	TriggerSequence createSequence(@NonNull String sequence);
 
-	Collection<Binding> getConflictsFor(TriggerSequence sequence);
+	/**
+	 * Get the conflicts for a sequence
+	 * 
+	 * @param sequence
+	 *            the sequence
+	 * @return the bindings
+	 */
+	@Nullable
+	Collection<@NonNull Binding> getConflictsFor(@NonNull TriggerSequence sequence);
 
-	Collection<Binding> getAllConflicts();
+	/**
+	 * @return all conflicts
+	 */
+	@NonNull
+	Collection<@NonNull Binding> getAllConflicts();
 
-	Binding getPerfectMatch(TriggerSequence trigger);
+	/**
+	 * Get the perfect match for the trigger
+	 * 
+	 * @param trigger
+	 *            the trigger
+	 * @return the binding
+	 */
+	@Nullable
+	Binding getPerfectMatch(@NonNull TriggerSequence trigger);
 
-	boolean isPartialMatch(TriggerSequence keySequence);
+	/**
+	 * Check if the sequence is partially matched
+	 * 
+	 * @param keySequence
+	 *            the sequence
+	 * @return <code>true</code> if a partial match
+	 */
+	boolean isPartialMatch(@NonNull TriggerSequence keySequence);
 
-	boolean isPerfectMatch(TriggerSequence sequence);
+	/**
+	 * Check if there is a perfect match
+	 * 
+	 * @param sequence
+	 *            the sequence
+	 * @return <code>true</code> if a perfect match
+	 */
+	boolean isPerfectMatch(@NonNull TriggerSequence sequence);
 
-	TriggerSequence getBestSequenceFor(ParameterizedCommand command);
+	/**
+	 * Find the best sequence for the command
+	 * 
+	 * @param command
+	 *            the command
+	 * @return the sequence
+	 */
+	@Nullable
+	TriggerSequence getBestSequenceFor(@NonNull ParameterizedCommand command);
 
-	Collection<TriggerSequence> getSequencesFor(ParameterizedCommand command);
+	/**
+	 * Find all sequences for the give command
+	 * 
+	 * @param command
+	 *            the command
+	 * @return all sequences
+	 */
+	@NonNull
+	Collection<@NonNull TriggerSequence> getSequencesFor(@NonNull ParameterizedCommand command);
 
-	Collection<Binding> getPartialMatches(TriggerSequence sequence);
+	/**
+	 * Find all partial matches
+	 * 
+	 * @param sequence
+	 *            the sequence
+	 * @return the matches
+	 */
+	@NonNull
+	Collection<@NonNull Binding> getPartialMatches(@NonNull TriggerSequence sequence);
 
-	Collection<Binding> getActiveBindings();
+	/**
+	 * @return all active bindings
+	 */
+	@NonNull
+	Collection<@NonNull Binding> getActiveBindings();
 
-	Collection<Binding> getBindingsFor(ParameterizedCommand cmd);
+	/**
+	 * Find all bindings for the command
+	 * 
+	 * @param cmd
+	 *            the command
+	 * @return the bindings
+	 */
+	@NonNull
+	Collection<@NonNull Binding> getBindingsFor(@NonNull ParameterizedCommand cmd);
 }

@@ -38,6 +38,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
@@ -47,7 +48,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupport;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDTabPane;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
@@ -73,7 +73,6 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
 		WCallback<@NonNull DragData, @NonNull Boolean> dragStartCallback;
-		WCallback<@NonNull DropData, @Nullable Void> droppedCallback;
 		
 		// private WCallback<WMinMaxState, Void> minMaxCallback;
 		// private MinMaxGroup minMaxGroup;
@@ -161,107 +160,18 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		protected TabPane createWidget() {
 			DnDSupport dnd = new DnDSupport(
 					(param) -> StackWidgetImpl.this.dragStartCallback,
-					(param) -> StackWidgetImpl.this.droppedCallback,
+					(param) -> StackWidgetImpl.this.getDropCallback(),
 					StackWidgetImpl.this.dndFeedback,
 					this.domainElement);
 			
-			DnDTabPane p = new DnDTabPane();
-			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_START, dnd::handleDragStart);
-			p.addEventHandler(DnDTabPane.DND_TABPANE_DROPPED, dnd::handleDropped);
-			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_FEEDBACK, dnd::handleFeedback);
-			p.addEventHandler(DnDTabPane.DND_TABPANE_DRAG_FINISHED, dnd::handleFinished);
+			TabPane p = DndTabPaneFactory.createDndTabPane((s) -> {
+				s.setStartFunction(dnd::handleDragStart);
+				s.setDropConsumer(dnd::handleDropped);
+				s.setFeedbackConsumer(dnd::handleFeedback);
+				s.setDragFinishedConsumer(dnd::handleFinished);
+				s.setClipboardDataFunction(dnd::clipboardDataFunction);
+			});
 			
-//			TabPane p = new TabPane() {
-//				@Override
-//				protected Skin<?> createDefaultSkin() {
-//					Skin<?> skin = super.createDefaultSkin();
-//					DnDSupporter.hookTabPane(skin, getDomElement(), StackWidgetImpl.this.dndFeedback,
-//							(param) -> StackWidgetImpl.this.dragStartCallback,
-//							(param) -> StackWidgetImpl.this.droppedCallback);
-//					return skin;
-//				}
-//			};
-
-			// ContextMenu m = new ContextMenu();
-			//
-			// {
-			// MenuItem item = new MenuItem("Detach");
-			// item.setOnAction(new EventHandler<ActionEvent>() {
-			//
-			// @Override
-			// public void handle(ActionEvent event) {
-			// DetachView d = new DetachView();
-			// d.detach((MPart) getDomElement().getSelectedElement(),
-			// modelService);
-			// }
-			// });
-			// m.getItems().add(item);
-			// }
-			//
-			// {
-			// MenuItem item = new MenuItem("Move To First");
-			// item.setOnAction(new EventHandler<ActionEvent>() {
-			//
-			// @Override
-			// public void handle(ActionEvent event) {
-			// MoveToFirst d = new MoveToFirst();
-			// d.move((MPart) getDomElement().getSelectedElement());
-			// }
-			// });
-			// m.getItems().add(item);
-			// }
-			//
-			// {
-			// MenuItem item = new MenuItem("Move To Last");
-			// item.setOnAction(new EventHandler<ActionEvent>() {
-			//
-			// @Override
-			// public void handle(ActionEvent event) {
-			// MoveToLast d = new MoveToLast();
-			// d.move((MPart) getDomElement().getSelectedElement());
-			// }
-			// });
-			// m.getItems().add(item);
-			// }
-			//
-			// {
-			// MenuItem item = new MenuItem("Pin To Bottom");
-			// item.setOnAction(new EventHandler<ActionEvent>() {
-			//
-			// @Override
-			// public void handle(ActionEvent event) {
-			// PinToBottom d = new PinToBottom();
-			// d.pin((MPart) getDomElement().getSelectedElement());
-			// }
-			// });
-			// m.getItems().add(item);
-			// }
-			//
-			// p.setContextMenu(m);
-			// (FXTabPane)p.minMaxStateProperty().addListener(new
-			// ChangeListener<MinMaxState>() {
-			//
-			// @Override
-			// public void changed(ObservableValue<? extends MinMaxState>
-			// observable, MinMaxState oldValue, MinMaxState newValue) {
-			// if( minMaxCallback != null ) {
-			// switch (newValue) {
-			// case RESTORED:
-			// minMaxCallback.call(WMinMaxState.RESTORED);
-			// break;
-			// case MAXIMIZED:
-			// minMaxCallback.call(WMinMaxState.MAXIMIZED);
-			// break;
-			// case MINIMIZED:
-			// minMaxCallback.call(WMinMaxState.MINIMIZED);
-			// break;
-			// case NONE:
-			// // Nothing to do
-			// break;
-			// }
-			// }
-			// }
-			// });
 			p.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
 				@Override
@@ -404,13 +314,6 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		public void setDragStartCallback(@NonNull WCallback<@NonNull DragData, @NonNull Boolean> dragStackCallback) {
 			this.dragStartCallback = dragStackCallback;
 		}
-
-		@Override
-		public void setDragDroppedCallback(@NonNull WCallback<@NonNull DropData, @Nullable Void> droppedCallback) {
-			this.droppedCallback = droppedCallback;
-		}
-		
-		
 	}
 
 	static class StackItemImpl implements WStackItem<Object, Node> {
@@ -660,12 +563,6 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		public void setDragStartCallback(@NonNull WCallback<@NonNull DragData, @NonNull Boolean> dragStackCallback) {
 			// not implemented yet
 		}
-
-		@Override
-		public void setDragDroppedCallback(@NonNull WCallback<@NonNull DropData, @Nullable Void> callback) {
-			// not implemented yet
-		}
-
 	}
 
 	static class PagninationItemImpl implements WStackItem<Object, Node> {

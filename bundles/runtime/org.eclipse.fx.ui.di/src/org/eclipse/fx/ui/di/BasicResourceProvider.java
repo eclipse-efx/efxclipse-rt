@@ -42,6 +42,7 @@ public abstract class BasicResourceProvider implements ResourceProviderService {
 	/**
 	 * A logger instance
 	 */
+	@SuppressWarnings("null")
 	protected Logger logger = LoggerCreator.createLogger(getClass());
 
 	/**

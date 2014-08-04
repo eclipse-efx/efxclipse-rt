@@ -30,6 +30,16 @@ import org.osgi.framework.wiring.BundleWiring;
  * Helper class which is able to load FXML-Files in OSGi is an easy way
  */
 public class OSGiFXMLLoader {
+	@SuppressWarnings("null")
+	private static @NonNull ClassLoader getClassLoader(Class<?> clazz) {
+		return clazz.getClassLoader();
+	}
+	
+	@SuppressWarnings("null")
+	private static @NonNull ClassLoader getClassLoader(Bundle bundle) {
+		return bundle.adapt(BundleWiring.class).getClassLoader();
+	}
+	
 	/**
 	 * Load a FXML file relative to the requested
 	 * 
@@ -46,8 +56,10 @@ public class OSGiFXMLLoader {
 	 */
 	public static <O> O load(@NonNull Class<?> requester, @NonNull String relativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory) throws IOException {
 		URL url = requester.getResource(relativeFxmlPath);
-		ClassLoader loader = requester.getClassLoader();
-		return load(loader, url, resourceBundle, builderFactory);
+		if( url == null ) {
+			throw new IOException("Unable to load '"+relativeFxmlPath+"' relative to '"+requester+"'");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		}
+		return load(getClassLoader(requester), url, resourceBundle, builderFactory);
 	}
 	
 	/**
@@ -66,8 +78,10 @@ public class OSGiFXMLLoader {
 	 */
 	public static <O,C> FXMLData<O,C> loadWithController(@NonNull Class<?> requester, @NonNull String relativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory) throws IOException {
 		URL url = requester.getResource(relativeFxmlPath);
-		ClassLoader loader = requester.getClassLoader();
-		return loadWithController(loader, url, resourceBundle, builderFactory);
+		if( url == null ) {
+			throw new IOException("Unable to load '"+relativeFxmlPath+"' relative to '"+requester+"'");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		}
+		return loadWithController(getClassLoader(requester), url, resourceBundle, builderFactory);
 	}
 
 	/**
@@ -86,8 +100,10 @@ public class OSGiFXMLLoader {
 	 */
 	public static <O> O load(@NonNull Bundle bundle, @NonNull String bundleRelativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory) throws IOException {
 		URL url = bundle.getResource(bundleRelativeFxmlPath);
-		ClassLoader loader = bundle.adapt(BundleWiring.class).getClassLoader();
-		return load(loader, url, resourceBundle, builderFactory);
+		if( url == null ) {
+			throw new IOException("Unable to load '"+bundleRelativeFxmlPath+"' relative to '"+bundle+"'");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		}
+		return load(getClassLoader(bundle), url, resourceBundle, builderFactory);
 	}
 	
 	/**
@@ -106,8 +122,10 @@ public class OSGiFXMLLoader {
 	 */
 	public static <O,C> FXMLData<O,C> loadWithController(@NonNull Bundle bundle, @NonNull String bundleRelativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory) throws IOException {
 		URL url = bundle.getResource(bundleRelativeFxmlPath);
-		ClassLoader loader = bundle.adapt(BundleWiring.class).getClassLoader();
-		return loadWithController(loader, url, resourceBundle, builderFactory);
+		if( url == null ) {
+			throw new IOException("Unable to load '"+bundleRelativeFxmlPath+"' relative to '"+bundle+"'");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		}
+		return loadWithController(getClassLoader(bundle), url, resourceBundle, builderFactory);
 	}
 
 	/**
@@ -165,8 +183,10 @@ public class OSGiFXMLLoader {
 	public static <O> O load(@NonNull Class<?> requester, @NonNull String relativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory,
 			@Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		URL url = requester.getResource(relativeFxmlPath);
-		ClassLoader loader = requester.getClassLoader();
-		return load(loader, url, resourceBundle, builderFactory, controllerFactory);
+		if( url == null ) {
+			throw new IOException("Unable to load '"+relativeFxmlPath+"' relative to '"+requester+"'");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		}
+		return load(getClassLoader(requester), url, resourceBundle, builderFactory, controllerFactory);
 	}
 	
 	/**
@@ -188,8 +208,10 @@ public class OSGiFXMLLoader {
 	public static <O,C> FXMLData<O,C> loadWithController(@NonNull Class<?> requester, @NonNull String relativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory,
 			@Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		URL url = requester.getResource(relativeFxmlPath);
-		ClassLoader loader = requester.getClassLoader();
-		return loadWithController(loader, url, resourceBundle, builderFactory, controllerFactory);
+		if( url == null ) {
+			throw new IOException("Unable to load '"+relativeFxmlPath+"' relative to '"+requester+"'");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		}
+		return loadWithController(getClassLoader(requester), url, resourceBundle, builderFactory, controllerFactory);
 	}
 
 	/**
@@ -211,8 +233,10 @@ public class OSGiFXMLLoader {
 	public static <O> O load(@NonNull Bundle bundle, @NonNull String bundleRelativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory,
 			@Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		URL url = bundle.getResource(bundleRelativeFxmlPath);
-		ClassLoader loader = bundle.adapt(BundleWiring.class).getClassLoader();
-		return load(loader, url, resourceBundle, builderFactory, controllerFactory);
+		if( url == null ) {
+			throw new IOException("Unable to load '"+bundleRelativeFxmlPath+"' relative to '"+bundle+"'");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		}
+		return load(getClassLoader(bundle), url, resourceBundle, builderFactory, controllerFactory);
 	}
 	
 	/**
@@ -234,8 +258,10 @@ public class OSGiFXMLLoader {
 	public static <O,C> FXMLData<O,C> loadWithController(@NonNull Bundle bundle, @NonNull String bundleRelativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory,
 			@Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		URL url = bundle.getResource(bundleRelativeFxmlPath);
-		ClassLoader loader = bundle.adapt(BundleWiring.class).getClassLoader();
-		return loadWithController(loader, url, resourceBundle, builderFactory, controllerFactory);
+		if( url == null ) {
+			throw new IOException("Unable to load '"+bundleRelativeFxmlPath+"' relative to '"+bundle+"'");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		}
+		return loadWithController(getClassLoader(bundle), url, resourceBundle, builderFactory, controllerFactory);
 	}
 
 	/**
@@ -305,8 +331,10 @@ public class OSGiFXMLLoader {
 
 		try (InputStream in = url.openStream()) {
 			O value = loader.load(in);
-			in.close();
-			return new FXMLData<O, C>(value, (C) loader.getController());
+			if( value != null ) {
+				return new FXMLData<O, C>(value, (C) loader.getController());	
+			}
+			throw new IOException("Unable to construct UI from FXML '"+url+"'");  //$NON-NLS-1$//$NON-NLS-2$
 		}
 	}
 
@@ -329,7 +357,7 @@ public class OSGiFXMLLoader {
 		@Nullable
 		public final C controller;
 
-		FXMLData(N node, C controller) {
+		FXMLData(@NonNull N node, @Nullable C controller) {
 			this.node = node;
 			this.controller = controller;
 		}

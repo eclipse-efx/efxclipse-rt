@@ -1,0 +1,50 @@
+.groovy_default {
+	-styled-text-color: rgb(0, 0, 0);
+}
+
+.groovy_operator {
+	-styled-text-color: rgb(0, 0, 0);
+}
+
+.groovy_bracket {
+	-styled-text-color: rgb(0, 0, 0);
+}
+
+.groovy_keyword_return {
+	-styled-text-color: rgb(127, 0, 85);
+	-fx-font-weight: bold;
+}
+
+.groovy_keyword_type {
+	-styled-text-color: rgb(127, 0, 85);
+	-fx-font-weight: bold;
+}
+
+.groovy_keyword {
+	-styled-text-color: rgb(127, 0, 85);
+	-fx-font-weight: bold;
+}
+
+.groovy_doc_default {
+	-styled-text-color: rgb(63, 95, 191);
+}
+
+.groovy_single_line_comment {
+	-styled-text-color: rgb(63, 127, 95);
+}
+
+.groovy_multi_line_comment {
+	-styled-text-color: rgb(63, 127, 95);
+}
+
+.groovy_string {
+	-styled-text-color: rgb(42, 0, 255);
+}
+
+.groovy_var_interpolation {
+	-styled-text-color: rgb(255, 0, 0);
+}
+
+.groovy_char {
+	-styled-text-color: rgb(42, 0, 255);
+}

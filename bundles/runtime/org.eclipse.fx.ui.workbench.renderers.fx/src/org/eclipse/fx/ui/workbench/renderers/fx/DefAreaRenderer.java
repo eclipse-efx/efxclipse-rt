@@ -71,9 +71,11 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 				
 				prev = d;
 			}
-			MPartSashContainerElement element = this.items.get(this.items.size() - 1).getDomElement();
-			if( element != null ) {
-				element.setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$	
+			if( this.items.size() - 1 >= 0 ) {
+				MPartSashContainerElement element = this.items.get(this.items.size() - 1).getDomElement();
+				if( element != null ) {
+					element.setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$	
+				}	
 			}
 		}
 

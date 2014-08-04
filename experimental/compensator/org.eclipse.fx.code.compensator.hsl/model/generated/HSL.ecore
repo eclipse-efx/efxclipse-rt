@@ -17,6 +17,14 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Partitioner"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JavaLikeParitioner" eSuperTypes="#//Partitioner">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleLineDocParition"
+        eType="#//Partition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="multiLineDocParition" eType="#//Partition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="javaDocParition" eType="#//Partition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="characterParition" eType="#//Partition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stringParition" eType="#//Partition"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RulePartitioner" eSuperTypes="#//Partitioner">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//ParitionRule" containment="true"/>
@@ -41,11 +49,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="ScannerToken">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fgColor" eType="#//Color"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bgColor" eType="#//Color"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="font" eType="#//Font" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="KeywordGroup">
     <eStructuralFeatures xsi:type="ecore:EReference" name="token" eType="#//ScannerToken"/>
@@ -96,7 +99,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="ScannerWhitespaceRule" eSuperTypes="#//ScannerRule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="characters" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jsDetector" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="javawhitespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Color"/>
   <eClassifiers xsi:type="ecore:EClass" name="RGBColor" eSuperTypes="#//Color">

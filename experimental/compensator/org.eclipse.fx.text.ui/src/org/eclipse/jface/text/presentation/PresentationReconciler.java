@@ -440,7 +440,7 @@ public class PresentationReconciler implements IPresentationReconciler, IPresent
 		try {
 			if (fRepairers == null || fRepairers.isEmpty()) {
 				TextPresentation presentation= new TextPresentation(damage, 100);
-				presentation.setDefaultStyleRange(new StyleRange(damage.getOffset(), damage.getLength(), null, null));
+				presentation.setDefaultStyleRange(new StyleRange(null, damage.getOffset(), damage.getLength(), null, null));
 				return presentation;
 			}
 

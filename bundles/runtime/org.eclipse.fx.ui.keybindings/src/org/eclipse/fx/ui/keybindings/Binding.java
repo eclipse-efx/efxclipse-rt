@@ -11,17 +11,38 @@
 package org.eclipse.fx.ui.keybindings;
 
 import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * A binding between a trigger sequence and a command
+ */
 public interface Binding {
-
+	/**
+	 * System binding
+	 */
 	int SYSTEM = 0;
+	/**
+	 * User binding
+	 */
 	int USER = 1;
-
-	String getSchemeId();
-
-	TriggerSequence getTriggerSequence();
-
-	ParameterizedCommand getParameterizedCommand();
-
-	String getContextId();
+	
+	/**
+	 * @return the scheme id the binding is part of
+	 */
+	@NonNull String getSchemeId();
+	
+	/**
+	 * @return the sequence
+	 */
+	@NonNull TriggerSequence getTriggerSequence();
+	
+	/**
+	 * @return the command
+	 */
+	@NonNull ParameterizedCommand getParameterizedCommand();
+	
+	/**
+	 * @return the context
+	 */
+	@NonNull String getContextId();
 }

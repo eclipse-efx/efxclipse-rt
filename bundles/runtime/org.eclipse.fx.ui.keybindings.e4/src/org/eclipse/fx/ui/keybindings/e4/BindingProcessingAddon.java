@@ -45,6 +45,7 @@ import org.eclipse.fx.ui.keybindings.Binding;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
 import org.eclipse.fx.ui.keybindings.e4.internal.BindingTable;
 import org.eclipse.fx.ui.keybindings.e4.internal.BindingTableManager;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -71,7 +72,7 @@ public class BindingProcessingAddon {
 
 	@Inject
 	private EBindingService bindingService;
-	
+
 	@Inject
 	@Log
 	private Logger logger;
@@ -81,9 +82,9 @@ public class BindingProcessingAddon {
 	private EventHandler contextHandler;
 
 	@PostConstruct
-	public void init() {
+	void init() {
 		defineBindingTables();
-		activateContexts(application);
+		activateContexts(this.application);
 		registerModelListeners();
 	}
 
@@ -91,8 +92,7 @@ public class BindingProcessingAddon {
 		if (me instanceof MBindings) {
 			MContext contextModel = (MContext) me;
 			MBindings container = (MBindings) me;
-			List<MBindingContext> bindingContexts = container
-					.getBindingContexts();
+			List<MBindingContext> bindingContexts = container.getBindingContexts();
 			IEclipseContext context = contextModel.getContext();
 			if (context != null && !bindingContexts.isEmpty()) {
 				EContextService cs = context.get(EContextService.class);
@@ -102,7 +102,8 @@ public class BindingProcessingAddon {
 			}
 		}
 		if (me instanceof MElementContainer) {
-			List<MUIElement> children = ((MElementContainer) me).getChildren();
+			@SuppressWarnings("unchecked")
+			List<MUIElement> children = ((MElementContainer<MUIElement>) me).getChildren();
 			Iterator<MUIElement> i = children.iterator();
 			while (i.hasNext()) {
 				MUIElement e = i.next();
@@ -112,7 +113,7 @@ public class BindingProcessingAddon {
 	}
 
 	private void defineBindingTables() {
-		for (MBindingTable bindingTable : application.getBindingTables()) {
+		for (MBindingTable bindingTable : this.application.getBindingTables()) {
 			defineBindingTable(bindingTable);
 		}
 	}
@@ -121,49 +122,38 @@ public class BindingProcessingAddon {
 	 * @param bindingTable
 	 */
 	private void defineBindingTable(MBindingTable bindingTable) {
-		final Context bindingContext = contextManager.getContext(bindingTable
-				.getBindingContext().getElementId());
-		BindingTable table = bindingTables.getTable(bindingTable
-				.getBindingContext().getElementId());
-		if (table == null) {
+		final Context bindingContext = this.contextManager.getContext(bindingTable.getBindingContext().getElementId());
+		BindingTable table = this.bindingTables.getTable(bindingTable.getBindingContext().getElementId());
+		if (table == null && bindingContext != null) {
 			table = new BindingTable(bindingContext);
-			bindingTables.addTable(table);
+			this.bindingTables.addTable(table);
 		}
 		for (MKeyBinding binding : bindingTable.getBindings()) {
 			defineBinding(table, bindingContext, binding);
 		}
 	}
 
-	/**
-	 * @param bindingTable
-	 * @param binding
-	 */
-	private void defineBinding(BindingTable bindingTable,
-			Context bindingContext, MKeyBinding binding) {
-		Binding keyBinding = createBinding(bindingContext,
-				binding.getCommand(), binding.getParameters(),
-				binding.getKeySequence(), binding);
-		if (keyBinding != null
-				&& !binding.getTags().contains(
-						EBindingService.DELETED_BINDING_TAG)) {
-			bindingTable.addBinding(keyBinding);
+	private void defineBinding(BindingTable bindingTable, Context bindingContext, MKeyBinding binding) {
+		String keySequence = binding.getKeySequence();
+		if( keySequence != null ) {
+			Binding keyBinding = createBinding(bindingContext, binding.getCommand(), binding.getParameters(), keySequence, binding);
+			if (keyBinding != null && !binding.getTags().contains(EBindingService.DELETED_BINDING_TAG)) {
+				bindingTable.addBinding(keyBinding);
+			}			
 		}
 	}
 
-	private Binding createBinding(Context bindingContext, MCommand cmdModel,
-			List<MParameter> modelParms, String keySequence, MKeyBinding binding) {
+	@SuppressWarnings("null")
+	private Binding createBinding(Context bindingContext, MCommand cmdModel, List<MParameter> modelParms, @NonNull String keySequence, MKeyBinding binding) {
 		Binding keyBinding = null;
 
-		if (binding.getTransientData()
-				.get(EBindingService.MODEL_TO_BINDING_KEY) != null) {
+		if (binding.getTransientData().get(EBindingService.MODEL_TO_BINDING_KEY) != null) {
 			try {
-				keyBinding = (Binding) binding.getTransientData().get(
-						EBindingService.MODEL_TO_BINDING_KEY);
+				keyBinding = (Binding) binding.getTransientData().get(EBindingService.MODEL_TO_BINDING_KEY);
 				return keyBinding;
 			} catch (ClassCastException cce) {
-				System.err
-						.println("Invalid type stored in transient data with the key "
-								+ EBindingService.MODEL_TO_BINDING_KEY);
+				System.err.println("Invalid type stored in transient data with the key " //$NON-NLS-1$
+						+ EBindingService.MODEL_TO_BINDING_KEY);
 				return null;
 			}
 		}
@@ -178,44 +168,50 @@ public class BindingProcessingAddon {
 				parameters.put(mParm.getName(), mParm.getValue());
 			}
 		}
-		ParameterizedCommand cmd = commandService.createCommand(
-				cmdModel.getElementId(), parameters);
+		ParameterizedCommand cmd = this.commandService.createCommand(cmdModel.getElementId(), parameters);
 		TriggerSequence sequence = null;
-		sequence = bindingService.createSequence(keySequence);
+		sequence = this.bindingService.createSequence(keySequence);
 
 		if (cmd == null) {
-			logger.error("Failed to find command for binding: " + binding); //$NON-NLS-1$
+			this.logger.error("Failed to find command for binding: " + binding); //$NON-NLS-1$
 		} else if (sequence == null) {
-			logger.error("Failed to map binding: " + binding); //$NON-NLS-1$
+			this.logger.error("Failed to map binding: " + binding); //$NON-NLS-1$
 		} else {
 			try {
 				String schemeId = null;
 				String locale = null;
 				String platform = null;
 
-				Map<String, String> attrs = new HashMap<String, String>();
+				Map<@NonNull String, @NonNull String> attrs = new HashMap<>();
 				List<String> tags = binding.getTags();
 				for (String tag : tags) {
 					// remember to skip the ':' in each tag!
 					if (tag.startsWith(EBindingService.SCHEME_ID_ATTR_TAG)) {
 						schemeId = tag.substring(9);
-						attrs.put(EBindingService.SCHEME_ID_ATTR_TAG, schemeId);
+						if( schemeId != null ) {
+							attrs.put(EBindingService.SCHEME_ID_ATTR_TAG, schemeId);	
+						}
 					} else if (tag.startsWith(EBindingService.LOCALE_ATTR_TAG)) {
 						locale = tag.substring(7);
-						attrs.put(EBindingService.LOCALE_ATTR_TAG, locale);
-					} else if (tag
-							.startsWith(EBindingService.PLATFORM_ATTR_TAG)) {
+						if( locale != null ) {
+							attrs.put(EBindingService.LOCALE_ATTR_TAG, locale);	
+						}
+					} else if (tag.startsWith(EBindingService.PLATFORM_ATTR_TAG)) {
 						platform = tag.substring(9);
-						attrs.put(EBindingService.PLATFORM_ATTR_TAG, platform);
+						if( platform != null ) {
+							attrs.put(EBindingService.PLATFORM_ATTR_TAG, platform);	
+						}
 					} else if (tag.startsWith(EBindingService.TYPE_ATTR_TAG)) {
 						// system bindings won't pass this attr
-						attrs.put(EBindingService.TYPE_ATTR_TAG, "user");
+						attrs.put(EBindingService.TYPE_ATTR_TAG, "user"); //$NON-NLS-1$
 					}
 				}
-				keyBinding = bindingService.createBinding(sequence, cmd,
-						bindingContext.getId(), attrs);
+				String id = bindingContext.getId();
+				if( id != null ) {
+					keyBinding = this.bindingService.createBinding(sequence, cmd, id, attrs);	
+				}
 			} catch (IllegalArgumentException e) {
-				logger.error("failed to create: " + binding, e); //$NON-NLS-1$
+				this.logger.error("failed to create: " + binding, e); //$NON-NLS-1$
 				return null;
 			}
 
@@ -237,178 +233,146 @@ public class BindingProcessingAddon {
 		}
 
 		MBindingTable bt = (MBindingTable) parentObj;
-		final Context bindingContext = contextManager.getContext(bt
-				.getBindingContext().getElementId());
-		BindingTable table = bindingTables.getTable(bindingContext.getId());
+		final Context bindingContext = this.contextManager.getContext(bt.getBindingContext().getElementId());
+		BindingTable table = this.bindingTables.getTable(bindingContext.getId());
 		if (table == null) {
-			logger.error("Trying to create \'" + binding //$NON-NLS-1$
+			this.logger.error("Trying to create \'" + binding //$NON-NLS-1$
 					+ "\' without binding table " + bindingContext.getId());//$NON-NLS-1$
 			return;
 		}
-		Binding keyBinding = createBinding(bindingContext,
-				binding.getCommand(), binding.getParameters(),
-				binding.getKeySequence(), binding);
-		if (keyBinding != null) {
-			if (add) {
-				table.addBinding(keyBinding);
-			} else {
-				table.removeBinding(keyBinding);
-			}
+		String keySequence = binding.getKeySequence();
+		if(  keySequence != null ) {
+			Binding keyBinding = createBinding(bindingContext, binding.getCommand(), binding.getParameters(), keySequence, binding);
+			if (keyBinding != null) {
+				if (add) {
+					table.addBinding(keyBinding);
+				} else {
+					table.removeBinding(keyBinding);
+				}
+			}			
 		}
 	}
 
 	@PreDestroy
-	public void dispose() {
+	void dispose() {
 		unregsiterModelListeners();
 	}
 
-	private void registerModelListeners() {
-		additionHandler = new EventHandler() {
-			public void handleEvent(Event event) {
-				Object elementObj = event
-						.getProperty(UIEvents.EventTags.ELEMENT);
-				if (elementObj instanceof MApplication) {
-					Object newObj = event
-							.getProperty(UIEvents.EventTags.NEW_VALUE);
-					if (UIEvents.EventTypes.ADD.equals(event
-							.getProperty(UIEvents.EventTags.TYPE))
-							&& newObj instanceof MBindingTable) {
-						MBindingTable bt = (MBindingTable) newObj;
-						final Context bindingContext = contextManager
-								.getContext(bt.getBindingContext()
-										.getElementId());
-						final BindingTable table = new BindingTable(
-								bindingContext);
-						bindingTables.addTable(table);
-						List<MKeyBinding> bindings = bt.getBindings();
-						for (MKeyBinding binding : bindings) {
-							Binding keyBinding = createBinding(bindingContext,
-									binding.getCommand(),
-									binding.getParameters(),
-									binding.getKeySequence(), binding);
+	private void additionHandler(Event event) {
+		Object elementObj = event.getProperty(UIEvents.EventTags.ELEMENT);
+		if (elementObj instanceof MApplication) {
+			Object newObj = event.getProperty(UIEvents.EventTags.NEW_VALUE);
+			if (UIEvents.EventTypes.ADD.equals(event.getProperty(UIEvents.EventTags.TYPE)) && newObj instanceof MBindingTable) {
+				MBindingTable bt = (MBindingTable) newObj;
+				final Context bindingContext = this.contextManager.getContext(bt.getBindingContext().getElementId());
+				if (bindingContext != null) {
+					final BindingTable table = new BindingTable(bindingContext);
+					this.bindingTables.addTable(table);
+					List<MKeyBinding> bindings = bt.getBindings();
+					for (MKeyBinding binding : bindings) {
+						String keySequence = binding.getKeySequence();
+						if( keySequence != null ) {
+							Binding keyBinding = createBinding(bindingContext, binding.getCommand(), binding.getParameters(), keySequence, binding);
 							if (keyBinding != null) {
 								table.addBinding(keyBinding);
-							}
-						}
-					}
-				} else if (elementObj instanceof MBindingTable) {
-					Object newObj = event
-							.getProperty(UIEvents.EventTags.NEW_VALUE);
-					Object oldObj = event
-							.getProperty(UIEvents.EventTags.OLD_VALUE);
-
-					// adding a binding
-					if (UIEvents.EventTypes.ADD.equals(event
-							.getProperty(UIEvents.EventTags.TYPE))
-							&& newObj instanceof MKeyBinding) {
-
-						MKeyBinding binding = (MKeyBinding) newObj;
-						updateBinding(binding, true, elementObj);
-					}
-					// removing a binding
-					else if (UIEvents.EventTypes.REMOVE.equals(event
-							.getProperty(UIEvents.EventTags.TYPE))
-							&& oldObj instanceof MKeyBinding) {
-
-						MKeyBinding binding = (MKeyBinding) oldObj;
-						updateBinding(binding, false, elementObj);
-					}
-				} else if (elementObj instanceof MKeyBinding) {
-					MKeyBinding binding = (MKeyBinding) elementObj;
-
-					String attrName = (String) event
-							.getProperty(UIEvents.EventTags.ATTNAME);
-
-					if (UIEvents.EventTypes.SET.equals(event
-							.getProperty(UIEvents.EventTags.TYPE))) {
-						Object oldObj = event
-								.getProperty(UIEvents.EventTags.OLD_VALUE);
-						if (UIEvents.KeyBinding.COMMAND.equals(attrName)) {
-							MKeyBinding oldBinding = (MKeyBinding) EcoreUtil
-									.copy((EObject) binding);
-							oldBinding.setCommand((MCommand) oldObj);
-							updateBinding(oldBinding, false,
-									((EObject) binding).eContainer());
-							updateBinding(binding, true, null);
-						} else if (UIEvents.KeySequence.KEYSEQUENCE
-								.equals(attrName)) {
-							MKeyBinding oldBinding = (MKeyBinding) EcoreUtil
-									.copy((EObject) binding);
-							oldBinding.setKeySequence((String) oldObj);
-							updateBinding(oldBinding, false,
-									((EObject) binding).eContainer());
-							updateBinding(binding, true, null);
-						}
-					} else if (UIEvents.KeyBinding.PARAMETERS.equals(attrName)) {
-						if (UIEvents.EventTypes.ADD.equals(event
-								.getProperty(UIEvents.EventTags.TYPE))) {
-							Object newObj = event
-									.getProperty(UIEvents.EventTags.NEW_VALUE);
-							MKeyBinding oldBinding = (MKeyBinding) EcoreUtil
-									.copy((EObject) binding);
-							oldBinding.getParameters().remove(newObj);
-							updateBinding(oldBinding, false,
-									((EObject) binding).eContainer());
-							updateBinding(binding, true, null);
-						} else if (UIEvents.EventTypes.REMOVE.equals(event
-								.getProperty(UIEvents.EventTags.TYPE))) {
-							Object oldObj = event
-									.getProperty(UIEvents.EventTags.OLD_VALUE);
-							MKeyBinding oldBinding = (MKeyBinding) EcoreUtil
-									.copy((EObject) binding);
-							oldBinding.getParameters().add((MParameter) oldObj);
-							updateBinding(oldBinding, false,
-									((EObject) binding).eContainer());
-							updateBinding(binding, true, null);
-						}
-					}
-					// if we've updated the tags for an MKeyBinding
-					else if (UIEvents.ApplicationElement.TAGS.equals(attrName)) {
-						List<String> tags = binding.getTags();
-						// if we added a deleted tag to the MKeyBinding, then
-						// remove it from the runtime binding tables
-						if (tags.contains(EBindingService.DELETED_BINDING_TAG)) {
-							updateBinding(binding, false, elementObj);
-						}
-						// else we're adding the binding to the runtime tables
-						else {
-							updateBinding(binding, true, elementObj);
+							}							
 						}
 					}
 				}
 			}
-		};
-		broker.subscribe(UIEvents.BindingTableContainer.TOPIC_BINDINGTABLES,
-				additionHandler);
-		broker.subscribe(UIEvents.BindingTable.TOPIC_BINDINGS, additionHandler);
-		broker.subscribe(UIEvents.KeyBinding.TOPIC_COMMAND, additionHandler);
-		broker.subscribe(UIEvents.KeyBinding.TOPIC_PARAMETERS, additionHandler);
-		broker.subscribe(UIEvents.KeySequence.TOPIC_KEYSEQUENCE,
-				additionHandler);
-		broker.subscribe(UIEvents.ApplicationElement.TOPIC_TAGS,
-				additionHandler);
+		} else if (elementObj instanceof MBindingTable) {
+			Object newObj = event.getProperty(UIEvents.EventTags.NEW_VALUE);
+			Object oldObj = event.getProperty(UIEvents.EventTags.OLD_VALUE);
 
-		contextHandler = new EventHandler() {
-			public void handleEvent(Event event) {
-				Object elementObj = event
-						.getProperty(UIEvents.EventTags.ELEMENT);
-				Object newObj = event.getProperty(UIEvents.EventTags.NEW_VALUE);
-				if (UIEvents.EventTypes.SET.equals(event
-						.getProperty(UIEvents.EventTags.TYPE))
-						&& newObj instanceof IEclipseContext) {
-					activateContexts(elementObj);
+			// adding a binding
+			if (UIEvents.EventTypes.ADD.equals(event.getProperty(UIEvents.EventTags.TYPE)) && newObj instanceof MKeyBinding) {
+
+				MKeyBinding binding = (MKeyBinding) newObj;
+				updateBinding(binding, true, elementObj);
+			}
+			// removing a binding
+			else if (UIEvents.EventTypes.REMOVE.equals(event.getProperty(UIEvents.EventTags.TYPE)) && oldObj instanceof MKeyBinding) {
+
+				MKeyBinding binding = (MKeyBinding) oldObj;
+				updateBinding(binding, false, elementObj);
+			}
+		} else if (elementObj instanceof MKeyBinding) {
+			MKeyBinding binding = (MKeyBinding) elementObj;
+
+			String attrName = (String) event.getProperty(UIEvents.EventTags.ATTNAME);
+
+			if (UIEvents.EventTypes.SET.equals(event.getProperty(UIEvents.EventTags.TYPE))) {
+				Object oldObj = event.getProperty(UIEvents.EventTags.OLD_VALUE);
+				if (UIEvents.KeyBinding.COMMAND.equals(attrName)) {
+					MKeyBinding oldBinding = (MKeyBinding) EcoreUtil.copy((EObject) binding);
+					oldBinding.setCommand((MCommand) oldObj);
+					updateBinding(oldBinding, false, ((EObject) binding).eContainer());
+					updateBinding(binding, true, null);
+				} else if (UIEvents.KeySequence.KEYSEQUENCE.equals(attrName)) {
+					MKeyBinding oldBinding = (MKeyBinding) EcoreUtil.copy((EObject) binding);
+					oldBinding.setKeySequence((String) oldObj);
+					updateBinding(oldBinding, false, ((EObject) binding).eContainer());
+					updateBinding(binding, true, null);
+				}
+			} else if (UIEvents.KeyBinding.PARAMETERS.equals(attrName)) {
+				if (UIEvents.EventTypes.ADD.equals(event.getProperty(UIEvents.EventTags.TYPE))) {
+					Object newObj = event.getProperty(UIEvents.EventTags.NEW_VALUE);
+					MKeyBinding oldBinding = (MKeyBinding) EcoreUtil.copy((EObject) binding);
+					oldBinding.getParameters().remove(newObj);
+					updateBinding(oldBinding, false, ((EObject) binding).eContainer());
+					updateBinding(binding, true, null);
+				} else if (UIEvents.EventTypes.REMOVE.equals(event.getProperty(UIEvents.EventTags.TYPE))) {
+					Object oldObj = event.getProperty(UIEvents.EventTags.OLD_VALUE);
+					MKeyBinding oldBinding = (MKeyBinding) EcoreUtil.copy((EObject) binding);
+					oldBinding.getParameters().add((MParameter) oldObj);
+					updateBinding(oldBinding, false, ((EObject) binding).eContainer());
+					updateBinding(binding, true, null);
 				}
 			}
-		};
-		broker.subscribe(UIEvents.Context.TOPIC_CONTEXT, contextHandler);
+			// if we've updated the tags for an MKeyBinding
+			else if (UIEvents.ApplicationElement.TAGS.equals(attrName)) {
+				List<String> tags = binding.getTags();
+				// if we added a deleted tag to the MKeyBinding, then
+				// remove it from the runtime binding tables
+				if (tags.contains(EBindingService.DELETED_BINDING_TAG)) {
+					updateBinding(binding, false, elementObj);
+				}
+				// else we're adding the binding to the runtime tables
+				else {
+					updateBinding(binding, true, elementObj);
+				}
+			}
+		}
+	}
+
+	private void contextHandler(Event event) {
+		Object elementObj = event.getProperty(UIEvents.EventTags.ELEMENT);
+		Object newObj = event.getProperty(UIEvents.EventTags.NEW_VALUE);
+		if (UIEvents.EventTypes.SET.equals(event.getProperty(UIEvents.EventTags.TYPE)) && newObj instanceof IEclipseContext) {
+			activateContexts(elementObj);
+		}
+	}
+
+	private void registerModelListeners() {
+		this.additionHandler = this::additionHandler;
+
+		this.broker.subscribe(UIEvents.BindingTableContainer.TOPIC_BINDINGTABLES, this.additionHandler);
+		this.broker.subscribe(UIEvents.BindingTable.TOPIC_BINDINGS, this.additionHandler);
+		this.broker.subscribe(UIEvents.KeyBinding.TOPIC_COMMAND, this.additionHandler);
+		this.broker.subscribe(UIEvents.KeyBinding.TOPIC_PARAMETERS, this.additionHandler);
+		this.broker.subscribe(UIEvents.KeySequence.TOPIC_KEYSEQUENCE, this.additionHandler);
+		this.broker.subscribe(UIEvents.ApplicationElement.TOPIC_TAGS, this.additionHandler);
+
+		this.contextHandler = this::contextHandler;
+		this.broker.subscribe(UIEvents.Context.TOPIC_CONTEXT, this.contextHandler);
 	}
 
 	private void unregsiterModelListeners() {
-		broker.unsubscribe(additionHandler);
-		broker.unsubscribe(additionHandler);
-		broker.unsubscribe(additionHandler);
-		broker.unsubscribe(additionHandler);
-		broker.unsubscribe(additionHandler);
-		broker.unsubscribe(contextHandler);
+		this.broker.unsubscribe(this.additionHandler);
+		this.broker.unsubscribe(this.additionHandler);
+		this.broker.unsubscribe(this.additionHandler);
+		this.broker.unsubscribe(this.additionHandler);
+		this.broker.unsubscribe(this.additionHandler);
+		this.broker.unsubscribe(this.contextHandler);
 	}
 }

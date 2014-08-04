@@ -50,24 +50,31 @@ public class FXClassLoader extends ClassLoaderHook {
 	}
 	
 	private static ClassLoader getSWTClassloader(Generation generation) {
-		for( Bundle b : generation.getRevision().getBundle().getBundleContext().getBundles() ) {
-			if( SWT_SYMBOLIC_NAME.equals(b.getSymbolicName()) ) {
-				if ((b.getState() & Bundle.INSTALLED) == 0) {
-					// Ensure the bundle is started else we are unable to
-					// extract the
-					// classloader
-					if ((b.getState() & Bundle.ACTIVE) != 0) {
-						try {
-							b.start();
-						} catch (BundleException e) {
-							e.printStackTrace();
+		try {
+			// Should we better use findProviders() see PackageAdminImpl?
+			for( Bundle b : generation.getBundleInfo().getStorage().getModuleContainer().getFrameworkWiring().getBundle().getBundleContext().getBundles() ) {
+				if( SWT_SYMBOLIC_NAME.equals(b.getSymbolicName()) ) {
+					if ((b.getState() & Bundle.INSTALLED) == 0) {
+						// Ensure the bundle is started else we are unable to
+						// extract the
+						// classloader
+						if ((b.getState() & Bundle.ACTIVE) != 0) {
+							try {
+								b.start();
+							} catch (BundleException e) {
+								e.printStackTrace();
+							}
 						}
+						return b.adapt(BundleWiring.class).getClassLoader();
 					}
-					return b.adapt(BundleWiring.class).getClassLoader();
+					
 				}
-				
 			}
+		} catch(Throwable t) {
+			System.err.println("Failed to access swt classloader"); //$NON-NLS-1$
+			t.printStackTrace();
 		}
+
 		
 		return null;
 	}
@@ -356,22 +363,42 @@ public class FXClassLoader extends ClassLoaderHook {
 	static class SWTFXClassloader extends ClassLoader {
 		private final ClassLoader lastResortLoader;
 		private final ClassLoader primaryLoader;
-		private boolean implicitExitSet;
 		
 		public SWTFXClassloader(ClassLoader lastResortLoader,
 				ClassLoader primaryLoader) {
 			this.lastResortLoader = lastResortLoader;
 			this.primaryLoader = primaryLoader;
+			if (FXClassloaderConfigurator.DEBUG) {
+				System.err.println("FXClassLoader.SWTFXClassloader#init - Primary Loader " + primaryLoader); //$NON-NLS-1$
+				System.err.println("FXClassLoader.SWTFXClassloader#init - Lastresort Loader " + lastResortLoader); //$NON-NLS-1$
+			}
 		}
 
 		@Override
 		protected Class<?> findClass(String name) throws ClassNotFoundException {
 			try {
-				return this.primaryLoader.loadClass(name);
+				if (FXClassloaderConfigurator.DEBUG) {
+					System.err.println("FXClassLoader.SWTFXClassloader#findClass - Loading " + name + " with primary"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				Class<?> loadClass = this.primaryLoader.loadClass(name);
+				if (FXClassloaderConfigurator.DEBUG) {
+					System.err.println("FXClassLoader.SWTFXClassloader#findClass - Result " + name + " " + loadClass); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				return loadClass;
 			} catch (ClassNotFoundException c) {
-				try {
-					return this.lastResortLoader.loadClass(name);
+				if (FXClassloaderConfigurator.DEBUG) {
+					System.err.println("FXClassLoader.SWTFXClassloader#findClass - ClassNotFoundException thrown"); //$NON-NLS-1$
+					System.err.println("FXClassLoader.SWTFXClassloader#findClass - Loading " + name + " with last resort"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				
+				try {					
+					Class<?> loadClass = this.lastResortLoader.loadClass(name);
+					if (FXClassloaderConfigurator.DEBUG) {
+						System.err.println("FXClassLoader.SWTFXClassloader#findClass - Result " + name + " " + loadClass); //$NON-NLS-1$ //$NON-NLS-2$
+					}
+					return loadClass;
 				} catch (ClassNotFoundException tmp) {
+					System.err.println("FXClassLoader.SWTFXClassloader#findClass - Even last resort was unable to load " + name); //$NON-NLS-1$
 					throw c;
 				}
 			}

@@ -24,6 +24,13 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//Partition/name"/>
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//Partitioner"/>
+    <genClasses ecoreClass="HSL.ecore#//JavaLikeParitioner">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//JavaLikeParitioner/singleLineDocParition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//JavaLikeParitioner/multiLineDocParition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//JavaLikeParitioner/javaDocParition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//JavaLikeParitioner/characterParition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//JavaLikeParitioner/stringParition"/>
+    </genClasses>
     <genClasses ecoreClass="HSL.ecore#//RulePartitioner">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//RulePartitioner/rules"/>
     </genClasses>
@@ -44,9 +51,6 @@
     <genClasses ecoreClass="HSL.ecore#//ScannerToken">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerToken/default"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerToken/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//ScannerToken/fgColor"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//ScannerToken/bgColor"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference HSL.ecore#//ScannerToken/font"/>
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//KeywordGroup">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference HSL.ecore#//KeywordGroup/token"/>
@@ -94,7 +98,8 @@
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//ScannerWhitespaceRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerWhitespaceRule/characters"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerWhitespaceRule/jsDetector"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerWhitespaceRule/javawhitespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute HSL.ecore#//ScannerWhitespaceRule/fileURI"/>
     </genClasses>
     <genClasses ecoreClass="HSL.ecore#//Color"/>
     <genClasses ecoreClass="HSL.ecore#//RGBColor">

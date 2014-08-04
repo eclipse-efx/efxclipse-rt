@@ -23,7 +23,7 @@ import javafx.scene.Node;
  * Constraints for grid elements
  */
 public class GridData {
-	
+
 	/**
 	 * The alignment of the item in the cell
 	 */
@@ -45,7 +45,7 @@ public class GridData {
 		 */
 		FILL
 	}
-	
+
 	private ObjectProperty<Alignment> verticalAlignment = new SimpleObjectProperty<Alignment>(this, "verticalAlignment", Alignment.CENTER); //$NON-NLS-1$
 
 	private ObjectProperty<Alignment> horizontalAlignment = new SimpleObjectProperty<Alignment>(this, "horizontalAlignment", Alignment.BEGINNING); //$NON-NLS-1$
@@ -189,23 +189,23 @@ public class GridData {
 	public GridData(int style) {
 		super();
 		if ((style & VERTICAL_ALIGN_BEGINNING) != 0)
-			this.verticalAlignment.set(Alignment.BEGINNING);
+			setVerticalAlignment(Alignment.BEGINNING);
 		if ((style & VERTICAL_ALIGN_CENTER) != 0)
-			this.verticalAlignment.set(Alignment.CENTER);
+			setVerticalAlignment(Alignment.CENTER);
 		if ((style & VERTICAL_ALIGN_FILL) != 0)
-			this.verticalAlignment.set(Alignment.FILL);
+			setVerticalAlignment(Alignment.FILL);
 		if ((style & VERTICAL_ALIGN_END) != 0)
-			this.verticalAlignment.set(Alignment.END);
+			setVerticalAlignment(Alignment.END);
 		if ((style & HORIZONTAL_ALIGN_BEGINNING) != 0)
-			this.horizontalAlignment.set(Alignment.BEGINNING);
+			setHorizontalAlignment(Alignment.BEGINNING);
 		if ((style & HORIZONTAL_ALIGN_CENTER) != 0)
-			this.horizontalAlignment.set(Alignment.CENTER);
+			setHorizontalAlignment(Alignment.CENTER);
 		if ((style & HORIZONTAL_ALIGN_FILL) != 0)
-			this.horizontalAlignment.set(Alignment.FILL);
+			setHorizontalAlignment(Alignment.FILL);
 		if ((style & HORIZONTAL_ALIGN_END) != 0)
-			this.horizontalAlignment.set(Alignment.END);
-		this.grabExcessHorizontalSpace.set((style & GRAB_HORIZONTAL) != 0);
-		this.grabExcessVerticalSpace.set((style & GRAB_VERTICAL) != 0);
+			setHorizontalAlignment(Alignment.END);
+		setGrabExcessHorizontalSpace((style & GRAB_HORIZONTAL) != 0);
+		setGrabExcessVerticalSpace((style & GRAB_VERTICAL) != 0);
 	}
 
 	/**
@@ -258,12 +258,12 @@ public class GridData {
 	 */
 	public GridData(Alignment horizontalAlignment, Alignment verticalAlignment, boolean grabExcessHorizontalSpace, boolean grabExcessVerticalSpace, int horizontalSpan, int verticalSpan) {
 		super();
-		this.horizontalAlignment.set(horizontalAlignment);
-		this.verticalAlignment.set(verticalAlignment);
-		this.grabExcessHorizontalSpace.set(grabExcessHorizontalSpace);
-		this.grabExcessVerticalSpace.set(grabExcessVerticalSpace);
-		this.horizontalSpan.set(horizontalSpan);
-		this.verticalSpan.set(verticalSpan);
+		setHorizontalAlignment(horizontalAlignment);
+		setVerticalAlignment(verticalAlignment);
+		setGrabExcessHorizontalSpace(grabExcessHorizontalSpace);
+		setGrabExcessVerticalSpace(grabExcessVerticalSpace);
+		setHorizontalSpan(horizontalSpan);
+		setVerticalSpan(verticalSpan);
 	}
 
 	/**
@@ -280,15 +280,15 @@ public class GridData {
 	 */
 	public GridData(int width, int height) {
 		super();
-		this.widthHint.set(width);
-		this.heightHint.set(height);
+		setWidthHint(width);
+		setHeightHint(height);
 	}
 
 	void computeSize(Node control, int wHint, int hHint, boolean flushCache) {
 		if (this.cacheWidth != -1 && this.cacheHeight != -1)
 			return;
-		
-		if (wHint == this.widthHint.get() && hHint == this.heightHint.get()) {
+
+		if (wHint == getWidthHint() && hHint == getHeightHint()) {
 			if (this.defaultWidth == -1 || this.defaultHeight == -1 || wHint != this.defaultWhint || hHint != this.defaultHhint) {
 				// Point size = control.computeSize (wHint, hHint, flushCache);
 				this.defaultWhint = wHint;
@@ -325,173 +325,319 @@ public class GridData {
 		return string.substring(index + 1, string.length());
 	}
 
-	// ----
+	/**
+	 * Exclude the node when layouting
+	 * 
+	 * @param value
+	 *            the new value
+	 */
 	public void setExclude(boolean value) {
-		exclude.set(value);
+		excludeProperty().set(value);
 	}
 
+	/**
+	 * @return Exclude the node when layouting
+	 */
 	public boolean isExclude() {
-		return exclude.get();
+		return excludeProperty().get();
 	}
 
+	/**
+	 * @return Exclude the node when layouting
+	 */
 	public BooleanProperty excludeProperty() {
-		return exclude;
+		return this.exclude;
 	}
 
-	// ----
+	/**
+	 * Grab all available horizontal space
+	 * 
+	 * @param value
+	 *            <code>true</code> to grab space
+	 */
 	public void setGrabExcessHorizontalSpace(boolean value) {
-		grabExcessHorizontalSpace.set(value);
+		grabExcessHorizontalSpaceProperty().set(value);
 	}
 
+	/**
+	 * @return <code>true</code> if space is grabbed
+	 */
 	public boolean isGrabExcessHorizontalSpace() {
-		return grabExcessHorizontalSpace.get();
+		return grabExcessHorizontalSpaceProperty().get();
 	}
 
+	/**
+	 * @return Grab all available horizontal space
+	 */
 	public BooleanProperty grabExcessHorizontalSpaceProperty() {
-		return grabExcessHorizontalSpace;
+		return this.grabExcessHorizontalSpace;
 	}
 
-	// ----
-	public void setGrabVerticalSpace(boolean value) {
-		grabExcessVerticalSpace.set(value);
+	/**
+	 * Grab vertical space if available
+	 * 
+	 * @param value
+	 *            <code>true</code> to grab space
+	 */
+	public void setGrabExcessVerticalSpace(boolean value) {
+		grabExcessVerticalSpaceProperty().set(value);
 	}
 
-	public boolean isGrabVerticalSapce() {
-		return grabExcessVerticalSpace.get();
+	/**
+	 * @return <code>true</code> is space is grabbed
+	 */
+	public boolean isGrabExcessVerticalSpace() {
+		return grabExcessVerticalSpaceProperty().get();
 	}
 
+	/**
+	 * @return <code>true</code> is space is grabbed
+	 */
 	public BooleanProperty grabExcessVerticalSpaceProperty() {
-		return grabExcessVerticalSpace;
+		return this.grabExcessVerticalSpace;
 	}
 
-	// ----
+	/**
+	 * Set a height hint
+	 * 
+	 * @param value
+	 *            the hint of or {@link AbstractLayoutPane#FX_DEFAULT} to set
+	 *            back
+	 */
 	public void setHeightHint(int value) {
-		heightHint.set(value);
+		heightHintProperty().set(value);
 	}
 
+	/**
+	 * @return the current height hint
+	 */
 	public int getHeightHint() {
-		return heightHint.get();
+		return heightHintProperty().get();
 	}
 
+	/**
+	 * @return the height property
+	 */
 	public IntegerProperty heightHintProperty() {
-		return heightHint;
+		return this.heightHint;
 	}
 
-	// ----
+	/**
+	 * Set a horizontal alignment
+	 * 
+	 * @param value
+	 *            the alignment
+	 */
 	public void setHorizontalAlignment(Alignment value) {
-		horizontalAlignment.set(value);
+		horizontalAlignmentProperty().set(value);
 	}
 
+	/**
+	 * @return the current horizontal alignment
+	 */
 	public Alignment getHorizontalAlignment() {
-		return horizontalAlignment.get();
+		return horizontalAlignmentProperty().get();
 	}
 
+	/**
+	 * @return the horizontal alignment property
+	 */
 	public ObjectProperty<Alignment> horizontalAlignmentProperty() {
-		return horizontalAlignment;
+		return this.horizontalAlignment;
 	}
 
-	// ----
+	/**
+	 * Set the horizontal indent
+	 * 
+	 * @param value
+	 *            the indent
+	 */
 	public void setHorizontalIndent(int value) {
-		horizontalIndent.set(value);
+		horizontalIndentProperty().set(value);
 	}
 
-	public int getHorizontalnIdent() {
-		return horizontalIndent.get();
+	/**
+	 * @return the horizontal indent
+	 */
+	public int getHorizontalIndent() {
+		return horizontalIndentProperty().get();
 	}
 
+	/**
+	 * @return the horizontal indent property
+	 */
 	public IntegerProperty horizontalIndentProperty() {
-		return horizontalIndent;
+		return this.horizontalIndent;
 	}
 
-	// ----
+	/**
+	 * Set a horizontal span
+	 * 
+	 * @param value
+	 *            the horizontal span
+	 */
 	public void setHorizontalSpan(int value) {
-		horizontalSpan.set(value);
+		horizontalSpanProperty().set(value);
 	}
 
+	/**
+	 * @return the current horizontal span
+	 */
 	public int getHorizontalSpan() {
-		return horizontalSpan.get();
+		return horizontalSpanProperty().get();
 	}
 
+	/**
+	 * @return the horizontal span property
+	 */
 	public IntegerProperty horizontalSpanProperty() {
-		return horizontalSpan;
+		return this.horizontalSpan;
 	}
 
-	// ----
+	/**
+	 * Set a minimum height
+	 * 
+	 * @param value
+	 *            the value or {@link AbstractLayoutPane#FX_DEFAULT} for the
+	 *            default
+	 */
 	public void setMinimumHeight(int value) {
-		minimumHeight.set(value);
+		minimumHeightProperty().set(value);
 	}
 
+	/**
+	 * @return the current minimum height
+	 */
 	public int getMinimumHeight() {
-		return minimumHeight.get();
+		return minimumHeightProperty().get();
 	}
 
+	/**
+	 * @return the current minimum height property
+	 */
 	public IntegerProperty minimumHeightProperty() {
-		return minimumHeight;
+		return this.minimumHeight;
 	}
 
-	// ----
+	/**
+	 * Set a minimum width
+	 * 
+	 * @param value
+	 *            the new minimum width or {@link AbstractLayoutPane#FX_DEFAULT}
+	 *            for the default
+	 */
 	public void setMinimumWidth(int value) {
-		minimumWidth.set(value);
+		minimumWidthProperty().set(value);
 	}
 
+	/**
+	 * @return the current minimum width
+	 */
 	public int getMinimumWidth() {
-		return minimumWidth.get();
+		return minimumWidthProperty().get();
 	}
 
+	/**
+	 * @return the current minimum width property
+	 */
 	public IntegerProperty minimumWidthProperty() {
-		return minimumWidth;
+		return this.minimumWidth;
 	}
 
-	// ----
+	/**
+	 * Set a vertical alignment
+	 * 
+	 * @param value
+	 *            the new alignment
+	 */
 	public void setVerticalAlignment(Alignment value) {
-		verticalAlignment.set(value);
+		verticalAlignmentProperty().set(value);
 	}
 
+	/**
+	 * @return the current vertical alignment
+	 */
 	public Alignment getVerticalAlignment() {
-		return verticalAlignment.get();
+		return verticalAlignmentProperty().get();
 	}
 
+	/**
+	 * @return the vertical alignment property
+	 */
 	public ObjectProperty<Alignment> verticalAlignmentProperty() {
-		return verticalAlignment;
+		return this.verticalAlignment;
 	}
-	
-	// ----
+
+	/**
+	 * Set a vertical indent
+	 * 
+	 * @param value
+	 *            the indent
+	 */
 	public void setVerticalIndent(int value) {
-		verticalIndent.set(value);
+		verticalIndentProperty().set(value);
 	}
 
+	/**
+	 * @return The current vertical indent
+	 */
 	public int getVerticalIndent() {
-		return verticalIndent.get();
+		return verticalIndentProperty().get();
 	}
 
+	/**
+	 * @return the vertical indent property
+	 */
 	public IntegerProperty verticalIndentProperty() {
-		return verticalIndent;
+		return this.verticalIndent;
 	}
 
-	// ----
+	/**
+	 * Set the vertical span
+	 * 
+	 * @param value
+	 *            the new vertical span
+	 */
 	public void setVerticalSpan(int value) {
-		verticalSpan.set(value);
+		verticalSpanProperty().set(value);
 	}
 
+	/**
+	 * @return the current vertical span
+	 */
 	public int getVerticalSpan() {
-		return verticalSpan.get();
+		return verticalSpanProperty().get();
 	}
 
+	/**
+	 * @return the vertical span property
+	 */
 	public IntegerProperty verticalSpanProperty() {
-		return verticalSpan;
+		return this.verticalSpan;
 	}
 
-	// ----
+	/**
+	 * Set the width hint
+	 * 
+	 * @param value
+	 *            the width hint or {@link AbstractLayoutPane#FX_DEFAULT}
+	 */
 	public void setWidthHint(int value) {
-		widthHint.set(value);
+		widthHintProperty().set(value);
 	}
 
+	/**
+	 * @return the current width hint
+	 */
 	public int getWidthHint() {
-		return widthHint.get();
+		return widthHintProperty().get();
 	}
 
+	/**
+	 * @return the width hint property
+	 */
 	public IntegerProperty widthHintProperty() {
-		return widthHint;
+		return this.widthHint;
 	}
 
 	/**
@@ -500,75 +646,74 @@ public class GridData {
 	 * 
 	 * @return a string representation of the GridData object
 	 */
+	@Override
 	public String toString() {
-		String hAlign = "";
-		switch (horizontalAlignment.get()) {
+		String hAlign = ""; //$NON-NLS-1$
+		switch (this.getHorizontalAlignment()) {
 		case FILL:
-			hAlign = "SWT.FILL";
+			hAlign = "SWT.FILL"; //$NON-NLS-1$
 			break;
 		case BEGINNING:
-			hAlign = "SWT.BEGINNING";
+			hAlign = "SWT.BEGINNING"; //$NON-NLS-1$
 			break;
 		case END:
-			hAlign = "GridData.END";
+			hAlign = "GridData.END"; //$NON-NLS-1$
 			break;
 		case CENTER:
-			hAlign = "GridData.CENTER";
+			hAlign = "GridData.CENTER"; //$NON-NLS-1$
 			break;
 		default:
-			hAlign = "Undefined " + horizontalAlignment;
+			hAlign = "Undefined " + getHorizontalAlignment(); //$NON-NLS-1$
 			break;
 		}
-		
-		String vAlign = "";
-		switch (verticalAlignment.get()) {
+
+		String vAlign = ""; //$NON-NLS-1$
+		switch (this.getVerticalAlignment()) {
 		case FILL:
-			vAlign = "SWT.FILL";
+			vAlign = "SWT.FILL"; //$NON-NLS-1$
 			break;
 		case BEGINNING:
-			vAlign = "SWT.BEGINNING";
+			vAlign = "SWT.BEGINNING"; //$NON-NLS-1$
 			break;
 		case END:
-			vAlign = "SWT.END";
+			vAlign = "SWT.END"; //$NON-NLS-1$
 			break;
 		case CENTER:
-			vAlign = "SWT.CENTER";
+			vAlign = "SWT.CENTER"; //$NON-NLS-1$
 			break;
 		default:
-			vAlign = "Undefined " + verticalAlignment;
+			vAlign = "Undefined " + getVerticalAlignment(); //$NON-NLS-1$
 			break;
 		}
-		
-		String string = getName() + " {";
-		string += "horizontalAlignment=" + hAlign + " ";
-		if (horizontalIndent.get() != 0)
-			string += "horizontalIndent=" + horizontalIndent.get() + " ";
-		if (horizontalSpan.get() != 1)
-			string += "horizontalSpan=" + horizontalSpan.get() + " ";
-		if (grabExcessHorizontalSpace.get())
-			string += "grabExcessHorizontalSpace=" + grabExcessHorizontalSpace.get() + " ";
-		if (widthHint.get() != FX_DEFAULT)
-			string += "widthHint=" + widthHint.get() + " ";
-		if (minimumWidth.get() != 0)
-			string += "minimumWidth=" + minimumWidth.get() + " ";
-		string += "verticalAlignment=" + vAlign + " ";
-		if (verticalIndent.get() != 0)
-			string += "verticalIndent=" + verticalIndent .get()+ " ";
-		if (verticalSpan.get() != 1)
-			string += "verticalSpan=" + verticalSpan.get() + " ";
-		if (grabExcessVerticalSpace.get())
-			string += "grabExcessVerticalSpace=" + grabExcessVerticalSpace.get() + " ";
-		if (heightHint.get() != FX_DEFAULT)
-			string += "heightHint=" + heightHint.get() + " ";
-		if (minimumHeight.get() != 0)
-			string += "minimumHeight=" + minimumHeight.get() + " ";
-		if (exclude.get())
-			string += "exclude=" + exclude.get() + " ";
+
+		String string = getName() + " {"; //$NON-NLS-1$
+		string += "horizontalAlignment=" + hAlign + " ";  //$NON-NLS-1$//$NON-NLS-2$
+		if (getHorizontalIndent() != 0)
+			string += "horizontalIndent=" + getHorizontalIndent() + " ";  //$NON-NLS-1$//$NON-NLS-2$
+		if (getHorizontalSpan() != 1)
+			string += "horizontalSpan=" + getHorizontalSpan() + " ";  //$NON-NLS-1$//$NON-NLS-2$
+		if (isGrabExcessHorizontalSpace())
+			string += "grabExcessHorizontalSpace=" + isGrabExcessHorizontalSpace() + " "; //$NON-NLS-1$ //$NON-NLS-2$
+		if (getWidthHint() != FX_DEFAULT)
+			string += "widthHint=" + getWidthHint() + " "; //$NON-NLS-1$ //$NON-NLS-2$
+		if (getMinimumWidth() != 0)
+			string += "minimumWidth=" + getMinimumWidth() + " "; //$NON-NLS-1$ //$NON-NLS-2$
+		string += "verticalAlignment=" + vAlign + " "; //$NON-NLS-1$ //$NON-NLS-2$
+		if (getVerticalIndent() != 0)
+			string += "verticalIndent=" + getVerticalIndent() + " ";  //$NON-NLS-1$//$NON-NLS-2$
+		if (getVerticalSpan() != 1)
+			string += "verticalSpan=" + getVerticalSpan() + " ";  //$NON-NLS-1$//$NON-NLS-2$
+		if (isGrabExcessVerticalSpace())
+			string += "grabExcessVerticalSpace=" + isGrabExcessVerticalSpace() + " "; //$NON-NLS-1$ //$NON-NLS-2$
+		if (getHeightHint() != FX_DEFAULT)
+			string += "heightHint=" + getHeightHint() + " "; //$NON-NLS-1$ //$NON-NLS-2$
+		if (getMinimumHeight() != 0)
+			string += "minimumHeight=" + getMinimumHeight() + " "; //$NON-NLS-1$ //$NON-NLS-2$
+		if (isExclude())
+			string += "exclude=" + isExclude() + " "; //$NON-NLS-1$ //$NON-NLS-2$
 		string = string.trim();
-		string += "}";
+		string += "}"; //$NON-NLS-1$
 		return string;
 	}
-
-	
 
 }

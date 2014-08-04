@@ -10,36 +10,35 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.animation.pagetransition.animation;
 
-
-import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
-
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
-import javafx.animation.ParallelTransitionBuilder;
-import javafx.animation.TranslateTransitionBuilder;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.util.Duration;
+
+import org.eclipse.fx.ui.animation.pagetransition.CenterSwitchAnimation;
 
 /**
  * Slide transition
  */
-@SuppressWarnings("deprecation")
 public class SlideAnimation extends CenterSwitchAnimation {
 
 	@Override
 	protected Animation createAndPrepareAnimation(Node curNode, Node newNode) {
 		newNode.setOpacity(1);
-		
+
 		double deltaX = -curNode.getBoundsInLocal().getWidth();
 		newNode.setTranslateX(-deltaX);
-		
-		
-		TranslateTransitionBuilder builder = TranslateTransitionBuilder.create()
-			.interpolator(Interpolator.EASE_BOTH)
-			.byX(deltaX)
-			.duration(new Duration(1000));
-			
-		return ParallelTransitionBuilder.create().children(builder.node(curNode).build(), builder.node(newNode).build()).build();
+
+		return new ParallelTransition(createTransition(curNode, deltaX), createTransition(newNode, deltaX));
+	}
+
+	private static TranslateTransition createTransition(Node n, double deltaX) {
+		TranslateTransition t = new TranslateTransition(Duration.millis(1000), n);
+		t.setInterpolator(Interpolator.EASE_BOTH);
+		t.setByX(deltaX);
+		return t;
 	}
 
 	@Override

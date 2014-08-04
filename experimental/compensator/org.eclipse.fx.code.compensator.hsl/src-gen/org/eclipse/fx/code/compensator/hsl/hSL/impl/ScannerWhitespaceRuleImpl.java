@@ -25,7 +25,8 @@ import org.eclipse.fx.code.compensator.hsl.hSL.ScannerWhitespaceRule;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ScannerWhitespaceRuleImpl#getCharacters <em>Characters</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ScannerWhitespaceRuleImpl#getJsDetector <em>Js Detector</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ScannerWhitespaceRuleImpl#isJavawhitespace <em>Javawhitespace</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.hsl.hSL.impl.ScannerWhitespaceRuleImpl#getFileURI <em>File URI</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,24 +45,44 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
   protected EList<String> characters;
 
   /**
-   * The default value of the '{@link #getJsDetector() <em>Js Detector</em>}' attribute.
+   * The default value of the '{@link #isJavawhitespace() <em>Javawhitespace</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getJsDetector()
+   * @see #isJavawhitespace()
    * @generated
    * @ordered
    */
-  protected static final String JS_DETECTOR_EDEFAULT = null;
+  protected static final boolean JAVAWHITESPACE_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getJsDetector() <em>Js Detector</em>}' attribute.
+   * The cached value of the '{@link #isJavawhitespace() <em>Javawhitespace</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getJsDetector()
+   * @see #isJavawhitespace()
    * @generated
    * @ordered
    */
-  protected String jsDetector = JS_DETECTOR_EDEFAULT;
+  protected boolean javawhitespace = JAVAWHITESPACE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getFileURI() <em>File URI</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFileURI()
+   * @generated
+   * @ordered
+   */
+  protected static final String FILE_URI_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getFileURI() <em>File URI</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFileURI()
+   * @generated
+   * @ordered
+   */
+  protected String fileURI = FILE_URI_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -103,9 +124,9 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getJsDetector()
+  public boolean isJavawhitespace()
   {
-    return jsDetector;
+    return javawhitespace;
   }
 
   /**
@@ -113,12 +134,35 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setJsDetector(String newJsDetector)
+  public void setJavawhitespace(boolean newJavawhitespace)
   {
-    String oldJsDetector = jsDetector;
-    jsDetector = newJsDetector;
+    boolean oldJavawhitespace = javawhitespace;
+    javawhitespace = newJavawhitespace;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.SCANNER_WHITESPACE_RULE__JS_DETECTOR, oldJsDetector, jsDetector));
+      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.SCANNER_WHITESPACE_RULE__JAVAWHITESPACE, oldJavawhitespace, javawhitespace));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getFileURI()
+  {
+    return fileURI;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setFileURI(String newFileURI)
+  {
+    String oldFileURI = fileURI;
+    fileURI = newFileURI;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, HSLPackage.SCANNER_WHITESPACE_RULE__FILE_URI, oldFileURI, fileURI));
   }
 
   /**
@@ -133,8 +177,10 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
     {
       case HSLPackage.SCANNER_WHITESPACE_RULE__CHARACTERS:
         return getCharacters();
-      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_DETECTOR:
-        return getJsDetector();
+      case HSLPackage.SCANNER_WHITESPACE_RULE__JAVAWHITESPACE:
+        return isJavawhitespace();
+      case HSLPackage.SCANNER_WHITESPACE_RULE__FILE_URI:
+        return getFileURI();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -154,8 +200,11 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
         getCharacters().clear();
         getCharacters().addAll((Collection<? extends String>)newValue);
         return;
-      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_DETECTOR:
-        setJsDetector((String)newValue);
+      case HSLPackage.SCANNER_WHITESPACE_RULE__JAVAWHITESPACE:
+        setJavawhitespace((Boolean)newValue);
+        return;
+      case HSLPackage.SCANNER_WHITESPACE_RULE__FILE_URI:
+        setFileURI((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -174,8 +223,11 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
       case HSLPackage.SCANNER_WHITESPACE_RULE__CHARACTERS:
         getCharacters().clear();
         return;
-      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_DETECTOR:
-        setJsDetector(JS_DETECTOR_EDEFAULT);
+      case HSLPackage.SCANNER_WHITESPACE_RULE__JAVAWHITESPACE:
+        setJavawhitespace(JAVAWHITESPACE_EDEFAULT);
+        return;
+      case HSLPackage.SCANNER_WHITESPACE_RULE__FILE_URI:
+        setFileURI(FILE_URI_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -193,8 +245,10 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
     {
       case HSLPackage.SCANNER_WHITESPACE_RULE__CHARACTERS:
         return characters != null && !characters.isEmpty();
-      case HSLPackage.SCANNER_WHITESPACE_RULE__JS_DETECTOR:
-        return JS_DETECTOR_EDEFAULT == null ? jsDetector != null : !JS_DETECTOR_EDEFAULT.equals(jsDetector);
+      case HSLPackage.SCANNER_WHITESPACE_RULE__JAVAWHITESPACE:
+        return javawhitespace != JAVAWHITESPACE_EDEFAULT;
+      case HSLPackage.SCANNER_WHITESPACE_RULE__FILE_URI:
+        return FILE_URI_EDEFAULT == null ? fileURI != null : !FILE_URI_EDEFAULT.equals(fileURI);
     }
     return super.eIsSet(featureID);
   }
@@ -212,8 +266,10 @@ public class ScannerWhitespaceRuleImpl extends ScannerRuleImpl implements Scanne
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (characters: ");
     result.append(characters);
-    result.append(", jsDetector: ");
-    result.append(jsDetector);
+    result.append(", javawhitespace: ");
+    result.append(javawhitespace);
+    result.append(", fileURI: ");
+    result.append(fileURI);
     result.append(')');
     return result.toString();
   }

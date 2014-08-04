@@ -13,18 +13,31 @@ package org.eclipse.fx.ui.keybindings.generic;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.fx.ui.keybindings.KeySequence;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * A keybinding implementation
+ */
 public class KeyBindingImpl extends BindingImpl {
+	@NonNull
 	private final KeySequence keySequence;
-	
-	public KeyBindingImpl(final KeySequence keySequence, ParameterizedCommand command, String schemeId, String contextId) {
+
+	/**
+	 * Create a binding
+	 * 
+	 * @param keySequence
+	 * @param command
+	 * @param schemeId
+	 * @param contextId
+	 */
+	public KeyBindingImpl(@NonNull final KeySequence keySequence, @NonNull ParameterizedCommand command, @NonNull String schemeId, @NonNull String contextId) {
 		super(command, schemeId, contextId);
 		this.keySequence = keySequence;
 	}
 
 	@Override
 	public TriggerSequence getTriggerSequence() {
-		return keySequence;
+		return this.keySequence;
 	}
 
 }

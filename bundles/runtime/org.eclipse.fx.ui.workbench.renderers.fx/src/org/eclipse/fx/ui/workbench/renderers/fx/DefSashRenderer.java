@@ -37,6 +37,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseSashRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -55,7 +56,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 
 	static class WFixedSashImpl extends WLayoutedWidgetImpl<GridLayoutPane, Node, MPartSashContainer> implements WSash<Node> {
 
-		private static GridData toGridData(Map<String, String> dataMap) {
+		private static @NonNull GridData toGridData(Map<String, String> dataMap) {
 			GridData gd = new GridData();
 			if (dataMap.containsKey(WSash.FIXED_LAYOUT_WIDTH)) {
 				gd.widthHintProperty().set(Integer.parseInt(dataMap.get(WSash.FIXED_LAYOUT_WIDTH)));
@@ -88,6 +89,14 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			}
 
 			return gd;
+		}
+
+		
+		private final @NonNull MPartSashContainer mPartSashContainer;
+		
+		@Inject
+		public WFixedSashImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartSashContainer mPartSashContainer) {
+			this.mPartSashContainer = mPartSashContainer;
 		}
 
 		@Override
@@ -165,7 +174,11 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		public void removeItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			Node n = (Node) widget.getStaticLayoutNode();
 			GridLayoutPane p = getWidget();
-			p.setNumColumns(p.getNumColumns() - 1);
+			MPartSashContainer domElement = getDomElement();
+			
+			if( domElement != null && domElement.isHorizontal() ) {
+				p.setNumColumns(p.getNumColumns() - 1);	
+			}
 			p.getChildren().remove(n);
 		}
 
@@ -181,6 +194,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			p.setMarginHeight(0);
 			p.setHorizontalSpacing(0);
 			p.setVerticalSpacing(0);
+			p.setNumColumns(this.mPartSashContainer.isHorizontal() ? 0 : 1); 
 			return p;
 		}
 

@@ -1,13 +1,13 @@
 /*******************************************************************************
-* Copyright (c) 2014 BestSolution.at and others.
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-* 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
-*******************************************************************************/
+ * Copyright (c) 2014 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.skin;
 
 import java.util.ArrayList;
@@ -18,13 +18,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -44,13 +42,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.PathElement;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
@@ -58,403 +52,430 @@ import javafx.util.Duration;
 
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
 
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 import com.sun.javafx.scene.control.skin.ListViewSkin;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 
+/**
+ * Styled text skin
+ */
 @SuppressWarnings("restriction")
 public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextBehavior> {
-	private ListView<Line> contentView;
-	private StackPane lineRuler;
-	
-	private ObservableList<Line> lineList = FXCollections.observableArrayList();
-	
-//	private Set<LineCell> visibleCells = new HashSet<>();
-	private Map<LineCell, LineInfo> lineInfoMap = new HashMap<>();
+	ListView<Line> contentView;
+	StackPane lineRuler;
 
-	private Font boldFont;
-	
-	private Font boldItalicFont;
-	
-	private Font italicFont;
-	private HBox rootContainer;
-	
+	ObservableList<Line> lineList = FXCollections.observableArrayList();
+
+	// private Set<LineCell> visibleCells = new HashSet<>();
+	Map<LineCell, LineInfo> lineInfoMap = new HashMap<>();
+
+	HBox rootContainer;
+
+	/**
+	 * Create a new skin
+	 * 
+	 * @param styledText
+	 *            the control
+	 */
 	public StyledTextSkin(StyledTextArea styledText) {
 		super(styledText, new StyledTextBehavior(styledText));
 
-		rootContainer = new HBox();
-		rootContainer.setSpacing(0);
+		this.rootContainer = new HBox();
+		this.rootContainer.setSpacing(0);
 
-		lineRuler = new LineRuler();
-		lineRuler.visibleProperty().bind(getSkinnable().lineRulerVisibleProperty());
-		lineRuler.managedProperty().bind(getSkinnable().lineRulerVisibleProperty());
-		rootContainer.getChildren().add(lineRuler);
-		
-		contentView = new ListView<Line>() {
+		this.lineRuler = new LineRuler();
+		this.lineRuler.visibleProperty().bind(getSkinnable().lineRulerVisibleProperty());
+		this.lineRuler.managedProperty().bind(getSkinnable().lineRulerVisibleProperty());
+		this.rootContainer.getChildren().add(this.lineRuler);
+
+		this.contentView = new ListView<Line>() {
 			@Override
 			protected Skin<?> createDefaultSkin() {
 				return new MyListViewSkin(this);
 			}
 		};
-		contentView.getStyleClass().add("styled-text-area");
-//		listView.setFocusTraversable(false);
-		contentView.focusedProperty().addListener(new ChangeListener<Boolean>() {
+		this.contentView.getStyleClass().add("styled-text-area"); //$NON-NLS-1$
+		// listView.setFocusTraversable(false);
+		this.contentView.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Boolean> observable,
-					Boolean oldValue, Boolean newValue) {
-				if( newValue ) {
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (newValue.booleanValue()) {
 					getSkinnable().requestFocus();
 				}
 			}
 		});
-//		listView.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-//		});
-		contentView.setCellFactory(new Callback<ListView<Line>, ListCell<Line>>() {
-			
+		// listView.addEventHandler(KeyEvent.KEY_PRESSED, new
+		// EventHandler<KeyEvent>() {
+		// });
+		this.contentView.setCellFactory(new Callback<ListView<Line>, ListCell<Line>>() {
+
 			@Override
 			public ListCell<Line> call(ListView<Line> arg0) {
 				return new LineCell();
 			}
 		});
-		contentView.setMinHeight(0);
-		contentView.setMinWidth(0);
-		contentView.setOnMousePressed(new EventHandler<MouseEvent>() {
+		this.contentView.setMinHeight(0);
+		this.contentView.setMinWidth(0);
+		this.contentView.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
 				getBehavior().mousePressed(event, getCurrentVisibleCells());
 				// The consuming does not help because it looks like the
-				// selection change happens earlier => should be push a new ListViewBehavior?
+				// selection change happens earlier => should be push a new
+				// ListViewBehavior?
 				event.consume();
 			}
 		});
-		
+
 		recalculateItems();
-		
-		
-		
-		contentView.setItems(lineList);
-		
-		HBox.setHgrow(contentView,Priority.ALWAYS);
-		
-//		b.getChildren().addAll(lineView);
-		rootContainer.getChildren().addAll(contentView);
-		getChildren().addAll(rootContainer);
-		
+
+		this.contentView.setItems(this.lineList);
+
+		HBox.setHgrow(this.contentView, Priority.ALWAYS);
+
+		// b.getChildren().addAll(lineView);
+		this.rootContainer.getChildren().addAll(this.contentView);
+		getChildren().addAll(this.rootContainer);
+
 		styledText.caretOffsetProperty().addListener(new ChangeListener<Number>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Number> observable,
-					Number oldValue, Number newValue) {
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				int lineIndex = getSkinnable().getContent().getLineAtOffset(newValue.intValue());
-				Line lineObject = lineList.get(lineIndex);
+				Line lineObject = StyledTextSkin.this.lineList.get(lineIndex);
 				getFlow().show(lineIndex);
-				for( LineCell c : getCurrentVisibleCells() ) {
-					if( c.domainElement == lineObject ) {
+				for (LineCell c : getCurrentVisibleCells()) {
+					if (c.domainElement == lineObject) {
 						// Adjust the selection
-						if( contentView.getSelectionModel().getSelectedItem() != c.domainElement ) {
-							contentView.getSelectionModel().select(lineObject);
+						if (StyledTextSkin.this.contentView.getSelectionModel().getSelectedItem() != c.domainElement) {
+							StyledTextSkin.this.contentView.getSelectionModel().select(lineObject);
 						}
-						
-						RegionImpl container = (RegionImpl)c.getGraphic();
-						TextFlow flow = (TextFlow)container.getChildren().get(0);
-						
+
+						RegionImpl container = (RegionImpl) c.getGraphic();
+						TextFlow flow = (TextFlow) container.getChildren().get(0);
+
 						flow.requestLayout();
-						
+
 						return;
 					}
 				}
-				
+
+			}
+		});
+		styledText.selectionProperty().addListener(new ChangeListener<TextSelection>() {
+
+			@Override
+			public void changed(
+					ObservableValue<? extends TextSelection> observable,
+					TextSelection oldValue, TextSelection newValue) {
+				recalculateItems();
 			}
 		});
 	}
-	
-	private MyVirtualFlow getFlow() {
-		if( contentView == null || contentView.getSkin() == null ) {
+
+	MyVirtualFlow getFlow() {
+		if (this.contentView == null || this.contentView.getSkin() == null) {
 			return null;
 		}
-		return ((MyListViewSkin)contentView.getSkin()).getFlow();
+		return ((MyListViewSkin) this.contentView.getSkin()).getFlow();
 	}
-	
+
+	/**
+	 * The line height at the care position
+	 * 
+	 * @param caretPosition
+	 *            the position
+	 * @return the line height
+	 */
 	public double getLineHeight(int caretPosition) {
 		int lineIndex = getSkinnable().getContent().getLineAtOffset(caretPosition);
-		Line lineObject = lineList.get(lineIndex);
-		
-		for( LineCell c : getCurrentVisibleCells() ) {
-			if( c.domainElement == lineObject ) {
+		Line lineObject = this.lineList.get(lineIndex);
+
+		for (LineCell c : getCurrentVisibleCells()) {
+			if (c.domainElement == lineObject) {
 				return c.getHeight();
 			}
 		}
 		return 0;
 	}
-	
+
+	/**
+	 * Get the point for the caret position
+	 * 
+	 * @param caretPosition
+	 *            the position
+	 * @return the point
+	 */
 	@SuppressWarnings("deprecation")
 	public Point2D getCaretLocation(int caretPosition) {
-		if( caretPosition < 0 ) {
+		if (caretPosition < 0) {
 			return null;
 		}
-		
+
 		int lineIndex = getSkinnable().getContent().getLineAtOffset(caretPosition);
-		Line lineObject = lineList.get(lineIndex);
-		for( LineCell c : getCurrentVisibleCells() ) {
-			if( c.domainElement == lineObject ) {
-				RegionImpl container = (RegionImpl)c.getGraphic();
-				TextFlow flow = (TextFlow)container.getChildren().get(0);
-//				System.err.println("STARTING SCAN");
+		Line lineObject = this.lineList.get(lineIndex);
+		for (LineCell c : getCurrentVisibleCells()) {
+			if (c.domainElement == lineObject) {
+				RegionImpl container = (RegionImpl) c.getGraphic();
+				TextFlow flow = (TextFlow) container.getChildren().get(0);
+				// System.err.println("STARTING SCAN");
 				Text textNode = null;
 				int relativePos = 0;
-				for( int i = flow.getChildren().size()-1; i >= 0; i-- ) {
+				for (int i = flow.getChildren().size() - 1; i >= 0; i--) {
 					Node n = flow.getChildren().get(i);
-//					System.err.println(((Text)n).getText() + " => " + n.getLayoutX());
+					// System.err.println(((Text)n).getText() + " => " +
+					// n.getLayoutX());
 					int offset = ((Integer) n.getUserData()).intValue();
-					if( offset <= caretPosition ) {
+					if (offset <= caretPosition) {
 						relativePos = caretPosition - offset;
 						textNode = (Text) n;
 						break;
 					}
 				}
-				
-				if( textNode != null ) {
+
+				if (textNode != null) {
 					textNode.setImpl_caretPosition(relativePos);
 					PathElement[] elements = textNode.getImpl_caretShape();
 					double xShift = textNode.getLayoutX();
-//					System.err.println(textNode.getText() + " ====> " + xShift);
-					for( PathElement e : elements ) {
-						if( e instanceof MoveTo ) {
-							xShift +=((MoveTo)e).getX();
+					// System.err.println(textNode.getText() + " ====> " +
+					// xShift);
+					for (PathElement e : elements) {
+						if (e instanceof MoveTo) {
+							xShift += ((MoveTo) e).getX();
 						}
 					}
-//					System.err.println("==> " + xShift);
-					
+					// System.err.println("==> " + xShift);
+
 					Point2D rv = new Point2D(xShift, c.getLayoutY());
 					return rv;
-//					final Path p = (Path)container.getChildren().get(1); 
-//					
-//					p.getElements().clear();
-//					p.getElements().addAll(textNode.getImpl_caretShape());
-//					
-//					p.setLayoutX(textNode.getLayoutX());
-//					p.setLayoutY(textNode.getBaselineOffset());
+					// final Path p = (Path)container.getChildren().get(1);
+					//
+					// p.getElements().clear();
+					// p.getElements().addAll(textNode.getImpl_caretShape());
+					//
+					// p.setLayoutX(textNode.getLayoutX());
+					// p.setLayoutY(textNode.getBaselineOffset());
 				}
-				
-				
-//				RegionImpl container = (RegionImpl)c.getGraphic();
-//				
-//				final Path p = (Path)container.getChildren().get(1);
-//				Point2D rv = new Point2D(p.getLayoutX(),container.getLayoutY());
-//				System.err.println("CARE-LOC: " + rv);
-//				return rv;
+
+				// RegionImpl container = (RegionImpl)c.getGraphic();
+				//
+				// final Path p = (Path)container.getChildren().get(1);
+				// Point2D rv = new
+				// Point2D(p.getLayoutX(),container.getLayoutY());
+				// System.err.println("CARE-LOC: " + rv);
+				// return rv;
 			}
 		}
-		
+
 		return null;
 	}
-	
-	protected double computeMinHeight(double arg0) {
-		return contentView.minHeight(arg0);
+
+	/**
+	 * Compute the min height
+	 * 
+	 * @param width
+	 *            the width that should be used if minimum height depends on it
+	 * @return the min height
+	 */
+	protected double computeMinHeight(double width) {
+		return this.contentView.minHeight(width);
 	}
-	
-	protected double computeMinWidth(double arg0) {
-		return contentView.minWidth(arg0);
+
+	/**
+	 * Compute the min width
+	 * 
+	 * @param height
+	 *            the height that should be used if minimum width depends on it
+	 * @return the min width
+	 */
+	protected double computeMinWidth(double height) {
+		return this.contentView.minWidth(height);
 	}
-	
+
+	/**
+	 * recalculate the line items
+	 */
 	public void recalculateItems() {
-		if( lineList.size() != getSkinnable().getContent().getLineCount() ) {
-			if( lineList.size() > getSkinnable().getContent().getLineCount() ) {
-				lineList.remove(getSkinnable().getContent().getLineCount(), lineList.size());
+		if (this.lineList.size() != getSkinnable().getContent().getLineCount()) {
+			if (this.lineList.size() > getSkinnable().getContent().getLineCount()) {
+				this.lineList.remove(getSkinnable().getContent().getLineCount(), this.lineList.size());
 			} else {
-				List<Line> tmp = new ArrayList<>(getSkinnable().getContent().getLineCount()-lineList.size());
-				for( int i = lineList.size(); i < getSkinnable().getContent().getLineCount(); i++ ) {
+				List<Line> tmp = new ArrayList<>(getSkinnable().getContent().getLineCount() - this.lineList.size());
+				for (int i = this.lineList.size(); i < getSkinnable().getContent().getLineCount(); i++) {
 					tmp.add(new Line());
 				}
-				lineList.addAll(tmp);
+				this.lineList.addAll(tmp);
 			}
 		}
-		
+
 		redraw();
 	}
 	
+	/**
+	 * Redraw the lines
+	 */
 	public void redraw() {
-		for( LineCell l : getCurrentVisibleCells() ) {
-			l.update();
+		for (LineCell l : getCurrentVisibleCells()) {
+			if( l != null )
+				l.update();
 		}
 	}
-	
+
 	List<LineCell> getCurrentVisibleCells() {
-		if( contentView == null || contentView.getSkin() == null ) {
+		if (this.contentView == null || this.contentView.getSkin() == null) {
 			return Collections.emptyList();
 		}
-		return ((MyListViewSkin)contentView.getSkin()).getFlow().getCells();
+		return ((MyListViewSkin) this.contentView.getSkin()).getFlow().getCells();
 	}
-	
-	Font getFontByStyle(int style) {
-		switch (style) {
-			case StyleRange.BOLD:
-				if (boldFont != null) return boldFont;
-				return boldFont = createFont(style);
-			case StyleRange.ITALIC:
-				if (italicFont != null) return italicFont;
-				return italicFont = createFont(style);
-			case StyleRange.BOLD | StyleRange.ITALIC:
-				if (boldItalicFont != null) return boldItalicFont;
-				return boldItalicFont = createFont(style);
-			default:
-				return getSkinnable().fontProperty().get();
-		}
-	}
-	
-	Font createFont(int style) {
-		switch (style) {
-		case StyleRange.BOLD:
-		{
-			Font f = Font.font(getSkinnable().getFont().getFamily(), FontWeight.BOLD, getSkinnable().getFont().getSize());
-			return f;
-		}
-		case StyleRange.ITALIC:
-		{
-			Font f = Font.font(getSkinnable().getFont().getFamily(), FontPosture.ITALIC, getSkinnable().getFont().getSize());
-			return f;
-		}
-		case StyleRange.BOLD | StyleRange.ITALIC:
-		{
-			Font f = Font.font(getSkinnable().getFont().getFamily(), FontWeight.BOLD, FontPosture.ITALIC, getSkinnable().getFont().getSize());
-			return f;
-		}	
-		}
-		return null;
-	}
-	
+
+	/**
+	 * A line cell
+	 */
 	public class LineCell extends ListCell<Line> {
-		private Line domainElement;
+		Line domainElement;
 		private BooleanBinding caretVisible;
-		private BooleanProperty flashProperty;
-		private Timeline flashTimeline;
-		
+		BooleanProperty flashProperty;
+		Timeline flashTimeline;
+
+		/**
+		 * A line cell instance
+		 */
 		public LineCell() {
-			getStyleClass().add("styled-text-line");
-			flashProperty = new SimpleBooleanProperty(this,"flash",false);
-			flashTimeline = new Timeline();
-			flashTimeline.setCycleCount(Timeline.INDEFINITE);
-			
+			getStyleClass().add("styled-text-line"); //$NON-NLS-1$
+			this.flashProperty = new SimpleBooleanProperty(this, "flash", false); //$NON-NLS-1$
+			this.flashTimeline = new Timeline();
+			this.flashTimeline.setCycleCount(Animation.INDEFINITE);
+
 			EventHandler<ActionEvent> startEvent = new EventHandler<ActionEvent>() {
-				
+
 				@Override
 				public void handle(ActionEvent arg0) {
-					flashProperty.set(true);
+					LineCell.this.flashProperty.set(true);
 				}
 			};
-			
+
 			EventHandler<ActionEvent> endEvent = new EventHandler<ActionEvent>() {
-				
+
 				@Override
 				public void handle(ActionEvent arg0) {
-					flashProperty.set(false);
+					LineCell.this.flashProperty.set(false);
 				}
 			};
-			
-			flashTimeline.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, startEvent), new KeyFrame(Duration.millis(500), endEvent), new KeyFrame(Duration.millis(1000)));
-			caretVisible = new BooleanBinding() {
+
+			this.flashTimeline.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, startEvent), new KeyFrame(Duration.millis(500), endEvent), new KeyFrame(Duration.millis(1000)));
+			this.caretVisible = new BooleanBinding() {
 				{
-					bind(selectedProperty(), flashProperty);
+					bind(selectedProperty(), LineCell.this.flashProperty);
 				}
+
 				@Override
 				protected boolean computeValue() {
-					return selectedProperty().get() && flashProperty.get();
+					return selectedProperty().get() && LineCell.this.flashProperty.get();
 				}
 			};
 			selectedProperty().addListener(new ChangeListener<Boolean>() {
 
 				@Override
-				public void changed(ObservableValue<? extends Boolean> arg0,
-						Boolean arg1, Boolean arg2) {
-					if( arg2.booleanValue() ) {
-						flashTimeline.play();
+				public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+					if (arg2.booleanValue()) {
+						LineCell.this.flashTimeline.play();
 					} else {
-						flashTimeline.stop();
+						LineCell.this.flashTimeline.stop();
 					}
 				}
 			});
 		}
-		
+
+		/**
+		 * @return the domain element
+		 */
 		public Line getDomainElement() {
-			return domainElement;
+			return this.domainElement;
 		}
-		
+
+		/**
+		 * Update the item
+		 */
 		public void update() {
-			if( domainElement != null ) {
-				updateItem(domainElement, false);	
+			if (this.domainElement != null) {
+				updateItem(this.domainElement, false);
 			}
 		}
-		
+
+		/**
+		 * Update the caret
+		 */
+		@SuppressWarnings("deprecation")
 		public void updateCaret() {
-			//FIXME Could not pass on the Region?
 			int caretPosition = getSkinnable().getCaretOffset();
-			
-			if( caretPosition < 0 ) {
+
+			if (caretPosition < 0) {
 				return;
 			}
-			
+
 			int lineIndex = getSkinnable().getContent().getLineAtOffset(caretPosition);
-			Line lineObject = lineList.get(lineIndex);
-			for( LineCell c : getCurrentVisibleCells() ) {
-				if( c.domainElement == lineObject ) {
-					RegionImpl container = (RegionImpl)c.getGraphic();
-					TextFlow flow = (TextFlow)container.getChildren().get(0);
-					
-					
-					Text textNode = null;
+			Line lineObject = StyledTextSkin.this.lineList.get(lineIndex);
+			for (LineCell c : getCurrentVisibleCells()) {
+				if (c.domainElement == lineObject) {
+					RegionImpl container = (RegionImpl) c.getGraphic();
+					TextFlow flow = (TextFlow) container.getChildren().get(0);
+
+					TextFlow textNode = null;
 					int relativePos = 0;
-					for( int i = flow.getChildren().size()-1; i >= 0; i-- ) {
+					for (int i = flow.getChildren().size() - 1; i >= 0; i--) {
 						Node n = flow.getChildren().get(i);
 						int offset = ((Integer) n.getUserData()).intValue();
-						if( offset <= caretPosition ) {
+						if (offset <= caretPosition) {
 							relativePos = caretPosition - offset;
-							textNode = (Text) n;
+							textNode = (TextFlow) n;
 							break;
 						}
 					}
-					
-					if( textNode != null ) {
-						textNode.setImpl_caretPosition(relativePos);
-						
-						final Path p = (Path)container.getChildren().get(1); 
-						
+
+					if (textNode != null) {
+//						System.err.println("THE NODE: " + textNode.getText());
+						((Text)textNode.getChildren().get(0)).setImpl_caretPosition(relativePos);
+
+						final Path p = (Path) container.getChildren().get(1);
+
 						p.getElements().clear();
-						p.getElements().addAll(textNode.getImpl_caretShape());
-						
-						p.setLayoutX(textNode.getLayoutX());
-						p.setLayoutY(textNode.getLayoutY());
+						p.getElements().addAll(((Text)textNode.getChildren().get(0)).getImpl_caretShape());
+
+						p.setLayoutX(textNode.getChildren().get(0).getLayoutX() + textNode.getLayoutX());
+						p.setLayoutY(textNode.getChildren().get(0).getLayoutY() + textNode.getLayoutY());
 					}
-					
+
 					break;
 				}
 			}
 		}
-		
+
 		@Override
 		protected void updateItem(Line arg0, boolean arg1) {
-			if( ! arg1 ) {
-				domainElement = arg0;
-				LineInfo lineInfo = lineInfoMap.get(this);
-				if( lineInfo == null ) {
+			if (!arg1) {
+				this.domainElement = arg0;
+				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(this);
+				if (lineInfo == null) {
 					lineInfo = new LineInfo();
-					lineInfo.setDomainElement(domainElement);
-					lineInfoMap.put(this, lineInfo);
-					lineRuler.getChildren().add(lineInfo);
-					lineRuler.requestLayout();
+					lineInfo.setDomainElement(this.domainElement);
+					StyledTextSkin.this.lineInfoMap.put(this, lineInfo);
+					StyledTextSkin.this.lineRuler.getChildren().add(lineInfo);
+					StyledTextSkin.this.lineRuler.requestLayout();
 				} else {
-					lineInfo.setDomainElement(domainElement);
-					lineRuler.requestLayout();
+					lineInfo.setDomainElement(this.domainElement);
+					StyledTextSkin.this.lineRuler.requestLayout();
 				}
 				lineInfo.setLayoutY(getLayoutY());
-				
+
 				RegionImpl stack = (RegionImpl) getGraphic();
 				TextFlow flow;
-				
-				if( stack == null ) {
+
+				if (stack == null) {
 					flow = new TextFlow() {
 						@Override
 						protected void layoutChildren() {
@@ -463,169 +484,298 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						}
 					};
 					Path caretPath = new Path();
+					caretPath.getStyleClass().add("text-caret"); //$NON-NLS-1$
 					caretPath.setManaged(false);
-					caretPath.setStrokeWidth(1);
-			        caretPath.setFill((Color.BLACK));
-			        caretPath.setStroke((Color.BLACK));
-			        caretPath.visibleProperty().bind(caretVisible);
-					stack = new RegionImpl(flow,caretPath);
+					caretPath.setStrokeWidth(2);
+					caretPath.visibleProperty().bind(this.caretVisible);
+					stack = new RegionImpl(flow, caretPath);
 					setGraphic(stack);
 				} else {
 					flow = (TextFlow) stack.getChildren().get(0);
 				}
-				
-				List<Text> texts = new ArrayList<>();
-				for( final Segment seg : arg0.getSegments() ) {
+
+				List<TextFlow> texts = new ArrayList<>();
+				for (final Segment seg : arg0.getSegments()) {
+//					System.err.println("SEGMENT: " + seg.text + " => " + seg.style.stylename);
 					final Text t = new Text(seg.text);
-					t.setUserData(seg.style.start);
-					if( seg.style.foreground != null ) {
+					
+					if( seg.style.stylename != null ) {
+						t.getStyleClass().setAll("source-segment",seg.style.stylename); //$NON-NLS-1$
+					} else {
+						t.getStyleClass().setAll("source-segment"); //$NON-NLS-1$
+					}
+					
+					if (seg.style.foreground != null) {
 						t.setFill(seg.style.foreground);
 					}
-					if( seg.style.font != null ) {
+					if (seg.style.font != null) {
 						t.setFont(seg.style.font);
+					}
+
+					if (seg.style.underline) {
+//						System.err.println("=====================> UNDERLINEING");
+					}
+
+					
+					TextFlow f = new TextFlow(t);
+					f.setUserData(Integer.valueOf(seg.style.start));
+					if( seg.style.hoverStylename != null ) {
+						f.getStyleClass().setAll("source-segment-container", seg.style.hoverStylename); //$NON-NLS-1$
+						texts.add(f);
 					} else {
-						t.setFont(getFontByStyle(seg.style.fontStyle));
+						f.getStyleClass().setAll("source-segment-container"); //$NON-NLS-1$
+						texts.add(f);
 					}
-					
-					if( seg.style.underline ) {
-						System.err.println("=====================> UNDERLINEING");
-					}
-					
-					texts.add(t);
 				}
-				
-				if( texts.isEmpty() ) {
-					Text t = new Text("");
-					t.setUserData(arg0.getLineOffset());
-					texts.add(t);
+
+				if (texts.isEmpty()) {
+					Text t = new Text(""); //$NON-NLS-1$
+					t.getStyleClass().setAll("source-segment");  //$NON-NLS-1$
+					TextFlow f = new TextFlow(t);
+					f.setUserData(Integer.valueOf(arg0.getLineOffset()));
+					texts.add(f);
 				}
-				
+
 				flow.getChildren().setAll(texts);
-				stack.requestLayout();
 			} else {
 				setGraphic(null);
-				domainElement = null;
-				LineInfo lineInfo = lineInfoMap.remove(this);
-				if( lineInfo != null ) {
+				this.domainElement = null;
+				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.remove(this);
+				if (lineInfo != null) {
 					lineInfo.setDomainElement(null);
-					lineRuler.getChildren().remove(lineInfo);
+					StyledTextSkin.this.lineRuler.getChildren().remove(lineInfo);
 				}
 			}
 			super.updateItem(arg0, arg1);
 		}
 	}
-	
+
 	static class RegionImpl extends Region {
 		public RegionImpl(Node... nodes) {
 			getChildren().addAll(nodes);
 		}
-		
+
 		@Override
 		public ObservableList<Node> getChildren() {
-			// TODO Auto-generated method stub
 			return super.getChildren();
 		}
 	}
-	
+
+	/**
+	 * The line domain object
+	 */
 	public class Line {
+		/**
+		 * @return the current text
+		 */
 		public String getText() {
-			return removeLineending(getSkinnable().getContent().getLine(lineList.indexOf(this)));
+			return removeLineending(getSkinnable().getContent().getLine(StyledTextSkin.this.lineList.indexOf(this)));
 		}
-		
+
+		/**
+		 * @return the line offset
+		 */
 		public int getLineOffset() {
-			int idx = lineList.indexOf(this);
+			int idx = StyledTextSkin.this.lineList.indexOf(this);
 			return getSkinnable().getContent().getOffsetAtLine(idx);
 		}
-		
+
+		/**
+		 * @return the line length
+		 */
 		public int getLineLength() {
-			int idx = lineList.indexOf(this);
+			int idx = StyledTextSkin.this.lineList.indexOf(this);
 			String s = getSkinnable().getContent().getLine(idx);
-			return s == null ? 0 : s.length();
+			return s.length();
 		}
-		
+
+		/**
+		 * @return the different segments
+		 */
+		@SuppressWarnings("null")
 		public List<Segment> getSegments() {
-			int idx = lineList.indexOf(this);
+			int idx = StyledTextSkin.this.lineList.indexOf(this);
 			List<Segment> segments = new ArrayList<>();
-			
+
 			String line = getSkinnable().getContent().getLine(idx);
-//			System.err.println("LINE: " + line);
-			if( line != null ) {
+			// System.err.println("LINE: " + line);
+			if (line != null) {
 				int start = getSkinnable().getContent().getOffsetAtLine(idx);
 				int length = line.length();
-				
+
 				StyleRange[] ranges = getSkinnable().getStyleRanges(start, length, true);
-//				System.err.println("RANGES: " + ranges);
-				if( ranges == null ) {
+				// System.err.println("RANGES: " + ranges);
+				if (ranges == null) {
 					return Collections.emptyList();
 				}
+
+				TextSelection selection = getSkinnable().getSelection();
+				
+				int selectionStart = selection.offset - start;
+				int selectionEnd = selection.offset+selection.length - start;
+				
+//				System.err.println("Line: " + line);
+//				System.err.println("SELECTION: " + selectionStart + " => " + selectionEnd);
 				
 				int lastIndex = -1;
-				for( StyleRange r : ranges ) {
-					int begin = r.start-start;
-					int end = r.start-start+r.length;
-					if( lastIndex != -1 && lastIndex != begin ) {
-						Segment seg = new Segment();
-						seg.text = line.substring(lastIndex, begin);
-						seg.style = new StyleRange();
-						segments.add(seg);
+				for (StyleRange r : ranges) {
+					int begin = r.start - start;
+					int end = r.start - start + r.length;
+					
+					if (lastIndex != -1 && lastIndex != begin) {
+						segments.addAll(createSegments(line, new StyleRange((String)null), selectionStart, selectionEnd, lastIndex, begin));
 					}
-					Segment seg = new Segment();
-					seg.text = removeLineending(line.substring(begin, end));
-					seg.style = r;
-					segments.add(seg);
+					
+					segments.addAll(createSegments(line, r, selectionStart, selectionEnd, begin, end));
 					lastIndex = end;
 				}
-				
-//				System.err.println("SEGEMENTS: " + segments);
+
+				// System.err.println("SEGEMENTS: " + segments);
 			}
-			
+
 			return segments;
 		}
+		
+		private List<Segment> createSegments(String line, StyleRange r, int selectionStart, int selectionEnd, int begin, int end) {
+//			System.err.println("LINE: " + line);
+			if( selectionStart != selectionEnd ) {
+				if( selectionStart <= begin  && selectionEnd >= end  ) {
+					// whole entry is selected
+					Segment seg = new Segment();
+					seg.text = removeLineending(line.substring(begin, end));
+					seg.style = new StyleRange(r);
+					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
+					return Collections.singletonList(seg);
+				} else if( selectionStart <= begin && selectionEnd >= begin && selectionEnd <= end ) {
+					// selection start before and ends inside
+					List<Segment> rv = new ArrayList<StyledTextSkin.Segment>();
+					
+					Segment seg = new Segment();
+					seg.text = removeLineending(line.substring(begin, selectionEnd));
+					seg.style = new StyleRange(r);
+					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
+					seg.style.start = r.start;
+					rv.add(seg);
+					
+					seg = new Segment();
+					seg.text = removeLineending(line.substring(selectionEnd, end));
+					seg.style = new StyleRange(r);
+					seg.style.start = r.start + selectionEnd-begin;
+					rv.add(seg);
+					
+					return rv;
+				} else if( begin < selectionStart && selectionStart <= end && selectionEnd >= end ) {
+					// selection starts inside and ends outside
+					List<Segment> rv = new ArrayList<StyledTextSkin.Segment>();
+					
+					Segment seg = new Segment();
+					seg.text = removeLineending(line.substring(begin, selectionStart));
+					seg.style = new StyleRange(r);
+					seg.style.start = r.start;
+					rv.add(seg);
+					
+					seg = new Segment();
+					seg.text = removeLineending(line.substring(selectionStart, end));
+					seg.style = new StyleRange(r);
+					seg.style.start = r.start + selectionStart-begin;
+					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
+					rv.add(seg);
+					
+					return rv;
+				} else if( between(selectionStart, begin, end) && between(selectionEnd, begin, end) ) {
+//					System.err.println("A BETWEEN MATCH!!!!");
+					// selection starts and ends inside
+					List<Segment> rv = new ArrayList<StyledTextSkin.Segment>();
+					
+					Segment seg = new Segment();
+					seg.text = removeLineending(line.substring(begin, selectionStart));
+					seg.style = new StyleRange(r);
+					seg.style.start = r.start;
+					rv.add(seg);
+					
+					seg = new Segment();
+					seg.text = removeLineending(line.substring(selectionStart, selectionEnd));
+					seg.style = new StyleRange(r);
+					seg.style.start = r.start + selectionStart-begin;
+					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
+					rv.add(seg);
+					
+					seg = new Segment();
+					seg.text = removeLineending(line.substring(selectionEnd, end));
+					seg.style = new StyleRange(r);
+					seg.style.start = r.start + selectionEnd-begin;
+					rv.add(seg);
+					return rv;
+				} else {
+//					System.err.println("UNMATCHED CASE");
+//					System.err.println("Sel: "+ selectionStart + "/" + selectionEnd);
+//					System.err.println("Segment:" + begin + "/" + end);
+				}
+			}
+			
+			Segment seg = new Segment();
+			seg.text = removeLineending(line.substring(begin, end));
+			seg.style = r;
+			return Collections.singletonList(seg); 
+		}
+		
+		private boolean between(int x, int min, int max) {
+			return x > min && x < max;
+		}
 	}
-	
+
 	class Segment {
 		public String text;
 		public StyleRange style;
-		
+
 		@Override
 		public String toString() {
-			return text + " => " + style;
+			return this.text + " => " + this.style; //$NON-NLS-1$
 		}
 	}
-	
+
 	static String removeLineending(String s) {
-		return s.replace("\n","").replace("\r", "");
+		return s.replace("\n", "").replace("\r", "");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
-	
+
 	class LineInfo extends HBox {
 		private Label markerLabel;
 		private Label lineText;
 		private Line line;
-		
+
 		public LineInfo() {
-			markerLabel = new Label();
-			markerLabel.setPrefWidth(20);
-			lineText = new Label();
-			lineText.setMaxWidth(Double.MAX_VALUE);
-			lineText.setMaxHeight(Double.MAX_VALUE);
-			lineText.setAlignment(Pos.CENTER_RIGHT);
-			HBox.setHgrow(lineText, Priority.ALWAYS);
-			getChildren().addAll(markerLabel, lineText);
+			this.markerLabel = new Label();
+			this.markerLabel.setPrefWidth(20);
+			this.lineText = new Label();
+			this.lineText.getStyleClass().add("line-ruler-text"); //$NON-NLS-1$
+			this.lineText.setMaxWidth(Double.MAX_VALUE);
+			this.lineText.setMaxHeight(Double.MAX_VALUE);
+			this.lineText.setAlignment(Pos.CENTER_RIGHT);
+			HBox.setHgrow(this.lineText, Priority.ALWAYS);
+			getChildren().addAll(this.markerLabel, this.lineText);
 		}
-		
+
 		public void setDomainElement(Line line) {
-			if( line == null ) {
+			if (line == null) {
 				setVisible(false);
 			} else {
 				setVisible(true);
-				if( line != this.line ) {
-					lineText.setText(lineList.indexOf(line)+1+"");
-					rootContainer.layout();
+				if (line != this.line) {
+					String newText = StyledTextSkin.this.lineList.indexOf(line) + 1 + ""; //$NON-NLS-1$
+					String oldText = this.lineText.getText();
+					if( oldText == null ) {
+						oldText = ""; //$NON-NLS-1$
+					}
+					this.lineText.setText(newText);
+					if( newText.length() != oldText.length() ) {
+						StyledTextSkin.this.rootContainer.layout();	
+					}
+					StyledTextSkin.this.lineRuler.layout();	
 				}
 			}
 		}
 	}
-	
+
 	class LineRuler extends StackPane {
 		@Override
 		protected void layoutChildren() {
@@ -633,9 +783,9 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			Set<Node> children = new HashSet<Node>(getChildren());
 			List<LineInfo> layouted = new ArrayList<>();
 			double maxWidth = 0;
-			for( LineCell c : ((MyListViewSkin)contentView.getSkin()).getFlow().getCells() ) {
-				LineInfo lineInfo = lineInfoMap.get(c);
-				if( lineInfo != null ) {
+			for (LineCell c : ((MyListViewSkin) StyledTextSkin.this.contentView.getSkin()).getFlow().getCells()) {
+				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(c);
+				if (lineInfo != null) {
 					layouted.add(lineInfo);
 					maxWidth = Math.max(maxWidth, lineInfo.getWidth());
 					lineInfo.relocate(0, c.getLayoutY());
@@ -644,49 +794,49 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					children.remove(lineInfo);
 				}
 			}
-			
-			for( LineInfo l : layouted ) {
+
+			for (LineInfo l : layouted) {
 				l.resize(maxWidth, l.getHeight());
 			}
-			
-			for( Node n : children ) {
+
+			for (Node n : children) {
 				n.setVisible(false);
-			}			
+			}
 		}
 	}
 
-	class MyListViewSkin extends ListViewSkin<Line>{
+	class MyListViewSkin extends ListViewSkin<Line> {
 		private MyVirtualFlow flow;
 
 		public MyListViewSkin(ListView<Line> listView) {
 			super(listView);
 		}
-		
+
 		public MyVirtualFlow getFlow() {
-			return flow;
+			return this.flow;
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		@Override
 		protected VirtualFlow<ListCell<Line>> createVirtualFlow() {
 			this.flow = new MyVirtualFlow();
-			return (VirtualFlow<ListCell<Line>>) ((VirtualFlow<?>)flow);
+			return (VirtualFlow<ListCell<Line>>) ((VirtualFlow<?>) this.flow);
 		}
-		
+
 	}
-	
+
 	class MyVirtualFlow extends VirtualFlow<LineCell> {
 		@Override
 		protected void positionCell(LineCell cell, double position) {
 			super.positionCell(cell, position);
-			LineInfo lineInfo = lineInfoMap.get(cell);
-			if( lineInfo != null ) {
+			LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(cell);
+			if (lineInfo != null) {
 				lineInfo.setDomainElement(cell.domainElement);
 				lineInfo.setLayoutY(cell.getLayoutY());
 			}
-			lineRuler.requestLayout();
+			StyledTextSkin.this.lineRuler.requestLayout();
 		}
-		
+
 		@Override
 		public List<LineCell> getCells() {
 			return super.getCells();

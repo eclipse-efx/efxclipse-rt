@@ -1,10 +1,10 @@
 import javafx.scene.Group
 
 package org.eclipse.fx.ui.controls {
-	PositionMarker extends Group {
+	PositionMarker extends Group styleclass position-marker {
 		-fx-fill <javafx.paint> default: "rgb(0, 139, 255)";
 	}
-	TabOutlineMarker extends Group {
+	TabOutlineMarker extends Group styleclass tab-outline-marker {
 		-fx-fill <javafx.paint> default: "orange";
 	}
 }

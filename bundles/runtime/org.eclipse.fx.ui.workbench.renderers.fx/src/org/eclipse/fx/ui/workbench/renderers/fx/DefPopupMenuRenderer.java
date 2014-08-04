@@ -24,6 +24,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MPopupMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.BasePopupMenuRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
+import org.eclipse.fx.ui.workbench.renderers.fx.DefMenuRenderer.MenuImpl;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 
 /**
@@ -38,6 +39,13 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 	static class ContextMenuImpl extends WWidgetImpl<ContextMenu, MPopupMenu> implements WPopupMenu<ContextMenu> {
 		private ToggleGroup group;
 		Runnable showingCallback;
+		Runnable hidingCallback;
+		MenuItem item;
+
+		public ContextMenuImpl() {
+			this.item = new MenuItem("<empty>"); //$NON-NLS-1$
+			this.item.setDisable(true);
+		}
 
 		@Override
 		protected ContextMenu createWidget() {
@@ -49,6 +57,23 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 					if (ContextMenuImpl.this.showingCallback != null) {
 						ContextMenuImpl.this.showingCallback.run();
 					}
+					
+					if (getWidget().getItems().size() > 1) {
+						getWidget().getItems().remove(ContextMenuImpl.this.item);
+					}
+				}
+			});
+			m.setOnHiding(new EventHandler<WindowEvent>() {
+
+				@Override
+				public void handle(WindowEvent event) {
+					if (ContextMenuImpl.this.hidingCallback != null) {
+						ContextMenuImpl.this.hidingCallback.run();
+					}
+					
+					if (getWidget().getItems().isEmpty()) {
+						getWidget().getItems().add(ContextMenuImpl.this.item);
+					}
 				}
 			});
 			return m;
@@ -57,6 +82,11 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 		@Override
 		public void setShowingCallback(Runnable showingCallback) {
 			this.showingCallback = showingCallback;
+		}
+		
+		@Override
+		public void setHidingCallback(Runnable hidingCallback) {
+			this.hidingCallback = hidingCallback;
 		}
 
 		@Override
@@ -86,6 +116,10 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 
 		@Override
 		public void addElement(WMenuElement<MMenuElement> widget) {
+			if (getWidget().getItems().size() == 1) {
+				getWidget().getItems().remove(this.item);
+			}
+			
 			if (widget.getWidget() instanceof Toggle) {
 				if (this.group == null) {
 					this.group = new ToggleGroup();
@@ -99,6 +133,10 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 
 		@Override
 		public void addElement(int idx, WMenuElement<MMenuElement> widget) {
+			if (getWidget().getItems().size() == 1) {
+				getWidget().getItems().remove(this.item);
+			}
+			
 			if (widget.getWidget() instanceof Toggle) {
 				if (this.group == null) {
 					this.group = new ToggleGroup();
@@ -116,6 +154,9 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 				((Toggle) widget.getWidget()).setToggleGroup(null);
 			}
 			getWidget().getItems().remove(widget.getWidget());
+			if (getWidget().getItems().isEmpty()) {
+				getWidget().getItems().add(this.item);
+			}
 		}
 
 		@Override

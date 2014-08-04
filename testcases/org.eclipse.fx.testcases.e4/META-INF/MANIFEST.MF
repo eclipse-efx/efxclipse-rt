@@ -25,7 +25,6 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="0.10.1",
  org.eclipse.osgi;bundle-version="3.9.0",
  org.eclipse.fx.ui.workbench.renderers.base,
  org.eclipse.fx.ui.dialogs,
- org.eclipse.fx.ui.lifecycle,
  org.eclipse.fx.ui.workbench.base,
  org.eclipse.e4.core.commands,
  org.eclipse.core.commands,
@@ -34,7 +33,8 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="0.10.1",
  org.eclipse.fx.core;bundle-version="1.0.0",
  org.eclipse.fx.core.fxml;bundle-version="1.0.0",
  org.eclipse.fx.core.di;bundle-version="1.0.0",
- org.eclipse.core.expressions;bundle-version="3.4.600"
+ org.eclipse.core.expressions;bundle-version="3.4.600",
+ org.eclipse.fx.ui.workbench.services;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Import-Package: javafx.animation;version="2.0.0",
  javafx.application;version="2.0.0",
@@ -66,6 +66,5 @@ Import-Package: javafx.animation;version="2.0.0",
  javafx.util;version="2.0.0",
  javax.annotation;version="1.1.0",
  javax.inject;version="1.0.0",
- org.eclipse.fx.ui.lifecycle,
  org.osgi.framework;version="1.3.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

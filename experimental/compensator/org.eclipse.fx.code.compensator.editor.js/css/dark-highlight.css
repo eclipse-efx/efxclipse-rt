@@ -1,0 +1,59 @@
+.hover {
+	-fx-background-color: #2b5696;
+}
+
+.java_string {
+	-styled-text-color: #7c986c;
+}
+
+.java_default {
+	-styled-text-color: #b8c4d1;
+}
+
+.java_annotation {
+	-styled-text-color: rgb(200, 200, 200);
+}
+
+.java_keyword {
+	-styled-text-color: #d78b40;
+	-fx-font-weight: bold;
+}
+
+.java_operator {
+	-styled-text-color: #b8c4d1;
+}
+
+.java_bracket {
+	-styled-text-color: #b8c4d1;
+}
+
+.java_keyword_return {
+	-styled-text-color: #d78b40;
+	-fx-font-weight: bold;
+}
+
+.java_comment_task_tag {
+	-fx-fill: rgb(127, 159, 191);
+}
+
+.java_doc_link {
+	-styled-text-color: #74a567;
+	-fx-font-weight: bold;
+}
+
+.java_doc_default {
+	-styled-text-color: #74a567;
+}
+
+.java_multi_line_comment {
+	-styled-text-color: #929292;
+}
+
+.java_single_line_comment {
+	-styled-text-color: #929292;
+}
+
+.java_doc_tag {
+	-styled-text-color: #74a567;
+	-fx-font-weight: bold;
+}

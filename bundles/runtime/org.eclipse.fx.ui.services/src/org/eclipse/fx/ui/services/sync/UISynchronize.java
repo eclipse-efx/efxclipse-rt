@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.services.sync;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 import org.eclipse.fx.core.Callback;
@@ -75,39 +76,77 @@ public interface UISynchronize {
 	<T> @Nullable T block(@NonNull BlockCondition<T> blockCondition);
 
 	/**
+	 * Schedule the execution of the runnable
+	 * 
+	 * @param delay
+	 *            the delay
+	 * @param runnable
+	 *            the runnable to execute
+	 * @return subscription to cancel the execution
+	 */
+	Subscription scheduleExecution(long delay, Runnable runnable);
+
+	/**
+	 * Schedule the execution of the callable
+	 * 
+	 * @param delay
+	 *            the delay
+	 * @param runnable
+	 *            the callable to execute
+	 * @return future to get informed about the value
+	 */
+	<T> CompletableFuture<T> scheduleExecution(long delay, Callable<T> runnable);
+
+	/**
 	 * A block condition
 	 * 
 	 * @param <T>
 	 *            the type
 	 */
 	public static class BlockCondition<T> {
-		private List<Callback<T>> callbacks = new ArrayList<>();
+		List<Callback<T>> callbacks = new ArrayList<>();
 		private boolean isBlocked = true;
 
+		/**
+		 * Subscribe to unblocking
+		 * 
+		 * @param r
+		 *            the callback
+		 * @return the subscription
+		 */
 		public Subscription subscribeUnblockedCallback(Callback<T> r) {
-			if (!isBlocked) {
+			if (!this.isBlocked) {
 				throw new IllegalStateException();
 			}
-			callbacks.add(r);
+			this.callbacks.add(r);
 			return new Subscription() {
 
 				@Override
 				public void dispose() {
-					callbacks.remove(r);
+					BlockCondition.this.callbacks.remove(r);
 				}
 			};
 		}
 
+		/**
+		 * @return check if still blocked
+		 */
 		public boolean isBlocked() {
-			return isBlocked;
+			return this.isBlocked;
 		}
 
+		/**
+		 * Release the lock and pass value
+		 * 
+		 * @param value
+		 *            the value to pass
+		 */
 		public void release(T value) {
-			for (Callback<T> r : callbacks) {
+			for (Callback<T> r : this.callbacks) {
 				r.call(value);
 			}
-			callbacks.clear();
-			isBlocked = false;
+			this.callbacks.clear();
+			this.isBlocked = false;
 		}
 	}
 

@@ -26,9 +26,7 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
-import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
-import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
@@ -47,7 +45,6 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
-import org.osgi.service.event.EventHandler;
 
 /**
  * Base renderer for {@link MWindow}
@@ -161,56 +158,58 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LABEL);
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_TOOLTIP);
 		registerEventListener(eventBroker, UIEvents.UIElement.TOPIC_VISIBLE);
-		eventBroker.subscribe(UIEvents.Window.TOPIC_WINDOWS, new EventHandler() {
-
-			@Override
-			public void handleEvent(Event event) {
-				Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
-				if (changedObj instanceof MPerspective) {
-					MPerspective perspective = (MPerspective) changedObj;
-					if (BaseWindowRenderer.this == perspective.getRenderer()) {
-						String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-						if (UIEvents.EventTypes.ADD.equals(eventType)) {
-							MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-							if (element instanceof MWindow) {
-								handleWindowAdd((MWindow) element);
-							} else if (element instanceof MWindowElement) {
-								handleChildAdd((MWindowElement) element);
-							}
-						} else if (UIEvents.EventTypes.REMOVE.equals(eventType)) {
-							MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.OLD_VALUE);
-							if (element instanceof MWindow) {
-								handleWindowRemove((MWindow) element);
-							} else if (element instanceof MWindowElement) {
-								handleChildRemove((MWindowElement) element);
-							}
-						}
-					}
-				}
-			}
-		});
+		
+		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, this::handleChildrenEvent);
+		eventBroker.subscribe(UIEvents.Window.TOPIC_WINDOWS, this::handleChildrenEvent);
 	}
 
+	void handleChildrenEvent(Event event) {
+	    Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
+        if (changedObj instanceof MWindow) {
+            MWindow window = (MWindow) changedObj;
+            if (BaseWindowRenderer.this == window.getRenderer()) {
+                String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
+                if (UIEvents.EventTypes.ADD.equals(eventType)) {
+                    MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.NEW_VALUE);
+                    if (element instanceof MWindow) {
+                        handleWindowAdd((MWindow) element);
+                    } else if (element instanceof MWindowElement) {
+                        handleChildAdd(window, (MWindowElement) element);
+                    }
+                } else if (UIEvents.EventTypes.REMOVE.equals(eventType)) {
+                    MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.OLD_VALUE);
+                    if (element instanceof MWindow) {
+                        handleWindowRemove(window, (MWindow) element);
+                    } else if (element instanceof MWindowElement) {
+                        handleChildRemove(window, (MWindowElement) element);
+                    }
+                }
+            }
+        }
+	}
+	
 	void handleWindowAdd(@NonNull MWindow element) {
 		engineCreateWidget(element);
 	}
 
-	void handleWindowRemove(@NonNull MWindow element) {
-		// Nothing to do here
+	void handleWindowRemove(@NonNull MWindow parent, @NonNull MWindow element) {
+	    if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+            hideChild(parent, element);
+	    }
 	}
 
-	void handleChildAdd(@NonNull MWindowElement element) {
-		engineCreateWidget(element);
+	void handleChildAdd(@NonNull MWindow window, @NonNull MWindowElement element) {
+	    if(element.getWidget() != null) {
+	        // e.g. detaching something into a new window
+	        childRendered(window, element);    
+	    } else {
+	        engineCreateWidget(element);
+	    }
 	}
 
-	void handleChildRemove(MWindowElement element) {
+	void handleChildRemove(@NonNull MWindow window, MWindowElement element) {
 		if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
-			MElementContainer<MUIElement> parent = element.getParent();
-			if( parent != null ) {
-				hideChild((MWindow) (MUIElement) parent, element);	
-			} else {
-				getLogger().error("Unable to find parent for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
-			}
+			hideChild(window, element);
 		}
 	}
 

@@ -19,11 +19,15 @@ import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.keybindings.ParseException;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
 import org.eclipse.fx.ui.keybindings.service.BindingFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Factory to crate bindings
+ */
 public class BindingFactoryImpl implements BindingFactory {
 
 	@Override
-	public KeySequence getKeySequenceInstance(KeyLookup keylookup, String sequence) throws ParseException {
+	public @NonNull KeySequence getKeySequenceInstance(@NonNull KeyLookup keylookup, @NonNull String sequence) throws ParseException {
 		return KeySequenceImpl.getInstance(keylookup, sequence);
 	}
 
@@ -33,17 +37,17 @@ public class BindingFactoryImpl implements BindingFactory {
 	}
 
 	@Override
-	public KeySequence getKeySequenceInstance(KeySequence keySequence, KeyStroke stroke) {
+	public @NonNull KeySequence getKeySequenceInstance(@NonNull KeySequence keySequence, @NonNull KeyStroke stroke) {
 		return KeySequenceImpl.getInstance(keySequence, stroke);
 	}
 	
 	@Override
-	public KeySequence getKeySequenceInstance() {
+	public @NonNull KeySequence getKeySequenceInstance() {
 		return KeySequenceImpl.getInstance();
 	}
 	
 	@Override
-	public KeyStroke getKeyStrokeInstance(KeyLookup lookup, int modifierKeys, int naturalKey) {
+	public @NonNull KeyStroke getKeyStrokeInstance(@NonNull KeyLookup lookup, int modifierKeys, int naturalKey) {
 		return KeyStrokeImpl.getInstance(lookup, modifierKeys, naturalKey);
 	}
 

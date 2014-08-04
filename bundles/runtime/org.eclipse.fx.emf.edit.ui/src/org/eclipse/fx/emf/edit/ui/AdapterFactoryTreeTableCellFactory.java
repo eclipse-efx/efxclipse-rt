@@ -24,6 +24,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * This list cell factory wraps an {@link AdapterFactory} and delegates calls to its {@link TableCell}s to the
@@ -56,7 +57,7 @@ public class AdapterFactoryTreeTableCellFactory<S, T> extends AdapterFactoryCell
 	 * @param columnIndex
 	 *            the column index
 	 */
-	public AdapterFactoryTreeTableCellFactory(AdapterFactory adapterFactory, int columnIndex) {
+	public AdapterFactoryTreeTableCellFactory(@NonNull AdapterFactory adapterFactory, int columnIndex) {
 		super(adapterFactory);
 		this.columnIndex = columnIndex;
 	}

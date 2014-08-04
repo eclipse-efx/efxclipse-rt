@@ -24,12 +24,12 @@ import org.eclipse.core.commands.contexts.Context;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.ui.keybindings.Binding;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
-
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * manage tables of bindings that can be used to look up commands from keys.
  */
-@SuppressWarnings("restriction")
 public class BindingTableManager {
 	private static final String BINDING_TABLE_PREFIX = "bindingTable:"; //$NON-NLS-1$
 
@@ -40,48 +40,72 @@ public class BindingTableManager {
 
 	private String[] activeSchemeIds;
 
-	public void addTable(BindingTable table) {
+	/**
+	 * Add a binding table
+	 * 
+	 * @param table
+	 *            the table
+	 */
+	public void addTable(@NonNull BindingTable table) {
 		String contextId = getTableId(table.getId());
-		if (eclipseContext.containsKey(contextId)) {
+		if (this.eclipseContext.containsKey(contextId)) {
 			return; // it's already there
 			//			throw new IllegalArgumentException("Already contains table " + contextId); //$NON-NLS-1$
 		}
-		eclipseContext.set(contextId, table);
-		final List<Context> contexts = definedTables.getContexts();
+		this.eclipseContext.set(contextId, table);
+		final List<@NonNull Context> contexts = this.definedTables.getContexts();
 		if (!contexts.contains(table.getTableId())) {
-			// this is only valid because I'm throwing away the old definedTables contextSet
+			// this is only valid because I'm throwing away the old
+			// definedTables contextSet
 			contexts.add(table.getTableId());
-			definedTables = createContextSet(contexts);
+			this.definedTables = createContextSet(contexts);
 		}
 	}
 
-	private String getTableId(String id) {
+	private static String getTableId(String id) {
 		return BINDING_TABLE_PREFIX + id;
 	}
 
-	public void removeTable(BindingTable table) {
+	/**
+	 * remove a table
+	 * 
+	 * @param table
+	 *            the table
+	 */
+	public void removeTable(@NonNull BindingTable table) {
 		String contextId = getTableId(table.getId());
-		if (!eclipseContext.containsKey(contextId)) {
+		if (!this.eclipseContext.containsKey(contextId)) {
 			throw new IllegalArgumentException("Does not contains table " + contextId); //$NON-NLS-1$
 		}
-		eclipseContext.remove(contextId);
-		final List<Context> contexts = definedTables.getContexts();
+		this.eclipseContext.remove(contextId);
+		final List<@NonNull Context> contexts = this.definedTables.getContexts();
 		if (contexts.contains(table.getTableId())) {
-			// this is only valid because I'm throwing away the old definedTables contextSet
+			// this is only valid because I'm throwing away the old
+			// definedTables contextSet
 			contexts.remove(table.getTableId());
-			definedTables = createContextSet(contexts);
+			this.definedTables = createContextSet(contexts);
 		}
 	}
 
-	public BindingTable getTable(String id) {
-		return (BindingTable) eclipseContext.get(getTableId(id));
+	/**
+	 * Get the table for the give id
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the table
+	 */
+	public @Nullable BindingTable getTable(String id) {
+		return (BindingTable) this.eclipseContext.get(getTableId(id));
 	}
 
-	// we're just going through each binding table, and returning a
-	// flat list of bindings here
-	public Collection<Binding> getActiveBindings() {
-		ArrayList<Binding> bindings = new ArrayList<Binding>();
-		for (Context ctx : definedTables.getContexts()) {
+	/**
+	 * @return the current bindings
+	 */
+	public @NonNull Collection<@NonNull Binding> getActiveBindings() {
+		// we're just going through each binding table, and returning a
+		// flat list of bindings here
+		ArrayList<@NonNull Binding> bindings = new ArrayList<>();
+		for (Context ctx : this.definedTables.getContexts()) {
 			BindingTable table = getTable(ctx.getId());
 			if (table != null) {
 				bindings.addAll(table.getBindings());
@@ -90,17 +114,17 @@ public class BindingTableManager {
 		return bindings;
 	}
 
-	public ContextSet createContextSet(Collection<Context> contexts) {
+	static @NonNull ContextSet createContextSet(@NonNull Collection<@NonNull Context> contexts) {
 		return new ContextSet(contexts);
 	}
 
-	public Collection<Binding> getConflictsFor(ContextSet contextSet,
-			TriggerSequence triggerSequence) {
-		Collection<Binding> matches = new ArrayList<Binding>();
+	@Nullable
+	Collection<@NonNull Binding> getConflictsFor(@NonNull ContextSet contextSet, @NonNull TriggerSequence triggerSequence) {
+		Collection<@NonNull Binding> matches = new ArrayList<>();
 		for (Context ctx : contextSet.getContexts()) {
 			BindingTable table = getTable(ctx.getId());
 			if (table != null) {
-				final Collection<Binding> matchesFor = table.getConflictsFor(triggerSequence);
+				final Collection<@NonNull Binding> matchesFor = table.getConflictsFor(triggerSequence);
 				if (matchesFor != null) {
 					matches.addAll(matchesFor);
 				}
@@ -109,21 +133,21 @@ public class BindingTableManager {
 		return matches.size() == 0 ? null : matches;
 	}
 
-	public Collection<Binding> getAllConflicts() {
-		Collection<Binding> conflictsList = new ArrayList<Binding>();
-		for (Context ctx : definedTables.getContexts()) {
+	@NonNull
+	Collection<@NonNull Binding> getAllConflicts() {
+		Collection<@NonNull Binding> conflictsList = new ArrayList<>();
+		for (Context ctx : this.definedTables.getContexts()) {
 			BindingTable table = getTable(ctx.getId());
 			if (table != null) {
-				Collection<Binding> conflictsInTable = table.getConflicts();
-				if (conflictsInTable != null) {
-					conflictsList.addAll(conflictsInTable);
-				}
+				Collection<@NonNull Binding> conflictsInTable = table.getConflicts();
+				conflictsList.addAll(conflictsInTable);
 			}
 		}
 		return conflictsList;
 	}
 
-	public Binding getPerfectMatch(ContextSet contextSet, TriggerSequence triggerSequence) {
+	@Nullable
+	Binding getPerfectMatch(@NonNull ContextSet contextSet, @NonNull TriggerSequence triggerSequence) {
 		Binding result = null;
 		Binding currentResult = null;
 		List<Context> contexts = contextSet.getContexts();
@@ -151,62 +175,51 @@ public class BindingTableManager {
 		return result;
 	}
 
-	/**
-	 * @param currentResult
-	 * @return
-	 */
 	private boolean isMostActiveScheme(Binding currentResult) {
-		if (activeSchemeIds == null || activeSchemeIds.length < 2) {
+		if (this.activeSchemeIds == null || this.activeSchemeIds.length < 2) {
 			return true;
 		}
-		final String mostActive = activeSchemeIds[0];
+		final String mostActive = this.activeSchemeIds[0];
 		return mostActive == null ? false : mostActive.equals(currentResult.getSchemeId());
 	}
 
-	public Binding getBestSequenceFor(ContextSet contextSet,
-			ParameterizedCommand parameterizedCommand) {
-		ArrayList<Binding> bindings = (ArrayList<Binding>) getSequencesFor(contextSet,
-				parameterizedCommand);
+	@Nullable Binding getBestSequenceFor(@NonNull ContextSet contextSet, @NonNull ParameterizedCommand parameterizedCommand) {
+		List<@NonNull Binding> bindings = getSequencesFor(contextSet, parameterizedCommand);
 		if (bindings.size() == 0) {
 			return null;
 		}
 		return bindings.get(0);
 	}
 
-	public Collection<Binding> getSequencesFor(ContextSet contextSet,
-			ParameterizedCommand parameterizedCommand) {
-		ArrayList<Binding> bindings = new ArrayList<Binding>();
+	@NonNull List<@NonNull Binding> getSequencesFor(@NonNull ContextSet contextSet, @NonNull ParameterizedCommand parameterizedCommand) {
+		ArrayList<@NonNull Binding> bindings = new ArrayList<>();
 		List<Context> contexts = contextSet.getContexts();
 		ListIterator<Context> it = contexts.listIterator(contexts.size());
 		while (it.hasPrevious()) {
 			Context c = it.previous();
 			BindingTable table = getTable(c.getId());
 			if (table != null) {
-				Collection<Binding> sequences = table.getSequencesFor(parameterizedCommand);
-				if (sequences != null) {
-					bindings.addAll(sequences);
-				}
+				Collection<@NonNull Binding> sequences = table.getSequencesFor(parameterizedCommand);
+				bindings.addAll(sequences);
 			}
 		}
 		Collections.sort(bindings, BindingTable.BEST_SEQUENCE);
 		return bindings;
 	}
 
-	public Collection<Binding> getBindingsFor(ContextSet contextSet, ParameterizedCommand cmd) {
-		Collection<Binding> bindings = new ArrayList<Binding>();
+	@NonNull Collection<@NonNull Binding> getBindingsFor(@NonNull ContextSet contextSet, @NonNull  ParameterizedCommand cmd) {
+		Collection<@NonNull Binding> bindings = new ArrayList<>();
 		for (Context ctx : contextSet.getContexts()) {
 			BindingTable table = getTable(ctx.getId());
 			if (table != null) {
-				Collection<Binding> matches = table.getSequencesFor(cmd);
-				if (matches != null) {
-					bindings.addAll(matches);
-				}
+				Collection<@NonNull Binding> matches = table.getSequencesFor(cmd);
+				bindings.addAll(matches);
 			}
 		}
 		return bindings;
 	}
 
-	public boolean isPartialMatch(ContextSet contextSet, TriggerSequence sequence) {
+	boolean isPartialMatch(@NonNull ContextSet contextSet, @NonNull TriggerSequence sequence) {
 		List<Context> contexts = contextSet.getContexts();
 		ListIterator<Context> it = contexts.listIterator(contexts.size());
 		while (it.hasPrevious()) {
@@ -221,15 +234,15 @@ public class BindingTableManager {
 		return false;
 	}
 
-	public Collection<Binding> getPartialMatches(ContextSet contextSet, TriggerSequence sequence) {
-		ArrayList<Binding> bindings = new ArrayList<Binding>();
+	@NonNull Collection<@NonNull Binding> getPartialMatches(@NonNull ContextSet contextSet, @NonNull TriggerSequence sequence) {
+		ArrayList<@NonNull Binding> bindings = new ArrayList<>();
 		List<Context> contexts = contextSet.getContexts();
 		ListIterator<Context> it = contexts.listIterator(contexts.size());
 		while (it.hasPrevious()) {
 			Context c = it.previous();
 			BindingTable table = getTable(c.getId());
 			if (table != null) {
-				Collection<Binding> partialMatches = table.getPartialMatches(sequence);
+				Collection<@NonNull Binding> partialMatches = table.getPartialMatches(sequence);
 				if (partialMatches != null) {
 					bindings.addAll(partialMatches);
 				}
@@ -247,17 +260,18 @@ public class BindingTableManager {
 	}
 
 	/*
-	 * Copied from org.eclipse.jface.bindings.BindingManager.compareSchemes(String, String)
+	 * Copied from
+	 * org.eclipse.jface.bindings.BindingManager.compareSchemes(String, String)
 	 * 
 	 * Returns an in based on scheme 1 < scheme 2
 	 */
 	private final int compareSchemes(final String schemeId1, final String schemeId2) {
-		if (activeSchemeIds == null) {
+		if (this.activeSchemeIds == null) {
 			return 0;
 		}
 		if (!schemeId2.equals(schemeId1)) {
-			for (int i = 0; i < activeSchemeIds.length; i++) {
-				final String schemePointer = activeSchemeIds[i];
+			for (int i = 0; i < this.activeSchemeIds.length; i++) {
+				final String schemePointer = this.activeSchemeIds[i];
 				if (schemeId2.equals(schemePointer)) {
 					return 1;
 				} else if (schemeId1.equals(schemePointer)) {
