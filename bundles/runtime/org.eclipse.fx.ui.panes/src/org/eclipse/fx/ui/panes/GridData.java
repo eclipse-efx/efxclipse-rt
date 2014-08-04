@@ -293,8 +293,8 @@ public class GridData {
 				// Point size = control.computeSize (wHint, hHint, flushCache);
 				this.defaultWhint = wHint;
 				this.defaultHhint = hHint;
-				this.defaultWidth = wHint == -1 ? control.prefWidth(hHint) : this.defaultWhint;
-				this.defaultHeight = hHint == -1 ? control.prefHeight(wHint) : this.defaultHhint;
+				this.defaultWidth = wHint == -1 ? Math.ceil(control.prefWidth(hHint)) : Math.ceil(this.defaultWhint);
+				this.defaultHeight = hHint == -1 ? Math.ceil(control.prefHeight(wHint)) : Math.ceil(this.defaultHhint);
 			}
 			this.cacheWidth = this.defaultWidth;
 			this.cacheHeight = this.defaultHeight;
@@ -304,8 +304,8 @@ public class GridData {
 			// Point size = control.computeSize (wHint, hHint, flushCache);
 			this.currentWhint = wHint;
 			this.currentHhint = hHint;
-			this.currentWidth = control.getLayoutBounds().getWidth();
-			this.currentHeight = control.getLayoutBounds().getHeight();
+			this.currentWidth = Math.ceil(control.getLayoutBounds().getWidth());
+			this.currentHeight = Math.ceil(control.getLayoutBounds().getHeight());
 		}
 		this.cacheWidth = this.currentWidth;
 		this.cacheHeight = this.currentHeight;
