@@ -1,0 +1,3 @@
+.fonticonview {
+   -fx-skin: "org.eclipse.fx.ui.controls.image.skin.FontIconViewSkin";
+}
