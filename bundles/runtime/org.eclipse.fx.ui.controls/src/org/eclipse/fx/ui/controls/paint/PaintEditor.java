@@ -22,8 +22,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -35,7 +34,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -47,7 +45,6 @@ import javafx.scene.shape.Rectangle;
 import org.eclipse.fx.ui.panes.GridData;
 import org.eclipse.fx.ui.panes.GridData.Alignment;
 import org.eclipse.fx.ui.panes.GridLayoutPane;
-import org.eclipse.fx.ui.panes.RowLayoutPane;
 
 public class PaintEditor extends StackPane {
 	private static final DecimalFormat FORMAT = new DecimalFormat("0.0#");
@@ -56,16 +53,18 @@ public class PaintEditor extends StackPane {
 	private ObjectProperty<Runnable> cancel = new SimpleObjectProperty<>();
 	
 	private Paint defaultPaint;
+	private TabPane paintTabFolder;
+	private Rectangle linearGradientPreview;
 	
 	public PaintEditor(Paint defaultPaint) {
 		this.defaultPaint = defaultPaint;
 		
 		BorderPane pane = new BorderPane();
 		
-		TabPane p = new TabPane();
-		p.getTabs().addAll(createLinearTab(), createRadialTab());
+		paintTabFolder = new TabPane();
+		paintTabFolder.getTabs().addAll(createLinearTab(), createRadialTab());
 		
-		pane.setCenter(p);
+		pane.setCenter(paintTabFolder);
 		
 		GridLayoutPane gl = new GridLayoutPane();
 		gl.setNumColumns(1);
@@ -76,18 +75,21 @@ public class PaintEditor extends StackPane {
 		
 		{
 			Button b = new Button("Apply");
+			b.setOnAction(this::handleApply);
 			buttons.getChildren().add(b);
 			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL,Alignment.CENTER,false,false));
 		}
 		
 		{
 			Button b = new Button("Ok");
+			b.setOnAction(this::handleOk);
 			buttons.getChildren().add(b);
 			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL,Alignment.CENTER,false,false));
 		}
 		
 		{
 			Button b = new Button("Cancel");
+			b.setOnAction(this::handleCancel);
 			buttons.getChildren().add(b);
 			GridLayoutPane.setConstraint(b, new GridData(Alignment.FILL,Alignment.CENTER,false,false));
 		}
@@ -98,6 +100,31 @@ public class PaintEditor extends StackPane {
 		pane.setBottom(gl);
 		
 		getChildren().add(pane);
+	}
+	
+	public Paint getPaint() {
+		if( paintTabFolder.getSelectionModel().getSelectedIndex() == 0 ) {
+			return linearGradientPreview.getFill();
+		}
+		return null;
+	}
+	
+	private void handleApply(ActionEvent e) {
+		if( applyConsumer.get() != null ) {
+			applyConsumer.get().accept(getPaint());
+		}
+	}
+	
+	private void handleOk(ActionEvent e) {
+		if( okConsumer.get() != null ) {
+			okConsumer.get().accept(getPaint());
+		}
+	}
+	
+	private void handleCancel(ActionEvent e) {
+		if( cancel.get() != null ) {
+			cancel.get().run();
+		}
 	}
 	
 	public void setOkConsumer(Consumer<Paint> okConsumer) {
@@ -119,7 +146,7 @@ public class PaintEditor extends StackPane {
 		GridLayoutPane p = new GridLayoutPane();
 		p.setNumColumns(3);
 		
-		Rectangle r = new Rectangle(200, 200);
+		linearGradientPreview = new Rectangle(200, 200);
 		
 		
 		TextField startX = new TextField();
@@ -150,10 +177,10 @@ public class PaintEditor extends StackPane {
 			proportional.setSelected(true);
 			cycleMethod.getSelectionModel().select(0);
 			colorStops.setItems(FXCollections.observableArrayList(new Stop(0,Color.WHITE), new Stop(1, Color.BLACK)));
-			r.setFill(createLinearGradient(startX.getText(), startY.getText(), endX.getText(), endY.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), colorStops.getItems()));
+			linearGradientPreview.setFill(createLinearGradient(startX.getText(), startY.getText(), endX.getText(), endY.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), colorStops.getItems()));
 		}
 		else {
-			r.setFill(defaultPaint);
+			linearGradientPreview.setFill(defaultPaint);
 			LinearGradient g = (LinearGradient) this.defaultPaint;
 			startX.setText(FORMAT.format(g.getStartX()));
 			startY.setText(FORMAT.format(g.getStartY()));
@@ -167,10 +194,10 @@ public class PaintEditor extends StackPane {
 			ObservableList<Stop> items = colorStops.getItems();
 			items.set(items.indexOf(oldStop), newStop);
 			colorStops.getSelectionModel().select(newStop);
-			r.setFill(createLinearGradient(startX.getText(), startY.getText(), endX.getText(), endY.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), items));
+			linearGradientPreview.setFill(createLinearGradient(startX.getText(), startY.getText(), endX.getText(), endY.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), items));
 		});
 		
-		InvalidationListener l = (o) -> { r.setFill(createLinearGradient(startX.getText(), startY.getText(), endX.getText(), endY.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), colorStops.getItems())); };
+		InvalidationListener l = (o) -> { linearGradientPreview.setFill(createLinearGradient(startX.getText(), startY.getText(), endX.getText(), endY.getText(), proportional.isSelected(), cycleMethod.getSelectionModel().getSelectedItem(), colorStops.getItems())); };
 		startX.textProperty().addListener(l);
 		startY.textProperty().addListener(l);
 		endX.textProperty().addListener(l);
@@ -185,13 +212,13 @@ public class PaintEditor extends StackPane {
 			}
 		});
 		
-		GridLayoutPane.setConstraint(r, new GridData(Alignment.CENTER,Alignment.CENTER,false,false,1,2));
+		GridLayoutPane.setConstraint(linearGradientPreview, new GridData(Alignment.CENTER,Alignment.CENTER,false,false,1,2));
 		GridLayoutPane.setConstraint(colorStops, new GridData(Alignment.CENTER,Alignment.FILL,false,true,1,2));
 		GridLayoutPane.setConstraint(pane, new GridData(Alignment.FILL,Alignment.BEGINNING,true,false));
 		
 		TitledPane dtp = new TitledPane("Data", dataPane);
 		GridLayoutPane.setConstraint(dtp, new GridData(Alignment.FILL,Alignment.BEGINNING,true,false));
-		p.getChildren().addAll(r, colorStops, pane, dtp);
+		p.getChildren().addAll(linearGradientPreview, colorStops, pane, dtp);
 		
 		t.setContent(p);
 		
