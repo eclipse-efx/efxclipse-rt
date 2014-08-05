@@ -197,7 +197,7 @@ public final class DndTabPaneFactory {
 		}
 
 		MarkerFeedback f = CURRENT_FEEDBACK;
-		if (f == null || !f.equals(data)) {
+		if (f == null || !f.data.equals(data)) {
 			cleanup();
 			if (type == FeedbackType.MARKER) {
 				CURRENT_FEEDBACK = handleMarker(layoutNode, data);
