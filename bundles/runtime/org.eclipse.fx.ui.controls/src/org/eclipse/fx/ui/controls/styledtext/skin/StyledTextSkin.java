@@ -761,6 +761,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			} else {
 				setVisible(true);
 				if (line != this.line) {
+					this.line = line;
 					String newText = StyledTextSkin.this.lineList.indexOf(line) + 1 + ""; //$NON-NLS-1$
 					String oldText = this.lineText.getText();
 					if( oldText == null ) {
