@@ -1,44 +1,39 @@
+/*******************************************************************************
+ * Copyright (c) 2014 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Christoph Caks <ccaks@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.ui.controls.image;
-
-import java.security.Provider;
-import java.security.Provider.Service;
-import java.util.Iterator;
-import java.util.ServiceLoader;
-
-import org.eclipse.fx.ui.controls.image.spi.IconFontProvider;
-
-import com.sun.javafx.Utils;
-import com.sun.javafx.css.StyleConverterImpl;
 
 import javafx.css.ParsedValue;
 import javafx.css.StyleConverter;
 import javafx.scene.text.Font;
 
+import com.sun.javafx.Utils;
+
+/**
+ * Convert the string into an icon
+ */
+@SuppressWarnings("restriction")
 public class FontIconStyleConverter extends StyleConverter<String, FontIcon> {
 
 	@Override
 	public FontIcon convert(ParsedValue<String, FontIcon> value, Font font) {
-		System.err.println("convert " + value + ", " + font);
 		String v = value.getValue();
-		System.err.println(v);
-		// this converts a java unicode (\\u....)
-		// however css standard uses the syntax (\....) without u
 		v = Utils.convertUnicode(v);
-		System.err.println(v);
-		
 		
 		if (v.length() == 1) {
 			char c = v.charAt(0);
-			System.err.println("creating char");
 			return FontIcon.create(c);
 		}
 		else {
-			System.err.println("creating name");
 			return FontIcon.create(v);
-//			IconFontProvider sup = getSupportForFont(font);
-//			return FontIcon.create(sup.map(v));
 		}
-//		return super.convert(value, font);
 	}
 	
 	
