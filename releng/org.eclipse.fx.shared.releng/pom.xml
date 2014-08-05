@@ -35,6 +35,7 @@
 		<module>../runtime/org.eclipse.fx.core.shared.feature</module>
 		
 		<module>../org.eclipse.fx.core.shared.updatesite</module>
+		<module>../org.eclipse.fx.shared.doc</module>
 	</modules>
 
 	<repositories>
