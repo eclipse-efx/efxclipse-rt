@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>e(fx)clipse - Runtime - Doc</name>
+	<groupId>org.eclipse.fx.runtime</groupId>
+	<artifactId>org.eclipse.fx.runtime.doc</artifactId>
+	<packaging>eclipse-plugin</packaging>
+
+	<parent>
+		<groupId>org.eclipse.fx</groupId>
+		<artifactId>releng</artifactId>
+		<relativePath>../org.eclipse.fx.releng/pom.xml</relativePath>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.fx.runtime</groupId>
+			<artifactId>org.eclipse.fx.runtime.feature</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<doc.output.folder>${project.build.directory}/gen-doc/</doc.output.folder>
+	</properties>
+
+	<build>
+		<resources>
+			<!-- to ensure that the feature lookup of the ui test works -->
+			<resource>
+				<directory>.</directory>
+				<includes>
+					<include>META-INF/</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-document-bundle-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>javadoc</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<additionalFileSets>
+						<fileSet>
+							<directory>${doc.output.folder}</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+						</fileSet>
+					</additionalFileSets>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
