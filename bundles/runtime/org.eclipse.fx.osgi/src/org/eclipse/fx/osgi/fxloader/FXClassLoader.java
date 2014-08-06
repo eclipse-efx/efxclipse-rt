@@ -119,7 +119,9 @@ public class FXClassLoader extends ClassLoaderHook {
 								}
 								b = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3").get(null);  //$NON-NLS-1$//$NON-NLS-2$
 							} else {
-								System.err.println("FXModuleClassloader#findLocalClass - OS is '"+value+"' no need to get upset all is fine"); //$NON-NLS-1$ //$NON-NLS-2$
+								if( FXClassloaderConfigurator.DEBUG ) {
+									System.err.println("FXModuleClassloader#findLocalClass - OS is '"+value+"' no need to get upset all is fine"); //$NON-NLS-1$ //$NON-NLS-2$	
+								}
 							}
 						} catch (Throwable e) {
 							System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
@@ -398,7 +400,9 @@ public class FXClassLoader extends ClassLoaderHook {
 					}
 					return loadClass;
 				} catch (ClassNotFoundException tmp) {
-					System.err.println("FXClassLoader.SWTFXClassloader#findClass - Even last resort was unable to load " + name); //$NON-NLS-1$
+					if( FXClassloaderConfigurator.DEBUG ) {
+						System.err.println("FXClassLoader.SWTFXClassloader#findClass - Even last resort was unable to load " + name); //$NON-NLS-1$	
+					}
 					throw c;
 				}
 			}
