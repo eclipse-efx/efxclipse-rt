@@ -36,6 +36,7 @@ public interface ELifecycleService {
 	 * @param element
 	 *            the element
 	 * @param contribution
+	 *            the contribution instance
 	 */
 	public void unregisterLifecycleContribution(@NonNull MUIElement element, @NonNull Object contribution);
 
