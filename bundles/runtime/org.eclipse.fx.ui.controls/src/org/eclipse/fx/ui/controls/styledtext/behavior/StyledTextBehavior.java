@@ -116,7 +116,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				int currentLine = getControl().getContent().getLineAtOffset(offset);
 				@SuppressWarnings("unused")
 				int newLine = getControl().getContent().getLineAtOffset(newOffset);
-				getControl().setCaretOffset(newOffset,event.isShiftDown());
+				getControl().impl_setCaretOffset(newOffset,event.isShiftDown());
 				event.consume();
 			}
 			break;
@@ -129,7 +129,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				int lineOffset = getControl().getContent().getOffsetAtLine(currentLine);
 				String lineContent = getControl().getContent().getLine(currentLine);
 
-				getControl().setCaretOffset(lineOffset + lineContent.length(),event.isShiftDown());
+				getControl().impl_setCaretOffset(lineOffset + lineContent.length(),event.isShiftDown());
 				event.consume();
 			} else {
 				if (offset + 1 > getControl().getContent().getCharCount()) {
@@ -140,7 +140,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 //				int currentLine = getControl().getContent().getLineAtOffset(offset);
 //				@SuppressWarnings("unused")
 //				int newLine = getControl().getContent().getLineAtOffset(newOffset);
-				getControl().setCaretOffset(newOffset,event.isShiftDown());
+				getControl().impl_setCaretOffset(newOffset,event.isShiftDown());
 				event.consume();
 			}
 			break;
@@ -159,7 +159,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 			int newCaretPosition = lineOffset + colIdx;
 			int maxPosition = lineOffset + getControl().getContent().getLine(rowIndex).length();
 
-			getControl().setCaretOffset(Math.min(newCaretPosition, maxPosition),event.isShiftDown());
+			getControl().impl_setCaretOffset(Math.min(newCaretPosition, maxPosition),event.isShiftDown());
 			break;
 		}
 		case DOWN: {
@@ -175,7 +175,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 			int newCaretPosition = lineOffset + colIdx;
 			int maxPosition = lineOffset + getControl().getContent().getLine(rowIndex).length();
 
-			getControl().setCaretOffset(Math.min(newCaretPosition, maxPosition),event.isShiftDown());
+			getControl().impl_setCaretOffset(Math.min(newCaretPosition, maxPosition),event.isShiftDown());
 			break;
 		}
 		case ENTER:
@@ -292,14 +292,14 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 								int offset = ((Integer) text.getUserData()).intValue() + info.getInsertionIndex();
 								// System.err.println("NEW OFFSET AT: " +
 								// offset);
-								getControl().setCaretOffset(offset, event.isShiftDown());
+								getControl().impl_setCaretOffset(offset, event.isShiftDown());
 								return;
 							}
 						}
 					}
 
 					int offset = cell.getDomainElement().getLineOffset() + cell.getDomainElement().getLineLength();
-					getControl().setCaretOffset(offset, event.isShiftDown());
+					getControl().impl_setCaretOffset(offset, event.isShiftDown());
 					
 				}
 				break;

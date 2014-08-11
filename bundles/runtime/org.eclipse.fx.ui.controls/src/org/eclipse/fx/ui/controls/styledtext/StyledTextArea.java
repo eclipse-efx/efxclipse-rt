@@ -209,8 +209,10 @@ public class StyledTextArea extends Control {
 	 *            the offset
 	 * @param selection
 	 *            <code>true</code> to update the current selection
+	 * @deprecated internal API for now
 	 */
-	public void setCaretOffset(int offset, boolean selection) {
+	@Deprecated
+	public void impl_setCaretOffset(int offset, boolean selection) {
 		if (selection) {
 			TextSelection s = getSelection();
 			int lastOffset = getCaretOffset();
