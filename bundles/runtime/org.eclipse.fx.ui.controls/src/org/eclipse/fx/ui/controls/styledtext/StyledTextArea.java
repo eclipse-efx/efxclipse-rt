@@ -34,6 +34,10 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Control which allows to implemented a code-editor
+ * 
+ * <p>
+ * <b>This is an experimental component provided as a preview we'll improve and fix problems in up coming releases</b>
+ * </p>
  */
 public class StyledTextArea extends Control {
 
