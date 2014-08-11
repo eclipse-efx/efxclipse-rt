@@ -36,6 +36,7 @@ public class EMFEditFXProperties {
 	 *            the object
 	 * @param feature
 	 *            the feature instance the property is created for
+	 * @param <T> the property type
 	 * @return a value property for the given {@link EStructuralFeature}
 	 */
 	public static <T> Property<T> value(@NonNull EditingDomain editingDomain, @NonNull EObject eObject, @NonNull EStructuralFeature feature) {

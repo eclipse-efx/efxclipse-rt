@@ -22,7 +22,7 @@ public interface ScopedObjectFactory {
 	 * EventBroker topic published when key is modified
 	 */
 	public static String KEYMODIFED_TOPIC = "org/eclipse/fx/context/key"; //$NON-NLS-1$
-	
+
 	/**
 	 * Create a new instance of the class
 	 * 
@@ -59,6 +59,8 @@ public interface ScopedObjectFactory {
 	 *            the key
 	 * @param value
 	 *            the value
+	 * @param <O>
+	 *            the value type
 	 */
 	public <O> void put(@NonNull Class<@NonNull O> key, @NonNull O value);
 
@@ -67,12 +69,14 @@ public interface ScopedObjectFactory {
 	 * 
 	 * @param instance
 	 *            the instance on which the method is invoked
+	 * @param <O>
+	 *            the value type
 	 * @return the return value
 	 * @throws IllegalStateException
 	 *             in case there's no method that could be invoked
 	 */
 	public <O> @Nullable O invoke(@NonNull Object instance) throws IllegalStateException;
-	
+
 	/**
 	 * Dispose the factory
 	 */

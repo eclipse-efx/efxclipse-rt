@@ -78,7 +78,7 @@ public abstract class AdapterFactoryCellFactory {
 	 * An interface for providers that handle cell editing. The {@link Cell}s
 	 * created by the factory will delegate calls to their editing methods to
 	 * the first handler in
-	 * <code>AdapterFactoryCellFactory#cellEditHandlers<code> that returns <code>true</code>
+	 * <code>AdapterFactoryCellFactory#cellEditHandlers</code> that returns <code>true</code>
 	 * for {@link ICellEditHandler#canEdit(Cell)} .
 	 */
 	public interface ICellEditHandler {
@@ -295,13 +295,13 @@ public abstract class AdapterFactoryCellFactory {
 			cell.setText(labelProvider.getText(item));
 			Node graphic = graphicFromObject(labelProvider.getImage(item));
 			if (graphic == null) {
-				resetPropertyState(cell,cell.graphicProperty(), null);
+				resetPropertyState(cell, cell.graphicProperty(), null);
 			} else {
 				cell.setGraphic(graphic);
 			}
 		} else {
 			cell.setText(null);
-			resetPropertyState(cell,cell.graphicProperty(), null);
+			resetPropertyState(cell, cell.graphicProperty(), null);
 		}
 	}
 
@@ -318,7 +318,7 @@ public abstract class AdapterFactoryCellFactory {
 			Object columnImage = labelProvider.getColumnImage(item, columnIndex);
 			Node graphic = graphicFromObject(columnImage);
 			if (graphic == null) {
-				resetPropertyState(cell,cell.graphicProperty(), null);
+				resetPropertyState(cell, cell.graphicProperty(), null);
 			} else {
 				cell.setGraphic(graphic);
 			}
@@ -326,7 +326,7 @@ public abstract class AdapterFactoryCellFactory {
 		} else {
 			// clear the cell if there is no item
 			cell.setText(null);
-			resetPropertyState(cell,cell.graphicProperty(), null);
+			resetPropertyState(cell, cell.graphicProperty(), null);
 		}
 	}
 
@@ -335,7 +335,7 @@ public abstract class AdapterFactoryCellFactory {
 		if (colorProvider != null) {
 			Color color = colorFromObject(colorProvider.getForeground(item, columnIndex));
 			if (color == null) {
-				resetPropertyState(cell,cell.textFillProperty(), Color.BLACK);
+				resetPropertyState(cell, cell.textFillProperty(), Color.BLACK);
 			} else {
 				cell.setTextFill(color);
 			}
@@ -347,7 +347,7 @@ public abstract class AdapterFactoryCellFactory {
 				cell.setStyle(null);
 			}
 		} else {
-			resetPropertyState(cell,cell.textFillProperty(), Color.BLACK);
+			resetPropertyState(cell, cell.textFillProperty(), Color.BLACK);
 			cell.setStyle(null);
 		}
 	}
@@ -357,12 +357,12 @@ public abstract class AdapterFactoryCellFactory {
 		if (fontProvider != null) {
 			Font font = fontFromObject(fontProvider.getFont(item, columnIndex));
 			if (font == null) {
-				resetPropertyState(cell,cell.fontProperty(), Font.getDefault());
+				resetPropertyState(cell, cell.fontProperty(), Font.getDefault());
 			} else {
 				cell.setFont(font);
 			}
 		} else {
-			resetPropertyState(cell,cell.fontProperty(), Font.getDefault());
+			resetPropertyState(cell, cell.fontProperty(), Font.getDefault());
 		}
 	}
 
@@ -376,6 +376,8 @@ public abstract class AdapterFactoryCellFactory {
 	 *            the property
 	 * @param defaultValue
 	 *            the default value
+	 * @param <T>
+	 *            the value type
 	 */
 	protected static <T> void resetPropertyState(Cell<?> cell, ObjectProperty<T> property, T defaultValue) {
 		if (property instanceof StyleableProperty) {
@@ -426,7 +428,7 @@ public abstract class AdapterFactoryCellFactory {
 				cell.setStyle(null);
 			}
 		} else {
-			resetPropertyState(cell,cell.textFillProperty(), Color.BLACK);
+			resetPropertyState(cell, cell.textFillProperty(), Color.BLACK);
 			cell.setStyle(null);
 		}
 	}
