@@ -30,13 +30,13 @@ public class TableUtil {
 	 *            the column
 	 * @param property
 	 *            the property
+	 * @param <S>
+	 *            row and cell type
 	 * @see PropertyTableCellFactory#textFactory(IValueProperty)
 	 */
-	public static <S> void setupColumn(@NonNull TableColumn<S, S> column,
-			@NonNull IValueProperty property) {
+	public static <S> void setupColumn(@NonNull TableColumn<S, S> column, @NonNull IValueProperty property) {
 		column.setCellValueFactory((param) -> new SimpleObjectProperty<S>(param.getValue()));
-		column.setCellFactory(PropertyTableCellFactory
-				.<S, S> textFactory(property));
+		column.setCellFactory(PropertyTableCellFactory.<S, S> textFactory(property));
 	}
 
 	/**
@@ -49,12 +49,12 @@ public class TableUtil {
 	 *            the template
 	 * @param property
 	 *            the properties
+	 * @param <S>
+	 *            row and cell type
 	 * @see PropertyTableCellFactory#textFactory(String, IValueProperty...)
 	 */
-	public static <S> void setupColumn(@NonNull TableColumn<S, S> column,
-			@NonNull String template, @NonNull IValueProperty... property) {
+	public static <S> void setupColumn(@NonNull TableColumn<S, S> column, @NonNull String template, @NonNull IValueProperty... property) {
 		column.setCellValueFactory((param) -> new SimpleObjectProperty<S>(param.getValue()));
-		column.setCellFactory(PropertyTableCellFactory.<S, S> textFactory(
-				template, property));
+		column.setCellFactory(PropertyTableCellFactory.<S, S> textFactory(template, property));
 	}
 }

@@ -138,7 +138,6 @@ public final class TabOutlineMarker extends Group {
 
 	/**
 	 * The fill property
-	 * <p>
 	 * <table>
 	 * <tr>
 	 * <td>The default value is {@link Color#ORANGE}</td>
@@ -147,7 +146,6 @@ public final class TabOutlineMarker extends Group {
 	 * ></div></td>
 	 * </tr>
 	 * </table>
-	 * </p>
 	 * 
 	 * @return the property
 	 */
@@ -157,7 +155,6 @@ public final class TabOutlineMarker extends Group {
 
 	/**
 	 * Set a new fill
-	 * <p>
 	 * <table>
 	 * <tr>
 	 * <td>The default value is {@link Color#ORANGE}</td>
@@ -166,7 +163,6 @@ public final class TabOutlineMarker extends Group {
 	 * ></div></td>
 	 * </tr>
 	 * </table>
-	 * </p>
 	 * 
 	 * @param fill
 	 *            the fill
@@ -177,7 +173,6 @@ public final class TabOutlineMarker extends Group {
 
 	/**
 	 * Get the current fill
-	 * <p>
 	 * <table>
 	 * <tr>
 	 * <td>The default value is {@link Color#ORANGE}</td>
@@ -186,7 +181,6 @@ public final class TabOutlineMarker extends Group {
 	 * ></div></td>
 	 * </tr>
 	 * </table>
-	 * </p>
 	 * 
 	 * @return the current fill
 	 */

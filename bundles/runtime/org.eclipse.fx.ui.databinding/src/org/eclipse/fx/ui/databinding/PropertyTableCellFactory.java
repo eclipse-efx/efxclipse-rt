@@ -29,19 +29,21 @@ import org.eclipse.jdt.annotation.NonNull;
  * @param <T>
  *            the cell value type
  */
-public interface PropertyTableCellFactory<S, T> extends
-		Callback<TableColumn<S, T>, TableCell<S, T>> {
+public interface PropertyTableCellFactory<S, T> extends Callback<TableColumn<S, T>, TableCell<S, T>> {
 	/**
 	 * Create a factory who uses the given property for the text
 	 * 
 	 * @param property
 	 *            the property
+	 * @param <S>
+	 *            the row value type
+	 * @param <T>
+	 *            the cell value type
 	 * @return the factory instance
 	 * @see #textCell(IValueProperty)
 	 */
 	@NonNull
-	public static <S, T> PropertyTableCellFactory<S, T> textFactory(
-			@NonNull final IValueProperty property) {
+	public static <S, T> PropertyTableCellFactory<S, T> textFactory(@NonNull final IValueProperty property) {
 		return (param) -> textCell(property);
 	}
 
@@ -53,12 +55,15 @@ public interface PropertyTableCellFactory<S, T> extends
 	 *            the template
 	 * @param property
 	 *            the property
+	 * @param <S>
+	 *            the row value type
+	 * @param <T>
+	 *            the cell value type
 	 * @return the factory instance
 	 * @see #textCell(String, IValueProperty...)
 	 */
 	@NonNull
-	public static <S, T> PropertyTableCellFactory<S, T> textFactory(
-			@NonNull final String template, @NonNull final IValueProperty... property) {
+	public static <S, T> PropertyTableCellFactory<S, T> textFactory(@NonNull final String template, @NonNull final IValueProperty... property) {
 		return (param) -> textCell(template, property);
 	}
 
@@ -67,6 +72,10 @@ public interface PropertyTableCellFactory<S, T> extends
 	 * 
 	 * @param property
 	 *            the property
+	 * @param <S>
+	 *            the row value type
+	 * @param <T>
+	 *            the cell value type
 	 * @return the table cell
 	 */
 	@NonNull
@@ -82,11 +91,14 @@ public interface PropertyTableCellFactory<S, T> extends
 	 *            the template
 	 * @param property
 	 *            the property
+	 * @param <S>
+	 *            the row value type
+	 * @param <T>
+	 *            the cell value type
 	 * @return the table cell
 	 */
-	@NonNull 
-	public static <S, T> TableCell<S, T> textCell(@NonNull String template,
-			@NonNull IValueProperty... property) {
+	@NonNull
+	public static <S, T> TableCell<S, T> textCell(@NonNull String template, @NonNull IValueProperty... property) {
 		return new TemplateTextOnlyPropertyTableCell<>(template, property);
 	}
 }

@@ -51,6 +51,8 @@ public class OSGiFXMLLoader {
 	 *            the translation to be used
 	 * @param builderFactory
 	 *            the builder factory to use
+	 * @param <O>
+	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
 	 *             if the FXML could not be loaded
@@ -75,6 +77,8 @@ public class OSGiFXMLLoader {
 	 *            the translation to be used
 	 * @param builderFactory
 	 *            the builder factory to use
+	 * @param <O>
+	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
 	 *             if the FXML could not be loaded
@@ -98,6 +102,8 @@ public class OSGiFXMLLoader {
 	 *            the translation to be used
 	 * @param builderFactory
 	 *            the builder factory to use
+	 * @param <O>
+	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
 	 */
@@ -121,6 +127,10 @@ public class OSGiFXMLLoader {
 	 *            the translation to be used
 	 * @param builderFactory
 	 *            the builder factory to use
+	 * @param <O>
+	 *            the loaded root object type
+	 * @param <C>
+	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
 	 */
@@ -143,6 +153,8 @@ public class OSGiFXMLLoader {
 	 *            the translations
 	 * @param builderFactory
 	 *            the builder factory
+	 * @param <O>
+	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
 	 */
@@ -162,6 +174,10 @@ public class OSGiFXMLLoader {
 	 *            the translations
 	 * @param builderFactory
 	 *            the builder factory
+	 * @param <O>
+	 *            the loaded root object type
+	 * @param <C>
+	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
 	 */
@@ -182,6 +198,8 @@ public class OSGiFXMLLoader {
 	 *            the builder factory to use
 	 * @param controllerFactory
 	 *            the controller factory
+	 * @param <O>
+	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
 	 */
@@ -207,6 +225,10 @@ public class OSGiFXMLLoader {
 	 *            the builder factory to use
 	 * @param controllerFactory
 	 *            the controller factory
+	 * @param <O>
+	 *            the loaded root object type
+	 * @param <C>
+	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
 	 */
@@ -231,6 +253,8 @@ public class OSGiFXMLLoader {
 	 *            the builder factory to use
 	 * @param controllerFactory
 	 *            the controller factory
+	 * @param <O>
+	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
 	 */
@@ -256,6 +280,10 @@ public class OSGiFXMLLoader {
 	 *            the builder factory to use
 	 * @param controllerFactory
 	 *            the controller factory
+	 * @param <O>
+	 *            the loaded root object type
+	 * @param <C>
+	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
 	 */
@@ -280,6 +308,8 @@ public class OSGiFXMLLoader {
 	 *            the builder factory
 	 * @param controllerFactory
 	 *            the controller factory
+	 * @param <O>
+	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
 	 */
@@ -301,6 +331,10 @@ public class OSGiFXMLLoader {
 	 *            the builder factory
 	 * @param controllerFactory
 	 *            the controller factory
+	 * @param <O>
+	 *            the loaded root object type
+	 * @param <C>
+	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
 	 */

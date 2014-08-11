@@ -88,7 +88,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@Inject
 	EModelService modelService;
-	
+
 	@Inject
 	EModelStylingService modelStylingService;
 
@@ -122,7 +122,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	public static final String CALCULATED_VISIBILITY = "efx_calculated_visibility"; //$NON-NLS-1$
 
 	/**
-	 * Constant used to remember the current state of the visible when expression
+	 * Constant used to remember the current state of the visible when
+	 * expression
 	 */
 	public static final String CURRENT_VISIBLE_WHEN = "efx_current_visible_when"; //$NON-NLS-1$
 
@@ -387,23 +388,20 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 			if (changedObj instanceof MUIElement) {
 				if (e.getRenderer() == BaseRenderer.this) {
-					
+
 					if (attributeName.equals(UIEvents.ApplicationElement.TAGS)) {
 						MUIElement m = (MUIElement) changedObj;
 						if (m.getWidget() != null) {
 							if (UIEvents.isADD(event)) {
-								Collection<String> addedTags = Util.<String>asCollection(event, UIEvents.EventTags.NEW_VALUE);
-								((WWidget<?>) m.getWidget()).addStyleClasses(
-										this.modelStylingService.getStylesFromTags(new ArrayList<String>(addedTags)));
+								Collection<String> addedTags = Util.<String> asCollection(event, UIEvents.EventTags.NEW_VALUE);
+								((WWidget<?>) m.getWidget()).addStyleClasses(this.modelStylingService.getStylesFromTags(new ArrayList<String>(addedTags)));
 							} else if (UIEvents.isREMOVE(event)) {
-								Collection<String> removedTags = Util.<String>asCollection(event, UIEvents.EventTags.OLD_VALUE);
-								((WWidget<?>) m.getWidget()).removeStyleClasses(
-										this.modelStylingService.getStylesFromTags(new ArrayList<String>(removedTags)));
+								Collection<String> removedTags = Util.<String> asCollection(event, UIEvents.EventTags.OLD_VALUE);
+								((WWidget<?>) m.getWidget()).removeStyleClasses(this.modelStylingService.getStylesFromTags(new ArrayList<String>(removedTags)));
 							}
 						}
 					}
 
-				
 					IEclipseContext ctx = (IEclipseContext) e.getTransientData().get(RENDERING_CONTEXT_KEY);
 					if (ctx != null) {
 						if (attributeName.equals(UIEvents.ApplicationElement.PERSISTEDSTATE) && newValue instanceof Entry) {
@@ -542,6 +540,10 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * 
 	 * @param pm
 	 *            the model element
+	 * @param <LW>
+	 *            the widget type
+	 * @param <PM>
+	 *            the model type
 	 * @return the widget
 	 */
 	@SuppressWarnings("unchecked")
@@ -558,6 +560,10 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the model element
 	 * @param context
 	 *            the context
+	 * @param <LW>
+	 *            the widget type
+	 * @param <PM>
+	 *            the model type
 	 * @return the widget
 	 */
 	@SuppressWarnings("unchecked")
