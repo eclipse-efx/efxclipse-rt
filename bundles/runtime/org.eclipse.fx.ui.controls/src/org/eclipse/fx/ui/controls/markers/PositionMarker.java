@@ -89,7 +89,6 @@ public final class PositionMarker extends Group {
 
 	/**
 	 * The property
-	 * <p>
 	 * <table>
 	 * <tr>
 	 * <td>The default value is Color.rgb(0, 139, 255)</td>
@@ -98,7 +97,6 @@ public final class PositionMarker extends Group {
 	 * ></div></td>
 	 * </tr>
 	 * </table>
-	 * </p>
 	 * 
 	 * @return the fill property of the marker
 	 */
@@ -108,7 +106,6 @@ public final class PositionMarker extends Group {
 
 	/**
 	 * Set the fill of the marker
-	 * <p>
 	 * <table>
 	 * <tr>
 	 * <td>The default value is Color.rgb(0, 139, 255)</td>
@@ -117,7 +114,6 @@ public final class PositionMarker extends Group {
 	 * ></div></td>
 	 * </tr>
 	 * </table>
-	 * </p>
 	 * 
 	 * @param fill
 	 *            the new fill
@@ -128,7 +124,6 @@ public final class PositionMarker extends Group {
 
 	/**
 	 * Access the current fill
-	 * <p>
 	 * <table>
 	 * <tr>
 	 * <td>The default value is Color.rgb(0, 139, 255)</td>
@@ -137,7 +132,6 @@ public final class PositionMarker extends Group {
 	 * ></div></td>
 	 * </tr>
 	 * </table>
-	 * </p>
 	 * 
 	 * @return the current fill
 	 */
