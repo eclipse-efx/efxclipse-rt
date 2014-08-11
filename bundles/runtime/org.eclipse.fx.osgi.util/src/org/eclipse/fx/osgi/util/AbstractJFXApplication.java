@@ -33,7 +33,7 @@ import org.osgi.service.event.EventAdmin;
  */
 public abstract class AbstractJFXApplication implements IApplication {
 	static AbstractJFXApplication SELF;
-	
+
 	@Nullable
 	IApplicationContext applicationContext;
 	Object returnValue;
@@ -52,14 +52,12 @@ public abstract class AbstractJFXApplication implements IApplication {
 			this.applicationContext = this.osgiApp.applicationContext;
 
 			JFXRealm.createDefault();
-			this.osgiApp.jfxStart(this.applicationContext, JFXApp.this,
-					primaryStage);
+			this.osgiApp.jfxStart(this.applicationContext, JFXApp.this, primaryStage);
 
 			if (this.osgiApp.eventAdmin != null) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				// map.put("name", value);
-				this.osgiApp.eventAdmin.sendEvent(new Event(
-						"efxapp/applicationLaunched", map)); //$NON-NLS-1$
+				this.osgiApp.eventAdmin.sendEvent(new Event("efxapp/applicationLaunched", map)); //$NON-NLS-1$
 			}
 		}
 
@@ -78,22 +76,19 @@ public abstract class AbstractJFXApplication implements IApplication {
 
 		Bundle b = FrameworkUtil.getBundle(AbstractJFXApplication.class);
 		BundleContext bundleContext = b.getBundleContext();
-		ServiceReference<EventAdmin> ref = bundleContext
-				.getServiceReference(EventAdmin.class);
+		ServiceReference<EventAdmin> ref = bundleContext.getServiceReference(EventAdmin.class);
 		if (ref != null) {
 			this.eventAdmin = bundleContext.getService(ref);
 		}
 
 		// Looks like OS-X wants to have the context class loader to locate
 		// FX-Classes
-		Thread.currentThread().setContextClassLoader(
-				Application.class.getClassLoader());
+		Thread.currentThread().setContextClassLoader(Application.class.getClassLoader());
 
 		Application.launch(JFXApp.class);
 
 		try {
-			return this.returnValue == null ? IApplication.EXIT_OK
-					: this.returnValue;
+			return this.returnValue == null ? IApplication.EXIT_OK : this.returnValue;
 		} finally {
 			this.returnValue = null;
 		}
@@ -105,7 +100,7 @@ public abstract class AbstractJFXApplication implements IApplication {
 	}
 
 	/**
-	 * Method called when OSGi & JavaFX are fully initialized
+	 * Method called when OSGi &amp; JavaFX are fully initialized
 	 * {@link Application#start(Stage)}
 	 * 
 	 * @param applicationContext
@@ -113,18 +108,18 @@ public abstract class AbstractJFXApplication implements IApplication {
 	 * @param jfxApplication
 	 *            the javafx application instance
 	 * @param primaryStage
+	 *            the primary stage created by JavaFX bootstrap
 	 * @see IApplication#start(IApplicationContext)
 	 * @see Application#start(Stage)
 	 */
-	protected abstract void jfxStart(
-			@NonNull IApplicationContext applicationContext,
-			@NonNull Application jfxApplication, @NonNull Stage primaryStage);
+	protected abstract void jfxStart(@NonNull IApplicationContext applicationContext, @NonNull Application jfxApplication, @NonNull Stage primaryStage);
 
 	/**
 	 * Method called when the javafx application is shutdown
 	 * {@link Application#stop()}
 	 * 
-	 * @return the return status for the OSGi application see {@link IApplication#start(IApplicationContext)}
+	 * @return the return status for the OSGi application see
+	 *         {@link IApplication#start(IApplicationContext)}
 	 * @see IApplication#start(IApplicationContext)
 	 * @see Application#stop()
 	 */
