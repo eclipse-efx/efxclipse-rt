@@ -44,9 +44,12 @@ public class StyledTextArea extends Control {
 
 		@Override
 		protected void invalidated() {
-			if (this.oldContent != null && this.oldContent.get() != null) {
-				this.oldContent.get().removeTextChangeListener(
-						StyledTextArea.this.textChangeListener);
+			if (this.oldContent != null) {
+				StyledTextContent content = this.oldContent.get();
+				if( content != null ) {
+					content.removeTextChangeListener(
+							StyledTextArea.this.textChangeListener);	
+				}
 			}
 			StyledTextContent newContent = StyledTextArea.this.contentProperty
 					.get();
