@@ -10,7 +10,7 @@ Export-Package: org.eclipse.fx.ui.controls.image,
  org.eclipse.fx.ui.controls.image.spi,
  org.eclipse.fx.ui.controls.markers,
  org.eclipse.fx.ui.controls.paint,
- org.eclipse.fx.ui.controls.styledtext;x-internal:=true,
+ org.eclipse.fx.ui.controls.styledtext,
  org.eclipse.fx.ui.controls.tabpane
 Import-Package: com.sun.javafx;version="2.2.0",
  com.sun.javafx.accessible;version="2.2.0",
