@@ -112,12 +112,12 @@ public interface WWidget<M extends MUIElement> {
 	 *            the classnames to add
 	 */
 	public void removeStyleClasses(@NonNull String... classnames);
-	
-	
+
 	/**
 	 * Set a style id used for an CSS ID-Selector in your css
 	 * 
 	 * @param id
+	 *            the style id
 	 */
 	public void setStyleId(@NonNull String id);
 

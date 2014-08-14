@@ -27,7 +27,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *            the content provider responsible to translate the input into the
  *            internal structure
  */
-public interface ListViewer<O, I, C extends ContentProvider<O, I>> extends Viewer<O, I, C> {
+public interface ListViewer<I, O, C extends ContentProvider<I, O>> extends Viewer<I, O, C> {
 	/**
 	 * Translate the domain object into a string
 	 * 
@@ -35,7 +35,7 @@ public interface ListViewer<O, I, C extends ContentProvider<O, I>> extends Viewe
 	 *            the converter
 	 * @return the list viewer
 	 */
-	public ListViewer<O, I, C> textProvider(Function<@NonNull O, @Nullable String> converter);
+	public ListViewer<I, O, C> textProvider(Function<@NonNull O, @Nullable String> converter);
 
 	/**
 	 * Translate the domain object into a style information to style the cell
@@ -45,7 +45,7 @@ public interface ListViewer<O, I, C extends ContentProvider<O, I>> extends Viewe
 	 *            the converter
 	 * @return the list viewer
 	 */
-	public ListViewer<O, I, C> styleProvider(Function<@NonNull O, @Nullable String> converter);
+	public ListViewer<I, O, C> styleProvider(Function<@NonNull O, @Nullable String> converter);
 
 	/**
 	 * Translate the domain object into a style ranges
@@ -54,7 +54,7 @@ public interface ListViewer<O, I, C extends ContentProvider<O, I>> extends Viewe
 	 *            the converter
 	 * @return the list viewer
 	 */
-	public ListViewer<O, I, C> textStyleRangeProvider(Function<@NonNull O, @NonNull List<@NonNull StyleRange>> converter);
+	public ListViewer<I, O, C> textStyleRangeProvider(Function<@NonNull O, @NonNull List<@NonNull StyleRange>> converter);
 
 	/**
 	 * Translate the domain object into an image definition
@@ -63,5 +63,5 @@ public interface ListViewer<O, I, C extends ContentProvider<O, I>> extends Viewe
 	 *            the converter
 	 * @return the list viewer
 	 */
-	public ListViewer<O, I, C> graphicProvider(Function<@NonNull O, @Nullable String> converter);
+	public ListViewer<I, O, C> graphicProvider(Function<@NonNull O, @Nullable String> converter);
 }

@@ -250,7 +250,8 @@ public class AdapterFactory {
 							return;
 						}
 
-						// TODO We need to make this perform a lot better by calculating range changes
+						// TODO We need to make this perform a lot better by
+						// calculating range changes
 						for (ListChangeListener<? super E> l : WrappedList.this.fxChangeListeners.toArray(new ListChangeListener[0])) {
 							Change<E> change = new Change<E>(WrappedList.this) {
 								private int index = -1;
@@ -483,6 +484,8 @@ public class AdapterFactory {
 	 * 
 	 * @param value
 	 *            the eclipse db value
+	 * @param <E>
+	 *            the list type
 	 * @return the javafx observable
 	 */
 	public static <E> ObservableWritableValue<E> adapt(IObservableValue value) {
@@ -494,6 +497,8 @@ public class AdapterFactory {
 	 * 
 	 * @param list
 	 *            the eclipse db list
+	 * @param <E>
+	 *            the list type
 	 * @return the javafx observable list
 	 */
 	public static <E> ObservableList<E> adapt(IObservableList list) {
@@ -513,6 +518,8 @@ public class AdapterFactory {
 	 *            the eclipse db observable
 	 * @param initialSync
 	 *            the initial sync direction
+	 * @param <E>
+	 *            the list type
 	 */
 	public static <E> void bind(ObservableList<E> fxObs, IObservableList dbObs, InitialSync initialSync) {
 		ObservableList<E> dbList = adapt(dbObs);
@@ -533,6 +540,10 @@ public class AdapterFactory {
 	 *            the eclipse db observable
 	 * @param initialSync
 	 *            the initial sync direction
+	 * @param <E>
+	 *            the value type
+	 * @param <F>
+	 *            the observable value type
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E, F extends ObservableValue<E> & WritableValue<E>> void bind(F fxObs, IObservableValue dbObs, InitialSync initialSync) {
@@ -546,28 +557,32 @@ public class AdapterFactory {
 	}
 
 	/**
-	 * Creates an <b>readonly</b> observable list which is backed by the source list but the values are converted using the
-	 * converter
+	 * Creates an <b>readonly</b> observable list which is backed by the source
+	 * list but the values are converted using the converter
 	 * 
 	 * @param source
 	 *            the source list
 	 * @param converter
 	 *            the converter
+	 * @param <S>
+	 *            the source list type
+	 * @param <T>
+	 *            the target list type
 	 * @return observable list with converter value
 	 */
 	@SuppressWarnings("unchecked")
 	public static <S, T> IObservableList convertObservableList(IObservableList source, final Callback<S, T> converter) {
 		final ReadonlyWritableList target = new ReadonlyWritableList(source.getRealm());
-		
+
 		try {
 			target.modifiable = true;
 			for (Object o : source) {
-				target.add(converter.call((S)o));
+				target.add(converter.call((S) o));
 			}
 		} finally {
 			target.modifiable = false;
 		}
-		
+
 		source.addListChangeListener(new IListChangeListener() {
 
 			@Override
@@ -603,7 +618,7 @@ public class AdapterFactory {
 							target.modifiable = false;
 						}
 					}
-					
+
 					@Override
 					public void handleMove(int oldIndex, int newIndex, Object element) {
 						try {
@@ -619,17 +634,17 @@ public class AdapterFactory {
 
 		return target;
 	}
-	
+
 	static class ReadonlyWritableList extends WritableList {
 		boolean modifiable;
-		
+
 		public ReadonlyWritableList(Realm r) {
 			super(r);
 		}
 
 		@Override
 		public Object set(int index, Object element) {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			return super.set(index, element);
@@ -637,7 +652,7 @@ public class AdapterFactory {
 
 		@Override
 		public Object move(int oldIndex, int newIndex) {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			return super.move(oldIndex, newIndex);
@@ -645,7 +660,7 @@ public class AdapterFactory {
 
 		@Override
 		public Object remove(int index) {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			return super.remove(index);
@@ -653,7 +668,7 @@ public class AdapterFactory {
 
 		@Override
 		public boolean add(Object element) {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			return super.add(element);
@@ -661,7 +676,7 @@ public class AdapterFactory {
 
 		@Override
 		public void add(int index, Object element) {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			super.add(index, element);
@@ -670,7 +685,7 @@ public class AdapterFactory {
 		@SuppressWarnings("rawtypes")
 		@Override
 		public boolean addAll(Collection c) {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			return super.addAll(c);
@@ -679,7 +694,7 @@ public class AdapterFactory {
 		@SuppressWarnings("rawtypes")
 		@Override
 		public boolean addAll(int index, Collection c) {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			return super.addAll(index, c);
@@ -687,7 +702,7 @@ public class AdapterFactory {
 
 		@Override
 		public boolean remove(Object o) {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			return super.remove(o);
@@ -696,7 +711,7 @@ public class AdapterFactory {
 		@SuppressWarnings("rawtypes")
 		@Override
 		public boolean removeAll(Collection c) {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			return super.removeAll(c);
@@ -705,7 +720,7 @@ public class AdapterFactory {
 		@SuppressWarnings("rawtypes")
 		@Override
 		public boolean retainAll(Collection c) {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			return super.retainAll(c);
@@ -713,7 +728,7 @@ public class AdapterFactory {
 
 		@Override
 		public void clear() {
-			if( ! this.modifiable ) {
+			if (!this.modifiable) {
 				throw new UnsupportedOperationException("Unmodifiable list"); //$NON-NLS-1$
 			}
 			super.clear();

@@ -28,19 +28,19 @@ import org.eclipse.jdt.annotation.NonNull;
  * @param <O>
  *            the type
  */
-public interface PropertyListCellFaytory<O> extends
-		Callback<ListView<O>, ListCell<O>> {
+public interface PropertyListCellFaytory<O> extends Callback<ListView<O>, ListCell<O>> {
 	/**
 	 * Create a factory who uses the given property as the cells text content
 	 * 
 	 * @param textProperty
 	 *            the property
+	 * @param <O>
+	 *            the type
 	 * @return a factory instance
 	 * @see #textCell(IValueProperty)
 	 */
 	@NonNull
-	public static <O> PropertyListCellFaytory<O> textFactory(
-			@NonNull final IValueProperty textProperty) {
+	public static <O> PropertyListCellFaytory<O> textFactory(@NonNull final IValueProperty textProperty) {
 		return (param) -> textCell(textProperty);
 	}
 
@@ -52,11 +52,12 @@ public interface PropertyListCellFaytory<O> extends
 	 *            the template
 	 * @param textProperties
 	 *            the properties
+	 * @param <O>
+	 *            the type
 	 * @return a factory instance
 	 */
 	@NonNull
-	public static <O> PropertyListCellFaytory<O> textFactory(
-			@NonNull final String template, @NonNull final IValueProperty... textProperties) {
+	public static <O> PropertyListCellFaytory<O> textFactory(@NonNull final String template, @NonNull final IValueProperty... textProperties) {
 		return (param) -> textCell(template, textProperties);
 	}
 
@@ -66,6 +67,8 @@ public interface PropertyListCellFaytory<O> extends
 	 * 
 	 * @param textProperty
 	 *            the text property
+	 * @param <O>
+	 *            the type
 	 * @return the list cell
 	 */
 	@NonNull
@@ -82,12 +85,13 @@ public interface PropertyListCellFaytory<O> extends
 	 *            the template
 	 * @param textProperties
 	 *            the properties
+	 * @param <O>
+	 *            the type
 	 * @return the list cell
 	 */
 	@NonNull
-	public static <O> ListCell<O> textCell(@NonNull String template,
-			@NonNull IValueProperty... textProperties) {
+	public static <O> ListCell<O> textCell(@NonNull String template, @NonNull IValueProperty... textProperties) {
 		return new TemplateTextOnlyPropertyListCell<>(template, textProperties);
 	}
-	
+
 }

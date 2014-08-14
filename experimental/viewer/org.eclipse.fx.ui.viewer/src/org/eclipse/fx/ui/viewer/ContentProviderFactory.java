@@ -13,8 +13,8 @@ package org.eclipse.fx.ui.viewer;
 import java.util.List;
 
 public class ContentProviderFactory {
-	public static <O> ContentProvider<O, List<O>> createListContentProvider() {
-		return new ContentProvider<O, List<O>>() {
+	public static <O> ContentProvider<List<O>, O> createListContentProvider() {
+		return new ContentProvider<List<O>,O>() {
 			private List<O> input;
 			
 			@Override
@@ -34,8 +34,8 @@ public class ContentProviderFactory {
 		};
 	}
 	
-	public static <O> ContentProvider<O, O[]> createArrayContentProvider() {
-		return new ContentProvider<O, O[]>() {
+	public static <O> ContentProvider<O[], O> createArrayContentProvider() {
+		return new ContentProvider<O[], O>() {
 			private O[] input;
 			
 			@Override

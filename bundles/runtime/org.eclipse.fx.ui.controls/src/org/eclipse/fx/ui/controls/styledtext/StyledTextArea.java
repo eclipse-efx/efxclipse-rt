@@ -34,6 +34,10 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Control which allows to implemented a code-editor
+ * 
+ * <p>
+ * <b>This is an experimental component provided as a preview we'll improve and fix problems in up coming releases</b>
+ * </p>
  */
 public class StyledTextArea extends Control {
 
@@ -44,9 +48,12 @@ public class StyledTextArea extends Control {
 
 		@Override
 		protected void invalidated() {
-			if (this.oldContent != null && this.oldContent.get() != null) {
-				this.oldContent.get().removeTextChangeListener(
-						StyledTextArea.this.textChangeListener);
+			if (this.oldContent != null) {
+				StyledTextContent content = this.oldContent.get();
+				if( content != null ) {
+					content.removeTextChangeListener(
+							StyledTextArea.this.textChangeListener);	
+				}
 			}
 			StyledTextContent newContent = StyledTextArea.this.contentProperty
 					.get();
@@ -206,8 +213,10 @@ public class StyledTextArea extends Control {
 	 *            the offset
 	 * @param selection
 	 *            <code>true</code> to update the current selection
+	 * @deprecated internal API for now
 	 */
-	public void setCaretOffset(int offset, boolean selection) {
+	@Deprecated
+	public void impl_setCaretOffset(int offset, boolean selection) {
 		if (selection) {
 			TextSelection s = getSelection();
 			int lastOffset = getCaretOffset();

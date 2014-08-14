@@ -39,12 +39,14 @@ public class ExtendedFXMLLoader {
 	 *            the classloader to use
 	 * @param path
 	 *            the path to the FXML-File
+	 * @param <T>
+	 *            the root node type
 	 * @return the object graph constructed from the fxml or .class-File
 	 * @throws IOException
+	 *             in case loading of the FXML file fails
 	 */
 	@NonNull
-	public static <T> T load(@NonNull ClassLoader cl, @NonNull String path)
-			throws IOException {
+	public static <T> T load(@NonNull ClassLoader cl, @NonNull String path) throws IOException {
 		return load(cl, null, path);
 	}
 
@@ -57,17 +59,17 @@ public class ExtendedFXMLLoader {
 	 *            the l10n bundle for localization
 	 * @param path
 	 *            the path to the FXML-File
+	 * @param <T>
+	 *            the root node type
 	 * @return the object graph constructed from the fxml or .class-File
 	 * @throws IOException
+	 *             in case loading of the FXML file fails
 	 */
 	@NonNull
-	public static <T> T load(@NonNull ClassLoader cl,
-			@Nullable ResourceBundle resourceBundle, @NonNull String path)
-			throws IOException {
-		return ExtendedFXMLLoader.<T, Object> loadWithController(cl,
-				resourceBundle, null, path).getNode();
+	public static <T> T load(@NonNull ClassLoader cl, @Nullable ResourceBundle resourceBundle, @NonNull String path) throws IOException {
+		return ExtendedFXMLLoader.<T, Object> loadWithController(cl, resourceBundle, null, path).getNode();
 	}
-	
+
 	/**
 	 * Load the FXML file
 	 * 
@@ -79,17 +81,17 @@ public class ExtendedFXMLLoader {
 	 *            the l10n bundle for localization
 	 * @param path
 	 *            the path to the FXML-File
+	 * @param <T>
+	 *            the root node type
 	 * @return the object graph constructed from the fxml or .class-File
 	 * @throws IOException
+	 *             in case loading of the FXML file fails
 	 */
 	@NonNull
-	public static <T> T load(@NonNull ClassLoader cl,
-			@Nullable ResourceBundle resourceBundle, T root, @NonNull String path)
-			throws IOException {
-		return ExtendedFXMLLoader.<T,T, Object> loadWithController(cl,
-				resourceBundle, root, null, path).getNode();
+	public static <T> T load(@NonNull ClassLoader cl, @Nullable ResourceBundle resourceBundle, T root, @NonNull String path) throws IOException {
+		return ExtendedFXMLLoader.<T, T, Object> loadWithController(cl, resourceBundle, root, null, path).getNode();
 	}
-	
+
 	/**
 	 * Load the FXML file
 	 * 
@@ -101,14 +103,16 @@ public class ExtendedFXMLLoader {
 	 *            an optional controller factory
 	 * @param path
 	 *            the path to the FXML-File
+	 * @param <N>
+	 *            the root node type
+	 * @param <C>
+	 *            the controller type
 	 * @return the object graph constructed from the fxml or .class-File
 	 * @throws IOException
+	 *             in case loading of the FXML file fails
 	 */
-	public static <N, C> Data<N, C> loadWithController(@NonNull ClassLoader cl,
-			@Nullable ResourceBundle resourceBundle,
-			@Nullable Callback<Class<?>, Object> controllerFactory,
-			@NonNull String path) throws IOException {
-		return ExtendedFXMLLoader.<N,N,C>loadWithController(cl, resourceBundle, null, controllerFactory, path);
+	public static <N, C> Data<N, C> loadWithController(@NonNull ClassLoader cl, @Nullable ResourceBundle resourceBundle, @Nullable Callback<Class<?>, Object> controllerFactory, @NonNull String path) throws IOException {
+		return ExtendedFXMLLoader.<N, N, C> loadWithController(cl, resourceBundle, null, controllerFactory, path);
 	}
 
 	/**
@@ -124,24 +128,26 @@ public class ExtendedFXMLLoader {
 	 *            an optional controller factory
 	 * @param path
 	 *            the path to the FXML-File
+	 * @param <N>
+	 *            the root node type
+	 * @param <D>
+	 *            the root type passed in
+	 * @param <C>
+	 *            the controller type
 	 * @return the object graph constructed from the fxml or .class-File
 	 * @throws IOException
+	 *             in case loading of the FXML file fails
 	 */
 	@SuppressWarnings("unchecked")
 	@NonNull
-	public static <N, D extends N, C> Data<N, C> loadWithController(@NonNull ClassLoader cl,
-			@Nullable ResourceBundle resourceBundle, @Nullable D root,
-			@Nullable Callback<Class<?>, Object> controllerFactory,
-			@NonNull String path) throws IOException {
+	public static <N, D extends N, C> Data<N, C> loadWithController(@NonNull ClassLoader cl, @Nullable ResourceBundle resourceBundle, @Nullable D root, @Nullable Callback<Class<?>, Object> controllerFactory, @NonNull String path) throws IOException {
 		try {
-			String classname = path.substring(0, path.lastIndexOf('.'))
-					.replace('/', '.');
+			String classname = path.substring(0, path.lastIndexOf('.')).replace('/', '.');
 			Class<?> clazz = cl.loadClass(classname);
 			final FXMLDocument<N> d = (FXMLDocument<N>) clazz.newInstance();
 			URL url = cl.getResource(path);
 			if (url != null) {
-				final N n = d.load(new LoadData<N>(url, resourceBundle,
-						root,controllerFactory));
+				final N n = d.load(new LoadData<N>(url, resourceBundle, root, controllerFactory));
 				return new Data<N, C>() {
 
 					@Override
@@ -155,8 +161,7 @@ public class ExtendedFXMLLoader {
 					}
 				};
 			} else {
-				throw new IOException(
-						"Unable to get url for path '" + path + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+				throw new IOException("Unable to get url for path '" + path + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		} catch (ClassNotFoundException e) {
 			final FXMLLoader loader = new FXMLLoader();
@@ -178,8 +183,7 @@ public class ExtendedFXMLLoader {
 					}
 				};
 			}
-			throw new IOException(
-					"Unable to load fxml document from '" + path + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+			throw new IOException("Unable to load fxml document from '" + path + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 		} catch (InstantiationException e) {
 			throw new IOException(e);
 		} catch (IllegalAccessException e) {

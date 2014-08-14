@@ -32,23 +32,27 @@ public class TreeUtil {
 	 *            the root of the model
 	 * @param factory
 	 *            the factory to create children
+	 * @param <T>
+	 *            the the item value type
 	 * @return the tree item backed by the given root model instance
 	 */
-	@NonNull 
-	public static <T> TreeItem<T> createModel(@NonNull T root,
-			@NonNull ObservableFactory<T> factory) {
+	@NonNull
+	public static <T> TreeItem<T> createModel(@NonNull T root, @NonNull ObservableFactory<T> factory) {
 		return new TreeItemImpl<T>(root, factory);
 	}
 
 	/**
 	 * Factory to create child observables
 	 * 
-	 * @param <T> the type
+	 * @param <T>
+	 *            the type
 	 */
 	public interface ObservableFactory<T> {
 		/**
 		 * Create an observable list for the parent element
-		 * @param parent the parent
+		 * 
+		 * @param parent
+		 *            the parent
 		 * @return the list
 		 */
 		public IObservableList createObservable(@NonNull T parent);
@@ -74,12 +78,12 @@ public class TreeUtil {
 			return super.getChildren();
 		}
 
-//		public boolean isLeaf() {
-//			if (this.hasLoadedChildren == false) {
-//				loadChildren();
-//			}
-//			return super.getChildren().isEmpty();
-//		}
+		// public boolean isLeaf() {
+		// if (this.hasLoadedChildren == false) {
+		// loadChildren();
+		// }
+		// return super.getChildren().isEmpty();
+		// }
 
 		@SuppressWarnings("null")
 		private void loadChildren() {
@@ -99,8 +103,7 @@ public class TreeUtil {
 									if (t.getValue() == element) {
 										itemList.remove(index);
 									} else {
-										Iterator<TreeItem<T>> it = itemList
-												.iterator();
+										Iterator<TreeItem<T>> it = itemList.iterator();
 										while (it.hasNext()) {
 											if (it.next().getValue() == element) {
 												it.remove();
@@ -115,11 +118,9 @@ public class TreeUtil {
 							@Override
 							public void handleAdd(int index, Object element) {
 								if (itemList.size() > index) {
-									itemList.add(index, new TreeItemImpl<@NonNull T>(
-											(T) element, TreeItemImpl.this.factory));
+									itemList.add(index, new TreeItemImpl<@NonNull T>((T) element, TreeItemImpl.this.factory));
 								} else {
-									itemList.add(new TreeItemImpl<@NonNull T>(
-											(T) element, TreeItemImpl.this.factory));
+									itemList.add(new TreeItemImpl<@NonNull T>((T) element, TreeItemImpl.this.factory));
 								}
 							}
 						});

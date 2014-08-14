@@ -237,6 +237,7 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	 * 
 	 * @param rendererClass
 	 *            The renderer class to be instantiated.
+	 * @param <R> the renderer type
 	 * @return a new instance of the given renderer class.
 	 */
 	@NonNull

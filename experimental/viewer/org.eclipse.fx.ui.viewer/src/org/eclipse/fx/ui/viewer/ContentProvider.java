@@ -11,7 +11,7 @@
 package org.eclipse.fx.ui.viewer;
 
 
-public interface ContentProvider<O,I> {
+public interface ContentProvider<I, O> {
 	public void setInput(I input);
 	public O getRootElement(int index);
 	public int getSize();

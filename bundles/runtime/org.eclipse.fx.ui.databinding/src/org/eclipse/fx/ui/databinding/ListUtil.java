@@ -31,12 +31,12 @@ public class ListUtil {
 	 *            the list view
 	 * @param property
 	 *            the text property
+	 * @param <T>
+	 *            the list element type
 	 * @see PropertyListCellFaytory#textFactory(IValueProperty)
 	 */
-	public static <T> void setupList(@NonNull ListView<T> listView,
-			@NonNull IValueProperty property) {
-		listView.setCellFactory(PropertyListCellFaytory
-				.<T> textFactory(property));
+	public static <T> void setupList(@NonNull ListView<T> listView, @NonNull IValueProperty property) {
+		listView.setCellFactory(PropertyListCellFaytory.<T> textFactory(property));
 	}
 
 	/**
@@ -49,12 +49,12 @@ public class ListUtil {
 	 *            the template to use
 	 * @param properties
 	 *            the properties to display
+	 * @param <T>
+	 *            the list element type
 	 * @see PropertyListCellFaytory#textCell(String, IValueProperty...)
 	 */
-	public static <T> void setupList(@NonNull ListView<T> listView, @NonNull String template,
-			@NonNull IValueProperty... properties) {
-		listView.setCellFactory(PropertyListCellFaytory.<T> textFactory(
-				template, properties));
+	public static <T> void setupList(@NonNull ListView<T> listView, @NonNull String template, @NonNull IValueProperty... properties) {
+		listView.setCellFactory(PropertyListCellFaytory.<T> textFactory(template, properties));
 	}
 
 	/**
@@ -66,10 +66,11 @@ public class ListUtil {
 	 *            the list to set as the input
 	 * @param property
 	 *            the property
+	 * @param <T>
+	 *            the list element type
 	 * @see #setupList(ListView, IValueProperty)
 	 */
-	public static <T> void setupList(@NonNull ListView<T> listView,
-			@NonNull IObservableList list, @NonNull IValueProperty property) {
+	public static <T> void setupList(@NonNull ListView<T> listView, @NonNull IObservableList list, @NonNull IValueProperty property) {
 		setupList(listView, property);
 		listView.setItems(AdapterFactory.<T> adapt(list));
 	}
@@ -86,10 +87,11 @@ public class ListUtil {
 	 *            the template
 	 * @param properties
 	 *            the properties to display
+	 * @param <T>
+	 *            the list element type
 	 * @see #setupList(ListView, String, IValueProperty...)
 	 */
-	public static <T> void setupList(@NonNull ListView<T> listView,
-			@NonNull IObservableList list, @NonNull String template, @NonNull IValueProperty... properties) {
+	public static <T> void setupList(@NonNull ListView<T> listView, @NonNull IObservableList list, @NonNull String template, @NonNull IValueProperty... properties) {
 		setupList(listView, template, properties);
 		listView.setItems(AdapterFactory.<T> adapt(list));
 	}
@@ -101,13 +103,13 @@ public class ListUtil {
 	 *            the combo box
 	 * @param property
 	 *            the property
+	 * @param <T>
+	 *            the combobox element type
 	 * @see PropertyListCellFaytory#textFactory(IValueProperty)
 	 * @see PropertyListCellFaytory#textCell(IValueProperty)
 	 */
-	public static <T> void setupComboBox(@NonNull ComboBox<T> comboBox,
-			@NonNull IValueProperty property) {
-		comboBox.setCellFactory(PropertyListCellFaytory
-				.<T> textFactory(property));
+	public static <T> void setupComboBox(@NonNull ComboBox<T> comboBox, @NonNull IValueProperty property) {
+		comboBox.setCellFactory(PropertyListCellFaytory.<T> textFactory(property));
 		comboBox.setButtonCell(PropertyListCellFaytory.<T> textCell(property));
 	}
 
@@ -121,15 +123,14 @@ public class ListUtil {
 	 *            the template to use
 	 * @param properties
 	 *            the properties to display
+	 * @param <T>
+	 *            the combobox element type
 	 * @see PropertyListCellFaytory#textFactory(String, IValueProperty...)
 	 * @see PropertyListCellFaytory#textCell(String, IValueProperty...)
 	 */
-	public static <T> void setupComboBox(@NonNull ComboBox<T> comboBox, @NonNull String template,
-			@NonNull IValueProperty... properties) {
-		comboBox.setCellFactory(PropertyListCellFaytory.<T> textFactory(
-				template, properties));
-		comboBox.setButtonCell(PropertyListCellFaytory.<T> textCell(template,
-				properties));
+	public static <T> void setupComboBox(@NonNull ComboBox<T> comboBox, @NonNull String template, @NonNull IValueProperty... properties) {
+		comboBox.setCellFactory(PropertyListCellFaytory.<T> textFactory(template, properties));
+		comboBox.setButtonCell(PropertyListCellFaytory.<T> textCell(template, properties));
 	}
 
 	/**
@@ -141,10 +142,11 @@ public class ListUtil {
 	 *            the combo box
 	 * @param property
 	 *            the property
+	 * @param <T>
+	 *            the combobox element type
 	 * @see #setupComboBox(ComboBox, IValueProperty)
 	 */
-	public static <T> void setupComboBox(@NonNull IObservableList list,
-			@NonNull ComboBox<T> comboBox, @NonNull IValueProperty property) {
+	public static <T> void setupComboBox(@NonNull IObservableList list, @NonNull ComboBox<T> comboBox, @NonNull IValueProperty property) {
 		setupComboBox(comboBox, property);
 		comboBox.setItems(AdapterFactory.<T> adapt(list));
 	}
@@ -161,10 +163,11 @@ public class ListUtil {
 	 *            the template to use
 	 * @param properties
 	 *            the properties to display
+	 * @param <T>
+	 *            the combobox element type
 	 * @see #setupComboBox(ComboBox, String, IValueProperty...)
 	 */
-	public static <T> void setupComboBox(@NonNull ComboBox<T> comboBox,
-			@NonNull IObservableList list, @NonNull String template, @NonNull IValueProperty... properties) {
+	public static <T> void setupComboBox(@NonNull ComboBox<T> comboBox, @NonNull IObservableList list, @NonNull String template, @NonNull IValueProperty... properties) {
 		setupComboBox(comboBox, template, properties);
 		comboBox.setItems(AdapterFactory.<T> adapt(list));
 	}

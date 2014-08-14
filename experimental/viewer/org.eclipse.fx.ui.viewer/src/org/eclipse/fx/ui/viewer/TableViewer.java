@@ -10,6 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.viewer;
 
-public interface TableViewer<O,I,C extends ContentProvider<O, I>> extends ColumnViewer<O, I, C> {
+public interface TableViewer<I,O,C extends ContentProvider<I, O>> extends ColumnViewer<I, O, C> {
 
 }

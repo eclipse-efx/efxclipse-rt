@@ -11,7 +11,7 @@
 package org.eclipse.fx.ui.viewer;
 
 
-public interface TreeContentProvider<O,I> extends ContentProvider<O, I> {
+public interface TreeContentProvider<I, O> extends ContentProvider<I, O> {
 	public O getChild(O parent, int index);
 	public O getParent(O element);
 	public int getChildSize(O parent);

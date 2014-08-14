@@ -46,10 +46,10 @@ public class TextStyle {
 	 * Style constant to indicate single underline (value is 0).
 	 * <p>
 	 * <b>Used By:</b>
+	 * </p>
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * </p>
 	 * 
 	 * @since 3.4
 	 */
@@ -59,10 +59,10 @@ public class TextStyle {
 	 * Style constant to indicate double underline (value is 1).
 	 * <p>
 	 * <b>Used By:</b>
+	 * </p>
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * </p>
 	 * 
 	 * @since 3.4
 	 */
@@ -72,10 +72,10 @@ public class TextStyle {
 	 * Style constant to indicate error underline (value is 2).
 	 * <p>
 	 * <b>Used By:</b>
+	 * </p>
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * </p>
 	 * 
 	 * @since 3.4
 	 */
@@ -85,10 +85,10 @@ public class TextStyle {
 	 * Style constant to indicate squiggle underline (value is 3).
 	 * <p>
 	 * <b>Used By:</b>
+	 * </p>
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * </p>
 	 * 
 	 * @since 3.4
 	 */
@@ -106,10 +106,10 @@ public class TextStyle {
 	 * </p>
 	 * <p>
 	 * <b>Used By:</b>
+	 * </p>
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * </p>
 	 * 
 	 * @since 3.5
 	 */
@@ -119,10 +119,10 @@ public class TextStyle {
 	 * Style constant to indicate solid border (value is 1).
 	 * <p>
 	 * <b>Used By:</b>
+	 * </p>
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * </p>
 	 * 
 	 * @since 3.4
 	 */
@@ -132,10 +132,10 @@ public class TextStyle {
 	 * Style constant to indicate dashed border (value is 2).
 	 * <p>
 	 * <b>Used By:</b>
+	 * </p>
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * </p>
 	 * 
 	 * @since 3.4
 	 */
@@ -145,10 +145,10 @@ public class TextStyle {
 	 * Style constant to indicate dotted border (value is 4).
 	 * <p>
 	 * <b>Used By:</b>
+	 * </p>
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * </p>
 	 * 
 	 * @since 3.4
 	 */
@@ -250,7 +250,6 @@ public class TextStyle {
 	 * the data. An user data field. It can be used to hold the HREF when the
 	 * range is used as a link or the embed object when the range is used with
 	 * <code>GlyphMetrics</code>.
-	 * <p>
 	 * 
 	 * @since 3.5
 	 */

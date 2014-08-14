@@ -22,6 +22,8 @@ public interface RendererFactory {
 	 * 
 	 * @param element
 	 *            the model element
+	 * @param <R>
+	 *            the renderer type
 	 * @return the renderer
 	 */
 	public <R extends ElementRenderer<?, ?>> @Nullable R getRenderer(MUIElement element);

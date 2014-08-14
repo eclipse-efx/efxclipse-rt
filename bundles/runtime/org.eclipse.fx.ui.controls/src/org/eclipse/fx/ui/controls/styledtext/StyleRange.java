@@ -29,12 +29,10 @@ public class StyleRange extends TextStyle implements Cloneable {
 	 * The font style constant indicating a normal weight, non-italic font
 	 * (value is 0). This constant is also used with <code>ProgressBar</code> to
 	 * indicate a normal state.
-	 * <p>
 	 * <b>Used By:</b>
 	 * <ul>
 	 * <li><code>ProgressBar</code></li>
 	 * </ul>
-	 * </p>
 	 */
 	public static final int NORMAL = 0;
 

@@ -34,7 +34,7 @@ import org.eclipse.jdt.annotation.NonNull;
 public class EditingDomainCellDropAdapter implements ICellCreationListener {
 
 	/**
-	 * Handles the feedback to Drag & Drop events by styling or otherwise modifying the affected {@link Cell}
+	 * Handles the feedback to Drag &amp; Drop events by styling or otherwise modifying the affected {@link Cell}
 	 */
 	public interface IDnDFeedbackHandler {
 

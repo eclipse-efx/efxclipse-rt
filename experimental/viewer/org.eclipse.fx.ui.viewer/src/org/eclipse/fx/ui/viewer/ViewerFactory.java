@@ -13,6 +13,6 @@ package org.eclipse.fx.ui.viewer;
 import java.util.function.Consumer;
 
 public interface ViewerFactory {
-	public <O,I,C extends ContentProvider<O, I>, V extends TableViewer<O,I,C>,W> V createTableViewer(W ownerWidget, Consumer<V> setup);
-	public <O,I,C extends ContentProvider<O, I>, V extends ListViewer<O,I,C>,W> V createListViewer(W ownerWidget, Consumer<V> setup);
+	public <I,O,C extends ContentProvider<I, O>, V extends TableViewer<I, O,C>,W> V createTableViewer(W ownerWidget, Consumer<V> setup);
+	public <I,O,C extends ContentProvider<I, O>, V extends ListViewer<I, O,C>,W> V createListViewer(W ownerWidget, Consumer<V> setup);
 }

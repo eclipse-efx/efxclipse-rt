@@ -10,6 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.viewer;
 
-public interface TreeTableViewer<O,I,C extends TreeContentProvider<O, I>> extends ColumnViewer<O, I, C> {
+public interface TreeTableViewer<I, O, C extends TreeContentProvider<I, O>> extends ColumnViewer<I, O, C> {
 
 }

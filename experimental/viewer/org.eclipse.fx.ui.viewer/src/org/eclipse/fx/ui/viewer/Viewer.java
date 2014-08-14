@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.NonNull;
  *            the content provider responsible to translate the input into the
  *            internal structure
  */
-public interface Viewer<O, I, C extends ContentProvider<O, I>> {
+public interface Viewer<I, O, C extends ContentProvider<I, O>> {
 	public void setContentProvider(@NonNull Supplier<@NonNull C> contentProvider);
 
 	public void setInput(@NonNull Supplier<@NonNull I> input);
