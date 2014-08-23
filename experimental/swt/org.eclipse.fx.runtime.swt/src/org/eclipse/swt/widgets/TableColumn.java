@@ -529,12 +529,12 @@ public class TableColumn extends Item {
 			if( event.getClickCount() == 2 && cell.currentItem != null ) {
 				Event evt = new Event();
 				evt.item = cell.currentItem.item;
-				internal_sendEvent(SWT.DefaultSelection, evt, true);
-			} else {
+				parent.internal_sendEvent(SWT.DefaultSelection, evt, true);
+			} /*else if( cell.currentItem != null ) {
 				Event evt = new Event();
 				evt.item = cell.currentItem.item;
 				internal_sendEvent(SWT.Selection, evt, true);
-			}
+			}*/
 		}
 	}
 }
