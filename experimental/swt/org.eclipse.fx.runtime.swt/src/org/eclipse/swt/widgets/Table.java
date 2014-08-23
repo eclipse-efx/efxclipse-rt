@@ -40,6 +40,8 @@ import javafx.scene.control.Skin;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -76,6 +78,7 @@ public class Table extends Composite {
 	private List<TableColumn> columns = new ArrayList<TableColumn>();
 	private WeakHashMap<SWTTableRow, Boolean> currentRows = new WeakHashMap<>();
 	private InvalidationListener selectionListener;
+	private EventHandler<KeyEvent> keyEventHandler;
 	
 	private ScrollBar hBar;
 	private ScrollBar vBar;
@@ -187,6 +190,22 @@ public class Table extends Composite {
 				}
 			}
 		};
+		this.keyEventHandler = (e) -> {
+			if( e.getCode() == KeyCode.ENTER ) {
+				TableItem item;
+				if( listView == null ) {
+					item = tableView.getFocusModel().getFocusedItem();	
+				} else {
+					item = listView.getFocusModel().getFocusedItem();
+				}
+				
+				if( item != null ) {
+					Event evt = new Event();
+					internal_sendEvent(SWT.DefaultSelection, evt, true);	
+				}
+			}
+		};
+		this.listView.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
 		this.listView.getSelectionModel().getSelectedItems().addListener(selectionListener);
 		registerConnection(listView);
 		AnchorPane.setTopAnchor(listView, 0.0);
@@ -344,6 +363,7 @@ public class Table extends Composite {
 			listView.getSelectionModel().getSelectedItems().removeListener(selectionListener);
 			listView.setItems(null);
 			listView.setContextMenu(null);
+			listView.removeEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
 			
 			tableView = new TableView<TableItem>(list) {
 				@Override
@@ -361,6 +381,7 @@ public class Table extends Composite {
 			});
 			tableView.getSelectionModel().setSelectionMode( ((style & SWT.MULTI) == SWT.MULTI) ? SelectionMode.MULTIPLE : SelectionMode.SINGLE );
 			tableView.getSelectionModel().getSelectedItems().addListener(selectionListener);
+			tableView.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
 			tableView.setContextMenu(contextMenu);
 			AnchorPane.setTopAnchor(tableView, 0.0);
 			AnchorPane.setBottomAnchor(tableView, 0.0);
