@@ -38,8 +38,10 @@ public class LoggerProviderImpl implements ILoggerProvider {
 					logger.warning(message, t);
 				} else if( message == null && t != null ) {
 					logger.error("", t); //$NON-NLS-1$
-				} else {
-					logger.error("<no message & no throwable>"); //$NON-NLS-1$
+                } else if(message != null && t == null) {
+                    logger.info( message );
+                } else {    
+                    logger.info("<no message & no throwable>"); //$NON-NLS-1$
 				}
 			}
 
@@ -49,8 +51,10 @@ public class LoggerProviderImpl implements ILoggerProvider {
 					logger.trace(message, t);
 				} else if( message == null && t != null ) {
 					logger.trace("", t); //$NON-NLS-1$
-				} else {
-					logger.trace("<no message & no throwable>");//$NON-NLS-1$
+                } else if(message != null && t == null) {
+                    logger.info( message );
+                } else {    
+                    logger.info("<no message & no throwable>"); //$NON-NLS-1$
 				}
 				
 			}
@@ -86,7 +90,9 @@ public class LoggerProviderImpl implements ILoggerProvider {
 					logger.info(message, t);	
 				} else if( message == null && t != null ) {
 					logger.info("", t); //$NON-NLS-1$
-				} else {
+				} else if(message != null && t == null) {
+				    logger.info( message );
+				} else {    
 					logger.info("<no message & no throwable>"); //$NON-NLS-1$
 				}
 			}
@@ -97,8 +103,10 @@ public class LoggerProviderImpl implements ILoggerProvider {
 					logger.error(message, t);
 				} else if( message == null && t != null ) {
 					logger.error("",t); //$NON-NLS-1$
-				} else {
-					logger.error("<no message & no throwable>");	 //$NON-NLS-1$
+                } else if(message != null && t == null) {
+                    logger.info( message );
+                } else {    
+                    logger.info("<no message & no throwable>"); //$NON-NLS-1$
 				}
 			}
 
@@ -108,8 +116,10 @@ public class LoggerProviderImpl implements ILoggerProvider {
 					logger.debug(message, t);	
 				} else if( message == null && t != null ) {
 					logger.error("", t); //$NON-NLS-1$
-				} else {
-					logger.error("<no message & no throwable>");	 //$NON-NLS-1$
+                } else if(message !=null && t == null) {
+                    logger.info( message );
+                } else {    
+                    logger.info("<no message & no throwable>"); //$NON-NLS-1$
 				}
 			}
 
