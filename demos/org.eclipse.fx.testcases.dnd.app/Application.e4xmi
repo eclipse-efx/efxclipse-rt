@@ -12,6 +12,9 @@
         <children xsi:type="basic:Part" xmi:id="_3xoEoNYyEeOfScQ4JVEa_Q" elementId="org.eclipse.fx.testcases.dnd.app.part.2" contributionURI="bundleclass://org.eclipse.fx.testcases.dnd.app/org.eclipse.fx.testcases.dnd.app.PartImpl" label="Part 2.1"/>
         <children xsi:type="basic:Part" xmi:id="_4My9sNYyEeOfScQ4JVEa_Q" elementId="org.eclipse.fx.testcases.dnd.app.part.3" contributionURI="bundleclass://org.eclipse.fx.testcases.dnd.app/org.eclipse.fx.testcases.dnd.app.PartImpl" label="Part 2.2"/>
       </children>
+      <children xsi:type="basic:PartStack" xmi:id="_kBTdIC4IEeSYGs8-UuUEjw" elementId="org.eclipse.fx.testcases.dnd.app.partstack.2">
+        <children xsi:type="basic:Part" xmi:id="_q2ZssC4IEeSYGs8-UuUEjw" elementId="org.eclipse.fx.testcases.dnd.app.part.5" contributionURI="bundleclass://org.eclipse.fx.testcases.dnd.app/org.eclipse.fx.testcases.dnd.app.PartImpl" label="Collapse Stack"/>
+      </children>
     </children>
     <mainMenu xmi:id="_MrcxAC4IEeSYGs8-UuUEjw" elementId="org.eclipse.fx.testcases.dnd.app.menu.0">
       <children xsi:type="menu:Menu" xmi:id="_NIZLsC4IEeSYGs8-UuUEjw" elementId="org.eclipse.fx.testcases.dnd.app.menu.1" label="File">
