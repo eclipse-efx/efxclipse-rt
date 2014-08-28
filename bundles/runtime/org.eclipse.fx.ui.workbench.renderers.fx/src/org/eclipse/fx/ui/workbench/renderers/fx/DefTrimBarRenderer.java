@@ -109,5 +109,10 @@ public class DefTrimBarRenderer extends BaseTrimBarRenderer<Pane> {
 			Node n = (Node) trimElementWidget.getStaticLayoutNode();
 			getWidget().getChildren().remove(n);
 		}
+		
+		@Override
+		protected void initDnd(Pane staticLayoutGroup) {
+			// needs different dnd
+		}
 	}
 }

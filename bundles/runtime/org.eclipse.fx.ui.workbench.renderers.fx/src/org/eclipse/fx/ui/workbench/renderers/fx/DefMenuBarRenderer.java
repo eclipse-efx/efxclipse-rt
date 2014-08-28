@@ -15,6 +15,7 @@ import javax.inject.Named;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.Pane;
 
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
@@ -69,6 +70,11 @@ public class DefMenuBarRenderer extends BaseMenuBarRenderer<MenuBar> {
 		@Override
 		public void removeElement(WMenuElement<MMenuElement> widget) {
 			getWidget().getMenus().remove(widget.getWidget());
+		}
+		
+		@Override
+		protected void initDnd(Pane staticLayoutGroup) {
+			// needs different dnd
 		}
 	}
 }

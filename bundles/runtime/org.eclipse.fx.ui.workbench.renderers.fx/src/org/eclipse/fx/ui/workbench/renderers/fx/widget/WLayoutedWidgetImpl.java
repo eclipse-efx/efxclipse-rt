@@ -56,7 +56,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@Inject
 	@NonNull
 	EModelService modelService;
-	
+
 	/**
 	 * @return the widget node
 	 */
@@ -89,11 +89,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@NonNull
 	protected Node createStaticLayoutNode() {
 		Pane staticLayoutGroup = createStaticPane();
-		
-		SplitDnDSupport<M> dndSupport = new SplitDnDSupport<>(this.modelService,this.feedbackService, this);
-		staticLayoutGroup.addEventHandler(DragEvent.DRAG_OVER, dndSupport::handleDragOver);
-		staticLayoutGroup.addEventHandler(DragEvent.DRAG_EXITED, dndSupport::handleDragExit);
-		staticLayoutGroup.addEventHandler(DragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
+		initDnd(staticLayoutGroup);
 		Node n = getWidgetNode();
 		if (n != null) {
 			staticLayoutGroup.getChildren().add(n);
@@ -103,30 +99,18 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 		return staticLayoutGroup;
 	}
 
-//	/**
-//	 * Show the split feedback
-//	 * 
-//	 * @param e
-//	 *            the drag event
-//	 */
-//	protected void showSplitFeedback(DragEvent e) {
-//		if (this.splitFeedback == null) {
-//			this.splitFeedback = new AreaOverlay(0.2);
-//			this.splitFeedback.setMouseTransparent(true);
-//			this.splitFeedback.setFocusTraversable(false);
-//			this.splitFeedback.setManaged(false);
-//			Pane p = (Pane) getStaticLayoutNode();
-//			p.getChildren().add(this.splitFeedback);
-//
-//		}
-//		
-//		Bounds boundsInLocal = getStaticLayoutNode().getBoundsInLocal();
-//		this.splitFeedback.setVisible(true);
-//		this.splitFeedback.resizeRelocate(0, 0, boundsInLocal.getWidth(), boundsInLocal.getHeight());
-//
-//		Point2D sceneToLocal = this.splitFeedback.sceneToLocal(e.getSceneX(), e.getSceneY());
-//		this.splitFeedback.updateDraggedArea(sceneToLocal.getX(), sceneToLocal.getY());
-//	}
+	/**
+	 * Initialize drag and drop
+	 * 
+	 * @param staticLayoutGroup
+	 *            the static group we attach the DnD to
+	 */
+	protected void initDnd(Pane staticLayoutGroup) {
+		SplitDnDSupport<M> dndSupport = new SplitDnDSupport<>(this.modelService, this.feedbackService, this);
+		staticLayoutGroup.addEventHandler(DragEvent.DRAG_OVER, dndSupport::handleDragOver);
+		staticLayoutGroup.addEventHandler(DragEvent.DRAG_EXITED, dndSupport::handleDragExit);
+		staticLayoutGroup.addEventHandler(DragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
+	}
 
 	@Override
 	public final void setDragDroppedCallback(@Nullable WCallback<@NonNull DropData, @Nullable Void> callback) {
@@ -192,7 +176,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@SuppressWarnings("null")
 	@Inject
 	void setContainerData(@Named(UIEvents.UIElement.CONTAINERDATA) @Optional String data) {
-		if (data != null && ! data.isEmpty()) {
+		if (data != null && !data.isEmpty()) {
 			try {
 				this.weight = Double.parseDouble(data);
 				return;

@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ToolBar;
+import javafx.scene.layout.Pane;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
@@ -108,6 +109,11 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 				((Toggle) widget.getWidget()).setToggleGroup(null);
 			}
 			getWidget().getItems().remove((Node) widget.getWidget());
+		}
+		
+		@Override
+		protected void initDnd(Pane staticLayoutGroup) {
+			// needs different dnd
 		}
 	}
 }
