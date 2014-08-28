@@ -187,7 +187,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@SuppressWarnings("null")
 	@Inject
 	void setContainerData(@Named(UIEvents.UIElement.CONTAINERDATA) @Optional String data) {
-		if (data != null) {
+		if (data != null && ! data.isEmpty()) {
 			try {
 				this.weight = Double.parseDouble(data);
 				return;
