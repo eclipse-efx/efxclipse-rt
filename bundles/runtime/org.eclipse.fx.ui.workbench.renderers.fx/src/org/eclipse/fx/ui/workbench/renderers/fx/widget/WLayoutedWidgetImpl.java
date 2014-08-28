@@ -23,6 +23,7 @@ import javax.inject.Named;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
@@ -52,6 +53,10 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@NonNull
 	DnDFeedbackService feedbackService;
 
+	@Inject
+	@NonNull
+	EModelService modelService;
+	
 	/**
 	 * @return the widget node
 	 */
@@ -85,7 +90,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	protected Node createStaticLayoutNode() {
 		Pane staticLayoutGroup = createStaticPane();
 		
-		SplitDnDSupport<M> dndSupport = new SplitDnDSupport<>(this.feedbackService, this);
+		SplitDnDSupport<M> dndSupport = new SplitDnDSupport<>(this.modelService,this.feedbackService, this);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_OVER, dndSupport::handleDragOver);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_EXITED, dndSupport::handleDragExit);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);

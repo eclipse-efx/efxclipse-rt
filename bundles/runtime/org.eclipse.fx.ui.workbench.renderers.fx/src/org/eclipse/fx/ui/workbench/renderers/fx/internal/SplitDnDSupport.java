@@ -21,6 +21,7 @@ import org.eclipse.e4.ui.model.application.ui.MGenericTile;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
@@ -35,9 +36,13 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	private final WLayoutedWidget<M> widget;
+	
+	@NonNull
+	private EModelService modelService;
 
-	public SplitDnDSupport(@NonNull DnDFeedbackService feedbackService, WLayoutedWidget<M> widget) {
+	public SplitDnDSupport(@NonNull EModelService modelService, @NonNull DnDFeedbackService feedbackService, WLayoutedWidget<M> widget) {
 		super(feedbackService);
+		this.modelService = modelService;
 		this.widget = widget;
 	}
 
@@ -90,7 +95,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 				// }
 			} else if (m instanceof MElementContainer<?>) {
 				MElementContainer<?> c = (MElementContainer<?>) m;
-				if (c.getChildren().isEmpty()) {
+				if (this.modelService.countRenderableChildren(c) == 0) {
 					e.acceptTransferModes(TransferMode.MOVE);
 					e.consume();
 				} else {
@@ -136,7 +141,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 				}
 			} else if (m instanceof MElementContainer<?>) {
 				MElementContainer<?> c = (MElementContainer<?>) m;
-				if (c.getChildren().isEmpty()) {
+				if (this.modelService.countRenderableChildren(c) == 0) {
 					DropData d = new DropData(this.widget.getDomElement(), draggedElement, DropType.INSERT);
 					dropDroppedCallback.call(d);
 					e.consume();
