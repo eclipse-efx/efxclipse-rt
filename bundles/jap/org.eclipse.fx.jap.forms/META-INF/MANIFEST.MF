@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Forms
+Bundle-SymbolicName: org.eclipse.fx.jap.forms
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.fx.jap.datasource;bundle-version="1.0.0",
+ org.eclipse.core.databinding;bundle-version="1.4.1"
+Export-Package: org.eclipse.fx.jap.forms
