@@ -18,6 +18,7 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.jdt.annotation.NonNull;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
@@ -68,15 +69,33 @@ public class TreeUtil {
 			setValue(element);
 			this.factory = factory;
 			this.list = factory.createObservable(element);
+			getChildren().add(new TreeItem<>());
+			
+			expandedProperty().addListener((o) -> {
+				if( isExpanded() ) {
+					if( ! this.hasLoadedChildren ) {
+						getChildren().clear();
+						loadChildren();
+					}
+				}
+			});
 		}
-
-		@Override
-		public ObservableList<TreeItem<T>> getChildren() {
-			if (this.hasLoadedChildren == false) {
-				loadChildren();
-			}
-			return super.getChildren();
-		}
+		
+//		@Override
+//		public ObservableList<TreeItem<T>> getChildren() {
+//			if (this.hasLoadedChildren == false) {
+//				loadChildren();
+//			}
+//			return super.getChildren();
+//		}
+		
+//		@Override
+//		public boolean isLeaf() {
+//			if( this.hasLoadedChildren ) {
+//				loadChildren();
+//			}
+//			return super.isLeaf();
+//		}
 
 		// public boolean isLeaf() {
 		// if (this.hasLoadedChildren == false) {
