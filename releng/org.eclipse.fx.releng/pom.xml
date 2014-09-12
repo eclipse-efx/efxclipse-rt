@@ -42,7 +42,7 @@
 		<!-- UI Modules -->
 		<module>../../bundles/runtime/org.eclipse.fx.ui.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.di</module>
-		<!--  module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module-->
+		<module>../../bundles/runtime/org.eclipse.fx.ui.di.interopt</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.animation</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.panes</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.controls</module>
@@ -73,6 +73,7 @@
 		<module>../runtime/org.eclipse.fx.runtime.feature</module>
 		<module>../runtime/org.eclipse.fx.target.feature</module>
 		<module>../runtime/org.eclipse.fx.target.rcp.feature</module>
+		<module>../runtime/org.eclipse.fx.target.rcp4.feature</module>
 				
 		<module>../org.eclipse.fx.updatesite</module>
 		<module>../org.eclipse.fx.runtime.doc</module>
