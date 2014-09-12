@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="e4 swt &amp; javafx" sequenceNumber="26">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.fx.target.rcp4.feature.feature.group" version="1.0.0.201409120655"/>
+<repository location="http://download.eclipse.org/efxclipse/runtime-nightly/site"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.equinox.compendium.sdk.feature.group" version="3.10.0.v20140416-2102"/>
+<unit id="org.eclipse.emf.common.feature.group" version="2.10.0.v20140514-1158"/>
+<unit id="org.eclipse.equinox.core.feature.feature.group" version="1.2.0.v20140606-1445"/>
+<unit id="org.eclipse.e4.rcp.feature.group" version="1.3.100.v20140606-1445"/>
+<unit id="org.eclipse.emf.ecore.feature.group" version="2.10.0.v20140514-1158"/>
+<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.10.0.v20140606-1445"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.4"/>
+</location>
+</locations>
+</target>
