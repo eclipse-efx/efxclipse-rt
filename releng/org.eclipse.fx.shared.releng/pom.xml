@@ -33,6 +33,7 @@
 		
 		<!-- Features -->
 		<module>../runtime/org.eclipse.fx.core.shared.feature</module>
+		<module>../runtime/org.eclipse.fx.runtime.min.feature</module>
 		
 		<module>../org.eclipse.fx.core.shared.updatesite</module>
 		<module>../org.eclipse.fx.shared.doc</module>
