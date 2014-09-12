@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.databinding;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.databinding.observable.list.IListChangeListener;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -74,7 +76,6 @@ public class TreeUtil {
 			expandedProperty().addListener((o) -> {
 				if( isExpanded() ) {
 					if( ! this.hasLoadedChildren ) {
-						getChildren().clear();
 						loadChildren();
 					}
 				}
@@ -145,11 +146,15 @@ public class TreeUtil {
 						});
 					}
 				});
+				List<TreeItemImpl<@NonNull T>> l = new ArrayList<>(this.list.size());
+				
 				for (Object o : this.list) {
 					@SuppressWarnings("unchecked")
 					T t = (T) o;
-					itemList.add(new TreeItemImpl<@NonNull T>(t, this.factory));
+					l.add(new TreeItemImpl<@NonNull T>(t, this.factory));
 				}
+				
+				itemList.setAll(l);
 			}
 		}
 
