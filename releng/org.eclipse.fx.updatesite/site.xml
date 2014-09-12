@@ -12,6 +12,9 @@
    <feature url="features/org.eclipse.fx.runtime.feature_1.0.0.qualifier.jar" id="org.eclipse.fx.runtime.feature" version="1.0.0.qualifier">
       <category name="fxruntime"/>
    </feature>
+   <feature url="features/org.eclipse.fx.target.rcp4.feature_1.0.0.qualifier.jar" id="org.eclipse.fx.target.rcp4.feature" version="1.0.0.qualifier">
+      <category name="fxtarget"/>
+   </feature>
    <category-def name="fxruntime" label="FX Runtime"/>
    <category-def name="fxtarget" label="FX Target"/>
 </site>
