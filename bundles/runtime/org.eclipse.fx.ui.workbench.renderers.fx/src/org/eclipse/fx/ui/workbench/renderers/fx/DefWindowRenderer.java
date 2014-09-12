@@ -46,6 +46,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -107,7 +108,7 @@ import org.osgi.framework.Bundle;
 public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	private static final String CSS_TRIM_CONTAINER = "window-trim-container"; //$NON-NLS-1$
 	private static final String CSS_CONTENT_CONTAINER = "window-content-container"; //$NON-NLS-1$
-	
+
 	@Inject
 	@Translation
 	@NonNull
@@ -119,7 +120,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	protected List<@NonNull Save> promptToSave(@NonNull MWindow element, @NonNull Collection<MPart> dirtyParts, @NonNull WWindow<Stage> widget) {
 		Save[] response = new Save[dirtyParts.size()];
 		IEclipseContext modelContext = getModelContext(element);
-		if( modelContext == null ) {
+		if (modelContext == null) {
 			getLogger().error("Model context should not be null at this point"); //$NON-NLS-1$
 			Arrays.fill(response, Save.CANCEL);
 			return Arrays.asList(response);
@@ -139,9 +140,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		return Arrays.asList(response);
 	}
-	
+
 	@Override
-	protected Save promptToSave(MWindow element, MPart dirtyPart, WWindow<Stage> widget) { 
+	protected Save promptToSave(MWindow element, MPart dirtyPart, WWindow<Stage> widget) {
 		QuestionCancelResult r = MessageDialog.openQuestionCancelDialog((Stage) widget.getWidget(), this.messages.DefWindowRenderer_promptToSave_Title, this.messages.DefWindowRenderer_promptToSave_Message(dirtyPart.getLocalizedLabel()));
 
 		switch (r) {
@@ -164,9 +165,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	/**
 	 * Default implementation of a window
 	 */
-	public static class WWindowImpl extends WLayoutedWidgetImpl<Stage, BorderPane, MWindow> implements WWindow<Stage> {
+	public static class WWindowImpl extends WLayoutedWidgetImpl<Stage, Pane, MWindow> implements WWindow<Stage> {
 		private boolean support3d;
-		private BorderPane rootPane;
+		private Pane rootPane;
 		private BorderPane trimPane;
 		private FillLayoutPane contentPane;
 		private KeyBindingDispatcher dispatcher;
@@ -181,6 +182,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private Registration sceneRegistration;
 
 		private String decorationFXML;
+
+		private String rootFXML;
 
 		private boolean fullscreen;
 
@@ -207,7 +210,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Inject
 		private GraphicsLoader graphicsLoader;
-		
+
 		@Inject
 		private IEventBroker eventBroker;
 
@@ -236,6 +239,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		private static final String KEY_STAGE_STYLE = "efx.window.stagestyle"; //$NON-NLS-1$
 		private static final String KEY_STAGE_UNDECORATED_DEPRECATED = "efx.window.undecorated"; //$NON-NLS-1$
+
+		private static final String KEY_STAGE_ROOT_CONTENT = "efx.window.root.fxml"; //$NON-NLS-1$
 
 		/**
 		 * Create a new window
@@ -281,6 +286,11 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			if (mWindow.getTags().contains(BaseWindowRenderer.TAG_SHELLMAXIMIZED)) {
 				this.maximizedShell = Boolean.TRUE;
+			}
+
+			this.rootFXML = mWindow.getPersistedState().get(KEY_STAGE_ROOT_CONTENT);
+			if (this.decorationFXML != null && this.rootFXML != null) {
+				logger.warning("You've specified a decorationXML and a rootFXML. Only rootFXML is used"); //$NON-NLS-1$
 			}
 		}
 
@@ -335,31 +345,38 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				this.stage.addEventFilter(KeyEvent.KEY_PRESSED, this.dispatcher.getKeyHandler());
 			}
 
-			this.rootPane = new BorderPane() {
-				@Override
-				protected void layoutChildren() {
-					super.layoutChildren();
-					if (WWindowImpl.this.windowResizeButton != null) {
-						WWindowImpl.this.windowResizeButton.autosize();
-
-						WWindowImpl.this.windowResizeButton.setLayoutX(getWidth() - WWindowImpl.this.windowResizeButton.getLayoutBounds().getWidth());
-						WWindowImpl.this.windowResizeButton.setLayoutY(getHeight() - WWindowImpl.this.windowResizeButton.getLayoutBounds().getHeight());
-					}
-				}
-			};
-
 			this.trimPane = new BorderPane();
 			this.trimPane.getStyleClass().add(CSS_TRIM_CONTAINER);
-			this.rootPane.setCenter(this.trimPane);
 			this.contentPane = new FillLayoutPane();
 			this.contentPane.getStyleClass().add(CSS_CONTENT_CONTAINER);
 			this.trimPane.setCenter(this.contentPane);
 
-			if (this.decorationFXML != null) {
-				this.windowResizeButton = new WindowResizeButton(this.stage, 50, 50);
-				this.decoratorPane = new BorderPane();
-				this.decoratorPane.setTop(createTopDecoration(this.stage));
-				this.rootPane.setTop(this.decoratorPane);
+			if (this.rootFXML != null) {
+				this.rootPane = createRootContainer(stage);
+				((CustomRootContainer) this.rootPane).setTrim(this.trimPane);
+			} else {
+				BorderPane rootPane = new BorderPane() {
+					@Override
+					protected void layoutChildren() {
+						super.layoutChildren();
+						if (WWindowImpl.this.windowResizeButton != null) {
+							WWindowImpl.this.windowResizeButton.autosize();
+
+							WWindowImpl.this.windowResizeButton.setLayoutX(getWidth() - WWindowImpl.this.windowResizeButton.getLayoutBounds().getWidth());
+							WWindowImpl.this.windowResizeButton.setLayoutY(getHeight() - WWindowImpl.this.windowResizeButton.getLayoutBounds().getHeight());
+						}
+					}
+				};
+				this.rootPane = rootPane;
+
+				rootPane.setCenter(this.trimPane);
+
+				if (this.decorationFXML != null) {
+					this.windowResizeButton = new WindowResizeButton(this.stage, 50, 50);
+					this.decoratorPane = new BorderPane();
+					this.decoratorPane.setTop(createTopDecoration(this.stage));
+					rootPane.setTop(this.decoratorPane);
+				}
 			}
 
 			if (this.stageStyle != null) {
@@ -377,12 +394,12 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			} else {
 				s = new Scene(this.rootPane, this.mWindow.getWidth(), this.mWindow.getHeight());
 			}
-			
+
 			// Add a css which sets defaults
 			{
 				URL url = getClass().getClassLoader().getResource("css/efx-default.css"); //$NON-NLS-1$
-				if( url != null ) {
-					s.getStylesheets().add(url.toExternalForm());				
+				if (url != null) {
+					s.getStylesheets().add(url.toExternalForm());
 				} else {
 					this.logger.error("Unable to load css 'css/efx-default.css'"); //$NON-NLS-1$
 				}
@@ -432,13 +449,13 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				activateWindow();
 			}
 		}
-		
+
 		private void activateWindow() {
 			if (this.stage.getScene() != null) {
 				this.applicationContext.set(Constants.APP_FOCUS_NODE, this.stage.getScene().getFocusOwner());
 			}
 
-			if( ! isActive() ) {
+			if (!isActive()) {
 				activate();
 				this.eventBroker.send(Constants.WINDOW_ACTIVATED, getDomElement());
 			}
@@ -508,6 +525,42 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			}
 		}
 
+		private Pane createRootContainer(final Stage stage) {
+			URI uri = URI.createURI(this.rootFXML);
+
+			if (uri != null) {
+				stage.initStyle(StageStyle.UNDECORATED);
+
+				Bundle b = org.eclipse.core.runtime.Platform.getBundle(uri.segment(1));
+				if (b != null) {
+					try {
+						StringBuilder sb = new StringBuilder();
+						for (int i = 2; i < uri.segmentCount(); i++) {
+							if (sb.length() != 0) {
+								sb.append("/"); //$NON-NLS-1$
+							}
+							sb.append(uri.segment(i));
+						}
+
+						@SuppressWarnings("null")
+						InjectingFXMLLoader<Node> loader = InjectingFXMLLoader.create(this.context, b, sb.toString());
+						ResourceBundle resourceBundle = this.localizationService.getLocalization(b, Locale.getDefault().toString());
+						if (resourceBundle != null) {
+							loader.resourceBundle(resourceBundle);
+						}
+
+						return (Pane) loader.load();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+
+			return null;
+		}
+
 		private Node createTopDecoration(final Stage stage) {
 			URI uri = URI.createURI(this.decorationFXML);
 
@@ -528,8 +581,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 						@SuppressWarnings("null")
 						InjectingFXMLLoader<Node> loader = InjectingFXMLLoader.create(this.context, b, sb.toString());
 						ResourceBundle resourceBundle = this.localizationService.getLocalization(b, Locale.getDefault().toString());
-						if( resourceBundle != null ) {
-							loader.resourceBundle(resourceBundle);	
+						if (resourceBundle != null) {
+							loader.resourceBundle(resourceBundle);
 						}
 
 						return (Node) loader.load();
@@ -557,23 +610,29 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		public void setMainMenu(WLayoutedWidget<MMenu> menuWidget) {
 			if (this.decoratorPane == null) {
-				if( menuWidget == null ) {
-					this.rootPane.setTop(null);
-				} else {
-					this.rootPane.setTop((Node) menuWidget.getStaticLayoutNode());	
+				Node n = null;
+				if (menuWidget != null) {
+					n = (Node) menuWidget.getStaticLayoutNode();
 				}
+
+				if (this.rootPane instanceof CustomRootContainer) {
+					((CustomRootContainer) this.rootPane).setMenuBar(n);
+				} else {
+					((BorderPane) this.rootPane).setTop(n);
+				}
+
 			} else {
-				if( menuWidget == null ) {
+				if (menuWidget == null) {
 					this.decoratorPane.setBottom(null);
 				} else {
-					this.decoratorPane.setBottom((Node) menuWidget.getStaticLayoutNode());	
+					this.decoratorPane.setBottom((Node) menuWidget.getStaticLayoutNode());
 				}
-				
+
 			}
 		}
 
 		@Override
-		protected BorderPane getWidgetNode() {
+		protected Pane getWidgetNode() {
 			return this.rootPane;
 		}
 
@@ -719,7 +778,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				AnimationDelegate<Stage> delegate = this.windowTransitionService.getShowDelegate(this.mWindow);
 				if (delegate != null) {
 					delegate.animate(getWidget(), () -> {
-						activateWindow();	
+						activateWindow();
 						this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 					});
 				} else {
@@ -734,15 +793,15 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				activateWindow();
 				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}
-			
+
 			// I don't think sub-windows should be activated
 			for (WWindow<Stage> c : this.windows) {
 				c.show();
 				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}
-			
+
 			// Force the focus back on ourselves
-			if( this.windows.size() > 0 ) {
+			if (this.windows.size() > 0) {
 				this.stage.requestFocus();
 				// force activation of the stage see 435273
 				activateWindow();
@@ -776,6 +835,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Inject
 		public void setTitle(@Named(ATTRIBUTE_localizedLabel) String title) {
 			getWidget().setTitle(title);
+			if (this.rootPane instanceof CustomRootContainer) {
+				((CustomRootContainer) this.rootPane).setTitle(title);
+			}
 		}
 
 		/**
@@ -807,41 +869,41 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Override
 		public void setBottomTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			if( trimBar == null ) {
+			if (trimBar == null) {
 				this.trimPane.setBottom(null);
 			} else {
-				this.trimPane.setBottom((Node) trimBar.getStaticLayoutNode());	
+				this.trimPane.setBottom((Node) trimBar.getStaticLayoutNode());
 			}
-			
+
 		}
 
 		@Override
 		public void setLeftTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			if( trimBar == null ) {
+			if (trimBar == null) {
 				this.trimPane.setLeft(null);
 			} else {
-				this.trimPane.setLeft((Node) trimBar.getStaticLayoutNode());	
+				this.trimPane.setLeft((Node) trimBar.getStaticLayoutNode());
 			}
-			
+
 		}
 
 		@Override
 		public void setRightTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			if( trimBar == null ) {
+			if (trimBar == null) {
 				this.trimPane.setRight(null);
 			} else {
-				this.trimPane.setRight((Node) trimBar.getStaticLayoutNode());	
+				this.trimPane.setRight((Node) trimBar.getStaticLayoutNode());
 			}
-			
+
 		}
 
 		@Override
 		public void setTopTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			if( trimBar == null ) {
+			if (trimBar == null) {
 				this.trimPane.setTop(null);
 			} else {
 				Node g = (Node) trimBar.getStaticLayoutNode();
-				this.trimPane.setTop(g);				
+				this.trimPane.setTop(g);
 			}
 		}
 
@@ -1042,5 +1104,34 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			this.stage.setHeight(Math.max(this.stageMinimumHeight, maxY - this.stage.getY()));
 			e.consume();
 		}
+	}
+
+	/**
+	 * Custom root containers need to implement this interface
+	 */
+	public interface CustomRootContainer {
+		/**
+		 * Set the trim area
+		 * 
+		 * @param trim
+		 *            the trim area
+		 */
+		public void setTrim(Node trim);
+
+		/**
+		 * Set the menu bar
+		 * 
+		 * @param menuBar
+		 *            the menu bar
+		 */
+		public void setMenuBar(Node menuBar);
+
+		/**
+		 * Set the window title
+		 * 
+		 * @param title
+		 *            the title
+		 */
+		public void setTitle(String title);
 	}
 }
