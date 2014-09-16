@@ -34,7 +34,7 @@ public abstract class ContextSingletonFunction<T> extends ContextFunction {
 	public ContextSingletonFunction(@NonNull Class<@NonNull T> type) {
 		this.type = type;
 	}
-
+	
 	@Override
 	public Object compute(IEclipseContext context) {
 		String key = "local_" + this.type; //$NON-NLS-1$
@@ -43,7 +43,7 @@ public abstract class ContextSingletonFunction<T> extends ContextFunction {
 		if (rv == null) {
 			ScopedObjectFactory factory = context.get(ScopedObjectFactory.class);
 			rv = factory.newInstance(this.type);
-			factory.put(key, rv);
+			context.modify(key, rv);
 		}
 		return rv;
 	}
