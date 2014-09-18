@@ -506,6 +506,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					}
 					
 					if (seg.style.foreground != null) {
+						System.err.println("==========> COLOR: " + seg.style.foreground);
 						t.setFill(seg.style.foreground);
 					}
 					if (seg.style.font != null) {
