@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.ui.fx.di.loggersupplier">
-   <implementation class="org.eclipse.fx.ui.di.internal.LoggerSupplier"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.core.di.context.loggersupplier">
+   <implementation class="org.eclipse.fx.core.di.context.internal.LoggerSupplier"/>
    <service>
       <provide interface="org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier"/>
    </service>
