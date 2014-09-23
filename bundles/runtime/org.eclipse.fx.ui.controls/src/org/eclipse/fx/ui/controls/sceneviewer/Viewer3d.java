@@ -10,18 +10,24 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.sceneviewer;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.ParallelCamera;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 import javafx.scene.input.MouseEvent;
@@ -37,64 +43,94 @@ import javafx.util.Duration;
  */
 public final class Viewer3d extends Pane {
 	private SubScene scene;
-	private final Rotate cameraXRotation = new Rotate(-20, 0, 0, 0, Rotate.X_AXIS);
-	private final Rotate cameraYRotation = new Rotate(-20, 0, 0, 0, Rotate.Y_AXIS);
-	private final Translate cameraPosition = new Translate(0, 0, -20);
+	private final Rotate cameraXRotation = new Rotate(0, 0, 0, 0, Rotate.X_AXIS);
+	private final Rotate cameraYRotation = new Rotate(-35, 0, 0, 0, Rotate.Y_AXIS);
+	private final Translate cameraPosition = new Translate(0, 0, -100);
 	private Camera camera;
 	private double dragStartX, dragStartY, dragStartRotateX, dragStartRotateY;
 	private RotateTransition rotateTransition;
-	private Scale zoom = new Scale(1, 1, 1);
-	private Group root;
+	private Scale contentScale = new Scale(1, 1, 1);
+	private Group contentGroup;
 	
-	private ObjectProperty<Node> contentProperty = new SimpleObjectProperty<>(this, "content"); //$NON-NLS-1$
+	@SuppressWarnings("null")
+	@NonNull
+	private final ObservableList<@NonNull Node> selectedNodes = FXCollections.observableArrayList();
+	
+	@NonNull
+	private ObjectProperty<@Nullable Node> hoverNode = new SimpleObjectProperty<>(this, "hoverNode"); //$NON-NLS-1$
+
+	@NonNull
+	private final ObjectProperty<@Nullable Node> contentProperty = new SimpleObjectProperty<>(this, "content"); //$NON-NLS-1$
+	@NonNull
 	private BooleanProperty animated = new SimpleBooleanProperty(this, "rotate"); //$NON-NLS-1$
-	
+
 	/**
 	 * Create a new 3d viewer
 	 */
 	public Viewer3d() {
-		this.root = new Group();
-		this.scene = new SubScene(this.root, -1, -1, true, SceneAntialiasing.BALANCED);
+		this.contentGroup = new Group();
+		this.contentGroup.getTransforms().add(this.contentScale);
+		Group root = new Group(this.contentGroup);
+		this.scene = new SubScene(root, -1, -1, true, SceneAntialiasing.BALANCED);
 		this.scene.setManaged(false);
 		this.camera = setupCamera();
 		this.scene.setCamera(this.camera);
-		this.root.getChildren().add(this.camera);
+		root.getChildren().add(this.camera);
 		this.scene.widthProperty().addListener((o) -> updateSize());
 		this.scene.heightProperty().addListener((o) -> updateSize());
 		getChildren().add(this.scene);
 
-		addEventHandler(MouseEvent.MOUSE_PRESSED,this::cameraRotationHandler);
-		addEventHandler(MouseEvent.MOUSE_DRAGGED,this::cameraRotationHandler);
+		addEventHandler(MouseEvent.MOUSE_PRESSED, this::cameraRotationHandler);
+		addEventHandler(MouseEvent.MOUSE_DRAGGED, this::cameraRotationHandler);
 		addEventHandler(ScrollEvent.SCROLL, this::zoomHandler);
-		
+
 		contentProperty().addListener(this::contentHandler);
 		contentRotateProperty().addListener(this::animationHandler);
 	}
-	
+
 	@Override
 	protected void layoutChildren() {
 		this.scene.setWidth(getWidth());
 		this.scene.setHeight(getHeight());
 		super.layoutChildren();
 	}
-	
+
+	/**
+	 * Zoom out
+	 * 
+	 * @param percentage
+	 *            the percentage to zoom out
+	 */
+	public void zoomIn(double percentage) {
+		this.contentScale.setX(this.contentScale.getX() + this.contentScale.getX() * percentage);
+		this.contentScale.setY(this.contentScale.getY() + this.contentScale.getY() * percentage);
+		this.contentScale.setZ(this.contentScale.getZ() + this.contentScale.getZ() * percentage);
+	}
+
+	/**
+	 * Zoom in
+	 * 
+	 * @param percentage
+	 *            the percentage to zoom in
+	 */
+	public void zoomOut(double percentage) {
+		this.contentScale.setX(this.contentScale.getX() - this.contentScale.getX() * percentage);
+		this.contentScale.setY(this.contentScale.getY() - this.contentScale.getY() * percentage);
+		this.contentScale.setZ(this.contentScale.getZ() - this.contentScale.getZ() * percentage);
+	}
+
 	private void animationHandler(Observable o) {
-		if( this.rotateTransition != null ) {
-			if( isContentRotate() ) {
+		if (this.rotateTransition != null) {
+			if (isContentRotate()) {
 				this.rotateTransition.play();
 			} else {
 				this.rotateTransition.stop();
 			}
 		}
 	}
-	
+
 	private void contentHandler(Observable o) {
-		if (this.root.getChildren().size() > 1) {
-			this.root.getChildren().set(1, getContent());
-		} else {
-			this.root.getChildren().add(getContent());
-		}
-		getContent().getTransforms().setAll(this.zoom);
+		this.contentGroup.getChildren().setAll(getContent());
 
 		updateSize();
 
@@ -116,7 +152,7 @@ public final class Viewer3d extends Pane {
 			this.rotateTransition.play();
 		}
 	}
-	
+
 	private void cameraRotationHandler(MouseEvent event) {
 		if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
 			this.dragStartX = event.getSceneX();
@@ -130,53 +166,104 @@ public final class Viewer3d extends Pane {
 			this.cameraYRotation.setAngle(this.dragStartRotateY + (xDelta * 0.7));
 		}
 	}
-	
+
 	private void zoomHandler(ScrollEvent event) {
-		this.zoom.setX(this.zoom.getX() + event.getDeltaY() * 0.01);
-		this.zoom.setY(this.zoom.getY() + event.getDeltaY() * 0.01);
-		this.zoom.setZ(this.zoom.getZ() + event.getDeltaY() * 0.01);
+		this.contentScale.setX(this.contentScale.getX() + event.getDeltaY() * 0.01);
+		this.contentScale.setY(this.contentScale.getY() + event.getDeltaY() * 0.01);
+		this.contentScale.setZ(this.contentScale.getZ() + event.getDeltaY() * 0.01);
 	}
-	
+
 	private void updateSize() {
-		if( this.contentProperty.get() != null) {
-			Node content = this.contentProperty.get();
+		@Nullable
+		Node content = this.contentProperty.get();
+		if (content != null) {
 			double width = content.getLayoutBounds().getWidth();
 			double height = content.getLayoutBounds().getHeight();
 			double depth = content.getLayoutBounds().getDepth();
-			content.setTranslateX(getWidth() / 2 - width / 2);
-			content.setTranslateY(getHeight() / 2 + height / 2);
-			content.setTranslateZ(-content.getLayoutBounds().getMinZ() - depth / 2);
-		}	
+			content.setTranslateX(+7.8 - width / 2);
+			content.setTranslateY(height / 2);
+			content.setTranslateZ(+7.8 - depth / 2);
+			this.cameraPosition.setX(getWidth() / -2);
+			this.cameraPosition.setY(getHeight() / -2);
+		}
 	}
-	
+
 	private Camera setupCamera() {
-		ParallelCamera camera = new ParallelCamera();
-		camera.getTransforms().addAll(this.cameraXRotation, this.cameraYRotation,
-				this.cameraPosition);
+		PerspectiveCamera camera = new PerspectiveCamera();
+		camera.getTransforms().addAll(this.cameraXRotation, this.cameraYRotation, this.cameraPosition);
 		return camera;
 	}
-	
-	public void setContent(Node node) {
+
+	/**
+	 * Set the content node
+	 * 
+	 * @param node
+	 *            the new content node
+	 */
+	public void setContent(@Nullable Node node) {
 		this.contentProperty.set(node);
 	}
-	
-	public Node getContent() {
+
+	/**
+	 * Get the current content node
+	 * 
+	 * @return the new node
+	 */
+	public @Nullable Node getContent() {
 		return contentProperty().get();
 	}
-	
-	public ObjectProperty<Node> contentProperty() {
+
+	/**
+	 * @return the content node
+	 */
+	public @NonNull ObjectProperty<@Nullable Node> contentProperty() {
 		return this.contentProperty;
 	}
-	
+
+	/**
+	 * Check if the content is rotating
+	 * 
+	 * @return <code>true</code> if rotating
+	 */
 	public boolean isContentRotate() {
 		return contentRotateProperty().get();
 	}
-	
-	public void setContentRotate(boolean animated) {
-		contentRotateProperty().set(animated);
+
+	/**
+	 * Start/Stop the rotation of the content
+	 * 
+	 * @param rotate
+	 *            the new value
+	 */
+	public void setContentRotate(boolean rotate) {
+		contentRotateProperty().set(rotate);
 	}
-	
-	public BooleanProperty contentRotateProperty() {
+
+	/**
+	 * @return the rotation property
+	 */
+	public @NonNull BooleanProperty contentRotateProperty() {
 		return this.animated;
-	}	
+	}
+
+	/**
+	 * @return list of currently selected nodes
+	 */
+	public @NonNull ObservableList<@NonNull Node> getSelectedNodes() {
+		return this.selectedNodes;
+	}
+
+	/**
+	 * @return currently hover node
+	 */
+	public @NonNull ReadOnlyObjectProperty<@Nullable Node> hoverNodeProperty() {
+		return this.hoverNode;
+	}
+
+	/**
+	 * @return the currently hovered node
+	 */
+	public @Nullable Node getHoverNode() {
+		return this.hoverNode.get();
+	}
 }
