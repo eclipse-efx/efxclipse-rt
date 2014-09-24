@@ -24,6 +24,7 @@ import javax.inject.Named;
 
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
+import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
@@ -113,7 +114,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		}
 
 		@Inject
-		public void setLabel(@Named(ATTRIBUTE_localizedLabel) String label) {
+		public void setLabel(@Named(UIEvents.UILabel.LOCALIZED_LABEL) String label) {
 			getWidget().setText(label);
 		}
 

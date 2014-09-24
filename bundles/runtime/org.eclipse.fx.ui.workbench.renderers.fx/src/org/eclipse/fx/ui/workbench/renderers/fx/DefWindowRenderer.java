@@ -833,7 +833,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		 *            the new title
 		 */
 		@Inject
-		public void setTitle(@Named(ATTRIBUTE_localizedLabel) String title) {
+		public void setTitle(@Named(UIEvents.UILabel.LOCALIZED_LABEL) String title) {
 			getWidget().setTitle(title);
 			if (this.rootPane instanceof CustomRootContainer) {
 				((CustomRootContainer) this.rootPane).setTitle(title);

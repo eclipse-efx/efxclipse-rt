@@ -53,12 +53,26 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 	
 	@SuppressWarnings("null")
 	@PostConstruct
-	void init(@NonNull IEventBroker broker) {
+	final void init(@NonNull IEventBroker broker) {
 		registerEventListener(broker, UIEvents.UILabel.TOPIC_ICONURI);
+		
 		registerEventListener(broker, UIEvents.UILabel.TOPIC_LABEL);
+		registerEventListener(broker, UIEvents.UILabel.TOPIC_LOCALIZED_LABEL);
+		
 		registerEventListener(broker, UIEvents.UILabel.TOPIC_TOOLTIP);
+		registerEventListener(broker, UIEvents.UILabel.TOPIC_LOCALIZED_TOOLTIP);
+		
+		do_init(broker);
 	}
 
+	/**
+	 * Initialize handler
+	 * @param broker the event broker
+	 */
+	protected void do_init(@NonNull IEventBroker broker) {
+		// nothing by default
+	}
+	
 	/**
 	 * Generate a parameterized command for the given {@link MHandledItem}
 	 * 

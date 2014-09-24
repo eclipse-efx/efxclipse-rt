@@ -53,8 +53,13 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 	@PostConstruct
 	void init(@NonNull IEventBroker eventBroker) {
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_ICONURI);
+		
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LABEL);
+		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LOCALIZED_LABEL);
+		
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_TOOLTIP);
+		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LOCALIZED_TOOLTIP);
+		
 		registerEventListener(eventBroker, UIEvents.Dirtyable.TOPIC_DIRTY);
 		eventBroker.subscribe(UIEvents.Part.TOPIC_MENUS, new EventHandler() {
 

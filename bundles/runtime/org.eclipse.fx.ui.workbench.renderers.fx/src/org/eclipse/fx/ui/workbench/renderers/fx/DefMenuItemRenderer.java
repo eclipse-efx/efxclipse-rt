@@ -151,7 +151,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		}
 
 		@Inject
-		public void setLabel(@Named(ATTRIBUTE_localizedLabel) String label) {
+		public void setLabel(@Named(UIEvents.UILabel.LOCALIZED_LABEL) String label) {
 			getWidget().setText(label);
 		}
 

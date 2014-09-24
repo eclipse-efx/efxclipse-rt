@@ -105,7 +105,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		 *            the label
 		 */
 		@Inject
-		public void setLabel(@Named(ATTRIBUTE_localizedLabel) String label) {
+		public void setLabel(@Named(UIEvents.UILabel.LOCALIZED_LABEL) String label) {
 			getWidget().setText(label);
 		}
 
@@ -116,7 +116,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		 *            the tooltip
 		 */
 		@Inject
-		public void setTooltip(@Named(ATTRIBUTE_localizedTooltip) String tooltip) {
+		public void setTooltip(@Named(UIEvents.UILabel.LOCALIZED_TOOLTIP) String tooltip) {
 			if (tooltip != null && !tooltip.isEmpty()) {
 				getWidget().setTooltip(new Tooltip(tooltip));
 			} else {

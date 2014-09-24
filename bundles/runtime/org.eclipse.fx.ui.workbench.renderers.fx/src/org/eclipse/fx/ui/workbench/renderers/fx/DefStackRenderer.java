@@ -329,7 +329,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		private boolean dirty;
 
 		@Inject
-		public StackItemImpl(@Named(ATTRIBUTE_localizedLabel) @Optional String label, @Named(UIEvents.Dirtyable.DIRTY) @Optional boolean dirty) {
+		public StackItemImpl(@Named(UIEvents.UILabel.LOCALIZED_LABEL) @Optional String label, @Named(UIEvents.Dirtyable.DIRTY) @Optional boolean dirty) {
 			this.label = label;
 			this.dirty = dirty;
 		}
@@ -391,13 +391,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Inject
-		public void setLabel(@Named(ATTRIBUTE_localizedLabel) @Optional String label) {
+		public void setLabel(@Named(UIEvents.UILabel.LOCALIZED_LABEL) @Optional String label) {
 			this.label = label;
 			getWidget().setText(this.dirty ? "*" + notNull(label) : notNull(label)); //$NON-NLS-1$
 		}
 
 		@Inject
-		public void setTooltip(@Named(ATTRIBUTE_localizedTooltip) @Optional String tooltip) {
+		public void setTooltip(@Named(UIEvents.UILabel.LOCALIZED_TOOLTIP) @Optional String tooltip) {
 			if (tooltip != null && !tooltip.isEmpty()) {
 				getWidget().setTooltip(new Tooltip(tooltip));
 			} else {

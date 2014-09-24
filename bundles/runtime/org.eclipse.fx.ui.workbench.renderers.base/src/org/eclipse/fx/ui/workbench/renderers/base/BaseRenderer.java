@@ -32,7 +32,6 @@ import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MCoreExpression;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
-import org.eclipse.e4.ui.model.application.ui.MUILabel;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
@@ -72,14 +71,14 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 */
 	public static final String CONTEXT_DOM_ELEMENT = "fx.rendering.domElement"; //$NON-NLS-1$
 
-	/**
-	 * Key used to store the localized label in the context
-	 */
-	public static final String ATTRIBUTE_localizedLabel = "localizedLabel"; //$NON-NLS-1$
-	/**
-	 * Key used to store the localized tooltip in the context
-	 */
-	public static final String ATTRIBUTE_localizedTooltip = "localizedTooltip"; //$NON-NLS-1$
+//	/**
+//	 * Key used to store the localized label in the context
+//	 */
+//	public static final String ATTRIBUTE_localizedLabel = "localizedLabel"; //$NON-NLS-1$
+//	/**
+//	 * Key used to store the localized tooltip in the context
+//	 */
+//	public static final String ATTRIBUTE_localizedTooltip = "localizedTooltip"; //$NON-NLS-1$
 
 	@Inject
 	IEclipseContext _context; // The
@@ -340,12 +339,12 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			}
 		}
 
-		// Localized Label/Tooltip treatment
-		if (eo instanceof MUILabel) {
-			MUILabel l = (MUILabel) eo;
-			context.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
-			context.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
-		}
+//		// Localized Label/Tooltip treatment
+//		if (eo instanceof MUILabel) {
+//			MUILabel l = (MUILabel) eo;
+//			context.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
+//			context.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
+//		}
 	}
 
 	/**
@@ -363,6 +362,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@SuppressWarnings("null")
 	void handleEvent(Event event) {
+//		System.err.println("EVENT: " + event + " - " + event.getProperty(UIEvents.EventTags.ATTNAME));
 		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
 		if (!(changedObj instanceof MUIElement)) {
 			return;
@@ -411,14 +411,14 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 									+ entry.getKey(), entry.getValue());
 						} else {
 							ctx.set(attributeName, newValue);
-							if (e instanceof MUILabel) {
-								MUILabel l = (MUILabel) e;
-								if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.UILabel.LABEL)) {
-									ctx.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
-								} else if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.UILabel.TOOLTIP)) {
-									ctx.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
-								}
-							}
+//							if (e instanceof MUILabel) {
+//								MUILabel l = (MUILabel) e;
+//								if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.UILabel.LABEL)) {
+//									ctx.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
+//								} else if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.UILabel.TOOLTIP)) {
+//									ctx.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
+//								}
+//							}
 						}
 					}
 				}
