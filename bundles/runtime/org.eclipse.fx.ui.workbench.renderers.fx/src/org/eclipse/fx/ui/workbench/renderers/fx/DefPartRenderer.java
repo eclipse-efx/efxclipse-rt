@@ -131,11 +131,10 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 			Pane tmp = CustomContainerSupport.createContainerPane(this.logger, this.context);
 			final Pane p = tmp == null ? new BorderPane() : tmp;
 
-			p.setOnMousePressed(new EventHandler<MouseEvent>() {
+			p.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 
 				@Override
 				public void handle(MouseEvent event) {
-					event.consume();
 					MPart domElement = getDomElement();
 					if (domElement != null) {
 						PartImpl.this.service.activate(domElement, true);
