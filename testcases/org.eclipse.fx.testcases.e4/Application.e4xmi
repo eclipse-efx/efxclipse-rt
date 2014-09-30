@@ -129,6 +129,45 @@
           </children>
         </children>
       </children>
+      <children xsi:type="advanced:Perspective" xmi:id="_g-UoYEijEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.perspective.7" label="MCompositePart with Toolbar and menu">
+        <children xsi:type="basic:PartStack" xmi:id="_rhOmcEijEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.partstack.2">
+          <children xsi:type="basic:CompositePart" xmi:id="_t_oikEijEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.compositepart.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.MCompositePartContribution" label="Composite Part with toolbar and menu">
+            <menus xmi:id="_DFXwwEilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.menu.9">
+              <tags>ViewMenu</tags>
+              <children xsi:type="menu:HandledMenuItem" xmi:id="_D0TTUEilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.menuOption1" label="Menu option 1" command="_FEZr8OUcEeGP-5z69KadAQ"/>
+              <children xsi:type="menu:HandledMenuItem" xmi:id="_EEuU8EilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.menuOption2" label="Menu option 2" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
+            </menus>
+            <toolbar xmi:id="_Wxo8gEikEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.">
+              <children xsi:type="menu:HandledToolItem" xmi:id="_XOM8sEikEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledtoolitem.5" label="Command A" command="_FEZr8OUcEeGP-5z69KadAQ"/>
+              <children xsi:type="menu:HandledToolItem" xmi:id="_XgF98EikEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledtoolitem.6" label="Command B" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
+              <children xsi:type="menu:HandledToolItem" xmi:id="_Xw8dYEikEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledtoolitem.7" label="Command C" command="_8Tn3gD4rEeKaHfJUGGs7Mw"/>
+            </toolbar>
+            <children xsi:type="basic:Part" xmi:id="_u9l_oEijEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.part.partA" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.StartCountPart" label="Part A"/>
+            <children xsi:type="basic:Part" xmi:id="_vXzPYEijEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.part.partB" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.StartCountPart" label="Part B"/>
+          </children>
+          <children xsi:type="basic:CompositePart" xmi:id="_uZraQEijEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.compositepart.1" label="Composite Part without toolbar and menu" tooltip="This toolbar and the menu belongs to the part.">
+            <children xsi:type="basic:Part" xmi:id="_wFCI0EijEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.part.partA" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.StartCountPart" label="Part A">
+              <menus xmi:id="_DFXwwEilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.menu.9">
+                <tags>ViewMenu</tags>
+                <children xsi:type="menu:HandledMenuItem" xmi:id="_D0TTUEilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.menuOption1" label="Menu option 1" command="_FEZr8OUcEeGP-5z69KadAQ"/>
+                <children xsi:type="menu:HandledMenuItem" xmi:id="_EEuU8EilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.menuOption2" label="Menu option 2" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
+              </menus>
+            </children>
+            <children xsi:type="basic:Part" xmi:id="_vt-TsEijEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.part.partB" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.StartCountPart" label="Simple part which contains a toolbar and menu">
+              <menus xmi:id="_elqdAEilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.menu.10">
+                <tags>ViewMenu</tags>
+                <children xsi:type="menu:HandledMenuItem" xmi:id="_e-FkEEilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.menuOption1" label="Menu option 1" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
+                <children xsi:type="menu:HandledMenuItem" xmi:id="_fSTgkEilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.menuOption2" label="Menu option 2" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
+              </menus>
+              <toolbar xmi:id="_icOe4EilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.toolbar.7">
+                <children xsi:type="menu:HandledToolItem" xmi:id="_jKsucEilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledtoolitem.commandA" label="Command A" command="_FEZr8OUcEeGP-5z69KadAQ"/>
+                <children xsi:type="menu:HandledToolItem" xmi:id="_jd-20EilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledtoolitem.commandB" label="Command B" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
+                <children xsi:type="menu:HandledToolItem" xmi:id="_jv2p8EilEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledtoolitem.commandC" label="Command c" command="_8Tn3gD4rEeKaHfJUGGs7Mw"/>
+              </toolbar>
+            </children>
+          </children>
+        </children>
+      </children>
     </children>
     <mainMenu xmi:id="_W8hHoORZEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.menu.0">
       <children xsi:type="menu:Menu" xmi:id="_Xwuy0ORZEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.menu.1" label="M1">
@@ -185,6 +224,9 @@
         </children>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_SnxwgAjwEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.14" label="Layout perspective" command="_kCbZQO6yEeG4lfn-YKJbJw">
           <parameters xmi:id="_WMZGwAjwEeS-OoJT2xrBFg" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.6"/>
+        </children>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_I3PeMEikEeSj0oj2ZLkHQQ" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.compositePartWithToolbarAndMenu" label="Composite Part with toolbar and menu" command="_kCbZQO6yEeG4lfn-YKJbJw">
+          <parameters xmi:id="_OKPB0EikEeSj0oj2ZLkHQQ" elementId="" name="org.eclipse.fx.testcases.e4.command.2.perspective" value="org.eclipse.fx.testcases.e4.perspective.7"/>
         </children>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_xS050MayEeKo1rUjbZCXsQ" elementId="org.eclipse.fx.testcases.e4.menu.6" label="Multiple close">

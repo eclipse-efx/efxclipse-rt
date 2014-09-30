@@ -96,8 +96,24 @@ public interface WCompositePart<N> extends WLayoutedWidget<MCompositePart> {
 	public void addItems(int index, @NonNull List<WLayoutedWidget<MPartSashContainerElement>> list);
 
 	/**
-	 * Remove item
+	 * Sets the toolbar.
+	 *
+	 * @param toolbar
+	 *            the {@link WToolBar} to be set.
+	 */
+	public void setToolbar(WToolBar<N> toolbar);
+
+	/**
+	 * Sets the menu.
 	 * 
+	 * @param menu
+	 *            the {@link WMenu} to be set.
+	 */
+	public void setMenu(WMenu<N> menu);
+
+	/**
+	 * Remove item
+	 *
 	 * @param widget
 	 *            the widget
 	 */

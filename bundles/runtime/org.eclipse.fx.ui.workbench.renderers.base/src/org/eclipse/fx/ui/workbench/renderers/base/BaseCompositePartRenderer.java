@@ -19,15 +19,20 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MCompositePart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
+import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCompositePart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
@@ -39,6 +44,7 @@ import org.osgi.service.event.EventHandler;
  * @param <N>
  *            the native widget
  */
+@SuppressWarnings("restriction")
 public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MCompositePart, WCompositePart<N>> {
 	@Inject
 	RendererFactory factory;
@@ -147,7 +153,31 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 			}
 		}
 
+		MToolBar mToolBar = element.getToolbar();
+		if (mToolBar != null) {
+			WToolBar<N> toolbar = engineCreateWidget(mToolBar);
+			sash.setToolbar(toolbar);
+		}
+
+		for (MMenu m : element.getMenus()) {
+			if (m.getTags().contains(BasePartRenderer.VIEW_MENU_TAG)) {
+				final WMenu<N> menu = engineCreateWidget(m);
+				sash.setMenu(menu);
+				break;
+			}
+		}
+
 		sash.addItems(list);
+
+		Class<?> cl = sash.getWidget().getClass();
+		do {
+			element.getContext().set(cl.getName(), sash.getWidget());
+			cl = cl.getSuperclass();
+		} while (cl != Object.class);
+
+		IContributionFactory contributionFactory = element.getContext().get(IContributionFactory.class);
+		Object newPart = contributionFactory.create(element.getContributionURI(), element.getContext());
+		element.setObject(newPart);
 	}
 
 	@SuppressWarnings("null")
@@ -192,7 +222,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 	void handleChildrenAddition(@NonNull MCompositePart parent, Collection<MPartSashContainerElement> elements) {
 		Iterator<MPartSashContainerElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
-			MCompositePart element = (MCompositePart) iterator.next();
+			MUIElement element = iterator.next();
 
 			if (element.isToBeRendered() && element.isVisible()) {
 				if (element.getWidget() == null) {
@@ -208,7 +238,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 	void handleChildrenRemove(@NonNull MCompositePart parent, Collection<MPartSashContainerElement> elements) {
 		Iterator<MPartSashContainerElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
-			MPartSashContainerElement element = (MPartSashContainerElement) iterator.next();
+			MPartSashContainerElement element = iterator.next();
 			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}

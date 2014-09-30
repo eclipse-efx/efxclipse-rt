@@ -41,17 +41,6 @@ import org.eclipse.jdt.annotation.Nullable;
  * default renderer for {@link MPart}
  */
 public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
-	private static final String TOOLBAR_MENU_FLOAT_TAG = "Part-ToolBarMenu-Floating"; //$NON-NLS-1$
-	// private static final String TOOLBAR_MENU_COLLAPSIBLE_TAG =
-	// "Part-ToolBarMenu-Collapsible";
-	private static final String TOOLBAR_MENU_BOTTOM_TAG = "Part-ToolBarMenu-Bottom"; //$NON-NLS-1$
-
-	private static final String TOOL_BAR_FULL_SPAN_TAG = "Part-Toolbar-FullSpan"; //$NON-NLS-1$
-
-	private static final String CSS_CLASS_PART_CONTENT = "part-content"; //$NON-NLS-1$
-	private static final String CSS_CLASS_VIEW_TOOLBAR_CONTAINER = "view-toolbar-container"; //$NON-NLS-1$
-	private static final String CSS_CLASS_VIEW_TOOLBAR = "view-toolbar"; //$NON-NLS-1$
-	private static final String CSS_CLASS_PART_EXPAND_GROUNP = "part-expand-group"; //$NON-NLS-1$
 
 	@Override
 	protected Class<? extends WPart<Pane, Node, Node>> getWidgetClass(MPart part) {
@@ -160,7 +149,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				this.menuGroup.setManaged(false);
 
 				this.expandGroup = new StackPane();
-				this.expandGroup.getStyleClass().add(CSS_CLASS_PART_EXPAND_GROUNP);
+				this.expandGroup.getStyleClass().add(RendererConstants.CSS_CLASS_PART_EXPAND_GROUNP);
 				this.expandGroup.setOpacity(0.5);
 				Node handler = new HandleGroup();// new ImageView(new
 													// Image(getClass().getClassLoader().getResourceAsStream("/icons/format-line-spacing-normal.png")));
@@ -201,7 +190,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 
 				this.contentArea.getChildren().addAll(this.dataArea, this.menuGroup);
 				Node n = getWidget();
-				n.getStyleClass().add(CSS_CLASS_PART_CONTENT);
+				n.getStyleClass().add(RendererConstants.CSS_CLASS_PART_CONTENT);
 				this.dataArea.setCenter(n);
 			}
 			return this.contentArea;
@@ -214,11 +203,11 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 
 				this.toolbarGroup = new StackPane();
 				MPart element = getDomElement();
-				if (element != null && element.getTags().contains(TOOL_BAR_FULL_SPAN_TAG)) {
+				if (element != null && element.getTags().contains(RendererConstants.TOOL_BAR_FULL_SPAN_TAG)) {
 					final BorderPane p = new BorderPane();
 					p.setCenter(this.toolbarGroup);
-					p.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
-					if (element.getTags().contains(TOOLBAR_MENU_FLOAT_TAG)) {
+					p.getStyleClass().add(RendererConstants.CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
+					if (element.getTags().contains(RendererConstants.TOOLBAR_MENU_FLOAT_TAG)) {
 						AnchorPane.setLeftAnchor(p, Double.valueOf(0.0));
 						AnchorPane.setRightAnchor(p, Double.valueOf(0.0));
 						AnchorPane.setTopAnchor(p, Double.valueOf(0.0));
@@ -233,7 +222,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 							}
 						});
 					} else {
-						if (element.getTags().contains(TOOLBAR_MENU_BOTTOM_TAG)) {
+						if (element.getTags().contains(RendererConstants.TOOLBAR_MENU_BOTTOM_TAG)) {
 							this.dataArea.setBottom(p);
 						} else {
 							this.dataArea.setTop(p);
@@ -242,8 +231,8 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				} else {
 					BorderPane p = new BorderPane();
 					p.setRight(this.toolbarGroup);
-					p.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
-					if (element != null && element.getTags().contains(TOOLBAR_MENU_BOTTOM_TAG)) {
+					p.getStyleClass().add(RendererConstants.CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
+					if (element != null && element.getTags().contains(RendererConstants.TOOLBAR_MENU_BOTTOM_TAG)) {
 						this.dataArea.setBottom(p);
 					} else {
 						this.dataArea.setTop(p);
@@ -269,13 +258,13 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					@Override
 					public void handle(MouseEvent event) {
 						MPart element = getDomElement();
-						if (element != null && element.getTags().contains(TOOLBAR_MENU_FLOAT_TAG)) {
+						if (element != null && element.getTags().contains(RendererConstants.TOOLBAR_MENU_FLOAT_TAG)) {
 							PartImpl.this.toolbarGroup.getParent().setVisible(false);
 						}
 					}
 				});
 
-				n.getStyleClass().add(CSS_CLASS_VIEW_TOOLBAR);
+				n.getStyleClass().add(RendererConstants.CSS_CLASS_VIEW_TOOLBAR);
 				this.toolbarGroup.getChildren().setAll(n);
 			}
 

@@ -14,28 +14,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.SplitPane.Divider;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.eclipse.e4.ui.model.application.ui.basic.MCompositePart;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.ui.panes.GridData;
-import org.eclipse.fx.ui.panes.GridLayoutPane;
 import org.eclipse.fx.ui.panes.GridData.Alignment;
+import org.eclipse.fx.ui.panes.GridLayoutPane;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseCompositePartRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCompositePart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
+import org.eclipse.fx.ui.workbench.renderers.fx.DefPartRenderer.HandleGroup;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -54,7 +64,161 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 		}
 	}
 
-	static class WFixedSashImpl extends WLayoutedWidgetImpl<GridLayoutPane, Node, MCompositePart> implements WCompositePart<Node> {
+	/**
+	 * The {@link AbstractCompositePartImpl} provides a basic "template" for the {@link MCompositePart}.
+	 * <p>
+	 * A rendered {@link MCompositePart} can consist of a toolbar, menu and the main content (parts). The
+	 * {@link AbstractCompositePartImpl} takes care of rendering the toolbar and the menu.
+	 *
+	 * @param <T>
+	 *            the business control
+	 */
+	static abstract class AbstractCompositePartImpl<T extends Node> extends WLayoutedWidgetImpl<T, Node, MCompositePart> implements WCompositePart<Node> {
+
+		AnchorPane contentArea;
+		BorderPane dataArea;
+		StackPane toolbarGroup;
+		Group menuGroup;
+
+		@Override
+		public void setToolbar(WToolBar<Node> toolbar) {
+			if (toolbar == null) {
+				clearToolBar();
+			} else {
+				initToolbarMenu();
+				Node n = (Node) toolbar.getWidget();
+				n.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+
+					@Override
+					public void handle(MouseEvent event) {
+						MPart element = getDomElement();
+						if (element != null && element.getTags().contains(RendererConstants.TOOLBAR_MENU_FLOAT_TAG)) {
+							AbstractCompositePartImpl.this.toolbarGroup.getParent().setVisible(false);
+						}
+					}
+				});
+
+				n.getStyleClass().add(RendererConstants.CSS_CLASS_VIEW_TOOLBAR);
+				this.toolbarGroup.getChildren().setAll(n);
+			}
+
+		}
+
+		@Override
+		public void setMenu(WMenu<Node> menu) {
+			if (menu == null) {
+				clearMenu();
+			} else {
+				this.menuGroup.setVisible(true);
+				this.menuGroup.getChildren().setAll((Node) menu.getWidget());
+				this.contentArea.requestLayout();
+			}
+		}
+
+		@Override
+		protected AnchorPane getWidgetNode() {
+			if (this.contentArea == null) {
+				this.menuGroup = new Group();
+				this.menuGroup.setVisible(false);
+				this.menuGroup.setManaged(false);
+
+				Node handler = new HandleGroup();
+				handler.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+					@Override
+					public void handle(MouseEvent event) {
+						AbstractCompositePartImpl.this.toolbarGroup.getParent().setVisible(true);
+					}
+				});
+
+				this.contentArea = new AnchorPane() {
+					@Override
+					protected void layoutChildren() {
+						super.layoutChildren();
+
+						if (AbstractCompositePartImpl.this.menuGroup.isVisible()) {
+							AbstractCompositePartImpl.this.menuGroup.relocate(AbstractCompositePartImpl.this.contentArea.getWidth() - 20, 0);
+						}
+					}
+				};
+				this.dataArea = new BorderPane();
+
+				AnchorPane.setTopAnchor(this.dataArea, Double.valueOf(0.0));
+				AnchorPane.setLeftAnchor(this.dataArea, Double.valueOf(0.0));
+				AnchorPane.setBottomAnchor(this.dataArea, Double.valueOf(0.0));
+				AnchorPane.setRightAnchor(this.dataArea, Double.valueOf(0.0));
+
+				this.contentArea.getChildren().addAll(this.dataArea, this.menuGroup);
+				Node n = getWidget();
+				n.getStyleClass().add(RendererConstants.CSS_CLASS_PART_CONTENT);
+				this.dataArea.setCenter(n);
+			}
+			return this.contentArea;
+
+		}
+
+		private void clearToolBar() {
+			if (this.toolbarGroup != null) {
+				this.toolbarGroup.getChildren().clear();
+				this.dataArea.setTop(null);
+				this.dataArea.setBottom(null);
+				this.toolbarGroup = null;
+			}
+		}
+
+		private void clearMenu() {
+			if (this.menuGroup != null) {
+				this.menuGroup.setVisible(false);
+				this.menuGroup.getChildren().clear();
+			}
+		}
+
+		private void initToolbarMenu() {
+			if (this.toolbarGroup == null) {
+				// Ensure that everything is initialized!!!
+				getStaticLayoutNode();
+
+				this.toolbarGroup = new StackPane();
+				MPart element = getDomElement();
+				if (element != null && element.getTags().contains(RendererConstants.TOOL_BAR_FULL_SPAN_TAG)) {
+					final BorderPane p = new BorderPane();
+					p.setCenter(this.toolbarGroup);
+					p.getStyleClass().add(RendererConstants.CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
+					if (element.getTags().contains(RendererConstants.TOOLBAR_MENU_FLOAT_TAG)) {
+						AnchorPane.setLeftAnchor(p, Double.valueOf(0.0));
+						AnchorPane.setRightAnchor(p, Double.valueOf(0.0));
+						AnchorPane.setTopAnchor(p, Double.valueOf(0.0));
+						this.contentArea.getChildren().add(p);
+						p.setVisible(false);
+						p.setOnMousePressed(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent event) {
+								p.setVisible(false);
+							}
+						});
+					} else {
+						if (element.getTags().contains(RendererConstants.TOOLBAR_MENU_BOTTOM_TAG)) {
+							this.dataArea.setBottom(p);
+						} else {
+							this.dataArea.setTop(p);
+						}
+					}
+				} else {
+					BorderPane p = new BorderPane();
+					p.setRight(this.toolbarGroup);
+					p.getStyleClass().add(RendererConstants.CSS_CLASS_VIEW_TOOLBAR_CONTAINER);
+					if (element != null && element.getTags().contains(RendererConstants.TOOLBAR_MENU_BOTTOM_TAG)) {
+						this.dataArea.setBottom(p);
+					} else {
+						this.dataArea.setTop(p);
+					}
+				}
+			}
+		}
+
+	}
+
+	static class WFixedSashImpl extends AbstractCompositePartImpl<GridLayoutPane> {
 
 		private static @NonNull GridData toGridData(Map<String, String> dataMap) {
 			GridData gd = new GridData();
@@ -171,11 +335,6 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 		}
 
 		@Override
-		protected GridLayoutPane getWidgetNode() {
-			return getWidget();
-		}
-
-		@Override
 		protected GridLayoutPane createWidget() {
 			GridLayoutPane p = new GridLayoutPane();
 			p.setMarginWidth(0);
@@ -193,7 +352,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 		}
 	}
 
-	static class WResizableSashImpl extends WLayoutedWidgetImpl<SplitPane, SplitPane, MCompositePart> implements WCompositePart<Node> {
+	static class WResizableSashImpl extends AbstractCompositePartImpl<SplitPane> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		ChangeListener<Number> listener = new ChangeListener<Number>() {
@@ -290,11 +449,6 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 		@Inject
 		void setOrientation(@Named(UIEvents.GenericTile.HORIZONTAL) boolean horizontal) {
 			getWidget().setOrientation(horizontal ? Orientation.HORIZONTAL : Orientation.VERTICAL);
-		}
-
-		@Override
-		protected SplitPane getWidgetNode() {
-			return getWidget();
 		}
 
 		@Override
