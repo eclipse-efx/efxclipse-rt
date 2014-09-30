@@ -62,7 +62,6 @@ public class E4Application extends AbstractE4Application {
 	Location instanceLocation;
 	IEclipseContext workbenchContext;
 	
-	private static final String EXIT_CODE = "e4.osgi.exit.code"; //$NON-NLS-1$
 	private static final String PRIMARY_STAGE_KEY = "primaryStage"; //$NON-NLS-1$
 	private static final String CREATE_WORKBENCH_ON_NON_UI_THREAD_ARG = "createWorkbenchOnNonUIThread"; //$NON-NLS-1$
 	
@@ -133,6 +132,7 @@ public class E4Application extends AbstractE4Application {
 			public void run() {
 				if (E4Application.this.workbench == null) {
 					if(! initE4Workbench(context, jfxApplication, primaryStage) ) {
+						calculateReturnValue();
 						return;
 					}
 				}
@@ -148,24 +148,15 @@ public class E4Application extends AbstractE4Application {
 				}
 				
 				UISynchronize uiSync = workbench.getContext().get(UISynchronize.class);
-				uiSync.syncExec(new Runnable(){
-					@Override
-					public void run() {
-						
-						E4Application.this.instanceLocation = (Location) wbContext.get(E4Workbench.INSTANCE_LOCATION);
-						
-						try {
-							if (!checkInstanceLocation(E4Application.this.instanceLocation, wbContext))
-								return;
-
-							E4Application.this.workbenchContext = E4Application.this.workbench.getContext();
-							
-							// Create and run the UI (if any)
-							workbench.createAndRunUI(E4Application.this.workbench.getApplication());
-
-						} finally {
-							postJfxStarted(context);
-						}
+				uiSync.syncExec(() -> {
+					E4Application.this.instanceLocation = (Location) wbContext.get(E4Workbench.INSTANCE_LOCATION);
+					try {
+						if (!checkInstanceLocation(E4Application.this.instanceLocation, wbContext))
+							return;
+						// Create and run the UI (if any)
+						workbench.createAndRunUI(E4Application.this.workbench.getApplication());
+					} finally {
+						postJfxStarted(context);
 					}
 				});
 			}
@@ -189,13 +180,9 @@ public class E4Application extends AbstractE4Application {
 	 * Stops the application.
 	 */
 	public void jfxStop() {
-		Object returnCode = null;
+		calculateReturnValue();
 		try {
 			if (this.workbenchContext != null && this.workbench != null) {
-				returnCode = this.workbenchContext.get(EXIT_CODE);
-				if (returnCode == null && this.workbench.isRestart()) {
-					returnCode = IApplication.EXIT_RESTART;
-				}
 				// Save the model into the targetURI
 				if (getLifecycleManager() != null) {
 					ContextInjectionFactory.invoke(getLifecycleManager(), PreSave.class, this.workbenchContext, null);
@@ -219,9 +206,18 @@ public class E4Application extends AbstractE4Application {
 			if (this.instanceLocation != null)
 				this.instanceLocation.release();
 		}
-
-		if (returnCode != null) {
-			this.returnValue = returnCode;
+	}
+	
+	void calculateReturnValue() {
+		Object result = null;
+		if (this.workbenchContext != null) {
+			result = this.workbenchContext.get(EXIT_CODE);
+			if (result == null && this.workbench != null && this.workbench.isRestart()) {
+				result = IApplication.EXIT_RESTART;
+			}
+		}
+		if (result != null) {
+			this.returnValue = result;
 		}
 	}
 
@@ -249,16 +245,16 @@ public class E4Application extends AbstractE4Application {
 	 * @return <code>true</code> if the workbench was initialized successfully
 	 */
 	public boolean initE4Workbench(final IApplicationContext context, Application jfxApplication, final Stage primaryStage) {
-		final IEclipseContext workbenchContext = createApplicationContext();
+		this.workbenchContext = createApplicationContext();
 
 		// It is the very first time when the javaFX Application appears. It
 		// will be used to render the UI.
 		// Add following objects to the context since they might be needed by
 		// life-cycle manager and
 		// @PostContextCreate implementations.
-		workbenchContext.set(Application.class, jfxApplication);
-		workbenchContext.set(PRIMARY_STAGE_KEY, primaryStage);
-		this.workbench = createE4Workbench(context, workbenchContext);
+		this.workbenchContext.set(Application.class, jfxApplication);
+		this.workbenchContext.set(PRIMARY_STAGE_KEY, primaryStage);
+		this.workbench = createE4Workbench(context, this.workbenchContext);
 		return this.workbench != null;
 	}
 

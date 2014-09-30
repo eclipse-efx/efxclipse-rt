@@ -76,6 +76,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.osgi.util.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
+import org.eclipse.fx.ui.services.restart.LifecycleRV;
 import org.eclipse.fx.ui.services.restart.RestartService;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.base.internal.Activator;
@@ -100,6 +101,11 @@ public abstract class AbstractE4Application implements IApplication {
 	private static final String WORKSPACE_VERSION_VALUE = "2"; //$NON-NLS-1$
 	private static final String METADATA_FOLDER = ".metadata"; //$NON-NLS-1$
 	private static final String VERSION_FILENAME = "version.ini"; //$NON-NLS-1$
+	
+	/**
+	 * Set the return value of the application in the context with this key
+	 */
+	protected static final String EXIT_CODE = "e4.osgi.exit.code"; //$NON-NLS-1$
 
 	Object lcManager;
 	private IModelResourceHandler handler;
@@ -214,24 +220,29 @@ public abstract class AbstractE4Application implements IApplication {
 
 		preLifecycle(appContext);
 
-		// Install the life-cycle manager for this session if there's one
-		// defined
+		// Install the life-cycle manager for this session if there's one defined
+		LifecycleRV rv = LifecycleRV.CONTINUE;
 		String lifeCycleURI = getArgValue(IWorkbench.LIFE_CYCLE_URI_ARG, applicationContext, false);
 		if (lifeCycleURI != null) {
 			this.lcManager = factory.create(lifeCycleURI, appContext);
 			if (this.lcManager != null) {
-				Boolean rv = uiSync.syncExec(new Callable<Boolean>() {
-					@Override
-					public Boolean call() throws Exception {
-						return (Boolean) ContextInjectionFactory.invoke(AbstractE4Application.this.lcManager, PostContextCreate.class, appContext, Boolean.TRUE);
-					}
-				}, null);
-
-				if (rv != null && !rv.booleanValue()) {
-					return null;
-				}
+				rv = invokePostContextCreate(appContext);
 			}
 		}
+		switch (rv) {
+		case RESTART_CLEAR_STATE:
+			RestartPreferenceUtil prefUtil = ContextInjectionFactory.make(RestartPreferenceUtil.class, appContext);
+			prefUtil.setClearPersistedStateOnRestart(true);
+		case RESTART:
+			appContext.set(EXIT_CODE, IApplication.EXIT_RESTART);
+		case SHUTDOWN:
+			return null;
+		case CONTINUE:
+			break;
+		default:
+			break;
+		}
+		
 		String toolItemTimer = getArgValue(Constants.TOOLITEM_TIMER, applicationContext, false);
 		if (toolItemTimer != null) {
 			try {
@@ -290,6 +301,27 @@ public abstract class AbstractE4Application implements IApplication {
 		appContext.set(RestartService.class, ContextInjectionFactory.make(RestartServiceImpl.class, appContext));
 
 		return workbench;
+	}
+
+	private LifecycleRV invokePostContextCreate(IEclipseContext appContext) {
+		UISynchronize uiSynchronize = appContext.get(UISynchronize.class);
+		Object rv = uiSynchronize.syncExec(new Callable<Object>() {
+			@Override
+			public Object call() throws Exception {
+				return ContextInjectionFactory.invoke(AbstractE4Application.this.lcManager, PostContextCreate.class, appContext, Boolean.TRUE);
+			}
+		}, null);
+		
+		if (rv == null) {
+			return LifecycleRV.CONTINUE;
+		} else if (rv instanceof Boolean) {
+			return ((Boolean)rv).booleanValue() ? LifecycleRV.CONTINUE : LifecycleRV.SHUTDOWN;
+		} else if (rv instanceof LifecycleRV) {
+			return (LifecycleRV)rv;
+		} else {
+			LOGGER.warning("Unrecognised return value type from @PostContextCreate. The expected types are Boolean or LifecycleRV."); //$NON-NLS-1$
+		}
+		return LifecycleRV.CONTINUE;
 	}
 
 	/**
