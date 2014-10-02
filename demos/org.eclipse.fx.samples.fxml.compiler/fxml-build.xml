@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project" default="default">
+
+	<description>
+            description
+    </description>
+
+	<path id="fxcompile">
+		<filelist>
+			<file name="bin" />
+			<file name="blibs/org.eclipse.fx.fxml.compiler_1.0.0-SNAPSHOT.jar" />
+		</filelist>
+	</path>
+
+	<taskdef name="fxml-compiler" classpathref="fxcompile" classname="org.eclipse.fx.ide.fxml.compiler.ant.FXMLCompilerTask" />	
+
+	<target name="default" description="Generate Java Code from FXML">
+		<fxml-compiler sourcedir="src" destdir="src-gen"/>
+	</target>
+
+</project>
