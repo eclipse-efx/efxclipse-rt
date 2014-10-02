@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.sceneviewer;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -27,6 +29,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
@@ -118,6 +121,15 @@ public final class Viewer3d extends Pane {
 		this.contentScale.setY(this.contentScale.getY() - this.contentScale.getY() * percentage);
 		this.contentScale.setZ(this.contentScale.getZ() - this.contentScale.getZ() * percentage);
 	}
+	
+	/**
+	 * Reset the zoom 
+	 */
+	public void resetZoom() {
+		this.contentScale.setX(1);
+		this.contentScale.setY(1);
+		this.contentScale.setZ(1);
+	}
 
 	private void animationHandler(Observable o) {
 		if (this.rotateTransition != null) {
@@ -129,10 +141,37 @@ public final class Viewer3d extends Pane {
 		}
 	}
 
+	private void attachListener() {
+		Node n = getContent();
+		if( n != null ) {
+			for( Node c : n.lookupAll(".component") ) {	 //$NON-NLS-1$
+				if( c.getId() != null ) {
+					for( Node s : c.lookupAll(".shape") ) { //$NON-NLS-1$
+						s.setOnMouseEntered((e) -> {
+							this.hoverNode.set(c);
+						});
+						s.setOnMouseExited((e) -> {
+							if( this.hoverNode.get() == c ) {
+								this.hoverNode.set(null);	
+							}
+						});
+						s.setOnMouseReleased((e) -> {
+							this.selectedNodes.clear();
+							this.selectedNodes.add(c);
+						});
+					}
+				}
+			}
+		}
+	}
+	
 	private void contentHandler(Observable o) {
 		this.contentGroup.getChildren().setAll(getContent());
-
+		
+		attachListener();
 		updateSize();
+		this.selectedNodes.clear();
+		this.hoverNode.set(null);
 
 		if (this.rotateTransition != null) {
 			this.rotateTransition.stop();
