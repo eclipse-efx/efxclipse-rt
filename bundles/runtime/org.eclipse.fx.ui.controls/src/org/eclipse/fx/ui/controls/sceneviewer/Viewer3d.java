@@ -60,7 +60,7 @@ public final class Viewer3d extends Pane {
 	private RotateTransition rotateTransition;
 	private Scale contentScale = new Scale(1, 1, 1);
 	private Group contentGroup;
-	
+
 	@SuppressWarnings("null")
 	@NonNull
 	private final ObservableList<@NonNull Node> selectedNodes = FXCollections.observableArrayList();
@@ -70,7 +70,7 @@ public final class Viewer3d extends Pane {
 	private final ObjectProperty<@Nullable Node> contentProperty = new SimpleObjectProperty<>(this, "content"); //$NON-NLS-1$
 	@NonNull
 	private final BooleanProperty animated = new SimpleBooleanProperty(this, "rotate"); //$NON-NLS-1$
-	
+
 	/**
 	 * Create a new 3d viewer
 	 */
@@ -94,7 +94,7 @@ public final class Viewer3d extends Pane {
 		contentProperty().addListener(this::contentHandler);
 		contentRotateProperty().addListener(this::animationHandler);
 	}
-	
+
 	public final ObjectProperty<EventHandler<OpenItemEvent>> onOpenItemProperty() { return onOpenItem; }
     public final void setOnOpenItem(EventHandler<OpenItemEvent> value) { onOpenItemProperty().set(value); }
     public final EventHandler<OpenItemEvent> getOpenItem() { return onOpenItemProperty().get(); }
@@ -123,7 +123,7 @@ public final class Viewer3d extends Pane {
 
 	/**
 	 * Zoom out
-	 * 
+	 *
 	 * @param percentage
 	 *            the percentage to zoom out
 	 */
@@ -135,7 +135,7 @@ public final class Viewer3d extends Pane {
 
 	/**
 	 * Zoom in
-	 * 
+	 *
 	 * @param percentage
 	 *            the percentage to zoom in
 	 */
@@ -144,16 +144,16 @@ public final class Viewer3d extends Pane {
 		this.contentScale.setY(this.contentScale.getY() - this.contentScale.getY() * percentage);
 		this.contentScale.setZ(this.contentScale.getZ() - this.contentScale.getZ() * percentage);
 	}
-	
+
 	/**
-	 * Reset the zoom 
+	 * Reset the zoom
 	 */
 	public void resetZoom() {
 		this.contentScale.setX(1);
 		this.contentScale.setY(1);
 		this.contentScale.setZ(1);
 	}
-	
+
 	/**
 	 * Zoom to the target factor
 	 * @param target the target factor
@@ -161,29 +161,36 @@ public final class Viewer3d extends Pane {
 	 * @param r
 	 */
 	public void zoomTo(double target, Duration duration, Consumer<ActionEvent> r) {
-		double startX = this.contentScale.getX();
-		double delta = target - startX;
-		
-		Transition t = new Transition() {
-			{
-				this.setCycleDuration(duration);
+		if( duration != null ) {
+			double startX = this.contentScale.getX();
+			double delta = target - startX;
+
+			Transition t = new Transition() {
+				{
+					this.setCycleDuration(duration);
+				}
+
+				@Override
+				protected void interpolate(double frac) {
+					Viewer3d.this.contentScale.setX(startX + delta * frac);
+					Viewer3d.this.contentScale.setY(startX + delta * frac);
+					Viewer3d.this.contentScale.setZ(startX + delta * frac);
+				}
+			};
+
+			if( r != null) {
+				t.setOnFinished((e) -> r.accept(e));
 			}
-			
-			@Override
-			protected void interpolate(double frac) {
-				Viewer3d.this.contentScale.setX(startX + delta * frac);
-				Viewer3d.this.contentScale.setY(startX + delta * frac);
-				Viewer3d.this.contentScale.setZ(startX + delta * frac);
-			}
-		};
-		
-		if( r != null) {
-			t.setOnFinished((e) -> r.accept(e));	
+
+			t.playFromStart();
+		} else {
+			Viewer3d.this.contentScale.setX(target);
+			Viewer3d.this.contentScale.setY(target);
+			Viewer3d.this.contentScale.setZ(target);
 		}
-		
-		t.playFromStart();
+
 	}
-	
+
 	private void animationHandler(Observable o) {
 		if (this.rotateTransition != null) {
 			if (isContentRotate()) {
@@ -205,7 +212,7 @@ public final class Viewer3d extends Pane {
 						});
 						s.setOnMouseExited((e) -> {
 							if( this.hoverNode.get() == c ) {
-								this.hoverNode.set(null);	
+								this.hoverNode.set(null);
 							}
 						});
 						s.setOnMouseReleased((e) -> {
@@ -221,14 +228,14 @@ public final class Viewer3d extends Pane {
 			}
 		}
 	}
-	
+
 	private void contentHandler(Observable o) {
 		if( getContent() == null ) {
 			this.contentGroup.getChildren().clear();
 		} else {
-			this.contentGroup.getChildren().setAll(getContent());	
+			this.contentGroup.getChildren().setAll(getContent());
 		}
-		
+
 		attachListener();
 		updateSize();
 		this.selectedNodes.clear();
@@ -296,7 +303,7 @@ public final class Viewer3d extends Pane {
 
 	/**
 	 * Set the content node
-	 * 
+	 *
 	 * @param node
 	 *            the new content node
 	 */
@@ -306,7 +313,7 @@ public final class Viewer3d extends Pane {
 
 	/**
 	 * Get the current content node
-	 * 
+	 *
 	 * @return the new node
 	 */
 	public @Nullable Node getContent() {
@@ -322,7 +329,7 @@ public final class Viewer3d extends Pane {
 
 	/**
 	 * Check if the content is rotating
-	 * 
+	 *
 	 * @return <code>true</code> if rotating
 	 */
 	public boolean isContentRotate() {
@@ -331,7 +338,7 @@ public final class Viewer3d extends Pane {
 
 	/**
 	 * Start/Stop the rotation of the content
-	 * 
+	 *
 	 * @param rotate
 	 *            the new value
 	 */
