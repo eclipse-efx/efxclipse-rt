@@ -10,29 +10,32 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.sceneviewer;
 
-import java.util.concurrent.atomic.AtomicReference;
-
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
+import java.util.function.Consumer;
 
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.Transition;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ObjectPropertyBase;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
@@ -40,6 +43,9 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.util.Duration;
+
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Viewer for 3d models
@@ -58,15 +64,13 @@ public final class Viewer3d extends Pane {
 	@SuppressWarnings("null")
 	@NonNull
 	private final ObservableList<@NonNull Node> selectedNodes = FXCollections.observableArrayList();
-	
 	@NonNull
-	private ObjectProperty<@Nullable Node> hoverNode = new SimpleObjectProperty<>(this, "hoverNode"); //$NON-NLS-1$
-
+	private final ObjectProperty<@Nullable Node> hoverNode = new SimpleObjectProperty<>(this, "hoverNode"); //$NON-NLS-1$
 	@NonNull
 	private final ObjectProperty<@Nullable Node> contentProperty = new SimpleObjectProperty<>(this, "content"); //$NON-NLS-1$
 	@NonNull
-	private BooleanProperty animated = new SimpleBooleanProperty(this, "rotate"); //$NON-NLS-1$
-
+	private final BooleanProperty animated = new SimpleBooleanProperty(this, "rotate"); //$NON-NLS-1$
+	
 	/**
 	 * Create a new 3d viewer
 	 */
@@ -90,6 +94,25 @@ public final class Viewer3d extends Pane {
 		contentProperty().addListener(this::contentHandler);
 		contentRotateProperty().addListener(this::animationHandler);
 	}
+	
+	public final ObjectProperty<EventHandler<OpenItemEvent>> onOpenItemProperty() { return onOpenItem; }
+    public final void setOnOpenItem(EventHandler<OpenItemEvent> value) { onOpenItemProperty().set(value); }
+    public final EventHandler<OpenItemEvent> getOpenItem() { return onOpenItemProperty().get(); }
+    private final ObjectProperty<EventHandler<OpenItemEvent>> onOpenItem = new ObjectPropertyBase<EventHandler<OpenItemEvent>>() {
+        @Override protected void invalidated() {
+            setEventHandler(OpenItemEvent.OPEN_ITEM, get());
+        }
+
+        @Override
+        public Object getBean() {
+            return Viewer3d.this;
+        }
+
+        @Override
+        public String getName() {
+            return "onOpenItem";
+        }
+    };
 
 	@Override
 	protected void layoutChildren() {
@@ -130,7 +153,37 @@ public final class Viewer3d extends Pane {
 		this.contentScale.setY(1);
 		this.contentScale.setZ(1);
 	}
-
+	
+	/**
+	 * Zoom to the target factor
+	 * @param target the target factor
+	 * @param duration the duration
+	 * @param r
+	 */
+	public void zoomTo(double target, Duration duration, Consumer<ActionEvent> r) {
+		double startX = this.contentScale.getX();
+		double delta = target - startX;
+		
+		Transition t = new Transition() {
+			{
+				this.setCycleDuration(duration);
+			}
+			
+			@Override
+			protected void interpolate(double frac) {
+				Viewer3d.this.contentScale.setX(startX + delta * frac);
+				Viewer3d.this.contentScale.setY(startX + delta * frac);
+				Viewer3d.this.contentScale.setZ(startX + delta * frac);
+			}
+		};
+		
+		if( r != null) {
+			t.setOnFinished((e) -> r.accept(e));	
+		}
+		
+		t.playFromStart();
+	}
+	
 	private void animationHandler(Observable o) {
 		if (this.rotateTransition != null) {
 			if (isContentRotate()) {
@@ -156,8 +209,12 @@ public final class Viewer3d extends Pane {
 							}
 						});
 						s.setOnMouseReleased((e) -> {
-							this.selectedNodes.clear();
-							this.selectedNodes.add(c);
+							if( e.getClickCount() == 2 ) {
+								fireEvent(new OpenItemEvent(c));
+							} else {
+								this.selectedNodes.clear();
+								this.selectedNodes.add(c);
+							}
 						});
 					}
 				}
@@ -166,7 +223,11 @@ public final class Viewer3d extends Pane {
 	}
 	
 	private void contentHandler(Observable o) {
-		this.contentGroup.getChildren().setAll(getContent());
+		if( getContent() == null ) {
+			this.contentGroup.getChildren().clear();
+		} else {
+			this.contentGroup.getChildren().setAll(getContent());	
+		}
 		
 		attachListener();
 		updateSize();
