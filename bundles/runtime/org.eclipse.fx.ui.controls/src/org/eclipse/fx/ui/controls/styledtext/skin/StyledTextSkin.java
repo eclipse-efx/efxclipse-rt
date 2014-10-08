@@ -21,6 +21,7 @@ import java.util.Set;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -495,6 +496,11 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				}
 
 				List<TextFlow> texts = new ArrayList<>();
+				if( arg0.getSegments().isEmpty() ) {
+					setPrefHeight(20);
+				} else {
+					setPrefHeight(-1);
+				}
 				for (final Segment seg : arg0.getSegments()) {
 //					System.err.println("SEGMENT: " + seg.text + " => " + seg.style.stylename);
 					final Text t = new Text(seg.text);
@@ -502,11 +508,14 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					if( seg.style.stylename != null ) {
 						t.getStyleClass().setAll("source-segment",seg.style.stylename); //$NON-NLS-1$
 					} else {
-						t.getStyleClass().setAll("source-segment"); //$NON-NLS-1$
+						if (seg.style.foreground != null) {
+							t.getStyleClass().setAll("plain-source-segment"); //$NON-NLS-1$
+						} else {
+							t.getStyleClass().setAll("source-segment"); //$NON-NLS-1$
+						}
 					}
 					
 					if (seg.style.foreground != null) {
-						System.err.println("==========> COLOR: " + seg.style.foreground);
 						t.setFill(seg.style.foreground);
 					}
 					if (seg.style.font != null) {
@@ -786,14 +795,16 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			List<LineInfo> layouted = new ArrayList<>();
 			double maxWidth = 0;
 			for (LineCell c : ((MyListViewSkin) StyledTextSkin.this.contentView.getSkin()).getFlow().getCells()) {
-				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(c);
-				if (lineInfo != null) {
-					layouted.add(lineInfo);
-					maxWidth = Math.max(maxWidth, lineInfo.getWidth());
-					lineInfo.relocate(0, c.getLayoutY());
-					lineInfo.resize(lineInfo.getWidth(), c.getHeight());
-					lineInfo.setVisible(true);
-					children.remove(lineInfo);
+				if( c.isVisible() ) {
+					LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(c);
+					if (lineInfo != null) {
+						layouted.add(lineInfo);
+						maxWidth = Math.max(maxWidth, lineInfo.getWidth());
+						lineInfo.relocate(0, c.getLayoutY());
+						lineInfo.resize(lineInfo.getWidth(), c.getHeight());
+						lineInfo.setVisible(true);
+						children.remove(lineInfo);
+					}	
 				}
 			}
 
@@ -836,7 +847,14 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				lineInfo.setDomainElement(cell.domainElement);
 				lineInfo.setLayoutY(cell.getLayoutY());
 			}
-			StyledTextSkin.this.lineRuler.requestLayout();
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					StyledTextSkin.this.lineRuler.requestLayout();
+				}
+			});
+			
 		}
 
 		@Override

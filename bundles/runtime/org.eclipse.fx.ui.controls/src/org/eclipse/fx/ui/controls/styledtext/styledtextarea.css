@@ -5,6 +5,11 @@
 	-fx-fill: -styled-text-color;
 }
 
+.plain-source-segment {
+	-fx-font-family: Courier;
+	-fx-font-size: 15;
+}
+
 .line-ruler-text {
 	-fx-font-family: Courier;
 	-fx-font-size: 15;
