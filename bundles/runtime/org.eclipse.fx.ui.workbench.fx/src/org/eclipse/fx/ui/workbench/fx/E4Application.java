@@ -61,10 +61,10 @@ public class E4Application extends AbstractE4Application {
 	E4Workbench workbench;
 	Location instanceLocation;
 	IEclipseContext workbenchContext;
-	
+
 	private static final String PRIMARY_STAGE_KEY = "primaryStage"; //$NON-NLS-1$
 	private static final String CREATE_WORKBENCH_ON_NON_UI_THREAD_ARG = "createWorkbenchOnNonUIThread"; //$NON-NLS-1$
-	
+
 	static E4Application SELF;
 
 	IApplicationContext applicationContext;
@@ -126,7 +126,7 @@ public class E4Application extends AbstractE4Application {
 	 *            {@link Application}.
 	 */
 	public void jfxStart(IApplicationContext context, Application jfxApplication, Stage primaryStage) {
-		
+
 		Runnable startRunnable = new Runnable() {
 			@Override
 			public void run() {
@@ -136,17 +136,17 @@ public class E4Application extends AbstractE4Application {
 						return;
 					}
 				}
-				
+
 				E4Workbench workbench = E4Application.this.workbench;
 				if( workbench == null ) {
 					throw new IllegalStateException("Not workbench instance yet available"); //$NON-NLS-1$
 				}
-				
+
 				IEclipseContext wbContext = workbench.getContext();
 				if( wbContext == null ) {
 					throw new IllegalStateException("The workbench has no context assigned"); //$NON-NLS-1$
 				}
-				
+
 				UISynchronize uiSync = workbench.getContext().get(UISynchronize.class);
 				uiSync.syncExec(() -> {
 					E4Application.this.instanceLocation = (Location) wbContext.get(E4Workbench.INSTANCE_LOCATION);
@@ -161,7 +161,7 @@ public class E4Application extends AbstractE4Application {
 				});
 			}
 		};
-		
+
 		if (getArgValue(CREATE_WORKBENCH_ON_NON_UI_THREAD_ARG, context, true) != null) {
 			Thread t = new Thread(startRunnable);
 			t.start();
@@ -188,7 +188,7 @@ public class E4Application extends AbstractE4Application {
 					ContextInjectionFactory.invoke(getLifecycleManager(), PreSave.class, this.workbenchContext, null);
 				}
 				ThemeManager manager = this.workbenchContext.get(ThemeManager.class);
-				Theme theme = manager.getCurrentTheme(); 
+				Theme theme = manager.getCurrentTheme();
 				if( theme != null ) {
 					IEclipsePreferences node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.ui.workbench.fx"); //$NON-NLS-1$
 					node.put(AbstractE4Application.THEME_ID, theme.getId());
@@ -198,16 +198,18 @@ public class E4Application extends AbstractE4Application {
 						LOGGER.error("Failed to remember the theme id", e); //$NON-NLS-1$
 					}
 				}
-				
-				saveModel();
+
 				this.workbench.close();
+
+				// save after the shutdown see Bug 446933
+				saveModel();
 			}
 		} finally {
 			if (this.instanceLocation != null)
 				this.instanceLocation.release();
 		}
 	}
-	
+
 	void calculateReturnValue() {
 		Object result = null;
 		if (this.workbenchContext != null) {
@@ -272,7 +274,7 @@ public class E4Application extends AbstractE4Application {
 	 * <b>NOTE</b>: this method is intended to be overridden by subclasses of
 	 * the {@link E4Application} that would like provide a custom application
 	 * launcher.
-	 * 
+	 *
 	 * @throws Exception
 	 *             when the application could not be started.
 	 */

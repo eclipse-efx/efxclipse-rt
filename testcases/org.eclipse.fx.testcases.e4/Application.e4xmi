@@ -52,6 +52,7 @@
             <children xsi:type="basic:Part" xmi:id="_NbT9cI3zEeOEhJYRfEsdog" elementId="org.eclipse.fx.testcases.e4.part.18" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.TestExtendedFXMLBuilder" label="ExtendedFXMLLoader"/>
             <children xsi:type="basic:Part" xmi:id="__dr90LpZEeOpi709HEnsKw" elementId="org.eclipse.fx.testcases.e4.part.20" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.Test_431338" label="Test_431338"/>
             <children xsi:type="basic:Part" xmi:id="_9_eSAA0cEeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.part.24" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.TestSwingPart" label="Swing Node"/>
+            <children xsi:type="basic:Part" xmi:id="_cmNhwFLtEeS6NZkbveQ5Nw" elementId="org.eclipse.fx.testcases.e4.part.25" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.Test_PersistState" label="Persist State"/>
           </children>
           <children xsi:type="basic:Part" xmi:id="_txxY4OMsEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.4" toBeRendered="false" containerData="10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C4"/>
           <children xsi:type="basic:Part" xmi:id="_-czbgLpMEeOpi709HEnsKw" elementId="org.eclipse.fx.testcases.e4.part.19" containerData="10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.Test_431391" label="Label Test"/>
@@ -75,7 +76,7 @@
           <tags>fx_fixedLayout</tags>
           <children xsi:type="basic:Part" xmi:id="_Tp95UCZmEeKqs9jU_V83wg" elementId="org.eclipse.fx.testcases.e4.part.10" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="Part 10">
             <persistedState key="fx_layout_width" value="300"/>
-            <tags>content_a</tags>
+            <tags>efx_styleclass:content_a</tags>
             <menus xmi:id="_xwNwMIE0EeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.menu.5">
               <tags>ViewMenu</tags>
               <children xsi:type="menu:DirectMenuItem" xmi:id="_y7B9gIE0EeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.directmenuitem.6" label="Di" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler2"/>
@@ -87,7 +88,7 @@
           <children xsi:type="basic:Part" xmi:id="_uiO8QCZmEeKqs9jU_V83wg" elementId="org.eclipse.fx.testcases.e4.part.11" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="Part 11">
             <persistedState key="fx_layout_grab_horizontal" value="true"/>
             <persistedState key="fx_layout_grab_vertical" value="true"/>
-            <tags>content_b</tags>
+            <tags>efx_styleclass:content_b</tags>
           </children>
         </children>
       </children>
@@ -100,7 +101,7 @@
       </children>
       <children xsi:type="advanced:Perspective" xmi:id="_9YqNgIfYEeKsYN0U3N_L9Q" elementId="org.eclipse.fx.testcases.e4.perspective.5" label="P5">
         <children xsi:type="basic:Part" xmi:id="__HnCoIfYEeKsYN0U3N_L9Q" elementId="org.eclipse.fx.testcases.e4.part.14" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="Panel 14">
-          <tags>content_a</tags>
+          <tags>efx_styleclass:content_a</tags>
         </children>
         <children xsi:type="basic:PartStack" xmi:id="_36dDAA21EeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.partstack.1">
           <children xsi:type="basic:CompositePart" xmi:id="_bkSXUA24EeSBX93V23L1Jg" elementId="blabla.compositepart.0">
@@ -113,18 +114,18 @@
       <children xsi:type="advanced:Perspective" xmi:id="_iCfngAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.perspective.6" label="Layout Sample">
         <tags>myperspective</tags>
         <children xsi:type="basic:PartSashContainer" xmi:id="_kWd1QAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.partsashcontainer.4" horizontal="true">
-          <tags>mysash</tags>
           <tags>fx_fixedLayout</tags>
+          <tags>efx_styleclass:mysash</tags>
           <children xsi:type="basic:PartSashContainer" xmi:id="_1LeUQA21EeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.partsashcontainer.5">
-            <children xsi:type="basic:Part" xmi:id="_lkcEQAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.22">
+            <children xsi:type="basic:Part" xmi:id="_lkcEQAjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.22" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel">
               <persistedState key="fx_layout_grab_horizontal" value="true"/>
               <persistedState key="fx_layout_grab_vertical" value="true"/>
-              <tags>mypart</tags>
+              <tags>efx_styleclass:mypart</tags>
             </children>
-            <children xsi:type="basic:Part" xmi:id="_l-Ky4AjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.23">
+            <children xsi:type="basic:Part" xmi:id="_l-Ky4AjvEeS-OoJT2xrBFg" elementId="org.eclipse.fx.testcases.e4.part.23" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel">
               <persistedState key="fx_layout_grab_horizontal" value="true"/>
               <persistedState key="fx_layout_grab_vertical" value="true"/>
-              <tags>mypart</tags>
+              <tags>efx_styleclass:mypart</tags>
             </children>
           </children>
         </children>
