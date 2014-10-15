@@ -10,13 +10,18 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.internal;
 
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.WeakHashMap;
+
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.services.DocumentFactory;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 
 public class DefaultDocumentFactory implements DocumentFactory {
-
+	private WeakHashMap<IDocument, Input<?>> documents = new WeakHashMap<IDocument, Input<?>>();
+	
 	@Override
 	public boolean applies(Input<?> input) {
 		return input instanceof FileInput;
@@ -24,7 +29,27 @@ public class DefaultDocumentFactory implements DocumentFactory {
 
 	@Override
 	public IDocument createDocument(Input<?> input) {
-		return new Document(((FileInput)input).getData());
+		IDocument document;
+		
+		Optional<Entry<IDocument, Input<?>>> first = documents.entrySet().stream().filter((e) -> e.getValue() == input).findFirst();
+		if( first.isPresent() ) {
+			document = first.get().getKey();
+		} else {
+			document = new Document(((FileInput)input).getData());	
+		}
+		
+		documents.put(document, input);
+		return document;
+	}
+
+	@Override
+	public boolean persistDocument(IDocument document) {
+		Input<?> input = documents.get(document);
+		if( input != null ) {
+			((FileInput)input).setData(document.get());
+			return true;
+		}
+		return false;
 	}
 
 }

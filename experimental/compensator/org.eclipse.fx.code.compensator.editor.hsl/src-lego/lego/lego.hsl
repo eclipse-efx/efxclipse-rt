@@ -1,0 +1,16 @@
+Lego {
+    partition __dftl_partition_content_type
+    partition __lego_comment
+    rule_damager __dftl_partition_content_type {
+        default token default_legotoken
+        token lego_keyword
+        keywords lego_keyword [ "brick" ]
+        whitespace_rule [" ", "\t", "\n", "\r"]
+    }
+    rule_damager __lego_comment {
+        default token default_legodoc
+    }
+    rule_partitioner {
+        multi_line __lego_comment "/*" => "*/"
+    }
+} for "text/lego"

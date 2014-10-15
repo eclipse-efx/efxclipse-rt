@@ -166,13 +166,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.fx.ui.lifecycle"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="com.ibm.icu"
          download-size="0"
          install-size="0"
@@ -531,6 +524,13 @@
 
    <plugin
          id="org.eclipse.fx.code.compensator.editor.hsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.ui.workbench.services"
          download-size="0"
          install-size="0"
          version="0.0.0"

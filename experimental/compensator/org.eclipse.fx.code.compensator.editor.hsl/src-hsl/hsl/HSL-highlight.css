@@ -1,0 +1,16 @@
+.hsl_default {
+	-styled-text-color: rgb(0, 0, 0);
+}
+
+.hsl_string {
+	-styled-text-color: rgb(42, 0, 255);
+}
+
+.hsl_keyword {
+	-styled-text-color: rgb(127, 0, 85);
+	-fx-font-weight: bold;
+}
+
+.hsl_comment {
+	-styled-text-color: rgb(63, 127, 95);
+}

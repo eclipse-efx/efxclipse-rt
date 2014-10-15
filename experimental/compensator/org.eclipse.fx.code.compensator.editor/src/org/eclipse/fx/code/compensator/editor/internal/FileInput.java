@@ -66,6 +66,10 @@ public class FileInput implements Input<String>, ContentTypeProvider {
 			return ContentTypeProvider.JAVASCRIPT;
 		} else if( path.toString().endsWith(".groovy") ) {
 			return ContentTypeProvider.GROOVY;
+		} else if( path.toString().endsWith(".hsl") ) {
+			return ContentTypeProvider.HSL;
+		} else if( path.toString().endsWith(".lego") ) {
+			return ContentTypeProvider.LEGO;
 		}
 		return null;
 	}

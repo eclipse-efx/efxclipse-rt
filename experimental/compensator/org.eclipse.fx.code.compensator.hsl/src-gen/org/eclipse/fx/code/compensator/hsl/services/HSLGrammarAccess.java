@@ -133,7 +133,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class JavaLikeParitionerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "JavaLikeParitioner");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cJavaLikePartitionerKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cJavaLikePartitionerKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cJava_like_partitionerKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cSinglelinedocKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cSingleLineDocParitionAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -158,18 +160,24 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_12 = (Keyword)cGroup.eContents().get(12);
 		
 		//JavaLikeParitioner:
-		//	"java-like-partitioner" "{" "singlelinedoc" singleLineDocParition=[Partition] "multilinedoc"
-		//	multiLineDocParition=[Partition] "javadoc" javaDocParition=[Partition] "char" characterParition=[Partition] "string"
-		//	stringParition=[Partition] "}";
+		//	("java-like-partitioner" | "java_like_partitioner") "{" "singlelinedoc" singleLineDocParition=[Partition]
+		//	"multilinedoc" multiLineDocParition=[Partition] "javadoc" javaDocParition=[Partition] "char"
+		//	characterParition=[Partition] "string" stringParition=[Partition] "}";
 		public ParserRule getRule() { return rule; }
 
-		//"java-like-partitioner" "{" "singlelinedoc" singleLineDocParition=[Partition] "multilinedoc"
+		//("java-like-partitioner" | "java_like_partitioner") "{" "singlelinedoc" singleLineDocParition=[Partition] "multilinedoc"
 		//multiLineDocParition=[Partition] "javadoc" javaDocParition=[Partition] "char" characterParition=[Partition] "string"
 		//stringParition=[Partition] "}"
 		public Group getGroup() { return cGroup; }
 
+		//"java-like-partitioner" | "java_like_partitioner"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"java-like-partitioner"
-		public Keyword getJavaLikePartitionerKeyword_0() { return cJavaLikePartitionerKeyword_0; }
+		public Keyword getJavaLikePartitionerKeyword_0_0() { return cJavaLikePartitionerKeyword_0_0; }
+
+		//"java_like_partitioner"
+		public Keyword getJava_like_partitionerKeyword_0_1() { return cJava_like_partitionerKeyword_0_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
@@ -241,21 +249,29 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class RulePartitionerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RulePartitioner");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cRulePartitionerKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cRulePartitionerKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cRule_partitionerKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cRulesAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cRulesParitionRuleParserRuleCall_2_0 = (RuleCall)cRulesAssignment_2.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//RulePartitioner:
-		//	"rule-partitioner" "{" rules+=ParitionRule+ "}";
+		//	("rule-partitioner" | "rule_partitioner") "{" rules+=ParitionRule+ "}";
 		public ParserRule getRule() { return rule; }
 
-		//"rule-partitioner" "{" rules+=ParitionRule+ "}"
+		//("rule-partitioner" | "rule_partitioner") "{" rules+=ParitionRule+ "}"
 		public Group getGroup() { return cGroup; }
 
+		//"rule-partitioner" | "rule_partitioner"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"rule-partitioner"
-		public Keyword getRulePartitionerKeyword_0() { return cRulePartitionerKeyword_0; }
+		public Keyword getRulePartitionerKeyword_0_0() { return cRulePartitionerKeyword_0_0; }
+
+		//"rule_partitioner"
+		public Keyword getRule_partitionerKeyword_0_1() { return cRule_partitionerKeyword_0_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
@@ -273,19 +289,27 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class JSParitionerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "JSParitioner");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cJsPartitionerKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cJsPartitionerKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cJs_partitionerKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cFileURIAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cFileURISTRINGTerminalRuleCall_1_0 = (RuleCall)cFileURIAssignment_1.eContents().get(0);
 		
 		//JSParitioner:
-		//	"js-partitioner" fileURI=STRING;
+		//	("js-partitioner" | "js_partitioner") fileURI=STRING;
 		public ParserRule getRule() { return rule; }
 
-		//"js-partitioner" fileURI=STRING
+		//("js-partitioner" | "js_partitioner") fileURI=STRING
 		public Group getGroup() { return cGroup; }
 
+		//"js-partitioner" | "js_partitioner"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"js-partitioner"
-		public Keyword getJsPartitionerKeyword_0() { return cJsPartitionerKeyword_0; }
+		public Keyword getJsPartitionerKeyword_0_0() { return cJsPartitionerKeyword_0_0; }
+
+		//"js_partitioner"
+		public Keyword getJs_partitionerKeyword_0_1() { return cJs_partitionerKeyword_0_1; }
 
 		//fileURI=STRING
 		public Assignment getFileURIAssignment_1() { return cFileURIAssignment_1; }
@@ -317,7 +341,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class JSDamagerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "JSDamager");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cJsDamagerKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cJsDamagerKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cJs_damagerKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cPartitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cPartitionPartitionCrossReference_1_0 = (CrossReference)cPartitionAssignment_1.eContents().get(0);
 		private final RuleCall cPartitionPartitionIDTerminalRuleCall_1_0_1 = (RuleCall)cPartitionPartitionCrossReference_1_0.eContents().get(1);
@@ -325,14 +351,20 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFileURISTRINGTerminalRuleCall_2_0 = (RuleCall)cFileURIAssignment_2.eContents().get(0);
 		
 		//JSDamager:
-		//	"js-damager" partition=[Partition] fileURI=STRING;
+		//	("js-damager" | "js_damager") partition=[Partition] fileURI=STRING;
 		public ParserRule getRule() { return rule; }
 
-		//"js-damager" partition=[Partition] fileURI=STRING
+		//("js-damager" | "js_damager") partition=[Partition] fileURI=STRING
 		public Group getGroup() { return cGroup; }
 
+		//"js-damager" | "js_damager"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"js-damager"
-		public Keyword getJsDamagerKeyword_0() { return cJsDamagerKeyword_0; }
+		public Keyword getJsDamagerKeyword_0_0() { return cJsDamagerKeyword_0_0; }
+
+		//"js_damager"
+		public Keyword getJs_damagerKeyword_0_1() { return cJs_damagerKeyword_0_1; }
 
 		//partition=[Partition]
 		public Assignment getPartitionAssignment_1() { return cPartitionAssignment_1; }
@@ -353,7 +385,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class RuleDamagerElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "RuleDamager");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cRuleDamagerKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cRuleDamagerKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cRule_damagerKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cPartitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cPartitionPartitionCrossReference_1_0 = (CrossReference)cPartitionAssignment_1.eContents().get(0);
 		private final RuleCall cPartitionPartitionIDTerminalRuleCall_1_0_1 = (RuleCall)cPartitionPartitionCrossReference_1_0.eContents().get(1);
@@ -367,14 +401,22 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//RuleDamager:
-		//	"rule-damager" partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule* "}";
+		//	("rule-damager" | "rule_damager") partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup*
+		//	rules+=ScannerRule* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"rule-damager" partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule* "}"
+		//("rule-damager" | "rule_damager") partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup*
+		//rules+=ScannerRule* "}"
 		public Group getGroup() { return cGroup; }
 
+		//"rule-damager" | "rule_damager"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"rule-damager"
-		public Keyword getRuleDamagerKeyword_0() { return cRuleDamagerKeyword_0; }
+		public Keyword getRuleDamagerKeyword_0_0() { return cRuleDamagerKeyword_0_0; }
+
+		//"rule_damager"
+		public Keyword getRule_damagerKeyword_0_1() { return cRule_damagerKeyword_0_1; }
 
 		//partition=[Partition]
 		public Assignment getPartitionAssignment_1() { return cPartitionAssignment_1; }
@@ -597,7 +639,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class ScannerSingleLineRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ScannerSingleLineRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cSingleLineKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cSingleLineKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cSingle_lineKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cTokenAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cTokenScannerTokenCrossReference_1_0 = (CrossReference)cTokenAssignment_1.eContents().get(0);
 		private final RuleCall cTokenScannerTokenIDTerminalRuleCall_1_0_1 = (RuleCall)cTokenScannerTokenCrossReference_1_0.eContents().get(1);
@@ -613,14 +657,22 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
 		
 		//ScannerSingleLineRule:
-		//	"single-line" token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+		//	("single-line" | "single_line") token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by"
+		//	escapeSeq=STRING)?;
 		public ParserRule getRule() { return rule; }
 
-		//"single-line" token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?
+		//("single-line" | "single_line") token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by"
+		//escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
+		//"single-line" | "single_line"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"single-line"
-		public Keyword getSingleLineKeyword_0() { return cSingleLineKeyword_0; }
+		public Keyword getSingleLineKeyword_0_0() { return cSingleLineKeyword_0_0; }
+
+		//"single_line"
+		public Keyword getSingle_lineKeyword_0_1() { return cSingle_lineKeyword_0_1; }
 
 		//token=[ScannerToken]
 		public Assignment getTokenAssignment_1() { return cTokenAssignment_1; }
@@ -665,7 +717,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class PartitionSingleLineRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PartitionSingleLineRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cSingleLineKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cSingleLineKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cSingle_lineKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cParitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cParitionPartitionCrossReference_1_0 = (CrossReference)cParitionAssignment_1.eContents().get(0);
 		private final RuleCall cParitionPartitionIDTerminalRuleCall_1_0_1 = (RuleCall)cParitionPartitionCrossReference_1_0.eContents().get(1);
@@ -681,14 +735,22 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
 		
 		//PartitionSingleLineRule:
-		//	"single-line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+		//	("single-line" | "single_line") parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by"
+		//	escapeSeq=STRING)?;
 		public ParserRule getRule() { return rule; }
 
-		//"single-line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?
+		//("single-line" | "single_line") parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by"
+		//escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
+		//"single-line" | "single_line"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"single-line"
-		public Keyword getSingleLineKeyword_0() { return cSingleLineKeyword_0; }
+		public Keyword getSingleLineKeyword_0_0() { return cSingleLineKeyword_0_0; }
+
+		//"single_line"
+		public Keyword getSingle_lineKeyword_0_1() { return cSingle_lineKeyword_0_1; }
 
 		//parition=[Partition]
 		public Assignment getParitionAssignment_1() { return cParitionAssignment_1; }
@@ -733,7 +795,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class ScannerMultiLineRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ScannerMultiLineRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cMultiLineKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cMultiLineKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cMulti_lineKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cTokenAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cTokenScannerTokenCrossReference_1_0 = (CrossReference)cTokenAssignment_1.eContents().get(0);
 		private final RuleCall cTokenScannerTokenIDTerminalRuleCall_1_0_1 = (RuleCall)cTokenScannerTokenCrossReference_1_0.eContents().get(1);
@@ -749,14 +813,21 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
 		
 		//ScannerMultiLineRule:
-		//	"multi-line" token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+		//	("multi-line" | "multi_line") token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by"
+		//	escapeSeq=STRING)?;
 		public ParserRule getRule() { return rule; }
 
-		//"multi-line" token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?
+		//("multi-line" | "multi_line") token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
+		//"multi-line" | "multi_line"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"multi-line"
-		public Keyword getMultiLineKeyword_0() { return cMultiLineKeyword_0; }
+		public Keyword getMultiLineKeyword_0_0() { return cMultiLineKeyword_0_0; }
+
+		//"multi_line"
+		public Keyword getMulti_lineKeyword_0_1() { return cMulti_lineKeyword_0_1; }
 
 		//token=[ScannerToken]
 		public Assignment getTokenAssignment_1() { return cTokenAssignment_1; }
@@ -801,7 +872,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class PartitionMultiLineRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PartitionMultiLineRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cMultiLineKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cMultiLineKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cMulti_lineKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cParitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cParitionPartitionCrossReference_1_0 = (CrossReference)cParitionAssignment_1.eContents().get(0);
 		private final RuleCall cParitionPartitionIDTerminalRuleCall_1_0_1 = (RuleCall)cParitionPartitionCrossReference_1_0.eContents().get(1);
@@ -817,14 +890,21 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
 		
 		//PartitionMultiLineRule:
-		//	"multi-line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+		//	("multi-line" | "multi_line") parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by"
+		//	escapeSeq=STRING)?;
 		public ParserRule getRule() { return rule; }
 
-		//"multi-line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?
+		//("multi-line" | "multi_line") parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
+		//"multi-line" | "multi_line"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"multi-line"
-		public Keyword getMultiLineKeyword_0() { return cMultiLineKeyword_0; }
+		public Keyword getMultiLineKeyword_0_0() { return cMultiLineKeyword_0_0; }
+
+		//"multi_line"
+		public Keyword getMulti_lineKeyword_0_1() { return cMulti_lineKeyword_0_1; }
 
 		//parition=[Partition]
 		public Assignment getParitionAssignment_1() { return cParitionAssignment_1; }
@@ -869,7 +949,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class ScannerCharacterRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ScannerCharacterRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cCharacterRuleKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cCharacterRuleKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cCharacter_ruleKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cTokenAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cTokenScannerTokenCrossReference_1_0 = (CrossReference)cTokenAssignment_1.eContents().get(0);
 		private final RuleCall cTokenScannerTokenIDTerminalRuleCall_1_0_1 = (RuleCall)cTokenScannerTokenCrossReference_1_0.eContents().get(1);
@@ -883,14 +965,20 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightSquareBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//ScannerCharacterRule:
-		//	"character-rule" token=[ScannerToken] "[" characters+=STRING ("," characters+=STRING)* "]";
+		//	("character-rule" | "character_rule") token=[ScannerToken] "[" characters+=STRING ("," characters+=STRING)* "]";
 		public ParserRule getRule() { return rule; }
 
-		//"character-rule" token=[ScannerToken] "[" characters+=STRING ("," characters+=STRING)* "]"
+		//("character-rule" | "character_rule") token=[ScannerToken] "[" characters+=STRING ("," characters+=STRING)* "]"
 		public Group getGroup() { return cGroup; }
 
+		//"character-rule" | "character_rule"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"character-rule"
-		public Keyword getCharacterRuleKeyword_0() { return cCharacterRuleKeyword_0; }
+		public Keyword getCharacterRuleKeyword_0_0() { return cCharacterRuleKeyword_0_0; }
+
+		//"character_rule"
+		public Keyword getCharacter_ruleKeyword_0_1() { return cCharacter_ruleKeyword_0_1; }
 
 		//token=[ScannerToken]
 		public Assignment getTokenAssignment_1() { return cTokenAssignment_1; }
@@ -929,7 +1017,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class ScannerJSRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ScannerJSRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cJavascriptRuleKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cJavascriptRuleKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cJavascript_ruleKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cTokenAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cTokenScannerTokenCrossReference_1_0 = (CrossReference)cTokenAssignment_1.eContents().get(0);
 		private final RuleCall cTokenScannerTokenIDTerminalRuleCall_1_0_1 = (RuleCall)cTokenScannerTokenCrossReference_1_0.eContents().get(1);
@@ -937,14 +1027,20 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFileURISTRINGTerminalRuleCall_2_0 = (RuleCall)cFileURIAssignment_2.eContents().get(0);
 		
 		//ScannerJSRule:
-		//	"javascript-rule" token=[ScannerToken] fileURI=STRING;
+		//	("javascript-rule" | "javascript_rule") token=[ScannerToken] fileURI=STRING;
 		public ParserRule getRule() { return rule; }
 
-		//"javascript-rule" token=[ScannerToken] fileURI=STRING
+		//("javascript-rule" | "javascript_rule") token=[ScannerToken] fileURI=STRING
 		public Group getGroup() { return cGroup; }
 
+		//"javascript-rule" | "javascript_rule"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"javascript-rule"
-		public Keyword getJavascriptRuleKeyword_0() { return cJavascriptRuleKeyword_0; }
+		public Keyword getJavascriptRuleKeyword_0_0() { return cJavascriptRuleKeyword_0_0; }
+
+		//"javascript_rule"
+		public Keyword getJavascript_ruleKeyword_0_1() { return cJavascript_ruleKeyword_0_1; }
 
 		//token=[ScannerToken]
 		public Assignment getTokenAssignment_1() { return cTokenAssignment_1; }
@@ -965,7 +1061,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class PartitionJSRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PartitionJSRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cJavascriptRuleKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cJavascriptRuleKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cJavascript_ruleKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cTokenAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cTokenPartitionCrossReference_1_0 = (CrossReference)cTokenAssignment_1.eContents().get(0);
 		private final RuleCall cTokenPartitionIDTerminalRuleCall_1_0_1 = (RuleCall)cTokenPartitionCrossReference_1_0.eContents().get(1);
@@ -973,14 +1071,20 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFileURISTRINGTerminalRuleCall_2_0 = (RuleCall)cFileURIAssignment_2.eContents().get(0);
 		
 		//PartitionJSRule:
-		//	"javascript-rule" token=[Partition] fileURI=STRING;
+		//	("javascript-rule" | "javascript_rule") token=[Partition] fileURI=STRING;
 		public ParserRule getRule() { return rule; }
 
-		//"javascript-rule" token=[Partition] fileURI=STRING
+		//("javascript-rule" | "javascript_rule") token=[Partition] fileURI=STRING
 		public Group getGroup() { return cGroup; }
 
+		//"javascript-rule" | "javascript_rule"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"javascript-rule"
-		public Keyword getJavascriptRuleKeyword_0() { return cJavascriptRuleKeyword_0; }
+		public Keyword getJavascriptRuleKeyword_0_0() { return cJavascriptRuleKeyword_0_0; }
+
+		//"javascript_rule"
+		public Keyword getJavascript_ruleKeyword_0_1() { return cJavascript_ruleKeyword_0_1; }
 
 		//token=[Partition]
 		public Assignment getTokenAssignment_1() { return cTokenAssignment_1; }
@@ -1001,7 +1105,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class ScannerWhitespaceRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ScannerWhitespaceRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cWhitespaceRuleKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cWhitespaceRuleKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cWhitespace_ruleKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cTokenAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cTokenScannerTokenCrossReference_1_0 = (CrossReference)cTokenAssignment_1.eContents().get(0);
 		private final RuleCall cTokenScannerTokenIDTerminalRuleCall_1_0_1 = (RuleCall)cTokenScannerTokenCrossReference_1_0.eContents().get(1);
@@ -1021,16 +1127,22 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFileURISTRINGTerminalRuleCall_2_2_0 = (RuleCall)cFileURIAssignment_2_2.eContents().get(0);
 		
 		//ScannerWhitespaceRule:
-		//	"whitespace-rule" token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]" |
+		//	("whitespace-rule" | "whitespace_rule") token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]" |
 		//	javawhitespace?="javawhitespace" | fileURI=STRING);
 		public ParserRule getRule() { return rule; }
 
-		//"whitespace-rule" token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]" |
+		//("whitespace-rule" | "whitespace_rule") token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]" |
 		//javawhitespace?="javawhitespace" | fileURI=STRING)
 		public Group getGroup() { return cGroup; }
 
+		//"whitespace-rule" | "whitespace_rule"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//"whitespace-rule"
-		public Keyword getWhitespaceRuleKeyword_0() { return cWhitespaceRuleKeyword_0; }
+		public Keyword getWhitespaceRuleKeyword_0_0() { return cWhitespaceRuleKeyword_0_0; }
+
+		//"whitespace_rule"
+		public Keyword getWhitespace_ruleKeyword_0_1() { return cWhitespace_ruleKeyword_0_1; }
 
 		//token=[ScannerToken]?
 		public Assignment getTokenAssignment_1() { return cTokenAssignment_1; }
@@ -1233,42 +1345,68 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getStrike_throughStrikeThroughKeyword_3_0() { return cStrike_throughStrikeThroughKeyword_3_0; }
 	}
 	
-	private ModelElements pModel;
-	private PartitionElements pPartition;
-	private PartitionerElements pPartitioner;
-	private JavaLikeParitionerElements pJavaLikeParitioner;
-	private RulePartitionerElements pRulePartitioner;
-	private JSParitionerElements pJSParitioner;
-	private DamagerElements pDamager;
-	private JSDamagerElements pJSDamager;
-	private RuleDamagerElements pRuleDamager;
-	private ScannerTokenElements pScannerToken;
-	private KeywordGroupElements pKeywordGroup;
-	private KeywordElements pKeyword;
-	private ScannerRuleElements pScannerRule;
-	private ParitionRuleElements pParitionRule;
-	private ScannerSingleLineRuleElements pScannerSingleLineRule;
-	private PartitionSingleLineRuleElements pPartitionSingleLineRule;
-	private ScannerMultiLineRuleElements pScannerMultiLineRule;
-	private PartitionMultiLineRuleElements pPartitionMultiLineRule;
-	private ScannerCharacterRuleElements pScannerCharacterRule;
-	private ScannerJSRuleElements pScannerJSRule;
-	private PartitionJSRuleElements pPartitionJSRule;
-	private ScannerWhitespaceRuleElements pScannerWhitespaceRule;
-	private ColorElements pColor;
-	private RGBColorElements pRGBColor;
-	private FontElements pFont;
-	private FontTypeElements unknownRuleFontType;
+	private final ModelElements pModel;
+	private final PartitionElements pPartition;
+	private final PartitionerElements pPartitioner;
+	private final JavaLikeParitionerElements pJavaLikeParitioner;
+	private final RulePartitionerElements pRulePartitioner;
+	private final JSParitionerElements pJSParitioner;
+	private final DamagerElements pDamager;
+	private final JSDamagerElements pJSDamager;
+	private final RuleDamagerElements pRuleDamager;
+	private final ScannerTokenElements pScannerToken;
+	private final KeywordGroupElements pKeywordGroup;
+	private final KeywordElements pKeyword;
+	private final ScannerRuleElements pScannerRule;
+	private final ParitionRuleElements pParitionRule;
+	private final ScannerSingleLineRuleElements pScannerSingleLineRule;
+	private final PartitionSingleLineRuleElements pPartitionSingleLineRule;
+	private final ScannerMultiLineRuleElements pScannerMultiLineRule;
+	private final PartitionMultiLineRuleElements pPartitionMultiLineRule;
+	private final ScannerCharacterRuleElements pScannerCharacterRule;
+	private final ScannerJSRuleElements pScannerJSRule;
+	private final PartitionJSRuleElements pPartitionJSRule;
+	private final ScannerWhitespaceRuleElements pScannerWhitespaceRule;
+	private final ColorElements pColor;
+	private final RGBColorElements pRGBColor;
+	private final FontElements pFont;
+	private final FontTypeElements unknownRuleFontType;
 	
 	private final Grammar grammar;
 
-	private TerminalsGrammarAccess gaTerminals;
+	private final TerminalsGrammarAccess gaTerminals;
 
 	@Inject
 	public HSLGrammarAccess(GrammarProvider grammarProvider,
 		TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
+		this.pModel = new ModelElements();
+		this.pPartition = new PartitionElements();
+		this.pPartitioner = new PartitionerElements();
+		this.pJavaLikeParitioner = new JavaLikeParitionerElements();
+		this.pRulePartitioner = new RulePartitionerElements();
+		this.pJSParitioner = new JSParitionerElements();
+		this.pDamager = new DamagerElements();
+		this.pJSDamager = new JSDamagerElements();
+		this.pRuleDamager = new RuleDamagerElements();
+		this.pScannerToken = new ScannerTokenElements();
+		this.pKeywordGroup = new KeywordGroupElements();
+		this.pKeyword = new KeywordElements();
+		this.pScannerRule = new ScannerRuleElements();
+		this.pParitionRule = new ParitionRuleElements();
+		this.pScannerSingleLineRule = new ScannerSingleLineRuleElements();
+		this.pPartitionSingleLineRule = new PartitionSingleLineRuleElements();
+		this.pScannerMultiLineRule = new ScannerMultiLineRuleElements();
+		this.pPartitionMultiLineRule = new PartitionMultiLineRuleElements();
+		this.pScannerCharacterRule = new ScannerCharacterRuleElements();
+		this.pScannerJSRule = new ScannerJSRuleElements();
+		this.pPartitionJSRule = new PartitionJSRuleElements();
+		this.pScannerWhitespaceRule = new ScannerWhitespaceRuleElements();
+		this.pColor = new ColorElements();
+		this.pRGBColor = new RGBColorElements();
+		this.pFont = new FontElements();
+		this.unknownRuleFontType = new FontTypeElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1301,7 +1439,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//Model:
 	//	name=ID "{" partitions+=Partition+ damagers+=Damager+ partitioner=Partitioner "}" "for" contentTypes+=STRING+;
 	public ModelElements getModelAccess() {
-		return (pModel != null) ? pModel : (pModel = new ModelElements());
+		return pModel;
 	}
 	
 	public ParserRule getModelRule() {
@@ -1311,7 +1449,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//Partition:
 	//	"partition" name=ID;
 	public PartitionElements getPartitionAccess() {
-		return (pPartition != null) ? pPartition : (pPartition = new PartitionElements());
+		return pPartition;
 	}
 	
 	public ParserRule getPartitionRule() {
@@ -1321,7 +1459,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//Partitioner:
 	//	RulePartitioner | JavaLikeParitioner | JSParitioner;
 	public PartitionerElements getPartitionerAccess() {
-		return (pPartitioner != null) ? pPartitioner : (pPartitioner = new PartitionerElements());
+		return pPartitioner;
 	}
 	
 	public ParserRule getPartitionerRule() {
@@ -1329,11 +1467,11 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JavaLikeParitioner:
-	//	"java-like-partitioner" "{" "singlelinedoc" singleLineDocParition=[Partition] "multilinedoc"
-	//	multiLineDocParition=[Partition] "javadoc" javaDocParition=[Partition] "char" characterParition=[Partition] "string"
-	//	stringParition=[Partition] "}";
+	//	("java-like-partitioner" | "java_like_partitioner") "{" "singlelinedoc" singleLineDocParition=[Partition]
+	//	"multilinedoc" multiLineDocParition=[Partition] "javadoc" javaDocParition=[Partition] "char"
+	//	characterParition=[Partition] "string" stringParition=[Partition] "}";
 	public JavaLikeParitionerElements getJavaLikeParitionerAccess() {
-		return (pJavaLikeParitioner != null) ? pJavaLikeParitioner : (pJavaLikeParitioner = new JavaLikeParitionerElements());
+		return pJavaLikeParitioner;
 	}
 	
 	public ParserRule getJavaLikeParitionerRule() {
@@ -1341,9 +1479,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RulePartitioner:
-	//	"rule-partitioner" "{" rules+=ParitionRule+ "}";
+	//	("rule-partitioner" | "rule_partitioner") "{" rules+=ParitionRule+ "}";
 	public RulePartitionerElements getRulePartitionerAccess() {
-		return (pRulePartitioner != null) ? pRulePartitioner : (pRulePartitioner = new RulePartitionerElements());
+		return pRulePartitioner;
 	}
 	
 	public ParserRule getRulePartitionerRule() {
@@ -1351,9 +1489,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JSParitioner:
-	//	"js-partitioner" fileURI=STRING;
+	//	("js-partitioner" | "js_partitioner") fileURI=STRING;
 	public JSParitionerElements getJSParitionerAccess() {
-		return (pJSParitioner != null) ? pJSParitioner : (pJSParitioner = new JSParitionerElements());
+		return pJSParitioner;
 	}
 	
 	public ParserRule getJSParitionerRule() {
@@ -1363,7 +1501,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//Damager:
 	//	RuleDamager | JSDamager;
 	public DamagerElements getDamagerAccess() {
-		return (pDamager != null) ? pDamager : (pDamager = new DamagerElements());
+		return pDamager;
 	}
 	
 	public ParserRule getDamagerRule() {
@@ -1371,9 +1509,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JSDamager:
-	//	"js-damager" partition=[Partition] fileURI=STRING;
+	//	("js-damager" | "js_damager") partition=[Partition] fileURI=STRING;
 	public JSDamagerElements getJSDamagerAccess() {
-		return (pJSDamager != null) ? pJSDamager : (pJSDamager = new JSDamagerElements());
+		return pJSDamager;
 	}
 	
 	public ParserRule getJSDamagerRule() {
@@ -1381,9 +1519,10 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RuleDamager:
-	//	"rule-damager" partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup* rules+=ScannerRule* "}";
+	//	("rule-damager" | "rule_damager") partition=[Partition] "{" tokens+=ScannerToken* keywordGroups+=KeywordGroup*
+	//	rules+=ScannerRule* "}";
 	public RuleDamagerElements getRuleDamagerAccess() {
-		return (pRuleDamager != null) ? pRuleDamager : (pRuleDamager = new RuleDamagerElements());
+		return pRuleDamager;
 	}
 	
 	public ParserRule getRuleDamagerRule() {
@@ -1393,7 +1532,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//ScannerToken:
 	//	default?="default"? "token" name=ID;
 	public ScannerTokenElements getScannerTokenAccess() {
-		return (pScannerToken != null) ? pScannerToken : (pScannerToken = new ScannerTokenElements());
+		return pScannerToken;
 	}
 	
 	public ParserRule getScannerTokenRule() {
@@ -1403,7 +1542,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//KeywordGroup:
 	//	"keywords" token=[ScannerToken] "[" keywords+=Keyword ("," keywords+=Keyword)* "]";
 	public KeywordGroupElements getKeywordGroupAccess() {
-		return (pKeywordGroup != null) ? pKeywordGroup : (pKeywordGroup = new KeywordGroupElements());
+		return pKeywordGroup;
 	}
 	
 	public ParserRule getKeywordGroupRule() {
@@ -1413,7 +1552,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//Keyword:
 	//	name=STRING ("since" version=STRING)?;
 	public KeywordElements getKeywordAccess() {
-		return (pKeyword != null) ? pKeyword : (pKeyword = new KeywordElements());
+		return pKeyword;
 	}
 	
 	public ParserRule getKeywordRule() {
@@ -1423,7 +1562,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//ScannerRule:
 	//	ScannerSingleLineRule | ScannerMultiLineRule | ScannerCharacterRule | ScannerJSRule | ScannerWhitespaceRule;
 	public ScannerRuleElements getScannerRuleAccess() {
-		return (pScannerRule != null) ? pScannerRule : (pScannerRule = new ScannerRuleElements());
+		return pScannerRule;
 	}
 	
 	public ParserRule getScannerRuleRule() {
@@ -1433,7 +1572,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//ParitionRule:
 	//	PartitionSingleLineRule | PartitionMultiLineRule | PartitionJSRule;
 	public ParitionRuleElements getParitionRuleAccess() {
-		return (pParitionRule != null) ? pParitionRule : (pParitionRule = new ParitionRuleElements());
+		return pParitionRule;
 	}
 	
 	public ParserRule getParitionRuleRule() {
@@ -1441,9 +1580,10 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScannerSingleLineRule:
-	//	"single-line" token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+	//	("single-line" | "single_line") token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by"
+	//	escapeSeq=STRING)?;
 	public ScannerSingleLineRuleElements getScannerSingleLineRuleAccess() {
-		return (pScannerSingleLineRule != null) ? pScannerSingleLineRule : (pScannerSingleLineRule = new ScannerSingleLineRuleElements());
+		return pScannerSingleLineRule;
 	}
 	
 	public ParserRule getScannerSingleLineRuleRule() {
@@ -1451,9 +1591,10 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PartitionSingleLineRule:
-	//	"single-line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+	//	("single-line" | "single_line") parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by"
+	//	escapeSeq=STRING)?;
 	public PartitionSingleLineRuleElements getPartitionSingleLineRuleAccess() {
-		return (pPartitionSingleLineRule != null) ? pPartitionSingleLineRule : (pPartitionSingleLineRule = new PartitionSingleLineRuleElements());
+		return pPartitionSingleLineRule;
 	}
 	
 	public ParserRule getPartitionSingleLineRuleRule() {
@@ -1461,9 +1602,10 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScannerMultiLineRule:
-	//	"multi-line" token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+	//	("multi-line" | "multi_line") token=[ScannerToken] startSeq=STRING "=>" endSeq=STRING ("escaped" "by"
+	//	escapeSeq=STRING)?;
 	public ScannerMultiLineRuleElements getScannerMultiLineRuleAccess() {
-		return (pScannerMultiLineRule != null) ? pScannerMultiLineRule : (pScannerMultiLineRule = new ScannerMultiLineRuleElements());
+		return pScannerMultiLineRule;
 	}
 	
 	public ParserRule getScannerMultiLineRuleRule() {
@@ -1471,9 +1613,10 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PartitionMultiLineRule:
-	//	"multi-line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+	//	("multi-line" | "multi_line") parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by"
+	//	escapeSeq=STRING)?;
 	public PartitionMultiLineRuleElements getPartitionMultiLineRuleAccess() {
-		return (pPartitionMultiLineRule != null) ? pPartitionMultiLineRule : (pPartitionMultiLineRule = new PartitionMultiLineRuleElements());
+		return pPartitionMultiLineRule;
 	}
 	
 	public ParserRule getPartitionMultiLineRuleRule() {
@@ -1481,9 +1624,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScannerCharacterRule:
-	//	"character-rule" token=[ScannerToken] "[" characters+=STRING ("," characters+=STRING)* "]";
+	//	("character-rule" | "character_rule") token=[ScannerToken] "[" characters+=STRING ("," characters+=STRING)* "]";
 	public ScannerCharacterRuleElements getScannerCharacterRuleAccess() {
-		return (pScannerCharacterRule != null) ? pScannerCharacterRule : (pScannerCharacterRule = new ScannerCharacterRuleElements());
+		return pScannerCharacterRule;
 	}
 	
 	public ParserRule getScannerCharacterRuleRule() {
@@ -1491,9 +1634,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScannerJSRule:
-	//	"javascript-rule" token=[ScannerToken] fileURI=STRING;
+	//	("javascript-rule" | "javascript_rule") token=[ScannerToken] fileURI=STRING;
 	public ScannerJSRuleElements getScannerJSRuleAccess() {
-		return (pScannerJSRule != null) ? pScannerJSRule : (pScannerJSRule = new ScannerJSRuleElements());
+		return pScannerJSRule;
 	}
 	
 	public ParserRule getScannerJSRuleRule() {
@@ -1501,9 +1644,9 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PartitionJSRule:
-	//	"javascript-rule" token=[Partition] fileURI=STRING;
+	//	("javascript-rule" | "javascript_rule") token=[Partition] fileURI=STRING;
 	public PartitionJSRuleElements getPartitionJSRuleAccess() {
-		return (pPartitionJSRule != null) ? pPartitionJSRule : (pPartitionJSRule = new PartitionJSRuleElements());
+		return pPartitionJSRule;
 	}
 	
 	public ParserRule getPartitionJSRuleRule() {
@@ -1511,10 +1654,10 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScannerWhitespaceRule:
-	//	"whitespace-rule" token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]" |
+	//	("whitespace-rule" | "whitespace_rule") token=[ScannerToken]? ("[" characters+=STRING ("," characters+=STRING)* "]" |
 	//	javawhitespace?="javawhitespace" | fileURI=STRING);
 	public ScannerWhitespaceRuleElements getScannerWhitespaceRuleAccess() {
-		return (pScannerWhitespaceRule != null) ? pScannerWhitespaceRule : (pScannerWhitespaceRule = new ScannerWhitespaceRuleElements());
+		return pScannerWhitespaceRule;
 	}
 	
 	public ParserRule getScannerWhitespaceRuleRule() {
@@ -1524,7 +1667,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//Color:
 	//	RGBColor;
 	public ColorElements getColorAccess() {
-		return (pColor != null) ? pColor : (pColor = new ColorElements());
+		return pColor;
 	}
 	
 	public ParserRule getColorRule() {
@@ -1534,7 +1677,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//RGBColor:
 	//	"rgb" "(" r=INT "," g=INT "," b=INT ")";
 	public RGBColorElements getRGBColorAccess() {
-		return (pRGBColor != null) ? pRGBColor : (pRGBColor = new RGBColorElements());
+		return pRGBColor;
 	}
 	
 	public ParserRule getRGBColorRule() {
@@ -1544,7 +1687,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//Font:
 	//	name=ID size=INT attributes+=FontType*;
 	public FontElements getFontAccess() {
-		return (pFont != null) ? pFont : (pFont = new FontElements());
+		return pFont;
 	}
 	
 	public ParserRule getFontRule() {
@@ -1554,7 +1697,7 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	//enum FontType:
 	//	bold | italic | underline | strike_through="strike-through";
 	public FontTypeElements getFontTypeAccess() {
-		return (unknownRuleFontType != null) ? unknownRuleFontType : (unknownRuleFontType = new FontTypeElements());
+		return unknownRuleFontType;
 	}
 	
 	public EnumRule getFontTypeRule() {
@@ -1574,8 +1717,8 @@ public class HSLGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal STRING:
-	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" |
-	//	"n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
+	//	"\"" ("\\" . / * 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' * / | !("\\" | "\""))* "\"" | "\'" ("\\" .
+	//	/ * 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' * / | !("\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
 		return gaTerminals.getSTRINGRule();
 	} 

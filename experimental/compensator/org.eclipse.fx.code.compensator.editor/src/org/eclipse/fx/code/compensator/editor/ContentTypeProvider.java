@@ -15,5 +15,7 @@ public interface ContentTypeProvider {
 	public static final String JAVA = "text/java";
 	public static final String JAVASCRIPT = "text/javascript";
 	public static final String GROOVY = "text/groovy";
+	public static final String HSL = "text/hsl";
+	public static final String LEGO = "text/lego";
 	public String getContentType();
 }

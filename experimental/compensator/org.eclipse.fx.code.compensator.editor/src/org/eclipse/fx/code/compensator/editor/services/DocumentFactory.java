@@ -16,4 +16,5 @@ import org.eclipse.jface.text.IDocument;
 public interface DocumentFactory {
 	public boolean applies(Input<?> input);
 	public IDocument createDocument(Input<?> input);
+	public boolean persistDocument(IDocument document);
 }

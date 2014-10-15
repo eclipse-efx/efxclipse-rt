@@ -1,0 +1,25 @@
+HSL {
+    partition __dftl_partition_content_type
+    partition __hsl_comment
+    partition __hsl_string
+    rule_damager __dftl_partition_content_type {
+        default token hsl_default
+        token hsl_string
+        token hsl_keyword 
+        keywords hsl_keyword [
+            "partition", "rule_damager", "default", "token",
+            "keywords" , "single_line" , "multi_line" ,"whitespace_rule",
+            "character_rule", "javascript_rule", "java_like_partitioner",
+            "singlelinedoc", "multilinedoc", "javadoc",
+            "char", "string", "for", "escapedby", "javawhitespace", "rule_partitioner"
+        ]
+        whitespace_rule hsl_default javawhitespace
+    }
+    rule_damager __hsl_string {
+      default token hsl_string
+    }
+    rule_partitioner {
+      single_line __hsl_string '"' => '"' 
+      multi_line __hsl_comment "/*" => "*/"
+    }
+} for "text/hsl"

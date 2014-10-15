@@ -19,7 +19,7 @@ Partitioner:
 ;
 
 JavaLikeParitioner:
-	'java-like-partitioner' '{'
+	('java-like-partitioner'|'java_like_partitioner') '{'
 		'singlelinedoc' singleLineDocParition=[Partition|ID]
 		'multilinedoc' multiLineDocParition=[Partition|ID]
 		'javadoc' javaDocParition=[Partition|ID]
@@ -29,13 +29,13 @@ JavaLikeParitioner:
 ;
 
 RulePartitioner:
-	'rule-partitioner' '{'
+	('rule-partitioner'|'rule_partitioner') '{'
 		rules += ParitionRule+
 	'}'
 ;
 
 JSParitioner:
-	'js-partitioner' fileURI=STRING
+	('js-partitioner'|'js_partitioner') fileURI=STRING
 ;
 
 Damager:
@@ -43,11 +43,11 @@ Damager:
 ;
 
 JSDamager:
-	'js-damager' partition=[Partition|ID] fileURI=STRING
+	('js-damager'|'js_damager') partition=[Partition|ID] fileURI=STRING
 ;
 
 RuleDamager:
-	'rule-damager' partition=[Partition|ID] '{'
+	('rule-damager'|'rule_damager') partition=[Partition|ID] '{'
 		tokens			+=ScannerToken*
 		keywordGroups 	+=KeywordGroup*
 		rules 			+= ScannerRule*
@@ -75,35 +75,35 @@ ParitionRule:
 ;
 
 ScannerSingleLineRule:
-	'single-line' token=[ScannerToken|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? 
+	('single-line'|'single_line') token=[ScannerToken|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? 
 ;
 
 PartitionSingleLineRule:
-	'single-line' parition=[Partition|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? 
+	('single-line'|'single_line') parition=[Partition|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? 
 ;
 
 ScannerMultiLineRule:
-	'multi-line' token=[ScannerToken|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
+	('multi-line'|'multi_line') token=[ScannerToken|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
 ;
 
 PartitionMultiLineRule:
-	'multi-line' parition=[Partition|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
+	('multi-line'|'multi_line') parition=[Partition|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
 ;
 
 ScannerCharacterRule:
-	'character-rule' token=[ScannerToken|ID] '[' characters+=STRING (',' characters+=STRING)* ']'
+	('character-rule'|'character_rule') token=[ScannerToken|ID] '[' characters+=STRING (',' characters+=STRING)* ']'
 ;
 
 ScannerJSRule:
-	'javascript-rule' token=[ScannerToken|ID] fileURI=STRING
+	('javascript-rule'|'javascript_rule') token=[ScannerToken|ID] fileURI=STRING
 ;
 
 PartitionJSRule:
-	'javascript-rule' token=[Partition|ID] fileURI=STRING
+	('javascript-rule'|'javascript_rule') token=[Partition|ID] fileURI=STRING
 ;
 
 ScannerWhitespaceRule:
-	'whitespace-rule' (token=[ScannerToken|ID])? (('[' characters+=STRING (',' characters+=STRING )* ']') | javawhitespace?='javawhitespace' | fileURI=STRING)
+	('whitespace-rule'|'whitespace_rule') (token=[ScannerToken|ID])? (('[' characters+=STRING (',' characters+=STRING )* ']') | javawhitespace?='javawhitespace' | fileURI=STRING)
 ;
 
 Color:

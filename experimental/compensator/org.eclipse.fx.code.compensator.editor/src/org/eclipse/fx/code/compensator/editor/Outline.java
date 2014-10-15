@@ -10,6 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor;
 
-public class Outline {
+import javafx.collections.ObservableList;
 
+public interface Outline {
+	public ObservableList<OutlineItem> getRootItems();
+	
+	public interface OutlineItem {
+		public ObservableList<OutlineItem> getChildren();
+	}
 }

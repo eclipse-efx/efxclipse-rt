@@ -43,6 +43,8 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 		rs = new ResourceSetImpl();
 		registerHslConfig(URI.createPlatformPluginURI("/org.eclipse.fx.code.compensator.editor.hsl/xml/xml.hsl", true));
 		registerHslConfig(URI.createPlatformPluginURI("/org.eclipse.fx.code.compensator.editor.hsl/groovy/groovy.hsl", true));
+		registerHslConfig(URI.createPlatformPluginURI("/org.eclipse.fx.code.compensator.editor.hsl/hsl/hsl.hsl", true));
+		registerHslConfig(URI.createPlatformPluginURI("/org.eclipse.fx.code.compensator.editor.hsl/lego/lego.hsl", true));
 	}
 	
 	@Override

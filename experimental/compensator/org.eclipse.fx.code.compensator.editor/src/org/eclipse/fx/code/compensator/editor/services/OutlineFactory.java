@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.services;
 
-public interface OutlineFactory {
+import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.code.compensator.editor.Outline;
 
+public interface OutlineFactory {
+	public boolean applies(Input<?> input);
+	public Outline createOutline(Input<?> input);
 }

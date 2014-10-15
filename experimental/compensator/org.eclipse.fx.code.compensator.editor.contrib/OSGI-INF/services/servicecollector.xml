@@ -3,6 +3,7 @@
    <implementation class="org.eclipse.fx.code.compensator.editor.contrib.ServiceCollector"/>
    <service>
       <provide interface="org.eclipse.fx.code.compensator.editor.contrib.ServiceCollector"/>
+      <provide interface="org.eclipse.fx.code.compensator.editor.services.DocumentPersitenceService"/>
    </service>
    <reference bind="addInputFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.InputFactory" name="InputFactory" policy="dynamic" unbind="removeInputFactory"/>
    <reference bind="addDocumentFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.DocumentFactory" name="DocumentFactory" policy="dynamic" unbind="removeDocumentFactory"/>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_fFsNwPG6EeOigcR0oBysUg" elementId="org.eclipse.fx.code.compensator.app" bindingContexts="_fFq_oPG6EeOigcR0oBysUg">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_xH6dEPG6EeOigcR0oBysUg" elementId="org.eclipse.fx.code.compensator.app.trimmedwindow.0" x="10" y="10" width="800" height="600">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_xH6dEPG6EeOigcR0oBysUg" elementId="org.eclipse.fx.code.compensator.app.trimmedwindow.0" bindingContexts="_fFsNwfG6EeOigcR0oBysUg" x="10" y="10" width="800" height="600">
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_mym9kPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.perspectivestack.0"/>
     <mainMenu xmi:id="_RTKZcPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.menu.0">
       <children xsi:type="menu:Menu" xmi:id="_SXdvEPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.menu.1" label="File">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_U7ubkPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.handledmenuitem.0" label="Open File ..." command="_NKFrQPNkEeOKm6R57HGa4g"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_KY76wEdBEeSZQYCAvKFSig" elementId="org.eclipse.fx.code.compensator.app.handledmenuitem.1" label="Save" command="_3He4MEdAEeSZQYCAvKFSig"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_LCyGcAxQEeSN54I_YjEqrw" elementId="org.eclipse.fx.code.compensator.app.menu.2" label="Themes">
         <children xsi:type="menu:DirectMenuItem" xmi:id="_NgjJYAxQEeSN54I_YjEqrw" elementId="org.eclipse.fx.code.compensator.app.directmenuitem.0" label="Default" selected="true" type="Radio" contributionURI="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.ToggleThemeHandler"/>
@@ -14,12 +15,17 @@
   </children>
   <handlers xmi:id="_FcDokPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.handler.0" contributionURI="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.LoadFile" command="_NKFrQPNkEeOKm6R57HGa4g"/>
   <handlers xmi:id="_R3Pi0POkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.handler.1" contributionURI="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.OpenFile" command="_VwzOUPOkEeOKm6R57HGa4g"/>
+  <handlers xmi:id="_1rs2sEdAEeSZQYCAvKFSig" elementId="org.eclipse.fx.code.compensator.app.handler.2" contributionURI="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.SaveFile" command="_3He4MEdAEeSZQYCAvKFSig"/>
+  <bindingTables xmi:id="_iCgYwFRVEeSOIvvv6jFM3A" elementId="org.eclipse.fx.code.compensator.app.bindingtable.0" bindingContext="_fFsNwfG6EeOigcR0oBysUg">
+    <bindings xmi:id="_jaVuYFRVEeSOIvvv6jFM3A" elementId="org.eclipse.fx.code.compensator.app.keybinding.0" keySequence="M1+S" command="_3He4MEdAEeSZQYCAvKFSig"/>
+  </bindingTables>
   <rootContext xmi:id="_fFq_oPG6EeOigcR0oBysUg" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_fFsNwfG6EeOigcR0oBysUg" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_fFsNwvG6EeOigcR0oBysUg" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
   <commands xmi:id="_NKFrQPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.command.0" commandName="Load File"/>
   <commands xmi:id="_VwzOUPOkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.command.1" commandName="Open File"/>
+  <commands xmi:id="_3He4MEdAEeSZQYCAvKFSig" elementId="org.eclipse.fx.code.compensator.app.command.2" commandName="Save File"/>
   <addons xmi:id="_fFsNw_G6EeOigcR0oBysUg" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_fFsNxPG6EeOigcR0oBysUg" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_fFsNxfG6EeOigcR0oBysUg" elementId="org.eclipse.fx.ui.keybindings.e4.service" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingServiceAddon"/>
@@ -27,4 +33,5 @@
   <addons xmi:id="_fFsNx_G6EeOigcR0oBysUg" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
   <addons xmi:id="_fFsNyPG6EeOigcR0oBysUg" elementId="org.eclipse.fx.ui.keybindings.e4.model" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingProcessingAddon"/>
   <addons xmi:id="_fFsNyfG6EeOigcR0oBysUg" elementId="org.eclipse.e4.ui.workbench.addons.HandlerProcessingAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+  <addons xmi:id="_w5KdIEcyEeSZQYCAvKFSig" elementId="org.eclipse.fx.code.compensator.app.addon.0" contributionURI="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.DirtyStateTrackerAddon"/>
 </application:Application>
