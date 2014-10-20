@@ -68,12 +68,12 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 	}
 
-	static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> { 
+	static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
 
 		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
 		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
 		WCallback<@NonNull DragData, @NonNull Boolean> dragStartCallback;
-		
+
 		// private WCallback<WMinMaxState, Void> minMaxCallback;
 		// private MinMaxGroup minMaxGroup;
 		boolean inKeyTraversal;
@@ -84,15 +84,15 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@Inject
 		@NonNull
 		DnDFeedbackService dndFeedback;
-		
+
 		@NonNull
 		private final MPartStack domainElement;
-		
+
 		@Inject
 		public StackWidgetImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartStack domainElement) {
 			this.domainElement = domainElement;
 		}
-		
+
 		@Override
 		protected Pane createStaticPane() {
 			return new StackPane() {
@@ -155,7 +155,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			// }
 			// }
 		}
-		
+
 		@Override
 		protected TabPane createWidget() {
 			DnDSupport dnd = new DnDSupport(
@@ -163,7 +163,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					(param) -> StackWidgetImpl.this.getDropDroppedCallback(),
 					StackWidgetImpl.this.dndFeedback,
 					this.domainElement);
-			
+
 			TabPane p = DndTabPaneFactory.createDndTabPane((s) -> {
 				s.setStartFunction(dnd::handleDragStart);
 				s.setDropConsumer(dnd::handleDropped);
@@ -171,7 +171,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				s.setDragFinishedConsumer(dnd::handleFinished);
 				s.setClipboardDataFunction(dnd::clipboardDataFunction);
 			});
-			
+
 			p.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
 				@Override
@@ -190,7 +190,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			});
 
 			p.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+				boolean inUpdate;
 
+				@SuppressWarnings("synthetic-access")
 				@Override
 				public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
 					if (newValue == null || (getWidgetState() != WidgetState.CREATED && getWidgetState() != WidgetState.IN_SETUP)) {
@@ -205,7 +207,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					} else {
 						cb = StackWidgetImpl.this.keySelectedItemCallback;
 					}
-					
+
 					if (cb != null) {
 						if (w.tab.getContent() != null && !w.tab.getContent().isVisible()) {
 							// At the moment the visibility changes the content
@@ -223,22 +225,33 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 							});
 						} else {
 							if (w.tab.getContent() == null || w.tab.getContent().getScene() != null) {
+//								System.err.println("LOOKS LIKE NULL");
+//								System.err.println(w.tab.getContent());
+//								System.err.println(w.tab.getContent().getScene());
 								// Delay if the subcontrol just got created
 								// isVisible() reports true while it is not
 								// really
-								Platform.runLater(new Runnable() {
-
-									@Override
-									public void run() {
-										cb.call(w);
-									}
-								});
+								if( ! this.inUpdate ) {
+									this.inUpdate = true;
+									Platform.runLater(new Runnable() {
+										@SuppressWarnings("unqualified-field-access")
+										@Override
+										public void run() {
+											cb.call(w);
+											inUpdate = false;
+										}
+									});
+								} else {
+									StackWidgetImpl.this.logger.info("An endless activation update has been blocked!"); //$NON-NLS-1$
+								}
 							} else {
 								// We are in the init phase
 								cb.call(w);
 							}
 						}
 					}
+
+//					System.err.println("END CHANGE");
 				}
 			});
 			return p;
@@ -270,7 +283,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			if( index >= getWidget().getTabs().size() ) {
 				addItems(items);
 			} else {
-				getWidget().getTabs().addAll(index, extractTabs(items));	
+				getWidget().getTabs().addAll(index, extractTabs(items));
 			}
 		}
 
@@ -309,7 +322,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			}
 			getWidget().getTabs().removeAll(l);
 		}
-		
+
 		@Override
 		public void setDragStartCallback(@NonNull WCallback<@NonNull DragData, @NonNull Boolean> dragStackCallback) {
 			this.dragStartCallback = dragStackCallback;
@@ -532,15 +545,15 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				public Node call(Integer param) {
 					PagninationItemImpl item = (PagninationItemImpl) PaginationWidgetImpl.this.items.get(param.intValue());
 					item.handleSelection();
-					
+
 					WCallback<WStackItem<Object, Node>, Void> cb = PaginationWidgetImpl.this.mouseSelectedItemCallback;
 					if( cb != null ) {
-						cb.call(item);	
+						cb.call(item);
 					}
-					
+
 					PaginationItem nativeItem = item.getNativeItem();
 					if( nativeItem != null ) {
-						return nativeItem.getContent();	
+						return nativeItem.getContent();
 					}
 					return null;
 				}
@@ -558,7 +571,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			});
 			return p;
 		}
-		
+
 		@Override
 		public void setDragStartCallback(@NonNull WCallback<@NonNull DragData, @NonNull Boolean> dragStackCallback) {
 			// not implemented yet
