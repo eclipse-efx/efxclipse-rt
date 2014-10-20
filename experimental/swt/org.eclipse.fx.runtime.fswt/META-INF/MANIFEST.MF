@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Fswt
+Bundle-SymbolicName: org.eclipse.fx.runtime.fswt
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.eclipse.swt,
+ org.eclipse.swt.widgets,
+ org.osgi.framework;version="1.8.0"
+Export-Package: org.eclipse.fx.runtime.fswt,
+ org.eclipse.fx.runtime.fswt.graphics,
+ org.eclipse.fx.runtime.fswt.widgets
+Bundle-ActivationPolicy: lazy

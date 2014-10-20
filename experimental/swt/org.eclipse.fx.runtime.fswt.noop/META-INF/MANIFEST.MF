@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Noop
+Bundle-SymbolicName: org.eclipse.fx.runtime.fswt.noop
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.fx.runtime.fswt
+Import-Package: org.eclipse.swt,
+ org.eclipse.swt.widgets
+Service-Component: OSGI-INF/services/nativeswt.xml
+Bundle-ActivationPolicy: lazy
