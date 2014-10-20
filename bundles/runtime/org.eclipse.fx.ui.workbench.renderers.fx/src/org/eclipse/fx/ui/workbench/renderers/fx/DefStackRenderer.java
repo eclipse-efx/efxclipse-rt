@@ -225,12 +225,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 							});
 						} else {
 							if (w.tab.getContent() == null || w.tab.getContent().getScene() != null) {
-//								System.err.println("LOOKS LIKE NULL");
-//								System.err.println(w.tab.getContent());
-//								System.err.println(w.tab.getContent().getScene());
 								// Delay if the subcontrol just got created
 								// isVisible() reports true while it is not
 								// really
+								// See 447924 why we need this inUpdate safe guard
 								if( ! this.inUpdate ) {
 									this.inUpdate = true;
 									Platform.runLater(new Runnable() {
