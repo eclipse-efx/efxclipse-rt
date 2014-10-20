@@ -248,8 +248,6 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 							}
 						}
 					}
-
-//					System.err.println("END CHANGE");
 				}
 			});
 			return p;
