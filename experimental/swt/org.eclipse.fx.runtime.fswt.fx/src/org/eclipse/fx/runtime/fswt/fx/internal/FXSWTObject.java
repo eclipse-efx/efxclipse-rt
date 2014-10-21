@@ -22,6 +22,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import org.eclipse.fx.runtime.fswt.FSWT;
 import org.eclipse.fx.runtime.fswt.FSWTObject;
 import org.eclipse.fx.runtime.fswt.graphics.FFadeTransition;
 import org.eclipse.fx.runtime.fswt.graphics.FFill;
@@ -31,13 +32,20 @@ import org.eclipse.fx.runtime.fswt.graphics.FTransition;
 public class FXSWTObject<T> implements FSWTObject<T> {
 	private final T nativeInstance;
 
-	public FXSWTObject(T nativeInstance) {
+	private final FSWT fswt;
+
+	public FXSWTObject(T nativeInstance, FSWT fswt) {
 		this.nativeInstance = nativeInstance;
+		this.fswt = fswt;
 	}
 
 	@Override
 	public T getNativeInstance() {
 		return nativeInstance;
+	}
+
+	public FSWT getFSWT() {
+		return fswt;
 	}
 
 	public static final Background createBackground(FFill fill) {
@@ -51,7 +59,6 @@ public class FXSWTObject<T> implements FSWTObject<T> {
 	public static void transitionExecutionPre(FTransition transition, Function<FTransition, Transition> transitionFactory, Runnable completed, Runnable code) {
 		Transition tr = transitionFactory.apply(transition);
 
-		System.err.println(tr);
 		tr.setOnFinished((e) -> completed.run());
 		tr.play();
 

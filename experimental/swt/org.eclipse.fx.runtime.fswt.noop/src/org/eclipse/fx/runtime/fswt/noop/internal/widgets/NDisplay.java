@@ -11,14 +11,15 @@
 package org.eclipse.fx.runtime.fswt.noop.internal.widgets;
 
 import org.eclipse.fx.runtime.fswt.FBlockCondition;
+import org.eclipse.fx.runtime.fswt.FSWT;
 import org.eclipse.fx.runtime.fswt.noop.internal.NSWTObject;
 import org.eclipse.fx.runtime.fswt.widgets.FDisplay;
 import org.eclipse.swt.widgets.Display;
 
 public class NDisplay<T extends Display> extends NSWTObject<T> implements FDisplay<T> {
 
-	public NDisplay(T instance) {
-		super(instance);
+	public NDisplay(T instance, FSWT fswt) {
+		super(instance,fswt);
 	}
 
 	@Override

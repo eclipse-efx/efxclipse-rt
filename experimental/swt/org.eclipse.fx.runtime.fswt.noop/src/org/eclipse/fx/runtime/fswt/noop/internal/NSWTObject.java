@@ -10,13 +10,20 @@
  *******************************************************************************/
 package org.eclipse.fx.runtime.fswt.noop.internal;
 
+import org.eclipse.fx.runtime.fswt.FSWT;
 import org.eclipse.fx.runtime.fswt.FSWTObject;
 
 public class NSWTObject<T> implements FSWTObject<T> {
 	private final T instance;
+	private final FSWT fswt;
 
-	public NSWTObject(T instance) {
+	public NSWTObject(T instance, FSWT fswt) {
 		this.instance = instance;
+		this.fswt = fswt;
+	}
+
+	public FSWT getFSWT() {
+		return fswt;
 	}
 
 	@Override

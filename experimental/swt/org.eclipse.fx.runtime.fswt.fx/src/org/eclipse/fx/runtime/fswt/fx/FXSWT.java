@@ -55,11 +55,11 @@ public class FXSWT implements FSWT {
 	public <T extends Widget, F extends FWidget<T>> F adapt(T widget,
 			Class<F> clazz) {
 		if( clazz == FShell.class ) {
-			return (F) new FXShell<>((Shell) widget);
+			return (F) new FXShell<>((Shell) widget,this);
 		} else if( clazz == FComposite.class ) {
-			return (F) new FXComposite<>((Composite)widget);
+			return (F) new FXComposite<>((Composite)widget,this);
 		} else if( clazz == FControl.class ) {
-			return (F) new FXControl<>((Control)widget);
+			return (F) new FXControl<>((Control)widget,this);
 		}
 		throw new IllegalArgumentException("Unsupported adapter '"+clazz+"'");
 	}
@@ -75,7 +75,7 @@ public class FXSWT implements FSWT {
 		@Override
 		public void start(Stage primaryStage) throws Exception {
 			final Display d = new Display();
-			FXDisplay<Display> fxd = new FXDisplay<>(d);
+			FXDisplay<Display> fxd = new FXDisplay<>(d,SELF);
 			FBlockCondition condition = SELF.initialize.invoke(fxd);
 			if( condition != null ) {
 				if( condition instanceof ShellBlockCondition ) {

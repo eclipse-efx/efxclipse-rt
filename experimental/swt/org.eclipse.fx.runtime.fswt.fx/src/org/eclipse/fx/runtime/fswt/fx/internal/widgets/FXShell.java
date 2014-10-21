@@ -15,6 +15,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import org.eclipse.fx.runtime.fswt.FSWT;
 import org.eclipse.fx.runtime.fswt.fx.internal.FXSWTObject;
 import org.eclipse.fx.runtime.fswt.graphics.FFadeTransition;
 import org.eclipse.fx.runtime.fswt.graphics.FFill;
@@ -25,8 +26,8 @@ import org.eclipse.swt.widgets.Shell;
 public class FXShell<T extends Shell> extends FXSWTObject<T> implements
 		FShell<T> {
 
-	public FXShell(T nativeInstance) {
-		super(nativeInstance);
+	public FXShell(T nativeInstance, FSWT fswt) {
+		super(nativeInstance,fswt);
 	}
 
 	@Override

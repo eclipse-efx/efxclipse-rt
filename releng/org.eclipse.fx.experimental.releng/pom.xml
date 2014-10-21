@@ -14,8 +14,8 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
-		<tycho-version>0.21.0-SNAPSHOT</tycho-version>
-		<tycho-extras.version>0.21.0-SNAPSHOT</tycho-extras.version>
+		<tycho-version>0.21.0</tycho-version>
+		<tycho-extras.version>0.21.0</tycho-extras.version>
 		<cbi-plugins.version>1.0.5</cbi-plugins.version>
 		<junit-version>4.8.1</junit-version>
 		<mockito-version>1.8.4</mockito-version>
@@ -28,15 +28,20 @@
 	</properties>
 
 	<modules>
-		
+
 		<!-- Experimental -->
 		<module>../../experimental/swt/org.eclipse.fx.runtime.swt</module>
+
+		<module>../../experimental/swt/org.eclipse.fx.runtime.fswt</module>
+		<module>../../experimental/swt/org.eclipse.fx.runtime.fswt.fx</module>
+		<module>../../experimental/swt/org.eclipse.fx.runtime.fswt.noop</module>
+
 		<module>../../experimental/swt/org.eclipse.fx.runtime.swt.compat</module>
 		<module>../../experimental/swt/org.eclipse.fx.runtime.swt.e4</module>
-		<module>../../experimental/swt/org.eclipse.fx.runtime.swtutil</module>
+		<!--  module>../../experimental/swt/org.eclipse.fx.runtime.swtutil</module-->
 		<module>../runtime/org.eclipse.fx.swtfx.feature</module>
 		<module>../org.eclipse.fx.experimental.updatesite</module>
-		
+
 	</modules>
 
 	<repositories>
@@ -97,7 +102,7 @@
  					</execution>
  				</executions>
 			</plugin>
-		
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -161,7 +166,7 @@
 				                <systemPath>${java.home}/lib/jfxswt.jar</systemPath>
 				                <scope>system</scope>
 				            </extraClasspathElement>
-        				</extraClasspathElements> 
+        				</extraClasspathElements>
 					</configuration>
 				</plugin>
 				<plugin>

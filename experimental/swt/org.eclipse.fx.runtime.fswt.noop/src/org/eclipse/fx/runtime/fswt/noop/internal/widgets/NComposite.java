@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.runtime.fswt.noop.internal.widgets;
 
+import org.eclipse.fx.runtime.fswt.FSWT;
 import org.eclipse.fx.runtime.fswt.graphics.FFill;
 import org.eclipse.fx.runtime.fswt.graphics.FTransition;
 import org.eclipse.fx.runtime.fswt.noop.internal.NSWTObject;
@@ -18,8 +19,8 @@ import org.eclipse.swt.widgets.Composite;
 
 public class NComposite<T extends Composite> extends NSWTObject<T> implements FComposite<T> {
 
-	public NComposite(T instance) {
-		super(instance);
+	public NComposite(T instance, FSWT fswt) {
+		super(instance,fswt);
 	}
 
 	@Override

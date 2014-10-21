@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>e(fx)clipse - Runtime - SWT Util</name>
-	<groupId>org.eclipse.fx</groupId>
-	<artifactId>org.eclipse.fx.runtime.swtutil</artifactId>
+	<name>e(fx)clipse - Runtime - FSWT Noop Facade implementation</name>
+	<groupId>org.eclipse.fx.experimental</groupId>
+	<artifactId>org.eclipse.fx.runtime.fswt.noop</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<parent>
-		<groupId>org.eclipse.fx</groupId>
+		<groupId>org.eclipse.fx.experimental</groupId>
 		<artifactId>releng</artifactId>
-		<relativePath>../../../releng/org.eclipse.fx.releng/pom.xml</relativePath>
+		<relativePath>../../../releng/org.eclipse.fx.experimental.releng/pom.xml</relativePath>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 

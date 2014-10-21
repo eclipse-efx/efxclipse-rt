@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.runtime.fswt.noop.internal.widgets;
 
+import org.eclipse.fx.runtime.fswt.FSWT;
 import org.eclipse.fx.runtime.fswt.graphics.FFill;
 import org.eclipse.fx.runtime.fswt.graphics.FTransition;
 import org.eclipse.fx.runtime.fswt.noop.internal.NSWTObject;
@@ -19,8 +20,8 @@ import org.eclipse.swt.widgets.Shell;
 
 public class NShell<T extends Shell> extends NSWTObject<T> implements FShell<T> {
 
-	public NShell(T instance) {
-		super(instance);
+	public NShell(T instance, FSWT fswt) {
+		super(instance,fswt);
 	}
 
 	@Override

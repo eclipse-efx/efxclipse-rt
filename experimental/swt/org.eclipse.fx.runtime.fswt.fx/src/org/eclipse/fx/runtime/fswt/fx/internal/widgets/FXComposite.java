@@ -12,6 +12,7 @@ package org.eclipse.fx.runtime.fswt.fx.internal.widgets;
 
 import javafx.animation.Transition;
 
+import org.eclipse.fx.runtime.fswt.FSWT;
 import org.eclipse.fx.runtime.fswt.fx.internal.FXSWTObject;
 import org.eclipse.fx.runtime.fswt.graphics.FFill;
 import org.eclipse.fx.runtime.fswt.graphics.FTransition;
@@ -20,8 +21,8 @@ import org.eclipse.swt.widgets.Composite;
 
 public class FXComposite<T extends Composite> extends FXSWTObject<T> implements FComposite<T> {
 
-	public FXComposite(T nativeInstance) {
-		super(nativeInstance);
+	public FXComposite(T nativeInstance, FSWT fswt) {
+		super(nativeInstance,fswt);
 	}
 
 	@Override
