@@ -14,9 +14,10 @@ import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Factory service
- * 
+ *
  * @param <T>
  *            the type
+ * @since 1.1
  */
 public interface ObjectFactory<@NonNull T> {
 	/**

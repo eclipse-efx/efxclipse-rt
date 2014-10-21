@@ -27,6 +27,7 @@ import org.eclipse.fx.core.Subscription;
  *
  * @param <M>
  *            the message class type
+ * @since 1.1
  */
 public class AbstractMessageRegistry<M> {
 	private M messages;

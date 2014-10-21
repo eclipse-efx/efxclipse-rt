@@ -17,9 +17,10 @@ import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Context function who creates a singleton instance
- * 
+ *
  * @param <T>
  *            the type to create
+ * @since 1.1
  */
 public abstract class ContextSingletonFunction<T> extends ContextFunction {
 	@NonNull
@@ -27,14 +28,14 @@ public abstract class ContextSingletonFunction<T> extends ContextFunction {
 
 	/**
 	 * Create a function who creates an instance of the object only once
-	 * 
+	 *
 	 * @param type
 	 *            the type
 	 */
 	public ContextSingletonFunction(@NonNull Class<@NonNull T> type) {
 		this.type = type;
 	}
-	
+
 	@Override
 	public Object compute(IEclipseContext context) {
 		String key = "local_" + this.type; //$NON-NLS-1$

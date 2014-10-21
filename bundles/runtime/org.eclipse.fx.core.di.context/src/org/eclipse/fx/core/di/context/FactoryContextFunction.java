@@ -25,12 +25,13 @@ import org.eclipse.fx.core.di.ScopedObjectFactory;
  * as {@link IContextFunction#SERVICE_CONTEXT_KEY}. e.g. <code>PersonListService</code> is assumed
  * to be created by <code>PersonListServiceFactory</code>
  * </p>
+ * @since 1.1
  */
 public class FactoryContextFunction extends ContextFunction {
 	private String factoryClass;
 	private String type;
 	private boolean singleton;
-	
+
 	/**
 	 * Key to be used in registry to require singleton
 	 */
@@ -49,7 +50,7 @@ public class FactoryContextFunction extends ContextFunction {
 					context.modify(key, rv);
 				}
 			}
-			return rv;			
+			return rv;
 		} else {
 			ScopedObjectFactory factory = context.get(ScopedObjectFactory.class);
 			ObjectFactory<?> f = (ObjectFactory<?>) context.get(this.factoryClass);
@@ -62,7 +63,7 @@ public class FactoryContextFunction extends ContextFunction {
 
 	/**
 	 * Called by OSGi when activating the component
-	 * 
+	 *
 	 * @param config
 	 *            the config
 	 */
