@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.di;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,7 +32,7 @@ import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * Allows to use Eclipse DI inside your controller to access services
- * 
+ *
  * @param <N>
  *            the root node
  */
@@ -44,7 +45,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 
 	/**
 	 * Create a loader which operates relative to the requestor
-	 * 
+	 *
 	 * @param context
 	 *            the di context
 	 * @param requester
@@ -61,7 +62,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 	/**
 	 * Create a loader which operates relative to the requestor and uses the
 	 * {@link ExtendedFXMLLoader} if requested to do so
-	 * 
+	 *
 	 * @param context
 	 *            the di context
 	 * @param requester
@@ -106,7 +107,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 
 	/**
 	 * Create a loader which operates relative to the bundle classpath
-	 * 
+	 *
 	 * @param context
 	 *            the di context
 	 * @param bundle
@@ -122,7 +123,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 	/**
 	 * Create a loader which operates relative to the bundle classpath and uses
 	 * the {@link ExtendedFXMLLoader} if requested to do so
-	 * 
+	 *
 	 * @param context
 	 *            the di context
 	 * @param bundle
@@ -191,7 +192,7 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 
 	/**
 	 * Create a loader which uses the given classloader
-	 * 
+	 *
 	 * @param context
 	 *            the di context
 	 * @param classloader
@@ -212,6 +213,46 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 			@Override
 			public <C> Data<N, C> loadWithController() throws IOException {
 				final FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(classloader, url, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
+				return new Data<N, C>() {
+					@Override
+					public C getController() {
+						return d.controller;
+					}
+
+					@Override
+					public N getNode() {
+						return d.node;
+					}
+				};
+			}
+		};
+	}
+
+	/**
+	 * Create a loader which uses a give classloader and reads from the stream
+	 *
+	 * @param context
+	 *            the di context
+	 * @param classloader
+	 *            the classloader
+	 * @param stream
+	 *            the stream
+	 * @param path
+	 *            the path
+	 * @return a loader instance
+	 */
+	@NonNull
+	public static <N> InjectingFXMLLoader<N> create(@NonNull final IEclipseContext context, @NonNull final ClassLoader classloader, @NonNull final InputStream stream, @Nullable URL path) {
+		return new InjectingFXMLLoader<N>() {
+
+			@Override
+			public N load() throws IOException {
+				return OSGiFXMLLoader.load(classloader, path, stream, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
+			}
+
+			@Override
+			public <C> Data<N, C> loadWithController() throws IOException {
+				final FXMLData<N, C> d = OSGiFXMLLoader.loadWithController(classloader, path, stream, this.resourceBundle, this.builderFactory, new ControllerFactory(context));
 				return new Data<N, C>() {
 					@Override
 					public C getController() {

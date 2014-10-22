@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.di.internal;
 
+import java.io.InputStream;
+import java.net.URL;
+
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.IInjector;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
@@ -22,6 +25,7 @@ import org.eclipse.fx.ui.di.FXMLLoader;
 import org.eclipse.fx.ui.di.FXMLLoaderFactory;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -52,6 +56,18 @@ public class FXMLLoaderSupplier extends ExtendedObjectSupplier {
 			@Override
 			public <N> FXMLBuilder<N> loadBundleRelative(@NonNull String relativePath) {
 				return InjectingFXMLLoader.create(context, FrameworkUtil.getBundle(requestingClass), relativePath, extended);
+			}
+
+			@SuppressWarnings("null")
+			@Override
+			public <N> @NonNull FXMLBuilder<N> loadFromInputStream(@NonNull InputStream stream, @Nullable URL path) {
+				return InjectingFXMLLoader.create(context, requestingClass.getClassLoader(), stream, path);
+			}
+
+			@SuppressWarnings("null")
+			@Override
+			public <N> @NonNull FXMLBuilder<N> loadFromURL(@NonNull URL url) {
+				return InjectingFXMLLoader.create(context, requestingClass.getClassLoader(), url);
 			}
 		};
 	}
