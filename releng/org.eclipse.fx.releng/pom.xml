@@ -11,7 +11,7 @@
 
 	<groupId>org.eclipse.fx</groupId>
 	<artifactId>releng</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<tycho-version>0.21.0</tycho-version>
@@ -38,7 +38,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.core.p2</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core.di</module>
 		<module>../../bundles/runtime/org.eclipse.fx.core.di.context</module>
-		
+
 		<!-- UI Modules -->
 		<module>../../bundles/runtime/org.eclipse.fx.ui.databinding</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.di</module>
@@ -52,32 +52,32 @@
 		<!-- EMF -->
 		<module>../../bundles/runtime/org.eclipse.fx.emf.edit.ui</module>
 		<module>../../bundles/runtime/org.eclipse.fx.emf.databinding</module>
-		
+
 		<!-- e4 -->
 		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings.generic</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.keybindings.e4</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.base</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.base</module>
-		
+
 		<module>../../bundles/runtime/org.eclipse.fx.ui.theme</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.fx</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.renderers.fx</module>
 		<module>../../bundles/runtime/org.eclipse.fx.ui.workbench.services</module>
-				
+
 		<!-- Format Conversion -->
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
-		
+
 		<!-- Features -->
 		<module>../runtime/org.eclipse.fx.core.feature</module>
 		<module>../runtime/org.eclipse.fx.runtime.feature</module>
 		<module>../runtime/org.eclipse.fx.target.feature</module>
 		<module>../runtime/org.eclipse.fx.target.rcp.feature</module>
 		<module>../runtime/org.eclipse.fx.target.rcp4.feature</module>
-				
+
 		<module>../org.eclipse.fx.updatesite</module>
 		<module>../org.eclipse.fx.runtime.doc</module>
-		
+
 	</modules>
 
 	<repositories>
@@ -143,7 +143,7 @@
  					</execution>
  				</executions>
 			</plugin>
-		
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -207,7 +207,7 @@
 				                <systemPath>${java.home}/lib/jfxswt.jar</systemPath>
 				                <scope>system</scope>
 				            </extraClasspathElement>
-        				</extraClasspathElements> 
+        				</extraClasspathElements>
 					</configuration>
 				</plugin>
 				<plugin>
