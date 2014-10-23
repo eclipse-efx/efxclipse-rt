@@ -56,7 +56,7 @@ import org.osgi.service.event.Event;
 
 /**
  * Base class foe all renderers
- * 
+ *
  * @param <M>
  *            the model type
  * @param <W>
@@ -71,14 +71,16 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 */
 	public static final String CONTEXT_DOM_ELEMENT = "fx.rendering.domElement"; //$NON-NLS-1$
 
-//	/**
-//	 * Key used to store the localized label in the context
-//	 */
-//	public static final String ATTRIBUTE_localizedLabel = "localizedLabel"; //$NON-NLS-1$
-//	/**
-//	 * Key used to store the localized tooltip in the context
-//	 */
-//	public static final String ATTRIBUTE_localizedTooltip = "localizedTooltip"; //$NON-NLS-1$
+	private static final String RENDER_KEY = "_renderer"; //$NON-NLS-1$
+
+	// /**
+	// * Key used to store the localized label in the context
+	// */
+	//	public static final String ATTRIBUTE_localizedLabel = "localizedLabel"; //$NON-NLS-1$
+	// /**
+	// * Key used to store the localized tooltip in the context
+	// */
+	//	public static final String ATTRIBUTE_localizedTooltip = "localizedTooltip"; //$NON-NLS-1$
 
 	@Inject
 	IEclipseContext _context; // The
@@ -135,7 +137,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Check if we are currently processing this element
-	 * 
+	 *
 	 * @param element
 	 *            the element to check
 	 * @return <code>true</code> if element is currently processed
@@ -146,7 +148,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Check if we are currently modifying the context of this element
-	 * 
+	 *
 	 * @param element
 	 *            the element to check
 	 * @return <code>true</code> if the elements context is currently modified
@@ -157,7 +159,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Check if we are currently modifying the UI of the given element
-	 * 
+	 *
 	 * @param element
 	 *            the element to check
 	 * @return <code>true</code> if the elements ui is currently modified
@@ -199,7 +201,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Run code without informing the UI about updates
-	 * 
+	 *
 	 * @param element
 	 *            the element the code is executed on
 	 * @param codeBlock
@@ -284,11 +286,32 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		}
 	}
 
+	/**
+	 * Check if this renderer is the one responsible for this class
+	 *
+	 * @param element
+	 *            the element
+	 * @return <code>true</code> if renderer is the one associated with this
+	 *         element
+	 */
+	protected boolean isRenderer(@NonNull MUIElement element) {
+		if (element.getRenderer() != null) {
+			return element.getRenderer() == this;
+		}
+		@Nullable
+		IEclipseContext renderingContext = getRenderingContext(element);
+		if (renderingContext != null) {
+			return renderingContext.get(RENDER_KEY) == this;
+		}
+		return false;
+	}
+
 	@Override
 	public final IEclipseContext setupRenderingContext(@NonNull M element) {
 		IEclipseContext context = (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
 		if (context == null) {
 			context = this._context.createChild("Element RenderingContext"); //$NON-NLS-1$
+			context.set(RENDER_KEY, this);
 			element.getTransientData().put(RENDERING_CONTEXT_KEY, context);
 			context.set(CONTEXT_DOM_ELEMENT, element);
 			initRenderingContext(element, context);
@@ -320,7 +343,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Initialize the context
-	 * 
+	 *
 	 * @param eo
 	 *            the object the context should be populated with
 	 * @param context
@@ -339,18 +362,18 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			}
 		}
 
-//		// Localized Label/Tooltip treatment
-//		if (eo instanceof MUILabel) {
-//			MUILabel l = (MUILabel) eo;
-//			context.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
-//			context.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
-//		}
+		// // Localized Label/Tooltip treatment
+		// if (eo instanceof MUILabel) {
+		// MUILabel l = (MUILabel) eo;
+		// context.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
+		// context.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
+		// }
 	}
 
 	/**
 	 * Register an event listener for the give topic and translate it into
 	 * context informations
-	 * 
+	 *
 	 * @param broker
 	 *            the event broker
 	 * @param topic
@@ -362,7 +385,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@SuppressWarnings("null")
 	void handleEvent(Event event) {
-//		System.err.println("EVENT: " + event + " - " + event.getProperty(UIEvents.EventTags.ATTNAME));
+		// System.err.println("EVENT: " + event + " - " +
+		// event.getProperty(UIEvents.EventTags.ATTNAME));
 		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
 		if (!(changedObj instanceof MUIElement)) {
 			return;
@@ -387,8 +411,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			BaseRenderer.this.contextModification.put(e, Boolean.TRUE);
 
 			if (changedObj instanceof MUIElement) {
-				if (e.getRenderer() == BaseRenderer.this) {
-
+				if ( isRenderer(e) ) {
 					if (attributeName.equals(UIEvents.ApplicationElement.TAGS)) {
 						MUIElement m = (MUIElement) changedObj;
 						if (m.getWidget() != null) {
@@ -411,14 +434,6 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 									+ entry.getKey(), entry.getValue());
 						} else {
 							ctx.set(attributeName, newValue);
-//							if (e instanceof MUILabel) {
-//								MUILabel l = (MUILabel) e;
-//								if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.UILabel.LABEL)) {
-//									ctx.set(ATTRIBUTE_localizedLabel, l.getLocalizedLabel());
-//								} else if (event.getProperty(UIEvents.EventTags.ATTNAME).equals(UIEvents.UILabel.TOOLTIP)) {
-//									ctx.set(ATTRIBUTE_localizedTooltip, l.getLocalizedTooltip());
-//								}
-//							}
 						}
 					}
 				}
@@ -430,7 +445,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Initialize the rendering context
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @param context
@@ -442,7 +457,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Initialize the widget
-	 * 
+	 *
 	 * @param element
 	 *            the model element
 	 * @param widget
@@ -526,7 +541,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Get the widgets class
-	 * 
+	 *
 	 * @param element
 	 *            the widget class
 	 * @return the widget class
@@ -537,7 +552,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	/**
 	 * Create a widget for the model element through the
 	 * {@link IPresentationEngine#createGui(MUIElement)}
-	 * 
+	 *
 	 * @param pm
 	 *            the model element
 	 * @param <LW>
@@ -555,7 +570,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	/**
 	 * Create a widget for the model element through
 	 * {@link IPresentationEngine#createGui(MUIElement, Object, IEclipseContext)}
-	 * 
+	 *
 	 * @param pm
 	 *            the model element
 	 * @param context
@@ -574,20 +589,21 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Get the rendering context of the element
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @return the context
 	 */
+	@SuppressWarnings("static-method")
 	@Nullable
-	protected IEclipseContext getRenderingContext(@NonNull M element) {
+	protected IEclipseContext getRenderingContext(@NonNull MUIElement element) {
 		return (IEclipseContext) element.getTransientData().get(RENDERING_CONTEXT_KEY);
 	}
 
 	/**
 	 * Get the context for the parent using
 	 * {@link EModelService#getContainingContext(MUIElement)}
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @return the context
@@ -609,7 +625,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	/**
 	 * Activate the given part using
 	 * {@link EPartService#activate(MPart, boolean)}
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @param requiresFocus
@@ -636,7 +652,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Check the visible when expression
-	 * 
+	 *
 	 * @param item
 	 *            the item
 	 * @param context
@@ -656,7 +672,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Get the last calculated visible when state or calculates one
-	 * 
+	 *
 	 * @param item
 	 *            the item
 	 * @param context
@@ -675,7 +691,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Get the rendering index of the element
-	 * 
+	 *
 	 * @param parent
 	 *            the parent
 	 * @param element
@@ -702,7 +718,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Check if the item is visible and to be rendered
-	 * 
+	 *
 	 * @param u
 	 *            the element
 	 * @return <code>true</code> if item is to be shown
@@ -713,7 +729,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Process the content of an element
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 */
