@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Base
 Bundle-SymbolicName: org.eclipse.fx.ui.workbench.base
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.1.0",
  org.eclipse.e4.ui.model.workbench;bundle-version="0.10.1",
@@ -19,10 +19,10 @@ Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.1.0",
  org.eclipse.core.databinding.observable,
  org.eclipse.osgi;bundle-version="3.10.0",
  org.eclipse.core.runtime;bundle-version="3.10.0",
- org.eclipse.fx.osgi.util;bundle-version="1.0.0",
+ org.eclipse.fx.osgi.util;bundle-version="1.1.0",
  org.eclipse.e4.core.di.extensions,
- org.eclipse.fx.ui.services;bundle-version="1.0.0",
- org.eclipse.fx.ui.workbench.services;bundle-version="1.0.0"
+ org.eclipse.fx.ui.services;bundle-version="1.1.0",
+ org.eclipse.fx.ui.workbench.services;bundle-version="1.1.0"
 Export-Package: org.eclipse.fx.ui.workbench.base;x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx,org.eclipse.fx.ui.workbench.renderers.base",
  org.eclipse.fx.ui.workbench.base.rendering;x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx,org.eclipse.fx.ui.workbench.renderers.base"
 Import-Package: javax.annotation;version="1.2.0",
