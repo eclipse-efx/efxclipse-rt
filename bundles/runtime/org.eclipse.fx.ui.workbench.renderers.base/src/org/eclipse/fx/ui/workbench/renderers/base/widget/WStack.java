@@ -32,6 +32,11 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 * Tag to use a pagination control
 	 */
 	public static final String TAG_PAGINATION = "fx_pagination"; //$NON-NLS-1$
+	
+	public static final String TAG_TAB_CLOSING_POLICY_UNAVAILABLE = "fx_tab_closing_policy_unavailable"; //$NON-NLS-1$
+	public static final String TAG_TAB_CLOSING_POLICY_SELECTED_TAB = "fx_tab_closing_policy_selectedTab"; //$NON-NLS-1$
+	public static final String TAG_TAB_CLOSING_POLICY_ALL_TABS = "fx_tab_closing_policy_allTabs"; //$NON-NLS-1$
+
 
 	/**
 	 * Abstraction representing an item in the stack

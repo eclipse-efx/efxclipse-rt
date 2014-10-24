@@ -172,6 +172,16 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				s.setClipboardDataFunction(dnd::clipboardDataFunction);
 			});
 
+			if (domainElement.getTags().contains(WStack.TAG_TAB_CLOSING_POLICY_ALL_TABS)) {
+				p.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+			}
+			if (domainElement.getTags().contains(WStack.TAG_TAB_CLOSING_POLICY_UNAVAILABLE)) {
+				p.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+			}
+			if (domainElement.getTags().contains(WStack.TAG_TAB_CLOSING_POLICY_SELECTED_TAB)) {
+				p.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
+			}
+
 			p.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
 				@Override
