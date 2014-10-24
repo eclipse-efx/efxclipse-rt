@@ -12,7 +12,9 @@ package org.eclipse.fx.ui.workbench.base.internal;
 
 import java.util.List;
 import java.util.Locale;
+
 import javax.inject.Inject;
+
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.internal.services.ResourceBundleHelper;
 import org.eclipse.e4.core.internal.services.ServicesActivator;
@@ -23,9 +25,12 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MLocalizable;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
+import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.osgi.service.log.LogService;
 
 /**
@@ -110,17 +115,28 @@ public class FixedLocaleChangeService implements ILocaleChangeService {
 			}
 
 			if (element instanceof MWindow) {
-				if( ((MWindow) element).getMainMenu() != null ) {
-					((MWindow) element).getMainMenu().updateLocalization();
-					updateLocalization(((MWindow) element).getMainMenu().getChildren());
+				MWindow window = (MWindow) element;
+				MMenu mainMenu = window.getMainMenu();
+				if (mainMenu != null) {
+					mainMenu.updateLocalization();
+					updateLocalization(mainMenu.getChildren());
 				}
-				updateLocalization(((MWindow) element).getSharedElements());
+				updateLocalization(window.getSharedElements());
 			}
 
 			if (element instanceof MTrimmedWindow) {
 				for (MTrimBar trimBar : ((MTrimmedWindow) element).getTrimBars()) {
 					trimBar.updateLocalization();
 					updateLocalization(trimBar.getChildren());
+				}
+			}
+
+			if (element instanceof MPart) {
+				MPart mPart = (MPart) element;
+				MToolBar toolbar = mPart.getToolbar();
+				if (toolbar != null && toolbar.getChildren() != null) {
+					toolbar.updateLocalization();
+					updateLocalization(toolbar.getChildren());
 				}
 			}
 
