@@ -25,6 +25,7 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MLocalizable;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
@@ -122,6 +123,11 @@ public class FixedLocaleChangeService implements ILocaleChangeService {
 					updateLocalization(mainMenu.getChildren());
 				}
 				updateLocalization(window.getSharedElements());
+				updateLocalization(window.getWindows());
+			}
+
+			if(element instanceof MPerspective) {
+				updateLocalization(((MPerspective) element).getWindows());
 			}
 
 			if (element instanceof MTrimmedWindow) {
