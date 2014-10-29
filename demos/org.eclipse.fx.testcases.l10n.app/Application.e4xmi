@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_UsTVQVr7EeS5TKc3qjGXdA" elementId="org.eclipse.e4.application" bindingContexts="_UsTVQFr7EeS5TKc3qjGXdA">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_a94oEFr7EeS5TKc3qjGXdA" elementId="org.eclipse.fx.testcases.l10n.app.trimmedwindow.0" label="%trimmedwindow.label.1" x="10" y="10" width="800" height="600">
+    <children xsi:type="basic:PartStack" xmi:id="_vIvX0Fr7EeS5TKc3qjGXdA" elementId="org.eclipse.fx.testcases.l10n.app.partstack.0">
+      <children xsi:type="basic:Part" xmi:id="_viJWUFr7EeS5TKc3qjGXdA" elementId="org.eclipse.fx.testcases.l10n.app.part.1" contributionURI="bundleclass://org.eclipse.fx.testcases.l10n.app/org.eclipse.fx.testcases.l10n.app.SamplePart" label="%part.label.1"/>
+      <children xsi:type="advanced:Placeholder" xmi:id="_ysqKgFr7EeS5TKc3qjGXdA" elementId="org.eclipse.fx.testcases.l10n.app.placeholder.0" ref="_hE97EFr7EeS5TKc3qjGXdA"/>
+      <children xsi:type="basic:Part" xmi:id="_1OaKAFsFEeS5TKc3qjGXdA" elementId="org.eclipse.fx.testcases.l10n.app.part.2" label="%part.label.1"/>
+    </children>
+    <sharedElements xsi:type="basic:Part" xmi:id="_hE97EFr7EeS5TKc3qjGXdA" elementId="org.eclipse.fx.testcases.l10n.app.part.0" contributionURI="bundleclass://org.eclipse.fx.testcases.l10n.app/org.eclipse.fx.testcases.l10n.app.SamplePart" label="%part.label.2"/>
+    <trimBars xmi:id="_MGpRkFr8EeS5TKc3qjGXdA" elementId="org.eclipse.fx.testcases.l10n.app.trimbar.0">
+      <children xsi:type="menu:ToolBar" xmi:id="_Mmuf0Fr8EeS5TKc3qjGXdA" elementId="org.eclipse.fx.testcases.l10n.app.toolbar.0">
+        <children xsi:type="menu:DirectToolItem" xmi:id="_POnvIFr8EeS5TKc3qjGXdA" elementId="org.eclipse.fx.testcases.l10n.app.directtoolitem.0" label="%directtoolitem.label.1" contributionURI="bundleclass://org.eclipse.fx.testcases.l10n.app/org.eclipse.fx.testcases.l10n.app.SwitchLang"/>
+      </children>
+    </trimBars>
+  </children>
+  <rootContext xmi:id="_UsTVQFr7EeS5TKc3qjGXdA" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_UsTVQlr7EeS5TKc3qjGXdA" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_UsTVQ1r7EeS5TKc3qjGXdA" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <addons xmi:id="_UsTVRFr7EeS5TKc3qjGXdA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_UsTVRVr7EeS5TKc3qjGXdA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_UsTVRlr7EeS5TKc3qjGXdA" elementId="org.eclipse.fx.ui.keybindings.e4.service" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingServiceAddon"/>
+  <addons xmi:id="_UsTVR1r7EeS5TKc3qjGXdA" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_UsTVSFr7EeS5TKc3qjGXdA" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_UsTVSVr7EeS5TKc3qjGXdA" elementId="org.eclipse.fx.ui.keybindings.e4.model" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingProcessingAddon"/>
+  <addons xmi:id="_UsTVSlr7EeS5TKc3qjGXdA" elementId="org.eclipse.e4.ui.workbench.addons.HandlerProcessingAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+</application:Application>
