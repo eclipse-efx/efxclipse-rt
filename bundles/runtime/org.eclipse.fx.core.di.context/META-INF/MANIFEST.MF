@@ -46,6 +46,5 @@ Import-Package: javafx.animation;version="2.2.0";resolution:=optional,
  javafx.util.converter;version="2.2.0";resolution:=optional,
  javax.annotation;version="1.1.0",
  javax.inject;version="1.0.0"
-Service-Component: OSGI-INF/services/obervableadapter.xml,OSGI-INF/services/fxpropertyadapter.xml,OSGI-INF/services/valuesupplier.xml,OSGI-INF/services/scopedobjectfactoryfunction.xml,OSGI-INF/services/adaptsupplier.xml,
- OSGI-INF/services/loggersupplier.xml
+Service-Component: OSGI-INF/services/*
 Export-Package: org.eclipse.fx.core.di.context

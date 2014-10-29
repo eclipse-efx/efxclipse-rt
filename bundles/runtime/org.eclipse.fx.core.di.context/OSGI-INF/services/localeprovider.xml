@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.core.di.context.localeprovider">
+   <implementation class="org.eclipse.fx.core.di.context.internal.LocaleProviderFunction"/>
+   <service>
+      <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
+   </service>
+   <property name="service.context.key" type="String" value="org.eclipse.fx.core.text.LocaleProvider"/>
+</scr:component>

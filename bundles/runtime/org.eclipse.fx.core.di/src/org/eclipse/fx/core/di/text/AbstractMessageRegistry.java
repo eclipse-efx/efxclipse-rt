@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.core.di;
+package org.eclipse.fx.core.di.text;
 
 import java.util.HashMap;
 import java.util.Iterator;
