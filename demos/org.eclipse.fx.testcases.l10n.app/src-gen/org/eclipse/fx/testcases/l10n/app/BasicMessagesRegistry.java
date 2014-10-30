@@ -4,7 +4,7 @@ package org.eclipse.fx.testcases.l10n.app;
  * Do not modify - Auto generated from Message.l10n
  */
 @org.eclipse.e4.core.di.annotations.Creatable
-public class BasicMessagesRegistry extends org.eclipse.fx.core.di.text.AbstractMessageRegistry<BasicMessages> {
+public class BasicMessagesRegistry extends org.eclipse.fx.core.text.AbstractTextRegistry<BasicMessages> {
 
 
 

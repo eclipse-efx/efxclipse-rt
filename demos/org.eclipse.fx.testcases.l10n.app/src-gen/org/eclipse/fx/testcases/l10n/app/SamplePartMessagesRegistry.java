@@ -4,12 +4,12 @@ package org.eclipse.fx.testcases.l10n.app;
  * Do not modify - Auto generated from Message.l10n
  */
 @org.eclipse.e4.core.di.annotations.Creatable
-public class SamplePartMessagesRegistry extends org.eclipse.fx.core.di.text.AbstractMessageRegistry<SamplePartMessages> {
+public class SamplePartMessagesRegistry extends org.eclipse.fx.core.text.AbstractTextRegistry<SamplePartMessages> {
 	@javax.inject.Inject
-	private org.eclipse.fx.core.di.text.NumberFormatter _number;
+	private org.eclipse.fx.core.text.NumberFormatter _number;
 
 	@javax.inject.Inject
-	private org.eclipse.fx.core.di.text.DateFormatter _date;
+	private org.eclipse.fx.core.text.DateFormatter _date;
 
 
 	@javax.inject.Inject
