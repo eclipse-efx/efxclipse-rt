@@ -8,7 +8,7 @@ package org.eclipse.fx.testcases.l10n.app {
 			en : '''EN: «val»''',
 			de : '''DE: «val»'''
 		}
-	}
+	}  
 	bundle SamplePartMessages default en {
 		formatter myformatter org.eclipse.fx.testcases.l10n.app.MyFormatter
 		SimpleText : {

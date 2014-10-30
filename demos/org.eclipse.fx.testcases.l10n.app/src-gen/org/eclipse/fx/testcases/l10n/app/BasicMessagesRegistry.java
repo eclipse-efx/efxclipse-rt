@@ -1,24 +1,17 @@
 package org.eclipse.fx.testcases.l10n.app;
 
-import org.eclipse.fx.core.di.text.AbstractMessageRegistry;
-import org.eclipse.fx.core.text.Formatter;
-
-import org.eclipse.e4.core.di.annotations.Creatable;
-
-import java.util.function.Supplier;
-
-import javax.inject.Inject;
-
-import org.eclipse.e4.core.services.nls.Translation;
-
-@Creatable
-public class BasicMessagesRegistry extends AbstractMessageRegistry<BasicMessages> {
+/*
+ * Do not modify - Auto generated from Message.l10n
+ */
+@org.eclipse.e4.core.di.annotations.Creatable
+public class BasicMessagesRegistry extends org.eclipse.fx.core.di.text.AbstractMessageRegistry<BasicMessages> {
 
 
 
 
-	@Inject
-	public void updateMessages(@Translation BasicMessages messages) {
+
+	@javax.inject.Inject
+	public void updateMessages(@org.eclipse.e4.core.services.nls.Translation BasicMessages messages) {
 		super.updateMessages(messages);
 	}
 
@@ -37,7 +30,7 @@ public class BasicMessagesRegistry extends AbstractMessageRegistry<BasicMessages
 		return org.apache.commons.lang.text.StrSubstitutor.replace( BasicDyn(), dataMap);
 	}
 
-	public Supplier<String> BasicDyn_supplier(Object val) {
+	public java.util.function.Supplier<String> BasicDyn_supplier(Object val) {
 		return () -> BasicDyn(val);
 	}
 

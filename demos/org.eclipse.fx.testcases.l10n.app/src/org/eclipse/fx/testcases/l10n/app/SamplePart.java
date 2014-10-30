@@ -45,6 +45,13 @@ public class SamplePart {
 			b.getChildren().add(label);
 		}
 		
+		{
+			Label label = new Label();
+			r.register(label::setText, r::ReferenceText);
+			
+			b.getChildren().add(label);
+		}
+		
 		parent.setTop(b);
 	}
 }
