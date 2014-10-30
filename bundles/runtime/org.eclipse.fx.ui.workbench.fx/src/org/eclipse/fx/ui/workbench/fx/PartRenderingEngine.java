@@ -80,13 +80,13 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 	@NonNull
 	private final IEventBroker eventBroker;
-	
+
 	@Inject
 	PartRenderingEngine(
-			@Nullable @Named(E4Workbench.RENDERER_FACTORY_URI) @Optional String _factoryUrl, 
-			@NonNull IEclipseContext context, 
-			@NonNull EModelService modelService, 
-			@NonNull IEventBroker eventBroker, 
+			@Nullable @Named(E4Workbench.RENDERER_FACTORY_URI) @Optional String _factoryUrl,
+			@NonNull IEclipseContext context,
+			@NonNull EModelService modelService,
+			@NonNull IEventBroker eventBroker,
 			@NonNull ThemeManager themeManager,
 			@Preference(nodePath="org.eclipse.fx.ui.workbench.fx",value=AbstractE4Application.THEME_ID)
 			String themeId) {
@@ -111,22 +111,22 @@ public class PartRenderingEngine implements IPresentationEngine {
 		}
 
 		setupEventListener(eventBroker);
-		
+
 		if( themeId != null && !themeId.isEmpty()) {
 			try {
-				themeManager.setCurrentThemeId(themeId);	
+				themeManager.setCurrentThemeId(themeId);
 			} catch(Throwable t) {
 				this.logger.error("Unknown theme '"+themeId+"'", t);  //$NON-NLS-1$//$NON-NLS-2$
 			}
 		}
-		
+
 		if( themeManager.getCurrentTheme() == null ) {
 			Object object = context.get(AbstractE4Application.THEME_ID);
 			if (object != null && object instanceof String) {
 				themeManager.setCurrentThemeId((String) object);
 			} else {
 				this.logger.info("No current theme is set"); //$NON-NLS-1$
-			}	
+			}
 		}
 	}
 
@@ -416,11 +416,22 @@ public class PartRenderingEngine implements IPresentationEngine {
 				}
 			}
 			this.eventBroker.post(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, this.app);
+
+			int deadlockCount = 0;
 			// focus the selected part
 			MUIElement element = selected;
 			while ((element != null) && (!(element instanceof MPart))) {
 				if (element instanceof MElementContainer<?>) {
 					element = ((MElementContainer<?>) element).getSelectedElement();
+				}
+
+				if( element instanceof MPlaceholder ) {
+					element = ((MPlaceholder) element).getRef();
+				}
+
+				if( deadlockCount++ > 100 ) {
+					this.logger.error("Possible deadlock - Unable to restore focus to appropriate element"); //$NON-NLS-1$
+					return null;
 				}
 			}
 			if (element != null)
