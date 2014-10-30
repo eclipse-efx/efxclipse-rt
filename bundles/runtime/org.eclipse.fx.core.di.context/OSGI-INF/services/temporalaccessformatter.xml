@@ -4,5 +4,5 @@
    <service>
       <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
    </service>
-   <property name="service.context.key" type="String" value="org.eclipse.fx.core.di.text.TemporalAccessorFormatter"/>
+   <property name="service.context.key" type="String" value="org.eclipse.fx.core.text.TemporalAccessorFormatter"/>
 </scr:component>

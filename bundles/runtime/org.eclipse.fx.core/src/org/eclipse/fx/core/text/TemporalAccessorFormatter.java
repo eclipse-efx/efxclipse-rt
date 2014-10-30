@@ -8,41 +8,40 @@
  * Contributors:
  *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.core.di.text;
+package org.eclipse.fx.core.text;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 
 import javax.inject.Inject;
 
-import org.eclipse.fx.core.text.Formatter;
-import org.eclipse.fx.core.text.LocaleProvider;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * Formatter based on {@link DecimalFormat}
+ * Formatter based on {@link DateTimeFormatter}
  *
  * @since 1.1.0
  */
-public class NumberFormatter implements Formatter<Number> {
+public class TemporalAccessorFormatter implements Formatter<TemporalAccessor> {
 	@NonNull
 	private final LocaleProvider localeProvider;
 
 	/**
-	 * Create number formatter
+	 * Create a temporal access formatter
 	 *
 	 * @param localeProvider
 	 *            the locale provider
 	 */
 	@Inject
-	public NumberFormatter(@NonNull LocaleProvider localeProvider) {
+	public TemporalAccessorFormatter(@NonNull LocaleProvider localeProvider) {
 		this.localeProvider = localeProvider;
 	}
 
 	@Override
-	public @NonNull String format(@Nullable Number object, @NonNull String format) {
-		String rv = new DecimalFormat(format, DecimalFormatSymbols.getInstance(this.localeProvider.getLocale())).format(object);
+	public @NonNull String format(@Nullable TemporalAccessor object, @NonNull String format) {
+		String rv = DateTimeFormatter.ofPattern(format, this.localeProvider.getLocale()).format(object);
 		return rv == null ? "" : rv; //$NON-NLS-1$
 	}
+
 }

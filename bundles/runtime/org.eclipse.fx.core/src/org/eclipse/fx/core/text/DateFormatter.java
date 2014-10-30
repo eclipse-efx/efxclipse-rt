@@ -8,42 +8,39 @@
  * Contributors:
  *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.core.di.text;
+package org.eclipse.fx.core.text;
 
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.inject.Inject;
 
-import org.eclipse.fx.core.text.Formatter;
-import org.eclipse.fx.core.text.LocaleProvider;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * Formatter based on {@link DateTimeFormatter}
+ * Formatter based on {@link SimpleDateFormat}
  *
  * @since 1.1.0
  */
-public class TemporalAccessorFormatter implements Formatter<TemporalAccessor> {
+public class DateFormatter implements Formatter<Date> {
 	@NonNull
 	private final LocaleProvider localeProvider;
 
 	/**
-	 * Create a temporal access formatter
+	 * Create a new date formatter
 	 *
 	 * @param localeProvider
 	 *            the locale provider
 	 */
 	@Inject
-	public TemporalAccessorFormatter(@NonNull LocaleProvider localeProvider) {
+	public DateFormatter(@NonNull LocaleProvider localeProvider) {
 		this.localeProvider = localeProvider;
 	}
 
 	@Override
-	public @NonNull String format(@Nullable TemporalAccessor object, @NonNull String format) {
-		String rv = DateTimeFormatter.ofPattern(format, this.localeProvider.getLocale()).format(object);
+	public @NonNull String format(@Nullable Date object, @NonNull String format) {
+		String rv = new SimpleDateFormat(format, this.localeProvider.getLocale()).format(object);
 		return rv == null ? "" : rv; //$NON-NLS-1$
 	}
-
 }

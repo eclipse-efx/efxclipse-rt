@@ -14,7 +14,7 @@ import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.fx.core.di.text.TemporalAccessorFormatter;
+import org.eclipse.fx.core.text.TemporalAccessorFormatter;
 
 /**
  * {@link IContextFunction} to create {@link TemporalAccessorFormatter}

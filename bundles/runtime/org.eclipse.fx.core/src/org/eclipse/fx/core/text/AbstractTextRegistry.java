@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.core.di.text;
+package org.eclipse.fx.core.text;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,7 +29,7 @@ import org.eclipse.fx.core.Subscription;
  *            the message class type
  * @since 1.1
  */
-public class AbstractMessageRegistry<M> {
+public class AbstractTextRegistry<M> {
 	private M messages;
 
 	Map<Consumer<String>, Supplier<String>> bindings = new HashMap<>();
@@ -83,7 +83,7 @@ public class AbstractMessageRegistry<M> {
 
 			@Override
 			public void dispose() {
-				AbstractMessageRegistry.this.bindings.remove(consumer);
+				AbstractTextRegistry.this.bindings.remove(consumer);
 			}
 		};
 	}
