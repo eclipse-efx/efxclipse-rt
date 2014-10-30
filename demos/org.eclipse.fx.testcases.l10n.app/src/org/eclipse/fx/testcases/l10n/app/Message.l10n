@@ -1,33 +1,33 @@
 package org.eclipse.fx.testcases.l10n.app {
 	bundle BasicMessages default en {
-		BasicYes : {
+		BasicYes {
 			en : '''Yes''',
 			de : '''Ja'''
 		}
-		BasicDyn (ANY val) : {
+		BasicDyn (ANY val) {
 			en : '''EN: «val»''',
 			de : '''DE: «val»'''
 		}
 	}  
 	bundle SamplePartMessages default en {
 		formatter myformatter org.eclipse.fx.testcases.l10n.app.MyFormatter
-		SimpleText : {
+		SimpleText {
 			en : '''Hello World''',
 			de : '''Hallo Welt'''
 		}
-		SimpleDateText (DATE now) : {
+		SimpleDateText (DATE now) {
 			en : '''Hello World on «now "MMM/dd/yyyy"»''',
 			de : '''Hallo Welt am «now "dd.MM.yyyy"»''' 
 		}
-		SimpleNumberText (NUMBER val) : {
+		SimpleNumberText (NUMBER val) {
 			en : '''Hello World «val "#,##0"» times''',
 			de : '''Hallo Welt «val "#,##0"» mal'''
 		}
-		CustFormatText (NUMBER val) : {
+		CustFormatText (NUMBER val) {
 			en : '''Hello World «val "#,##0" myformatter» times''',
 			de : '''Hallo Welt «val "#,##0" myformatter» mal'''
 		}
-		ReferenceText : [ BasicMessages.BasicYes ]
-		ReferenceDyn (ANY val) : [ BasicMessages.BasicDyn ] 
+		ReferenceText [ BasicMessages.BasicYes ]
+		ReferenceDyn (ANY val) [ BasicMessages.BasicDyn ] 
 	}
 }  
