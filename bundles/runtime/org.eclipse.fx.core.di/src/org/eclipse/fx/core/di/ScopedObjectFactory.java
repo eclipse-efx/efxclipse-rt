@@ -25,26 +25,28 @@ public interface ScopedObjectFactory {
 
 	/**
 	 * Create a new instance of the class
-	 * 
+	 *
 	 * @param c
 	 *            the class
+	 * @param <C>
+	 *            the type
 	 * @return the instance
 	 */
 	public <C> C newInstance(@NonNull Class<@NonNull C> c);
 
 	/**
 	 * Create a child of the scoped object factory
-	 * 
+	 *
 	 * @param name
 	 *            the name
-	 * 
+	 *
 	 * @return the child
 	 */
 	public @NonNull ScopedObjectFactory createChild(@NonNull String name);
 
 	/**
 	 * Push a new value
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param value
@@ -54,7 +56,7 @@ public interface ScopedObjectFactory {
 
 	/**
 	 * Push a new value
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param value
@@ -66,7 +68,7 @@ public interface ScopedObjectFactory {
 
 	/**
 	 * Invoke a method annotated with {@link Invoke}
-	 * 
+	 *
 	 * @param instance
 	 *            the instance on which the method is invoked
 	 * @param <O>

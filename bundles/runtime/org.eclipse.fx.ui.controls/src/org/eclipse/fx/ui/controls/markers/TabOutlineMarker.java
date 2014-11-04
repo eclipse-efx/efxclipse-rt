@@ -44,7 +44,7 @@ public final class TabOutlineMarker extends Group {
 
 	/**
 	 * Create a new tab outline
-	 * 
+	 *
 	 * @param containerBounds
 	 *            the bounds of the container
 	 * @param referenceBounds
@@ -62,7 +62,7 @@ public final class TabOutlineMarker extends Group {
 
 	/**
 	 * Update the tab outline
-	 * 
+	 *
 	 * @param containerBounds
 	 *            the bounds of the container
 	 * @param referenceBounds
@@ -138,15 +138,12 @@ public final class TabOutlineMarker extends Group {
 
 	/**
 	 * The fill property
-	 * <table>
-	 * <tr>
-	 * <td>The default value is {@link Color#ORANGE}</td>
-	 * <td><div style=
-	 * "background-color: orange; border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
-	 * ></div></td>
-	 * </tr>
-	 * </table>
-	 * 
+	 *
+	 * <p>
+	 * The default color {@link Color#ORANGE} <span style=
+	 * "background-color: orange; color: orange; border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;">__</span>
+	 * </p>
+	 *
 	 * @return the property
 	 */
 	public @NonNull ObjectProperty<@NonNull Paint> fillProperty() {
@@ -155,15 +152,11 @@ public final class TabOutlineMarker extends Group {
 
 	/**
 	 * Set a new fill
-	 * <table>
-	 * <tr>
-	 * <td>The default value is {@link Color#ORANGE}</td>
-	 * <td><div style=
-	 * "background-color: orange; border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
-	 * ></div></td>
-	 * </tr>
-	 * </table>
-	 * 
+	 * <p>
+	 * The default color {@link Color#ORANGE} <span style=
+	 * "background-color: orange; color: orange; border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;">__</span>
+	 * </p>
+	 *
 	 * @param fill
 	 *            the fill
 	 */
@@ -173,15 +166,11 @@ public final class TabOutlineMarker extends Group {
 
 	/**
 	 * Get the current fill
-	 * <table>
-	 * <tr>
-	 * <td>The default value is {@link Color#ORANGE}</td>
-	 * <td><div style=
-	 * "background-color: orange; border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
-	 * ></div></td>
-	 * </tr>
-	 * </table>
-	 * 
+	 * <p>
+	 * The default color {@link Color#ORANGE} <span style=
+	 * "background-color: orange; color: orange; border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;">__</span>
+	 * </p>
+	 *
 	 * @return the current fill
 	 */
 	public @NonNull Paint getFill() {

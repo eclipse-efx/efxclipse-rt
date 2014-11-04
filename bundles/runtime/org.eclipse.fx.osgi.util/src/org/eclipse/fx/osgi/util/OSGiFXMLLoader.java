@@ -106,6 +106,7 @@ public class OSGiFXMLLoader {
 	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	public static <O> O load(@NonNull Bundle bundle, @NonNull String bundleRelativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory) throws IOException {
 		URL url = bundle.getResource(bundleRelativeFxmlPath);
@@ -133,6 +134,7 @@ public class OSGiFXMLLoader {
 	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	public static <O, C> FXMLData<O, C> loadWithController(@NonNull Bundle bundle, @NonNull String bundleRelativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory) throws IOException {
 		URL url = bundle.getResource(bundleRelativeFxmlPath);
@@ -157,6 +159,7 @@ public class OSGiFXMLLoader {
 	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	public static <O> O load(@NonNull ClassLoader classloader, @NonNull URL url, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory) throws IOException {
 		return load(classloader, url, resourceBundle, builderFactory, null);
@@ -180,6 +183,7 @@ public class OSGiFXMLLoader {
 	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	public static <O, C> FXMLData<O, C> loadWithController(@NonNull ClassLoader classloader, @NonNull URL url, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory) throws IOException {
 		return loadWithController(classloader, url, null, resourceBundle, builderFactory, null);
@@ -202,6 +206,7 @@ public class OSGiFXMLLoader {
 	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	public static <O> O load(@NonNull Class<?> requester, @NonNull String relativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory, @Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		URL url = requester.getResource(relativeFxmlPath);
@@ -231,6 +236,7 @@ public class OSGiFXMLLoader {
 	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	public static <O, C> FXMLData<O, C> loadWithController(@NonNull Class<?> requester, @NonNull String relativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory, @Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		URL url = requester.getResource(relativeFxmlPath);
@@ -257,6 +263,7 @@ public class OSGiFXMLLoader {
 	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	public static <O> O load(@NonNull Bundle bundle, @NonNull String bundleRelativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory, @Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		URL url = bundle.getResource(bundleRelativeFxmlPath);
@@ -286,6 +293,7 @@ public class OSGiFXMLLoader {
 	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	public static <O, C> FXMLData<O, C> loadWithController(@NonNull Bundle bundle, @NonNull String bundleRelativeFxmlPath, @Nullable ResourceBundle resourceBundle, @Nullable BuilderFactory builderFactory, @Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		URL url = bundle.getResource(bundleRelativeFxmlPath);
@@ -312,6 +320,7 @@ public class OSGiFXMLLoader {
 	 *            the loaded root object type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	public static <O> O load(@NonNull final ClassLoader classloader, @NonNull URL url, @Nullable ResourceBundle resourceBundle, @Nullable final BuilderFactory builderFactory, @Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		return OSGiFXMLLoader.<O, Object> loadWithController(classloader, url, null, resourceBundle, builderFactory, controllerFactory).node;
@@ -336,6 +345,7 @@ public class OSGiFXMLLoader {
 	 *            the input stream to load from
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	public static <O> O load(@NonNull final ClassLoader classloader, @Nullable URL url, @NonNull InputStream stream, @Nullable ResourceBundle resourceBundle, @Nullable final BuilderFactory builderFactory, @Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		return OSGiFXMLLoader.<O, Object> loadWithController(classloader, url, stream, resourceBundle, builderFactory, controllerFactory).node;
@@ -361,9 +371,9 @@ public class OSGiFXMLLoader {
 	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
-	public static <O, C> FXMLData<O, C> loadWithController(@NonNull final ClassLoader classloader, @Nullable URL url, @Nullable ResourceBundle resourceBundle, @Nullable final BuilderFactory builderFactory, @Nullable Callback<Class<?>, Object> controllerFactory)
-			throws IOException {
+	public static <O, C> FXMLData<O, C> loadWithController(@NonNull final ClassLoader classloader, @Nullable URL url, @Nullable ResourceBundle resourceBundle, @Nullable final BuilderFactory builderFactory, @Nullable Callback<Class<?>, Object> controllerFactory) throws IOException {
 		return loadWithController(classloader, url, null, resourceBundle, builderFactory, controllerFactory);
 	}
 
@@ -389,6 +399,7 @@ public class OSGiFXMLLoader {
 	 *            the loaded controller type
 	 * @return the created scene graph
 	 * @throws IOException
+	 *             thrown when the FXML could not be loaded
 	 */
 	@SuppressWarnings("unchecked")
 	public static <O, C> FXMLData<O, C> loadWithController(@NonNull final ClassLoader classloader, @Nullable URL url, @Nullable InputStream stream, @Nullable ResourceBundle resourceBundle, @Nullable final BuilderFactory builderFactory, @Nullable Callback<Class<?>, Object> controllerFactory)

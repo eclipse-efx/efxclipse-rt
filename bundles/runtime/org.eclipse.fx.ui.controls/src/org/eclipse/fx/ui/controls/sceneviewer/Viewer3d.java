@@ -52,8 +52,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public final class Viewer3d extends Pane {
 	private SubScene scene;
 	private final Rotate cameraXRotation = new Rotate(0, 0, 0, 0, Rotate.X_AXIS);
-	private final Rotate cameraYRotation = new Rotate(-35, 0, 0, 0,
-			Rotate.Y_AXIS);
+	private final Rotate cameraYRotation = new Rotate(-35, 0, 0, 0, Rotate.Y_AXIS);
 	private final Translate cameraPosition = new Translate(0, 0, -100);
 	private Camera camera;
 	private double dragStartX, dragStartY, dragStartRotateX, dragStartRotateY;
@@ -63,17 +62,13 @@ public final class Viewer3d extends Pane {
 
 	@SuppressWarnings("null")
 	@NonNull
-	private final ObservableList<@NonNull Node> selectedNodes = FXCollections
-			.observableArrayList();
+	private final ObservableList<@NonNull Node> selectedNodes = FXCollections.observableArrayList();
 	@NonNull
-	private final ObjectProperty<@Nullable Node> hoverNode = new SimpleObjectProperty<>(
-			this, "hoverNode"); //$NON-NLS-1$
+	private final ObjectProperty<@Nullable Node> hoverNode = new SimpleObjectProperty<>(this, "hoverNode"); //$NON-NLS-1$
 	@NonNull
-	private final ObjectProperty<@Nullable Node> contentProperty = new SimpleObjectProperty<>(
-			this, "content"); //$NON-NLS-1$
+	private final ObjectProperty<@Nullable Node> contentProperty = new SimpleObjectProperty<>(this, "content"); //$NON-NLS-1$
 	@NonNull
-	private final BooleanProperty animated = new SimpleBooleanProperty(this,
-			"rotate"); //$NON-NLS-1$
+	private final BooleanProperty animated = new SimpleBooleanProperty(this, "rotate"); //$NON-NLS-1$
 
 	/**
 	 * Create a new 3d viewer
@@ -82,8 +77,7 @@ public final class Viewer3d extends Pane {
 		this.contentGroup = new Group();
 		this.contentGroup.getTransforms().add(this.contentScale);
 		Group root = new Group(this.contentGroup);
-		this.scene = new SubScene(root, -1, -1, true,
-				SceneAntialiasing.BALANCED);
+		this.scene = new SubScene(root, -1, -1, true, SceneAntialiasing.BALANCED);
 		this.scene.setManaged(false);
 		this.camera = setupCamera();
 		this.scene.setCamera(this.camera);
@@ -159,12 +153,9 @@ public final class Viewer3d extends Pane {
 	 *            the percentage to zoom out
 	 */
 	public void zoomIn(double percentage) {
-		this.contentScale.setX(this.contentScale.getX()
-				+ this.contentScale.getX() * percentage);
-		this.contentScale.setY(this.contentScale.getY()
-				+ this.contentScale.getY() * percentage);
-		this.contentScale.setZ(this.contentScale.getZ()
-				+ this.contentScale.getZ() * percentage);
+		this.contentScale.setX(this.contentScale.getX() + this.contentScale.getX() * percentage);
+		this.contentScale.setY(this.contentScale.getY() + this.contentScale.getY() * percentage);
+		this.contentScale.setZ(this.contentScale.getZ() + this.contentScale.getZ() * percentage);
 	}
 
 	/**
@@ -174,12 +165,9 @@ public final class Viewer3d extends Pane {
 	 *            the percentage to zoom in
 	 */
 	public void zoomOut(double percentage) {
-		this.contentScale.setX(this.contentScale.getX()
-				- this.contentScale.getX() * percentage);
-		this.contentScale.setY(this.contentScale.getY()
-				- this.contentScale.getY() * percentage);
-		this.contentScale.setZ(this.contentScale.getZ()
-				- this.contentScale.getZ() * percentage);
+		this.contentScale.setX(this.contentScale.getX() - this.contentScale.getX() * percentage);
+		this.contentScale.setY(this.contentScale.getY() - this.contentScale.getY() * percentage);
+		this.contentScale.setZ(this.contentScale.getZ() - this.contentScale.getZ() * percentage);
 	}
 
 	/**
@@ -199,6 +187,7 @@ public final class Viewer3d extends Pane {
 	 * @param duration
 	 *            the duration
 	 * @param r
+	 *            consumer called at the end of the zooming
 	 */
 	public void zoomTo(double target, Duration duration, Consumer<ActionEvent> r) {
 		if (duration != null) {
@@ -309,20 +298,15 @@ public final class Viewer3d extends Pane {
 		} else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
 			double xDelta = event.getSceneX() - this.dragStartX;
 			double yDelta = event.getSceneY() - this.dragStartY;
-			this.cameraXRotation.setAngle(this.dragStartRotateX
-					- (yDelta * 0.7));
-			this.cameraYRotation.setAngle(this.dragStartRotateY
-					+ (xDelta * 0.7));
+			this.cameraXRotation.setAngle(this.dragStartRotateX - (yDelta * 0.7));
+			this.cameraYRotation.setAngle(this.dragStartRotateY + (xDelta * 0.7));
 		}
 	}
 
 	private void zoomHandler(ScrollEvent event) {
-		this.contentScale.setX(this.contentScale.getX() + event.getDeltaY()
-				* 0.01);
-		this.contentScale.setY(this.contentScale.getY() + event.getDeltaY()
-				* 0.01);
-		this.contentScale.setZ(this.contentScale.getZ() + event.getDeltaY()
-				* 0.01);
+		this.contentScale.setX(this.contentScale.getX() + event.getDeltaY() * 0.01);
+		this.contentScale.setY(this.contentScale.getY() + event.getDeltaY() * 0.01);
+		this.contentScale.setZ(this.contentScale.getZ() + event.getDeltaY() * 0.01);
 	}
 
 	private void updateSize() {
@@ -342,8 +326,7 @@ public final class Viewer3d extends Pane {
 
 	private Camera setupCamera() {
 		PerspectiveCamera camera = new PerspectiveCamera();
-		camera.getTransforms().addAll(this.cameraXRotation,
-				this.cameraYRotation, this.cameraPosition);
+		camera.getTransforms().addAll(this.cameraXRotation, this.cameraYRotation, this.cameraPosition);
 		return camera;
 	}
 

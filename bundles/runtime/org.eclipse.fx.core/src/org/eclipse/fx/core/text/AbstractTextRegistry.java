@@ -49,7 +49,7 @@ public class AbstractTextRegistry<M> {
 	 *   private MessageHandler handler; // Subclass of AbstractMessageRegistry
 	 *
 	 *   TitledPane tb = new TitledPane();
-	 *   handler.register(tb::setText, (m) -> m.PreferenceView_Title);
+	 *   handler.register(tb::setText, (m) -&gt; m.PreferenceView_Title);
 	 * </pre>
 	 *
 	 * @param consumer

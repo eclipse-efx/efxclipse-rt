@@ -89,15 +89,11 @@ public final class PositionMarker extends Group {
 
 	/**
 	 * The property
-	 * <table>
-	 * <tr>
-	 * <td>The default value is Color.rgb(0, 139, 255)</td>
-	 * <td><div style=
-	 * "background-color: rgb(0, 139, 255); border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
-	 * ></div></td>
-	 * </tr>
-	 * </table>
-	 * 
+	 * <p>
+	 * The default color Color.rgb(0, 139, 255) <span style=
+	 * "background-color: rgb(0, 139, 255); color: rgb(0, 139, 255); border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;">__</span>
+	 * </p>
+	 *
 	 * @return the fill property of the marker
 	 */
 	public @NonNull ObjectProperty<@NonNull Paint> fillProperty() {
@@ -106,15 +102,11 @@ public final class PositionMarker extends Group {
 
 	/**
 	 * Set the fill of the marker
-	 * <table>
-	 * <tr>
-	 * <td>The default value is Color.rgb(0, 139, 255)</td>
-	 * <td><div style=
-	 * "background-color: rgb(0, 139, 255); border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
-	 * ></div></td>
-	 * </tr>
-	 * </table>
-	 * 
+	 * <p>
+	 * The default color Color.rgb(0, 139, 255) <span style=
+	 * "background-color: rgb(0, 139, 255); color: rgb(0, 139, 255); border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;">__</span>
+	 * </p>
+	 *
 	 * @param fill
 	 *            the new fill
 	 */
@@ -124,15 +116,11 @@ public final class PositionMarker extends Group {
 
 	/**
 	 * Access the current fill
-	 * <table>
-	 * <tr>
-	 * <td>The default value is Color.rgb(0, 139, 255)</td>
-	 * <td><div style=
-	 * "background-color: rgb(0, 139, 255); border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;"
-	 * ></div></td>
-	 * </tr>
-	 * </table>
-	 * 
+	 * <p>
+	 * The default color Color.rgb(0, 139, 255) <span style=
+	 * "background-color: rgb(0, 139, 255); color: rgb(0, 139, 255); border-width: 1px; border-color: black; border-style: solid; width: 15; height: 15;">__</span>
+	 * </p>
+	 *
 	 * @return the current fill
 	 */
 	public @NonNull Paint getFill() {
