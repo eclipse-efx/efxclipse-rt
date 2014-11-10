@@ -26,6 +26,58 @@
 					<archiveSite>true</archiveSite>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>build-p2-obr-index</id>
+						<phase>package</phase>
+						<configuration>
+							<urlTemplate>plugins/%f</urlTemplate>
+							<mavenRepository>${project.build.directory}/site/plugins</mavenRepository>
+							<obrRepository>${project.build.directory}/site/repository.xml</obrRepository>
+						</configuration>
+						<goals>
+							<goal>index</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>build-obr-index</id>
+						<phase>package</phase>
+						<configuration>
+							<urlTemplate>%f</urlTemplate>
+							<mavenRepository>${project.build.directory}/site/plugins</mavenRepository>
+							<obrRepository>${project.build.directory}/site/plugins/repository.xml</obrRepository>
+						</configuration>
+						<goals>
+							<goal>index</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create-obr-archive</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<zip 	destfile="${project.build.directory}/obr.zip">
+									<fileset dir="${project.build.directory}/site/plugins" />
+								</zip>	
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
