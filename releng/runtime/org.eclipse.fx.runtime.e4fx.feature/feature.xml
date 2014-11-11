@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.runtime.e4fx.feature"
       label="minimal e4 application framework feature"
-      version="1.1.0.qualifier"
+      version="1.2.0.qualifier"
       provider-name="BestSolution.at">
 
    <description url="http://www.example.com/description">

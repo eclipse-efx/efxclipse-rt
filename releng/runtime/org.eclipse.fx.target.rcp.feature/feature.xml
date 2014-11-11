@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.target.rcp.feature"
       label="RCP 3.x Target Platform Feature"
-      version="1.1.0.qualifier"
+      version="1.2.0.qualifier"
       provider-name="BestSolution.at">
 
    <description url="http://www.example.com/description">
