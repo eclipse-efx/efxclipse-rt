@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.fx.core.feature_1.2.0.qualifier.jar" id="org.eclipse.fx.core.feature" version="1.1.0.qualifier">
+   <feature url="features/org.eclipse.fx.core.feature_1.2.0.qualifier.jar" id="org.eclipse.fx.core.feature" version="1.2.0.qualifier">
       <category name="fxruntime"/>
    </feature>
-   <feature url="features/org.eclipse.fx.target.feature_1.2.0.qualifier.jar" id="org.eclipse.fx.target.feature" version="1.1.0.qualifier">
+   <feature url="features/org.eclipse.fx.target.feature_1.2.0.qualifier.jar" id="org.eclipse.fx.target.feature" version="1.2.0.qualifier">
       <category name="fxtarget"/>
    </feature>
-   <feature url="features/org.eclipse.fx.target.rcp.feature_1.2.0.qualifier.jar" id="org.eclipse.fx.target.rcp.feature" version="1.1.0.qualifier">
+   <feature url="features/org.eclipse.fx.target.rcp.feature_1.2.0.qualifier.jar" id="org.eclipse.fx.target.rcp.feature" version="1.2.0.qualifier">
       <category name="fxtarget"/>
    </feature>
-   <feature url="features/org.eclipse.fx.runtime.feature_1.2.0.qualifier.jar" id="org.eclipse.fx.runtime.feature" version="1.1.0.qualifier">
+   <feature url="features/org.eclipse.fx.runtime.feature_1.2.0.qualifier.jar" id="org.eclipse.fx.runtime.feature" version="1.2.0.qualifier">
       <category name="fxruntime"/>
    </feature>
-   <feature url="features/org.eclipse.fx.target.rcp4.feature_1.2.0.qualifier.jar" id="org.eclipse.fx.target.rcp4.feature" version="1.1.0.qualifier">
+   <feature url="features/org.eclipse.fx.target.rcp4.feature_1.2.0.qualifier.jar" id="org.eclipse.fx.target.rcp4.feature" version="1.2.0.qualifier">
       <category name="fxtarget"/>
    </feature>
    <category-def name="fxruntime" label="FX Runtime"/>
