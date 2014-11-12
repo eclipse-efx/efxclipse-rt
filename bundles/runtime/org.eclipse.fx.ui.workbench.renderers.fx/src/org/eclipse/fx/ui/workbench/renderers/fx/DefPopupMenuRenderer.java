@@ -12,6 +12,7 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -56,7 +57,7 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 					if (ContextMenuImpl.this.showingCallback != null) {
 						ContextMenuImpl.this.showingCallback.run();
 					}
-					
+
 					if (getWidget().getItems().size() > 1) {
 						getWidget().getItems().remove(ContextMenuImpl.this.item);
 					}
@@ -66,13 +67,18 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 
 				@Override
 				public void handle(WindowEvent event) {
-					if (ContextMenuImpl.this.hidingCallback != null) {
-						ContextMenuImpl.this.hidingCallback.run();
-					}
-					
-					if (getWidget().getItems().isEmpty()) {
-						getWidget().getItems().add(ContextMenuImpl.this.item);
-					}
+					// Delay the callback so that the action can be execute
+					// before the hiding happens see Bug 451127
+					Platform.runLater(() -> {
+							if (ContextMenuImpl.this.hidingCallback != null) {
+								ContextMenuImpl.this.hidingCallback.run();
+							}
+
+							if (getWidget().getItems().isEmpty()) {
+								getWidget().getItems().add(ContextMenuImpl.this.item);
+							}
+					});
+
 				}
 			});
 			return m;
@@ -82,7 +88,7 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 		public void setShowingCallback(Runnable showingCallback) {
 			this.showingCallback = showingCallback;
 		}
-		
+
 		@Override
 		public void setHidingCallback(Runnable hidingCallback) {
 			this.hidingCallback = hidingCallback;
@@ -97,7 +103,7 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 		public void addStyleClasses(String... classnames) {
 			getWidget().getStyleClass().addAll(classnames);
 		}
-		
+
 		@Override
 		public void removeStyleClasses(List<String> classnames) {
 			getWidget().getStyleClass().removeAll(classnames);
@@ -118,7 +124,7 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 			if (getWidget().getItems().size() == 1) {
 				getWidget().getItems().remove(this.item);
 			}
-			
+
 			if (widget.getWidget() instanceof Toggle) {
 				if (this.group == null) {
 					this.group = new ToggleGroup();
@@ -135,7 +141,7 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 			if (getWidget().getItems().size() == 1) {
 				getWidget().getItems().remove(this.item);
 			}
-			
+
 			if (widget.getWidget() instanceof Toggle) {
 				if (this.group == null) {
 					this.group = new ToggleGroup();

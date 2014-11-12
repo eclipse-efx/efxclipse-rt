@@ -12,6 +12,7 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
@@ -72,12 +73,16 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 
 				@Override
 				public void handle(Event arg0) {
-					if (MenuImpl.this.hidingCallback != null)
-						MenuImpl.this.hidingCallback.run();
+					// Delay the callback so that the action can be execute
+					// before the hiding happens see Bug 451127
+					Platform.runLater(() -> {
+						if (MenuImpl.this.hidingCallback != null)
+							MenuImpl.this.hidingCallback.run();
 
-					if (getWidget().getItems().isEmpty()) {
-						getWidget().getItems().add(MenuImpl.this.item);
-					}
+						if (getWidget().getItems().isEmpty()) {
+							getWidget().getItems().add(MenuImpl.this.item);
+						}
+					});
 				}
 			});
 			return m;
@@ -97,7 +102,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		public void addStyleClasses(String... classnames) {
 			getWidget().getStyleClass().addAll(classnames);
 		}
-		
+
 		@Override
 		public void removeStyleClasses(List<String> classnames) {
 			getWidget().getStyleClass().removeAll(classnames);
@@ -107,7 +112,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		public void removeStyleClasses(String... classnames) {
 			getWidget().getStyleClass().removeAll(classnames);
 		}
-		
+
 		@Override
 		public void setStyleId(String id) {
 			getWidget().setId(id);
