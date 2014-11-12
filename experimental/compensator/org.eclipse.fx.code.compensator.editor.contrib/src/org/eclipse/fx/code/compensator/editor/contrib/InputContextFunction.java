@@ -23,10 +23,12 @@ public class InputContextFunction extends ContextFunction {
 		if( input == null ) {
 			MPart part = context.get(MPart.class);
 			String url = part.getPersistedState().get(TextEditor.DOCUMENT_URL);
-			
-			ServiceCollector collector = context.get(ServiceCollector.class);
-			input = collector.createInput(url);
-			context.set("localInput", input);
+
+			if( url != null ) {
+				ServiceCollector collector = context.get(ServiceCollector.class);
+				input = collector.createInput(url);
+				context.set("localInput", input);
+			}
 		}
 		return input;
 	}

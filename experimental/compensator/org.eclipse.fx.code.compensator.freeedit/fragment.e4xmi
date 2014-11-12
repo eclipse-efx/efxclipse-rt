@@ -11,6 +11,7 @@
           <children xsi:type="basic:Part" xmi:id="_tzdUsPNlEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.freeedit.part.1" contributionURI="bundleclass://org.eclipse.fx.code.compensator.freeedit/org.eclipse.fx.code.compensator.freeedit.FileOutline" label="Outline" iconURI="platform:/plugin/org.eclipse.fx.code.compensator.freeedit/icons/22/code-class.png"/>
         </children>
       </children>
+      <variables>activeInput</variables>
     </elements>
   </fragments>
 </fragment:ModelFragments>

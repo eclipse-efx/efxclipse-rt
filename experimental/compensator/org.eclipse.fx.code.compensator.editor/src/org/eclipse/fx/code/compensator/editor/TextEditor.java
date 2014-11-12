@@ -10,14 +10,18 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor;
 
+import javafx.beans.property.Property;
 import javafx.scene.layout.BorderPane;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.fx.code.compensator.editor.services.DocumentPersitenceService;
+import org.eclipse.fx.core.di.ContextValue;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
@@ -43,6 +47,13 @@ public class TextEditor {
 
 	@Inject
 	DocumentPersitenceService persistenceService;
+
+	@Inject
+	Input<?> input;
+
+	@Inject
+	@ContextValue("activeInput")
+	Property<Input<?>> activeInput;
 
 	StyledTextArea textArea;
 
@@ -101,6 +112,19 @@ public class TextEditor {
 			broker.send(org.eclipse.fx.code.compensator.editor.Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this);
 		} else {
 			//TODO Handle that
+		}
+	}
+
+	@Focus
+	void focused() {
+		activeInput.setValue(input);
+		textArea.requestFocus();
+	}
+
+	@PreDestroy
+	void destroy() {
+		if( activeInput.getValue() == input ) {
+			activeInput.setValue(null);
 		}
 	}
 }

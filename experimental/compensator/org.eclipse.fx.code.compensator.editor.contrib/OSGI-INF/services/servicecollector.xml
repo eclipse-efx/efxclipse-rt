@@ -9,4 +9,5 @@
    <reference bind="addDocumentFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.DocumentFactory" name="DocumentFactory" policy="dynamic" unbind="removeDocumentFactory"/>
    <reference bind="addPartitionerFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.PartitionerFactory" name="PartitionerFactory" policy="dynamic" unbind="removePartitionerFactory"/>
    <reference bind="addSourceViewerConfigurationFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory" name="SourceViewerConfigurationFactory" policy="dynamic" unbind="removeSourceViewerConfigurationFactory"/>
+   <reference bind="addOutlineFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.OutlineFactory" name="OutlineFactory" policy="dynamic" unbind="removeOutlineFactory"/>
 </scr:component>

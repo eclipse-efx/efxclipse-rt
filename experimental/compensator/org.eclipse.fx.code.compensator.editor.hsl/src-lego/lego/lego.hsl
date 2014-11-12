@@ -4,7 +4,7 @@ Lego {
     rule_damager __dftl_partition_content_type {
         default token default_legotoken
         token lego_keyword
-        keywords lego_keyword [ "brick" ]
+        keywords lego_keyword [ "brick", "generated", "units" ]
         whitespace_rule [" ", "\t", "\n", "\r"]
     }
     rule_damager __lego_comment {

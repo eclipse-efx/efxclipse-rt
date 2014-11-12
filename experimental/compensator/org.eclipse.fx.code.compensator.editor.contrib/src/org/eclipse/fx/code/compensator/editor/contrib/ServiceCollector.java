@@ -15,9 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.code.compensator.editor.Outline;
 import org.eclipse.fx.code.compensator.editor.services.DocumentFactory;
 import org.eclipse.fx.code.compensator.editor.services.DocumentPersitenceService;
 import org.eclipse.fx.code.compensator.editor.services.InputFactory;
+import org.eclipse.fx.code.compensator.editor.services.OutlineFactory;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
 import org.eclipse.jface.text.IDocument;
@@ -28,60 +30,82 @@ public class ServiceCollector implements DocumentPersitenceService {
 	private List<InputFactory> inputProviderList = new ArrayList<>();
 	private List<DocumentFactory> documentProvider = new ArrayList<>();
 	private List<PartitionerFactory> partitionerProvider = new ArrayList<>();
+	private List<OutlineFactory> outlineFactoryList = new ArrayList<>();
 	private List<SourceViewerConfigurationFactory> configurationProvider = new ArrayList<>();
-	
+
 	public void addInputFactory(InputFactory provider) {
 		inputProviderList.add(provider);
 	}
-	
+
 	public void removeInputFactory(InputFactory provider) {
 		inputProviderList.remove(provider);
 	}
-	
+
 	public void addDocumentFactory(DocumentFactory provider) {
 		documentProvider.add(provider);
 	}
-	
+
 	public void removeDocumentFactory(DocumentFactory provider) {
 		documentProvider.remove(provider);
 	}
-	
+
 	public void addPartitionerFactory(PartitionerFactory provider) {
 		partitionerProvider.add(provider);
 	}
-	
+
 	public void removePartitionerFactory(PartitionerFactory provider) {
 		partitionerProvider.remove(provider);
 	}
-	
+
 	public void addSourceViewerConfigurationFactory(SourceViewerConfigurationFactory provider) {
 		configurationProvider.add(provider);
 	}
-	
+
 	public void removeSourceViewerConfigurationFactory(SourceViewerConfigurationFactory provider) {
 		configurationProvider.remove(provider);
 	}
-	
+
+	public void addOutlineFactory(OutlineFactory factory) {
+		outlineFactoryList.add(factory);
+	}
+
+	public void removeOutlineFactory(OutlineFactory factory) {
+		outlineFactoryList.remove(factory);
+	}
+
 	public <O> Input<O> createInput(String url) {
 		Optional<Input<O>> map = inputProviderList.stream().filter((p) -> p.applies(url)).findFirst().map((p) -> p.createInput(url));
-		return map.get();
+		if( map.isPresent() ) {
+			return map.get();
+		}
+		return null;
 	}
-	
+
+	public Optional<Outline> createOutline(Input<?> input) {
+		return outlineFactoryList.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createOutline(input));
+	}
+
 	public IDocument createDocument(Input<?> input) {
 		Optional<IDocument> map = documentProvider.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createDocument(input));
-		return map.get();
+		if( map.isPresent() ) {
+			return map.get();
+		}
+		return null;
 	}
-	
+
 	public IDocumentPartitioner createPartitioner(Input<?> input) {
 		Optional<IDocumentPartitioner> map = partitionerProvider.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createPartitioner(input));
-		return map.get();
+		if( map.isPresent() ) {
+			return map.get();
+		}
+		return null;
 	}
-	
+
 	public SourceViewerConfiguration createConfiguration(Input<?> input) {
 		Optional<SourceViewerConfiguration> map = configurationProvider.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createConfiguration(input));
 		return map.get();
 	}
-	
+
 	@Override
 	public boolean persist(IDocument d) {
 		for( DocumentFactory f : documentProvider ) {
