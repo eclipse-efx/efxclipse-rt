@@ -4,5 +4,5 @@
    <service>
       <provide interface="org.eclipse.fx.core.adapter.AdapterService"/>
    </service>
-   <reference bind="registerAdapterProviderService" cardinality="0..n" interface="org.eclipse.fx.core.adapter.AdapterProvider" name="AdapterProvider" policy="static" unbind="unregisterAdapterProviderService"/>
+   <reference bind="registerAdapterProviderService" cardinality="0..n" interface="org.eclipse.fx.core.adapter.AdapterProvider" name="AdapterProvider" policy="dynamic" unbind="unregisterAdapterProviderService"/>
 </scr:component>
