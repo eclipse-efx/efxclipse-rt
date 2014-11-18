@@ -6,7 +6,7 @@
       provider-name="BestSolution.at">
 
    <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+      feature helping to integrate JavaFX content into a e4-SWT-RCP application
    </description>
 
    <copyright url="http://www.bestsolution.at">
