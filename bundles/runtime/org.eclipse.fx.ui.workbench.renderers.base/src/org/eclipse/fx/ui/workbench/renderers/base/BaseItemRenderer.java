@@ -62,6 +62,9 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 		registerEventListener(broker, UIEvents.UILabel.TOPIC_TOOLTIP);
 		registerEventListener(broker, UIEvents.UILabel.TOPIC_LOCALIZED_TOOLTIP);
 		
+		registerEventListener(broker, UIEvents.Item.TOPIC_SELECTED);
+		registerEventListener(broker, UIEvents.Item.TOPIC_ENABLED);
+		
 		do_init(broker);
 	}
 
