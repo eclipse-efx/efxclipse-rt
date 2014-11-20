@@ -32,6 +32,7 @@ import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MCoreExpression;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.MUILabel;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
@@ -385,8 +386,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@SuppressWarnings("null")
 	void handleEvent(Event event) {
-		// System.err.println("EVENT: " + event + " - " +
-		// event.getProperty(UIEvents.EventTags.ATTNAME));
+//		System.err.println("EVENT: " + this + " ===> " + event);
 		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
 		if (!(changedObj instanceof MUIElement)) {
 			return;
@@ -409,9 +409,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 		try {
 			BaseRenderer.this.contextModification.put(e, Boolean.TRUE);
-
 			if (changedObj instanceof MUIElement) {
-				if ( isRenderer(e) ) {
+				if (isRenderer(e)) {
 					if (attributeName.equals(UIEvents.ApplicationElement.TAGS)) {
 						MUIElement m = (MUIElement) changedObj;
 						if (m.getWidget() != null) {
@@ -435,11 +434,37 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 						} else {
 							ctx.set(attributeName, newValue);
 						}
+						handleAttributeChange(e, ctx, attributeName, newValue);
 					}
 				}
 			}
 		} finally {
 			BaseRenderer.this.contextModification.remove(e);
+		}
+	}
+
+	/**
+	 * Handle the change of an attribute e.g. to publish the localized string as
+	 * well when the label value changes
+	 *
+	 * @param e
+	 *            the ui element
+	 * @param context
+	 *            the context
+	 * @param attributeName
+	 *            the attribute name
+	 * @param newValue
+	 *            the new value
+	 */
+	@SuppressWarnings("static-method")
+	protected void handleAttributeChange(MUIElement e, IEclipseContext context, String attributeName, Object newValue) {
+		if (e instanceof MUILabel) {
+			MUILabel l = (MUILabel) e;
+			if (UIEvents.UILabel.LABEL.equals(attributeName)) {
+				context.set(UIEvents.UILabel.LOCALIZED_LABEL, l.getLocalizedLabel());
+			} else if (UIEvents.UILabel.TOOLTIP.equals(attributeName)) {
+				context.set(UIEvents.UILabel.LOCALIZED_TOOLTIP, l.getLocalizedTooltip());
+			}
 		}
 	}
 

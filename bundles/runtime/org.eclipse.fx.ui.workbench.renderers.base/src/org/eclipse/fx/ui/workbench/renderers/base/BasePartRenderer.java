@@ -15,6 +15,7 @@ import java.util.Collections;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
@@ -34,7 +35,7 @@ import org.osgi.service.event.EventHandler;
 
 /**
  * Base renderer for {@link MPart}
- * 
+ *
  * @param <N>
  *            the native widget
  * @param <T>
@@ -53,13 +54,16 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 	@PostConstruct
 	void init(@NonNull IEventBroker eventBroker) {
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_ICONURI);
-		
+
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LABEL);
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LOCALIZED_LABEL);
-		
+
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_TOOLTIP);
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LOCALIZED_TOOLTIP);
-		
+
+		registerEventListener(eventBroker, UIEvents.Part.TOPIC_DESCRIPTION);
+		registerEventListener(eventBroker, UIEvents.Part.TOPIC_LOCALIZED_DESCRIPTION);
+
 		registerEventListener(eventBroker, UIEvents.Dirtyable.TOPIC_DIRTY);
 		eventBroker.subscribe(UIEvents.Part.TOPIC_MENUS, new EventHandler() {
 
@@ -122,6 +126,17 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 		});
 	}
 
+	@Override
+	protected void handleAttributeChange(MUIElement e, IEclipseContext context, String attributeName, Object newValue) {
+		super.handleAttributeChange(e, context, attributeName, newValue);
+		if( e instanceof MPart ) {
+			MPart l = (MPart) e;
+			if (UIEvents.Part.DESCRIPTION.equals(attributeName)) {
+				context.set(UIEvents.Part.LOCALIZED_DESCRIPTION, l.getLocalizedLabel());
+			}
+		}
+	}
+
 	void handleToolbarRemove(@NonNull MPart parent, @NonNull MToolBar toolbar) {
 		WPart<N, T, M> widget = getWidget(parent);
 		if (widget == null) {
@@ -166,7 +181,7 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 
 	/**
 	 * Check if the activated part needs focus called
-	 * 
+	 *
 	 * @param widget
 	 *            the widget
 	 * @return <code>true</code> if activation should call {@link Focus}
