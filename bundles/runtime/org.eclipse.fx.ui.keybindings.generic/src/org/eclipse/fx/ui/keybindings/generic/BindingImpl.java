@@ -43,7 +43,7 @@ public abstract class BindingImpl implements Binding {
 
 	/**
 	 * Create a binding impl
-	 * 
+	 *
 	 * @param command
 	 *            the command
 	 * @param schemeId
@@ -70,5 +70,44 @@ public abstract class BindingImpl implements Binding {
 	@Override
 	public String getSchemeId() {
 		return this.schemeId;
+	}
+
+	@SuppressWarnings("null")
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.command == null) ? 0 : this.command.hashCode());
+		result = prime * result + ((this.contextId == null) ? 0 : this.contextId.hashCode());
+		result = prime * result + ((this.schemeId == null) ? 0 : this.schemeId.hashCode());
+		return result;
+	}
+
+	@SuppressWarnings({ "unused", "null" })
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BindingImpl other = (BindingImpl) obj;
+		if (this.command == null) {
+			if (other.command != null)
+				return false;
+		} else if (!this.command.equals(other.command))
+			return false;
+		if (this.contextId == null) {
+			if (other.contextId != null)
+				return false;
+		} else if (!this.contextId.equals(other.contextId))
+			return false;
+		if (this.schemeId == null) {
+			if (other.schemeId != null)
+				return false;
+		} else if (!this.schemeId.equals(other.schemeId))
+			return false;
+		return true;
 	}
 }

@@ -24,7 +24,7 @@ public class KeyBindingImpl extends BindingImpl {
 
 	/**
 	 * Create a binding
-	 * 
+	 *
 	 * @param keySequence
 	 * @param command
 	 * @param schemeId
@@ -40,4 +40,30 @@ public class KeyBindingImpl extends BindingImpl {
 		return this.keySequence;
 	}
 
+	@SuppressWarnings("null")
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((this.keySequence == null) ? 0 : this.keySequence.hashCode());
+		return result;
+	}
+
+	@SuppressWarnings({ "null", "unused" })
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		KeyBindingImpl other = (KeyBindingImpl) obj;
+		if (this.keySequence == null) {
+			if (other.keySequence != null)
+				return false;
+		} else if (!this.keySequence.equals(other.keySequence))
+			return false;
+		return true;
+	}
 }
