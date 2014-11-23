@@ -44,6 +44,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.PathElement;
@@ -401,7 +402,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						ObservableValue<? extends Bounds> observable,
 						Bounds oldValue, Bounds newValue) {
 					if( newValue != null && newValue.getHeight() > 100 ) {
-						System.err.println("Looks like an invalid cell height"); //$NON-NLS-1$
+						System.err.println("Looks like an invalid cell height: " + newValue); //$NON-NLS-1$
 						Thread.dumpStack();
 					}
 				}
@@ -456,12 +457,28 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 					if (textNode != null) {
 //						System.err.println("THE NODE: " + textNode.getText());
-						((Text)textNode.getChildren().get(0)).setImpl_caretPosition(relativePos);
+						Text text = (Text)textNode.getChildren().get(0);
+						text.setImpl_caretPosition(relativePos);
 
 						final Path p = (Path) container.getChildren().get(1);
 
 						p.getElements().clear();
-						p.getElements().addAll(((Text)textNode.getChildren().get(0)).getImpl_caretShape());
+
+						PathElement[] impl_caretShape = text.getImpl_caretShape();
+						if( impl_caretShape.length == 2 ) {
+							if( impl_caretShape[0] instanceof MoveTo && impl_caretShape[1] instanceof LineTo ) {
+								MoveTo m = (MoveTo)impl_caretShape[0];
+								LineTo l = (LineTo)impl_caretShape[1];
+								if( m.getY() > 0.0 ) {
+									System.err.println(m.getY());
+									l.setY(l.getY() - m.getY());
+									m.setY(0);
+								}
+
+							}
+						}
+
+						p.getElements().addAll(impl_caretShape);
 
 						p.setLayoutX(textNode.getChildren().get(0).getLayoutX() + textNode.getLayoutX());
 						p.setLayoutY(textNode.getChildren().get(0).getLayoutY() + textNode.getLayoutY());
