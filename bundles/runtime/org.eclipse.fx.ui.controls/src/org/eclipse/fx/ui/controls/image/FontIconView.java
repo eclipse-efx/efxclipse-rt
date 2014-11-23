@@ -50,7 +50,7 @@ public class FontIconView extends Control {
 	}
 
 	@Override
-	protected String getUserAgentStylesheet() {
+	public String getUserAgentStylesheet() {
 		String uri = FontIconView.class.getResource("fonticonview.css").toExternalForm(); //$NON-NLS-1$
 		return uri;
 	}
@@ -75,7 +75,7 @@ public class FontIconView extends Control {
 
 	/**
 	 * Set a new font icon
-	 * 
+	 *
 	 * @param icon
 	 *            the icon
 	 */
@@ -151,7 +151,7 @@ public class FontIconView extends Control {
 
 	/**
 	 * Set a new font
-	 * 
+	 *
 	 * @param font
 	 *            the new font
 	 */
@@ -337,7 +337,7 @@ public class FontIconView extends Control {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @since JavaFX 8.0
 	 */
 	@Override
