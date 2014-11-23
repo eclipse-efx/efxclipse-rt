@@ -31,6 +31,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -121,6 +122,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		});
 		this.contentView.setMinHeight(0);
 		this.contentView.setMinWidth(0);
+//		this.contentView.setFixedCellSize(25);
 		this.contentView.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -387,6 +389,20 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						LineCell.this.flashTimeline.play();
 					} else {
 						LineCell.this.flashTimeline.stop();
+					}
+				}
+			});
+			// Once this property is observed the error does not occurr
+			// need to track that down one day
+			boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
+
+				@Override
+				public void changed(
+						ObservableValue<? extends Bounds> observable,
+						Bounds oldValue, Bounds newValue) {
+					if( newValue != null && newValue.getHeight() > 100 ) {
+						System.err.println("Looks like an invalid cell height"); //$NON-NLS-1$
+						Thread.dumpStack();
 					}
 				}
 			});
