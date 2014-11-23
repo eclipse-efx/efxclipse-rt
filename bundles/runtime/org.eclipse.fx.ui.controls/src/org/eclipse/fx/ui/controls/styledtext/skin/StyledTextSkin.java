@@ -77,7 +77,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 	/**
 	 * Create a new skin
-	 * 
+	 *
 	 * @param styledText
 	 *            the control
 	 */
@@ -188,7 +188,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 	/**
 	 * The line height at the care position
-	 * 
+	 *
 	 * @param caretPosition
 	 *            the position
 	 * @return the line height
@@ -207,7 +207,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 	/**
 	 * Get the point for the caret position
-	 * 
+	 *
 	 * @param caretPosition
 	 *            the position
 	 * @return the point
@@ -278,7 +278,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 	/**
 	 * Compute the min height
-	 * 
+	 *
 	 * @param width
 	 *            the width that should be used if minimum height depends on it
 	 * @return the min height
@@ -289,7 +289,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 	/**
 	 * Compute the min width
-	 * 
+	 *
 	 * @param height
 	 *            the height that should be used if minimum width depends on it
 	 * @return the min width
@@ -316,7 +316,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 		redraw();
 	}
-	
+
 	/**
 	 * Redraw the lines
 	 */
@@ -504,7 +504,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				for (final Segment seg : arg0.getSegments()) {
 //					System.err.println("SEGMENT: " + seg.text + " => " + seg.style.stylename);
 					final Text t = new Text(seg.text);
-					
+
 					if( seg.style.stylename != null ) {
 						t.getStyleClass().setAll("source-segment",seg.style.stylename); //$NON-NLS-1$
 					} else {
@@ -514,7 +514,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 							t.getStyleClass().setAll("source-segment"); //$NON-NLS-1$
 						}
 					}
-					
+
 					if (seg.style.foreground != null) {
 						t.setFill(seg.style.foreground);
 					}
@@ -526,7 +526,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 //						System.err.println("=====================> UNDERLINEING");
 					}
 
-					
+
 					TextFlow f = new TextFlow(t);
 					f.setUserData(Integer.valueOf(seg.style.start));
 					if( seg.style.hoverStylename != null ) {
@@ -620,22 +620,22 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				}
 
 				TextSelection selection = getSkinnable().getSelection();
-				
+
 				int selectionStart = selection.offset - start;
 				int selectionEnd = selection.offset+selection.length - start;
-				
+
 //				System.err.println("Line: " + line);
 //				System.err.println("SELECTION: " + selectionStart + " => " + selectionEnd);
-				
+
 				int lastIndex = -1;
 				for (StyleRange r : ranges) {
 					int begin = r.start - start;
 					int end = r.start - start + r.length;
-					
+
 					if (lastIndex != -1 && lastIndex != begin) {
 						segments.addAll(createSegments(line, new StyleRange((String)null), selectionStart, selectionEnd, lastIndex, begin));
 					}
-					
+
 					segments.addAll(createSegments(line, r, selectionStart, selectionEnd, begin, end));
 					lastIndex = end;
 				}
@@ -645,7 +645,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 			return segments;
 		}
-		
+
 		private List<Segment> createSegments(String line, StyleRange r, int selectionStart, int selectionEnd, int begin, int end) {
 //			System.err.println("LINE: " + line);
 			if( selectionStart != selectionEnd ) {
@@ -659,57 +659,57 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				} else if( selectionStart <= begin && selectionEnd >= begin && selectionEnd <= end ) {
 					// selection start before and ends inside
 					List<Segment> rv = new ArrayList<StyledTextSkin.Segment>();
-					
+
 					Segment seg = new Segment();
 					seg.text = removeLineending(line.substring(begin, selectionEnd));
 					seg.style = new StyleRange(r);
 					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
 					seg.style.start = r.start;
 					rv.add(seg);
-					
+
 					seg = new Segment();
 					seg.text = removeLineending(line.substring(selectionEnd, end));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start + selectionEnd-begin;
 					rv.add(seg);
-					
+
 					return rv;
 				} else if( begin < selectionStart && selectionStart <= end && selectionEnd >= end ) {
 					// selection starts inside and ends outside
 					List<Segment> rv = new ArrayList<StyledTextSkin.Segment>();
-					
+
 					Segment seg = new Segment();
 					seg.text = removeLineending(line.substring(begin, selectionStart));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start;
 					rv.add(seg);
-					
+
 					seg = new Segment();
 					seg.text = removeLineending(line.substring(selectionStart, end));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start + selectionStart-begin;
 					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
 					rv.add(seg);
-					
+
 					return rv;
 				} else if( between(selectionStart, begin, end) && between(selectionEnd, begin, end) ) {
 //					System.err.println("A BETWEEN MATCH!!!!");
 					// selection starts and ends inside
 					List<Segment> rv = new ArrayList<StyledTextSkin.Segment>();
-					
+
 					Segment seg = new Segment();
 					seg.text = removeLineending(line.substring(begin, selectionStart));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start;
 					rv.add(seg);
-					
+
 					seg = new Segment();
 					seg.text = removeLineending(line.substring(selectionStart, selectionEnd));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start + selectionStart-begin;
 					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
 					rv.add(seg);
-					
+
 					seg = new Segment();
 					seg.text = removeLineending(line.substring(selectionEnd, end));
 					seg.style = new StyleRange(r);
@@ -722,13 +722,13 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 //					System.err.println("Segment:" + begin + "/" + end);
 				}
 			}
-			
+
 			Segment seg = new Segment();
 			seg.text = removeLineending(line.substring(begin, end));
 			seg.style = r;
-			return Collections.singletonList(seg); 
+			return Collections.singletonList(seg);
 		}
-		
+
 		private boolean between(int x, int min, int max) {
 			return x > min && x < max;
 		}
@@ -779,9 +779,9 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					}
 					this.lineText.setText(newText);
 					if( newText.length() != oldText.length() ) {
-						StyledTextSkin.this.rootContainer.layout();	
+						StyledTextSkin.this.rootContainer.layout();
 					}
-					StyledTextSkin.this.lineRuler.layout();	
+					StyledTextSkin.this.lineRuler.layout();
 				}
 			}
 		}
@@ -804,7 +804,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						lineInfo.resize(lineInfo.getWidth(), c.getHeight());
 						lineInfo.setVisible(true);
 						children.remove(lineInfo);
-					}	
+					}
 				}
 			}
 
@@ -848,13 +848,13 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				lineInfo.setLayoutY(cell.getLayoutY());
 			}
 			Platform.runLater(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					StyledTextSkin.this.lineRuler.requestLayout();
 				}
 			});
-			
+
 		}
 
 		@Override
