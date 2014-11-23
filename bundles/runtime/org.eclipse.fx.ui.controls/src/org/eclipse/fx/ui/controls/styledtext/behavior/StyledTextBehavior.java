@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.event.Event;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
@@ -47,7 +48,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 
 	/**
 	 * Create a new behavior
-	 * 
+	 *
 	 * @param styledText
 	 *            the styled text control
 	 */
@@ -76,7 +77,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 
 	/**
 	 * Invoke an action
-	 * 
+	 *
 	 * @param action
 	 *            the action
 	 * @return true is consumed
@@ -257,7 +258,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 
 	/**
 	 * Send a mouse pressed
-	 * 
+	 *
 	 * @param event
 	 *            the event
 	 * @param visibleCells
@@ -265,12 +266,20 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	 */
 	public void mousePressed(MouseEvent event, List<LineCell> visibleCells) {
 		Point2D p = new Point2D(event.getX(), event.getY());
-		for (LineCell cell : visibleCells) {
-			if (cell.getBoundsInParent().contains(p)) {
-				if (cell.getDomainElement() != null) {
+		LineCell lastCell = null;
+
+		for (LineCell tmp : visibleCells) {
+			Bounds boundsInParent = tmp.getBoundsInParent();
+
+			if ( boundsInParent.getMinY() > event.getY()) {
+				if( lastCell == null ) {
+					lastCell = tmp;
+				}
+
+				if (lastCell.getDomainElement() != null) {
 					// Calculate to cell relative
-					p = p.subtract(cell.getLayoutX(), cell.getLayoutY());
-					Region g = (Region) cell.getGraphic();
+					p = p.subtract(lastCell.getLayoutX(), lastCell.getLayoutY());
+					Region g = (Region) lastCell.getGraphic();
 					p = p.subtract(g.getLayoutX(), g.getLayoutY());
 
 					TextFlow flow = (TextFlow) g.getChildrenUnmodifiable().get(0);
@@ -278,7 +287,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 					p = p.subtract(flow.getLayoutX(), flow.getLayoutY());
 					for (Node n : flow.getChildren()) {
 						TextFlow text = (TextFlow) n;
-						 
+
 						if (text.getBoundsInParent().contains(p)) {
 							@SuppressWarnings("deprecation")
 							HitInfo info = ((Text)text.getChildren().get(0)).impl_hitTestChar(new Point2D(p.getX() - text.getLayoutX(), 0 ));
@@ -298,18 +307,19 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 						}
 					}
 
-					int offset = cell.getDomainElement().getLineOffset() + cell.getDomainElement().getLineLength();
+					int offset = lastCell.getDomainElement().getLineOffset() + lastCell.getDomainElement().getLineLength();
 					getControl().impl_setCaretOffset(offset, event.isShiftDown());
-					
+
 				}
 				break;
 			}
+			lastCell = tmp;
 		}
 		getControl().requestFocus();
 		Event.fireEvent(getControl(), event.copyFor(getControl(), getControl()));
 	}
-	
+
 //	public void mouseDragged(MouseEvent event, List<LineCell> visibleCells) {
-//		
+//
 //	}
 }
