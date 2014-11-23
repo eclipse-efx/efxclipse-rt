@@ -277,30 +277,16 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				}
 
 				if (lastCell.getDomainElement() != null) {
-					// Calculate to cell relative
-					p = p.subtract(lastCell.getLayoutX(), lastCell.getLayoutY());
 					Region g = (Region) lastCell.getGraphic();
-					p = p.subtract(g.getLayoutX(), g.getLayoutY());
-
 					TextFlow flow = (TextFlow) g.getChildrenUnmodifiable().get(0);
-					// Calculate to text flow
-					p = p.subtract(flow.getLayoutX(), flow.getLayoutY());
 					for (Node n : flow.getChildren()) {
-						TextFlow text = (TextFlow) n;
+						if( n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY()) ) {
+							TextFlow textFlow = (TextFlow) n;
+							Text text = (Text)textFlow.getChildren().get(0);
 
-						if (text.getBoundsInParent().contains(p)) {
-							@SuppressWarnings("deprecation")
-							HitInfo info = ((Text)text.getChildren().get(0)).impl_hitTestChar(new Point2D(p.getX() - text.getLayoutX(), 0 ));
+							HitInfo info = text.impl_hitTestChar(text.sceneToLocal(event.getSceneX(), event.getSceneY()));
 							if (info.getInsertionIndex() >= 0) {
-								// System.err.println("Text: " +
-								// text.getText());
-								// System.err.println("Text-Offset: " +
-								// text.getUserData());
-								// System.err.println("INSERT INDEX: " +
-								// info.getInsertionIndex());
-								int offset = ((Integer) text.getUserData()).intValue() + info.getInsertionIndex();
-								// System.err.println("NEW OFFSET AT: " +
-								// offset);
+								int offset = ((Integer) textFlow.getUserData()).intValue() + info.getInsertionIndex();
 								getControl().impl_setCaretOffset(offset, event.isShiftDown());
 								return;
 							}
