@@ -11,7 +11,9 @@
 package org.eclipse.fx.ui.workbench.renderers.fx.widget;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -29,7 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Base class for all widgets
- * 
+ *
  * @param <N>
  *            the native type
  * @param <M>
@@ -50,6 +52,8 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 	protected WidgetState state = WidgetState.IN_SETUP;
 
 	private WPropertyChangeHandler<? extends WWidget<M>> propertyChangeHandler;
+
+	private Set<WPropertyChangeEvent<@NonNull WWidget<M>>> currentPropertyChanges = new HashSet<>();
 
 	/**
 	 * @return the widget
@@ -150,7 +154,7 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 
 	/**
 	 * Setup property bindings
-	 * 
+	 *
 	 * @param widget
 	 *            the widget
 	 */
@@ -160,7 +164,7 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 
 	/**
 	 * Bind a property and fire change events
-	 * 
+	 *
 	 * @param propertyName
 	 *            the property to bound to
 	 * @param value
@@ -178,7 +182,7 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 
 	/**
 	 * Associate user data with the widget
-	 * 
+	 *
 	 * @param widget
 	 *            the widget
 	 */
@@ -190,8 +194,24 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 	}
 
 	/**
+	 * Check if there already property change in progress for the given property
+	 *
+	 * @param propertyName
+	 *            the property name
+	 * @return <code>true</code> if property is currently changeing
+	 */
+	protected boolean isPropertyChangeInProgress(@NonNull String propertyName) {
+		for( WPropertyChangeEvent<@NonNull WWidget<M>> e : this.currentPropertyChanges ) {
+			if( propertyName.equals(e.propertyname) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Fire a change event
-	 * 
+	 *
 	 * @param propertyName
 	 *            the property modified
 	 * @param newValue
@@ -200,7 +220,12 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 	protected final void fireChange(@NonNull String propertyName, @Nullable Object newValue) {
 		if (this.propertyChangeHandler != null) {
 			WPropertyChangeEvent<@NonNull WWidget<M>> e = new WPropertyChangeEvent<@NonNull WWidget<M>>(this, propertyName, newValue);
-			this.propertyChangeHandler.propertyObjectChanged(e); 
+			try {
+				this.currentPropertyChanges.add(e);
+				this.propertyChangeHandler.propertyObjectChanged(e);
+			} finally {
+				this.currentPropertyChanges.remove(e);
+			}
 		}
 	}
 }

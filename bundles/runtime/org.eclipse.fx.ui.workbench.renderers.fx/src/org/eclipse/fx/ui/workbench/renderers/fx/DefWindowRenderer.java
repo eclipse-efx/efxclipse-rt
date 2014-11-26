@@ -244,7 +244,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		/**
 		 * Create a new window
-		 * 
+		 *
 		 * @param mWindow
 		 *            the window model element
 		 * @param dispatcher
@@ -643,59 +643,71 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		/**
 		 * set a new x coordinate
-		 * 
+		 *
 		 * @param _x
 		 *            the new x
 		 */
+		@SuppressWarnings("null")
 		@Inject
 		public void setX(@Named(UIEvents.Window.X) int _x) {
-			int x = _x;
-			if (x == -2147483648) {
-				x = 0;
+			if( ! isPropertyChangeInProgress(UIEvents.Window.X) ) {
+				int x = _x;
+				if (x == -2147483648) {
+					x = 0;
+				}
+				getWidget().setX(x);
 			}
-			getWidget().setX(x);
 		}
 
 		/**
 		 * set a new y coordinate
-		 * 
+		 *
 		 * @param _y
 		 *            the new y
 		 */
+		@SuppressWarnings("null")
 		@Inject
 		public void setY(@Named(UIEvents.Window.Y) int _y) {
-			int y = _y;
-			if (y == -2147483648) {
-				y = 0;
+			if( ! isPropertyChangeInProgress(UIEvents.Window.Y) ) {
+				int y = _y;
+				if (y == -2147483648) {
+					y = 0;
+				}
+				getWidget().setY(y);
 			}
-			getWidget().setY(y);
 		}
 
 		/**
 		 * set a new width
-		 * 
+		 *
 		 * @param w
 		 *            the new width
 		 */
+		@SuppressWarnings("null")
 		@Inject
 		public void setWidth(@Named(UIEvents.Window.WIDTH) int w) {
-			getWidget().setWidth(w);
+			if( ! isPropertyChangeInProgress(UIEvents.Window.WIDTH) ) {
+				getWidget().setWidth(w);
+			}
 		}
 
 		/**
 		 * set a new height
-		 * 
+		 *
 		 * @param h
 		 *            the new height
 		 */
+		@SuppressWarnings("null")
 		@Inject
 		public void setHeight(@Named(UIEvents.Window.HEIGHT) int h) {
-			getWidget().setHeight(h);
+			if( ! isPropertyChangeInProgress(UIEvents.Window.HEIGHT) ) {
+				getWidget().setHeight(h);
+			}
 		}
 
 		/**
 		 * update the visibility of the window
-		 * 
+		 *
 		 * @param visible
 		 *            the new visible value
 		 */
@@ -716,7 +728,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		/**
 		 * Make stage shown in fullscreen
-		 * 
+		 *
 		 * @param fullScreen
 		 *            the new state
 		 */
@@ -828,7 +840,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		/**
 		 * Set a new window title
-		 * 
+		 *
 		 * @param title
 		 *            the new title
 		 */
@@ -843,7 +855,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		/**
 		 * Set a window icon. Icons of multiple sizes can be set by separating
 		 * the urls using a ; (semicolon)
-		 * 
+		 *
 		 * @param iconUri
 		 *            the new icon
 		 */
@@ -1112,7 +1124,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	public interface CustomRootContainer {
 		/**
 		 * Set the trim area
-		 * 
+		 *
 		 * @param trim
 		 *            the trim area
 		 */
@@ -1120,7 +1132,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		/**
 		 * Set the menu bar
-		 * 
+		 *
 		 * @param menuBar
 		 *            the menu bar
 		 */
@@ -1128,7 +1140,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		/**
 		 * Set the window title
-		 * 
+		 *
 		 * @param title
 		 *            the title
 		 */
