@@ -444,6 +444,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	@Override
 	public void stop() {
 		if (this.app != null) {
+			this.app.getContext().set("__efx_engine_shutdown", Boolean.TRUE); //$NON-NLS-1$
 			for (MWindow w : this.app.getChildren()) {
 				ElementRenderer<MUIElement, Object> r = getRenderer(w);
 				if (r != null) {

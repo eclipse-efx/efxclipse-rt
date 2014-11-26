@@ -49,7 +49,7 @@ import org.osgi.service.event.EventHandler;
 
 /**
  * Base renderer for {@link MPartStack}
- * 
+ *
  * @param <N>
  *            the native widget
  * @param <I>
@@ -153,7 +153,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				element = container.getChildren().get(0);
 			}
 			if( element != null ) {
-				return getPart(element);	
+				return getPart(element);
 			}
 			return null;
 		} else {
@@ -173,7 +173,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				if (domElement != null) {
 					MPart part = getPart(domElement);
 					if( part != null ) {
-						activatationJob(element, part, true);	
+						activatationJob(element, part, true);
 					} else {
 						getLogger().error("Unable to find part to activate for '"+domElement+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
@@ -190,7 +190,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				if (domElement != null) {
 					MPart part = getPart(domElement);
 					if( part != null ) {
-						activatationJob(element, part, false);	
+						activatationJob(element, part, false);
 					} else {
 						getLogger().error("Unable to find part to activate for '"+domElement+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
@@ -208,7 +208,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				if (param.booleanValue() && selectedElement != null) {
 					MPart part = getPart(selectedElement);
 					if( part != null ) {
-						activatationJob(element, part, true);	
+						activatationJob(element, part, true);
 					} else {
 						getLogger().error("Unable to find part to activate for '"+selectedElement+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
@@ -280,7 +280,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		}
 
 		stack.selectItem(stack.getItems().indexOf(initalItem));
-		
+
 		// Ensure an element is selected see 436659
 		if( element.getSelectedElement() == null ) {
 			if( ! stack.getItems().isEmpty() ) {
@@ -303,7 +303,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				BaseStackRenderer.this.inLazyInit = true;
 				try {
 					WLayoutedWidget<MStackElement> widget = engineCreateWidget(e);
-					
+
 					if (widget != null) {
 						return (IC) widget.getStaticLayoutNode();
 					}
@@ -324,16 +324,16 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		return item;
 	}
 
-	
+
 	@SuppressWarnings("null")
 	void handleChildrenAddition(MPartStack parent, Collection<MStackElement> elements) {
 		WStack<N, I, IC> widget = getWidget(parent);
-		
+
 		if( widget == null ) {
 			getLogger().error("Could not find widget for '"+parent+"'");  //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
-		
+
 		Iterator<MStackElement> i = elements.iterator();
 		while (i.hasNext()) {
 			MStackElement element = (MStackElement) i.next();
@@ -342,22 +342,22 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 				ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 				if( renderer != null ) {
-					
-					
+
+
 					WStack<N, I, IC> stack = widget;
 					@SuppressWarnings("unchecked")
 					WStackItem<I, IC> item = (WStackItem<I, IC>) element.getTransientData().get(MAP_ITEM_KEY);
 					if( item == null || ! widget.getStackItemClass().isAssignableFrom(item.getClass()) ) {
-						item = createStackItem(widget, element, renderer);	
+						item = createStackItem(widget, element, renderer);
 					}
 
-					stack.addItems(idx, Collections.singletonList(item));					
+					stack.addItems(idx, Collections.singletonList(item));
 				} else {
 					getLogger().error("Could not find renderer for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
 				}
 			}
 		}
-		
+
 		// Ensure an element is selected see 436659
 		if( parent.getSelectedElement() == null ) {
 			if( ! widget.getItems().isEmpty() ) {
@@ -372,7 +372,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			getLogger().error("Could not find widget for '"+parent+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
-		
+
 		// more performant group removal
 		ArrayList<MStackElement> list = new ArrayList<MStackElement>(elements);
 		MStackElement selectedElement = parent.getSelectedElement();
@@ -381,20 +381,23 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			list.add(selectedElement);// remove and add the selected element to
 										// the end
 		}
-		
+
 		// build the stack item list out of the model
 		List<@NonNull WStackItem<I, IC>> items = transmuteList(parentWidget, list);
 		parentWidget.removeItems(items);
 		ArrayList<MStackElement> removeOnHideList = new ArrayList<MStackElement>();
-		for (MStackElement element : list) {
-			if (element.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG)) {
-				removeOnHideList.add(element);
+		Boolean b = (Boolean) this.application.getContext().get("__efx_engine_shutdown"); //$NON-NLS-1$
+		if( b == null || ! b.booleanValue() ) {
+			for (MStackElement element : list) {
+				if (element.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG)) {
+					removeOnHideList.add(element);
+				}
+				if( ! element.getTransientData().containsKey(MAP_MOVE) ) {
+					element.getTransientData().remove(MAP_ITEM_KEY);
+				}
 			}
-			if( ! element.getTransientData().containsKey(MAP_MOVE) ) {
-				element.getTransientData().remove(MAP_ITEM_KEY);
-			}
+			parent.getChildren().removeAll(removeOnHideList);
 		}
-		parent.getChildren().removeAll(removeOnHideList);
 	}
 
 	@NonNull
@@ -412,11 +415,11 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 	void handleSelectedElement(final @NonNull MPartStack parent, @Nullable final MStackElement oldElement, @Nullable final MStackElement _newElement) {
 		MStackElement newElement = _newElement;
-		
+
 		if( newElement == null ) {
 			return;
 		}
-		
+
 		WStack<N, I, IC> stack = getWidget(parent);
 		if( stack == null ) {
 			getLogger().error("Could not find widget for '"+parent+"'"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -446,7 +449,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			getLogger().error("Unable to extract part from '"+e+"'");  //$NON-NLS-1$//$NON-NLS-2$
 			return true;
 		}
-		
+
 		if (!part.isCloseable()) {
 			return false;
 		}
@@ -501,11 +504,11 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 		if( renderer != null ) {
 			int idx = getRenderedIndex(parentElement, element);
-			stack.addItems(idx, Collections.singletonList(createStackItem(stack, (MStackElement) element, renderer)));	
+			stack.addItems(idx, Collections.singletonList(createStackItem(stack, (MStackElement) element, renderer)));
 		} else {
 			getLogger().error("Could not find renderer for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
 		}
-		
+
 	}
 
 	@SuppressWarnings("null")
@@ -530,7 +533,8 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			stack.removeItems(l);
 		}
 
-		if (changedObj.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG)) {
+		Boolean b = (Boolean) this.application.getContext().get("__efx_engine_shutdown"); //$NON-NLS-1$
+		if ((b == null || ! b.booleanValue()) && changedObj.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG)) {
 			container.getChildren().remove(changedObj);
 		}
 	}
