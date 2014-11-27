@@ -10,12 +10,22 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.freeedit;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
@@ -31,34 +41,59 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.code.compensator.editor.services.FileIconLookup;
 import org.eclipse.fx.code.compensator.model.workbench.File;
+import org.eclipse.fx.code.compensator.model.workbench.Folder;
 import org.eclipse.fx.code.compensator.model.workbench.Resource;
 import org.eclipse.fx.code.compensator.model.workbench.Workbench;
+import org.eclipse.fx.code.compensator.model.workbench.WorkbenchFactory;
 import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
+
 
 @SuppressWarnings("restriction")
 public class FileList {
 	@Inject
 	private Workbench workbench;
-	
+
 	@Inject
 	private ECommandService commandService;
-	
+
 	@Inject
 	private EHandlerService handlerService;
-	
-	private ObservableList<Resource> inputList = FXCollections.observableArrayList();
 
-	private ListView<Resource> view;
-	
+	@Inject
+	private FileIconLookup lookup;
+
+	private ObservableList<TreeItem<Resource>> inputList = FXCollections.observableArrayList();
+
+	private TreeView<Resource> view;
+
+	private Image fileIcon;
+	private Image folderIcon;
+
+
 	@PostConstruct
 	public void initUI(BorderPane parent) {
-		view = new ListView<>();
-		view.setCellFactory(FileList::listCell);
+		fileIcon = new Image(getClass().getClassLoader().getResource("/icons/16/application-x-zerosize.png").toExternalForm());
+		folderIcon = new Image(getClass().getClassLoader().getResource("/icons/16/inode-directory.png").toExternalForm());
+
+		view = new TreeView<>();
+		view.setCellFactory(this::treeCell);
+		view.setShowRoot(false);
+
+		TreeItem<Resource> t = new TreeItem<>();
 		for( Resource r : workbench.getResources() ) {
-			inputList.add(r);
+			if( r instanceof Folder ) {
+				FolderTreeItem ti = new FolderTreeItem((Folder)r);
+				t.getChildren().add(ti);
+				inputList.add(ti);
+			} else {
+				TreeItem<Resource> ti = new TreeItem<>(r);
+				t.getChildren().add(ti);
+				inputList.add(ti);
+			}
 		}
-		view.setItems(inputList);
+		view.setRoot(t);
 		view.setOnMouseClicked(this::open);
 		parent.setCenter(view);
 		workbench.eAdapters().add(new AdapterImpl() {
@@ -66,32 +101,53 @@ public class FileList {
 			public void notifyChanged(Notification msg) {
 				if( msg.getFeature() == WorkbenchPackage.Literals.WORKBENCH_ELEMENT__RESOURCES ) {
 					if( msg.getEventType() == Notification.ADD ) {
-						inputList.add((Resource) msg.getNewValue());
+						if( msg.getNewValue() instanceof File ) {
+							TreeItem<Resource> e = new TreeItem<>((Resource) msg.getNewValue());
+							t.getChildren().add(e);
+							inputList.add(e);
+						} else {
+							FolderTreeItem e = new FolderTreeItem((Folder) msg.getNewValue());
+							t.getChildren().add(e);
+							inputList.add(e);
+						}
 					}
 				}
 			}
 		});
 	}
-	
+
 	private void open(MouseEvent event) {
 		if( event.getClickCount() == 2 ) {
 			Command cmd = commandService.getCommand("org.eclipse.fx.code.compensator.app.command.1");
 			IEclipseContext staticCtx = EclipseContextFactory.create();
-			staticCtx.set(File.class, (File)view.getSelectionModel().getSelectedItem());
-			ParameterizedCommand pCmd = ParameterizedCommand.generateCommand(cmd, Collections.emptyMap());
-			handlerService.executeHandler(pCmd, staticCtx);
-			staticCtx.dispose();
+			if( view.getSelectionModel().getSelectedItem() != null && view.getSelectionModel().getSelectedItem().getValue() instanceof File ) {
+				staticCtx.set(File.class, (File)view.getSelectionModel().getSelectedItem().getValue());
+				ParameterizedCommand pCmd = ParameterizedCommand.generateCommand(cmd, Collections.emptyMap());
+				handlerService.executeHandler(pCmd, staticCtx);
+				staticCtx.dispose();
+			}
 		}
 	}
-	
-	private static ListCell<Resource> listCell(ListView<Resource> param) {
-		return new ListCell<Resource>() {
+
+	private TreeCell<Resource> treeCell(TreeView<Resource> param) {
+		return new TreeCell<Resource>() {
 			@Override
 			protected void updateItem(Resource item, boolean empty) {
 				if( item != null && ! empty ) {
 					if( item instanceof File ) {
 						URI uri = URI.createURI(((File) item).getUrl());
 						setText(uri.lastSegment());
+						String iconUri = lookup.getFileIcon(uri.toString());
+						if( iconUri == null ) {
+							setGraphic(new ImageView(fileIcon));
+						} else {
+							//TODO We need to cache images by URI
+							setGraphic(new ImageView(new Image(iconUri)));
+						}
+					} else if( item instanceof Folder ) {
+						URI uri = URI.createURI(((Folder) item).getUrl());
+						setText(uri.segment(uri.segmentCount()-2));
+						setGraphic(new ImageView(folderIcon));
 					}
 				} else {
 					setText(null);
@@ -100,5 +156,50 @@ public class FileList {
 				super.updateItem(item, empty);
 			}
 		};
+	}
+
+	static class FolderTreeItem extends TreeItem<Resource> {
+		private boolean hasLoaded;
+
+		public FolderTreeItem(Folder f) {
+			super(f);
+			getChildren().add(new TreeItem<>());
+
+			expandedProperty().addListener((o) -> {
+				if( isExpanded() ) {
+					if( ! this.hasLoaded ) {
+						loadChildren();
+					}
+				}
+			});
+		}
+
+		private void loadChildren() {
+			try {
+				java.net.URI uri = new java.net.URI(((Folder)getValue()).getUrl());
+				Path path = Paths.get(uri);
+				List<TreeItem<Resource>> l = new ArrayList<>();
+				Files.newDirectoryStream(path).forEach((p) -> {
+					if( Files.isDirectory(p) ) {
+						Folder f = WorkbenchFactory.eINSTANCE.createFolder();
+						f.setUrl(p.toUri().toString());
+						l.add(new FolderTreeItem(f));
+					} else {
+						File f = WorkbenchFactory.eINSTANCE.createFile();
+						f.setUrl(p.toUri().toString());
+						l.add(new TreeItem<>(f));
+					}
+				});
+				getChildren().setAll(l);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+		}
 	}
 }

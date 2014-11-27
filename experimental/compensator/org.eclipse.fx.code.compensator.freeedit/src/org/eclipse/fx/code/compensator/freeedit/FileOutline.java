@@ -10,10 +10,12 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.freeedit;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -26,6 +28,7 @@ import javax.inject.Named;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.fx.code.compensator.editor.Outline;
 import org.eclipse.fx.code.compensator.editor.Outline.OutlineItem;
+import org.eclipse.fx.ui.controls.Util;
 
 public class FileOutline {
 	private TreeView<OutlineItem> outlineView;
@@ -40,19 +43,18 @@ public class FileOutline {
 
 	TreeCell<OutlineItem> createCell(TreeView<OutlineItem> param) {
 		return new TreeCell<OutlineItem>() {
-			private List<String> currentStyles = Collections.emptyList();
 			@Override
 			protected void updateItem(OutlineItem item, boolean empty) {
-				super.updateItem(item, empty);
-				getStyleClass().removeAll(currentStyles);
+
 				if( item != null && ! empty ) {
-					setText(item.getLabel());
-					currentStyles = item.getStyle();
-					getStyleClass().addAll(currentStyles);
+					Label value = new Label(item.getLabel().toString());
+					value.getStyleClass().addAll(item.getStyle());
+					setGraphic(value);
 				} else {
-					currentStyles = Collections.emptyList();
-					setText("");
+					setGraphic(null);
 				}
+
+				super.updateItem(item, empty);
 			}
 		};
 	}
