@@ -15,7 +15,7 @@
 <stringAttribute key="featureDefaultLocation" value="workspace"/>
 <stringAttribute key="featurePluginResolution" value="workspace"/>
 <booleanAttribute key="includeOptional" value="true"/>
-<stringAttribute key="location" value="${workspace_loc}/../runtime-org.eclipse.fx.code.compensator.app.product"/>
+<stringAttribute key="location" value="${workspace_loc}/../runtime-org.eclipse.fx.code.compensator.app.product_2"/>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java SE 8 u40"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-nl ${target.nl} -consoleLog -nosplash -console -consoleLog -clearPersistedState"/>
@@ -26,6 +26,7 @@
 <stringAttribute key="productFile" value="/org.eclipse.fx.code.compensator.app.product/org.eclipse.fx.code.compensator.app.product.product"/>
 <setAttribute key="selected_features">
 <setEntry value="org.eclipse.fx.code.compensator.app.feature:default"/>
+<setEntry value="org.eclipse.fx.code.compensator.jdt.runtime.feature:default"/>
 <setEntry value="org.eclipse.fx.code.compensator.xtext.runtime.feature:default"/>
 </setAttribute>
 <booleanAttribute key="show_selected_only" value="false"/>

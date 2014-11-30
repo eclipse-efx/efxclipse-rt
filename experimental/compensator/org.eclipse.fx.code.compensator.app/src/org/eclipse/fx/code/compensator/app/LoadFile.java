@@ -10,10 +10,13 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.app;
 
+import java.nio.file.Paths;
 import java.util.Optional;
+
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -30,17 +33,17 @@ public class LoadFile {
 				l.forEach((f) -> {
 					try {
 						org.eclipse.fx.code.compensator.model.workbench.File wf = WorkbenchFactory.eINSTANCE.createFile();
-						wf.setUrl(f.toURI().toURL().toExternalForm());
-						wb.getResources().add(wf);	
+						wf.setUrl(Paths.get(f.toURI()).toUri().toString());
+						wb.getResources().add(wf);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				});
-				
+
 			}
 		);
-		
+
 	}
-		
+
 }

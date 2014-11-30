@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Qx
+Bundle-SymbolicName: org.eclipse.fx.code.compensator.nashorn.qx;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.fx.code.compensator.nashorn,
+ org.eclipse.fx.code.compensator.editor,
+ org.eclipse.fx.ui.theme;bundle-version="1.2.0"
+Service-Component: OSGI-INF/services/qxnashornoutlineext.xml
+Bundle-ActivationPolicy: lazy

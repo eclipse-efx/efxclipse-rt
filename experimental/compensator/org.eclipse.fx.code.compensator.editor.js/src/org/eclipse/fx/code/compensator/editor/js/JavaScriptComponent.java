@@ -14,13 +14,14 @@ import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.js.scanner.FastJavaScriptPartitionScanner;
 import org.eclipse.fx.code.compensator.editor.js.scanner.IJavaScriptPartitions;
+import org.eclipse.fx.code.compensator.editor.services.FileIconProvider;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
-public class JavaScriptComponent implements PartitionerFactory, SourceViewerConfigurationFactory {
+public class JavaScriptComponent implements PartitionerFactory, SourceViewerConfigurationFactory, FileIconProvider {
 	private final static String[] LEGAL_CONTENT_TYPES= new String[] {
 		IJavaScriptPartitions.JAVA_DOC,
 		IJavaScriptPartitions.JAVA_MULTI_LINE_COMMENT,
@@ -47,5 +48,15 @@ public class JavaScriptComponent implements PartitionerFactory, SourceViewerConf
 		return new FastPartitioner(
 				new FastJavaScriptPartitionScanner(),
 				LEGAL_CONTENT_TYPES);
+	}
+
+	@Override
+	public boolean applies(String uri) {
+		return uri.endsWith(".js");
+	}
+
+	@Override
+	public String getIcon(String uri) {
+		return "platform:/plugin/org.eclipse.fx.code.compensator.editor.js/icons/16/js-file.png";
 	}
 }

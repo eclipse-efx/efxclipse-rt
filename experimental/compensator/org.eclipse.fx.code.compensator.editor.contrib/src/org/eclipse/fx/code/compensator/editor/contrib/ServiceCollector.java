@@ -18,6 +18,8 @@ import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.Outline;
 import org.eclipse.fx.code.compensator.editor.services.DocumentFactory;
 import org.eclipse.fx.code.compensator.editor.services.DocumentPersitenceService;
+import org.eclipse.fx.code.compensator.editor.services.FileIconLookup;
+import org.eclipse.fx.code.compensator.editor.services.FileIconProvider;
 import org.eclipse.fx.code.compensator.editor.services.InputFactory;
 import org.eclipse.fx.code.compensator.editor.services.OutlineFactory;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
@@ -26,12 +28,13 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
-public class ServiceCollector implements DocumentPersitenceService {
+public class ServiceCollector implements DocumentPersitenceService, FileIconLookup {
 	private List<InputFactory> inputProviderList = new ArrayList<>();
 	private List<DocumentFactory> documentProvider = new ArrayList<>();
 	private List<PartitionerFactory> partitionerProvider = new ArrayList<>();
 	private List<OutlineFactory> outlineFactoryList = new ArrayList<>();
 	private List<SourceViewerConfigurationFactory> configurationProvider = new ArrayList<>();
+	private List<FileIconProvider> fileIconProvider = new ArrayList<>();
 
 	public void addInputFactory(InputFactory provider) {
 		inputProviderList.add(provider);
@@ -73,6 +76,14 @@ public class ServiceCollector implements DocumentPersitenceService {
 		outlineFactoryList.remove(factory);
 	}
 
+	public void addFileIconProvider(FileIconProvider provider) {
+		fileIconProvider.add(provider);
+	}
+
+	public void removeFileIconProvider(FileIconProvider provider) {
+		fileIconProvider.add(provider);
+	}
+
 	public <O> Input<O> createInput(String url) {
 		Optional<Input<O>> map = inputProviderList.stream().filter((p) -> p.applies(url)).findFirst().map((p) -> p.createInput(url));
 		if( map.isPresent() ) {
@@ -104,6 +115,14 @@ public class ServiceCollector implements DocumentPersitenceService {
 	public SourceViewerConfiguration createConfiguration(Input<?> input) {
 		Optional<SourceViewerConfiguration> map = configurationProvider.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createConfiguration(input));
 		return map.get();
+	}
+
+	public String getFileIcon(String uri) {
+		Optional<String> map = fileIconProvider.stream().filter((p) -> p.applies(uri)).findFirst().map((p) -> p.getIcon(uri));
+		if( map.isPresent() ) {
+			return map.get();
+		}
+		return null;
 	}
 
 	@Override

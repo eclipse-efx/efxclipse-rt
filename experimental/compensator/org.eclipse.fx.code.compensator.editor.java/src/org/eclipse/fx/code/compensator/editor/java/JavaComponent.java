@@ -10,17 +10,20 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.java;
 
+import java.net.URISyntaxException;
+
 import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.java.scanner.FastJavaPartitionScanner;
 import org.eclipse.fx.code.compensator.editor.java.scanner.IJavaPartitions;
+import org.eclipse.fx.code.compensator.editor.services.FileIconProvider;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
-public class JavaComponent implements PartitionerFactory, SourceViewerConfigurationFactory {
+public class JavaComponent implements PartitionerFactory, SourceViewerConfigurationFactory, FileIconProvider {
 	private final static String[] LEGAL_CONTENT_TYPES= new String[] {
 		IJavaPartitions.JAVA_DOC,
 		IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
@@ -49,4 +52,13 @@ public class JavaComponent implements PartitionerFactory, SourceViewerConfigurat
 				LEGAL_CONTENT_TYPES);
 	}
 
+	@Override
+	public boolean applies(String uri) {
+		return uri.endsWith(".java");
+	}
+
+	@Override
+	public String getIcon(String uri) {
+		return "platform:/plugin/org.eclipse.fx.code.compensator.editor.java/icons/16/java-file.png";
+	}
 }

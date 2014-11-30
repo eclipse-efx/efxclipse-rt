@@ -18,7 +18,7 @@ public interface Outline {
 	public ObservableList<OutlineItem> getRootItems();
 
 	public interface OutlineItem {
-		public String getLabel();
+		public CharSequence getLabel();
 		public List<String> getStyle();
 		public ObservableList<OutlineItem> getChildren();
 	}

@@ -4,10 +4,12 @@
    <service>
       <provide interface="org.eclipse.fx.code.compensator.editor.contrib.ServiceCollector"/>
       <provide interface="org.eclipse.fx.code.compensator.editor.services.DocumentPersitenceService"/>
+      <provide interface="org.eclipse.fx.code.compensator.editor.services.FileIconLookup"/>
    </service>
    <reference bind="addInputFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.InputFactory" name="InputFactory" policy="dynamic" unbind="removeInputFactory"/>
    <reference bind="addDocumentFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.DocumentFactory" name="DocumentFactory" policy="dynamic" unbind="removeDocumentFactory"/>
    <reference bind="addPartitionerFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.PartitionerFactory" name="PartitionerFactory" policy="dynamic" unbind="removePartitionerFactory"/>
    <reference bind="addSourceViewerConfigurationFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory" name="SourceViewerConfigurationFactory" policy="dynamic" unbind="removeSourceViewerConfigurationFactory"/>
    <reference bind="addOutlineFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.OutlineFactory" name="OutlineFactory" policy="dynamic" unbind="removeOutlineFactory"/>
+   <reference bind="addFileIconProvider" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.FileIconProvider" name="FileIconProvider" policy="dynamic" unbind="removeFileIconProvider"/>
 </scr:component>
