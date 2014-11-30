@@ -1,0 +1,11 @@
+.java-class {
+	-fx-graphic: url("icons/class.png");
+}
+
+.java-method {
+	-fx-graphic: url("icons/method.png");
+}
+
+.java-field {
+	-fx-graphic: url("icons/field.png");
+}
