@@ -1,0 +1,7 @@
+.js-method-icon {
+	-fx-graphic: url("icons/method.png");
+}
+
+.js-function-icon {
+	-fx-graphic: url("icons/function.png");
+}

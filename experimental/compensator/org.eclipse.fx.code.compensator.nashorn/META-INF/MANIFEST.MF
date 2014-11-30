@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Nashorn
+Bundle-SymbolicName: org.eclipse.fx.code.compensator.nashorn;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.fx.code.compensator.editor,
+ org.eclipse.fx.ui.theme;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/services/nashornoutline.xml
+Export-Package: org.eclipse.fx.code.compensator.nashorn
