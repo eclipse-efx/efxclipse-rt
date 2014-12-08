@@ -48,6 +48,7 @@ import org.eclipse.fx.code.compensator.model.workbench.Resource;
 import org.eclipse.fx.code.compensator.model.workbench.Workbench;
 import org.eclipse.fx.code.compensator.model.workbench.WorkbenchFactory;
 import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
+import org.eclipse.fx.ui.controls.tree.LazyTreeItem;
 
 
 @SuppressWarnings("restriction")
@@ -84,7 +85,7 @@ public class FileList {
 		TreeItem<Resource> t = new TreeItem<>();
 		for( Resource r : workbench.getResources() ) {
 			if( r instanceof Folder ) {
-				FolderTreeItem ti = new FolderTreeItem((Folder)r);
+				LazyTreeItem<Resource> ti = new LazyTreeItem<Resource>((Folder)r, FileList::treeItemChildrenFactory);
 				t.getChildren().add(ti);
 				inputList.add(ti);
 			} else {
@@ -106,7 +107,7 @@ public class FileList {
 							t.getChildren().add(e);
 							inputList.add(e);
 						} else {
-							FolderTreeItem e = new FolderTreeItem((Folder) msg.getNewValue());
+							LazyTreeItem<Resource> e = new LazyTreeItem<Resource>((Resource) msg.getNewValue(),FileList::treeItemChildrenFactory);
 							t.getChildren().add(e);
 							inputList.add(e);
 						}
@@ -158,48 +159,31 @@ public class FileList {
 		};
 	}
 
-	static class FolderTreeItem extends TreeItem<Resource> {
-		private boolean hasLoaded;
-
-		public FolderTreeItem(Folder f) {
-			super(f);
-			getChildren().add(new TreeItem<>());
-
-			expandedProperty().addListener((o) -> {
-				if( isExpanded() ) {
-					if( ! this.hasLoaded ) {
-						loadChildren();
-					}
+	static List<TreeItem<Resource>> treeItemChildrenFactory(TreeItem<Resource> parent) {
+		try {
+			java.net.URI uri = new java.net.URI(((Folder)parent.getValue()).getUrl());
+			Path path = Paths.get(uri);
+			List<TreeItem<Resource>> l = new ArrayList<>();
+			Files.newDirectoryStream(path).forEach((p) -> {
+				if( Files.isDirectory(p) ) {
+					Folder f = WorkbenchFactory.eINSTANCE.createFolder();
+					f.setUrl(p.toUri().toString());
+					l.add(new LazyTreeItem<Resource>(f,FileList::treeItemChildrenFactory));
+				} else {
+					File f = WorkbenchFactory.eINSTANCE.createFile();
+					f.setUrl(p.toUri().toString());
+					l.add(new TreeItem<>(f));
 				}
 			});
+			return l;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		private void loadChildren() {
-			try {
-				java.net.URI uri = new java.net.URI(((Folder)getValue()).getUrl());
-				Path path = Paths.get(uri);
-				List<TreeItem<Resource>> l = new ArrayList<>();
-				Files.newDirectoryStream(path).forEach((p) -> {
-					if( Files.isDirectory(p) ) {
-						Folder f = WorkbenchFactory.eINSTANCE.createFolder();
-						f.setUrl(p.toUri().toString());
-						l.add(new FolderTreeItem(f));
-					} else {
-						File f = WorkbenchFactory.eINSTANCE.createFile();
-						f.setUrl(p.toUri().toString());
-						l.add(new TreeItem<>(f));
-					}
-				});
-				getChildren().setAll(l);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-
-		}
+		return Collections.emptyList();
 	}
+
 }

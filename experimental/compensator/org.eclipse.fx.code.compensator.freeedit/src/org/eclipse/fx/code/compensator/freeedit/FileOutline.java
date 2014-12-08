@@ -10,11 +10,6 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.freeedit;
 
-import java.util.Collections;
-import java.util.List;
-
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -28,7 +23,6 @@ import javax.inject.Named;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.fx.code.compensator.editor.Outline;
 import org.eclipse.fx.code.compensator.editor.Outline.OutlineItem;
-import org.eclipse.fx.ui.controls.Util;
 
 public class FileOutline {
 	private TreeView<OutlineItem> outlineView;
