@@ -17,7 +17,6 @@ import java.util.List;
 
 import javafx.event.Event;
 import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -180,76 +179,85 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 			break;
 		}
 		case ENTER:
-			int line = getControl().getContent().getLineAtOffset(getControl().getCaretOffset());
-			String lineContent = getControl().getContent().getLine(line);
+			if( getControl().getEditable() ) {
+				int line = getControl().getContent().getLineAtOffset(getControl().getCaretOffset());
+				String lineContent = getControl().getContent().getLine(line);
 
-			// FIXME Temp hack
-			char[] chars = lineContent.toCharArray();
-			String prefix = ""; //$NON-NLS-1$
-			for (int i = 0; i < chars.length; i++) {
-				if (chars[i] == ' ') {
-					prefix += " "; //$NON-NLS-1$
+				// FIXME Temp hack
+				char[] chars = lineContent.toCharArray();
+				String prefix = ""; //$NON-NLS-1$
+				for (int i = 0; i < chars.length; i++) {
+					if (chars[i] == ' ') {
+						prefix += " "; //$NON-NLS-1$
+					} else {
+						break;
+					}
+				}
+
+				getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, event.getText() + prefix);
+				// listView.getSelectionModel().select(listView.getSelectionModel().getSelectedIndex()+1);
+				getControl().setCaretOffset(offset + 1 + prefix.length());
+			}
+			break;
+		case DELETE:
+			if( getControl().getEditable() ) {
+				if (event.isMetaDown()) {
+					invokeAction(ActionType.DELETE_WORD_NEXT);
 				} else {
+					getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 1, ""); //$NON-NLS-1$
+					getControl().setCaretOffset(offset);
+				}
+				break;
+			}
+		case BACK_SPACE:
+			if( getControl().getEditable() ) {
+				if (event.isMetaDown()) {
+					invokeAction(ActionType.DELETE_WORD_PREVIOUS);
+				} else {
+					getControl().getContent().replaceTextRange(getControl().getCaretOffset() - 1, 1, ""); //$NON-NLS-1$
+					getControl().setCaretOffset(offset - 1);
+				}
+				break;
+			}
+		case TAB:
+			if( getControl().getEditable() ) {
+				event.consume();
+				if (event.isShiftDown()) {
+					// TODO Remove first 4 white space chars???
+					break;
+				} else {
+					// FIXME Need to should fix this but it currently completely
+					// break cursor positioning
+					getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, "    "); //$NON-NLS-1$
+					getControl().setCaretOffset(offset + 4);
 					break;
 				}
 			}
-
-			getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, event.getText() + prefix);
-			// listView.getSelectionModel().select(listView.getSelectionModel().getSelectedIndex()+1);
-			getControl().setCaretOffset(offset + 1 + prefix.length());
-			break;
-		case DELETE:
-			if (event.isMetaDown()) {
-				invokeAction(ActionType.DELETE_WORD_NEXT);
-			} else {
-				getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 1, ""); //$NON-NLS-1$
-				getControl().setCaretOffset(offset);
-			}
-			break;
-		case BACK_SPACE:
-			if (event.isMetaDown()) {
-				invokeAction(ActionType.DELETE_WORD_PREVIOUS);
-			} else {
-				getControl().getContent().replaceTextRange(getControl().getCaretOffset() - 1, 1, ""); //$NON-NLS-1$
-				getControl().setCaretOffset(offset - 1);
-			}
-			break;
-		case TAB:
-			event.consume();
-			if (event.isShiftDown()) {
-				// TODO Remove first 4 white space chars???
-				break;
-			} else {
-				// FIXME Need to should fix this but it currently completely
-				// break cursor positioning
-				getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, "    "); //$NON-NLS-1$
-				getControl().setCaretOffset(offset + 4);
-				break;
-			}
 		case V:
-			if( event.isShortcutDown() ) {
-				getControl().paste();
-				event.consume();
-				break;
+			if( getControl().getEditable() ) {
+				if( event.isShortcutDown() ) {
+					getControl().paste();
+					event.consume();
+					break;
+				}
 			}
 		case C:
-			if( event.isShortcutDown() ) {
-				getControl().copy();
-				event.consume();
-				break;
+			if( getControl().getEditable() ) {
+				if( event.isShortcutDown() ) {
+					getControl().copy();
+					event.consume();
+					break;
+				}
 			}
 		default:
-			if (event.isMetaDown() || event.isControlDown()) {
-				// exclude meta keys
-			} else {
+			if( getControl().getEditable() ) {
 				String text = event.getText();
 				if (text.length() > 0) {
 					getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, text);
 					getControl().setCaretOffset(offset + 1);
 				}
+				break;
 			}
-
-			break;
 		}
 
 		// Event.fireEvent(getControl(), event.copyFor(getControl(),
@@ -265,12 +273,10 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	 *            the visible cells
 	 */
 	public void mousePressed(MouseEvent event, List<LineCell> visibleCells) {
-		Point2D p = new Point2D(event.getX(), event.getY());
 		LineCell lastCell = null;
 
 		for (LineCell tmp : visibleCells) {
 			Bounds boundsInParent = tmp.getBoundsInParent();
-
 			if ( boundsInParent.getMinY() > event.getY()) {
 				if( lastCell == null ) {
 					lastCell = tmp;

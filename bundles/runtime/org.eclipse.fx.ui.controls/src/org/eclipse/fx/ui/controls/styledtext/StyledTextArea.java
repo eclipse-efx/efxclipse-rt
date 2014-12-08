@@ -34,35 +34,41 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Control which allows to implemented a code-editor
- * 
+ *
  * <p>
- * <b>This is an experimental component provided as a preview we'll improve and fix problems in up coming releases</b>
+ * <b>This is an experimental component provided as a preview we'll improve and
+ * fix problems in up coming releases</b>
  * </p>
  */
 public class StyledTextArea extends Control {
-
-	@NonNull
-	final ObjectProperty<@NonNull StyledTextContent> contentProperty = new SimpleObjectProperty<@NonNull StyledTextContent>(
-			this, "content", new DefaultContent()) { //$NON-NLS-1$
+	class ContentProperty extends
+			SimpleObjectProperty<@NonNull StyledTextContent> {
 		WeakReference<StyledTextContent> oldContent;
+
+		public ContentProperty(Object bean, String name,
+				@NonNull StyledTextContent initialValue) {
+			super(bean, name, initialValue);
+			invalidated();
+		}
 
 		@Override
 		protected void invalidated() {
 			if (this.oldContent != null) {
 				StyledTextContent content = this.oldContent.get();
-				if( content != null ) {
-					content.removeTextChangeListener(
-							StyledTextArea.this.textChangeListener);	
+				if (content != null) {
+					content.removeTextChangeListener(StyledTextArea.this.textChangeListener);
 				}
 			}
-			StyledTextContent newContent = StyledTextArea.this.contentProperty
-					.get();
+			StyledTextContent newContent = get();
 
 			this.oldContent = new WeakReference<StyledTextContent>(newContent);
 			newContent
 					.addTextChangeListener(StyledTextArea.this.textChangeListener);
 		}
-	};
+	}
+
+	@NonNull
+	final ObjectProperty<@NonNull StyledTextContent> contentProperty;
 
 	TextChangeListener textChangeListener = new TextChangeListener() {
 		@Override
@@ -110,6 +116,8 @@ public class StyledTextArea extends Control {
 	 * Create a new control
 	 */
 	public StyledTextArea() {
+		this.contentProperty = new ContentProperty(this,
+				"content", new DefaultContent()); //$NON-NLS-1$
 		getStylesheets().add(
 				getClass().getResource("styledtextarea.css").toExternalForm()); //$NON-NLS-1$
 		setFocusTraversable(true);
@@ -153,7 +161,7 @@ public class StyledTextArea extends Control {
 	 * <p>
 	 * Default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull BooleanProperty lineRulerVisibleProperty() {
@@ -165,7 +173,7 @@ public class StyledTextArea extends Control {
 	 * <p>
 	 * Default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @param lineRulerVisible
 	 *            the new state
 	 */
@@ -178,7 +186,7 @@ public class StyledTextArea extends Control {
 	 * <p>
 	 * Default is <code>false</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the current state
 	 */
 	public boolean isLineRulerVisible() {
@@ -187,7 +195,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * The current caret offset
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull IntegerProperty caretOffsetProperty() {
@@ -196,7 +204,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Set the current caret offset
-	 * 
+	 *
 	 * @param offset
 	 *            the new offset
 	 */
@@ -208,7 +216,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Setting the caret offset and updateing the selection if requested
-	 * 
+	 *
 	 * @param offset
 	 *            the offset
 	 * @param selection
@@ -259,7 +267,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Set the content
-	 * 
+	 *
 	 * @param content
 	 *            the content
 	 */
@@ -269,7 +277,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Access the content
-	 * 
+	 *
 	 * @return the content
 	 */
 	public @NonNull StyledTextContent getContent() {
@@ -278,7 +286,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * The content property
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull ObjectProperty<@NonNull StyledTextContent> contentProperty() {
@@ -287,7 +295,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Set the style range
-	 * 
+	 *
 	 * @param range
 	 *            the range
 	 */
@@ -306,7 +314,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Set the style range
-	 * 
+	 *
 	 * @param start
 	 *            the start
 	 * @param length
@@ -327,7 +335,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Set the style ranges
-	 * 
+	 *
 	 * @param ranges
 	 *            the ranges
 	 * @param styles
@@ -344,7 +352,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Set the style ranges
-	 * 
+	 *
 	 * @param ranges
 	 *            the ranges
 	 */
@@ -354,7 +362,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Replace style ranges
-	 * 
+	 *
 	 * @param start
 	 *            the start
 	 * @param length
@@ -447,7 +455,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Access style ranges in the specified segment
-	 * 
+	 *
 	 * @param start
 	 *            the start
 	 * @param length
@@ -467,7 +475,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * The style range at the given offset
-	 * 
+	 *
 	 * @param offset
 	 *            the offset
 	 * @return the style range
@@ -1290,299 +1298,6 @@ public class StyledTextArea extends Control {
 		}
 	}
 
-	/*******************************************************************************
-	 * Copyright (c) 2000, 2011 IBM Corporation and others. All rights reserved.
-	 * This program and the accompanying materials are made available under the
-	 * terms of the Eclipse Public License v1.0 which accompanies this
-	 * distribution, and is available at
-	 * http://www.eclipse.org/legal/epl-v10.html
-	 *
-	 * Contributors: IBM Corporation - initial API and implementation
-	 *******************************************************************************/
-	static class DefaultContent implements StyledTextContent {
-
-		private char[] textStore;
-		private int lineCount;
-		private int[][] lines = new int[50][2];
-		private int expandExp = 1;
-		private int replaceExpandExp;
-
-		// private List<TextChangeListener> textChangeListeners= new
-		// ArrayList<>(1);
-
-		@Override
-		public void setText(String text) {
-			this.textStore = text.toCharArray();
-			indexLines();
-		}
-
-		@Override
-		public void addTextChangeListener(TextChangeListener listener) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void removeTextChangeListener(TextChangeListener listener) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public int getCharCount() {
-			// int length = gapEnd - gapStart;
-			// return (textStore.length - length);
-			return this.textStore.length;
-		}
-
-		@Override
-		public String getTextRange(int start, int length) {
-			return new String(this.textStore, start, length);
-		}
-
-		@Override
-		public String getLine(int index) {
-			int start = this.lines[index][0];
-			int length = this.lines[index][1];
-
-			return new String(this.textStore, start, length);
-		}
-
-		@Override
-		public int getLineCount() {
-			return this.lineCount;
-		}
-
-		@Override
-		public int getOffsetAtLine(int lineIndex) {
-			int start = this.lines[lineIndex][0];
-			return start;
-		}
-
-		@Override
-		public int getLineAtOffset(int charPosition) {
-			int position = charPosition;
-
-			if (this.lineCount > 0) {
-				int lastLine = this.lineCount - 1;
-				if (position == this.lines[lastLine][0]
-						+ this.lines[lastLine][1])
-					return lastLine;
-			}
-
-			int high = this.lineCount;
-			int low = -1;
-			int index = this.lineCount;
-			while (high - low > 1) {
-				index = (high + low) / 2;
-				int lineStart = this.lines[index][0];
-				int lineEnd = lineStart + this.lines[index][1] - 1;
-				if (position <= lineStart) {
-					high = index;
-				} else if (position <= lineEnd) {
-					high = index;
-					break;
-				} else {
-					low = index;
-				}
-			}
-			return high;
-		}
-
-		void indexLines() {
-			int start = 0;
-			this.lineCount = 0;
-			int textLength = this.textStore.length;
-			int i;
-			for (i = start; i < textLength; i++) {
-				char ch = this.textStore[i];
-				if (ch == '\r') {
-					// see if the next character is a LF
-					if (i + 1 < textLength) {
-						ch = this.textStore[i + 1];
-						if (ch == '\n') {
-							i++;
-						}
-					}
-					addLineIndex(start, i - start + 1);
-					start = i + 1;
-				} else if (ch == '\n') {
-					addLineIndex(start, i - start + 1);
-					start = i + 1;
-				}
-			}
-			addLineIndex(start, i - start);
-		}
-
-		void addLineIndex(int start, int length) {
-			int size = this.lines.length;
-			if (this.lineCount == size) {
-				// expand the lines by powers of 2
-				int[][] newLines = new int[size + pow2(this.expandExp)][2];
-				System.arraycopy(this.lines, 0, newLines, 0, size);
-				this.lines = newLines;
-				this.expandExp++;
-			}
-			int[] range = new int[] { start, length };
-			this.lines[this.lineCount] = range;
-			this.lineCount++;
-		}
-
-		@Override
-		public void replaceTextRange(int start, int replaceLength,
-				String newText) {
-			// first delete the text to be replaced
-			// delete(start, replaceLength, event.replaceLineCount + 1);
-
-			// then insert the new text
-			insert(start, newText);
-		}
-
-		void insert(int position, String text) {
-			if (text.length() == 0)
-				return;
-
-			int startLine = getLineAtOffset(position);
-			int change = text.length();
-			boolean endInsert = position == getCharCount();
-
-			// during an insert the gap will be adjusted to start at
-			// position and it will be associated with startline, the
-			// inserted text will be placed in the gap
-			int startLineOffset = getOffsetAtLine(startLine);
-			// at this point, startLineLength will include the start line
-			// and all of the newly inserted text
-			int startLineLength = getPhysicalLine(startLine).length();
-
-			if (change > 0) {
-				// shrink gap
-				// gapStart += (change);
-				for (int i = 0; i < text.length(); i++) {
-					this.textStore[position + i] = text.charAt(i);
-				}
-			}
-
-			// figure out the number of new lines that have been inserted
-			int[][] newLines = indexLines(startLineOffset, startLineLength, 10);
-			// only insert an empty line if it is the last line in the text
-			int numNewLines = newLines.length - 1;
-			if (newLines[numNewLines][1] == 0) {
-				// last inserted line is a new line
-				if (endInsert) {
-					// insert happening at end of the text, leave numNewLines as
-					// is since the last new line will not be concatenated with
-					// another
-					// line
-					numNewLines += 1;
-				} else {
-					numNewLines -= 1;
-				}
-			}
-
-			// make room for the new lines
-			expandLinesBy(numNewLines);
-			// shift down the lines after the replace line
-			for (int i = this.lineCount - 1; i > startLine; i--) {
-				this.lines[i + numNewLines] = this.lines[i];
-			}
-			// insert the new lines
-			for (int i = 0; i < numNewLines; i++) {
-				newLines[i][0] += startLineOffset;
-				this.lines[startLine + i] = newLines[i];
-			}
-			// update the last inserted line
-			if (numNewLines < newLines.length) {
-				newLines[numNewLines][0] += startLineOffset;
-				this.lines[startLine + numNewLines] = newLines[numNewLines];
-			}
-
-			this.lineCount += numNewLines;
-			// gapLine = getLineAtPhysicalOffset(gapStart);
-		}
-
-		void expandLinesBy(int numLines) {
-			int size = this.lines.length;
-			if (size - this.lineCount >= numLines) {
-				return;
-			}
-			int[][] newLines = new int[size + Math.max(10, numLines)][2];
-			System.arraycopy(this.lines, 0, newLines, 0, size);
-			this.lines = newLines;
-		}
-
-		String getPhysicalLine(int index) {
-			int start = this.lines[index][0];
-			int length = this.lines[index][1];
-			return getPhysicalText(start, length);
-		}
-
-		String getPhysicalText(int start, int length) {
-			return new String(this.textStore, start, length);
-		}
-
-		int[][] indexLines(int offset, int length, int numLines) {
-			int[][] indexedLines = new int[numLines][2];
-			int start = 0;
-			int lineCount = 0;
-			int i;
-			this.replaceExpandExp = 1;
-			for (i = start; i < length; i++) {
-				int location = i + offset;
-				// if ((location >= gapStart) && (location < gapEnd)) {
-				// // ignore the gap
-				// } else {
-				char ch = this.textStore[location];
-				if (ch == '\r') {
-					// see if the next character is a LF
-					if (location + 1 < this.textStore.length) {
-						ch = this.textStore[location + 1];
-						if (ch == '\n') {
-							i++;
-						}
-					}
-					indexedLines = addLineIndex(start, i - start + 1,
-							indexedLines, lineCount);
-					lineCount++;
-					start = i + 1;
-				} else if (ch == '\n') {
-					indexedLines = addLineIndex(start, i - start + 1,
-							indexedLines, lineCount);
-					lineCount++;
-					start = i + 1;
-				}
-				// }
-			}
-			int[][] newLines = new int[lineCount + 1][2];
-			System.arraycopy(indexedLines, 0, newLines, 0, lineCount);
-			int[] range = new int[] { start, i - start };
-			newLines[lineCount] = range;
-			return newLines;
-		}
-
-		int[][] addLineIndex(int start, int length, int[][] linesArray,
-				int count) {
-			int size = linesArray.length;
-			int[][] newLines = linesArray;
-			if (count == size) {
-				newLines = new int[size + pow2(this.replaceExpandExp)][2];
-				this.replaceExpandExp++;
-				System.arraycopy(linesArray, 0, newLines, 0, size);
-			}
-			int[] range = new int[] { start, length };
-			newLines[count] = range;
-			return newLines;
-		}
-
-		public static int pow2(int n) {
-			if (n >= 1 && n <= 30)
-				return 2 << (n - 1);
-			else if (n != 0) {
-				throw new IllegalArgumentException();
-			}
-			return 1;
-		}
-	}
-
 	// public void setTabs(int tabWidth) {
 	// // keep empty
 	// }
@@ -1611,7 +1326,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Set the current selection
-	 * 
+	 *
 	 * @param selection
 	 *            the selection
 	 */
@@ -1633,7 +1348,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Set the selection
-	 * 
+	 *
 	 * @param offset
 	 *            the offset
 	 * @param length
@@ -1649,11 +1364,11 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Mark the editor editable
-	 * 
+	 *
 	 * <p>
 	 * Default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @param editable
 	 *            the new value
 	 */
@@ -1666,7 +1381,7 @@ public class StyledTextArea extends Control {
 	 * <p>
 	 * Default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the current value
 	 */
 	public boolean getEditable() {
@@ -1678,7 +1393,7 @@ public class StyledTextArea extends Control {
 	 * <p>
 	 * Default is <code>true</code>
 	 * </p>
-	 * 
+	 *
 	 * @return the property
 	 */
 	public @NonNull BooleanProperty editableProperty() {
@@ -1687,7 +1402,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Check the location at the given offset
-	 * 
+	 *
 	 * @param offset
 	 *            the offset
 	 * @return the point
@@ -1701,7 +1416,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Get the line height
-	 * 
+	 *
 	 * @param offset
 	 *            the offset
 	 * @return the height
@@ -1720,7 +1435,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Get the line index for the caret
-	 * 
+	 *
 	 * @param caretOffset
 	 *            the caret offset
 	 * @return the line index
@@ -1731,7 +1446,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Get the initial offset of the line
-	 * 
+	 *
 	 * @param lineNumber
 	 *            the line number
 	 * @return the offset
@@ -1742,7 +1457,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Get the text for the given range
-	 * 
+	 *
 	 * @param start
 	 *            the start
 	 * @param end

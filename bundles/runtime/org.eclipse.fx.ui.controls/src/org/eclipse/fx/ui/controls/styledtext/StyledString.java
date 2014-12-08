@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.controls.styledtext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,12 +56,26 @@ public class StyledString implements CharSequence {
 
 		this.stringBuffer.append(s);
 		if (s instanceof StyledString) {
-			for( StyleRange r : ((StyledString) s).rangeList ) {
+			for (StyleRange r : ((StyledString) s).rangeList) {
 				StyleRange clone = (StyleRange) r.clone();
 				clone.start += l;
 				this.rangeList.add(clone);
 			}
 		}
+	}
+
+	/**
+	 * Append a char sequence and the given style ranges
+	 *
+	 * @param s
+	 *            the sequence to append
+	 * @param ranges
+	 *            the ranges
+	 */
+	@SuppressWarnings("null")
+	public void append(CharSequence s, StyleRange... ranges) {
+		this.stringBuffer.append(s);
+		this.rangeList.addAll(Arrays.asList(ranges));
 	}
 
 	/**

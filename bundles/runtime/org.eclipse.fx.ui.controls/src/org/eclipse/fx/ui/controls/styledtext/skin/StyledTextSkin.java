@@ -456,7 +456,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					}
 
 					if (textNode != null) {
-//						System.err.println("THE NODE: " + textNode.getText());
 						Text text = (Text)textNode.getChildren().get(0);
 						text.setImpl_caretPosition(relativePos);
 
@@ -470,11 +469,20 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 								MoveTo m = (MoveTo)impl_caretShape[0];
 								LineTo l = (LineTo)impl_caretShape[1];
 								if( m.getY() > 0.0 ) {
-									System.err.println(m.getY());
+//									System.err.println("========== INVALID: " + text.getText() + "============");
+//									System.err.println("Caret: " + Arrays.toString(impl_caretShape));
+//									System.err.println("Text-Bounds: " + text.getBoundsInLocal());
+//									System.err.println("Wrapping-Width: " + text.getWrappingWidth());
+//									System.err.println("Text-Flow:" + textNode.getBoundsInLocal());
 									l.setY(l.getY() - m.getY());
 									m.setY(0);
+								} else {
+//									System.err.println("========== VALID: " + text.getText() + "============");
+//									System.err.println("Caret: " + Arrays.toString(impl_caretShape));
+//									System.err.println("Text-Bounds: " + text.getBoundsInLocal());
+//									System.err.println("Wrapping-Width: " + text.getWrappingWidth());
+//									System.err.println("Text-Flow:" + textNode.getBoundsInLocal());
 								}
-
 							}
 						}
 
@@ -649,29 +657,57 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				StyleRange[] ranges = getSkinnable().getStyleRanges(start, length, true);
 				// System.err.println("RANGES: " + ranges);
 				if (ranges == null) {
+//					System.err.println("NO RANGES");
 					return Collections.emptyList();
 				}
+
+//				System.err.println("LINE: " + line);
 
 				TextSelection selection = getSkinnable().getSelection();
 
 				int selectionStart = selection.offset - start;
 				int selectionEnd = selection.offset+selection.length - start;
 
-//				System.err.println("Line: " + line);
-//				System.err.println("SELECTION: " + selectionStart + " => " + selectionEnd);
+				if( ranges.length == 0 && line.length() > 0 ) {
+					StyleRange styleRange = new StyleRange((String)null);
+					styleRange.start = start;
+					styleRange.length = line.length();
+					segments.addAll(createSegments(line, styleRange, selectionStart, selectionEnd, 0, line.length()));
+				} else {
+					int lastIndex = -1;
 
-				int lastIndex = -1;
-				for (StyleRange r : ranges) {
-					int begin = r.start - start;
-					int end = r.start - start + r.length;
-
-					if (lastIndex != -1 && lastIndex != begin) {
-						segments.addAll(createSegments(line, new StyleRange((String)null), selectionStart, selectionEnd, lastIndex, begin));
+					if( ranges.length > 0 ) {
+						if( ranges[0].start - start > 0 ) {
+							StyleRange styleRange = new StyleRange((String)null);
+							styleRange.start = start;
+							styleRange.length = ranges[0].start - start;
+							segments.addAll(createSegments(line, styleRange, selectionStart, selectionEnd, 0, ranges[0].start - start));
+						}
 					}
 
-					segments.addAll(createSegments(line, r, selectionStart, selectionEnd, begin, end));
-					lastIndex = end;
+					for (StyleRange r : ranges) {
+						int begin = r.start - start;
+						int end = r.start - start + r.length;
+
+						if (lastIndex != -1 && lastIndex != begin) {
+							StyleRange styleRange = new StyleRange((String)null);
+							styleRange.start = start + lastIndex;
+							styleRange.length = begin - lastIndex;
+							segments.addAll(createSegments(line, styleRange, selectionStart, selectionEnd, lastIndex, begin));
+						}
+
+						segments.addAll(createSegments(line, r, selectionStart, selectionEnd, begin, end));
+						lastIndex = end;
+					}
+
+					if( lastIndex > 0 && lastIndex < line.length() ) {
+						StyleRange styleRange = new StyleRange((String)null);
+						styleRange.start = start + lastIndex;
+						styleRange.length = line.length() - lastIndex;
+						segments.addAll(createSegments(line, styleRange, selectionStart, selectionEnd, lastIndex, line.length()));
+					}
 				}
+
 
 				// System.err.println("SEGEMENTS: " + segments);
 			}
@@ -680,7 +716,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		}
 
 		private List<Segment> createSegments(String line, StyleRange r, int selectionStart, int selectionEnd, int begin, int end) {
-//			System.err.println("LINE: " + line);
 			if( selectionStart != selectionEnd ) {
 				if( selectionStart <= begin  && selectionEnd >= end  ) {
 					// whole entry is selected

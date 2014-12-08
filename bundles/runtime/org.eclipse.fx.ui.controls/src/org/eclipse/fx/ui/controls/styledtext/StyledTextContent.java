@@ -19,7 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
 public interface StyledTextContent {
 	/**
 	 * Get the content of the line with the given index
-	 * 
+	 *
 	 * @param index
 	 *            the index
 	 * @return the line content
@@ -28,7 +28,7 @@ public interface StyledTextContent {
 
 	/**
 	 * Get the content for the given range
-	 * 
+	 *
 	 * @param start
 	 *            the start
 	 * @param length
@@ -39,7 +39,7 @@ public interface StyledTextContent {
 
 	/**
 	 * Set a new text content
-	 * 
+	 *
 	 * @param text
 	 *            the text
 	 */
@@ -57,7 +57,7 @@ public interface StyledTextContent {
 
 	/**
 	 * Get the offset of the line
-	 * 
+	 *
 	 * @param lineIndex
 	 *            the line index
 	 * @return the offset
@@ -66,7 +66,7 @@ public interface StyledTextContent {
 
 	/**
 	 * Get the line index for the char
-	 * 
+	 *
 	 * @param charPosition
 	 *            the char position
 	 * @return the line index
@@ -75,7 +75,7 @@ public interface StyledTextContent {
 
 	/**
 	 * Replace the content in range
-	 * 
+	 *
 	 * @param start
 	 *            the start
 	 * @param replaceLength
@@ -87,7 +87,7 @@ public interface StyledTextContent {
 
 	/**
 	 * Attach a change listener
-	 * 
+	 *
 	 * @param listener
 	 *            the listener
 	 */
@@ -95,7 +95,7 @@ public interface StyledTextContent {
 
 	/**
 	 * Remove a change listener
-	 * 
+	 *
 	 * @param listener
 	 *            the listener
 	 */
@@ -107,7 +107,7 @@ public interface StyledTextContent {
 	public interface TextChangeListener {
 		/**
 		 * Called after the text has changed
-		 * 
+		 *
 		 * @param event
 		 *            the event
 		 */
@@ -115,7 +115,7 @@ public interface StyledTextContent {
 
 		/**
 		 * Called after the text has been set
-		 * 
+		 *
 		 * @param event
 		 *            the event
 		 */
@@ -123,7 +123,7 @@ public interface StyledTextContent {
 
 		/**
 		 * Called when the text is changing
-		 * 
+		 *
 		 * @param event
 		 *            the event
 		 */
