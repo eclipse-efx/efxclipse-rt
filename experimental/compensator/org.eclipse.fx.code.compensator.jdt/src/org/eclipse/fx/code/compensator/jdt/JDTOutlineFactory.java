@@ -16,10 +16,9 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
-import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
@@ -48,7 +47,17 @@ public class JDTOutlineFactory implements OutlineFactory {
 
 	    	@Override
 	    	public boolean visit(TypeDeclaration node) {
-	    		OutlineItem o = new JavaOutlineItem(node.getName().getFullyQualifiedName(), "java-class");
+	    		String style;
+				if( Modifier.isPrivate(node.getModifiers()) ) {
+					style = "java-class-private";
+				} else if( Modifier.isProtected(node.getModifiers()) ) {
+					style = "java-class-protected";
+				} else if( Modifier.isPublic(node.getModifiers()) ) {
+					style = "java-class-public";
+				} else {
+					style = "java-class-default";
+				}
+	    		OutlineItem o = new JavaOutlineItem(node.getName().getFullyQualifiedName(), style);
 	    		i.peek().getChildren().add(o);
 	    		i.push(o);
 
@@ -63,10 +72,21 @@ public class JDTOutlineFactory implements OutlineFactory {
 
 	    	@Override
 	    	public boolean visit(FieldDeclaration node) {
+	    		String style;
+				if( Modifier.isPrivate(node.getModifiers()) ) {
+					style = "java-field-private";
+				} else if( Modifier.isProtected(node.getModifiers()) ) {
+					style = "java-field-protected";
+				} else if( Modifier.isPublic(node.getModifiers()) ) {
+					style = "java-field-public";
+				} else {
+					style = "java-field-default";
+				}
+
 	    		for( Object v : node.fragments() ) {
 	    			if( v instanceof VariableDeclarationFragment ) {
 	    				VariableDeclarationFragment vdf = (VariableDeclarationFragment) v;
-	    				i.peek().getChildren().add(new JavaOutlineItem(vdf.getName().getFullyQualifiedName(), "java-field"));
+	    				i.peek().getChildren().add(new JavaOutlineItem(vdf.getName().getFullyQualifiedName(), style));
 	    			}
 	    		}
 	    		return super.visit(node);
@@ -74,7 +94,18 @@ public class JDTOutlineFactory implements OutlineFactory {
 
 	    	@Override
 	    	public boolean visit(MethodDeclaration node) {
-	    		i.peek().getChildren().add(new JavaOutlineItem(node.getName().getFullyQualifiedName(), "java-method"));
+	    		String style;
+				if( Modifier.isPrivate(node.getModifiers()) ) {
+					style = "java-method-private";
+				} else if( Modifier.isProtected(node.getModifiers()) ) {
+					style = "java-method-protected";
+				} else if( Modifier.isPublic(node.getModifiers()) ) {
+					style = "java-method-public";
+				} else {
+					style = "java-method-default";
+				}
+
+	    		i.peek().getChildren().add(new JavaOutlineItem(node.getName().getFullyQualifiedName(), style));
 	    		return super.visit(node);
 	    	}
 
