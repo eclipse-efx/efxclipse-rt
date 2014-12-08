@@ -14,7 +14,8 @@ Export-Package: org.eclipse.fx.ui.controls,
  org.eclipse.fx.ui.controls.paint,
  org.eclipse.fx.ui.controls.sceneviewer,
  org.eclipse.fx.ui.controls.styledtext,
- org.eclipse.fx.ui.controls.tabpane
+ org.eclipse.fx.ui.controls.tabpane,
+ org.eclipse.fx.ui.controls.tree
 Import-Package: com.sun.javafx;version="2.2.0",
  com.sun.javafx.accessible;version="2.2.0",
  com.sun.javafx.accessible.providers;version="2.2.0",
