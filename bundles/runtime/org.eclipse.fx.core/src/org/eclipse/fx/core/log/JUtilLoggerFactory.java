@@ -12,16 +12,23 @@ package org.eclipse.fx.core.log;
 
 import javax.inject.Provider;
 
+import org.eclipse.fx.core.RankedService;
+
 /**
  * Concreate implementation for a logger factory using {@link java.util.logging.Logger}
  */
-public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory> {
+public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory>, RankedService {
+
+	@Override
+	public int getRanking() {
+		return 0;
+	}
 
 	@Override
 	public LoggerFactory get() {
 		return this;
 	}
-	
+
 	@Override
 	public Logger createLogger(String name) {
 		return new LoggerImpl(name);
@@ -29,20 +36,20 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 
 	static class LoggerImpl implements Logger {
 		private java.util.logging.Logger logger;
-		
+
 		private String name;
-		
+
 		public LoggerImpl(String name) {
 			this.name = name;
 		}
-		
+
 		private java.util.logging.Logger getLogger() {
 			if( this.logger == null ) {
 				this.logger = java.util.logging.Logger.getLogger(this.name);
 			}
 			return this.logger;
 		}
-		
+
 		private static java.util.logging.Level toLogLevel(Level level) {
 			switch (level) {
 			case TRACE:
@@ -61,11 +68,11 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 				return java.util.logging.Level.SEVERE;
 			}
 		}
-		
+
 		private void logInternal(Level level, String message, Throwable t) {
-			
+
 			java.util.logging.Level jlevel = toLogLevel(level);
-			
+
 			StackTraceElement frame = null;
 			StackTraceElement[] e  = Thread.currentThread().getStackTrace();
 			if (e.length > 2) {
@@ -79,7 +86,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 					}
 				}
 			}
-			
+
 			if (t == null) {
 				if (frame != null) {
 					getLogger().logp(jlevel, frame.getClassName(), frame.getMethodName(), message);
@@ -95,9 +102,9 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 					getLogger().log(jlevel, message, t);
 				}
 			}
-			
+
 		}
-		
+
 		@Override
 		public void log(Level level, String message) {
 			if (!isEnabled(level)) {
@@ -105,7 +112,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(level, message, null);
 		}
-		
+
 		@Override
 		public void logf(Level level, String pattern, Throwable t, Object... args) {
 			if (!isEnabled(level)) {
@@ -113,7 +120,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(level, String.format(pattern, args), t);
 		}
-		
+
 		@Override
 		public void logf(Level level, String pattern, Object... args) {
 			if (!isEnabled(level)) {
@@ -121,7 +128,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(level, String.format(pattern, args), null);
 		}
-		
+
 		@Override
 		public void log(Level level, String message, Throwable t) {
 			if (!isEnabled(level)) {
@@ -137,7 +144,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.TRACE, message, null);
 		}
-		
+
 		@Override
 		public void trace(String message, Throwable t) {
 			if (!isEnabled(Level.TRACE)) {
@@ -153,7 +160,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.DEBUG, message, null);
 		}
-		
+
 		@Override
 		public void debug(String message, Throwable t) {
 			if (!isEnabled(Level.DEBUG)) {
@@ -170,7 +177,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			logInternal(Level.INFO, message, null);
 		}
 
-		
+
 		@Override
 		public void info(String message, Throwable t) {
 			if (!isEnabled(Level.INFO)) {
@@ -186,7 +193,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.WARNING, message, null);
 		}
-		
+
 		@Override
 		public void warning(String message, Throwable t) {
 			if (!isEnabled(Level.WARNING)) {
@@ -203,7 +210,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			logInternal(Level.ERROR, message, null);
 		}
 
-		
+
 		@Override
 		public void error(String message, Throwable t) {
 			if (!isEnabled(Level.ERROR)) {
@@ -219,7 +226,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.FATAL, message, null);
 		}
-		
+
 		@Override
 		public void fatal(String message, Throwable t) {
 			if (!isEnabled(Level.FATAL)) {
@@ -235,7 +242,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.TRACE, String.format(pattern, args), null);
 		}
-		
+
 		@Override
 		public void tracef(String pattern, Throwable t, Object... args) {
 			if (!isEnabled(Level.TRACE)) {
@@ -243,7 +250,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.TRACE, String.format(pattern, args), t);
 		}
-		
+
 		@Override
 		public void debugf(String pattern, Object... args) {
 			if (!isEnabled(Level.DEBUG)) {
@@ -251,7 +258,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.DEBUG, String.format(pattern, args), null);
 		}
-		
+
 		@Override
 		public void debugf(String pattern, Throwable t, Object... args) {
 			if (!isEnabled(Level.DEBUG)) {
@@ -259,7 +266,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.DEBUG, String.format(pattern, args), t);
 		}
-		
+
 		@Override
 		public void infof(String pattern, Object... args) {
 			if (!isEnabled(Level.INFO)) {
@@ -267,7 +274,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.INFO, String.format(pattern, args), null);
 		}
-		
+
 		@Override
 		public void infof(String pattern, Throwable t, Object... args) {
 			if (!isEnabled(Level.INFO)) {
@@ -275,7 +282,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.INFO, String.format(pattern, args), t);
 		}
-		
+
 		@Override
 		public void warningf(String pattern, Object... args) {
 			if (!isEnabled(Level.WARNING)) {
@@ -283,7 +290,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.WARNING, String.format(pattern, args), null);
 		}
-		
+
 		@Override
 		public void warningf(String pattern, Throwable t, Object... args) {
 			if (!isEnabled(Level.WARNING)) {
@@ -291,7 +298,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.WARNING, String.format(pattern, args), t);
 		}
-		
+
 		@Override
 		public void errorf(String pattern, Object... args) {
 			if (!isEnabled(Level.ERROR)) {
@@ -299,7 +306,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.ERROR, String.format(pattern, args), null);
 		}
-		
+
 		@Override
 		public void errorf(String pattern, Throwable t, Object... args) {
 			if (!isEnabled(Level.ERROR)) {
@@ -307,7 +314,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.ERROR, String.format(pattern, args), t);
 		}
-		
+
 		@Override
 		public void fatalf(String pattern, Object... args) {
 			if (!isEnabled(Level.FATAL)) {
@@ -315,7 +322,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.FATAL, String.format(pattern, args), null);
 		}
-		
+
 		@Override
 		public void fatalf(String pattern, Throwable t, Object... args) {
 			if (!isEnabled(Level.FATAL)) {
@@ -323,10 +330,10 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.FATAL, String.format(pattern, args), t);
 		}
-		
+
 		@Override
 		public boolean isEnabled(Level level) {
 			return getLogger().isLoggable(toLogLevel(level));
-		}		
+		}
 	}
 }

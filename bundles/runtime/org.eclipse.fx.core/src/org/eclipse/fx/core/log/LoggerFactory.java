@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 /**
  * A factory service to create a logger instance
  */
-public interface LoggerFactory {
+public interface LoggerFactory /* Make it extend RankedService in 2.0*/ {
 	/**
 	 * Create an instance of a logger
 	 * @param name the name of the logger

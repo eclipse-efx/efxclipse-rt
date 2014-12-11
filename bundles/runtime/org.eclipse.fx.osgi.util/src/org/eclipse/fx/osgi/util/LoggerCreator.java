@@ -20,11 +20,14 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * Factory helper to create a logger instance which is backed by the OSGi-Service registry
+ *
+ * @deprecated use {@link LoggerCreator}
  */
+@Deprecated
 public class LoggerCreator {
 	/**
 	 * Create a logger for the given class
-	 * 
+	 *
 	 * @param clazz
 	 *            the clazz
 	 * @return the logger created
