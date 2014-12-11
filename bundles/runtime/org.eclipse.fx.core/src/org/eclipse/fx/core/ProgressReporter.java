@@ -22,7 +22,8 @@ public interface ProgressReporter {
 	/**
 	 * Reports about the start of a task
 	 * <p>
-	 * <b>Warning</b>: This code might be called by multiple threads concurrently
+	 * <b>Warning</b>: This code might be called by multiple threads
+	 * concurrently
 	 * </p>
 	 *
 	 * @param taskId
@@ -37,13 +38,28 @@ public interface ProgressReporter {
 	 * @return <code>false</code> if the task should be canceled
 	 *
 	 */
-	public boolean taskStart(@NonNull String taskId, @Nullable String parentTaskId, @NonNull String taskName, int totalUnits);
+	public boolean taskStart(@NonNull String taskId,
+			@Nullable String parentTaskId, @NonNull String taskName,
+			int totalUnits);
+
+	/**
+	 * Inform that the total task units has changed
+	 *
+	 * @param taskId
+	 *            the task id
+	 * @param totalUnits
+	 *            the new total units
+	 * @return <code>false</code> if the task should be canceled
+	 */
+	public boolean taskUnitsChanged(@NonNull String taskId, int totalUnits);
 
 	/**
 	 * Report about the end of a task
 	 * <p>
-	 * <b>Warning</b>: This code might be called by multiple threads concurrently
+	 * <b>Warning</b>: This code might be called by multiple threads
+	 * concurrently
 	 * </p>
+	 *
 	 * @param taskId
 	 *            the task id
 	 * @param canceled
@@ -55,7 +71,8 @@ public interface ProgressReporter {
 	 * Inform about progress update and provide a chance for the user to cancel
 	 * the task.
 	 * <p>
-	 * <b>Warning</b>: This code might be called by multiple threads concurrently
+	 * <b>Warning</b>: This code might be called by multiple threads
+	 * concurrently
 	 * </p>
 	 *
 	 * @param taskId
