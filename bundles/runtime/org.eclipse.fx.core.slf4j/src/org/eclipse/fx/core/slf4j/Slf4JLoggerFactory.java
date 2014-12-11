@@ -14,6 +14,7 @@ import java.text.MessageFormat;
 
 import javax.inject.Provider;
 
+import org.eclipse.fx.core.RankedService;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,34 +22,39 @@ import org.eclipse.jdt.annotation.NonNull;
 /**
  * Factory to create a logger backed by slf4j
  */
-public class Slf4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory> {
+public class Slf4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory>, RankedService {
+
+	@Override
+	public int getRanking() {
+		return 1;
+	}
 
 	@Override
 	public LoggerFactory get() {
 		return this;
 	}
-	
-	@Override @NonNull 
+
+	@Override @NonNull
 	public Logger createLogger(@NonNull String name) {
 		return new LoggerImpl(name);
 	}
 
 	static class LoggerImpl implements Logger {
 		private org.slf4j.Logger logger;
-		
+
 		private String name;
-		
+
 		public LoggerImpl(@NonNull String name) {
 			this.name = name;
 		}
-		
+
 		private org.slf4j.Logger getLogger() {
 			if( this.logger == null ) {
 				this.logger = org.slf4j.LoggerFactory.getLogger(this.name);
 			}
 			return this.logger;
 		}
-		
+
 		@Override
 		public void log(@NonNull Level level, @NonNull String message) {
 			switch (level) {
@@ -198,7 +204,7 @@ public class Slf4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		public void infof(@NonNull String pattern, Object... args) {
 			logf(Level.INFO,pattern,args);
 		}
-		
+
 		@SuppressWarnings("all")
 		@Override
 		public void warningf(@NonNull String pattern, Object... args) {
@@ -270,6 +276,6 @@ public class Slf4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			return true;
 		}
-		
+
 	}
 }

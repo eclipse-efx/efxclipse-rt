@@ -15,13 +15,14 @@ import java.text.MessageFormat;
 import javax.inject.Provider;
 
 import org.apache.log4j.PropertyConfigurator;
+import org.eclipse.fx.core.RankedService;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 
 /**
  * Factory to create a logger backed by log4j
  */
-public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory> {
+public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory>, RankedService {
 
 	/**
 	 * Create a new instance
@@ -32,12 +33,17 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			PropertyConfigurator.configure( properties );
 		}
 	}
-	
+
+	@Override
+	public int getRanking() {
+		return 1;
+	}
+
 	@Override
 	public LoggerFactory get() {
 		return this;
 	}
-	
+
 	@Override
 	public Logger createLogger(String name) {
 		return new LoggerImpl(name);
@@ -45,20 +51,20 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 
 	static class LoggerImpl implements Logger {
 		private org.apache.log4j.Logger logger;
-		
+
 		private String name;
-		
+
 		public LoggerImpl(String name) {
 			this.name = name;
 		}
-		
+
 		private org.apache.log4j.Logger getLogger() {
 			if( this.logger == null ) {
 				this.logger = org.apache.log4j.Logger.getLogger(this.name);
 			}
 			return this.logger;
 		}
-		
+
 		private static org.apache.log4j.Level toLog4JLevel(Level level) {
 			switch (level) {
 			case DEBUG:
@@ -77,7 +83,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 				return org.apache.log4j.Level.ERROR;
 			}
 		}
-		
+
 		@Override
 		public void log(Level level, String message) {
 			getLogger().log(toLog4JLevel(level), message);
@@ -193,7 +199,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		public void infof(String pattern, Object... args) {
 			logf(Level.INFO,pattern,args);
 		}
-		
+
 		@SuppressWarnings("all")
 		@Override
 		public void warningf(String pattern, Object... args) {
@@ -252,6 +258,6 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		public boolean isEnabled(Level level) {
 			return getLogger().isEnabledFor(toLog4JLevel(level));
 		}
-		
+
 	}
 }
