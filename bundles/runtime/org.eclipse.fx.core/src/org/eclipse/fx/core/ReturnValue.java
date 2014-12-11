@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.core;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -5,7 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A return value definition
- * 
+ *
  * @param <V>
  *            the returned value type
  */
@@ -33,7 +43,7 @@ public interface ReturnValue<V> {
 	 */
 	@Nullable
 	public Throwable getThrowable();
-	
+
 	/**
 	 * State of the method a callback
 	 */
@@ -55,10 +65,10 @@ public interface ReturnValue<V> {
 		 */
 		OK
 	}
-	
+
 	/**
 	 * Basic return value hold information for the callback
-	 * 
+	 *
 	 * @param <V>
 	 *            the value type
 	 */
@@ -86,7 +96,7 @@ public interface ReturnValue<V> {
 
 		/**
 		 * Create a new return value
-		 * 
+		 *
 		 * @param state
 		 *            the state
 		 * @param message
