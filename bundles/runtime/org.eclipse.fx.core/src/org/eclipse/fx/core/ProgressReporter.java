@@ -35,12 +35,12 @@ public interface ProgressReporter {
 	 *            the name of the task
 	 * @param totalUnits
 	 *            the total units of work for this task
+	 * @param cancelable
+	 *            <code>true</code> if the task can be canceled
 	 * @return <code>false</code> if the task should be canceled
 	 *
 	 */
-	public boolean taskStart(@NonNull String taskId,
-			@Nullable String parentTaskId, @NonNull String taskName,
-			int totalUnits);
+	public boolean taskStart(@NonNull String taskId, @Nullable String parentTaskId, @NonNull String taskName, int totalUnits, boolean cancelable);
 
 	/**
 	 * Inform that the total task units has changed
