@@ -74,7 +74,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.fx.osgi.util.LoggerCreator;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.restart.LifecycleRV;
 import org.eclipse.fx.ui.services.restart.RestartService;
@@ -101,7 +101,7 @@ public abstract class AbstractE4Application implements IApplication {
 	private static final String WORKSPACE_VERSION_VALUE = "2"; //$NON-NLS-1$
 	private static final String METADATA_FOLDER = ".metadata"; //$NON-NLS-1$
 	private static final String VERSION_FILENAME = "version.ini"; //$NON-NLS-1$
-	
+
 	/**
 	 * Set the return value of the application in the context with this key
 	 */
@@ -115,7 +115,7 @@ public abstract class AbstractE4Application implements IApplication {
 	/**
 	 * Create a synchronizer instance who synchronizes between UI and none-UI
 	 * threads
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 * @return the instance
@@ -124,7 +124,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Create a databinding realm
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 * @return the realm
@@ -133,7 +133,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Create the utility to handle resources
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 * @return the instance
@@ -142,7 +142,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Get the uri of the presentation engine
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 * @return the uri
@@ -151,7 +151,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Extract an application arguments
-	 * 
+	 *
 	 * @param applicationContext
 	 *            the application context
 	 * @return arguments
@@ -162,7 +162,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Create the workbench instance
-	 * 
+	 *
 	 * @param applicationContext
 	 *            the OSGi application context
 	 * @param appContext
@@ -200,7 +200,7 @@ public abstract class AbstractE4Application implements IApplication {
 			public List<String> getStyles(MUIElement element) {
 				return getStylesFromTags(element.getTags());
 			}
-			
+
 			@Override
 			public List<String> getStylesFromTags(List<String> tags) {
 				return tags.stream().filter((t) -> t.startsWith(PREFIX))
@@ -242,7 +242,7 @@ public abstract class AbstractE4Application implements IApplication {
 		default:
 			break;
 		}
-		
+
 		String toolItemTimer = getArgValue(Constants.TOOLITEM_TIMER, applicationContext, false);
 		if (toolItemTimer != null) {
 			try {
@@ -311,7 +311,7 @@ public abstract class AbstractE4Application implements IApplication {
 				return ContextInjectionFactory.invoke(AbstractE4Application.this.lcManager, PostContextCreate.class, appContext, Boolean.TRUE);
 			}
 		}, null);
-		
+
 		if (rv == null) {
 			return LifecycleRV.CONTINUE;
 		} else if (rv instanceof Boolean) {
@@ -345,7 +345,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Called before the lifecycle handler is created
-	 * 
+	 *
 	 * @param appContext
 	 *            the application context
 	 */
@@ -355,7 +355,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Called before the workbench is created
-	 * 
+	 *
 	 * @param appContext
 	 *            the context
 	 */
@@ -432,7 +432,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Setup the application context
-	 * 
+	 *
 	 * @return the context
 	 */
 	@SuppressWarnings("static-method")
@@ -476,7 +476,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Initialize the services
-	 * 
+	 *
 	 * @param appModel
 	 *            the application model
 	 */
@@ -506,7 +506,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Initialize the application services
-	 * 
+	 *
 	 * @param appContext
 	 *            the application context
 	 */
@@ -539,7 +539,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Initialize the window services
-	 * 
+	 *
 	 * @param childWindow
 	 *            the window
 	 */
@@ -561,7 +561,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Initialize the window context
-	 * 
+	 *
 	 * @param windowContext
 	 *            the window context
 	 */
@@ -580,7 +580,7 @@ public abstract class AbstractE4Application implements IApplication {
 	 * <li>The product extension point</li>
 	 * <li>The System-Properties</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param argName
 	 *            the argument name
 	 * @param applicationContext
@@ -613,7 +613,7 @@ public abstract class AbstractE4Application implements IApplication {
 
 	/**
 	 * Check the instance location
-	 * 
+	 *
 	 * @param instanceLocation
 	 *            the location to check
 	 * @param context
