@@ -594,7 +594,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.remove(this);
 				if (lineInfo != null) {
 					lineInfo.setDomainElement(null);
-					StyledTextSkin.this.lineRuler.getChildren().remove(lineInfo);
+//					StyledTextSkin.this.lineRuler.getChildren().remove(lineInfo);
 				}
 			}
 			super.updateItem(arg0, arg1);
@@ -819,7 +819,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	class LineInfo extends HBox {
 		private Label markerLabel;
 		private Label lineText;
-		private Line line;
+		Line line;
 
 		public LineInfo() {
 			this.markerLabel = new Label();
@@ -835,9 +835,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 		public void setDomainElement(Line line) {
 			if (line == null) {
-				setVisible(false);
+				this.line = null;
 			} else {
-				setVisible(true);
 				if (line != this.line) {
 					this.line = line;
 					String newText = StyledTextSkin.this.lineList.indexOf(line) + 1 + ""; //$NON-NLS-1$
@@ -888,9 +887,18 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 			}
 
+			List<Node> toRemove = new ArrayList<>();
 			for (Node n : children) {
+				if( n instanceof LineInfo ) {
+					LineInfo l = (LineInfo) n;
+					if( l.line == null ) {
+						toRemove.add(l);
+					}
+				}
 				n.setVisible(false);
 			}
+
+			getChildren().removeAll(toRemove);
 		}
 	}
 
