@@ -41,9 +41,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Skin;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -68,7 +68,7 @@ import com.sun.javafx.scene.control.skin.VirtualFlow;
 @SuppressWarnings("restriction")
 public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextBehavior> {
 	ListView<Line> contentView;
-	StackPane lineRuler;
+	LineRuler lineRuler;
 
 	ObservableList<Line> lineList = FXCollections.observableArrayList();
 
@@ -855,10 +855,16 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		}
 	}
 
-	class LineRuler extends StackPane {
+	class LineRuler extends Pane {
+		boolean skipRelayout;
+
 		@Override
 		protected void layoutChildren() {
+			if( this.skipRelayout ) {
+				return;
+			}
 			super.layoutChildren();
+//			System.err.println("RELAYOUT");
 			Set<Node> children = new HashSet<Node>(getChildren());
 			List<LineInfo> layouted = new ArrayList<>();
 			double maxWidth = 0;
@@ -878,6 +884,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 			for (LineInfo l : layouted) {
 				l.resize(maxWidth, l.getHeight());
+//				System.err.println("BOUNDS: " + l.lineText.getText() + " => " + l.getBoundsInParent());
+
 			}
 
 			for (Node n : children) {
@@ -928,6 +936,19 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		@Override
 		public List<LineCell> getCells() {
 			return super.getCells();
+		}
+
+		@Override
+		public void rebuildCells() {
+			StyledTextSkin.this.lineRuler.skipRelayout = true;
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					StyledTextSkin.this.lineRuler.skipRelayout = false;
+				}
+			});
+			super.rebuildCells();
 		}
 	}
 }
