@@ -35,6 +35,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -836,8 +837,11 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		public void setDomainElement(Line line) {
 			if (line == null) {
 				this.line = null;
+				setManaged(false);
+				StyledTextSkin.this.rootContainer.requestLayout();
 			} else {
 				if (line != this.line) {
+					setManaged(true);
 					this.line = line;
 					String newText = StyledTextSkin.this.lineList.indexOf(line) + 1 + ""; //$NON-NLS-1$
 					String oldText = this.lineText.getText();
@@ -846,7 +850,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					}
 					this.lineText.setText(newText);
 					if( newText.length() != oldText.length() ) {
-						StyledTextSkin.this.rootContainer.layout();
+						StyledTextSkin.this.rootContainer.requestLayout();
 					}
 					StyledTextSkin.this.lineRuler.layout();
 				}
@@ -923,6 +927,10 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	}
 
 	class MyVirtualFlow extends VirtualFlow<LineCell> {
+		public MyVirtualFlow() {
+			setMaxPrefBreadth(Double.MAX_VALUE);
+		}
+
 		@Override
 		protected void positionCell(LineCell cell, double position) {
 			super.positionCell(cell, position);
@@ -954,6 +962,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				@Override
 				public void run() {
 					StyledTextSkin.this.lineRuler.skipRelayout = false;
+					StyledTextSkin.this.lineRuler.requestLayout();
 				}
 			});
 			super.rebuildCells();
