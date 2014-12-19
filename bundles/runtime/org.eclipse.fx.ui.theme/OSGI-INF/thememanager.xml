@@ -4,4 +4,5 @@
    <service>
       <provide interface="org.eclipse.fx.ui.services.theme.ThemeManager"/>
    </service>
+   <reference bind="registerTheme" cardinality="0..n" interface="org.eclipse.fx.ui.services.theme.Theme" name="Theme" policy="dynamic" unbind="unregisterTheme"/>
 </scr:component>

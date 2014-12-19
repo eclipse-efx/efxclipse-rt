@@ -13,7 +13,7 @@
    <element name="extension">
       <annotation>
          <appinfo>
-            <meta.element />
+            <meta.element deprecated="true" />
          </appinfo>
       </annotation>
       <complexType>
@@ -49,6 +49,11 @@
    </element>
 
    <element name="theme">
+      <annotation>
+         <appinfo>
+            <meta.element deprecated="true"/>
+         </appinfo>
+      </annotation>
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -78,6 +83,11 @@
    </element>
 
    <element name="stylesheet">
+      <annotation>
+         <appinfo>
+            <meta.element deprecated="true"/>
+         </appinfo>
+      </annotation>
       <complexType>
          <attribute name="resource" type="string" use="required">
             <annotation>
