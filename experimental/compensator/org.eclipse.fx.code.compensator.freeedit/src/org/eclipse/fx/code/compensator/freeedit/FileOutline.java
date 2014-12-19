@@ -10,7 +10,6 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.freeedit;
 
-import javafx.scene.control.Label;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -23,6 +22,7 @@ import javax.inject.Named;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.fx.code.compensator.editor.Outline;
 import org.eclipse.fx.code.compensator.editor.Outline.OutlineItem;
+import org.eclipse.fx.ui.controls.tree.SimpleTreeCell;
 
 public class FileOutline {
 	private TreeView<OutlineItem> outlineView;
@@ -36,21 +36,7 @@ public class FileOutline {
 	}
 
 	TreeCell<OutlineItem> createCell(TreeView<OutlineItem> param) {
-		return new TreeCell<OutlineItem>() {
-			@Override
-			protected void updateItem(OutlineItem item, boolean empty) {
-
-				if( item != null && ! empty ) {
-					Label value = new Label(item.getLabel().toString());
-					value.getStyleClass().addAll(item.getStyle());
-					setGraphic(value);
-				} else {
-					setGraphic(null);
-				}
-
-				super.updateItem(item, empty);
-			}
-		};
+		return new SimpleTreeCell<OutlineItem>(i -> i.getLabel(), i -> i.getStyle());
 	}
 
 	@Inject
