@@ -10,12 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import javafx.beans.WeakInvalidationListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A string with styling informations
@@ -23,88 +23,55 @@ import org.eclipse.jdt.annotation.NonNull;
  * @since 1.2
  */
 public class StyledString implements CharSequence {
+	@Nullable
+	private StringBuffer buffer;
+
+	@SuppressWarnings("null")
 	@NonNull
-	private final StringBuffer stringBuffer;
-	@NonNull
-	private List<@NonNull StyleRange> rangeList = new ArrayList<>();
+	private ObservableList<@NonNull StyledStringSegment> segmentList = FXCollections.observableArrayList();
 
 	/**
-	 * Create a new styled string
-	 *
-	 * @param s
-	 *            the initial char sequence
+	 * Create a styled string
 	 */
-	public StyledString(@NonNull CharSequence s) {
-		this.stringBuffer = new StringBuffer(s);
-		if (s instanceof StyledString) {
-			this.rangeList.addAll(((StyledString) s).rangeList);
-		}
+	public StyledString() {
+		this.segmentList.addListener(new WeakInvalidationListener((o) -> this.buffer = null ));
 	}
 
-	/**
-	 * Append a char sequence
-	 *
-	 * <p>
-	 * If the sequence is a {@link StyledString} the styles are appended as well
-	 * </p>
-	 *
-	 * @param s
-	 *            the sequence to append
-	 */
-	public void append(CharSequence s) {
-		int l = this.stringBuffer.length();
-
-		this.stringBuffer.append(s);
-		if (s instanceof StyledString) {
-			for (StyleRange r : ((StyledString) s).rangeList) {
-				StyleRange clone = (StyleRange) r.clone();
-				clone.start += l;
-				this.rangeList.add(clone);
+	private final StringBuffer buffer() {
+		StringBuffer rv = this.buffer;
+		if( rv == null ) {
+			rv = this.buffer = new StringBuffer();
+			for( StyledStringSegment s : this.segmentList ) {
+				rv.append(s.getText());
 			}
 		}
-	}
-
-	/**
-	 * Append a char sequence and the given style ranges
-	 *
-	 * @param s
-	 *            the sequence to append
-	 * @param ranges
-	 *            the ranges
-	 */
-	@SuppressWarnings("null")
-	public void append(CharSequence s, StyleRange... ranges) {
-		this.stringBuffer.append(s);
-		this.rangeList.addAll(Arrays.asList(ranges));
-	}
-
-	/**
-	 * @return unmodifiable list of ranges
-	 */
-	@SuppressWarnings("null")
-	public @NonNull List<@NonNull StyleRange> getRanges() {
-		return Collections.unmodifiableList(this.rangeList);
-	}
-
-	@SuppressWarnings("null")
-	@Override
-	public @NonNull String toString() {
-		return this.stringBuffer.toString();
+		return rv;
 	}
 
 	@Override
 	public int length() {
-		return this.stringBuffer.length();
+		return buffer().length();
 	}
 
 	@Override
 	public char charAt(int index) {
-		return this.stringBuffer.charAt(index);
+		return buffer().charAt(index);
 	}
 
-	@SuppressWarnings("null")
 	@Override
-	public @NonNull CharSequence subSequence(int start, int end) {
-		return this.stringBuffer.subSequence(start, end);
+	public CharSequence subSequence(int start, int end) {
+		return buffer().subSequence(start, end);
+	}
+
+	@Override
+	public String toString() {
+		return buffer().toString();
+	}
+
+	/**
+	 * @return list of segments
+	 */
+	public @NonNull ObservableList<@NonNull StyledStringSegment> getSegmentList() {
+		return this.segmentList;
 	}
 }

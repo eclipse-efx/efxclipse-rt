@@ -87,6 +87,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 		return evt.isConsumed();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void keyPressed(KeyEvent event, int currentRowIndex) {
 		VerifyEvent evt = new VerifyEvent(getControl(), getControl(), event);
 		Event.fireEvent(getControl(), evt);
@@ -272,6 +273,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	 * @param visibleCells
 	 *            the visible cells
 	 */
+	@SuppressWarnings("deprecation")
 	public void mousePressed(MouseEvent event, List<LineCell> visibleCells) {
 		LineCell lastCell = null;
 
