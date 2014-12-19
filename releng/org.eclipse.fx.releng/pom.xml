@@ -92,11 +92,11 @@
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/</url>
 		</repository>
-		<repository>
+		<!--  repository>
 			<id>xtext</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
-		</repository>
+		</repository-->
 		<repository>
 			<id>efx-shared-runtime</id>
 			<layout>p2</layout>
