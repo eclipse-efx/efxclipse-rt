@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.testcases.e4.defaulttheme">
+   <implementation class="org.eclipse.fx.testcases.e4.theme.DefaultTheme"/>
+   <service>
+      <provide interface="org.eclipse.fx.ui.services.theme.Theme"/>
+   </service>
+</scr:component>
