@@ -10,8 +10,16 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.fx.ui.controls.styledtext.StyledString;
+import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
+
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 /**
  * Utility methods
@@ -56,5 +64,18 @@ public class Util {
 
 			return this.sb;
 		}
+	}
+
+	public static Node toNode(StyledString s) {
+		List<Text> segList = new ArrayList<>();
+		for( StyledStringSegment seg : s.getSegmentList() ) {
+			Text t = new Text(seg.getText());
+			t.getStyleClass().addAll(seg.getStyleClass());
+			segList.add(t);
+		}
+
+		System.err.println(segList);
+
+		return new TextFlow(segList.toArray(new Node[0]));
 	}
 }
