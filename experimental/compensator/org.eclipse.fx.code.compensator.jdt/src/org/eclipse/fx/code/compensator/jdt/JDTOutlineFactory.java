@@ -1,6 +1,7 @@
 package org.eclipse.fx.code.compensator.jdt;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -12,6 +13,8 @@ import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.Outline;
 import org.eclipse.fx.code.compensator.editor.Outline.OutlineItem;
 import org.eclipse.fx.code.compensator.editor.services.OutlineFactory;
+import org.eclipse.fx.ui.controls.styledtext.StyledString;
+import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -19,6 +22,7 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
@@ -57,7 +61,9 @@ public class JDTOutlineFactory implements OutlineFactory {
 				} else {
 					style = "java-class-default";
 				}
-	    		OutlineItem o = new JavaOutlineItem(node.getName().getFullyQualifiedName(), style);
+				StyledString s = new StyledString();
+				s.getSegmentList().add(new StyledStringSegment(node.getName().getFullyQualifiedName(),"java-element-name"));
+	    		OutlineItem o = new JavaOutlineItem(s, style);
 	    		i.peek().getChildren().add(o);
 	    		i.push(o);
 
@@ -83,10 +89,15 @@ public class JDTOutlineFactory implements OutlineFactory {
 					style = "java-field-default";
 				}
 
+				String type = node.getType().toString();
+
 	    		for( Object v : node.fragments() ) {
 	    			if( v instanceof VariableDeclarationFragment ) {
 	    				VariableDeclarationFragment vdf = (VariableDeclarationFragment) v;
-	    				i.peek().getChildren().add(new JavaOutlineItem(vdf.getName().getFullyQualifiedName(), style));
+	    				StyledString s = new StyledString();
+	    				s.getSegmentList().add(new StyledStringSegment(vdf.getName().getFullyQualifiedName(),"java-element-name"));
+	    				s.getSegmentList().add(new StyledStringSegment(" : " + type, "java-type-info"));
+	    				i.peek().getChildren().add(new JavaOutlineItem(s, style));
 	    			}
 	    		}
 	    		return super.visit(node);
@@ -105,7 +116,26 @@ public class JDTOutlineFactory implements OutlineFactory {
 					style = "java-method-default";
 				}
 
-	    		i.peek().getChildren().add(new JavaOutlineItem(node.getName().getFullyQualifiedName(), style));
+				String type = node.getReturnType2() == null ? "void" : node.getReturnType2().toString();
+				StyledString s = new StyledString();
+				s.getSegmentList().add(new StyledStringSegment(node.getName().getFullyQualifiedName(),"java-element-name"));
+
+				StringBuffer b = new StringBuffer();
+
+				b.append("(");
+				Iterator<?> iterator = node.parameters().iterator();
+				while( iterator.hasNext()  ) {
+					SingleVariableDeclaration d = (SingleVariableDeclaration) iterator.next();
+					b.append(d.getType().toString());
+					if( iterator.hasNext() ) {
+						b.append(",");
+					}
+				}
+				b.append(")");
+				s.getSegmentList().add(new StyledStringSegment(b.toString(),"java-element-name"));
+				s.getSegmentList().add(new StyledStringSegment(" : " + type, "java-type-info"));
+
+	    		i.peek().getChildren().add(new JavaOutlineItem(s, style));
 	    		return super.visit(node);
 	    	}
 
@@ -128,17 +158,17 @@ public class JDTOutlineFactory implements OutlineFactory {
 	}
 
 	static class JavaOutlineItem implements OutlineItem {
-		private final String label;
+		private final CharSequence label;
 		private final ObservableList<OutlineItem> list = FXCollections.observableArrayList();
 		private final String type;
 
-		public JavaOutlineItem(String label, String type) {
+		public JavaOutlineItem(CharSequence label, String type) {
 			this.label = label;
 			this.type = type;
 		}
 
 		@Override
-		public String getLabel() {
+		public CharSequence getLabel() {
 			return label;
 		}
 
