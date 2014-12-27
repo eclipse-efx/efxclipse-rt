@@ -74,6 +74,12 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 		getControl().requestFocus();
 	}
 
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		super.mouseDragged(e);
+
+	}
+
 	/**
 	 * Invoke an action
 	 *
@@ -274,7 +280,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	 *            the visible cells
 	 */
 	@SuppressWarnings("deprecation")
-	public void mousePressed(MouseEvent event, List<LineCell> visibleCells) {
+	public void updateCursor(MouseEvent event, List<LineCell> visibleCells, boolean selection) {
 		LineCell lastCell = null;
 
 		for (LineCell tmp : visibleCells) {
@@ -295,14 +301,14 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 							HitInfo info = text.impl_hitTestChar(text.sceneToLocal(event.getSceneX(), event.getSceneY()));
 							if (info.getInsertionIndex() >= 0) {
 								int offset = ((Integer) textFlow.getUserData()).intValue() + info.getInsertionIndex();
-								getControl().impl_setCaretOffset(offset, event.isShiftDown());
+								getControl().impl_setCaretOffset(offset, selection);
 								return;
 							}
 						}
 					}
 
 					int offset = lastCell.getDomainElement().getLineOffset() + lastCell.getDomainElement().getLineLength();
-					getControl().impl_setCaretOffset(offset, event.isShiftDown());
+					getControl().impl_setCaretOffset(offset, selection);
 
 				}
 				break;

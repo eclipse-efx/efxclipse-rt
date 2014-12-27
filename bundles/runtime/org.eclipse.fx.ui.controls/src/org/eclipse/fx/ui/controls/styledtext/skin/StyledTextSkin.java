@@ -128,10 +128,18 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 			@Override
 			public void handle(MouseEvent event) {
-				getBehavior().mousePressed(event, getCurrentVisibleCells());
+				getBehavior().updateCursor(event, getCurrentVisibleCells(), event.isShiftDown());
 				// The consuming does not help because it looks like the
 				// selection change happens earlier => should be push a new
 				// ListViewBehavior?
+				event.consume();
+			}
+		});
+		this.contentView.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				getBehavior().updateCursor(event, getCurrentVisibleCells(), true);
 				event.consume();
 			}
 		});
