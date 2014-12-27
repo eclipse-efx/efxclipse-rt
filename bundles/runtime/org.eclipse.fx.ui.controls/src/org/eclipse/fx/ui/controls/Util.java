@@ -66,15 +66,20 @@ public class Util {
 		}
 	}
 
+	/**
+	 * Create a scenegraph node from the styled string
+	 *
+	 * @param s
+	 *            the string
+	 * @return a scenegraph node
+	 */
 	public static Node toNode(StyledString s) {
 		List<Text> segList = new ArrayList<>();
-		for( StyledStringSegment seg : s.getSegmentList() ) {
+		for (StyledStringSegment seg : s.getSegmentList()) {
 			Text t = new Text(seg.getText());
 			t.getStyleClass().addAll(seg.getStyleClass());
 			segList.add(t);
 		}
-
-		System.err.println(segList);
 
 		return new TextFlow(segList.toArray(new Node[0]));
 	}
