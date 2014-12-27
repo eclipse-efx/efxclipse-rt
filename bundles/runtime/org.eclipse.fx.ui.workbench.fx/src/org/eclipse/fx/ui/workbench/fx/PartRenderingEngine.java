@@ -73,10 +73,8 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 	private MApplication app;
 
-	@Inject
-	@Log
 	@NonNull
-	private Logger logger;
+	private final Logger logger;
 
 	@NonNull
 	private final IEventBroker eventBroker;
@@ -89,8 +87,10 @@ public class PartRenderingEngine implements IPresentationEngine {
 			@NonNull IEventBroker eventBroker,
 			@NonNull ThemeManager themeManager,
 			@Preference(nodePath="org.eclipse.fx.ui.workbench.fx",value=AbstractE4Application.THEME_ID)
-			String themeId) {
+			String themeId,
+			@NonNull @Log Logger logger) {
 		final String factoryUrl;
+		this.logger = logger;
 		if (_factoryUrl == null) {
 			factoryUrl = defaultFactoryUrl;
 		} else {
