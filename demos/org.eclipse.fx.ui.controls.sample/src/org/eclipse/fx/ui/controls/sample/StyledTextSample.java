@@ -17,13 +17,9 @@ public class StyledTextSample extends Application {
 		t.getStylesheets().add(getClass().getResource("test.css").toExternalForm());
 		t.getContent().setText("This is a styled text!\nThis is the 2nd line with data\nBlaBla");
 		t.setStyleRanges(
-				new StyleRange[] {
-						new StyleRange("text-highlight",0,30,null,null)
-						,
-						new StyleRange("text-highlight",34,5,null,null)
-//						,
-//						new StyleRange("text-highlight",10,12,null,null)
-				});
+					new StyleRange("text-highlight",0,30,null,null)
+					, new StyleRange("text-highlight",34,5,null,null)
+				);
 		p.setCenter(t);
 
 		Scene scene = new Scene(p,800,600);

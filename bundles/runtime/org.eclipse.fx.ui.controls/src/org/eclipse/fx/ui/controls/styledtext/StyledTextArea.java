@@ -122,6 +122,11 @@ public class StyledTextArea extends Control {
 				getClass().getResource("styledtextarea.css").toExternalForm()); //$NON-NLS-1$
 		setFocusTraversable(true);
 	}
+//Requires 8u40!
+//	@Override
+//	public String getUserAgentStylesheet() {
+//		return getClass().getResource("styledtextarea.css").toExternalForm();
+//	}
 
 	void handleTextChanging(TextChangingEvent event) {
 		if (event.replaceCharCount < 0) {
@@ -356,7 +361,7 @@ public class StyledTextArea extends Control {
 	 * @param ranges
 	 *            the ranges
 	 */
-	public void setStyleRanges(@Nullable StyleRange[] ranges) {
+	public void setStyleRanges(@Nullable StyleRange... ranges) {
 		setStyleRanges(0, 0, null, ranges, true);
 	}
 
