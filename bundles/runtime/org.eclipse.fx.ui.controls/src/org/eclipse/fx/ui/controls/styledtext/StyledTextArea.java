@@ -102,6 +102,8 @@ public class StyledTextArea extends Control {
 	private final ObjectProperty<TextSelection> currentSelection = new SimpleObjectProperty<>(
 			this, "currentSelection"); //$NON-NLS-1$
 
+	private int anchor;
+
 	// private int lastTextChangeStart;
 	//
 	// private int lastTextChangeNewLineCount;
@@ -215,6 +217,7 @@ public class StyledTextArea extends Control {
 	 */
 	public void setCaretOffset(int offset) {
 		// System.err.println("OFFSET: " + offset);
+		this.anchor = offset;
 		caretOffsetProperty().set(offset);
 		clearSelection();
 	}
@@ -231,33 +234,13 @@ public class StyledTextArea extends Control {
 	@Deprecated
 	public void impl_setCaretOffset(int offset, boolean selection) {
 		if (selection) {
-			TextSelection s = getSelection();
-			int lastOffset = getCaretOffset();
-
 			caretOffsetProperty().set(offset);
 
-			int selectStart = s.offset;
-			int selectionEnd = s.offset + s.length;
-
-			if (offset > selectionEnd) {
-				selectStart = s.offset;
-				selectionEnd = offset;
-			} else if (offset < selectionEnd && offset > selectStart) {
-				if (lastOffset > offset) {
-					selectStart = s.offset;
-					selectionEnd = offset;
-				} else {
-					selectStart = offset;
-				}
-
-			} else if (offset < selectStart) {
-				selectStart = offset;
+			if( offset > this.anchor ) {
+				setSelectionRange(this.anchor, offset - this.anchor);
 			} else {
-				selectStart = offset;
-				selectionEnd = offset;
+				setSelectionRange(offset, this.anchor - offset);
 			}
-
-			setSelectionRange(selectStart, selectionEnd - selectStart);
 		} else {
 			setCaretOffset(offset);
 		}
