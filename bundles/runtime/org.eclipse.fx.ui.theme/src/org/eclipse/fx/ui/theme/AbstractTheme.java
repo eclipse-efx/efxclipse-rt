@@ -69,7 +69,7 @@ public class AbstractTheme implements Theme {
 	 */
 	public void registerStylesheet(Stylesheet stylesheet) {
 		if (stylesheet.appliesToTheme(this)) {
-			this.stylesheetUrlList.add(stylesheet.getURL());
+			this.stylesheetUrlList.add(stylesheet.getURL(this));
 		}
 	}
 
@@ -81,7 +81,7 @@ public class AbstractTheme implements Theme {
 	 */
 	public void unregisterStylesheet(Stylesheet stylesheet) {
 		if (stylesheet.appliesToTheme(this)) {
-			this.stylesheetUrlList.remove(stylesheet.getURL());
+			this.stylesheetUrlList.remove(stylesheet.getURL(this));
 		}
 	}
 }

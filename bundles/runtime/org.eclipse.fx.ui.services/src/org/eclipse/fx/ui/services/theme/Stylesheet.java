@@ -30,7 +30,9 @@ public interface Stylesheet {
 	public boolean appliesToTheme(Theme t);
 
 	/**
+	 * @param t
+	 *            the theme
 	 * @return the url to the stylesheet
 	 */
-	public @NonNull URL getURL();
+	public @NonNull URL getURL(Theme t);
 }
