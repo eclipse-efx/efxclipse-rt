@@ -1,5 +1,18 @@
-/*.root {
-    -fx-base: #4d5052;
-    -fx-background: #4d5052;
-    -fx-control-inner-background: #4d5052;
-}*/
+.root {
+    /* @SuppressWarning */
+    -compensator-default-text: -fx-text-background-color;
+	/* @SuppressWarning */
+    -compensator-extra1: /*#957d47*/ derive(-fx-text-background-color, 50%);
+}
+
+.new_project_dialog {
+	-fx-graphic: url(icons/48/project_icon.png);
+}
+
+.cell-text-extra {
+	-fx-fill: -compensator-extra1;
+}
+
+.cell-text-default {
+	-fx-fill: -compensator-default-text;
+}

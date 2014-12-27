@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.code.compensator.app.default-theme">
+   <implementation class="org.eclipse.fx.code.compensator.app.DefaultTheme"/>
+   <service>
+      <provide interface="org.eclipse.fx.ui.services.theme.Theme"/>
+   </service>
+   <reference bind="registerStylesheet" cardinality="0..n" interface="org.eclipse.fx.ui.services.theme.Stylesheet" name="Stylesheet" policy="dynamic" unbind="unregisterStylesheet"/>
+</scr:component>

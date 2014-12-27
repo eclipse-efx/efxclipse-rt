@@ -21,6 +21,10 @@ public class DirtyStateTrackerAddon {
 	void init(IEventBroker broker) {
 		broker.subscribe(Constants.EDITOR_DOCUMENT_MODIFIED, this::handleDocumentModified);
 		broker.subscribe(Constants.EDITOR_DOCUMENT_SAVED, this::handleDocumentSaved);
+
+//		application.getCommands().forEach(System.err::println);
+//		application.getHandlers().forEach(h -> System.err.println(h.getContributionURI() + " => " + h.getCommand()));
+
 	}
 
 	void handleDocumentSaved(Event event) {

@@ -16,16 +16,4 @@
 	</product>
 	
 </extension>
-<extension  point="org.eclipse.fx.ui.theme">
-	<theme
-       basestylesheet="css/default.css"
-       id="default"
-       name="Default Theme"/>
- <theme
-       basestylesheet="css/dark-default.css"
-       id="dark"
-       name="Dark Theme">
- </theme>
-	
-</extension>
 </plugin>

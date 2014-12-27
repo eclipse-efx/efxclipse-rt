@@ -24,7 +24,12 @@ Require-Bundle: org.eclipse.fx.ui.workbench.fx,
  org.eclipse.fx.code.compensator.editor;bundle-version="1.0.0",
  org.eclipse.fx.ui.services;bundle-version="1.0.0",
  org.eclipse.equinox.preferences;bundle-version="3.5.200",
- org.eclipse.osgi.services;bundle-version="3.4.0"
+ org.eclipse.osgi.services;bundle-version="3.4.0",
+ org.eclipse.fx.ui.panes,
+ org.eclipse.fx.core,
+ org.eclipse.jdt.annotation;bundle-version="2.0.0";resolution:=optional,
+ org.eclipse.fx.code.compensator.project,
+ org.eclipse.fx.core.di
 Import-Package: javafx.animation;version="2.0.0",
  javafx.application;version="2.0.0",
  javafx.beans;version="2.0.0",
@@ -55,3 +60,6 @@ Import-Package: javafx.animation;version="2.0.0",
  javax.annotation;version="1.2.0",
  javax.inject;version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Service-Component: OSGI-INF/services/default-theme.xml,
+ OSGI-INF/services/dark-theme.xml
+Bundle-ActivationPolicy: lazy
