@@ -716,13 +716,17 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		}
 
 		private List<Segment> createSegments(String line, StyleRange r, int selectionStart, int selectionEnd, int begin, int end) {
+			//FIXME We need to to set the length!!!
 			if( selectionStart != selectionEnd ) {
 				if( selectionStart <= begin  && selectionEnd >= end  ) {
 					// whole entry is selected
 					Segment seg = new Segment();
 					seg.text = removeLineending(line.substring(begin, end));
 					seg.style = new StyleRange(r);
+					seg.style.start = r.start;
 					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
+
+//					System.err.println(seg.text + " => " + seg.style.start);
 					return Collections.singletonList(seg);
 				} else if( selectionStart <= begin && selectionEnd >= begin && selectionEnd <= end ) {
 					// selection start before and ends inside
@@ -733,12 +737,14 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					seg.style = new StyleRange(r);
 					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
 					seg.style.start = r.start;
+//					System.err.println(seg.text + " => " + seg.style.start);
 					rv.add(seg);
 
 					seg = new Segment();
 					seg.text = removeLineending(line.substring(selectionEnd, end));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start + selectionEnd-begin;
+//					System.err.println(seg.text + " => " + seg.style.start);
 					rv.add(seg);
 
 					return rv;
@@ -750,6 +756,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					seg.text = removeLineending(line.substring(begin, selectionStart));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start;
+//					System.err.println(seg.text + " => " + seg.style.start);
 					rv.add(seg);
 
 					seg = new Segment();
@@ -757,6 +764,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start + selectionStart-begin;
 					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
+//					System.err.println(seg.text + " => " + seg.style.start);
 					rv.add(seg);
 
 					return rv;
@@ -769,6 +777,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					seg.text = removeLineending(line.substring(begin, selectionStart));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start;
+//					System.err.println(seg.text + " => " + seg.style.start);
 					rv.add(seg);
 
 					seg = new Segment();
@@ -776,12 +785,14 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start + selectionStart-begin;
 					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
+//					System.err.println(seg.text + " => " + seg.style.start);
 					rv.add(seg);
 
 					seg = new Segment();
 					seg.text = removeLineending(line.substring(selectionEnd, end));
 					seg.style = new StyleRange(r);
 					seg.style.start = r.start + selectionEnd-begin;
+//					System.err.println(seg.text + " => " + seg.style.start);
 					rv.add(seg);
 					return rv;
 				} else {
