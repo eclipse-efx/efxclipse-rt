@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext;
 
+import java.util.List;
+
 import javafx.beans.WeakInvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,20 +30,22 @@ public class StyledString implements CharSequence {
 
 	@SuppressWarnings("null")
 	@NonNull
-	private ObservableList<@NonNull StyledStringSegment> segmentList = FXCollections.observableArrayList();
+	private ObservableList<@NonNull StyledStringSegment> segmentList = FXCollections
+			.observableArrayList();
 
 	/**
 	 * Create a styled string
 	 */
 	public StyledString() {
-		this.segmentList.addListener(new WeakInvalidationListener((o) -> this.buffer = null ));
+		this.segmentList.addListener(new WeakInvalidationListener(
+				(o) -> this.buffer = null));
 	}
 
 	private final StringBuffer buffer() {
 		StringBuffer rv = this.buffer;
-		if( rv == null ) {
+		if (rv == null) {
 			rv = this.buffer = new StringBuffer();
-			for( StyledStringSegment s : this.segmentList ) {
+			for (StyledStringSegment s : this.segmentList) {
 				rv.append(s.getText());
 			}
 		}
@@ -73,5 +77,31 @@ public class StyledString implements CharSequence {
 	 */
 	public @NonNull ObservableList<@NonNull StyledStringSegment> getSegmentList() {
 		return this.segmentList;
+	}
+
+	/**
+	 * Append a new segment with the given text and styleclasses
+	 *
+	 * @param text
+	 *            the text
+	 * @param styleClass
+	 *            the style classes
+	 * @see StyledStringSegment#StyledStringSegment(String, String...)
+	 */
+	public void appendSegment(String text, String... styleClass) {
+		this.segmentList.add(new StyledStringSegment(text, styleClass));
+	}
+
+	/**
+	 * Append a new segment with the given text and styleclasses
+	 *
+	 * @param text
+	 *            the text
+	 * @param styleClass
+	 *            the style classes
+	 * @see StyledStringSegment#StyledStringSegment(String, List)
+	 */
+	public void appendSegment(String text, List<String> styleClass) {
+		this.segmentList.add(new StyledStringSegment(text, styleClass));
 	}
 }
