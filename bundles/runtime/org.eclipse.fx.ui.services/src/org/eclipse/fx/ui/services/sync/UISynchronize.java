@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.eclipse.fx.core.Callback;
 import org.eclipse.fx.core.Subscription;
@@ -28,7 +31,7 @@ public interface UISynchronize {
 
 	/**
 	 * Sync with the ui thread und provide a result when done
-	 * 
+	 *
 	 * @param callable
 	 *            the callable to execute
 	 * @param defaultValue
@@ -40,7 +43,7 @@ public interface UISynchronize {
 	/**
 	 * Executes the runnable on the UI-Thread and blocks until the runnable is
 	 * finished
-	 * 
+	 *
 	 * @param runnable
 	 *            the runnable to execute
 	 */
@@ -49,7 +52,7 @@ public interface UISynchronize {
 	/**
 	 * Schedules the runnable on the UI-Thread for execution and returns
 	 * immediately
-	 * 
+	 *
 	 * @param callable
 	 *            the callable to execute
 	 * @return interface to the result of the callable
@@ -59,7 +62,7 @@ public interface UISynchronize {
 	/**
 	 * Schedules the runnable on the UI-Thread for execution and returns
 	 * immediately
-	 * 
+	 *
 	 * @param runnable
 	 *            the runnable to execute
 	 */
@@ -68,7 +71,7 @@ public interface UISynchronize {
 	/**
 	 * Block the UI-Thread in a way that events are still processed until the
 	 * given condition is released
-	 * 
+	 *
 	 * @param blockCondition
 	 *            the condition
 	 * @return the value
@@ -77,7 +80,7 @@ public interface UISynchronize {
 
 	/**
 	 * Schedule the execution of the runnable
-	 * 
+	 *
 	 * @param delay
 	 *            the delay
 	 * @param runnable
@@ -88,7 +91,7 @@ public interface UISynchronize {
 
 	/**
 	 * Schedule the execution of the callable
-	 * 
+	 *
 	 * @param delay
 	 *            the delay
 	 * @param runnable
@@ -98,8 +101,64 @@ public interface UISynchronize {
 	<T> CompletableFuture<T> scheduleExecution(long delay, Callable<T> runnable);
 
 	/**
+	 * Wraps a runnable so that it is called on the UI thread.
+	 * <p>
+	 * This is handy if you pass a {@link Runnable} as callback into some async
+	 * API
+	 * </p>
+	 *
+	 * @param r
+	 *            the runnable to wrap
+	 * @return a new runnable who invokes the real runnable on the UI thread
+	 */
+	default Runnable wrap(Runnable r) {
+		return () -> asyncExec(r);
+	}
+
+	/**
+	 * Wraps a consumer so that it is called on the UI thread.
+	 * <p>
+	 * This is handy if you pass a {@link Consumer} as callback into some async
+	 * API
+	 * </p>
+	 *
+	 * @param c
+	 *            the consumer to wrap
+	 * @return a new consumer who invokes the real consumer on the UI thread
+	 */
+	default <T> Consumer<T> wrap(Consumer<T> c) {
+		return (t) -> asyncExec(() -> c.accept(t));
+	}
+
+	/**
+	 * Wraps a bi-consumer so that it is called on the UI thread
+	 * <p>
+	 * This is handy if you pass a {@link BiConsumer} as callback into some
+	 * async API
+	 * </p>
+	 *
+	 * @param c
+	 *            the consumer to wrap
+	 * @return a new consumer who invokes the real consumer on the UI thread
+	 */
+	default <T, U> BiConsumer<T, U> wrap(BiConsumer<T, U> c) {
+		return (t, u) -> asyncExec(() -> c.accept(t, u));
+	}
+
+	/**
+	 * Wraps a supplier so that it is called on the UI thread
+	 *
+	 * @param s
+	 *            the supplier
+	 * @return a new supplier who invokes the real supplier on the UI thread
+	 */
+	default <@Nullable T> Supplier<T> wrap(Supplier<T> s) {
+		return () -> syncExec(() -> s.get(), null);
+	}
+
+	/**
 	 * A block condition
-	 * 
+	 *
 	 * @param <T>
 	 *            the type
 	 */
@@ -109,7 +168,7 @@ public interface UISynchronize {
 
 		/**
 		 * Subscribe to unblocking
-		 * 
+		 *
 		 * @param r
 		 *            the callback
 		 * @return the subscription
@@ -137,7 +196,7 @@ public interface UISynchronize {
 
 		/**
 		 * Release the lock and pass value
-		 * 
+		 *
 		 * @param value
 		 *            the value to pass
 		 */
