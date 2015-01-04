@@ -34,12 +34,28 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * Implementation of splitting with DnD
+ *
+ * @param <M>
+ *            the domain model type
+ */
 public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	private final WLayoutedWidget<M> widget;
-	
+
 	@NonNull
 	private EModelService modelService;
 
+	/**
+	 * Create new instance
+	 *
+	 * @param modelService
+	 *            the model service
+	 * @param feedbackService
+	 *            the feedback service
+	 * @param widget
+	 *            the widget
+	 */
 	public SplitDnDSupport(@NonNull EModelService modelService, @NonNull DnDFeedbackService feedbackService, WLayoutedWidget<M> widget) {
 		super(feedbackService);
 		this.modelService = modelService;
@@ -48,10 +64,11 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 
 	/**
 	 * Handle exiting of the drag
-	 * 
+	 *
 	 * @param e
 	 *            the event
 	 */
+	@SuppressWarnings("static-method")
 	public void handleDragExit(DragEvent e) {
 		cleanup();
 	}
@@ -70,7 +87,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 
 	/**
 	 * Handling the drag over
-	 * 
+	 *
 	 * @param e
 	 *            the event
 	 */
@@ -109,7 +126,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 
 	/**
 	 * Handle the drag
-	 * 
+	 *
 	 * @param e
 	 *            the event
 	 */
@@ -142,6 +159,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 			} else if (m instanceof MElementContainer<?>) {
 				MElementContainer<?> c = (MElementContainer<?>) m;
 				if (this.modelService.countRenderableChildren(c) == 0) {
+					@SuppressWarnings("all")
 					DropData d = new DropData(this.widget.getDomElement(), draggedElement, DropType.INSERT);
 					dropDroppedCallback.call(d);
 					e.consume();

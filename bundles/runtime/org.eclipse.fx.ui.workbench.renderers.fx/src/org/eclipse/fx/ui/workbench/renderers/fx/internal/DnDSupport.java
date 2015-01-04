@@ -18,7 +18,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.core.log.Logger;
-import org.eclipse.fx.osgi.util.LoggerCreator;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DropType;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DroppedData;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.FeedbackData;
@@ -49,7 +49,7 @@ public class DnDSupport extends BaseDnDSupport {
 
 	/**
 	 * Create a new dnd support instance
-	 * 
+	 *
 	 * @param dragStartCallbackProvider
 	 *            the start callback
 	 * @param dropCallbackProvider
@@ -69,7 +69,7 @@ public class DnDSupport extends BaseDnDSupport {
 
 	/**
 	 * Function to serialize tab
-	 * 
+	 *
 	 * @param tab
 	 *            the tab
 	 * @return the tab
@@ -90,11 +90,11 @@ public class DnDSupport extends BaseDnDSupport {
 
 	/**
 	 * Handle the drag start
-	 * 
+	 *
 	 * @param tab
 	 *            the tab
 	 * @return <code>true</code> if drag can start
-	 * 
+	 *
 	 */
 	@SuppressWarnings("null")
 	public @NonNull Boolean handleDragStart(@NonNull Tab tab) {
@@ -121,7 +121,7 @@ public class DnDSupport extends BaseDnDSupport {
 
 	/**
 	 * Handle the drop
-	 * 
+	 *
 	 * @param event
 	 *            the event
 	 */
@@ -142,10 +142,10 @@ public class DnDSupport extends BaseDnDSupport {
 
 	/**
 	 * Handle the feedback event
-	 * 
+	 *
 	 * @param data
 	 *            the data
-	 * 
+	 *
 	 */
 	public void handleFeedback(FeedbackData data) {
 		if (data.dropType == DropType.NONE) {
@@ -162,15 +162,15 @@ public class DnDSupport extends BaseDnDSupport {
 
 	/**
 	 * Handle the finish event
-	 * 
+	 *
 	 * @param tab
 	 *            the tab
-	 * 
+	 *
 	 */
 	@SuppressWarnings("static-method")
 	public void handleFinished(Tab tab) {
 		cleanup();
 	}
 
-	
+
 }
