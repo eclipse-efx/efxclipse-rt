@@ -81,6 +81,7 @@ public class DefPopupMenuRenderer extends BasePopupMenuRenderer<ContextMenu> {
 
 				}
 			});
+			m.getItems().add(this.item);
 			return m;
 		}
 
