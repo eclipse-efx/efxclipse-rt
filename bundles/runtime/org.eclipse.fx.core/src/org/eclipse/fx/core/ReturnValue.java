@@ -45,6 +45,33 @@ public interface ReturnValue<V> {
 	public Throwable getThrowable();
 
 	/**
+	 * Create an ok return value
+	 *
+	 * @param value
+	 *            the value
+	 * @return the return value
+	 * @since 1.2
+	 */
+	public static <V> @NonNull ReturnValue<V> ok(@Nullable V value) {
+		return new ReturnValueImpl<V>(State.OK, null, value, null);
+	}
+
+	/**
+	 * Create an error return value
+	 *
+	 * @param message
+	 *            the message
+	 * @param error
+	 *            the error
+	 * @return the return value
+	 * @since 1.2
+	 */
+	public static <V> @NonNull ReturnValue<V> error(@NonNull String message,
+			@NonNull Throwable error) {
+		return new ReturnValueImpl<V>(State.ERROR, message, null, error);
+	}
+
+	/**
 	 * State of the method a callback
 	 */
 	public enum State {
@@ -71,7 +98,9 @@ public interface ReturnValue<V> {
 	 *
 	 * @param <V>
 	 *            the value type
+	 * @deprecated use {@link ReturnValue#ok(Object)}
 	 */
+	@Deprecated
 	public static class ReturnValueImpl<V> implements ReturnValue<V> {
 		/**
 		 * The state
@@ -106,7 +135,8 @@ public interface ReturnValue<V> {
 		 * @param throwable
 		 *            the exception
 		 */
-		public ReturnValueImpl(@NonNull State state, @Nullable String message, @Nullable V value, @Nullable Throwable throwable) {
+		public ReturnValueImpl(@NonNull State state, @Nullable String message,
+				@Nullable V value, @Nullable Throwable throwable) {
 			this.state = state;
 			this.message = message;
 			this.throwable = throwable;
