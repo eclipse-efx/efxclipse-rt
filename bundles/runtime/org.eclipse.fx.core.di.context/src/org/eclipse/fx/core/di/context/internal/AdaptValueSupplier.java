@@ -35,7 +35,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @SuppressWarnings("restriction")
 public class AdaptValueSupplier extends ExtendedObjectSupplier {
-	
+
 	@SuppressWarnings("null")
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
@@ -44,19 +44,19 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 		if( desiredClass == null ) {
 			return IInjector.NOT_A_VALUE;
 		}
-		
+
 		final String key;
 		if( descriptor.hasQualifier(Named.class) ) {
 			key = descriptor.getQualifier(Named.class).value();
 		} else {
 			key = desiredClass.getName();
 		}
-		
+
 		AtomicInteger i = new AtomicInteger();
 		AtomicReference<Object> ref = new AtomicReference<>();
 		Dummy dummy = r.getInjector().make(Dummy.class, r.getPrimarySupplier());
 		dummy.context.runAndTrack(new RunAndTrack() {
-			
+
 			@Override
 			public boolean changed(IEclipseContext context) {
 				if( i.getAndIncrement() == 1 ) {
@@ -73,7 +73,7 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 				return dummy.adapterService.adapt(ref.get(), desiredClass, new ValueAccessImpl(dummy.context));
 			}
 		}
-		
+
 		return IInjector.NOT_A_VALUE;
 	}
 
@@ -87,19 +87,19 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 		}
 		return null;
 	}
-	
+
 	static class Dummy {
 		public AdapterService adapterService;
-		
+
 		public final IEclipseContext context;
-		
+
 		@Inject
 		public Dummy(IEclipseContext context, AdapterService adapterService) {
 			this.context = context;
 			this.adapterService = adapterService;
 		}
 	}
-	
+
 	static class ValueAccessImpl implements ValueAccess {
 		private final IEclipseContext context;
 
