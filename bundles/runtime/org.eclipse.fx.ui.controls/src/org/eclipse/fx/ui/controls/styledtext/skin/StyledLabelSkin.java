@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.controls.styledtext.skin;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -48,6 +49,10 @@ public class StyledLabelSkin extends
 		this.b.getChildren().add(this.l);
 
 		control.styledStringProperty().addListener(this::styleStringChanged);
+		control.graphicProperty().addListener(this::graphicChanged);
+		if( control.getGraphic() != null ) {
+			this.l.setGraphic(control.getGraphic());
+		}
 		getChildren().add(this.b);
 		rebuildControl();
 	}
@@ -61,6 +66,12 @@ public class StyledLabelSkin extends
 		if (newValue != null) {
 			newValue.getSegmentList().addListener(this::segmentsChanged);
 		}
+	}
+
+	private void graphicChanged(ObservableValue<? extends Node> observable,
+			Node oldValue,
+			Node newValue) {
+		this.l.setGraphic(newValue);
 	}
 
 	private void segmentsChanged(Observable o) {
