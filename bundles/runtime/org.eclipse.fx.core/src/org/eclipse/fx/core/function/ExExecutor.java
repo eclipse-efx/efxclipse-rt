@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.core.function;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -89,7 +90,7 @@ public final class ExExecutor {
 	 *            the message to use
 	 * @return the value provided by the supplier
 	 */
-	public static <@Nullable V> V executeSupplier(@NonNull ExSupplier<V> r,
+	public static <@Nullable V> Optional<V> executeSupplier(@NonNull ExSupplier<V> r,
 			@NonNull String message) {
 		return executeSupplier(r, (e) -> wrap(e, message));
 	}
@@ -107,11 +108,11 @@ public final class ExExecutor {
 	 *            function to convert checked exceptions into runtime exceptions
 	 * @return the value provided by the supplier
 	 */
-	public static <@Nullable V> V executeSupplier(
+	public static <@Nullable V> Optional<V> executeSupplier(
 			@NonNull ExSupplier<V> r,
 			@NonNull Function<@NonNull Throwable, @NonNull RuntimeException> exceptionConverter) {
 		try {
-			return r.wrappedGet();
+			return Optional.ofNullable(r.wrappedGet());
 		} catch (Throwable e) {
 			if (e instanceof RuntimeException) {
 				throw (RuntimeException) e;
@@ -186,8 +187,8 @@ public final class ExExecutor {
 	 *            the message to use
 	 * @return the return value of the function
 	 */
-	public static <@Nullable V, @Nullable R> R executeFunction(V value, @NonNull ExFunction<V, R> r,
-			@NonNull String message) {
+	public static <@Nullable V, @Nullable R> Optional<R> executeFunction(V value,
+			@NonNull ExFunction<V, R> r, @NonNull String message) {
 		return executeFunction(value, r, (e) -> wrap(e, message));
 	}
 
@@ -206,12 +207,12 @@ public final class ExExecutor {
 	 *            function to convert checked exceptions into runtime exceptions
 	 * @return the return value of the function
 	 */
-	public static <@Nullable V, @Nullable R> R executeFunction(
+	public static <@Nullable V, @Nullable R> Optional<R> executeFunction(
 			V value,
 			@NonNull ExFunction<V, R> r,
 			@NonNull Function<@NonNull Throwable, @NonNull RuntimeException> exceptionConverter) {
 		try {
-			return r.wrappedApply(value);
+			return Optional.ofNullable(r.wrappedApply(value));
 		} catch (Throwable e) {
 			if (e instanceof RuntimeException) {
 				throw (RuntimeException) e;
