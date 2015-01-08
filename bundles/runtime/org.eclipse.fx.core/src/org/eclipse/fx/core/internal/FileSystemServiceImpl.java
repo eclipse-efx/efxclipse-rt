@@ -21,6 +21,8 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.function.BiConsumer;
 
 import org.eclipse.fx.core.FilesystemService;
@@ -56,6 +58,7 @@ public class FileSystemServiceImpl implements FilesystemService {
 	static class CheckThread extends Thread {
 		public final Map<WatchKey, PathSubscription> subscriptions = new HashMap<>();
 		private final WatchService watcher;
+		private final Executor dispatcher = Executors.newCachedThreadPool();
 
 		public CheckThread() {
 			setDaemon(true);
@@ -105,10 +108,9 @@ public class FileSystemServiceImpl implements FilesystemService {
 					}
 
 	            	if( pathSubscription != null && pathSubscription.consumer != null ) {
-	            		pathSubscription.consumer.accept(toKind(kind), pathSubscription.path.resolve(context));
+	            		this.dispatcher.execute((() -> pathSubscription.consumer.accept(toKind(kind), pathSubscription.path.resolve(context))));
 	            	}
 	            }
-
 
 	            key.reset();
 			}
