@@ -11,6 +11,7 @@ Import-Package: javax.annotation;version="1.2.0",
 Export-Package: org.eclipse.fx.core,
  org.eclipse.fx.core.adapter,
  org.eclipse.fx.core.command,
+ org.eclipse.fx.core.function,
  org.eclipse.fx.core.log,
  org.eclipse.fx.core.text,
  org.eclipse.fx.core.update
