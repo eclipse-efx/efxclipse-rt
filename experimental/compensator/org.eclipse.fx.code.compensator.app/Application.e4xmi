@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_fFsNwPG6EeOigcR0oBysUg" elementId="org.eclipse.fx.code.compensator.app" bindingContexts="_fFq_oPG6EeOigcR0oBysUg">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_xH6dEPG6EeOigcR0oBysUg" elementId="org.eclipse.fx.code.compensator.app.trimmedwindow.0" bindingContexts="_fFsNwfG6EeOigcR0oBysUg" x="10" y="10" width="800" height="600">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_xH6dEPG6EeOigcR0oBysUg" elementId="org.eclipse.fx.code.compensator.app.trimmedwindow.0" label="Bestsolution Compensator" bindingContexts="_fFsNwfG6EeOigcR0oBysUg" x="10" y="10" width="800" height="600">
+    <persistedState key="efx.window.root.fxml" value="platform:/plugin/org.eclipse.fx.code.compensator.app/org/eclipse/fx/code/compensator/app/ApplicationDecoration.fxml"/>
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_mym9kPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.perspectivestack.0"/>
     <mainMenu xmi:id="_RTKZcPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.menu.0">
       <children xsi:type="menu:Menu" xmi:id="_SXdvEPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.menu.1" label="Application">

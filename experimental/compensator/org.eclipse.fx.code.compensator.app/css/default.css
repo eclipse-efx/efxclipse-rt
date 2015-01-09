@@ -2,11 +2,7 @@
     /* @SuppressWarning */
     -compensator-default-text: -fx-text-background-color;
 	/* @SuppressWarning */
-    -compensator-extra1: /*#957d47*/ derive(-fx-text-background-color, 50%);
-}
-
-.new_project_dialog {
-	-fx-graphic: url(icons/48/project_icon.png);
+    -compensator-extra1: /*#957d47*/ derive(-fx-text-background-color, 110%);
 }
 
 .cell-text-extra {
@@ -15,4 +11,108 @@
 
 .cell-text-default {
 	-fx-fill: -compensator-default-text;
+}
+
+.menu-bar {
+	-fx-background-color: transparent;
+}
+
+/* Main CSS-File */
+.dialog {
+    -fx-padding: -1;
+    -fx-border-insets: 0 10 10 0;
+}
+
+.dialog.cross-platform {
+    -fx-border-width: 2;
+    -fx-border-radius: 5 5 0 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 11, 0.0, 3, 3);
+    -fx-border-color: #a3a3a3;
+}
+
+.dialog.heavyweight.cross-platform {
+    /**
+     * This allows for the drop shadow which otherwise won't appear. We don't
+     * want this in lightweight dialogs as it will overwrite the background.
+     */
+    -fx-background-color: inherit;
+}
+
+.dialog.cross-platform:active {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 11, 0.0, 3, 3);
+    -fx-border-color: #3e3e3e;
+}
+
+.dialog > * > .window-header {
+    -fx-padding: 0 3 0 8;
+    -fx-background-color: linear-gradient(#cccccc, #bababa 37%, #a6a6a6);
+    -fx-background-radius: 5 5 0 0;
+}
+
+.dialog:active > * > .window-header {
+    -fx-background-color: linear-gradient(#595959, #474747 37%, #343434);
+}
+
+.dialog > * > .window-header > * > .window-title {
+    -fx-padding: 0 0 0 0;
+    -fx-alignment: center;
+    -fx-font-size: 1.166667em; /*15px;*/
+    -fx-text-fill: #808080;
+}
+
+.dialog:active > * > .window-header > * > .window-title {
+    -fx-text-fill: #ebebeb;
+}
+
+.dialog > .window-resize-corner {
+    -fx-fill: transparent;
+    -fx-cursor: se_resize;
+}
+
+.dialog > * > .window-header > * > .window-buttons > .window-button {
+    -fx-background-color: transparent transparent;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 2;
+    -fx-padding: 0 0 0 0;
+    -fx-alignment: center;
+}
+
+.dialog:active .window-button:hover {
+    -fx-background-color: linear-gradient(#505050,#2d2d2d),
+                          linear-gradient(#a3a3a3, #8b8b8b 34%, #777777 36%, #777777 63%, #8b8b8b 65%, #adadad);
+}
+
+.dialog .window-buttons {
+    -fx-padding: 6 0 0 0;
+}
+
+.dialog .window-button:pressed {
+    -fx-background-color: linear-gradient(#515151,#202020),
+                          linear-gradient(#a3a3a3, #8b8b8b 34%, #777777 36%, #777777 63%, #8b8b8b 65%, #adadad);
+}
+
+.dialog .window-button > .graphic {
+    -fx-background-color: #949494;
+    -fx-scale-shape: false;
+    -fx-padding: 4.5 4.5 4.5 4.5; /* Graphic is 9x9 px */
+}
+
+.dialog:active .window-button:hover > .graphic {
+    -fx-background-color: #fefeff;
+}
+
+.dialog .window-button:pressed > .graphic {
+    -fx-background-color: #cfcfcf;
+}
+
+.dialog .window-close-button > .graphic {
+    -fx-shape: "M395.992,296.758l1.794-1.794l7.292,7.292l-1.795,1.794 L395.992,296.758z M403.256,294.992l1.794,1.794l-7.292,7.292l-1.794-1.795 L403.256,294.992z";
+}
+
+.dialog .window-minimize-button > .graphic {
+    -fx-shape: "M420.012,299.248v2.537h-9.001v-2.537H420.012z";
+}
+
+.dialog .window-maximize-button > .graphic {
+    -fx-shape: "M406.283,294.985h2.537v9.031h-2.538L406.283,294.985z M412.012,298.248v2.537h-9.001v-2.537H412.012z";
 }

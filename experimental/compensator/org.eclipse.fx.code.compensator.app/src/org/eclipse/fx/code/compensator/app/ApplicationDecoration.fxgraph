@@ -1,0 +1,27 @@
+package org.eclipse.fx.code.compensator.app
+
+import javafx.scene.layout.BorderPane
+import org.eclipse.fx.code.compensator.app.CustomWindowPane
+import javafx.scene.control.Label
+import javafx.scene.image.ImageView
+import javafx.scene.image.Image
+import org.eclipse.fx.ui.panes.FillLayoutPane
+import javafx.scene.control.ToolBar
+import javafx.scene.control.TextField
+import javafx.scene.Group
+
+component ApplicationDecoration styledwith "/css/default.css" {
+	CustomWindowPane {
+		content : BorderPane {
+			top : ToolBar {
+				^id : "main-header",
+				items : [
+					TextField
+				]
+			},
+			center : FillLayoutPane {
+				^id : "trim-pane-container"
+			}
+		}
+	}
+}
