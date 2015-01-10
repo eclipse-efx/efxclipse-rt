@@ -43,7 +43,16 @@ public class FileSystemServiceImpl implements FilesystemService {
 	}
 
 	@Override
-	public Subscription observePath(URI path, BiConsumer<Kind,Path> consumer) {
+	public Subscription observePath(URI uri, BiConsumer<Kind,Path> consumer) {
+		try {
+			return observePath(Paths.get(new java.net.URI(uri.toString())), consumer);
+		} catch (URISyntaxException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public Subscription observePath(Path path, BiConsumer<Kind,Path> consumer) {
 		if( this.thread == null || ! this.thread.isAlive() ) {
 			this.thread = new CheckThread();
 			this.thread.start();
@@ -69,19 +78,14 @@ public class FileSystemServiceImpl implements FilesystemService {
 			}
 		}
 
-		public Subscription registerURI(URI uri, BiConsumer<Kind,Path> consumer) throws IOException {
-			try {
-				Path path = Paths.get(new java.net.URI(uri.toString()));
-				WatchKey register = path.register(this.watcher, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
-				PathSubscription s = new PathSubscription(this, path, register, consumer);
-				synchronized (this.subscriptions) {
-					this.subscriptions.put(register,s);
-				}
-
-				return s;
-			} catch (URISyntaxException e) {
-				throw new IOException(e);
+		public Subscription registerURI(Path path, BiConsumer<Kind,Path> consumer) throws IOException {
+			WatchKey register = path.register(this.watcher, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
+			PathSubscription s = new PathSubscription(this, path, register, consumer);
+			synchronized (this.subscriptions) {
+				this.subscriptions.put(register,s);
 			}
+
+			return s;
 		}
 
 		@Override
