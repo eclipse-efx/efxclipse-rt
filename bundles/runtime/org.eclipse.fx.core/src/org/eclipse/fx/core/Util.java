@@ -12,8 +12,10 @@ package org.eclipse.fx.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -84,44 +86,14 @@ public class Util {
 		return ctx;
 	}
 
-	private static <@Nullable S> @Nullable S _lookupService(
-			@Nullable Class<?> requestor, Class<S> serviceClass) {
-		if (isOsgiEnv()) {
-			List<Class<?>> cl = new ArrayList<>();
-			if( requestor != null ) {
-				cl.add(requestor);
-			}
-			cl.add(serviceClass);
-			BundleContext ctx = getContext(cl);
-			ServiceReference<S> serviceReference = ctx.getServiceReference(serviceClass);
-			if (serviceReference != null) {
-				return ctx.getService(serviceReference);
-			}
-			return null;
-		} else {
-			ServiceLoader<S> serviceLoader = ServiceLoader.load(serviceClass);
-			Iterator<S> iterator = serviceLoader.iterator();
-			S rv = null;
-			int cur = 0;
-			while (iterator.hasNext()) {
-				@Nullable
-				S next = iterator.next();
-				if (rv == null) {
-					rv = next;
-
-					if (rv instanceof RankedService) {
-						cur = ((RankedService) rv).getRanking();
-					}
-				} else if (next instanceof RankedService) {
-					int ranking = ((RankedService) next).getRanking();
-					if (cur < ranking) {
-						rv = next;
-						cur = ranking;
-					}
-				}
-			}
-			return rv;
+	@SuppressWarnings("null")
+	private static <S> @Nullable S _lookupService(
+			@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
+		List<@NonNull S> _lookupServiceList = _lookupServiceList(requestor, serviceClass);
+		if( ! _lookupServiceList.isEmpty() ) {
+			return _lookupServiceList.get(0);
 		}
+		return null;
 	}
 
 	static class CompareableService<@NonNull S> implements Comparable<CompareableService<S>> {
@@ -156,9 +128,21 @@ public class Util {
 		}
 	}
 
+	private static Map<Class<?>, ServiceLoader<?>> LOADER_CACHE = new HashMap<Class<?>, ServiceLoader<?>>();
+
+	@SuppressWarnings("unchecked")
+	private static <S> ServiceLoader<S> getLoader(Class<S> clazz) {
+		ServiceLoader<S> l = (ServiceLoader<S>) LOADER_CACHE.get(clazz);
+		if( l == null ) {
+			l = ServiceLoader.load(clazz);
+			LOADER_CACHE.put(clazz, l);
+		}
+		return l;
+	}
+
 	@SuppressWarnings("null")
-	private static <@NonNull S> @NonNull List<S> _lookupServiceList(
-			@Nullable Class<?> requestor, Class<S> serviceClass) {
+	private static <S> @NonNull List<@NonNull S> _lookupServiceList(
+			@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
 		if (isOsgiEnv()) {
 			List<Class<?>> cl = new ArrayList<>();
 			if( requestor != null ) {
@@ -176,7 +160,7 @@ public class Util {
 			}
 
 		} else {
-			ServiceLoader<S> serviceLoader = ServiceLoader.load(serviceClass);
+			ServiceLoader<S> serviceLoader = getLoader(serviceClass);
 			Iterator<S> iterator = serviceLoader.iterator();
 			List<S> rv = new ArrayList<>();
 			while (iterator.hasNext()) {
@@ -204,8 +188,9 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	public static <@Nullable S> @Nullable S lookupService(Class<?> requestor,
-			Class<S> serviceClass) {
+	@SuppressWarnings("null")
+	public static <S> @Nullable S lookupService(@NonNull Class<?> requestor,
+			@NonNull Class<S> serviceClass) {
 		return _lookupService(requestor, serviceClass);
 	}
 
@@ -217,7 +202,8 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	public static <@Nullable S> @Nullable S lookupService(Class<S> serviceClass) {
+	@SuppressWarnings("null")
+	public static <S> @Nullable S lookupService(@NonNull Class<S> serviceClass) {
 		return _lookupService(null, serviceClass);
 	}
 
@@ -232,8 +218,9 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	public static <@NonNull S> @NonNull List<S> lookupServiceList(Class<?> requestor,
-			Class<S> serviceClass) {
+	@SuppressWarnings("null")
+	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor,
+			@NonNull Class<S> serviceClass) {
 		return _lookupServiceList(requestor, serviceClass);
 	}
 
@@ -245,7 +232,8 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	public static <@NonNull S> @NonNull List<S> lookupServiceList(Class<S> serviceClass) {
+	@SuppressWarnings("null")
+	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<S> serviceClass) {
 		return _lookupServiceList(null, serviceClass);
 	}
 
