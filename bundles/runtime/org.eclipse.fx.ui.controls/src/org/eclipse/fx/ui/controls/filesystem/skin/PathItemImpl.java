@@ -170,7 +170,7 @@ public abstract class PathItemImpl implements ResourceItem {
 		private void handlePathModification(Kind k, Path p) {
 			switch (k) {
 			case CREATE:
-				if (this.children.stream().filter(i -> i.getPath() == p)
+				if (! this.children.stream().filter(i -> i.getPath().equals(p))
 						.findFirst().isPresent()) {
 					this.children
 							.add(Files.isDirectory(p) ? new DirPathItemImpl(p,
@@ -178,10 +178,10 @@ public abstract class PathItemImpl implements ResourceItem {
 				}
 				break;
 			case DELETE:
-				this.children.removeIf(i -> i.getPath() == p);
+				this.children.removeIf(i -> i.getPath().equals(p));
 				break;
 			case MODIFY:
-				this.children.stream().filter(i -> i.getPath() == p)
+				this.children.stream().filter(i -> i.getPath().equals(p))
 						.findFirst().ifPresent(i -> i.refresh());
 				break;
 			default:

@@ -12,11 +12,14 @@ package org.eclipse.fx.ui.controls.filesystem.skin;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
@@ -24,6 +27,7 @@ import javafx.scene.control.TreeView;
 
 import org.eclipse.fx.ui.controls.filesystem.DirItem;
 import org.eclipse.fx.ui.controls.filesystem.DirectoryTreeView;
+import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
 import org.eclipse.fx.ui.controls.filesystem.behavior.DirectoryTreeViewBehavior;
 import org.eclipse.fx.ui.controls.tree.LazyTreeItem;
 import org.eclipse.fx.ui.controls.tree.SimpleTreeCell;
@@ -116,6 +120,35 @@ public class DirectoryTreeViewSkin extends
 	static class DirTreeItem extends LazyTreeItem<DirItem> {
 		public DirTreeItem(DirItem item) {
 			super(item, FACTORY);
+			item.getChildren().addListener(this::handleListModification);
+		}
+
+		private void handleListModification(
+				Change<? extends ResourceItem> change) {
+			if( ! Platform.isFxApplicationThread() ) {
+				Platform.runLater(() -> _handleListModification(change));
+			} else {
+				_handleListModification(change);
+			}
+		}
+
+		private void _handleListModification(Change<? extends ResourceItem> change) {
+			while (change.next()) {
+				if (change.wasRemoved()) {
+					Map<DirItem, TreeItem<DirItem>> map = getChildren().stream().collect(Collectors.toMap( c -> c.getValue(), c -> c));
+					List<TreeItem<DirItem>> itemsToRemove = change.getRemoved().stream().filter( c -> map.containsKey(c)).map(c -> map.get(c)).collect(Collectors.toList());
+					getChildren().removeAll(itemsToRemove);
+				}
+
+				if (change.wasAdded()) {
+					getChildren().addAll(
+							change.getAddedSubList().stream()
+									.filter(c -> c instanceof DirItem)
+									.map((c) -> new DirTreeItem((DirItem) c))
+									.collect(Collectors.toList()));
+				}
+
+			}
 		}
 	}
 
