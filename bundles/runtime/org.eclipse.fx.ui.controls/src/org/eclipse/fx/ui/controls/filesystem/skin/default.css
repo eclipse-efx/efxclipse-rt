@@ -1,0 +1,45 @@
+.folderSmall {
+	-fx-image: url(fldr_16.png);
+}
+
+.folderMedium {
+	-fx-image: url(fldr_32.png);
+}
+
+.folderBig {
+	-fx-image: url(fldr_48.png);
+}
+
+.label.folderSmall {
+	-fx-graphic: url(fldr_16.png);
+}
+
+.label.folderMedium {
+	-fx-graphic: url(fldr_32.png);
+}
+
+.label.folderBig {
+	-fx-graphic: url(fldr_48.png);
+}
+
+.fileSmall {
+	-fx-image: url(file_16.png);
+}
+
+.fileMedium {
+	-fx-image: url(file_32.png);
+}
+
+.fileBig {
+	-fx-image: url(file_48.png);
+}
+
+.preview.resourceName {
+	-fx-font-weight: bold;
+	-fx-font-size: 1.2em;
+}
+
+.preview.resourcePropertyLabel {
+	-fx-font-weight: bold;
+	-fx-text-fill: derive(-fx-text-background-color, 70%);
+}
