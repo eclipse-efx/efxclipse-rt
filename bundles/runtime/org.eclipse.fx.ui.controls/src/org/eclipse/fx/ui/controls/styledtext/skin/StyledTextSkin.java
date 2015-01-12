@@ -946,7 +946,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 	class MyVirtualFlow extends VirtualFlow<LineCell> {
 		public MyVirtualFlow() {
-			setMaxPrefBreadth(Double.MAX_VALUE);
 		}
 
 		@Override
