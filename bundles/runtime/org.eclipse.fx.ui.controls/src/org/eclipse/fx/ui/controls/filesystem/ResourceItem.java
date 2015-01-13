@@ -32,7 +32,12 @@ public interface ResourceItem {
 	/**
 	 * @return the path to the resource
 	 */
-	public Path getPath();
+	public Object getNativeResourceObject();
+
+	/**
+	 * @return the uri
+	 */
+	public String getUri();
 
 	/**
 	 * refresh the resource information

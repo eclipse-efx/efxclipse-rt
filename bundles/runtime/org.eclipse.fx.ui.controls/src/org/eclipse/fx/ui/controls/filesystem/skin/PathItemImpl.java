@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.controls.filesystem.skin;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
@@ -56,8 +57,17 @@ public abstract class PathItemImpl implements ResourceItem {
 	}
 
 	@Override
-	public Path getPath() {
+	public Path getNativeResourceObject() {
 		return this.path;
+	}
+
+	@Override
+	public String getUri() {
+		try {
+			return this.path.toUri().toURL().toExternalForm();
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@SuppressWarnings("null")
@@ -170,7 +180,7 @@ public abstract class PathItemImpl implements ResourceItem {
 		private void handlePathModification(Kind k, Path p) {
 			switch (k) {
 			case CREATE:
-				if (! this.children.stream().filter(i -> i.getPath().equals(p))
+				if (! this.children.stream().filter(i -> i.getNativeResourceObject().equals(p))
 						.findFirst().isPresent()) {
 					this.children
 							.add(Files.isDirectory(p) ? new DirPathItemImpl(p,
@@ -178,10 +188,10 @@ public abstract class PathItemImpl implements ResourceItem {
 				}
 				break;
 			case DELETE:
-				this.children.removeIf(i -> i.getPath().equals(p));
+				this.children.removeIf(i -> i.getNativeResourceObject().equals(p));
 				break;
 			case MODIFY:
-				this.children.stream().filter(i -> i.getPath().equals(p))
+				this.children.stream().filter(i -> i.getNativeResourceObject().equals(p))
 						.findFirst().ifPresent(i -> i.refresh());
 				break;
 			default:

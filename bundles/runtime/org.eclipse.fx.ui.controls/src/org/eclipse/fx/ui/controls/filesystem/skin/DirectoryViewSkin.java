@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.filesystem.skin;
 
-import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
@@ -90,10 +88,12 @@ public class DirectoryViewSkin extends
 		TableView<ResourceItem> t = new TableView<>();
 		t.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		ResourceBundle b = ResourceBundle.getBundle("org.eclipse.fx.ui.controls.filesystem.skin.resource"); //$NON-NLS-1$
+		ResourceBundle b = ResourceBundle
+				.getBundle("org.eclipse.fx.ui.controls.filesystem.skin.resource"); //$NON-NLS-1$
 
 		{
-			TableColumn<ResourceItem, ResourceItem> c = new TableColumn<>(b.getString("DirectoryViewSkin_Name")); //$NON-NLS-1$
+			TableColumn<ResourceItem, ResourceItem> c = new TableColumn<>(
+					b.getString("DirectoryViewSkin_Name")); //$NON-NLS-1$
 			c.setPrefWidth(400);
 			c.setMinWidth(400);
 			c.setCellFactory((co) -> new NameTableCell());
@@ -103,7 +103,8 @@ public class DirectoryViewSkin extends
 		}
 
 		{
-			TableColumn<ResourceItem, LocalDateTime> c = new TableColumn<>(b.getString("DirectoryViewSkin_ChangeDate")); //$NON-NLS-1$
+			TableColumn<ResourceItem, LocalDateTime> c = new TableColumn<>(
+					b.getString("DirectoryViewSkin_ChangeDate")); //$NON-NLS-1$
 			c.setMinWidth(100);
 			c.setCellFactory((co) -> new LastModifiedCell());
 			c.setCellValueFactory((cdf) -> cdf.getValue()
@@ -112,7 +113,8 @@ public class DirectoryViewSkin extends
 		}
 
 		{
-			TableColumn<ResourceItem, Long> c = new TableColumn<>(b.getString("DirectoryViewSkin_Size")); //$NON-NLS-1$
+			TableColumn<ResourceItem, Long> c = new TableColumn<>(
+					b.getString("DirectoryViewSkin_Size")); //$NON-NLS-1$
 			c.setCellFactory((co) -> new SizeCell());
 			c.setCellValueFactory((cdf) -> {
 				if (cdf.getValue() instanceof DirItem) {
@@ -143,7 +145,7 @@ public class DirectoryViewSkin extends
 		}
 		this.elements.clear();
 		this.currentItem = getSkinnable().getDir();
-		if( this.currentItem != null ) {
+		if (this.currentItem != null) {
 			Bindings.bindContent(this.elements, this.currentItem.getChildren());
 		}
 	}
@@ -214,7 +216,7 @@ public class DirectoryViewSkin extends
 			if (item != null && !empty) {
 				Label l = new Label();
 				ImageView v = new ImageView();
-				if (Files.isDirectory(item.getPath())) {
+				if (item instanceof DirItem) {
 					String styleClass;
 					switch (getSkinnable().getIconSize()) {
 					case SMALL:
@@ -244,15 +246,9 @@ public class DirectoryViewSkin extends
 							break;
 						}
 
-						try {
-							Image img = new Image(item.getPath().toUri()
-									.toURL().toExternalForm(), size, size,
-									true, true, true);
-							v.setImage(img);
-						} catch (MalformedURLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						Image img = new Image(item.getUri(), size, size, true,
+								true, true);
+						v.setImage(img);
 					} else {
 						String styleClass;
 						switch (getSkinnable().getIconSize()) {
@@ -270,8 +266,7 @@ public class DirectoryViewSkin extends
 					}
 				}
 				l.setGraphic(v);
-				l.setText(item.getPath()
-						.getName(item.getPath().getNameCount() - 1).toString());
+				l.setText(item.getName());
 				v.setFitWidth(size(getSkinnable().getIconSize()) - 10);
 				v.setPreserveRatio(true);
 				l.setMaxHeight(size(getSkinnable().getIconSize()));

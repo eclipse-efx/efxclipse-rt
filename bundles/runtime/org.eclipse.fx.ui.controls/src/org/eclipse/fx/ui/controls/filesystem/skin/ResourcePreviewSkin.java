@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.filesystem.skin;
 
-import java.net.MalformedURLException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
@@ -140,19 +139,13 @@ public class ResourcePreviewSkin extends
 				this.size.setText("--"); //$NON-NLS-1$
 			} else {
 				if (item.getName().endsWith(".png") || item.getName().endsWith(".jpg") || item.getName().endsWith(".gif")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					try {
-						Image value = new Image(item.getPath().toUri().toURL()
-								.toExternalForm(), true);
-						v.setImage(value);
-						this.imageSizeValue
-								.textProperty()
-								.bind(value
-										.widthProperty()
-										.asString("%.0f").concat(" x ").concat(value.heightProperty().asString("%.0f"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					Image value = new Image(item.getUri(), true);
+					v.setImage(value);
+					this.imageSizeValue
+							.textProperty()
+							.bind(value
+									.widthProperty()
+									.asString("%.0f").concat(" x ").concat(value.heightProperty().asString("%.0f"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					this.fileProperties.getChildren().addAll(
 							this.imageSizeLabel, this.imageSizeValue);
 				} else {
