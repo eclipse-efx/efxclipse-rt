@@ -20,6 +20,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -292,7 +293,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 
 				if (lastCell.getDomainElement() != null) {
 					Region g = (Region) lastCell.getGraphic();
-					TextFlow flow = (TextFlow) g.getChildrenUnmodifiable().get(0);
+					Pane flow = (Pane) g.getChildrenUnmodifiable().get(0);
 					for (Node n : flow.getChildren()) {
 						if( n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY()) ) {
 							TextFlow textFlow = (TextFlow) n;

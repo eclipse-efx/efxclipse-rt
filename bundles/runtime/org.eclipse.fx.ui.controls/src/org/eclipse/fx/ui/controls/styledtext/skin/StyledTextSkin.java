@@ -77,6 +77,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 	HBox rootContainer;
 
+	private static final boolean USE_MONO_RASTER = true;
+
 	/**
 	 * Create a new skin
 	 *
@@ -169,7 +171,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						}
 
 						RegionImpl container = (RegionImpl) c.getGraphic();
-						TextFlow flow = (TextFlow) container.getChildren().get(0);
+						Pane flow = (Pane) container.getChildren().get(0);
 
 						flow.requestLayout();
 
@@ -449,7 +451,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			for (LineCell c : getCurrentVisibleCells()) {
 				if (c.domainElement == lineObject) {
 					RegionImpl container = (RegionImpl) c.getGraphic();
-					TextFlow flow = (TextFlow) container.getChildren().get(0);
+					Pane flow = (Pane) container.getChildren().get(0);
 
 					TextFlow textNode = null;
 					int relativePos = 0;
@@ -523,16 +525,12 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				lineInfo.setLayoutY(getLayoutY());
 
 				RegionImpl stack = (RegionImpl) getGraphic();
-				TextFlow flow;
+				Pane flow;
+				TextLayouter layouter;
 
 				if (stack == null) {
-					flow = new TextFlow() {
-						@Override
-						protected void layoutChildren() {
-							super.layoutChildren();
-							updateCaret();
-						}
-					};
+					layouter = new TextLayouter(USE_MONO_RASTER, this::updateCaret);
+					flow = layouter.getLayoutPane();
 					Path caretPath = new Path();
 					caretPath.getStyleClass().add("text-caret"); //$NON-NLS-1$
 					caretPath.setManaged(false);
@@ -541,7 +539,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					stack = new RegionImpl(flow, caretPath);
 					setGraphic(stack);
 				} else {
-					flow = (TextFlow) stack.getChildren().get(0);
+					flow = (Pane) stack.getChildren().get(0);
+					layouter = (TextLayouter) flow.getUserData();
 				}
 
 				List<TextFlow> texts = new ArrayList<>();
@@ -594,7 +593,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					f.setUserData(Integer.valueOf(arg0.getLineOffset()));
 					texts.add(f);
 				}
-
+				layouter.setText(arg0.getText());
 				flow.getChildren().setAll(texts);
 			} else {
 				setGraphic(null);
