@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.code.compensator.project.jdt.jdtproject">
+   <implementation class="org.eclipse.fx.code.compensator.project.jdt.JDTProjectService"/>
+   <service>
+      <provide interface="org.eclipse.fx.code.compensator.project.ProjectService"/>
+   </service>
+   <reference bind="registerContextMenuContributions" cardinality="0..n" interface="org.eclipse.fx.code.compensator.project.ProjectNavigatorContribution" name="ProjectNavigatorContribution" policy="dynamic" unbind="unregisterContextMenuContributions"/>
+</scr:component>

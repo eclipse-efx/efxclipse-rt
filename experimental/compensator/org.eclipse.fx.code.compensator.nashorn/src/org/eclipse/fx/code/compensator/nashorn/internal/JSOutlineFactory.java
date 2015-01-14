@@ -61,7 +61,7 @@ public class JSOutlineFactory implements OutlineFactory {
         FunctionNode node = new Parser(context.getEnv(), source, errors).parse();
 
         Optional<JSOutlineExtension> extension = extensions.stream().filter((e) -> e.applies(input)).findFirst();
-        return extension.map((e)->e.createOutline(node)).orElse(defaultOutline(node));
+        return extension.map((e)->e.createOutline(node,input)).orElse(defaultOutline(node));
 	}
 
 	private static JSOutline defaultOutline(FunctionNode node) {

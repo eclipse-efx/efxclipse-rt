@@ -25,23 +25,20 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 	public void configure(SourceViewerConfiguration configuration) {
 		if (getTextWidget() == null)
 			return;
-		
+
 		if( configuration.getDefaultStylesheet().getValue() != null ) {
-			getTextWidget().getStylesheets().add(configuration.getDefaultStylesheet().getValue().toExternalForm());	
+			getTextWidget().getStylesheets().add(configuration.getDefaultStylesheet().getValue().toExternalForm());
 		}
-		
+
 		configuration.getDefaultStylesheet().addListener((obs,oldVal,newVal) -> {
-			System.err.println("UPDATING STYLESHEET");
 			if( oldVal != null ) {
-				System.err.println("REMOVE: " + oldVal);
 				getTextWidget().getStylesheets().remove(oldVal.toExternalForm());
 			}
 			if( newVal != null ) {
-				System.err.println("ADD: " + newVal);
 				getTextWidget().getStylesheets().add(newVal.toExternalForm());
 			}
 		});
-		
+
 		setDocumentPartitioning(configuration.getConfiguredDocumentPartitioning(this));
 
 		// install content type independent plug-ins
@@ -51,7 +48,7 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 		fReconciler= configuration.getReconciler(this);
 		if (fReconciler != null)
-			fReconciler.install(this);	
+			fReconciler.install(this);
 	}
 
 }

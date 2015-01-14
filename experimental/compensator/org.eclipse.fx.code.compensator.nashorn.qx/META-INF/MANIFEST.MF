@@ -6,6 +6,9 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.fx.code.compensator.nashorn,
  org.eclipse.fx.code.compensator.editor,
- org.eclipse.fx.ui.theme;bundle-version="1.2.0"
-Service-Component: OSGI-INF/services/qxnashornoutlineext.xml
+ org.eclipse.fx.ui.theme;bundle-version="1.2.0",
+ org.eclipse.fx.ui.controls;bundle-version="1.2.0",
+ org.eclipse.fx.ui.services
+Service-Component: OSGI-INF/services/qxnashornoutlineext.xml,
+ OSGI-INF/services/jsqxstyleysheet.xml
 Bundle-ActivationPolicy: lazy

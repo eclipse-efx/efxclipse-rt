@@ -20,7 +20,6 @@ import org.eclipse.fx.code.compensator.editor.services.InputFactory;
 public class FileInputFactory implements InputFactory {
 	@Override
 	public boolean applies(String url) {
-		System.err.println("CHECKING: " + url);
 		return url.startsWith("file:");
 	}
 

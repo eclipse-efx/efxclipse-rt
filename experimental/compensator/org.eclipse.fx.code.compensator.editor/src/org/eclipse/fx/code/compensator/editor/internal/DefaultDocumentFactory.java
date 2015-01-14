@@ -21,7 +21,7 @@ import org.eclipse.jface.text.IDocument;
 
 public class DefaultDocumentFactory implements DocumentFactory {
 	private WeakHashMap<IDocument, Input<?>> documents = new WeakHashMap<IDocument, Input<?>>();
-	
+
 	@Override
 	public boolean applies(Input<?> input) {
 		return input instanceof FileInput;
@@ -30,14 +30,14 @@ public class DefaultDocumentFactory implements DocumentFactory {
 	@Override
 	public IDocument createDocument(Input<?> input) {
 		IDocument document;
-		
+
 		Optional<Entry<IDocument, Input<?>>> first = documents.entrySet().stream().filter((e) -> e.getValue() == input).findFirst();
 		if( first.isPresent() ) {
 			document = first.get().getKey();
 		} else {
-			document = new Document(((FileInput)input).getData());	
+			document = new Document(((FileInput)input).getData());
 		}
-		
+
 		documents.put(document, input);
 		return document;
 	}
@@ -46,7 +46,9 @@ public class DefaultDocumentFactory implements DocumentFactory {
 	public boolean persistDocument(IDocument document) {
 		Input<?> input = documents.get(document);
 		if( input != null ) {
-			((FileInput)input).setData(document.get());
+			FileInput fileInput = (FileInput)input;
+			fileInput.setData(document.get());
+			fileInput.persist();
 			return true;
 		}
 		return false;

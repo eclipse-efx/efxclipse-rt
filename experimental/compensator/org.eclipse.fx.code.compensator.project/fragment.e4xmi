@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_4ZRrMICvEeSVlekWrdeFsw">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_8qFZEICvEeSVlekWrdeFsw" featurename="snippets" parentElementId="org.eclipse.fx.code.compensator.app">
+    <elements xsi:type="advanced:Perspective" xmi:id="_-gA_8ICvEeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.project.perspective.default">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_CFaZUICwEeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.project.partsashcontainer.0" horizontal="true">
+        <tags>fx_fixedLayout</tags>
+        <children xsi:type="basic:Part" xmi:id="_GIlT0ICwEeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.project.part.0" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.ProjectMainToolbar"/>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_Q3a1EICwEeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.project.partsashcontainer.1" horizontal="true">
+          <persistedState key="fx_layout_grab_horizontal" value="true"/>
+          <persistedState key="fx_layout_grab_vertical" value="true"/>
+          <children xsi:type="basic:Part" xmi:id="_h8e4kICwEeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.project.part.2" containerData="10" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.ProjectNavigator" label="Navigator" iconURI="platform:/plugin/org.eclipse.fx.code.compensator.project/css/icons/16/filenav_nav.png">
+            <menus xsi:type="menu:PopupMenu" xmi:id="_817HwJRaEeSW6PsXAs2Rlg" elementId="org.eclipse.fx.code.compensator.project.popupmenu.navigator">
+              <children xsi:type="menu:DynamicMenuContribution" xmi:id="_fYe84JRbEeSW6PsXAs2Rlg" elementId="org.eclipse.fx.code.compensator.project.dynamicmenucontribution.0" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.DynamicContextMenu"/>
+            </menus>
+          </children>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_51uSIJi4EeSDUP4UCvXSqw" elementId="org.eclipse.fx.code.compensator.project.partsashcontainer.2" containerData="80">
+            <tags>fx_fixedLayout</tags>
+            <children xsi:type="basic:Part" xmi:id="_9XOqAJi4EeSDUP4UCvXSqw" elementId="org.eclipse.fx.code.compensator.project.part.4" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.EditorNavigation"/>
+            <children xsi:type="basic:PartStack" xmi:id="_Y15HgICwEeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.project.partstack.1" containerData="">
+              <persistedState key="fx_layout_grab_horizontal" value="true"/>
+              <persistedState key="fx_layout_grab_vertical" value="true"/>
+            </children>
+          </children>
+          <children xsi:type="basic:Part" xmi:id="_jcf50ICwEeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.project.part.3" containerData="10" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.ProjectFileOutline" label="Outline" iconURI="platform:/plugin/org.eclipse.fx.code.compensator.project/css/icons/16/outline_co.png"/>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_TucskICwEeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.project.part.1" toBeRendered="false" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.ProjectSecondaryToolbar"/>
+      </children>
+      <variables>navigatorSelection</variables>
+      <variables>activeInput</variables>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_o6_GQIPmEeS5JpVAKZcwIQ" featurename="children" parentElementId="org.eclipse.fx.code.compensator.app.menu.0" positionInList="">
+    <elements xsi:type="menu:Menu" xmi:id="_qZcoUIPmEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.menu.0" label="Projects">
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_6PbCgIPmEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.handledmenuitem.0" label="New Local Project ..." command="_bSwrIIPoEeS5JpVAKZcwIQ"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_9jgpcIPmEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.handledmenuitem.1" label="New Remote Project ..." command="_fMNo8IPoEeS5JpVAKZcwIQ"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_AbMoQIPnEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.handledmenuitem.2" label="Open Project ..." command="_prnAAIPoEeS5JpVAKZcwIQ"/>
+      <children xsi:type="menu:MenuSeparator" xmi:id="_1WAkcIRSEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.menuseparator.0"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_zKehAIRSEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.handledmenuitem.3" label="Open Playground" command="_u3zK4IRSEeS5JpVAKZcwIQ"/>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Q-wEsIPoEeS5JpVAKZcwIQ" featurename="commands" parentElementId="org.eclipse.fx.code.compensator.app">
+    <elements xsi:type="commands:Command" xmi:id="_bSwrIIPoEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.command.2" commandName="Create New Local Project"/>
+    <elements xsi:type="commands:Command" xmi:id="_fMNo8IPoEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.command.1" commandName="Create Remote Project"/>
+    <elements xsi:type="commands:Command" xmi:id="_jCev4IPoEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.app.command.openproject" commandName="Open Project">
+      <parameters xmi:id="_lf-tEIPoEeS5JpVAKZcwIQ" elementId="projectId" name="Project ID"/>
+    </elements>
+    <elements xsi:type="commands:Command" xmi:id="_prnAAIPoEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.command.3" commandName="Open Project Selection Dialog"/>
+    <elements xsi:type="commands:Command" xmi:id="_u3zK4IRSEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.command.0" commandName="Switch to Playground"/>
+    <elements xsi:type="commands:Command" xmi:id="_quw04JZZEeSjZ8iCNzGAiA" elementId="org.eclipse.fx.code.compensator.project.command.openresource" commandName="Open Resource">
+      <parameters xmi:id="_1IWe4JZZEeSjZ8iCNzGAiA" elementId="resourceURI" name="Resource URI"/>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_SOxssIPpEeS5JpVAKZcwIQ" featurename="handlers" parentElementId="org.eclipse.fx.code.compensator.app">
+    <elements xsi:type="commands:Handler" xmi:id="_Xsst8IPpEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.handler.0" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.commands.NewLocalProject" command="_bSwrIIPoEeS5JpVAKZcwIQ"/>
+    <elements xsi:type="commands:Handler" xmi:id="_avqvsIPpEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.handler.1" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.commands.OpenProject" command="_jCev4IPoEeS5JpVAKZcwIQ"/>
+    <elements xsi:type="commands:Handler" xmi:id="_1e0r4IopEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.handler.2" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.commands.OpenProjectDialog" command="_prnAAIPoEeS5JpVAKZcwIQ"/>
+    <elements xsi:type="commands:Handler" xmi:id="_wR0BAJZJEeSjZ8iCNzGAiA" elementId="org.eclipse.fx.code.compensator.project.handler.3" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.commands.SwitchPlayground" command="_u3zK4IRSEeS5JpVAKZcwIQ"/>
+    <elements xsi:type="commands:Handler" xmi:id="_vG9kMJZZEeSjZ8iCNzGAiA" elementId="org.eclipse.fx.code.compensator.project.handler.4" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.commands.OpenResource" command="_quw04JZZEeSjZ8iCNzGAiA"/>
+  </fragments>
+</fragment:ModelFragments>

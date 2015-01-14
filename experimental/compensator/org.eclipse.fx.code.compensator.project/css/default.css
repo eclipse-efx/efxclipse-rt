@@ -1,0 +1,11 @@
+.project-toolbar > * > .button {
+	-fx-background-color: transparent;
+}
+
+.new_project_dialog {
+	-fx-graphic: url(icons/64/newprj_wiz.png);
+}
+
+.open_project_dialog {
+	-fx-graphic: url(icons/64/prj_obj.png);
+}

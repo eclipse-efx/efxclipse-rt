@@ -21,31 +21,39 @@ import org.eclipse.fx.code.compensator.editor.Input;
 
 public class FileInput implements Input<String>, ContentTypeProvider {
 	private Path path;
+	private String data;
 
 	public FileInput(Path path) {
 		this.path = path;
 	}
-	
+
 	@Override
 	public String getData() {
-		try(BufferedReader reader = Files.newBufferedReader(path)) {
-			StringBuilder b = new StringBuilder();
-			String line;
-			while( (line = reader.readLine()) != null ) {
-				//FIXME We need to replace TABs for now
-				b.append(line.replaceAll("\t", "    ")+"\n");
+		if( data == null ) {
+			try(BufferedReader reader = Files.newBufferedReader(path)) {
+				StringBuilder b = new StringBuilder();
+				String line;
+				while( (line = reader.readLine()) != null ) {
+					//FIXME We need to replace TABs for now
+					b.append(line.replaceAll("\t", "    ")+"\n");
+				}
+				reader.close();
+				data = b.toString();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			reader.close();
-			return b.toString();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		return "";
+		return data;
 	}
-	
+
 	@Override
 	public void setData(String data) {
+		this.data = data;
+	}
+
+	@Override
+	public void persist() {
 		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
 			writer.write(data);
 			writer.close();
@@ -54,7 +62,7 @@ public class FileInput implements Input<String>, ContentTypeProvider {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public String getContentType() {
 		//FIXME Need suffix => type mapping
@@ -70,6 +78,8 @@ public class FileInput implements Input<String>, ContentTypeProvider {
 			return ContentTypeProvider.HSL;
 		} else if( path.toString().endsWith(".lego") ) {
 			return ContentTypeProvider.LEGO;
+		} else if( path.toString().endsWith(".dart") ) {
+			return ContentTypeProvider.DART;
 		}
 		return null;
 	}

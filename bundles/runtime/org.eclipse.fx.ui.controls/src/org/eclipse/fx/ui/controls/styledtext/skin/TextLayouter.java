@@ -62,24 +62,28 @@ public class TextLayouter {
 		@Override
 		protected void layoutChildren() {
 			super.layoutChildren();
+			try {
+				if( ! getChildren().isEmpty() ) {
+					TextFlow f = (TextFlow) getChildren().get(0);
 
-			if( ! getChildren().isEmpty() ) {
-				TextFlow f = (TextFlow) getChildren().get(0);
+					if( this.glyphList == null ) {
+						TextLayoutFactory factory = Toolkit.getToolkit().getTextLayoutFactory();
+						TextLayout layout = factory.createLayout();
+						layout.setContent(this.text, ((Text)f.getChildren().get(0)).getFont().impl_getNativeFont());
+						this.glyphList = layout.getLines()[0].getRuns()[0];
+					}
 
-				if( this.glyphList == null ) {
-					TextLayoutFactory factory = Toolkit.getToolkit().getTextLayoutFactory();
-					TextLayout layout = factory.createLayout();
-					layout.setContent(this.text, ((Text)f.getChildren().get(0)).getFont().impl_getNativeFont());
-					this.glyphList = layout.getLines()[0].getRuns()[0];
+					int start = ((Integer) f.getUserData()).intValue();
+					for( Node n : getChildren() ) {
+						double offset = this.glyphList.getPosX((((Integer)n.getUserData()).intValue()-start));
+						TextFlow t = (TextFlow) n;
+						t.relocate(offset, 0);
+					}
 				}
-
-				int start = ((Integer) f.getUserData()).intValue();
-				for( Node n : getChildren() ) {
-					double offset = this.glyphList.getPosX((((Integer)n.getUserData()).intValue()-start));
-					TextFlow t = (TextFlow) n;
-					t.relocate(offset, 0);
-				}
+			} catch(Throwable t) {
+				t.printStackTrace();
 			}
+
 
 
 			this.layoutRunnable.run();

@@ -13,4 +13,5 @@ package org.eclipse.fx.code.compensator.editor;
 public interface Input<O> {
 	public O getData();
 	public void setData(O data);
+	public void persist();
 }

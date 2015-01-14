@@ -6,5 +6,5 @@ import org.eclipse.fx.code.compensator.editor.Input;
 
 public interface JSOutlineExtension {
 	public boolean applies(Input<?> input);
-	public JSOutline createOutline(FunctionNode node);
+	public JSOutline createOutline(FunctionNode node, Input<?> input);
 }

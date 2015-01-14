@@ -9,6 +9,7 @@ Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolu
  org.eclipse.fx.ui.animation;bundle-version="1.2.0",
  org.eclipse.fx.core
 Export-Package: org.eclipse.fx.ui.controls,
+ org.eclipse.fx.ui.controls.filesystem,
  org.eclipse.fx.ui.controls.image,
  org.eclipse.fx.ui.controls.image.spi,
  org.eclipse.fx.ui.controls.list,

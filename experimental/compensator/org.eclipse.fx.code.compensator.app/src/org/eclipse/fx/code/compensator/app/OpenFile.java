@@ -26,7 +26,6 @@ import org.eclipse.fx.code.compensator.model.workbench.File;
 public class OpenFile {
 	@Execute
 	public void openFile(MPerspective perspective, EModelService service, File file, EPartService partService, FileIconLookup lookup) {
-
 		MPartStack element = (MPartStack) service.find("org.eclipse.fx.code.compensator.freeedit.partstack.1", perspective);
 
 		for( MStackElement p : element.getChildren() ) {

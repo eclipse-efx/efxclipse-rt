@@ -1,0 +1,35 @@
+.run-button {
+	-fx-graphic: url(icons/24/run.png);
+}
+
+.debug-button {
+	-fx-graphic: url(icons/24/debug.png);
+}
+
+.profile-button {
+	-fx-graphic: url(icons/24/junit.png);
+}
+
+.new-java-class {
+	-fx-graphic: url(icons/24/newclass_wiz.png);
+}
+
+.new-java-enum {
+	-fx-graphic: url(icons/24/newenum_wiz.png);
+}
+
+.new-java-interface {
+	-fx-graphic: url(icons/24/newint_wiz.png);
+}
+
+.new-java-package {
+	-fx-graphic: url(icons/24/newpack_wiz.png);
+}
+
+.new-java-module {
+	-fx-graphic: url(icons/24/newjworkingSet_wiz.png);
+}
+
+/*.list-cell >*/ .styled-label.java-project {
+	-fx-graphic: url(icons/16/jperspective.png);
+}

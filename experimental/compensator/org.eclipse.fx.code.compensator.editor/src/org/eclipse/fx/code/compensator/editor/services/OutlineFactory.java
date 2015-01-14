@@ -15,5 +15,6 @@ import org.eclipse.fx.code.compensator.editor.Outline;
 
 public interface OutlineFactory {
 	public boolean applies(Input<?> input);
+	//TODO we should make this async
 	public Outline createOutline(Input<?> input);
 }

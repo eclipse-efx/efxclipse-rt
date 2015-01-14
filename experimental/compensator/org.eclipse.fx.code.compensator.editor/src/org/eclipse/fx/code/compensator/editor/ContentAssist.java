@@ -10,15 +10,28 @@
  *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor;
 
+import java.util.List;
+import java.util.function.Consumer;
+
+
 public interface ContentAssist {
 	public class Proposal {
-//		public final String type;
-//		public final String label;
-//		public final String extraData; 
-//		
-//		public Proposal(String type, Styled label) {
-//			this.type = type;
-//			this.label = label;
-//		}
+		public final CharSequence label;
+
+		public Proposal(CharSequence label) {
+			this.label = label;
+		}
 	}
+
+	public class ProposalContext {
+		public Input<?> input;
+		public int location;
+
+		public ProposalContext(Input<?> input, int location) {
+			this.input = input;
+			this.location = location;
+		}
+	}
+
+	public void collectProposals(ProposalContext context, Consumer<List<Proposal>> proposals);
 }
