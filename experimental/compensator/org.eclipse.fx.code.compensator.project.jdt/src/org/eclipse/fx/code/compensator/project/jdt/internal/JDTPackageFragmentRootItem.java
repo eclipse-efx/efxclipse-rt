@@ -30,6 +30,11 @@ public class JDTPackageFragmentRootItem extends FolderItem implements ProjectNav
 	}
 
 	@Override
+	public JDTInstanceProject getJdtProject() {
+		return getModuleItem().getJdtProject();
+	}
+
+	@Override
 	public CharSequence getLabel() {
 		return moduleItem.getPath().relativize(path).toString();
 	}

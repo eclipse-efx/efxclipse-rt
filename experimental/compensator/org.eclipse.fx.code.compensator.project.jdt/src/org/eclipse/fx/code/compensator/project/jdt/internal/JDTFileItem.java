@@ -2,16 +2,18 @@ package org.eclipse.fx.code.compensator.project.jdt.internal;
 
 import java.nio.file.Path;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
-import org.eclipse.fx.code.compensator.project.navigator.PathItem;
+import org.eclipse.fx.code.compensator.project.navigator.FileItem;
 
-public class JDTFileItem extends PathItem implements JDTPathItem {
+public class JDTFileItem extends FileItem implements JDTPathItem {
 
 	public JDTFileItem(ProjectNavigatorItem parent, Path p) {
 		super(parent,p);
+	}
+
+	@Override
+	public String getIcon() {
+		return getJdtProject().getFileLookup().getFileIcon(getDomainObject().toUri().toString());
 	}
 
 	@Override
@@ -20,25 +22,8 @@ public class JDTFileItem extends PathItem implements JDTPathItem {
 	}
 
 	@Override
-	public String getIcon() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getOpenCommandId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ObservableList<ProjectNavigatorItem> getChildren() {
-		return FXCollections.emptyObservableList();
-	}
-
-	@Override
-	public boolean isLeaf() {
-		return true;
+	public JDTInstanceProject getJdtProject() {
+		return ((JDTPathItem)parent).getJdtProject();
 	}
 
 }

@@ -38,12 +38,15 @@ public class JDTInstanceProject implements InstanceProject {
 		this.modelService = modelService;
 		this.perspective = perspective;
 		this.fileLookup = fileLookup;
-		System.err.println("A NEW INSTANCE");
 	}
 
 	@Override
 	public Project getProject() {
 		return project;
+	}
+
+	public FileIconLookup getFileLookup() {
+		return fileLookup;
 	}
 
 	public JDTServer getProjectServer() {

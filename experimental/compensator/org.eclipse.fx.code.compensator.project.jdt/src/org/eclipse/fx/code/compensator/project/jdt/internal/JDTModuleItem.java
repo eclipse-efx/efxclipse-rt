@@ -47,6 +47,11 @@ public class JDTModuleItem implements ProjectNavigatorItem, JDTPathItem {
 		return this;
 	}
 
+	@Override
+	public JDTInstanceProject getJdtProject() {
+		return this.instanceProject;
+	}
+
 	public Path getModuleRelativePath(Path path) {
 		return getPath().relativize(path);
 	}

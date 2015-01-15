@@ -31,4 +31,9 @@ public class JDTPackageItem extends FolderItem implements ProjectNavigatorItem, 
 	public JDTModuleItem getModuleItem() {
 		return ((JDTPathItem)parent).getModuleItem();
 	}
+
+	@Override
+	public JDTInstanceProject getJdtProject() {
+		return ((JDTPathItem)parent).getJdtProject();
+	}
 }
