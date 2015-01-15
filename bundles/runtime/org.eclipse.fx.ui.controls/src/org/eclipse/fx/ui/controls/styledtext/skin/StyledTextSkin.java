@@ -236,7 +236,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		for (LineCell c : getCurrentVisibleCells()) {
 			if (c.domainElement == lineObject) {
 				RegionImpl container = (RegionImpl) c.getGraphic();
-				TextFlow flow = (TextFlow) container.getChildren().get(0);
+				Pane flow = (Pane) container.getChildren().get(0);
 				// System.err.println("STARTING SCAN");
 				Text textNode = null;
 				int relativePos = 0;
@@ -247,7 +247,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					int offset = ((Integer) n.getUserData()).intValue();
 					if (offset <= caretPosition) {
 						relativePos = caretPosition - offset;
-						textNode = (Text) n;
+						textNode = (Text) ((TextFlow) n).getChildren().get(0);
 						break;
 					}
 				}
@@ -255,9 +255,10 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				if (textNode != null) {
 					textNode.setImpl_caretPosition(relativePos);
 					PathElement[] elements = textNode.getImpl_caretShape();
-					double xShift = textNode.getLayoutX();
+					Point2D t = getSkinnable().sceneToLocal(textNode.localToScene(new Point2D(0, textNode.getBoundsInParent().getHeight())));
 					// System.err.println(textNode.getText() + " ====> " +
 					// xShift);
+					int xShift = 0;
 					for (PathElement e : elements) {
 						if (e instanceof MoveTo) {
 							xShift += ((MoveTo) e).getX();
@@ -265,8 +266,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					}
 					// System.err.println("==> " + xShift);
 
-					Point2D rv = new Point2D(xShift, c.getLayoutY());
-					return rv;
+					return t.add(xShift, 0);
 					// final Path p = (Path)container.getChildren().get(1);
 					//
 					// p.getElements().clear();
