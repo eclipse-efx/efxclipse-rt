@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 
 import org.eclipse.fx.code.server.jdt.JDTServer;
 import org.eclipse.fx.code.server.jdt.server.JDTServerImpl;
+import org.eclipse.fx.code.server.jdt.shared.Proposal;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
 
@@ -56,6 +57,22 @@ public class MemJDTServer implements JDTServer {
 	}
 
 	@Override
+	public Future<Boolean> reset(String id) {
+		return CompletableFuture.supplyAsync(() -> {
+			serverImpl.reset(id);
+			return true;
+		});
+	}
+
+	@Override
+	public Future<Boolean> dispose(String resourceId) {
+		return CompletableFuture.supplyAsync(() -> {
+			serverImpl.dispose(resourceId);
+			return true;
+		});
+	}
+
+	@Override
 	public Future<Boolean> insertContent(String id, int offset,
 			ByteBuffer content) {
 		return CompletableFuture.supplyAsync(() -> {
@@ -89,5 +106,8 @@ public class MemJDTServer implements JDTServer {
 		});
 	}
 
-
+	@Override
+	public Future<List<Proposal>> getProposals(String id, int offset) {
+		return CompletableFuture.supplyAsync(() -> serverImpl.getProposals(id,offset));
+	}
 }

@@ -1,5 +1,7 @@
 package org.eclipse.jface.text;
 
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+
 public interface ITextViewer {
 	public IDocument getDocument();
 	public void setDocument(IDocument document);
@@ -9,4 +11,5 @@ public interface ITextViewer {
 	void addTextInputListener(ITextInputListener listener);
 	void removeTextInputListener(ITextInputListener listener);
 	void changeTextPresentation(TextPresentation presentation, boolean controlRedraw);
+	StyledTextArea getTextWidget();
 }

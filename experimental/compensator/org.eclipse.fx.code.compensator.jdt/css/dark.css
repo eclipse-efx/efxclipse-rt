@@ -1,4 +1,4 @@
-.java-class-private {
+/* .java-class-private {
 	-fx-graphic: url("icons/class-private.png");
 }
 
@@ -8,46 +8,46 @@
 
 .java-class-default {
 	-fx-graphic: url("icons/class-default.png");
-}
+}*/
 
 .java-class-public {
-	-fx-graphic: url("icons/class-public.png");
+	-fx-graphic: url("icons/16/classpub_obj.png");
 }
 
 /* -------------------- */
 
 .java-method-private {
-	-fx-graphic: url("icons/method-private.png");
+	-fx-graphic: url("icons/16/methpri_obj.png");
 }
 
 .java-method-protected {
-	-fx-graphic: url("icons/method-protected.png");
+	-fx-graphic: url("icons/16/methpro_obj.png");
 }
 
 .java-method-default {
-	-fx-graphic: url("icons/method-default.png");
+	-fx-graphic: url("icons/16/methdef_obj.png");
 }
 
 .java-method-public {
-	-fx-graphic: url("icons/method-public.png");
+	-fx-graphic: url("icons/16/methpub_obj.png");
 }
 
 /* -------------------- */
 
 .java-field-private {
-	-fx-graphic: url("icons/field-private.png");
+	-fx-graphic: url("icons/16/field_private_obj.png");
 }
 
 .java-field-protected {
-	-fx-graphic: url("icons/field-protected.png");
+	-fx-graphic: url("icons/16/field_protected_obj.png");
 }
 
 .java-field-default {
-	-fx-graphic: url("icons/field-default.png");
+	-fx-graphic: url("icons/16/field_default_obj.png");
 }
 
 .java-field-public {
-	-fx-graphic: url("icons/field-public.png");
+	-fx-graphic: url("icons/16/field_public_obj.png");
 }
 
 /* -------------------- */

@@ -64,6 +64,18 @@ public class FileInput implements Input<String>, ContentTypeProvider {
 	}
 
 	@Override
+	public void reset() {
+		this.data = null;
+		getData();
+	}
+
+	@Override
+	public void dispose() {
+		this.data = null;
+		this.path = null;
+	}
+
+	@Override
 	public String getContentType() {
 		//FIXME Need suffix => type mapping
 		if( path.toString().endsWith(".xml") ) {

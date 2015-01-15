@@ -15,8 +15,11 @@ Require-Bundle: org.eclipse.fx.code.compensator.project,
  org.eclipse.fx.code.server.jdt;bundle-version="1.0.0",
  org.eclipse.fx.code.compensator.editor,
  org.eclipse.fx.text,
- org.eclipse.e4.ui.workbench
-Service-Component: OSGI-INF/services/jdtproject.xml,OSGI-INF/services/jdtstylesheet.xml,OSGI-INF/services/serverfunction.xml,OSGI-INF/services/jdtserverinputfactory.xml,
- OSGI-INF/services/jdtDocumentfactory.xml
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.fx.code.server.jdt.shared;bundle-version="1.0.0",
+ org.eclipse.fx.ui.controls
+Service-Component: OSGI-INF/services/jdtproject.xml,OSGI-INF/services/jdtstylesheet.xml,OSGI-INF/services/serverfunction.xml,OSGI-INF/services/jdtserverinputfactory.xml,OSGI-INF/services/jdtDocumentfactory.xml,
+ OSGI-INF/services/jdtproposalcomputer.xml
 Bundle-ActivationPolicy: lazy
-Import-Package: javax.inject;version="1.0.0"
+Import-Package: javax.inject;version="1.0.0",
+ org.eclipse.jface.text.contentassist

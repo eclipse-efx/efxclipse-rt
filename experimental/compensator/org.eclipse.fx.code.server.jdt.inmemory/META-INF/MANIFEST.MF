@@ -9,3 +9,4 @@ Require-Bundle: org.eclipse.fx.code.server.jdt,
  org.eclipse.fx.code.server.jdt.server
 Service-Component: OSGI-INF/services/serverfactory.xml
 Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.fx.code.server.jdt.shared

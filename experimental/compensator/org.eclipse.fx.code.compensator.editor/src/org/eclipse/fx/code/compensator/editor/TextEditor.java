@@ -104,6 +104,7 @@ public class TextEditor {
 		viewer.configure(configuration);
 		viewer.setDocument(document);
 		pane.setCenter(viewer);
+		activeInput.setValue(input);
 	}
 
 	@Persist
@@ -119,6 +120,10 @@ public class TextEditor {
 	void focused() {
 		activeInput.setValue(input);
 		textArea.requestFocus();
+		//TODO We should remember the caret offset
+		if( textArea.getCaretOffset() == -1 && textArea.getContent().getCharCount() > 0 ) {
+			textArea.setCaretOffset(0);
+		}
 	}
 
 	@PreDestroy
@@ -126,5 +131,7 @@ public class TextEditor {
 		if( activeInput.getValue() == input ) {
 			activeInput.setValue(null);
 		}
+		this.input.dispose();
+		this.input = null;
 	}
 }

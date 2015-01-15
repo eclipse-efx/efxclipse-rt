@@ -24,7 +24,9 @@ public class ActiveOutlineContextFunction extends ContextFunction {
 				return true;
 			}
 		});
-		return createOutline(outerContext);
+		Outline outline = createOutline(outerContext);
+		System.err.println("THE OUTLINE IS: " + outline);
+		return outline;
 	}
 
 	private Outline createOutline(IEclipseContext context) {

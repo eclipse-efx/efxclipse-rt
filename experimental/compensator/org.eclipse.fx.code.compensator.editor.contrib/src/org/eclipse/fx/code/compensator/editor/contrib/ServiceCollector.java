@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.fx.code.compensator.editor.ProposalComputer;
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.Outline;
+import org.eclipse.fx.code.compensator.editor.services.ProposalComputerFactory;
 import org.eclipse.fx.code.compensator.editor.services.DocumentFactory;
 import org.eclipse.fx.code.compensator.editor.services.DocumentPersitenceService;
 import org.eclipse.fx.code.compensator.editor.services.FileIconLookup;
@@ -35,6 +37,15 @@ public class ServiceCollector implements DocumentPersitenceService, FileIconLook
 	private List<OutlineFactory> outlineFactoryList = new ArrayList<>();
 	private List<SourceViewerConfigurationFactory> configurationProvider = new ArrayList<>();
 	private List<FileIconProvider> fileIconProvider = new ArrayList<>();
+	private List<ProposalComputerFactory> contentAssistFactory = new ArrayList<>();
+
+	public void addContentAssistFactory(ProposalComputerFactory factory) {
+		this.contentAssistFactory.add(factory);
+	}
+
+	public void removeContentAssistFactory(ProposalComputerFactory factory) {
+		this.contentAssistFactory.remove(factory);
+	}
 
 	public void addInputFactory(InputFactory provider) {
 		inputProviderList.add(provider);
@@ -115,6 +126,14 @@ public class ServiceCollector implements DocumentPersitenceService, FileIconLook
 	public SourceViewerConfiguration createConfiguration(Input<?> input) {
 		Optional<SourceViewerConfiguration> map = configurationProvider.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createConfiguration(input));
 		return map.get();
+	}
+
+	public ProposalComputer createProposalComputer(Input<?> input) {
+		Optional<ProposalComputer> map = contentAssistFactory.stream().filter((c) -> c.applies(input)).findFirst().map((c) -> c.createProposalComputer());
+		if( map.isPresent() ) {
+			return map.get();
+		}
+		return null;
 	}
 
 	public String getFileIcon(String uri) {

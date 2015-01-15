@@ -6,4 +6,5 @@
       <provide interface="org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory"/>
       <provide interface="org.eclipse.fx.code.compensator.editor.services.FileIconProvider"/>
    </service>
+   <reference bind="registerProposalComputerFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.ProposalComputerFactory" name="ProposalComputerFactory" policy="static" unbind="unregisterProposalComputerFactory"/>
 </scr:component>

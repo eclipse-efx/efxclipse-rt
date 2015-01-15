@@ -12,4 +12,5 @@
    <reference bind="addSourceViewerConfigurationFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory" name="SourceViewerConfigurationFactory" policy="dynamic" unbind="removeSourceViewerConfigurationFactory"/>
    <reference bind="addOutlineFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.OutlineFactory" name="OutlineFactory" policy="dynamic" unbind="removeOutlineFactory"/>
    <reference bind="addFileIconProvider" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.FileIconProvider" name="FileIconProvider" policy="dynamic" unbind="removeFileIconProvider"/>
+   <reference bind="addContentAssistFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.ContentAssistFactory" name="ContentAssistFactory" policy="dynamic" unbind="removeContentAssistFactory"/>
 </scr:component>

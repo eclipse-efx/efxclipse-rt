@@ -12,12 +12,37 @@ import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.server.jdt.JDTServer;
 
 public class JDTServerInput implements Input<String>, ContentTypeProvider {
-	private JDTServer server;
-	private Future<String> openFile;
+	public final JDTServer server;
+	public final Future<String> openFile;
 
 	public JDTServerInput(JDTServer server, String module, String path) {
 		this.server = server;
 		this.openFile = this.server.openFile(module, path);
+	}
+
+	@Override
+	public void reset() {
+		try {
+			String resourceId = this.openFile.get();
+			Future<Boolean> rv = this.server.reset(resourceId);
+			rv.get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void dispose() {
+		try {
+			String resourceId = this.openFile.get();
+			Future<Boolean> rv = this.server.dispose(resourceId);
+			rv.get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override

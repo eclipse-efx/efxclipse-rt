@@ -25,6 +25,7 @@ public class ProjectFileOutline {
 	private TreeView<OutlineItem> outlineView;
 	private final GraphicsLoader nodeProvider;
 	private final MPart appModelElement;
+	private Outline outline;
 
 	@Inject
 	public ProjectFileOutline(GraphicsLoader nodeProvider, MPart appModelElement) {
@@ -45,6 +46,7 @@ public class ProjectFileOutline {
 		outlineView.setShowRoot(false);
 		outlineView.setCellFactory(this::createCell);
 		parent.setCenter(outlineView);
+		updateInput(outline);
 	}
 
 	TreeCell<OutlineItem> createCell(TreeView<OutlineItem> param) {
@@ -53,10 +55,11 @@ public class ProjectFileOutline {
 
 	@Inject
 	void updateInput(@Optional @Named("activeOutline") Outline outline) {
-		//TODO needs to be fixed
+		this.outline = outline;
 		if( outlineView == null ) {
 			return;
 		}
+
 		if( outline != null ) {
 			TreeItem<OutlineItem> root = new TreeItem<Outline.OutlineItem>();
 			for( OutlineItem l : outline.getRootItems() ) {

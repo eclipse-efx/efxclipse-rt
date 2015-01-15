@@ -8,12 +8,24 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.code.compensator.editor.services;
+package org.eclipse.fx.code.compensator.editor;
 
-import org.eclipse.fx.code.compensator.editor.ContentAssist;
-import org.eclipse.fx.code.compensator.editor.Input;
+import java.util.List;
+import java.util.concurrent.Future;
 
-public interface ContentAssistFactory {
-	public boolean applies(Input<?> input);
-	public ContentAssist getContentAssist();
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
+
+public interface ProposalComputer {
+
+	public class ProposalContext {
+		public final Input<?> input;
+		public final int location;
+
+		public ProposalContext(Input<?> input, int location) {
+			this.input = input;
+			this.location = location;
+		}
+	}
+
+	public Future<List<ICompletionProposal>> compute(ProposalContext context);
 }

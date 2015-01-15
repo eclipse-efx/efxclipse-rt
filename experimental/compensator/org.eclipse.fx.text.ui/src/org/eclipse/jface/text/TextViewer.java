@@ -50,11 +50,11 @@ public class TextViewer extends Viewer implements
 	private final String MARK_POSITION_CATEGORY="__mark_category_" + hashCode(); //$NON-NLS-1$
 	private final IPositionUpdater fMarkPositionUpdater= new DefaultPositionUpdater(MARK_POSITION_CATEGORY);
 	private List fTextPresentationListeners;
-	
+
 	public TextViewer() {
 		createControl();
 	}
-	
+
 	protected void createControl() {
 		fTextWidget = createTextWidget();
 		AnchorPane.setLeftAnchor(fTextWidget, 0.0);
@@ -63,18 +63,18 @@ public class TextViewer extends Viewer implements
 		AnchorPane.setBottomAnchor(fTextWidget, 0.0);
 		getChildren().add(fTextWidget);
 	}
-	
-	protected StyledTextArea getTextWidget() {
+
+	public StyledTextArea getTextWidget() {
 		return fTextWidget;
 	}
-	
+
 	protected StyledTextArea createTextWidget() {
 		StyledTextArea styledText= new StyledTextArea();
 		styledText.setLineRulerVisible(true);
 //		styledText.setLeftMargin(Math.max(styledText.getLeftMargin(), 2));
 		return styledText;
 	}
-	
+
 	public void setInput(Object input) {
 
 		IDocument document= null;
@@ -83,15 +83,15 @@ public class TextViewer extends Viewer implements
 
 		setDocument(document);
 	}
-	
+
 	public Object getInput() {
 		return getDocument();
 	}
-	
+
 	public void setDocumentPartitioning(String partitioning) {
 		fPartitioning= partitioning;
 	}
-	
+
 	/**
 	 * Sets this viewer's visible document. The visible document represents the
 	 * visible region of the viewer's input document.
@@ -115,17 +115,17 @@ public class TextViewer extends Viewer implements
 		initializeDocumentInformationMapping(fVisibleDocument);
 
 		initializeWidgetContents();
-		
+
 //TODO needs porting
 //		fFindReplaceDocumentAdapter= null;
 		if (fVisibleDocument != null && fVisibleDocumentListener != null)
 			fVisibleDocument.addDocumentListener(fVisibleDocumentListener);
 	}
-	
+
 	public IDocument getDocument() {
 		return fDocument;
 	}
-	
+
 	public void setDocument(IDocument document) {
 		fReplaceTextPresentation= true;
 		fireInputDocumentAboutToBeChanged(fDocument, document);
@@ -142,7 +142,7 @@ public class TextViewer extends Viewer implements
 		fLastSentSelectionChange= null;
 		fReplaceTextPresentation= false;
 	}
-	
+
 	public IRegion getVisibleRegion() {
 
 		IDocument document= getVisibleDocument();
@@ -153,7 +153,7 @@ public class TextViewer extends Viewer implements
 
 		return new Region(0, document == null ? 0 : document.getLength());
 	}
-	
+
 	protected void fireInputDocumentAboutToBeChanged(IDocument oldInput, IDocument newInput) {
 		List listener= fTextInputListeners;
 		if (listener != null) {
@@ -163,7 +163,7 @@ public class TextViewer extends Viewer implements
 			}
 		}
 	}
-	
+
 	protected void fireInputDocumentChanged(IDocument oldInput, IDocument newInput) {
 		List listener= fTextInputListeners;
 		if (listener != null) {
@@ -173,32 +173,32 @@ public class TextViewer extends Viewer implements
 			}
 		}
 	}
-	
+
 	protected IDocument getVisibleDocument() {
 		return fVisibleDocument;
 	}
-	
+
 	protected void freeSlaveDocument(IDocument slave) {
 		ISlaveDocumentManager manager= getSlaveDocumentManager();
 		if (manager != null && manager.isSlaveDocument(slave))
 			manager.freeSlaveDocument(slave);
 	}
-	
+
 	protected ISlaveDocumentManager getSlaveDocumentManager() {
 		if (fSlaveDocumentManager == null)
 			fSlaveDocumentManager= createSlaveDocumentManager();
 		return fSlaveDocumentManager;
 	}
-	
+
 	protected ISlaveDocumentManager createSlaveDocumentManager() {
 		return new ChildDocumentManager();
 	}
-	
+
 	protected void initializeDocumentInformationMapping(IDocument visibleDocument) {
 		ISlaveDocumentManager manager= getSlaveDocumentManager();
 		fInformationMapping= manager == null ? null : manager.createMasterSlaveMapping(visibleDocument);
 	}
-	
+
 	protected void inputChanged(Object newInput, Object oldInput) {
 
 		IDocument oldDocument= (IDocument) oldInput;
@@ -235,7 +235,7 @@ public class TextViewer extends Viewer implements
 			newDocument.addPositionUpdater(fMarkPositionUpdater);
 		}
 	}
-	
+
 	private void initializeWidgetContents() {
 
 		if (fTextWidget != null && fVisibleDocument != null) {
@@ -256,7 +256,7 @@ public class TextViewer extends Viewer implements
 	protected IDocumentAdapter createDocumentAdapter() {
 		return new DefaultDocumentAdapter();
 	}
-	
+
 	public final void invalidateTextPresentation() {
 		if (fVisibleDocument != null) {
 			fWidgetCommand.event= null;
@@ -266,7 +266,7 @@ public class TextViewer extends Viewer implements
 			updateTextListeners(fWidgetCommand);
 		}
 	}
-	
+
 	protected void updateTextListeners(WidgetCommand cmd) {
 		List textListeners= fTextListeners;
 		if (textListeners != null) {
@@ -282,14 +282,14 @@ public class TextViewer extends Viewer implements
 			}
 		}
 	}
-	
+
 	protected final boolean redraws() {
 		return fRedrawCounter <= 0;
 	}
 
 	protected void handleVisibleDocumentAboutToBeChanged(DocumentEvent event) {
 	}
-	
+
 	protected void handleVisibleDocumentChanged(DocumentEvent event) {
 	}
 
@@ -303,7 +303,7 @@ public class TextViewer extends Viewer implements
 		if (!fTextListeners.contains(listener))
 			fTextListeners.add(listener);
 	}
-	
+
 	public void removeTextListener(ITextListener listener) {
 		Assert.isNotNull(listener);
 
@@ -313,7 +313,7 @@ public class TextViewer extends Viewer implements
 				fTextListeners= null;
 		}
 	}
-	
+
 	public void addTextInputListener(ITextInputListener listener) {
 
 		Assert.isNotNull(listener);
@@ -324,7 +324,7 @@ public class TextViewer extends Viewer implements
 		if (!fTextInputListeners.contains(listener))
 			fTextInputListeners.add(listener);
 	}
-	
+
 	public void removeTextInputListener(ITextInputListener listener) {
 
 		Assert.isNotNull(listener);
@@ -335,7 +335,7 @@ public class TextViewer extends Viewer implements
 				fTextInputListeners= null;
 		}
 	}
-	
+
 	public void changeTextPresentation(TextPresentation presentation, boolean controlRedraw) {
 
 		if (presentation == null || !redraws())
@@ -371,7 +371,7 @@ public class TextViewer extends Viewer implements
 //		if (controlRedraw)
 //			fTextWidget.setRedraw(true);
 	}
-	
+
 	private void addPresentation(TextPresentation presentation) {
 
 		StyleRange range= presentation.getDefaultStyleRange();
@@ -414,7 +414,7 @@ public class TextViewer extends Viewer implements
 			}
 		}
 	}
-	
+
 	private void applyTextPresentation(TextPresentation presentation) {
 		List list= new ArrayList(presentation.getDenumerableRanges());
 		Iterator e= presentation.getAllStyleRangeIterator();
@@ -431,7 +431,7 @@ public class TextViewer extends Viewer implements
 			fTextWidget.setStyleRanges(ranges);
 		}
 	}
-	
+
 	protected StyleRange modelStyleRange2WidgetStyleRange(StyleRange range) {
 		IRegion region= modelRange2WidgetRange(new Region(range.start, range.length));
 		if (region != null) {
@@ -442,7 +442,7 @@ public class TextViewer extends Viewer implements
 		}
 		return null;
 	}
-	
+
 	public IRegion modelRange2WidgetRange(IRegion modelRange) {
 		if (fInformationMapping == null)
 			return modelRange;
@@ -462,13 +462,13 @@ public class TextViewer extends Viewer implements
 
 		return null;
 	}
-	
+
 	public IRewriteTarget getRewriteTarget() {
 		if (fRewriteTarget == null)
 			fRewriteTarget= new RewriteTarget();
 		return fRewriteTarget;
 	}
-	
+
 	public final void setRedraw(boolean redraw) {
 //TODO needs porting
 //		setRedraw(redraw, -1);
@@ -489,7 +489,7 @@ public class TextViewer extends Viewer implements
 			handleVisibleDocumentChanged(e);
 		}
 	}
-	
+
 	/**
 	 * Represents a replace command that brings the text viewer's text widget
 	 * back in synchronization with text viewer's document after the document
@@ -542,7 +542,7 @@ public class TextViewer extends Viewer implements
 				preservedText= null;
 		}
 	}
-	
+
 	private class DocumentRewriteSessionListener implements IDocumentRewriteSessionListener {
 
 		/*
@@ -573,7 +573,7 @@ public class TextViewer extends Viewer implements
 			}
 		}
 	}
-	
+
 	/**
 	 * The viewer's rewrite target.
 	 * @since 2.0
@@ -584,7 +584,7 @@ public class TextViewer extends Viewer implements
 		 * @see org.eclipse.jface.text.IRewriteTarget#beginCompoundChange()
 		 */
 		public void beginCompoundChange() {
-//TODO needs porting			
+//TODO needs porting
 //			if (fUndoManager != null)
 //				fUndoManager.beginCompoundChange();
 		}
@@ -593,7 +593,7 @@ public class TextViewer extends Viewer implements
 		 * @see org.eclipse.jface.text.IRewriteTarget#endCompoundChange()
 		 */
 		public void endCompoundChange() {
-//TODO needs porting			
+//TODO needs porting
 //			if (fUndoManager != null)
 //				fUndoManager.endCompoundChange();
 		}
@@ -612,11 +612,11 @@ public class TextViewer extends Viewer implements
 			TextViewer.this.setRedraw(redraw);
 		}
 	}
-	
+
 	private final class ViewerState {
-//TODO needs porting	
+//TODO needs porting
 		public void restore(boolean restoreViewport) {
-			
+
 		}
 	}
 }

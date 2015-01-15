@@ -10,8 +10,6 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.java;
 
-import java.net.URISyntaxException;
-
 import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.java.scanner.FastJavaPartitionScanner;
@@ -19,11 +17,12 @@ import org.eclipse.fx.code.compensator.editor.java.scanner.IJavaPartitions;
 import org.eclipse.fx.code.compensator.editor.services.FileIconProvider;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
+import org.eclipse.fx.code.compensator.editor.spi.BaseLanguageComponent;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
-public class JavaComponent implements PartitionerFactory, SourceViewerConfigurationFactory, FileIconProvider {
+public class JavaComponent extends BaseLanguageComponent implements PartitionerFactory, SourceViewerConfigurationFactory, FileIconProvider {
 	private final static String[] LEGAL_CONTENT_TYPES= new String[] {
 		IJavaPartitions.JAVA_DOC,
 		IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
@@ -31,9 +30,10 @@ public class JavaComponent implements PartitionerFactory, SourceViewerConfigurat
 		IJavaPartitions.JAVA_STRING,
 		IJavaPartitions.JAVA_CHARACTER
 	};
+
 	@Override
 	public SourceViewerConfiguration createConfiguration(Input<?> input) {
-		return new JavaSourceConfiguration();
+		return new JavaSourceConfiguration(input, createProposalComputer(input));
 	}
 
 	@Override

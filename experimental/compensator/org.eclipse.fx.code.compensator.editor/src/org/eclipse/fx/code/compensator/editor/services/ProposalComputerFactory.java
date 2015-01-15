@@ -8,30 +8,12 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.code.compensator.editor;
+package org.eclipse.fx.code.compensator.editor.services;
 
-import java.util.List;
-import java.util.function.Consumer;
+import org.eclipse.fx.code.compensator.editor.ProposalComputer;
+import org.eclipse.fx.code.compensator.editor.Input;
 
-
-public interface ContentAssist {
-	public class Proposal {
-		public final CharSequence label;
-
-		public Proposal(CharSequence label) {
-			this.label = label;
-		}
-	}
-
-	public class ProposalContext {
-		public Input<?> input;
-		public int location;
-
-		public ProposalContext(Input<?> input, int location) {
-			this.input = input;
-			this.location = location;
-		}
-	}
-
-	public void collectProposals(ProposalContext context, Consumer<List<Proposal>> proposals);
+public interface ProposalComputerFactory {
+	public boolean applies(Input<?> input);
+	public ProposalComputer createProposalComputer();
 }

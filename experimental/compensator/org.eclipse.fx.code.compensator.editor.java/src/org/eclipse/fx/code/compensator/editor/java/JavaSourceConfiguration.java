@@ -11,12 +11,18 @@
 package org.eclipse.fx.code.compensator.editor.java;
 
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyProperty;
-import javafx.beans.property.SimpleObjectProperty;
 
+import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.code.compensator.editor.ProposalComputer;
+import org.eclipse.fx.code.compensator.editor.ProposalComputer.ProposalContext;
 import org.eclipse.fx.code.compensator.editor.java.scanner.IJavaColorConstants;
 import org.eclipse.fx.code.compensator.editor.java.scanner.IJavaPartitions;
 import org.eclipse.fx.code.compensator.editor.java.scanner.JavaCodeScanner;
@@ -24,6 +30,9 @@ import org.eclipse.fx.code.compensator.editor.java.scanner.JavaCommentScanner;
 import org.eclipse.fx.code.compensator.editor.java.scanner.JavaDocScanner;
 import org.eclipse.fx.code.compensator.editor.java.scanner.SingleTokenJavaScanner;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.contentassist.ContentAssistant;
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
@@ -32,17 +41,21 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
 public class JavaSourceConfiguration extends SourceViewerConfiguration {
-	
+
 	private JavaCodeScanner fCodeScanner;
 	private JavaDocScanner fJavaDocScanner;
 	private JavaCommentScanner fMultilineCommentScanner;
 	private JavaCommentScanner fSinglelineCommentScanner;
 	private SingleTokenJavaScanner fStringScanner;
+	private final Optional<ProposalComputer> computer;
+	private Input<?> input;
 
-	public JavaSourceConfiguration() {
+	public JavaSourceConfiguration(Input<?> input, Optional<ProposalComputer> computer) {
+		this.computer = computer;
+		this.input = input;
 		initializeScanners();
 	}
-	
+
 	private void initializeScanners() {
 		fCodeScanner= new JavaCodeScanner();
 		fMultilineCommentScanner= new JavaCommentScanner(IJavaColorConstants.JAVA_MULTI_LINE_COMMENT);
@@ -50,16 +63,36 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 		fStringScanner= new SingleTokenJavaScanner(IJavaColorConstants.JAVA_STRING);
 		fJavaDocScanner= new JavaDocScanner();
 	}
-	
+
 	@Override
 	public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
 		return IJavaPartitions.JAVA_PARTITIONING;
 	}
-	
+
+	@Override
+	public IContentAssistant getContentAssist() {
+		if( computer.isPresent() ) {
+			return new ContentAssistant(this::computeProposals);
+		}
+		return super.getContentAssist();
+	}
+
+	private List<ICompletionProposal> computeProposals(Integer offset) {
+		System.err.println("Compute at: " + offset);
+		Future<List<ICompletionProposal>> computedProposals = computer.get().compute(new ProposalContext(input, offset));
+		try {
+			return computedProposals.get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Collections.emptyList();
+	}
+
 	@Override
 	public IPresentationReconciler getPresentationReconciler(
 			ISourceViewer sourceViewer) {
-		PresentationReconciler reconciler= new /*JavaPresentationReconciler*/ PresentationReconciler(); 
+		PresentationReconciler reconciler= new /*JavaPresentationReconciler*/ PresentationReconciler();
 		reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
 
 		DefaultDamagerRepairer dr= new DefaultDamagerRepairer(getCodeScanner());
@@ -85,7 +118,7 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 		dr= new DefaultDamagerRepairer(getStringScanner());
 		reconciler.setDamager(dr, IJavaPartitions.JAVA_CHARACTER);
 		reconciler.setRepairer(dr, IJavaPartitions.JAVA_CHARACTER);
-		
+
 		return reconciler;
 	}
 
@@ -108,7 +141,7 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 	private ITokenScanner getCodeScanner() {
 		return fCodeScanner;
 	}
-	
+
 	@Override
 	public void setThemeId(String themeId) {
 		super.setThemeId(themeId);
@@ -116,12 +149,12 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 		if( url != null ) {
 			defaultStylesheet.set(url);
 		} else {
-			defaultStylesheet.set(getClass().getClassLoader().getResource("css/highlight.css"));			
+			defaultStylesheet.set(getClass().getClassLoader().getResource("css/highlight.css"));
 		}
 	}
-	
+
 	private ReadOnlyObjectWrapper<URL> defaultStylesheet = new ReadOnlyObjectWrapper<>(this, "defaultStylesheet", getClass().getClassLoader().getResource("css/highlight.css"));
-	
+
 	@Override
 	public ReadOnlyProperty<URL> getDefaultStylesheet() {
 		return defaultStylesheet.getReadOnlyProperty();

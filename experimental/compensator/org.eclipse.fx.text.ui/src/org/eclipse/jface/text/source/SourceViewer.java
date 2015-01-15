@@ -13,6 +13,7 @@
 package org.eclipse.jface.text.source;
 
 import org.eclipse.jface.text.TextViewer;
+import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.reconciler.IReconciler;
 
@@ -49,6 +50,11 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		fReconciler= configuration.getReconciler(this);
 		if (fReconciler != null)
 			fReconciler.install(this);
+
+		IContentAssistant assist = configuration.getContentAssist();
+		if( assist != null ) {
+			assist.install(this);
+		}
 	}
 
 }
