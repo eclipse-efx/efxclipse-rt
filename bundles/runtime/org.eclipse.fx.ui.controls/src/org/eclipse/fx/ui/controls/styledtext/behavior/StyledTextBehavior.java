@@ -28,8 +28,10 @@ import javafx.scene.text.TextFlow;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent.ActionType;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin.LineCell;
+import org.eclipse.jdt.annotation.NonNull;
 
 import com.sun.javafx.scene.control.behavior.BehaviorBase;
 import com.sun.javafx.scene.control.behavior.KeyBinding;
@@ -59,7 +61,9 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	@Override
 	protected void callActionForEvent(KeyEvent arg0) {
 		if (arg0.getEventType() == KeyEvent.KEY_PRESSED) {
-			keyPressed(arg0, getControl().getContent().getLineAtOffset(getControl().getCaretOffset()));
+			_keyPressed(arg0);
+		} else if( arg0.getEventType() == KeyEvent.KEY_TYPED ) {
+			_keyTyped(arg0);
 		}
 		super.callActionForEvent(arg0);
 	}
@@ -95,7 +99,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	}
 
 	@SuppressWarnings("deprecation")
-	private void keyPressed(KeyEvent event, int currentRowIndex) {
+	private void _keyPressed(KeyEvent event) {
 		VerifyEvent evt = new VerifyEvent(getControl(), getControl(), event);
 		Event.fireEvent(getControl(), evt);
 
@@ -103,6 +107,8 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 			event.consume();
 			return;
 		}
+
+		int currentRowIndex = getControl().getContent().getLineAtOffset(getControl().getCaretOffset());
 
 		final int offset = getControl().getCaretOffset();
 
@@ -222,8 +228,14 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				if (event.isMetaDown()) {
 					invokeAction(ActionType.DELETE_WORD_PREVIOUS);
 				} else {
-					getControl().getContent().replaceTextRange(getControl().getCaretOffset() - 1, 1, ""); //$NON-NLS-1$
-					getControl().setCaretOffset(offset - 1);
+					TextSelection selection = getControl().getSelection();
+					if( selection.length > 0 ) {
+						getControl().getContent().replaceTextRange(selection.offset, selection.length, ""); //$NON-NLS-1$
+						getControl().setCaretOffset(selection.offset);
+					} else {
+						getControl().getContent().replaceTextRange(getControl().getCaretOffset() - 1, 1, ""); //$NON-NLS-1$
+						getControl().setCaretOffset(offset - 1);
+					}
 				}
 				break;
 			}
@@ -270,6 +282,10 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 
 		// Event.fireEvent(getControl(), event.copyFor(getControl(),
 		// getControl()));
+	}
+
+	private void _keyTyped(KeyEvent e) {
+
 	}
 
 	/**
