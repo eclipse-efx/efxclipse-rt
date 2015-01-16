@@ -31,7 +31,7 @@ public class ProjectServiceExtractorCF extends ContextFunction {
 		public ProjectService getVersionControl(@Service List<ProjectService> service, Project p) {
 			if(p instanceof LocalProject) {
 				LocalProject lp = (LocalProject) p;
-				Optional<ProjectService> first = service.stream().filter((vcs) -> vcs.getId().equals(lp.getRepoType())).findFirst();
+				Optional<ProjectService> first = service.stream().filter((ps) -> ps.getId().equals(lp.getProjectType())).findFirst();
 				if( first.isPresent() ) {
 					return first.get();
 				}

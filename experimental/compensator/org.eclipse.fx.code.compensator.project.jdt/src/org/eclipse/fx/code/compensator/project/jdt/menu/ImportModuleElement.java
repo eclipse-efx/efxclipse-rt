@@ -11,7 +11,6 @@ import org.eclipse.fx.code.compensator.model.workbench.Project;
 import org.eclipse.fx.code.compensator.model.workbench.WorkbenchFactory;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.ProjectService.MenuElement;
-import org.eclipse.fx.code.compensator.project.internal.adapter.VCSContainerItem.VCSDirectory;
 import org.eclipse.fx.code.server.jdt.JDTServer;
 import org.eclipse.fx.core.di.Invoke;
 import org.eclipse.fx.core.function.ExExecutor;
@@ -24,7 +23,8 @@ public class ImportModuleElement extends MenuElement {
 
 	@Override
 	public boolean applies(ProjectNavigatorItem item) {
-		return item instanceof VCSDirectory && Files.exists(((Path)item.getDomainObject()).resolve(".project"));
+//		return item instanceof VCSDirectory && Files.exists(((Path)item.getDomainObject()).resolve(".project"));
+		return false;
 	}
 
 	@Invoke

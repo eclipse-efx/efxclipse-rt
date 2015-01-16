@@ -22,11 +22,11 @@ public class ProjectItem implements ProjectNavigatorItem {
 		children.add(new ModuleContainerItem(project));
 		children.add(new BugtrackerItem());
 		children.add(new BuildServerItem());
-		if( project.getProject() instanceof LocalProject ) {
-			LocalProject lp = (LocalProject) project.getProject();
-			URI uri = new SimpleURI(lp.getLocalURI());
-			children.add(new VCSContainerItem(lp, versionControl,fileSystemServiceList.stream().filter(s -> s.applies(uri)).findFirst().get()));
-		}
+//		if( project.getProject() instanceof LocalProject ) {
+//			LocalProject lp = (LocalProject) project.getProject();
+//			URI uri = new SimpleURI(lp.getLocalURI());
+//			children.add(new VCSContainerItem(lp, versionControl,fileSystemServiceList.stream().filter(s -> s.applies(uri)).findFirst().get()));
+//		}
 	}
 
 	@Override

@@ -70,7 +70,7 @@ public class JDTProposalComputerFactory implements ProposalComputerFactory {
 			styles.add("java-field-"+visibilityAddon(cp.getVisibility()));
 		}
 
-		return new CompletetionProposal(cp.getValue(), cp.getReplacementOffset(), cp.getReplacementLength(),s, styles);
+		return new CompletetionProposal(cp.getValue(), cp.getReplacementOffset(), cp.getReplacementLength(),s, () -> null);
 	}
 
 	private static String visibilityAddon(Visibility v) {

@@ -3,6 +3,7 @@ package org.eclipse.fx.code.compensator.project.vcs.git;
 import java.io.File;
 import java.net.URI;
 
+import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.vcs.VersionControlService;
 import org.eclipse.fx.core.ProgressReporter;
 import org.eclipse.fx.core.ReturnValue;
@@ -41,5 +42,11 @@ public class GitVersionControlService implements VersionControlService {
 				result.close();
 			}
 		}
+	}
+
+	@Override
+	public ProjectNavigatorItem mapVCS() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

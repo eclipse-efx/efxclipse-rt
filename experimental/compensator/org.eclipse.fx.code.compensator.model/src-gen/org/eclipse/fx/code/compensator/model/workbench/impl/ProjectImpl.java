@@ -2,12 +2,22 @@
  */
 package org.eclipse.fx.code.compensator.model.workbench.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
+import org.eclipse.fx.code.compensator.model.workbench.BugTracker;
 import org.eclipse.fx.code.compensator.model.workbench.Project;
 import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
 
@@ -22,10 +32,7 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getProjectType <em>Project Type</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getIconURI <em>Icon URI</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getBugtrackerType <em>Bugtracker Type</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getBugtrackerUrl <em>Bugtracker Url</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getBugtrackerUsername <em>Bugtracker Username</em>}</li>
- *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getBugtrackerPassword <em>Bugtracker Password</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getBugTrackerList <em>Bug Tracker List</em>}</li>
  * </ul>
  * </p>
  *
@@ -113,84 +120,14 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 	protected String iconURI = ICON_URI_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getBugtrackerType() <em>Bugtracker Type</em>}' attribute.
+	 * The cached value of the '{@link #getBugTrackerList() <em>Bug Tracker List</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBugtrackerType()
+	 * @see #getBugTrackerList()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String BUGTRACKER_TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getBugtrackerType() <em>Bugtracker Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBugtrackerType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String bugtrackerType = BUGTRACKER_TYPE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getBugtrackerUrl() <em>Bugtracker Url</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBugtrackerUrl()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String BUGTRACKER_URL_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getBugtrackerUrl() <em>Bugtracker Url</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBugtrackerUrl()
-	 * @generated
-	 * @ordered
-	 */
-	protected String bugtrackerUrl = BUGTRACKER_URL_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getBugtrackerUsername() <em>Bugtracker Username</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBugtrackerUsername()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String BUGTRACKER_USERNAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getBugtrackerUsername() <em>Bugtracker Username</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBugtrackerUsername()
-	 * @generated
-	 * @ordered
-	 */
-	protected String bugtrackerUsername = BUGTRACKER_USERNAME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getBugtrackerPassword() <em>Bugtracker Password</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBugtrackerPassword()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String BUGTRACKER_PASSWORD_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getBugtrackerPassword() <em>Bugtracker Password</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBugtrackerPassword()
-	 * @generated
-	 * @ordered
-	 */
-	protected String bugtrackerPassword = BUGTRACKER_PASSWORD_EDEFAULT;
+	protected EList<BugTracker> bugTrackerList;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -300,8 +237,11 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getBugtrackerType() {
-		return bugtrackerType;
+	public EList<BugTracker> getBugTrackerList() {
+		if (bugTrackerList == null) {
+			bugTrackerList = new EObjectContainmentEList<BugTracker>(BugTracker.class, this, WorkbenchPackage.PROJECT__BUG_TRACKER_LIST);
+		}
+		return bugTrackerList;
 	}
 
 	/**
@@ -309,74 +249,13 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setBugtrackerType(String newBugtrackerType) {
-		String oldBugtrackerType = bugtrackerType;
-		bugtrackerType = newBugtrackerType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, WorkbenchPackage.PROJECT__BUGTRACKER_TYPE, oldBugtrackerType, bugtrackerType));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getBugtrackerUrl() {
-		return bugtrackerUrl;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setBugtrackerUrl(String newBugtrackerUrl) {
-		String oldBugtrackerUrl = bugtrackerUrl;
-		bugtrackerUrl = newBugtrackerUrl;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, WorkbenchPackage.PROJECT__BUGTRACKER_URL, oldBugtrackerUrl, bugtrackerUrl));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getBugtrackerUsername() {
-		return bugtrackerUsername;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setBugtrackerUsername(String newBugtrackerUsername) {
-		String oldBugtrackerUsername = bugtrackerUsername;
-		bugtrackerUsername = newBugtrackerUsername;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, WorkbenchPackage.PROJECT__BUGTRACKER_USERNAME, oldBugtrackerUsername, bugtrackerUsername));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getBugtrackerPassword() {
-		return bugtrackerPassword;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setBugtrackerPassword(String newBugtrackerPassword) {
-		String oldBugtrackerPassword = bugtrackerPassword;
-		bugtrackerPassword = newBugtrackerPassword;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, WorkbenchPackage.PROJECT__BUGTRACKER_PASSWORD, oldBugtrackerPassword, bugtrackerPassword));
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case WorkbenchPackage.PROJECT__BUG_TRACKER_LIST:
+				return ((InternalEList<?>)getBugTrackerList()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -395,14 +274,8 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 				return getProjectType();
 			case WorkbenchPackage.PROJECT__ICON_URI:
 				return getIconURI();
-			case WorkbenchPackage.PROJECT__BUGTRACKER_TYPE:
-				return getBugtrackerType();
-			case WorkbenchPackage.PROJECT__BUGTRACKER_URL:
-				return getBugtrackerUrl();
-			case WorkbenchPackage.PROJECT__BUGTRACKER_USERNAME:
-				return getBugtrackerUsername();
-			case WorkbenchPackage.PROJECT__BUGTRACKER_PASSWORD:
-				return getBugtrackerPassword();
+			case WorkbenchPackage.PROJECT__BUG_TRACKER_LIST:
+				return getBugTrackerList();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -412,6 +285,7 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -427,17 +301,9 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 			case WorkbenchPackage.PROJECT__ICON_URI:
 				setIconURI((String)newValue);
 				return;
-			case WorkbenchPackage.PROJECT__BUGTRACKER_TYPE:
-				setBugtrackerType((String)newValue);
-				return;
-			case WorkbenchPackage.PROJECT__BUGTRACKER_URL:
-				setBugtrackerUrl((String)newValue);
-				return;
-			case WorkbenchPackage.PROJECT__BUGTRACKER_USERNAME:
-				setBugtrackerUsername((String)newValue);
-				return;
-			case WorkbenchPackage.PROJECT__BUGTRACKER_PASSWORD:
-				setBugtrackerPassword((String)newValue);
+			case WorkbenchPackage.PROJECT__BUG_TRACKER_LIST:
+				getBugTrackerList().clear();
+				getBugTrackerList().addAll((Collection<? extends BugTracker>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -463,17 +329,8 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 			case WorkbenchPackage.PROJECT__ICON_URI:
 				setIconURI(ICON_URI_EDEFAULT);
 				return;
-			case WorkbenchPackage.PROJECT__BUGTRACKER_TYPE:
-				setBugtrackerType(BUGTRACKER_TYPE_EDEFAULT);
-				return;
-			case WorkbenchPackage.PROJECT__BUGTRACKER_URL:
-				setBugtrackerUrl(BUGTRACKER_URL_EDEFAULT);
-				return;
-			case WorkbenchPackage.PROJECT__BUGTRACKER_USERNAME:
-				setBugtrackerUsername(BUGTRACKER_USERNAME_EDEFAULT);
-				return;
-			case WorkbenchPackage.PROJECT__BUGTRACKER_PASSWORD:
-				setBugtrackerPassword(BUGTRACKER_PASSWORD_EDEFAULT);
+			case WorkbenchPackage.PROJECT__BUG_TRACKER_LIST:
+				getBugTrackerList().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -495,14 +352,8 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 				return PROJECT_TYPE_EDEFAULT == null ? projectType != null : !PROJECT_TYPE_EDEFAULT.equals(projectType);
 			case WorkbenchPackage.PROJECT__ICON_URI:
 				return ICON_URI_EDEFAULT == null ? iconURI != null : !ICON_URI_EDEFAULT.equals(iconURI);
-			case WorkbenchPackage.PROJECT__BUGTRACKER_TYPE:
-				return BUGTRACKER_TYPE_EDEFAULT == null ? bugtrackerType != null : !BUGTRACKER_TYPE_EDEFAULT.equals(bugtrackerType);
-			case WorkbenchPackage.PROJECT__BUGTRACKER_URL:
-				return BUGTRACKER_URL_EDEFAULT == null ? bugtrackerUrl != null : !BUGTRACKER_URL_EDEFAULT.equals(bugtrackerUrl);
-			case WorkbenchPackage.PROJECT__BUGTRACKER_USERNAME:
-				return BUGTRACKER_USERNAME_EDEFAULT == null ? bugtrackerUsername != null : !BUGTRACKER_USERNAME_EDEFAULT.equals(bugtrackerUsername);
-			case WorkbenchPackage.PROJECT__BUGTRACKER_PASSWORD:
-				return BUGTRACKER_PASSWORD_EDEFAULT == null ? bugtrackerPassword != null : !BUGTRACKER_PASSWORD_EDEFAULT.equals(bugtrackerPassword);
+			case WorkbenchPackage.PROJECT__BUG_TRACKER_LIST:
+				return bugTrackerList != null && !bugTrackerList.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -525,14 +376,6 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 		result.append(projectType);
 		result.append(", iconURI: ");
 		result.append(iconURI);
-		result.append(", bugtrackerType: ");
-		result.append(bugtrackerType);
-		result.append(", bugtrackerUrl: ");
-		result.append(bugtrackerUrl);
-		result.append(", bugtrackerUsername: ");
-		result.append(bugtrackerUsername);
-		result.append(", bugtrackerPassword: ");
-		result.append(bugtrackerPassword);
 		result.append(')');
 		return result.toString();
 	}

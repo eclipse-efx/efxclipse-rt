@@ -14,10 +14,8 @@ import org.eclipse.fx.code.compensator.project.ProjectNavigatorContribution;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.ProjectService;
 import org.eclipse.fx.code.compensator.project.internal.adapter.ModuleContainerItem;
-import org.eclipse.fx.code.compensator.project.internal.adapter.VCSContainerItem.VCSDirectory;
 import org.eclipse.fx.code.compensator.project.jdt.internal.JDTInstanceProject;
 import org.eclipse.fx.code.compensator.project.jdt.internal.JDTModuleItem;
-import org.eclipse.fx.code.compensator.project.jdt.menu.ImportModuleElement;
 import org.eclipse.fx.code.compensator.project.jdt.tb.DebugElement;
 import org.eclipse.fx.code.compensator.project.jdt.tb.NewClassElement;
 import org.eclipse.fx.code.compensator.project.jdt.tb.NewEnumElement;
@@ -116,7 +114,7 @@ public class JDTProjectService implements ProjectService {
 		if( menuGroups == null ) {
 			menuGroups = new ArrayList<>();
 			menuGroups.add(new ModuleContainerContextGroup());
-			menuGroups.add(new VCSDirectoryContextGroup());
+//			menuGroups.add(new VCSDirectoryContextGroup());
 		}
 		return menuGroups;
 	}
@@ -138,19 +136,19 @@ public class JDTProjectService implements ProjectService {
 		}
 	}
 
-	static class VCSDirectoryContextGroup extends ContextMenuGroup {
-
-		public VCSDirectoryContextGroup() {
-			super("vcs-dir", createElements());
-		}
-
-		private static List<MenuElement> createElements() {
-			return Arrays.asList(new ImportModuleElement());
-		}
-
-		@Override
-		public boolean applies(ProjectNavigatorItem item) {
-			return item instanceof VCSDirectory;
-		}
-	}
+//	static class VCSDirectoryContextGroup extends ContextMenuGroup {
+//
+//		public VCSDirectoryContextGroup() {
+//			super("vcs-dir", createElements());
+//		}
+//
+//		private static List<MenuElement> createElements() {
+//			return Arrays.asList(new ImportModuleElement());
+//		}
+//
+//		@Override
+//		public boolean applies(ProjectNavigatorItem item) {
+//			return item instanceof VCSDirectory;
+//		}
+//	}
 }

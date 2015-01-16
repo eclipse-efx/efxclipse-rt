@@ -16,7 +16,9 @@ import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.fx.code.compensator.model.workbench.BugTracker;
 import org.eclipse.fx.code.compensator.model.workbench.LocalProject;
+import org.eclipse.fx.code.compensator.model.workbench.VCSRepository;
 import org.eclipse.fx.code.compensator.model.workbench.Workbench;
 import org.eclipse.fx.code.compensator.model.workbench.WorkbenchFactory;
 import org.eclipse.fx.code.compensator.project.ProjectService;
@@ -186,17 +188,22 @@ public class NewLocalProject {
 				lp.setProjectId(UUID.randomUUID().toString());
 				lp.setName(nameField.getText());
 				lp.setProjectType(projectType.getValue().getId());
-				// repo
-				lp.setRepoType(repoType.getValue().getId());
-				lp.setRepoURI(repoUrl.getText());
-				lp.setLocalURI(repoLocalDir.getText());
-				lp.setRepoUsername(repoUser.getText());
-				lp.setRepoPassword(repoPassword.getText());
-				// bug
-				lp.setBugtrackerType(bugtrackerType.getValue());
-				lp.setBugtrackerUrl(bugTrackerUrl.getText());
-				lp.setBugtrackerUsername(bugTrackerUser.getText());
-				lp.setBugtrackerPassword(bugTrackerPassword.getText());
+
+				VCSRepository r = WorkbenchFactory.eINSTANCE.createVCSRepository();
+				r.setRepoType(repoType.getValue().getId());
+				r.setRepoURI(repoUrl.getText());
+				r.setLocalURI(repoLocalDir.getText());
+				r.setRepoUsername(repoUser.getText());
+				r.setRepoPassword(repoPassword.getText());
+				lp.getVcsRepository().add(r);
+
+				BugTracker t = WorkbenchFactory.eINSTANCE.createBugTracker();
+				t.setBugtrackerType(bugtrackerType.getValue());
+				t.setBugtrackerUrl(bugTrackerUrl.getText());
+				t.setBugtrackerUsername(bugTrackerUser.getText());
+				t.setBugtrackerPassword(bugTrackerPassword.getText());
+				lp.getBugTrackerList().add(t);
+
 				workbench.getProjectList().add(lp);
 
 				cmdService.execute("org.eclipse.fx.code.compensator.app.command.openproject", Collections.singletonMap("projectId", lp.getProjectId()));

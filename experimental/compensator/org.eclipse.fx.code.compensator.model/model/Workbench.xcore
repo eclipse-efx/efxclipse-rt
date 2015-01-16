@@ -49,10 +49,7 @@ class Project extends ModuleContainer {
 	String name
 	String projectType
 	String iconURI
-	String bugtrackerType
-	String bugtrackerUrl
-	String bugtrackerUsername
-	String bugtrackerPassword
+	contains BugTracker[0..*] bugTrackerList
 }
 
 class RemoteProject extends Project {
@@ -60,11 +57,22 @@ class RemoteProject extends Project {
 }
 
 class LocalProject extends Project {
+	contains VCSRepository[0..*] vcsRepository
+}
+
+class VCSRepository {
 	String repoType
 	String repoURI
 	String localURI
 	String repoUsername
 	String repoPassword
+}
+
+class BugTracker {
+	String bugtrackerType
+	String bugtrackerUrl
+	String bugtrackerUsername
+	String bugtrackerPassword
 }
 
 class Module extends ModuleContainer {
