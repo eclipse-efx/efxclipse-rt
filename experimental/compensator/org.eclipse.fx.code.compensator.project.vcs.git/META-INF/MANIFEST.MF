@@ -6,6 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.fx.core,
  org.eclipse.jgit;bundle-version="3.5.2",
- org.eclipse.fx.code.compensator.project
+ org.eclipse.fx.code.compensator.project,
+ org.eclipse.fx.code.compensator.model
 Service-Component: OSGI-INF/services/gitvcs.xml
 Bundle-ActivationPolicy: lazy

@@ -1,6 +1,7 @@
 package org.eclipse.fx.code.compensator.project.jdt.internal;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,10 +19,11 @@ import org.eclipse.fx.code.compensator.model.workbench.Module;
 import org.eclipse.fx.code.compensator.model.workbench.Project;
 import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
+import org.eclipse.fx.code.compensator.project.vcs.VersionControlService;
 import org.eclipse.fx.code.server.jdt.JDTServer;
+import org.eclipse.fx.core.di.Service;
 
-public class JDTInstanceProject implements InstanceProject {
-	private final Project project;
+public class JDTInstanceProject extends InstanceProject {
 	private final JDTServer projectServer;
 	private final EPartService partService;
 	private final EModelService modelService;
@@ -30,19 +32,19 @@ public class JDTInstanceProject implements InstanceProject {
 
 	@Inject
 	public JDTInstanceProject(
-			JDTServer projectServer, Project project, EPartService partService, EModelService modelService, MPerspective perspective,
-			FileIconLookup fileLookup) {
-		this.project = project;
+			JDTServer projectServer,
+			Project project,
+			EPartService partService,
+			EModelService modelService,
+			MPerspective perspective,
+			FileIconLookup fileLookup,
+			@Service List<VersionControlService> versionControlService) {
+		super(project, versionControlService);
 		this.projectServer = projectServer;
 		this.partService = partService;
 		this.modelService = modelService;
 		this.perspective = perspective;
 		this.fileLookup = fileLookup;
-	}
-
-	@Override
-	public Project getProject() {
-		return project;
 	}
 
 	public FileIconLookup getFileLookup() {
@@ -66,7 +68,7 @@ public class JDTInstanceProject implements InstanceProject {
 
 			JDTModuleItem moduleItem = jdtItem.getModuleItem();
 			Path path = moduleItem.getModuleRelativePath(jdtItem.getDomainObject());
-			String url = "jdt:/"+project.getName()+"/"+moduleItem.getDomainObject().getName()+"/"+path.toString();
+			String url = "jdt:/"+getProject().getName()+"/"+moduleItem.getDomainObject().getName()+"/"+path.toString();
 
 			for( MStackElement p : element.getChildren() ) {
 				if( url.equals(p.getPersistedState().get(TextEditor.DOCUMENT_URL)) ) {

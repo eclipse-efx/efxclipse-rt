@@ -195,7 +195,7 @@ public class NewLocalProject {
 				r.setLocalURI(repoLocalDir.getText());
 				r.setRepoUsername(repoUser.getText());
 				r.setRepoPassword(repoPassword.getText());
-				lp.getVcsRepository().add(r);
+				lp.getVcsRepositoryList().add(r);
 
 				BugTracker t = WorkbenchFactory.eINSTANCE.createBugTracker();
 				t.setBugtrackerType(bugtrackerType.getValue());

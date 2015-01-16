@@ -19,6 +19,7 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.BugTrackerImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.BugTrackerImpl#getBugtrackerType <em>Bugtracker Type</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.BugTrackerImpl#getBugtrackerUrl <em>Bugtracker Url</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.BugTrackerImpl#getBugtrackerUsername <em>Bugtracker Username</em>}</li>
@@ -29,6 +30,26 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * @generated
  */
 public class BugTrackerImpl extends MinimalEObjectImpl.Container implements BugTracker {
+	/**
+	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LABEL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
+	protected String label = LABEL_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getBugtrackerType() <em>Bugtracker Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -133,6 +154,27 @@ public class BugTrackerImpl extends MinimalEObjectImpl.Container implements BugT
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLabel(String newLabel) {
+		String oldLabel = label;
+		label = newLabel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkbenchPackage.BUG_TRACKER__LABEL, oldLabel, label));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getBugtrackerType() {
 		return bugtrackerType;
 	}
@@ -220,6 +262,8 @@ public class BugTrackerImpl extends MinimalEObjectImpl.Container implements BugT
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case WorkbenchPackage.BUG_TRACKER__LABEL:
+				return getLabel();
 			case WorkbenchPackage.BUG_TRACKER__BUGTRACKER_TYPE:
 				return getBugtrackerType();
 			case WorkbenchPackage.BUG_TRACKER__BUGTRACKER_URL:
@@ -240,6 +284,9 @@ public class BugTrackerImpl extends MinimalEObjectImpl.Container implements BugT
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case WorkbenchPackage.BUG_TRACKER__LABEL:
+				setLabel((String)newValue);
+				return;
 			case WorkbenchPackage.BUG_TRACKER__BUGTRACKER_TYPE:
 				setBugtrackerType((String)newValue);
 				return;
@@ -264,6 +311,9 @@ public class BugTrackerImpl extends MinimalEObjectImpl.Container implements BugT
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case WorkbenchPackage.BUG_TRACKER__LABEL:
+				setLabel(LABEL_EDEFAULT);
+				return;
 			case WorkbenchPackage.BUG_TRACKER__BUGTRACKER_TYPE:
 				setBugtrackerType(BUGTRACKER_TYPE_EDEFAULT);
 				return;
@@ -288,6 +338,8 @@ public class BugTrackerImpl extends MinimalEObjectImpl.Container implements BugT
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case WorkbenchPackage.BUG_TRACKER__LABEL:
+				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
 			case WorkbenchPackage.BUG_TRACKER__BUGTRACKER_TYPE:
 				return BUGTRACKER_TYPE_EDEFAULT == null ? bugtrackerType != null : !BUGTRACKER_TYPE_EDEFAULT.equals(bugtrackerType);
 			case WorkbenchPackage.BUG_TRACKER__BUGTRACKER_URL:
@@ -310,7 +362,9 @@ public class BugTrackerImpl extends MinimalEObjectImpl.Container implements BugT
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (bugtrackerType: ");
+		result.append(" (label: ");
+		result.append(label);
+		result.append(", bugtrackerType: ");
 		result.append(bugtrackerType);
 		result.append(", bugtrackerUrl: ");
 		result.append(bugtrackerUrl);

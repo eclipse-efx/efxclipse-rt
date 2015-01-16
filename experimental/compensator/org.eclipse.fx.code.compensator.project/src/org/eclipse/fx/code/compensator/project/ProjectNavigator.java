@@ -24,21 +24,16 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
 import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.fx.code.compensator.project.internal.adapter.ProjectItem;
-import org.eclipse.fx.code.compensator.project.vcs.VersionControlService;
-import org.eclipse.fx.core.FilesystemService;
 import org.eclipse.fx.core.SimpleURI;
 import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.fx.core.di.ContextValue;
-import org.eclipse.fx.core.di.Service;
 import org.eclipse.fx.ui.controls.tree.LazyTreeItem;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 
 public class ProjectNavigator {
 	private final InstanceProject project;
-	private final VersionControlService versionControl;
 	private final Property<Object> navigatorSelection;
 	private final EMenuService menuService;
-	private final List<FilesystemService> filesystemServices;
 	private final GraphicsLoader nodeProvider;
 	private final CommandService commandService;
 	private final MPart appModelElement;
@@ -48,18 +43,14 @@ public class ProjectNavigator {
 	@Inject
 	public ProjectNavigator(
 			InstanceProject project,
-			VersionControlService versionControl,
 			@ContextValue("navigatorSelection") Property<Object> navigatorSelection,
 			EMenuService menuService,
-			@Service List<FilesystemService> filesystemServices,
 			GraphicsLoader nodeProvider,
 			CommandService commandService,
 			MPart container) {
 		this.project = project;
-		this.versionControl = versionControl;
 		this.navigatorSelection = navigatorSelection;
 		this.menuService = menuService;
-		this.filesystemServices = filesystemServices;
 		this.nodeProvider = nodeProvider;
 		this.commandService = commandService;
 		this.appModelElement = container;
@@ -75,7 +66,7 @@ public class ProjectNavigator {
 		}
 		parent.setTop(b);
 
-		tree = new TreeView<>(new LazyTreeItem<ProjectNavigatorItem>(new ProjectItem(project,versionControl,filesystemServices),ProjectNavigator::createChildren));
+		tree = new TreeView<>(new LazyTreeItem<ProjectNavigatorItem>(new ProjectItem(project),ProjectNavigator::createChildren));
 		if( (MUIElement)appModelElement.getParent() instanceof MPartSashContainer ) {
 			tree.setShowRoot(false);
 		}

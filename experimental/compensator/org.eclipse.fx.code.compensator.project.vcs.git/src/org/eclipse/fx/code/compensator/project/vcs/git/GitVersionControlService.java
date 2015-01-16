@@ -2,15 +2,23 @@ package org.eclipse.fx.code.compensator.project.vcs.git;
 
 import java.io.File;
 import java.net.URI;
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
 
+import org.eclipse.fx.code.compensator.model.workbench.VCSRepository;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.vcs.VersionControlService;
+import org.eclipse.fx.core.FilesystemService;
 import org.eclipse.fx.core.ProgressReporter;
 import org.eclipse.fx.core.ReturnValue;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 public class GitVersionControlService implements VersionControlService {
+
+//	public void registerFilesystemService(FilesystemService filesystemService) {
+//
+//	}
 
 	@Override
 	public String getId() {
@@ -45,8 +53,8 @@ public class GitVersionControlService implements VersionControlService {
 	}
 
 	@Override
-	public ProjectNavigatorItem mapVCS() {
-		// TODO Auto-generated method stub
-		return null;
+	public ProjectNavigatorItem mapRepository(VCSRepository repository) {
+		return new GitRepositoryItem(repository, Paths.get(URI.create(repository.getLocalURI())));
 	}
+
 }

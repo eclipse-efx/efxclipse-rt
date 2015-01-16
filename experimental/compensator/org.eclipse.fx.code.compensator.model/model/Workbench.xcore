@@ -57,10 +57,11 @@ class RemoteProject extends Project {
 }
 
 class LocalProject extends Project {
-	contains VCSRepository[0..*] vcsRepository
+	contains VCSRepository[0..*] vcsRepositoryList
 }
 
 class VCSRepository {
+	String label
 	String repoType
 	String repoURI
 	String localURI
@@ -69,6 +70,7 @@ class VCSRepository {
 }
 
 class BugTracker {
+	String label
 	String bugtrackerType
 	String bugtrackerUrl
 	String bugtrackerUsername

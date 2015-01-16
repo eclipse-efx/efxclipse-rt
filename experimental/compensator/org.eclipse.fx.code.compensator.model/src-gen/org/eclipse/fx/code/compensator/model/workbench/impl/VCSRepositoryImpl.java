@@ -19,6 +19,7 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.VCSRepositoryImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.VCSRepositoryImpl#getRepoType <em>Repo Type</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.VCSRepositoryImpl#getRepoURI <em>Repo URI</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.VCSRepositoryImpl#getLocalURI <em>Local URI</em>}</li>
@@ -30,6 +31,26 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * @generated
  */
 public class VCSRepositoryImpl extends MinimalEObjectImpl.Container implements VCSRepository {
+	/**
+	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LABEL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
+	protected String label = LABEL_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getRepoType() <em>Repo Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -154,6 +175,27 @@ public class VCSRepositoryImpl extends MinimalEObjectImpl.Container implements V
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLabel(String newLabel) {
+		String oldLabel = label;
+		label = newLabel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkbenchPackage.VCS_REPOSITORY__LABEL, oldLabel, label));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getRepoType() {
 		return repoType;
 	}
@@ -262,6 +304,8 @@ public class VCSRepositoryImpl extends MinimalEObjectImpl.Container implements V
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case WorkbenchPackage.VCS_REPOSITORY__LABEL:
+				return getLabel();
 			case WorkbenchPackage.VCS_REPOSITORY__REPO_TYPE:
 				return getRepoType();
 			case WorkbenchPackage.VCS_REPOSITORY__REPO_URI:
@@ -284,6 +328,9 @@ public class VCSRepositoryImpl extends MinimalEObjectImpl.Container implements V
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case WorkbenchPackage.VCS_REPOSITORY__LABEL:
+				setLabel((String)newValue);
+				return;
 			case WorkbenchPackage.VCS_REPOSITORY__REPO_TYPE:
 				setRepoType((String)newValue);
 				return;
@@ -311,6 +358,9 @@ public class VCSRepositoryImpl extends MinimalEObjectImpl.Container implements V
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case WorkbenchPackage.VCS_REPOSITORY__LABEL:
+				setLabel(LABEL_EDEFAULT);
+				return;
 			case WorkbenchPackage.VCS_REPOSITORY__REPO_TYPE:
 				setRepoType(REPO_TYPE_EDEFAULT);
 				return;
@@ -338,6 +388,8 @@ public class VCSRepositoryImpl extends MinimalEObjectImpl.Container implements V
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case WorkbenchPackage.VCS_REPOSITORY__LABEL:
+				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
 			case WorkbenchPackage.VCS_REPOSITORY__REPO_TYPE:
 				return REPO_TYPE_EDEFAULT == null ? repoType != null : !REPO_TYPE_EDEFAULT.equals(repoType);
 			case WorkbenchPackage.VCS_REPOSITORY__REPO_URI:
@@ -362,7 +414,9 @@ public class VCSRepositoryImpl extends MinimalEObjectImpl.Container implements V
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (repoType: ");
+		result.append(" (label: ");
+		result.append(label);
+		result.append(", repoType: ");
 		result.append(repoType);
 		result.append(", repoURI: ");
 		result.append(repoURI);

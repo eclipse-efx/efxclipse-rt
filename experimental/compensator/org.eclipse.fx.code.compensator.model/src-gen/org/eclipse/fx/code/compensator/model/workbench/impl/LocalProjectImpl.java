@@ -25,7 +25,7 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.LocalProjectImpl#getVcsRepository <em>Vcs Repository</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.LocalProjectImpl#getVcsRepositoryList <em>Vcs Repository List</em>}</li>
  * </ul>
  * </p>
  *
@@ -33,14 +33,14 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  */
 public class LocalProjectImpl extends ProjectImpl implements LocalProject {
 	/**
-	 * The cached value of the '{@link #getVcsRepository() <em>Vcs Repository</em>}' containment reference list.
+	 * The cached value of the '{@link #getVcsRepositoryList() <em>Vcs Repository List</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getVcsRepository()
+	 * @see #getVcsRepositoryList()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<VCSRepository> vcsRepository;
+	protected EList<VCSRepository> vcsRepositoryList;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -66,11 +66,11 @@ public class LocalProjectImpl extends ProjectImpl implements LocalProject {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<VCSRepository> getVcsRepository() {
-		if (vcsRepository == null) {
-			vcsRepository = new EObjectContainmentEList<VCSRepository>(VCSRepository.class, this, WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY);
+	public EList<VCSRepository> getVcsRepositoryList() {
+		if (vcsRepositoryList == null) {
+			vcsRepositoryList = new EObjectContainmentEList<VCSRepository>(VCSRepository.class, this, WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY_LIST);
 		}
-		return vcsRepository;
+		return vcsRepositoryList;
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class LocalProjectImpl extends ProjectImpl implements LocalProject {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY:
-				return ((InternalEList<?>)getVcsRepository()).basicRemove(otherEnd, msgs);
+			case WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY_LIST:
+				return ((InternalEList<?>)getVcsRepositoryList()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -95,8 +95,8 @@ public class LocalProjectImpl extends ProjectImpl implements LocalProject {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY:
-				return getVcsRepository();
+			case WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY_LIST:
+				return getVcsRepositoryList();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -110,9 +110,9 @@ public class LocalProjectImpl extends ProjectImpl implements LocalProject {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY:
-				getVcsRepository().clear();
-				getVcsRepository().addAll((Collection<? extends VCSRepository>)newValue);
+			case WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY_LIST:
+				getVcsRepositoryList().clear();
+				getVcsRepositoryList().addAll((Collection<? extends VCSRepository>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -126,8 +126,8 @@ public class LocalProjectImpl extends ProjectImpl implements LocalProject {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY:
-				getVcsRepository().clear();
+			case WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY_LIST:
+				getVcsRepositoryList().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -141,8 +141,8 @@ public class LocalProjectImpl extends ProjectImpl implements LocalProject {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY:
-				return vcsRepository != null && !vcsRepository.isEmpty();
+			case WorkbenchPackage.LOCAL_PROJECT__VCS_REPOSITORY_LIST:
+				return vcsRepositoryList != null && !vcsRepositoryList.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
