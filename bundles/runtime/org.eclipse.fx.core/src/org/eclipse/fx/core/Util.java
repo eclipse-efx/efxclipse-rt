@@ -168,7 +168,7 @@ public class Util {
 			}
 			Collections.sort(rv,  (o1,o2) -> {
 				if(o1 instanceof RankedService && o2 instanceof RankedService) {
-					return Integer.compare(((RankedService)o1).getRanking(), ((RankedService)o2).getRanking());
+					return -1 * Integer.compare(((RankedService)o1).getRanking(), ((RankedService)o2).getRanking());
 				} else {
 					return 0;
 				}
