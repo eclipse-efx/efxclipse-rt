@@ -57,6 +57,7 @@ public interface GraphicsLoader {
 	 * @param descriptor
 	 *            the descriptor
 	 * @return the graphic node
+	 * @since 1.2
 	 */
 	public default Node getGraphicsNode(@NonNull AdornedImageDescriptor descriptor) {
 		AnchorPane a = new AnchorPane();
