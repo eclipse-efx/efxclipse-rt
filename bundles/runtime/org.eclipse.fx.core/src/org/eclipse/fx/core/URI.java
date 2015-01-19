@@ -25,7 +25,7 @@ public interface URI {
 
 	/**
 	 * Get the segment at the specified index
-	 * 
+	 *
 	 * @param i
 	 *            the index
 	 * @return the segment
@@ -54,10 +54,23 @@ public interface URI {
 
 	/**
 	 * Create a new uri
-	 * 
+	 *
 	 * @param s
 	 *            the uri value
 	 * @return the new uri
+	 * @deprecated use {@link #create(String)}
 	 */
 	public URI createURI(@NonNull String s);
+
+	/**
+	 * Create an URI from a string
+	 *
+	 * @param s
+	 *            the string to create the uri from
+	 * @return the new uri
+	 */
+	@SuppressWarnings("deprecation")
+	public static URI create(@NonNull String s) {
+		return new SimpleURI(s);
+	}
 }

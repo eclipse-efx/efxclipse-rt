@@ -15,12 +15,15 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * An URI representation
+ *
+ * @deprecated use {@link URI#createURI(String)}
  */
+@Deprecated
 public class SimpleURI implements URI {
 	@SuppressWarnings("null")
 	@NonNull
 	private String[] segments = new String[0];
-	
+
 	@Nullable
 	private String query;
 
@@ -29,7 +32,7 @@ public class SimpleURI implements URI {
 
 	/**
 	 * Create a new uri
-	 * 
+	 *
 	 * @param uri
 	 *            the uri
 	 */
@@ -64,7 +67,7 @@ public class SimpleURI implements URI {
 	@Override
 	public @Nullable String segment(int i) {
 		if( i < this.segments.length ) {
-			return this.segments[i];	
+			return this.segments[i];
 		}
 		return null;
 	}
@@ -98,7 +101,7 @@ public class SimpleURI implements URI {
 	public boolean hasQuery() {
 		return this.query != null;
 	}
-	
+
 	@Override
 	public URI createURI(String s) {
 		return new SimpleURI(s);
