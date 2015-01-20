@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.controls.list;
 import java.util.List;
 import java.util.function.Function;
 
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 
@@ -29,7 +30,11 @@ import org.eclipse.jdt.annotation.Nullable;
  * @since 1.2
  */
 public class SimpleListCell<T> extends ListCell<T> {
+	@NonNull
 	private final Function<@Nullable T, @Nullable CharSequence> labelExtractor;
+	@NonNull
+	private final Function<@Nullable T, @Nullable Node> graphicExtractor;
+	@NonNull
 	private final Function<@Nullable T, @NonNull List<@NonNull String>> cssClassProvider;
 
 	/**
@@ -41,9 +46,27 @@ public class SimpleListCell<T> extends ListCell<T> {
 	 *            get the CSS classes for the given domain object
 	 */
 	public SimpleListCell(
-			Function<@Nullable T, @Nullable CharSequence> labelExtractor,
-			Function<@Nullable T, @NonNull List<@NonNull String>> cssClassProvider) {
+			@NonNull Function<@Nullable T, @Nullable CharSequence> labelExtractor,
+			@NonNull Function<@Nullable T, @NonNull List<@NonNull String>> cssClassProvider) {
+		this(labelExtractor, i -> null, cssClassProvider);
+	}
+
+	/**
+	 * Create a new instance
+	 *
+	 * @param labelExtractor
+	 *            extract the text from the domain object
+	 * @param graphicExtractor
+	 *            extracts the graphic from the domain object
+	 * @param cssClassProvider
+	 *            get the CSS classes for the given domain object
+	 */
+	public SimpleListCell(
+			@NonNull Function<@Nullable T, @Nullable CharSequence> labelExtractor,
+			@NonNull Function<@Nullable T, @Nullable Node> graphicExtractor,
+			@NonNull Function<@Nullable T, @NonNull List<@NonNull String>> cssClassProvider) {
 		this.labelExtractor = labelExtractor;
+		this.graphicExtractor = graphicExtractor;
 		this.cssClassProvider = cssClassProvider;
 	}
 
@@ -57,10 +80,18 @@ public class SimpleListCell<T> extends ListCell<T> {
 			} else if (t instanceof StyledString) {
 				StyledLabel l = new StyledLabel((StyledString) t);
 				l.getStyleClass().addAll(this.cssClassProvider.apply(item));
+				Node g = this.graphicExtractor.apply(item);
+				if( g != null ) {
+					l.setGraphic(g);
+				}
 				setGraphic(l);
 			} else {
 				Label l = new Label(t.toString());
 				l.getStyleClass().addAll(this.cssClassProvider.apply(item));
+				Node g = this.graphicExtractor.apply(item);
+				if( g != null ) {
+					l.setGraphic(g);
+				}
 				setGraphic(l);
 			}
 		} else {
