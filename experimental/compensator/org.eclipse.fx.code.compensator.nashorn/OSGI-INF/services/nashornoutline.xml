@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.code.compensator.nashorn.nashornoutline">
    <implementation class="org.eclipse.fx.code.compensator.nashorn.internal.JSOutlineFactory"/>
-   <reference bind="addJSOutlineExtension" cardinality="0..n" interface="org.eclipse.fx.code.compensator.nashorn.JSOutlineExtension" name="JSOutlineExtension" policy="dynamic" unbind="removeJSOutlineExtension"/>
    <service>
       <provide interface="org.eclipse.fx.code.compensator.editor.services.OutlineFactory"/>
    </service>

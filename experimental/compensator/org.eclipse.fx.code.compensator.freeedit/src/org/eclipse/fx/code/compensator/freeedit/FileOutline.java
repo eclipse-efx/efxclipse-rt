@@ -10,6 +10,8 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.freeedit;
 
+import java.util.Collections;
+
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -36,7 +38,7 @@ public class FileOutline {
 	}
 
 	TreeCell<OutlineItem> createCell(TreeView<OutlineItem> param) {
-		return new SimpleTreeCell<OutlineItem>(i -> i.getLabel(), i -> i.getStyle());
+		return new SimpleTreeCell<OutlineItem>(i -> i.getLabel(), i -> i.getGraphic(), i -> Collections.emptyList());
 	}
 
 	@Inject

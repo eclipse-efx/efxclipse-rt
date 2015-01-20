@@ -3,6 +3,7 @@ package org.eclipse.fx.code.compensator.editor.contrib;
 import java.util.Optional;
 
 import org.eclipse.e4.core.contexts.ContextFunction;
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.fx.code.compensator.editor.Input;
@@ -31,10 +32,11 @@ public class ActiveOutlineContextFunction extends ContextFunction {
 
 	private Outline createOutline(IEclipseContext context) {
 		Input<?> input = (Input<?>) context.get("activeInput");
+		context.set(Input.class, input);
 		if( input != null ) {
-			Optional<Outline> outline = context.get(ServiceCollector.class).createOutline(input);
+			Optional<Class<? extends Outline>> outline = context.get(ServiceCollector.class).createOutline(input);
 			if( outline.isPresent() ) {
-				return outline.get();
+				return ContextInjectionFactory.make(outline.get(),context);
 			}
 		}
 		return null;

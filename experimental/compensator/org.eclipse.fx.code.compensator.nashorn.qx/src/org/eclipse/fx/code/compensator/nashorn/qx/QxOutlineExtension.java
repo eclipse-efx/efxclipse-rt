@@ -4,13 +4,12 @@ import jdk.nashorn.internal.ir.CallNode;
 import jdk.nashorn.internal.ir.FunctionNode;
 import jdk.nashorn.internal.ir.LexicalContext;
 import jdk.nashorn.internal.ir.LiteralNode;
-import jdk.nashorn.internal.ir.Node;
 import jdk.nashorn.internal.ir.ObjectNode;
 import jdk.nashorn.internal.ir.PropertyNode;
 import jdk.nashorn.internal.ir.visitor.NodeVisitor;
 
 import org.eclipse.fx.code.compensator.editor.Input;
-import org.eclipse.fx.code.compensator.nashorn.JSOutline;
+import org.eclipse.fx.code.compensator.editor.Outline.OutlineItem;
 import org.eclipse.fx.code.compensator.nashorn.JSOutlineExtension;
 import org.eclipse.fx.code.compensator.nashorn.JSOutlineItem;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
@@ -24,7 +23,7 @@ public class QxOutlineExtension implements JSOutlineExtension {
 	}
 
 	@Override
-	public JSOutline createOutline(FunctionNode node, Input<?> input) {
+	public OutlineItem createOutline(FunctionNode node, Input<?> input) {
 		JSOutlineItem root = new JSOutlineItem("<root>",null);
 
 		node.accept(new NodeVisitor<LexicalContext>(new LexicalContext()) {
@@ -68,7 +67,7 @@ public class QxOutlineExtension implements JSOutlineExtension {
 				return super.enterPropertyNode(propertyNode);
 			}
 		});
-		return new JSOutline(root);
+		return root;
 	}
 
 	private JSOutlineItem handleProperties(PropertyNode p) {

@@ -104,7 +104,7 @@ public class ServiceCollector implements DocumentPersitenceService, FileIconLook
 		return null;
 	}
 
-	public Optional<Outline> createOutline(Input<?> input) {
+	public Optional<Class<? extends Outline>> createOutline(Input<?> input) {
 		return outlineFactoryList.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createOutline(input));
 	}
 
