@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.text;bundle-version="3.5.300",
  org.eclipse.equinox.common;bundle-version="3.6.200",
  org.eclipse.fx.code.compensator.editor;bundle-version="1.0.0",
  org.eclipse.fx.text.ui;bundle-version="1.0.0",
- org.eclipse.fx.ui.controls;bundle-version="1.0.0"
+ org.eclipse.fx.ui.controls;bundle-version="1.0.0",
+ org.eclipse.fx.ui.services
 Service-Component: OSGI-INF/services/javacomponent.xml
 Bundle-ActivationPolicy: lazy
 Import-Package: javafx.animation;version="2.2.0",

@@ -13,6 +13,7 @@ package org.eclipse.fx.code.compensator.editor.contrib;
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
 public class SourceViewerConfigurationContextFunction extends ContextFunction {
@@ -20,7 +21,7 @@ public class SourceViewerConfigurationContextFunction extends ContextFunction {
 	public Object compute(IEclipseContext context) {
 		SourceViewerConfiguration config = (SourceViewerConfiguration) context.get("localSourceConfig");
 		if( config == null ) {
-			config = context.get(ServiceCollector.class).createConfiguration(context.get(Input.class));
+			config = context.get(ServiceCollector.class).createConfiguration(context.get(Input.class),context.get(GraphicsLoader.class));
 			context.set("localSourceConfig", config);
 		}
 		return config;

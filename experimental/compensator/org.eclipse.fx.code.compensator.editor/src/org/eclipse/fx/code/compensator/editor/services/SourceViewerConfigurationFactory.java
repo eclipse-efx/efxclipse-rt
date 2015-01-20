@@ -10,10 +10,23 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.services;
 
+import java.util.List;
+
 import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
 public interface SourceViewerConfigurationFactory {
+	public static class ConfigurationData {
+		public String name;
+		public List<ConfigurationType> configurationTypes;
+	}
+
+	public static class ConfigurationType {
+		public String name;
+		public String contentType;
+	}
+
 	public boolean applies(Input<?> input);
-	public SourceViewerConfiguration createConfiguration(Input<?> input);
+	public SourceViewerConfiguration createConfiguration(Input<?> input, GraphicsLoader graphicsLoader);
 }

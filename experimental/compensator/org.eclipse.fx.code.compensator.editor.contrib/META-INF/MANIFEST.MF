@@ -11,6 +11,7 @@ Require-Bundle: org.eclipse.fx.code.compensator.editor;bundle-version="1.0.0",
  org.eclipse.fx.text;bundle-version="1.0.0",
  org.eclipse.fx.text.ui;bundle-version="1.0.0",
  org.eclipse.fx.code.compensator.model;bundle-version="0.1.0",
- org.eclipse.emf.ecore.xmi;bundle-version="2.10.0"
+ org.eclipse.emf.ecore.xmi;bundle-version="2.10.0",
+ org.eclipse.fx.ui.services
 Service-Component: OSGI-INF/services/servicecollector.xml,OSGI-INF/services/inputcf.xml,OSGI-INF/services/documentcf.xml,OSGI-INF/services/partitionercf.xml,OSGI-INF/services/sourceconfigcf.xml,OSGI-INF/services/workbenchmodelcf.xml,OSGI-INF/services/activeOutline.xml
 Bundle-ActivationPolicy: lazy

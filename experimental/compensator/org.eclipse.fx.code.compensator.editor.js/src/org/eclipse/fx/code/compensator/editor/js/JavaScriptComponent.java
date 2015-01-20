@@ -17,6 +17,7 @@ import org.eclipse.fx.code.compensator.editor.js.scanner.IJavaScriptPartitions;
 import org.eclipse.fx.code.compensator.editor.services.FileIconProvider;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
@@ -30,7 +31,7 @@ public class JavaScriptComponent implements PartitionerFactory, SourceViewerConf
 		IJavaScriptPartitions.JAVA_CHARACTER
 	};
 	@Override
-	public SourceViewerConfiguration createConfiguration(Input<?> input) {
+	public SourceViewerConfiguration createConfiguration(Input<?> input, GraphicsLoader graphicsLoader) {
 		return new JavaScriptSourceConfiguration();
 	}
 

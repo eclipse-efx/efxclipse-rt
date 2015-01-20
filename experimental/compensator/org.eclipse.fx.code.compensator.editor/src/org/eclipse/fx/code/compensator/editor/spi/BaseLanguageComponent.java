@@ -10,6 +10,7 @@ import org.eclipse.fx.code.compensator.editor.services.FileIconProvider;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.ProposalComputerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 
 public abstract class BaseLanguageComponent implements PartitionerFactory, SourceViewerConfigurationFactory, FileIconProvider {
 	private List<ProposalComputerFactory> proposalComputerFactoryList = new ArrayList<ProposalComputerFactory>();
@@ -26,7 +27,7 @@ public abstract class BaseLanguageComponent implements PartitionerFactory, Sourc
 		}
 	}
 
-	protected Optional<ProposalComputer> createProposalComputer(Input<?> input) {
-		return proposalComputerFactoryList.stream().filter(c -> c.applies(input)).map(c -> c.createProposalComputer()).findFirst();
+	protected Optional<ProposalComputer> createProposalComputer(Input<?> input, GraphicsLoader graphicsLoader) {
+		return proposalComputerFactoryList.stream().filter(c -> c.applies(input)).map(c -> c.createProposalComputer(graphicsLoader)).findFirst();
 	}
 }

@@ -18,6 +18,7 @@ import org.eclipse.fx.code.compensator.editor.services.FileIconProvider;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
 import org.eclipse.fx.code.compensator.editor.spi.BaseLanguageComponent;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
@@ -32,8 +33,8 @@ public class JavaComponent extends BaseLanguageComponent implements PartitionerF
 	};
 
 	@Override
-	public SourceViewerConfiguration createConfiguration(Input<?> input) {
-		return new JavaSourceConfiguration(input, createProposalComputer(input));
+	public SourceViewerConfiguration createConfiguration(Input<?> input, GraphicsLoader graphicsLoader) {
+		return new JavaSourceConfiguration(input, createProposalComputer(input,graphicsLoader));
 	}
 
 	@Override

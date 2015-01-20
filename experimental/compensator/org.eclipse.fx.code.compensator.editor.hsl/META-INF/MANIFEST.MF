@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.fx.code.compensator.editor;bundle-version="1.0.0",
  org.eclipse.text,
  org.eclipse.fx.text.ui;bundle-version="1.0.0",
  org.eclipse.fx.code.compensator.hsl;bundle-version="1.0.0",
- org.eclipse.fx.ui.controls;bundle-version="1.0.0"
+ org.eclipse.fx.ui.controls;bundle-version="1.0.0",
+ org.eclipse.fx.ui.services
 Export-Package: org.eclipse.fx.code.compensator.editor.hsl
 Import-Package: org.osgi.framework
 Service-Component: OSGI-INF/services/hslcomponent.xml

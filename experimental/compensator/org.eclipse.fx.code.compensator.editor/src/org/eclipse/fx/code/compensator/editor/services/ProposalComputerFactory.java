@@ -12,8 +12,9 @@ package org.eclipse.fx.code.compensator.editor.services;
 
 import org.eclipse.fx.code.compensator.editor.ProposalComputer;
 import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 
 public interface ProposalComputerFactory {
 	public boolean applies(Input<?> input);
-	public ProposalComputer createProposalComputer();
+	public ProposalComputer createProposalComputer(GraphicsLoader graphicsLoader);
 }
