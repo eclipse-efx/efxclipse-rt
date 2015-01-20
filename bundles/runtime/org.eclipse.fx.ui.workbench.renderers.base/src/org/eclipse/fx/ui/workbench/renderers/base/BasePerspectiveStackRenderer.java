@@ -45,7 +45,7 @@ import org.osgi.service.event.EventHandler;
 
 /**
  * Base renderer of {@link MPerspectiveStack}
- * 
+ *
  * @param <N>
  *            the native widget type
  * @param <I>
@@ -368,6 +368,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		if (element instanceof MPlaceholder) {
 			MPlaceholder ph = (MPlaceholder) element;
 			element = ph.getRef();
+			element.setCurSharedRef(null);
 		}
 
 		// Hide any floating windows

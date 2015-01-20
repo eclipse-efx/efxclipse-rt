@@ -164,6 +164,7 @@ public abstract class BasePlaceholderRenderer<N> extends BaseRenderer<MPlacehold
 				thePart.setIconURI(null);
 				thePart.setIconURI(imageURI);
 			}
+			refElement.setCurSharedRef(null);
 			getPresentationEngine().removeGui(refElement);
 		} else {
 			IEclipseContext curContext = this.modelService.getContainingContext(element);
