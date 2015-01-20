@@ -19,7 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Abstraction of a stack widget
- * 
+ *
  * @param <N>
  *            the native widget
  * @param <I>
@@ -32,15 +32,26 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 * Tag to use a pagination control
 	 */
 	public static final String TAG_PAGINATION = "fx_pagination"; //$NON-NLS-1$
-	
+	/**
+	 * None of the tabs can be closed
+	 * @since 1.2
+	 */
 	public static final String TAG_TAB_CLOSING_POLICY_UNAVAILABLE = "fx_tab_closing_policy_unavailable"; //$NON-NLS-1$
+	/**
+	 * Only the selected tab can be closed
+	 * @since 1.2
+	 */
 	public static final String TAG_TAB_CLOSING_POLICY_SELECTED_TAB = "fx_tab_closing_policy_selectedTab"; //$NON-NLS-1$
+	/**
+	 * All tabs can be closed
+	 * @since 1.2
+	 */
 	public static final String TAG_TAB_CLOSING_POLICY_ALL_TABS = "fx_tab_closing_policy_allTabs"; //$NON-NLS-1$
 
 
 	/**
 	 * Abstraction representing an item in the stack
-	 * 
+	 *
 	 * @param <I>
 	 *            the native item type
 	 * @param <IC>
@@ -55,7 +66,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 		/**
 		 * Attach the application model element
-		 * 
+		 *
 		 * @param domElement
 		 *            the element
 		 */
@@ -69,7 +80,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 		/**
 		 * Set a callback to invoke when the tab is activated the first time
-		 * 
+		 *
 		 * @param callback
 		 *            the callback
 		 */
@@ -78,7 +89,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 		/**
 		 * Set a callback to invoke when the tab is closed and veto it if
 		 * desired
-		 * 
+		 *
 		 * @param callback
 		 *            the callback
 		 */
@@ -93,7 +104,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 	/**
 	 * Append a stack item
-	 * 
+	 *
 	 * @param item
 	 *            the item
 	 */
@@ -101,7 +112,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 	/**
 	 * Append multiple stack items
-	 * 
+	 *
 	 * @param items
 	 *            the items to append
 	 */
@@ -109,7 +120,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 	/**
 	 * Insert stack items at the given index
-	 * 
+	 *
 	 * @param index
 	 *            the index
 	 * @param items
@@ -119,7 +130,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 	/**
 	 * Select the item at a given index
-	 * 
+	 *
 	 * @param idx
 	 *            the index to select
 	 */
@@ -127,7 +138,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 	/**
 	 * The index of the item
-	 * 
+	 *
 	 * @param item
 	 *            the item
 	 * @return the index or <code>-1</code> if not found
@@ -142,7 +153,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 	/**
 	 * Remove items
-	 * 
+	 *
 	 * @param items
 	 *            the items to remove
 	 */
@@ -150,7 +161,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 	/**
 	 * Set the callback to be used when the item is selected by the mouse
-	 * 
+	 *
 	 * @param selectedItemCallback
 	 *            the callback
 	 */
@@ -158,12 +169,12 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 	/**
 	 * Set the callback to be used when the item is selected by the keyboard
-	 * 
+	 *
 	 * @param selectedItemCallback
 	 *            the callback
 	 */
 	public void setKeySelectedItemCallback(@NonNull WCallback<@NonNull WStackItem<I, IC>, Void> selectedItemCallback);
-	
+
 	/**
 	 * @return the number of items
 	 */
