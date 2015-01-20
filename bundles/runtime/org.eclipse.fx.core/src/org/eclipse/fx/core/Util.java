@@ -124,7 +124,7 @@ public class Util {
 				i1 = getRanking(this.r);
 				i2 = getRanking(o.r);
 			}
-			return Integer.compare(i1, i2);
+			return -1 * Integer.compare(i1, i2);
 		}
 	}
 
