@@ -39,6 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
  * </p>
+ * @noreference
  */
 public class StyledTextArea extends Control {
 	class ContentProperty extends
