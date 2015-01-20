@@ -1,5 +1,7 @@
 package org.eclipse.fx.code.compensator.nashorn;
 
+import java.util.function.Supplier;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -11,8 +13,11 @@ public class JSOutlineItem implements OutlineItem {
 	private final ObservableList<OutlineItem> list = FXCollections
 			.observableArrayList();
 
-	public JSOutlineItem(CharSequence name, String type) {
+	private final Supplier<Node> graphicSupplier;
+
+	public JSOutlineItem(CharSequence name, Supplier<Node> graphicSupplier) {
 		this.name = name;
+		this.graphicSupplier = graphicSupplier;
 	}
 
 	@Override
@@ -27,7 +32,6 @@ public class JSOutlineItem implements OutlineItem {
 
 	@Override
 	public Node getGraphic() {
-		// TODO Auto-generated method stub
-		return null;
+		return graphicSupplier != null ? graphicSupplier.get() : null;
 	}
 }

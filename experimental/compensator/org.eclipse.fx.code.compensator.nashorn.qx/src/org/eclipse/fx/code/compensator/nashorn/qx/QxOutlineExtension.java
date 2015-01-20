@@ -12,8 +12,10 @@ import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.Outline.OutlineItem;
 import org.eclipse.fx.code.compensator.nashorn.JSOutlineExtension;
 import org.eclipse.fx.code.compensator.nashorn.JSOutlineItem;
+import org.eclipse.fx.core.URI;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 
 public class QxOutlineExtension implements JSOutlineExtension {
 
@@ -22,8 +24,23 @@ public class QxOutlineExtension implements JSOutlineExtension {
 		return input.getData().toString().contains("qx.Class.define");
 	}
 
+//	private static final URI Q_CLASS = URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.nashorn.qx", "css/icons/function.png");
+
+	private static final URI FIELD_PRIVATE_CLASS = URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.nashorn.qx", "css/icons/field-private.png");
+	private static final URI FIELD_PROTECTED_CLASS = URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.nashorn.qx", "css/icons/field-protected.png");
+	private static final URI FIELD_PUBLIC_CLASS = URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.nashorn.qx", "css/icons/field-public.png");
+
+	private static final URI METHOD_PRIVATE_CLASS = URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.nashorn.qx", "css/icons/method-private.png");
+	private static final URI METHOD_PROTECTED_CLASS = URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.nashorn.qx", "css/icons/method-protected.png");
+	private static final URI METHOD_PUBLIC_CLASS = URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.nashorn.qx", "css/icons/method-public.png");
+
+	private static final URI PROPERTY_PRIVATE_CLASS = URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.nashorn.qx", "css/icons/property-public.png");
+	private static final URI PROPERTY_PROTECTED_CLASS = URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.nashorn.qx", "css/icons/property-public.png");
+	private static final URI PROPERTY_PUBLIC_CLASS = URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.nashorn.qx", "css/icons/property-public.png");
+
+
 	@Override
-	public OutlineItem createOutline(FunctionNode node, Input<?> input) {
+	public OutlineItem createOutline(FunctionNode node, Input<?> input, GraphicsLoader loader) {
 		JSOutlineItem root = new JSOutlineItem("<root>",null);
 
 		node.accept(new NodeVisitor<LexicalContext>(new LexicalContext()) {
@@ -34,7 +51,7 @@ public class QxOutlineExtension implements JSOutlineExtension {
 				if( callNode.getFunction().toString().endsWith("qx.Class.define") ) {
 					StyledString s = new StyledString();
 					s.appendSegment(((LiteralNode<?>)callNode.getArgs().get(0)).getString(),"java-element-name");
-					classDef = new JSOutlineItem(s, "qx-class-def");
+					classDef = new JSOutlineItem(s, null);
 					root.getChildren().add(classDef);
 				}
 				return super.enterCallNode(callNode);
@@ -55,10 +72,10 @@ public class QxOutlineExtension implements JSOutlineExtension {
 					case "events":
 						break;
 					case "properties":
-						classDef.getChildren().add(handleProperties(propertyNode));
+						classDef.getChildren().add(handleProperties(propertyNode,loader));
 						break;
 					case "members":
-						classDef.getChildren().add(handleMembers(propertyNode,(String) input.getData()));
+						classDef.getChildren().add(handleMembers(propertyNode,(String) input.getData(),loader));
 						break;
 					default:
 						break;
@@ -70,8 +87,8 @@ public class QxOutlineExtension implements JSOutlineExtension {
 		return root;
 	}
 
-	private JSOutlineItem handleProperties(PropertyNode p) {
-		JSOutlineItem outline = new JSOutlineItem("Properties", "qx-properties");
+	private JSOutlineItem handleProperties(PropertyNode p, GraphicsLoader loader) {
+		JSOutlineItem outline = new JSOutlineItem("Properties", null);
 		p.accept(new NodeVisitor<LexicalContext>(new LexicalContext()) {
 			@Override
 			public boolean enterPropertyNode(PropertyNode propertyNode) {
@@ -88,8 +105,15 @@ public class QxOutlineExtension implements JSOutlineExtension {
 							return true;
 						}
 					});
-
-					outline.getChildren().add(new JSOutlineItem(s, "qx-property-"+visibility(propertyNode.getKeyName())));
+					URI uri;
+					if( propertyNode.getKeyName().startsWith("__") ) {
+						uri = PROPERTY_PRIVATE_CLASS;
+					} else if( propertyNode.getKeyName().startsWith("_") ) {
+						uri = PROPERTY_PROTECTED_CLASS;
+					} else {
+						uri = PROPERTY_PUBLIC_CLASS;
+					}
+					outline.getChildren().add(new JSOutlineItem(s, () -> loader.getGraphicsNode(uri)));
 					return false;
 				}
 
@@ -99,19 +123,34 @@ public class QxOutlineExtension implements JSOutlineExtension {
 		return outline;
 	}
 
-	private JSOutlineItem handleMembers(PropertyNode p, String content) {
-		JSOutlineItem outline = new JSOutlineItem("Members", "qx-members");
+	private JSOutlineItem handleMembers(PropertyNode p, String content, GraphicsLoader loader) {
+		JSOutlineItem outline = new JSOutlineItem("Members", null);
 
 		p.accept(new NodeVisitor<LexicalContext>(new LexicalContext()) {
 			@Override
 			public boolean enterPropertyNode(PropertyNode propertyNode) {
 				if( p != propertyNode ) {
 					if( propertyNode.getValue() instanceof FunctionNode ) {
-						outline.getChildren().add(new JSOutlineItem(propertyNode.getKeyName()+"()","qx-method-"+visibility(propertyNode.getKeyName())));
-					} else if( propertyNode.getValue() instanceof ObjectNode ) {
-						outline.getChildren().add(new JSOutlineItem(propertyNode.getKeyName(),"qx-field-"+visibility(propertyNode.getKeyName())));
-					} else if( propertyNode.getValue() instanceof LiteralNode<?> ) {
-						outline.getChildren().add(new JSOutlineItem(propertyNode.getKeyName(),"qx-field-"+visibility(propertyNode.getKeyName())));
+						URI uri;
+						if( propertyNode.getKeyName().startsWith("__") ) {
+							uri = METHOD_PRIVATE_CLASS;
+						} else if( propertyNode.getKeyName().startsWith("_") ) {
+							uri = METHOD_PROTECTED_CLASS;
+						} else {
+							uri = METHOD_PUBLIC_CLASS;
+						}
+						outline.getChildren().add(new JSOutlineItem(propertyNode.getKeyName()+"()",() -> loader.getGraphicsNode(uri)));
+					} else if( propertyNode.getValue() instanceof ObjectNode || propertyNode.getValue() instanceof LiteralNode<?> ) {
+						URI uri;
+						if( propertyNode.getKeyName().startsWith("__") ) {
+							uri = FIELD_PRIVATE_CLASS;
+						} else if( propertyNode.getKeyName().startsWith("_") ) {
+							uri = FIELD_PROTECTED_CLASS;
+						} else {
+							uri = FIELD_PUBLIC_CLASS;
+						}
+
+						outline.getChildren().add(new JSOutlineItem(propertyNode.getKeyName(),() -> loader.getGraphicsNode(uri)));
 					} else {
 						System.err.println("Unknown value type: " + propertyNode.getValue().getClass());
 					}

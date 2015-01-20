@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.fx.code.compensator.nashorn,
  org.eclipse.fx.code.compensator.editor,
  org.eclipse.fx.ui.theme;bundle-version="1.2.0",
  org.eclipse.fx.ui.controls;bundle-version="1.2.0",
- org.eclipse.fx.ui.services
+ org.eclipse.fx.ui.services,
+ org.eclipse.fx.core
 Service-Component: OSGI-INF/services/qxnashornoutlineext.xml,
  OSGI-INF/services/jsqxstyleysheet.xml
 Bundle-ActivationPolicy: lazy
