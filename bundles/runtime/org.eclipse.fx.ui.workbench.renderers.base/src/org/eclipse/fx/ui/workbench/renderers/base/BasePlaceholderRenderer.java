@@ -11,7 +11,6 @@
 package org.eclipse.fx.ui.workbench.renderers.base;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -167,22 +166,9 @@ public abstract class BasePlaceholderRenderer<N> extends BaseRenderer<MPlacehold
 			refElement.setCurSharedRef(null);
 			getPresentationEngine().removeGui(refElement);
 		} else {
-			IEclipseContext curContext = this.modelService.getContainingContext(element);
 			MPlaceholder currentRef = refElement.getCurSharedRef();
-			IEclipseContext newParentContext = this.modelService.getContainingContext(currentRef);
-			List<MContext> allContexts = this.modelService.findElements(refElement, null, MContext.class, null);
-			for (MContext ctxtElement : allContexts) {
-				IEclipseContext theContext = ctxtElement.getContext();
-				// this may be null if it hasn't been rendered yet
-				if (theContext != null && theContext.getParent() == curContext) {
-					// about to reparent the context, if we're the
-					// active child of the current parent, deactivate
-					// ourselves first
-					if (curContext.getActiveChild() == theContext) {
-						theContext.deactivate();
-					}
-					theContext.setParent(newParentContext);
-				}
+			if( currentRef == element ) {
+				refElement.setCurSharedRef(null);
 			}
 		}
 
