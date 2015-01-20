@@ -73,4 +73,20 @@ public interface URI {
 	public static URI create(@NonNull String s) {
 		return new SimpleURI(s);
 	}
+
+	/**
+	 * Create a platform plugin URI as speced by {@link #isPlatformPlugin()}
+	 *
+	 * @param symbolicBundleName
+	 *            the symbolic name of the bundle
+	 * @param path
+	 *            the path
+	 * @return the uri
+	 */
+	@SuppressWarnings("deprecation")
+	public static URI createPlatformPluginURI(String symbolicBundleName,
+			String path) {
+		return new SimpleURI("platform:/plugin/" + symbolicBundleName + "/" //$NON-NLS-1$ //$NON-NLS-2$
+				+ path);
+	}
 }
