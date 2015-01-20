@@ -38,7 +38,7 @@ public class CleanUpAddon {
 
 	@Inject
 	UISynchronize synchronize;
-	
+
 	@Inject
 	EModelService modelService;
 
@@ -48,6 +48,7 @@ public class CleanUpAddon {
 		broker.subscribe(UIEvents.UIElement.TOPIC_TOBERENDERED, this::handleRenderingChanged);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void handleChildrenModified(Event event) {
 		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
 		if (UIEvents.isREMOVE(event)) {
@@ -65,19 +66,19 @@ public class CleanUpAddon {
 
 			this.synchronize.scheduleExecution(200, () -> {
 				int tbrCount = this.modelService.toBeRenderedCount(container);
-				
+
 				// Cache the value since setting the TBR may change the result
 				boolean lastStack = isLastEditorStack(container);
 				if (tbrCount == 0 && !lastStack) {
 					container.setToBeRendered(false);
 				}
-				
+
 				if (container.getChildren().isEmpty()) {
 					container.setParent(null);
 				} else if( container instanceof MGenericTile<?> && container.getChildren().size() == 1 ) {
 					final MGenericTile<MUIElement> tile = (MGenericTile<MUIElement>) container;
 					int idx = container.getParent().getChildren().indexOf(container);
-					
+
 					String containerData = tile.getContainerData();
 					MUIElement child = container.getChildren().remove(0);
 					child.setContainerData(containerData);
@@ -87,7 +88,7 @@ public class CleanUpAddon {
 			});
 		}
 	}
-	
+
 	private void handleRenderingChanged(Event event) {
 		MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
 		MElementContainer<MUIElement> container = null;
@@ -111,7 +112,7 @@ public class CleanUpAddon {
 		if (isLastEditorStack(containerElement) || containerElement instanceof MPerspective
 				|| containerElement instanceof MPerspectiveStack)
 			return;
-		
+
 		Boolean toBeRendered = (Boolean) event.getProperty(UIEvents.EventTags.NEW_VALUE);
 		if (Boolean.TRUE.equals(toBeRendered)) {
 			// Bring the container back if one of its children goes visible
@@ -158,7 +159,7 @@ public class CleanUpAddon {
 			}
 		}
 	}
-	
+
 	boolean isLastEditorStack(MUIElement element) {
 		return this.modelService.isLastEditorStack(element);
 	}
