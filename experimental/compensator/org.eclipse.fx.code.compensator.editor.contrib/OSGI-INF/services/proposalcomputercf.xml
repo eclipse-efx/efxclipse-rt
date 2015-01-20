@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.code.compensator.editor.contrib.proposalcomputercf">
+   <implementation class="org.eclipse.fx.code.compensator.editor.contrib.ProposalComputerContextFunction"/>
+   <service>
+      <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
+   </service>
+   <property name="service.context.key" type="String" value="org.eclipse.fx.code.compensator.editor.ProposalComputer"/>
+   <reference bind="registerProposalComputerFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.ProposalComputerFactory" name="ProposalComputerFactory" policy="dynamic" unbind="unregisterProposalComputerFactory"/>
+</scr:component>

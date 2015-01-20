@@ -28,5 +28,5 @@ public interface SourceViewerConfigurationFactory {
 	}
 
 	public boolean applies(Input<?> input);
-	public SourceViewerConfiguration createConfiguration(Input<?> input, GraphicsLoader graphicsLoader);
+	public Class<? extends SourceViewerConfiguration> createConfiguration(Input<?> input);
 }

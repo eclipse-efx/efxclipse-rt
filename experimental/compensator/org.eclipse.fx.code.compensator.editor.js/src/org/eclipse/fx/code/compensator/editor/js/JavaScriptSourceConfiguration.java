@@ -12,6 +12,8 @@ package org.eclipse.fx.code.compensator.editor.js;
 
 import java.net.URL;
 
+import javax.inject.Inject;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyProperty;
 
@@ -30,17 +32,18 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
 public class JavaScriptSourceConfiguration extends SourceViewerConfiguration {
-	
+
 	private JavaScriptCodeScanner fCodeScanner;
 	private JavaScriptDocScanner fJavaDocScanner;
 	private JavaScriptCommentScanner fMultilineCommentScanner;
 	private JavaScriptCommentScanner fSinglelineCommentScanner;
 	private SingleTokenJavaScriptScanner fStringScanner;
 
+	@Inject
 	public JavaScriptSourceConfiguration() {
 		initializeScanners();
 	}
-	
+
 	private void initializeScanners() {
 		fCodeScanner= new JavaScriptCodeScanner();
 		fMultilineCommentScanner= new JavaScriptCommentScanner(IJavaScriptColorConstants.JAVA_MULTI_LINE_COMMENT);
@@ -48,16 +51,16 @@ public class JavaScriptSourceConfiguration extends SourceViewerConfiguration {
 		fStringScanner= new SingleTokenJavaScriptScanner(IJavaScriptColorConstants.JAVA_STRING);
 		fJavaDocScanner= new JavaScriptDocScanner();
 	}
-	
+
 	@Override
 	public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
 		return IJavaScriptPartitions.JAVA_PARTITIONING;
 	}
-	
+
 	@Override
 	public IPresentationReconciler getPresentationReconciler(
 			ISourceViewer sourceViewer) {
-		PresentationReconciler reconciler= new /*JavaPresentationReconciler*/ PresentationReconciler(); 
+		PresentationReconciler reconciler= new /*JavaPresentationReconciler*/ PresentationReconciler();
 		reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
 
 		DefaultDamagerRepairer dr= new DefaultDamagerRepairer(getCodeScanner());
@@ -83,7 +86,7 @@ public class JavaScriptSourceConfiguration extends SourceViewerConfiguration {
 		dr= new DefaultDamagerRepairer(getStringScanner());
 		reconciler.setDamager(dr, IJavaScriptPartitions.JAVA_CHARACTER);
 		reconciler.setRepairer(dr, IJavaScriptPartitions.JAVA_CHARACTER);
-		
+
 		return reconciler;
 	}
 
@@ -106,7 +109,7 @@ public class JavaScriptSourceConfiguration extends SourceViewerConfiguration {
 	private ITokenScanner getCodeScanner() {
 		return fCodeScanner;
 	}
-	
+
 	@Override
 	public void setThemeId(String themeId) {
 		super.setThemeId(themeId);
@@ -114,12 +117,12 @@ public class JavaScriptSourceConfiguration extends SourceViewerConfiguration {
 		if( url != null ) {
 			defaultStylesheet.set(url);
 		} else {
-			defaultStylesheet.set(getClass().getClassLoader().getResource("css/highlight.css"));			
+			defaultStylesheet.set(getClass().getClassLoader().getResource("css/highlight.css"));
 		}
 	}
-	
+
 	private ReadOnlyObjectWrapper<URL> defaultStylesheet = new ReadOnlyObjectWrapper<>(this, "defaultStylesheet", getClass().getClassLoader().getResource("css/highlight.css"));
-	
+
 	@Override
 	public ReadOnlyProperty<URL> getDefaultStylesheet() {
 		return defaultStylesheet.getReadOnlyProperty();

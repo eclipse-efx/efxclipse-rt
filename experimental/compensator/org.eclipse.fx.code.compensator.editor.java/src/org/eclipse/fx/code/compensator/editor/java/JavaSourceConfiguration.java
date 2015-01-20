@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import javax.inject.Inject;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyProperty;
 
@@ -50,8 +52,9 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 	private final Optional<ProposalComputer> computer;
 	private Input<?> input;
 
-	public JavaSourceConfiguration(Input<?> input, Optional<ProposalComputer> computer) {
-		this.computer = computer;
+	@Inject
+	public JavaSourceConfiguration(Input<?> input, @org.eclipse.e4.core.di.annotations.Optional ProposalComputer computer) {
+		this.computer = Optional.of(computer);
 		this.input = input;
 		initializeScanners();
 	}

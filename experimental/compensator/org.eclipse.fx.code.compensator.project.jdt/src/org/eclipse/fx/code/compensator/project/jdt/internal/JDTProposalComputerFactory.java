@@ -9,6 +9,8 @@ import java.util.concurrent.Future;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+
 import javafx.scene.Node;
 
 import org.eclipse.fx.code.compensator.editor.Input;
@@ -49,28 +51,35 @@ public class JDTProposalComputerFactory implements ProposalComputerFactory {
 	}
 
 	@Override
-	public ProposalComputer createProposalComputer(GraphicsLoader graphicsLoader) {
-		return new ProposalComputer() {
+	public Class<? extends ProposalComputer> createProposalComputer() {
+		return JDTProposalComputer.class;
+	}
 
-			@Override
-			public Future<List<ICompletionProposal>> compute(ProposalContext context) {
-				try {
-					JDTServerInput i = (JDTServerInput) context.input;
-					Future<List<org.eclipse.fx.code.server.jdt.shared.Proposal>> proposals = i.server.getProposals(i.openFile.get(), context.location);
-					return CompletableFuture.supplyAsync(() -> {
-						try {
-							return proposals.get().stream().map((p) -> createProposal(context,p,graphicsLoader)).collect(Collectors.toList());
-						} catch (Exception e) {
-							throw new RuntimeException(e);
-						}
-					});
-				} catch (InterruptedException | ExecutionException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return CompletableFuture.supplyAsync(() -> Collections.emptyList());
+	static class JDTProposalComputer implements ProposalComputer {
+		private GraphicsLoader graphicsLoader;
+
+		@Inject
+		public JDTProposalComputer(GraphicsLoader graphicsLoader) {
+			this.graphicsLoader = graphicsLoader;
+		}
+
+		public Future<List<ICompletionProposal>> compute(ProposalContext context) {
+			try {
+				JDTServerInput i = (JDTServerInput) context.input;
+				Future<List<org.eclipse.fx.code.server.jdt.shared.Proposal>> proposals = i.server.getProposals(i.openFile.get(), context.location);
+				return CompletableFuture.supplyAsync(() -> {
+					try {
+						return proposals.get().stream().map((p) -> createProposal(context,p,graphicsLoader)).collect(Collectors.toList());
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				});
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		};
+			return CompletableFuture.supplyAsync(() -> Collections.emptyList());
+		}
 	}
 
 	static ICompletionProposal createProposal(ProposalContext context, org.eclipse.fx.code.server.jdt.shared.Proposal proposal, GraphicsLoader graphicsLoader) {

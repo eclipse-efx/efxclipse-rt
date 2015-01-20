@@ -4,5 +4,6 @@
    <service>
       <provide interface="org.eclipse.fx.code.compensator.editor.services.PartitionerFactory"/>
       <provide interface="org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory"/>
+      <provide interface="org.eclipse.fx.code.compensator.editor.hsl.internal.HSLComponent"/>
    </service>
 </scr:component>

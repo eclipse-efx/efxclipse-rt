@@ -11,6 +11,7 @@
 package org.eclipse.fx.code.compensator.editor.contrib;
 
 import org.eclipse.e4.core.contexts.ContextFunction;
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
@@ -21,7 +22,8 @@ public class SourceViewerConfigurationContextFunction extends ContextFunction {
 	public Object compute(IEclipseContext context) {
 		SourceViewerConfiguration config = (SourceViewerConfiguration) context.get("localSourceConfig");
 		if( config == null ) {
-			config = context.get(ServiceCollector.class).createConfiguration(context.get(Input.class),context.get(GraphicsLoader.class));
+			Class<? extends SourceViewerConfiguration> cl = context.get(ServiceCollector.class).createConfiguration(context.get(Input.class),context.get(GraphicsLoader.class));
+			config = ContextInjectionFactory.make(cl, context);
 			context.set("localSourceConfig", config);
 		}
 		return config;

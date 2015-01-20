@@ -17,13 +17,11 @@ import org.eclipse.fx.code.compensator.editor.java.scanner.IJavaPartitions;
 import org.eclipse.fx.code.compensator.editor.services.FileIconProvider;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
-import org.eclipse.fx.code.compensator.editor.spi.BaseLanguageComponent;
-import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
-public class JavaComponent extends BaseLanguageComponent implements PartitionerFactory, SourceViewerConfigurationFactory, FileIconProvider {
+public class JavaComponent implements PartitionerFactory, SourceViewerConfigurationFactory, FileIconProvider {
 	private final static String[] LEGAL_CONTENT_TYPES= new String[] {
 		IJavaPartitions.JAVA_DOC,
 		IJavaPartitions.JAVA_MULTI_LINE_COMMENT,
@@ -33,8 +31,9 @@ public class JavaComponent extends BaseLanguageComponent implements PartitionerF
 	};
 
 	@Override
-	public SourceViewerConfiguration createConfiguration(Input<?> input, GraphicsLoader graphicsLoader) {
-		return new JavaSourceConfiguration(input, createProposalComputer(input,graphicsLoader));
+	public Class<? extends SourceViewerConfiguration> createConfiguration(Input<?> input) {
+//		return new JavaSourceConfiguration(input, createProposalComputer(input,graphicsLoader));
+		return JavaSourceConfiguration.class;
 	}
 
 	@Override

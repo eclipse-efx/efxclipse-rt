@@ -16,5 +16,5 @@ import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 
 public interface ProposalComputerFactory {
 	public boolean applies(Input<?> input);
-	public ProposalComputer createProposalComputer(GraphicsLoader graphicsLoader);
+	public Class<? extends ProposalComputer> createProposalComputer();
 }

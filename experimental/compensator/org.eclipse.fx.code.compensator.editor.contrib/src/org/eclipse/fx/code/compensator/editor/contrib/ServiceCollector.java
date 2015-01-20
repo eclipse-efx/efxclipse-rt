@@ -124,8 +124,8 @@ public class ServiceCollector implements DocumentPersitenceService, FileIconLook
 		return null;
 	}
 
-	public SourceViewerConfiguration createConfiguration(Input<?> input, GraphicsLoader graphicsLoader) {
-		Optional<SourceViewerConfiguration> map = configurationProvider.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createConfiguration(input,graphicsLoader));
+	public Class<? extends SourceViewerConfiguration> createConfiguration(Input<?> input, GraphicsLoader graphicsLoader) {
+		Optional<Class<? extends SourceViewerConfiguration>> map = configurationProvider.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createConfiguration(input));
 		return map.get();
 	}
 

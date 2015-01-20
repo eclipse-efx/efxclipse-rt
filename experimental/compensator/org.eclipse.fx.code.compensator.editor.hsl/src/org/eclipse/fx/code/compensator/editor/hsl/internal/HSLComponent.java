@@ -27,7 +27,6 @@ import org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner;
 import org.eclipse.fx.code.compensator.hsl.hSL.Model;
 import org.eclipse.fx.code.compensator.hsl.hSL.Partitioner;
 import org.eclipse.fx.code.compensator.hsl.hSL.RulePartitioner;
-import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
@@ -49,13 +48,14 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 	}
 
 	@Override
-	public SourceViewerConfiguration createConfiguration(Input<?> input, GraphicsLoader graphicsLoader) {
-		Model m = getModelForInput(input);
-		if( m == null ) {
-			throw new IllegalArgumentException("Unsupported input '"+input+"'");
-		}
-
-		return new HSLConfiguration(getClass().getClassLoader(), m);
+	public Class<? extends SourceViewerConfiguration> createConfiguration(Input<?> input) {
+//		Model m = getModelForInput(input);
+//		if( m == null ) {
+//			throw new IllegalArgumentException("Unsupported input '"+input+"'");
+//		}
+//
+//		return new HSLConfiguration(getClass().getClassLoader(), m);
+		return HSLConfiguration.class;
 	}
 
 	private void registerHslConfig(URI uri) {
@@ -78,7 +78,7 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 		return false;
 	}
 
-	private Model getModelForInput(Input<?> input) {
+	public Model getModelForInput(Input<?> input) {
 		if( input instanceof ContentTypeProvider ) {
 			return contentTypeMappings.get(((ContentTypeProvider) input).getContentType());
 		}

@@ -14,10 +14,14 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.inject.Inject;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyProperty;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.code.compensator.editor.hsl.internal.HSLComponent;
 import org.eclipse.fx.code.compensator.editor.hsl.internal.JavaScriptHelper;
 import org.eclipse.fx.code.compensator.hsl.hSL.Damager;
 import org.eclipse.fx.code.compensator.hsl.hSL.JSDamager;
@@ -34,15 +38,19 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 public class HSLConfiguration extends SourceViewerConfiguration {
 	private Model model;
 	private ClassLoader cl;
-	
-	public HSLConfiguration(ClassLoader cl, Model model) {
-		this.cl = cl;
-		this.model = model;
+
+	private final HSLComponent component;
+
+	@Inject
+	public HSLConfiguration(HSLComponent component, Input<?> input) {
+		this.component = component;
+		this.cl = getClass().getClassLoader();
+		this.model = component.getModelForInput(input);
 	}
-	
+
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
 		PresentationReconciler reconciler = new PresentationReconciler();
-		
+
 		for( Damager sc : model.getDamagers() ) {
 			if( sc instanceof RuleDamager ) {
 				RuleDamager rs = (RuleDamager) sc;
@@ -60,7 +68,7 @@ public class HSLConfiguration extends SourceViewerConfiguration {
 
 		return reconciler;
 	}
-	
+
 	@Override
 	public void setThemeId(String themeId) {
 		super.setThemeId(themeId);
@@ -70,12 +78,12 @@ public class HSLConfiguration extends SourceViewerConfiguration {
 		if( url != null ) {
 			defaultStylesheet.set(url);
 		} else {
-			defaultStylesheet.set(_getDefaultStylesheet(null));			
+			defaultStylesheet.set(_getDefaultStylesheet(null));
 		}
 	}
-	
+
 	private ReadOnlyObjectWrapper<URL> defaultStylesheet;
-	
+
 	@Override
 	public ReadOnlyProperty<URL> getDefaultStylesheet() {
 		if( defaultStylesheet == null ) {
@@ -83,12 +91,12 @@ public class HSLConfiguration extends SourceViewerConfiguration {
 		}
 		return defaultStylesheet.getReadOnlyProperty();
 	}
-	
+
 	private URL _getDefaultStylesheet(String themeId) {
 		URI uri = model.eResource().getURI();
 		uri = uri.trimSegments(1);
 		uri = uri.appendSegment(model.getName()+(themeId != null ? "-"+themeId : "")+"-highlight.css");
-		
+
 		if( uri.isPlatform() ) {
 			System.err.println(cl.getResource(getPluginPath(uri)));
 			return cl.getResource(getPluginPath(uri));
@@ -98,13 +106,13 @@ public class HSLConfiguration extends SourceViewerConfiguration {
 			} catch (MalformedURLException e) {
 				return null;
 			}
-		}		
+		}
 	}
-	
+
 	private static String getPluginPath(URI uri) {
 		String[] parts = uri.segments();
 		StringBuffer b = new StringBuffer(parts[2]);
-		
+
 		for( int i = 3; i < parts.length; i++ ) {
 			b.append("/" + parts[i]);
 		}
