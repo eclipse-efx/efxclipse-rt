@@ -53,5 +53,4 @@ public class DefaultDocumentFactory implements DocumentFactory {
 		}
 		return false;
 	}
-
 }

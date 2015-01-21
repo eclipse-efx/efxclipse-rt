@@ -110,6 +110,7 @@ public class TextEditor {
 	@Persist
 	void save(IEventBroker broker) {
 		if( persistenceService.persist(document) ) {
+			broker.send(org.eclipse.fx.code.compensator.editor.Constants.OUTLINE_RELOAD, input);
 			broker.send(org.eclipse.fx.code.compensator.editor.Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this);
 		} else {
 			//TODO Handle that
