@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.navigator.FileItem;
+import org.eclipse.fx.core.URI;
 
 public class JDTFileItem extends FileItem implements JDTPathItem {
 
@@ -12,7 +13,7 @@ public class JDTFileItem extends FileItem implements JDTPathItem {
 	}
 
 	@Override
-	public String getIcon() {
+	public URI getIcon() {
 		return getJdtProject().getFileLookup().getFileIcon(getDomainObject().toUri().toString());
 	}
 

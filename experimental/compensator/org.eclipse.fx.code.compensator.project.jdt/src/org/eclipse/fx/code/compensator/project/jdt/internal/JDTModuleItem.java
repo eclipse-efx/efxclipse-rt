@@ -1,7 +1,6 @@
 package org.eclipse.fx.code.compensator.project.jdt.internal;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,13 +32,7 @@ public class JDTModuleItem implements ProjectNavigatorItem, JDTPathItem {
 		this.module = module;
 		this.instanceProject = instanceProject;
 
-		Path path = null;
-		try {
-			path = Paths.get(new URI(module.getRootFolderUrl()));
-		} catch (URISyntaxException e) {
-			getLogger().errorf("Unable to create path for #1", e, module.getRootFolderUrl());
-		}
-		this.path = path;
+		this.path = Paths.get(URI.create(module.getRootFolderUrl()));
 	}
 
 	@Override
@@ -73,8 +66,8 @@ public class JDTModuleItem implements ProjectNavigatorItem, JDTPathItem {
 	}
 
 	@Override
-	public String getIcon() {
-		return "platform:/plugin/org.eclipse.fx.code.compensator.project.jdt/css/icons/16/prj_obj.png";
+	public org.eclipse.fx.core.URI getIcon() {
+		return org.eclipse.fx.core.URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project.jdt","css/icons/16/prj_obj.png");
 	}
 
 	@Override

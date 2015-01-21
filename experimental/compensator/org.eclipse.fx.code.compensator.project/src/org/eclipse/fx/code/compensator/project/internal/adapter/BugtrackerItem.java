@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
+import org.eclipse.fx.core.URI;
 
 public class BugtrackerItem implements ProjectNavigatorItem {
 
@@ -13,8 +14,8 @@ public class BugtrackerItem implements ProjectNavigatorItem {
 	}
 
 	@Override
-	public String getIcon() {
-		return "platform:/plugin/org.eclipse.fx.code.compensator.project/css/icons/16/problems_view.png";
+	public URI getIcon() {
+		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project","css/icons/16/problems_view.png");
 	}
 
 	@Override

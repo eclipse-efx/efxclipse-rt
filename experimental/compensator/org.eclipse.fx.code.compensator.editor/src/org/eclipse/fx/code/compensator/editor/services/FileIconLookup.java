@@ -1,5 +1,7 @@
 package org.eclipse.fx.code.compensator.editor.services;
 
+import org.eclipse.fx.core.URI;
+
 public interface FileIconLookup {
-	public String getFileIcon(String uri);
+	public URI getFileIcon(String uri);
 }

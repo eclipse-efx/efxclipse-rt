@@ -136,14 +136,14 @@ public class FileList {
 			protected void updateItem(Resource item, boolean empty) {
 				if( item != null && ! empty ) {
 					if( item instanceof File ) {
-						URI uri = URI.createURI(((File) item).getUrl());
+						org.eclipse.fx.core.URI uri = org.eclipse.fx.core.URI.create(((File) item).getUrl());
 						setText(uri.lastSegment());
-						String iconUri = lookup.getFileIcon(uri.toString());
+						org.eclipse.fx.core.URI iconUri = lookup.getFileIcon(uri.toString());
 						if( iconUri == null ) {
 							setGraphic(new ImageView(fileIcon));
 						} else {
 							//TODO We need to cache images by URI
-							setGraphic(new ImageView(new Image(iconUri)));
+							setGraphic(new ImageView(new Image(iconUri.toString())));
 						}
 					} else if( item instanceof Folder ) {
 						URI uri = URI.createURI(((Folder) item).getUrl());

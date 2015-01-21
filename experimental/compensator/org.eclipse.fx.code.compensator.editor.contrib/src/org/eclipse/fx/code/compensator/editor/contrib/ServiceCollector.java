@@ -26,6 +26,7 @@ import org.eclipse.fx.code.compensator.editor.services.InputFactory;
 import org.eclipse.fx.code.compensator.editor.services.OutlineFactory;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
+import org.eclipse.fx.core.URI;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
@@ -137,8 +138,8 @@ public class ServiceCollector implements DocumentPersitenceService, FileIconLook
 //		return null;
 //	}
 
-	public String getFileIcon(String uri) {
-		Optional<String> map = fileIconProvider.stream().filter((p) -> p.applies(uri)).findFirst().map((p) -> p.getIcon(uri));
+	public URI getFileIcon(String uri) {
+		Optional<URI> map = fileIconProvider.stream().filter((p) -> p.applies(uri)).findFirst().map((p) -> p.getIcon(uri));
 		if( map.isPresent() ) {
 			return map.get();
 		}

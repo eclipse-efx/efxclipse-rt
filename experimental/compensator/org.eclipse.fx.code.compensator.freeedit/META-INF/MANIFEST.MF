@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="1.1.0.v2014051
  org.eclipse.e4.core.contexts;bundle-version="1.3.100",
  org.eclipse.fx.code.compensator.editor,
  org.eclipse.e4.core.di,
- org.eclipse.fx.ui.controls
+ org.eclipse.fx.ui.controls,
+ org.eclipse.fx.core;bundle-version="1.2.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javafx.animation;version="2.2.0",
  javafx.application;version="2.2.0",

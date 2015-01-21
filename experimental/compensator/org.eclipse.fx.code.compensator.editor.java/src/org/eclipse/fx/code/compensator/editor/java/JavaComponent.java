@@ -17,6 +17,7 @@ import org.eclipse.fx.code.compensator.editor.java.scanner.IJavaPartitions;
 import org.eclipse.fx.code.compensator.editor.services.FileIconProvider;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
+import org.eclipse.fx.core.URI;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
@@ -58,7 +59,7 @@ public class JavaComponent implements PartitionerFactory, SourceViewerConfigurat
 	}
 
 	@Override
-	public String getIcon(String uri) {
-		return "platform:/plugin/org.eclipse.fx.code.compensator.editor.java/icons/16/java-file.png";
+	public URI getIcon(String uri) {
+		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.editor.java","icons/16/java-file.png");
 	}
 }

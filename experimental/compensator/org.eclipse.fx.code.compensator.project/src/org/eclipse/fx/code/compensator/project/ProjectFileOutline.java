@@ -1,7 +1,6 @@
 package org.eclipse.fx.code.compensator.project;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -29,7 +28,6 @@ import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 public class ProjectFileOutline {
 	private final GraphicsLoader nodeProvider;
 	private final MPart appModelElement;
-	private Outline outline;
 	private Map<Outline, TreeView<OutlineItem>> treeCache = new WeakHashMap<>();
 
 	private final BorderPane container;
@@ -64,8 +62,6 @@ public class ProjectFileOutline {
 
 	@Inject
 	void updateInput(@Optional @Named("activeOutline") Outline outline) {
-		this.outline = outline;
-
 		if( outline != null ) {
 			TreeView<OutlineItem> view = treeCache.get(outline);
 

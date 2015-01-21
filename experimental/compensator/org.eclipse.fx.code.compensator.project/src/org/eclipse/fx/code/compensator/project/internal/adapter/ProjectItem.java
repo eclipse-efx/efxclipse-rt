@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import org.eclipse.fx.code.compensator.model.workbench.LocalProject;
 import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
+import org.eclipse.fx.core.URI;
 
 public class ProjectItem implements ProjectNavigatorItem {
 	private final InstanceProject project;
@@ -27,8 +28,8 @@ public class ProjectItem implements ProjectNavigatorItem {
 	}
 
 	@Override
-	public String getIcon() {
-		return "platform:/plugin/org.eclipse.fx.code.compensator.project/css/icons/16/module_view.png";
+	public URI getIcon() {
+		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project","css/icons/16/module_view.png");
 	}
 
 	@Override

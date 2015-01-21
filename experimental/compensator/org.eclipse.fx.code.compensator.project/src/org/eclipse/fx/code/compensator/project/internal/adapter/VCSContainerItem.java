@@ -10,6 +10,7 @@ import org.eclipse.fx.code.compensator.model.workbench.LocalProject;
 import org.eclipse.fx.code.compensator.model.workbench.VCSRepository;
 import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
+import org.eclipse.fx.core.URI;
 
 public class VCSContainerItem implements ProjectNavigatorItem {
 	private final InstanceProject project;
@@ -34,8 +35,8 @@ public class VCSContainerItem implements ProjectNavigatorItem {
 	}
 
 	@Override
-	public String getIcon() {
-		return "platform:/plugin/org.eclipse.fx.code.compensator.project/css/icons/16/vcs.png";
+	public URI getIcon() {
+		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project","css/icons/16/vcs.png");
 	}
 
 	@Override

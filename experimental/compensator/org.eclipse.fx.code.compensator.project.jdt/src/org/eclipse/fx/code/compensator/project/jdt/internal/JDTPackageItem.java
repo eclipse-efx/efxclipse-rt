@@ -8,6 +8,7 @@ import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.navigator.FileItem;
 import org.eclipse.fx.code.compensator.project.navigator.FolderItem;
 import org.eclipse.fx.code.compensator.project.navigator.PathItem;
+import org.eclipse.fx.core.URI;
 
 
 public class JDTPackageItem extends FolderItem implements ProjectNavigatorItem, JDTPathItem {
@@ -23,8 +24,8 @@ public class JDTPackageItem extends FolderItem implements ProjectNavigatorItem, 
 		super(parent,p,FACTORY);
 	}
 
-	public String getIcon() {
-		return "platform:/plugin/org.eclipse.fx.code.compensator.project.jdt/css/icons/16/package_obj.png";
+	public URI getIcon() {
+		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project.jdt","css/icons/16/package_obj.png");
 	}
 
 	@Override

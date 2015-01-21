@@ -11,6 +11,7 @@ import org.eclipse.fx.code.compensator.model.workbench.Module;
 import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
 import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
+import org.eclipse.fx.core.URI;
 
 public class ModuleContainerItem implements ProjectNavigatorItem {
 	private final InstanceProject instanceProject;
@@ -36,8 +37,8 @@ public class ModuleContainerItem implements ProjectNavigatorItem {
 	}
 
 	@Override
-	public String getIcon() {
-		return "platform:/plugin/org.eclipse.fx.code.compensator.project/css/icons/16/workingsets.png";
+	public URI getIcon() {
+		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project","css/icons/16/workingsets.png");
 	}
 
 	@Override

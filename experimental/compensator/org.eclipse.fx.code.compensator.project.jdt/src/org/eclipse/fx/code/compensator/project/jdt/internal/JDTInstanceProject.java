@@ -81,7 +81,7 @@ public class JDTInstanceProject extends InstanceProject {
 			p.setContributionURI("bundleclass://org.eclipse.fx.code.compensator.editor/org.eclipse.fx.code.compensator.editor.TextEditor");
 			p.getPersistedState().put(TextEditor.DOCUMENT_URL, url);
 			p.setLabel(URI.createURI(url).lastSegment());
-			p.setIconURI(fileLookup.getFileIcon(url));
+			p.setIconURI(fileLookup.getFileIcon(url).toString());
 			p.setCloseable(true);
 			p.getTags().add(EPartService.REMOVE_ON_HIDE_TAG);
 			element.getChildren().add(p);

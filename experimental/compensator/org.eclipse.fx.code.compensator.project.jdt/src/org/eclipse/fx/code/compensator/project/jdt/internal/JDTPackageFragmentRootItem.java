@@ -7,6 +7,7 @@ import java.util.function.BiFunction;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.navigator.FolderItem;
 import org.eclipse.fx.code.compensator.project.navigator.PathItem;
+import org.eclipse.fx.core.URI;
 
 public class JDTPackageFragmentRootItem extends FolderItem implements ProjectNavigatorItem, JDTPathItem {
 	private JDTModuleItem moduleItem;
@@ -40,8 +41,8 @@ public class JDTPackageFragmentRootItem extends FolderItem implements ProjectNav
 	}
 
 	@Override
-	public String getIcon() {
-		return "platform:/plugin/org.eclipse.fx.code.compensator.project.jdt/css/icons/16/packagefolder_obj.png";
+	public URI getIcon() {
+		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project.jdt","css/icons/16/packagefolder_obj.png");
 	}
 
 	@Override

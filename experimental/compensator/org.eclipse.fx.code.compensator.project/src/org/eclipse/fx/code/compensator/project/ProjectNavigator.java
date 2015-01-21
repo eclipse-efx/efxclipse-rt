@@ -24,7 +24,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
 import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.fx.code.compensator.project.internal.adapter.ProjectItem;
-import org.eclipse.fx.core.SimpleURI;
+import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.fx.core.di.ContextValue;
 import org.eclipse.fx.ui.controls.tree.LazyTreeItem;
@@ -62,7 +62,7 @@ public class ProjectNavigator {
 		HBox b = new HBox();
 		b.getStyleClass().add("tool-bar");
 		if( (MUIElement)appModelElement.getParent() instanceof MPartSashContainer ) {
-			b.getChildren().add(new Label(project.getProject().getName(), nodeProvider.getGraphicsNode(new SimpleURI("platform:/plugin/org.eclipse.fx.code.compensator.project/css/icons/16/filenav_nav.png"))));
+			b.getChildren().add(new Label(project.getProject().getName(), nodeProvider.getGraphicsNode(URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project","css/icons/16/filenav_nav.png"))));
 		}
 		parent.setTop(b);
 
@@ -126,7 +126,7 @@ public class ProjectNavigator {
 			if( item != null && ! empty ) {
 				setText(item.getLabel().toString());
 				if( item.getIcon() != null ) {
-					setGraphic(provider.getGraphicsNode(new SimpleURI(item.getIcon())));
+					setGraphic(provider.getGraphicsNode(item.getIcon()));
 				} else {
 					setGraphic(null);
 				}

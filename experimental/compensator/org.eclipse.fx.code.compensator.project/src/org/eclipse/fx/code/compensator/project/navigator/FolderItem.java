@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
+import org.eclipse.fx.core.URI;
 
 public class FolderItem extends PathItem {
 	private ObservableList<ProjectNavigatorItem> items;
@@ -39,8 +40,8 @@ public class FolderItem extends PathItem {
 	}
 
 	@Override
-	public String getIcon() {
-		return "platform:/plugin/org.eclipse.fx.code.compensator.project/css/icons/16/fldr_obj.png";
+	public URI getIcon() {
+		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project","css/icons/16/fldr_obj.png");
 	}
 
 	@Override
