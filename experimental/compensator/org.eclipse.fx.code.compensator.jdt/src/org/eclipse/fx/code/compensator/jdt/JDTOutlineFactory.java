@@ -80,7 +80,7 @@ public class JDTOutlineFactory implements OutlineFactory {
 		    ASTNode cu = parser.createAST(null);
 
 		    Stack<OutlineItem> i = new Stack<>();
-	        i.push(new JavaOutlineItem(graphicsLoader,"<root>",Type.UNKNOWN,0));
+	        i.push(new JavaOutlineItem(null,graphicsLoader,"<root>",Type.UNKNOWN,0));
 
 		    cu.accept(new ASTVisitor() {
 
@@ -88,7 +88,7 @@ public class JDTOutlineFactory implements OutlineFactory {
 		    	public boolean visit(TypeDeclaration node) {
 					StyledString s = new StyledString();
 					s.getSegmentList().add(new StyledStringSegment(node.getName().getFullyQualifiedName(),"java-element-name"));
-		    		OutlineItem o = new JavaOutlineItem(graphicsLoader,s, Type.CLASS, node.getModifiers());
+		    		OutlineItem o = new JavaOutlineItem(i.peek(),graphicsLoader,s, Type.CLASS, node.getModifiers());
 		    		i.peek().getChildren().add(o);
 		    		i.push(o);
 
@@ -112,7 +112,7 @@ public class JDTOutlineFactory implements OutlineFactory {
 		    				StyledString s = new StyledString();
 		    				s.getSegmentList().add(new StyledStringSegment(vdf.getName().getFullyQualifiedName(),"java-element-name"));
 		    				s.getSegmentList().add(new StyledStringSegment(" : " + type, "java-type-info"));
-		    				i.peek().getChildren().add(new JavaOutlineItem(graphicsLoader,s, Type.FIELD,node.getModifiers()));
+		    				i.peek().getChildren().add(new JavaOutlineItem(i.peek(),graphicsLoader,s, Type.FIELD,node.getModifiers()));
 		    			}
 		    		}
 		    		return super.visit(node);
@@ -139,7 +139,7 @@ public class JDTOutlineFactory implements OutlineFactory {
 					s.getSegmentList().add(new StyledStringSegment(b.toString(),"java-element-name"));
 					s.getSegmentList().add(new StyledStringSegment(" : " + type, "java-type-info"));
 
-		    		i.peek().getChildren().add(new JavaOutlineItem(graphicsLoader,s, Type.METHOD, node.getModifiers()));
+		    		i.peek().getChildren().add(new JavaOutlineItem(i.peek(),graphicsLoader,s, Type.METHOD, node.getModifiers()));
 		    		return super.visit(node);
 		    	}
 
@@ -155,8 +155,10 @@ public class JDTOutlineFactory implements OutlineFactory {
 		private final int flags;
 		private final Type type;
 		private final GraphicsLoader loader;
+		private final OutlineItem parent;
 
-		public JavaOutlineItem(GraphicsLoader loader, CharSequence label, Type type, int flags) {
+		public JavaOutlineItem(OutlineItem parent, GraphicsLoader loader, CharSequence label, Type type, int flags) {
+			this.parent = parent;
 			this.loader = loader;
 			this.label = label;
 			this.type = type;
@@ -166,6 +168,11 @@ public class JDTOutlineFactory implements OutlineFactory {
 		@Override
 		public CharSequence getLabel() {
 			return label;
+		}
+
+		@Override
+		public OutlineItem getParent() {
+			return parent;
 		}
 
 		@Override

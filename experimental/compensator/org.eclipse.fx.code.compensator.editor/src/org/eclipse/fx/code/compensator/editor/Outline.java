@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor;
 
-import java.util.List;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
@@ -21,6 +19,7 @@ public interface Outline {
 	public interface OutlineItem {
 		public CharSequence getLabel();
 		public Node getGraphic();
+		public OutlineItem getParent();
 		public ObservableList<OutlineItem> getChildren();
 	}
 }

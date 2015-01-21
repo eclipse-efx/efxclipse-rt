@@ -62,7 +62,7 @@ public class JSOutline implements Outline {
 
 	private static OutlineItem defaultOutline(FunctionNode node, GraphicsLoader loader) {
 		Stack<OutlineItem> i = new Stack<>();
-        i.push(new JSOutlineItem("<root>",null));
+        i.push(new JSOutlineItem(null,"<root>",null));
         node.accept(new NodeVisitor<LexicalContext>(new LexicalContext()) {
 
         	@Override
@@ -72,12 +72,12 @@ public class JSOutline implements Outline {
         			if( functionNode.isAnonymous() ) {
         				String name = ((IdentNode)functionNode.getIdent().accept(this)).getName();
         				if( name.contains(":") ) {
-        					outlineItem = new JSOutlineItem("<anonymous>",() -> loader.getGraphicsNode(FUNCTION_ICON));
+        					outlineItem = new JSOutlineItem(i.peek(),"<anonymous>",() -> loader.getGraphicsNode(FUNCTION_ICON));
         				} else {
-        					outlineItem = new JSOutlineItem(name, () -> loader.getGraphicsNode(METHOD_ICON));
+        					outlineItem = new JSOutlineItem(i.peek(), name, () -> loader.getGraphicsNode(METHOD_ICON));
         				}
         			} else {
-        				outlineItem = new JSOutlineItem(((IdentNode)functionNode.getIdent().accept(this)).getName(),() -> loader.getGraphicsNode(FUNCTION_ICON));
+        				outlineItem = new JSOutlineItem(i.peek(), ((IdentNode)functionNode.getIdent().accept(this)).getName(),() -> loader.getGraphicsNode(FUNCTION_ICON));
         			}
 
         			i.peek().getChildren().add(outlineItem);

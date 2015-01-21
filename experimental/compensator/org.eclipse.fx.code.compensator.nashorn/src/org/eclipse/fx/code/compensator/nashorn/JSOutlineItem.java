@@ -14,10 +14,17 @@ public class JSOutlineItem implements OutlineItem {
 			.observableArrayList();
 
 	private final Supplier<Node> graphicSupplier;
+	private final OutlineItem parent;
 
-	public JSOutlineItem(CharSequence name, Supplier<Node> graphicSupplier) {
+	public JSOutlineItem(OutlineItem parent, CharSequence name, Supplier<Node> graphicSupplier) {
+		this.parent = parent;
 		this.name = name;
 		this.graphicSupplier = graphicSupplier;
+	}
+
+	@Override
+	public OutlineItem getParent() {
+		return parent;
 	}
 
 	@Override

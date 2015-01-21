@@ -41,7 +41,7 @@ public class QxOutlineExtension implements JSOutlineExtension {
 
 	@Override
 	public OutlineItem createOutline(FunctionNode node, Input<?> input, GraphicsLoader loader) {
-		JSOutlineItem root = new JSOutlineItem("<root>",null);
+		JSOutlineItem root = new JSOutlineItem(null,"<root>",null);
 
 		node.accept(new NodeVisitor<LexicalContext>(new LexicalContext()) {
 			private JSOutlineItem classDef;
@@ -51,7 +51,7 @@ public class QxOutlineExtension implements JSOutlineExtension {
 				if( callNode.getFunction().toString().endsWith("qx.Class.define") ) {
 					StyledString s = new StyledString();
 					s.appendSegment(((LiteralNode<?>)callNode.getArgs().get(0)).getString(),"java-element-name");
-					classDef = new JSOutlineItem(s, null);
+					classDef = new JSOutlineItem(root,s, null);
 					root.getChildren().add(classDef);
 				}
 				return super.enterCallNode(callNode);
@@ -72,10 +72,10 @@ public class QxOutlineExtension implements JSOutlineExtension {
 					case "events":
 						break;
 					case "properties":
-						classDef.getChildren().add(handleProperties(propertyNode,loader));
+						classDef.getChildren().add(handleProperties(classDef,propertyNode,loader));
 						break;
 					case "members":
-						classDef.getChildren().add(handleMembers(propertyNode,(String) input.getData(),loader));
+						classDef.getChildren().add(handleMembers(classDef,propertyNode,(String) input.getData(),loader));
 						break;
 					default:
 						break;
@@ -87,8 +87,8 @@ public class QxOutlineExtension implements JSOutlineExtension {
 		return root;
 	}
 
-	private JSOutlineItem handleProperties(PropertyNode p, GraphicsLoader loader) {
-		JSOutlineItem outline = new JSOutlineItem("Properties", null);
+	private JSOutlineItem handleProperties(OutlineItem parent, PropertyNode p, GraphicsLoader loader) {
+		JSOutlineItem outline = new JSOutlineItem(parent, "Properties", null);
 		p.accept(new NodeVisitor<LexicalContext>(new LexicalContext()) {
 			@Override
 			public boolean enterPropertyNode(PropertyNode propertyNode) {
@@ -113,7 +113,7 @@ public class QxOutlineExtension implements JSOutlineExtension {
 					} else {
 						uri = PROPERTY_PUBLIC_CLASS;
 					}
-					outline.getChildren().add(new JSOutlineItem(s, () -> loader.getGraphicsNode(uri)));
+					outline.getChildren().add(new JSOutlineItem(outline, s, () -> loader.getGraphicsNode(uri)));
 					return false;
 				}
 
@@ -123,8 +123,8 @@ public class QxOutlineExtension implements JSOutlineExtension {
 		return outline;
 	}
 
-	private JSOutlineItem handleMembers(PropertyNode p, String content, GraphicsLoader loader) {
-		JSOutlineItem outline = new JSOutlineItem("Members", null);
+	private JSOutlineItem handleMembers(OutlineItem parent, PropertyNode p, String content, GraphicsLoader loader) {
+		JSOutlineItem outline = new JSOutlineItem(parent, "Members", null);
 
 		p.accept(new NodeVisitor<LexicalContext>(new LexicalContext()) {
 			@Override
@@ -139,7 +139,7 @@ public class QxOutlineExtension implements JSOutlineExtension {
 						} else {
 							uri = METHOD_PUBLIC_CLASS;
 						}
-						outline.getChildren().add(new JSOutlineItem(propertyNode.getKeyName()+"()",() -> loader.getGraphicsNode(uri)));
+						outline.getChildren().add(new JSOutlineItem(outline, propertyNode.getKeyName()+"()",() -> loader.getGraphicsNode(uri)));
 					} else if( propertyNode.getValue() instanceof ObjectNode || propertyNode.getValue() instanceof LiteralNode<?> ) {
 						URI uri;
 						if( propertyNode.getKeyName().startsWith("__") ) {
@@ -150,7 +150,7 @@ public class QxOutlineExtension implements JSOutlineExtension {
 							uri = FIELD_PUBLIC_CLASS;
 						}
 
-						outline.getChildren().add(new JSOutlineItem(propertyNode.getKeyName(),() -> loader.getGraphicsNode(uri)));
+						outline.getChildren().add(new JSOutlineItem(outline, propertyNode.getKeyName(),() -> loader.getGraphicsNode(uri)));
 					} else {
 						System.err.println("Unknown value type: " + propertyNode.getValue().getClass());
 					}
