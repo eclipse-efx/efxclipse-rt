@@ -33,7 +33,7 @@ public class JDTServerInputFactory implements InputFactory {
 			}
 			b.append(uri.segment(i));
 		}
-		return (Input<O>) new JDTServerInput(server,module,b.toString());
+		return (Input<O>) new JDTServerInput(server,url,module,b.toString());
 	}
 
 }

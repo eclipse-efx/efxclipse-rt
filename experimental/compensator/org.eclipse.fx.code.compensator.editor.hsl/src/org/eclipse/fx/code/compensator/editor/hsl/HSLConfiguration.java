@@ -93,9 +93,14 @@ public class HSLConfiguration extends SourceViewerConfiguration {
 	}
 
 	private URL _getDefaultStylesheet(String themeId) {
+		if( "default".equals(themeId) ) {
+			themeId = null;
+		}
 		URI uri = model.eResource().getURI();
 		uri = uri.trimSegments(1);
 		uri = uri.appendSegment(model.getName()+(themeId != null ? "-"+themeId : "")+"-highlight.css");
+
+		System.err.println("=======> " + uri);
 
 		if( uri.isPlatform() ) {
 			System.err.println(cl.getResource(getPluginPath(uri)));

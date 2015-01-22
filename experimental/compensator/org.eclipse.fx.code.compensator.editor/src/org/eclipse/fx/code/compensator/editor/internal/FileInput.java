@@ -15,16 +15,27 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.code.compensator.editor.URIProvider;
+import org.eclipse.fx.code.compensator.editor.services.ContentTypeDetector;
+import org.eclipse.fx.core.URI;
 
-public class FileInput implements Input<String>, ContentTypeProvider {
+public class FileInput implements Input<String>, ContentTypeProvider, URIProvider {
 	private Path path;
 	private String data;
+	private final List<ContentTypeDetector> detectorList;
 
-	public FileInput(Path path) {
+	public FileInput(Path path, List<ContentTypeDetector> detectorList) {
 		this.path = path;
+		this.detectorList = detectorList;
+	}
+
+	@Override
+	public URI getURI() {
+		return URI.create(path.toUri().toString());
 	}
 
 	@Override
@@ -77,21 +88,16 @@ public class FileInput implements Input<String>, ContentTypeProvider {
 
 	@Override
 	public String getContentType() {
-		//FIXME Need suffix => type mapping
-		if( path.toString().endsWith(".xml") ) {
-			return ContentTypeProvider.XML;
-		} else if( path.toString().endsWith(".java") ) {
+		if( path.toString().endsWith(".java") ) {
 			return ContentTypeProvider.JAVA;
 		} else if( path.toString().endsWith(".js") ) {
 			return ContentTypeProvider.JAVASCRIPT;
-		} else if( path.toString().endsWith(".groovy") ) {
-			return ContentTypeProvider.GROOVY;
-		} else if( path.toString().endsWith(".hsl") ) {
-			return ContentTypeProvider.HSL;
-		} else if( path.toString().endsWith(".lego") ) {
-			return ContentTypeProvider.LEGO;
-		} else if( path.toString().endsWith(".dart") ) {
-			return ContentTypeProvider.DART;
+		}
+		for( ContentTypeDetector d : detectorList ) {
+			String ct = d.getContentType(this);
+			if( ct != null ) {
+				return ct;
+			}
 		}
 		return null;
 	}

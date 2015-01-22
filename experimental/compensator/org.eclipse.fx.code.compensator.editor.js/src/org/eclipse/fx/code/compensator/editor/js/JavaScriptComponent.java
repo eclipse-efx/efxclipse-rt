@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.js;
 
+import java.util.List;
+
 import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.js.scanner.FastJavaScriptPartitionScanner;
@@ -60,5 +62,11 @@ public class JavaScriptComponent implements PartitionerFactory, SourceViewerConf
 	@Override
 	public URI getIcon(String uri) {
 		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.editor.js","icons/16/js-file.png");
+	}
+
+	@Override
+	public List<ConfigurationType> getConfigurationData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -4,4 +4,5 @@
    <service>
       <provide interface="org.eclipse.fx.code.compensator.editor.services.InputFactory"/>
    </service>
+   <reference bind="registerContentTypeDetector" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.ContentTypeDetector" name="ContentTypeDetector" policy="dynamic" unbind="unregisterContentTypeDetector"/>
 </scr:component>

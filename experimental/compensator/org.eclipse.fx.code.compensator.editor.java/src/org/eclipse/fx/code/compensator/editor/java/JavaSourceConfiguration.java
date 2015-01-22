@@ -54,7 +54,7 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 
 	@Inject
 	public JavaSourceConfiguration(Input<?> input, @org.eclipse.e4.core.di.annotations.Optional ProposalComputer computer) {
-		this.computer = Optional.of(computer);
+		this.computer = Optional.ofNullable(computer);
 		this.input = input;
 		initializeScanners();
 	}

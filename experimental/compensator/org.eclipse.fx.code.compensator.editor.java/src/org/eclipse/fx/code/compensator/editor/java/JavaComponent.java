@@ -10,6 +10,8 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.java;
 
+import java.util.List;
+
 import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.java.scanner.FastJavaPartitionScanner;
@@ -61,5 +63,11 @@ public class JavaComponent implements PartitionerFactory, SourceViewerConfigurat
 	@Override
 	public URI getIcon(String uri) {
 		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.editor.java","icons/16/java-file.png");
+	}
+
+	@Override
+	public List<ConfigurationType> getConfigurationData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

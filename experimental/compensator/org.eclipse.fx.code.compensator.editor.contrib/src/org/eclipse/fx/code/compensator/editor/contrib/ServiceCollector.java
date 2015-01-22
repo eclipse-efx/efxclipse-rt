@@ -10,14 +10,16 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.contrib;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.fx.code.compensator.editor.ProposalComputer;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyProperty;
+
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.Outline;
-import org.eclipse.fx.code.compensator.editor.services.ProposalComputerFactory;
 import org.eclipse.fx.code.compensator.editor.services.DocumentFactory;
 import org.eclipse.fx.code.compensator.editor.services.DocumentPersitenceService;
 import org.eclipse.fx.code.compensator.editor.services.FileIconLookup;
@@ -25,11 +27,22 @@ import org.eclipse.fx.code.compensator.editor.services.FileIconProvider;
 import org.eclipse.fx.code.compensator.editor.services.InputFactory;
 import org.eclipse.fx.code.compensator.editor.services.OutlineFactory;
 import org.eclipse.fx.code.compensator.editor.services.PartitionerFactory;
+import org.eclipse.fx.code.compensator.editor.services.ProposalComputerFactory;
 import org.eclipse.fx.code.compensator.editor.services.SourceViewerConfigurationFactory;
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.jface.text.presentation.IPresentationReconciler;
+import org.eclipse.jface.text.presentation.PresentationReconciler;
+import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
+import org.eclipse.jface.text.rules.FastPartitioner;
+import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
+import org.eclipse.jface.text.rules.RuleBasedScanner;
+import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
 public class ServiceCollector implements DocumentPersitenceService, FileIconLookup {
@@ -122,12 +135,15 @@ public class ServiceCollector implements DocumentPersitenceService, FileIconLook
 		if( map.isPresent() ) {
 			return map.get();
 		}
-		return null;
+		return  new FastPartitioner(new RuleBasedPartitionScanner(), new String[0]);
 	}
 
 	public Class<? extends SourceViewerConfiguration> createConfiguration(Input<?> input, GraphicsLoader graphicsLoader) {
 		Optional<Class<? extends SourceViewerConfiguration>> map = configurationProvider.stream().filter((p) -> p.applies(input)).findFirst().map((p) -> p.createConfiguration(input));
-		return map.get();
+		if( map.isPresent() ) {
+			return map.get();
+		}
+		return DefaultTextConfiguration.class;
 	}
 
 //	public ProposalComputer createProposalComputer(Input<?> input, GraphicsLoader graphicsLoader) {
@@ -154,5 +170,51 @@ public class ServiceCollector implements DocumentPersitenceService, FileIconLook
 			}
 		}
 		return false;
+	}
+
+
+	public static class DefaultTextConfiguration extends SourceViewerConfiguration {
+		public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
+			PresentationReconciler reconciler = new PresentationReconciler();
+			reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
+
+			DefaultDamagerRepairer dr = new DefaultDamagerRepairer(new NoopScanner());
+			reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
+			reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
+
+			return reconciler;
+		}
+
+		@Override
+		public void setThemeId(String themeId) {
+			super.setThemeId(themeId);
+			URL url = getClass().getClassLoader().getResource("css/"+themeId+"-highlight.css");
+			if( url != null ) {
+				defaultStylesheet.set(url);
+			} else {
+				defaultStylesheet.set(getClass().getClassLoader().getResource("css/highlight.css"));
+			}
+		}
+
+		private ReadOnlyObjectWrapper<URL> defaultStylesheet = new ReadOnlyObjectWrapper<>(this, "defaultStylesheet", getClass().getClassLoader().getResource("css/highlight.css"));
+
+		@Override
+		public ReadOnlyProperty<URL> getDefaultStylesheet() {
+			return defaultStylesheet.getReadOnlyProperty();
+		}
+	}
+
+	private static class NoopScanner extends RuleBasedScanner {
+		private IToken defaultToken = new Token(new TextAttribute("text_default"));
+
+		public NoopScanner() {
+			setDefaultReturnToken(defaultToken);
+		}
+
+		@Override
+		public IToken nextToken() {
+			IToken t = super.nextToken();
+			return t;
+		}
 	}
 }

@@ -39,7 +39,8 @@ public class OpenFile {
 		p.setContributionURI("bundleclass://org.eclipse.fx.code.compensator.editor/org.eclipse.fx.code.compensator.editor.TextEditor");
 		p.getPersistedState().put(TextEditor.DOCUMENT_URL, file.getUrl());
 		p.setLabel(URI.createURI(file.getUrl()).lastSegment());
-		p.setIconURI(lookup.getFileIcon(file.getUrl()).toString());
+		org.eclipse.fx.core.URI fileIcon = lookup.getFileIcon(file.getUrl());
+		p.setIconURI(fileIcon == null ? null : fileIcon.toString());
 		p.setCloseable(true);
 		p.getTags().add(EPartService.REMOVE_ON_HIDE_TAG);
 		element.getChildren().add(p);

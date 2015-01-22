@@ -28,5 +28,6 @@ public interface SourceViewerConfigurationFactory {
 	}
 
 	public boolean applies(Input<?> input);
+	public List<ConfigurationType> getConfigurationData();
 	public Class<? extends SourceViewerConfiguration> createConfiguration(Input<?> input);
 }

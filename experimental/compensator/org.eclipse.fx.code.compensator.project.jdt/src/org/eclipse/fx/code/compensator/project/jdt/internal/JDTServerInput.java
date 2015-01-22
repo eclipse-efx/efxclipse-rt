@@ -9,15 +9,24 @@ import java.util.concurrent.Future;
 
 import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.code.compensator.editor.URIProvider;
 import org.eclipse.fx.code.server.jdt.JDTServer;
+import org.eclipse.fx.core.URI;
 
-public class JDTServerInput implements Input<String>, ContentTypeProvider {
+public class JDTServerInput implements Input<String>, ContentTypeProvider, URIProvider {
 	public final JDTServer server;
 	public final Future<String> openFile;
+	private final String uri;
 
-	public JDTServerInput(JDTServer server, String module, String path) {
+	public JDTServerInput(JDTServer server, String uri, String module, String path) {
 		this.server = server;
+		this.uri = uri;
 		this.openFile = this.server.openFile(module, path);
+	}
+
+	@Override
+	public URI getURI() {
+		return URI.create(uri);
 	}
 
 	@Override
