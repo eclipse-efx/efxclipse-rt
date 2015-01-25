@@ -42,11 +42,12 @@ public class FileSystemServiceImpl implements FilesystemService {
 		return path.toString().startsWith("file:"); //$NON-NLS-1$
 	}
 
+	@SuppressWarnings("all")
 	@Override
-	public Subscription observePath(URI uri, BiConsumer<Kind, Path> consumer) {
+	public Subscription observePath(URI uri, BiConsumer<Kind, URI> consumer) {
 		try {
 			return observePath(Paths.get(new java.net.URI(uri.toString())),
-					consumer);
+					(k,p) -> consumer.accept(k, URI.create(p.toUri().toString())));
 		} catch (URISyntaxException e) {
 			throw new RuntimeException(e);
 		}

@@ -49,7 +49,7 @@ public interface FilesystemService {
 	 *            the consumer
 	 * @return subscription
 	 */
-	public Subscription observePath(URI path, BiConsumer<Kind, Path> consumer);
+	public Subscription observePath(URI path, BiConsumer<Kind, URI> consumer);
 
 	/**
 	 * Observe a path and invoke the consumer when a modification happens
