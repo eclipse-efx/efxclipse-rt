@@ -60,6 +60,7 @@ public interface URI {
 	 * @return the new uri
 	 * @deprecated use {@link #create(String)}
 	 */
+	@Deprecated
 	public URI createURI(@NonNull String s);
 
 	/**
