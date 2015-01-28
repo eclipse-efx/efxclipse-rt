@@ -56,6 +56,7 @@ import javafx.util.Duration;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.StyledTextLine;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
 
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
@@ -190,6 +191,10 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				recalculateItems();
 			}
 		});
+	}
+
+	public void refreshLineRuler() {
+		this.lineRuler.refresh();
 	}
 
 	MyVirtualFlow getFlow() {
@@ -622,12 +627,18 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	/**
 	 * The line domain object
 	 */
-	public class Line {
+	public class Line implements StyledTextLine {
 		/**
 		 * @return the current text
 		 */
+		@Override
 		public String getText() {
 			return removeLineending(getSkinnable().getContent().getLine(StyledTextSkin.this.lineList.indexOf(this)));
+		}
+
+		@Override
+		public int getLineIndex() {
+			return StyledTextSkin.this.lineList.indexOf(this);
 		}
 
 		/**
@@ -858,20 +869,25 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				StyledTextSkin.this.rootContainer.requestLayout();
 			} else {
 				if (line != this.line) {
-					setManaged(true);
 					this.line = line;
-					String newText = StyledTextSkin.this.lineList.indexOf(line) + 1 + ""; //$NON-NLS-1$
-					String oldText = this.lineText.getText();
-					if( oldText == null ) {
-						oldText = ""; //$NON-NLS-1$
-					}
-					this.lineText.setText(newText);
-					if( newText.length() != oldText.length() ) {
-						StyledTextSkin.this.rootContainer.requestLayout();
-					}
-					StyledTextSkin.this.lineRuler.layout();
+					calculateContent();
 				}
 			}
+		}
+
+		public void calculateContent() {
+			setManaged(true);
+			String newText = this.line.getLineIndex() + 1 + ""; //$NON-NLS-1$
+			String oldText = this.lineText.getText();
+			if( oldText == null ) {
+				oldText = ""; //$NON-NLS-1$
+			}
+			this.lineText.setText(newText);
+			this.markerLabel.setGraphic(getSkinnable().getLineRulerGraphicNodeFactory().call(this.line));
+			if( newText.length() != oldText.length() ) {
+				StyledTextSkin.this.rootContainer.requestLayout();
+			}
+			StyledTextSkin.this.lineRuler.layout();
 		}
 	}
 
@@ -920,6 +936,10 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			}
 
 			getChildren().removeAll(toRemove);
+		}
+
+		public void refresh() {
+			getChildren().filtered(n -> n instanceof LineInfo).forEach( n -> ((LineInfo)n).calculateContent());
 		}
 	}
 

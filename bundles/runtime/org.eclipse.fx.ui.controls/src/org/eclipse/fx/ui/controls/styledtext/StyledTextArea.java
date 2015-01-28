@@ -21,11 +21,13 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.DataFormat;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
@@ -39,6 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
  * </p>
+ *
  * @noreference
  */
 public class StyledTextArea extends Control {
@@ -103,17 +106,27 @@ public class StyledTextArea extends Control {
 	private final ObjectProperty<TextSelection> currentSelection = new SimpleObjectProperty<>(
 			this, "currentSelection"); //$NON-NLS-1$
 
-	private int anchor;
+	@NonNull
+	private final ObjectProperty<@NonNull Callback<@NonNull StyledTextLine, @Nullable Node>> lineRulerGraphicNodeFactory = new SimpleObjectProperty<>(
+			this, "lineRulerGraphicNodeFactory", e -> null); //$NON-NLS-1$
 
-	// private int lastTextChangeStart;
-	//
-	// private int lastTextChangeNewLineCount;
-	//
-	// private int lastTextChangeNewCharCount;
-	//
-	// private int lastTextChangeReplaceLineCount;
-	//
-	// private int lastTextChangeReplaceCharCount;
+	/**
+	 * Represents a line shown in the control
+	 */
+	public interface StyledTextLine {
+		/**
+		 * @return the plain text value
+		 */
+		public String getText();
+
+		/**
+		 * @return the index of the line
+		 */
+		public int getLineIndex();
+
+	}
+
+	private int anchor;
 
 	/**
 	 * Create a new control
@@ -125,11 +138,12 @@ public class StyledTextArea extends Control {
 				getClass().getResource("styledtextarea.css").toExternalForm()); //$NON-NLS-1$
 		setFocusTraversable(true);
 	}
-//Requires 8u40!
-//	@Override
-//	public String getUserAgentStylesheet() {
-//		return getClass().getResource("styledtextarea.css").toExternalForm();
-//	}
+
+	// Requires 8u40!
+	// @Override
+	// public String getUserAgentStylesheet() {
+	// return getClass().getResource("styledtextarea.css").toExternalForm();
+	// }
 
 	void handleTextChanging(TextChangingEvent event) {
 		if (event.replaceCharCount < 0) {
@@ -237,7 +251,7 @@ public class StyledTextArea extends Control {
 		if (selection) {
 			caretOffsetProperty().set(offset);
 
-			if( offset > this.anchor ) {
+			if (offset > this.anchor) {
 				setSelectionRange(this.anchor, offset - this.anchor);
 			} else {
 				setSelectionRange(offset, this.anchor - offset);
@@ -1484,5 +1498,40 @@ public class StyledTextArea extends Control {
 					getContent().getTextRange(getSelection().offset,
 							getSelection().length)));
 		}
+	}
+
+	/**
+	 * @return property holding the factory to create graphics in the ruler
+	 */
+	@NonNull
+	public final ObjectProperty<@NonNull Callback<@NonNull StyledTextLine, @Nullable Node>> lineRulerGraphicNodeFactoryProperty() {
+		return this.lineRulerGraphicNodeFactory;
+	}
+
+	/**
+	 * @return the current factory to create graphics in the ruler
+	 */
+	public final @NonNull Callback<@NonNull StyledTextLine, @Nullable Node> getLineRulerGraphicNodeFactory() {
+		return this.lineRulerGraphicNodeFactoryProperty().get();
+	}
+
+	/**
+	 * Set a new factory to create graphics in the ruler
+	 *
+	 * @param lineRulerGraphicNodeFactory
+	 *            the factory
+	 */
+	public final void setLineRulerGraphicNodeFactory(
+			final @NonNull Callback<@NonNull StyledTextLine, @Nullable Node> lineRulerGraphicNodeFactory) {
+		this.lineRulerGraphicNodeFactoryProperty().set(
+				lineRulerGraphicNodeFactory);
+	}
+
+	/**
+	 * Refresh the line ruler
+	 */
+	public void refreshLineRuler() {
+		//TODO We need to send an event!
+		((StyledTextSkin)getSkin()).refreshLineRuler();
 	}
 }
