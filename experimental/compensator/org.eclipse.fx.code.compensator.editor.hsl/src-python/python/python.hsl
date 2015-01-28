@@ -1,0 +1,38 @@
+Python {
+	partition __dftl_partition_content_type
+	partition __python_multiline_comment
+	partition __python_singleline_comment
+	partition __python_string
+	rule-damager __dftl_partition_content_type {
+		default token python_default
+		token python_string
+		token python_operator
+		token python_bracket
+		token python_keyword_return
+		token python_keyword
+		keywords python_keyword_return [ "return" ]
+		keywords python_keyword [
+			'and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'not', 'or', 'pass', 'print', 'raise', 'return', 'try', 'while', 'with', 'yield']
+		single-line python_string "'" => "'" escaped by "\\"
+		whitespace-rule python_default javawhitespace
+		character-rule python_operator [ ';', '.', '=', '/', '\\', '+', '-', '*', '<', '>', ':', '?', '!', ',', '|', '&', '^', '%', '~' ]
+		character-rule python_bracket [ '(', ')', '{', '}', '[', ']' ]
+	}
+	rule-damager __python_singleline_comment {
+		default token python_single_line_comment
+		//TODO not fully ported
+	}
+	rule-damager __python_multiline_comment {
+		default token python_multi_line_comment
+		//TODO not fully ported
+	}
+	rule-damager __python_string {
+		default token python_string
+	}
+	rule_partitioner {
+      single_line __python_string '"' => '"'
+      single_line __python_singleline_comment '#'
+      multi_line __python_multiline_comment "'''" => "'''"
+      single_line __python_string "'" => "'"
+    }
+} for "text/python"
