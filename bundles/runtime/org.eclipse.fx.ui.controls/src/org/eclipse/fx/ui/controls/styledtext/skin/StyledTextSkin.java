@@ -193,6 +193,9 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		});
 	}
 
+	/**
+	 * Refresh the line ruler
+	 */
 	public void refreshLineRuler() {
 		this.lineRuler.refresh();
 	}
@@ -876,18 +879,21 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		}
 
 		public void calculateContent() {
-			setManaged(true);
-			String newText = this.line.getLineIndex() + 1 + ""; //$NON-NLS-1$
-			String oldText = this.lineText.getText();
-			if( oldText == null ) {
-				oldText = ""; //$NON-NLS-1$
+			Line line = this.line;
+			if( line != null ) {
+				setManaged(true);
+				String newText = this.line.getLineIndex() + 1 + ""; //$NON-NLS-1$
+				String oldText = this.lineText.getText();
+				if( oldText == null ) {
+					oldText = ""; //$NON-NLS-1$
+				}
+				this.lineText.setText(newText);
+				this.markerLabel.setGraphic(getSkinnable().getLineRulerGraphicNodeFactory().call(line));
+				if( newText.length() != oldText.length() ) {
+					StyledTextSkin.this.rootContainer.requestLayout();
+				}
+				StyledTextSkin.this.lineRuler.layout();
 			}
-			this.lineText.setText(newText);
-			this.markerLabel.setGraphic(getSkinnable().getLineRulerGraphicNodeFactory().call(this.line));
-			if( newText.length() != oldText.length() ) {
-				StyledTextSkin.this.rootContainer.requestLayout();
-			}
-			StyledTextSkin.this.lineRuler.layout();
 		}
 	}
 
