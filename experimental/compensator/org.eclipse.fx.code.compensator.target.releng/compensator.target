@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="compensator-target" sequenceNumber="46">
+<?pde version="3.8"?><target name="compensator-target" sequenceNumber="47">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.fx.code.compensator.target.feature.feature.group" version="1.0.0.201501291604"/>
-<repository location="file:/Users/tomschindl/git/efxclipse/experimental/compensator/org.eclipse.fx.code.compensator.target.updatesite/target/site/"/>
+<unit id="org.eclipse.fx.code.compensator.target.feature.feature.group" version="1.0.0.201501291702"/>
+<repository location="http://download.eclipse.org/efxclipse/compensator/target/site"/>
 </location>
 </locations>
 <includeBundles>
