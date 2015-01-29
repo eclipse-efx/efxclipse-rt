@@ -11,6 +11,7 @@
 package org.eclipse.fx.core.function;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -90,8 +91,8 @@ public final class ExExecutor {
 	 *            the message to use
 	 * @return the value provided by the supplier
 	 */
-	public static <@Nullable V> Optional<V> executeSupplier(@NonNull ExSupplier<V> r,
-			@NonNull String message) {
+	public static <@Nullable V> Optional<V> executeSupplier(
+			@NonNull ExSupplier<V> r, @NonNull String message) {
 		return executeSupplier(r, (e) -> wrap(e, message));
 	}
 
@@ -119,6 +120,25 @@ public final class ExExecutor {
 			} else {
 				throw exceptionConverter.apply(e);
 			}
+		}
+	}
+
+	/**
+	 * Execute the supplier and if an exception occurs handle the exception with
+	 * provides handler to provide a default value
+	 *
+	 * @param r
+	 *            the supplier
+	 * @param exceptionHandler
+	 *            the exception handler
+	 * @return the value
+	 */
+	public static <@Nullable V> Optional<V> executeSupplierOrDefault(
+			@NonNull ExSupplier<V> r, Function<Throwable, V> exceptionHandler) {
+		try {
+			return Optional.of(r.wrappedGet());
+		} catch (Throwable t) {
+			return Optional.ofNullable(exceptionHandler.apply(t));
 		}
 	}
 
@@ -187,9 +207,30 @@ public final class ExExecutor {
 	 *            the message to use
 	 * @return the return value of the function
 	 */
-	public static <@Nullable V, @Nullable R> Optional<R> executeFunction(V value,
-			@NonNull ExFunction<V, R> r, @NonNull String message) {
+	public static <@Nullable V, @Nullable R> Optional<R> executeFunction(
+			V value, @NonNull ExFunction<V, R> r, @NonNull String message) {
 		return executeFunction(value, r, (e) -> wrap(e, message));
+	}
+
+	/**
+	 * Execute the function and in case of an exception
+	 *
+	 * @param value
+	 *            the value to pass to the function
+	 * @param r
+	 *            the function
+	 * @param exceptionHandler
+	 *            handle an exception and return a value
+	 * @return the value returned by the function or the exception handler
+	 */
+	public static <@Nullable V, @Nullable R> Optional<R> executeFunctionOrDefault(
+			V value, @NonNull ExFunction<V, R> r,
+			BiFunction<Throwable, V, R> exceptionHandler) {
+		try {
+			return Optional.of(r.wrappedApply(value));
+		} catch (Throwable t) {
+			return Optional.ofNullable(exceptionHandler.apply(t, value));
+		}
 	}
 
 	/**
