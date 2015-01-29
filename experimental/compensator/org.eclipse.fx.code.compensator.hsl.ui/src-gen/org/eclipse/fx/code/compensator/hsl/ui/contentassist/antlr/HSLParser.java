@@ -38,9 +38,22 @@ public class HSLParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getPartitionerAccess().getAlternatives(), "rule__Partitioner__Alternatives");
+					put(grammarAccess.getJavaLikeParitionerAccess().getAlternatives_0(), "rule__JavaLikeParitioner__Alternatives_0");
+					put(grammarAccess.getRulePartitionerAccess().getAlternatives_0(), "rule__RulePartitioner__Alternatives_0");
+					put(grammarAccess.getJSParitionerAccess().getAlternatives_0(), "rule__JSParitioner__Alternatives_0");
 					put(grammarAccess.getDamagerAccess().getAlternatives(), "rule__Damager__Alternatives");
+					put(grammarAccess.getJSDamagerAccess().getAlternatives_0(), "rule__JSDamager__Alternatives_0");
+					put(grammarAccess.getRuleDamagerAccess().getAlternatives_0(), "rule__RuleDamager__Alternatives_0");
 					put(grammarAccess.getScannerRuleAccess().getAlternatives(), "rule__ScannerRule__Alternatives");
 					put(grammarAccess.getParitionRuleAccess().getAlternatives(), "rule__ParitionRule__Alternatives");
+					put(grammarAccess.getScannerSingleLineRuleAccess().getAlternatives_0(), "rule__ScannerSingleLineRule__Alternatives_0");
+					put(grammarAccess.getPartitionSingleLineRuleAccess().getAlternatives_0(), "rule__PartitionSingleLineRule__Alternatives_0");
+					put(grammarAccess.getScannerMultiLineRuleAccess().getAlternatives_0(), "rule__ScannerMultiLineRule__Alternatives_0");
+					put(grammarAccess.getPartitionMultiLineRuleAccess().getAlternatives_0(), "rule__PartitionMultiLineRule__Alternatives_0");
+					put(grammarAccess.getScannerCharacterRuleAccess().getAlternatives_0(), "rule__ScannerCharacterRule__Alternatives_0");
+					put(grammarAccess.getScannerJSRuleAccess().getAlternatives_0(), "rule__ScannerJSRule__Alternatives_0");
+					put(grammarAccess.getPartitionJSRuleAccess().getAlternatives_0(), "rule__PartitionJSRule__Alternatives_0");
+					put(grammarAccess.getScannerWhitespaceRuleAccess().getAlternatives_0(), "rule__ScannerWhitespaceRule__Alternatives_0");
 					put(grammarAccess.getScannerWhitespaceRuleAccess().getAlternatives_2(), "rule__ScannerWhitespaceRule__Alternatives_2");
 					put(grammarAccess.getFontTypeAccess().getAlternatives(), "rule__FontType__Alternatives");
 					put(grammarAccess.getModelAccess().getGroup(), "rule__Model__Group__0");

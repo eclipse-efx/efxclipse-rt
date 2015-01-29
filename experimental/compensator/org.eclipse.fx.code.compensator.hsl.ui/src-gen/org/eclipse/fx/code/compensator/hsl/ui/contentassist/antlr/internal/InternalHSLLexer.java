@@ -12,15 +12,23 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalHSLLexer extends Lexer {
+    public static final int T__50=50;
     public static final int T__19=19;
     public static final int T__15=15;
     public static final int T__16=16;
     public static final int T__17=17;
     public static final int T__18=18;
     public static final int T__11=11;
+    public static final int T__55=55;
     public static final int T__12=12;
+    public static final int T__56=56;
     public static final int T__13=13;
+    public static final int T__57=57;
     public static final int T__14=14;
+    public static final int T__51=51;
+    public static final int T__52=52;
+    public static final int T__53=53;
+    public static final int T__54=54;
     public static final int RULE_ID=4;
     public static final int T__26=26;
     public static final int T__27=27;
@@ -49,6 +57,8 @@ public class InternalHSLLexer extends Lexer {
     public static final int T__32=32;
     public static final int RULE_WS=9;
     public static final int RULE_ANY_OTHER=10;
+    public static final int T__48=48;
+    public static final int T__49=49;
     public static final int T__44=44;
     public static final int T__45=45;
     public static final int T__46=46;
@@ -76,10 +86,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__11;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:11:7: ( 'bold' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:11:9: 'bold'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:11:7: ( 'java-like-partitioner' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:11:9: 'java-like-partitioner'
             {
-            match("bold"); 
+            match("java-like-partitioner"); 
 
 
             }
@@ -97,10 +107,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__12;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:12:7: ( 'italic' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:12:9: 'italic'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:12:7: ( 'java_like_partitioner' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:12:9: 'java_like_partitioner'
             {
-            match("italic"); 
+            match("java_like_partitioner"); 
 
 
             }
@@ -118,10 +128,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__13;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:13:7: ( 'underline' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:13:9: 'underline'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:13:7: ( 'rule-partitioner' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:13:9: 'rule-partitioner'
             {
-            match("underline"); 
+            match("rule-partitioner"); 
 
 
             }
@@ -139,10 +149,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__14;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:14:7: ( 'strike-through' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:14:9: 'strike-through'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:14:7: ( 'rule_partitioner' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:14:9: 'rule_partitioner'
             {
-            match("strike-through"); 
+            match("rule_partitioner"); 
 
 
             }
@@ -160,10 +170,11 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:15:7: ( '{' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:15:9: '{'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:15:7: ( 'js-partitioner' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:15:9: 'js-partitioner'
             {
-            match('{'); 
+            match("js-partitioner"); 
+
 
             }
 
@@ -180,10 +191,11 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:16:7: ( '}' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:16:9: '}'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:16:7: ( 'js_partitioner' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:16:9: 'js_partitioner'
             {
-            match('}'); 
+            match("js_partitioner"); 
+
 
             }
 
@@ -200,10 +212,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:17:7: ( 'for' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:17:9: 'for'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:17:7: ( 'js-damager' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:17:9: 'js-damager'
             {
-            match("for"); 
+            match("js-damager"); 
 
 
             }
@@ -221,10 +233,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:18:7: ( 'partition' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:18:9: 'partition'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:18:7: ( 'js_damager' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:18:9: 'js_damager'
             {
-            match("partition"); 
+            match("js_damager"); 
 
 
             }
@@ -242,10 +254,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:19:7: ( 'java-like-partitioner' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:19:9: 'java-like-partitioner'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:19:7: ( 'rule-damager' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:19:9: 'rule-damager'
             {
-            match("java-like-partitioner"); 
+            match("rule-damager"); 
 
 
             }
@@ -263,10 +275,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:20:7: ( 'singlelinedoc' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:20:9: 'singlelinedoc'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:20:7: ( 'rule_damager' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:20:9: 'rule_damager'
             {
-            match("singlelinedoc"); 
+            match("rule_damager"); 
 
 
             }
@@ -284,10 +296,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:21:7: ( 'multilinedoc' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:21:9: 'multilinedoc'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:21:7: ( 'single-line' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:21:9: 'single-line'
             {
-            match("multilinedoc"); 
+            match("single-line"); 
 
 
             }
@@ -305,10 +317,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:22:7: ( 'javadoc' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:22:9: 'javadoc'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:22:7: ( 'single_line' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:22:9: 'single_line'
             {
-            match("javadoc"); 
+            match("single_line"); 
 
 
             }
@@ -326,10 +338,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:23:7: ( 'char' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:23:9: 'char'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:23:7: ( 'multi-line' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:23:9: 'multi-line'
             {
-            match("char"); 
+            match("multi-line"); 
 
 
             }
@@ -347,10 +359,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:24:7: ( 'string' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:24:9: 'string'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:24:7: ( 'multi_line' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:24:9: 'multi_line'
             {
-            match("string"); 
+            match("multi_line"); 
 
 
             }
@@ -368,10 +380,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:25:7: ( 'rule-partitioner' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:25:9: 'rule-partitioner'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:25:7: ( 'character-rule' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:25:9: 'character-rule'
             {
-            match("rule-partitioner"); 
+            match("character-rule"); 
 
 
             }
@@ -389,10 +401,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:26:7: ( 'js-partitioner' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:26:9: 'js-partitioner'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:26:7: ( 'character_rule' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:26:9: 'character_rule'
             {
-            match("js-partitioner"); 
+            match("character_rule"); 
 
 
             }
@@ -410,10 +422,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:27:7: ( 'js-damager' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:27:9: 'js-damager'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:27:7: ( 'javascript-rule' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:27:9: 'javascript-rule'
             {
-            match("js-damager"); 
+            match("javascript-rule"); 
 
 
             }
@@ -431,10 +443,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:28:7: ( 'rule-damager' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:28:9: 'rule-damager'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:28:7: ( 'javascript_rule' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:28:9: 'javascript_rule'
             {
-            match("rule-damager"); 
+            match("javascript_rule"); 
 
 
             }
@@ -452,10 +464,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:29:7: ( 'token' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:29:9: 'token'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:29:7: ( 'whitespace-rule' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:29:9: 'whitespace-rule'
             {
-            match("token"); 
+            match("whitespace-rule"); 
 
 
             }
@@ -473,10 +485,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:30:7: ( 'keywords' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:30:9: 'keywords'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:30:7: ( 'whitespace_rule' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:30:9: 'whitespace_rule'
             {
-            match("keywords"); 
+            match("whitespace_rule"); 
 
 
             }
@@ -494,10 +506,11 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:31:7: ( '[' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:31:9: '['
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:31:7: ( 'bold' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:31:9: 'bold'
             {
-            match('['); 
+            match("bold"); 
+
 
             }
 
@@ -514,10 +527,11 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:32:7: ( ']' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:32:9: ']'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:32:7: ( 'italic' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:32:9: 'italic'
             {
-            match(']'); 
+            match("italic"); 
+
 
             }
 
@@ -534,10 +548,11 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:33:7: ( ',' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:33:9: ','
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:33:7: ( 'underline' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:33:9: 'underline'
             {
-            match(','); 
+            match("underline"); 
+
 
             }
 
@@ -554,10 +569,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:34:7: ( 'since' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:34:9: 'since'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:34:7: ( 'strike-through' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:34:9: 'strike-through'
             {
-            match("since"); 
+            match("strike-through"); 
 
 
             }
@@ -575,11 +590,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:35:7: ( 'single-line' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:35:9: 'single-line'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:35:7: ( '{' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:35:9: '{'
             {
-            match("single-line"); 
-
+            match('{'); 
 
             }
 
@@ -596,11 +610,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:36:7: ( '=>' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:36:9: '=>'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:36:7: ( '}' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:36:9: '}'
             {
-            match("=>"); 
-
+            match('}'); 
 
             }
 
@@ -617,10 +630,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:37:7: ( 'escaped' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:37:9: 'escaped'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:37:7: ( 'for' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:37:9: 'for'
             {
-            match("escaped"); 
+            match("for"); 
 
 
             }
@@ -638,10 +651,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:38:7: ( 'by' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:38:9: 'by'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:38:7: ( 'partition' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:38:9: 'partition'
             {
-            match("by"); 
+            match("partition"); 
 
 
             }
@@ -659,10 +672,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:39:7: ( 'multi-line' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:39:9: 'multi-line'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:39:7: ( 'singlelinedoc' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:39:9: 'singlelinedoc'
             {
-            match("multi-line"); 
+            match("singlelinedoc"); 
 
 
             }
@@ -680,10 +693,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:40:7: ( 'character-rule' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:40:9: 'character-rule'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:40:7: ( 'multilinedoc' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:40:9: 'multilinedoc'
             {
-            match("character-rule"); 
+            match("multilinedoc"); 
 
 
             }
@@ -701,10 +714,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__41;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:41:7: ( 'javascript-rule' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:41:9: 'javascript-rule'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:41:7: ( 'javadoc' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:41:9: 'javadoc'
             {
-            match("javascript-rule"); 
+            match("javadoc"); 
 
 
             }
@@ -722,10 +735,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__42;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:42:7: ( 'whitespace-rule' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:42:9: 'whitespace-rule'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:42:7: ( 'char' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:42:9: 'char'
             {
-            match("whitespace-rule"); 
+            match("char"); 
 
 
             }
@@ -743,10 +756,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:43:7: ( 'rgb' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:43:9: 'rgb'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:43:7: ( 'string' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:43:9: 'string'
             {
-            match("rgb"); 
+            match("string"); 
 
 
             }
@@ -764,10 +777,11 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:44:7: ( '(' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:44:9: '('
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:44:7: ( 'token' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:44:9: 'token'
             {
-            match('('); 
+            match("token"); 
+
 
             }
 
@@ -784,10 +798,11 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__45;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:45:7: ( ')' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:45:9: ')'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:45:7: ( 'keywords' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:45:9: 'keywords'
             {
-            match(')'); 
+            match("keywords"); 
+
 
             }
 
@@ -804,11 +819,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__46;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:46:7: ( 'default' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:46:9: 'default'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:46:7: ( '[' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:46:9: '['
             {
-            match("default"); 
-
+            match('['); 
 
             }
 
@@ -825,8 +839,214 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = T__47;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:47:7: ( 'javawhitespace' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:47:9: 'javawhitespace'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:47:7: ( ']' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:47:9: ']'
+            {
+            match(']'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__47"
+
+    // $ANTLR start "T__48"
+    public final void mT__48() throws RecognitionException {
+        try {
+            int _type = T__48;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:48:7: ( ',' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:48:9: ','
+            {
+            match(','); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__48"
+
+    // $ANTLR start "T__49"
+    public final void mT__49() throws RecognitionException {
+        try {
+            int _type = T__49;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:49:7: ( 'since' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:49:9: 'since'
+            {
+            match("since"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__49"
+
+    // $ANTLR start "T__50"
+    public final void mT__50() throws RecognitionException {
+        try {
+            int _type = T__50;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:50:7: ( '=>' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:50:9: '=>'
+            {
+            match("=>"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__50"
+
+    // $ANTLR start "T__51"
+    public final void mT__51() throws RecognitionException {
+        try {
+            int _type = T__51;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:51:7: ( 'escaped' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:51:9: 'escaped'
+            {
+            match("escaped"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__51"
+
+    // $ANTLR start "T__52"
+    public final void mT__52() throws RecognitionException {
+        try {
+            int _type = T__52;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:52:7: ( 'by' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:52:9: 'by'
+            {
+            match("by"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__52"
+
+    // $ANTLR start "T__53"
+    public final void mT__53() throws RecognitionException {
+        try {
+            int _type = T__53;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:53:7: ( 'rgb' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:53:9: 'rgb'
+            {
+            match("rgb"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__53"
+
+    // $ANTLR start "T__54"
+    public final void mT__54() throws RecognitionException {
+        try {
+            int _type = T__54;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:54:7: ( '(' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:54:9: '('
+            {
+            match('('); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__54"
+
+    // $ANTLR start "T__55"
+    public final void mT__55() throws RecognitionException {
+        try {
+            int _type = T__55;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:55:7: ( ')' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:55:9: ')'
+            {
+            match(')'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__55"
+
+    // $ANTLR start "T__56"
+    public final void mT__56() throws RecognitionException {
+        try {
+            int _type = T__56;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:56:7: ( 'default' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:56:9: 'default'
+            {
+            match("default"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__56"
+
+    // $ANTLR start "T__57"
+    public final void mT__57() throws RecognitionException {
+        try {
+            int _type = T__57;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:57:7: ( 'javawhitespace' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:57:9: 'javawhitespace'
             {
             match("javawhitespace"); 
 
@@ -839,17 +1059,17 @@ public class InternalHSLLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "T__47"
+    // $ANTLR end "T__57"
 
     // $ANTLR start "RULE_ID"
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5719:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5719:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6031:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6031:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5719:11: ( '^' )?
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6031:11: ( '^' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -858,7 +1078,7 @@ public class InternalHSLLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5719:11: '^'
+                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6031:11: '^'
                     {
                     match('^'); 
 
@@ -876,7 +1096,7 @@ public class InternalHSLLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5719:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6031:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -925,10 +1145,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5721:10: ( ( '0' .. '9' )+ )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5721:12: ( '0' .. '9' )+
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6033:10: ( ( '0' .. '9' )+ )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6033:12: ( '0' .. '9' )+
             {
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5721:12: ( '0' .. '9' )+
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6033:12: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -942,7 +1162,7 @@ public class InternalHSLLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5721:13: '0' .. '9'
+            	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6033:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -974,10 +1194,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -995,10 +1215,10 @@ public class InternalHSLLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop4:
                     do {
                         int alt4=3;
@@ -1014,23 +1234,15 @@ public class InternalHSLLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:21: '\\\\' .
                     	    {
                     	    match('\\'); 
-                    	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
-                    	        input.consume();
-
-                    	    }
-                    	    else {
-                    	        MismatchedSetException mse = new MismatchedSetException(null,input);
-                    	        recover(mse);
-                    	        throw mse;}
-
+                    	    matchAny(); 
 
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:28: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1055,10 +1267,10 @@ public class InternalHSLLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -1074,23 +1286,15 @@ public class InternalHSLLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:54: '\\\\' .
                     	    {
                     	    match('\\'); 
-                    	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
-                    	        input.consume();
-
-                    	    }
-                    	    else {
-                    	        MismatchedSetException mse = new MismatchedSetException(null,input);
-                    	        recover(mse);
-                    	        throw mse;}
-
+                    	    matchAny(); 
 
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5723:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6035:61: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1133,12 +1337,12 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5725:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5725:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6037:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6037:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5725:24: ( options {greedy=false; } : . )*
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6037:24: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -1163,7 +1367,7 @@ public class InternalHSLLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5725:52: .
+            	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6037:52: .
             	    {
             	    matchAny(); 
 
@@ -1193,12 +1397,12 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5727:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5727:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6039:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6039:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5727:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6039:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -1211,7 +1415,7 @@ public class InternalHSLLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5727:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6039:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1231,7 +1435,7 @@ public class InternalHSLLexer extends Lexer {
                 }
             } while (true);
 
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5727:40: ( ( '\\r' )? '\\n' )?
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6039:40: ( ( '\\r' )? '\\n' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -1240,9 +1444,9 @@ public class InternalHSLLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5727:41: ( '\\r' )? '\\n'
+                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6039:41: ( '\\r' )? '\\n'
                     {
-                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5727:41: ( '\\r' )?
+                    // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6039:41: ( '\\r' )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1251,7 +1455,7 @@ public class InternalHSLLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5727:41: '\\r'
+                            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6039:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1283,10 +1487,10 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5729:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5729:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6041:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6041:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5729:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6041:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt11=0;
             loop11:
             do {
@@ -1340,8 +1544,8 @@ public class InternalHSLLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5731:16: ( . )
-            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:5731:18: .
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6043:16: ( . )
+            // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:6043:18: .
             {
             matchAny(); 
 
@@ -1356,8 +1560,8 @@ public class InternalHSLLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt12=44;
+        // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt12=54;
         alt12 = dfa12.predict(input);
         switch (alt12) {
             case 1 :
@@ -1620,49 +1824,119 @@ public class InternalHSLLexer extends Lexer {
                 }
                 break;
             case 38 :
-                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:232: RULE_ID
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:232: T__48
+                {
+                mT__48(); 
+
+                }
+                break;
+            case 39 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:238: T__49
+                {
+                mT__49(); 
+
+                }
+                break;
+            case 40 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:244: T__50
+                {
+                mT__50(); 
+
+                }
+                break;
+            case 41 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:250: T__51
+                {
+                mT__51(); 
+
+                }
+                break;
+            case 42 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:256: T__52
+                {
+                mT__52(); 
+
+                }
+                break;
+            case 43 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:262: T__53
+                {
+                mT__53(); 
+
+                }
+                break;
+            case 44 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:268: T__54
+                {
+                mT__54(); 
+
+                }
+                break;
+            case 45 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:274: T__55
+                {
+                mT__55(); 
+
+                }
+                break;
+            case 46 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:280: T__56
+                {
+                mT__56(); 
+
+                }
+                break;
+            case 47 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:286: T__57
+                {
+                mT__57(); 
+
+                }
+                break;
+            case 48 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:292: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
-            case 39 :
-                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:240: RULE_INT
+            case 49 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:300: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 40 :
-                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:249: RULE_STRING
+            case 50 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:309: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 41 :
-                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:261: RULE_ML_COMMENT
+            case 51 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:321: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 42 :
-                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:277: RULE_SL_COMMENT
+            case 52 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:337: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 43 :
-                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:293: RULE_WS
+            case 53 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:353: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 44 :
-                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:301: RULE_ANY_OTHER
+            case 54 :
+                // ../org.eclipse.fx.code.compensator.hsl.ui/src-gen/org/eclipse/fx/code/compensator/hsl/ui/contentassist/antlr/internal/InternalHSL.g:1:361: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -1676,92 +1950,37 @@ public class InternalHSLLexer extends Lexer {
 
     protected DFA12 dfa12 = new DFA12(this);
     static final String DFA12_eotS =
-        "\1\uffff\4\42\2\uffff\10\42\3\uffff\1\37\2\42\2\uffff\1\42\1\37"+
-        "\2\uffff\3\37\2\uffff\1\42\1\102\1\uffff\4\42\2\uffff\12\42\4\uffff"+
-        "\2\42\2\uffff\1\42\5\uffff\1\42\1\uffff\4\42\1\132\2\42\1\uffff"+
-        "\3\42\1\142\5\42\1\150\5\42\1\uffff\2\42\2\uffff\1\42\1\166\1\42"+
-        "\1\uffff\5\42\1\uffff\5\42\1\u0082\1\42\1\uffff\5\42\2\uffff\1\u008c"+
-        "\4\42\1\u0091\2\42\1\u0094\1\42\1\uffff\5\42\1\uffff\1\42\3\uffff"+
-        "\4\42\1\uffff\1\42\2\uffff\1\42\1\uffff\1\42\1\u00a4\5\42\1\u00aa"+
-        "\1\42\1\u00ac\3\42\1\uffff\4\42\1\u00b4\1\uffff\1\42\1\uffff\1\u00b6"+
-        "\1\42\1\u00b8\4\42\1\uffff\1\42\1\uffff\1\42\1\uffff\3\42\1\uffff"+
-        "\2\42\1\uffff\2\42\1\uffff\2\42\1\u00c8\1\u00c9\1\42\2\uffff\1\u00cb"+
-        "\1\uffff";
+        "\1\uffff\11\42\2\uffff\4\42\3\uffff\1\37\1\42\2\uffff\1\42\1\37\2\uffff\3\37\2\uffff\2\42\1\uffff\10\42\1\114\2\42\2\uffff\4\42\4\uffff\1\42\2\uffff\1\42\5\uffff\1\42\1\uffff\2\42\1\133\6\42\1\uffff\2\42\1\145\6\42\2\uffff\3\42\1\uffff\4\42\1\172\1\42\1\174\2\42\1\uffff\5\42\1\uffff\6\42\1\uffff\2\42\1\u008f\4\42\1\uffff\1\42\1\uffff\3\42\1\u009a\11\42\2\uffff\3\42\1\uffff\1\42\1\u00aa\1\uffff\4\42\1\u00af\2\42\1\uffff\5\42\1\u00b7\5\42\1\uffff\2\42\2\uffff\4\42\1\uffff\3\42\1\u00c6\1\u00c7\2\42\1\uffff\15\42\1\u00d7\2\uffff\15\42\1\u00e6\1\u00e7\1\uffff\4\42\1\u00ed\4\42\1\u00f2\1\42\1\uffff\2\42\2\uffff\1\42\1\uffff\3\42\1\uffff\2\42\1\u00fd\1\42\1\uffff\2\42\1\uffff\6\42\1\u0107\1\uffff\1\42\1\u0109\7\42\1\uffff\1\u0111\1\uffff\4\42\1\u0116\1\u0117\1\42\1\uffff\1\u0119\2\42\1\u011c\2\uffff\1\42\1\uffff\1\u011e\1\42\1\uffff\1\u0120\1\uffff\1\42\1\uffff\3\42\1\u0125\1\uffff";
     static final String DFA12_eofS =
-        "\u00cc\uffff";
+        "\u0126\uffff";
     static final String DFA12_minS =
-        "\1\0\1\157\1\164\1\156\1\151\2\uffff\1\157\2\141\1\165\1\150\1\147"+
-        "\1\157\1\145\3\uffff\1\76\1\163\1\150\2\uffff\1\145\1\101\2\uffff"+
-        "\2\0\1\52\2\uffff\1\154\1\60\1\uffff\1\141\1\144\1\162\1\156\2\uffff"+
-        "\2\162\1\166\1\55\1\154\1\141\1\154\1\142\1\153\1\171\4\uffff\1"+
-        "\143\1\151\2\uffff\1\146\5\uffff\1\144\1\uffff\1\154\1\145\1\151"+
-        "\1\143\1\60\1\164\1\141\1\144\1\164\1\162\1\145\1\60\1\145\1\167"+
-        "\1\141\1\164\1\141\1\60\1\151\1\162\1\153\1\154\1\145\1\uffff\1"+
-        "\151\1\55\2\uffff\1\151\1\60\1\55\1\uffff\1\156\1\157\1\160\1\145"+
-        "\1\165\1\uffff\1\143\1\154\1\145\1\147\1\145\1\60\1\164\1\uffff"+
-        "\1\157\1\143\1\150\1\55\1\143\1\uffff\1\144\1\60\1\162\1\145\1\163"+
-        "\1\154\1\60\1\151\1\55\1\60\1\55\1\uffff\1\151\1\143\1\162\2\151"+
-        "\1\uffff\1\164\3\uffff\2\144\1\160\1\164\1\uffff\1\156\2\uffff\1"+
-        "\151\1\uffff\1\157\1\60\1\151\1\164\1\156\1\145\1\163\1\60\1\141"+
-        "\1\60\1\145\2\156\1\uffff\1\160\2\145\1\162\1\60\1\uffff\1\143\1"+
-        "\uffff\1\60\1\145\1\60\1\164\1\163\1\144\1\55\1\uffff\1\145\1\uffff"+
-        "\1\144\1\uffff\1\55\1\160\1\157\1\uffff\1\55\1\157\1\uffff\1\141"+
-        "\1\143\1\uffff\2\143\2\60\1\145\2\uffff\1\60\1\uffff";
+        "\1\0\1\141\1\147\1\151\1\165\2\150\1\157\1\164\1\156\2\uffff\1\157\1\141\1\157\1\145\3\uffff\1\76\1\163\2\uffff\1\145\1\101\2\uffff\2\0\1\52\2\uffff\1\166\1\55\1\uffff\1\154\1\142\1\156\1\162\1\154\1\141\1\151\1\154\1\60\1\141\1\144\2\uffff\2\162\1\153\1\171\4\uffff\1\143\2\uffff\1\146\5\uffff\1\141\2\144\1\145\1\60\1\143\1\151\1\164\1\162\1\164\1\144\1\uffff\1\154\1\145\1\60\1\164\1\145\1\167\2\141\1\55\2\uffff\2\141\1\55\1\uffff\1\154\1\145\1\153\1\151\1\60\1\145\1\60\1\151\1\162\1\uffff\1\151\1\156\1\157\1\160\1\165\1\uffff\1\154\1\143\1\157\1\150\1\162\1\155\2\144\1\145\1\60\1\145\1\147\1\55\1\143\1\uffff\1\163\1\uffff\1\143\1\154\1\164\1\60\1\162\1\145\1\154\1\151\1\162\1\143\1\151\1\164\1\141\2\uffff\2\141\1\55\1\uffff\1\55\1\60\1\uffff\1\154\1\151\1\164\1\160\1\60\2\151\1\uffff\2\144\1\164\1\153\1\151\1\60\1\164\1\151\1\147\1\162\1\155\1\uffff\1\154\1\151\2\uffff\1\151\1\156\1\145\1\141\1\uffff\1\156\1\157\1\163\2\60\1\145\1\160\1\uffff\1\145\1\164\1\145\1\164\1\141\1\151\2\156\1\145\1\162\1\143\1\145\1\156\1\60\2\uffff\1\137\1\164\1\163\1\151\1\162\1\151\1\147\1\156\2\145\1\144\1\55\1\145\2\60\1\uffff\1\160\1\55\1\160\1\157\1\60\1\164\2\145\1\144\1\60\1\157\1\uffff\1\162\1\55\2\uffff\1\141\1\uffff\1\162\1\141\1\156\1\uffff\1\151\1\162\1\60\1\157\1\uffff\1\143\1\165\1\uffff\2\162\1\165\1\143\1\145\1\157\1\60\1\uffff\1\143\1\60\1\154\1\165\1\164\1\154\1\145\1\162\1\156\1\uffff\1\60\1\uffff\1\145\1\154\1\151\1\145\2\60\1\145\1\uffff\1\60\1\145\1\164\1\60\2\uffff\1\162\1\uffff\1\60\1\151\1\uffff\1\60\1\uffff\1\157\1\uffff\1\156\1\145\1\162\1\60\1\uffff";
     static final String DFA12_maxS =
-        "\1\uffff\1\171\1\164\1\156\1\164\2\uffff\1\157\1\141\1\163\1\165"+
-        "\1\150\1\165\1\157\1\145\3\uffff\1\76\1\163\1\150\2\uffff\1\145"+
-        "\1\172\2\uffff\2\uffff\1\57\2\uffff\1\154\1\172\1\uffff\1\141\1"+
-        "\144\1\162\1\156\2\uffff\2\162\1\166\1\55\1\154\1\141\1\154\1\142"+
-        "\1\153\1\171\4\uffff\1\143\1\151\2\uffff\1\146\5\uffff\1\144\1\uffff"+
-        "\1\154\1\145\1\151\1\147\1\172\1\164\1\141\1\160\1\164\1\162\1\145"+
-        "\1\172\1\145\1\167\1\141\1\164\1\141\1\172\1\151\1\162\1\156\1\154"+
-        "\1\145\1\uffff\1\151\1\167\2\uffff\1\151\1\172\1\55\1\uffff\1\156"+
-        "\1\157\1\160\1\145\1\165\1\uffff\1\143\1\154\1\145\1\147\1\145\1"+
-        "\172\1\164\1\uffff\1\157\1\143\1\150\1\154\1\143\1\uffff\1\160\1"+
-        "\172\1\162\1\145\1\163\1\154\1\172\1\151\1\55\1\172\1\154\1\uffff"+
-        "\1\151\1\143\1\162\2\151\1\uffff\1\164\3\uffff\2\144\1\160\1\164"+
-        "\1\uffff\1\156\2\uffff\1\151\1\uffff\1\157\1\172\1\151\1\164\1\156"+
-        "\1\145\1\163\1\172\1\141\1\172\1\145\2\156\1\uffff\1\160\2\145\1"+
-        "\162\1\172\1\uffff\1\143\1\uffff\1\172\1\145\1\172\1\164\1\163\1"+
-        "\144\1\55\1\uffff\1\145\1\uffff\1\144\1\uffff\1\55\1\160\1\157\1"+
-        "\uffff\1\55\1\157\1\uffff\1\141\1\143\1\uffff\2\143\2\172\1\145"+
-        "\2\uffff\1\172\1\uffff";
+        "\1\uffff\1\163\1\165\1\164\1\165\2\150\1\171\1\164\1\156\2\uffff\1\157\1\141\1\157\1\145\3\uffff\1\76\1\163\2\uffff\1\145\1\172\2\uffff\2\uffff\1\57\2\uffff\1\166\1\137\1\uffff\1\154\1\142\1\156\1\162\1\154\1\141\1\151\1\154\1\172\1\141\1\144\2\uffff\2\162\1\153\1\171\4\uffff\1\143\2\uffff\1\146\5\uffff\1\141\2\160\1\145\1\172\1\147\1\151\1\164\1\162\1\164\1\144\1\uffff\1\154\1\145\1\172\1\164\1\145\1\167\2\141\1\167\2\uffff\2\141\1\137\1\uffff\1\154\1\145\1\156\1\151\1\172\1\145\1\172\1\151\1\162\1\uffff\1\151\1\156\1\157\1\160\1\165\1\uffff\1\154\1\143\1\157\1\150\1\162\1\155\2\160\1\145\1\172\1\145\1\147\1\154\1\143\1\uffff\1\163\1\uffff\1\143\1\154\1\164\1\172\1\162\1\145\1\154\1\151\1\162\1\143\1\151\1\164\1\141\2\uffff\2\141\1\154\1\uffff\1\55\1\172\1\uffff\1\154\1\151\1\164\1\160\1\172\2\151\1\uffff\2\144\1\164\1\153\1\151\1\172\1\164\1\151\1\147\1\162\1\155\1\uffff\1\154\1\151\2\uffff\1\151\1\156\1\145\1\141\1\uffff\1\156\1\157\1\163\2\172\1\145\1\160\1\uffff\1\145\1\164\1\145\1\164\1\141\1\151\2\156\1\145\1\162\1\143\1\145\1\156\1\172\2\uffff\1\137\1\164\1\163\1\151\1\162\1\151\1\147\1\156\2\145\1\144\1\137\1\145\2\172\1\uffff\1\160\1\137\1\160\1\157\1\172\1\164\2\145\1\144\1\172\1\157\1\uffff\1\162\1\137\2\uffff\1\141\1\uffff\1\162\1\141\1\156\1\uffff\1\151\1\162\1\172\1\157\1\uffff\1\143\1\165\1\uffff\2\162\1\165\1\143\1\145\1\157\1\172\1\uffff\1\143\1\172\1\154\1\165\1\164\1\154\1\145\1\162\1\156\1\uffff\1\172\1\uffff\1\145\1\154\1\151\1\145\2\172\1\145\1\uffff\1\172\1\145\1\164\1\172\2\uffff\1\162\1\uffff\1\172\1\151\1\uffff\1\172\1\uffff\1\157\1\uffff\1\156\1\145\1\162\1\172\1\uffff";
     static final String DFA12_acceptS =
-        "\5\uffff\1\5\1\6\10\uffff\1\25\1\26\1\27\3\uffff\1\42\1\43\2\uffff"+
-        "\1\46\1\47\3\uffff\1\53\1\54\2\uffff\1\46\4\uffff\1\5\1\6\12\uffff"+
-        "\1\25\1\26\1\27\1\32\2\uffff\1\42\1\43\1\uffff\1\47\1\50\1\51\1"+
-        "\52\1\53\1\uffff\1\34\27\uffff\1\7\2\uffff\1\20\1\21\3\uffff\1\41"+
-        "\5\uffff\1\1\7\uffff\1\11\5\uffff\1\15\13\uffff\1\30\5\uffff\1\35"+
-        "\1\uffff\1\17\1\22\1\23\4\uffff\1\2\1\uffff\1\4\1\16\1\uffff\1\31"+
-        "\15\uffff\1\14\5\uffff\1\33\1\uffff\1\44\7\uffff\1\24\1\uffff\1"+
-        "\3\1\uffff\1\10\3\uffff\1\36\2\uffff\1\37\2\uffff\1\40\5\uffff\1"+
-        "\13\1\12\1\uffff\1\45";
+        "\12\uffff\1\31\1\32\4\uffff\1\44\1\45\1\46\2\uffff\1\54\1\55\2\uffff\1\60\1\61\3\uffff\1\65\1\66\2\uffff\1\60\13\uffff\1\31\1\32\4\uffff\1\44\1\45\1\46\1\50\1\uffff\1\54\1\55\1\uffff\1\61\1\62\1\63\1\64\1\65\13\uffff\1\52\11\uffff\1\5\1\7\3\uffff\1\53\11\uffff\1\33\5\uffff\1\1\16\uffff\1\40\1\uffff\1\25\15\uffff\1\3\1\11\3\uffff\1\47\2\uffff\1\15\7\uffff\1\42\13\uffff\1\13\2\uffff\1\30\1\41\4\uffff\1\26\7\uffff\1\37\16\uffff\1\51\1\56\17\uffff\1\43\13\uffff\1\17\2\uffff\1\27\1\34\1\uffff\1\21\3\uffff\1\10\4\uffff\1\16\2\uffff\1\23\7\uffff\1\14\11\uffff\1\12\1\uffff\1\36\7\uffff\1\35\4\uffff\1\57\1\6\1\uffff\1\20\2\uffff\1\22\1\uffff\1\24\1\uffff\1\4\4\uffff\1\2";
     static final String DFA12_specialS =
-        "\1\1\32\uffff\1\0\1\2\u00af\uffff}>";
+        "\1\2\32\uffff\1\1\1\0\u0109\uffff}>";
     static final String[] DFA12_transitionS = {
-            "\11\37\2\36\2\37\1\36\22\37\1\36\1\37\1\33\4\37\1\34\1\25\1"+
-            "\26\2\37\1\21\2\37\1\35\12\32\3\37\1\22\3\37\32\31\1\17\1\37"+
-            "\1\20\1\30\1\31\1\37\1\31\1\1\1\13\1\27\1\23\1\7\2\31\1\2\1"+
-            "\11\1\16\1\31\1\12\2\31\1\10\1\31\1\14\1\4\1\15\1\3\1\31\1\24"+
-            "\3\31\1\5\1\37\1\6\uff82\37",
-            "\1\40\11\uffff\1\41",
-            "\1\43",
-            "\1\44",
-            "\1\46\12\uffff\1\45",
-            "",
-            "",
+            "\11\37\2\36\2\37\1\36\22\37\1\36\1\37\1\33\4\37\1\34\1\25\1\26\2\37\1\22\2\37\1\35\12\32\3\37\1\23\3\37\32\31\1\20\1\37\1\21\1\30\1\31\1\37\1\31\1\7\1\5\1\27\1\24\1\14\2\31\1\10\1\1\1\17\1\31\1\4\2\31\1\15\1\31\1\2\1\3\1\16\1\11\1\31\1\6\3\31\1\12\1\37\1\13\uff82\37",
+            "\1\40\21\uffff\1\41",
+            "\1\44\15\uffff\1\43",
+            "\1\45\12\uffff\1\46",
+            "\1\47",
+            "\1\50",
             "\1\51",
-            "\1\52",
-            "\1\53\21\uffff\1\54",
+            "\1\52\11\uffff\1\53",
+            "\1\54",
             "\1\55",
-            "\1\56",
-            "\1\60\15\uffff\1\57",
+            "",
+            "",
+            "\1\60",
             "\1\61",
             "\1\62",
+            "\1\63",
             "",
             "",
             "",
-            "\1\66",
             "\1\67",
             "\1\70",
             "",
@@ -1776,175 +1995,265 @@ public class InternalHSLLexer extends Lexer {
             "",
             "",
             "\1\101",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\102\61\uffff\1\103",
             "",
-            "\1\103",
             "\1\104",
             "\1\105",
             "\1\106",
-            "",
-            "",
             "\1\107",
             "\1\110",
             "\1\111",
             "\1\112",
             "\1\113",
-            "\1\114",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "\1\115",
             "\1\116",
+            "",
+            "",
             "\1\117",
             "\1\120",
-            "",
-            "",
-            "",
-            "",
             "\1\121",
             "\1\122",
+            "",
+            "",
             "",
             "",
             "\1\123",
             "",
             "",
-            "",
-            "",
-            "",
             "\1\124",
             "",
+            "",
+            "",
+            "",
+            "",
             "\1\125",
-            "\1\126",
-            "\1\127",
-            "\1\131\3\uffff\1\130",
+            "\1\127\13\uffff\1\126",
+            "\1\131\13\uffff\1\130",
+            "\1\132",
             "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
-            "\1\133",
-            "\1\134",
-            "\1\136\13\uffff\1\135",
+            "\1\135\3\uffff\1\134",
+            "\1\136",
             "\1\137",
             "\1\140",
             "\1\141",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\142",
+            "",
             "\1\143",
             "\1\144",
-            "\1\145",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "\1\146",
             "\1\147",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\150",
             "\1\151",
             "\1\152",
-            "\1\153\2\uffff\1\154",
-            "\1\155",
-            "\1\156",
+            "\1\153\61\uffff\1\154\4\uffff\1\156\16\uffff\1\155\3\uffff\1\157",
             "",
-            "\1\157",
-            "\1\160\66\uffff\1\161\16\uffff\1\162\3\uffff\1\163",
             "",
+            "\1\160",
+            "\1\161",
+            "\1\162\61\uffff\1\163",
             "",
             "\1\164",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\1\165\31\42",
-            "\1\167",
-            "",
+            "\1\165",
+            "\1\166\2\uffff\1\167",
             "\1\170",
-            "\1\171",
-            "\1\172",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\1\171\31\42",
             "\1\173",
-            "\1\174",
-            "",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "\1\175",
             "\1\176",
+            "",
             "\1\177",
             "\1\u0080",
             "\1\u0081",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u0082",
             "\1\u0083",
             "",
             "\1\u0084",
             "\1\u0085",
             "\1\u0086",
-            "\1\u0088\76\uffff\1\u0087",
+            "\1\u0087",
+            "\1\u0088",
             "\1\u0089",
-            "",
             "\1\u008b\13\uffff\1\u008a",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
-            "\1\u008d",
+            "\1\u008d\13\uffff\1\u008c",
             "\1\u008e",
-            "\1\u008f",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "\1\u0090",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
-            "\1\u0092",
-            "\1\u0093",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
-            "\1\u0096\76\uffff\1\u0095",
+            "\1\u0091",
+            "\1\u0092\61\uffff\1\u0093\14\uffff\1\u0094",
+            "\1\u0095",
+            "",
+            "\1\u0096",
             "",
             "\1\u0097",
             "\1\u0098",
             "\1\u0099",
-            "\1\u009a",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "\1\u009b",
-            "",
             "\1\u009c",
-            "",
-            "",
-            "",
             "\1\u009d",
             "\1\u009e",
             "\1\u009f",
             "\1\u00a0",
-            "",
             "\1\u00a1",
-            "",
-            "",
             "\1\u00a2",
-            "",
             "\1\u00a3",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "",
+            "",
+            "\1\u00a4",
             "\1\u00a5",
-            "\1\u00a6",
-            "\1\u00a7",
-            "\1\u00a8",
+            "\1\u00a6\61\uffff\1\u00a7\14\uffff\1\u00a8",
+            "",
             "\1\u00a9",
             "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "",
             "\1\u00ab",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u00ac",
             "\1\u00ad",
             "\1\u00ae",
-            "\1\u00af",
-            "",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "\1\u00b0",
             "\1\u00b1",
+            "",
             "\1\u00b2",
             "\1\u00b3",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
-            "",
+            "\1\u00b4",
             "\1\u00b5",
-            "",
+            "\1\u00b6",
             "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
-            "\1\u00b7",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u00b8",
             "\1\u00b9",
             "\1\u00ba",
             "\1\u00bb",
             "\1\u00bc",
             "",
             "\1\u00bd",
-            "",
             "\1\u00be",
+            "",
             "",
             "\1\u00bf",
             "\1\u00c0",
             "\1\u00c1",
-            "",
             "\1\u00c2",
-            "\1\u00c3",
             "",
+            "\1\u00c3",
             "\1\u00c4",
             "\1\u00c5",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u00c8",
+            "\1\u00c9",
             "",
-            "\1\u00c6",
-            "\1\u00c7",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
-            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "\1\u00ca",
+            "\1\u00cb",
+            "\1\u00cc",
+            "\1\u00cd",
+            "\1\u00ce",
+            "\1\u00cf",
+            "\1\u00d0",
+            "\1\u00d1",
+            "\1\u00d2",
+            "\1\u00d3",
+            "\1\u00d4",
+            "\1\u00d5",
+            "\1\u00d6",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "",
             "",
+            "\1\u00d8",
+            "\1\u00d9",
+            "\1\u00da",
+            "\1\u00db",
+            "\1\u00dc",
+            "\1\u00dd",
+            "\1\u00de",
+            "\1\u00df",
+            "\1\u00e0",
+            "\1\u00e1",
+            "\1\u00e2",
+            "\1\u00e3\61\uffff\1\u00e4",
+            "\1\u00e5",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "",
+            "\1\u00e8",
+            "\1\u00e9\61\uffff\1\u00ea",
+            "\1\u00eb",
+            "\1\u00ec",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u00ee",
+            "\1\u00ef",
+            "\1\u00f0",
+            "\1\u00f1",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u00f3",
+            "",
+            "\1\u00f4",
+            "\1\u00f5\61\uffff\1\u00f6",
+            "",
+            "",
+            "\1\u00f7",
+            "",
+            "\1\u00f8",
+            "\1\u00f9",
+            "\1\u00fa",
+            "",
+            "\1\u00fb",
+            "\1\u00fc",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u00fe",
+            "",
+            "\1\u00ff",
+            "\1\u0100",
+            "",
+            "\1\u0101",
+            "\1\u0102",
+            "\1\u0103",
+            "\1\u0104",
+            "\1\u0105",
+            "\1\u0106",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "",
+            "\1\u0108",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u010a",
+            "\1\u010b",
+            "\1\u010c",
+            "\1\u010d",
+            "\1\u010e",
+            "\1\u010f",
+            "\1\u0110",
+            "",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "",
+            "\1\u0112",
+            "\1\u0113",
+            "\1\u0114",
+            "\1\u0115",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u0118",
+            "",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u011a",
+            "\1\u011b",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "",
+            "",
+            "\1\u011d",
+            "",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\1\u011f",
+            "",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "",
+            "\1\u0121",
+            "",
+            "\1\u0122",
+            "\1\u0123",
+            "\1\u0124",
             "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             ""
     };
@@ -1979,13 +2288,23 @@ public class InternalHSLLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
+                        int LA12_28 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA12_28>='\u0000' && LA12_28<='\uFFFF')) ) {s = 61;}
+
+                        else s = 31;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
                         int LA12_27 = input.LA(1);
 
                         s = -1;
@@ -1995,49 +2314,49 @@ public class InternalHSLLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 1 : 
+                    case 2 : 
                         int LA12_0 = input.LA(1);
 
                         s = -1;
-                        if ( (LA12_0=='b') ) {s = 1;}
+                        if ( (LA12_0=='j') ) {s = 1;}
 
-                        else if ( (LA12_0=='i') ) {s = 2;}
+                        else if ( (LA12_0=='r') ) {s = 2;}
 
-                        else if ( (LA12_0=='u') ) {s = 3;}
+                        else if ( (LA12_0=='s') ) {s = 3;}
 
-                        else if ( (LA12_0=='s') ) {s = 4;}
+                        else if ( (LA12_0=='m') ) {s = 4;}
 
-                        else if ( (LA12_0=='{') ) {s = 5;}
+                        else if ( (LA12_0=='c') ) {s = 5;}
 
-                        else if ( (LA12_0=='}') ) {s = 6;}
+                        else if ( (LA12_0=='w') ) {s = 6;}
 
-                        else if ( (LA12_0=='f') ) {s = 7;}
+                        else if ( (LA12_0=='b') ) {s = 7;}
 
-                        else if ( (LA12_0=='p') ) {s = 8;}
+                        else if ( (LA12_0=='i') ) {s = 8;}
 
-                        else if ( (LA12_0=='j') ) {s = 9;}
+                        else if ( (LA12_0=='u') ) {s = 9;}
 
-                        else if ( (LA12_0=='m') ) {s = 10;}
+                        else if ( (LA12_0=='{') ) {s = 10;}
 
-                        else if ( (LA12_0=='c') ) {s = 11;}
+                        else if ( (LA12_0=='}') ) {s = 11;}
 
-                        else if ( (LA12_0=='r') ) {s = 12;}
+                        else if ( (LA12_0=='f') ) {s = 12;}
 
-                        else if ( (LA12_0=='t') ) {s = 13;}
+                        else if ( (LA12_0=='p') ) {s = 13;}
 
-                        else if ( (LA12_0=='k') ) {s = 14;}
+                        else if ( (LA12_0=='t') ) {s = 14;}
 
-                        else if ( (LA12_0=='[') ) {s = 15;}
+                        else if ( (LA12_0=='k') ) {s = 15;}
 
-                        else if ( (LA12_0==']') ) {s = 16;}
+                        else if ( (LA12_0=='[') ) {s = 16;}
 
-                        else if ( (LA12_0==',') ) {s = 17;}
+                        else if ( (LA12_0==']') ) {s = 17;}
 
-                        else if ( (LA12_0=='=') ) {s = 18;}
+                        else if ( (LA12_0==',') ) {s = 18;}
 
-                        else if ( (LA12_0=='e') ) {s = 19;}
+                        else if ( (LA12_0=='=') ) {s = 19;}
 
-                        else if ( (LA12_0=='w') ) {s = 20;}
+                        else if ( (LA12_0=='e') ) {s = 20;}
 
                         else if ( (LA12_0=='(') ) {s = 21;}
 
@@ -2060,16 +2379,6 @@ public class InternalHSLLexer extends Lexer {
                         else if ( ((LA12_0>='\t' && LA12_0<='\n')||LA12_0=='\r'||LA12_0==' ') ) {s = 30;}
 
                         else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\u001F')||LA12_0=='!'||(LA12_0>='#' && LA12_0<='&')||(LA12_0>='*' && LA12_0<='+')||(LA12_0>='-' && LA12_0<='.')||(LA12_0>=':' && LA12_0<='<')||(LA12_0>='>' && LA12_0<='@')||LA12_0=='\\'||LA12_0=='`'||LA12_0=='|'||(LA12_0>='~' && LA12_0<='\uFFFF')) ) {s = 31;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA12_28 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA12_28>='\u0000' && LA12_28<='\uFFFF')) ) {s = 61;}
-
-                        else s = 31;
 
                         if ( s>=0 ) return s;
                         break;
