@@ -143,6 +143,95 @@ public class TextViewer extends Viewer implements
 		fReplaceTextPresentation= false;
 	}
 
+	public void setDocument(IDocument document, int modelRangeOffset, int modelRangeLength) {
+
+		fReplaceTextPresentation= true;
+		fireInputDocumentAboutToBeChanged(fDocument, document);
+
+		IDocument oldDocument= fDocument;
+		fDocument= document;
+
+		try {
+
+			IDocument slaveDocument= createSlaveDocument(document);
+			updateSlaveDocument(slaveDocument, modelRangeOffset, modelRangeLength);
+			setVisibleDocument(slaveDocument);
+
+		} catch (BadLocationException x) {
+//			throw new IllegalArgumentException(JFaceTextMessages.getString("TextViewer.error.invalid_visible_region_1")); //$NON-NLS-1$
+			throw new IllegalArgumentException();
+		}
+
+		//TODO needs porting
+//		resetPlugins();
+		inputChanged(fDocument, oldDocument);
+
+		fireInputDocumentChanged(oldDocument, fDocument);
+		fLastSentSelectionChange= null;
+		fReplaceTextPresentation= false;
+	}
+
+	/**
+	 * Creates a slave document for the given document if there is a slave document manager
+	 * associated with this viewer.
+	 *
+	 * @param document the master document
+	 * @return the newly created slave document
+	 * @since 2.1
+	 */
+	protected IDocument createSlaveDocument(IDocument document) {
+		ISlaveDocumentManager manager= getSlaveDocumentManager();
+		if (manager != null) {
+			if (manager.isSlaveDocument(document))
+				return document;
+			return manager.createSlaveDocument(document);
+		}
+		return document;
+	}
+
+	/**
+	 * Updates the given slave document to show the specified range of its master document.
+	 *
+	 * @param slaveDocument the slave document
+	 * @param modelRangeOffset the offset of the master document range
+	 * @param modelRangeLength the length of the master document range
+	 * @return <code>true</code> if the slave has been adapted successfully
+	 * @throws BadLocationException in case the specified range is not valid in the master document
+	 * @since 3.0
+	 */
+	protected boolean updateSlaveDocument(IDocument slaveDocument, int modelRangeOffset, int modelRangeLength) throws BadLocationException {
+		return updateVisibleDocument(slaveDocument, modelRangeOffset, modelRangeLength);
+	}
+
+	/**
+	 * Sets the given slave document to the specified range of its master document.
+	 *
+	 * @param visibleDocument the slave document
+	 * @param visibleRegionOffset the offset of the master document range
+	 * @param visibleRegionLength the length of the master document range
+	 * @return <code>true</code> if the slave has been adapted successfully
+	 * @throws BadLocationException in case the specified range is not valid in the master document
+	 * @since 2.1
+ 	 * @deprecated use <code>updateSlaveDocument</code> instead
+	 */
+	protected boolean updateVisibleDocument(IDocument visibleDocument, int visibleRegionOffset, int visibleRegionLength) throws BadLocationException {
+		if (visibleDocument instanceof ChildDocument) {
+			ChildDocument childDocument= (ChildDocument) visibleDocument;
+
+			IDocument document= childDocument.getParentDocument();
+			int line= document.getLineOfOffset(visibleRegionOffset);
+			int offset= document.getLineOffset(line);
+			int length= (visibleRegionOffset - offset) + visibleRegionLength;
+
+			Position parentRange= childDocument.getParentDocumentRange();
+			if (offset != parentRange.getOffset() || length != parentRange.getLength()) {
+				childDocument.setParentDocumentRange(offset, length);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public IRegion getVisibleRegion() {
 
 		IDocument document= getVisibleDocument();

@@ -8,8 +8,8 @@ import java.util.function.Function;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
@@ -19,8 +19,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import org.eclipse.fx.ui.controls.list.SimpleListCell;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
@@ -152,9 +150,11 @@ public class ContentProposalPopup {
 			});
 
 			Function<ICompletionProposal, CharSequence> label = (c) -> c.getLabel();
-			Function<ICompletionProposal, List<String>> css = (c) -> c.getStyles();
+			Function<ICompletionProposal, Node> graphic = (c) -> c.getGraphic();
+			Function<ICompletionProposal, List<String>> css = (c) -> Collections.emptyList();
 
-			proposalList.setCellFactory((v) -> new SimpleListCell<ICompletionProposal>(label,css));
+
+			proposalList.setCellFactory((v) -> new SimpleListCell<ICompletionProposal>(label,graphic,css));
 			p.setCenter(proposalList);
 			stage.setScene(s);
 			stage.focusedProperty().addListener((o) -> {

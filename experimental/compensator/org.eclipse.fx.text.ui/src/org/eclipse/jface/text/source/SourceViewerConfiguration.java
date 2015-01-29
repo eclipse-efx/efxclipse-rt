@@ -11,9 +11,14 @@
 package org.eclipse.jface.text.source;
 
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import javafx.beans.property.ReadOnlyProperty;
 
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -49,5 +54,20 @@ public abstract class SourceViewerConfiguration {
 
 	public IContentAssistant getContentAssist() {
 		return null;
+	}
+
+	public IAnnotationModel getAnnotationModel() {
+		return null;
+	}
+
+	public List<AnnotationPresenter> getAnnotationPresenters() {
+		return Collections.emptyList();
+	}
+
+	@Inject
+	GraphicsLoader graphicsLoader;
+
+	public GraphicsLoader getGraphicsLoader() {
+		return graphicsLoader;
 	}
 }

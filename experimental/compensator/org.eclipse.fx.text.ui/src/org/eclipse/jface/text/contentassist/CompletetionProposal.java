@@ -1,6 +1,8 @@
 package org.eclipse.jface.text.contentassist;
 
-import java.util.List;
+import java.util.function.Supplier;
+
+import javafx.scene.Node;
 
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.jface.text.BadLocationException;
@@ -14,19 +16,20 @@ public class CompletetionProposal implements ICompletionProposal {
 	private final int replacementOffset;
 	private final int replacementLength;
 	private final int cursorPosition;
-	private final List<String> styles;
+	private final Supplier<Node> graphicSupplier;
 
-	public CompletetionProposal(String replacementString, int replacementOffset, int replacementLength, CharSequence label, List<String> styles) {
+	public CompletetionProposal(String replacementString, int replacementOffset, int replacementLength, CharSequence label, Supplier<Node> graphicSupplier) {
 		this.replacementString = replacementString;
 		this.replacementOffset = replacementOffset;
 		this.replacementLength = replacementLength;
 		this.cursorPosition = replacementString.length();
 		this.label = label;
-		this.styles = styles;
+		this.graphicSupplier = graphicSupplier;
 	}
 
-	public List<String> getStyles() {
-		return styles;
+	@Override
+	public Node getGraphic() {
+		return graphicSupplier.get();
 	}
 
 	@Override

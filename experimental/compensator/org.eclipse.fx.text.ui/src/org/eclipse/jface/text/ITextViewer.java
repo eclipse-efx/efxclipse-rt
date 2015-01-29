@@ -5,6 +5,7 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 public interface ITextViewer {
 	public IDocument getDocument();
 	public void setDocument(IDocument document);
+	void setDocument(IDocument document, int modelRangeOffset, int modelRangeLength);
 	public IRegion getVisibleRegion();
 	void addTextListener(ITextListener listener);
 	public void removeTextListener(ITextListener listener);
