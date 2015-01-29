@@ -20,7 +20,7 @@
 		<platform-version>4.2</platform-version>
 		<efx-version>0.9.0</efx-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<download-publish-experimental-path>/home/data/httpd/download.eclipse.org/efxclipse/compensator/target</download-publish-experimental-path>
+		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/compensator/target</download-publish-path>
 	</properties>
 
 	<modules>
