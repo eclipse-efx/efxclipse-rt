@@ -10,14 +10,21 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.freeedit;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +33,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 
 import javax.annotation.PostConstruct;
@@ -81,6 +91,8 @@ public class FileList {
 		view = new TreeView<>();
 		view.setCellFactory(this::treeCell);
 		view.setShowRoot(false);
+		view.setOnDragOver(this::handleDragOver);
+		view.setOnDragDropped(this::handleDrop);
 
 		TreeItem<Resource> t = new TreeItem<>();
 		for( Resource r : workbench.getResources() ) {
@@ -115,6 +127,56 @@ public class FileList {
 				}
 			}
 		});
+	}
+
+	private void handleDragOver(DragEvent e) {
+		System.err.println(e);
+		if( e.getDragboard().hasFiles() ) {
+			e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+		} else if( e.getDragboard().hasUrl() ) {
+			e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+		}
+	}
+
+	private void handleDrop(DragEvent e) {
+		if( e.getDragboard().hasFiles() ) {
+			workbench.getResources().addAll(e.getDragboard().getFiles().stream().map(this::handleDroppedFile).collect(Collectors.toList()));
+		} else if( e.getDragboard().hasUrl() ) {
+			if( e.getDragboard().getUrl().endsWith(".comp") ) {
+				try {
+					URL url = new URL( e.getDragboard().getUrl());
+					String name = org.eclipse.fx.core.URI.create(e.getDragboard().getUrl()).lastSegment();
+
+					java.io.File outFile = new java.io.File(System.getProperty("user.home")+"/.compensator/languages/"+name);
+					FileOutputStream out = new FileOutputStream(outFile);
+					byte[] buffer = new byte[2048];
+					int l;
+					InputStream in = url.openStream();
+					while( (l = in.read(buffer)) != -1 ) {
+						out.write(buffer, 0, l);
+					}
+					out.close();
+				} catch (MalformedURLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private Resource handleDroppedFile(java.io.File f) {
+		if( f.isDirectory() ) {
+			Folder folder = WorkbenchFactory.eINSTANCE.createFolder();
+			folder.setUrl(Paths.get(f.toURI()).toUri().toString());
+			return folder;
+		} else {
+			File file = WorkbenchFactory.eINSTANCE.createFile();
+			file.setUrl(Paths.get(f.toURI()).toUri().toString());
+			return file;
+		}
 	}
 
 	private void open(MouseEvent event) {

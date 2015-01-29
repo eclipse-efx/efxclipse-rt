@@ -31,6 +31,7 @@ import org.eclipse.fx.code.compensator.editor.java.scanner.JavaCodeScanner;
 import org.eclipse.fx.code.compensator.editor.java.scanner.JavaCommentScanner;
 import org.eclipse.fx.code.compensator.editor.java.scanner.JavaDocScanner;
 import org.eclipse.fx.code.compensator.editor.java.scanner.SingleTokenJavaScanner;
+import org.eclipse.fx.core.di.Service;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -39,6 +40,8 @@ import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.ITokenScanner;
+import org.eclipse.jface.text.source.AnnotationPresenter;
+import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
@@ -51,12 +54,24 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 	private SingleTokenJavaScanner fStringScanner;
 	private final Optional<ProposalComputer> computer;
 	private Input<?> input;
+	private IAnnotationModel annotationModel;
+	private List<AnnotationPresenter> annotationPresenters;
 
 	@Inject
-	public JavaSourceConfiguration(Input<?> input, @org.eclipse.e4.core.di.annotations.Optional ProposalComputer computer) {
+	public JavaSourceConfiguration(Input<?> input,
+			@org.eclipse.e4.core.di.annotations.Optional ProposalComputer computer,
+			@org.eclipse.e4.core.di.annotations.Optional IAnnotationModel annotationModel,
+			@Service List<AnnotationPresenter> annotationPresenters) {
 		this.computer = Optional.ofNullable(computer);
+		this.annotationModel = annotationModel;
 		this.input = input;
+		this.annotationPresenters = annotationPresenters;
 		initializeScanners();
+	}
+
+	@Override
+	public IAnnotationModel getAnnotationModel() {
+		return annotationModel;
 	}
 
 	private void initializeScanners() {
@@ -161,5 +176,10 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 	@Override
 	public ReadOnlyProperty<URL> getDefaultStylesheet() {
 		return defaultStylesheet.getReadOnlyProperty();
+	}
+
+	@Override
+	public List<AnnotationPresenter> getAnnotationPresenters() {
+		return annotationPresenters;
 	}
 }

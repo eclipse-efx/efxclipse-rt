@@ -7,5 +7,6 @@
 	<classpathentry kind="src" path="src-groovy"/>
 	<classpathentry kind="src" path="src-hsl"/>
 	<classpathentry kind="src" path="src-lego"/>
+	<classpathentry kind="src" path="src-python"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

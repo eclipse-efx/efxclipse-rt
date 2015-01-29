@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.code.compensator.editor.contrib.annotationmodelrcf">
+   <implementation class="org.eclipse.fx.code.compensator.editor.contrib.AnnotationModelContextFunction"/>
+   <service>
+      <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
+   </service>
+   <reference bind="addAnnotationModelFactory" cardinality="0..n" interface="org.eclipse.fx.code.compensator.editor.services.AnnotationModelFactory" name="AnnotationModelFactory" policy="dynamic" unbind="removeAnnotationModelFactory"/>
+   <property name="service.context.key" type="String" value="org.eclipse.jface.text.source.IAnnotationModel"/>
+</scr:component>

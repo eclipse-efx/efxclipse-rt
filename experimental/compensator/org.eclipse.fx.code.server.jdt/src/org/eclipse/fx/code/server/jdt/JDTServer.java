@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import org.eclipse.fx.code.server.jdt.shared.Marker;
 import org.eclipse.fx.code.server.jdt.shared.Proposal;
 
 public interface JDTServer {
@@ -22,6 +23,7 @@ public interface JDTServer {
 	public Future<Boolean> replaceContent(String resourceId, int offset,
 			int length, ByteBuffer wrap);
 	public Future<Boolean> persistContent(String id);
+	public Future<List<Marker>> getMarkers(String id);
 
 	public Future<List<Proposal>> getProposals(String id, int offset);
 	public Future<Boolean> reset(String id);

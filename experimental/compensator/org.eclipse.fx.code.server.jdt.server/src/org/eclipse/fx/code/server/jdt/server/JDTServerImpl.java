@@ -18,19 +18,24 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal;
-import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal.Type;
 import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal.Modifier;
+import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal.Type;
 import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal.Visibility;
+import org.eclipse.fx.code.server.jdt.shared.Marker;
 import org.eclipse.fx.code.server.jdt.shared.Proposal;
+import org.eclipse.fx.core.function.ExExecutor;
 import org.eclipse.jdt.core.CompletionProposal;
 import org.eclipse.jdt.core.CompletionRequestor;
 import org.eclipse.jdt.core.Flags;
@@ -147,7 +152,6 @@ public class JDTServerImpl {
 		ResourceContainer<?> rc = createResourceContainer(moduleName,path);
 		if( rc != null ) {
 			openResources.put(rc.id, rc);
-			System.err.println("OPENING " + rc.id);
 			return rc.id;
 		}
 		throw new IllegalArgumentException("Unable file '"+moduleName+"' in path '"+path+"'");
@@ -202,13 +206,20 @@ public class JDTServerImpl {
 	}
 
 	public void dispose(String id) {
-		System.err.println(openResources);
 		ResourceContainer<?> c = openResources.get(id);
 		if( c == null ) {
 			throw new IllegalStateException("There's no open resource with id '"+id+"'");
 		}
 		openResources.remove(id);
 		c.dispose();
+	}
+
+	public List<Marker> getMarkers(String id) {
+		ResourceContainer<?> c = openResources.get(id);
+		if( c == null ) {
+			throw new IllegalStateException("There's no open resource with id '"+id+"'");
+		}
+		return c.getMarkers();
 	}
 
 	private static void assertExists(IProject project) {
@@ -248,6 +259,7 @@ public class JDTServerImpl {
 		public abstract void persist();
 		public abstract void dispose();
 		public abstract void reset();
+		public abstract List<Marker> getMarkers();
 	}
 
 	static class CompilationUnitContainer extends ResourceContainer<ICompilationUnit> implements IProblemRequestor {
@@ -268,14 +280,58 @@ public class JDTServerImpl {
 				unit = executeSupplier(() -> {
 					return ((ICompilationUnit) JavaCore.create(file)).getWorkingCopy(owner, new NullProgressMonitor());
 				}, "Failed to create compilation unit").get();
-				try {
-					unit.reconcile(ICompilationUnit.NO_AST, true, null, null);
-				} catch (JavaModelException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					reconcile();
+//					unit.reconcile(ICompilationUnit.NO_AST, true, null, null);
 			}
 			return unit;
+		}
+
+		@Override
+		public List<Marker> getMarkers() {
+			reconcile();
+			IMarker[] errorMarkers = executeSupplier( () -> file.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE), "Unable to retrieve markers").get();
+			IMarker[] taskMarkers = executeSupplier( () -> file.findMarkers(IMarker.TASK, true, IResource.DEPTH_INFINITE), "Unable to retrieve markers").get();
+
+			return Stream.concat(Stream.of(errorMarkers),Stream.of(taskMarkers)).map(this::toMarker).collect(Collectors.toList());
+		}
+
+		private Marker toMarker(IMarker marker) {
+//			System.err.println("===========================");
+//			try {
+//				marker.getAttributes().forEach((k,v) -> System.err.println(k + " => " + v));
+//			} catch (CoreException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			return new Marker(
+					toType(ExExecutor.executeOrDefault(marker::getType, t -> IMarker.PROBLEM).get()),
+					toSeverity(
+							marker.getAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO)),
+					marker.getAttribute(IMarker.MESSAGE, null),
+					id,
+					marker.getAttribute(IMarker.LINE_NUMBER, -1),
+					marker.getAttribute(IMarker.CHAR_START, -1),
+					marker.getAttribute(IMarker.CHAR_END,-1));
+		}
+
+		private static Marker.Type toType(String type) {
+			switch (type) {
+			case IMarker.TASK:
+				return Marker.Type.TASK;
+			default:
+				return Marker.Type.PROBLEM;
+			}
+		}
+
+		private static Marker.Severity toSeverity(int severity) {
+			switch (severity) {
+			case IMarker.SEVERITY_ERROR:
+				return Marker.Severity.ERROR;
+			case IMarker.SEVERITY_INFO:
+				return Marker.Severity.INFO;
+			default:
+				return Marker.Severity.WARNING;
+			}
 		}
 
 		@Override
@@ -308,6 +364,7 @@ public class JDTServerImpl {
 
 		private void reconcile() {
 			if( needsReconcile ) {
+				System.err.println("DOING A RECONCILE");
 				executeRunnable(() -> getResource().reconcile(ICompilationUnit.NO_AST, true, null, null),"Failed to reconcile '"+file+"'");
 				needsReconcile = false;
 			}
@@ -375,7 +432,6 @@ public class JDTServerImpl {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.err.println("=======> " + rv);
 			return rv;
 		}
 
@@ -423,12 +479,35 @@ public class JDTServerImpl {
 
 		@Override
 		public void acceptProblem(IProblem arg0) {
-			System.err.println("A problem " + arg0);
+			try {
+				System.err.println("CREATING MARKER FOR " + arg0);
+				IMarker m = file.createMarker(arg0.getID() == IProblem.Task ? IMarker.TASK : IMarker.PROBLEM);
+				m.setAttribute(IMarker.MESSAGE, arg0.getMessage());
+				m.setAttribute(IMarker.LINE_NUMBER, arg0.getSourceLineNumber());
+				m.setAttribute(IMarker.CHAR_START, arg0.getSourceStart());
+				m.setAttribute(IMarker.CHAR_END, arg0.getSourceEnd());
+				if( arg0.isError() ) {
+					m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+				} else if( arg0.isWarning() ) {
+					m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+				} else {
+					m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
+				}
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		@Override
 		public void beginReporting() {
-			System.err.println("STARTING WITH REPORTS");
+			try {
+				file.deleteMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
+				file.deleteMarkers(IMarker.TASK, true, IResource.DEPTH_INFINITE);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		@Override

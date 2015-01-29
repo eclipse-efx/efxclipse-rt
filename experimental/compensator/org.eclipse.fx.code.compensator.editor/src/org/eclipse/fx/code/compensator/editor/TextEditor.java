@@ -17,6 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
@@ -30,6 +31,7 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
@@ -54,6 +56,10 @@ public class TextEditor {
 	@Inject
 	@ContextValue("activeInput")
 	Property<Input<?>> activeInput;
+
+	@Inject
+	@Optional
+	IAnnotationModel annotationModel;
 
 	StyledTextArea textArea;
 
@@ -102,7 +108,7 @@ public class TextEditor {
 		});
 
 		viewer.configure(configuration);
-		viewer.setDocument(document);
+		viewer.setDocument(document, annotationModel);
 		pane.setCenter(viewer);
 		activeInput.setValue(input);
 	}

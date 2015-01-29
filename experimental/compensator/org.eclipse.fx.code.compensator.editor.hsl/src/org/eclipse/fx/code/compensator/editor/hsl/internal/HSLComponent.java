@@ -11,7 +11,9 @@
 package org.eclipse.fx.code.compensator.editor.hsl.internal;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -37,6 +41,8 @@ import org.eclipse.fx.code.compensator.hsl.hSL.JavaLikeParitioner;
 import org.eclipse.fx.code.compensator.hsl.hSL.Model;
 import org.eclipse.fx.code.compensator.hsl.hSL.Partitioner;
 import org.eclipse.fx.code.compensator.hsl.hSL.RulePartitioner;
+import org.eclipse.fx.core.FilesystemService;
+import org.eclipse.fx.core.FilesystemService.Kind;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.rules.FastPartitioner;
@@ -48,6 +54,7 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 	private Map<String, Model> contentTypeMappings = new HashMap<>();
 	private Map<String, String> fileEndMappings = new HashMap<>();
 	private ResourceSetImpl rs;
+	private FilesystemService filesystemService;
 
 	public HSLComponent() {
 		HSLStandaloneSetup.doSetup();
@@ -56,7 +63,18 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 //		registerHslConfig(".groovy",URI.createPlatformPluginURI("/org.eclipse.fx.code.compensator.editor.hsl/groovy/groovy.hsl", true));
 //		registerHslConfig(".hsl",URI.createPlatformPluginURI("/org.eclipse.fx.code.compensator.editor.hsl/hsl/hsl.hsl", true));
 //		registerHslConfig(URI.createPlatformPluginURI("/org.eclipse.fx.code.compensator.editor.hsl/lego/lego.hsl", true));
+	}
+
+	public void activate() {
 		loadExternalConfigurations();
+	}
+
+	public void registerFilesystemService(FilesystemService s) {
+		this.filesystemService = s;
+	}
+
+	public void unregisterFilesystemService(FilesystemService s) {
+		this.filesystemService = null;
 	}
 
 	@Override
@@ -65,7 +83,8 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 			org.eclipse.fx.core.URI uri = ((URIProvider) input).getURI();
 			int idx = uri.lastSegment().lastIndexOf('.');
 			if( idx > -1 ) {
-				return fileEndMappings.get(uri.lastSegment().substring(idx));
+				String rv = fileEndMappings.get(uri.lastSegment().substring(idx));
+				return rv;
 			}
 
 		}
@@ -78,6 +97,49 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 			Path path = Paths.get(folder.toURI());
 			try {
 				Files.walk(path,1).filter((p) -> !p.equals(path)).forEach(this::handleLanguage);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		filesystemService.observePath(Paths.get(folder.toURI()), this::handleNewLanguage);
+	}
+
+	private void handleNewLanguage(Kind kind, Path path) {
+		String name = path.getFileName().toString();
+		if( name.endsWith(".comp") ) {
+			java.io.File folder = new java.io.File(System.getProperty("user.home")+"/.compensator/languages/"+name.substring(0,name.length()-5));
+			folder.mkdir();
+
+			byte[] buffer = new byte[2048];
+			InputStream newInputStream;
+			try {
+				newInputStream = Files.newInputStream(path);
+				ZipInputStream zin = new ZipInputStream(newInputStream);
+				ZipEntry entry;
+				while( (entry = zin.getNextEntry()) != null ) {
+					java.io.File f = new java.io.File(folder,entry.getName());
+					FileOutputStream output = null;
+		            try
+		            {
+		                output = new FileOutputStream(f);
+		                int len = 0;
+		                while ((len = zin.read(buffer)) > 0)
+		                {
+		                    output.write(buffer, 0, len);
+		                }
+		            }
+		            finally
+		            {
+		                // we must always close the output file
+		                if(output!=null) output.close();
+		            }
+				}
+
+				zin.close();
+				newInputStream.close();
+				handleLanguage(Paths.get(folder.toURI()));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -121,6 +183,7 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 	}
 
 	private void registerHslConfig(String fileEnding, URI uri) {
+		System.err.println("REGISTERING: " + fileEnding + " => " + uri);
 		Model m = loadModel(uri);
 		for( String t : m.getContentTypes() ) {
 			contentTypeMappings.put(t, m);

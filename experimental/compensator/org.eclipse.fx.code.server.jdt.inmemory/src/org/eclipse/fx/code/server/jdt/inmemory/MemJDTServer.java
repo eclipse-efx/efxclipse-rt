@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 
 import org.eclipse.fx.code.server.jdt.JDTServer;
 import org.eclipse.fx.code.server.jdt.server.JDTServerImpl;
+import org.eclipse.fx.code.server.jdt.shared.Marker;
 import org.eclipse.fx.code.server.jdt.shared.Proposal;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
@@ -54,6 +55,11 @@ public class MemJDTServer implements JDTServer {
 	@Override
 	public Future<ByteBuffer> getFileContent(String id) {
 		return CompletableFuture.supplyAsync(() -> ByteBuffer.wrap(serverImpl.getFileContent(id)));
+	}
+
+	@Override
+	public Future<List<Marker>> getMarkers(String id) {
+		return CompletableFuture.supplyAsync(() -> serverImpl.getMarkers(id));
 	}
 
 	@Override
