@@ -1,9 +1,6 @@
 package org.eclipse.fx.code.server.jdt.server;
 
-import static org.eclipse.fx.core.function.ExExecutor.executeConsumer;
-import static org.eclipse.fx.core.function.ExExecutor.executeFunction;
-import static org.eclipse.fx.core.function.ExExecutor.executeRunnable;
-import static org.eclipse.fx.core.function.ExExecutor.executeSupplier;
+import static org.eclipse.fx.core.function.ExExecutor.*;
 
 import java.net.URI;
 import java.nio.file.Files;
@@ -35,7 +32,6 @@ import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal.Type;
 import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal.Visibility;
 import org.eclipse.fx.code.server.jdt.shared.Marker;
 import org.eclipse.fx.code.server.jdt.shared.Proposal;
-import org.eclipse.fx.core.function.ExExecutor;
 import org.eclipse.jdt.core.CompletionProposal;
 import org.eclipse.jdt.core.CompletionRequestor;
 import org.eclipse.jdt.core.Flags;
@@ -304,7 +300,7 @@ public class JDTServerImpl {
 //				e.printStackTrace();
 //			}
 			return new Marker(
-					toType(ExExecutor.executeOrDefault(marker::getType, t -> IMarker.PROBLEM).get()),
+					toType(executeSupplierOrDefault(marker::getType, t -> IMarker.PROBLEM).get()),
 					toSeverity(
 							marker.getAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO)),
 					marker.getAttribute(IMarker.MESSAGE, null),
