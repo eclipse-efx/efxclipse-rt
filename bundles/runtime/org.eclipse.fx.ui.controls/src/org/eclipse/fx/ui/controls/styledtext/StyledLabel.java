@@ -22,7 +22,10 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A label which is able to display {@link StyledString}
- *
+ * <b>This is an experimental component provided as a preview we'll improve and
+ * fix problems in up coming releases</b>
+ * </p>
+ * @noreference
  * @since 1.2
  */
 public class StyledLabel extends Control {

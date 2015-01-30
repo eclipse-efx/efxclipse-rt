@@ -21,7 +21,10 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A string with styling informations
- *
+ * <b>This is an experimental component provided as a preview we'll improve and
+ * fix problems in up coming releases</b>
+ * </p>
+ * @noreference
  * @since 1.2
  */
 public class StyledString implements CharSequence {

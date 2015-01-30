@@ -17,6 +17,11 @@ import java.util.List;
 
 /**
  * Segment of a {@link StyledString}
+ *
+ * <b>This is an experimental component provided as a preview we'll improve and
+ * fix problems in up coming releases</b>
+ * </p>
+ * @noreference
  */
 public class StyledStringSegment {
 	private final String text;

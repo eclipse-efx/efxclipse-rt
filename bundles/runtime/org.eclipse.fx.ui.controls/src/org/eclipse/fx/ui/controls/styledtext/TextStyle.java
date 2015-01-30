@@ -30,14 +30,10 @@ import javafx.scene.text.Font;
  * thus no <code>dispose()</code> method is provided.
  * </p>
  *
- * @see Font
- * @see Color
- * @see <a href="http://www.eclipse.org/swt/snippets/#textlayout">TextLayout,
- *      TextStyle snippets</a>
- * @see <a href="http://www.eclipse.org/swt/">Sample code and further
- *      information</a>
- *
- * @since 3.0
+ * <b>This is an experimental component provided as a preview we'll improve and
+ * fix problems in up coming releases</b>
+ * </p>
+ * @noreference
  */
 public class TextStyle {
 	/**

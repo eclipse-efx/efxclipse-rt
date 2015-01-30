@@ -16,10 +16,15 @@ import javafx.event.EventType;
 
 /**
  * An action event
+ *
+ * <b>This is an experimental component provided as a preview we'll improve and
+ * fix problems in up coming releases</b>
+ * </p>
+ * @noreference
  */
 public class ActionEvent extends Event {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -65,7 +70,7 @@ public class ActionEvent extends Event {
 
 	/**
 	 * Create a new action event
-	 * 
+	 *
 	 * @param source
 	 *            the source
 	 * @param target

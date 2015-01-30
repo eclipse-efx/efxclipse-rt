@@ -20,9 +20,12 @@ import javafx.scene.paint.Color;
  * compute the hash value. When storing instances of the class in hashed
  * collections, do not modify these fields after the object has been inserted.
  * </p>
- *
- * @see <a href="http://www.eclipse.org/swt/">Sample code and further
- *      information</a>
+ * <p>
+ * 
+ * <b>This is an experimental component provided as a preview we'll improve and
+ * fix problems in up coming releases</b>
+ * </p>
+ * @noreference
  */
 public class StyleRange extends TextStyle implements Cloneable {
 	/**
@@ -60,7 +63,7 @@ public class StyleRange extends TextStyle implements Cloneable {
 	/**
 	 * the font style of the range. It may be a combination of SWT.NORMAL,
 	 * SWT.ITALIC or SWT.BOLD
-	 * 
+	 *
 	 * Note: the font style is not used if the <code>font</code> attribute is
 	 * set
 	 */
@@ -68,10 +71,10 @@ public class StyleRange extends TextStyle implements Cloneable {
 
 	/**
 	 * Create a new style range with no styles
-	 * 
+	 *
 	 * @param stylename
 	 *            the css stylename
-	 * 
+	 *
 	 * @since 3.2
 	 */
 	public StyleRange(String stylename) {
@@ -92,7 +95,7 @@ public class StyleRange extends TextStyle implements Cloneable {
 
 	/**
 	 * Create a new style range.
-	 * 
+	 *
 	 * @param stylename
 	 *            the css stylename
 	 *
@@ -114,7 +117,7 @@ public class StyleRange extends TextStyle implements Cloneable {
 
 	/**
 	 * Create a new style range.
-	 * 
+	 *
 	 * @param stylename
 	 *            the css stylename
 	 *

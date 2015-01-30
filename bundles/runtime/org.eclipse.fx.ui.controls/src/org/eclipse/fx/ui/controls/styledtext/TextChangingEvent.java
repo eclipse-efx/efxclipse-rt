@@ -12,6 +12,11 @@ package org.eclipse.fx.ui.controls.styledtext;
 
 /**
  * Event informing about text changing
+ *
+ * <b>This is an experimental component provided as a preview we'll improve and
+ * fix problems in up coming releases</b>
+ * </p>
+ * @noreference
  */
 public class TextChangingEvent {
 
@@ -57,7 +62,7 @@ public class TextChangingEvent {
 
 	/**
 	 * Create a new event
-	 * 
+	 *
 	 * @param source
 	 *            the source
 	 * @param offset

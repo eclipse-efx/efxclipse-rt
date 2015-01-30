@@ -12,6 +12,11 @@ package org.eclipse.fx.ui.controls.styledtext;
 
 /**
  * Represent a text selection
+ *
+ * <b>This is an experimental component provided as a preview we'll improve and
+ * fix problems in up coming releases</b>
+ * </p>
+ * @noreference
  */
 public class TextSelection {
 	/**
@@ -25,7 +30,7 @@ public class TextSelection {
 
 	/**
 	 * Create a new selection
-	 * 
+	 *
 	 * @param offset
 	 *            the offset
 	 * @param length
