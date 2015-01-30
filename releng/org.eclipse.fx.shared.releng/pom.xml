@@ -51,13 +51,36 @@
 		<pluginRepository>
 			<id>tycho</id>
 			<url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
+			<releases>
+        		<enabled>true</enabled>
+      		</releases>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
 		<pluginRepository>
+      		<id>sonatype</id>
+      		<url>http://oss.sonatype.org/content/repositories/releases/</url>
+      		<releases>
+        		<enabled>true</enabled>
+      		</releases>
+      		<snapshots>
+        		<enabled>true</enabled>
+      		</snapshots>
+    	</pluginRepository>
+		<!--  pluginRepository>
       		<id>eclipse</id>
       		<url>${eclipse-repo.url}</url>
+      		<releases>
+        		<enabled>true</enabled>
+      		</releases>
+      		<snapshots>
+        		<enabled>true</enabled>
+      		</snapshots>
+    	</pluginRepository-->
+		<pluginRepository>
+      		<id>eclipse-cbi-releases</id>
+      		<url>https://repo.eclipse.org/content/groups/cbi/</url>
       		<releases>
         		<enabled>true</enabled>
       		</releases>
