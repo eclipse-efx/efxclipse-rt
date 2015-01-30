@@ -584,6 +584,9 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 
 					TextFlow f = new TextFlow(t);
+					if( seg.style.decorationStyleClasses != null ) {
+						t.getStyleClass().addAll(seg.style.decorationStyleClasses);
+					}
 					f.setUserData(Integer.valueOf(seg.style.start));
 					if( seg.style.hoverStylename != null ) {
 						f.getStyleClass().setAll("source-segment-container", seg.style.hoverStylename); //$NON-NLS-1$

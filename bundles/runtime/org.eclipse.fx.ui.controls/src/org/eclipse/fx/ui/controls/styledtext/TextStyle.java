@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -26,14 +29,14 @@ import javafx.scene.text.Font;
  * managed by each instance when those instances are no longer required, and
  * thus no <code>dispose()</code> method is provided.
  * </p>
- * 
+ *
  * @see Font
  * @see Color
  * @see <a href="http://www.eclipse.org/swt/snippets/#textlayout">TextLayout,
  *      TextStyle snippets</a>
  * @see <a href="http://www.eclipse.org/swt/">Sample code and further
  *      information</a>
- * 
+ *
  * @since 3.0
  */
 public class TextStyle {
@@ -50,7 +53,7 @@ public class TextStyle {
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public static final int UNDERLINE_SINGLE = 0;
@@ -63,7 +66,7 @@ public class TextStyle {
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public static final int UNDERLINE_DOUBLE = 1;
@@ -76,7 +79,7 @@ public class TextStyle {
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public static final int UNDERLINE_ERROR = 2;
@@ -89,7 +92,7 @@ public class TextStyle {
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public static final int UNDERLINE_SQUIGGLE = 3;
@@ -110,7 +113,7 @@ public class TextStyle {
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * 
+	 *
 	 * @since 3.5
 	 */
 	public static final int UNDERLINE_LINK = 4;
@@ -123,7 +126,7 @@ public class TextStyle {
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public static final int BORDER_SOLID = 1;
@@ -136,7 +139,7 @@ public class TextStyle {
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public static final int BORDER_DASH = 2;
@@ -149,7 +152,7 @@ public class TextStyle {
 	 * <ul>
 	 * <li><code>TextStyle</code></li>
 	 * </ul>
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public static final int BORDER_DOT = 4;
@@ -172,15 +175,15 @@ public class TextStyle {
 	/**
 	 * the underline flag of the style. The default underline style is
 	 * <code>TextStyle.UNDERLINE_SINGLE</code>.
-	 * 
-	 * 
+	 *
+	 *
 	 * @since 3.1
 	 */
 	public boolean underline;
 
 	/**
 	 * the underline color of the style
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public Color underlineColor;
@@ -188,27 +191,27 @@ public class TextStyle {
 	/**
 	 * the underline style. This style is ignored when <code>underline</code> is
 	 * false.
-	 * 
+	 *
 	 * @see TextStyle#UNDERLINE_SINGLE
 	 * @see TextStyle#UNDERLINE_DOUBLE
 	 * @see TextStyle#UNDERLINE_ERROR
 	 * @see TextStyle#UNDERLINE_SQUIGGLE
 	 * @see TextStyle#UNDERLINE_LINK
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public int underlineStyle;
 
 	/**
 	 * the strikeout flag of the style
-	 * 
+	 *
 	 * @since 3.1
 	 */
 	public boolean strikeout;
 
 	/**
 	 * the strikeout color of the style
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public Color strikeoutColor;
@@ -220,14 +223,14 @@ public class TextStyle {
 	 * <code>SWT.BORDER_DASH</code>,<code>SWT.BORDER_DOT</code> or
 	 * <code>SWT.NONE</code>.
 	 * </p>
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public int borderStyle;
 
 	/**
 	 * the border color of the style
-	 * 
+	 *
 	 * @since 3.4
 	 */
 	public Color borderColor;
@@ -241,7 +244,7 @@ public class TextStyle {
 
 	/**
 	 * the baseline rise of the style.
-	 * 
+	 *
 	 * @since 3.2
 	 */
 	public int rise;
@@ -250,7 +253,7 @@ public class TextStyle {
 	 * the data. An user data field. It can be used to hold the HREF when the
 	 * range is used as a link or the embed object when the range is used with
 	 * <code>GlyphMetrics</code>.
-	 * 
+	 *
 	 * @since 3.5
 	 */
 	public Object data;
@@ -259,7 +262,12 @@ public class TextStyle {
 	 * The css stylename to use
 	 */
 	public String stylename;
-	
+
+	/**
+	 *
+	 */
+	public List<String> decorationStyleClasses;
+
 	/**
 	 * The style named to used for hovering
 	 */
@@ -267,7 +275,7 @@ public class TextStyle {
 
 	/**
 	 * Create an empty text style.
-	 * 
+	 *
 	 * @param stylename
 	 *            the css stylename
 	 *
@@ -277,10 +285,17 @@ public class TextStyle {
 		this.stylename = stylename;
 	}
 
+	public void addStyleClass(String styleClass) {
+		if( decorationStyleClasses == null ) {
+			decorationStyleClasses = new ArrayList<>();
+		}
+		decorationStyleClasses.add(styleClass);
+	}
+
 	/**
 	 * Create a new text style with the specified font, foreground and
 	 * background.
-	 * 
+	 *
 	 * @param stylename
 	 *            the css stylename
 	 *
@@ -307,7 +322,7 @@ public class TextStyle {
 
 	/**
 	 * Create a new text style from an existing text style.
-	 * 
+	 *
 	 * @param style
 	 *            the style to copy
 	 *
@@ -317,6 +332,7 @@ public class TextStyle {
 		if (style == null)
 			throw new IllegalStateException();
 		this.stylename = style.stylename;
+		this.decorationStyleClasses = new ArrayList<>(style.decorationStyleClasses);
 		this.font = style.font;
 		this.foreground = style.foreground;
 		this.background = style.background;
@@ -539,7 +555,7 @@ public class TextStyle {
 		}
 		if (this.foreground != null) {
 			if (buffer.length() > startLength)
-				buffer.append(", "); //$NON-NLS-1$ 
+				buffer.append(", "); //$NON-NLS-1$
 			buffer.append("foreground="); //$NON-NLS-1$
 			buffer.append(this.foreground);
 		}
@@ -555,15 +571,15 @@ public class TextStyle {
 			buffer.append("underline="); //$NON-NLS-1$
 			switch (this.underlineStyle) {
 			case UNDERLINE_SINGLE:
-				buffer.append("single");break; //$NON-NLS-1$ 
+				buffer.append("single");break; //$NON-NLS-1$
 			case UNDERLINE_DOUBLE:
-				buffer.append("double");break; //$NON-NLS-1$ 
+				buffer.append("double");break; //$NON-NLS-1$
 			case UNDERLINE_SQUIGGLE:
-				buffer.append("squiggle");break; //$NON-NLS-1$ 
+				buffer.append("squiggle");break; //$NON-NLS-1$
 			case UNDERLINE_ERROR:
-				buffer.append("error");break; //$NON-NLS-1$ 
+				buffer.append("error");break; //$NON-NLS-1$
 			case UNDERLINE_LINK:
-				buffer.append("link");break; //$NON-NLS-1$ 
+				buffer.append("link");break; //$NON-NLS-1$
 			}
 			if (this.underlineColor != null) {
 				buffer.append(", underlineColor="); //$NON-NLS-1$
