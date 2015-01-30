@@ -112,9 +112,19 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
-		<pluginRepository>
+		<!--  pluginRepository>
       		<id>eclipse</id>
       		<url>${eclipse-repo.url}</url>
+      		<releases>
+        		<enabled>true</enabled>
+      		</releases>
+      		<snapshots>
+        		<enabled>true</enabled>
+      		</snapshots>
+    	</pluginRepository-->
+		<pluginRepository>
+      		<id>eclipse-cbi-releases</id>
+      		<url>https://repo.eclipse.org/content/groups/cbi/</url>
       		<releases>
         		<enabled>true</enabled>
       		</releases>
