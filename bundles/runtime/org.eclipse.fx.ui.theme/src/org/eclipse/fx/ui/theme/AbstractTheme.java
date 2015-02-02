@@ -11,10 +11,14 @@
 package org.eclipse.fx.ui.theme;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
+
+import org.eclipse.fx.ui.services.theme.MultiURLStylesheet;
 import org.eclipse.fx.ui.services.theme.Stylesheet;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.jdt.annotation.NonNull;
@@ -27,7 +31,10 @@ import org.eclipse.jdt.annotation.NonNull;
 public class AbstractTheme implements Theme {
 	private final @NonNull String id;
 	private final @NonNull String name;
-	private final @NonNull List<@NonNull URL> stylesheetUrlList = new ArrayList<>();
+	@SuppressWarnings("null")
+	private final @NonNull ObservableList<@NonNull URL> stylesheetUrlList = FXCollections.observableArrayList();
+	@SuppressWarnings("null")
+	private final @NonNull ObservableList<@NonNull URL> unmodifiableStylesheetUrlList = FXCollections.unmodifiableObservableList(this.stylesheetUrlList);
 
 	/**
 	 * Create a theme
@@ -55,10 +62,9 @@ public class AbstractTheme implements Theme {
 		return this.name;
 	}
 
-	@SuppressWarnings("null")
 	@Override
-	public @NonNull List<@NonNull URL> getStylesheetURL() {
-		return Collections.unmodifiableList(this.stylesheetUrlList);
+	public @NonNull ObservableList<@NonNull URL> getStylesheetURL() {
+		return this.unmodifiableStylesheetUrlList;
 	}
 
 	/**
@@ -82,6 +88,46 @@ public class AbstractTheme implements Theme {
 	public void unregisterStylesheet(Stylesheet stylesheet) {
 		if (stylesheet.appliesToTheme(this)) {
 			this.stylesheetUrlList.remove(stylesheet.getURL(this));
+		}
+	}
+	
+	private Map<@NonNull MultiURLStylesheet, @NonNull ObservableList<@NonNull URL>> urlMap = new HashMap<>();
+	
+	/**
+	 * Try to register a stylesheet
+	 *
+	 * @param stylesheet
+	 *            the stylesheet
+	 */
+	public void registerMultiURLStylesheet(MultiURLStylesheet stylesheet) {
+		if (stylesheet.appliesToTheme(this)) {
+			ObservableList<@NonNull URL> url = stylesheet.getURL(this);
+			url.addListener(this::handleChange);
+			this.urlMap.put(stylesheet, url);
+			this.stylesheetUrlList.addAll(url);
+		}
+	}
+
+	/**
+	 * Try to unregister a stylesheet
+	 *
+	 * @param stylesheet
+	 *            the stylesheet
+	 */
+	public void unregisterMultiURLStylesheet(MultiURLStylesheet stylesheet) {
+		if (stylesheet.appliesToTheme(this)) {
+			if( this.urlMap.containsKey(stylesheet) ) {
+				ObservableList<@NonNull URL> remove = this.urlMap.remove(stylesheet);
+				remove.removeListener(this::handleChange);
+				this.stylesheetUrlList.remove(remove);
+			}
+		}
+	}
+	
+	private void handleChange(Change<@NonNull ? extends URL> change) {
+		while( change.next() ) {
+			this.stylesheetUrlList.removeAll(change.getRemoved());
+			this.stylesheetUrlList.addAll(change.getAddedSubList());
 		}
 	}
 }

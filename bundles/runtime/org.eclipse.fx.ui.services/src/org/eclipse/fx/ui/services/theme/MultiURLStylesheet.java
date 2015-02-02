@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 BestSolution.at and others.
+ * Copyright (c) 2015 BestSolution.at and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,24 +17,24 @@ import javafx.collections.ObservableList;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
- * A theme definition
+ * A stylesheet that is made up of multiple (potentially changeing) urls
+ * 
+ * @since 2.0
  */
-public interface Theme {
+public interface MultiURLStylesheet {
 	/**
-	 * @return unique theme id
+	 * Check if the stylesheet applies to the given theme
+	 *
+	 * @param t
+	 *            the theme
+	 * @return <code>true</code> if the stylesheet applies
 	 */
-	@NonNull
-	public String getId();
+	public boolean appliesToTheme(Theme t);
+
 	/**
-	 * @return human readable name
+	 * @param t
+	 *            the theme
+	 * @return the url to the stylesheet
 	 */
-	@NonNull
-	public String getName();
-	/**
-	 * @return the stylesheets
-	 * 
-	 * @since 2.0
-	 */
-	@NonNull
-	public ObservableList<@NonNull URL> getStylesheetURL();
+	public @NonNull ObservableList<@NonNull URL> getURL(Theme t);
 }

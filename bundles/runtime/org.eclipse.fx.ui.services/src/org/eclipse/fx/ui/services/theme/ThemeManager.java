@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 
 /**
@@ -29,9 +30,10 @@ public interface ThemeManager {
 
 	/**
 	 * @return available themes
+	 * @since 2.0
 	 */
 	@NonNull
-	public List<@NonNull Theme> getAvailableThemes();
+	public ObservableMap<@NonNull String, @NonNull Theme> getAvailableThemes();
 
 	/**
 	 * Set the current theme id
