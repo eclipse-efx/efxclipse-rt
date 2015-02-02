@@ -8,7 +8,7 @@ public class JDTAnnotation extends Annotation {
 	private final Marker marker;
 
 	public JDTAnnotation(Marker marker) {
-		super("jdt.annotation", false, marker.getMessage());
+		super("jdt.annotation."+marker.getSeverity(), false, marker.getMessage());
 		this.marker = marker;
 	}
 

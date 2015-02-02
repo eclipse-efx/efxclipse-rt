@@ -51,6 +51,11 @@ public class JavaScriptSourceConfiguration extends SourceViewerConfiguration {
 		fStringScanner= new SingleTokenJavaScriptScanner(IJavaScriptColorConstants.JAVA_STRING);
 		fJavaDocScanner= new JavaScriptDocScanner();
 	}
+	
+	@Override
+	public String getStyleclassName() {
+		return "javascript";
+	}
 
 	@Override
 	public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
@@ -110,21 +115,4 @@ public class JavaScriptSourceConfiguration extends SourceViewerConfiguration {
 		return fCodeScanner;
 	}
 
-	@Override
-	public void setThemeId(String themeId) {
-		super.setThemeId(themeId);
-		URL url = getClass().getClassLoader().getResource("css/"+themeId+"-highlight.css");
-		if( url != null ) {
-			defaultStylesheet.set(url);
-		} else {
-			defaultStylesheet.set(getClass().getClassLoader().getResource("css/highlight.css"));
-		}
-	}
-
-	private ReadOnlyObjectWrapper<URL> defaultStylesheet = new ReadOnlyObjectWrapper<>(this, "defaultStylesheet", getClass().getClassLoader().getResource("css/highlight.css"));
-
-	@Override
-	public ReadOnlyProperty<URL> getDefaultStylesheet() {
-		return defaultStylesheet.getReadOnlyProperty();
-	}
 }

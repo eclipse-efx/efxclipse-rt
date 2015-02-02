@@ -18,12 +18,18 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -55,6 +61,7 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 	private Map<String, String> fileEndMappings = new HashMap<>();
 	private ResourceSetImpl rs;
 	private FilesystemService filesystemService;
+	private ObservableList<Model> models = FXCollections.observableArrayList();
 
 	public HSLComponent() {
 		HSLStandaloneSetup.doSetup();
@@ -183,12 +190,17 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 	}
 
 	private void registerHslConfig(String fileEnding, URI uri) {
-		System.err.println("REGISTERING: " + fileEnding + " => " + uri);
+//		System.err.println("REGISTERING: " + fileEnding + " => " + uri);
 		Model m = loadModel(uri);
+		models.add(m);
 		for( String t : m.getContentTypes() ) {
 			contentTypeMappings.put(t, m);
 			fileEndMappings.put(fileEnding, t);
 		}
+	}
+	
+	public ObservableList<Model> getModels() {
+		return models;
 	}
 
 	private Model loadModel(URI uri) {

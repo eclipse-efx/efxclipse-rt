@@ -76,7 +76,6 @@ public class TextEditor {
 				currentId = manager.getCurrentTheme().getId();
 				currentStyle = getClass().getClassLoader().getResource("css/"+currentId+"-editor.css").toExternalForm();
 				textArea.getStylesheets().add(currentStyle);
-				configuration.setThemeId(currentId);
 				return textArea;
 			}
 		};
@@ -85,7 +84,6 @@ public class TextEditor {
 			currentId = manager.getCurrentTheme().getId();
 			currentStyle = getClass().getClassLoader().getResource("css/"+currentId+"-editor.css").toExternalForm();
 			textArea.getStylesheets().add(currentStyle);
-			configuration.setThemeId(currentId);
 		});
 		if( document instanceof IDocumentExtension3 ) {
 			((IDocumentExtension3)document).setDocumentPartitioner(configuration.getConfiguredDocumentPartitioning(viewer),partitioner);

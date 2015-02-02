@@ -1,54 +1,54 @@
-.hover {
+.Groovy.styled-text-area .selection-marker {
 	-fx-background-color: #2b5696;
 }
 
-.groovy_default {
+.Groovy.styled-text-area .groovy_default {
 	-styled-text-color: #b8c4d1;
 }
 
-.groovy_operator {
+.Groovy.styled-text-area .groovy_operator {
 	-styled-text-color: #b8c4d1;
 }
 
-.groovy_bracket {
+.Groovy.styled-text-area .groovy_bracket {
 	-styled-text-color: #b8c4d1;
 }
 
-.groovy_keyword_return {
+.Groovy.styled-text-area .groovy_keyword_return {
 	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
-.groovy_keyword_type {
+.Groovy.styled-text-area .groovy_keyword_type {
 	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
-.groovy_keyword {
+.Groovy.styled-text-area .groovy_keyword {
 	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
-.groovy_doc_default {
+.Groovy.styled-text-area .groovy_doc_default {
 	-styled-text-color: #74a567;
 }
 
-.groovy_single_line_comment {
+.Groovy.styled-text-area .groovy_single_line_comment {
 	-styled-text-color: #929292;
 }
 
-.groovy_multi_line_comment {
+.Groovy.styled-text-area .groovy_multi_line_comment {
 	-styled-text-color: #929292;
 }
 
-.groovy_string {
+.Groovy.styled-text-area .groovy_string {
 	-styled-text-color: #7c986c;
 }
 
-.groovy_var_interpolation {
+.Groovy.styled-text-area .groovy_var_interpolation {
 	-styled-text-color: #99bcc8;
 }
 
-.groovy_char {
+.Groovy.styled-text-area .groovy_char {
 	-styled-text-color: #7c986c;
 }

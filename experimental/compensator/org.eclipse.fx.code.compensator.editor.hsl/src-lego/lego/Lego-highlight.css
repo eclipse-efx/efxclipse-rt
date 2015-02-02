@@ -1,7 +1,7 @@
-.default_legodoc {
+.Lego.styled-text-area .default_legodoc {
 	-styled-text-color: rgb(63, 127, 95);
 }
 
-.lego_keyword {
+.Lego.styled-text-area .lego_keyword {
 	-styled-text-color: rgb(127, 0, 85);
 }

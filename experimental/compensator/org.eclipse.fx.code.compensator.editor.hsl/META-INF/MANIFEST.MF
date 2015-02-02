@@ -14,5 +14,6 @@ Require-Bundle: org.eclipse.fx.code.compensator.editor;bundle-version="1.0.0",
  org.eclipse.fx.core
 Export-Package: org.eclipse.fx.code.compensator.editor.hsl
 Import-Package: org.osgi.framework
-Service-Component: OSGI-INF/services/hslcomponent.xml
+Service-Component: OSGI-INF/services/hslcomponent.xml,
+ OSGI-INF/services/hslstylesheet.xml
 Bundle-ActivationPolicy: lazy

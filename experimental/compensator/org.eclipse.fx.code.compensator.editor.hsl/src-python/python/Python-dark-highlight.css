@@ -1,54 +1,54 @@
-.hover {
+.Python.styled-text-area .selection-marker {
 	-fx-background-color: #2b5696;
 }
 
-.python_default {
+.Python.styled-text-area .python_default {
 	-styled-text-color: #b8c4d1;
 }
 
-.python_operator {
+.Python.styled-text-area .python_operator {
 	-styled-text-color: #b8c4d1;
 }
 
-.python_bracket {
+.Python.styled-text-area .python_bracket {
 	-styled-text-color: #b8c4d1;
 }
 
-.python_keyword_return {
+.Python.styled-text-area .python_keyword_return {
 	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
-.python_keyword_type {
+.Python.styled-text-area .python_keyword_type {
 	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
-.python_keyword {
+.Python.styled-text-area .python_keyword {
 	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
-.python_doc_default {
+.Python.styled-text-area .python_doc_default {
 	-styled-text-color: #74a567;
 }
 
-.python_single_line_comment {
+.Python.styled-text-area .python_single_line_comment {
 	-styled-text-color: #929292;
 }
 
-.python_multi_line_comment {
+.Python.styled-text-area .python_multi_line_comment {
 	-styled-text-color: #929292;
 }
 
-.python_string {
+.Python.styled-text-area .python_string {
 	-styled-text-color: #7c986c;
 }
 
-.python_var_interpolation {
+.Python.styled-text-area .python_var_interpolation {
 	-styled-text-color: #99bcc8;
 }
 
-.python_char {
+.Python.styled-text-area .python_char {
 	-styled-text-color: #7c986c;
 }

@@ -68,59 +68,64 @@ public class HSLConfiguration extends SourceViewerConfiguration {
 
 		return reconciler;
 	}
-
+	
 	@Override
-	public void setThemeId(String themeId) {
-		super.setThemeId(themeId);
-		URL url = _getDefaultStylesheet(themeId);
-		// ensure initialized!!!
-		getDefaultStylesheet();
-		if( url != null ) {
-			defaultStylesheet.set(url);
-		} else {
-			defaultStylesheet.set(_getDefaultStylesheet(null));
-		}
+	public String getStyleclassName() {
+		return model.getName();
 	}
 
-	private ReadOnlyObjectWrapper<URL> defaultStylesheet;
-
-	@Override
-	public ReadOnlyProperty<URL> getDefaultStylesheet() {
-		if( defaultStylesheet == null ) {
-			defaultStylesheet = new ReadOnlyObjectWrapper<>(this, "defaultStylesheet", _getDefaultStylesheet(null));
-		}
-		return defaultStylesheet.getReadOnlyProperty();
-	}
-
-	private URL _getDefaultStylesheet(String themeId) {
-		if( "default".equals(themeId) ) {
-			themeId = null;
-		}
-		URI uri = model.eResource().getURI();
-		uri = uri.trimSegments(1);
-		uri = uri.appendSegment(model.getName()+(themeId != null ? "-"+themeId : "")+"-highlight.css");
-
-		System.err.println("=======> " + uri);
-
-		if( uri.isPlatform() ) {
-			System.err.println(cl.getResource(getPluginPath(uri)));
-			return cl.getResource(getPluginPath(uri));
-		} else {
-			try {
-				return new File(uri.toFileString()).toURI().toURL();
-			} catch (MalformedURLException e) {
-				return null;
-			}
-		}
-	}
-
-	private static String getPluginPath(URI uri) {
-		String[] parts = uri.segments();
-		StringBuffer b = new StringBuffer(parts[2]);
-
-		for( int i = 3; i < parts.length; i++ ) {
-			b.append("/" + parts[i]);
-		}
-		return b.toString();
-	}
+//	@Override
+//	public void setThemeId(String themeId) {
+//		super.setThemeId(themeId);
+//		URL url = _getDefaultStylesheet(themeId);
+//		// ensure initialized!!!
+//		getDefaultStylesheet();
+//		if( url != null ) {
+//			defaultStylesheet.set(url);
+//		} else {
+//			defaultStylesheet.set(_getDefaultStylesheet(null));
+//		}
+//	}
+//
+//	private ReadOnlyObjectWrapper<URL> defaultStylesheet;
+//
+//	@Override
+//	public ReadOnlyProperty<URL> getDefaultStylesheet() {
+//		if( defaultStylesheet == null ) {
+//			defaultStylesheet = new ReadOnlyObjectWrapper<>(this, "defaultStylesheet", _getDefaultStylesheet(null));
+//		}
+//		return defaultStylesheet.getReadOnlyProperty();
+//	}
+//
+//	private URL _getDefaultStylesheet(String themeId) {
+//		if( "default".equals(themeId) ) {
+//			themeId = null;
+//		}
+//		URI uri = model.eResource().getURI();
+//		uri = uri.trimSegments(1);
+//		uri = uri.appendSegment(model.getName()+(themeId != null ? "-"+themeId : "")+"-highlight.css");
+//
+//		System.err.println("=======> " + uri);
+//
+//		if( uri.isPlatform() ) {
+//			System.err.println(cl.getResource(getPluginPath(uri)));
+//			return cl.getResource(getPluginPath(uri));
+//		} else {
+//			try {
+//				return new File(uri.toFileString()).toURI().toURL();
+//			} catch (MalformedURLException e) {
+//				return null;
+//			}
+//		}
+//	}
+//
+//	private static String getPluginPath(URI uri) {
+//		String[] parts = uri.segments();
+//		StringBuffer b = new StringBuffer(parts[2]);
+//
+//		for( int i = 3; i < parts.length; i++ ) {
+//			b.append("/" + parts[i]);
+//		}
+//		return b.toString();
+//	}
 }

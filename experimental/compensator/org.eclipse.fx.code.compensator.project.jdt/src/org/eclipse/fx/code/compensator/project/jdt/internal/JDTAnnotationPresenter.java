@@ -1,5 +1,8 @@
 package org.eclipse.fx.code.compensator.project.jdt.internal;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -15,8 +18,8 @@ import com.sun.javafx.iio.ImageStorage.ImageType;
 public class JDTAnnotationPresenter implements AnnotationPresenter {
 
 	@Override
-	public String getType() {
-		return "jdt.annotation";
+	public List<String> getTypes() {
+		return Arrays.asList("jdt.annotation.WARNING","jdt.annotation.ERROR","jdt.annotation.INFO");
 	}
 
 	@Override

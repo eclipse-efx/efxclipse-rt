@@ -1,20 +1,20 @@
-.hover {
+.HSL.styled-text-area .selection-marker {
 	-fx-background-color: #2b5696;
 }
 
-.hsl_default {
+.HSL.styled-text-area.hsl_default {
 	-styled-text-color: #b8c4d1;
 }
 
-.hsl_string {
+.HSL.styled-text-area.hsl_string {
 	-styled-text-color: #7c986c;
 }
 
-.hsl_keyword {
+.HSL.styled-text-area.hsl_keyword {
 	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
-.hsl_comment {
+.HSL.styled-text-area .hsl_comment {
 	-styled-text-color: #929292;
 }

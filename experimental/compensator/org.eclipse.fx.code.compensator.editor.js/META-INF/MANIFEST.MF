@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.fx.text;bundle-version="1.0.0",
  org.eclipse.fx.ui.services,
  org.eclipse.fx.core
 Bundle-ActivationPolicy: lazy
-Service-Component: OSGI-INF/services/javascriptcomponent.xml
+Service-Component: OSGI-INF/services/javascriptcomponent.xml,
+ OSGI-INF/services/javascriptstylesheet.xml
 Import-Package: javafx.animation;version="2.2.0",
  javafx.application;version="2.2.0",
  javafx.beans;version="2.2.0",

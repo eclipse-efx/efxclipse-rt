@@ -1,59 +1,59 @@
-.hover {
+.java.styled-text-area .selection-marker {
 	-fx-background-color: #2b5696;
 }
 
-.java_string {
+.java.styled-text-area .java_string {
 	-styled-text-color: #7c986c;
 }
 
-.java_default {
+.java.styled-text-area .java_default {
 	-styled-text-color: #b8c4d1;
 }
 
-.java_annotation {
+.java.styled-text-area .java_annotation {
 	-styled-text-color: rgb(200, 200, 200);
 }
 
-.java_keyword {
+.java.styled-text-area .java_keyword {
 	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
-.java_operator {
+.java.styled-text-area .java_operator {
 	-styled-text-color: #b8c4d1;
 }
 
-.java_bracket {
+.java.styled-text-area .java_bracket {
 	-styled-text-color: #b8c4d1;
 }
 
-.java_keyword_return {
+.java.styled-text-area .java_keyword_return {
 	-styled-text-color: #d78b40;
 	-fx-font-weight: bold;
 }
 
-.java_comment_task_tag {
+.java.styled-text-area .java_comment_task_tag {
 	-styled-text-color: rgb(127, 159, 191);
 }
 
-.java_doc_link {
+.java.styled-text-area .java_doc_link {
 	-styled-text-color: #74a567;
 	-fx-font-weight: bold;
 }
 
-.java_doc_default {
+.java.styled-text-area .java_doc_default {
 	-styled-text-color: #74a567;
 }
 
-.java_multi_line_comment {
+.java.styled-text-area .java_multi_line_comment {
 	-styled-text-color: #929292;
 }
 
-.java_single_line_comment {
+.java.styled-text-area .java_single_line_comment {
 	-styled-text-color: #929292;
 }
 
-.java_doc_tag {
+.java.styled-text-area .java_doc_tag {
 	-fx-fill: #74a567;
 	-fx-font-weight: bold;
 }

@@ -1,6 +1,10 @@
 package org.eclipse.fx.code.compensator.project.jdt.internal;
 
 import java.net.URL;
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import org.eclipse.fx.ui.services.theme.Stylesheet;
 import org.eclipse.fx.ui.services.theme.Theme;
