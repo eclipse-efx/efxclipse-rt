@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Modelviewer
 Bundle-SymbolicName: org.eclipse.fx.ui.modelviewer;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javafx.animation;version="2.2.0",
  javafx.application;version="2.2.0",
