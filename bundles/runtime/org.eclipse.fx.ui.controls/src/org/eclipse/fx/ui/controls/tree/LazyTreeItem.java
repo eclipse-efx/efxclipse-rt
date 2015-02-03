@@ -13,6 +13,8 @@ package org.eclipse.fx.ui.controls.tree;
 import java.util.List;
 import java.util.function.Function;
 
+import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
 /**
@@ -41,7 +43,14 @@ public class LazyTreeItem<T> extends TreeItem<T> {
 		expandedProperty().addListener((o) -> {
 			if (isExpanded()) {
 				if (!this.hasLoaded) {
-					getChildren().setAll(listCreator.apply(this));
+					List<TreeItem<T>> list = listCreator.apply(this);
+					if( list instanceof ObservableList<?> ) {
+						getChildren().clear();
+						Bindings.bindContent(getChildren(), (ObservableList<TreeItem<T>>)list);
+					} else {
+						getChildren().setAll(list);
+					}
+					
 				}
 			}
 		});
