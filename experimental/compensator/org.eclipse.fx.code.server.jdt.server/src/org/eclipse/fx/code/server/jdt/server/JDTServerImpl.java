@@ -23,8 +23,10 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal;
 import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal.Modifier;
@@ -56,26 +58,37 @@ public class JDTServerImpl {
 	public String registerModule(URI uri) {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		Path path = Paths.get(uri).resolve(".project");
-		if( Files.exists(path) ) {
-			try {
-				IProjectDescription p = workspace.loadProjectDescription(new org.eclipse.core.runtime.Path(path.toFile().getAbsolutePath()));
-				IProject project = workspace.getRoot().getProject(p.getName());
-				if( ! project.exists() ) {
-					project.create(p, null);
-					return p.getName();
-				} else {
-					if( Paths.get(project.getLocationURI()).equals(Paths.get(uri)) ) {
+		try {
+			if( Files.exists(path) ) {
+				try {
+					IProjectDescription p = workspace.loadProjectDescription(new org.eclipse.core.runtime.Path(path.toFile().getAbsolutePath()));
+					IProject project = workspace.getRoot().getProject(p.getName());
+					if( ! project.exists() ) {
+						workspace.run(new IWorkspaceRunnable() {
+							
+							@Override
+							public void run(IProgressMonitor monitor) throws CoreException {
+								project.create(p, null);
+								project.open(null);
+							}
+						}, null);
 						return p.getName();
 					} else {
-						throw new RuntimeException("A module with name '"+p.getName()+"' already exists in the workspace");
+						if( Paths.get(project.getLocationURI()).equals(Paths.get(uri)) ) {
+							return p.getName();
+						} else {
+							throw new RuntimeException("A module with name '"+p.getName()+"' already exists in the workspace");
+						}
 					}
+				} catch (CoreException e) {
+					throw new RuntimeException("Failed to register module '"+uri+"' in the workspace", e);
 				}
-			} catch (CoreException e) {
-				throw new RuntimeException("Failed to register module '"+uri+"' in the workspace", e);
-			}
-		} else {
-			throw new RuntimeException("There's no valid project module at the given location '"+uri+"'");
-		}
+			} else {
+				throw new RuntimeException("There's no valid project module at the given location '"+uri+"'");
+			}			
+		} finally {
+			executeRunnable(() -> workspace.save(true, null), "Unable to save workbench state");	
+		}		
 	}
 
 	public List<String> getSourceFolders(String moduleName) {
@@ -225,6 +238,13 @@ public class JDTServerImpl {
 	}
 
 	private static void assertJavaProject(IProject project) {
+		try {
+			System.err.println(project);
+			System.err.println("CHECK NATURE: " + project.hasNature(JavaCore.NATURE_ID));
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		executeFunction(JavaCore.NATURE_ID, project::hasNature, "Unable to retrieve nature").ifPresent(
 				v -> {
 					if( ! v ) {

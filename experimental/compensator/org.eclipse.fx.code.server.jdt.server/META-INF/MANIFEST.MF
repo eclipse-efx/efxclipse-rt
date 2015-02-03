@@ -9,5 +9,8 @@ Require-Bundle: org.eclipse.core.resources,
  org.eclipse.fx.core,
  org.eclipse.jdt.launching;bundle-version="3.7.101"
 Import-Package: org.eclipse.core.runtime,
- org.eclipse.fx.code.server.jdt.shared
+ org.eclipse.fx.code.server.jdt.shared,
+ org.osgi.framework;version="1.8.0"
 Export-Package: org.eclipse.fx.code.server.jdt.server
+Bundle-Activator: org.eclipse.fx.code.server.jdt.server.Activator
+Bundle-ActivationPolicy: lazy
