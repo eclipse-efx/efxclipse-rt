@@ -1,4 +1,4 @@
-.source-segment {
+.styled-text-area .source-segment {
 	-fx-font-family: Courier;
 	-fx-font-size: 15;
 	/* @SuppressWarning */
@@ -6,49 +6,54 @@
 	-fx-fill: -styled-text-color;
 }
 
-.plain-source-segment {
+.styled-text-area .plain-source-segment {
 	-fx-font-family: Courier;
 	-fx-font-size: 15;
 }
 
-.line-ruler-text {
+.styled-text-area .line-ruler-text {
 	-fx-font-family: Courier;
 	-fx-font-size: 15;
 }
 
-.list-cell:filled:focused:selected {
+/* FIXME: Fixes layouting issues with ListView */
+.styled-text-area .list-view {
+	-fx-fixed-cell-size: 18;
+}
+
+.styled-text-area .list-cell:filled:focused:selected {
 	-fx-background-color: #e8f2fe;
 }
 
-.list-cell:odd {
+.styled-text-area .list-cell:odd {
 	-fx-background-color: transparent;
 }
 
-.list-cell:even {
+.styled-text-area .list-cell:even {
 	-fx-background-color: transparent;
 }
 
-.list-cell:filled:hover {
+.styled-text-area .list-cell:filled:hover {
 	-fx-background-color: transparent;
 }
 
-.list-cell {
-	-fx-padding: 0;
+.styled-text-area .list-cell {
+	-fx-padding: 0 0 0 5;
 }
 
-.source-segment-container {
-	-fx-padding: 3 0 3 0;
+.styled-text-area .source-segment-container {
+
 }
 
-.sheet {
+.styled-text-area .sheet {
 	-fx-cursor: text;
 }
 
-.text-caret {
+.styled-text-area .text-caret {
 	-fx-fill: black;
 	-fx-stroke: black;
 }
 
-.hover {
+.styled-text-area .selection-marker {
 	-fx-background-color: #b5d5ff;
 }

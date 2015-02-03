@@ -18,20 +18,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -44,20 +36,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.PathElement;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
-import javafx.util.Duration;
 
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
-import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.StyledTextLine;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextLayoutContainer;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextNode;
+import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
+import org.eclipse.jdt.annotation.NonNull;
 
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 import com.sun.javafx.scene.control.skin.ListViewSkin;
@@ -77,8 +65,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	Map<LineCell, LineInfo> lineInfoMap = new HashMap<>();
 
 	HBox rootContainer;
-
-	private static final boolean USE_MONO_RASTER = true;
 
 	/**
 	 * Create a new skin
@@ -103,7 +89,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				return new MyListViewSkin(this);
 			}
 		};
-		this.contentView.getStyleClass().add("styled-text-area"); //$NON-NLS-1$
+//		this.contentView.getStyleClass().add("styled-text-area"); //$NON-NLS-1$
 		// listView.setFocusTraversable(false);
 		this.contentView.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
@@ -126,7 +112,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		});
 		this.contentView.setMinHeight(0);
 		this.contentView.setMinWidth(0);
-//		this.contentView.setFixedCellSize(25);
+//		this.contentView.setFixedCellSize(value);
+		this.contentView.setFixedCellSize(15);
 		this.contentView.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -153,7 +140,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 		HBox.setHgrow(this.contentView, Priority.ALWAYS);
 
-		// b.getChildren().addAll(lineView);
 		this.rootContainer.getChildren().addAll(this.contentView);
 		getChildren().addAll(this.rootContainer);
 
@@ -164,6 +150,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				int lineIndex = getSkinnable().getContent().getLineAtOffset(newValue.intValue());
 				Line lineObject = StyledTextSkin.this.lineList.get(lineIndex);
 				getFlow().show(lineIndex);
+
 				for (LineCell c : getCurrentVisibleCells()) {
 					if (c.domainElement == lineObject) {
 						// Adjust the selection
@@ -171,10 +158,11 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 							StyledTextSkin.this.contentView.getSelectionModel().select(lineObject);
 						}
 
-						RegionImpl container = (RegionImpl) c.getGraphic();
-						Pane flow = (Pane) container.getChildren().get(0);
+						StyledTextLayoutContainer p = (StyledTextLayoutContainer) c.getGraphic();
+						p.setCaretIndex(newValue.intValue() - p.getStartOffset());
+						p.requestLayout();
 
-						flow.requestLayout();
+						updateCurrentCursorNode(p);
 
 						return;
 					}
@@ -188,10 +176,49 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			public void changed(
 					ObservableValue<? extends TextSelection> observable,
 					TextSelection oldValue, TextSelection newValue) {
-				recalculateItems();
+				if( newValue == null || newValue.length == 0 ) {
+					for( LineCell c : getCurrentVisibleCells() ) {
+						if( c.getGraphic() != null ) {
+							StyledTextLayoutContainer block = (StyledTextLayoutContainer) c.getGraphic();
+							block.setSelection(new TextSelection(0, 0));
+						}
+					}
+				} else {
+					TextSelection selection = newValue;
+					for( LineCell c : getCurrentVisibleCells() ) {
+						if( c.getGraphic() != null ) {
+							Line arg0 = c.domainElement;
+							StyledTextLayoutContainer block = (StyledTextLayoutContainer) c.getGraphic();
+							if( selection.length > 0 && block.intersectOffset(selection.offset, selection.offset+selection.length) ) {
+								int start = Math.max(0,selection.offset - arg0.getLineOffset());
+
+								if( arg0.getLineOffset() + arg0.getLineLength() > selection.offset+selection.length ) {
+									block.setSelection(new TextSelection(start, selection.offset+selection.length - arg0.getLineOffset() - start));
+								} else {
+									block.setSelection(new TextSelection(start, arg0.getLineLength() - start));
+								}
+							} else {
+								block.setSelection(new TextSelection(0, 0));
+							}
+						}
+					}
+				}
 			}
 		});
 	}
+
+	private StyledTextLayoutContainer currentActiveNode;
+
+	void updateCurrentCursorNode(StyledTextLayoutContainer node) {
+		if( this.currentActiveNode != node ) {
+			if( this.currentActiveNode != null ) {
+				this.currentActiveNode.setCaretIndex(-1);
+			}
+
+			this.currentActiveNode = node;
+		}
+	}
+
 
 	/**
 	 * Refresh the line ruler
@@ -233,7 +260,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	 *            the position
 	 * @return the point
 	 */
-	@SuppressWarnings("deprecation")
 	public Point2D getCaretLocation(int caretPosition) {
 		if (caretPosition < 0) {
 			return null;
@@ -243,54 +269,10 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		Line lineObject = this.lineList.get(lineIndex);
 		for (LineCell c : getCurrentVisibleCells()) {
 			if (c.domainElement == lineObject) {
-				RegionImpl container = (RegionImpl) c.getGraphic();
-				Pane flow = (Pane) container.getChildren().get(0);
-				// System.err.println("STARTING SCAN");
-				Text textNode = null;
-				int relativePos = 0;
-				for (int i = flow.getChildren().size() - 1; i >= 0; i--) {
-					Node n = flow.getChildren().get(i);
-					// System.err.println(((Text)n).getText() + " => " +
-					// n.getLayoutX());
-					int offset = ((Integer) n.getUserData()).intValue();
-					if (offset <= caretPosition) {
-						relativePos = caretPosition - offset;
-						textNode = (Text) ((TextFlow) n).getChildren().get(0);
-						break;
-					}
-				}
-
-				if (textNode != null) {
-					textNode.setImpl_caretPosition(relativePos);
-					PathElement[] elements = textNode.getImpl_caretShape();
-					Point2D t = getSkinnable().sceneToLocal(textNode.localToScene(new Point2D(0, textNode.getBoundsInParent().getHeight())));
-					// System.err.println(textNode.getText() + " ====> " +
-					// xShift);
-					int xShift = 0;
-					for (PathElement e : elements) {
-						if (e instanceof MoveTo) {
-							xShift += ((MoveTo) e).getX();
-						}
-					}
-					// System.err.println("==> " + xShift);
-
-					return t.add(xShift, 0);
-					// final Path p = (Path)container.getChildren().get(1);
-					//
-					// p.getElements().clear();
-					// p.getElements().addAll(textNode.getImpl_caretShape());
-					//
-					// p.setLayoutX(textNode.getLayoutX());
-					// p.setLayoutY(textNode.getBaselineOffset());
-				}
-
-				// RegionImpl container = (RegionImpl)c.getGraphic();
-				//
-				// final Path p = (Path)container.getChildren().get(1);
-				// Point2D rv = new
-				// Point2D(p.getLayoutX(),container.getLayoutY());
-				// System.err.println("CARE-LOC: " + rv);
-				// return rv;
+				StyledTextLayoutContainer b = (StyledTextLayoutContainer) c.getGraphic();
+				Point2D careLocation = b.getCareLocation(caretPosition - b.getStartOffset());
+				Point2D tmp = getSkinnable().sceneToLocal(b.localToScene(careLocation));
+				return new Point2D(tmp.getX(), getSkinnable().sceneToLocal(b.localToScene(0, b.getHeight())).getY());
 			}
 		}
 
@@ -360,71 +342,12 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	 */
 	public class LineCell extends ListCell<Line> {
 		Line domainElement;
-		private BooleanBinding caretVisible;
-		BooleanProperty flashProperty;
-		Timeline flashTimeline;
 
 		/**
 		 * A line cell instance
 		 */
 		public LineCell() {
 			getStyleClass().add("styled-text-line"); //$NON-NLS-1$
-			this.flashProperty = new SimpleBooleanProperty(this, "flash", false); //$NON-NLS-1$
-			this.flashTimeline = new Timeline();
-			this.flashTimeline.setCycleCount(Animation.INDEFINITE);
-
-			EventHandler<ActionEvent> startEvent = new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent arg0) {
-					LineCell.this.flashProperty.set(true);
-				}
-			};
-
-			EventHandler<ActionEvent> endEvent = new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent arg0) {
-					LineCell.this.flashProperty.set(false);
-				}
-			};
-
-			this.flashTimeline.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, startEvent), new KeyFrame(Duration.millis(500), endEvent), new KeyFrame(Duration.millis(1000)));
-			this.caretVisible = new BooleanBinding() {
-				{
-					bind(selectedProperty(), LineCell.this.flashProperty);
-				}
-
-				@Override
-				protected boolean computeValue() {
-					return selectedProperty().get() && LineCell.this.flashProperty.get();
-				}
-			};
-			selectedProperty().addListener(new ChangeListener<Boolean>() {
-
-				@Override
-				public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
-					if (arg2.booleanValue()) {
-						LineCell.this.flashTimeline.play();
-					} else {
-						LineCell.this.flashTimeline.stop();
-					}
-				}
-			});
-			// Once this property is observed the error does not occurr
-			// need to track that down one day
-			boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
-
-				@Override
-				public void changed(
-						ObservableValue<? extends Bounds> observable,
-						Bounds oldValue, Bounds newValue) {
-					if( newValue != null && newValue.getHeight() > 100 ) {
-						System.err.println("Looks like an invalid cell height: " + newValue); //$NON-NLS-1$
-						Thread.dumpStack();
-					}
-				}
-			});
 		}
 
 		/**
@@ -446,78 +369,17 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		/**
 		 * Update the caret
 		 */
-		@SuppressWarnings("deprecation")
 		public void updateCaret() {
 			int caretPosition = getSkinnable().getCaretOffset();
 
 			if (caretPosition < 0) {
 				return;
 			}
-
-			int lineIndex = getSkinnable().getContent().getLineAtOffset(caretPosition);
-			Line lineObject = StyledTextSkin.this.lineList.get(lineIndex);
-			for (LineCell c : getCurrentVisibleCells()) {
-				if (c.domainElement == lineObject) {
-					RegionImpl container = (RegionImpl) c.getGraphic();
-					Pane flow = (Pane) container.getChildren().get(0);
-
-					TextFlow textNode = null;
-					int relativePos = 0;
-					for (int i = flow.getChildren().size() - 1; i >= 0; i--) {
-						Node n = flow.getChildren().get(i);
-						int offset = ((Integer) n.getUserData()).intValue();
-						if (offset <= caretPosition) {
-							relativePos = caretPosition - offset;
-							textNode = (TextFlow) n;
-							break;
-						}
-					}
-
-					if (textNode != null) {
-						Text text = (Text)textNode.getChildren().get(0);
-						text.setImpl_caretPosition(relativePos);
-
-						final Path p = (Path) container.getChildren().get(1);
-
-						p.getElements().clear();
-
-						PathElement[] impl_caretShape = text.getImpl_caretShape();
-						if( impl_caretShape.length == 2 ) {
-							if( impl_caretShape[0] instanceof MoveTo && impl_caretShape[1] instanceof LineTo ) {
-								MoveTo m = (MoveTo)impl_caretShape[0];
-								LineTo l = (LineTo)impl_caretShape[1];
-								if( m.getY() > 0.0 ) {
-//									System.err.println("========== INVALID: " + text.getText() + "============");
-//									System.err.println("Caret: " + Arrays.toString(impl_caretShape));
-//									System.err.println("Text-Bounds: " + text.getBoundsInLocal());
-//									System.err.println("Wrapping-Width: " + text.getWrappingWidth());
-//									System.err.println("Text-Flow:" + textNode.getBoundsInLocal());
-									l.setY(l.getY() - m.getY());
-									m.setY(0);
-								} else {
-//									System.err.println("========== VALID: " + text.getText() + "============");
-//									System.err.println("Caret: " + Arrays.toString(impl_caretShape));
-//									System.err.println("Text-Bounds: " + text.getBoundsInLocal());
-//									System.err.println("Wrapping-Width: " + text.getWrappingWidth());
-//									System.err.println("Text-Flow:" + textNode.getBoundsInLocal());
-								}
-							}
-						}
-
-						p.getElements().addAll(impl_caretShape);
-
-						p.setLayoutX(textNode.getChildren().get(0).getLayoutX() + textNode.getLayoutX());
-						p.setLayoutY(textNode.getChildren().get(0).getLayoutY() + textNode.getLayoutY());
-					}
-
-					break;
-				}
-			}
 		}
 
 		@Override
 		protected void updateItem(Line arg0, boolean arg1) {
-			if (!arg1) {
+			if( ! arg1 ) {
 				this.domainElement = arg0;
 				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(this);
 				if (lineInfo == null) {
@@ -532,35 +394,19 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				}
 				lineInfo.setLayoutY(getLayoutY());
 
-				RegionImpl stack = (RegionImpl) getGraphic();
-				Pane flow;
-				TextLayouter layouter;
+				StyledTextLayoutContainer block = (StyledTextLayoutContainer) getGraphic();
 
-				if (stack == null) {
-					layouter = new TextLayouter(USE_MONO_RASTER, this::updateCaret);
-					flow = layouter.getLayoutPane();
-					Path caretPath = new Path();
-					caretPath.getStyleClass().add("text-caret"); //$NON-NLS-1$
-					caretPath.setManaged(false);
-					caretPath.setStrokeWidth(2);
-					caretPath.visibleProperty().bind(this.caretVisible);
-					stack = new RegionImpl(flow, caretPath);
-					setGraphic(stack);
-				} else {
-					flow = (Pane) stack.getChildren().get(0);
-					layouter = (TextLayouter) flow.getUserData();
+				if( block == null ) {
+					block = new StyledTextLayoutContainer();
+					block.getStyleClass().add("source-segment-container"); //$NON-NLS-1$
+					setGraphic(block);
+//					getSkinnable().requestLayout();
 				}
+				block.setStartOffset(arg0.getLineOffset());
 
-				List<TextFlow> texts = new ArrayList<>();
-				if( arg0.getSegments().isEmpty() ) {
-					setPrefHeight(20);
-				} else {
-					setPrefHeight(-1);
-				}
+				List<@NonNull StyledTextNode> texts = new ArrayList<>();
 				for (final Segment seg : arg0.getSegments()) {
-//					System.err.println("SEGMENT: " + seg.text + " => " + seg.style.stylename);
-					final Text t = new Text(seg.text);
-
+					StyledTextNode t = new StyledTextNode(seg.text);
 					if( seg.style.stylename != null ) {
 						t.getStyleClass().setAll("source-segment",seg.style.stylename); //$NON-NLS-1$
 					} else {
@@ -570,51 +416,47 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 							t.getStyleClass().setAll("source-segment"); //$NON-NLS-1$
 						}
 					}
+					texts.add(t);
+				}
 
-					if (seg.style.foreground != null) {
-						t.setFill(seg.style.foreground);
-					}
-					if (seg.style.font != null) {
-						t.setFont(seg.style.font);
-					}
-
-					if (seg.style.underline) {
-//						System.err.println("=====================> UNDERLINEING");
-					}
+				if( arg0.getSegments().isEmpty() ) {
+					StyledTextNode t = new StyledTextNode(""); //$NON-NLS-1$
+					t.getStyleClass().setAll("source-segment"); //$NON-NLS-1$
+					block.getTextNodes().setAll(t);
+				} else {
+					block.getTextNodes().setAll(texts);
+				}
 
 
-					TextFlow f = new TextFlow(t);
-					if( seg.style.decorationStyleClasses != null ) {
-						t.getStyleClass().addAll(seg.style.decorationStyleClasses);
-					}
-					f.setUserData(Integer.valueOf(seg.style.start));
-					if( seg.style.hoverStylename != null ) {
-						f.getStyleClass().setAll("source-segment-container", seg.style.hoverStylename); //$NON-NLS-1$
-						texts.add(f);
+				TextSelection selection = getSkinnable().getSelection();
+
+				if( selection.length > 0 && block.intersectOffset(selection.offset, selection.offset+selection.length) ) {
+					int start = Math.max(0,selection.offset - arg0.getLineOffset());
+
+					if( arg0.getLineOffset() + arg0.getLineLength() > selection.offset+selection.length ) {
+						block.setSelection(new TextSelection(start, selection.offset+selection.length - arg0.getLineOffset() - start));
 					} else {
-						f.getStyleClass().setAll("source-segment-container"); //$NON-NLS-1$
-						texts.add(f);
+						block.setSelection(new TextSelection(start, arg0.getLineLength() - start));
 					}
+				} else {
+					block.setSelection(new TextSelection(0,0));
 				}
 
-				if (texts.isEmpty()) {
-					Text t = new Text(""); //$NON-NLS-1$
-					t.getStyleClass().setAll("source-segment");  //$NON-NLS-1$
-					TextFlow f = new TextFlow(t);
-					f.setUserData(Integer.valueOf(arg0.getLineOffset()));
-					texts.add(f);
+				if( arg0.getLineOffset() <= getSkinnable().getCaretOffset() && arg0.getLineOffset() + arg0.getText().length() >= getSkinnable().getCaretOffset() ) {
+					block.setCaretIndex(getSkinnable().getCaretOffset() - arg0.getLineOffset());
+					updateCurrentCursorNode(block);
+				} else {
+					block.setCaretIndex(-1);
 				}
-				layouter.setText(arg0.getText());
-				flow.getChildren().setAll(texts);
 			} else {
 				setGraphic(null);
 				this.domainElement = null;
 				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.remove(this);
 				if (lineInfo != null) {
 					lineInfo.setDomainElement(null);
-//					StyledTextSkin.this.lineRuler.getChildren().remove(lineInfo);
 				}
 			}
+
 			super.updateItem(arg0, arg1);
 		}
 	}
@@ -673,30 +515,25 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			List<Segment> segments = new ArrayList<>();
 
 			String line = getSkinnable().getContent().getLine(idx);
-			// System.err.println("LINE: " + line);
 			if (line != null) {
 				int start = getSkinnable().getContent().getOffsetAtLine(idx);
 				int length = line.length();
 
 				StyleRange[] ranges = getSkinnable().getStyleRanges(start, length, true);
-				// System.err.println("RANGES: " + ranges);
 				if (ranges == null) {
-//					System.err.println("NO RANGES");
 					return Collections.emptyList();
 				}
-
-//				System.err.println("LINE: " + line);
-
-				TextSelection selection = getSkinnable().getSelection();
-
-				int selectionStart = selection.offset - start;
-				int selectionEnd = selection.offset+selection.length - start;
 
 				if( ranges.length == 0 && line.length() > 0 ) {
 					StyleRange styleRange = new StyleRange((String)null);
 					styleRange.start = start;
 					styleRange.length = line.length();
-					segments.addAll(createSegments(line, styleRange, selectionStart, selectionEnd, 0, line.length()));
+
+					Segment seg = new Segment();
+					seg.text = removeLineending(line.substring(0, line.length()));
+					seg.style = styleRange;
+
+					segments.add(seg);
 				} else {
 					int lastIndex = -1;
 
@@ -705,7 +542,12 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 							StyleRange styleRange = new StyleRange((String)null);
 							styleRange.start = start;
 							styleRange.length = ranges[0].start - start;
-							segments.addAll(createSegments(line, styleRange, selectionStart, selectionEnd, 0, ranges[0].start - start));
+
+							Segment seg = new Segment();
+							seg.text = removeLineending(line.substring(0, ranges[0].start - start));
+							seg.style = styleRange;
+
+							segments.add(seg);
 						}
 					}
 
@@ -717,10 +559,19 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 							StyleRange styleRange = new StyleRange((String)null);
 							styleRange.start = start + lastIndex;
 							styleRange.length = begin - lastIndex;
-							segments.addAll(createSegments(line, styleRange, selectionStart, selectionEnd, lastIndex, begin));
+
+							Segment seg = new Segment();
+							seg.text = removeLineending(line.substring(lastIndex, begin));
+							seg.style = styleRange;
+
+							segments.add(seg);
 						}
 
-						segments.addAll(createSegments(line, r, selectionStart, selectionEnd, begin, end));
+						Segment seg = new Segment();
+						seg.text = removeLineending(line.substring(begin, end));
+						seg.style = r;
+
+						segments.add(seg);
 						lastIndex = end;
 					}
 
@@ -728,112 +579,17 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						StyleRange styleRange = new StyleRange((String)null);
 						styleRange.start = start + lastIndex;
 						styleRange.length = line.length() - lastIndex;
-						segments.addAll(createSegments(line, styleRange, selectionStart, selectionEnd, lastIndex, line.length()));
+
+						Segment seg = new Segment();
+						seg.text = removeLineending(line.substring(lastIndex, line.length()));
+						seg.style = styleRange;
+
+						segments.add(seg);
 					}
 				}
-
-
-				// System.err.println("SEGEMENTS: " + segments);
 			}
 
 			return segments;
-		}
-
-		private List<Segment> createSegments(String line, StyleRange r, int selectionStart, int selectionEnd, int begin, int end) {
-			//FIXME We need to to set the length!!!
-			if( selectionStart != selectionEnd ) {
-				if( selectionStart <= begin  && selectionEnd >= end  ) {
-					// whole entry is selected
-					Segment seg = new Segment();
-					seg.text = removeLineending(line.substring(begin, end));
-					seg.style = new StyleRange(r);
-					seg.style.start = r.start;
-					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
-
-//					System.err.println(seg.text + " => " + seg.style.start);
-					return Collections.singletonList(seg);
-				} else if( selectionStart <= begin && selectionEnd >= begin && selectionEnd <= end ) {
-					// selection start before and ends inside
-					List<Segment> rv = new ArrayList<StyledTextSkin.Segment>();
-
-					Segment seg = new Segment();
-					seg.text = removeLineending(line.substring(begin, selectionEnd));
-					seg.style = new StyleRange(r);
-					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
-					seg.style.start = r.start;
-//					System.err.println(seg.text + " => " + seg.style.start);
-					rv.add(seg);
-
-					seg = new Segment();
-					seg.text = removeLineending(line.substring(selectionEnd, end));
-					seg.style = new StyleRange(r);
-					seg.style.start = r.start + selectionEnd-begin;
-//					System.err.println(seg.text + " => " + seg.style.start);
-					rv.add(seg);
-
-					return rv;
-				} else if( begin < selectionStart && selectionStart <= end && selectionEnd >= end ) {
-					// selection starts inside and ends outside
-					List<Segment> rv = new ArrayList<StyledTextSkin.Segment>();
-
-					Segment seg = new Segment();
-					seg.text = removeLineending(line.substring(begin, selectionStart));
-					seg.style = new StyleRange(r);
-					seg.style.start = r.start;
-//					System.err.println(seg.text + " => " + seg.style.start);
-					rv.add(seg);
-
-					seg = new Segment();
-					seg.text = removeLineending(line.substring(selectionStart, end));
-					seg.style = new StyleRange(r);
-					seg.style.start = r.start + selectionStart-begin;
-					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
-//					System.err.println(seg.text + " => " + seg.style.start);
-					rv.add(seg);
-
-					return rv;
-				} else if( between(selectionStart, begin, end) && between(selectionEnd, begin, end) ) {
-//					System.err.println("A BETWEEN MATCH!!!!");
-					// selection starts and ends inside
-					List<Segment> rv = new ArrayList<StyledTextSkin.Segment>();
-
-					Segment seg = new Segment();
-					seg.text = removeLineending(line.substring(begin, selectionStart));
-					seg.style = new StyleRange(r);
-					seg.style.start = r.start;
-//					System.err.println(seg.text + " => " + seg.style.start);
-					rv.add(seg);
-
-					seg = new Segment();
-					seg.text = removeLineending(line.substring(selectionStart, selectionEnd));
-					seg.style = new StyleRange(r);
-					seg.style.start = r.start + selectionStart-begin;
-					seg.style.hoverStylename = "hover"; //$NON-NLS-1$
-//					System.err.println(seg.text + " => " + seg.style.start);
-					rv.add(seg);
-
-					seg = new Segment();
-					seg.text = removeLineending(line.substring(selectionEnd, end));
-					seg.style = new StyleRange(r);
-					seg.style.start = r.start + selectionEnd-begin;
-//					System.err.println(seg.text + " => " + seg.style.start);
-					rv.add(seg);
-					return rv;
-				} else {
-//					System.err.println("UNMATCHED CASE");
-//					System.err.println("Sel: "+ selectionStart + "/" + selectionEnd);
-//					System.err.println("Segment:" + begin + "/" + end);
-				}
-			}
-
-			Segment seg = new Segment();
-			seg.text = removeLineending(line.substring(begin, end));
-			seg.style = r;
-			return Collections.singletonList(seg);
-		}
-
-		private boolean between(int x, int min, int max) {
-			return x > min && x < max;
 		}
 	}
 
@@ -909,7 +665,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				return;
 			}
 			super.layoutChildren();
-//			System.err.println("RELAYOUT");
 			Set<Node> children = new HashSet<Node>(getChildren());
 			List<LineInfo> layouted = new ArrayList<>();
 			double maxWidth = 0;
@@ -929,7 +684,6 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 			for (LineInfo l : layouted) {
 				l.resize(maxWidth, l.getHeight());
-//				System.err.println("BOUNDS: " + l.lineText.getText() + " => " + l.getBoundsInParent());
 
 			}
 

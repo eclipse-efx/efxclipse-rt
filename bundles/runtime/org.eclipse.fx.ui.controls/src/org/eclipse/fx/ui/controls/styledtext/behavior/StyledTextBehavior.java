@@ -17,25 +17,19 @@ import java.util.List;
 
 import javafx.event.Event;
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent.ActionType;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextLayoutContainer;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin.LineCell;
-import org.eclipse.jdt.annotation.NonNull;
 
 import com.sun.javafx.scene.control.behavior.BehaviorBase;
 import com.sun.javafx.scene.control.behavior.KeyBinding;
-import com.sun.javafx.scene.text.HitInfo;
 
 /**
  * Behavior for styled text
@@ -174,6 +168,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 			int maxPosition = lineOffset + getControl().getContent().getLine(rowIndex).length();
 
 			getControl().impl_setCaretOffset(Math.min(newCaretPosition, maxPosition),event.isShiftDown());
+			event.consume();
 			break;
 		}
 		case DOWN: {
@@ -190,6 +185,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 			int maxPosition = lineOffset + getControl().getContent().getLine(rowIndex).length();
 
 			getControl().impl_setCaretOffset(Math.min(newCaretPosition, maxPosition),event.isShiftDown());
+			event.consume();
 			break;
 		}
 		case ENTER:
@@ -308,19 +304,12 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				}
 
 				if (lastCell.getDomainElement() != null) {
-					Region g = (Region) lastCell.getGraphic();
-					Pane flow = (Pane) g.getChildrenUnmodifiable().get(0);
-					for (Node n : flow.getChildren()) {
-						if( n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY()) ) {
-							TextFlow textFlow = (TextFlow) n;
-							Text text = (Text)textFlow.getChildren().get(0);
-
-							HitInfo info = text.impl_hitTestChar(text.sceneToLocal(event.getSceneX(), event.getSceneY()));
-							if (info.getInsertionIndex() >= 0) {
-								int offset = ((Integer) textFlow.getUserData()).intValue() + info.getInsertionIndex();
-								getControl().impl_setCaretOffset(offset, selection);
-								return;
-							}
+					StyledTextLayoutContainer n = (StyledTextLayoutContainer) lastCell.getGraphic();
+					if( n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY()) ) {
+						int index = n.getCaretIndexAtPoint(n.sceneToLocal(event.getSceneX(), event.getSceneY()));
+						if( index >= 0 ) {
+							getControl().impl_setCaretOffset(n.getStartOffset()+index, selection);
+							return;
 						}
 					}
 

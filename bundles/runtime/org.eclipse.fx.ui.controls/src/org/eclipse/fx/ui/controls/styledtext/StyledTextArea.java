@@ -132,18 +132,19 @@ public class StyledTextArea extends Control {
 	 * Create a new control
 	 */
 	public StyledTextArea() {
+		this.getStyleClass().add("styled-text-area"); //$NON-NLS-1$
 		this.contentProperty = new ContentProperty(this,
 				"content", new DefaultContent()); //$NON-NLS-1$
-		getStylesheets().add(
-				getClass().getResource("styledtextarea.css").toExternalForm()); //$NON-NLS-1$
+//		getStylesheets().add(
+//				getClass().getResource("styledtextarea.css").toExternalForm()); //$NON-NLS-1$
 		setFocusTraversable(true);
 	}
 
 	// Requires 8u40!
-	// @Override
-	// public String getUserAgentStylesheet() {
-	// return getClass().getResource("styledtextarea.css").toExternalForm();
-	// }
+	 @Override
+	 public String getUserAgentStylesheet() {
+		 return getClass().getResource("styledtextarea.css").toExternalForm();
+	 }
 
 	void handleTextChanging(TextChangingEvent event) {
 		if (event.replaceCharCount < 0) {
@@ -231,7 +232,6 @@ public class StyledTextArea extends Control {
 	 *            the new offset
 	 */
 	public void setCaretOffset(int offset) {
-		// System.err.println("OFFSET: " + offset);
 		this.anchor = offset;
 		caretOffsetProperty().set(offset);
 		clearSelection();
@@ -382,7 +382,6 @@ public class StyledTextArea extends Control {
 
 	void setStyleRanges(int start, int length, int[] ranges,
 			StyleRange[] styles, boolean reset) {
-		// System.err.println("New styles: " + Arrays.toString(styles));
 
 		int charCount = getContent().getCharCount();
 		int end = start + length;
@@ -747,7 +746,6 @@ public class StyledTextArea extends Control {
 				}
 			}
 
-			System.err.println("DONE"); //$NON-NLS-1$
 		}
 
 		int[] getRanges(int start, int length) {

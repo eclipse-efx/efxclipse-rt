@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * Represent a text selection
  *
@@ -29,6 +31,12 @@ public class TextSelection {
 	public final int length;
 
 	/**
+	 * An empty selection
+	 */
+	@NonNull
+	public static final TextSelection EMPTY = new TextSelection(0,0);
+
+	/**
 	 * Create a new selection
 	 *
 	 * @param offset
@@ -40,4 +48,38 @@ public class TextSelection {
 		this.offset = offset;
 		this.length = length;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "TextSelection [offset=" + this.offset + ", length=" + this.length + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.length;
+		result = prime * result + this.offset;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TextSelection other = (TextSelection) obj;
+		if (this.length != other.length)
+			return false;
+		if (this.offset != other.offset)
+			return false;
+		return true;
+	}
+
+
 }

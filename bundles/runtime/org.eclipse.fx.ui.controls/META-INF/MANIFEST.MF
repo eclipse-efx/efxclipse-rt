@@ -133,3 +133,4 @@ Import-Package: com.sun.javafx;version="2.2.0",
  javafx.util.converter;version="2.2.0",
  org.osgi.framework;version="1.8.0";resolution:=optional
 Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/services/underlinestrategyfactory.xml
