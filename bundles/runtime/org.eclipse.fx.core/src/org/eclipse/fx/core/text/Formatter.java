@@ -35,7 +35,7 @@ public interface Formatter<@Nullable T> {
 	/**
 	 * A formatter who simply creates a string from the object
 	 */
-	public static Formatter<Object> TO_STRING = new Formatter<Object>() {
+	public static Formatter<@Nullable Object> TO_STRING = new Formatter<@Nullable Object>() {
 
 		@SuppressWarnings("null")
 		@Override

@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  * @since 1.1.0
  */
-public class DateFormatter implements Formatter<Date> {
+public class DateFormatter implements Formatter<@Nullable Date> {
 	@NonNull
 	private final LocaleProvider localeProvider;
 

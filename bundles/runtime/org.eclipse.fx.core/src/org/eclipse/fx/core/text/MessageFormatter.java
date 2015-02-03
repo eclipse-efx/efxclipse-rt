@@ -60,7 +60,7 @@ public class MessageFormatter {
 
 			Object object = this.dataProvider.apply(key);
 			@SuppressWarnings("unchecked")
-			Formatter<Object> formatterInstance = (Formatter<Object>) this.formatProvider.apply(formatter);
+			Formatter<@Nullable Object> formatterInstance = (Formatter<@Nullable Object>) this.formatProvider.apply(formatter);
 			if (formatterInstance == null) {
 				return object + ""; //$NON-NLS-1$
 			}

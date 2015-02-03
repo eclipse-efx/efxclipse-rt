@@ -17,6 +17,7 @@ import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.core.di.ObjectFactory;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Context function who delegates to an OSGi-Service to create instances.
@@ -44,7 +45,7 @@ public class FactoryContextFunction extends ContextFunction {
 			Object rv = context.get(key);
 			if (rv == null) {
 				ScopedObjectFactory factory = context.get(ScopedObjectFactory.class);
-				ObjectFactory<?> f = (ObjectFactory<?>) context.get(this.factoryClass);
+				ObjectFactory<@NonNull ?> f = (ObjectFactory<@NonNull ?>) context.get(this.factoryClass);
 				if( f != null && factory != null ) {
 					rv = f.create(factory);
 					context.modify(key, rv);
@@ -53,7 +54,7 @@ public class FactoryContextFunction extends ContextFunction {
 			return rv;
 		} else {
 			ScopedObjectFactory factory = context.get(ScopedObjectFactory.class);
-			ObjectFactory<?> f = (ObjectFactory<?>) context.get(this.factoryClass);
+			ObjectFactory<@NonNull ?> f = (ObjectFactory<@NonNull ?>) context.get(this.factoryClass);
 			if( f != null && factory != null ) {
 				return f.create(factory);
 			}

@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  * @since 1.1.0
  */
-public class NumberFormatter implements Formatter<Number> {
+public class NumberFormatter implements Formatter<@Nullable Number> {
 	@NonNull
 	private final LocaleProvider localeProvider;
 
