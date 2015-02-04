@@ -55,7 +55,7 @@ public class DirectoryView extends Control {
 			this, "iconSize", IconSize.SMALL); //$NON-NLS-1$
 
 	@NonNull
-	private final ObjectProperty<@Nullable EventHandler<@NonNull ResourceEvent<ResourceItem>>> onOpenResource = new ObjectPropertyBase<@Nullable EventHandler<@NonNull ResourceEvent<ResourceItem>>>() {
+	private final ObjectProperty<@Nullable EventHandler<@NonNull ResourceEvent<@NonNull ResourceItem>>> onOpenResource = new ObjectPropertyBase<@Nullable EventHandler<@NonNull ResourceEvent<@NonNull ResourceItem>>>() {
 		@SuppressWarnings({ "synthetic-access", "null" })
 		@Override
 		protected void invalidated() {
@@ -173,14 +173,14 @@ public class DirectoryView extends Control {
 	 *
 	 * @return the property
 	 */
-	public final @NonNull ObjectProperty<@Nullable EventHandler<@NonNull ResourceEvent<ResourceItem>>> onOpenResourceProperty() {
+	public final @NonNull ObjectProperty<@Nullable EventHandler<@NonNull ResourceEvent<@NonNull ResourceItem>>> onOpenResourceProperty() {
 		return this.onOpenResource;
 	}
 
 	/**
 	 * @return the current event handler
 	 */
-	public final @Nullable EventHandler<@NonNull ResourceEvent<ResourceItem>> getOnOpenResource() {
+	public final @Nullable EventHandler<@NonNull ResourceEvent<@NonNull ResourceItem>> getOnOpenResource() {
 		return this.onOpenResourceProperty().get();
 	}
 
@@ -191,7 +191,7 @@ public class DirectoryView extends Control {
 	 *            the event handler
 	 */
 	public final void setOnOpenResource(
-			final @Nullable EventHandler<@NonNull ResourceEvent<ResourceItem>> onOpenResource) {
+			final @Nullable EventHandler<@NonNull ResourceEvent<@NonNull ResourceItem>> onOpenResource) {
 		this.onOpenResourceProperty().set(onOpenResource);
 	}
 

@@ -33,8 +33,8 @@ public class ResourceEvent<@NonNull T extends ResourceItem> extends Event {
 	 * @return the open resource type
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends ResourceItem> EventType<ResourceEvent<T>> openResourceEvent() {
-		return (EventType<ResourceEvent<T>>) OPEN_RESOURCE;
+	public static <T extends ResourceItem> EventType<ResourceEvent<@NonNull T>> openResourceEvent() {
+		return (EventType<ResourceEvent<@NonNull T>>) OPEN_RESOURCE;
 	}
 
 	private final List<ResourceItem> resourceItems;
