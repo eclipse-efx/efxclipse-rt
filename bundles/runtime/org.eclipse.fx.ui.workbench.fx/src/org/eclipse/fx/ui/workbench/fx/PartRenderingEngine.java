@@ -187,7 +187,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 		Object widget = createWidget(element);
 		if (widget != null) {
-			ElementRenderer<MUIElement, Object> r = getRendererFor(element);
+			ElementRenderer<@NonNull MUIElement, Object> r = getRendererFor(element);
 			r.processContent(element);
 			r.postProcess(element);
 
@@ -195,7 +195,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 			if (parent instanceof MUIElement) {
 				MUIElement parentElement = (MUIElement) parent;
-				ElementRenderer<MUIElement, Object> parentRenderer = getRendererFor(parentElement);
+				ElementRenderer<@NonNull MUIElement, Object> parentRenderer = getRendererFor(parentElement);
 				if (parentRenderer != null) {
 					parentRenderer.childRendered(parentElement, element);
 				}
@@ -216,7 +216,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	}
 
 	private Object createWidget(MUIElement element) {
-		ElementRenderer<MUIElement, Object> renderer = getRenderer(element);
+		ElementRenderer<@NonNull MUIElement, Object> renderer = getRenderer(element);
 		if (renderer != null) {
 			// Remember which renderer is responsible for this widget
 			element.setRenderer(renderer);
@@ -228,12 +228,12 @@ public class PartRenderingEngine implements IPresentationEngine {
 		return null;
 	}
 
-	private ElementRenderer<MUIElement, Object> getRenderer(MUIElement uiElement) {
+	private ElementRenderer<@NonNull MUIElement, Object> getRenderer(MUIElement uiElement) {
 		return this.factory.getRenderer(uiElement);
 	}
 
 	@SuppressWarnings({ "unchecked", "static-method" })
-	protected <R extends ElementRenderer<? extends M, Object>, M extends MUIElement> R getRendererFor(M element) {
+	protected <R extends ElementRenderer<@NonNull ? extends M, Object>, M extends MUIElement> R getRendererFor(M element) {
 		return (R) element.getRenderer();
 	}
 
@@ -301,8 +301,8 @@ public class PartRenderingEngine implements IPresentationEngine {
 		MUIElement container = (element.getCurSharedRef() != null) ? element.getCurSharedRef() : (MUIElement) ((EObject) element).eContainer();
 
 		if (container != null || element instanceof MWindow) {
-			ElementRenderer<MUIElement, Object> parentRenderer = (ElementRenderer<MUIElement, Object>) (container == null ? null : getRendererFor(container));
-			ElementRenderer<MUIElement, Object> renderer = getRendererFor(element);
+			ElementRenderer<@NonNull MUIElement, Object> parentRenderer = (ElementRenderer<@NonNull MUIElement, Object>) (container == null ? null : getRendererFor(container));
+			ElementRenderer<@NonNull MUIElement, Object> renderer = getRendererFor(element);
 
 			if (renderer != null) {
 				renderer.preDestroy(element);
@@ -446,7 +446,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 		if (this.app != null) {
 			this.app.getContext().set("__efx_engine_shutdown", Boolean.TRUE); //$NON-NLS-1$
 			for (MWindow w : this.app.getChildren()) {
-				ElementRenderer<MUIElement, Object> r = getRenderer(w);
+				ElementRenderer<@NonNull MUIElement, Object> r = getRenderer(w);
 				if (r != null) {
 					removeGui(w);
 				}
@@ -457,7 +457,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 	@Override
 	public void focusGui(MUIElement element) {
 		@SuppressWarnings("unchecked")
-		ElementRenderer<MUIElement, Object> renderer = (ElementRenderer<MUIElement, Object>) element.getRenderer();
+		ElementRenderer<@NonNull MUIElement, Object> renderer = (ElementRenderer<@NonNull MUIElement, Object>) element.getRenderer();
 		if (renderer == null || element.getWidget() == null)
 			return;
 
