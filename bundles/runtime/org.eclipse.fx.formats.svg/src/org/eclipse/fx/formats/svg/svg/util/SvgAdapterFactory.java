@@ -100,6 +100,8 @@ import org.eclipse.fx.formats.svg.svg.____ATTRIBUTES____;
 import org.eclipse.fx.formats.svg.svg.____DATATYPES____;
 import org.eclipse.fx.formats.svg.svg.____ELEMENTES____;
 import org.eclipse.fx.formats.svg.svg.____ENUMS____;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * <!-- begin-user-doc -->
@@ -155,8 +157,8 @@ public class SvgAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected SvgSwitch<Adapter> modelSwitch =
-		new SvgSwitch<Adapter>() {
+	protected SvgSwitch<@Nullable Adapter> modelSwitch =
+		new SvgSwitch<@Nullable Adapter>() {
 			@Override
 			public <T extends SvgElement> Adapter caseContentElement(ContentElement<T> object) {
 				return createContentElementAdapter();

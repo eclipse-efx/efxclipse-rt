@@ -67,7 +67,7 @@ public interface ResourceService {
 	 *             if something goes wrong
 	 */
 	@NonNull
-	public IPooledResource<Image> getImage(@NonNull String key)
+	public IPooledResource<@Nullable Image> getImage(@NonNull String key)
 			throws IOException;
 
 	/**

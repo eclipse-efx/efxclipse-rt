@@ -46,15 +46,15 @@ import org.eclipse.fx.formats.svg.svg.SvgImageElement
 
 class FXMLConverter {
 	private SvgSvgElement rootElement
-	
+
 	new(SvgSvgElement rootElement) {
 		this.rootElement = rootElement;
 	}
-	
-	def generate() ''' 
+
+	def generate() '''
 	«val content = handle(rootElement)»
 	<?xml version="1.0" encoding="UTF-8"?>
-	
+
 	<?import java.lang.*?>
 	<?import javafx.scene.*?>
 	<?import javafx.scene.shape.*?>
@@ -62,22 +62,22 @@ class FXMLConverter {
 	<?import javafx.scene.image.*?>
 	<?import javafx.scene.transform.*?>
 	<?import javafx.scene.effect.*?>
-	
+
 	«content»
 	'''
-	
+
 	def dispatch CharSequence handle(EObject o) '''
 		<!-- Unhandled type '«o.eClass.name»' -->
 	'''
-	
+
 	def dispatch CharSequence handle(SvgLinearGradientElement o) {
 		// Nothing to do we reference them directly when needed because they can contain relative sizes
 	}
-	
+
 	def dispatch CharSequence handle(SvgRadialGradientElement o) {
 		// Nothing to do we reference them directly when needed because they can contain relative sizes
 	}
-	
+
 	def dispatch CharSequence handle(SvgSvgElement element) '''
 	<Group id='_root' xmlns:fx="http://javafx.com/fxml" xmlns:fxsvg="http://efxclipse.org/fxml-svg">
 		«handleStyleClassAttributes(element.class_)»
@@ -93,7 +93,7 @@ class FXMLConverter {
 		</children>
 	</Group>
 	'''
-	
+
 	def dispatch CharSequence handle(SvgDefsElement element) '''
 	<fx:define>
 		«FOR o : element.children»
@@ -101,7 +101,7 @@ class FXMLConverter {
 		«ENDFOR»
 	</fx:define>
 	'''
-	
+
 	def CharSequence handleGradient(SvgLinearGradientElement element, Double opacity) '''
 	<LinearGradient
 		«val t = createAffineTransform(element.gradientTransform) as AffineTransform»
@@ -109,13 +109,14 @@ class FXMLConverter {
 		«var y1 = element.y1.parseCoordinate»
 		«var x2 = element.x2.parseCoordinate»
 		«var y2 = element.y2.parseCoordinate»
-		
+
 		«IF element.x1 != null»startX="«t.transform( new Point2D$Double(x1,y1), null).x»"«ENDIF»
 		«IF element.y1 != null»startY="«t.transform( new Point2D$Double(x1,y1),null).y»"«ENDIF»
 		«IF element.x2 != null»endX="«t.transform( new Point2D$Double(x2,y2), null).x»"«ENDIF»
 		«IF element.y2 != null»endY="«t.transform( new Point2D$Double(x2,y2), null).y»"«ENDIF»
-		«IF element.spreadMethod != SpreadMethod::PAD»cycleMethod="«element.spreadMethod.toFx»"«ENDIF»
-		«IF element.id != null»id="«element.id.validateId»"«ENDIF»
+		«IF element.spreadMethod != SpreadMethod::PAD»cycleMethod="«element.spreadMethod.toFx»"«ELSE»cycleMethod="NO_CYCLE"«ENDIF»
+««« Gradients don't have an ID attribute should use fx:id?
+«««		«IF element.id != null»id="«element.id.validateId»"«ENDIF»
 		proportional="false">
 		«val owner = resolveGradientStopElement(element)»
 		«IF owner != null»
@@ -127,8 +128,8 @@ class FXMLConverter {
 		«ENDIF»
 	</LinearGradient>
 	'''
-	
-	
+
+
 	def CharSequence handleGradient(SvgRadialGradientElement element, Double opacity) '''
 	<RadialGradient
 		«val t = createAffineTransform(element.gradientTransform) as AffineTransform»
@@ -136,17 +137,18 @@ class FXMLConverter {
 		«var cy = element.cy.parseCoordinate»
 		«var fx = element.fx.parseCoordinate»
 		«var fy = element.fy.parseCoordinate»
-		
+
 		«IF element.cx != null»centerX="«t.transform(new Point2D$Double(cx,cy),null).x»"«ENDIF»
 		«IF element.cy != null»centerY="«t.transform(new Point2D$Double(cx,cy),null).y»"«ENDIF»
 		«IF element.r != null»radius="«element.r.parseLength*t.scaleX»"«ENDIF»
 		«IF element.fx != null || element.fy != null»focusDistance="«calculateFocusDistance(t,cx,cy,fx,fy)»"«ENDIF»
 ««« Is the Focus Radius calculation really correct???
 		«IF element.fx != null || element.fy != null»focusAngle="«calculateFocusAngle(t,cx,cy,fx,fy)»"«ENDIF»
-		«IF element.spreadMethod != SpreadMethod::PAD»cycleMethod="«element.spreadMethod.toFx»"«ENDIF»
-		«IF element.id != null»id="«element.id.validateId»"«ENDIF»
+		«IF element.spreadMethod != SpreadMethod::PAD»cycleMethod="«element.spreadMethod.toFx»"«ELSE»cycleMethod="NO_CYCLE"«ENDIF»
+««« Gradients don't have an ID attribute should use fx:id?
+«««		«IF element.id != null»id="«element.id.validateId»"«ENDIF»
 		proportional="false">
-		«val owner = resolveGradientStopElement(element)» 
+		«val owner = resolveGradientStopElement(element)»
 		«IF owner != null»
 			<stops>
 			«FOR o : (owner as ContentElement<?>).children.filter(typeof(SvgStopElement))»
@@ -156,7 +158,7 @@ class FXMLConverter {
 		«ENDIF»
 	</RadialGradient>
 	'''
-	
+
 	def createAffineTransform(String transformSpec) {
 		if( transformSpec == null ) {
 			return new AffineTransform();
@@ -172,7 +174,7 @@ class FXMLConverter {
 					Double::parseDouble(parts.get(4)),
 					Double::parseDouble(parts.get(5))
 				);
-				
+
                 return rv;
 
 			} else if( transformSpec.startsWith("translate") ) {
@@ -180,7 +182,7 @@ class FXMLConverter {
 				val rv = new AffineTransform();
 				rv.translate(
 					Double::parseDouble(parts.get(0)),
-					Double::parseDouble(parts.get(1))					
+					Double::parseDouble(parts.get(1))
 				);
 				return rv;
 			} else if( transformSpec.startsWith("scale") ) {
@@ -188,36 +190,36 @@ class FXMLConverter {
 				val rv = new AffineTransform();
 				rv.scale(
 					Double::parseDouble(parts.get(0)),
-					Double::parseDouble(parts.get(1))					
+					Double::parseDouble(parts.get(1))
 				);
-				return rv;			
+				return rv;
 			} else if( transformSpec.startsWith("rotate") ) {
 				val parts = params.split("\\s*,\\s*|\\s+");
 				val rv = new AffineTransform();
 				rv.rotate(
 					Double::parseDouble(parts.get(0)),
 					Double::parseDouble(parts.get(1)),
-					Double::parseDouble(parts.get(2))				
+					Double::parseDouble(parts.get(2))
 				);
-				return rv;	
-			}	
+				return rv;
+			}
 		}
-		
+
 		return new AffineTransform();
 	}
-	
-	
+
+
 //	def calculateFocusDistance(AffineTransform transform, double cx, double cy, double fx, double fy) {
 //		if( fx == cx && fy == cy ) {
 //			return 0;
 //		} else {
 //			val c = transform.transform(new Point2D$Double(cx,cy),null)
 //			val f = transform.transform(new Point2D$Double(fx,fy),null)
-//			
+//
 //			return Math::sqrt(((f.x-c.x)*(f.x-c.x))+((f.y-c.y)*(f.y-c.y)));
 //		}
 //	}
-//	
+//
 //	def calculateFocusAngle(AffineTransform transform, double cx, double cy, double fx, double fy) {
 //		if( fx == cx && fy == cy ) {
 //			return 0;
@@ -227,7 +229,7 @@ class FXMLConverter {
 //			return Math::atan2(f.y-c.y, f.x-c.x)*180*0.31830989;
 //		}
 //	}
-	
+
 	def calculateFocusDistance(AffineTransform transform, double cx, double cy, double fx, double fy) {
 		if( fx == cx && fy == cy ) {
 			return 0;
@@ -237,7 +239,7 @@ class FXMLConverter {
 			return Math::sqrt(Math::pow(c.x - f.x,2) + Math::pow(c.y - f.y,2));
 		}
 	}
-	
+
 	def calculateFocusAngle(AffineTransform transform, double cx, double cy, double fx, double fy) {
 		if( fx == cx && fy == cy ) {
 			return 0;
@@ -247,15 +249,15 @@ class FXMLConverter {
 			return Math::atan(Math::pow(c.y - f.y,2) / Math::pow(c.x - f.x,2));
 		}
 	}
-	
+
 	def ContentElement<?> resolveGradientStopElement(SvgElement element) {
 		if( element instanceof ContentElement<?> ) {
-			val rv = (element as ContentElement<?>); 
+			val rv = (element as ContentElement<?>);
 			if( rv.children.filter(typeof(SvgStopElement)).empty ) {
 				if( element instanceof XLinkAttributes ) {
 					val v = element as XLinkAttributes;
 					if( v.resolvedInstance != null ) {
-						return resolveGradientStopElement(v.resolvedInstance);	
+						return resolveGradientStopElement(v.resolvedInstance);
 					}
 				}
 			} else {
@@ -264,7 +266,7 @@ class FXMLConverter {
 		}
 		return null;
 	}
-	
+
 	def resolveElement(String id) {
 		val treeIt = EcoreUtil::getAllContents(rootElement,true).filter(typeof(SvgElement));
 		while( treeIt.hasNext ) {
@@ -278,13 +280,13 @@ class FXMLConverter {
 				val f = eo.eClass.getEStructuralFeature("id");
 				if( f != null && id.equals(eo.eGet(f)) ) {
 					return o;
-				}	
+				}
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	def handleStop(SvgStopElement element,Double opacity) '''
 	<Stop
 		«IF element.offset != null»offset="«element.offset.parsePercentage»"«ENDIF»
@@ -316,7 +318,7 @@ class FXMLConverter {
 		«ENDIF»
 	</Stop>
 	'''
-	
+
 	def dispatch CharSequence handle(SvgImageElement element) '''
 	<ImageView
 		«IF element.x != null»x="«element.x.parseLength»"«ENDIF»
@@ -325,7 +327,7 @@ class FXMLConverter {
 «««		«IF element.height != null»height="«element.height.parseLength»"«ENDIF»
 		>
 		«handleStyleClassAttributes(element.class_)»
-		<Image 
+		<Image
 			url="«element.xlink__href»"
 		/>
 		«IF element.transform != null»
@@ -365,7 +367,7 @@ class FXMLConverter {
 		«ENDIF»
 	</ImageView>
 	'''
-	
+
 	def dispatch CharSequence handle(SvgRectElement element) '''
 	<Rectangle
 		«IF element.x != null»x="«element.x.parseLength»"«ENDIF»
@@ -381,7 +383,7 @@ class FXMLConverter {
 		«handlePaint("fill", lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__FILL,element) as String,lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__FILL_OPACITY,element) as String)»
 		«handlePaint("stroke",lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE,element) as String,lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_OPACITY,element) as String)»
 		«handleStyleClassAttributes(element.class_)»
-		
+
 		«IF element.transform != null»
 			<transforms>
 				«element.transform.handleTransform»
@@ -419,7 +421,7 @@ class FXMLConverter {
 		«ENDIF»
 	</Rectangle>
 	'''
-	
+
 	def dispatch CharSequence handle(SvgGElement element) '''
 	<Group
 		«IF element.x != null»translateX="«element.x.parseCoordinate»"«ENDIF»
@@ -470,7 +472,7 @@ class FXMLConverter {
 		«ENDIF»
 	</Group>
 	'''
-	
+
 	def dispatch CharSequence handle(SvgUseElement element) '''
 	<Group
 		«IF element.x != null»translateX="«element.x.parseCoordinate»"«ENDIF»
@@ -479,7 +481,7 @@ class FXMLConverter {
 		«IF element.id != null»id="«element.id.validateId»"«ENDIF»
 		>
 		«handleStyleClassAttributes(element.class_)»
-		
+
 		«IF element.resolvedInstance != null»
 		<children>
 			«handle(element.resolvedInstance)»
@@ -522,7 +524,7 @@ class FXMLConverter {
 		«ENDIF»
 	</Group>
 	'''
-	
+
 	def lookupFeature(EStructuralFeature feature, EObject object) {
 		var eo = object;
 		do {
@@ -533,10 +535,10 @@ class FXMLConverter {
 			}
 			eo = eo.eContainer;
 		} while( eo != null );
-		
+
 		return null;
 	}
-	
+
 	def handleShapePresentationAttributes(PresentationAttributes element) '''
 «««		«IF element.stroke_dasharray != null»«ENDIF»
 		«IF lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_DASHOFFSET,element) != null»strokeDashOffset="«(lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_DASHOFFSET,element) as String).parseLength»"«ENDIF»
@@ -545,7 +547,7 @@ class FXMLConverter {
 		«IF lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_MITERLIMIT,element) != null»strokeMiterLimit="«(lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_MITERLIMIT,element) as String).parseLength»"«ENDIF»
 		«IF lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_WIDTH,element) != null»strokeWidth="«(lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_WIDTH,element) as String).parseLength»"«ENDIF»
 	'''
-	
+
 	def handleStyleClassAttributes(String styleClass) '''
 		«IF styleClass != null»
 			<styleClass>
@@ -555,7 +557,7 @@ class FXMLConverter {
 			</styleClass>
 		«ENDIF»
 	'''
-	
+
 	def dispatch CharSequence handle(SvgPathElement element) '''
 	<SVGPath
 		«IF element.d != null»content="«element.d»"«ENDIF»
@@ -604,17 +606,17 @@ class FXMLConverter {
 		«ENDIF»
 	</SVGPath>
 	'''
-	
+
 	def dispatch handleFilter(EObject o) '''
 	<!-- Unsupported filter type -->
 	'''
-	
+
 	def dispatch handleFilter(SvgFeGaussianBlurElement blur) '''
 		<GaussianBlur
 			«IF blur.stdDeviation != null»radius="«blur.stdDeviation.parseDouble * 2»"«ENDIF»
 		/>
 	'''
-	
+
 	def handlePaint(String type, String fillDefinition, String typeOpacity) '''
 	«IF fillDefinition != null»
 		<«type»>
@@ -628,10 +630,10 @@ class FXMLConverter {
 		</«type»>
 	«ENDIF»
 	'''
-	
+
 	def dispatch CharSequence handle(SvgClipPathElement element) {
 	}
-	
+
 	def dispatch CharSequence handle(SvgEllipseElement element) '''
 	<Ellipse
 		«IF element.rx != null»radiusX="«element.rx.parseLength»"«ENDIF»
@@ -645,7 +647,7 @@ class FXMLConverter {
 		«handlePaint("fill", lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__FILL,element) as String,lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__FILL_OPACITY,element) as String)»
 		«handlePaint("stroke",lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE,element) as String,lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_OPACITY,element) as String)»
 		«handleStyleClassAttributes(element.class_)»
-		
+
 		«IF element.transform != null»
 			<transforms>
 				«element.transform.handleTransform»
@@ -696,7 +698,7 @@ class FXMLConverter {
 		«handlePaint("fill", lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__FILL,element) as String,lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__FILL_OPACITY,element) as String)»
 		«handlePaint("stroke",lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE,element) as String,lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_OPACITY,element) as String)»
 		«handleStyleClassAttributes(element.class_)»
-		
+
 		«IF element.transform != null»
 			<transforms>
 				«element.transform.handleTransform»
@@ -734,7 +736,7 @@ class FXMLConverter {
 		«ENDIF»
 	</Circle>
 	'''
-	
+
 	def dispatch CharSequence handle(SvgPolylineElement element) '''
 	<Polyline
 		«IF element.points != null»points="«element.points.replaceAll("\\s+",",")»"«ENDIF»
@@ -745,7 +747,7 @@ class FXMLConverter {
 	«handlePaint("fill", lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__FILL,element) as String,lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__FILL_OPACITY,element) as String)»
 	«handlePaint("stroke",lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE,element) as String,lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_OPACITY,element) as String)»
 	«handleStyleClassAttributes(element.class_)»
-	
+
 	«IF element.transform != null»
 		<transforms>
 			«element.transform.handleTransform»
@@ -783,7 +785,7 @@ class FXMLConverter {
 	«ENDIF»
 	</Polyline>
 	'''
-	
+
 	def dispatch CharSequence handle(SvgPolygonElement element) '''
 	<Polygon
 		«IF element.points != null»points="«element.points.replaceAll("\\s+",",")»"«ENDIF»
@@ -794,7 +796,7 @@ class FXMLConverter {
 	«handlePaint("fill", lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__FILL,element) as String,lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__FILL_OPACITY,element) as String)»
 	«handlePaint("stroke",lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE,element) as String,lookupFeature(SvgPackage$Literals::PRESENTATION_ATTRIBUTES__STROKE_OPACITY,element) as String)»
 	«handleStyleClassAttributes(element.class_)»
-	
+
 	«IF element.transform != null»
 		<transforms>
 			«element.transform.handleTransform»
@@ -840,7 +842,7 @@ class FXMLConverter {
 			val c = fill.substring(fill.indexOf("(")+1,fill.indexOf(")"));
 			return c.rgbColor();
 		} else if( fill.startsWith("argb") ) {
-			
+
 		} else if( fill.startsWith("url") ) {
 			val e = resolveElement(fill.substring(5,fill.length-1));
 			if( e instanceof SvgLinearGradientElement ) {
@@ -852,7 +854,7 @@ class FXMLConverter {
 			return fill.toUpperCase
 		}
 	}
-	
+
 	def fillPaint(String fill, Double opacity) {
 		if( fill.startsWith("#") ) {
 			return fill.hexColor(opacity)
@@ -860,7 +862,7 @@ class FXMLConverter {
 			val c = fill.substring(fill.indexOf("(")+1,fill.indexOf(")"));
 			return c.rgbColor();
 		} else if( fill.startsWith("argb") ) {
-			
+
 		} else if( fill.startsWith("url") ) {
 			val e = resolveElement(fill.substring(5,fill.length-1));
 			if( e instanceof SvgLinearGradientElement ) {
@@ -876,7 +878,7 @@ class FXMLConverter {
 			return fill.toUpperCase
 		}
 	}
-	
+
 	def rgbColor(String fill) '''
 	<Color>
 		<red>«fill.rgbRed»</red>
@@ -884,7 +886,7 @@ class FXMLConverter {
 		<blue>«fill.rgbBlue»</blue>
 	</Color>
 	'''
-	
+
 	def rgbColor(String fill, Double opacity) '''
 	<Color>
 		<red>«fill.rgbRed»</red>
@@ -893,19 +895,19 @@ class FXMLConverter {
 		<opacity>«opacity»</opacity>
 	</Color>
 	'''
-	
+
 	def rgbRed(String color) {
 		return Integer::parseInt(color.split(",").get(0))/Double::parseDouble("255");
 	}
-	
+
 	def rgbGreen(String color) {
 		return Integer::parseInt(color.split(",").get(1))/Double::parseDouble("255");
 	}
-	
+
 	def rgbBlue(String color) {
 		return Integer::parseInt(color.split(",").get(2))/Double::parseDouble("255");
 	}
-	
+
 	def hexColor(String fill) '''
 	<Color>
 		<red>«fill.hexRed»</red>
@@ -913,7 +915,7 @@ class FXMLConverter {
 		<blue>«fill.hexBlue»</blue>
 	</Color>
 	'''
-	
+
 	def hexColor(String fill, Double opacity) '''
 	<Color>
 		<red>«fill.hexRed»</red>
@@ -922,19 +924,19 @@ class FXMLConverter {
 		<opacity>«opacity»</opacity>
 	</Color>
 	'''
-	
+
 	def hexRed(String color) {
 		return Colors::hexRed(color);
 	}
-	
+
 	def hexGreen(String color) {
 		return Colors::hexGreen(color);
 	}
-	
+
 	def hexBlue(String color) {
 		return Colors::hexBlue(color);
 	}
-	
+
 	def transformElement(String transform) '''
 	«val params = transform.substring(transform.indexOf("(")+1,transform.indexOf(")"))»
 	«IF transform.startsWith("translate")»
@@ -992,31 +994,31 @@ class FXMLConverter {
 	</Affine>
 	«ENDIF»
 	'''
-	
+
 	def handleTransform(String t) {
 		var transform = t;
 		var int endIdx;
 		val builder = new StringBuilder
 		while( (endIdx = transform.indexOf(')')) != -1 ) {
 			builder.append(transformElement(transform.substring(0,endIdx+1)))
-			
+
 			if( endIdx+1 > transform.length ) {
 				return builder.toString;
 			}
-			
+
 			transform = transform.substring(endIdx+1).trim
 		}
 		return builder.toString;
 	}
-	
+
 	def dispatch CharSequence handle(SvgFilterElement filter) {
-		
+
 	}
-	
+
 	def dispatch CharSequence handle(SvgFeGaussianBlurElement f) {
-		
+
 	}
-	
+
 	def String toFx(SpreadMethod m) {
 		switch(m) {
 			case SpreadMethod::PAD:
@@ -1026,10 +1028,10 @@ class FXMLConverter {
 			case SpreadMethod::REPEAT:
 				return "REPEAT"
 		}
-		
+
 		return "NO_CYCLE";
 	}
-	
+
 	def String toFx(Stroke_linecap m) {
 		switch(m) {
 			case Stroke_linecap::BUTT:
@@ -1043,7 +1045,7 @@ class FXMLConverter {
 		}
 		return "BUTT";
 	}
-	
+
 	def String toFx(Stroke_linejoin m) {
 		switch(m) {
 			case Stroke_linejoin::BEVEL:
@@ -1057,39 +1059,39 @@ class FXMLConverter {
 		}
 		return "BEVEL";
 	}
-	
+
 	def parseLength(String length) {
 		if( length != null ) {
 			if( length.endsWith("px") ) {
-				return Double::parseDouble(length.substring(0,length.length - 2)); 
+				return Double::parseDouble(length.substring(0,length.length - 2));
 			} else {
-				return Double::parseDouble(length);	
-			}			
+				return Double::parseDouble(length);
+			}
 		}
 		return 0.0;
 	}
-	
+
 	def parseCoordinate(String coordinate) {
 		if( coordinate != null ) {
-			return Double::parseDouble(coordinate);	
+			return Double::parseDouble(coordinate);
 		}
 		return 0.0;
 	}
-	
+
 	def parsePercentage(String percentage) {
 		if( percentage != null ) {
-			return Double::parseDouble(percentage);	
+			return Double::parseDouble(percentage);
 		}
 		return 0.0;
 	}
-	
+
 	def parseDouble(String value) {
 		if( value != null ) {
 			return Double::parseDouble(value)
 		}
 		return 0.0;
 	}
-	
+
 	def validateId(String value) {
 		// TODO replace http://www.w3.org/TR/2008/REC-xml-20081126/#NT-Name vs http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
 		return value.replaceAll("\\.","_dot").replaceAll(" ","_space").replaceAll(":","_colon");

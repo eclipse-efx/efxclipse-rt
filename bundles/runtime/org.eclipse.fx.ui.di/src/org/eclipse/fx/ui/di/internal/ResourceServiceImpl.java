@@ -76,7 +76,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 	static class ResourcePool implements IDiposeableResourcePool {
 		private final ResourceServiceImpl resourceService;
-		private List<IPooledResource<Image>> pooledImages = new ArrayList<IPooledResource<Image>>();
+		private List<IPooledResource<@Nullable Image>> pooledImages = new ArrayList<IPooledResource<@Nullable Image>>();
 
 		@Inject
 		public ResourcePool(ResourceService resourceService) {
@@ -85,9 +85,9 @@ public class ResourceServiceImpl implements ResourceService {
 
 		@Override
 		public Image getImage(String imageKey) throws IOException {
-			IPooledResource<Image> image = null;
+			IPooledResource<@Nullable Image> image = null;
 
-			for (IPooledResource<Image> img : this.pooledImages) {
+			for (IPooledResource<@Nullable Image> img : this.pooledImages) {
 				if (img.getId().equals(imageKey)) {
 					image = img;
 				}
@@ -117,14 +117,14 @@ public class ResourceServiceImpl implements ResourceService {
 		@Override
 		@PreDestroy
 		public void dispose() {
-			for (IPooledResource<Image> img : this.pooledImages) {
+			for (IPooledResource<@Nullable Image> img : this.pooledImages) {
 				img.dispose();
 			}
 			this.pooledImages = null;
 		}
 	}
 
-	private Map<String, PooledResource<Image>> imagePool = new HashMap<String, PooledResource<Image>>();
+	private Map<String, PooledResource<@Nullable Image>> imagePool = new HashMap<String, PooledResource<@Nullable Image>>();
 
 	private BundleContext context;
 
@@ -137,22 +137,22 @@ public class ResourceServiceImpl implements ResourceService {
 	}
 
 	@Override
-	public IPooledResource<Image> getImage(@NonNull String key) throws IOException {
+	public IPooledResource<@Nullable Image> getImage(@NonNull String key) throws IOException {
 		return loadResource(key);
 	}
 
 	@SuppressWarnings("unchecked")
 	@NonNull
 	private <R> IPooledResource<@Nullable R> loadResource(@NonNull String key) throws IOException {
-		PooledResource<R> resource = null;
+		PooledResource<@Nullable R> resource = null;
 
-		resource = (PooledResource<R>) this.imagePool.get(key);
+		resource = (PooledResource<@Nullable R>) this.imagePool.get(key);
 
 		if (resource != null && resource.getResource() != null) {
 			resource.count++;
 		} else {
-			resource = new PooledResource<R>(this, key, (R) lookupResource(key));
-			this.imagePool.put(key, (PooledResource<Image>) resource);
+			resource = new PooledResource<@Nullable R>(this, key, (R) lookupResource(key));
+			this.imagePool.put(key, (PooledResource<@Nullable Image>) resource);
 		}
 
 		return resource;
@@ -196,7 +196,7 @@ public class ResourceServiceImpl implements ResourceService {
 	 * @param resource
 	 *            the resource to remove
 	 */
-	public void removePooledResource(PooledResource<?> resource) {
+	public void removePooledResource(PooledResource<@Nullable ?> resource) {
 		this.imagePool.remove(resource.getId());
 	}
 
