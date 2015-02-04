@@ -240,7 +240,7 @@ public class StyledTextLayoutContainer extends Region {
 			this.textLayoutNode.applyCss();
 			for (StyledTextNode t : this.textNodes) {
 				t.applyCss();
-				if (t.getStartOffset() <= this.caretIndex && t.getEndOffset() >= this.caretIndex) {
+				if (t.getStartOffset() <= this.caretIndex && ( t.getEndOffset() > this.caretIndex || this.textNodes.get(this.textNodes.size()-1) == t )) {
 					double caretX = t.getCharLocation(this.caretIndex - t.getStartOffset());
 					double x = this.textLayoutNode.localToParent(t.getBoundsInParent().getMinX(), 0).getX() + caretX;
 					double h = t.prefHeight(-1);

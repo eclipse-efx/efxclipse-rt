@@ -242,10 +242,8 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 					// TODO Remove first 4 white space chars???
 					break;
 				} else {
-					// FIXME Need to should fix this but it currently completely
-					// break cursor positioning
-					getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, "    "); //$NON-NLS-1$
-					getControl().setCaretOffset(offset + 4);
+					getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, event.getText());
+					getControl().setCaretOffset(offset + 1);
 					break;
 				}
 			}

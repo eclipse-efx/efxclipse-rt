@@ -16,11 +16,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
 import javafx.css.ParsedValue;
+import javafx.css.SimpleStyleableIntegerProperty;
 import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.StyleConverter;
 import javafx.css.Styleable;
@@ -88,6 +90,7 @@ public class StyledTextNode extends Region {
 	private final Text textNode;
 
 	@SuppressWarnings("null")
+	@NonNull
 	private static final CssMetaData<StyledTextNode, @NonNull Paint> FILL = new CssMetaData<StyledTextNode, @NonNull Paint>("-fx-fill", PaintConverter.getInstance(), Color.BLACK) { //$NON-NLS-1$
 
 		@Override
@@ -180,6 +183,23 @@ public class StyledTextNode extends Region {
 
 	};
 
+	@SuppressWarnings("null")
+	@NonNull
+	private static final CssMetaData<StyledTextNode, @NonNull Number> TABCHARADANCE = new CssMetaData<StyledTextNode, @NonNull Number>("-efx-tab-char-advance", StyleConverter.getSizeConverter(), Integer.valueOf(4)) { //$NON-NLS-1$
+
+		@Override
+		public boolean isSettable(StyledTextNode styleable) {
+			return !styleable.tabCharAdvanceProperty().isBound();
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public StyleableProperty<@NonNull Number> getStyleableProperty(StyledTextNode styleable) {
+			return (StyleableProperty<@NonNull Number>) styleable.tabCharAdvance;
+		}
+
+	};
+
 	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
 
 	static {
@@ -226,7 +246,38 @@ public class StyledTextNode extends Region {
 		this.decorationStrategyProperty().set(strategy);
 	}
 
+	@NonNull
+	IntegerProperty tabCharAdvance = new SimpleStyleableIntegerProperty(TABCHARADANCE, this, "tabCharAdvance", Integer.valueOf(4)); //$NON-NLS-1$
+
+	/**
+	 * Number of chars to use for tab advance (default is 4)
+	 * 
+	 * @return the property to observe
+	 */
+	public final IntegerProperty tabCharAdvanceProperty() {
+		return this.tabCharAdvance;
+	}
+
+	/**
+	 * @return the number of chars to use for tab advance (default is 4)
+	 */
+	public final int getTabCharAdvance() {
+		return this.tabCharAdvanceProperty().get();
+	}
+
+	/**
+	 * Set a new number for chars to advance for a tab
+	 * 
+	 * @param tabCharAdvance
+	 *            the number of chars to use for tab advance (default is 4)
+	 */
+	public final void setTabCharAdvance(final int tabCharAdvance) {
+		this.tabCharAdvanceProperty().set(tabCharAdvance);
+	}
+
 	private int startOffset;
+	private List<Integer> tabPositions = new ArrayList<>();
+	private String originalText;
 
 	/**
 	 * Create a new styled text node
@@ -236,10 +287,30 @@ public class StyledTextNode extends Region {
 	 */
 	public StyledTextNode(String text) {
 		getStyleClass().add("styled-text-node"); //$NON-NLS-1$
-		this.textNode = new Text(text);
+		this.originalText = text;
+		this.tabCharAdvance.addListener(o -> {
+			this.textNode.setText(processText(text));
+		});
+
+		this.textNode = new Text(processText(text));
 		this.textNode.fillProperty().bind(fillProperty());
 		getChildren().add(this.textNode);
 		this.decorationStrategy.addListener(this::handleDecorationChange);
+	}
+
+	private String processText(String text) {
+		String tmp = text;
+		StringBuilder b = new StringBuilder();
+		for (int i = 0; i < this.tabCharAdvance.get(); i++) {
+			b.append(" "); //$NON-NLS-1$
+		}
+		int position = -1;
+		this.tabPositions.clear();
+		while ((position = tmp.indexOf('\t')) != -1) {
+			tmp = tmp.replaceFirst("\t", b.toString()); //$NON-NLS-1$
+			this.tabPositions.add(Integer.valueOf(position));
+		}
+		return tmp;
 	}
 
 	private void handleDecorationChange(ObservableValue<? extends DecorationStrategy> observable, DecorationStrategy oldValue, DecorationStrategy newValue) {
@@ -265,26 +336,6 @@ public class StyledTextNode extends Region {
 	}
 
 	/**
-	 * Find the x coordinate where we the character for the given index starts
-	 * 
-	 * @param index
-	 *            the index
-	 * @return the location or <code>0</code> if not found
-	 */
-	@SuppressWarnings("deprecation")
-	public double getCharLocation(int index) {
-		this.textNode.setImpl_caretPosition(index);
-		PathElement[] pathElements = this.textNode.getImpl_caretShape();
-		for (PathElement e : pathElements) {
-			if (e instanceof MoveTo) {
-				return this.textNode.localToParent(((MoveTo) e).getX(), 0).getX();
-			}
-		}
-
-		return 0.0;
-	}
-
-	/**
 	 * Check if the text node intersects with the start and end locations
 	 * 
 	 * @param start
@@ -304,7 +355,7 @@ public class StyledTextNode extends Region {
 
 	@Override
 	public String toString() {
-		return this.textNode.toString();
+		return this.originalText;
 	}
 
 	@Override
@@ -316,7 +367,7 @@ public class StyledTextNode extends Region {
 	 * @return the text
 	 */
 	public String getText() {
-		return this.textNode.getText();
+		return this.originalText;
 	}
 
 	@Override
@@ -330,77 +381,6 @@ public class StyledTextNode extends Region {
 
 	}
 
-	// private Path createZigZag(Point2D from, Point2D to, double period) {
-	// double len = from.distance(to);
-	//
-	// Point2D dir = to.subtract(from).normalize();
-	// Point2D up = new Point2D(-dir.getY(), dir.getX());
-	//
-	// Path path = new Path();
-	//
-	// Point2D cur = from.add(up.multiply(period / 2));
-	//
-	// path.getElements().add(new MoveTo(cur.getX(), cur.getY()));
-	//
-	// int s = 0;
-	// double dist = 0;
-	// while (dist < len) {
-	// if (s % 2 == 0) {
-	// // up
-	// cur = cur.add(dir.multiply(period / 2)).add(up.multiply(period / 2));
-	// } else if (s % 2 == 1) {
-	// // down
-	// cur = cur.add(dir.multiply(period / 2)).add(up.multiply(-period / 2));
-	// }
-	//
-	// path.getElements().add(new LineTo(cur.getX(), cur.getY()));
-	// s++;
-	// dist += period / 2;
-	// }
-	//
-	// return path;
-	// }
-	//
-	// private Path createSine(Point2D from, Point2D to, double period) {
-	// double len = from.distance(to);
-	//
-	// Point2D dir = to.subtract(from).normalize();
-	// Point2D up = new Point2D(-dir.getY(), dir.getX());
-	//
-	// Path path = new Path();
-	//
-	// Point2D cur = from.add(up.multiply(period / 2));
-	//
-	// path.getElements().add(new MoveTo(cur.getX(), cur.getY()));
-	//
-	// int s = 0;
-	// double dist = 0;
-	// while (dist < len) {
-	// if (s % 2 == 0) {
-	// // up
-	// Point2D control = cur.add(dir.multiply(period /
-	// 4)).add(up.multiply(period / 4));
-	// cur = cur.add(dir.multiply(period / 2));
-	//
-	// path.getElements().add(new QuadCurveTo(control.getX(), control.getY(),
-	// cur.getX(), cur.getY()));
-	// } else if (s % 2 == 1) {
-	// // down
-	// Point2D control = cur.add(dir.multiply(period /
-	// 4)).add(up.multiply(-period / 4));
-	// cur = cur.add(dir.multiply(period / 2));
-	//
-	// path.getElements().add(new QuadCurveTo(control.getX(), control.getY(),
-	// cur.getX(), cur.getY()));
-	// }
-	//
-	// s++;
-	// dist += period / 2;
-	// }
-	//
-	// return path;
-	// }
-
 	/**
 	 * Get the caret index at the given point
 	 * 
@@ -412,8 +392,50 @@ public class StyledTextNode extends Region {
 		@SuppressWarnings("deprecation")
 		HitInfo info = this.textNode.impl_hitTestChar(this.textNode.sceneToLocal(localToScene(point)));
 		if (info != null) {
-			return info.getInsertionIndex();
+			int idx = info.getInsertionIndex();
+			int toRemove = 0;
+			for (Integer i : this.tabPositions) {
+				if (i.intValue() <= idx && idx < i.intValue() + this.tabCharAdvance.get()) {
+					toRemove += idx - i.intValue();
+					// If we are in the 2nd half of the tab we
+					// simply move one past the value
+					if ((idx - i.intValue()) % this.tabCharAdvance.get() >= this.tabCharAdvance.get() / 2) {
+						idx += 1;
+					}
+					break;
+				} else if (i.intValue() < idx) {
+					toRemove += this.tabCharAdvance.get() - 1;
+				}
+			}
+			idx -= toRemove;
+			return idx;
 		}
 		return -1;
+	}
+
+	/**
+	 * Find the x coordinate where we the character for the given index starts
+	 * 
+	 * @param index
+	 *            the index
+	 * @return the location or <code>0</code> if not found
+	 */
+	@SuppressWarnings("deprecation")
+	public double getCharLocation(int index) {
+		int realIndex = index;
+		for (Integer i : this.tabPositions) {
+			if (i.intValue() < realIndex) {
+				realIndex += this.tabCharAdvance.get() - 1;
+			}
+		}
+		this.textNode.setImpl_caretPosition(realIndex);
+		PathElement[] pathElements = this.textNode.getImpl_caretShape();
+		for (PathElement e : pathElements) {
+			if (e instanceof MoveTo) {
+				return this.textNode.localToParent(((MoveTo) e).getX(), 0).getX();
+			}
+		}
+
+		return 0.0;
 	}
 }
