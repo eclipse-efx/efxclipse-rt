@@ -22,6 +22,7 @@ import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.TabPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
@@ -147,8 +148,7 @@ public final class PositionMarker extends Group {
 
 	static {
 
-		@SuppressWarnings("static-access")
-		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(Group.getClassCssMetaData());
+		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(Node.getClassCssMetaData());
 		styleables.add(FILL);
 		STYLEABLES = Collections.unmodifiableList(styleables);
 	}
