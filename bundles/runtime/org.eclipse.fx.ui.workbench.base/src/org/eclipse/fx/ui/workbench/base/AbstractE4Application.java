@@ -454,9 +454,7 @@ public abstract class AbstractE4Application implements IApplication {
 		appContext.set(EModelService.class, new ModelServiceImpl(appContext));
 		appContext.set(EPlaceholderResolver.class, new PlaceholderResolver());
 
-		// translation
-		String locale = Locale.getDefault().toString();
-		appContext.set(TranslationService.LOCALE, locale);
+		appContext.set(TranslationService.LOCALE, Locale.getDefault());
 		TranslationService bundleTranslationProvider = TranslationProviderFactory.bundleTranslationService(appContext);
 		appContext.set(TranslationService.class, bundleTranslationProvider);
 

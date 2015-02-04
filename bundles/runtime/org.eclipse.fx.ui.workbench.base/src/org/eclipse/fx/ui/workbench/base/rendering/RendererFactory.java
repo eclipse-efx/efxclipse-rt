@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.workbench.base.rendering;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -26,5 +27,5 @@ public interface RendererFactory {
 	 *            the renderer type
 	 * @return the renderer
 	 */
-	public <R extends ElementRenderer<?, ?>> @Nullable R getRenderer(MUIElement element);
+	public <R extends ElementRenderer<@NonNull ?, ?>> @Nullable R getRenderer(MUIElement element);
 }
