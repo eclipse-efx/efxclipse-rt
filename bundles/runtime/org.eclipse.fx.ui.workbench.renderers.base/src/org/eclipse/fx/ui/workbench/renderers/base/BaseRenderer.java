@@ -64,7 +64,7 @@ import org.osgi.service.event.Event;
  *            the abstracted widget type
  */
 @SuppressWarnings("restriction")
-public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> implements ElementRenderer<M, W> {
+public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> implements ElementRenderer<@NonNull M, W> {
 	private static final String RENDERING_CONTEXT_KEY = "fx.rendering.context"; //$NON-NLS-1$
 
 	/**

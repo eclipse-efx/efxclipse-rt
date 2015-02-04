@@ -181,7 +181,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 
 		for (MPerspective e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
-			ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(e);
+			ElementRenderer<@NonNull MPerspective, ?> renderer = this.factory.getRenderer(e);
 			if (renderer != null && e.isToBeRendered() && e.isVisible()) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
@@ -217,7 +217,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 	}
 
 	@NonNull
-	private WStackItem<I, IC> createStackItem(@NonNull WPerspectiveStack<N, I, IC> stack, @NonNull final MPerspective e, ElementRenderer<MPerspective, ?> renderer) {
+	private WStackItem<I, IC> createStackItem(@NonNull WPerspectiveStack<N, I, IC> stack, @NonNull final MPerspective e, ElementRenderer<@NonNull MPerspective, ?> renderer) {
 		IEclipseContext context = renderer.setupRenderingContext(e);
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
 		item.setDomElement(e);
@@ -263,7 +263,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 			if (element.isToBeRendered() && element.isVisible()) {
 				int idx = getRenderedIndex(parent, element);
 
-				ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(element);
+				ElementRenderer<@NonNull MPerspective, ?> renderer = this.factory.getRenderer(element);
 				WStackItem<I, IC> item = createStackItem(stack, element, renderer);
 				stack.addItems(idx, Collections.singletonList(item));
 			}
@@ -332,7 +332,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		}
 
 		int idx = getRenderedIndex(parentElement, element);
-		ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(element);
+		ElementRenderer<@NonNull MPerspective, ?> renderer = this.factory.getRenderer(element);
 		WStackItem<I, IC> item = createStackItem(stack, (MPerspective) element, renderer);
 		stack.addItems(idx, Collections.singletonList(item));
 	}
