@@ -10,11 +10,11 @@ package org.eclipse.fx.code.compensator.model.workbench;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.Module#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.Module#getRootFolderUrl <em>Root Folder Url</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage#getModule()
  * @model

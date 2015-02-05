@@ -18,7 +18,7 @@ public interface ProjectService {
 	public List<ToolbarGroup> getPrimaryToolbarGroups();
 	public List<ToolbarGroup> getSecondaryToolbarGroups();
 	public List<ContextMenuGroup> getProjectNavigatorContextMenuGroups();
-	public ProjectNavigatorItem mapModuleItem(Module m, InstanceProject project);
+	public ProjectNavigatorItem mapModuleItem(ProjectNavigatorItem parent, Module m, InstanceProject project);
 	public InstanceProject createProjectInstance(IEclipseContext context);
 
 	public abstract static class ContextMenuGroup {

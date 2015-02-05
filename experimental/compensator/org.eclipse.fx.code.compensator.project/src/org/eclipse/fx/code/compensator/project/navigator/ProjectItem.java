@@ -1,4 +1,6 @@
-package org.eclipse.fx.code.compensator.project.internal.adapter;
+package org.eclipse.fx.code.compensator.project.navigator;
+
+import java.nio.file.Path;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -6,21 +8,33 @@ import javafx.collections.ObservableList;
 import org.eclipse.fx.code.compensator.model.workbench.LocalProject;
 import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
+import org.eclipse.fx.code.compensator.project.vcs.VCSRootNavigatorItem;
 import org.eclipse.fx.core.URI;
 
 public class ProjectItem implements ProjectNavigatorItem {
 	private final InstanceProject project;
 	private final ObservableList<ProjectNavigatorItem> children = FXCollections.observableArrayList();
+	private VCSContainerItem vcsContainerItem;
 
 	public ProjectItem(InstanceProject project) {
 		this.project = project;
-		children.add(new ModuleContainerItem(project));
-		children.add(new BugtrackerItem());
-		children.add(new BuildServerItem());
+		children.add(new ModuleContainerItem(this,project));
+		children.add(new BugtrackerItem(this));
+		children.add(new BuildServerItem(this));
 		if( project.getProject() instanceof LocalProject ) {
-			children.add(new VCSContainerItem(project));
+			vcsContainerItem = new VCSContainerItem(this,project);
+			children.add(vcsContainerItem);
 		}
 	}
+	
+	@Override
+	public ProjectNavigatorItem getParent() {
+		return null;
+	}
+	
+//	public VCSRootNavigatorItem getVCSRoot(Path path) {
+//		return vcsContainerItem.getRootItem(path);
+//	}
 
 	@Override
 	public CharSequence getLabel() {

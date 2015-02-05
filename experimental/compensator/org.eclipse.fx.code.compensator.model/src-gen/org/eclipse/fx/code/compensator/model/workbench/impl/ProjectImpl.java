@@ -26,7 +26,9 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * An implementation of the model object '<em><b>Project</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getProjectId <em>Project Id</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getName <em>Name</em>}</li>
@@ -34,7 +36,6 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getIconURI <em>Icon URI</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getBugTrackerList <em>Bug Tracker List</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

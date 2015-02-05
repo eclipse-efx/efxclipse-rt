@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.VCSRepository#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.VCSRepository#getRepoType <em>Repo Type</em>}</li>
@@ -19,7 +20,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.VCSRepository#getRepoUsername <em>Repo Username</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.VCSRepository#getRepoPassword <em>Repo Password</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage#getVCSRepository()
  * @model

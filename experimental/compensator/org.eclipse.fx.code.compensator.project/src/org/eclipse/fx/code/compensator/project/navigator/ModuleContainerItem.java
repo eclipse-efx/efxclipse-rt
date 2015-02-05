@@ -1,4 +1,4 @@
-package org.eclipse.fx.code.compensator.project.internal.adapter;
+package org.eclipse.fx.code.compensator.project.navigator;
 
 import java.util.stream.Collectors;
 
@@ -16,21 +16,28 @@ import org.eclipse.fx.core.URI;
 public class ModuleContainerItem implements ProjectNavigatorItem {
 	private final InstanceProject instanceProject;
 	private final ObservableList<ProjectNavigatorItem> modules = FXCollections.observableArrayList();
+	private final ProjectItem parent;
 
-	public ModuleContainerItem(InstanceProject instanceProject) {
+	public ModuleContainerItem(ProjectItem parent, InstanceProject instanceProject) {
 		this.instanceProject = instanceProject;
-		modules.addAll(instanceProject.getProject().getModuleList().stream().map( m -> instanceProject.mapModule(m)).collect(Collectors.toList()));
+		this.parent = parent;
+		modules.addAll(instanceProject.getProject().getModuleList().stream().map( m -> instanceProject.mapModule(this,m)).collect(Collectors.toList()));
 		instanceProject.getProject().eAdapters().add(new AdapterImpl() {
 			public void notifyChanged(org.eclipse.emf.common.notify.Notification msg) {
 				if( msg.getFeature() == WorkbenchPackage.Literals.MODULE_CONTAINER__MODULE_LIST ) {
 					if( msg.getEventType() == Notification.ADD ) {
-						modules.add(instanceProject.mapModule((Module) msg.getNewValue()));
+						modules.add(instanceProject.mapModule(ModuleContainerItem.this, (Module) msg.getNewValue()));
 					}
 				}
 			}
 		});
 	}
 
+	@Override
+	public ProjectNavigatorItem getParent() {
+		return this.parent;
+	}
+	
 	@Override
 	public CharSequence getLabel() {
 		return "Modules";

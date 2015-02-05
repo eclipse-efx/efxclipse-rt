@@ -13,6 +13,10 @@ public abstract class PathItem implements ProjectNavigatorItem {
 		this.path = path;
 		this.parent = parent;
 	}
+	
+	public ProjectNavigatorItem getParent() {
+		return parent;
+	}
 
 	@Override
 	public CharSequence getLabel() {

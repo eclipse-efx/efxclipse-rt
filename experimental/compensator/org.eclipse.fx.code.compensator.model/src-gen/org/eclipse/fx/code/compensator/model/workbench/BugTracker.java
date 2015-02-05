@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.BugTracker#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.BugTracker#getBugtrackerType <em>Bugtracker Type</em>}</li>
@@ -18,7 +19,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.BugTracker#getBugtrackerUsername <em>Bugtracker Username</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.BugTracker#getBugtrackerPassword <em>Bugtracker Password</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage#getBugTracker()
  * @model

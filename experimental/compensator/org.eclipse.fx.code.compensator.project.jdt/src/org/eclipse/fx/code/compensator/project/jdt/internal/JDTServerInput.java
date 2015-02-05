@@ -1,8 +1,5 @@
 package org.eclipse.fx.code.compensator.project.jdt.internal;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -10,20 +7,27 @@ import java.util.concurrent.Future;
 import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.URIProvider;
+import org.eclipse.fx.code.compensator.editor.VCSInput;
+import org.eclipse.fx.code.compensator.project.vcs.VCSRepositoryInstance;
 import org.eclipse.fx.code.server.jdt.JDTServer;
 import org.eclipse.fx.core.URI;
 
-public class JDTServerInput implements Input<String>, ContentTypeProvider, URIProvider {
+public class JDTServerInput implements Input<String>, ContentTypeProvider, URIProvider, VCSInput<String> {
 	public final JDTServer server;
 	public final Future<String> openFile;
 	private final String uri;
 
-	public JDTServerInput(JDTServer server, String uri, String module, String path) {
+	public JDTServerInput(JDTServer server, VCSRepositoryInstance repository, String uri, String module, String path) {
 		this.server = server;
 		this.uri = uri;
 		this.openFile = this.server.openFile(module, path);
 	}
 
+	@Override
+	public Future<Boolean> commit() {
+		return null;
+	}
+	
 	@Override
 	public URI getURI() {
 		return URI.create(uri);
@@ -62,24 +66,21 @@ public class JDTServerInput implements Input<String>, ContentTypeProvider, URIPr
 
 			// Freaking hack because JavaFX can not deal with TABs
 			String s = new String(data.get().array());
-			BufferedReader reader = new BufferedReader(new StringReader(s));
-			StringBuilder b = new StringBuilder();
-			String line;
-			while( (line = reader.readLine()) != null ) {
-				//FIXME We need to replace TABs for now
-				b.append(line.replaceAll("\t", "    ")+"\n");
-			}
-			reader.close();
-
-			if( ! s.equals(b.toString()) ) {
-				this.server.setFileContent(resourceId, ByteBuffer.wrap(b.toString().getBytes())).get();
-				this.server.persistContent(resourceId);
-			}
-			return b.toString();
+//			BufferedReader reader = new BufferedReader(new StringReader(s));
+//			StringBuilder b = new StringBuilder();
+//			String line;
+//			while( (line = reader.readLine()) != null ) {
+//				//FIXME We need to replace TABs for now
+//				b.append(line.replaceAll("\t", "    ")+"\n");
+//			}
+//			reader.close();
+//
+//			if( ! s.equals(b.toString()) ) {
+//				this.server.setFileContent(resourceId, ByteBuffer.wrap(b.toString().getBytes())).get();
+//				this.server.persistContent(resourceId);
+//			}
+			return s;
 		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

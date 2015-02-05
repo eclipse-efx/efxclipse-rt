@@ -16,12 +16,13 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * An implementation of the model object '<em><b>Module</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ModuleImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ModuleImpl#getRootFolderUrl <em>Root Folder Url</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

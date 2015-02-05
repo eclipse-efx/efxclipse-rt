@@ -2,7 +2,6 @@ package org.eclipse.fx.code.compensator.project.jdt.internal;
 
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.services.InputFactory;
 import org.eclipse.fx.code.server.jdt.JDTServer;
@@ -33,7 +32,7 @@ public class JDTServerInputFactory implements InputFactory {
 			}
 			b.append(uri.segment(i));
 		}
-		return (Input<O>) new JDTServerInput(server,url,module,b.toString());
+		return (Input<O>) new JDTServerInput(server,null,url,module,b.toString());
 	}
 
 }

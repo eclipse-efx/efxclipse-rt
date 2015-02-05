@@ -1,6 +1,5 @@
 package org.eclipse.fx.code.compensator.project.jdt.menu;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.Future;
 
@@ -11,6 +10,7 @@ import org.eclipse.fx.code.compensator.model.workbench.Project;
 import org.eclipse.fx.code.compensator.model.workbench.WorkbenchFactory;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.ProjectService.MenuElement;
+import org.eclipse.fx.code.compensator.project.navigator.FolderItem;
 import org.eclipse.fx.code.server.jdt.JDTServer;
 import org.eclipse.fx.core.di.Invoke;
 import org.eclipse.fx.core.function.ExExecutor;
@@ -23,7 +23,12 @@ public class ImportModuleElement extends MenuElement {
 
 	@Override
 	public boolean applies(ProjectNavigatorItem item) {
-//		return item instanceof VCSDirectory && Files.exists(((Path)item.getDomainObject()).resolve(".project"));
+		if( item instanceof FolderItem ) {
+			return item.getChildren()
+				.stream()
+				.filter(i -> i.getDomainObject() instanceof Path && ((Path)i.getDomainObject()).getFileName().toString().equals(".project"))
+				.findFirst().isPresent();
+		}
 		return false;
 	}
 

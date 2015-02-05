@@ -17,7 +17,9 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * An implementation of the model object '<em><b>Bug Tracker</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.BugTrackerImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.BugTrackerImpl#getBugtrackerType <em>Bugtracker Type</em>}</li>
@@ -25,7 +27,6 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.BugTrackerImpl#getBugtrackerUsername <em>Bugtracker Username</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.BugTrackerImpl#getBugtrackerPassword <em>Bugtracker Password</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

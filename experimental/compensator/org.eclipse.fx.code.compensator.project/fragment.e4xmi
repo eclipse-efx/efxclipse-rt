@@ -27,6 +27,7 @@
       </children>
       <variables>navigatorSelection</variables>
       <variables>activeInput</variables>
+      <variables>activeVCSUrl</variables>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_o6_GQIPmEeS5JpVAKZcwIQ" featurename="children" parentElementId="org.eclipse.fx.code.compensator.app.menu.0" positionInList="">

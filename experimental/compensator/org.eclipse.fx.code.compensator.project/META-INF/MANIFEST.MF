@@ -4,7 +4,6 @@ Bundle-Name: Project
 Bundle-SymbolicName: org.eclipse.fx.code.compensator.project;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Export-Package: org.eclipse.fx.code.compensator.project,
- org.eclipse.fx.code.compensator.project.internal.adapter,
  org.eclipse.fx.code.compensator.project.navigator,
  org.eclipse.fx.code.compensator.project.vcs
 Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="1.1.0.v20140512-1820",
@@ -21,7 +20,8 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="1.1.0.v2014051
  org.eclipse.e4.ui.di,
  javax.inject,
  org.eclipse.e4.ui.services,
- org.eclipse.fx.code.compensator.editor
+ org.eclipse.fx.code.compensator.editor,
+ org.eclipse.e4.core.services
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/services/projectsetupcf.xml,OSGI-INF/services/projectextractorcf.xml,OSGI-INF/services/projectstylesheet.xml,
  OSGI-INF/services/projectinstancecf.xml

@@ -11,6 +11,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.Project#getProjectId <em>Project Id</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.Project#getName <em>Name</em>}</li>
@@ -18,7 +19,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.Project#getIconURI <em>Icon URI</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.Project#getBugTrackerList <em>Bug Tracker List</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage#getProject()
  * @model

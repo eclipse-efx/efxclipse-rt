@@ -17,7 +17,9 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * An implementation of the model object '<em><b>VCS Repository</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.VCSRepositoryImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.VCSRepositoryImpl#getRepoType <em>Repo Type</em>}</li>
@@ -26,7 +28,6 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.VCSRepositoryImpl#getRepoUsername <em>Repo Username</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.VCSRepositoryImpl#getRepoPassword <em>Repo Password</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

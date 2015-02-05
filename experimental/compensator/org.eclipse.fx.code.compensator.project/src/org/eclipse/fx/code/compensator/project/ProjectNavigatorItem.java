@@ -12,4 +12,5 @@ public interface ProjectNavigatorItem {
 	public boolean isDeletable();
 	public ObservableList<ProjectNavigatorItem> getChildren();
 	public boolean isLeaf();
+	public ProjectNavigatorItem getParent();
 }

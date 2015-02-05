@@ -5,8 +5,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.beans.property.Property;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -23,7 +27,7 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
 import org.eclipse.e4.ui.services.EMenuService;
-import org.eclipse.fx.code.compensator.project.internal.adapter.ProjectItem;
+import org.eclipse.fx.code.compensator.project.navigator.ProjectItem;
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.fx.core.di.ContextValue;
@@ -101,8 +105,8 @@ public class ProjectNavigator {
 		navigatorSelection.unbind();
 	}
 
-	private static List<TreeItem<ProjectNavigatorItem>> createChildren(TreeItem<ProjectNavigatorItem> parent) {
-		List<TreeItem<ProjectNavigatorItem>> rv = new ArrayList<>();
+	private static ObservableList<TreeItem<ProjectNavigatorItem>> createChildren(TreeItem<ProjectNavigatorItem> parent) {
+		ObservableList<TreeItem<ProjectNavigatorItem>> rv = FXCollections.observableArrayList();
 		for( ProjectNavigatorItem i : parent.getValue().getChildren() ) {
 			if( i.isLeaf() ) {
 				rv.add(new TreeItem<>(i));
@@ -110,6 +114,14 @@ public class ProjectNavigator {
 				rv.add(new LazyTreeItem<ProjectNavigatorItem>(i, ProjectNavigator::createChildren));
 			}
 		}
+		parent.getValue().getChildren().addListener( (Change<? extends ProjectNavigatorItem> c) -> {
+			while( c.next() ) {
+				rv.addAll(c.getAddedSubList()
+					.stream()
+					.map(i -> i.isLeaf() ? new TreeItem<ProjectNavigatorItem>(i) : new LazyTreeItem<ProjectNavigatorItem>(i, ProjectNavigator::createChildren))
+					.collect(Collectors.toList()));
+			}
+		});
 		return rv;
 	}
 

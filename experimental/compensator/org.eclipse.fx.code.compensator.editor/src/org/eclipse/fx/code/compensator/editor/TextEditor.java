@@ -24,8 +24,6 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.fx.code.compensator.editor.services.DocumentPersitenceService;
 import org.eclipse.fx.core.di.ContextValue;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
-import org.eclipse.fx.ui.services.Constants;
-import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
@@ -37,6 +35,7 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
 public class TextEditor {
 	public static final String DOCUMENT_URL = "documentUrl";
+	public static final String VCS_URL = "vcsUrl";
 
 	@Inject
 	IDocument document;
@@ -68,23 +67,8 @@ public class TextEditor {
 	String currentId;
 
 	@PostConstruct
-	public void initUI(BorderPane pane, ThemeManager manager, IEventBroker broker) {
-		SourceViewer viewer = new SourceViewer() {
-			@Override
-			protected StyledTextArea createTextWidget() {
-				textArea = super.createTextWidget();
-				currentId = manager.getCurrentTheme().getId();
-				currentStyle = getClass().getClassLoader().getResource("css/"+currentId+"-editor.css").toExternalForm();
-				textArea.getStylesheets().add(currentStyle);
-				return textArea;
-			}
-		};
-		broker.subscribe(Constants.THEME_CHANGED, (e) -> {
-			textArea.getStylesheets().remove(currentStyle);
-			currentId = manager.getCurrentTheme().getId();
-			currentStyle = getClass().getClassLoader().getResource("css/"+currentId+"-editor.css").toExternalForm();
-			textArea.getStylesheets().add(currentStyle);
-		});
+	public void initUI(BorderPane pane, IEventBroker broker) {
+		SourceViewer viewer = new SourceViewer();
 		if( document instanceof IDocumentExtension3 ) {
 			((IDocumentExtension3)document).setDocumentPartitioner(configuration.getConfiguredDocumentPartitioning(viewer),partitioner);
 		} else {

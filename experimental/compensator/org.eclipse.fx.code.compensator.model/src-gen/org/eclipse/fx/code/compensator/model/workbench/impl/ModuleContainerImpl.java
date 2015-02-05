@@ -25,11 +25,12 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * An implementation of the model object '<em><b>Module Container</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ModuleContainerImpl#getModuleList <em>Module List</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

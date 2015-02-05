@@ -13,10 +13,10 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.ModuleContainer#getModuleList <em>Module List</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage#getModuleContainer()
  * @model abstract="true"

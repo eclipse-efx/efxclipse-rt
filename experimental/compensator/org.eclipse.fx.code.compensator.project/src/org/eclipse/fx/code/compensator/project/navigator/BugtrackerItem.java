@@ -1,4 +1,4 @@
-package org.eclipse.fx.code.compensator.project.internal.adapter;
+package org.eclipse.fx.code.compensator.project.navigator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -6,16 +6,25 @@ import javafx.collections.ObservableList;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.core.URI;
 
-public class BuildServerItem implements ProjectNavigatorItem {
-
+public class BugtrackerItem implements ProjectNavigatorItem {
+	private final ProjectItem parent;
+	
+	public BugtrackerItem(ProjectItem parent) {
+		this.parent = parent;
+	}
+	
+	public ProjectNavigatorItem getParent() {
+		return parent;
+	}
+	
 	@Override
 	public CharSequence getLabel() {
-		return "Build-Server";
+		return "Bugtracker";
 	}
 
 	@Override
 	public URI getIcon() {
-		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project","css/icons/16/update.png");
+		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project","css/icons/16/problems_view.png");
 	}
 
 	@Override

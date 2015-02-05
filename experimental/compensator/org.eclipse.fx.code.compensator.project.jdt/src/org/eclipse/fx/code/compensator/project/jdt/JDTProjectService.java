@@ -1,5 +1,6 @@
 package org.eclipse.fx.code.compensator.project.jdt;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,13 +10,14 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.code.compensator.model.workbench.LocalProject;
 import org.eclipse.fx.code.compensator.model.workbench.Module;
 import org.eclipse.fx.code.compensator.model.workbench.Project;
+import org.eclipse.fx.code.compensator.model.workbench.VCSRepository;
 import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorContribution;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.ProjectService;
-import org.eclipse.fx.code.compensator.project.internal.adapter.ModuleContainerItem;
 import org.eclipse.fx.code.compensator.project.jdt.internal.JDTInstanceProject;
 import org.eclipse.fx.code.compensator.project.jdt.internal.JDTModuleItem;
+import org.eclipse.fx.code.compensator.project.jdt.menu.ImportModuleElement;
 import org.eclipse.fx.code.compensator.project.jdt.tb.DebugElement;
 import org.eclipse.fx.code.compensator.project.jdt.tb.NewClassElement;
 import org.eclipse.fx.code.compensator.project.jdt.tb.NewEnumElement;
@@ -23,6 +25,8 @@ import org.eclipse.fx.code.compensator.project.jdt.tb.NewInterfaceElement;
 import org.eclipse.fx.code.compensator.project.jdt.tb.NewModuleElement;
 import org.eclipse.fx.code.compensator.project.jdt.tb.NewPackageElement;
 import org.eclipse.fx.code.compensator.project.jdt.tb.RunElement;
+import org.eclipse.fx.code.compensator.project.navigator.FolderItem;
+import org.eclipse.fx.code.compensator.project.navigator.ModuleContainerItem;
 import org.eclipse.fx.core.SimpleURI;
 import org.eclipse.fx.core.URI;
 
@@ -45,8 +49,8 @@ public class JDTProjectService implements ProjectService {
 	}
 
 	@Override
-	public ProjectNavigatorItem mapModuleItem(Module m, InstanceProject instanceProject) {
-		return new JDTModuleItem(m, (JDTInstanceProject) instanceProject);
+	public ProjectNavigatorItem mapModuleItem(ProjectNavigatorItem parent, Module m, InstanceProject instanceProject) {
+		return new JDTModuleItem(parent, m, (JDTInstanceProject) instanceProject);
 	}
 
 	@Override
@@ -114,7 +118,7 @@ public class JDTProjectService implements ProjectService {
 		if( menuGroups == null ) {
 			menuGroups = new ArrayList<>();
 			menuGroups.add(new ModuleContainerContextGroup());
-//			menuGroups.add(new VCSDirectoryContextGroup());
+			menuGroups.add(new VCSDirectoryContextGroup());
 		}
 		return menuGroups;
 	}
@@ -136,19 +140,34 @@ public class JDTProjectService implements ProjectService {
 		}
 	}
 
-//	static class VCSDirectoryContextGroup extends ContextMenuGroup {
-//
-//		public VCSDirectoryContextGroup() {
-//			super("vcs-dir", createElements());
-//		}
-//
-//		private static List<MenuElement> createElements() {
-//			return Arrays.asList(new ImportModuleElement());
-//		}
-//
-//		@Override
-//		public boolean applies(ProjectNavigatorItem item) {
-//			return item instanceof VCSDirectory;
-//		}
-//	}
+	static class VCSDirectoryContextGroup extends ContextMenuGroup {
+
+		public VCSDirectoryContextGroup() {
+			super("vcs-dir", createElements());
+		}
+
+		private static List<MenuElement> createElements() {
+			return Arrays.asList(new ImportModuleElement());
+		}
+
+		@Override
+		public boolean applies(ProjectNavigatorItem item) {
+//			if( item instanceof FolderItem ) {
+//				return item.getChildren()
+//					.stream()
+//					.filter(i -> i.getDomainObject() instanceof Path && ((Path)i.getDomainObject()).getFileName().toString().equals(".project"))
+//					.findFirst().isPresent();
+//			}
+			//TODO need to fix 
+//			if( item instanceof FolderItem ) {
+//				FolderItem fItem = (FolderItem) item;
+//				Object domainObject = fItem.getParent().getDomainObject();
+//				if( domainObject instanceof Path ) {
+//					
+//				}
+//			}
+			
+			return item instanceof FolderItem && ((FolderItem)item).getParent().getDomainObject() instanceof Path;
+		}
+	}
 }

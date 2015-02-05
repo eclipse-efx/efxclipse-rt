@@ -27,12 +27,19 @@ public class JDTModuleItem implements ProjectNavigatorItem, JDTPathItem {
 	private ObservableList<ProjectNavigatorItem> children;
 	private Path path;
 	private static Logger LOGGER;
-
-	public JDTModuleItem(Module module, JDTInstanceProject instanceProject) {
+	private final ProjectNavigatorItem parent;
+	
+	public JDTModuleItem(ProjectNavigatorItem parent, Module module, JDTInstanceProject instanceProject) {
+		this.parent = parent;
 		this.module = module;
 		this.instanceProject = instanceProject;
 
 		this.path = Paths.get(URI.create(module.getRootFolderUrl()));
+	}
+	
+	@Override
+	public ProjectNavigatorItem getParent() {
+		return this.parent;
 	}
 
 	@Override
@@ -90,7 +97,7 @@ public class JDTModuleItem implements ProjectNavigatorItem, JDTPathItem {
 	public ObservableList<ProjectNavigatorItem> getChildren() {
 		if( children == null ) {
 			children = FXCollections.observableArrayList();
-			children.addAll(module.getModuleList().stream().map( m -> new JDTModuleItem(m, instanceProject) ).collect(Collectors.toList()));
+			children.addAll(module.getModuleList().stream().map( m -> new JDTModuleItem(this,m, instanceProject) ).collect(Collectors.toList()));
 			Future<List<String>> folders = instanceProject.getProjectServer().getSourceFolders(module.getName());
 
 			Optional<List<JDTPackageFragmentRootItem>> items = ExExecutor.executeSupplier(folders::get, "Unable to retrieve").map(srcfList -> {
