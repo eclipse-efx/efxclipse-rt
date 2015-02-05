@@ -30,6 +30,8 @@ import javafx.scene.layout.StackPane;
 
 /**
  * A default implementation for the window
+ * 
+ * @since 2.0
  */
 public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWindow {
 	/**

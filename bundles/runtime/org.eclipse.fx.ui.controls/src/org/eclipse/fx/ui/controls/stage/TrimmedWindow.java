@@ -14,6 +14,8 @@ import javafx.scene.Node;
 
 /**
  * Optional interface implemented by a window pane to support adding trim area
+ * 
+ * @since 2.0
  */
 public interface TrimmedWindow {
 	/**
