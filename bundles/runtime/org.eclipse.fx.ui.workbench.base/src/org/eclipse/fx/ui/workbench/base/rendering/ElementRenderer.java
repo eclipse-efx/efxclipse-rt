@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @param <C>
  *            the control/widget type
  */
-public interface ElementRenderer<@NonNull M extends MUIElement, C> {
+public interface ElementRenderer<M extends MUIElement, C> {
 	/**
 	 * Create the widget for the given model element
 	 * 
