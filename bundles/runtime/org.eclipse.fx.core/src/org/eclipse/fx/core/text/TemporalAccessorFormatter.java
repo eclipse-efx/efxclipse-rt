@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  * @since 1.1.0
  */
-public class TemporalAccessorFormatter implements Formatter<@Nullable TemporalAccessor> {
+public class TemporalAccessorFormatter implements Formatter<TemporalAccessor> {
 	@NonNull
 	private final LocaleProvider localeProvider;
 

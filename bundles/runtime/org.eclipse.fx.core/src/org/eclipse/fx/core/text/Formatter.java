@@ -20,7 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *            the type to format
  * @since 1.1.0
  */
-public interface Formatter<@Nullable T> {
+public interface Formatter<T> {
 	/**
 	 * Format the given object
 	 *
