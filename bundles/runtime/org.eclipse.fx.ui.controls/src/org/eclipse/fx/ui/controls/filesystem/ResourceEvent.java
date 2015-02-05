@@ -25,7 +25,7 @@ import javafx.event.EventType;
  * @param <T>
  *            the resource type
  */
-public class ResourceEvent<@NonNull T extends ResourceItem> extends Event {
+public class ResourceEvent<T extends ResourceItem> extends Event {
 	private static final EventType<?> OPEN_RESOURCE = new EventType<>(
 			"EFX_CONTROL_OPEN_RESOURCE"); //$NON-NLS-1$
 

@@ -83,8 +83,7 @@ public class DirectoryView extends Control {
 	private ObservableList<@NonNull ResourceItem> unmodifiableItemsPaths = FXCollections
 			.unmodifiableObservableList(this.selectedItems);
 
-	// Requires 8u40 to compile
-	// @Override
+	@Override
 	public final String getUserAgentStylesheet() {
 		return DirectoryView.class.getResource("skin/default.css") //$NON-NLS-1$
 				.toExternalForm();
