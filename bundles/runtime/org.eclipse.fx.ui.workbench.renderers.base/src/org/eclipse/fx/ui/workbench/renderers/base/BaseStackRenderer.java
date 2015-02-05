@@ -252,7 +252,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 		for (MStackElement e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
-			ElementRenderer<@NonNull MStackElement, ?> renderer = this.factory.getRenderer(e);
+			ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(e);
 			if (renderer != null && isChildAndRenderedVisible(e)) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
@@ -290,7 +290,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	}
 
 	@NonNull
-	private WStackItem<I, IC> createStackItem(@NonNull WStack<N, I, IC> stack, final @NonNull MStackElement e, @NonNull ElementRenderer<@NonNull MStackElement, ?> renderer) {
+	private WStackItem<I, IC> createStackItem(@NonNull WStack<N, I, IC> stack, final @NonNull MStackElement e, @NonNull ElementRenderer<MStackElement, ?> renderer) {
 		IEclipseContext context = renderer.setupRenderingContext(e);
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
 		e.getTransientData().put(MAP_ITEM_KEY, item);
@@ -340,7 +340,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			if (isChildAndRenderedVisible(element)) {
 				int idx = getRenderedIndex(parent, element);
 
-				ElementRenderer<@NonNull MStackElement, ?> renderer = this.factory.getRenderer(element);
+				ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 				if( renderer != null ) {
 
 
@@ -501,7 +501,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			}
 		}
 
-		ElementRenderer<@NonNull MStackElement, ?> renderer = this.factory.getRenderer(element);
+		ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
 		if( renderer != null ) {
 			int idx = getRenderedIndex(parentElement, element);
 			stack.addItems(idx, Collections.singletonList(createStackItem(stack, (MStackElement) element, renderer)));
