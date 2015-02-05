@@ -135,15 +135,12 @@ public class StyledTextArea extends Control {
 		this.getStyleClass().add("styled-text-area"); //$NON-NLS-1$
 		this.contentProperty = new ContentProperty(this,
 				"content", new DefaultContent()); //$NON-NLS-1$
-//		getStylesheets().add(
-//				getClass().getResource("styledtextarea.css").toExternalForm()); //$NON-NLS-1$
 		setFocusTraversable(true);
 	}
 
-	// Requires 8u40!
 	 @Override
 	 public String getUserAgentStylesheet() {
-		 return getClass().getResource("styledtextarea.css").toExternalForm();
+		 return getClass().getResource("styledtextarea.css").toExternalForm(); //$NON-NLS-1$
 	 }
 
 	void handleTextChanging(TextChangingEvent event) {
