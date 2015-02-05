@@ -7,24 +7,27 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
-<?import org.eclipse.fx.code.compensator.app.CustomWindowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import org.eclipse.fx.ui.controls.stage.DefaultWindowPane?>
 <?import org.eclipse.fx.ui.panes.FillLayoutPane?>
 <?scenebuilder-stylesheet /css/default.css?>
 
-<CustomWindowPane xmlns:fx="http://javafx.com/fxml">
+<DefaultWindowPane xmlns:fx="http://javafx.com/fxml">
 
 	<content>
 		<BorderPane> 
 			<top>
-				<ToolBar id="main-header"> 
+				<ToolBar> 
 					<items>
+						<Pane id="menu-bar-area" HBox.hgrow="ALWAYS"/> 
 						<TextField/> 
 					</items>
 				</ToolBar>
 			</top>
 			<center>
-				<FillLayoutPane id="trim-pane-container"/> 
+				<FillLayoutPane id="client-area"/> 
 			</center>
 		</BorderPane>
 	</content>
-</CustomWindowPane>
+</DefaultWindowPane>

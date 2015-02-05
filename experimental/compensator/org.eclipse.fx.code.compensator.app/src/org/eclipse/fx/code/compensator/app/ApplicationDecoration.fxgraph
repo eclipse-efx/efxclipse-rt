@@ -9,18 +9,24 @@ import org.eclipse.fx.ui.panes.FillLayoutPane
 import javafx.scene.control.ToolBar
 import javafx.scene.control.TextField
 import javafx.scene.Group
+import org.eclipse.fx.ui.controls.stage.DefaultWindowPane
+import javafx.scene.layout.Pane
+import javafx.scene.layout.HBox
 
 component ApplicationDecoration styledwith "/css/default.css" {
-	CustomWindowPane {
+	DefaultWindowPane {
 		content : BorderPane {
 			top : ToolBar {
-				^id : "main-header",
 				items : [
+					Pane {
+						^id : "menu-bar-area",
+						call HBox#hgrow : "ALWAYS" 
+					},
 					TextField
 				]
 			},
 			center : FillLayoutPane {
-				^id : "trim-pane-container"
+				^id : "client-area"
 			}
 		}
 	}
