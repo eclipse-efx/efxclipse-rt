@@ -75,6 +75,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.ui.controls.stage.TrimmedWindow;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
 import org.eclipse.fx.ui.dialogs.Dialog;
 import org.eclipse.fx.ui.dialogs.MessageDialog;
@@ -353,7 +354,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			if (this.rootFXML != null) {
 				this.rootPane = createRootContainer(stage);
-				((CustomRootContainer) this.rootPane).setTrim(this.trimPane);
+				((org.eclipse.fx.ui.controls.stage.Window) this.rootPane).setClientArea(this.trimPane);
 			} else {
 				BorderPane rootPane = new BorderPane() {
 					@Override
@@ -615,8 +616,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					n = (Node) menuWidget.getStaticLayoutNode();
 				}
 
-				if (this.rootPane instanceof CustomRootContainer) {
-					((CustomRootContainer) this.rootPane).setMenuBar(n);
+				if (this.rootPane instanceof org.eclipse.fx.ui.controls.stage.Window) {
+					((org.eclipse.fx.ui.controls.stage.Window) this.rootPane).setMenuBar(n);
 				} else {
 					((BorderPane) this.rootPane).setTop(n);
 				}
@@ -847,8 +848,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Inject
 		public void setTitle(@Named(UIEvents.UILabel.LOCALIZED_LABEL) String title) {
 			getWidget().setTitle(title);
-			if (this.rootPane instanceof CustomRootContainer) {
-				((CustomRootContainer) this.rootPane).setTitle(title);
+			if (this.rootPane instanceof org.eclipse.fx.ui.controls.stage.Window) {
+				((org.eclipse.fx.ui.controls.stage.Window) this.rootPane).setTitle(title);
 			}
 		}
 
@@ -882,9 +883,18 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		public void setBottomTrim(WLayoutedWidget<MTrimBar> trimBar) {
 			if (trimBar == null) {
-				this.trimPane.setBottom(null);
+				if( this.rootPane instanceof TrimmedWindow ) {
+					((TrimmedWindow)this.rootPane).setBottomTrim(null);
+				} else {
+					this.trimPane.setBottom(null);	
+				}
+				
 			} else {
-				this.trimPane.setBottom((Node) trimBar.getStaticLayoutNode());
+				if( this.rootPane instanceof TrimmedWindow ) {
+					((TrimmedWindow)this.rootPane).setBottomTrim((Node) trimBar.getStaticLayoutNode());
+				} else {
+					this.trimPane.setBottom((Node) trimBar.getStaticLayoutNode());	
+				}
 			}
 
 		}
@@ -892,19 +902,35 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		public void setLeftTrim(WLayoutedWidget<MTrimBar> trimBar) {
 			if (trimBar == null) {
-				this.trimPane.setLeft(null);
+				if( this.rootPane instanceof TrimmedWindow ) {
+					((TrimmedWindow)this.rootPane).setLeftTrim(null);
+				} else {
+					this.trimPane.setLeft(null);	
+				}
 			} else {
-				this.trimPane.setLeft((Node) trimBar.getStaticLayoutNode());
+				if( this.rootPane instanceof TrimmedWindow ) {
+					((TrimmedWindow)this.rootPane).setLeftTrim((Node) trimBar.getStaticLayoutNode());
+				} else {
+					this.trimPane.setLeft((Node) trimBar.getStaticLayoutNode());	
+				}
 			}
-
 		}
 
 		@Override
 		public void setRightTrim(WLayoutedWidget<MTrimBar> trimBar) {
 			if (trimBar == null) {
-				this.trimPane.setRight(null);
+				if( this.rootPane instanceof TrimmedWindow ) {
+					((TrimmedWindow)this.rootPane).setRightTrim(null);
+				} else {
+					this.trimPane.setRight(null);	
+				}
 			} else {
-				this.trimPane.setRight((Node) trimBar.getStaticLayoutNode());
+				if( this.rootPane instanceof TrimmedWindow ) {
+					((TrimmedWindow)this.rootPane).setRightTrim((Node) trimBar.getStaticLayoutNode());
+				} else {
+					this.trimPane.setRight((Node) trimBar.getStaticLayoutNode());	
+				}
+				
 			}
 
 		}
@@ -912,10 +938,17 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		public void setTopTrim(WLayoutedWidget<MTrimBar> trimBar) {
 			if (trimBar == null) {
-				this.trimPane.setTop(null);
+				if( this.rootPane instanceof TrimmedWindow ) {
+					((TrimmedWindow)this.rootPane).setTopTrim(null);
+				} else {
+					this.trimPane.setTop(null);	
+				}
 			} else {
-				Node g = (Node) trimBar.getStaticLayoutNode();
-				this.trimPane.setTop(g);
+				if( this.rootPane instanceof TrimmedWindow ) {
+					((TrimmedWindow)this.rootPane).setTopTrim((Node) trimBar.getStaticLayoutNode());
+				} else {
+					this.trimPane.setTop((Node) trimBar.getStaticLayoutNode());	
+				}
 			}
 		}
 
@@ -1116,34 +1149,5 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			this.stage.setHeight(Math.max(this.stageMinimumHeight, maxY - this.stage.getY()));
 			e.consume();
 		}
-	}
-
-	/**
-	 * Custom root containers need to implement this interface
-	 */
-	public interface CustomRootContainer {
-		/**
-		 * Set the trim area
-		 *
-		 * @param trim
-		 *            the trim area
-		 */
-		public void setTrim(Node trim);
-
-		/**
-		 * Set the menu bar
-		 *
-		 * @param menuBar
-		 *            the menu bar
-		 */
-		public void setMenuBar(Node menuBar);
-
-		/**
-		 * Set the window title
-		 *
-		 * @param title
-		 *            the title
-		 */
-		public void setTitle(String title);
 	}
 }
