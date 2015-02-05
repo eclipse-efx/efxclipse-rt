@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.stage;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -46,8 +49,18 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 
 	private static final PseudoClass ACTIVE_PSEUDO_CLASS = PseudoClass.getPseudoClass("active"); //$NON-NLS-1$
 
-	private ObjectProperty<Node> contentProperty;
+	private ObjectProperty<@Nullable Node> contentProperty;
 	private StringProperty titleProperty;
+	
+	@NonNull
+	private final ObjectProperty<@Nullable Node> leftTrim = new SimpleObjectProperty<>(this, "leftTrim"); //$NON-NLS-1$
+	@NonNull
+	private final ObjectProperty<@Nullable Node> rightTrim = new SimpleObjectProperty<>(this, "rightTrim"); //$NON-NLS-1$
+	@NonNull
+	private final ObjectProperty<@Nullable Node> topTrim = new SimpleObjectProperty<>(this,"topTrim"); //$NON-NLS-1$
+	@NonNull
+	private final ObjectProperty<@Nullable Node> bottomTrim = new SimpleObjectProperty<>(this,"bottomTrim"); //$NON-NLS-1$
+	
 
 	/**
 	 * Create a default window pane
@@ -55,8 +68,13 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 	public DefaultWindowPane() {
 		menuBarProperty().addListener(this::updateMenuBar);
 		clientAreaProperty().addListener(this::updateClientArea);
+		topTrimProperty().addListener(this::updateTopTrim);
+		bottomTrimProperty().addListener(this::updateBottomTrim);
+		rightTrimProperty().addListener(this::updateRightTrim);
+		leftTrimProperty().addListener(this::updateLeftTrim);
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	protected Node createWindowArea() {
 		BorderPane root = new BorderPane();
@@ -94,23 +112,159 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 	}
 	
 	@Override
-	public void setBottomTrim(Node node) {
-		this.trimPane.setBottom(node);
+	public void setBottomTrim(@Nullable Node node) {
+		this.bottomTrimProperty().set(node);
+	}
+	
+	/**
+	 * @return the bottom trim property
+	 */
+	public @NonNull ObjectProperty<@Nullable Node> bottomTrimProperty() {
+		return this.bottomTrim;
+	}
+	
+	/**
+	 * @return the bottom trim
+	 */
+	public @Nullable Node getBottomTrim() {
+		return this.bottomTrimProperty().get();
 	}
 	
 	@Override
-	public void setLeftTrim(Node node) {
-		this.trimPane.setLeft(node);
+	public void setLeftTrim(@Nullable Node node) {
+		this.leftTrimProperty().set(node);
+	}
+	
+	/**
+	 * @return the left trim property
+	 */
+	public @NonNull ObjectProperty<@Nullable Node> leftTrimProperty() {
+		return this.leftTrim;
+	}
+	
+	/**
+	 * @return the left trim
+	 */
+	public @Nullable Node getLeftTrim() {
+		return this.leftTrimProperty().get();
 	}
 	
 	@Override
-	public void setRightTrim(Node node) {
-		this.trimPane.setRight(node);
+	public void setRightTrim(@Nullable Node node) {
+		this.rightTrimProperty().set(node);
+	}
+	
+	/**
+	 * @return the right trim property
+	 */
+	public @NonNull ObjectProperty<@Nullable Node> rightTrimProperty() {
+		return this.rightTrim;
+	}
+	
+	/**
+	 * @return the right trim
+	 */
+	public @Nullable Node getRightTrim() {
+		return this.rightTrimProperty().get();
 	}
 	
 	@Override
-	public void setTopTrim(Node node) {
-		this.trimPane.setTop(node);
+	public void setTopTrim(@Nullable Node node) {
+		this.topTrimProperty().set(node);
+	}
+	
+	/**
+	 * @return the top trim property
+	 */
+	public @NonNull ObjectProperty<@Nullable Node> topTrimProperty() {
+		return this.topTrim;
+	}
+	
+	/**
+	 * @return the top trim
+	 */
+	public @Nullable Node getTopTrim() {
+		return this.topTrimProperty().get();
+	}
+	
+	private void updateTopTrim(ObservableValue<? extends Node> o, Node oldValue, Node newValue) {
+		if (oldValue != null) {
+			Pane pane = (Pane) lookup("#top-trim-area"); //$NON-NLS-1$
+			if( pane == null ) {
+				this.trimPane.setTop(null);
+			} else {
+				pane.getChildren().remove(oldValue);
+			}
+		}
+		
+		if (newValue != null) {
+			Pane pane = (Pane) lookup("#top-trim-area"); //$NON-NLS-1$
+			if( pane == null ) {
+				this.trimPane.setTop(newValue);
+			} else {
+				pane.getChildren().add(oldValue);
+			}			
+		}
+	}
+	
+	private void updateBottomTrim(ObservableValue<? extends Node> o, Node oldValue, Node newValue) {
+		if (oldValue != null) {
+			Pane pane = (Pane) lookup("#bottom-trim-area"); //$NON-NLS-1$
+			if( pane == null ) {
+				this.trimPane.setBottom(null);
+			} else {
+				pane.getChildren().remove(oldValue);
+			}
+		}
+		
+		if (newValue != null) {
+			Pane pane = (Pane) lookup("#bottom-trim-area"); //$NON-NLS-1$
+			if( pane == null ) {
+				this.trimPane.setBottom(newValue);
+			} else {
+				pane.getChildren().add(oldValue);
+			}			
+		}
+	}
+	
+	private void updateLeftTrim(ObservableValue<? extends Node> o, Node oldValue, Node newValue) {
+		if (oldValue != null) {
+			Pane pane = (Pane) lookup("#left-trim-area"); //$NON-NLS-1$
+			if( pane == null ) {
+				this.trimPane.setLeft(null);
+			} else {
+				pane.getChildren().remove(oldValue);
+			}
+		}
+		
+		if (newValue != null) {
+			Pane pane = (Pane) lookup("#left-trim-area"); //$NON-NLS-1$
+			if( pane == null ) {
+				this.trimPane.setLeft(newValue);
+			} else {
+				pane.getChildren().add(oldValue);
+			}			
+		}
+	}
+	
+	private void updateRightTrim(ObservableValue<? extends Node> o, Node oldValue, Node newValue) {
+		if (oldValue != null) {
+			Pane pane = (Pane) lookup("#right-trim-area"); //$NON-NLS-1$
+			if( pane == null ) {
+				this.trimPane.setRight(null);
+			} else {
+				pane.getChildren().remove(oldValue);
+			}
+		}
+		
+		if (newValue != null) {
+			Pane pane = (Pane) lookup("#right-trim-area"); //$NON-NLS-1$
+			if( pane == null ) {
+				this.trimPane.setRight(newValue);
+			} else {
+				pane.getChildren().add(oldValue);
+			}			
+		}
 	}
 
 	/**
