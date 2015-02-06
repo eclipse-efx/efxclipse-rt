@@ -56,6 +56,6 @@ Require-Bundle: org.eclipse.fx.ui.controls;bundle-version="1.0.0",
 Export-Package: org.eclipse.fx.code.compensator.editor,
  org.eclipse.fx.code.compensator.editor.services,
  org.eclipse.fx.code.compensator.editor.spi
-Service-Component: OSGI-INF/services/fileinputprovider.xml,
- OSGI-INF/services/defaultdocumentfactory.xml
+Service-Component: OSGI-INF/services/fileinputprovider.xml,OSGI-INF/services/defaultdocumentfactory.xml,
+ OSGI-INF/services/stylesheet.xml
 Bundle-ActivationPolicy: lazy

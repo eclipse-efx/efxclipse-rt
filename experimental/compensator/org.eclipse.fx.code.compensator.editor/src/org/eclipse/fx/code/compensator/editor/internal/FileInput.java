@@ -17,18 +17,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.URIProvider;
 import org.eclipse.fx.code.compensator.editor.services.ContentTypeDetector;
 import org.eclipse.fx.core.URI;
+import org.eclipse.fx.core.di.Service;
 
 public class FileInput implements Input<String>, ContentTypeProvider, URIProvider {
 	private Path path;
 	private String data;
 	private final List<ContentTypeDetector> detectorList;
 
-	public FileInput(Path path, List<ContentTypeDetector> detectorList) {
+	@Inject
+	public FileInput(Path path, @Service List<ContentTypeDetector> detectorList) {
 		this.path = path;
 		this.detectorList = detectorList;
 	}

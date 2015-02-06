@@ -1,0 +1,16 @@
+.styled-text-area .list-view {
+	-fx-background-color: #393939;
+}
+
+.styled-text-area .list-cell:filled:focused:selected {
+	-fx-background-color: #414141;
+}
+
+.styled-text-area .line-ruler-text {
+	-fx-text-fill: #c7c7c7;
+}
+
+.styled-text-area .text-caret {
+	-fx-fill: #c7c7c7;
+	-fx-stroke: #c7c7c7;
+}

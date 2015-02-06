@@ -12,7 +12,7 @@ package org.eclipse.fx.code.compensator.editor.services;
 
 import org.eclipse.fx.code.compensator.editor.Input;
 
-public interface InputFactory {
+public interface InputFactory<T extends Input<?>> {
 	public boolean applies(String url);
-	public <O> Input<O> createInput(String url);
+	public Class<T> createInput(String url);
 }

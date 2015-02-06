@@ -20,7 +20,7 @@ import org.eclipse.fx.code.compensator.editor.Input;
 import org.eclipse.fx.code.compensator.editor.services.ContentTypeDetector;
 import org.eclipse.fx.code.compensator.editor.services.InputFactory;
 
-public class FileInputFactory implements InputFactory {
+public class FileInputFactory implements InputFactory<FileInput> {
 	//FIXME We need to sort and synchronize
 	private List<ContentTypeDetector> detectors = new ArrayList<>();
 
@@ -38,14 +38,14 @@ public class FileInputFactory implements InputFactory {
 	}
 
 	@Override
-	public <O> Input<O> createInput(String url) {
-		try {
-			return (Input<O>) new FileInput(Paths.get(new URI(url)),detectors);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public Class<FileInput> createInput(String url) {
+//		try {
+//			return (Input<O>) new FileInput(Paths.get(new URI(url)),detectors);
+//		} catch (URISyntaxException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		return FileInput.class;
 	}
 
 }
