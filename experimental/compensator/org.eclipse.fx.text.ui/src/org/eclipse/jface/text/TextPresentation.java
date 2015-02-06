@@ -159,7 +159,7 @@ public class TextPresentation {
 	/**
 	 * Creates a new empty text presentation. <code>sizeHint</code> tells the expected size of this
 	 * presentation.
-	 * 
+	 *
 	 * @param sizeHint the expected size of this presentation, must be positive
 	 */
 	public TextPresentation(int sizeHint) {
@@ -170,7 +170,7 @@ public class TextPresentation {
 	/**
 	 * Creates a new empty text presentation with the given extent. <code>sizeHint</code> tells the
 	 * expected size of this presentation.
-	 * 
+	 *
 	 * @param extent the extent of the created <code>TextPresentation</code>
 	 * @param sizeHint the expected size of this presentation, must be positive
 	 * @since 3.0
@@ -346,7 +346,7 @@ public class TextPresentation {
 					current.length= Math.min(end, currentEnd) - start;
 				}
 
-				if (end < currentEnd) {
+				if (end < currentEnd && currentCopy != null) {
 					// Add rest of current range
 					currentCopy.start= end;
 					currentCopy.length= currentEnd - end;
@@ -441,7 +441,8 @@ public class TextPresentation {
 //			if (template.metrics != null)
 //				target.metrics= template.metrics;
 			target.stylename = template.stylename;
-			
+			target.decorationStyleClasses = template.decorationStyleClasses;
+
 			if (template.foreground != null || template.underlineStyle == StyleRange.UNDERLINE_LINK)
 				target.foreground= template.foreground;
 			if (template.background != null)

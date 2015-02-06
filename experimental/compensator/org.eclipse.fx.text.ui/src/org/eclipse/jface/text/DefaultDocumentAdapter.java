@@ -159,6 +159,7 @@ class DefaultDocumentAdapter implements IDocumentAdapter, IDocumentListener, IDo
 		return fDocument;
 	}
 
+	@Override
 	public String getLine(int line) {
 
 		IDocument document= getDocumentForRead();
@@ -169,12 +170,9 @@ class DefaultDocumentAdapter implements IDocumentAdapter, IDocumentListener, IDo
 			try {
 				return doGetLine(document, line);
 			} catch (BadLocationException x2) {
+				throw new IllegalStateException(x2);
 			}
 		}
-
-		//TODO Log it
-		System.err.println("invalid argument");
-		return null;
 	}
 
 	public int getLineAtOffset(int offset) {
@@ -219,9 +217,7 @@ class DefaultDocumentAdapter implements IDocumentAdapter, IDocumentListener, IDo
 		try {
 			return getDocumentForRead().get(offset, length);
 		} catch (BadLocationException x) {
-			//TODO Log it
-			x.printStackTrace();
-			return null;
+			throw new IllegalStateException(x);
 		}
 	}
 

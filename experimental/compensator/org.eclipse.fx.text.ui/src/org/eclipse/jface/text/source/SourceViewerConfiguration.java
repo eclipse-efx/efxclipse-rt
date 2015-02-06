@@ -10,13 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jface.text.source;
 
-import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import javafx.beans.property.ReadOnlyProperty;
 
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.IDocumentExtension3;
@@ -26,16 +23,6 @@ import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.reconciler.IReconciler;
 
 public abstract class SourceViewerConfiguration {
-	private String themeId;
-
-	public void setThemeId(String themeId) {
-		this.themeId = themeId;
-	}
-
-	public String getThemeId() {
-		return this.themeId;
-	}
-
 	public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
 		return IDocumentExtension3.DEFAULT_PARTITIONING;
 	}
@@ -45,8 +32,8 @@ public abstract class SourceViewerConfiguration {
 		reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
 		return reconciler;
 	}
-
-	public abstract ReadOnlyProperty<URL> getDefaultStylesheet();
+	
+	public abstract String getStyleclassName();
 
 	public IReconciler getReconciler(ISourceViewer sourceViewer) {
 		return null;
@@ -62,6 +49,10 @@ public abstract class SourceViewerConfiguration {
 
 	public List<AnnotationPresenter> getAnnotationPresenters() {
 		return Collections.emptyList();
+	}
+
+	public AnnotationPainter getAnnotationPainter(ISourceViewer sourceViewer) {
+		return null;
 	}
 
 	@Inject

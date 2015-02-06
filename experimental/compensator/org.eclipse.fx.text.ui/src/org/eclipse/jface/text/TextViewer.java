@@ -663,6 +663,60 @@ public class TextViewer extends Viewer implements
 		}
 	}
 
+	public boolean overlapsWithVisibleRegion(int start, int length) {
+		IDocument document= getVisibleDocument();
+		if (document instanceof ChildDocument) {
+			ChildDocument cdoc= (ChildDocument) document;
+			return cdoc.getParentDocumentRange().overlapsWith(start, length);
+		} else if (document != null) {
+			int size= document.getLength();
+			return (start >= 0 && length >= 0 && start + length <= size);
+		}
+		return false;
+	}
+
+	public final void invalidateTextPresentation(int offset, int length) {
+		if (fVisibleDocument != null) {
+
+			IRegion widgetRange= modelRange2WidgetRange(new Region(offset, length));
+			if (widgetRange != null) {
+
+				fWidgetCommand.event= null;
+				fWidgetCommand.start= widgetRange.getOffset();
+				fWidgetCommand.length= widgetRange.getLength();
+
+				try {
+					fWidgetCommand.text= fVisibleDocument.get(widgetRange.getOffset(), widgetRange.getLength());
+					updateTextListeners(fWidgetCommand);
+				} catch (BadLocationException x) {
+					// can not happen because of previous checking
+				}
+			}
+		}
+	}
+
+	public void addTextPresentationListener(ITextPresentationListener listener) {
+
+		Assert.isNotNull(listener);
+
+		if (fTextPresentationListeners == null)
+			fTextPresentationListeners= new ArrayList();
+
+		if (!fTextPresentationListeners.contains(listener))
+			fTextPresentationListeners.add(listener);
+	}
+
+	public void removeTextPresentationListener(ITextPresentationListener listener) {
+
+		Assert.isNotNull(listener);
+
+		if (fTextPresentationListeners != null) {
+			fTextPresentationListeners.remove(listener);
+			if (fTextPresentationListeners.size() == 0)
+				fTextPresentationListeners= null;
+		}
+	}
+
 	/**
 	 * The viewer's rewrite target.
 	 * @since 2.0

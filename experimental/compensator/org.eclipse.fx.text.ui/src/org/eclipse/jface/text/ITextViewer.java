@@ -13,4 +13,7 @@ public interface ITextViewer {
 	void removeTextInputListener(ITextInputListener listener);
 	void changeTextPresentation(TextPresentation presentation, boolean controlRedraw);
 	StyledTextArea getTextWidget();
+	public boolean overlapsWithVisibleRegion(int start, int length);
+	public void invalidateTextPresentation();
+
 }

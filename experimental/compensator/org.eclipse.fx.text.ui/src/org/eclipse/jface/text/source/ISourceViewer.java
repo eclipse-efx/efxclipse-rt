@@ -7,4 +7,5 @@ public interface ISourceViewer extends ITextViewer {
 	void configure(SourceViewerConfiguration configuration);
 	void setDocument(IDocument document, IAnnotationModel annotationModel);
 	public void setDocument(IDocument document, IAnnotationModel annotationModel, int modelRangeOffset, int modelRangeLength);
+	IAnnotationModel getAnnotationModel();
 }

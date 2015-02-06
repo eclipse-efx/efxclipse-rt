@@ -43,19 +43,21 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 	public void configure(SourceViewerConfiguration configuration) {
 		if (getTextWidget() == null)
 			return;
+		
+		getTextWidget().getStyleClass().add(configuration.getStyleclassName());
 
-		if( configuration.getDefaultStylesheet().getValue() != null ) {
-			getTextWidget().getStylesheets().add(configuration.getDefaultStylesheet().getValue().toExternalForm());
-		}
-
-		configuration.getDefaultStylesheet().addListener((obs,oldVal,newVal) -> {
-			if( oldVal != null ) {
-				getTextWidget().getStylesheets().remove(oldVal.toExternalForm());
-			}
-			if( newVal != null ) {
-				getTextWidget().getStylesheets().add(newVal.toExternalForm());
-			}
-		});
+//		if( configuration.getDefaultStylesheet().getValue() != null ) {
+//			getTextWidget().getStylesheets().add(configuration.getDefaultStylesheet().getValue().toExternalForm());
+//		}
+//
+//		configuration.getDefaultStylesheet().addListener((obs,oldVal,newVal) -> {
+//			if( oldVal != null ) {
+//				getTextWidget().getStylesheets().remove(oldVal.toExternalForm());
+//			}
+//			if( newVal != null ) {
+//				getTextWidget().getStylesheets().add(newVal.toExternalForm());
+//			}
+//		});
 
 		setDocumentPartitioning(configuration.getConfiguredDocumentPartitioning(this));
 
@@ -77,28 +79,35 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		IAnnotationModel annotationModel = configuration.getAnnotationModel();
 		if( annotationModel != null ) {
 			getTextWidget().setLineRulerGraphicNodeFactory(this::annotationFactory);
+			annotationModel.addAnnotationModelListener(new IAnnotationModelListener() {
+
+				private boolean scheduled = false;
+
+				@Override
+				public void modelChanged(IAnnotationModel model) {
+					if( ! scheduled ) {
+						scheduled = true;
+						Platform.runLater(() -> {
+							scheduled = false;
+							System.err.println("REFRESHING");
+							getTextWidget().refreshLineRuler();
+						});
+					}
+				}
+
+			});
 		}
 
-		presenterMap.putAll(configuration.getAnnotationPresenters().stream().collect(Collectors.toMap(p -> p.getType(), p -> p)));
+		configuration.getAnnotationPresenters().stream().forEach(p -> p.getTypes().forEach( s -> presenterMap.put(s,p)));
+
+//		presenterMap.putAll(configuration.getAnnotationPresenters().stream().collect(Collectors.toMap(p -> p.getType(), p -> p)));
 		graphicsLoader = configuration.getGraphicsLoader();
 
-		annotationModel.addAnnotationModelListener(new IAnnotationModelListener() {
-
-			private boolean scheduled = false;
-
-			@Override
-			public void modelChanged(IAnnotationModel model) {
-				if( ! scheduled ) {
-					scheduled = true;
-					Platform.runLater(() -> {
-						scheduled = false;
-						System.err.println("REFRESHING");
-						getTextWidget().refreshLineRuler();
-					});
-				}
-			}
-
-		});
+		AnnotationPainter annotationPainter = configuration.getAnnotationPainter(this);
+		if( annotationModel != null && annotationPainter != null ) {
+			annotationModel.addAnnotationModelListener(annotationPainter);
+			addTextPresentationListener(annotationPainter);
+		}
 	}
 
 	private Node annotationFactory(StyledTextLine l) {
@@ -174,5 +183,10 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 			super.setDocument(document);
 		else
 			super.setDocument(document, modelRangeOffset, modelRangeLength);
+	}
+
+	@Override
+	public IAnnotationModel getAnnotationModel() {
+		return fVisualAnnotationModel;
 	}
 }
