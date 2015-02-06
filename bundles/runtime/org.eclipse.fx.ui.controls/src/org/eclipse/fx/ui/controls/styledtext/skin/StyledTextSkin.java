@@ -113,7 +113,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		this.contentView.setMinHeight(0);
 		this.contentView.setMinWidth(0);
 //		this.contentView.setFixedCellSize(value);
-		this.contentView.setFixedCellSize(15);
+//		this.contentView.setFixedCellSize(15);
 		this.contentView.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			@Override
