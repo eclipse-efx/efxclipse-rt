@@ -55,8 +55,7 @@ public class GitVCSRepositoryInstance implements VCSRepositoryInstance {
 
 	@Override
 	public void commit(Collection<Path> pathList) {
-		// TODO Auto-generated method stub
-		
+		System.err.println("COMMIT: " + pathList);
 	}
 
 }

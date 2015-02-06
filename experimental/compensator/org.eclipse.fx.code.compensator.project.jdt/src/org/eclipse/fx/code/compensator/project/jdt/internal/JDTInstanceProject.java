@@ -85,22 +85,7 @@ public class JDTInstanceProject extends InstanceProject {
 			MPart p = modelService.createModelElement(MPart.class);
 			p.setContributionURI("bundleclass://org.eclipse.fx.code.compensator.editor/org.eclipse.fx.code.compensator.editor.TextEditor");
 			p.getPersistedState().put(TextEditor.DOCUMENT_URL, url);
-			
-			Path repoRelativePath = null;
-			Path vcsPathRoot = null;
-			
-			for( VCSRepository r : ((LocalProject)getProject()).getVcsRepositoryList() ) {
-				Path vcsPath = Paths.get(java.net.URI.create(r.getLocalURI()));
-				if( jdtItem.getDomainObject().startsWith(vcsPath) ) {
-					repoRelativePath = vcsPath.relativize(jdtItem.getDomainObject());
-					vcsPathRoot = vcsPath;
-					break;
-				}
-			}
-			
-			if( vcsPathRoot != null ) {
-				p.getPersistedState().put(TextEditor.VCS_URL, "vcs:git:"+vcsPathRoot.toUri()+"?"+repoRelativePath.getFileName().toString());
-			}
+			p.getPersistedState().put(TextEditor.VCS_URL, jdtItem.getDomainObject().toUri().toString());
 			
 			p.setLabel(URI.createURI(url).lastSegment());
 			p.setIconURI(fileLookup.getFileIcon(url).toString());

@@ -11,6 +11,7 @@
 package org.eclipse.fx.code.compensator.editor.contrib;
 
 import org.eclipse.e4.core.contexts.ContextFunction;
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.fx.code.compensator.editor.Input;
@@ -26,7 +27,9 @@ public class InputContextFunction extends ContextFunction {
 
 			if( url != null ) {
 				ServiceCollector collector = context.get(ServiceCollector.class);
-				input = collector.createInput(url);
+				context.set(TextEditor.DOCUMENT_URL, url);
+				context.set(TextEditor.VCS_URL, part.getPersistedState().get(TextEditor.VCS_URL));
+				input = ContextInjectionFactory.make(collector.createInput(url),context);
 				context.set("localInput", input);
 			}
 		}

@@ -31,7 +31,7 @@ public class JDTAnnotationPresenter implements AnnotationPresenter {
 			if( ja.getMarker().getType() == Type.PROBLEM ) {
 				switch (ja.getMarker().getSeverity()) {
 				case ERROR:
-					n = loader.getGraphicsNode(URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project", "css/icons/16/message_error.png"));
+					n = loader.getGraphicsNode(URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project", "css/icons/16/window-close.png"));
 					break;
 				case INFO:
 					n = loader.getGraphicsNode(URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project", "css/icons/16/message_info.png"));

@@ -3,6 +3,7 @@
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -10,12 +11,14 @@ import org.eclipse.fx.code.compensator.model.workbench.LocalProject;
 import org.eclipse.fx.code.compensator.model.workbench.Module;
 import org.eclipse.fx.code.compensator.model.workbench.Project;
 import org.eclipse.fx.code.compensator.model.workbench.VCSRepository;
+import org.eclipse.fx.code.compensator.project.vcs.VCSRepositoryInstance;
 import org.eclipse.fx.code.compensator.project.vcs.VersionControlService;
 
 public abstract class InstanceProject {
 	private final Project project;
 	private final List<VersionControlService> versionControlServiceList;
 	private final IEventBroker eventBroker;
+	private final List<VCSRepositoryInstance> repositoryInstanceList = new ArrayList<>();
 	
 	public InstanceProject(
 			IEventBroker eventBroker,
@@ -37,10 +40,20 @@ public abstract class InstanceProject {
 				.filter(v -> v.getId().equals(repository.getRepoType()))
 				.findFirst().ifPresent(v -> v.cloneRepository(path, repository.getRepoURI(), repository.getRepoUsername(), repository.getRepoPassword(), null));
 		}
+		
+		repositoryInstanceList.add(getVersionControlServiceList()
+				.stream()
+				.filter(v -> v.getId().equals(repository.getRepoType()))
+				.findFirst()
+				.map(v -> v.getOrCreateRepository(repository.getLocalURI())).get());
 	}
 
 	public final Project getProject() {
 		return project;
+	}
+	
+	public List<VCSRepositoryInstance> getRepositoryInstanceList() {
+		return repositoryInstanceList;
 	}
 
 	public final List<VersionControlService> getVersionControlServiceList() {

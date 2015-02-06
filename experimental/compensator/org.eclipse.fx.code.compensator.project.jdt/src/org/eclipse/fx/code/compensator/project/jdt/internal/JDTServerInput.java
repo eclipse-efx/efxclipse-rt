@@ -1,30 +1,63 @@
 package org.eclipse.fx.code.compensator.project.jdt.internal;
 
 import java.nio.ByteBuffer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.code.compensator.editor.TextEditor;
 import org.eclipse.fx.code.compensator.editor.URIProvider;
 import org.eclipse.fx.code.compensator.editor.VCSInput;
+import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.vcs.VCSRepositoryInstance;
 import org.eclipse.fx.code.server.jdt.JDTServer;
+import org.eclipse.fx.code.server.jdt.JDTServerFactory;
 import org.eclipse.fx.core.URI;
 
 public class JDTServerInput implements Input<String>, ContentTypeProvider, URIProvider, VCSInput<String> {
 	public final JDTServer server;
 	public final Future<String> openFile;
 	private final String uri;
+	private VCSRepositoryInstance repositoryInstance;
+	private Path filePath;
+	
+	
+	@Inject
+	public JDTServerInput(@Named(TextEditor.DOCUMENT_URL) String url, @Named(TextEditor.VCS_URL) String vcsUrl, InstanceProject project, JDTServerFactory factory) {
+		org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI.createURI(url);
+		JDTServer server = factory.getOrCreateServer(uri.segment(0));
+		String module = uri.segment(1);
+		StringBuilder b = new StringBuilder();
 
-	public JDTServerInput(JDTServer server, VCSRepositoryInstance repository, String uri, String module, String path) {
+		for( int i = 2; i < uri.segmentCount(); i++ ) {
+			if( b.length() > 0 ) {
+				b.append('/');
+			}
+			b.append(uri.segment(i));
+		}
 		this.server = server;
-		this.uri = uri;
-		this.openFile = this.server.openFile(module, path);
+		this.uri = url;
+		this.openFile = this.server.openFile(module, b.toString());
+		
+		filePath = Paths.get(java.net.URI.create(vcsUrl));
+		for( VCSRepositoryInstance i : project.getRepositoryInstanceList() ) {
+			if( filePath.startsWith(i.getRootPath()) ) {
+				repositoryInstance = i;
+				break;
+			}
+		}
 	}
 
 	@Override
 	public Future<Boolean> commit() {
+		repositoryInstance.commit(Collections.singleton(filePath));
 		return null;
 	}
 	

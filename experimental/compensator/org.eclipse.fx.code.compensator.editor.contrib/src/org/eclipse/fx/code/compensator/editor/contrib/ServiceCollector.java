@@ -109,8 +109,8 @@ public class ServiceCollector implements DocumentPersitenceService, FileIconLook
 		fileIconProvider.add(provider);
 	}
 
-	public <O> Input<O> createInput(String url) {
-		Optional<Input<O>> map = inputProviderList.stream().filter((p) -> p.applies(url)).findFirst().map((p) -> p.createInput(url));
+	public Class<Input<?>> createInput(String url) {
+		Optional<Class<Input<?>>> map = inputProviderList.stream().filter((p) -> p.applies(url)).findFirst().map((p) -> p.createInput(url));
 		if( map.isPresent() ) {
 			return map.get();
 		}
