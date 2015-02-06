@@ -385,8 +385,8 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 			setPrefSize(17, 17);
 		}
 	}
-
-	@Override
+//FIXME Once the build server is on u40
+//	@Override
 	public String getUserAgentStylesheet() {
 		return getClass().getResource("window.css").toExternalForm(); //$NON-NLS-1$
 	}
