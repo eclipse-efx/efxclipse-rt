@@ -17,7 +17,13 @@ import org.eclipse.jdt.annotation.Nullable;
  * An URI representation
  */
 public interface URI {
-
+	/**
+	 * @return the host
+	 * @since 2.0
+	 */
+	@Nullable
+	public String host();
+	
 	/**
 	 * @return <code>true</code> if it is a plug-in URI (platform:/plugin/....)
 	 */
@@ -53,24 +59,12 @@ public interface URI {
 	public boolean hasQuery();
 
 	/**
-	 * Create a new uri
-	 *
-	 * @param s
-	 *            the uri value
-	 * @return the new uri
-	 * @deprecated use {@link #create(String)}
-	 */
-	@Deprecated
-	public URI createURI(@NonNull String s);
-
-	/**
 	 * Create an URI from a string
 	 *
 	 * @param s
 	 *            the string to create the uri from
 	 * @return the new uri
 	 */
-	@SuppressWarnings("deprecation")
 	public static URI create(@NonNull String s) {
 		return new SimpleURI(s);
 	}
@@ -84,7 +78,6 @@ public interface URI {
 	 *            the path
 	 * @return the uri
 	 */
-	@SuppressWarnings("deprecation")
 	public static URI createPlatformPluginURI(String symbolicBundleName,
 			String path) {
 		return new SimpleURI("platform:/plugin/" + symbolicBundleName + "/" //$NON-NLS-1$ //$NON-NLS-2$

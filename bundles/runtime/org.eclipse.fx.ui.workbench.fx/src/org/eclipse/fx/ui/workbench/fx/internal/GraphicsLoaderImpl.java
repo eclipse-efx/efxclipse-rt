@@ -141,6 +141,6 @@ public class GraphicsLoaderImpl implements GraphicsLoader {
 	private static URI replaceDynamicValues(@NonNull URI uri, @NonNull Map<@NonNull String, @NonNull String> dynamicMap) {
 		String s = uri.toString();
 		s = StrSubstitutor.replace(s, dynamicMap);
-		return uri.createURI(s);
+		return URI.create(s);
 	}
 }

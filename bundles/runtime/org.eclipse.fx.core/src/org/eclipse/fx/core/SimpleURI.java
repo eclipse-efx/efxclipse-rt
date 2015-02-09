@@ -16,10 +16,8 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * An URI representation
  *
- * @deprecated use {@link URI#createURI(String)}
  */
-@Deprecated
-public class SimpleURI implements URI {
+class SimpleURI implements URI {
 	@SuppressWarnings("null")
 	@NonNull
 	private String[] segments = new String[0];
@@ -29,6 +27,9 @@ public class SimpleURI implements URI {
 
 	@NonNull
 	private String uri;
+	
+	@Nullable
+	private String host = null;
 
 	/**
 	 * Create a new uri
@@ -47,16 +48,33 @@ public class SimpleURI implements URI {
 
 		int schemeEnd = _uri.indexOf(':');
 		if (schemeEnd != -1) {
-			_uri = _uri.substring(schemeEnd + 2);
+			_uri = _uri.substring(schemeEnd + 1);
 		}
-
+		
 		int queryStart = _uri.indexOf('?');
 
 		if (queryStart != -1) {
 			this.query = _uri.substring(queryStart + 1);
 			_uri = _uri.substring(0, queryStart);
 		}
-		this.segments = _uri.split("/"); //$NON-NLS-1$
+
+		if( _uri.startsWith("//") ) { //$NON-NLS-1$
+			String[] vals = _uri.substring(2).split("/"); //$NON-NLS-1$
+			if( vals.length > 0 ) {
+				this.segments = new String[vals.length-1];  
+				for( int i = 1; i < vals.length; i++ ) {
+					this.segments[i-1] = vals[i];
+				}
+				this.host = vals[0];
+			}
+		} else {
+			this.segments = _uri.substring(1).split("/"); //$NON-NLS-1$
+		}
+	}
+	
+	@Override
+	public String host() {
+		return this.host;
 	}
 
 	@Override
@@ -100,10 +118,5 @@ public class SimpleURI implements URI {
 	@Override
 	public boolean hasQuery() {
 		return this.query != null;
-	}
-
-	@Override
-	public URI createURI(String s) {
-		return new SimpleURI(s);
 	}
 }

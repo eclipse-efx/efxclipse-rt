@@ -60,14 +60,13 @@ public class EMFUri implements URI {
 		return this.uri.hasQuery();
 	}
 
-	@SuppressWarnings("null")
-	@Override
-	public URI createURI(String s) {
-		return new EMFUri(org.eclipse.emf.common.util.URI.createURI(s));
-	}
-
 	@Override
 	public String toString() {
 		return this.uri.toString();
+	}
+	
+	@Override
+	public @Nullable String host() {
+		return this.uri.host();
 	}
 }
