@@ -288,14 +288,15 @@ public class StyledTextNode extends Region {
 	public StyledTextNode(String text) {
 		getStyleClass().add("styled-text-node"); //$NON-NLS-1$
 		this.originalText = text;
-		this.tabCharAdvance.addListener(o -> {
-			this.textNode.setText(processText(text));
-		});
 
 		this.textNode = new Text(processText(text));
 		this.textNode.fillProperty().bind(fillProperty());
 		getChildren().add(this.textNode);
 		this.decorationStrategy.addListener(this::handleDecorationChange);
+		
+		this.tabCharAdvance.addListener(o -> {
+			this.textNode.setText(processText(text));
+		});
 	}
 
 	private String processText(String text) {
