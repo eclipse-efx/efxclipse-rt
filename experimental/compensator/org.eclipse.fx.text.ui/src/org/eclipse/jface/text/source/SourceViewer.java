@@ -98,8 +98,10 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 			});
 		}
 
-		configuration.getAnnotationPresenters().stream().forEach(p -> p.getTypes().forEach( s -> presenterMap.put(s,p)));
-
+		if( configuration.getAnnotationPresenters() != null ) {
+			configuration.getAnnotationPresenters().stream().forEach(p -> p.getTypes().forEach( s -> presenterMap.put(s,p)));	
+		}
+		
 //		presenterMap.putAll(configuration.getAnnotationPresenters().stream().collect(Collectors.toMap(p -> p.getType(), p -> p)));
 		graphicsLoader = configuration.getGraphicsLoader();
 
