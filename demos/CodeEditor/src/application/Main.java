@@ -43,12 +43,12 @@ public class Main extends Application {
 		MenuItem item = new MenuItem("Open ...");
 		m.getItems().add(item);
 		b.getMenus().add(m);
-		
+
 		{
 			Menu themes = new Menu("Themes");
-			
+
 			ToggleGroup g = new ToggleGroup();
-			
+
 			RadioMenuItem defaultTheme = new RadioMenuItem("Default");
 			defaultTheme.setSelected(true);
 			defaultTheme.setOnAction(e -> {
@@ -58,7 +58,7 @@ public class Main extends Application {
 				scene.getStylesheets().add(Main.class.getResource("highlight.css").toExternalForm());
 
 			});
-			
+
 			RadioMenuItem dark = new RadioMenuItem("Dark");
 			dark.setOnAction(e -> {
 				Scene scene = primaryStage.getScene();
@@ -67,36 +67,36 @@ public class Main extends Application {
 				scene.getStylesheets().add(Main.class.getResource("dark-highlight.css").toExternalForm());
 
 			});
-			themes.getItems().addAll(defaultTheme,dark);
-			
+			themes.getItems().addAll(defaultTheme, dark);
+
 			m.getItems().add(themes);
-			g.getToggles().addAll(defaultTheme,dark);
+			g.getToggles().addAll(defaultTheme, dark);
 		}
-		
+
 		root.setTop(b);
-		
+
 		TabPane tabPane = new TabPane();
 		root.setCenter(tabPane);
-		
+
 		m.setOnAction(e -> {
 			FileChooser c = new FileChooser();
 			c.getExtensionFilters().add(new ExtensionFilter("Java Source Files", Collections.singletonList("*.java")));
 			c.setSelectedExtensionFilter(c.getExtensionFilters().get(0));
 			List<File> showOpenMultipleDialog = c.showOpenMultipleDialog(primaryStage);
-			if( showOpenMultipleDialog != null ) {
-				for( File f : showOpenMultipleDialog ) {
+			if (showOpenMultipleDialog != null) {
+				for (File f : showOpenMultipleDialog) {
 					Path path = Paths.get(f.toURI());
 					Tab t = new Tab(path.getFileName().toString());
 					t.setContent(createViewer(path).getTextWidget());
 					tabPane.getTabs().add(t);
-				}				
+				}
 			}
 		});
 
 		Scene scene = new Scene(root, 400, 400);
 		scene.getStylesheets().add(getClass().getResource("default.css").toExternalForm());
 		scene.getStylesheets().add(Main.class.getResource("highlight.css").toExternalForm());
-		
+
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
@@ -107,12 +107,8 @@ public class Main extends Application {
 		Document document = createDocument(p);
 		IDocumentPartitioner partitioner = createPartitioner();
 
-		if (document instanceof IDocumentExtension3) {
-			((IDocumentExtension3) document).setDocumentPartitioner(
-					configuration.getConfiguredDocumentPartitioning(viewer), partitioner);
-		} else {
-			document.setDocumentPartitioner(partitioner);
-		}
+		document.setDocumentPartitioner(configuration.getConfiguredDocumentPartitioning(viewer), partitioner);
+
 		document.setDocumentPartitioner(partitioner);
 		partitioner.connect(document);
 
@@ -141,8 +137,7 @@ public class Main extends Application {
 			StringBuilder b = new StringBuilder();
 			String line;
 			while ((line = reader.readLine()) != null) {
-				// FIXME We need to replace TABs for now
-				b.append(line.replaceAll("\t", "    ") + "\n");
+				b.append(line + "\n");
 			}
 			reader.close();
 			return b.toString();
