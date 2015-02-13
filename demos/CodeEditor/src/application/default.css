@@ -1,0 +1,18 @@
+.root {
+    /* @SuppressWarning */
+    -compensator-default-text: -fx-text-background-color;
+	/* @SuppressWarning */
+    -compensator-extra1: /*#957d47*/ derive(-fx-text-background-color, 110%);
+}
+
+.cell-text-extra {
+	-fx-fill: -compensator-extra1;
+}
+
+.cell-text-default {
+	-fx-fill: -compensator-default-text;
+}
+
+.menu-bar {
+	-fx-background-color: transparent;
+}
