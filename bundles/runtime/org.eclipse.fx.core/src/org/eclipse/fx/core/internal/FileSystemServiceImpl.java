@@ -20,7 +20,9 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.BiConsumer;
@@ -47,7 +49,7 @@ public class FileSystemServiceImpl implements FilesystemService {
 	public Subscription observePath(URI uri, BiConsumer<Kind, URI> consumer) {
 		try {
 			return observePath(Paths.get(new java.net.URI(uri.toString())),
-					(k,p) -> consumer.accept(k, URI.create(p.toUri().toString())));
+					(k, p) -> consumer.accept(k, URI.create(p.toUri().toString())));
 		} catch (URISyntaxException e) {
 			throw new RuntimeException(e);
 		}
@@ -67,11 +69,10 @@ public class FileSystemServiceImpl implements FilesystemService {
 	}
 
 	static class CheckThread extends Thread {
-		public final Map<WatchKey, PathSubscription> subscriptions = new HashMap<>();
+		public final Map<WatchKey, List<PathSubscription>> subscriptions = new HashMap<>();
 		private final WatchService watcher;
 		private final Executor dispatcher = Executors.newCachedThreadPool();
 		private final Thread shutdownCleanup;
-
 
 		public CheckThread() {
 			setDaemon(true);
@@ -95,16 +96,18 @@ public class FileSystemServiceImpl implements FilesystemService {
 			super.finalize();
 		}
 
-		public Subscription registerURI(Path path,
-				BiConsumer<Kind, Path> consumer) throws IOException {
-			WatchKey register = path.register(this.watcher,
-					StandardWatchEventKinds.ENTRY_CREATE,
-					StandardWatchEventKinds.ENTRY_DELETE,
-					StandardWatchEventKinds.ENTRY_MODIFY);
-			PathSubscription s = new PathSubscription(this, path, register,
-					consumer);
+		public Subscription registerURI(Path path, BiConsumer<Kind, Path> consumer) throws IOException {
+			WatchKey register = path.register(this.watcher, StandardWatchEventKinds.ENTRY_CREATE,
+					StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
+
+			PathSubscription s = new PathSubscription(this, path, register, consumer);
 			synchronized (this.subscriptions) {
-				this.subscriptions.put(register, s);
+				List<PathSubscription> list = this.subscriptions.get(register);
+				if (list == null) {
+					list = new CopyOnWriteArrayList<>();
+					this.subscriptions.put(register, list);
+				}
+				list.add(s);
 			}
 
 			return s;
@@ -128,18 +131,16 @@ public class FileSystemServiceImpl implements FilesystemService {
 						continue;
 					}
 					Path context = e.context();
-					PathSubscription pathSubscription;
-					synchronized (context) {
-						pathSubscription = this.subscriptions.get(key);
-					}
+					synchronized (this.subscriptions) {
+						List<PathSubscription> pathSubscriptionList = this.subscriptions.get(key);
 
-					if (pathSubscription != null
-							&& pathSubscription.consumer != null) {
-						this.dispatcher
-								.execute((() -> pathSubscription.consumer
-										.accept(toKind(kind),
-												pathSubscription.path
-														.resolve(context))));
+						if (pathSubscriptionList != null) {
+							for (PathSubscription pathSubscription : pathSubscriptionList) {
+								PathSubscription fp = pathSubscription;
+								this.dispatcher.execute((() -> fp.consumer.accept(toKind(kind),
+										fp.path.resolve(context))));
+							}
+						}
 					}
 				}
 
@@ -147,15 +148,25 @@ public class FileSystemServiceImpl implements FilesystemService {
 			}
 		}
 
-		synchronized void removeSubscription(WatchKey register) {
-			this.subscriptions.remove(register);
-			if (this.subscriptions.isEmpty()) {
-				try {
-					Runtime.getRuntime().removeShutdownHook(this.shutdownCleanup);
-					this.watcher.close();
-				} catch (IOException e) {
-					// ignore
+		synchronized void removeSubscription(PathSubscription subscription) {
+			synchronized (this.subscriptions) {
+				List<PathSubscription> list = this.subscriptions.get(subscription.register);
+				
+				if( list != null ) {
+					list.remove(subscription);
+					if( list.isEmpty() ) {
+						this.subscriptions.remove(subscription.register);
+					}
 				}
+				
+				if (this.subscriptions.isEmpty()) {
+					try {
+						Runtime.getRuntime().removeShutdownHook(this.shutdownCleanup);
+						this.watcher.close();
+					} catch (IOException e) {
+						// ignore
+					}
+				}				
 			}
 		}
 
@@ -176,8 +187,7 @@ public class FileSystemServiceImpl implements FilesystemService {
 		public final CheckThread thread;
 		public final BiConsumer<Kind, Path> consumer;
 
-		public PathSubscription(CheckThread thread, Path path,
-				WatchKey register, BiConsumer<Kind, Path> consumer) {
+		public PathSubscription(CheckThread thread, Path path, WatchKey register, BiConsumer<Kind, Path> consumer) {
 			this.thread = thread;
 			this.path = path;
 			this.register = register;
@@ -187,7 +197,7 @@ public class FileSystemServiceImpl implements FilesystemService {
 		@Override
 		public void dispose() {
 			this.register.cancel();
-			this.thread.removeSubscription(this.register);
+			this.thread.removeSubscription(this);
 		}
 	}
 }
