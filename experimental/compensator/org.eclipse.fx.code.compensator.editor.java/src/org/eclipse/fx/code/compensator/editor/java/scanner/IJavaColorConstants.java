@@ -137,6 +137,9 @@ public interface IJavaColorConstants {
 	 * (value <code>"java_doc_default"</code>).
 	 */
 	String JAVADOC_DEFAULT= "java_doc_default"; //$NON-NLS-1$
+	
+
+	String JAVA_NUMBER = "java_number";
 
 	//---------- Properties File Editor ----------
 
@@ -180,6 +183,7 @@ public interface IJavaColorConstants {
 	 * @since 3.1
 	 */
 	String PROPERTIES_FILE_COLORING_ARGUMENT= "pf_coloring_argument"; //$NON-NLS-1$
+
 	
 	public static final String ANNOTATION="java_annotation"; //$NON-NLS-1$
 }

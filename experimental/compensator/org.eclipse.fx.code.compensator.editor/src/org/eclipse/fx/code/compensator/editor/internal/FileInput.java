@@ -15,12 +15,15 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.eclipse.fx.code.compensator.editor.ContentTypeProvider;
 import org.eclipse.fx.code.compensator.editor.Input;
+import org.eclipse.fx.code.compensator.editor.TextEditor;
 import org.eclipse.fx.code.compensator.editor.URIProvider;
 import org.eclipse.fx.code.compensator.editor.services.ContentTypeDetector;
 import org.eclipse.fx.core.URI;
@@ -32,8 +35,8 @@ public class FileInput implements Input<String>, ContentTypeProvider, URIProvide
 	private final List<ContentTypeDetector> detectorList;
 
 	@Inject
-	public FileInput(Path path, @Service List<ContentTypeDetector> detectorList) {
-		this.path = path;
+	public FileInput(@Named(TextEditor.DOCUMENT_URL) String url, @Service List<ContentTypeDetector> detectorList) {
+		this.path = Paths.get(java.net.URI.create(url));
 		this.detectorList = detectorList;
 	}
 

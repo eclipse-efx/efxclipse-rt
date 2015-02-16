@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.fx.code.compensator.model.workbench.BugTracker;
+import org.eclipse.fx.code.compensator.model.workbench.CISystem;
 import org.eclipse.fx.code.compensator.model.workbench.Project;
 import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
 
@@ -35,6 +36,8 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getProjectType <em>Project Type</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getIconURI <em>Icon URI</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getBugTrackerList <em>Bug Tracker List</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getCiSystemList <em>Ci System List</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ProjectImpl#getUserdata <em>Userdata</em>}</li>
  * </ul>
  *
  * @generated
@@ -129,6 +132,36 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 	 * @ordered
 	 */
 	protected EList<BugTracker> bugTrackerList;
+
+	/**
+	 * The cached value of the '{@link #getCiSystemList() <em>Ci System List</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCiSystemList()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<CISystem> ciSystemList;
+
+	/**
+	 * The default value of the '{@link #getUserdata() <em>Userdata</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUserdata()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Object USERDATA_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getUserdata() <em>Userdata</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUserdata()
+	 * @generated
+	 * @ordered
+	 */
+	protected Object userdata = USERDATA_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -250,11 +283,46 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<CISystem> getCiSystemList() {
+		if (ciSystemList == null) {
+			ciSystemList = new EObjectContainmentEList<CISystem>(CISystem.class, this, WorkbenchPackage.PROJECT__CI_SYSTEM_LIST);
+		}
+		return ciSystemList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Object getUserdata() {
+		return userdata;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUserdata(Object newUserdata) {
+		Object oldUserdata = userdata;
+		userdata = newUserdata;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkbenchPackage.PROJECT__USERDATA, oldUserdata, userdata));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case WorkbenchPackage.PROJECT__BUG_TRACKER_LIST:
 				return ((InternalEList<?>)getBugTrackerList()).basicRemove(otherEnd, msgs);
+			case WorkbenchPackage.PROJECT__CI_SYSTEM_LIST:
+				return ((InternalEList<?>)getCiSystemList()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -277,6 +345,10 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 				return getIconURI();
 			case WorkbenchPackage.PROJECT__BUG_TRACKER_LIST:
 				return getBugTrackerList();
+			case WorkbenchPackage.PROJECT__CI_SYSTEM_LIST:
+				return getCiSystemList();
+			case WorkbenchPackage.PROJECT__USERDATA:
+				return getUserdata();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -306,6 +378,13 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 				getBugTrackerList().clear();
 				getBugTrackerList().addAll((Collection<? extends BugTracker>)newValue);
 				return;
+			case WorkbenchPackage.PROJECT__CI_SYSTEM_LIST:
+				getCiSystemList().clear();
+				getCiSystemList().addAll((Collection<? extends CISystem>)newValue);
+				return;
+			case WorkbenchPackage.PROJECT__USERDATA:
+				setUserdata(newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -333,6 +412,12 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 			case WorkbenchPackage.PROJECT__BUG_TRACKER_LIST:
 				getBugTrackerList().clear();
 				return;
+			case WorkbenchPackage.PROJECT__CI_SYSTEM_LIST:
+				getCiSystemList().clear();
+				return;
+			case WorkbenchPackage.PROJECT__USERDATA:
+				setUserdata(USERDATA_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -355,6 +440,10 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 				return ICON_URI_EDEFAULT == null ? iconURI != null : !ICON_URI_EDEFAULT.equals(iconURI);
 			case WorkbenchPackage.PROJECT__BUG_TRACKER_LIST:
 				return bugTrackerList != null && !bugTrackerList.isEmpty();
+			case WorkbenchPackage.PROJECT__CI_SYSTEM_LIST:
+				return ciSystemList != null && !ciSystemList.isEmpty();
+			case WorkbenchPackage.PROJECT__USERDATA:
+				return USERDATA_EDEFAULT == null ? userdata != null : !USERDATA_EDEFAULT.equals(userdata);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -377,6 +466,8 @@ public class ProjectImpl extends ModuleContainerImpl implements Project {
 		result.append(projectType);
 		result.append(", iconURI: ");
 		result.append(iconURI);
+		result.append(", userdata: ");
+		result.append(userdata);
 		result.append(')');
 		return result.toString();
 	}

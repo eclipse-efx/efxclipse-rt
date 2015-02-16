@@ -59,6 +59,11 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 	private IAnnotationModel annotationModel;
 	private List<AnnotationPresenter> annotationPresenters;
 
+	public JavaSourceConfiguration() {
+		this(null,null,null, null);
+	}
+			
+	
 	@Inject
 	public JavaSourceConfiguration(Input<?> input,
 			@org.eclipse.e4.core.di.annotations.Optional ProposalComputer computer,
@@ -98,7 +103,6 @@ public class JavaSourceConfiguration extends SourceViewerConfiguration {
 	}
 
 	private List<ICompletionProposal> computeProposals(Integer offset) {
-		System.err.println("Compute at: " + offset);
 		Future<List<ICompletionProposal>> computedProposals = computer.get().compute(new ProposalContext(input, offset));
 		try {
 			return computedProposals.get();

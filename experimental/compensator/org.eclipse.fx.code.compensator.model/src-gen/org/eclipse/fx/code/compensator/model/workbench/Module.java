@@ -14,6 +14,7 @@ package org.eclipse.fx.code.compensator.model.workbench;
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.Module#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.Module#getRootFolderUrl <em>Root Folder Url</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.Module#getUserdata <em>Userdata</em>}</li>
  * </ul>
  *
  * @see org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage#getModule()
@@ -72,5 +73,31 @@ public interface Module extends ModuleContainer {
 	 * @generated
 	 */
 	void setRootFolderUrl(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Userdata</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Userdata</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Userdata</em>' attribute.
+	 * @see #setUserdata(Object)
+	 * @see org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage#getModule_Userdata()
+	 * @model unique="false" transient="true"
+	 * @generated
+	 */
+	Object getUserdata();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.fx.code.compensator.model.workbench.Module#getUserdata <em>Userdata</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Userdata</em>' attribute.
+	 * @see #getUserdata()
+	 * @generated
+	 */
+	void setUserdata(Object value);
 
 } // Module

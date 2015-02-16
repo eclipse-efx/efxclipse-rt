@@ -114,6 +114,9 @@ public class JavaCodeScanner extends AbstractJavaScanner {
 		combinedWordRule.addWordMatcher(wordRule);
 
 		rules.add(combinedWordRule);
+		
+		token = getToken(IJavaColorConstants.JAVA_NUMBER);
+		rules.add(new NumberRule(token));
 
 		setDefaultReturnToken(defaultToken);
 		return rules;
@@ -241,11 +244,14 @@ public class JavaCodeScanner extends AbstractJavaScanner {
 			if (readInterface(scanner)) {
 				return fInterfaceToken;
 			} else {
-				scanner.reset();
+				while( Character.isJavaIdentifierPart(scanner.read()) ) {
+				}
+				scanner.unread();
+//				scanner.reset();
 				return fAtToken;
 			}
 		}
-
+		
 		private boolean readInterface(ICharacterScanner scanner) {
 			int ch= scanner.read();
 			int i= 0;
@@ -274,6 +280,32 @@ public class JavaCodeScanner extends AbstractJavaScanner {
 			return true;
 		}
 
+	}
+	
+	private static final class NumberRule implements IRule {
+		private final IToken fToken;
+		
+		public NumberRule(IToken fToken) {
+			this.fToken = fToken;
+		}
+
+		@Override
+		public IToken evaluate(ICharacterScanner scanner) {
+			int v = scanner.read();
+			
+			if( Character.isDigit(v) ) {
+				while( (v = scanner.read()) != ICharacterScanner.EOF ) {
+					if( ! Character.isDigit(v) & v != '.' && v != '_' ) {
+						scanner.unread();
+						break;
+					}
+				}
+				return fToken;
+			} else {
+				return Token.UNDEFINED;
+			}
+		}
+		
 	}
 	
 	private static final class OperatorRule implements IRule {

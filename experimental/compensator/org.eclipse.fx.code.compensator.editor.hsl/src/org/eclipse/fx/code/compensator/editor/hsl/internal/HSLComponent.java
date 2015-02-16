@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
@@ -155,6 +156,14 @@ public class HSLComponent implements PartitionerFactory, SourceViewerConfigurati
 	}
 
 	private void handleLanguage(Path directory) {
+		if( Platform.isFxApplicationThread() ) {
+			_handleLanguage(directory);
+		} else {
+			Platform.runLater(() -> _handleLanguage(directory));
+		}
+	}
+	
+	private void _handleLanguage(Path directory) {
 		Path propertyFile = directory.resolve("config.properties");
 		if( Files.exists(propertyFile) ) {
 			Properties p = new Properties();

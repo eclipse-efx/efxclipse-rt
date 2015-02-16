@@ -8,6 +8,7 @@
 
 .java.styled-text-area .java_annotation {
 	-styled-text-color: rgb(200, 200, 200);
+	-fx-font-weight: bold;
 }
 
 .java.styled-text-area .java_keyword {
@@ -50,4 +51,8 @@
 
 .java.styled-text-area .java_doc_tag {
 	-styled-text-color: rgb(127, 127, 159);
+}
+
+.java.styled-text-area .java_number {
+	-styled-text-color: rgb(42, 0, 255);	
 }

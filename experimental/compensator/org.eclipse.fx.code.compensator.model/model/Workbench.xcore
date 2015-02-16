@@ -50,6 +50,8 @@ class Project extends ModuleContainer {
 	String projectType
 	String iconURI
 	contains BugTracker[0..*] bugTrackerList
+	contains CISystem[0..*] ciSystemList
+	transient Object userdata
 }
 
 class RemoteProject extends Project {
@@ -80,4 +82,11 @@ class BugTracker {
 class Module extends ModuleContainer {
 	String name
 	String rootFolderUrl
+	transient Object userdata
+}
+
+class CISystem {
+	String typeId
+	String label
+	String serviceUrl
 }

@@ -65,6 +65,8 @@ public abstract class AbstractJavaScanner extends BufferedRuleBasedScanner {
 			return new Token(new TextAttribute(IJavaColorConstants.JAVA_SINGLE_LINE_COMMENT));
 		case IJavaColorConstants.JAVADOC_TAG:
 			return new Token(new TextAttribute(IJavaColorConstants.JAVADOC_TAG));
+		case IJavaColorConstants.JAVA_NUMBER:
+			return new Token(new TextAttribute(IJavaColorConstants.JAVA_NUMBER));
 		default:
 			throw new IllegalStateException("Unknown key '"+ key+"'");
 		}

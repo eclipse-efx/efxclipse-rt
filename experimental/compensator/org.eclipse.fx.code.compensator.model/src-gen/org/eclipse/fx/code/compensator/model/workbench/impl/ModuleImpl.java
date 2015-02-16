@@ -22,6 +22,7 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * <ul>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ModuleImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ModuleImpl#getRootFolderUrl <em>Root Folder Url</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.compensator.model.workbench.impl.ModuleImpl#getUserdata <em>Userdata</em>}</li>
  * </ul>
  *
  * @generated
@@ -66,6 +67,26 @@ public class ModuleImpl extends ModuleContainerImpl implements Module {
 	 * @ordered
 	 */
 	protected String rootFolderUrl = ROOT_FOLDER_URL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getUserdata() <em>Userdata</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUserdata()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Object USERDATA_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getUserdata() <em>Userdata</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUserdata()
+	 * @generated
+	 * @ordered
+	 */
+	protected Object userdata = USERDATA_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -133,6 +154,27 @@ public class ModuleImpl extends ModuleContainerImpl implements Module {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Object getUserdata() {
+		return userdata;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUserdata(Object newUserdata) {
+		Object oldUserdata = userdata;
+		userdata = newUserdata;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WorkbenchPackage.MODULE__USERDATA, oldUserdata, userdata));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -140,6 +182,8 @@ public class ModuleImpl extends ModuleContainerImpl implements Module {
 				return getName();
 			case WorkbenchPackage.MODULE__ROOT_FOLDER_URL:
 				return getRootFolderUrl();
+			case WorkbenchPackage.MODULE__USERDATA:
+				return getUserdata();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -157,6 +201,9 @@ public class ModuleImpl extends ModuleContainerImpl implements Module {
 				return;
 			case WorkbenchPackage.MODULE__ROOT_FOLDER_URL:
 				setRootFolderUrl((String)newValue);
+				return;
+			case WorkbenchPackage.MODULE__USERDATA:
+				setUserdata(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -176,6 +223,9 @@ public class ModuleImpl extends ModuleContainerImpl implements Module {
 			case WorkbenchPackage.MODULE__ROOT_FOLDER_URL:
 				setRootFolderUrl(ROOT_FOLDER_URL_EDEFAULT);
 				return;
+			case WorkbenchPackage.MODULE__USERDATA:
+				setUserdata(USERDATA_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -192,6 +242,8 @@ public class ModuleImpl extends ModuleContainerImpl implements Module {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case WorkbenchPackage.MODULE__ROOT_FOLDER_URL:
 				return ROOT_FOLDER_URL_EDEFAULT == null ? rootFolderUrl != null : !ROOT_FOLDER_URL_EDEFAULT.equals(rootFolderUrl);
+			case WorkbenchPackage.MODULE__USERDATA:
+				return USERDATA_EDEFAULT == null ? userdata != null : !USERDATA_EDEFAULT.equals(userdata);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -210,6 +262,8 @@ public class ModuleImpl extends ModuleContainerImpl implements Module {
 		result.append(name);
 		result.append(", rootFolderUrl: ");
 		result.append(rootFolderUrl);
+		result.append(", userdata: ");
+		result.append(userdata);
 		result.append(')');
 		return result.toString();
 	}
