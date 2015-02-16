@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.behavior;
 
+import static com.sun.javafx.PlatformUtil.isMac;
 import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	protected void callActionForEvent(KeyEvent arg0) {
 		if (arg0.getEventType() == KeyEvent.KEY_PRESSED) {
 			_keyPressed(arg0);
-		} else if( arg0.getEventType() == KeyEvent.KEY_TYPED ) {
+		} else if (arg0.getEventType() == KeyEvent.KEY_TYPED) {
 			_keyTyped(arg0);
 		}
 		super.callActionForEvent(arg0);
@@ -124,7 +125,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				int currentLine = getControl().getContent().getLineAtOffset(offset);
 				@SuppressWarnings("unused")
 				int newLine = getControl().getContent().getLineAtOffset(newOffset);
-				getControl().impl_setCaretOffset(newOffset,event.isShiftDown());
+				getControl().impl_setCaretOffset(newOffset, event.isShiftDown());
 				event.consume();
 			}
 			break;
@@ -137,18 +138,20 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				int lineOffset = getControl().getContent().getOffsetAtLine(currentLine);
 				String lineContent = getControl().getContent().getLine(currentLine);
 
-				getControl().impl_setCaretOffset(lineOffset + lineContent.length(),event.isShiftDown());
+				getControl().impl_setCaretOffset(lineOffset + lineContent.length(), event.isShiftDown());
 				event.consume();
 			} else {
 				if (offset + 1 > getControl().getContent().getCharCount()) {
 					break;
 				}
 				int newOffset = offset + 1;
-//				@SuppressWarnings("unused")
-//				int currentLine = getControl().getContent().getLineAtOffset(offset);
-//				@SuppressWarnings("unused")
-//				int newLine = getControl().getContent().getLineAtOffset(newOffset);
-				getControl().impl_setCaretOffset(newOffset,event.isShiftDown());
+				// @SuppressWarnings("unused")
+				// int currentLine =
+				// getControl().getContent().getLineAtOffset(offset);
+				// @SuppressWarnings("unused")
+				// int newLine =
+				// getControl().getContent().getLineAtOffset(newOffset);
+				getControl().impl_setCaretOffset(newOffset, event.isShiftDown());
 				event.consume();
 			}
 			break;
@@ -167,7 +170,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 			int newCaretPosition = lineOffset + colIdx;
 			int maxPosition = lineOffset + getControl().getContent().getLine(rowIndex).length();
 
-			getControl().impl_setCaretOffset(Math.min(newCaretPosition, maxPosition),event.isShiftDown());
+			getControl().impl_setCaretOffset(Math.min(newCaretPosition, maxPosition), event.isShiftDown());
 			event.consume();
 			break;
 		}
@@ -184,12 +187,12 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 			int newCaretPosition = lineOffset + colIdx;
 			int maxPosition = lineOffset + getControl().getContent().getLine(rowIndex).length();
 
-			getControl().impl_setCaretOffset(Math.min(newCaretPosition, maxPosition),event.isShiftDown());
+			getControl().impl_setCaretOffset(Math.min(newCaretPosition, maxPosition), event.isShiftDown());
 			event.consume();
 			break;
 		}
 		case ENTER:
-			if( getControl().getEditable() ) {
+			if (getControl().getEditable()) {
 				int line = getControl().getContent().getLineAtOffset(getControl().getCaretOffset());
 				String lineContent = getControl().getContent().getLine(line);
 
@@ -210,7 +213,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 			}
 			break;
 		case DELETE:
-			if( getControl().getEditable() ) {
+			if (getControl().getEditable()) {
 				if (event.isMetaDown()) {
 					invokeAction(ActionType.DELETE_WORD_NEXT);
 				} else {
@@ -220,12 +223,12 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				break;
 			}
 		case BACK_SPACE:
-			if( getControl().getEditable() ) {
+			if (getControl().getEditable()) {
 				if (event.isMetaDown()) {
 					invokeAction(ActionType.DELETE_WORD_PREVIOUS);
 				} else {
 					TextSelection selection = getControl().getSelection();
-					if( selection.length > 0 ) {
+					if (selection.length > 0) {
 						getControl().getContent().replaceTextRange(selection.offset, selection.length, ""); //$NON-NLS-1$
 						getControl().setCaretOffset(selection.offset);
 					} else {
@@ -236,50 +239,62 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				break;
 			}
 		case TAB:
-			if( getControl().getEditable() ) {
+			if (getControl().getEditable()) {
 				event.consume();
 				if (event.isShiftDown()) {
 					// TODO Remove first 4 white space chars???
 					break;
 				} else {
-					getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, event.getText());
+					getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, "\t"); //$NON-NLS-1$
 					getControl().setCaretOffset(offset + 1);
 					break;
 				}
 			}
 		case V:
-			if( getControl().getEditable() ) {
-				if( event.isShortcutDown() ) {
+			if (getControl().getEditable()) {
+				if (event.isShortcutDown()) {
 					getControl().paste();
 					event.consume();
 					break;
 				}
 			}
 		case C:
-			if( getControl().getEditable() ) {
-				if( event.isShortcutDown() ) {
+			if (getControl().getEditable()) {
+				if (event.isShortcutDown()) {
 					getControl().copy();
 					event.consume();
 					break;
 				}
 			}
 		default:
-			if( getControl().getEditable() ) {
-				String text = event.getText();
-				if (text.length() > 0) {
-					getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, text);
-					getControl().setCaretOffset(offset + 1);
-				}
-				break;
-			}
+			break;
 		}
-
-		// Event.fireEvent(getControl(), event.copyFor(getControl(),
-		// getControl()));
 	}
 
-	private void _keyTyped(KeyEvent e) {
+	private void _keyTyped(KeyEvent event) {
+		if (getControl().getEditable()) {
 
+			String character = event.getCharacter();
+			if (character.length() == 0) {
+				return;
+			}
+
+			// check the modifiers
+			// - OS-X: ALT+L ==> @
+			// - win32/linux: ALTGR+Q ==> @
+			if (event.isControlDown() || event.isAltDown() || (isMac() && event.isMetaDown())) {
+				if (!((event.isControlDown() || isMac()) && event.isAltDown()))
+					return;
+			}
+
+			if (character.charAt(0) > 31 // No ascii control chars
+					&& character.charAt(0) != 127 // no delete key
+					&& !event.isMetaDown()) {
+				final int offset = getControl().getCaretOffset();
+				getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, character);
+				getControl().setCaretOffset(offset + 1);
+			}
+		}
 	}
 
 	/**
@@ -289,6 +304,8 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	 *            the event
 	 * @param visibleCells
 	 *            the visible cells
+	 * @param selection
+	 *            are we in selection mode
 	 */
 	@SuppressWarnings("deprecation")
 	public void updateCursor(MouseEvent event, List<LineCell> visibleCells, boolean selection) {
@@ -296,17 +313,17 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 
 		for (LineCell tmp : visibleCells) {
 			Bounds boundsInParent = tmp.getBoundsInParent();
-			if ( boundsInParent.getMinY() > event.getY()) {
-				if( lastCell == null ) {
+			if (boundsInParent.getMinY() > event.getY()) {
+				if (lastCell == null) {
 					lastCell = tmp;
 				}
 
 				if (lastCell.getDomainElement() != null) {
 					StyledTextLayoutContainer n = (StyledTextLayoutContainer) lastCell.getGraphic();
-					if( n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY()) ) {
+					if (n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY())) {
 						int index = n.getCaretIndexAtPoint(n.sceneToLocal(event.getSceneX(), event.getSceneY()));
-						if( index >= 0 ) {
-							getControl().impl_setCaretOffset(n.getStartOffset()+index, selection);
+						if (index >= 0) {
+							getControl().impl_setCaretOffset(n.getStartOffset() + index, selection);
 							return;
 						}
 					}
@@ -323,7 +340,7 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 		Event.fireEvent(getControl(), event.copyFor(getControl(), getControl()));
 	}
 
-//	public void mouseDragged(MouseEvent event, List<LineCell> visibleCells) {
-//
-//	}
+	// public void mouseDragged(MouseEvent event, List<LineCell> visibleCells) {
+	//
+	// }
 }
