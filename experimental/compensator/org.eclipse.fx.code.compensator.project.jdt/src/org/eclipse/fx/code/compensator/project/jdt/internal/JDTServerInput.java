@@ -28,7 +28,6 @@ public class JDTServerInput implements Input<String>, ContentTypeProvider, URIPr
 	private VCSRepositoryInstance repositoryInstance;
 	private Path filePath;
 	
-	
 	@Inject
 	public JDTServerInput(@Named(TextEditor.DOCUMENT_URL) String url, @Named(TextEditor.VCS_URL) String vcsUrl, InstanceProject project, JDTServerFactory factory) {
 		org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI.createURI(url);
@@ -97,22 +96,7 @@ public class JDTServerInput implements Input<String>, ContentTypeProvider, URIPr
 			String resourceId = this.openFile.get();
 			Future<ByteBuffer> data = this.server.getFileContent(resourceId);
 
-			// Freaking hack because JavaFX can not deal with TABs
-			String s = new String(data.get().array());
-//			BufferedReader reader = new BufferedReader(new StringReader(s));
-//			StringBuilder b = new StringBuilder();
-//			String line;
-//			while( (line = reader.readLine()) != null ) {
-//				//FIXME We need to replace TABs for now
-//				b.append(line.replaceAll("\t", "    ")+"\n");
-//			}
-//			reader.close();
-//
-//			if( ! s.equals(b.toString()) ) {
-//				this.server.setFileContent(resourceId, ByteBuffer.wrap(b.toString().getBytes())).get();
-//				this.server.persistContent(resourceId);
-//			}
-			return s;
+			return new String(data.get().array());
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

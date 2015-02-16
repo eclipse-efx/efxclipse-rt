@@ -16,6 +16,7 @@ public interface JDTServer {
 	public Future<Boolean> isManaged(String moduleName, String path);
 
 	public Future<String> openFile(String moduleName, String path);
+	public Future<Boolean> createFile(String moduleName, String path, ByteBuffer content);
 
 	public Future<ByteBuffer> getFileContent(String id);
 	public Future<Boolean> setFileContent(String id, ByteBuffer content);

@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.function.BiFunction;
 
+import org.eclipse.fx.code.compensator.project.Constants;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.navigator.FileItem;
 import org.eclipse.fx.code.compensator.project.navigator.FolderItem;
@@ -22,8 +23,9 @@ public class JDTPackageItem extends FolderItem implements ProjectNavigatorItem, 
 
 	public JDTPackageItem(FolderItem parent, Path p) {
 		super(parent,p,FACTORY);
+		getJdtProject().getEventBroker().subscribe(Constants.TOPIC_NEW_FILE, e -> refresh());
 	}
-
+	
 	public URI getIcon() {
 		return URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.project.jdt","css/icons/16/package_obj.png");
 	}

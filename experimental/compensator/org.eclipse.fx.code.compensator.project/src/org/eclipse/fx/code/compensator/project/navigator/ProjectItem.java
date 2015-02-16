@@ -1,14 +1,11 @@
 package org.eclipse.fx.code.compensator.project.navigator;
 
-import java.nio.file.Path;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.eclipse.fx.code.compensator.model.workbench.LocalProject;
 import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
-import org.eclipse.fx.code.compensator.project.vcs.VCSRootNavigatorItem;
 import org.eclipse.fx.core.URI;
 
 public class ProjectItem implements ProjectNavigatorItem {
@@ -19,7 +16,7 @@ public class ProjectItem implements ProjectNavigatorItem {
 	public ProjectItem(InstanceProject project) {
 		this.project = project;
 		children.add(new ModuleContainerItem(this,project));
-		children.add(new BugtrackerItem(this));
+		children.add(new BugtrackerContainerItem(this,project));
 		children.add(new BuildServerItem(this));
 		if( project.getProject() instanceof LocalProject ) {
 			vcsContainerItem = new VCSContainerItem(this,project);

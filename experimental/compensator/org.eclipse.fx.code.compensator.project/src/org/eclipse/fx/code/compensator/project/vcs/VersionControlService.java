@@ -16,5 +16,5 @@ public interface VersionControlService {
 	public ReturnValue<URI> cloneRepository(Path localDirectory, String url, String username, String password, ProgressReporter reporter);
 
 	public VCSRootNavigatorItem mapRepository(ProjectNavigatorItem parent, VCSRepositoryInstance instance);
-	public VCSRepositoryInstance getOrCreateRepository(String uri);
+	public VCSRepositoryInstance createRepository(InstanceProject project, VCSRepository repository, String uri);
 }

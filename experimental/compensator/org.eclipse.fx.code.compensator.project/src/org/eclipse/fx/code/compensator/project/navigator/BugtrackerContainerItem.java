@@ -1,16 +1,21 @@
 package org.eclipse.fx.code.compensator.project.navigator;
 
+import java.util.stream.Collectors;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.core.URI;
 
-public class BugtrackerItem implements ProjectNavigatorItem {
+public class BugtrackerContainerItem implements ProjectNavigatorItem {
 	private final ProjectItem parent;
+	private final ObservableList<ProjectNavigatorItem> bugtrackerItems = FXCollections.observableArrayList();
 	
-	public BugtrackerItem(ProjectItem parent) {
+	public BugtrackerContainerItem(ProjectItem parent, InstanceProject project) {
 		this.parent = parent;
+		bugtrackerItems.addAll(project.getBugtrackerInstanceList().stream().map( i -> i.getService().mapRepository(this, i)).collect(Collectors.toList()));
 	}
 	
 	public ProjectNavigatorItem getParent() {
@@ -47,7 +52,7 @@ public class BugtrackerItem implements ProjectNavigatorItem {
 
 	@Override
 	public ObservableList<ProjectNavigatorItem> getChildren() {
-		return FXCollections.emptyObservableList();
+		return bugtrackerItems;
 	}
 
 	@Override

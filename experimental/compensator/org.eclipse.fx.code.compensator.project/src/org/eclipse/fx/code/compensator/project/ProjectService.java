@@ -65,11 +65,13 @@ public interface ProjectService {
 
 	public static abstract class ToolbarElement {
 		public final String id;
+		public final String commandId;
 		public final String tooltip;
 
-		public ToolbarElement(String id, String tooltip) {
+		public ToolbarElement(String id, String tooltip, String commandId) {
 			this.id = id;
 			this.tooltip = tooltip;
+			this.commandId = commandId;
 		}
 	}
 

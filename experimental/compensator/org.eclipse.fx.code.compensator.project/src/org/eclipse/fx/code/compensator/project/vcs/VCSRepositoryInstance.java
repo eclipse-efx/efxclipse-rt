@@ -5,6 +5,7 @@ import java.util.Collection;
 
 public interface VCSRepositoryInstance {
 	public Path getRootPath();
+	public VersionControlService getService();
 	public void fetch();
 	public void push();
 	public void merge();

@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.fx.code.compensator.model.workbench.VCSRepository;
+import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.vcs.VCSRepositoryInstance;
 import org.eclipse.fx.code.compensator.project.vcs.VCSRootNavigatorItem;
@@ -40,14 +42,18 @@ public class GitVersionControlService implements VersionControlService {
 	@Override
 	public ReturnValue<URI> cloneRepository(Path localDirectory, String url, String username,
 			String password, ProgressReporter reporter) {
-		if( url.startsWith("ssh://") ) {
+		if( url.startsWith("ssh:") ) {
 			url = "ssh://"+ username + "@" + url.substring("ssh://".length());
 		} else if( url.startsWith("https://") ) {
 			url = "https://"+ username + "@" + url.substring("https://".length());
 		}
+		
 		Git result = null;
 		try {
 			result = Git.cloneRepository().setURI(url).setCredentialsProvider(new SSHCredentialProvider(password)).setDirectory(localDirectory.toFile()).call();
+			if( result == null ) {
+				throw new IllegalStateException();
+			}
 			return ReturnValue.ok(localDirectory.toUri());
 		} catch (GitAPIException e) {
 			return ReturnValue.error("Unable to clone repository", e);
@@ -94,15 +100,9 @@ public class GitVersionControlService implements VersionControlService {
 		return new GitRepositoryItem(parent, repository, repository.getRootPath());
 	}
 	
-	private Map<String, GitVCSRepositoryInstance> instanceMap = new HashMap<>();
 
 	@Override
-	public VCSRepositoryInstance getOrCreateRepository(String uri) {
-		GitVCSRepositoryInstance rv = instanceMap.get(uri);
-		if( rv == null ) {
-			rv = new GitVCSRepositoryInstance(Paths.get(URI.create(uri)));
-			instanceMap.put(uri, rv);
-		}
-		return rv;
+	public VCSRepositoryInstance createRepository(InstanceProject project, VCSRepository repository, String uri) {
+		return new GitVCSRepositoryInstance(project, repository, this,Paths.get(URI.create(uri)));
 	}
 }

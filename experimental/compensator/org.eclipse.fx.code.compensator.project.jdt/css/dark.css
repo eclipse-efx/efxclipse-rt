@@ -33,3 +33,7 @@
 /*.list-cell >*/ .styled-label.java-project {
 	-fx-graphic: url(icons/16/jperspective.png);
 }
+
+.titleDialog_Icon-new-java-class-dialog {
+	-fx-image: url(icons/64/newclass_wiz.png);
+}

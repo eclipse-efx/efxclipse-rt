@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
@@ -13,6 +14,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -27,11 +29,25 @@ import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
 import org.eclipse.fx.core.di.Service;
+import org.eclipse.fx.ui.controls.stage.DefaultWindowPane;
+import org.eclipse.fx.ui.dialogs.TitleAreaDialog;
 import org.eclipse.fx.ui.panes.GridData;
 import org.eclipse.fx.ui.panes.GridLayoutPane;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 
 public class NewLocalProject {
+	TextField nameField;
+	ComboBox<ProjectService> projectType;
+	ComboBox<VersionControlService> repoType;
+	TextField repoUrl;
+	TextField repoLocalDir;
+	TextField repoUser;
+	TextField repoPassword;
+	ComboBox<String> bugtrackerType;
+	TextField bugTrackerUrl;
+	TextField bugTrackerUser;
+	TextField bugTrackerPassword;
+	
 	@Execute
 	public void execute(Stage parent, Workbench workbench,
 			@Service List<ProjectService> projectServices,
@@ -39,26 +55,50 @@ public class NewLocalProject {
 			CommandService cmdService,
 			GraphicsLoader loader,
 			ScopedObjectFactory objFactory) {
-		Dialog<ButtonType> d = new Dialog<>();
-		d.setHeaderText("Create new local project");
-		d.getDialogPane().getStyleClass().add("new_project_dialog");
-		d.getDialogPane().getButtonTypes()
-				.addAll(ButtonType.OK, ButtonType.CANCEL);
+		TitleAreaDialog dialog = new TitleAreaDialog(parent,"Create new local project","New local project","Provide in the fields below all informations to setup a local project","new_project_dialog") {
+			
+			@Override
+			protected Node createDialogContent() {
+				return NewLocalProject.this.createDialogContent(projectServices, versionControl, loader);
+			}
+			
+			protected org.eclipse.fx.ui.controls.stage.WindowPane getCustomWindowPane() {
+				return new DefaultWindowPane(new StackPane());
+			}
+		};
+		
+		if( dialog.open() == TitleAreaDialog.OK_BUTTON ) {
+			LocalProject lp = WorkbenchFactory.eINSTANCE.createLocalProject();
+			lp.setProjectId(UUID.randomUUID().toString());
+			lp.setName(nameField.getText());
+			lp.setProjectType(projectType.getValue().getId());
 
+			VCSRepository r = WorkbenchFactory.eINSTANCE.createVCSRepository();
+			r.setRepoType(repoType.getValue().getId());
+			r.setRepoURI(repoUrl.getText());
+			r.setLocalURI(repoLocalDir.getText());
+			r.setRepoUsername(repoUser.getText());
+			r.setRepoPassword(repoPassword.getText());
+			lp.getVcsRepositoryList().add(r);
+
+			BugTracker t = WorkbenchFactory.eINSTANCE.createBugTracker();
+			t.setBugtrackerType(bugtrackerType.getValue());
+			t.setBugtrackerUrl(bugTrackerUrl.getText());
+			t.setBugtrackerUsername(bugTrackerUser.getText());
+			t.setBugtrackerPassword(bugTrackerPassword.getText());
+			lp.getBugTrackerList().add(t);
+
+			workbench.getProjectList().add(lp);
+
+			cmdService.execute("org.eclipse.fx.code.compensator.app.command.openproject", Collections.singletonMap("projectId", lp.getProjectId()));
+		}
+		
+	}
+	
+	private Node createDialogContent(List<ProjectService> projectServices, List<VersionControlService> versionControl, GraphicsLoader loader) {
 		GridLayoutPane p = new GridLayoutPane();
 		p.setMinWidth(600);
 
-		TextField nameField;
-		ComboBox<ProjectService> projectType;
-		ComboBox<VersionControlService> repoType;
-		TextField repoUrl;
-		TextField repoLocalDir;
-		TextField repoUser;
-		TextField repoPassword;
-		ComboBox<String> bugtrackerType;
-		TextField bugTrackerUrl;
-		TextField bugTrackerUser;
-		TextField bugTrackerPassword;
 
 		{
 			p.getChildren().add(new Label("Name"));
@@ -179,36 +219,8 @@ public class NewLocalProject {
 
 			t.setContent(pp);
 		}
-
-		d.getDialogPane().setContent(p);
-		d.initOwner(parent);
-		d.showAndWait().ifPresent(e -> {
-			if( e == ButtonType.OK ) {
-				LocalProject lp = WorkbenchFactory.eINSTANCE.createLocalProject();
-				lp.setProjectId(UUID.randomUUID().toString());
-				lp.setName(nameField.getText());
-				lp.setProjectType(projectType.getValue().getId());
-
-				VCSRepository r = WorkbenchFactory.eINSTANCE.createVCSRepository();
-				r.setRepoType(repoType.getValue().getId());
-				r.setRepoURI(repoUrl.getText());
-				r.setLocalURI(repoLocalDir.getText());
-				r.setRepoUsername(repoUser.getText());
-				r.setRepoPassword(repoPassword.getText());
-				lp.getVcsRepositoryList().add(r);
-
-				BugTracker t = WorkbenchFactory.eINSTANCE.createBugTracker();
-				t.setBugtrackerType(bugtrackerType.getValue());
-				t.setBugtrackerUrl(bugTrackerUrl.getText());
-				t.setBugtrackerUsername(bugTrackerUser.getText());
-				t.setBugtrackerPassword(bugTrackerPassword.getText());
-				lp.getBugTrackerList().add(t);
-
-				workbench.getProjectList().add(lp);
-
-				cmdService.execute("org.eclipse.fx.code.compensator.app.command.openproject", Collections.singletonMap("projectId", lp.getProjectId()));
-			}
-		});
+		
+		return p;
 	}
 
 	static class ProjectTypeCell extends ListCell<ProjectService> {

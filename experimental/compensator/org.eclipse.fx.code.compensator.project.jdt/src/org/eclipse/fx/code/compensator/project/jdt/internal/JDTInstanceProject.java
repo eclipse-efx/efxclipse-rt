@@ -23,6 +23,7 @@ import org.eclipse.fx.code.compensator.model.workbench.Project;
 import org.eclipse.fx.code.compensator.model.workbench.VCSRepository;
 import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
+import org.eclipse.fx.code.compensator.project.bt.BugTrackerService;
 import org.eclipse.fx.code.compensator.project.vcs.VersionControlService;
 import org.eclipse.fx.code.server.jdt.JDTServer;
 import org.eclipse.fx.core.di.Service;
@@ -43,8 +44,9 @@ public class JDTInstanceProject extends InstanceProject {
 			EModelService modelService,
 			MPerspective perspective,
 			FileIconLookup fileLookup,
-			@Service List<VersionControlService> versionControlService) {
-		super(eventBroker, project, versionControlService);
+			@Service List<VersionControlService> versionControlService,
+			@Service List<BugTrackerService> bugtrackerService) {
+		super(eventBroker, project, versionControlService, bugtrackerService);
 		this.projectServer = projectServer;
 		this.partService = partService;
 		this.modelService = modelService;
@@ -96,5 +98,6 @@ public class JDTInstanceProject extends InstanceProject {
 			return true;
 		}
 		return false;
-	}	
+	}
+	
 }

@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.fx.code.compensator.model.workbench.BugTracker;
 import org.eclipse.fx.code.compensator.model.workbench.LocalProject;
 import org.eclipse.fx.code.compensator.model.workbench.Module;
 import org.eclipse.fx.code.compensator.model.workbench.Project;
 import org.eclipse.fx.code.compensator.model.workbench.VCSRepository;
+import org.eclipse.fx.code.compensator.project.bt.BugTrackerInstance;
+import org.eclipse.fx.code.compensator.project.bt.BugTrackerService;
 import org.eclipse.fx.code.compensator.project.vcs.VCSRepositoryInstance;
 import org.eclipse.fx.code.compensator.project.vcs.VersionControlService;
 
@@ -19,18 +22,33 @@ public abstract class InstanceProject {
 	private final List<VersionControlService> versionControlServiceList;
 	private final IEventBroker eventBroker;
 	private final List<VCSRepositoryInstance> repositoryInstanceList = new ArrayList<>();
+	private final List<BugTrackerService> bugtrackerServiceList;
+	private final List<BugTrackerInstance> bugtrackerInstanceList = new ArrayList<>();
 	
 	public InstanceProject(
 			IEventBroker eventBroker,
 			Project project,
-			List<VersionControlService> versionControlServiceList) {
+			List<VersionControlService> versionControlServiceList,
+			List<BugTrackerService> bugtrackerServiceList) {
 		this.eventBroker = eventBroker;
 		this.project = project;
+		this.project.setUserdata(this);
+		this.bugtrackerServiceList = bugtrackerServiceList;
 		this.versionControlServiceList = versionControlServiceList;
 		if( this.project instanceof LocalProject ) {
 			((LocalProject)this.project).getVcsRepositoryList().forEach(this::handleRepository);
 		}
+		project.getBugTrackerList().forEach(this::handleBugtracker);
 	}
+	
+	private void handleBugtracker(BugTracker bugtracker) {
+		bugtrackerInstanceList.add(getBugtrackerServiceList()
+			.stream()
+			.filter( s -> s.getId().equals(bugtracker.getBugtrackerType()) )
+			.findFirst().
+			map(s -> s.createInstance(bugtracker)).get());
+	}
+	
 	
 	private void handleRepository(VCSRepository repository) {
 		Path path = Paths.get(java.net.URI.create(repository.getLocalURI()));
@@ -45,7 +63,7 @@ public abstract class InstanceProject {
 				.stream()
 				.filter(v -> v.getId().equals(repository.getRepoType()))
 				.findFirst()
-				.map(v -> v.getOrCreateRepository(repository.getLocalURI())).get());
+				.map(v -> v.createRepository(this,repository,repository.getLocalURI())).get());
 	}
 
 	public final Project getProject() {
@@ -58,6 +76,14 @@ public abstract class InstanceProject {
 
 	public final List<VersionControlService> getVersionControlServiceList() {
 		return versionControlServiceList;
+	}
+	
+	public final List<BugTrackerInstance> getBugtrackerInstanceList() {
+		return bugtrackerInstanceList;
+	}
+	
+	public List<BugTrackerService> getBugtrackerServiceList() {
+		return bugtrackerServiceList;
 	}
 	
 	public IEventBroker getEventBroker() {

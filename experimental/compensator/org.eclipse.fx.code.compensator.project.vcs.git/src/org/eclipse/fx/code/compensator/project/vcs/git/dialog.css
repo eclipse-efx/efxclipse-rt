@@ -1,0 +1,3 @@
+.combo-box > .list-cell > .label {
+	-fx-text-fill: -fx-text-base-color;
+}

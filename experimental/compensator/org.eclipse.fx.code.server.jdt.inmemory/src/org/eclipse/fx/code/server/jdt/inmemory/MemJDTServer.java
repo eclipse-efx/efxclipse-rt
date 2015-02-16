@@ -51,6 +51,11 @@ public class MemJDTServer implements JDTServer {
 	public Future<String> openFile(String moduleName, String path) {
 		return CompletableFuture.supplyAsync(() -> serverImpl.openFile(moduleName, path));
 	}
+	
+	@Override
+	public Future<Boolean> createFile(String moduleName, String path, ByteBuffer content) {
+		return CompletableFuture.supplyAsync(() -> serverImpl.createFile(moduleName,path,content));
+	}
 
 	@Override
 	public Future<ByteBuffer> getFileContent(String id) {

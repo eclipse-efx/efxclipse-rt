@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.eclipse.fx.code.compensator.model.workbench.Module;
+import org.eclipse.fx.code.compensator.project.Constants;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.navigator.FileItem;
 import org.eclipse.fx.code.compensator.project.navigator.FolderItem;
@@ -20,6 +21,7 @@ import org.eclipse.fx.code.compensator.project.navigator.PathItem;
 import org.eclipse.fx.core.function.ExExecutor;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
+import org.osgi.service.event.Event;
 
 public class JDTModuleItem implements ProjectNavigatorItem, JDTPathItem {
 	private final Module module;
@@ -33,8 +35,10 @@ public class JDTModuleItem implements ProjectNavigatorItem, JDTPathItem {
 		this.parent = parent;
 		this.module = module;
 		this.instanceProject = instanceProject;
-
+		this.module.setUserdata(this);
+		
 		this.path = Paths.get(URI.create(module.getRootFolderUrl()));
+//		this.instanceProject.getEventBroker().subscribe(Constants.TOPIC_NEW_FILE, this::handleNewFile);
 	}
 	
 	@Override

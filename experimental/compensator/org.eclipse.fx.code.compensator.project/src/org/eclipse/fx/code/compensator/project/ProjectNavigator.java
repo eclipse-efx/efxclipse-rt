@@ -2,9 +2,7 @@ package org.eclipse.fx.code.compensator.project;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.beans.property.Property;
@@ -20,7 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
@@ -100,10 +97,10 @@ public class ProjectNavigator {
 		}
 	}
 
-	@PreDestroy
-	void close() {
-		navigatorSelection.unbind();
-	}
+//	@PreDestroy
+//	void close() {
+//		navigatorSelection.unbind();
+//	}
 
 	private static ObservableList<TreeItem<ProjectNavigatorItem>> createChildren(TreeItem<ProjectNavigatorItem> parent) {
 		ObservableList<TreeItem<ProjectNavigatorItem>> rv = FXCollections.observableArrayList();
@@ -116,7 +113,7 @@ public class ProjectNavigator {
 		}
 		parent.getValue().getChildren().addListener( (Change<? extends ProjectNavigatorItem> c) -> {
 			while( c.next() ) {
-				rv.addAll(c.getAddedSubList()
+				rv.addAll(c.getFrom(),c.getAddedSubList()
 					.stream()
 					.map(i -> i.isLeaf() ? new TreeItem<ProjectNavigatorItem>(i) : new LazyTreeItem<ProjectNavigatorItem>(i, ProjectNavigator::createChildren))
 					.collect(Collectors.toList()));

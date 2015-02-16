@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Travis
+Bundle-SymbolicName: org.eclipse.fx.code.compensator.project.ci.travis
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ClassPath: lib/org.eclipse.fx.travisci.client-0.0.1-SNAPSHOT.jar,
+ .
+Require-Bundle: org.eclipse.fx.code.compensator.project

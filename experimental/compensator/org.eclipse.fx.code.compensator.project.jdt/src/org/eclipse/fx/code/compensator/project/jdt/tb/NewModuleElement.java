@@ -5,7 +5,7 @@ import org.eclipse.fx.code.compensator.project.ProjectService.ToolbarElement;
 public class NewModuleElement extends ToolbarElement {
 
 	public NewModuleElement() {
-		super("new-java-module", "Create a new module");
+		super("new-java-module", "Create a new module","org.eclipse.fx.code.compensator.project.jdt.command.newmodule");
 	}
 
 }

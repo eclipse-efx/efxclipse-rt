@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.List;
 
 import javafx.collections.FXCollections;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -16,31 +16,36 @@ import org.eclipse.fx.code.compensator.project.ProjectService;
 import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.fx.core.di.Service;
 import org.eclipse.fx.ui.controls.list.SimpleListCell;
+import org.eclipse.fx.ui.controls.stage.DefaultWindowPane;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
+import org.eclipse.fx.ui.dialogs.TitleAreaDialog;
 
 public class OpenProjectDialog {
 	@Execute
 	public void open(Stage parent, Workbench workbench, CommandService cmdService, @Service List<ProjectService> projectServiceList) {
-		Dialog<ButtonType> d = new Dialog<>();
-		d.initOwner(parent);
-		d.setHeaderText("Open project");
-		d.getDialogPane().getStyleClass().add("open_project_dialog");
-		d.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-		d.setTitle("Open Project");
-
 		ListView<Project> list = new ListView<>();
 		list.setMinWidth(600);
 		list.setCellFactory(v -> new SimpleListCell<Project>( p -> labelExtractor(p, projectServiceList), p -> cssProvider(p,projectServiceList)));
 		list.setItems(FXCollections.observableArrayList(workbench.getProjectList()));
-		d.getDialogPane().setContent(list);
-		d.showAndWait().ifPresent(e -> {
-			if( e == ButtonType.OK ) {
-				if( list.getSelectionModel().getSelectedItem() != null ) {
-					cmdService.execute("org.eclipse.fx.code.compensator.app.command.openproject", Collections.singletonMap("projectId", list.getSelectionModel().getSelectedItem().getProjectId()));
-				}
+
+		TitleAreaDialog dialog = new TitleAreaDialog(parent,"Open project","Open project","Open an existing project","open_project_dialog") {
+			
+			@Override
+			protected Node createDialogContent() {
+				return list;
 			}
-		});
+			
+			protected org.eclipse.fx.ui.controls.stage.WindowPane getCustomWindowPane() {
+				return new DefaultWindowPane(new StackPane());
+			}
+		};
+		
+		if( dialog.open() == TitleAreaDialog.OK_BUTTON ) {
+			if( list.getSelectionModel().getSelectedItem() != null ) {
+				cmdService.execute("org.eclipse.fx.code.compensator.app.command.openproject", Collections.singletonMap("projectId", list.getSelectionModel().getSelectedItem().getProjectId()));
+			}
+		}
 	}
 
 	private static CharSequence labelExtractor(Project p, List<ProjectService> services) {

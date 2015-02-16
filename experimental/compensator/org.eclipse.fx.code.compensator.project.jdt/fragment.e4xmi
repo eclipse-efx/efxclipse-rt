@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_eZlGYLIwEeSfe79Bewi7bA">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_fem0wLIwEeSfe79Bewi7bA" featurename="commands" parentElementId="org.eclipse.fx.code.compensator.app">
+    <elements xsi:type="commands:Command" xmi:id="_oldrkLIwEeSfe79Bewi7bA" elementId="org.eclipse.fx.code.compensator.project.jdt.command.newclass" commandName="New Class"/>
+    <elements xsi:type="commands:Command" xmi:id="_V9vlMLXjEeS-EfBcv9o4bw" elementId="org.eclipse.fx.code.compensator.project.jdt.command.serverfile" commandName="Open Server Managed File">
+      <parameters xmi:id="_et6aULXjEeS-EfBcv9o4bw" elementId="projectid" name="Project Id" optional="false"/>
+      <parameters xmi:id="_ixOewLXjEeS-EfBcv9o4bw" elementId="moduleName" name="Module Name" optional="false"/>
+      <parameters xmi:id="_lE_4MLXjEeS-EfBcv9o4bw" elementId="modulePath" name="Modul Path" optional="false"/>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_lr0k8LIwEeSfe79Bewi7bA" featurename="handlers" parentElementId="org.eclipse.fx.code.compensator.app">
+    <elements xsi:type="commands:Handler" xmi:id="_vgN3MLIwEeSfe79Bewi7bA" elementId="org.eclipse.fx.code.compensator.project.jdt.handler.0" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project.jdt/org.eclipse.fx.code.compensator.project.jdt.handler.NewClassAction" command="_oldrkLIwEeSfe79Bewi7bA"/>
+    <elements xsi:type="commands:Handler" xmi:id="_bSZVsLXjEeS-EfBcv9o4bw" elementId="org.eclipse.fx.code.compensator.project.jdt.handler.1" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project.jdt/org.eclipse.fx.code.compensator.project.jdt.handler.OpenServerManagedFile" command="_V9vlMLXjEeS-EfBcv9o4bw"/>
+  </fragments>
+</fragment:ModelFragments>

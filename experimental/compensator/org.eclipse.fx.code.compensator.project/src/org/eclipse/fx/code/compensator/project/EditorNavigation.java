@@ -1,32 +1,33 @@
 package org.eclipse.fx.code.compensator.project;
 
-import javafx.geometry.Insets;
+import java.util.Collections;
+
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.fx.code.compensator.project.internal.commands.CommitActiveInput;
 import org.eclipse.fx.core.URI;
+import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 
 public class EditorNavigation {
 	private final GraphicsLoader provider;
 	
+	private final CommandService commandService;
+	
 	@Inject
-	public EditorNavigation(GraphicsLoader provider) {
+	public EditorNavigation(GraphicsLoader provider, CommandService commandService) {
 		this.provider = provider;
+		this.commandService = commandService;
 	}
 
 	@PostConstruct
@@ -65,7 +66,10 @@ public class EditorNavigation {
 							"org.eclipse.fx.code.compensator.project",
 							"css/icons/16/commit.png")));
 			label.setTooltip(new Tooltip("Commit"));
-			box.getChildren().add(label);			
+			box.getChildren().add(label);
+			label.setOnMouseClicked(e -> {
+				commandService.execute(CommitActiveInput.COMMAND_ID, Collections.emptyMap());
+			});
 		}
 
 		p.setTop(box);

@@ -30,7 +30,7 @@ public class OpenResource {
 		p.setContributionURI("bundleclass://org.eclipse.fx.code.compensator.editor/org.eclipse.fx.code.compensator.editor.TextEditor");
 		p.getPersistedState().put(TextEditor.DOCUMENT_URL, uri);
 		p.setLabel(URI.createURI(uri).lastSegment());
-		p.setIconURI(lookup.getFileIcon(uri).toString());
+		p.setIconURI(lookup.getFileIcon(uri) != null ? lookup.getFileIcon(uri).toString() : null);
 		p.setCloseable(true);
 		p.getTags().add(EPartService.REMOVE_ON_HIDE_TAG);
 		element.getChildren().add(p);

@@ -1,8 +1,14 @@
 package org.eclipse.fx.code.server.jdt.server;
 
-import static org.eclipse.fx.core.function.ExExecutor.*;
+import static org.eclipse.fx.core.function.ExExecutor.executeConsumer;
+import static org.eclipse.fx.core.function.ExExecutor.executeFunction;
+import static org.eclipse.fx.core.function.ExExecutor.executeRunnable;
+import static org.eclipse.fx.core.function.ExExecutor.executeSupplier;
+import static org.eclipse.fx.core.function.ExExecutor.executeSupplierOrDefault;
 
+import java.io.ByteArrayInputStream;
 import java.net.URI;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,6 +34,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal;
 import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal.Modifier;
 import org.eclipse.fx.code.server.jdt.shared.JavaCodeCompleteProposal.Type;
@@ -46,17 +54,20 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.Signature;
 import org.eclipse.jdt.core.compiler.IProblem;
-import org.eclipse.jdt.launching.JavaRuntime;
 
 public class JDTServerImpl {
 	private Map<String, ResourceContainer<?>> openResources = new HashMap<>();
 
 	public JDTServerImpl() {
-		System.err.println(JavaRuntime.getDefaultVMInstall());
+//		System.err.println(node.get(ResourcesPlugin.PREF_LIGHTWEIGHT_AUTO_REFRESH,"NIX DA"));
+//		System.err.println(node.get(ResourcesPlugin.PREF_AUTO_REFRESH,"NIX DA"));
+		
+//		System.err.println(JavaRuntime.getDefaultVMInstall());
 	}
 
 	public String registerModule(URI uri) {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		
 		Path path = Paths.get(uri).resolve(".project");
 		try {
 			if( Files.exists(path) ) {
@@ -165,11 +176,30 @@ public class JDTServerImpl {
 		}
 		throw new IllegalArgumentException("Unable file '"+moduleName+"' in path '"+path+"'");
 	}
+	
+	public Boolean createFile(String moduleName, String path, ByteBuffer content) {
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(moduleName);
+		if( project.exists() ) {
+			IFile file = project.getFile(new org.eclipse.core.runtime.Path(path));
+			if( ! file.exists() ) {
+				try {
+					file.create(new ByteArrayInputStream(content.array()), true, null);
+					return Boolean.TRUE;
+				} catch (CoreException e) {
+					throw new IllegalArgumentException("Unable to create new file '"+moduleName+"' in path '"+path+"'", e);
+				}
+			}
+		}
+		
+		throw new IllegalArgumentException("Unable to create new file '"+moduleName+"' in path '"+path+"'");
+	}
+
 
 	private ResourceContainer<?> createResourceContainer(String moduleName, String path) {
 		if( path.endsWith(".java") ) {
 			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(moduleName);
 			IFile file = project.getFile(new org.eclipse.core.runtime.Path(path));
+//			executeRunnable(() -> file.refreshLocal(IResource.DEPTH_ONE, null), "Failed to synchronize file '"+file+"'");
 
 			if( ! file.exists() ) {
 				throw new IllegalStateException("The requested file does not exist");
@@ -538,6 +568,4 @@ public class JDTServerImpl {
 		}
 
 	}
-
-
 }

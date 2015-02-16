@@ -27,7 +27,6 @@ import org.eclipse.fx.code.compensator.project.jdt.tb.NewPackageElement;
 import org.eclipse.fx.code.compensator.project.jdt.tb.RunElement;
 import org.eclipse.fx.code.compensator.project.navigator.FolderItem;
 import org.eclipse.fx.code.compensator.project.navigator.ModuleContainerItem;
-import org.eclipse.fx.core.SimpleURI;
 import org.eclipse.fx.core.URI;
 
 public class JDTProjectService implements ProjectService {
@@ -68,7 +67,7 @@ public class JDTProjectService implements ProjectService {
 
 	@Override
 	public URI getIconUri() {
-		return new SimpleURI(getClass().getClassLoader().getResource("css/icons/16/jperspective.png").toExternalForm());
+		return URI.create(getClass().getClassLoader().getResource("css/icons/16/jperspective.png").toExternalForm());
 	}
 
 	@Override

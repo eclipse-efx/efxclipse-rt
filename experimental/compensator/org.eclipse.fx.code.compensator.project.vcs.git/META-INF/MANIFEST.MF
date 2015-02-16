@@ -9,6 +9,11 @@ Require-Bundle: org.eclipse.fx.core,
  org.eclipse.fx.code.compensator.project,
  org.eclipse.fx.code.compensator.model,
  com.jcraft.jsch;bundle-version="0.1.51",
- org.eclipse.e4.core.services
+ org.eclipse.e4.core.services,
+ org.eclipse.fx.ui.panes,
+ org.eclipse.fx.code.compensator.project.bt.github,
+ org.eclipse.fx.ui.controls,
+ org.eclipse.jdt.annotation;bundle-version="2.0.100";resolution:=optional,
+ org.apache.commons.lang
 Service-Component: OSGI-INF/services/gitvcs.xml
 Bundle-ActivationPolicy: lazy

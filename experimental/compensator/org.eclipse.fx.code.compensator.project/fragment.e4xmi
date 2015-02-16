@@ -50,6 +50,7 @@
     <elements xsi:type="commands:Command" xmi:id="_quw04JZZEeSjZ8iCNzGAiA" elementId="org.eclipse.fx.code.compensator.project.command.openresource" commandName="Open Resource">
       <parameters xmi:id="_1IWe4JZZEeSjZ8iCNzGAiA" elementId="resourceURI" name="Resource URI"/>
     </elements>
+    <elements xsi:type="commands:Command" xmi:id="_fOAgMK5PEeSz6N7pcF6h1g" elementId="org.eclipse.fx.code.compensator.project.commit.activeInput" commandName="Commit Active Input"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_SOxssIPpEeS5JpVAKZcwIQ" featurename="handlers" parentElementId="org.eclipse.fx.code.compensator.app">
     <elements xsi:type="commands:Handler" xmi:id="_Xsst8IPpEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.handler.0" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.commands.NewLocalProject" command="_bSwrIIPoEeS5JpVAKZcwIQ"/>
@@ -57,5 +58,6 @@
     <elements xsi:type="commands:Handler" xmi:id="_1e0r4IopEeS5JpVAKZcwIQ" elementId="org.eclipse.fx.code.compensator.project.handler.2" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.commands.OpenProjectDialog" command="_prnAAIPoEeS5JpVAKZcwIQ"/>
     <elements xsi:type="commands:Handler" xmi:id="_wR0BAJZJEeSjZ8iCNzGAiA" elementId="org.eclipse.fx.code.compensator.project.handler.3" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.commands.SwitchPlayground" command="_u3zK4IRSEeS5JpVAKZcwIQ"/>
     <elements xsi:type="commands:Handler" xmi:id="_vG9kMJZZEeSjZ8iCNzGAiA" elementId="org.eclipse.fx.code.compensator.project.handler.4" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.commands.OpenResource" command="_quw04JZZEeSjZ8iCNzGAiA"/>
+    <elements xsi:type="commands:Handler" xmi:id="_kkfcsK5PEeSz6N7pcF6h1g" elementId="org.eclipse.fx.code.compensator.project.handler.5" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project/org.eclipse.fx.code.compensator.project.internal.commands.CommitActiveInput" command="_fOAgMK5PEeSz6N7pcF6h1g"/>
   </fragments>
 </fragment:ModelFragments>
