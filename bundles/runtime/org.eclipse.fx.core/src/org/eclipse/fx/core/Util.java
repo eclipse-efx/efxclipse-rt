@@ -86,7 +86,6 @@ public class Util {
 		return ctx;
 	}
 
-	@SuppressWarnings("null")
 	private static <S> @Nullable S _lookupService(
 			@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
 		List<@NonNull S> _lookupServiceList = _lookupServiceList(requestor, serviceClass);
@@ -188,7 +187,6 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	@SuppressWarnings("null")
 	public static <S> @Nullable S lookupService(@NonNull Class<?> requestor,
 			@NonNull Class<S> serviceClass) {
 		return _lookupService(requestor, serviceClass);
@@ -202,7 +200,6 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	@SuppressWarnings("null")
 	public static <S> @Nullable S lookupService(@NonNull Class<S> serviceClass) {
 		return _lookupService(null, serviceClass);
 	}
@@ -218,7 +215,6 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	@SuppressWarnings("null")
 	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor,
 			@NonNull Class<S> serviceClass) {
 		return _lookupServiceList(requestor, serviceClass);
@@ -232,7 +228,6 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	@SuppressWarnings("null")
 	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<S> serviceClass) {
 		return _lookupServiceList(null, serviceClass);
 	}
