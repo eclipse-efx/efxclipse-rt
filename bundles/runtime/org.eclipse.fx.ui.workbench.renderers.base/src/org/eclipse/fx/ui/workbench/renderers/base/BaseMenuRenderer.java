@@ -209,7 +209,7 @@ public abstract class BaseMenuRenderer<N> extends BaseItemContainerRenderer<MMen
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
 
-			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+			if (element.isToBeRendered() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
 		}
@@ -226,7 +226,7 @@ public abstract class BaseMenuRenderer<N> extends BaseItemContainerRenderer<MMen
 			// c.getContributionURI());
 			// continue;
 			// }
-			if (element.isToBeRendered() && element.isVisible()) {
+			if (element.isToBeRendered()) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
 				} else {
@@ -238,7 +238,7 @@ public abstract class BaseMenuRenderer<N> extends BaseItemContainerRenderer<MMen
 
 	@Override
 	public void do_childRendered(@NonNull MMenu parentElement, @NonNull MUIElement element) {
-		if (inContentProcessing(parentElement)) {
+		if (inContentProcessing(parentElement) || ! isChildAndRenderedVisible(element)) {
 			return;
 		}
 
