@@ -147,7 +147,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 		for (MPartSashContainerElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WLayoutedWidget<MPartSashContainerElement> widget = engineCreateWidget(e);
-				if (widget != null && isChildAndRenderedVisible(e)) {
+				if (widget != null && isChildRenderedAndVisible(e)) {
 					list.add(widget);
 				}
 			}
@@ -183,7 +183,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 	@SuppressWarnings("null")
 	@Override
 	public void childRendered(MCompositePart parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement)) {
+		if (inContentProcessing(parentElement) || ! isChildRenderedAndVisible(element)) {
 			return;
 		}
 
@@ -224,7 +224,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 		while (iterator.hasNext()) {
 			MUIElement element = iterator.next();
 
-			if (element.isToBeRendered() && element.isVisible()) {
+			if (element.isToBeRendered()) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
 				} else {
@@ -239,7 +239,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 		Iterator<MPartSashContainerElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MPartSashContainerElement element = iterator.next();
-			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+			if (element.isToBeRendered() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
 		}

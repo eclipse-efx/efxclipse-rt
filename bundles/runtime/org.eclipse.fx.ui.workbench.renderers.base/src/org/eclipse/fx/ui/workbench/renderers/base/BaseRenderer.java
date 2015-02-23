@@ -731,7 +731,11 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		List<MUIElement> list = (List<MUIElement>) container.eGet(eElement.eContainmentFeature());
 		int idx = 0;
 		for (MUIElement u : list) {
-			if (isChildAndRenderedVisible(u)) {
+			if( u == null ) {
+				getLogger().error("Found a null element in " + list); //$NON-NLS-1$
+				continue;
+			}
+			if (isChildRenderedAndVisible(u)) {
 				if (u == element) {
 					return idx;
 				}
@@ -748,7 +752,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the element
 	 * @return <code>true</code> if item is to be shown
 	 */
-	protected boolean isChildAndRenderedVisible(MUIElement u) {
+	@Override
+	public boolean isChildRenderedAndVisible(@NonNull MUIElement u) {
 		return u.isToBeRendered() && u.isVisible() && getVisibleWhen(u, getModelContext(u));
 	}
 

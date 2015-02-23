@@ -182,7 +182,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		for (MPerspective e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
 			ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(e);
-			if (renderer != null && isChildAndRenderedVisible(e)) {
+			if (renderer != null && isChildRenderedAndVisible(e)) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
 
@@ -260,7 +260,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		while (i.hasNext()) {
 			MPerspective element = i.next();
 
-			if (element.isToBeRendered() && element.isVisible()) {
+			if (element.isToBeRendered()) {
 				int idx = getRenderedIndex(parent, element);
 
 				ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(element);
@@ -274,7 +274,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		Iterator<MPerspective> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MPerspective element = iterator.next();
-			if (element.isToBeRendered() && element.isVisible()) {
+			if (element.isToBeRendered()) {
 				hideChild(parent, element);
 			}
 
@@ -316,7 +316,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 	@SuppressWarnings("null")
 	@Override
 	public void childRendered(MPerspectiveStack parentElement, MUIElement element) {
-		if (this.inLazyInit || inContentProcessing(parentElement) || !element.isVisible()) {
+		if (this.inLazyInit || inContentProcessing(parentElement) || !isChildRenderedAndVisible(element)) {
 			return;
 		}
 
@@ -400,6 +400,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		}
 	}
 
+	@SuppressWarnings("null")
 	private void showElementRecursive(MUIElement pElement) {
 		MUIElement element = pElement;
 		if (!element.isToBeRendered()) {
@@ -434,8 +435,10 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		if (element instanceof MWindow && element.getWidget() != null) {
 			int visCount = 0;
 			for (MUIElement kid : ((MWindow) element).getChildren()) {
-				if (kid.isToBeRendered() && kid.isVisible())
+				if (isWindowChildRendered(kid)) {
 					visCount++;
+				}
+					
 			}
 			if (visCount > 0)
 				element.setVisible(true);
@@ -467,5 +470,14 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 				}
 			}
 		}
+	}
+	
+	private boolean isWindowChildRendered(@NonNull MUIElement kid) {
+		ElementRenderer<?, ?> renderer = this.factory.getRenderer(kid);
+		if( renderer == null ) {
+			return false;
+		}
+		
+		return renderer.isChildRenderedAndVisible(kid);
 	}
 }

@@ -141,7 +141,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		for (MPartSashContainerElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WLayoutedWidget<MPartSashContainerElement> widget = engineCreateWidget(e);
-				if (widget != null && isChildAndRenderedVisible(e)) {
+				if (widget != null && isChildRenderedAndVisible(e)) {
 					list.add(widget);
 				}
 			}
@@ -153,7 +153,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 	@SuppressWarnings("null")
 	@Override
 	public void childRendered(MPartSashContainer parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement)) {
+		if (inContentProcessing(parentElement) || ! isChildRenderedAndVisible(element)) {
 			return;
 		}
 
@@ -194,7 +194,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		while (iterator.hasNext()) {
 			MPartSashContainerElement element = (MPartSashContainerElement) iterator.next();
 
-			if (element.isToBeRendered() && element.isVisible()) {
+			if (element.isToBeRendered()) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
 				} else {
@@ -209,7 +209,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		Iterator<MPartSashContainerElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MPartSashContainerElement element = (MPartSashContainerElement) iterator.next();
-			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+			if (element.isToBeRendered() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
 		}

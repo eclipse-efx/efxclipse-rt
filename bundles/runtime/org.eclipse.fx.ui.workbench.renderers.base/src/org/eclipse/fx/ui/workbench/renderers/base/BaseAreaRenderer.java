@@ -130,7 +130,7 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 	@SuppressWarnings("null")
 	@Override
 	public void childRendered(MArea parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement)) {
+		if (inContentProcessing(parentElement) || ! isChildRenderedAndVisible(element)) {
 			return;
 		}
 
@@ -167,7 +167,7 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 		MUIElement element;
 		while (i.hasNext()) {
 			element = i.next();
-			if (element.isToBeRendered() && element.isVisible()) {
+			if (element.isToBeRendered()) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
 				} else {
@@ -183,7 +183,7 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 		MUIElement element;
 		while (i.hasNext()) {
 			element = i.next();
-			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+			if (element.isToBeRendered() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
 		}

@@ -68,17 +68,20 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 			return;
 		}
 		for (MMenuElement e : element.getChildren()) {
-			@SuppressWarnings("null")
+			if( e == null ) {
+				getLogger().error("Found a null menu element in " + element); //$NON-NLS-1$
+				continue;
+			}
 			WMenuElement<MMenuElement> widget = engineCreateWidget(e);
-			if (widget != null && isChildAndRenderedVisible(e)) {
+			if (widget != null && isChildRenderedAndVisible(e)) {
 				menu.addElement(widget);
 			}
 		}
 	}
 	
 	@Override
-	protected boolean isChildAndRenderedVisible(MUIElement u) {
-		return !(u instanceof MDynamicMenuContribution) && super.isChildAndRenderedVisible(u);
+	public boolean isChildRenderedAndVisible(MUIElement u) {
+		return !(u instanceof MDynamicMenuContribution) && super.isChildRenderedAndVisible(u);
 	}
 
 	@Override
@@ -109,7 +112,7 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 
 	@Override
 	public void childRendered(MMenu parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement) || ! isChildAndRenderedVisible(element)) {
+		if (inContentProcessing(parentElement) || ! isChildRenderedAndVisible(element)) {
 			return;
 		}
 

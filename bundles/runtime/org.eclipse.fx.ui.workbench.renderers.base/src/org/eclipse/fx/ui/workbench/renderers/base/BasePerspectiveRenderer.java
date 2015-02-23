@@ -102,7 +102,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		for (MPartSashContainerElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WLayoutedWidget<MPartSashContainerElement> w = engineCreateWidget(e);
-				if (w != null && isChildAndRenderedVisible(e)) {
+				if (w != null && isChildRenderedAndVisible(e)) {
 					list.add(w);
 				}
 			}
@@ -151,7 +151,7 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void childRendered(MPerspective parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement)) {
+		if (inContentProcessing(parentElement)|| ! isChildRenderedAndVisible(element)) {
 			return;
 		}
 

@@ -189,7 +189,7 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 		for (MMenuElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WMenuElement<MMenuElement> widget = engineCreateWidget(e);
-				if (widget != null && isChildAndRenderedVisible(e)) {
+				if (widget != null && isChildRenderedAndVisible(e)) {
 					menu.addElement(widget);
 				}
 			}
@@ -201,8 +201,11 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
-
-			if (isChildAndRenderedVisible(element) && element.getWidget() != null) {
+			if( element == null ) {
+				getLogger().error("Found a null element in " + elements); //$NON-NLS-1$
+				continue;
+			}
+			if (isChildRenderedAndVisible(element) && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
 		}
@@ -219,7 +222,11 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 			// c.getContributionURI());
 			// continue;
 			// }
-			if (isChildAndRenderedVisible(element)) {
+			if( element == null ) {
+				getLogger().error("Found a null element in " + elements); //$NON-NLS-1$
+				continue;
+			}
+			if (isChildRenderedAndVisible(element)) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
 				} else {
@@ -231,7 +238,7 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 
 	@Override
 	public void do_childRendered(@NonNull MPopupMenu parentElement, @NonNull MUIElement element) {
-		if (inContentProcessing(parentElement)) {
+		if (inContentProcessing(parentElement)|| ! isChildRenderedAndVisible(element)) {
 			return;
 		}
 
@@ -253,8 +260,8 @@ public abstract class BasePopupMenuRenderer<N> extends BaseItemContainerRenderer
 	}
 	
 	@Override
-	protected boolean isChildAndRenderedVisible(MUIElement u) {
-		return super.isChildAndRenderedVisible(u) && !(u instanceof MDynamicMenuContribution);
+	public boolean isChildRenderedAndVisible(MUIElement u) {
+		return super.isChildRenderedAndVisible(u) && !(u instanceof MDynamicMenuContribution);
 	}
 
 	@Override

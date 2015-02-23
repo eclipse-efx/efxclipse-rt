@@ -193,7 +193,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	}
 
 	void handleWindowRemove(@NonNull MWindow parent, @NonNull MWindow element) {
-	    if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+	    if (element.isToBeRendered() && element.getWidget() != null) {
             hideChild(parent, element);
 	    }
 	}
@@ -208,7 +208,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	}
 
 	void handleChildRemove(@NonNull MWindow window, MWindowElement element) {
-		if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+		if (element.isToBeRendered() && element.getWidget() != null) {
 			hideChild(window, element);
 		}
 	}
@@ -308,7 +308,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 		if (element instanceof MTrimmedWindow) {
 			for (MTrimBar tm : ((MTrimmedWindow) element).getTrimBars()) {
-				if (tm.isToBeRendered() && isChildAndRenderedVisible(tm)) {
+				if (tm.isToBeRendered() && isChildRenderedAndVisible(tm)) {
 					WLayoutedWidget<MTrimBar> trimWidget = engineCreateWidget(tm);
 					if (trimWidget != null) {
 						trimWidget.addStyleClasses(tm.getSide().name());
@@ -334,7 +334,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		}
 
 		for (MWindowElement e : element.getChildren()) {
-			if (isChildAndRenderedVisible(e)) {
+			if (isChildRenderedAndVisible(e)) {
 				WLayoutedWidget<MWindowElement> widget = engineCreateWidget(e);
 				if (widget != null) {
 					windowWidget.addChild(widget);
@@ -345,7 +345,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		}
 
 		for (MWindow w : element.getWindows()) {
-			if (isChildAndRenderedVisible(w)) {
+			if (isChildRenderedAndVisible(w)) {
 				WWidget<MWindow> widget = engineCreateWidget(w);
 				if (widget != null) {
 					@SuppressWarnings("unchecked")
@@ -365,7 +365,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		super.postProcess(element);
 		// Only top level windows are shown explicitly
 		if (((EObject) element).eContainer() instanceof MApplication) {
-			if (isChildAndRenderedVisible(element)) {
+			if (isChildRenderedAndVisible(element)) {
 				WWindow<N> window = getWidget(element);
 				if (window != null) {
 					window.show();
@@ -376,7 +376,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 	@Override
 	public void childRendered(MWindow parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement)) {
+		if (inContentProcessing(parentElement)|| ! isChildRenderedAndVisible(element)) {
 			return;
 		}
 

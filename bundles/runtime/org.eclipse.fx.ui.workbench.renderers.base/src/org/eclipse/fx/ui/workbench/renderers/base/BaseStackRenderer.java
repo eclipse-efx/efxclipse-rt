@@ -229,7 +229,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		for (MStackElement e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
 			ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(e);
-			if (renderer != null && isChildAndRenderedVisible(e)) {
+			if (renderer != null && isChildRenderedAndVisible(e)) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
 
@@ -313,7 +313,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		Iterator<MStackElement> i = elements.iterator();
 		while (i.hasNext()) {
 			MStackElement element = (MStackElement) i.next();
-			if (isChildAndRenderedVisible(element)) {
+			if (isChildRenderedAndVisible(element)) {
 				int idx = getRenderedIndex(parent, element);
 
 				ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
@@ -381,7 +381,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		ArrayList<@NonNull WStackItem<I, IC>> resultList = new ArrayList<>();
 		for (WStackItem<I, IC> item : parentWidget.getItems()) {
 			MStackElement domElement = item.getDomElement();
-			if (domElement != null && list.contains(domElement) && (domElement.isToBeRendered()) && (isChildAndRenderedVisible(domElement))) {
+			if (domElement != null && list.contains(domElement) && (domElement.isToBeRendered()) && (isChildRenderedAndVisible(domElement))) {
 				resultList.add(item);
 			}
 		}
@@ -462,7 +462,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	@SuppressWarnings("null")
 	@Override
 	public void childRendered(MPartStack parentElement, MUIElement element) {
-		if (element == null || this.inLazyInit || inContentProcessing(parentElement) || !isChildAndRenderedVisible(element)) {
+		if (element == null || this.inLazyInit || inContentProcessing(parentElement) || !isChildRenderedAndVisible(element)) {
 			return;
 		}
 

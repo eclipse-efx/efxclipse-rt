@@ -54,7 +54,7 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 		for (MTrimElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WLayoutedWidget<MTrimElement> trimElementWidget = engineCreateWidget(e);
-				if (trimElementWidget != null && isChildAndRenderedVisible(e)) {
+				if (trimElementWidget != null && isChildRenderedAndVisible(e)) {
 					trimBar.addChild(trimElementWidget);
 				}
 			}
@@ -63,11 +63,11 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 
 	@Override
 	public void childRendered(MTrimBar parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement)) {
+		if (inContentProcessing(parentElement)|| ! isChildRenderedAndVisible(element)) {
 			return;
 		}
 
-		if (!element.isVisible() || !element.isToBeRendered()) {
+		if (!isChildRenderedAndVisible(element)) {
 			return;
 		}
 
@@ -110,7 +110,7 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 		Iterator<MTrimElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MTrimElement element = iterator.next();
-			if (element.isToBeRendered() && element.isVisible()) {
+			if (element.isToBeRendered()) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
 				} else {
@@ -125,7 +125,7 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 		Iterator<MTrimElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MTrimElement element = iterator.next();
-			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+			if (element.isToBeRendered() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
 		}

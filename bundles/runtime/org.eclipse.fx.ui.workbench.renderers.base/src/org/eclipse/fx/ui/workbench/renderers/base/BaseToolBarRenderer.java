@@ -62,7 +62,7 @@ public abstract class BaseToolBarRenderer<N> extends BaseItemContainerRenderer<M
 		for (MToolBarElement item : element.getChildren()) {
 			if (item.isToBeRendered()) {
 				WWidget<MToolBarElement> itemWidget = engineCreateWidget(item);
-				if (itemWidget != null && isChildAndRenderedVisible(item)) {
+				if (itemWidget != null && isChildRenderedAndVisible(item)) {
 					toolbar.addChild(itemWidget);
 				}
 			}
@@ -71,7 +71,7 @@ public abstract class BaseToolBarRenderer<N> extends BaseItemContainerRenderer<M
 
 	@Override
 	public void do_childRendered(MToolBar parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement)) {
+		if (inContentProcessing(parentElement)|| ! isChildRenderedAndVisible(element)) {
 			return;
 		}
 
@@ -111,7 +111,7 @@ public abstract class BaseToolBarRenderer<N> extends BaseItemContainerRenderer<M
 		Iterator<MToolBarElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MToolBarElement element = iterator.next();
-			if (element.isToBeRendered() && element.isVisible()) {
+			if (element.isToBeRendered() ) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
 				} else {
@@ -126,7 +126,7 @@ public abstract class BaseToolBarRenderer<N> extends BaseItemContainerRenderer<M
 		Iterator<MToolBarElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MToolBarElement element = iterator.next();
-			if (element.isToBeRendered() && element.isVisible() && element.getWidget() != null) {
+			if (element.isToBeRendered() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
 		}
