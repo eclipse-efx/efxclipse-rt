@@ -54,7 +54,7 @@ public abstract class BaseTrimBarRenderer<N> extends BaseRenderer<MTrimBar, WTri
 		for (MTrimElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WLayoutedWidget<MTrimElement> trimElementWidget = engineCreateWidget(e);
-				if (trimElementWidget != null && e.isVisible()) {
+				if (trimElementWidget != null && isChildAndRenderedVisible(e)) {
 					trimBar.addChild(trimElementWidget);
 				}
 			}
