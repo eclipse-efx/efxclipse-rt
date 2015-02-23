@@ -23,6 +23,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Base renderer for a {@link MMenu} representing a menu-bar
@@ -73,6 +74,11 @@ public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBa
 		if (widget instanceof WMenu) {
 			menu.addElement(idx, (WMenu<MMenuElement>) widget);
 		}
+	}
+	
+	@Override
+	public boolean isChildRenderedAndVisible(@NonNull MUIElement u) {
+		return u instanceof MMenu && super.isChildRenderedAndVisible(u);
 	}
 
 	@Override
