@@ -77,6 +77,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
+		//TODO Switch to EventProcessor.attachChildProcessor
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, new EventHandler() {
 
 			@Override
@@ -112,32 +113,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				}
 			}
 		});
-		eventBroker.subscribe(UIEvents.UIElement.TOPIC_VISIBLE, new EventHandler() {
-
-			@Override
-			public void handleEvent(Event event) {
-				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
-				if (changedObj.isToBeRendered()) {
-					MUIElement parent = changedObj.getParent();
-					if (parent != null) {
-						if (BaseStackRenderer.this == parent.getRenderer()) {
-							MPartStack stack = (MPartStack) parent;
-							String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-							if (UIEvents.EventTypes.SET.equals(eventType)) {
-								Boolean newValue = (Boolean) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-								if (newValue.booleanValue()) {
-									// TODO Is childRendered not
-									// dangerous to call here??
-									childRendered(stack, changedObj);
-								} else {
-									hideChild(stack, changedObj);
-								}
-							}
-						}
-					}
-				}
-			}
-		});
+		EventProcessor.attachVisibleProcessor(eventBroker, this);
 	}
 
 	@Nullable
@@ -405,7 +381,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		ArrayList<@NonNull WStackItem<I, IC>> resultList = new ArrayList<>();
 		for (WStackItem<I, IC> item : parentWidget.getItems()) {
 			MStackElement domElement = item.getDomElement();
-			if (domElement != null && list.contains(domElement) && (domElement.isToBeRendered()) && (domElement.isVisible())) {
+			if (domElement != null && list.contains(domElement) && (domElement.isToBeRendered()) && (isChildAndRenderedVisible(domElement))) {
 				resultList.add(item);
 			}
 		}
@@ -486,7 +462,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	@SuppressWarnings("null")
 	@Override
 	public void childRendered(MPartStack parentElement, MUIElement element) {
-		if (element == null || this.inLazyInit || inContentProcessing(parentElement) || !element.isVisible()) {
+		if (element == null || this.inLazyInit || inContentProcessing(parentElement) || !isChildAndRenderedVisible(element)) {
 			return;
 		}
 
