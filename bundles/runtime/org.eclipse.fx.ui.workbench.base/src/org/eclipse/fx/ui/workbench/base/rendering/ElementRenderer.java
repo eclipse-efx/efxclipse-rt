@@ -130,4 +130,13 @@ public interface ElementRenderer<M extends MUIElement, C> {
 	 */
 	public @Nullable C getWidget(@NonNull M element);
 
+	/**
+	 * @param element
+	 *            the ui element
+	 * @return <code>true</code> if the child is rendered and visible (including
+	 *         visibile when checks)
+	 * @since 2.0.0
+	 */
+	public boolean isChildRenderedAndVisible(@NonNull MUIElement element);
+
 }
