@@ -27,7 +27,7 @@ public interface WMenuBar<N> extends WMenuElement<MMenu>, WLayoutedWidget<MMenu>
 	 * @param widget
 	 *            the widget
 	 */
-	void addElement(@NonNull WMenu<MMenuElement> widget);
+	void addElement(@NonNull WMenuElement<MMenuElement> widget);
 
 	/**
 	 * Insert a widget at the given index
@@ -37,7 +37,7 @@ public interface WMenuBar<N> extends WMenuElement<MMenu>, WLayoutedWidget<MMenu>
 	 * @param widget
 	 *            the widget
 	 */
-	void addElement(int idx, @NonNull WMenu<MMenuElement> widget);
+	void addElement(int idx, @NonNull WMenuElement<MMenuElement> widget);
 
 	/**
 	 * Remove widget

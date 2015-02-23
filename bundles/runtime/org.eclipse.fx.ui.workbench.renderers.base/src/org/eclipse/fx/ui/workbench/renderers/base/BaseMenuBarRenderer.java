@@ -19,8 +19,8 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MMenuItem;
 import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.jdt.annotation.NonNull;
@@ -43,15 +43,15 @@ public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBa
 	@Override
 	public void doProcessContent(MMenu element) {
 		WMenuBar<N> menuBar = getWidget(element);
-		if( menuBar == null ) {
-			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		if (menuBar == null) {
+			getLogger().error("No widget found for '" + element + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
 		for (MMenuElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				Object widget = engineCreateWidget(e);
-				if (widget instanceof WMenu && isChildRenderedAndVisible(e)) {
-					menuBar.addElement((WMenu<MMenuElement>) widget);
+				if (widget != null && isChildRenderedAndVisible(e)) {
+					menuBar.addElement((WMenuElement<MMenuElement>) widget);
 				}
 			}
 		}
@@ -60,25 +60,42 @@ public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBa
 	@SuppressWarnings("unchecked")
 	@Override
 	public void childRendered(MMenu parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement) || ! isChildRenderedAndVisible(element)) {
+		if (inContentProcessing(parentElement) || !isChildRenderedAndVisible(element)) {
 			return;
 		}
 
 		int idx = getRenderedIndex(parentElement, element);
 		WMenuBar<N> menu = getWidget(parentElement);
-		if( menu == null ) {
-			getLogger().error("No widget for '"+menu+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		if (menu == null) {
+			getLogger().error("No widget for '" + menu + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
 		Object widget = (WMenuElement<MMenuElement>) element.getWidget();
-		if (widget instanceof WMenu) {
-			menu.addElement(idx, (WMenu<MMenuElement>) widget);
+		if (widget != null) {
+			menu.addElement(idx, (WMenuElement<MMenuElement>) widget);
 		}
 	}
-	
+
 	@Override
 	public boolean isChildRenderedAndVisible(@NonNull MUIElement u) {
-		return u instanceof MMenu && super.isChildRenderedAndVisible(u);
+		return isChildElementAllowed(u) && super.isChildRenderedAndVisible(u);
+	}
+
+	/**
+	 * Check if the element is allowed as a child of the {@link WMenuBar}
+	 * <p>
+	 * The default implementation only allows children of type {@link MMenu} but
+	 * subclasses my overwrite if their control supports direct placement of
+	 * {@link MMenuItem}
+	 * </p>
+	 * 
+	 * @param u
+	 *            the element
+	 * @return <code>true</code> if element is allowed as a child
+	 */
+	@SuppressWarnings("static-method")
+	protected boolean isChildElementAllowed(@NonNull MUIElement u) {
+		return u instanceof MMenu;
 	}
 
 	@Override
@@ -101,7 +118,7 @@ public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBa
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
-			if (element.isToBeRendered()) {
+			if (element.isToBeRendered() && isChildElementAllowed(element)) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
 				} else {
