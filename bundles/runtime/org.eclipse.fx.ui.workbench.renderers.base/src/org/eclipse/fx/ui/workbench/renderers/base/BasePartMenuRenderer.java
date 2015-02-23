@@ -10,46 +10,151 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
-import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.di.AboutToHide;
+import org.eclipse.e4.ui.di.AboutToShow;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MDynamicMenuContribution;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
-import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
+import org.eclipse.fx.core.log.Log;
+import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
+import org.eclipse.fx.ui.workbench.services.ELifecycleService;
+import org.eclipse.fx.ui.workbench.services.lifecycle.annotation.PreClose;
+import org.eclipse.fx.ui.workbench.services.lifecycle.annotation.PreShow;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Base renderer for part menus
  * 
  * @param <N>
  */
-public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<N>> implements ChildrenHandler<MMenu, MMenuElement> {
+@SuppressWarnings("restriction")
+public abstract class BasePartMenuRenderer<N> extends BaseItemContainerRenderer<MMenu,MMenuElement, WMenu<N>> {
 
-	@PostConstruct
-	void init(IEventBroker eventBroker) {
-		EventProcessor.attachChildProcessor(eventBroker, this);
-		EventProcessor.attachVisibleProcessor(eventBroker, this);
+	@Inject
+	ELifecycleService lifecycleService;
+
+	
+	@Inject
+	private IContributionFactory contributionFactory;
+
+	@Log
+	@Inject
+	private Logger logger;
+
+	private static final String DYNAMIC_MENU_CONTRIBUTION = "DYNAMIC_MENU_CONTRIBUTION"; //$NON-NLS-1$
+
+	private Set<MMenu> currentVisibleMenus = new HashSet<>();
+
+	@Override
+	protected void do_init(@NonNull IEventBroker broker) {
+		// nothing to be done
 	}
-
+	
 	@Override
 	protected void initWidget(final MMenu element, WMenu<N> widget) {
 		super.initWidget(element, widget);
-		widget.setShowingCallback(new Runnable() {
+		widget.setShowingCallback( () -> handleShowing(element));
+		widget.setHidingCallback( () -> handleHiding(element));
+	}
+	
+	@SuppressWarnings("null")
+	void handleHiding(@NonNull MMenu element) {
+		this.currentVisibleMenus.remove(element);
+		IEclipseContext modelContext = getModelContext(element);
+		if( modelContext == null ) {
+			getLogger().error("Model context is null"); //$NON-NLS-1$
+			return;
+		}
+		IEclipseContext context = modelContext.createChild("lifecycle"); //$NON-NLS-1$
+		context.set(MMenu.class, element);
+		BasePartMenuRenderer.this.lifecycleService.validateAnnotation(PreClose.class, element, context);
 
-			@Override
-			public void run() {
-				handleShowing(element);
+		for (MMenuElement e : element.getChildren().toArray(new MMenuElement[0])) {
+			if (e instanceof MDynamicMenuContribution) {
+				MDynamicMenuContribution dc = (MDynamicMenuContribution) e;
+
+				Object contrib = dc.getObject();
+				if (contrib != null) {
+					@SuppressWarnings("unchecked")
+					List<MMenuElement> previous = (List<MMenuElement>) dc.getTransientData().remove(DYNAMIC_MENU_CONTRIBUTION);
+					context.set(List.class, previous);
+					try {
+						ContextInjectionFactory.invoke(contrib, AboutToHide.class, context, null);
+
+						if (previous != null && !previous.isEmpty()) {
+							element.getChildren().removeAll(previous);
+						}
+					} catch (Throwable t) {
+						getLogger().debug("Unable to process the AboutToHide", t); //$NON-NLS-1$
+					}
+
+				}
 			}
-		});
+		}
+
+		context.dispose();
 	}
 
-	static void handleShowing(MMenu element) {
+	@SuppressWarnings("null")
+	void handleShowing(@NonNull MMenu element) {
+		this.currentVisibleMenus.add(element);
+		IEclipseContext modelContext = getModelContext(element);
+		if( modelContext == null ) {
+			getLogger().error("The model context is null"); //$NON-NLS-1$
+			return;
+		}
+		IEclipseContext context = modelContext.createChild("lifecycle"); //$NON-NLS-1$
+		context.set(MMenu.class, element);
+		this.lifecycleService.validateAnnotation(PreShow.class, element, context);
+
+		// we iterate of the copy because it is modified in between
+		for (MMenuElement e : element.getChildren().toArray(new MMenuElement[0])) {
+			if (e instanceof MDynamicMenuContribution) {
+				MDynamicMenuContribution dc = (MDynamicMenuContribution) e;
+				if (dc.getObject() == null && dc.getContributionURI() != null) {
+					try {
+						// TODO On which context should we create the instance,
+						// would
+						dc.setObject(this.contributionFactory.create(dc.getContributionURI(), context));
+					} catch (Throwable t) {
+						getLogger().debug("Unable to create contribution", t); //$NON-NLS-1$
+					}
+				}
+
+				Object contrib = dc.getObject();
+				if (contrib != null) {
+					List<MMenuElement> list = new ArrayList<MMenuElement>();
+					context.set(List.class, list);
+					try {
+						ContextInjectionFactory.invoke(contrib, AboutToShow.class, context, null);
+
+						int idx = element.getChildren().indexOf(e);
+						element.getChildren().addAll(idx, list);
+						dc.getTransientData().put(DYNAMIC_MENU_CONTRIBUTION, list);
+					} catch (Throwable t) {
+						getLogger().debug("Unable to process AboutToShow", t); //$NON-NLS-1$
+					}
+
+				}
+			}
+		}
+
 		for (MMenuElement e : element.getChildren()) {
 			if (e.getRenderer() instanceof BaseItemRenderer) {
 				@SuppressWarnings("unchecked")
@@ -57,6 +162,18 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 				r.checkEnablement(e);
 			}
 		}
+
+		context.dispose();
+	}
+
+	@Override
+	protected boolean skipEnablementCheck() {
+		return this.currentVisibleMenus.isEmpty();
+	}
+	
+	@Override
+	protected boolean isShowing(MMenuElement item) {
+		return this.currentVisibleMenus.contains(item.getParent());
 	}
 
 	@Override
@@ -67,28 +184,23 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
+		
 		for (MMenuElement e : element.getChildren()) {
-			if( e == null ) {
-				getLogger().error("Found a null menu element in " + element); //$NON-NLS-1$
-				continue;
-			}
-			WMenuElement<MMenuElement> widget = engineCreateWidget(e);
-			if (widget != null && isChildRenderedAndVisible(e)) {
-				menu.addElement(widget);
+			if (e.isToBeRendered()) {
+				WMenuElement<MMenuElement> widget = engineCreateWidget(e);
+				if (widget != null && isChildRenderedAndVisible(e)) {
+					menu.addElement(widget);
+				}
 			}
 		}
 	}
-	
-	@Override
-	public boolean isChildRenderedAndVisible(MUIElement u) {
-		return !(u instanceof MDynamicMenuContribution) && super.isChildRenderedAndVisible(u);
-	}
 
 	@Override
-	public void handleChildrenRemove(MMenu parent, Collection<MMenuElement> elements) {
+	public void handleChildrenRemove(@NonNull MMenu parent, @NonNull Collection<@NonNull MMenuElement> elements) {
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
+
 			if (element.isToBeRendered() && element.getWidget() != null) {
 				hideChild(parent, element);
 			}
@@ -100,6 +212,12 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 		Iterator<MMenuElement> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			MMenuElement element = iterator.next();
+			// if (element instanceof MDynamicMenuContribution) {
+			// MDynamicMenuContribution c = (MDynamicMenuContribution) element;
+			// lifecycleService.registerLifecycleURI(element,
+			// c.getContributionURI());
+			// continue;
+			// }
 			if (element.isToBeRendered()) {
 				if (element.getWidget() == null) {
 					engineCreateWidget(element);
@@ -111,7 +229,7 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 	}
 
 	@Override
-	public void childRendered(MMenu parentElement, MUIElement element) {
+	public void do_childRendered(@NonNull MMenu parentElement, @NonNull MUIElement element) {
 		if (inContentProcessing(parentElement) || ! isChildRenderedAndVisible(element)) {
 			return;
 		}
@@ -119,20 +237,27 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 		int idx = getRenderedIndex(parentElement, element);
 		WMenu<N> menu = getWidget(parentElement);
 		if( menu == null ) {
-			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			getLogger().error("No widget found for '"+parentElement+"'");  //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
+		
 		@SuppressWarnings("unchecked")
 		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
 		if( menuElement != null ) {
-			menu.addElement(idx, menuElement);
+			menu.addElement(idx, menuElement);	
 		} else {
-			getLogger().error("The widget of element '"+element+"' is null");  //$NON-NLS-1$//$NON-NLS-2$
+			getLogger().error("The widget of the element '"+element+"' is null");  //$NON-NLS-1$//$NON-NLS-2$
 		}
+		
+	}
+	
+	@Override
+	public boolean isChildRenderedAndVisible(MUIElement u) {
+		return super.isChildRenderedAndVisible(u) && !(u instanceof MDynamicMenuContribution);
 	}
 
 	@Override
-	public void hideChild(MMenu container, MUIElement changedObj) {
+	public void do_hideChild(MMenu container, MUIElement changedObj) {
 		WMenu<N> menu = getWidget(container);
 
 		if (menu == null) {
