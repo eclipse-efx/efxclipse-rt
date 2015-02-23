@@ -62,7 +62,7 @@ public abstract class BaseToolBarRenderer<N> extends BaseItemContainerRenderer<M
 		for (MToolBarElement item : element.getChildren()) {
 			if (item.isToBeRendered()) {
 				WWidget<MToolBarElement> itemWidget = engineCreateWidget(item);
-				if (itemWidget != null && item.isVisible()) {
+				if (itemWidget != null && isChildAndRenderedVisible(item)) {
 					toolbar.addChild(itemWidget);
 				}
 			}
