@@ -96,34 +96,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 				}
 			}
 		});
-		eventBroker.subscribe(UIEvents.UIElement.TOPIC_VISIBLE, new EventHandler() {
-
-			@Override
-			public void handleEvent(Event event) {
-				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
-				if (changedObj.isToBeRendered()) {
-					MUIElement parent = changedObj.getParent();
-					// Can be null for e.g. detached windows!!!
-					if (parent != null) {
-						if (BasePerspectiveStackRenderer.this == parent.getRenderer()) {
-							MPerspectiveStack stack = (MPerspectiveStack) parent;
-							String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-							if (UIEvents.EventTypes.SET.equals(eventType)) {
-								Boolean newValue = (Boolean) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-								if (newValue.booleanValue()) {
-									// TODO Is childRendered not
-									// dangerous to call
-									// here??
-									childRendered(stack, changedObj);
-								} else {
-									hideChild(stack, changedObj);
-								}
-							}
-						}
-					}
-				}
-			}
-		});
+		EventProcessor.attachVisibleProcessor(eventBroker, this);
 	}
 
 	@Override

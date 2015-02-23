@@ -78,33 +78,7 @@ public abstract class BaseAreaRenderer<N> extends BaseRenderer<MArea, WArea<N>> 
 				}
 			}
 		});
-		eventBroker.subscribe(UIEvents.UIElement.TOPIC_VISIBLE, new EventHandler() {
-
-			@Override
-			public void handleEvent(Event event) {
-				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
-				if (changedObj.isToBeRendered()) {
-					MUIElement parent = changedObj.getParent();
-					if (parent != null) {
-						if (BaseAreaRenderer.this == parent.getRenderer()) {
-							MArea stack = (MArea) parent;
-							String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-							if (UIEvents.EventTypes.SET.equals(eventType)) {
-								Boolean newValue = (Boolean) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-								if (newValue.booleanValue()) {
-									// TODO Is childRendered not
-									// dangerous to call
-									// here??
-									childRendered(stack, changedObj);
-								} else {
-									hideChild(stack, changedObj);
-								}
-							}
-						}
-					}
-				}
-			}
-		});
+		EventProcessor.attachVisibleProcessor(eventBroker, this);
 	}
 
 	@Override

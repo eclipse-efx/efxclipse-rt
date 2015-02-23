@@ -157,10 +157,11 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		registerEventListener(eventBroker, UIEvents.Window.TOPIC_HEIGHT);
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LABEL);
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_TOOLTIP);
-		registerEventListener(eventBroker, UIEvents.UIElement.TOPIC_VISIBLE);
+		registerEventListener(eventBroker, UIEvents.UIElement.TOPIC_VISIBLE); // This is to check our own visible flag
 		
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, this::handleChildrenEvent);
 		eventBroker.subscribe(UIEvents.Window.TOPIC_WINDOWS, this::handleChildrenEvent);
+		EventProcessor.attachVisibleProcessor(eventBroker, this); // this is for our children that come and go
 	}
 
 	void handleChildrenEvent(Event event) {

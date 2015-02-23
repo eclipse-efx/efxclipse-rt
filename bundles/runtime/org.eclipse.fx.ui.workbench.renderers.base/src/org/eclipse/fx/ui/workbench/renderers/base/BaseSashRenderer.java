@@ -81,33 +81,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 				}
 			}
 		});
-		eventBroker.subscribe(UIEvents.UIElement.TOPIC_VISIBLE, new EventHandler() {
-
-			@Override
-			public void handleEvent(Event event) {
-				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
-				if (changedObj.isToBeRendered()) {
-					MUIElement parent = changedObj.getParent();
-					if (parent != null) {
-						if (BaseSashRenderer.this == parent.getRenderer()) {
-							MPartSashContainer stack = (MPartSashContainer) parent;
-							String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-							if (UIEvents.EventTypes.SET.equals(eventType)) {
-								Boolean newValue = (Boolean) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-								if (newValue.booleanValue()) {
-									// TODO Is childRendered not
-									// dangerous to call
-									// here??
-									childRendered(stack, changedObj);
-								} else {
-									hideChild(stack, changedObj);
-								}
-							}
-						}
-					}
-				}
-			}
-		});
+		EventProcessor.attachVisibleProcessor(eventBroker, this);
 		eventBroker.subscribe(UIEvents.UIElement.TOPIC_CONTAINERDATA, new EventHandler() {
 			
 			@Override

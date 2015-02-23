@@ -24,7 +24,6 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.workbench.UIEvents;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
@@ -100,30 +99,7 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 			}
 		});
 
-		eventBroker.subscribe(UIEvents.UIElement.TOPIC_VISIBLE, new EventHandler() {
-
-			@Override
-			public void handleEvent(Event event) {
-				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
-				if (changedObj.isToBeRendered()) {
-					MUIElement parent = (MUIElement) ((EObject) changedObj).eContainer();
-					if (parent != null) {
-						if (BasePartRenderer.this == parent.getRenderer()) {
-							MPart part = (MPart) parent;
-							String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-							if (UIEvents.EventTypes.SET.equals(eventType)) {
-								Boolean newValue = (Boolean) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-								if (newValue.booleanValue()) {
-									childRendered(part, changedObj);
-								} else {
-									hideChild(part, changedObj);
-								}
-							}
-						}
-					}
-				}
-			}
-		});
+		EventProcessor.attachVisibleProcessor(eventBroker, this);
 	}
 
 	@Override
