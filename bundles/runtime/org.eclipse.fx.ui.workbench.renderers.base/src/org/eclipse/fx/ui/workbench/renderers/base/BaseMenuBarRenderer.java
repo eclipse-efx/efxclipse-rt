@@ -93,9 +93,12 @@ public abstract class BaseMenuBarRenderer<N> extends BaseRenderer<MMenu, WMenuBa
 	 *            the element
 	 * @return <code>true</code> if element is allowed as a child
 	 */
-	@SuppressWarnings("static-method")
 	protected boolean isChildElementAllowed(@NonNull MUIElement u) {
-		return u instanceof MMenu;
+		if( !(u instanceof MMenu) ) {
+			getLogger().info(getClass() + " does not allow an element of type '"+u.getClass()+"' as its child" );  //$NON-NLS-1$//$NON-NLS-2$
+			return false;
+		}
+		return true;
 	}
 
 	@Override
