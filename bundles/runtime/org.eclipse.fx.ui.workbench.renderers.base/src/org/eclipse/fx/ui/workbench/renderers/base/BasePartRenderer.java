@@ -257,7 +257,7 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 
 	@Override
 	public void childRendered(MPart parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement) || !element.isVisible()) {
+		if (inContentProcessing(parentElement) || !isChildAndRenderedVisible(element)) {
 			return;
 		}
 
