@@ -141,7 +141,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 		for (MPartSashContainerElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WLayoutedWidget<MPartSashContainerElement> widget = engineCreateWidget(e);
-				if (widget != null && e.isVisible()) {
+				if (widget != null && isChildAndRenderedVisible(e)) {
 					list.add(widget);
 				}
 			}

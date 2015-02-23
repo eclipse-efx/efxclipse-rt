@@ -147,7 +147,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 		for (MPartSashContainerElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WLayoutedWidget<MPartSashContainerElement> widget = engineCreateWidget(e);
-				if (widget != null && e.isVisible()) {
+				if (widget != null && isChildAndRenderedVisible(e)) {
 					list.add(widget);
 				}
 			}

@@ -182,7 +182,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		for (MPerspective e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
 			ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(e);
-			if (renderer != null && e.isToBeRendered() && e.isVisible()) {
+			if (renderer != null && isChildAndRenderedVisible(e)) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
 

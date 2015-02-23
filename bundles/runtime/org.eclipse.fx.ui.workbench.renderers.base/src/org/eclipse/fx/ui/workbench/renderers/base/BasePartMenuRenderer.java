@@ -17,6 +17,7 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MDynamicMenuContribution;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.base.EventProcessor.ChildrenHandler;
@@ -69,10 +70,15 @@ public abstract class BasePartMenuRenderer<N> extends BaseRenderer<MMenu, WMenu<
 		for (MMenuElement e : element.getChildren()) {
 			@SuppressWarnings("null")
 			WMenuElement<MMenuElement> widget = engineCreateWidget(e);
-			if (widget != null && e.isVisible()) {
+			if (widget != null && isChildAndRenderedVisible(e)) {
 				menu.addElement(widget);
 			}
 		}
+	}
+	
+	@Override
+	protected boolean isChildAndRenderedVisible(MUIElement u) {
+		return !(u instanceof MDynamicMenuContribution) && super.isChildAndRenderedVisible(u);
 	}
 
 	@Override

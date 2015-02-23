@@ -308,7 +308,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 		if (element instanceof MTrimmedWindow) {
 			for (MTrimBar tm : ((MTrimmedWindow) element).getTrimBars()) {
-				if (tm.isToBeRendered() && tm.isVisible()) {
+				if (tm.isToBeRendered() && isChildAndRenderedVisible(tm)) {
 					WLayoutedWidget<MTrimBar> trimWidget = engineCreateWidget(tm);
 					if (trimWidget != null) {
 						trimWidget.addStyleClasses(tm.getSide().name());
@@ -334,7 +334,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		}
 
 		for (MWindowElement e : element.getChildren()) {
-			if (e.isToBeRendered() && e.isVisible()) {
+			if (isChildAndRenderedVisible(e)) {
 				WLayoutedWidget<MWindowElement> widget = engineCreateWidget(e);
 				if (widget != null) {
 					windowWidget.addChild(widget);
@@ -345,7 +345,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		}
 
 		for (MWindow w : element.getWindows()) {
-			if (w.isVisible() && w.isToBeRendered()) {
+			if (isChildAndRenderedVisible(w)) {
 				WWidget<MWindow> widget = engineCreateWidget(w);
 				if (widget != null) {
 					@SuppressWarnings("unchecked")
@@ -365,7 +365,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		super.postProcess(element);
 		// Only top level windows are shown explicitly
 		if (((EObject) element).eContainer() instanceof MApplication) {
-			if (element.isVisible()) {
+			if (isChildAndRenderedVisible(element)) {
 				WWindow<N> window = getWidget(element);
 				if (window != null) {
 					window.show();
