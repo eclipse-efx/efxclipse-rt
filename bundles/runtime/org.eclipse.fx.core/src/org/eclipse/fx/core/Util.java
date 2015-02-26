@@ -153,6 +153,9 @@ public class Util {
 			try {
 				@SuppressWarnings("unchecked")
 				ServiceReference<S>[] serviceReferences = (ServiceReference<S>[]) ctx.getServiceReferences(serviceClass.getName(), null);
+				if( serviceReferences == null ) {
+					return Collections.emptyList();
+				}
 				return Stream.of(serviceReferences).map( r -> new CompareableService<>(r,ctx.getService(r))).sorted().map(s -> s.instance).collect(Collectors.toList());
 			} catch (InvalidSyntaxException e) {
 				throw new IllegalStateException(e);
