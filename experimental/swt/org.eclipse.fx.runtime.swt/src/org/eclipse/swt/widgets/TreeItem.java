@@ -126,6 +126,10 @@ public class TreeItem extends Item {
 	public javafx.scene.control.TreeItem<TreeItem> internal_getNativeObject() {
 		return nativeObject;
 	}
+	
+	public void removeAll() {
+		nativeObject.getChildren().clear();
+	}
 
 	@Override
 	public void setText(String string) {
@@ -479,4 +483,5 @@ public class TreeItem extends Item {
 		IMAGE,
 		CHECK
 	}
+
 }
