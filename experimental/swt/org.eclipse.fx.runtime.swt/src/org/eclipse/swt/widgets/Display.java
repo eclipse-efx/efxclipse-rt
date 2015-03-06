@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -46,7 +45,6 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.internal.Util;
 
 import com.sun.glass.ui.Robot;
-import com.sun.javafx.scene.control.skin.TabPaneSkin;
 import com.sun.javafx.tk.Toolkit;
 
 @SuppressWarnings("restriction")
@@ -796,6 +794,10 @@ public class Display extends Device {
 	}
 
 	public void setSynchronizer(Synchronizer synchronizer) {
+		Util.logNotImplemented();
+	}
+
+	public void close() {
 		Util.logNotImplemented();
 	}
 }
