@@ -70,7 +70,7 @@ public class StyledText extends Canvas {
 	}
 
 	private static org.eclipse.fx.ui.controls.styledtext.StyleRange toFXRange(StyleRange swtRange) {
-		TextStyle fxTextStyle = new TextStyle();
+		TextStyle fxTextStyle = new TextStyle("swtRange");
 		fxTextStyle.background = swtRange.background != null ? swtRange.background.internal_getNativeObject() : null;
 		fxTextStyle.borderColor = swtRange.borderColor != null ? swtRange.borderColor.internal_getNativeObject() : null;
 		fxTextStyle.borderStyle = swtRange.borderStyle;
