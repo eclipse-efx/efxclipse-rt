@@ -22,6 +22,7 @@ import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.operations.UpdateOperation;
 import org.eclipse.fx.core.Callback;
+import org.eclipse.fx.core.ReturnValue;
 import org.eclipse.fx.core.ReturnValue.State;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
@@ -42,16 +43,21 @@ public class UpdateServiceImpl implements UpdateService {
 		@Nullable
 		public final UpdateOperation updateOperation;
 
-		public P2UpdateCheckRV(@Nullable UpdateOperation updateOperation, @NonNull State state, @NonNull String message, @NonNull Boolean value, @Nullable Throwable throwable) {
-			super(state, message, value, throwable);
+		public P2UpdateCheckRV(int code, @Nullable UpdateOperation updateOperation, @NonNull State state, @NonNull String message, @NonNull Boolean value, @Nullable Throwable throwable) {
+			super(state, code, message, value, throwable);
 			this.updateOperation = updateOperation;
+		}
+		
+		@Override
+		public boolean nothingToUpdate() {
+			return getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE;
 		}
 	}
 
 	static class P2UpdateRV extends ReturnValueImpl<Boolean> implements UpdateData {
 
-		public P2UpdateRV(@NonNull State state, @NonNull String message, @NonNull Boolean value, @Nullable Throwable throwable) {
-			super(state, message, value, throwable);
+		public P2UpdateRV(int code, @NonNull State state, @NonNull String message, @NonNull Boolean value, @Nullable Throwable throwable) {
+			super(state, code, message, value, throwable);
 		}
 	}
 
@@ -114,7 +120,7 @@ public class UpdateServiceImpl implements UpdateService {
 				public void done(IJobChangeEvent event) {
 					IStatus s = event.getResult();
 					State state = fromStatus(s);
-					callback.call(new P2UpdateRV(state, s.getMessage(), Boolean.valueOf(State.OK == state), s.getException()));
+					callback.call(new P2UpdateRV(s.getCode(), state, s.getMessage(), Boolean.valueOf(State.OK == state), s.getException()));
 				}
 			});
 			job.schedule();
@@ -150,14 +156,14 @@ public class UpdateServiceImpl implements UpdateService {
 					UpdateOperation o = new UpdateOperation(session);
 					IStatus s = o.resolveModal(monitor);
 					State state = fromStatus(s);
-					callback.call(new P2UpdateCheckRV(o, state, s.getMessage(), Boolean.valueOf(state == State.OK), s.getException()));
+					callback.call(new P2UpdateCheckRV(s.getCode(), o, state, s.getMessage(), Boolean.valueOf(state == State.OK), s.getException()));
 					return Status.OK_STATUS;
 				}
 			};
 			o.schedule();
 		} catch (ProvisionException e) {
 			getLogger().error("Unable to provision", e); //$NON-NLS-1$
-			callback.call(new P2UpdateCheckRV(null, State.ERROR, "Failure while try to collect updateable units", Boolean.FALSE, e)); //$NON-NLS-1$
+			callback.call(new P2UpdateCheckRV(ReturnValue.UNKNOWN_RETURN_CODE, null, State.ERROR, "Failure while try to collect updateable units", Boolean.FALSE, e)); //$NON-NLS-1$
 		}
 	}
 

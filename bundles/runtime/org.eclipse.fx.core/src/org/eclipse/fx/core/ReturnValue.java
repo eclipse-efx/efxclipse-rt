@@ -21,6 +21,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public interface ReturnValue<V> {
 	/**
+	 * default code when unknown
+	 */
+	public static final int UNKNOWN_RETURN_CODE = -1;
+
+	/**
 	 * @return the state
 	 */
 	@NonNull
@@ -45,15 +50,37 @@ public interface ReturnValue<V> {
 	public Throwable getThrowable();
 
 	/**
+	 * @return return value specific (error/success) code or
+	 *         {@link #UNKNOWN_RETURN_CODE}
+	 */
+	public int getCode();
+
+	/**
 	 * Create an ok return value
 	 *
 	 * @param value
 	 *            the value
-	 * @return the return value
+	 * @return the return value with {@link ReturnValue#getCode()} ==
+	 *         {@link #UNKNOWN_RETURN_CODE}
 	 * @since 1.2
 	 */
 	public static <V> @NonNull ReturnValue<V> ok(@Nullable V value) {
-		return new ReturnValueImpl<V>(State.OK, null, value, null);
+		return ok(value, UNKNOWN_RETURN_CODE);
+	}
+
+	/**
+	 * Create an ok return value
+	 * 
+	 * @param value
+	 *            the value
+	 * @param code
+	 *            the return value code (if unknown supply
+	 *            {@link #UNKNOWN_RETURN_CODE})
+	 * @return the return value
+	 * @since 2.0
+	 */
+	public static <V> @NonNull ReturnValue<V> ok(@Nullable V value, int code) {
+		return new ReturnValueImpl<V>(State.OK, code, null, value, null);
 	}
 
 	/**
@@ -63,12 +90,30 @@ public interface ReturnValue<V> {
 	 *            the message
 	 * @param error
 	 *            the error
-	 * @return the return value
+	 * @return the return value with {@link ReturnValue#getCode()} ==
+	 *         {@link #UNKNOWN_RETURN_CODE}
 	 * @since 1.2
 	 */
-	public static <V> @NonNull ReturnValue<V> error(@NonNull String message,
-			@NonNull Throwable error) {
-		return new ReturnValueImpl<V>(State.ERROR, message, null, error);
+	public static <V> @NonNull ReturnValue<V> error(@NonNull String message, @NonNull Throwable error) {
+		return error(UNKNOWN_RETURN_CODE, message, error);
+	}
+
+	/**
+	 * Create an error return value
+	 * 
+	 * @param code
+	 *            the return value code (if unknown supply
+	 *            {@link #UNKNOWN_RETURN_CODE})
+	 *
+	 * @param message
+	 *            the message
+	 * @param error
+	 *            the error
+	 * @return the return value
+	 * @since 2.0
+	 */
+	public static <V> @NonNull ReturnValue<V> error(int code, @NonNull String message, @NonNull Throwable error) {
+		return new ReturnValueImpl<V>(State.ERROR, code, message, null, error);
 	}
 
 	/**
@@ -98,10 +143,8 @@ public interface ReturnValue<V> {
 	 *
 	 * @param <V>
 	 *            the value type
-	 * @deprecated use {@link ReturnValue#ok(Object)}
 	 */
-	@Deprecated
-	public static class ReturnValueImpl<V> implements ReturnValue<V> {
+	static class ReturnValueImpl<V> implements ReturnValue<V> {
 		/**
 		 * The state
 		 */
@@ -122,12 +165,18 @@ public interface ReturnValue<V> {
 		 */
 		@Nullable
 		public final V value;
+		/**
+		 * The return code
+		 */
+		public final int code;
 
 		/**
 		 * Create a new return value
 		 *
 		 * @param state
 		 *            the state
+		 * @param code
+		 *            the code
 		 * @param message
 		 *            the message
 		 * @param value
@@ -135,12 +184,12 @@ public interface ReturnValue<V> {
 		 * @param throwable
 		 *            the exception
 		 */
-		public ReturnValueImpl(@NonNull State state, @Nullable String message,
-				@Nullable V value, @Nullable Throwable throwable) {
+		public ReturnValueImpl(@NonNull State state, int code, @Nullable String message, @Nullable V value, @Nullable Throwable throwable) {
 			this.state = state;
 			this.message = message;
 			this.throwable = throwable;
 			this.value = value;
+			this.code = code;
 		}
 
 		@Override
@@ -161,6 +210,11 @@ public interface ReturnValue<V> {
 		@Override
 		public V getValue() {
 			return this.value;
+		}
+
+		@Override
+		public int getCode() {
+			return this.code;
 		}
 	}
 }

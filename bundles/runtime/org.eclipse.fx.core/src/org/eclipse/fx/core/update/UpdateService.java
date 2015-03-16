@@ -40,7 +40,7 @@ public interface UpdateService {
 	 * Basic definition for update callback informations
 	 */
 	interface UpdateCheckData extends ReturnValue<Boolean> {
-		// no methods needed
+		public boolean nothingToUpdate();
 	}
 	
 	/**
