@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * 
  * @param <T>
  *            the type produced when completed successfully
+ * @since 2.0
  */
 public interface CancelableOperation<T> extends Operation<T> {
 	/**

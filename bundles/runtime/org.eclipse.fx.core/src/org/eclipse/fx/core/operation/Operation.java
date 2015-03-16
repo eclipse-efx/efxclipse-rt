@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * 
  * @param <T>
  *            the value produced by the operation
+ * @since 2.0
  */
 public interface Operation<T> {
 	/**
