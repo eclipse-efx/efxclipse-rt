@@ -28,7 +28,6 @@ import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.core.update.UpdateService;
 import org.osgi.framework.ServiceReference;
-import org.eclipse.fx.core.ReturnValue.ReturnValueImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -39,7 +38,7 @@ public class UpdateServiceImpl implements UpdateService {
 	private Logger logger;
 	private LoggerFactory factory;
 
-	static class P2UpdateCheckRV extends ReturnValueImpl<Boolean> implements UpdateCheckData {
+	static class P2UpdateCheckRV extends BaseReturnValue<Boolean> implements UpdateCheckData {
 		@Nullable
 		public final UpdateOperation updateOperation;
 
@@ -54,7 +53,7 @@ public class UpdateServiceImpl implements UpdateService {
 		}
 	}
 
-	static class P2UpdateRV extends ReturnValueImpl<Boolean> implements UpdateData {
+	static class P2UpdateRV extends BaseReturnValue<Boolean> implements UpdateData {
 
 		public P2UpdateRV(int code, @NonNull State state, @NonNull String message, @NonNull Boolean value, @Nullable Throwable throwable) {
 			super(state, code, message, value, throwable);
