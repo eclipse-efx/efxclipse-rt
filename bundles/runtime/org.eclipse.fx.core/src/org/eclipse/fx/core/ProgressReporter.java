@@ -83,5 +83,5 @@ public interface ProgressReporter {
 	 *            the units done
 	 * @return <code>false</code> to cancel the task
 	 */
-	public boolean progress(String taskId, String message, int unitsDone);
+	public boolean progress(@NonNull String taskId, @Nullable String message, int unitsDone);
 }
