@@ -28,14 +28,16 @@ public interface Operation<T> {
 	 * 
 	 * @param consumer
 	 *            consumer invoked
+	 * @return the operation
 	 */
-	public void onComplete(@NonNull Consumer<@Nullable T> consumer);
+	public Operation<T> onComplete(@NonNull Consumer<@Nullable T> consumer);
 
 	/**
 	 * Called when the operation completes with an exception
 	 * 
 	 * @param consumer
 	 *            the consumer invoked
+	 * @return the operation
 	 */
-	public void onException(@NonNull Consumer<@NonNull Throwable> consumer);
+	public Operation<T> onException(@NonNull Consumer<@NonNull Throwable> consumer);
 }
