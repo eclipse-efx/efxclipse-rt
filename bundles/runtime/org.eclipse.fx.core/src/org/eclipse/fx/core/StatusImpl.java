@@ -30,6 +30,10 @@ class StatusImpl implements Status {
 	 */
 	public final int code;
 	
+	/**
+	 * Ok status
+	 */
+	@NonNull
 	public static final Status OK = new StatusImpl(State.OK,-1,"<ok>",null); //$NON-NLS-1$
 
 	/**

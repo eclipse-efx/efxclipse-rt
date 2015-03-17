@@ -11,8 +11,6 @@
 package org.eclipse.fx.core;
 
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -60,6 +58,7 @@ public interface Status {
 	/**
 	 * @return a status representing {@link State#OK}
 	 */
+	@NonNull
 	public static Status ok() {
 		return StatusImpl.OK;
 	}
@@ -77,6 +76,7 @@ public interface Status {
 	 *            the throwable
 	 * @return the new status instance
 	 */
+	@NonNull
 	public static Status status(@NonNull State state, int code, @NonNull String message, @Nullable Throwable t) {
 		return new StatusImpl(state, code, message, t);
 	}

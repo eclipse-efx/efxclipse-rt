@@ -24,6 +24,7 @@ import org.eclipse.equinox.p2.operations.UpdateOperation;
 import org.eclipse.fx.core.ProgressReporter;
 import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.StatusException;
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.function.ExExecutor;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
@@ -107,23 +108,23 @@ public class UpdateServiceImpl implements UpdateService {
 	}
 
 //Why is that not allowed???	
-//	@NonNull
-	private static org.eclipse.fx.core.Status fromStatus(@NonNull IStatus s) {
+	@NonNull
+	static Status fromStatus(@NonNull IStatus s) {
 		switch (s.getSeverity()) {
 		case IStatus.CANCEL:
-			return org.eclipse.fx.core.Status.status(org.eclipse.fx.core.Status.State.CANCEL,s.getCode(),s.getMessage(),s.getException());
+			return Status.status(Status.State.CANCEL,s.getCode(),Util.notNull(s.getMessage(),"<unknown>"),s.getException()); //$NON-NLS-1$
 		case IStatus.ERROR:
-			return org.eclipse.fx.core.Status.status(org.eclipse.fx.core.Status.State.ERROR,s.getCode(),s.getMessage(),s.getException());
+			return Status.status(Status.State.ERROR,s.getCode(),Util.notNull(s.getMessage(),"<unknown>"),s.getException()); //$NON-NLS-1$
 		case IStatus.WARNING:
-			return org.eclipse.fx.core.Status.status(org.eclipse.fx.core.Status.State.WARNING,s.getCode(),s.getMessage(),s.getException());
+			return Status.status(Status.State.WARNING,s.getCode(),Util.notNull(s.getMessage(),"<unknown>"),s.getException()); //$NON-NLS-1$
 		default:
-			return org.eclipse.fx.core.Status.ok();
+			return Status.ok();
 		}
 	}
 	
 	@Override
 	public SimpleCancelableOperation<UpdateCheckData> checkUpdate(ProgressReporter reporter) {
-		IProvisioningAgent agent = ExExecutor.executeSupplier(UpdateServiceImpl::getProvisioningAgent,"Unable to create supplier").get(); //$NON-NLS-1$
+		IProvisioningAgent agent = getProvisioningAgent();
 		final ProvisioningSession session = new ProvisioningSession(agent);
 		ProgressMonitorAdapter a = new ProgressMonitorAdapter(reporter);
 
@@ -157,7 +158,7 @@ public class UpdateServiceImpl implements UpdateService {
 		return op;
 	}
 
-	private static IProvisioningAgent getProvisioningAgent() throws ProvisionException {
+	private static IProvisioningAgent getProvisioningAgent() {
 		ServiceReference<?> reference = Activator.getContext().getServiceReference(IProvisioningAgent.SERVICE_NAME);
 		IProvisioningAgent agent = (IProvisioningAgent) Activator.getContext().getService(reference);
 		return agent;
