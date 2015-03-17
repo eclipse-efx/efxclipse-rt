@@ -10,10 +10,10 @@
  *******************************************************************************/
 package org.eclipse.fx.core.p2;
 
+import java.util.Optional;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
@@ -21,15 +21,17 @@ import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.operations.UpdateOperation;
-import org.eclipse.fx.core.Callback;
-import org.eclipse.fx.core.ReturnValue;
-import org.eclipse.fx.core.ReturnValue.State;
+import org.eclipse.fx.core.ProgressReporter;
+import org.eclipse.fx.core.Status;
+import org.eclipse.fx.core.StatusException;
+import org.eclipse.fx.core.function.ExExecutor;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
+import org.eclipse.fx.core.operation.CancelableOperation;
 import org.eclipse.fx.core.update.UpdateService;
-import org.osgi.framework.ServiceReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Implementation of service based upon p2
@@ -38,26 +40,44 @@ public class UpdateServiceImpl implements UpdateService {
 	private Logger logger;
 	private LoggerFactory factory;
 
-	static class P2UpdateCheckRV extends BaseReturnValue<Boolean> implements UpdateCheckData {
+	static class P2UpdateCheckRV implements UpdateCheckData {
 		@Nullable
 		public final UpdateOperation updateOperation;
-
-		public P2UpdateCheckRV(int code, @Nullable UpdateOperation updateOperation, @NonNull State state, @NonNull String message, @NonNull Boolean value, @Nullable Throwable throwable) {
-			super(state, code, message, value, throwable);
+		
+		public P2UpdateCheckRV(@Nullable UpdateOperation updateOperation) {
 			this.updateOperation = updateOperation;
 		}
 		
 		@Override
-		public boolean nothingToUpdate() {
-			return getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE;
+		public Optional<CancelableOperation<UpdateData>> update(ProgressReporter progressReporter) {
+			UpdateOperation updateOperation = this.updateOperation;
+			if( updateOperation != null ) {
+				ProgressMonitorAdapter a = new ProgressMonitorAdapter(progressReporter);
+				SimpleCancelableOperation<UpdateData> op = new SimpleCancelableOperation<>(() -> a.setCanceled(true));
+
+				Job job = updateOperation.getProvisioningJob(a);
+				job.addJobChangeListener(new JobChangeAdapter() {
+					@SuppressWarnings("null")
+					@Override
+					public void done(IJobChangeEvent event) {
+						IStatus s = event.getResult();
+						Status state = fromStatus(s);
+						Throwable throwable = state.getThrowable();
+						if( throwable == null ) {
+							op.completed(state,new P2UpdateRV());	
+						} else {
+							op.completeExceptionally(new StatusException(state));
+						}
+					}
+				});
+				job.schedule();
+			}
+			return Optional.empty();
 		}
 	}
 
-	static class P2UpdateRV extends BaseReturnValue<Boolean> implements UpdateData {
-
-		public P2UpdateRV(int code, @NonNull State state, @NonNull String message, @NonNull Boolean value, @Nullable Throwable throwable) {
-			super(state, code, message, value, throwable);
-		}
+	static class P2UpdateRV implements UpdateData {
+		// empty
 	}
 
 	/**
@@ -86,84 +106,55 @@ public class UpdateServiceImpl implements UpdateService {
 		}
 	}
 
-	@NonNull
-	private Logger getLogger() {
-		if( this.factory == null ) {
-			throw new IllegalStateException("No logger factory available"); //$NON-NLS-1$
-		}
-		
-		Logger logger = this.logger;
-		
-		if (logger == null ) {
-			String className = getClass().getName();
-			if( className != null ) {
-				logger = this.factory.createLogger(className);	
-			} else {
-				throw new IllegalStateException();
-			}
-			
-		}
-		this.logger = logger;
-		
-		return logger;
-	}
-
-	@Override
-	public void update(UpdateCheckData data, final Callback<UpdateData> callback) {
-		UpdateOperation updateOperation = ((P2UpdateCheckRV) data).updateOperation;
-		if( updateOperation != null ) {
-			Job job = updateOperation.getProvisioningJob(new NullProgressMonitor());
-			job.addJobChangeListener(new JobChangeAdapter() {
-				@SuppressWarnings("null")
-				@Override
-				public void done(IJobChangeEvent event) {
-					IStatus s = event.getResult();
-					State state = fromStatus(s);
-					callback.call(new P2UpdateRV(s.getCode(), state, s.getMessage(), Boolean.valueOf(State.OK == state), s.getException()));
-				}
-			});
-			job.schedule();
-		}
-		
-	}
-
-	@SuppressWarnings("all")
-	@NonNull
-	static State fromStatus(IStatus s) {
+//Why is that not allowed???	
+//	@NonNull
+	private static org.eclipse.fx.core.Status fromStatus(@NonNull IStatus s) {
 		switch (s.getSeverity()) {
 		case IStatus.CANCEL:
-			return State.CANCEL;
+			return org.eclipse.fx.core.Status.status(org.eclipse.fx.core.Status.State.CANCEL,s.getCode(),s.getMessage(),s.getException());
 		case IStatus.ERROR:
-			return State.ERROR;
+			return org.eclipse.fx.core.Status.status(org.eclipse.fx.core.Status.State.ERROR,s.getCode(),s.getMessage(),s.getException());
 		case IStatus.WARNING:
-			return State.WARNING;
+			return org.eclipse.fx.core.Status.status(org.eclipse.fx.core.Status.State.WARNING,s.getCode(),s.getMessage(),s.getException());
 		default:
-			return State.OK;
+			return org.eclipse.fx.core.Status.ok();
 		}
 	}
-
-	@SuppressWarnings("null")
+	
 	@Override
-	public void checkUpdate(final Callback<UpdateCheckData> callback) {
-		try {
-			IProvisioningAgent agent = getProvisioningAgent();
-			final ProvisioningSession session = new ProvisioningSession(agent);
-			Job o = new Job("Check for Updates") { //$NON-NLS-1$
+	public SimpleCancelableOperation<UpdateCheckData> checkUpdate(ProgressReporter reporter) {
+		IProvisioningAgent agent = ExExecutor.executeSupplier(UpdateServiceImpl::getProvisioningAgent,"Unable to create supplier").get(); //$NON-NLS-1$
+		final ProvisioningSession session = new ProvisioningSession(agent);
+		ProgressMonitorAdapter a = new ProgressMonitorAdapter(reporter);
 
-				@Override
-				protected IStatus run(IProgressMonitor monitor) {
-					UpdateOperation o = new UpdateOperation(session);
-					IStatus s = o.resolveModal(monitor);
-					State state = fromStatus(s);
-					callback.call(new P2UpdateCheckRV(s.getCode(), o, state, s.getMessage(), Boolean.valueOf(state == State.OK), s.getException()));
-					return Status.OK_STATUS;
+		SimpleCancelableOperation<UpdateCheckData> op = new SimpleCancelableOperation<>(() -> a.setCanceled(true));
+		Job o = new Job("Check for Updates") { //$NON-NLS-1$
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				if( a.isCanceled() ) {
+					return org.eclipse.core.runtime.Status.CANCEL_STATUS;
 				}
-			};
-			o.schedule();
-		} catch (ProvisionException e) {
-			getLogger().error("Unable to provision", e); //$NON-NLS-1$
-			callback.call(new P2UpdateCheckRV(ReturnValue.UNKNOWN_RETURN_CODE, null, State.ERROR, "Failure while try to collect updateable units", Boolean.FALSE, e)); //$NON-NLS-1$
-		}
+				
+				try {
+					UpdateOperation o = new UpdateOperation(session);
+					IStatus s = o.resolveModal(a);
+					if( s.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE ) {
+						op.completed(fromStatus(s),new P2UpdateCheckRV(null));
+					} else if( s.isOK() ) {
+						op.completed(fromStatus(s),new P2UpdateCheckRV(o));	
+					} else {
+						throw new StatusException(fromStatus(s));
+					}
+				} catch(Throwable t) {
+					op.completeExceptionally(t);
+				}
+				return org.eclipse.core.runtime.Status.OK_STATUS;
+			}
+		};
+
+		o.schedule();
+		return op;
 	}
 
 	private static IProvisioningAgent getProvisioningAgent() throws ProvisionException {

@@ -11,13 +11,13 @@
 package org.eclipse.fx.ui.workbench.base.internal;
 
 import java.util.Map;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
-import org.eclipse.fx.core.ReturnValue;
 import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -59,11 +59,11 @@ public class CommandServiceImpl implements CommandService {
 		return this.handlerService.canExecute(cmd);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "null" })
 	@Override
-	public <O> ReturnValue<@Nullable O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
+	public <O> Optional<@NonNull O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
 		ParameterizedCommand cmd = this.commandService.createCommand(commandId, parameters);
-		return ReturnValue.ok((O) this.handlerService.executeHandler(cmd));
+		return Optional.ofNullable((O)this.handlerService.executeHandler(cmd));
 	}
 
 }

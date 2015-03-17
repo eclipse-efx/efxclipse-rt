@@ -11,8 +11,8 @@
 package org.eclipse.fx.core.command;
 
 import java.util.Map;
+import java.util.Optional;
 
-import org.eclipse.fx.core.ReturnValue;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -52,5 +52,5 @@ public interface CommandService {
 	 *            the parameters
 	 * @return the return value of the command
 	 */
-	public <O> ReturnValue<@Nullable O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters);
+	public <O> Optional<O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters);
 }

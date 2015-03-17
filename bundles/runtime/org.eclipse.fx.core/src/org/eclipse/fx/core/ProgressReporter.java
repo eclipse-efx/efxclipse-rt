@@ -37,10 +37,9 @@ public interface ProgressReporter {
 	 *            the total units of work for this task
 	 * @param cancelable
 	 *            <code>true</code> if the task can be canceled
-	 * @return <code>false</code> if the task should be canceled
 	 *
 	 */
-	public boolean taskStart(@NonNull String taskId, @Nullable String parentTaskId, @NonNull String taskName, int totalUnits, boolean cancelable);
+	public void taskStart(@NonNull String taskId, @Nullable String parentTaskId, @NonNull String taskName, int totalUnits, boolean cancelable);
 
 	/**
 	 * Inform that the total task units has changed
@@ -49,9 +48,8 @@ public interface ProgressReporter {
 	 *            the task id
 	 * @param totalUnits
 	 *            the new total units
-	 * @return <code>false</code> if the task should be canceled
 	 */
-	public boolean taskUnitsChanged(@NonNull String taskId, int totalUnits);
+	public void taskUnitsChanged(@NonNull String taskId, int totalUnits);
 
 	/**
 	 * Report about the end of a task
@@ -81,7 +79,34 @@ public interface ProgressReporter {
 	 *            the message
 	 * @param unitsDone
 	 *            the units done
-	 * @return <code>false</code> to cancel the task
 	 */
-	public boolean progress(@NonNull String taskId, @Nullable String message, int unitsDone);
+	public void progress(@NonNull String taskId, @Nullable String message, int unitsDone);
+	
+	/**
+	 * A simple default progress reporter
+	 * 
+	 * @since 2.0
+	 */
+	public static ProgressReporter NULLPROGRESS_REPORTER = new ProgressReporter() {
+		
+		@Override
+		public void taskUnitsChanged(@NonNull String taskId, int totalUnits) {
+			// nothing
+		}
+		
+		@Override
+		public void taskStart(@NonNull String taskId, @Nullable String parentTaskId, @NonNull String taskName, int totalUnits, boolean cancelable) {
+			// nothing
+		}
+		
+		@Override
+		public void taskEnd(@NonNull String taskId, boolean canceled) {
+			// nothing
+		}
+		
+		@Override
+		public void progress(@NonNull String taskId, @Nullable String message, int unitsDone) {
+			// nothing
+		}
+	};
 }

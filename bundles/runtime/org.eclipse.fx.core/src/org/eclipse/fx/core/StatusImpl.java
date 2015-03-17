@@ -1,15 +1,15 @@
 package org.eclipse.fx.core;
 
+import java.util.Optional;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * Basic return value hold information for the callback
+ * Basic status implementation
  *
- * @param <V>
- *            the value type
  */
-class ReturnValueImpl<V> implements ReturnValue<V> {
+class StatusImpl implements Status {
 	/**
 	 * The state
 	 */
@@ -26,14 +26,11 @@ class ReturnValueImpl<V> implements ReturnValue<V> {
 	@Nullable
 	public final Throwable throwable;
 	/**
-	 * The value in case of a OK state
-	 */
-	@Nullable
-	public final V value;
-	/**
 	 * The return code
 	 */
 	public final int code;
+	
+	public static final Status OK = new StatusImpl(State.OK,-1,"<ok>",null); //$NON-NLS-1$
 
 	/**
 	 * Create a new return value
@@ -44,16 +41,13 @@ class ReturnValueImpl<V> implements ReturnValue<V> {
 	 *            the code
 	 * @param message
 	 *            the message
-	 * @param value
-	 *            the value
 	 * @param throwable
 	 *            the exception
 	 */
-	public ReturnValueImpl(@NonNull State state, int code, @Nullable String message, @Nullable V value, @Nullable Throwable throwable) {
+	public StatusImpl(@NonNull State state, int code, @Nullable String message, @Nullable Throwable throwable) {
 		this.state = state;
 		this.message = message;
 		this.throwable = throwable;
-		this.value = value;
 		this.code = code;
 	}
 
@@ -73,12 +67,12 @@ class ReturnValueImpl<V> implements ReturnValue<V> {
 	}
 
 	@Override
-	public V getValue() {
-		return this.value;
-	}
-
-	@Override
 	public int getCode() {
 		return this.code;
+	}
+	
+	@Override
+	public Optional<State> state() {
+		return Optional.of(this.state);
 	}
 }

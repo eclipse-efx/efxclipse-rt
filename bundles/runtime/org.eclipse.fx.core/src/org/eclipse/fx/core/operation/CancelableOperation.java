@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.fx.core.operation;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import org.eclipse.fx.core.Status;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -31,7 +33,7 @@ public interface CancelableOperation<T> extends Operation<T> {
 	 * @return the operation
 	 */
 	@Override
-	public CancelableOperation<T> onComplete(@NonNull Consumer<@Nullable T> consumer);
+	public CancelableOperation<T> onComplete(@NonNull BiConsumer<@NonNull Status, @Nullable T> consumer);
 
 	/**
 	 * Called when the operation completes with an exception
