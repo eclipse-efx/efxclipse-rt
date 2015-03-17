@@ -11,8 +11,6 @@
 package org.eclipse.fx.core;
 
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
