@@ -10,10 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.core.operation;
 
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import org.eclipse.fx.core.Status;
+import org.eclipse.fx.core.StatusException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -32,7 +31,7 @@ public interface Operation<T> {
 	 *            consumer invoked
 	 * @return the operation
 	 */
-	public Operation<T> onComplete(@NonNull BiConsumer<@NonNull Status, @Nullable T> consumer);
+	public Operation<T> onComplete(@NonNull Consumer<@Nullable T> consumer);
 
 	/**
 	 * Called when the operation completes with an exception
@@ -41,5 +40,5 @@ public interface Operation<T> {
 	 *            the consumer invoked
 	 * @return the operation
 	 */
-	public Operation<T> onException(@NonNull Consumer<@NonNull Throwable> consumer);
+	public Operation<T> onException(@NonNull Consumer<@NonNull StatusException> consumer);
 }

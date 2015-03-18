@@ -14,6 +14,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import org.eclipse.fx.core.Status;
+import org.eclipse.fx.core.StatusException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -33,7 +34,7 @@ public interface CancelableOperation<T> extends Operation<T> {
 	 * @return the operation
 	 */
 	@Override
-	public CancelableOperation<T> onComplete(@NonNull BiConsumer<@NonNull Status, @Nullable T> consumer);
+	public CancelableOperation<T> onComplete(@NonNull Consumer<@Nullable T> consumer);
 
 	/**
 	 * Called when the operation completes with an exception
@@ -43,7 +44,7 @@ public interface CancelableOperation<T> extends Operation<T> {
 	 * @return the operation
 	 */
 	@Override
-	public CancelableOperation<T> onException(@NonNull Consumer<@NonNull Throwable> consumer);
+	public CancelableOperation<T> onException(@NonNull Consumer<@NonNull StatusException> consumer);
 	
 	/**
 	 * Called when the operation is canceled

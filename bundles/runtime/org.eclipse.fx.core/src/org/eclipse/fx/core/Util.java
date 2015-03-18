@@ -39,6 +39,21 @@ public class Util {
 		return System.getProperty("javafx.version") != null && System.getProperty("javafx.version").startsWith("2"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
+	/**
+	 * Make use the value is not null
+	 * 
+	 * @param value
+	 *            the nullable value
+	 * @param defaultValue
+	 *            the default if the value is null
+	 * @return a nonnull string
+	 * @since 2.0
+	 */
+	@NonNull
+	public static String notNull(@Nullable String value, @NonNull String defaultValue) {
+		return value == null ? defaultValue : value;
+	}
+
 	private static Boolean isOSGi;
 
 	/**
@@ -60,12 +75,12 @@ public class Util {
 	}
 
 	private static BundleContext getContext(List<Class<?>> classList) {
-		for( Class<?> cl : classList ) {
+		for (Class<?> cl : classList) {
 			Bundle b = FrameworkUtil.getBundle(cl);
 			BundleContext ctx = null;
 			if (b != null) {
 				ctx = b.getBundleContext();
-				if( ctx != null ) {
+				if (ctx != null) {
 					return ctx;
 				}
 			}
@@ -79,17 +94,15 @@ public class Util {
 		}
 
 		if (ctx == null) {
-			throw new IllegalStateException(
-					"Unable to get a bundle context"); //$NON-NLS-1$
+			throw new IllegalStateException("Unable to get a bundle context"); //$NON-NLS-1$
 		}
 
 		return ctx;
 	}
 
-	private static <S> @Nullable S _lookupService(
-			@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
+	private static <S> @Nullable S _lookupService(@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
 		List<@NonNull S> _lookupServiceList = _lookupServiceList(requestor, serviceClass);
-		if( ! _lookupServiceList.isEmpty() ) {
+		if (!_lookupServiceList.isEmpty()) {
 			return _lookupServiceList.get(0);
 		}
 		return null;
@@ -106,8 +119,8 @@ public class Util {
 
 		private static int getRanking(ServiceReference<?> r) {
 			Object v = r.getProperty("service.ranking"); //$NON-NLS-1$
-			if( v instanceof Integer ) {
-				return ((Integer)v).intValue();
+			if (v instanceof Integer) {
+				return ((Integer) v).intValue();
 			}
 			return 0;
 		}
@@ -116,9 +129,9 @@ public class Util {
 		public int compareTo(CompareableService<S> o) {
 			int i1;
 			int i2;
-			if( this.instance instanceof RankedService && o.instance instanceof RankedService ) {
-				i1 = ((RankedService)this.instance).getRanking();
-				i2 = ((RankedService)o.instance).getRanking();
+			if (this.instance instanceof RankedService && o.instance instanceof RankedService) {
+				i1 = ((RankedService) this.instance).getRanking();
+				i2 = ((RankedService) o.instance).getRanking();
 			} else {
 				i1 = getRanking(this.r);
 				i2 = getRanking(o.r);
@@ -132,7 +145,7 @@ public class Util {
 	@SuppressWarnings("unchecked")
 	private static <S> ServiceLoader<S> getLoader(Class<S> clazz) {
 		ServiceLoader<S> l = (ServiceLoader<S>) LOADER_CACHE.get(clazz);
-		if( l == null ) {
+		if (l == null) {
 			l = ServiceLoader.load(clazz);
 			LOADER_CACHE.put(clazz, l);
 		}
@@ -140,11 +153,10 @@ public class Util {
 	}
 
 	@SuppressWarnings("null")
-	private static <S> @NonNull List<@NonNull S> _lookupServiceList(
-			@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
+	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
 		if (isOsgiEnv()) {
 			List<Class<?>> cl = new ArrayList<>();
-			if( requestor != null ) {
+			if (requestor != null) {
 				cl.add(requestor);
 			}
 			cl.add(serviceClass);
@@ -153,10 +165,10 @@ public class Util {
 			try {
 				@SuppressWarnings("unchecked")
 				ServiceReference<S>[] serviceReferences = (ServiceReference<S>[]) ctx.getServiceReferences(serviceClass.getName(), null);
-				if( serviceReferences == null ) {
+				if (serviceReferences == null) {
 					return Collections.emptyList();
 				}
-				return Stream.of(serviceReferences).map( r -> new CompareableService<>(r,ctx.getService(r))).sorted().map(s -> s.instance).collect(Collectors.toList());
+				return Stream.of(serviceReferences).map(r -> new CompareableService<>(r, ctx.getService(r))).sorted().map(s -> s.instance).collect(Collectors.toList());
 			} catch (InvalidSyntaxException e) {
 				throw new IllegalStateException(e);
 			}
@@ -168,9 +180,9 @@ public class Util {
 			while (iterator.hasNext()) {
 				rv.add(iterator.next());
 			}
-			Collections.sort(rv,  (o1,o2) -> {
-				if(o1 instanceof RankedService && o2 instanceof RankedService) {
-					return -1 * Integer.compare(((RankedService)o1).getRanking(), ((RankedService)o2).getRanking());
+			Collections.sort(rv, (o1, o2) -> {
+				if (o1 instanceof RankedService && o2 instanceof RankedService) {
+					return -1 * Integer.compare(((RankedService) o1).getRanking(), ((RankedService) o2).getRanking());
 				} else {
 					return 0;
 				}
@@ -190,8 +202,7 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	public static <S> @Nullable S lookupService(@NonNull Class<?> requestor,
-			@NonNull Class<S> serviceClass) {
+	public static <S> @Nullable S lookupService(@NonNull Class<?> requestor, @NonNull Class<S> serviceClass) {
 		return _lookupService(requestor, serviceClass);
 	}
 
@@ -218,8 +229,7 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor,
-			@NonNull Class<S> serviceClass) {
+	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor, @NonNull Class<S> serviceClass) {
 		return _lookupServiceList(requestor, serviceClass);
 	}
 

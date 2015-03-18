@@ -14,24 +14,23 @@ import java.util.Optional;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
-import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.operations.UpdateOperation;
 import org.eclipse.fx.core.ProgressReporter;
 import org.eclipse.fx.core.Status;
+import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.core.StatusException;
 import org.eclipse.fx.core.Util;
-import org.eclipse.fx.core.function.ExExecutor;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.core.operation.CancelableOperation;
 import org.eclipse.fx.core.update.UpdateService;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.ServiceReference;
 
 /**
@@ -41,46 +40,37 @@ public class UpdateServiceImpl implements UpdateService {
 	private Logger logger;
 	private LoggerFactory factory;
 
-	static class P2UpdateCheckRV implements UpdateCheckData {
-		@Nullable
+	static class P2UpdateCheckRV implements UpdatePlan {
+		@NonNull
 		public final UpdateOperation updateOperation;
 		
-		public P2UpdateCheckRV(@Nullable UpdateOperation updateOperation) {
+		public P2UpdateCheckRV(@NonNull UpdateOperation updateOperation) {
 			this.updateOperation = updateOperation;
 		}
 		
 		@Override
-		public Optional<CancelableOperation<UpdateData>> update(ProgressReporter progressReporter) {
-			UpdateOperation updateOperation = this.updateOperation;
-			if( updateOperation != null ) {
-				ProgressMonitorAdapter a = new ProgressMonitorAdapter(progressReporter);
-				SimpleCancelableOperation<UpdateData> op = new SimpleCancelableOperation<>(() -> a.setCanceled(true));
+		public CancelableOperation<UpdateResult> runUpdate(ProgressReporter progressReporter) {
+			ProgressMonitorAdapter a = new ProgressMonitorAdapter(progressReporter);
+			SimpleCancelableOperation<UpdateResult> op = new SimpleCancelableOperation<>(() -> a.setCanceled(true));
 
-				Job job = updateOperation.getProvisioningJob(a);
-				if( job == null ) {
-					return Optional.empty();
-				}
-				job.addJobChangeListener(new JobChangeAdapter() {
-					@SuppressWarnings("null")
-					@Override
-					public void done(IJobChangeEvent event) {
-						IStatus s = event.getResult();
-						Status state = fromStatus(s);
-						Throwable throwable = state.getThrowable();
-						if( throwable == null ) {
-							op.completed(state,new P2UpdateRV());	
-						} else {
-							op.completeExceptionally(new StatusException(state));
-						}
+			Job job = this.updateOperation.getProvisioningJob(a);
+			job.addJobChangeListener(new JobChangeAdapter() {
+				@Override
+				public void done(IJobChangeEvent event) {
+					IStatus s = event.getResult();
+					if( s.isOK() ) {
+						op.completed(new P2UpdateRV());	
+					} else {
+						op.completeExceptionally(new StatusException(fromStatus(s)));
 					}
-				});
-				job.schedule();
-			}
-			return Optional.empty();
+				}
+			});
+			job.schedule();
+			return op;
 		}
 	}
 
-	static class P2UpdateRV implements UpdateData {
+	static class P2UpdateRV implements UpdateResult {
 		// empty
 	}
 
@@ -126,12 +116,12 @@ public class UpdateServiceImpl implements UpdateService {
 	}
 	
 	@Override
-	public SimpleCancelableOperation<UpdateCheckData> checkUpdate(ProgressReporter reporter) {
+	public SimpleCancelableOperation<Optional<UpdatePlan>> checkUpdate(ProgressReporter reporter) {
 		IProvisioningAgent agent = getProvisioningAgent();
 		final ProvisioningSession session = new ProvisioningSession(agent);
 		ProgressMonitorAdapter a = new ProgressMonitorAdapter(reporter);
 
-		SimpleCancelableOperation<UpdateCheckData> op = new SimpleCancelableOperation<>(() -> a.setCanceled(true));
+		SimpleCancelableOperation<Optional<UpdatePlan>> op = new SimpleCancelableOperation<>(() -> a.setCanceled(true));
 		Job o = new Job("Check for Updates") { //$NON-NLS-1$
 
 			@Override
@@ -144,14 +134,18 @@ public class UpdateServiceImpl implements UpdateService {
 					UpdateOperation o = new UpdateOperation(session);
 					IStatus s = o.resolveModal(a);
 					if( s.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE ) {
-						op.completed(fromStatus(s),new P2UpdateCheckRV(null));
+						op.completed(Optional.empty());
 					} else if( s.isOK() ) {
-						op.completed(fromStatus(s),new P2UpdateCheckRV(o));	
+						if( o.getProvisioningJob(new NullProgressMonitor()) != null ) {
+							op.completed(Optional.of(new P2UpdateCheckRV(o)));	
+						} else {
+							op.completeExceptionally(new StatusException(Status.status(State.ERROR, 0, "No provisioning job available", null))); //$NON-NLS-1$
+						}
 					} else {
-						throw new StatusException(fromStatus(s));
+						op.completeExceptionally(new StatusException(fromStatus(s)));
 					}
 				} catch(Throwable t) {
-					op.completeExceptionally(t);
+					op.completeExceptionally(new StatusException(Status.status(State.ERROR, 0, "Check for update failed unexpectedly", t))); //$NON-NLS-1$
 				}
 				return org.eclipse.core.runtime.Status.OK_STATUS;
 			}

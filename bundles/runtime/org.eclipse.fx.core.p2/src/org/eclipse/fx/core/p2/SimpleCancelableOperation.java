@@ -1,10 +1,13 @@
 package org.eclipse.fx.core.p2;
 
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.eclipse.fx.core.Status;
+import org.eclipse.fx.core.Status.State;
+import org.eclipse.fx.core.StatusException;
 import org.eclipse.fx.core.operation.CancelableOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -21,14 +24,12 @@ public class SimpleCancelableOperation<T> implements CancelableOperation<T> {
 	private T object;
 	
 	@Nullable
-	private BiConsumer<@NonNull Status, @Nullable T> onCompleteConsumer;
-	@Nullable
-	private Status completeStatus;
+	private Consumer<@Nullable T> onCompleteConsumer;
 	
 	@Nullable
-	private Throwable exception;
+	private StatusException exception;
 	@Nullable
-	private Consumer<@NonNull Throwable> onCompleteExceptionallyConsumer;
+	private Consumer<@NonNull StatusException> onCompleteExceptionallyConsumer;
 	
 	@Nullable
 	private Runnable onCancelConsumer;
@@ -38,16 +39,15 @@ public class SimpleCancelableOperation<T> implements CancelableOperation<T> {
 		this.cancelable = cancelable;
 	}
 	
-	public synchronized void completed(@NonNull Status status, @Nullable T object) {
+	public synchronized void completed(@Nullable T object) {
 		this.object = object;
-		this.completeStatus = status;
 		this.state = COMPLETED_OK;
 		if( this.onCompleteConsumer != null ) {
-			this.onCompleteConsumer.accept(status, object);
+			this.onCompleteConsumer.accept(object);
 		}
 	}
 	
-	public synchronized void completeExceptionally(@NonNull Throwable t) {
+	public synchronized void completeExceptionally(@NonNull StatusException t) {
 		this.exception = t;
 		this.state = COMPLETED_EXCEPTION;
 		if( this.onCompleteExceptionallyConsumer != null ) {
@@ -56,15 +56,9 @@ public class SimpleCancelableOperation<T> implements CancelableOperation<T> {
 	}
 	
 	@Override
-	public synchronized CancelableOperation<T> onComplete(@NonNull BiConsumer<@NonNull Status, @Nullable T> consumer) {
+	public synchronized CancelableOperation<T> onComplete(@NonNull Consumer<@Nullable T> consumer) {
 		if( this.state == COMPLETED_OK ) {
-			Status completeStatus = this.completeStatus;
-			if( completeStatus != null ) {
-				consumer.accept(completeStatus, this.object);				
-			} else {
-				completeExceptionally(new IllegalStateException("There was no completion status available")); //$NON-NLS-1$
-			}
-			
+			consumer.accept(this.object);				
 		} else {
 			this.onCompleteConsumer = consumer;
 		}
@@ -72,7 +66,7 @@ public class SimpleCancelableOperation<T> implements CancelableOperation<T> {
 	}
 
 	@Override
-	public synchronized CancelableOperation<T> onException(@NonNull Consumer<@NonNull Throwable> consumer) {
+	public synchronized CancelableOperation<T> onException(@NonNull Consumer<@NonNull StatusException> consumer) {
 		if( this.state == COMPLETED_EXCEPTION ) {
 			if( this.exception != null ) {
 				consumer.accept(this.exception);	

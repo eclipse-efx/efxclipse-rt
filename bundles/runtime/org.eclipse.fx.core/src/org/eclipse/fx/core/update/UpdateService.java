@@ -29,12 +29,12 @@ public interface UpdateService {
 	 * @return check update operation
 	 * 
 	 */
-	public CancelableOperation<UpdateCheckData> checkUpdate(ProgressReporter reporter);
+	public CancelableOperation<Optional<UpdatePlan>> checkUpdate(ProgressReporter reporter);
 
 	/**
 	 * Basic definition for update callback informations
 	 */
-	interface UpdateCheckData {
+	interface UpdatePlan {
 		/**
 		 * Create the update operation
 		 * 
@@ -42,13 +42,13 @@ public interface UpdateService {
 		 *            the progress reporter
 		 * @return the update operation if available
 		 */
-		public Optional<CancelableOperation<UpdateData>> update(ProgressReporter progressReporter);
+		public CancelableOperation<UpdateResult> runUpdate(ProgressReporter progressReporter);
 	}
 
 	/**
 	 * Basic definition for an update data informations
 	 */
-	interface UpdateData {
+	interface UpdateResult {
 		// no methods needed
 	}
 }
