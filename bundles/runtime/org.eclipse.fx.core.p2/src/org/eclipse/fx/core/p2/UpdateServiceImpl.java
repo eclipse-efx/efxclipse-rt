@@ -57,6 +57,9 @@ public class UpdateServiceImpl implements UpdateService {
 				SimpleCancelableOperation<UpdateData> op = new SimpleCancelableOperation<>(() -> a.setCanceled(true));
 
 				Job job = updateOperation.getProvisioningJob(a);
+				if( job == null ) {
+					return Optional.empty();
+				}
 				job.addJobChangeListener(new JobChangeAdapter() {
 					@SuppressWarnings("null")
 					@Override
