@@ -79,4 +79,12 @@ class StatusImpl implements Status {
 	public Optional<State> state() {
 		return Optional.of(this.state);
 	}
+
+	@Override
+	public String toString() {
+		return "StatusImpl [state=" + this.state + ", message=" + this.message + ", throwable=" + this.throwable + ", code=" + this.code  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ "]"; //$NON-NLS-1$
+	}
+	
+	
 }
