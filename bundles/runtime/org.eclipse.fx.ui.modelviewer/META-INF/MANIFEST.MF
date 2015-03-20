@@ -4,7 +4,7 @@ Bundle-Name: Modelviewer
 Bundle-SymbolicName: org.eclipse.fx.ui.modelviewer;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: javax.annotation;version="1.1.0",
+Import-Package: javax.annotation;version="1.1.0";resolution:=optional,
  javax.inject;version="1.0.0"
 Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="1.0.1",
  org.eclipse.fx.ui.databinding;bundle-version="0.9.0",
