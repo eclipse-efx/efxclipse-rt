@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.fx.ui.controls.stage.WindowPane;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -29,11 +30,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 /**
@@ -254,9 +257,18 @@ public abstract class Dialog {
 		Stage stage = new Stage();
 		stage.setTitle(this.title);
 		stage.initOwner(this.parent);
+		stage.initModality(getModality());
 		Parent content = createContents();
-		BorderPane rootContainer = new BorderPane();
-		rootContainer.setCenter(content);
+		
+		Pane rootContainer = getCustomWindowPane();
+		if( rootContainer == null ) {
+			rootContainer = new BorderPane();
+			((BorderPane)rootContainer).setCenter(content);
+		} else {
+			stage.initStyle(StageStyle.UNDECORATED);
+			((WindowPane)rootContainer).setClientArea(content);
+			((WindowPane)rootContainer).setTitle(this.title);
+		}
 
 		Scene s = new Scene(rootContainer);
 		s.getStylesheets().addAll(getStylesheets());
@@ -279,6 +291,10 @@ public abstract class Dialog {
 			stage.setY(location.getY());
 		}
 		return stage;
+	}
+	
+	protected WindowPane getCustomWindowPane() {
+		return null;
 	}
 
 	/**
@@ -403,7 +419,6 @@ public abstract class Dialog {
 			});
 		}
 
-		this.stage.initModality(getModality());
 		preopen(this.stage);
 		if (this.blockOnOpen) {
 			this.stage.showAndWait();

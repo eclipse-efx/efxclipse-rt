@@ -5,3 +5,13 @@
 .text-highlight {
 	-styled-text-color: #ff0000;
 }
+
+.styled-text-node {
+	-efx-decoration: underline;
+}
+
+.styled-text-node > Line {
+	-fx-stroke-dash-array: 2.0 4.0;
+	-fx-stroke: blue;
+	-fx-stroke-width: 1.5;
+}

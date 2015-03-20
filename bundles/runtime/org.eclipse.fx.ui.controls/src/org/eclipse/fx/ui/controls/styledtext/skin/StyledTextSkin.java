@@ -313,7 +313,9 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				for (int i = this.lineList.size(); i < getSkinnable().getContent().getLineCount(); i++) {
 					tmp.add(new Line());
 				}
+//				System.err.println("DOING AN ADD!!!!!");
 				this.lineList.addAll(tmp);
+//				System.err.println("ADD IS DONE!");
 			}
 		}
 
@@ -342,6 +344,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	 */
 	public class LineCell extends ListCell<Line> {
 		Line domainElement;
+		List<Segment> currentSegments;
 
 		/**
 		 * A line cell instance
@@ -379,7 +382,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 		@Override
 		protected void updateItem(Line arg0, boolean arg1) {
-			if( ! arg1 ) {
+			if( arg0 != null && ! arg1 ) {			
 				this.domainElement = arg0;
 				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(this);
 				if (lineInfo == null) {
@@ -397,6 +400,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				StyledTextLayoutContainer block = (StyledTextLayoutContainer) getGraphic();
 
 				if( block == null ) {
+//					System.err.println("CREATING NEW GRAPHIC BLOCK: " + this + " => " + this.domainElement);
 					block = new StyledTextLayoutContainer();
 					block.getStyleClass().add("source-segment-container"); //$NON-NLS-1$
 					setGraphic(block);
@@ -404,8 +408,19 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				}
 				block.setStartOffset(arg0.getLineOffset());
 
+				List<Segment> segments = arg0.getSegments();
+				if( segments.equals(this.currentSegments) ) {
+//					System.err.println("EQUAL: " + this.currentSegments + " vs " + segments); //$NON-NLS-1$
+					return;
+				} else {
+//					System.err.println("MODIFIED: " + this.currentSegments + " vs " + segments);
+				}
+				
+				this.currentSegments = segments;
+				
 				List<@NonNull StyledTextNode> texts = new ArrayList<>();
-				for (final Segment seg : arg0.getSegments()) {
+				
+				for (final Segment seg : this.currentSegments) {
 					StyledTextNode t = new StyledTextNode(seg.text);
 					if( seg.style.stylename != null ) {
 						t.getStyleClass().setAll("source-segment",seg.style.stylename); //$NON-NLS-1$
@@ -419,7 +434,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					texts.add(t);
 				}
 
-				if( arg0.getSegments().isEmpty() ) {
+				if( segments.isEmpty() ) {
 					StyledTextNode t = new StyledTextNode(""); //$NON-NLS-1$
 					t.getStyleClass().setAll("source-segment"); //$NON-NLS-1$
 					block.getTextNodes().setAll(t);
@@ -449,8 +464,12 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					block.setCaretIndex(-1);
 				}
 			} else {
+//FIND OUT WHY WE CLEAR SO OFTEN				
+//				System.err.println("CLEARING GRAPHICS: " + this + " => " + this.domainElement);
+				
 				setGraphic(null);
 				this.domainElement = null;
+				this.currentSegments = null;
 				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.remove(this);
 				if (lineInfo != null) {
 					lineInfo.setDomainElement(null);
@@ -600,6 +619,44 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		@Override
 		public String toString() {
 			return this.text + " => " + this.style; //$NON-NLS-1$
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + ((this.style == null) ? 0 : this.style.hashCode());
+			result = prime * result + ((this.text == null) ? 0 : this.text.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Segment other = (Segment) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (this.style == null) {
+				if (other.style != null)
+					return false;
+			} else if (!this.style.equals(other.style))
+				return false;
+			if (this.text == null) {
+				if (other.text != null)
+					return false;
+			} else if (!this.text.equals(other.text))
+				return false;
+			return true;
+		}
+
+		private StyledTextSkin getOuterType() {
+			return StyledTextSkin.this;
 		}
 	}
 

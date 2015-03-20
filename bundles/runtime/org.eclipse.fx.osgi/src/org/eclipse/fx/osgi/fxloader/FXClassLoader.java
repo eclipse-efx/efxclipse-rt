@@ -25,6 +25,7 @@ import org.eclipse.osgi.internal.loader.ModuleClassLoader;
 import org.eclipse.osgi.internal.loader.classpath.ClasspathManager;
 import org.eclipse.osgi.storage.BundleInfo.Generation;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.wiring.BundleWiring;
 
@@ -34,25 +35,61 @@ import org.osgi.framework.wiring.BundleWiring;
 public class FXClassLoader extends ClassLoaderHook {
 	private static final String FX_SYMBOLIC_NAME = "org.eclipse.fx.javafx"; //$NON-NLS-1$
 	private static final String SWT_SYMBOLIC_NAME = "org.eclipse.swt"; //$NON-NLS-1$
+	
+	private URLClassLoader classLoader;
+	private boolean swtAvailable;
+	private BundleContext frameworkContext;
+	
+	@Override
+	public Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
+		if( name.startsWith("javafx") //$NON-NLS-1$
+				|| name.startsWith("com.sun.glass.events") //$NON-NLS-1$
+				|| name.startsWith("com.sun.glass.ui") //$NON-NLS-1$
+				|| name.startsWith("com.sun.javafx") //$NON-NLS-1$
+				|| name.startsWith("com.sun.media.jfxmedia") //$NON-NLS-1$
+				|| name.startsWith("com.sun.media.jfxmediaimpl") //$NON-NLS-1$
+				|| name.startsWith("com.sun.openpisces") //$NON-NLS-1$
+				|| name.startsWith("com.sun.pisces") //$NON-NLS-1$
+				|| name.startsWith("com.sun.prism") //$NON-NLS-1$
+				|| name.startsWith("com.sun.scenario") //$NON-NLS-1$
+				|| name.startsWith("com.sun.webkit")) { //$NON-NLS-1$
+			return getFXClassloader().loadClass(name);
+		}
+		
+		return super.postFindClass(name, moduleClassLoader);
+	}
+	
+	private URLClassLoader getFXClassloader() {
+		if( this.classLoader == null ) {
+			ClassLoader swtClassloader = getSWTClassloader(this.frameworkContext);
+			this.swtAvailable = swtClassloader != null;
+			this.classLoader = createJREBundledClassloader(swtClassloader == null ? ClassLoader.getSystemClassLoader() : swtClassloader, swtClassloader != null); 
+		}
+		return this.classLoader;
+	}
 
+	@SuppressWarnings("resource")
 	@Override
 	public ModuleClassLoader createClassLoader(ClassLoader parent,
 			EquinoxConfiguration configuration, BundleLoader delegate,
 			Generation generation) {
+		if( this.frameworkContext == null ) {
+			this.frameworkContext = generation.getBundleInfo().getStorage().getModuleContainer().getFrameworkWiring().getBundle().getBundleContext();
+		}
 		if (FX_SYMBOLIC_NAME.equals(generation.getRevision().getBundle()
 				.getSymbolicName())) {
-			ClassLoader swtClassloader = getSWTClassloader(generation);
-			URLClassLoader cl = createJREBundledClassloader(swtClassloader == null ? parent : swtClassloader,swtClassloader != null);
-			return new FXModuleClassloader(swtClassloader != null, cl, parent, configuration, delegate,
+			System.err.println("WARNING: You are binding against the deprecated org.eclipse.fx.javafx - please remove all javafx imports"); //$NON-NLS-1$
+			URLClassLoader cl = getFXClassloader();
+			return new FXModuleClassloader(this.swtAvailable, cl, parent, configuration, delegate,
 					generation);
 		}
-		return null;
+		return super.createClassLoader(parent, configuration, delegate, generation);
 	}
 	
-	private static ClassLoader getSWTClassloader(Generation generation) {
+	private static ClassLoader getSWTClassloader(BundleContext context) {
 		try {
 			// Should we better use findProviders() see PackageAdminImpl?
-			for( Bundle b : generation.getBundleInfo().getStorage().getModuleContainer().getFrameworkWiring().getBundle().getBundleContext().getBundles() ) {
+			for( Bundle b : context.getBundles() ) {
 				if( SWT_SYMBOLIC_NAME.equals(b.getSymbolicName()) ) {
 					if ((b.getState() & Bundle.INSTALLED) == 0) {
 						// Ensure the bundle is started else we are unable to
@@ -378,6 +415,10 @@ public class FXClassLoader extends ClassLoaderHook {
 
 		@Override
 		protected Class<?> findClass(String name) throws ClassNotFoundException {
+			// We can never load stuff from there and this would lead to a loop
+			if( name.startsWith("javafx.embed.swt") ) { //$NON-NLS-1$
+				return super.findClass(name);
+			}
 			try {
 				if (FXClassloaderConfigurator.DEBUG) {
 					System.err.println("FXClassLoader.SWTFXClassloader#findClass - Loading " + name + " with primary"); //$NON-NLS-1$ //$NON-NLS-2$

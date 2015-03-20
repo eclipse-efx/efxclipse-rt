@@ -1527,7 +1527,9 @@ public class StyledTextArea extends Control {
 	 * Refresh the line ruler
 	 */
 	public void refreshLineRuler() {
-		//TODO We need to send an event!
-		((StyledTextSkin)getSkin()).refreshLineRuler();
+		if( getSkin() != null ) {
+			//TODO We need to send an event!
+			((StyledTextSkin)getSkin()).refreshLineRuler();			
+		}
 	}
 }

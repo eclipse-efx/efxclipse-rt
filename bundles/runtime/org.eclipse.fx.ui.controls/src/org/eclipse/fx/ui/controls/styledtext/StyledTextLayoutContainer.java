@@ -247,8 +247,8 @@ public class StyledTextLayoutContainer extends Region {
 
 					this.caret.setStartX(x);
 					this.caret.setEndX(x);
-					this.caret.setStartY(getInsets().getTop());
-					this.caret.setEndY(h + getInsets().getTop());
+					this.caret.setStartY(getInsets().getTop()+1);
+					this.caret.setEndY(h + getInsets().getTop()+1);
 					this.caret.toFront();
 					return;
 				}

@@ -156,6 +156,25 @@ public interface UISynchronize {
 		return () -> syncExec(() -> s.get(), null);
 	}
 
+//	/**
+//	 * Returns the named queue
+//	 * 
+//	 * @param name
+//	 *            the name of the queue
+//	 * @return the queue
+//	 */
+//	public SynchronizeQueue getQueue(String name);
+//
+//	/**
+//	 * A synchronization queue allowing to prioritize ui updates and optimizing
+//	 * the update by e.g. removing duplicate update requests
+//	 */
+//	public interface SynchronizeQueue {
+//		public void schedule(int priority);
+//
+//		public <O> void schedule(int priority, O value, Consumer<O> consumer);
+//	}
+
 	/**
 	 * A block condition
 	 *

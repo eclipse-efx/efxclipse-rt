@@ -110,10 +110,10 @@ public abstract class TitleAreaDialog extends Dialog {
 		VBox pane = new VBox();
 		BorderPane titleArea = new BorderPane();
 		titleArea.getStyleClass().add("titleDialog_TitleArea"); //$NON-NLS-1$
-		titleArea.setPadding(new Insets(0, 0, 0, 10));
+//		titleArea.setPadding(new Insets(0, 0, 0, 10));
 
 		VBox messageArea = new VBox();
-		messageArea.setPadding(new Insets(10, 0, 0, 0));
+//		messageArea.setPadding(new Insets(10, 0, 0, 0));
 		messageArea.getStyleClass().add("titleDialog_MessageArea"); //$NON-NLS-1$
 
 		{

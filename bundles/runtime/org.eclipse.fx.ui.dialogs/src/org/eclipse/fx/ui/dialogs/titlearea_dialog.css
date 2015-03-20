@@ -1,7 +1,17 @@
 .titleDialog_TitleArea {
 	-fx-border-style: none none solid none; 
 	-fx-border-color: #b4b4b4; 
-	-fx-border-width: 1;
+	-fx-border-width: 0 0 1 0;
+	-fx-background-color: derive( -fx-background, 40% );
+	-fx-padding: 10;
+}
+
+.titleDialog_Title {
+	-fx-font-weight: bold;
+}
+
+VBox.titleDialog_MessageArea {
+	-fx-spacing: 10;
 }
 
 .MessageTitleDialog .titleDialog_TitleArea {

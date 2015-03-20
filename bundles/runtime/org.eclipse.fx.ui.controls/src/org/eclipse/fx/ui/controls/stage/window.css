@@ -6,7 +6,8 @@
 
 .default-window > * > .window-header {
     -fx-padding: 0 3 0 8;
-    -fx-background-color: linear-gradient(#cccccc, #bababa 37%, #a6a6a6);
+    /*-fx-background-color: linear-gradient(#cccccc, #bababa 37%, #a6a6a6);*/
+    -fx-background-color: linear-gradient(#595959, #474747 37%, #343434);
     -fx-background-radius: 5 5 0 0;
 }
 
@@ -17,8 +18,8 @@
 .default-window > * > .window-header > * > .window-title {
     -fx-padding: 0 0 0 0;
     -fx-alignment: center;
-    -fx-font-size: 1.166667em;
-    -fx-text-fill: #808080;
+    /*-fx-text-fill: #808080;*/
+    -fx-text-fill: #ebebeb;
 }
 
 .default-window:active > * > .window-header > * > .window-title {
@@ -83,7 +84,11 @@
 .default-window .window-button > .graphic {
     -fx-background-color: #949494;
     -fx-scale-shape: false;
-    -fx-padding: 4.5 4.5 4.5 4.5; /* Graphic is 9x9 px */
+    -fx-padding: 4.5 4.5 4.5 4.5;
+}
+
+.window-button:disabled > .graphic {
+	-fx-opacity: 0.4;
 }
 
 .default-window:active .window-button:hover > .graphic {

@@ -30,6 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 
 /**
  * A default implementation for the window
@@ -45,33 +46,54 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 		 * @return the title property
 		 */
 		public StringProperty titleProperty();
+
+		/**
+		 * @return the button used to minimize
+		 */
+		public Node getMinButton();
 	}
 
 	private static final PseudoClass ACTIVE_PSEUDO_CLASS = PseudoClass.getPseudoClass("active"); //$NON-NLS-1$
 
 	private ObjectProperty<@Nullable Node> contentProperty;
 	private StringProperty titleProperty;
-	
+
 	@NonNull
 	private final ObjectProperty<@Nullable Node> leftTrim = new SimpleObjectProperty<>(this, "leftTrim"); //$NON-NLS-1$
 	@NonNull
 	private final ObjectProperty<@Nullable Node> rightTrim = new SimpleObjectProperty<>(this, "rightTrim"); //$NON-NLS-1$
 	@NonNull
-	private final ObjectProperty<@Nullable Node> topTrim = new SimpleObjectProperty<>(this,"topTrim"); //$NON-NLS-1$
+	private final ObjectProperty<@Nullable Node> topTrim = new SimpleObjectProperty<>(this, "topTrim"); //$NON-NLS-1$
 	@NonNull
-	private final ObjectProperty<@Nullable Node> bottomTrim = new SimpleObjectProperty<>(this,"bottomTrim"); //$NON-NLS-1$
-	
+	private final ObjectProperty<@Nullable Node> bottomTrim = new SimpleObjectProperty<>(this, "bottomTrim"); //$NON-NLS-1$
+
+	private TitleAreaNode dialogAreaNode;
 
 	/**
 	 * Create a default window pane
 	 */
 	public DefaultWindowPane() {
+		this(null);
+	}
+
+	/**
+	 * Create a default window pane with a default client area as
+	 * {@link #setContent(Node)}
+	 * 
+	 * @param clientArea
+	 *            a client area
+	 */
+	public DefaultWindowPane(@Nullable Pane clientArea) {
 		menuBarProperty().addListener(this::updateMenuBar);
 		clientAreaProperty().addListener(this::updateClientArea);
 		topTrimProperty().addListener(this::updateTopTrim);
 		bottomTrimProperty().addListener(this::updateBottomTrim);
 		rightTrimProperty().addListener(this::updateRightTrim);
 		leftTrimProperty().addListener(this::updateLeftTrim);
+		if (clientArea != null) {
+			clientArea.setId("client-area"); //$NON-NLS-1$
+			setContent(clientArea);
+		}
 	}
 
 	@SuppressWarnings("null")
@@ -82,6 +104,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 		getStyleClass().addAll("default-window", "decorated-root"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		Node dialogTitleBar = createTitleBar();
+		this.dialogAreaNode = (TitleAreaNode) dialogTitleBar;
 		registerTitleBar(dialogTitleBar);
 		this.titleProperty = ((TitleAreaNode) dialogTitleBar).titleProperty();
 
@@ -92,178 +115,185 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 			Scene s = getScene();
 			if (s != null) {
 				if (s.getWindow() != null) {
-					handleFocus(s.getWindow().focusedProperty());
+					handleStageAttached();
 				} else {
 					s.windowProperty().addListener((o2) -> {
 						if (s.getWindow() != null) {
-							handleFocus(s.getWindow().focusedProperty());
+							handleStageAttached();
 						}
 					});
 				}
 			}
 		});
-		
+
 		this.trimPane = new BorderPane();
 		root.setCenter(this.trimPane);
-		
+
 		this.contentProperty = this.trimPane.centerProperty();
 
 		return root;
 	}
-	
+
+	private void handleStageAttached() {
+		handleFocus(getStage().focusedProperty());
+		if (getStage().getModality() == Modality.WINDOW_MODAL) {
+			this.dialogAreaNode.getMinButton().setVisible(false);
+		}
+	}
+
 	@Override
 	public void setBottomTrim(@Nullable Node node) {
 		this.bottomTrimProperty().set(node);
 	}
-	
+
 	/**
 	 * @return the bottom trim property
 	 */
 	public @NonNull ObjectProperty<@Nullable Node> bottomTrimProperty() {
 		return this.bottomTrim;
 	}
-	
+
 	/**
 	 * @return the bottom trim
 	 */
 	public @Nullable Node getBottomTrim() {
 		return this.bottomTrimProperty().get();
 	}
-	
+
 	@Override
 	public void setLeftTrim(@Nullable Node node) {
 		this.leftTrimProperty().set(node);
 	}
-	
+
 	/**
 	 * @return the left trim property
 	 */
 	public @NonNull ObjectProperty<@Nullable Node> leftTrimProperty() {
 		return this.leftTrim;
 	}
-	
+
 	/**
 	 * @return the left trim
 	 */
 	public @Nullable Node getLeftTrim() {
 		return this.leftTrimProperty().get();
 	}
-	
+
 	@Override
 	public void setRightTrim(@Nullable Node node) {
 		this.rightTrimProperty().set(node);
 	}
-	
+
 	/**
 	 * @return the right trim property
 	 */
 	public @NonNull ObjectProperty<@Nullable Node> rightTrimProperty() {
 		return this.rightTrim;
 	}
-	
+
 	/**
 	 * @return the right trim
 	 */
 	public @Nullable Node getRightTrim() {
 		return this.rightTrimProperty().get();
 	}
-	
+
 	@Override
 	public void setTopTrim(@Nullable Node node) {
 		this.topTrimProperty().set(node);
 	}
-	
+
 	/**
 	 * @return the top trim property
 	 */
 	public @NonNull ObjectProperty<@Nullable Node> topTrimProperty() {
 		return this.topTrim;
 	}
-	
+
 	/**
 	 * @return the top trim
 	 */
 	public @Nullable Node getTopTrim() {
 		return this.topTrimProperty().get();
 	}
-	
+
 	private void updateTopTrim(ObservableValue<? extends Node> o, Node oldValue, Node newValue) {
 		if (oldValue != null) {
 			Pane pane = (Pane) lookup("#top-trim-area"); //$NON-NLS-1$
-			if( pane == null ) {
+			if (pane == null) {
 				this.trimPane.setTop(null);
 			} else {
 				pane.getChildren().remove(oldValue);
 			}
 		}
-		
+
 		if (newValue != null) {
 			Pane pane = (Pane) lookup("#top-trim-area"); //$NON-NLS-1$
-			if( pane == null ) {
+			if (pane == null) {
 				this.trimPane.setTop(newValue);
 			} else {
 				pane.getChildren().add(oldValue);
-			}			
+			}
 		}
 	}
-	
+
 	private void updateBottomTrim(ObservableValue<? extends Node> o, Node oldValue, Node newValue) {
 		if (oldValue != null) {
 			Pane pane = (Pane) lookup("#bottom-trim-area"); //$NON-NLS-1$
-			if( pane == null ) {
+			if (pane == null) {
 				this.trimPane.setBottom(null);
 			} else {
 				pane.getChildren().remove(oldValue);
 			}
 		}
-		
+
 		if (newValue != null) {
 			Pane pane = (Pane) lookup("#bottom-trim-area"); //$NON-NLS-1$
-			if( pane == null ) {
+			if (pane == null) {
 				this.trimPane.setBottom(newValue);
 			} else {
 				pane.getChildren().add(oldValue);
-			}			
+			}
 		}
 	}
-	
+
 	private void updateLeftTrim(ObservableValue<? extends Node> o, Node oldValue, Node newValue) {
 		if (oldValue != null) {
 			Pane pane = (Pane) lookup("#left-trim-area"); //$NON-NLS-1$
-			if( pane == null ) {
+			if (pane == null) {
 				this.trimPane.setLeft(null);
 			} else {
 				pane.getChildren().remove(oldValue);
 			}
 		}
-		
+
 		if (newValue != null) {
 			Pane pane = (Pane) lookup("#left-trim-area"); //$NON-NLS-1$
-			if( pane == null ) {
+			if (pane == null) {
 				this.trimPane.setLeft(newValue);
 			} else {
 				pane.getChildren().add(oldValue);
-			}			
+			}
 		}
 	}
-	
+
 	private void updateRightTrim(ObservableValue<? extends Node> o, Node oldValue, Node newValue) {
 		if (oldValue != null) {
 			Pane pane = (Pane) lookup("#right-trim-area"); //$NON-NLS-1$
-			if( pane == null ) {
+			if (pane == null) {
 				this.trimPane.setRight(null);
 			} else {
 				pane.getChildren().remove(oldValue);
 			}
 		}
-		
+
 		if (newValue != null) {
 			Pane pane = (Pane) lookup("#right-trim-area"); //$NON-NLS-1$
-			if( pane == null ) {
+			if (pane == null) {
 				this.trimPane.setRight(newValue);
 			} else {
 				pane.getChildren().add(oldValue);
-			}			
+			}
 		}
 	}
 
@@ -278,6 +308,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 	class TitleAreaNodeImpl extends ToolBar implements TitleAreaNode {
 		private static final int HEADER_HEIGHT = 28;
 		private Label titleLabel;
+		private WindowButton minButton;
 
 		public TitleAreaNodeImpl() {
 			getStyleClass().add("window-header"); //$NON-NLS-1$
@@ -298,9 +329,9 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 			closeButton.setFocusTraversable(false);
 			closeButton.setOnAction(e -> close());
 
-			WindowButton minButton = new WindowButton("minimize"); //$NON-NLS-1$
-			minButton.setFocusTraversable(false);
-			minButton.setOnAction(e -> minimize());
+			this.minButton = new WindowButton("minimize"); //$NON-NLS-1$
+			this.minButton.setFocusTraversable(false);
+			this.minButton.setOnAction(e -> minimize());
 
 			WindowButton maxButton = new WindowButton("maximize"); //$NON-NLS-1$
 			maxButton.setFocusTraversable(false);
@@ -308,7 +339,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 
 			HBox windowBtns = new HBox(3);
 			windowBtns.getStyleClass().add("window-buttons"); //$NON-NLS-1$
-			windowBtns.getChildren().addAll(minButton, maxButton, closeButton);
+			windowBtns.getChildren().addAll(this.minButton, maxButton, closeButton);
 
 			getItems().addAll(this.titleLabel, spacer, windowBtns);
 		}
@@ -316,6 +347,11 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 		@Override
 		public StringProperty titleProperty() {
 			return this.titleLabel.textProperty();
+		}
+
+		@Override
+		public Node getMinButton() {
+			return this.minButton;
 		}
 	}
 
@@ -368,7 +404,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 			((Pane) lookup("#client-area")).getChildren().add(newClientArea); //$NON-NLS-1$
 		}
 	}
-	
+
 	@Override
 	public ObjectProperty<Node> impl_contentProperty() {
 		return this.contentProperty;
@@ -385,8 +421,9 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 			setPrefSize(17, 17);
 		}
 	}
-//FIXME Once the build server is on u40
-//	@Override
+
+	// FIXME Once the build server is on u40
+	// @Override
 	public String getUserAgentStylesheet() {
 		return getClass().getResource("window.css").toExternalForm(); //$NON-NLS-1$
 	}
