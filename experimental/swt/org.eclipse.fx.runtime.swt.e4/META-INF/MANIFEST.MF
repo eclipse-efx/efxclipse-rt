@@ -8,4 +8,3 @@ Require-Bundle: org.eclipse.e4.core.contexts,
  org.eclipse.fx.runtime.swt;bundle-version="1.0.0"
 Service-Component: OSGI-INF/services/fxtoswtfunction.xml
 Bundle-ActivationPolicy: lazy
-Import-Package: javafx.scene.layout;version="2.2.0"
