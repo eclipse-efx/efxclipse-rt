@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -209,8 +211,16 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 			if (sequence != null && sequence.getKeyStrokes().length == 1) {
 				KeyStroke k = sequence.getKeyStrokes()[0];
 
-				getWidget().setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(Character.toUpperCase((char) k.getKeyCode()) + ""), //$NON-NLS-1$
-						k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCommandModifier() ? ModifierValue.DOWN : ModifierValue.ANY, ModifierValue.ANY));
+				KeyCode keyCode = null;
+				List<KeyCode> collect = Arrays.asList(KeyCode.values()).stream().filter(code -> {
+					return code.impl_getCode() == k.getKeyCode();
+				}).collect(Collectors.toList());
+				if (collect.size() > 0)
+					keyCode = collect.get(0);
+
+				getWidget().setAccelerator(
+						new KeyCodeCombination(keyCode, k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCommandModifier() ? ModifierValue.DOWN
+								: ModifierValue.ANY, ModifierValue.ANY));
 			} else {
 				getWidget().setAccelerator(null);
 			}
