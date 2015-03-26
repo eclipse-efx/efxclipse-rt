@@ -63,6 +63,7 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.core.services.nls.Translation;
 import org.eclipse.e4.core.services.translation.TranslationService;
+import org.eclipse.e4.ui.internal.workbench.E4Workbench;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
@@ -328,6 +329,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		protected Stage createWidget() {
 			Stage stage = new Stage();
 			this.stage = stage;
+			this.modelContext.set(E4Workbench.LOCAL_ACTIVE_SHELL, stage);
 			MWindow parent = findParent((EObject) this.mWindow);
 			if (parent != null) {
 				this.stage.initOwner((Window) ((WWindow<?>) parent.getWidget()).getWidget());
