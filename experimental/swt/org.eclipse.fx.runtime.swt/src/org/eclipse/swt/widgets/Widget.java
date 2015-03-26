@@ -13,8 +13,6 @@ package org.eclipse.swt.widgets;
 
 import java.util.WeakHashMap;
 
-import javafx.scene.layout.Region;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.internal.SWTEventListener;
@@ -93,6 +91,8 @@ public abstract class Widget {
 	}
 	
 	public Display getDisplay() {
+		if (display == null)
+			display = Display.getCurrent();
 		return display;
 	}
 	
