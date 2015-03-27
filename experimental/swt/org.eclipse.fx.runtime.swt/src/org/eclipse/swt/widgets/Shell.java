@@ -23,8 +23,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javafx.scene.shape.SVGPath;
-import javafx.scene.shape.Shape;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -38,7 +36,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.internal.Util;
 
-import com.sun.javafx.geom.Area;
 import com.sun.javafx.geom.PathIterator;
 
 public class Shell extends Decorations {
@@ -62,7 +59,7 @@ public class Shell extends Decorations {
 	}
 	
 	public Shell(Shell s) {
-		this(s.getDisplay());
+		this(s == null ? null : s.getDisplay());
 		stage.initOwner(s.stage);
 		this.parentShell = s;
 	}
@@ -72,8 +69,10 @@ public class Shell extends Decorations {
 	}
 
 	public Shell(Shell shell, int style) {
-		this(shell.getDisplay(), style);
-		stage.initOwner(shell.stage);
+		this(shell == null ? null : shell.getDisplay(), style);
+		if (shell != null) {
+			stage.initOwner(shell.stage);
+		}
 		this.parentShell = shell;
 	}
 
