@@ -1,12 +1,14 @@
- /*.root {
-    -fx-base: rgb(50, 50, 50);
-    -fx-background: rgb(50, 50, 50);
-    -fx-control-inner-background:  rgb(50, 50, 50);
+/* .root {
+    -fx-base: #4d5052;
+    -fx-background: #4d5052;
+    -fx-control-inner-background: #4d5052;
+    -fx-text-base-color: #c7c7c7;
 }*/
 
 .swt-composite > .corner {
 	-fx-background-color: derive(-fx-base,-1%);
 }
+
 
 .swt-message-box {
 	-fx-padding: 10;
@@ -15,7 +17,7 @@
 
 .swt-message-box > .swt-message-error {
 	-fx-graphic: url("icons/dialog-error.png");
-	-fx-graphic-text-gap: 20; 
+	-fx-graphic-text-gap: 20;
 }
 
 .swt-message-box > .swt-message-question {
@@ -47,7 +49,7 @@
 }
 
 .swt-tooltip > .message-element {
-	
+
 }
 
 .swt-tooltip > .swt-text-error {
@@ -76,7 +78,7 @@
 }
 
 .styled-text-line:odd {
-	-fx-background-color: transparent; 
+	-fx-background-color: transparent;
 }
 
 .styled-text-line:filled:hover {

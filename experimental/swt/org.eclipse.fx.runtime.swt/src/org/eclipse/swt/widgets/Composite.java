@@ -582,28 +582,39 @@ public class Composite extends Scrollable {
 		return canvas;
 	}
 	
+	private boolean inRedraw;
+	
 	void redraw(double x, double y, double width, double height, boolean all) {
 		if( canvas != null ) {
-			if( all ) {
-				canvas.getGraphicsContext2D().clearRect(0,0,canvas.getWidth(),canvas.getHeight());
-				x = 0;
-				y = 0;
-				width = canvas.getWidth();
-				height = canvas.getHeight();
-			} else {
-				canvas.getGraphicsContext2D().clearRect(x,y,width,height);
+			if( inRedraw ) {
+				return;
+			}
+			try {
+				inRedraw = true;
+				if( all ) {
+					canvas.getGraphicsContext2D().clearRect(0,0,canvas.getWidth(),canvas.getHeight());
+					x = 0;
+					y = 0;
+					width = canvas.getWidth();
+					height = canvas.getHeight();
+				} else {
+					canvas.getGraphicsContext2D().clearRect(x,y,width,height);
+				}
+				
+				Event event = new Event ();
+				GC gc = new GC(this);
+				event.gc = gc;
+				event.x = (int)x;
+				event.y = (int)y;
+				event.width = (int)width;
+				event.height = (int)height;
+				internal_sendEvent (SWT.Paint, event,true);
+				event.gc = null;
+				gc.dispose ();
+			} finally {
+				inRedraw = false;
 			}
 			
-			Event event = new Event ();
-			GC gc = new GC(this);
-			event.gc = gc;
-			event.x = (int)x;
-			event.y = (int)y;
-			event.width = (int)width;
-			event.height = (int)height;
-			internal_sendEvent (SWT.Paint, event,true);
-			event.gc = null;
-			gc.dispose ();
 		}
 	}
 	

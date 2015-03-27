@@ -439,7 +439,6 @@ public class GC extends Resource {
 	}
 	
 	public Point stringExtent(String string) {
-		System.err.println(string);
 		return gc.stringExtent(string);
 	}
 	
