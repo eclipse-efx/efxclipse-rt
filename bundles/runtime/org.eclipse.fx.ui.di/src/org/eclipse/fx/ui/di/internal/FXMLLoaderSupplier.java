@@ -39,7 +39,7 @@ public class FXMLLoaderSupplier extends ExtendedObjectSupplier {
 		Requestor<?> req = (Requestor<?>) requestor;
 		ContextObjectSupplier sub = (ContextObjectSupplier) req.getPrimarySupplier();
 		final IEclipseContext context = sub.getContext();
-		final Class<?> requestingClass = requestor.getRequestingObject().getClass();
+		final Class<?> requestingClass = requestor.getRequestingObjectClass();
 		if( context == null || requestingClass == null ) {
 			return IInjector.NOT_A_VALUE;
 		}
