@@ -12,6 +12,8 @@ package org.eclipse.fx.ui.keybindings.generic;
 
 import java.util.StringTokenizer;
 
+import javafx.scene.input.KeyCode;
+
 import org.eclipse.fx.ui.keybindings.KeyLookup;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.keybindings.ParseException;
@@ -71,7 +73,13 @@ public class KeyStrokeImpl extends TriggerImpl implements KeyStroke {
 						token = token.toUpperCase();
 						if (token != null) {
 							naturalKey = lookup.formalKeyLookup(token);
+							if (naturalKey == NO_KEY) {
+								 KeyCode fxKeyCode = KeyCode.valueOf(token);
+								 if (fxKeyCode != null)
+									 naturalKey = fxKeyCode.impl_getCode();
+							}
 						}
+						
 					}
 				}
 

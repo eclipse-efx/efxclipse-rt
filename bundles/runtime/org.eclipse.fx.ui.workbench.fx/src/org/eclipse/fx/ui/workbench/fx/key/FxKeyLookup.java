@@ -401,23 +401,7 @@ public final class FxKeyLookup implements KeyLookup {
 		if (value instanceof Integer) {
 			return ((Integer) value).intValue();
 		}
-
-		if (name.length() > 0) {
-			throw new IllegalArgumentException("Unrecognized formal key name: " //$NON-NLS-1$
-					+ name);
-		}
-
-		return name.charAt(0);
-	}
-
-	@Override
-	public final Integer formalKeyLookupInteger(final String name) {
-		final Object value = this.naturalKeyTable.get(name);
-		if (value instanceof Integer) {
-			return (Integer) value;
-		}
-
-		return new Integer(name.charAt(0));
+		return NO_KEY;
 	}
 
 	@Override
@@ -426,19 +410,7 @@ public final class FxKeyLookup implements KeyLookup {
 		if (value instanceof Integer) {
 			return ((Integer) value).intValue();
 		}
-
-		return 0;
-	}
-
-	@Override
-	public final String formalNameLookup(final int key) {
-		final Integer keyObject = new Integer(key);
-		final Object value = this.nameTable.get(keyObject);
-		if (value instanceof String) {
-			return (String) value;
-		}
-
-		return ZERO_LENGTH_STRING + ((char) key);
+		return NO_KEY;
 	}
 
 	@Override
