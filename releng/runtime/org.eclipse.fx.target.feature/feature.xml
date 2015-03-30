@@ -1416,21 +1416,14 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="com.ibm.icu"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="com.ibm.icu.base"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+         
    <plugin
-         id="com.ibm.icu.source"
+         id="com.ibm.icu.base.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
