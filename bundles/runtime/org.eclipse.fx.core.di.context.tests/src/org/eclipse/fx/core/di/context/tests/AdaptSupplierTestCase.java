@@ -18,6 +18,7 @@ import javax.inject.Named;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.fx.core.adapter.Adapt;
 import org.eclipse.fx.core.adapter.AdapterProvider;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
@@ -41,6 +42,13 @@ public class AdaptSupplierTestCase {
 		@Adapt
 		@Named("test")
 		Double doubleValue;
+		
+		int executeCalled;
+		
+		@Execute
+		public void callMe(@Adapt @Named("test") Double doubleValue) {
+			this.executeCalled++;
+		}
 	}
 	
 	/**
@@ -68,6 +76,12 @@ public class AdaptSupplierTestCase {
 
 		Assert.assertEquals(15,bean.integerValue.intValue());
 		Assert.assertEquals(15.0,bean.doubleValue.doubleValue(),0.0);
+		
+		ContextInjectionFactory.invoke(bean, Execute.class, serviceContext);
+		Assert.assertEquals(1,bean.executeCalled);
+		
+		serviceContext.set("test", "16");
+		Assert.assertEquals(1,bean.executeCalled);
 		
 		r1.unregister();
 		r2.unregister();

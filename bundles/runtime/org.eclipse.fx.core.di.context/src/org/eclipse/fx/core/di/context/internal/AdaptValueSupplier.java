@@ -36,7 +36,6 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings("restriction")
 public class AdaptValueSupplier extends ExtendedObjectSupplier {
 
-	@SuppressWarnings("null")
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
 		Requestor<?> r = (Requestor<?>) requestor;
@@ -55,19 +54,23 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 		AtomicInteger i = new AtomicInteger();
 		AtomicReference<Object> ref = new AtomicReference<>();
 		Dummy dummy = r.getInjector().make(Dummy.class, r.getPrimarySupplier());
-		dummy.context.runAndTrack(new RunAndTrack() {
+		if( track ) {
+			dummy.context.runAndTrack(new RunAndTrack() {
 
-			@Override
-			public boolean changed(IEclipseContext context) {
-				if( i.getAndIncrement() == 1 ) {
-					requestor.resolveArguments(false);
-					requestor.execute();
-					return false;
+				@Override
+				public boolean changed(IEclipseContext context) {
+					if( i.getAndIncrement() == 1 ) {
+						requestor.resolveArguments(false);
+						requestor.execute();
+						return false;
+					}
+					ref.set(dummy.context.get(key));
+					return true;
 				}
-				ref.set(dummy.context.get(key));
-				return true;
-			}
-		});
+			});
+		} else {
+			ref.set(dummy.context.get(key));
+		}
 		if( ref.get() != null ) {
 			if( dummy.adapterService.canAdapt(ref.get(), desiredClass) ) {
 				return dummy.adapterService.adapt(ref.get(), desiredClass, new ValueAccessImpl(dummy.context));
