@@ -33,6 +33,8 @@ import org.eclipse.e4.ui.model.application.ui.menu.ItemType;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuItem;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.core.log.Log;
+import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.keybindings.KeySequence;
 import org.eclipse.fx.ui.keybindings.KeyStroke;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
@@ -41,6 +43,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * default renderer for {@link MMenuItem}
@@ -60,7 +63,10 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 
 		@Inject
 		GraphicsLoader graphicsLoader;
-
+		
+		@Inject @Log
+		private Logger logger;
+		
 		@Inject
 		public MenuItemImpl(@Named("type") ItemType type) {
 			this.type = type;
@@ -217,10 +223,15 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 				}).collect(Collectors.toList());
 				if (collect.size() > 0)
 					keyCode = collect.get(0);
-
-				getWidget().setAccelerator(
-						new KeyCodeCombination(keyCode, k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCommandModifier() ? ModifierValue.DOWN
-								: ModifierValue.ANY, ModifierValue.ANY));
+				
+				if (keyCode != null) {
+					getWidget().setAccelerator(
+							new KeyCodeCombination(keyCode, k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCommandModifier() ? ModifierValue.DOWN
+									: ModifierValue.ANY, ModifierValue.ANY));
+				} else {
+					String message = NLS.bind("No JavaFX KeyBinding found [keyCode={0}, character={1}]", k.getKeyCode(), (char) k.getKeyCode());
+					this.logger.warning(message);
+				}
 			} else {
 				getWidget().setAccelerator(null);
 			}
