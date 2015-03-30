@@ -13,14 +13,15 @@ package org.eclipse.swt.widgets;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 import org.eclipse.swt.SWT;
@@ -44,6 +45,21 @@ public class FX_SWT {
 		Composite c = new FXSWTEmbed(Display.getCurrent(), SWT.NONE);
 		c.setLayout(new FillLayout());
 		pane.setCenter(c.internal_getNativeObject());
+		return c;
+	}
+	
+	public static Composite new_Composite(Group group) {
+		Composite c = new FXSWTEmbed(Display.getCurrent(), SWT.NONE);
+		c.setLayout(new FillLayout());
+		group.getChildren().add(c.internal_getNativeObject());
+		return c;
+	}
+	
+	public static Composite new_Composite(HBox pane) {
+		Composite c = new FXSWTEmbed(Display.getCurrent(), SWT.NONE);
+		c.setLayout(new FillLayout());
+		pane.getChildren().add(c.internal_getNativeObject());
+		HBox.setHgrow(c.internal_getNativeObject(), Priority.ALWAYS);
 		return c;
 	}
 	
@@ -74,4 +90,5 @@ public class FX_SWT {
 			return s;
 		}
 	}
+
 }
