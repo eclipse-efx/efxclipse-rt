@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -24,7 +25,11 @@ public class SWTActiveShellFunction extends ContextFunction {
 	public Object compute(IEclipseContext context) {
 		Object active = context.get(IServiceConstants.ACTIVE_SHELL);
 		if (active != null && active instanceof Stage) {
-			return new Shell((Stage)active);
+			UISynchronize uiSynchronize = context.get(UISynchronize.class);
+			Shell result = uiSynchronize.syncExec(() -> {
+				return new Shell((Stage)active);
+			}, null);
+			return result;
 		}
 		return Display.getCurrent().getActiveShell();
 	}

@@ -6,7 +6,9 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.e4.core.contexts,
  org.eclipse.fx.runtime.swt;bundle-version="1.0.0",
- org.eclipse.e4.ui.services
+ org.eclipse.e4.ui.services,
+ org.eclipse.fx.ui.services,
+ org.eclipse.e4.ui.di
 Service-Component: OSGI-INF/services/fxtoswtfunction.xml,
  OSGI-INF/services/fxtoswtdisplay.xml,
  OSGI-INF/services/swtactiveshell.xml
