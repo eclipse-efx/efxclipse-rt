@@ -489,18 +489,6 @@ public interface KeyLookup {
 	public int formalKeyLookup(@NonNull String name);	
 
 	/**
-	 * Looks up a single natural key by its formal name, and returns the integer
-	 * representation for this natural key
-	 * 
-	 * @param name
-	 *            The formal name of the natural key to look-up; must not be
-	 *            <code>null</code>.
-	 * @return The integer representation of this key. If the natural key cannot
-	 *         be found, then this method returns <code>0</code>.
-	 */
-	public @NonNull Integer formalKeyLookupInteger(@NonNull String name);
-
-	/**
 	 * Looks up a single modifier key by its formal name, and returns the integer
 	 * representation for this modifier key
 	 * 
@@ -511,18 +499,6 @@ public interface KeyLookup {
 	 *         cannot be found, then this method returns <code>0</code>.
 	 */
 	public int formalModifierLookup(@NonNull String name);
-
-	/**
-	 * Looks up a key value, and returns the formal string representation for
-	 * that key
-	 * 
-	 * @param key
-	 *            The key to look-up.
-	 * @return The formal string representation of this key. If this key cannot
-	 *         be found, then it is simply the character corresponding to that
-	 *         integer value.
-	 */
-	public @NonNull String formalNameLookup(int key);
 
 	/**
 	 * Returns the integer representation of the ALT key.
