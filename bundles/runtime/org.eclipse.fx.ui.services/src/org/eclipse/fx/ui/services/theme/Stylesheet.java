@@ -12,7 +12,7 @@ package org.eclipse.fx.ui.services.theme;
 
 import java.net.URL;
 
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Stylesheet registered on a theme
@@ -34,5 +34,5 @@ public interface Stylesheet {
 	 *            the theme
 	 * @return the url to the stylesheet
 	 */
-	public @NonNull URL getURL(Theme t);
+	public @Nullable URL getURL(Theme t);
 }

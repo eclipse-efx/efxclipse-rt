@@ -18,10 +18,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 
+import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.services.theme.MultiURLStylesheet;
 import org.eclipse.fx.ui.services.theme.Stylesheet;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A basic implementation of a theme
@@ -35,7 +38,9 @@ public class AbstractTheme implements Theme {
 	private final @NonNull ObservableList<@NonNull URL> stylesheetUrlList = FXCollections.observableArrayList();
 	@SuppressWarnings("null")
 	private final @NonNull ObservableList<@NonNull URL> unmodifiableStylesheetUrlList = FXCollections.unmodifiableObservableList(this.stylesheetUrlList);
-
+	@Nullable
+	private static Logger LOGGER;
+	
 	/**
 	 * Create a theme
 	 *
@@ -75,8 +80,20 @@ public class AbstractTheme implements Theme {
 	 */
 	public void registerStylesheet(Stylesheet stylesheet) {
 		if (stylesheet.appliesToTheme(this)) {
-			this.stylesheetUrlList.add(stylesheet.getURL(this));
+			URL url = stylesheet.getURL(this);
+			if( url != null ) {
+				this.stylesheetUrlList.add(url);
+			} else {
+				getLogger().error("Stylesheet '"+stylesheet+"' tried to restrict null as a stylesheet URI");  //$NON-NLS-1$//$NON-NLS-2$
+			}
 		}
+	}
+	
+	private static Logger getLogger() {
+		if( LOGGER == null ) {
+			LOGGER = LoggerCreator.createLogger(AbstractTheme.class);
+		}
+		return LOGGER;
 	}
 
 	/**
