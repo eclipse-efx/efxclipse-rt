@@ -31,7 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  * @since 1.2
  */
-public class AbstractTheme implements Theme {
+public abstract class AbstractTheme implements Theme {
 	private final @NonNull String id;
 	private final @NonNull String name;
 	@SuppressWarnings("null")
