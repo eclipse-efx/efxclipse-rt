@@ -25,6 +25,9 @@ import org.eclipse.fx.ui.services.theme.Stylesheet;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * A basic implementation of a theme
@@ -78,6 +81,7 @@ public abstract class AbstractTheme implements Theme {
 	 * @param stylesheet
 	 *            the stylesheet
 	 */
+	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC)
 	public void registerStylesheet(Stylesheet stylesheet) {
 		if (stylesheet.appliesToTheme(this)) {
 			URL url = stylesheet.getURL(this);
@@ -116,6 +120,7 @@ public abstract class AbstractTheme implements Theme {
 	 * @param stylesheet
 	 *            the stylesheet
 	 */
+	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC)
 	public void registerMultiURLStylesheet(MultiURLStylesheet stylesheet) {
 		if (stylesheet.appliesToTheme(this)) {
 			ObservableList<@NonNull URL> url = stylesheet.getURL(this);
