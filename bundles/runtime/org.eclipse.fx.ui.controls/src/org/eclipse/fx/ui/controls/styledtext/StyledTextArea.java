@@ -325,7 +325,7 @@ public class StyledTextArea extends Control {
 	 * @param styles
 	 *            the style ranges
 	 */
-	public void setStyleRanges(int start, int length, @Nullable int[] ranges,
+	public void setStyleRanges(int start, int length, int[] ranges,
 			@Nullable StyleRange[] styles) {
 		if (ranges == null || styles == null) {
 			setStyleRanges(start, length, null, null, false);
@@ -342,7 +342,7 @@ public class StyledTextArea extends Control {
 	 * @param styles
 	 *            the style ranges
 	 */
-	public void setStyleRanges(@Nullable int[] ranges,
+	public void setStyleRanges(int[] ranges,
 			@Nullable StyleRange[] styles) {
 		if (ranges == null || styles == null) {
 			setStyleRanges(0, 0, null, null, true);
