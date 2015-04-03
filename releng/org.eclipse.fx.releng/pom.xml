@@ -86,7 +86,7 @@
 
 	<repositories>
 		<repository>
-			<id>luna</id>
+			<id>mars</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/mars</url>
 		</repository>
