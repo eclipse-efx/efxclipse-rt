@@ -30,4 +30,5 @@ Import-Package: javax.annotation;version="1.2.0";resolution:=optional,
  javax.inject;version="1.0.0"
 Bundle-Activator: org.eclipse.fx.ui.workbench.base.internal.Activator
 Bundle-ActivationPolicy: lazy
-Service-Component: OSGI-INF/services/commandservice.xml
+Service-Component: OSGI-INF/services/commandservice.xml,
+ OSGI-INF/services/mementocf.xml

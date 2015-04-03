@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * A simple storage API for states that need to be stored
  * 
@@ -24,7 +27,7 @@ public interface Memento {
 	 * @param value
 	 *            the value
 	 */
-	public void put(String key, String value);
+	public void put(@NonNull String key, String value);
 
 	/**
 	 * Store a boolean value
@@ -34,7 +37,7 @@ public interface Memento {
 	 * @param value
 	 *            the value
 	 */
-	public void put(String key, boolean value);
+	public void put(@NonNull String key, boolean value);
 
 	/**
 	 * Store an integer value
@@ -44,7 +47,7 @@ public interface Memento {
 	 * @param value
 	 *            the value
 	 */
-	public void put(String key, int value);
+	public void put(@NonNull String key, int value);
 
 	/**
 	 * Store a double value
@@ -54,7 +57,7 @@ public interface Memento {
 	 * @param value
 	 *            the value
 	 */
-	public void put(String key, double value);
+	public void put(@NonNull String key, double value);
 
 	/**
 	 * Remove the given key
@@ -62,7 +65,7 @@ public interface Memento {
 	 * @param key
 	 *            the key
 	 */
-	public void remove(String key);
+	public void remove(@NonNull String key);
 
 	/**
 	 * Check if the given key exists
@@ -71,7 +74,7 @@ public interface Memento {
 	 *            the key
 	 * @return <code>true</code> if exists else <code>false</code>
 	 */
-	public boolean exists(String key);
+	public boolean exists(@NonNull String key);
 
 	/**
 	 * Retrieve the value for the given key
@@ -79,11 +82,11 @@ public interface Memento {
 	 * @param key
 	 *            the key
 	 * @param defaultValue
-	 *            the default value if the key does not exists or is
-	 *            <code>null</code>
+	 *            the default value if the key does not exists, is
+	 *            <code>null</code> or not a {@link String}
 	 * @return the value or the default value provided
 	 */
-	public String get(String key, String defaultValue);
+	public @Nullable String get(@NonNull String key, @Nullable String defaultValue);
 
 	/**
 	 * Retrieve the value for the given key
@@ -95,7 +98,7 @@ public interface Memento {
 	 *            <code>null</code> or not a boolean
 	 * @return the value or the default value provided
 	 */
-	public boolean get(String key, boolean defaultValue);
+	public boolean get(@NonNull String key, boolean defaultValue);
 
 	/**
 	 * Retrieve the value for the given key
@@ -107,7 +110,7 @@ public interface Memento {
 	 *            <code>null</code> or not an int
 	 * @return the value or the default value provided
 	 */
-	public int get(String key, int defaultValue);
+	public int get(@NonNull String key, int defaultValue);
 	
 	/**
 	 * Retrieve the value for the given key
@@ -116,5 +119,5 @@ public interface Memento {
 	 *            <code>null</code> or not a double
 	 * @return the value or the default value provided
 	 */
-	public double get(String key, double defaultValue);
+	public double get(@NonNull String key, double defaultValue);
 }
