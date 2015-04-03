@@ -27,8 +27,9 @@ Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.1.0",
 Export-Package: org.eclipse.fx.ui.workbench.base;x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx,org.eclipse.fx.ui.workbench.renderers.base",
  org.eclipse.fx.ui.workbench.base.rendering;x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx,org.eclipse.fx.ui.workbench.renderers.base"
 Import-Package: javax.annotation;version="1.2.0";resolution:=optional,
- javax.inject;version="1.0.0"
+ javax.inject;version="1.0.0",
+ org.osgi.service.component.annotations;version="1.2.0"
 Bundle-Activator: org.eclipse.fx.ui.workbench.base.internal.Activator
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/services/commandservice.xml,
- OSGI-INF/services/mementocf.xml
+ OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.MementoCF.xml

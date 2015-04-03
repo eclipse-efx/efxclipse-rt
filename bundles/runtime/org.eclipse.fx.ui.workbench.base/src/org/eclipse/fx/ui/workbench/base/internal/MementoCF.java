@@ -23,6 +23,7 @@ import org.eclipse.fx.core.ObjectSerializer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
@@ -40,7 +41,7 @@ public class MementoCF extends ContextFunction {
 	 * @param serializer
 	 *            the new serializer
 	 */
-	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
+	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY, cardinality=ReferenceCardinality.MULTIPLE)
 	public void registerObjectSerializer(ObjectSerializer serializer) {
 		synchronized (this.serializers) {
 			this.serializers.add(serializer);
