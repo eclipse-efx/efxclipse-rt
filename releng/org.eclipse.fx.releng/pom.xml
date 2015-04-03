@@ -91,11 +91,6 @@
 			<url>http://download.eclipse.org/releases/mars</url>
 		</repository>
 		<repository>
-			<id>ibuilds</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/eclipse/updates/4.5-I-builds</url>
-		</repository>
-		<repository>
 			<id>orbit</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/</url>
