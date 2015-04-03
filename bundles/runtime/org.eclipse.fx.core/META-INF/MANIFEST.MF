@@ -7,7 +7,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.annotation;version="1.2.0";resolution:=optional,
  javax.inject;version="1.0.0",
  org.apache.commons.lang.text;version="2.6.0",
- org.osgi.framework;version="1.8.0";resolution:=optional
+ org.osgi.framework;version="1.8.0";resolution:=optional,
+ org.osgi.service.component.annotations;version="1.2.0";resolution:=optional
 Export-Package: org.eclipse.fx.core,
  org.eclipse.fx.core.adapter,
  org.eclipse.fx.core.command,
@@ -17,7 +18,9 @@ Export-Package: org.eclipse.fx.core,
  org.eclipse.fx.core.text,
  org.eclipse.fx.core.update
 Bundle-Vendor: %Bundle-Vendor
-Service-Component: OSGI-INF/services/jlogger.xml,OSGI-INF/services/adapterservice.xml,
- OSGI-INF/services/filesystem.xml
+Service-Component: OSGI-INF/services/jlogger.xml,
+ OSGI-INF/services/adapterservice.xml,
+ OSGI-INF/services/filesystem.xml,
+ OSGI-INF/services/org.eclipse.fx.core.internal.JAXBObjectSerializer.xml
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional
