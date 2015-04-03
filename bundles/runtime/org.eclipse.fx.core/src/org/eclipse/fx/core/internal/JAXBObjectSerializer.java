@@ -28,7 +28,7 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 
 	@Override
 	public String getId() {
-		return "jaxb"; //$NON-NLS-1$
+		return ObjectSerializer.JAXB_SERIALIZER;
 	}
 
 	@Override

@@ -15,6 +15,11 @@ package org.eclipse.fx.core;
  */
 public interface ObjectSerializer {
 	/**
+	 * Id of a default serializer based on JAXB
+	 */
+	public static final String JAXB_SERIALIZER = "jaxb"; //$NON-NLS-1$
+	
+	/**
 	 * @return the id of the serializer
 	 */
 	public String getId();
