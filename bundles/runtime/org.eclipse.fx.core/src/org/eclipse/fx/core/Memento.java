@@ -60,6 +60,18 @@ public interface Memento {
 	public void put(@NonNull String key, double value);
 
 	/**
+	 * Restore an object serialized with the given serializer
+	 * 
+	 * @param key
+	 *            the key
+	 * @param value
+	 *            the value
+	 * @param serializer
+	 *            the id of the serializer
+	 */
+	public void put(@NonNull String key, Object value, String serializer);
+
+	/**
 	 * Remove the given key
 	 * 
 	 * @param key
@@ -111,13 +123,30 @@ public interface Memento {
 	 * @return the value or the default value provided
 	 */
 	public int get(@NonNull String key, int defaultValue);
-	
+
 	/**
 	 * Retrieve the value for the given key
-	 * @param key the key
-	 * @param defaultValue the default value of the key does not exits, is
+	 * 
+	 * @param key
+	 *            the key
+	 * @param defaultValue
+	 *            the default value if the key does not exits, is
 	 *            <code>null</code> or not a double
 	 * @return the value or the default value provided
 	 */
 	public double get(@NonNull String key, double defaultValue);
+
+	/**
+	 * Retrieve the deserialized object
+	 * 
+	 * @param key
+	 *            the key
+	 * @param clazz
+	 *            the type
+	 * @param defaultValue
+	 *            the default value if the key does not exits, is
+	 *            <code>null</code> or can not be deserialized
+	 * @return the value or default value provided
+	 */
+	public <O> @Nullable O get(String key, Class<O> clazz, @Nullable O defaultValue);
 }
