@@ -232,7 +232,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 			if (pane == null) {
 				this.trimPane.setTop(newValue);
 			} else {
-				pane.getChildren().add(oldValue);
+				pane.getChildren().add(newValue);
 			}
 		}
 	}
@@ -243,7 +243,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 			if (pane == null) {
 				this.trimPane.setBottom(null);
 			} else {
-				pane.getChildren().remove(oldValue);
+				pane.getChildren().remove(newValue);
 			}
 		}
 
@@ -252,7 +252,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 			if (pane == null) {
 				this.trimPane.setBottom(newValue);
 			} else {
-				pane.getChildren().add(oldValue);
+				pane.getChildren().add(newValue);
 			}
 		}
 	}
@@ -272,7 +272,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 			if (pane == null) {
 				this.trimPane.setLeft(newValue);
 			} else {
-				pane.getChildren().add(oldValue);
+				pane.getChildren().add(newValue);
 			}
 		}
 	}
@@ -292,7 +292,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 			if (pane == null) {
 				this.trimPane.setRight(newValue);
 			} else {
-				pane.getChildren().add(oldValue);
+				pane.getChildren().add(newValue);
 			}
 		}
 	}
