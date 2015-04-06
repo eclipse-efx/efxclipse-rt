@@ -35,6 +35,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MWindowElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler;
+import org.eclipse.e4.ui.workbench.modeling.IWindowCloseHandler;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.core.log.Log;
@@ -43,7 +44,10 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
+import org.eclipse.fx.ui.workbench.services.ELifecycleService;
+import org.eclipse.fx.ui.workbench.services.lifecycle.annotation.PreClose;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
 
 /**
@@ -60,7 +64,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		private MWindow element;
 		@NonNull
 		private WWindow<N> widget;
-
+		
 		DefaultSaveHandler(@NonNull MWindow element, @NonNull WWindow<N> widget) {
 			this.element = element;
 			this.widget = widget;
@@ -147,6 +151,9 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	@Inject
 	@Log
 	Logger logger;
+	
+	@Inject
+	ELifecycleService lifecycleService;
 
 	@SuppressWarnings("null")
 	@PostConstruct
@@ -240,6 +247,23 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 			@Override
 			public Boolean call(WWindow<N> param) {
+				@Nullable
+				IEclipseContext modelContext = getModelContext(element);
+				if( modelContext != null ) {
+					IWindowCloseHandler closeHandler = modelContext.get(IWindowCloseHandler.class);
+					if( closeHandler != null ) {
+						boolean close = closeHandler.close(element);
+						if( ! close ) {
+							return Boolean.FALSE;
+						}
+					}
+					
+					if( ! BaseWindowRenderer.this.lifecycleService.validateAnnotation(PreClose.class, element, modelContext) ) {
+						return Boolean.FALSE;
+					}
+				} else {
+					BaseWindowRenderer.this.logger.error("No model context attached to " + element); //$NON-NLS-1$
+				}
 				// TODO Call out to lifecycle
 
 				// Set the render flag for other windows
