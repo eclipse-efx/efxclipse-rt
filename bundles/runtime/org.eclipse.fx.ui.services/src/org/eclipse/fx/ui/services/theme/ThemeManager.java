@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.services.theme;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
