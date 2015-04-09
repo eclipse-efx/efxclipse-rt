@@ -21,6 +21,7 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MArea;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
+import org.eclipse.e4.ui.model.application.ui.basic.MCompositePart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
@@ -75,7 +76,7 @@ public class CleanUpAddon {
 
 				if (container.getChildren().isEmpty()) {
 					container.setParent(null);
-				} else if( container instanceof MGenericTile<?> && container.getChildren().size() == 1 ) {
+				} else if( /* we never collapse MCompositePart see 464328*/ (!(container instanceof MCompositePart)) && container instanceof MGenericTile<?> && container.getChildren().size() == 1 ) {
 					final MGenericTile<MUIElement> tile = (MGenericTile<MUIElement>) container;
 					int idx = container.getParent().getChildren().indexOf(container);
 
