@@ -57,7 +57,7 @@ public class CleanUpAddon {
 			MUIElement containerParent = container.getParent();
 
 			// Elements who will never be destroyed even when empty
-			if (container instanceof MApplication || container instanceof MPerspectiveStack || container instanceof MMenuElement || container instanceof MTrimBar || container instanceof MToolBar || container instanceof MArea || container.getTags().contains(IPresentationEngine.NO_AUTO_COLLAPSE)) {
+			if (container instanceof MCompositePart || container instanceof MApplication || container instanceof MPerspectiveStack || container instanceof MMenuElement || container instanceof MTrimBar || container instanceof MToolBar || container instanceof MArea || container.getTags().contains(IPresentationEngine.NO_AUTO_COLLAPSE)) {
 				return;
 			}
 
