@@ -10,36 +10,29 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.stage;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.scene.Node;
 
 /**
- * A window pane who has handles at the borders to resize it
- * 
- * @since 2.0
+ * Base interface for all window structures
  */
-public abstract class ResizeableWindowPane extends ResizeableFramePane implements Window {
-	@Override
-	public final void setMenuBar(Node node) {
-		menuBarProperty().set(node);
-	}
-
+public interface Frame {
 	/**
-	 * @return the menu bar
+	 * Set the title
+	 * 
+	 * @param title
+	 *            the title
 	 */
-	public final Node getMenuBar() {
-		return menuBarProperty().get();
-	}
-
+	public abstract void setTitle(String title);
+	
 	/**
-	 * @return the menu bar property
+	 * Set the client area node
+	 * 
+	 * @param node
+	 *            the client area node
 	 */
-	public final ObjectProperty<Node> menuBarProperty() {
-		return impl_menuBarProperty();
-	}
-
-	/**
-	 * @return the real menubar property
-	 */
-	protected abstract ObjectProperty<Node> impl_menuBarProperty();
+	public abstract void setClientArea(Node node);
+	
+	public void setResizeable(boolean resizable);
+	public void setMinimizable(boolean minimizable);
+	public void setMaximizable(boolean maximizeable);
 }

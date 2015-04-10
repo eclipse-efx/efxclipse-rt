@@ -6,17 +6,21 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.ui.controls.stage;
+package org.eclipse.fx.ui.workbench.renderers.base.services;
 
-import javafx.scene.layout.StackPane;
+import java.util.function.BiFunction;
 
-/**
- * Base root node for window panes
- * 
- * @since 2.0
- */
-public abstract class WindowPane extends StackPane implements Window {
-	// empty by default
+import org.eclipse.fx.core.Status;
+
+public interface LightWeightDialogService {
+	public enum ModalityScope {
+		// APPLICATION,
+		WINDOW,
+		PERSPECTIVE,
+		PART
+	}
+	
+	public <T> void openDialog(Class<?> dialogClass, ModalityScope scope, BiFunction<Status, T, Boolean> result);
 }

@@ -48,6 +48,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -224,7 +225,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		IEclipseContext applicationContext;
 
-		private List<WWindow<Stage>> windows = new ArrayList<>();
+		private List<WWindow<?>> windows = new ArrayList<>();
 
 		WCallback<WWindow<Stage>, Boolean> onCloseCallback;
 
@@ -243,6 +244,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private static final String KEY_STAGE_UNDECORATED_DEPRECATED = "efx.window.undecorated"; //$NON-NLS-1$
 
 		private static final String KEY_STAGE_ROOT_CONTENT = "efx.window.root.fxml"; //$NON-NLS-1$
+		
+		private StackPane overlayContainer = new StackPane();
 
 		/**
 		 * Create a new window
@@ -323,6 +326,26 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			} while (e.eContainer() != null);
 
 			return null;
+		}
+		
+		@Override
+		public void setDialog(Object dialogNode) {
+			if( dialogNode == null ) {
+				if( this.overlayContainer != null ) {
+					((Pane)getStaticLayoutNode()).getChildren().remove(this.overlayContainer);
+					this.overlayContainer.getChildren().clear();
+				}
+			} else {
+				if( this.overlayContainer == null ) {
+					this.overlayContainer = new StackPane();
+					this.overlayContainer.getStyleClass().add("overlay-container"); //$NON-NLS-1$
+					this.overlayContainer.setManaged(false);
+					this.overlayContainer.setMouseTransparent(false);
+				}
+				
+				this.overlayContainer.getChildren().setAll((Node)dialogNode);
+				((Pane)getStaticLayoutNode()).getChildren().add(this.overlayContainer);
+			}
 		}
 
 		@Override
@@ -769,7 +792,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 
 		@Override
-		public void addChildWindow(WWindow<Stage> widget) {
+		public void addChildWindow(WWindow<?> widget) {
 			this.windows.add(widget);
 			if (this.initDone && this.stage.isShowing()) {
 				Stage s = (Stage) widget.getWidget();
@@ -778,7 +801,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 
 		@Override
-		public void removeChildWindow(@NonNull WWindow<Stage> widget) {
+		public void removeChildWindow(@NonNull WWindow<?> widget) {
 			Stage s = (Stage) widget.getWidget();
 			s.hide();
 			this.windows.remove(widget);
@@ -810,7 +833,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			}
 
 			// I don't think sub-windows should be activated
-			for (WWindow<Stage> c : this.windows) {
+			for (WWindow<?> c : this.windows) {
 				c.show();
 				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}

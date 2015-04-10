@@ -37,7 +37,7 @@ import javafx.stage.Modality;
  * 
  * @since 2.0
  */
-public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWindow {
+public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements TrimmedWindow {
 	/**
 	 * A node representing the title area
 	 */
@@ -72,7 +72,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 	/**
 	 * Create a default window pane
 	 */
-	public DefaultWindowPane() {
+	public DefaultTrimmedWindowPane() {
 		this(null);
 	}
 
@@ -83,7 +83,7 @@ public class DefaultWindowPane extends ResizeableWindowPane implements TrimmedWi
 	 * @param clientArea
 	 *            a client area
 	 */
-	public DefaultWindowPane(@Nullable Pane clientArea) {
+	public DefaultTrimmedWindowPane(@Nullable Pane clientArea) {
 		menuBarProperty().addListener(this::updateMenuBar);
 		clientAreaProperty().addListener(this::updateClientArea);
 		topTrimProperty().addListener(this::updateTopTrim);

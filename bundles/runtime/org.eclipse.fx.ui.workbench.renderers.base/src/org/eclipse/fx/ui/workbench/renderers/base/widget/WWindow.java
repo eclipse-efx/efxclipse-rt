@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @param <N>
  *            the native type
  */
-public interface WWindow<N> extends WWidget<MWindow> {
+public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 	/**
 	 * Set a main menu
 	 * 
@@ -96,7 +96,7 @@ public interface WWindow<N> extends WWidget<MWindow> {
 	 * @param widget
 	 *            the window
 	 */
-	public void addChildWindow(@NonNull WWindow<N> widget);
+	public void addChildWindow(@NonNull WWindow<?> widget);
 
 	/**
 	 * Remove the given child window
@@ -104,7 +104,7 @@ public interface WWindow<N> extends WWidget<MWindow> {
 	 * @param widget
 	 *            the window
 	 */
-	public void removeChildWindow(@NonNull WWindow<N> widget);
+	public void removeChildWindow(@NonNull WWindow<?> widget);
 
 	/**
 	 * Add a callback to veto the closing of the window

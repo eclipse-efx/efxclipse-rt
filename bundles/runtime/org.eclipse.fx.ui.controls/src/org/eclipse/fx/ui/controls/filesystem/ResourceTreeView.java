@@ -6,25 +6,16 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.ui.controls.stage;
+package org.eclipse.fx.ui.controls.filesystem;
 
-import javafx.scene.Node;
+import javafx.beans.property.ListProperty;
+import javafx.scene.control.Control;
 
 /**
- * A pane representing a window
- * 
- * @since 2.0
+ * View {@link ResourceItem} as a tree
  */
-public interface Window extends Frame {
-
-	/**
-	 * Set menu bar
-	 * 
-	 * @param n
-	 *            the menu bar node
-	 */
-	public abstract void setMenuBar(Node n);
-
+public class ResourceTreeView extends Control {
+	private ListProperty<ResourceItem> items;
 }
