@@ -396,6 +396,17 @@ public final class FxKeyLookup implements KeyLookup {
 	}
 
 	@Override
+	 public final String formalNameLookup(final int key) {
+	  final Integer keyObject = new Integer(key);
+	  final Object value = this.nameTable.get(keyObject);
+	  if (value instanceof String) {
+	   return (String) value;
+	  }
+
+	  return ZERO_LENGTH_STRING + ((char) key);
+	 }
+	
+	@Override
 	public final int formalKeyLookup(final String name) {
 		final Object value = this.naturalKeyTable.get(name);
 		if (value instanceof Integer) {

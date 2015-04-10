@@ -487,6 +487,15 @@ public interface KeyLookup {
 	 *         be found, then this method returns <code>0</code>.
 	 */
 	public int formalKeyLookup(@NonNull String name);	
+	
+	/**
+	 * Looks up a single key name by its keycode and return the String representation.
+	 * 
+	 * @param keyCode 
+	 * 
+	 * @return The String representation of the keyCode.
+	 */
+	public String formalNameLookup(int keyCode);
 
 	/**
 	 * Looks up a single modifier key by its formal name, and returns the integer
