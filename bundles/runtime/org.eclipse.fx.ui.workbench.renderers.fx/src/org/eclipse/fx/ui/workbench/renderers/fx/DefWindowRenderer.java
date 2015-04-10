@@ -168,7 +168,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	/**
 	 * Default implementation of a window
 	 */
-	public static class WWindowImpl extends WLayoutedWidgetImpl<Stage, Pane, MWindow> implements WWindow<Stage> {
+	public static class WWindowImpl extends WLayoutedWidgetImpl<Stage, Pane, MWindow>implements WWindow<Stage> {
 		private boolean support3d;
 		private Pane rootPane;
 		private BorderPane trimPane;
@@ -229,7 +229,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		WCallback<WWindow<Stage>, Boolean> onCloseCallback;
 
-		private Boolean maximizedShell;
+		private boolean maximizedShell;
 
 		List<WWidget<?>> lastActivationTree = new ArrayList<WWidget<?>>();
 		List<WWidget<?>> queuedTree = new ArrayList<WWidget<?>>();
@@ -244,7 +244,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private static final String KEY_STAGE_UNDECORATED_DEPRECATED = "efx.window.undecorated"; //$NON-NLS-1$
 
 		private static final String KEY_STAGE_ROOT_CONTENT = "efx.window.root.fxml"; //$NON-NLS-1$
-		
+
 		private StackPane overlayContainer = new StackPane();
 
 		/**
@@ -289,10 +289,6 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				this.undecorated = Boolean.parseBoolean(mWindow.getPersistedState().get(KEY_STAGE_UNDECORATED_DEPRECATED));
 			}
 
-			if (mWindow.getTags().contains(BaseWindowRenderer.TAG_SHELLMAXIMIZED)) {
-				this.maximizedShell = Boolean.TRUE;
-			}
-
 			this.rootFXML = mWindow.getPersistedState().get(KEY_STAGE_ROOT_CONTENT);
 			if (this.decorationFXML != null && this.rootFXML != null) {
 				logger.warning("You've specified a decorationXML and a rootFXML. Only rootFXML is used"); //$NON-NLS-1$
@@ -327,24 +323,24 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			return null;
 		}
-		
+
 		@Override
 		public void setDialog(Object dialogNode) {
-			if( dialogNode == null ) {
-				if( this.overlayContainer != null ) {
-					((Pane)getStaticLayoutNode()).getChildren().remove(this.overlayContainer);
+			if (dialogNode == null) {
+				if (this.overlayContainer != null) {
+					((Pane) getStaticLayoutNode()).getChildren().remove(this.overlayContainer);
 					this.overlayContainer.getChildren().clear();
 				}
 			} else {
-				if( this.overlayContainer == null ) {
+				if (this.overlayContainer == null) {
 					this.overlayContainer = new StackPane();
 					this.overlayContainer.getStyleClass().add("overlay-container"); //$NON-NLS-1$
 					this.overlayContainer.setManaged(false);
 					this.overlayContainer.setMouseTransparent(false);
 				}
-				
-				this.overlayContainer.getChildren().setAll((Node)dialogNode);
-				((Pane)getStaticLayoutNode()).getChildren().add(this.overlayContainer);
+
+				this.overlayContainer.getChildren().setAll((Node) dialogNode);
+				((Pane) getStaticLayoutNode()).getChildren().add(this.overlayContainer);
 			}
 		}
 
@@ -362,6 +358,13 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			this.stage.focusedProperty().addListener(this::handledFocus);
 			this.stage.setFullScreen(this.fullscreen);
+			this.stage.maximizedProperty().addListener((o) -> {
+				if( this.stage.isMaximized() ) {
+					this.mWindow.getTags().add(BaseWindowRenderer.TAG_SHELLMAXIMIZED);
+				} else {
+					this.mWindow.getTags().remove(BaseWindowRenderer.TAG_SHELLMAXIMIZED);
+				}
+			});
 			this.stage.fullScreenProperty().addListener(this::handleFullscreen);
 
 			if (this.dispatcher != null) {
@@ -673,7 +676,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@SuppressWarnings("null")
 		@Inject
 		public void setX(@Named(UIEvents.Window.X) int _x) {
-			if( ! isPropertyChangeInProgress(UIEvents.Window.X) ) {
+			if (!isPropertyChangeInProgress(UIEvents.Window.X)) {
 				int x = _x;
 				if (x == -2147483648) {
 					x = 0;
@@ -691,7 +694,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@SuppressWarnings("null")
 		@Inject
 		public void setY(@Named(UIEvents.Window.Y) int _y) {
-			if( ! isPropertyChangeInProgress(UIEvents.Window.Y) ) {
+			if (!isPropertyChangeInProgress(UIEvents.Window.Y)) {
 				int y = _y;
 				if (y == -2147483648) {
 					y = 0;
@@ -709,7 +712,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@SuppressWarnings("null")
 		@Inject
 		public void setWidth(@Named(UIEvents.Window.WIDTH) int w) {
-			if( ! isPropertyChangeInProgress(UIEvents.Window.WIDTH) ) {
+			if (!isPropertyChangeInProgress(UIEvents.Window.WIDTH)) {
 				getWidget().setWidth(w);
 			}
 		}
@@ -723,7 +726,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@SuppressWarnings("null")
 		@Inject
 		public void setHeight(@Named(UIEvents.Window.HEIGHT) int h) {
-			if( ! isPropertyChangeInProgress(UIEvents.Window.HEIGHT) ) {
+			if (!isPropertyChangeInProgress(UIEvents.Window.HEIGHT)) {
 				getWidget().setHeight(h);
 			}
 		}
@@ -746,6 +749,22 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				internalShow();
 			} else {
 				internalHide();
+			}
+		}
+
+		/**
+		 * Set the new tags list
+		 * 
+		 * @param tags
+		 *            the tags
+		 */
+		@Inject
+		public void setTags(@Optional @Named(UIEvents.ApplicationElement.TAGS) List<String> tags) {
+			if (tags != null) {
+				this.maximizedShell = tags.contains(BaseWindowRenderer.TAG_SHELLMAXIMIZED);
+				if (this.stage != null) {
+					this.stage.setMaximized(this.maximizedShell);
+				}
 			}
 		}
 
@@ -814,39 +833,36 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				if (delegate != null) {
 					delegate.animate(getWidget(), () -> {
 						activateWindow();
-						// Need to delay bit else maximize different things don't operation appropiately!
+						// Need to delay bit else maximize different things
+						// don't operation appropiately!
 						// need to file FX-Bug for that
 						Platform.runLater(() -> {
-							if (this.maximizedShell != null) {
-								this.stage.setMaximized(this.maximizedShell.booleanValue());
-							}					
-						});
+								this.stage.setMaximized(this.maximizedShell);
+						} );
 						this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
-					});
+					} );
 				} else {
 					getWidget().show();
 					// force activation of the stage see 435273
 					activateWindow();
-					// Need to delay bit else maximize different things don't operation appropiately!
+					// Need to delay bit else maximize different things don't
+					// operation appropiately!
 					// need to file FX-Bug for that
 					Platform.runLater(() -> {
-						if (this.maximizedShell != null) {
-							this.stage.setMaximized(this.maximizedShell.booleanValue());
-						}					
-					});
+						this.stage.setMaximized(this.maximizedShell);
+					} );
 					this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 				}
 			} else {
 				getWidget().show();
 				// force activation of the stage see 435273
 				activateWindow();
-				// Need to delay bit else maximize different things don't operation appropiately!
+				// Need to delay bit else maximize different things don't
+				// operation appropiately!
 				// need to file FX-Bug for that
 				Platform.runLater(() -> {
-					if (this.maximizedShell != null) {
-						this.stage.setMaximized(this.maximizedShell.booleanValue());
-					}					
-				});
+					this.stage.setMaximized(this.maximizedShell);
+				} );
 				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}
 
@@ -871,7 +887,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				if (delegate != null) {
 					delegate.animate(getWidget(), () -> {
 						this.eventBroker.send(Constants.WINDOW_HIDDEN, this.mWindow);
-					});
+					} );
 				} else {
 					getWidget().hide();
 					this.eventBroker.send(Constants.WINDOW_HIDDEN, this.mWindow);
@@ -926,17 +942,17 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		public void setBottomTrim(WLayoutedWidget<MTrimBar> trimBar) {
 			if (trimBar == null) {
-				if( this.rootPane instanceof TrimmedWindow ) {
-					((TrimmedWindow)this.rootPane).setBottomTrim(null);
+				if (this.rootPane instanceof TrimmedWindow) {
+					((TrimmedWindow) this.rootPane).setBottomTrim(null);
 				} else {
-					this.trimPane.setBottom(null);	
+					this.trimPane.setBottom(null);
 				}
-				
+
 			} else {
-				if( this.rootPane instanceof TrimmedWindow ) {
-					((TrimmedWindow)this.rootPane).setBottomTrim((Node) trimBar.getStaticLayoutNode());
+				if (this.rootPane instanceof TrimmedWindow) {
+					((TrimmedWindow) this.rootPane).setBottomTrim((Node) trimBar.getStaticLayoutNode());
 				} else {
-					this.trimPane.setBottom((Node) trimBar.getStaticLayoutNode());	
+					this.trimPane.setBottom((Node) trimBar.getStaticLayoutNode());
 				}
 			}
 
@@ -945,16 +961,16 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		public void setLeftTrim(WLayoutedWidget<MTrimBar> trimBar) {
 			if (trimBar == null) {
-				if( this.rootPane instanceof TrimmedWindow ) {
-					((TrimmedWindow)this.rootPane).setLeftTrim(null);
+				if (this.rootPane instanceof TrimmedWindow) {
+					((TrimmedWindow) this.rootPane).setLeftTrim(null);
 				} else {
-					this.trimPane.setLeft(null);	
+					this.trimPane.setLeft(null);
 				}
 			} else {
-				if( this.rootPane instanceof TrimmedWindow ) {
-					((TrimmedWindow)this.rootPane).setLeftTrim((Node) trimBar.getStaticLayoutNode());
+				if (this.rootPane instanceof TrimmedWindow) {
+					((TrimmedWindow) this.rootPane).setLeftTrim((Node) trimBar.getStaticLayoutNode());
 				} else {
-					this.trimPane.setLeft((Node) trimBar.getStaticLayoutNode());	
+					this.trimPane.setLeft((Node) trimBar.getStaticLayoutNode());
 				}
 			}
 		}
@@ -962,18 +978,18 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		public void setRightTrim(WLayoutedWidget<MTrimBar> trimBar) {
 			if (trimBar == null) {
-				if( this.rootPane instanceof TrimmedWindow ) {
-					((TrimmedWindow)this.rootPane).setRightTrim(null);
+				if (this.rootPane instanceof TrimmedWindow) {
+					((TrimmedWindow) this.rootPane).setRightTrim(null);
 				} else {
-					this.trimPane.setRight(null);	
+					this.trimPane.setRight(null);
 				}
 			} else {
-				if( this.rootPane instanceof TrimmedWindow ) {
-					((TrimmedWindow)this.rootPane).setRightTrim((Node) trimBar.getStaticLayoutNode());
+				if (this.rootPane instanceof TrimmedWindow) {
+					((TrimmedWindow) this.rootPane).setRightTrim((Node) trimBar.getStaticLayoutNode());
 				} else {
-					this.trimPane.setRight((Node) trimBar.getStaticLayoutNode());	
+					this.trimPane.setRight((Node) trimBar.getStaticLayoutNode());
 				}
-				
+
 			}
 
 		}
@@ -981,16 +997,16 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		public void setTopTrim(WLayoutedWidget<MTrimBar> trimBar) {
 			if (trimBar == null) {
-				if( this.rootPane instanceof TrimmedWindow ) {
-					((TrimmedWindow)this.rootPane).setTopTrim(null);
+				if (this.rootPane instanceof TrimmedWindow) {
+					((TrimmedWindow) this.rootPane).setTopTrim(null);
 				} else {
-					this.trimPane.setTop(null);	
+					this.trimPane.setTop(null);
 				}
 			} else {
-				if( this.rootPane instanceof TrimmedWindow ) {
-					((TrimmedWindow)this.rootPane).setTopTrim((Node) trimBar.getStaticLayoutNode());
+				if (this.rootPane instanceof TrimmedWindow) {
+					((TrimmedWindow) this.rootPane).setTopTrim((Node) trimBar.getStaticLayoutNode());
 				} else {
-					this.trimPane.setTop((Node) trimBar.getStaticLayoutNode());	
+					this.trimPane.setTop((Node) trimBar.getStaticLayoutNode());
 				}
 			}
 		}

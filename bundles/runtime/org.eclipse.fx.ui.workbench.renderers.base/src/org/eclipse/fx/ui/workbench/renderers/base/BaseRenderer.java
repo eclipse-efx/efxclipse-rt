@@ -37,6 +37,7 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.UIEvents.ApplicationElement;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.emf.ecore.EAttribute;
@@ -431,6 +432,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 							Entry<String, String> entry = (Entry<String, String>) newValue;
 							ctx.set(attributeName + "_" //$NON-NLS-1$
 									+ entry.getKey(), entry.getValue());
+						} else if( attributeName.equals(UIEvents.ApplicationElement.TAGS) ) {
+							ctx.set(ApplicationElement.TAGS, new ArrayList<>(e.getTags()));
 						} else {
 							ctx.set(attributeName, newValue);
 						}
