@@ -361,9 +361,6 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			this.stage.setOnCloseRequest(this::handleOnCloseRequest);
 
 			this.stage.focusedProperty().addListener(this::handledFocus);
-			if (this.maximizedShell != null) {
-				this.stage.setMaximized(this.maximizedShell.booleanValue());
-			}
 			this.stage.setFullScreen(this.fullscreen);
 			this.stage.fullScreenProperty().addListener(this::handleFullscreen);
 
@@ -817,18 +814,39 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				if (delegate != null) {
 					delegate.animate(getWidget(), () -> {
 						activateWindow();
+						// Need to delay bit else maximize different things don't operation appropiately!
+						// need to file FX-Bug for that
+						Platform.runLater(() -> {
+							if (this.maximizedShell != null) {
+								this.stage.setMaximized(this.maximizedShell.booleanValue());
+							}					
+						});
 						this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 					});
 				} else {
 					getWidget().show();
 					// force activation of the stage see 435273
 					activateWindow();
+					// Need to delay bit else maximize different things don't operation appropiately!
+					// need to file FX-Bug for that
+					Platform.runLater(() -> {
+						if (this.maximizedShell != null) {
+							this.stage.setMaximized(this.maximizedShell.booleanValue());
+						}					
+					});
 					this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 				}
 			} else {
 				getWidget().show();
 				// force activation of the stage see 435273
 				activateWindow();
+				// Need to delay bit else maximize different things don't operation appropiately!
+				// need to file FX-Bug for that
+				Platform.runLater(() -> {
+					if (this.maximizedShell != null) {
+						this.stage.setMaximized(this.maximizedShell.booleanValue());
+					}					
+				});
 				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}
 
