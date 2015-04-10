@@ -5,4 +5,5 @@
       <provide interface="org.eclipse.fx.core.update.UpdateService"/>
    </service>
    <reference bind="setLoggerFactory" cardinality="0..1" interface="org.eclipse.fx.core.log.LoggerFactory" name="LoggerFactory" policy="static" unbind="unsetLoggerFactory"/>
+   <reference bind="setProvisioningAgent" cardinality="1..1" interface="org.eclipse.equinox.p2.core.IProvisioningAgent" name="IProvisioningAgent" policy="static" unbind="unsetProvisioningAgent"/>
 </scr:component>

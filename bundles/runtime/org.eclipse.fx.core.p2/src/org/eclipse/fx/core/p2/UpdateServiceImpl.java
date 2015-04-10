@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *     Dirk Fauth <dirk.fauth@googlemail.com> - Bug 464376
  *******************************************************************************/
 package org.eclipse.fx.core.p2;
 
@@ -31,7 +32,6 @@ import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.core.operation.CancelableOperation;
 import org.eclipse.fx.core.update.UpdateService;
 import org.eclipse.jdt.annotation.NonNull;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Implementation of service based upon p2
@@ -39,6 +39,8 @@ import org.osgi.framework.ServiceReference;
 public class UpdateServiceImpl implements UpdateService {
 	private Logger logger;
 	private LoggerFactory factory;
+	
+	private IProvisioningAgent provisioningAgent;
 
 	static class P2UpdateCheckRV implements UpdatePlan {
 		@NonNull
@@ -100,6 +102,24 @@ public class UpdateServiceImpl implements UpdateService {
 		}
 	}
 
+	/**
+	 * Set the provisioning agent
+	 * @param agent the provisioning agent
+	 */
+	public void setProvisioningAgent(IProvisioningAgent agent) {
+		this.provisioningAgent = agent;
+	}
+	
+	/**
+	 * Unset the provisioning agent
+	 * @param agent the provisioning agent
+	 */
+	public void unsetProvisioningAgent(IProvisioningAgent agent) {
+		if (this.provisioningAgent == agent) {
+			this.provisioningAgent = null;
+		}
+	}
+
 //Why is that not allowed???	
 	@NonNull
 	static Status fromStatus(@NonNull IStatus s) {
@@ -117,8 +137,7 @@ public class UpdateServiceImpl implements UpdateService {
 	
 	@Override
 	public SimpleCancelableOperation<Optional<UpdatePlan>> checkUpdate(ProgressReporter reporter) {
-		IProvisioningAgent agent = getProvisioningAgent();
-		final ProvisioningSession session = new ProvisioningSession(agent);
+		final ProvisioningSession session = new ProvisioningSession(this.provisioningAgent);
 		ProgressMonitorAdapter a = new ProgressMonitorAdapter(reporter);
 
 		SimpleCancelableOperation<Optional<UpdatePlan>> op = new SimpleCancelableOperation<>(() -> a.setCanceled(true));
@@ -153,12 +172,6 @@ public class UpdateServiceImpl implements UpdateService {
 
 		o.schedule();
 		return op;
-	}
-
-	private static IProvisioningAgent getProvisioningAgent() {
-		ServiceReference<?> reference = Activator.getContext().getServiceReference(IProvisioningAgent.SERVICE_NAME);
-		IProvisioningAgent agent = (IProvisioningAgent) Activator.getContext().getService(reference);
-		return agent;
 	}
 
 	// TODO enable forced update support in future
