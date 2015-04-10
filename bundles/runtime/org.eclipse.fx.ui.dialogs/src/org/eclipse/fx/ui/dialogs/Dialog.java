@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.fx.ui.controls.stage.WindowPane;
+import org.eclipse.fx.ui.controls.stage.ResizeableFramePane;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -266,8 +266,8 @@ public abstract class Dialog {
 			((BorderPane)rootContainer).setCenter(content);
 		} else {
 			stage.initStyle(StageStyle.UNDECORATED);
-			((WindowPane)rootContainer).setClientArea(content);
-			((WindowPane)rootContainer).setTitle(this.title);
+			((ResizeableFramePane)rootContainer).setClientArea(content);
+			((ResizeableFramePane)rootContainer).setTitle(this.title);
 		}
 
 		Scene s = new Scene(rootContainer);
@@ -293,7 +293,7 @@ public abstract class Dialog {
 		return stage;
 	}
 	
-	protected WindowPane getCustomWindowPane() {
+	protected ResizeableFramePane getCustomWindowPane() {
 		return null;
 	}
 
