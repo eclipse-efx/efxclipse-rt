@@ -425,7 +425,7 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 	// FIXME Once the build server is on u40
 	// @Override
 	public String getUserAgentStylesheet() {
-		return getClass().getResource("window.css").toExternalForm(); //$NON-NLS-1$
+		return DefaultTrimmedWindowPane.class.getResource("window.css").toExternalForm(); //$NON-NLS-1$
 	}
 
 }

@@ -21,40 +21,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javafx.application.ConditionalFeature;
-import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -103,6 +69,40 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.Bundle;
+
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 /**
  * Default implementation of a window renderer
@@ -245,7 +245,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		private static final String KEY_STAGE_ROOT_CONTENT = "efx.window.root.fxml"; //$NON-NLS-1$
 
-		private StackPane overlayContainer = new StackPane();
+		private StackPane overlayContainer;
 
 		/**
 		 * Create a new window
@@ -326,9 +326,11 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Override
 		public void setDialog(Object dialogNode) {
+			@NonNull
+			Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
 			if (dialogNode == null) {
 				if (this.overlayContainer != null) {
-					((Pane) getStaticLayoutNode()).getChildren().remove(this.overlayContainer);
+					((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
 					this.overlayContainer.getChildren().clear();
 				}
 			} else {
@@ -337,10 +339,15 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					this.overlayContainer.getStyleClass().add("overlay-container"); //$NON-NLS-1$
 					this.overlayContainer.setManaged(false);
 					this.overlayContainer.setMouseTransparent(false);
+					staticLayoutNode.layoutBoundsProperty().addListener( o -> {
+						staticLayoutNode.layoutBoundsProperty().get();
+						this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
+					});
 				}
-
-				this.overlayContainer.getChildren().setAll((Node) dialogNode);
-				((Pane) getStaticLayoutNode()).getChildren().add(this.overlayContainer);
+				
+				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
+				this.overlayContainer.getChildren().setAll((Node)dialogNode);
+				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
 			}
 		}
 
@@ -464,6 +471,12 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					event.consume();
 				}
 			}
+		}
+		
+		@SuppressWarnings("null")
+		@Override
+		public @NonNull Node getStaticLayoutNode() {
+			return this.rootPane;
 		}
 
 		private void handleFullscreen(ObservableValue<? extends Boolean> obs, Boolean oldValue, Boolean newValue) {

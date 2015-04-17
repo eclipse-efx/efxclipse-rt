@@ -65,6 +65,10 @@ public class DefaultFramePane extends ResizeableFramePane {
 	public DefaultFramePane() {
 		this(null);
 	}
+	
+	public DefaultFramePane(boolean lightweight) {
+		this(null,lightweight);
+	}
 
 	/**
 	 * Create a default window pane with a default client area as
@@ -74,6 +78,11 @@ public class DefaultFramePane extends ResizeableFramePane {
 	 *            a client area
 	 */
 	public DefaultFramePane(@Nullable Pane clientArea) {
+		this(clientArea,false);
+	}
+	
+	public DefaultFramePane(@Nullable Pane clientArea, boolean lighteight) {
+		super(lighteight);
 		clientAreaProperty().addListener(this::updateClientArea);
 		if (clientArea != null) {
 			clientArea.setId("client-area"); //$NON-NLS-1$
@@ -234,7 +243,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 	// FIXME Once the build server is on u40
 	// @Override
 	public String getUserAgentStylesheet() {
-		return getClass().getResource("window.css").toExternalForm(); //$NON-NLS-1$
+		return DefaultFramePane.class.getResource("window.css").toExternalForm(); //$NON-NLS-1$
 	}
 
 }

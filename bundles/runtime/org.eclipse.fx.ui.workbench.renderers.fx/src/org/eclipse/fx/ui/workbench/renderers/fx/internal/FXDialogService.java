@@ -75,7 +75,7 @@ public class FXDialogService implements LightWeightDialogService {
 				return result.apply(s,t);
 			};
 			dialogContext.set("resultFunction", wrapper); //$NON-NLS-1$
-			ContextInjectionFactory.make(dialogClass, dialogContext);
+			fhost.setDialog(ContextInjectionFactory.make(dialogClass, dialogContext));
 		} else {
 			this.logger.error("Could not find a host for '"+dialogClass+"'");  //$NON-NLS-1$//$NON-NLS-2$
 		}

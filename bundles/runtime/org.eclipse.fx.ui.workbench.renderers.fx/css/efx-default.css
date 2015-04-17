@@ -14,3 +14,7 @@
 .area-overlay > .area.active {
 	-fx-background-color: rgba(0,0,0,0.3);
 }
+
+.overlay-container {
+	-fx-background-color: rgba(100,100,100,0.75);
+}

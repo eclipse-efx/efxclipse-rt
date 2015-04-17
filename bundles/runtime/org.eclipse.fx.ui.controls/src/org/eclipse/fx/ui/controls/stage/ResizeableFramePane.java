@@ -12,6 +12,8 @@ package org.eclipse.fx.ui.controls.stage;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
@@ -48,6 +50,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	private BooleanProperty minimizable = new SimpleBooleanProperty(this, "minimizable", true); //$NON-NLS-1$
 	private BooleanProperty maximizable = new SimpleBooleanProperty(this, "maximizable", true); //$NON-NLS-1$
 	private BooleanProperty resizeable = new SimpleBooleanProperty(this, "resizeable", true); //$NON-NLS-1$
+	private ReadOnlyBooleanWrapper lightweight = new ReadOnlyBooleanWrapper(this, "lightweight", false); //$NON-NLS-1$
 
 	enum Location {
 		TOP, LEFT, RIGHT, BOTTOM
@@ -79,32 +82,33 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 				this.height = getStage().getHeight();
 				this.dragAnchor = new Point2D(event.getScreenX(), event.getScreenY());
 			} else if (type == MouseEvent.MOUSE_DRAGGED) {
-				double deltaX = event.getScreenX() - this.dragAnchor.getX();
-				double deltaY = event.getScreenY() - this.dragAnchor.getY();
-				// update(this.x, this.y, this.width, this.height, deltaX,
-				// deltaY);
+				if( ! isLightweight() ) {
+					double deltaX = event.getScreenX() - this.dragAnchor.getX();
+					double deltaY = event.getScreenY() - this.dragAnchor.getY();
+					// update(this.x, this.y, this.width, this.height, deltaX,
+					// deltaY);
 
-				for (Location l : this.locations) {
-					switch (l) {
-					case TOP:
-						getStage().setY(this.y + (int) deltaY);
-						getStage().setHeight(this.height + -1 * (int) deltaY);
-						break;
-					case BOTTOM:
-						getStage().setHeight(this.height + deltaY);
-						break;
-					case LEFT:
-						getStage().setX(this.x + (int) deltaX);
-						getStage().setWidth(this.width + -1 * (int) deltaX);
-						break;
-					case RIGHT:
-						getStage().setWidth(this.width + deltaX);
-						break;
-					default:
-						break;
-					}
+					for (Location l : this.locations) {
+						switch (l) {
+						case TOP:
+							getStage().setY(this.y + (int) deltaY);
+							getStage().setHeight(this.height + -1 * (int) deltaY);
+							break;
+						case BOTTOM:
+							getStage().setHeight(this.height + deltaY);
+							break;
+						case LEFT:
+							getStage().setX(this.x + (int) deltaX);
+							getStage().setWidth(this.width + -1 * (int) deltaX);
+							break;
+						case RIGHT:
+							getStage().setWidth(this.width + deltaX);
+							break;
+						default:
+							break;
+						}
+					}					
 				}
-
 			}
 		}
 	}
@@ -113,6 +117,11 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	 * Create a new pane
 	 */
 	public ResizeableFramePane() {
+		this(false);
+	}
+	
+	public ResizeableFramePane(boolean lighweight) {
+		this.lightweight.set(lighweight);
 		Node windowNode = createWindowArea();
 		getChildren().add(windowNode);
 		initResize();
@@ -378,7 +387,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	 */
 	protected void maximize() {
 		// We are bound to the stage
-		if( getParent() == null ) {
+		if( ! isLightweight() ) {
 			Stage stage = getStage();
 			final double stageY = stage.getY();
 			final Screen screen = Screen.getScreensForRectangle(stage.getX(), stageY, 1, 1).get(0);
@@ -408,7 +417,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	 */
 	protected void close() {
 		// We are bound to the stage
-		if( getParent() == null ) {
+		if( ! isLightweight() ) {
 			((Stage) getScene().getWindow()).close();
 		} else {
 			// We are embedded into a container do nothing
@@ -420,7 +429,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	 */
 	protected void minimize() {
 		// We are bound to the stage
-		if( getParent() == null ) {
+		if( ! isLightweight() ) {
 			((Stage) getScene().getWindow()).setIconified(true);
 		} else {
 			// We are embedded into a container do nothing
@@ -487,4 +496,19 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 			this.resizeCornerLeftTop.visibleProperty().bind(this.resizeable);
 		}
 	}
+
+	/**
+	 * @return is the frame lightweight
+	 */
+	public final ReadOnlyBooleanProperty lightweightProperty() {
+		return this.lightweight.getReadOnlyProperty();
+	}
+	
+	/**
+	 * @return check if the frame is lightweight
+	 */
+	public final boolean isLightweight() {
+		return this.lightweightProperty().get();
+	}
+	
 }
