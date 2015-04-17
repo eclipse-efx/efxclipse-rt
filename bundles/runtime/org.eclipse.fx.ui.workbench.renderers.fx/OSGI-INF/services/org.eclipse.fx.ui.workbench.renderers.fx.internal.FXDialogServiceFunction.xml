@@ -4,5 +4,5 @@
    <service>
       <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
    </service>
-   <property name="service.context.key" value="org.eclipse.fx.ui.workbench.renderers.base.services.LightWeightDialogService"/>
+   <property name="service.context.key" value="org.eclipse.fx.ui.services.dialog.LightWeightDialogService"/>
 </scr:component>

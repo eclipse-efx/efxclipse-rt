@@ -16,7 +16,7 @@ import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.osgi.service.component.annotations.Component;
 
-@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.ui.workbench.renderers.base.services.LightWeightDialogService"})
+@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.ui.services.dialog.LightWeightDialogService"})
 public class FXDialogServiceFunction extends ContextFunction {
 	@Override
 	public Object compute(IEclipseContext context) {

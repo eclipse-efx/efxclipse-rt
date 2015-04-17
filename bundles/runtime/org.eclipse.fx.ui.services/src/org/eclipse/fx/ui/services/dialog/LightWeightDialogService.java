@@ -8,11 +8,10 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.ui.workbench.renderers.base.services;
+package org.eclipse.fx.ui.services.dialog;
 
-import java.util.function.BiFunction;
-
-import org.eclipse.fx.core.Status;
+import org.eclipse.fx.ui.controls.stage.Frame;
+import javafx.scene.Node;
 
 public interface LightWeightDialogService {
 	public enum ModalityScope {
@@ -22,5 +21,5 @@ public interface LightWeightDialogService {
 		PART
 	}
 	
-	public <T> void openDialog(Class<?> dialogClass, ModalityScope scope, BiFunction<Status, T, Boolean> result);
+	public <T extends Node & Frame> T openDialog(Class<T> dialogClass, ModalityScope scope);
 }

@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
-import java.util.function.BiFunction;
-
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
@@ -19,11 +17,14 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
-import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
-import org.eclipse.fx.ui.workbench.renderers.base.services.LightWeightDialogService;
+import org.eclipse.fx.ui.controls.stage.Frame;
+import org.eclipse.fx.ui.controls.stage.FrameEvent;
+import org.eclipse.fx.ui.services.dialog.LightWeightDialogService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDialogHost;
+
+import javafx.scene.Node;
 
 public class FXDialogService implements LightWeightDialogService {
 	private final IEclipseContext context;
@@ -38,7 +39,7 @@ public class FXDialogService implements LightWeightDialogService {
 	}
 	
 	@Override
-	public <T> void openDialog(Class<?> dialogClass, ModalityScope scope, BiFunction<Status, T, Boolean> result) {
+	public <T extends Node & Frame> T openDialog(Class<T> dialogClass, ModalityScope scope) {
 		WDialogHost host = null;
 		
 		if( scope == ModalityScope.WINDOW ) {
@@ -70,14 +71,16 @@ public class FXDialogService implements LightWeightDialogService {
 		if( host != null ) {
 			WDialogHost fhost = host;
 			IEclipseContext dialogContext = this.context.createChild();
-			BiFunction<Status, T, Boolean> wrapper = (s,t) -> {
+			Node dialogInstance = (Node) ContextInjectionFactory.make(dialogClass, dialogContext);
+			dialogInstance.addEventHandler(FrameEvent.CLOSED, e -> {
 				fhost.setDialog(null);
-				return result.apply(s,t);
-			};
-			dialogContext.set("resultFunction", wrapper); //$NON-NLS-1$
-			fhost.setDialog(ContextInjectionFactory.make(dialogClass, dialogContext));
+			});
+			
+			fhost.setDialog(dialogInstance);
+			return (T) dialogInstance;
 		} else {
 			this.logger.error("Could not find a host for '"+dialogClass+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			throw new IllegalStateException();
 		}
 	}
 }
