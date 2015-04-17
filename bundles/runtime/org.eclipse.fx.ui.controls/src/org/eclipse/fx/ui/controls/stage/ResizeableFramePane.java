@@ -10,12 +10,15 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.stage;
 
+import java.util.function.Supplier;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Point2D;
@@ -417,13 +420,16 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	 */
 	protected void close() {
 		// We are bound to the stage
-		if( ! isLightweight() ) {
-			((Stage) getScene().getWindow()).close();
-		} else {
-			// We are embedded into a container do nothing
+		FrameEvent evt = new FrameEvent(this, FrameEvent.CLOSING);
+		Event.fireEvent(this, evt);
+		if( ! evt.isConsumed() ) {
+			if( ! isLightweight() ) {
+				((Stage) getScene().getWindow()).close();
+			}
+			Event.fireEvent(this, new FrameEvent(this, FrameEvent.CLOSED));
 		}
 	}
-
+	
 	/**
 	 * Minimize the window
 	 */
@@ -441,9 +447,25 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		this.maximizable.set(maximizeable);
 	}
 	
+	public final BooleanProperty maximizableProperty() {
+		return this.maximizable;
+	}
+	
+	public final boolean getMaximizable() {
+		return this.maximizable.get();
+	}
+	
 	@Override
 	public final void setMinimizable(boolean minimizable) {
 		this.minimizable.set(minimizable);
+	}
+	
+	public final BooleanProperty minimizableProperty() {
+		return this.minimizable;
+	}
+	
+	public final boolean getMinimizable() {
+		return this.minimizable.get();
 	}
 	
 	@Override

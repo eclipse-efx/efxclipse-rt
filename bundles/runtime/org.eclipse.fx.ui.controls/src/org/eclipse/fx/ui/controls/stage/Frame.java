@@ -10,12 +10,13 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.stage;
 
+import javafx.event.EventTarget;
 import javafx.scene.Node;
 
 /**
  * Base interface for all window structures
  */
-public interface Frame {
+public interface Frame extends EventTarget {
 	/**
 	 * Set the title
 	 * 

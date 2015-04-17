@@ -83,6 +83,10 @@ public class DefaultFramePane extends ResizeableFramePane {
 	
 	public DefaultFramePane(@Nullable Pane clientArea, boolean lighteight) {
 		super(lighteight);
+		if( lighteight ) {
+			setMinimizable(false);
+			setMaximizable(false);
+		}
 		clientAreaProperty().addListener(this::updateClientArea);
 		if (clientArea != null) {
 			clientArea.setId("client-area"); //$NON-NLS-1$
@@ -129,9 +133,11 @@ public class DefaultFramePane extends ResizeableFramePane {
 	}
 
 	private void handleStageAttached() {
-		handleFocus(getStage().focusedProperty());
-		if (getStage().getModality() == Modality.WINDOW_MODAL) {
-			this.dialogAreaNode.getMinButton().setVisible(false);
+		if( ! isLightweight() ) {
+			handleFocus(getStage().focusedProperty());
+			if (getStage().getModality() == Modality.WINDOW_MODAL) {
+				this.dialogAreaNode.getMinButton().setVisible(false);
+			}			
 		}
 	}
 
@@ -170,10 +176,12 @@ public class DefaultFramePane extends ResizeableFramePane {
 			this.minButton = new WindowButton("minimize"); //$NON-NLS-1$
 			this.minButton.setFocusTraversable(false);
 			this.minButton.setOnAction(e -> minimize());
-
+			this.minButton.visibleProperty().bind(minimizableProperty());
+			
 			WindowButton maxButton = new WindowButton("maximize"); //$NON-NLS-1$
 			maxButton.setFocusTraversable(false);
 			maxButton.setOnAction(e -> maximize());
+			maxButton.visibleProperty().bind(maximizableProperty());
 
 			HBox windowBtns = new HBox(3);
 			windowBtns.getStyleClass().add("window-buttons"); //$NON-NLS-1$
