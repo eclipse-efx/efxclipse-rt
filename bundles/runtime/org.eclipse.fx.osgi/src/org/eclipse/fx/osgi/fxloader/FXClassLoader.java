@@ -43,7 +43,7 @@ public class FXClassLoader extends ClassLoaderHook {
 	
 	@Override
 	public Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
-		if( name.startsWith("javafx") //$NON-NLS-1$
+		if( (name.startsWith("javafx") //$NON-NLS-1$
 				|| name.startsWith("com.sun.glass.events") //$NON-NLS-1$
 				|| name.startsWith("com.sun.glass.ui") //$NON-NLS-1$
 				|| name.startsWith("com.sun.javafx") //$NON-NLS-1$
@@ -53,7 +53,8 @@ public class FXClassLoader extends ClassLoaderHook {
 				|| name.startsWith("com.sun.pisces") //$NON-NLS-1$
 				|| name.startsWith("com.sun.prism") //$NON-NLS-1$
 				|| name.startsWith("com.sun.scenario") //$NON-NLS-1$
-				|| name.startsWith("com.sun.webkit")) { //$NON-NLS-1$
+				|| name.startsWith("com.sun.webkit") //$NON-NLS-1$
+				) && ! moduleClassLoader.getBundle().getSymbolicName().equals("org.eclipse.swt")) { //$NON-NLS-1$
 			return getFXClassloader().loadClass(name);
 		}
 		
