@@ -26,6 +26,8 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
+import org.eclipse.fx.ui.workbench.renderers.base.services.DnDConstraintService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
@@ -56,6 +58,11 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@Inject
 	@NonNull
 	EModelService modelService;
+	
+	@Inject
+	@Optional
+	@Nullable
+	DnDConstraintService constraintService;
 
 	/**
 	 * @return the widget node
@@ -106,10 +113,14 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	 *            the static group we attach the DnD to
 	 */
 	protected void initDnd(Pane staticLayoutGroup) {
-		SplitDnDSupport<M> dndSupport = new SplitDnDSupport<>(this.modelService, this.feedbackService, this);
+		SplitDnDSupport<M> dndSupport = new SplitDnDSupport<>(this.modelService,this.constraintService, this.feedbackService, this);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_OVER, dndSupport::handleDragOver);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_EXITED, dndSupport::handleDragExit);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
+		
+		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_OVER, dndSupport::handleDragOver);
+//		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_EXITED, dndSupport::handleDragExit);
+		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
 	}
 
 	@Override

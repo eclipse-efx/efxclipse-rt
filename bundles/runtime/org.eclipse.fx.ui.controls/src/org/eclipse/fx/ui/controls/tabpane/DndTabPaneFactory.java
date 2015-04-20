@@ -13,12 +13,14 @@ package org.eclipse.fx.ui.controls.tabpane;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
 import org.eclipse.fx.ui.controls.markers.PositionMarker;
 import org.eclipse.fx.ui.controls.markers.TabOutlineMarker;
 import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javafx.event.Event;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -105,8 +107,13 @@ public final class DndTabPaneFactory {
 	 *            the event
 	 * @return the content
 	 */
-	public static boolean hasDnDContent(DragEvent e) {
-		return e.getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE);
+	public static boolean hasDnDContent(Event e) {
+		if( e instanceof DragEvent ) {
+			return ((DragEvent)e).getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE);
+		} else if( e instanceof EFXDragEvent ) {
+			return ((EFXDragEvent)e).getDraggedContent() != null;
+		}
+		return false;
 	}
 
 	/**
@@ -116,8 +123,13 @@ public final class DndTabPaneFactory {
 	 *            the event
 	 * @return the return value
 	 */
-	public static String getDnDContent(DragEvent e) {
-		return (String) e.getDragboard().getContent(DnDTabPaneSkin.TAB_MOVE);
+	public static String getDnDContent(Event e) {
+		if( e instanceof DragEvent ) {
+			return (String) ((DragEvent)e).getDragboard().getContent(DnDTabPaneSkin.TAB_MOVE);	
+		} else if( e instanceof EFXDragEvent ) {
+			return (String) ((EFXDragEvent)e).getDraggedContent();
+		}
+		return null;
 	}
 
 	/**

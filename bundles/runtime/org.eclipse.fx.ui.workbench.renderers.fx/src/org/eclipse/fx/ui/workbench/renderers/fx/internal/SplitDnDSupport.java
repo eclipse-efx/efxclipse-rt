@@ -10,12 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
-import javafx.scene.Node;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.TransferMode;
-
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MGenericTile;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
@@ -24,7 +18,9 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
+import org.eclipse.fx.ui.workbench.renderers.base.services.DnDConstraintService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService.DnDFeedbackData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
@@ -33,6 +29,13 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropT
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+
+import javafx.event.Event;
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 
 /**
  * Implementation of splitting with DnD
@@ -44,20 +47,26 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	private final WLayoutedWidget<M> widget;
 
 	@NonNull
-	private EModelService modelService;
+	private final EModelService modelService;
+
+	@Nullable
+	private final DnDConstraintService constraintService;
 
 	/**
 	 * Create new instance
 	 *
 	 * @param modelService
 	 *            the model service
+	 * @param constraintService
+	 *            the constraint service
 	 * @param feedbackService
 	 *            the feedback service
 	 * @param widget
 	 *            the widget
 	 */
-	public SplitDnDSupport(@NonNull EModelService modelService, @NonNull DnDFeedbackService feedbackService, WLayoutedWidget<M> widget) {
+	public SplitDnDSupport(@NonNull EModelService modelService, @Nullable DnDConstraintService constraintService, @NonNull DnDFeedbackService feedbackService, WLayoutedWidget<M> widget) {
 		super(feedbackService);
+		this.constraintService = constraintService;
 		this.modelService = modelService;
 		this.widget = widget;
 	}
@@ -85,13 +94,24 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		return null;
 	}
 
+	public void handleDragOver(EFXDragEvent e) {
+		_handleDragOver(e);
+	}
+
+	public void handleDragOver(DragEvent e) {
+		_handleDragOver(e);
+	}
+
 	/**
 	 * Handling the drag over
 	 *
 	 * @param e
 	 *            the event
 	 */
-	public void handleDragOver(DragEvent e) {
+	private void _handleDragOver(Event e) {
+		if( this.constraintService != null && ! this.constraintService.splitAllowed(this.widget.getDomElement()) ) {
+			return;
+		}
 		if (this.widget.getDropDroppedCallback() != null) {
 			if (!DndTabPaneFactory.hasDnDContent(e)) {
 				return;
@@ -113,15 +133,23 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 			} else if (m instanceof MElementContainer<?>) {
 				MElementContainer<?> c = (MElementContainer<?>) m;
 				if (this.modelService.countRenderableChildren(c) == 0) {
-					e.acceptTransferModes(TransferMode.MOVE);
+					setAcceptTransferModes(e, TransferMode.MOVE);
 					e.consume();
 				} else {
 					updateFeedback(new DnDFeedbackData(null, null, getSplitType(e), c, null));
-					e.acceptTransferModes(TransferMode.MOVE);
+					setAcceptTransferModes(e, TransferMode.MOVE);
 					e.consume();
 				}
 			}
 		}
+	}
+
+	public void handleDragDropped(EFXDragEvent e) {
+		_handleDragDropped(e);
+	}
+
+	public void handleDragDropped(DragEvent e) {
+		_handleDragDropped(e);
 	}
 
 	/**
@@ -130,7 +158,11 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	 * @param e
 	 *            the event
 	 */
-	public void handleDragDropped(DragEvent e) {
+	private void _handleDragDropped(Event e) {
+		if( this.constraintService != null && ! this.constraintService.splitAllowed(this.widget.getDomElement()) ) {
+			return;
+		}
+		
 		@Nullable
 		WCallback<@NonNull DropData, @Nullable Void> dropDroppedCallback = this.widget.getDropDroppedCallback();
 		if (dropDroppedCallback != null) {
@@ -155,6 +187,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 				if ((MUIElement) m.getParent() instanceof MPartStack) {
 					DropData d = new DropData(this.widget.getDomElement(), draggedElement, getSplitType(e));
 					dropDroppedCallback.call(d);
+					setDropComplete(e, true);
 				}
 			} else if (m instanceof MElementContainer<?>) {
 				MElementContainer<?> c = (MElementContainer<?>) m;
@@ -163,27 +196,56 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 					DropData d = new DropData(this.widget.getDomElement(), draggedElement, DropType.INSERT);
 					dropDroppedCallback.call(d);
 					e.consume();
-					e.setDropCompleted(true);
+					setDropComplete(e, true);
 				}
 			}
 		}
 	}
 
 	@SuppressWarnings("all")
-	private @NonNull DropType getSplitType(DragEvent e) {
+	private @NonNull DropType getSplitType(Event e) {
 		SplitAreas areas = calculateSplitAreas();
 
-		if (areas.left.contains(e.getX(), e.getY())) {
+		if (areas.left.contains(x(e), y(e))) {
 			return DropType.SPLIT_LEFT;
-		} else if (areas.right.contains(e.getX(), e.getY())) {
+		} else if (areas.right.contains(x(e), y(e))) {
 			return DropType.SPLIT_RIGHT;
-		} else if (areas.top.contains(e.getX(), e.getY())) {
+		} else if (areas.top.contains(x(e), y(e))) {
 			return DropType.SPLIT_TOP;
-		} else if (areas.bottom.contains(e.getX(), e.getY())) {
+		} else if (areas.bottom.contains(x(e), y(e))) {
 			return DropType.SPLIT_BOTTOM;
 		}
 
 		return DropType.SPLIT_BOTTOM;
+	}
+
+	private static double x(Event e) {
+		if (e instanceof DragEvent) {
+			return ((DragEvent) e).getX();
+		}
+		return ((EFXDragEvent) e).getX();
+	}
+
+	private static double y(Event e) {
+		if (e instanceof DragEvent) {
+			return ((DragEvent) e).getY();
+		}
+		return ((EFXDragEvent) e).getY();
+	}
+
+	private static void setDropComplete(Event e, boolean complete) {
+		if (e instanceof EFXDragEvent) {
+			System.err.println("====================> COMPLETEING!!!!");
+			((EFXDragEvent) e).setComplete(complete);
+		} else {
+			((DragEvent) e).setDropCompleted(complete);
+		}
+	}
+
+	private static void setAcceptTransferModes(Event e, TransferMode mode) {
+		if (e instanceof DragEvent) {
+			((DragEvent) e).acceptTransferModes(mode);
+		}
 	}
 
 	private SplitAreas calculateSplitAreas() {
@@ -206,10 +268,10 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 
 	private static int SPLIT_PADDING = 20;
 
-	private boolean isSplit(DragEvent e) {
+	private boolean isSplit(Event e) {
 		Bounds boundsInLocal = ((Node) this.widget.getStaticLayoutNode()).getBoundsInLocal();
 		boundsInLocal = new BoundingBox(boundsInLocal.getMinX() + SPLIT_PADDING, boundsInLocal.getMinY() + SPLIT_PADDING, boundsInLocal.getWidth() - SPLIT_PADDING * 2, boundsInLocal.getHeight() - SPLIT_PADDING * 2);
-		return boundsInLocal.contains(e.getX(), e.getY());
+		return boundsInLocal.contains(x(e), y(e));
 	}
 
 	private static class SplitAreas {
