@@ -109,16 +109,17 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	 *            the event
 	 */
 	private void _handleDragOver(Event e) {
-		if( this.constraintService != null && ! this.constraintService.splitAllowed(this.widget.getDomElement()) ) {
+		@Nullable
+		M m = this.widget.getDomElement();
+		
+		if( m != null && this.constraintService != null && ! this.constraintService.splitAllowed(m) ) {
 			return;
 		}
+		
 		if (this.widget.getDropDroppedCallback() != null) {
 			if (!DndTabPaneFactory.hasDnDContent(e)) {
 				return;
 			}
-
-			@Nullable
-			M m = this.widget.getDomElement();
 
 			if (m instanceof MGenericTile<?>) {
 				// Tiles are not split
@@ -159,7 +160,10 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	 *            the event
 	 */
 	private void _handleDragDropped(Event e) {
-		if( this.constraintService != null && ! this.constraintService.splitAllowed(this.widget.getDomElement()) ) {
+		@Nullable
+		M m = this.widget.getDomElement();
+		
+		if( m != null && this.constraintService != null && ! this.constraintService.splitAllowed(m) ) {
 			return;
 		}
 		
@@ -177,8 +181,6 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 				return;
 			}
 
-			@Nullable
-			M m = this.widget.getDomElement();
 			if (m instanceof MGenericTile<?>) {
 				// Tiles are not split
 				e.consume();
