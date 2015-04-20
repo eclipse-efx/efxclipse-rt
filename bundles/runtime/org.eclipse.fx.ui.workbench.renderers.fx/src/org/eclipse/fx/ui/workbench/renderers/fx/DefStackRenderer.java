@@ -44,6 +44,7 @@ import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
+import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
@@ -84,6 +85,11 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@Inject
 		@NonNull
 		DnDFeedbackService dndFeedback;
+		
+		@Inject
+		@Optional
+		@Nullable
+		DnDService dndService;
 
 		@NonNull
 		private final MPartStack domainElement;
@@ -156,13 +162,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			// }
 		}
 
-		@Override
+		@Override 
 		protected TabPane createWidget() {
 			DnDSupport dnd = new DnDSupport(
-					(param) -> StackWidgetImpl.this.dragStartCallback,
-					(param) -> StackWidgetImpl.this.getDropDroppedCallback(),
-					StackWidgetImpl.this.dndFeedback,
-					this.domainElement);
+					(param) -> this.dragStartCallback,
+					(param) -> this.getDropDroppedCallback(),
+					this.dndFeedback,
+					this.domainElement,this.dndService);
 
 			TabPane p = DndTabPaneFactory.createDndTabPane((s) -> {
 				s.setStartFunction(dnd::handleDragStart);

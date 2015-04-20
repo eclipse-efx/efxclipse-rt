@@ -126,7 +126,7 @@ public class DnDAddon {
 			}
 			break;
 		case DETACH:
-			if( this.dndService == null || ! this.dndService.handleDetach(sourceElement) ) {
+			if( this.dndService == null || (this.dndService.detachAllowed(sourceElement) && ! this.dndService.handleDetach(sourceElement)) ) {
 				handleDetach(sourceElement);	
 			}
 		case INSERT:

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
+import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
@@ -23,6 +24,7 @@ import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.FeedbackData;
 import org.eclipse.fx.ui.controls.tabpane.GenericTab;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService.DnDFeedbackData;
+import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget.DragData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropData;
@@ -46,6 +48,9 @@ public class DnDSupport extends BaseDnDSupport {
 	@NonNull
 	private static final Logger LOGGER = LoggerCreator.createLogger(DnDSupport.class);
 
+	@Nullable
+	private final DnDService dndService;
+
 	/**
 	 * Create a new dnd support instance
 	 *
@@ -57,10 +62,13 @@ public class DnDSupport extends BaseDnDSupport {
 	 *            the feedback service
 	 * @param stack
 	 *            the stack working for
+	 * @param dndService
+	 *            the dnd service
 	 */
 	public DnDSupport(@NonNull WCallback<@Nullable Void, @Nullable WCallback<@NonNull DragData, @NonNull Boolean>> dragStartCallbackProvider, @NonNull WCallback<@Nullable Void, @Nullable WCallback<@NonNull DropData, @Nullable Void>> dropCallbackProvider, @NonNull DnDFeedbackService feedbackService,
-			@NonNull MPartStack stack) {
+			@NonNull MPartStack stack, @Nullable DnDService dndService) {
 		super(feedbackService);
+		this.dndService = dndService;
 		this.dragStartCallbackProvider = dragStartCallbackProvider;
 		this.dropCallbackProvider = dropCallbackProvider;
 		this.stack = stack;
@@ -81,7 +89,7 @@ public class DnDSupport extends BaseDnDSupport {
 			EObject eo = (EObject) domElement;
 			rv = ((XMIResource) eo.eResource()).getID(eo);
 		}
-		if( rv != null ) {
+		if (rv != null) {
 			return rv;
 		}
 		return System.identityHashCode(tab) + ""; //$NON-NLS-1$
@@ -128,21 +136,29 @@ public class DnDSupport extends BaseDnDSupport {
 	public void handleDropped(DroppedData data) {
 		WCallback<DropData, Void> call = this.dropCallbackProvider.call(null);
 		if (call != null) {
-			if( data.dropType == DropType.DETACH ) {
+			if (data.dropType == DropType.DETACH) {
 				WStackItem<?, ?> sourceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.draggedTab.getUserData();
 				MStackElement domElement = sourceItem.getDomElement();
 				if (domElement != null) {
 					call.call(new DropData(null, domElement, org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.DETACH));
 				}
 			} else {
-				WStackItem<?, ?> referenceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.targetTab.getUserData();
-				WStackItem<?, ?> sourceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.draggedTab.getUserData();
-				MStackElement domElement = sourceItem.getDomElement();
-				if (domElement != null) {
-					call.call(new DropData(referenceItem.getDomElement(), domElement, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE));
+				MStackElement reference = ((WStackItem<?, ?>) data.targetTab.getUserData()).getDomElement();
+				MStackElement sourceReference = ((WStackItem<?, ?>) data.draggedTab.getUserData()).getDomElement();
+								
+				MElementContainer<MUIElement> parentRef = reference != null ? reference.getParent() : null;
+				MElementContainer<MUIElement> parentSource = sourceReference != null ? sourceReference.getParent() : null;
+				
+				if( parentRef != parentSource && sourceReference != null && this.dndService != null && ! this.dndService.repartentAllowed(sourceReference) ) {
+					cleanup();
+					return;
+				}
+				
+				if (sourceReference != null) {
+					call.call(new DropData(reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE));
 				} else {
-					LOGGER.error("Source item '" + sourceItem + "' has no dom element attached"); //$NON-NLS-1$ //$NON-NLS-2$
-				}				
+					LOGGER.error("Source item '" + data.draggedTab.getUserData() + "' has no dom element attached"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
 			}
 		}
 	}
@@ -159,10 +175,18 @@ public class DnDSupport extends BaseDnDSupport {
 			cleanup();
 			return;
 		}
-
+		
 		MStackElement reference = ((WStackItem<?, ?>) data.targetTab.getUserData()).getDomElement();
 		MStackElement sourceReference = ((WStackItem<?, ?>) data.draggedTab.getUserData()).getDomElement();
-
+		
+		MElementContainer<MUIElement> parentRef = reference != null ? reference.getParent() : null;
+		MElementContainer<MUIElement> parentSource = sourceReference != null ? sourceReference.getParent() : null;
+		
+		if( parentRef != parentSource && sourceReference != null && this.dndService != null && ! this.dndService.repartentAllowed(sourceReference) ) {
+			cleanup();
+			return;
+		}
+		
 		updateFeedback(new DnDFeedbackData(reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE, this.stack,
 				new DnDFeedbackService.Region(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight())));
 	}
@@ -178,6 +202,5 @@ public class DnDSupport extends BaseDnDSupport {
 	public void handleFinished(GenericTab tab) {
 		cleanup();
 	}
-
 
 }

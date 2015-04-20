@@ -27,6 +27,24 @@ public interface DnDService {
 	public boolean splitAllowed(@NonNull MUIElement element);
 
 	/**
+	 * Check if a detach is allowed
+	 * 
+	 * @param element
+	 *            the element to detach
+	 * @return <code>true</code> if a detach is allowed
+	 */
+	public boolean detachAllowed(@NonNull MUIElement element);
+
+	/**
+	 * Check if we can reparent the element
+	 * 
+	 * @param element
+	 *            the element
+	 * @return <code>true</code> if a reparent is allowed
+	 */
+	public boolean repartentAllowed(@NonNull MUIElement element);
+
+	/**
 	 * Handle the detaching of an element
 	 * 
 	 * @param sourceElement
