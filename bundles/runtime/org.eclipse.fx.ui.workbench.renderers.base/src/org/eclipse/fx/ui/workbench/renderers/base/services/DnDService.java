@@ -15,7 +15,7 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 /**
  * Service to constraint drag and drop operations
  */
-public interface DnDConstraintService {
+public interface DnDService {
 	/**
 	 * Check if a split is allowed
 	 * 

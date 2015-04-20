@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
-import org.eclipse.fx.ui.workbench.renderers.base.services.DnDConstraintService;
+import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService.DnDFeedbackData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
@@ -50,7 +50,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	private final EModelService modelService;
 
 	@Nullable
-	private final DnDConstraintService constraintService;
+	private final DnDService constraintService;
 
 	/**
 	 * Create new instance
@@ -64,7 +64,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	 * @param widget
 	 *            the widget
 	 */
-	public SplitDnDSupport(@NonNull EModelService modelService, @Nullable DnDConstraintService constraintService, @NonNull DnDFeedbackService feedbackService, WLayoutedWidget<M> widget) {
+	public SplitDnDSupport(@NonNull EModelService modelService, @Nullable DnDService constraintService, @NonNull DnDFeedbackService feedbackService, WLayoutedWidget<M> widget) {
 		super(feedbackService);
 		this.constraintService = constraintService;
 		this.modelService = modelService;
