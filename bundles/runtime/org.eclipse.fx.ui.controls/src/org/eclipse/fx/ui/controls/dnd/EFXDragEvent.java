@@ -10,16 +10,28 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.dnd;
 
+import java.util.function.Consumer;
+
 import javafx.event.Event;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * A custom drag event
  */
 public class EFXDragEvent extends Event {
 	private static Object DRAGGED_CONTENT = null;
+	private static DragFeedback DRAG_FEEDBACK = null;
 
 	/**
 	 * 
@@ -60,6 +72,39 @@ public class EFXDragEvent extends Event {
 		boolean complete = false;
 	}
 
+	static class DragFeedback {
+		Stage stage;
+		double screenX;
+		double screenY;
+
+		public DragFeedback() {
+			this.stage = new Stage(StageStyle.TRANSPARENT);
+			this.stage.setAlwaysOnTop(true);
+			StackPane root = new StackPane();
+			root.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+			Scene value = new Scene(root);
+			value.setFill(Color.TRANSPARENT);
+			this.stage.setScene(value);
+		}
+
+		public void updateCoordinates(double screenX, double screenY) {
+			this.stage.setX(screenX - this.stage.getWidth() / 2);
+			this.stage.setY(screenY + this.stage.getHeight() / 2);
+		}
+
+		public void updateFeedback(Consumer<StackPane> consumer) {
+			consumer.accept((StackPane) this.stage.getScene().getRoot());
+			this.stage.sizeToScene();
+			this.stage.setX(this.screenX + this.stage.getWidth() / 2);
+			this.stage.setY(this.screenY + this.stage.getHeight() / 2);
+			this.stage.show();
+		}
+
+		public void dispose() {
+			this.stage.close();
+		}
+	}
+
 	/**
 	 * Create a new drag event
 	 * 
@@ -83,6 +128,43 @@ public class EFXDragEvent extends Event {
 		this.state.complete = complete;
 		if (eventType == DRAG_START) {
 			DRAGGED_CONTENT = null;
+			DRAG_FEEDBACK = new DragFeedback();
+		} else if (eventType == DRAG_DONE) {
+			if (DRAG_FEEDBACK != null) {
+				DRAG_FEEDBACK.dispose();
+				DRAG_FEEDBACK = null;
+			}
+		}
+
+		if (DRAG_FEEDBACK != null) {
+			DRAG_FEEDBACK.updateCoordinates(screenX, screenY);
+		}
+	}
+
+	/**
+	 * Update the drag feedback
+	 * 
+	 * @param consumer
+	 *            the consumer
+	 */
+	@SuppressWarnings("static-method")
+	public void updateFeedback(Consumer<StackPane> consumer) {
+		if (DRAG_FEEDBACK != null) {
+			DRAG_FEEDBACK.updateFeedback(consumer);
+		}
+	}
+
+	/**
+	 * Update the screen location while no drag over events occur
+	 * 
+	 * @param screenX
+	 *            the screen x
+	 * @param screenY
+	 *            the screen y
+	 */
+	public static void updateFeedbackLocation(double screenX, double screenY) {
+		if (DRAG_FEEDBACK != null) {
+			DRAG_FEEDBACK.updateCoordinates(screenX, screenY);
 		}
 	}
 
@@ -145,7 +227,7 @@ public class EFXDragEvent extends Event {
 			this.state.complete = complete;
 		}
 	}
-	
+
 	/**
 	 * @return <code>true</code> if drag is completed
 	 */
