@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
-import javafx.scene.control.Tab;
-
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
@@ -22,6 +20,7 @@ import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DropType;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DroppedData;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.FeedbackData;
+import org.eclipse.fx.ui.controls.tabpane.GenericTab;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService.DnDFeedbackData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
@@ -75,7 +74,7 @@ public class DnDSupport extends BaseDnDSupport {
 	 * @return the tab
 	 */
 	@SuppressWarnings({ "static-method" })
-	public @NonNull String clipboardDataFunction(@NonNull Tab tab) {
+	public @NonNull String clipboardDataFunction(@NonNull GenericTab tab) {
 		MStackElement domElement = ((WStackItem<?, ?>) tab.getUserData()).getDomElement();
 		String rv = null;
 		if (domElement != null) {
@@ -97,7 +96,7 @@ public class DnDSupport extends BaseDnDSupport {
 	 *
 	 */
 	@SuppressWarnings("null")
-	public @NonNull Boolean handleDragStart(@NonNull Tab tab) {
+	public @NonNull Boolean handleDragStart(@NonNull GenericTab tab) {
 		WCallback<DragData, Boolean> dragStartCallback = this.dragStartCallbackProvider.call(null);
 		if (dragStartCallback != null) {
 			WStackItem<?, ?> item = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) tab.getUserData();
@@ -129,13 +128,21 @@ public class DnDSupport extends BaseDnDSupport {
 	public void handleDropped(DroppedData data) {
 		WCallback<DropData, Void> call = this.dropCallbackProvider.call(null);
 		if (call != null) {
-			WStackItem<?, ?> referenceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.targetTab.getUserData();
-			WStackItem<?, ?> sourceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.draggedTab.getUserData();
-			MStackElement domElement = sourceItem.getDomElement();
-			if (domElement != null) {
-				call.call(new DropData(referenceItem.getDomElement(), domElement, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE));
+			if( data.dropType == DropType.DETACH ) {
+				WStackItem<?, ?> sourceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.draggedTab.getUserData();
+				MStackElement domElement = sourceItem.getDomElement();
+				if (domElement != null) {
+					call.call(new DropData(null, domElement, org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.DETACH));
+				}
 			} else {
-				LOGGER.error("Source item '" + sourceItem + "' has no dom element attached"); //$NON-NLS-1$ //$NON-NLS-2$
+				WStackItem<?, ?> referenceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.targetTab.getUserData();
+				WStackItem<?, ?> sourceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.draggedTab.getUserData();
+				MStackElement domElement = sourceItem.getDomElement();
+				if (domElement != null) {
+					call.call(new DropData(referenceItem.getDomElement(), domElement, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE));
+				} else {
+					LOGGER.error("Source item '" + sourceItem + "' has no dom element attached"); //$NON-NLS-1$ //$NON-NLS-2$
+				}				
 			}
 		}
 	}
@@ -168,7 +175,7 @@ public class DnDSupport extends BaseDnDSupport {
 	 *
 	 */
 	@SuppressWarnings("static-method")
-	public void handleFinished(Tab tab) {
+	public void handleFinished(GenericTab tab) {
 		cleanup();
 	}
 

@@ -13,56 +13,47 @@ package org.eclipse.fx.ui.controls.tabpane;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
-import javafx.scene.Node;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.input.DragEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-
 import org.eclipse.fx.ui.controls.markers.PositionMarker;
 import org.eclipse.fx.ui.controls.markers.TabOutlineMarker;
 import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
+import javafx.scene.control.TabPane;
+import javafx.scene.input.DragEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+
 /**
  * Factory to create a tab pane who support DnD
  */
 public final class DndTabPaneFactory {
 	private static MarkerFeedback CURRENT_FEEDBACK;
-//	private static Map<TabSerializationStrategy<?>, Boolean> SERIALIZERS = new WeakHashMap<>();
 
 	private DndTabPaneFactory() {
 
 	}
 
-//	public static final class TabSerializationStrategy<O> {
-//		private final Function<Tab, String> serializationFunction;
-//		private final Function<String, O> deserializationFunction;
-//		final String prefix = UUID.randomUUID().toString();
-//
-//		public TabSerializationStrategy(Function<Tab, String> serializationFunction, Function<String, O> deserializationFunction) {
-//			this.serializationFunction = serializationFunction;
-//			this.deserializationFunction = deserializationFunction;
-//		}
-//
-//		public final String toString(Tab tab) {
-//			return this.prefix + "#" + this.serializationFunction.apply(tab); //$NON-NLS-1$
-//		}
-//
-//		public final O toData(String data) {
-//			return deserializationFunction.apply(data.substring(prefix.length() + 1));
-//		}
-//	}
-//
-//	public static <O> TabSerializationStrategy<O> register(Function<Tab, String> serializationFunction, Function<String, O> deserializationFunction) {
-//		TabSerializationStrategy<O> t = new TabSerializationStrategy<O>(serializationFunction, deserializationFunction);
-//		SERIALIZERS.put(t, Boolean.TRUE);
-//		return t;
-//	}
+	/**
+	 * Setup a drag and drop for the given instance
+	 * 
+	 * @param feedbackType
+	 *            the feedback type
+	 * @param dragSetup
+	 *            the drag setup
+	 * @param detachHandler
+	 *            the detach handler
+	 * @return a node to add to the scene graph
+	 */
+	public static <D extends Node & DragSetup> Pane setup(FeedbackType feedbackType, D dragSetup, Consumer<GenericTab> detachHandler) {
+		StackPane pane = new StackPane();
+		setup(feedbackType, pane, dragSetup, detachHandler);
+		pane.getChildren().add(dragSetup);
+		return pane;
+	}
 
 	/**
 	 * Create a tab pane and set the drag strategy
@@ -97,7 +88,7 @@ public final class DndTabPaneFactory {
 			@Override
 			protected javafx.scene.control.Skin<?> createDefaultSkin() {
 				DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
-				setup(feedbackType, pane, skin);
+				setup(feedbackType, pane, skin, null);
 
 				return skin;
 			}
@@ -118,35 +109,6 @@ public final class DndTabPaneFactory {
 		return e.getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE);
 	}
 
-//	/**
-//	 * Extract the tab content
-//	 * 
-//	 * @param e
-//	 *            the event
-//	 * @param clazz
-//	 *            the type
-//	 * @return the content
-//	 */
-//	public static <O> O getDnDContent(DragEvent e, Class<O> clazz) {
-//		String data = (String) e.getDragboard().getContent(DnDTabPaneSkin.TAB_MOVE);
-//		Object rv = null;
-//		for (TabSerializationStrategy<?> s : SERIALIZERS.keySet()) {
-//			if (data.startsWith(s.prefix + "#")) { //$NON-NLS-1$
-//				rv = s.toData(data);
-//			}
-//		}
-//
-//		if (rv == null) {
-//			return (O) null;
-//		} else {
-//			if (clazz.isAssignableFrom(rv.getClass())) {
-//				return (O) rv;
-//			}
-//		}
-//
-//		return (O) null;
-//	}
-	
 	/**
 	 * Extract the content
 	 * 
@@ -167,27 +129,33 @@ public final class DndTabPaneFactory {
 	 *            the setup
 	 */
 	@SuppressWarnings("null")
-	static void setup(FeedbackType type, Pane layoutNode, DragSetup setup) {
+	static void setup(FeedbackType type, Pane layoutNode, DragSetup setup, Consumer<GenericTab> detachHandler) {
 		setup.setStartFunction((t) -> Boolean.TRUE);
 		setup.setFeedbackConsumer((d) -> handleFeedback(type, layoutNode, d));
-		setup.setDropConsumer(DndTabPaneFactory::handleDropped);
+		setup.setDropConsumer(d -> handleDropped(d, detachHandler));
 		setup.setDragFinishedConsumer(DndTabPaneFactory::handleFinished);
 	}
 
-	private static void handleDropped(DroppedData data) {
-		TabPane targetPane = data.targetTab.getTabPane();
-		data.draggedTab.getTabPane().getTabs().remove(data.draggedTab);
-		int idx = targetPane.getTabs().indexOf(data.targetTab);
-		if (data.dropType == DropType.AFTER) {
-			if (idx + 1 <= targetPane.getTabs().size()) {
-				targetPane.getTabs().add(idx + 1, data.draggedTab);
-			} else {
-				targetPane.getTabs().add(data.draggedTab);
+	private static void handleDropped(DroppedData data, Consumer<GenericTab> detachHandler) {
+		if (data.dropType == DropType.DETACH) {
+			if (detachHandler != null) {
+				detachHandler.accept(data.draggedTab);
 			}
 		} else {
-			targetPane.getTabs().add(idx, data.draggedTab);
+			GenericTabPane targetPane = data.targetTab.getOwner();
+			data.draggedTab.getOwner().remove(data.draggedTab);
+			int idx = targetPane.indexOf(data.targetTab);
+			if (data.dropType == DropType.AFTER) {
+				if (idx + 1 <= targetPane.getTabNumber()) {
+					targetPane.add(idx + 1, data.draggedTab);
+				} else {
+					targetPane.add(data.draggedTab);
+				}
+			} else {
+				targetPane.add(idx, data.draggedTab);
+			}
+			data.draggedTab.getOwner().select(data.draggedTab);
 		}
-		data.draggedTab.getTabPane().getSelectionModel().select(data.draggedTab);
 	}
 
 	private static void handleFeedback(FeedbackType type, Pane layoutNode, FeedbackData data) {
@@ -207,7 +175,7 @@ public final class DndTabPaneFactory {
 		}
 	}
 
-	private static void handleFinished(Tab tab) {
+	private static void handleFinished(GenericTab tab) {
 		cleanup();
 	}
 
@@ -310,15 +278,16 @@ public final class DndTabPaneFactory {
 		/**
 		 * No dropping
 		 */
-		NONE,
-		/**
-		 * Dropped before a reference tab
-		 */
-		BEFORE,
-		/**
-		 * Dropped after a reference tab
-		 */
-		AFTER
+		NONE, /**
+				 * Dropped before a reference tab
+				 */
+		BEFORE, /**
+				 * Dropped after a reference tab
+				 */
+		AFTER, /**
+				 * Dropped in an area to detach
+				 */
+		DETACH
 	}
 
 	/**
@@ -328,10 +297,9 @@ public final class DndTabPaneFactory {
 		/**
 		 * Show a marker
 		 */
-		MARKER,
-		/**
-		 * Show an outline
-		 */
+		MARKER, /**
+				 * Show an outline
+				 */
 		OUTLINE
 	}
 
@@ -342,11 +310,11 @@ public final class DndTabPaneFactory {
 		/**
 		 * The tab dragged
 		 */
-		public final @NonNull Tab draggedTab;
+		public final @NonNull GenericTab draggedTab;
 		/**
 		 * The reference tab
 		 */
-		public final Tab targetTab;
+		public final GenericTab targetTab;
 		/**
 		 * The bounds of the reference tab
 		 */
@@ -368,7 +336,7 @@ public final class DndTabPaneFactory {
 		 * @param dropType
 		 *            the drop type
 		 */
-		public FeedbackData(@NonNull Tab draggedTab, Tab targetTab, Bounds bounds, @NonNull DropType dropType) {
+		public FeedbackData(@NonNull GenericTab draggedTab, GenericTab targetTab, Bounds bounds, @NonNull DropType dropType) {
 			this.draggedTab = draggedTab;
 			this.targetTab = targetTab;
 			this.bounds = bounds;
@@ -421,11 +389,11 @@ public final class DndTabPaneFactory {
 		/**
 		 * The dragged tab
 		 */
-		public final @NonNull Tab draggedTab;
+		public final @NonNull GenericTab draggedTab;
 		/**
 		 * The reference tab
 		 */
-		public final @NonNull Tab targetTab;
+		public final @NonNull GenericTab targetTab;
 		/**
 		 * The drop type
 		 */
@@ -441,7 +409,7 @@ public final class DndTabPaneFactory {
 		 * @param dropType
 		 *            the drop type
 		 */
-		public DroppedData(@NonNull Tab draggedTab, @NonNull Tab targetTab, @NonNull DropType dropType) {
+		public DroppedData(@NonNull GenericTab draggedTab, @NonNull GenericTab targetTab, @NonNull DropType dropType) {
 			this.draggedTab = draggedTab;
 			this.targetTab = targetTab;
 			this.dropType = dropType;
@@ -458,7 +426,7 @@ public final class DndTabPaneFactory {
 		 * @param startFunction
 		 *            the function
 		 */
-		public void setStartFunction(@Nullable Function<@NonNull Tab, @NonNull Boolean> startFunction);
+		public void setStartFunction(@Nullable Function<@NonNull GenericTab, @NonNull Boolean> startFunction);
 
 		/**
 		 * Consumer called to handle the finishing of the drag process
@@ -466,7 +434,7 @@ public final class DndTabPaneFactory {
 		 * @param dragFinishedConsumer
 		 *            the consumer
 		 */
-		public void setDragFinishedConsumer(@Nullable Consumer<@NonNull Tab> dragFinishedConsumer);
+		public void setDragFinishedConsumer(@Nullable Consumer<@NonNull GenericTab> dragFinishedConsumer);
 
 		/**
 		 * Consumer called to present drag feedback
@@ -490,6 +458,6 @@ public final class DndTabPaneFactory {
 		 * @param clipboardDataFunction
 		 *            the function
 		 */
-		public void setClipboardDataFunction(@Nullable Function<@NonNull Tab, @NonNull String> clipboardDataFunction);
+		public void setClipboardDataFunction(@Nullable Function<@NonNull GenericTab, @NonNull String> clipboardDataFunction);
 	}
 }

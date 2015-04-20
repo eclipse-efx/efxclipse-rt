@@ -11,15 +11,19 @@
 package org.eclipse.fx.ui.controls;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
 
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Window;
 
 /**
  * Utility methods
@@ -82,5 +86,64 @@ public class Util {
 		}
 
 		return new TextFlow(segList.toArray(new Node[0]));
+	}
+
+	/**
+	 * Find a node in all windows
+	 * 
+	 * @param w
+	 *            the preferred window
+	 * @param screenX
+	 *            the screen x
+	 * @param screenY
+	 *            the screen y
+	 * @return the node or <code>null</code>
+	 */
+	@SuppressWarnings("deprecation")
+	public static Node findNode(Window w, double screenX, double screenY) {
+		// First check the owner
+		if (new BoundingBox(w.getX(), w.getY(), w.getWidth(), w.getHeight()).contains(screenX, screenY)) {
+			return findNode(w.getScene().getRoot(), screenX, screenY);
+		}
+
+		// FIXME If multiple match take the closest
+		Iterator<Window> impl_getWindows = Window.impl_getWindows();
+		while (impl_getWindows.hasNext()) {
+			Window window = impl_getWindows.next();
+			if (new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
+				return findNode(window.getScene().getRoot(), screenX, screenY);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Find all node at the given x/y location starting the search from the
+	 * given node
+	 * 
+	 * @param n
+	 *            the node to use as the start
+	 * @param screenX
+	 *            the screen x
+	 * @param screenY
+	 *            the screen y
+	 * @return the node or <code>null</code>
+	 */
+	public static Node findNode(Node n, double screenX, double screenY) {
+		Node rv = null;
+		Point2D b = n.screenToLocal(screenX, screenY);
+		if (n.getBoundsInLocal().contains(b)) {
+			rv = n;
+			if (n instanceof Parent) {
+				for (Node c : ((Parent) n).getChildrenUnmodifiable()) {
+					Node cn = findNode(c, screenX, screenY);
+					if (cn != null) {
+						rv = cn;
+						break;
+					}
+				}
+			}
+		}
+		return rv;
 	}
 }

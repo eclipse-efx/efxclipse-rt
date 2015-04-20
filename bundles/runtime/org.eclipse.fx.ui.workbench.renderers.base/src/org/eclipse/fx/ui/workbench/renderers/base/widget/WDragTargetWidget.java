@@ -44,6 +44,10 @@ public interface WDragTargetWidget {
 		 */
 		AFTER,
 		/**
+		 * Detach the reference element
+		 */
+		DETACH,
+		/**
 		 * Insert the element into the reference
 		 */
 		INSERT,

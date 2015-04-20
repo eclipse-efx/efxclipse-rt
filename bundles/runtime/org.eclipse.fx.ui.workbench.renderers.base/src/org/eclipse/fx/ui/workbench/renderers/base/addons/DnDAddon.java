@@ -123,6 +123,8 @@ public class DnDAddon {
 				handleReorder(reference, sourceElement, d.dropType);
 			}
 			break;
+		case DETACH:
+			handleDetach(sourceElement);
 		case INSERT:
 			if (reference != null) {
 				handleInsert(reference, sourceElement);
@@ -141,6 +143,10 @@ public class DnDAddon {
 		}
 
 		return null;
+	}
+	
+	private void handleDetach(@NonNull MUIElement sourceElement) {
+		this.modelService.detach((MPartSashContainerElement) sourceElement, 0, 0, 800, 600);
 	}
 
 	private static void handleInsert(@NonNull MUIElement reference, @NonNull MUIElement sourceElement) {

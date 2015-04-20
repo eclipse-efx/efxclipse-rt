@@ -39,6 +39,7 @@ import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DragSetup;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DropType;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DroppedData;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.FeedbackData;
+import org.eclipse.fx.ui.controls.tabpane.GenericTab;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -140,7 +141,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 			f_tab.setAccessible(true);
 			Tab t = (Tab) f_tab.get(event.getSource());
 
-			if (t != null && efx_canStartDrag(t)) {
+			if (t != null && efx_canStartDrag(FXTabWrapper.wrap(t))) {
 				DRAGGED_TAB = t;
 				Node node = (Node) event.getSource();
 				Dragboard db = node.startDragAndDrop(TransferMode.MOVE);
@@ -173,7 +174,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 				db.setDragView(image, image.getWidth(), image.getHeight() * -1);
 
 				ClipboardContent content = new ClipboardContent();
-				String data = efx_getClipboardContent(t);
+				String data = efx_getClipboardContent(FXTabWrapper.wrap(t));
 				if (data != null) {
 					content.put(TAB_MOVE, data);
 				}
@@ -245,7 +246,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 				}
 
 				if (noMove) {
-					efx_dragFeedback(draggedTab, null, null, DropType.NONE);
+					efx_dragFeedback(FXTabWrapper.wrap(draggedTab), null, null, DropType.NONE);
 					return;
 				}
 
@@ -253,7 +254,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 				b = referenceNode.localToScene(b);
 				b = getSkinnable().sceneToLocal(b);
 
-				efx_dragFeedback(draggedTab, tab, b, type);
+				efx_dragFeedback(FXTabWrapper.wrap(draggedTab), FXTabWrapper.wrap(tab), b, type);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -261,7 +262,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 
 			event.acceptTransferModes(TransferMode.MOVE);
 		} else {
-			efx_dragFeedback(draggedTab, null, null, DropType.NONE);
+			efx_dragFeedback(FXTabWrapper.wrap(draggedTab), null, null, DropType.NONE);
 		}
 	}
 
@@ -332,7 +333,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 					try {
 						this.openAnimation.setValue(this.noneEnum);
 						this.closeAnimation.setValue(this.noneEnum);
-						efx_dropped(draggedTab, tab, type);
+						efx_dropped(FXTabWrapper.wrap(draggedTab), FXTabWrapper.wrap(tab), type);
 						event.setDropCompleted(true);
 					} finally {
 						this.openAnimation.applyStyle(openOrigin, openValue);
@@ -357,27 +358,27 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 			return;
 		}
 
-		efx_dragFinished(tab);
+		efx_dragFinished(FXTabWrapper.wrap(tab));
 	}
 
-	private @Nullable Function<@NonNull Tab, @NonNull Boolean> startFunction;
-	private @Nullable Consumer<@NonNull Tab> dragFinishedConsumer;
+	private @Nullable Function<@NonNull GenericTab, @NonNull Boolean> startFunction;
+	private @Nullable Consumer<@NonNull GenericTab> dragFinishedConsumer;
 	private @Nullable Consumer<@NonNull FeedbackData> feedbackConsumer;
 	private @Nullable Consumer<@NonNull DroppedData> dropConsumer;
-	private @Nullable Function<@NonNull Tab, @NonNull String> clipboardDataFunction;
+	private @Nullable Function<@NonNull GenericTab, @NonNull String> clipboardDataFunction;
 
 	@Override
-	public void setClipboardDataFunction(@Nullable Function<@NonNull Tab, @NonNull String> clipboardDataFunction) {
+	public void setClipboardDataFunction(@Nullable Function<@NonNull GenericTab, @NonNull String> clipboardDataFunction) {
 		this.clipboardDataFunction = clipboardDataFunction;
 	}
 
 	@Override
-	public void setStartFunction(@Nullable Function<@NonNull Tab, @NonNull Boolean> startFunction) {
+	public void setStartFunction(@Nullable Function<@NonNull GenericTab, @NonNull Boolean> startFunction) {
 		this.startFunction = startFunction;
 	}
 
 	@Override
-	public void setDragFinishedConsumer(@Nullable Consumer<@NonNull Tab> dragFinishedConsumer) {
+	public void setDragFinishedConsumer(@Nullable Consumer<@NonNull GenericTab> dragFinishedConsumer) {
 		this.dragFinishedConsumer = dragFinishedConsumer;
 	}
 
@@ -391,32 +392,32 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 		this.dropConsumer = dropConsumer;
 	}
 
-	private boolean efx_canStartDrag(@NonNull Tab tab) {
+	private boolean efx_canStartDrag(@NonNull GenericTab tab) {
 		if (this.startFunction != null) {
 			return this.startFunction.apply(tab).booleanValue();
 		}
 		return true;
 	}
 
-	private void efx_dragFeedback(@NonNull Tab draggedTab, Tab targetTab, Bounds bounds, @NonNull DropType dropType) {
+	private void efx_dragFeedback(@NonNull GenericTab draggedTab, GenericTab targetTab, Bounds bounds, @NonNull DropType dropType) {
 		if (this.feedbackConsumer != null) {
 			this.feedbackConsumer.accept(new FeedbackData(draggedTab, targetTab, bounds, dropType));
 		}
 	}
 
-	private void efx_dropped(@NonNull Tab draggedTab, @NonNull Tab targetTab, @NonNull DropType dropType) {
+	private void efx_dropped(@NonNull GenericTab draggedTab, @NonNull GenericTab targetTab, @NonNull DropType dropType) {
 		if (this.dropConsumer != null) {
 			this.dropConsumer.accept(new DroppedData(draggedTab, targetTab, dropType));
 		}
 	}
 
-	private void efx_dragFinished(@NonNull Tab tab) {
+	private void efx_dragFinished(@NonNull GenericTab tab) {
 		if (this.dragFinishedConsumer != null) {
 			this.dragFinishedConsumer.accept(tab);
 		}
 	}
 
-	private String efx_getClipboardContent(@NonNull Tab t) {
+	private String efx_getClipboardContent(@NonNull GenericTab t) {
 		if (this.clipboardDataFunction != null) {
 			return this.clipboardDataFunction.apply(t);
 		}
