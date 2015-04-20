@@ -147,6 +147,10 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	 * Maximize the shell - provided for SWT-Compat
 	 */
 	public static final String TAG_SHELLMAXIMIZED = "shellMaximized"; //$NON-NLS-1$
+	/**
+	 * Tag marking a secondary window
+	 */
+	public static final String TAG_SECONDARY_WINDOW = "secondaryMainWindow"; //$NON-NLS-1$
 
 	@Inject
 	@Log

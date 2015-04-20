@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.workbench.renderers.base.services;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Service to constraint drag and drop operations
@@ -23,5 +24,14 @@ public interface DnDService {
 	 *            the element
 	 * @return <code>true</code> if a split is allowed
 	 */
-	public boolean splitAllowed(MUIElement element);
+	public boolean splitAllowed(@NonNull MUIElement element);
+
+	/**
+	 * Handle the detaching of an element
+	 * 
+	 * @param sourceElement
+	 *            the source element
+	 * @return <code>true</code> if detaching is handled
+	 */
+	public boolean handleDetach(@NonNull MUIElement sourceElement);
 }

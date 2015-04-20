@@ -17,6 +17,7 @@ import java.util.TimerTask;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
@@ -30,8 +31,8 @@ import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
+import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget.DragData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget;
@@ -52,13 +53,14 @@ public class DnDAddon {
 	IEventBroker eventBroker;
 
 	@Inject
-	EPartService partService;
-
-	@Inject
 	UISynchronize synchronize;
 	
 	@Inject
 	EModelService modelService;
+	
+	@Inject
+	@Optional
+	DnDService dndService;
 
 	// FIXME This is workaround because of TabFolder problems
 	private Timer timer;
@@ -124,7 +126,9 @@ public class DnDAddon {
 			}
 			break;
 		case DETACH:
-			handleDetach(sourceElement);
+			if( this.dndService == null || ! this.dndService.handleDetach(sourceElement) ) {
+				handleDetach(sourceElement);	
+			}
 		case INSERT:
 			if (reference != null) {
 				handleInsert(reference, sourceElement);
