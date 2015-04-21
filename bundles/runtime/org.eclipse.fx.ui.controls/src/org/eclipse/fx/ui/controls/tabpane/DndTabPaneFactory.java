@@ -410,6 +410,16 @@ public final class DndTabPaneFactory {
 		 * The drop type
 		 */
 		public final @NonNull DropType dropType;
+		
+		/**
+		 * The x coordinate relative to the screen
+		 */
+		public final double x;
+		
+		/**
+		 * The y coordinate relative to the screen
+		 */
+		public final double y;
 
 		/**
 		 * Create drop data
@@ -421,7 +431,9 @@ public final class DndTabPaneFactory {
 		 * @param dropType
 		 *            the drop type
 		 */
-		public DroppedData(@NonNull GenericTab draggedTab, @NonNull GenericTab targetTab, @NonNull DropType dropType) {
+		public DroppedData(double x, double y,@NonNull GenericTab draggedTab, @NonNull GenericTab targetTab, @NonNull DropType dropType) {
+			this.x = x;
+			this.y = y;
 			this.draggedTab = draggedTab;
 			this.targetTab = targetTab;
 			this.dropType = dropType;

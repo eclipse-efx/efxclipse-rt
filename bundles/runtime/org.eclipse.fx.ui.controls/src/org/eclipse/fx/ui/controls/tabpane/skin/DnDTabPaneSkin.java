@@ -333,7 +333,7 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 					try {
 						this.openAnimation.setValue(this.noneEnum);
 						this.closeAnimation.setValue(this.noneEnum);
-						efx_dropped(FXTabWrapper.wrap(draggedTab), FXTabWrapper.wrap(tab), type);
+						efx_dropped(event.getScreenX(), event.getScreenY(),FXTabWrapper.wrap(draggedTab), FXTabWrapper.wrap(tab), type);
 						event.setDropCompleted(true);
 					} finally {
 						this.openAnimation.applyStyle(openOrigin, openValue);
@@ -405,9 +405,9 @@ public class DnDTabPaneSkin extends TabPaneSkin implements DragSetup {
 		}
 	}
 
-	private void efx_dropped(@NonNull GenericTab draggedTab, @NonNull GenericTab targetTab, @NonNull DropType dropType) {
+	private void efx_dropped(double x, double y, @NonNull GenericTab draggedTab, @NonNull GenericTab targetTab, @NonNull DropType dropType) {
 		if (this.dropConsumer != null) {
-			this.dropConsumer.accept(new DroppedData(draggedTab, targetTab, dropType));
+			this.dropConsumer.accept(new DroppedData(x, y, draggedTab, targetTab, dropType));
 		}
 	}
 

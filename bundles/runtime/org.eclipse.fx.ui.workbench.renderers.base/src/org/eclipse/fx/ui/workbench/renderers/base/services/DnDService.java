@@ -47,9 +47,14 @@ public interface DnDService {
 	/**
 	 * Handle the detaching of an element
 	 * 
+	 * @param x
+	 *            the x coordinate the new window should show up relative to the screen
+	 * @param y
+	 *            the y coordinate the new window should show up relative to the screen
+	 * 
 	 * @param sourceElement
 	 *            the source element
 	 * @return <code>true</code> if detaching is handled
 	 */
-	public boolean handleDetach(@NonNull MUIElement sourceElement);
+	public boolean handleDetach(double x, double y, @NonNull MUIElement sourceElement);
 }

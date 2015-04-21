@@ -57,6 +57,11 @@ public class EFXDragEvent extends Event {
 	 * Event fired when dropped
 	 */
 	public static final EventType<EFXDragEvent> DRAG_DROPPED = new EventType<EFXDragEvent>(EFXDragEvent.ANY, "DRAG_DROPPED"); //$NON-NLS-1$
+	
+	/**
+	 * Event fired when drag exits the area
+	 */
+	public static final EventType<EFXDragEvent> DRAG_EXITED = new EventType<EFXDragEvent>(EFXDragEvent.ANY, "DRAG_EXITED"); //$NON-NLS-1$
 
 	/**
 	 * Event fired when drag is done

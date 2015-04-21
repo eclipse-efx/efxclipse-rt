@@ -187,7 +187,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 			} else if (m instanceof MPart && isSplit(e)) {
 				e.consume();
 				if ((MUIElement) m.getParent() instanceof MPartStack) {
-					DropData d = new DropData(this.widget.getDomElement(), draggedElement, getSplitType(e));
+					DropData d = new DropData(screenX(e), screenY(e), this.widget.getDomElement(), draggedElement, getSplitType(e));
 					dropDroppedCallback.call(d);
 					setDropComplete(e, true);
 				}
@@ -195,7 +195,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 				MElementContainer<?> c = (MElementContainer<?>) m;
 				if (this.modelService.countRenderableChildren(c) == 0) {
 					@SuppressWarnings("all")
-					DropData d = new DropData(this.widget.getDomElement(), draggedElement, DropType.INSERT);
+					DropData d = new DropData(screenX(e), screenY(e), this.widget.getDomElement(), draggedElement, DropType.INSERT);
 					dropDroppedCallback.call(d);
 					e.consume();
 					setDropComplete(e, true);
@@ -234,10 +234,23 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		}
 		return ((EFXDragEvent) e).getY();
 	}
+	
+	private static double screenX(Event e) {
+		if (e instanceof DragEvent) {
+			return ((DragEvent) e).getScreenX();
+		}
+		return ((EFXDragEvent) e).getScreenX();
+	}
+
+	private static double screenY(Event e) {
+		if (e instanceof DragEvent) {
+			return ((DragEvent) e).getScreenY();
+		}
+		return ((EFXDragEvent) e).getScreenY();
+	}
 
 	private static void setDropComplete(Event e, boolean complete) {
 		if (e instanceof EFXDragEvent) {
-			System.err.println("====================> COMPLETEING!!!!");
 			((EFXDragEvent) e).setComplete(complete);
 		} else {
 			((DragEvent) e).setDropCompleted(complete);
