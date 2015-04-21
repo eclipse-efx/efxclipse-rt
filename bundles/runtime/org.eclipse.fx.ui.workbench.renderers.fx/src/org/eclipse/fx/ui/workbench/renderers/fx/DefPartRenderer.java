@@ -99,8 +99,6 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 	}
 
 	static class PartImpl extends WLayoutedWidgetImpl<Pane, AnchorPane, MPart> implements WPart<Pane, Node, Node> {
-		@Inject
-		EPartService service;
 
 		@Inject
 		@NonNull
@@ -114,7 +112,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		Group menuGroup;
 		private WMenu<Node> viewMenuWidget;
 		private WToolBar<Node> viewToolbarWidget;
-
+		
 		@Override
 		protected Pane createWidget() {
 			Pane tmp = CustomContainerSupport.createContainerPane(this.logger, this.context);
@@ -126,7 +124,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 				public void handle(MouseEvent event) {
 					MPart domElement = getDomElement();
 					if (domElement != null) {
-						PartImpl.this.service.activate(domElement, true);
+						domElement.getContext().get(EPartService.class).activate(domElement, true);
 						if (!checkFocusControl(getWidget()) && (domElement.getObject() != null)) {
 							// ContextInjectionFactory.invoke(domElement.getObject(),
 							// Focus.class, domElement.getContext(), null);
