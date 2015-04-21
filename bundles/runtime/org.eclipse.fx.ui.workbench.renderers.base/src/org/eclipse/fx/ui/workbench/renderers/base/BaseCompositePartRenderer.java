@@ -50,7 +50,20 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 	RendererFactory factory;
 
 	@PostConstruct
-	void init(IEventBroker eventBroker) {
+	void init(@NonNull IEventBroker eventBroker) {
+		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_ICONURI);
+
+		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LABEL);
+		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LOCALIZED_LABEL);
+
+		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_TOOLTIP);
+		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LOCALIZED_TOOLTIP);
+
+		registerEventListener(eventBroker, UIEvents.Part.TOPIC_DESCRIPTION);
+		registerEventListener(eventBroker, UIEvents.Part.TOPIC_LOCALIZED_DESCRIPTION);
+
+		registerEventListener(eventBroker, UIEvents.Dirtyable.TOPIC_DIRTY);
+		
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, new EventHandler() {
 
 			@Override
