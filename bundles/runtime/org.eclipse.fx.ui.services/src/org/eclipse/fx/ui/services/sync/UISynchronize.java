@@ -30,7 +30,11 @@ public interface UISynchronize {
 
 	/**
 	 * Sync with the ui thread und provide a result when done
-	 *
+	 * <p>
+	 * <b>WARNING: Using synchronized execute can easily lead to deadlocks. You
+	 * are better of using {@link #asyncExec(Callable)}</b>
+	 * </p>
+	 * 
 	 * @param callable
 	 *            the callable to execute
 	 * @param defaultValue
@@ -42,7 +46,11 @@ public interface UISynchronize {
 	/**
 	 * Executes the runnable on the UI-Thread and blocks until the runnable is
 	 * finished
-	 *
+	 * <p>
+	 * <b>WARNING: Using synchronized execute can easily lead to deadlocks. You
+	 * are better of using {@link #asyncExec(Runnable)}</b>
+	 * </p>
+	 * 
 	 * @param runnable
 	 *            the runnable to execute
 	 */
@@ -145,24 +153,25 @@ public interface UISynchronize {
 		return () -> syncExec(() -> s.get(), null);
 	}
 
-//	/**
-//	 * Returns the named queue
-//	 * 
-//	 * @param name
-//	 *            the name of the queue
-//	 * @return the queue
-//	 */
-//	public SynchronizeQueue getQueue(String name);
-//
-//	/**
-//	 * A synchronization queue allowing to prioritize ui updates and optimizing
-//	 * the update by e.g. removing duplicate update requests
-//	 */
-//	public interface SynchronizeQueue {
-//		public void schedule(int priority);
-//
-//		public <O> void schedule(int priority, O value, Consumer<O> consumer);
-//	}
+	// /**
+	// * Returns the named queue
+	// *
+	// * @param name
+	// * the name of the queue
+	// * @return the queue
+	// */
+	// public SynchronizeQueue getQueue(String name);
+	//
+	// /**
+	// * A synchronization queue allowing to prioritize ui updates and
+	// optimizing
+	// * the update by e.g. removing duplicate update requests
+	// */
+	// public interface SynchronizeQueue {
+	// public void schedule(int priority);
+	//
+	// public <O> void schedule(int priority, O value, Consumer<O> consumer);
+	// }
 
 	/**
 	 * A block condition
