@@ -203,7 +203,17 @@
           <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_A09kgANxEeS-UZpK2iB2xg" coreExpressionId="org.eclipse.fx.testcases.e4.definition1"/>
         </children>
         <children xsi:type="menu:DirectMenuItem" xmi:id="_p-vFcAxJEeSIHKL_NsSDZw" elementId="org.eclipse.fx.testcases.e4.directmenuitem.16" label="Disable Delayed" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DisableDelayed"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_2IheMOLTEeS2FPacIwDu2A" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.openLwWindowDialog" label="Open LW Window Dialog" command="_vYMZ4OLTEeS2FPacIwDu2A"/>
+        <children xsi:type="menu:Menu" xmi:id="_YDR54OkeEeSXwcF2YR_fiA" elementId="org.eclipse.fx.testcases.e4.menu.lightweight" label="Lightweight">
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_2IheMOLTEeS2FPacIwDu2A" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.openLwWindowDialog" label="Window" command="_vYMZ4OLTEeS2FPacIwDu2A">
+            <parameters xmi:id="_eW83YOkeEeSXwcF2YR_fiA" elementId="org.eclipse.fx.testcases.e4.parameter.0" name="scope" value="WINDOW"/>
+          </children>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_dnS8EOkeEeSXwcF2YR_fiA" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.perspective" label="Perspective" command="_vYMZ4OLTEeS2FPacIwDu2A">
+            <parameters xmi:id="_zdB5QOkeEeSXwcF2YR_fiA" elementId="org.eclipse.fx.testcases.e4.parameter.1" name="scope" value="PERSPECTIVE"/>
+          </children>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_xH2KkOkeEeSXwcF2YR_fiA" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.part" label="Part" command="_vYMZ4OLTEeS2FPacIwDu2A">
+            <parameters xmi:id="_4UxEQOkeEeSXwcF2YR_fiA" elementId="org.eclipse.fx.testcases.e4.parameter.2" name="scope" value="PART"/>
+          </children>
+        </children>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_d-oDwO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.menu.3" label="Switch">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_jYdPMO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.handledmenuitem.4" label="Perspective 0" command="_kCbZQO6yEeG4lfn-YKJbJw">
@@ -311,7 +321,9 @@
     <parameters xmi:id="_mCIAIO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.command.2.perspective" name="Perspective Id" optional="false"/>
   </commands>
   <commands xmi:id="_8Tn3gD4rEeKaHfJUGGs7Mw" elementId="org.eclipse.fx.testcases.e4.command.3" commandName="Function Keybinding"/>
-  <commands xmi:id="_vYMZ4OLTEeS2FPacIwDu2A" elementId="org.eclipse.fx.testcases.e4.command.openLighweightWindowDialog" commandName="Open Lighweight Window Dialog"/>
+  <commands xmi:id="_vYMZ4OLTEeS2FPacIwDu2A" elementId="org.eclipse.fx.testcases.e4.command.openLighweightWindowDialog" commandName="Open Lighweight Dialog">
+    <parameters xmi:id="_kvH6YOkeEeSXwcF2YR_fiA" elementId="scope" name="Modality scope"/>
+  </commands>
   <addons xmi:id="_A7QWlOL-EeGP-5z69KadAQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_A7QWleL-EeGP-5z69KadAQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_A7QWluL-EeGP-5z69KadAQ" elementId="org.eclipse.fx.ui.keybindings.e4.service" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingServiceAddon"/>
