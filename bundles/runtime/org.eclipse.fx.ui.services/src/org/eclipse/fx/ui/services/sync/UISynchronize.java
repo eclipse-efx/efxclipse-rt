@@ -21,7 +21,6 @@ import java.util.function.Supplier;
 
 import org.eclipse.fx.core.Callback;
 import org.eclipse.fx.core.Subscription;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -67,16 +66,6 @@ public interface UISynchronize {
 	 *            the runnable to execute
 	 */
 	void asyncExec(Runnable runnable);
-
-	/**
-	 * Block the UI-Thread in a way that events are still processed until the
-	 * given condition is released
-	 *
-	 * @param blockCondition
-	 *            the condition
-	 * @return the value
-	 */
-	<T> @Nullable T block(@NonNull BlockCondition<T> blockCondition);
 
 	/**
 	 * Schedule the execution of the runnable
