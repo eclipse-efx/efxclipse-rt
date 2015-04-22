@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @param <M>
  *            the menu widget
  */
-public interface WPart<N, T, M> extends WLayoutedWidget<MPart> {
+public interface WPart<N, T, M> extends WLayoutedWidget<MPart>, WDialogHost {
 	/**
 	 * Set a toolbar
 	 * 

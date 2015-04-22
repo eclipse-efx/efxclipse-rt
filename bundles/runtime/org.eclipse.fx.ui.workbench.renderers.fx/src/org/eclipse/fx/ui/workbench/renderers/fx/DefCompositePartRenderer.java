@@ -27,6 +27,7 @@ import javafx.scene.control.SplitPane.Divider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import javax.inject.Inject;
@@ -219,7 +220,35 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 	}
 
 	static class WFixedSashImpl extends AbstractCompositePartImpl<GridLayoutPane> {
-
+		private StackPane overlayContainer;
+		
+		@Override
+		public void setDialog(Object dialogNode) {
+			@NonNull
+			Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
+			if (dialogNode == null) {
+				if (this.overlayContainer != null) {
+					((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
+					this.overlayContainer.getChildren().clear();
+				}
+			} else {
+				if (this.overlayContainer == null) {
+					this.overlayContainer = new StackPane();
+					this.overlayContainer.getStyleClass().add("overlay-container"); //$NON-NLS-1$
+					this.overlayContainer.setManaged(false);
+					this.overlayContainer.setMouseTransparent(false);
+					staticLayoutNode.layoutBoundsProperty().addListener( o -> {
+						staticLayoutNode.layoutBoundsProperty().get();
+						this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
+					});
+				}
+				
+				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
+				this.overlayContainer.getChildren().setAll((Node)dialogNode);
+				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
+			}
+		}
+		
 		private static @NonNull GridData toGridData(Map<String, String> dataMap) {
 			GridData gd = new GridData();
 			if (dataMap.containsKey(WCompositePart.FIXED_LAYOUT_WIDTH)) {
@@ -355,6 +384,35 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 	static class WResizableSashImpl extends AbstractCompositePartImpl<SplitPane> {
 		private List<WLayoutedWidget<MPartSashContainerElement>> items = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
+		private StackPane overlayContainer;
+		
+		@Override
+		public void setDialog(Object dialogNode) {
+			@NonNull
+			Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
+			if (dialogNode == null) {
+				if (this.overlayContainer != null) {
+					((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
+					this.overlayContainer.getChildren().clear();
+				}
+			} else {
+				if (this.overlayContainer == null) {
+					this.overlayContainer = new StackPane();
+					this.overlayContainer.getStyleClass().add("overlay-container"); //$NON-NLS-1$
+					this.overlayContainer.setManaged(false);
+					this.overlayContainer.setMouseTransparent(false);
+					staticLayoutNode.layoutBoundsProperty().addListener( o -> {
+						staticLayoutNode.layoutBoundsProperty().get();
+						this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
+					});
+				}
+				
+				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
+				this.overlayContainer.getChildren().setAll((Node)dialogNode);
+				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
+			}
+		}
+		
 		ChangeListener<Number> listener = new ChangeListener<Number>() {
 			boolean queueing;
 

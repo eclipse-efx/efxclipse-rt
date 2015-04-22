@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -23,19 +25,21 @@ import org.eclipse.fx.ui.workbench.renderers.base.BasePerspectiveRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspective;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * default renderer for {@link MPerspective}
  */
 public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPane> {
-
+	
 	@Override
 	protected Class<? extends WPerspective<FillLayoutPane>> getWidgetClass(MPerspective perspective) {
 		return PerspectiveWidgetImpl.class;
 	}
 
 	static class PerspectiveWidgetImpl extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPerspective> implements WPerspective<FillLayoutPane> {
-
+		private StackPane overlayContainer;
+		
 		@Override
 		protected FillLayoutPane getWidgetNode() {
 			return getWidget();
@@ -63,6 +67,33 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 		@Override
 		public void removeItem(WLayoutedWidget<MUIElement> widget) {
 			getWidget().getChildren().remove(widget.getStaticLayoutNode());
+		}
+
+		@Override
+		public void setDialog(Object dialogNode) {
+			@NonNull
+			Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
+			if (dialogNode == null) {
+				if (this.overlayContainer != null) {
+					((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
+					this.overlayContainer.getChildren().clear();
+				}
+			} else {
+				if (this.overlayContainer == null) {
+					this.overlayContainer = new StackPane();
+					this.overlayContainer.getStyleClass().add("overlay-container"); //$NON-NLS-1$
+					this.overlayContainer.setManaged(false);
+					this.overlayContainer.setMouseTransparent(false);
+					staticLayoutNode.layoutBoundsProperty().addListener( o -> {
+						staticLayoutNode.layoutBoundsProperty().get();
+						this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
+					});
+				}
+				
+				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
+				this.overlayContainer.getChildren().setAll((Node)dialogNode);
+				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
+			}
 		}
 
 	}

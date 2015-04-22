@@ -22,7 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @param <N>
  *            the native widget
  */
-public interface WCompositePart<N> extends WLayoutedWidget<MCompositePart> {
+public interface WCompositePart<N> extends WLayoutedWidget<MCompositePart>, WDialogHost {
 	/**
 	 * PersistatedState Key to fix the layout.
 	 * <p>

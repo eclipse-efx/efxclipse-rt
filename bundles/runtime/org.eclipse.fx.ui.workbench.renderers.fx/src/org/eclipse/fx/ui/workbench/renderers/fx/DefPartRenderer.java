@@ -113,6 +113,8 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		private WMenu<Node> viewMenuWidget;
 		private WToolBar<Node> viewToolbarWidget;
 		
+		private StackPane overlayContainer;
+		
 		@Override
 		protected Pane createWidget() {
 			Pane tmp = CustomContainerSupport.createContainerPane(this.logger, this.context);
@@ -293,6 +295,33 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		@Override
 		public @Nullable WToolBar<Node> getToolbar() {
 			return this.viewToolbarWidget;
+		}
+		
+		@Override
+		public void setDialog(Object dialogNode) {
+			@NonNull
+			Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
+			if (dialogNode == null) {
+				if (this.overlayContainer != null) {
+					((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
+					this.overlayContainer.getChildren().clear();
+				}
+			} else {
+				if (this.overlayContainer == null) {
+					this.overlayContainer = new StackPane();
+					this.overlayContainer.getStyleClass().add("overlay-container"); //$NON-NLS-1$
+					this.overlayContainer.setManaged(false);
+					this.overlayContainer.setMouseTransparent(false);
+					staticLayoutNode.layoutBoundsProperty().addListener( o -> {
+						staticLayoutNode.layoutBoundsProperty().get();
+						this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
+					});
+				}
+				
+				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
+				this.overlayContainer.getChildren().setAll((Node)dialogNode);
+				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
+			}
 		}
 	}
 

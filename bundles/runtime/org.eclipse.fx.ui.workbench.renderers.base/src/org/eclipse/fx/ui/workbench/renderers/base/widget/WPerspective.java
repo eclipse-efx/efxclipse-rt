@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @param <N>
  *            the native
  */
-public interface WPerspective<N> extends WLayoutedWidget<MPerspective> {
+public interface WPerspective<N> extends WLayoutedWidget<MPerspective>, WDialogHost {
 
 	/**
 	 * Append widgets
