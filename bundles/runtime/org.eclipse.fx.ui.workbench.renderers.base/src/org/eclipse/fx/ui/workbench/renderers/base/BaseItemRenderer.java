@@ -128,7 +128,7 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 				return false;
 			}
 
-			IEclipseContext runContext = context.createChild("DI-ToolItem"); //$NON-NLS-1$
+			IEclipseContext runContext = Util.createLocalHandlerContext(context,context.getActiveLeaf(),"DI-Item"); //$NON-NLS-1$
 			try {
 				ContributionsAnalyzer.populateModelInterfaces(item, runContext, item.getClass().getInterfaces());
 				runContext.set(MItem.class.getName(), item);
@@ -152,9 +152,10 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 				return false;
 			}
 
-			final IEclipseContext runContext = context.createChild("HI-ToolItem"); //$NON-NLS-1$
+			final IEclipseContext runContext = Util.createLocalHandlerContext(context,context.getActiveLeaf(),"HI-Item"); //$NON-NLS-1$
 			try {
 				ContributionsAnalyzer.populateModelInterfaces(item, runContext, item.getClass().getInterfaces());
+				runContext.set(MItem.class.getName(), item);
 				return service.canExecute(cmd, runContext);
 			} finally {
 				runContext.dispose();
@@ -180,7 +181,7 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 				return;
 			}
 
-			IEclipseContext runContext = context.createChild("DI-ToolItem"); //$NON-NLS-1$
+			IEclipseContext runContext = Util.createLocalHandlerContext(context,context.getActiveLeaf(),"DI-Item"); //$NON-NLS-1$
 			try {
 				ContributionsAnalyzer.populateModelInterfaces(item, runContext, item.getClass().getInterfaces());
 				runContext.set(MItem.class.getName(), item);
@@ -200,7 +201,7 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 				getLogger().error("Failed to execute: " + handledItem.getCommand()); //$NON-NLS-1$
 				return;
 			}
-			final IEclipseContext runContext = context.createChild("HI-ToolItem"); //$NON-NLS-1$
+			final IEclipseContext runContext = Util.createLocalHandlerContext(context,context.getActiveLeaf(),"HI-Item"); //$NON-NLS-1$
 			try {
 				ContributionsAnalyzer.populateModelInterfaces(item, runContext, item.getClass().getInterfaces());
 				runContext.set(MItem.class.getName(), item);

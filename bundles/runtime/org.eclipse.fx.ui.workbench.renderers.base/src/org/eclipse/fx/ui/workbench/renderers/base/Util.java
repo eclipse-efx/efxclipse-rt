@@ -3,6 +3,7 @@ package org.eclipse.fx.ui.workbench.renderers.base;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 
@@ -38,5 +39,19 @@ public class Util {
 	@NonNull
 	public static String toCSSId(@NonNull String id) {
 		return id.replace('.', '-');
+	}
+	
+	public static IEclipseContext createLocalHandlerContext(IEclipseContext parent, IEclipseContext activeLeaf, String name) {
+		IEclipseContext rv = parent.createChild(name);
+		rv.set("efx_handler_context", activeLeaf); //$NON-NLS-1$
+		return rv;
+	}
+	
+	public static IEclipseContext getActiveHandlerContext(IEclipseContext context) {
+		return (IEclipseContext) context.get("efx_handler_context");
+	}
+	
+	public static boolean isLocalHandlerContext(IEclipseContext context) {
+		return context.get("efx_handler_context") != null; //$NON-NLS-1$
 	}
 }

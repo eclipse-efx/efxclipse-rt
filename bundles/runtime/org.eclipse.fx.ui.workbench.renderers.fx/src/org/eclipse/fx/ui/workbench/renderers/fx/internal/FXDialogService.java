@@ -47,22 +47,17 @@ public class FXDialogService implements LightWeightDialogService {
 			host = (WDialogHost) window.getWidget();
 		} else if( scope == ModalityScope.PERSPECTIVE ) {
 			MPerspective perspective = this.context.get(MPerspective.class);
+			
 			if( perspective == null ) {
-				MWindow window = this.context.get(MWindow.class);
-				host = (WDialogHost) window.getWidget();
+				return openDialog(dialogClass, ModalityScope.WINDOW);
 			} else {
 				host = (WDialogHost) perspective.getWidget();
 			}
 		} else if( scope == ModalityScope.PART ) {
 			MPart part = this.context.get(MPart.class);
+			
 			if( part == null ) {
-				MPerspective perspective = this.context.get(MPerspective.class);
-				if( perspective == null ) {
-					MWindow window = this.context.get(MWindow.class);
-					host = (WDialogHost) window.getWidget();
-				} else {
-					host = (WDialogHost) perspective.getWidget();
-				}
+				return openDialog(dialogClass, ModalityScope.PERSPECTIVE);
 			} else {
 				host = (WDialogHost) part.getWidget();
 			}
