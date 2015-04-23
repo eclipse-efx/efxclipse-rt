@@ -305,6 +305,13 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 		return (N) new TitleAreaNodeImpl();
 	}
 
+	/**
+	 * Request the closing through the cancel icon in trim
+	 */
+	protected void requestCancelClose() {
+		close();
+	}
+	
 	class TitleAreaNodeImpl extends ToolBar implements TitleAreaNode {
 		private static final int HEADER_HEIGHT = 28;
 		private Label titleLabel;
@@ -327,7 +334,7 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 			// add close min max
 			WindowButton closeButton = new WindowButton("close"); //$NON-NLS-1$
 			closeButton.setFocusTraversable(false);
-			closeButton.setOnAction(e -> close());
+			closeButton.setOnAction(e -> requestCancelClose());
 
 			this.minButton = new WindowButton("minimize"); //$NON-NLS-1$
 			this.minButton.setFocusTraversable(false);
@@ -343,6 +350,8 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 
 			getItems().addAll(this.titleLabel, spacer, windowBtns);
 		}
+		
+		
 
 		@Override
 		public StringProperty titleProperty() {

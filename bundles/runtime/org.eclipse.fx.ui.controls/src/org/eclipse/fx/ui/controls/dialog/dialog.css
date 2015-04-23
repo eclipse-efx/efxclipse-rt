@@ -1,0 +1,35 @@
+.efx-dialog-pane {
+	-fx-background-color: -fx-background;
+	-fx-border-color: derive(-fx-background, -20%);
+	-fx-border-width: 0 1 1 1;
+}
+
+.efx-dialog-button-area {
+	-fx-padding: 10px;
+	-fx-border-color: derive(-fx-background, -20%);
+	-fx-border-width: 1 0 0 0;
+}
+
+.efx-dialog-client-area {
+	-fx-padding: 5px;
+}
+
+.efx-dialog-title {
+	-fx-font-weight: bold;
+}
+
+.efx-dialog-messageArea-area {
+	-fx-spacing: 10px;
+}
+
+.efx-dialog-title-message {
+	-fx-padding: 0 0 0 10;
+}
+
+.efx-dialog-title-area {
+	-fx-min-height: 70px;
+	-fx-border-color: derive(-fx-background, -20%);
+	-fx-border-width: 0 0 1 0;
+	-fx-padding: 10px;
+	-fx-background-color: derive(-fx-background, 20%);
+}

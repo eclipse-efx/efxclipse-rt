@@ -65,6 +65,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.Messages;
+import org.eclipse.fx.ui.workbench.renderers.fx.services.LightweightDialogTransitionService;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.service.localization.BundleLocalization;
@@ -210,6 +211,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Inject
 		@Optional
 		WindowTransitionService<Stage> windowTransitionService;
+		
+		@Inject
+		@Optional
+		LightweightDialogTransitionService dialogTransitionService;
 
 		@Inject
 		private GraphicsLoader graphicsLoader;
@@ -330,8 +335,15 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
 			if (dialogNode == null) {
 				if (this.overlayContainer != null) {
-					((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
-					this.overlayContainer.getChildren().clear();
+					if( this.dialogTransitionService != null ) {
+						this.dialogTransitionService.hideDialog(this.mWindow, staticLayoutNode, this.overlayContainer, this.overlayContainer.getChildren().size() == 1 ? this.overlayContainer.getChildren().get(0) : null, () -> {
+							((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
+							this.overlayContainer.getChildren().clear();
+						});
+					} else {
+						((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
+						this.overlayContainer.getChildren().clear();						
+					}
 				}
 			} else {
 				if (this.overlayContainer == null) {
@@ -348,6 +360,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 				this.overlayContainer.getChildren().setAll((Node)dialogNode);
 				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
+				if( this.dialogTransitionService != null ) {
+					this.dialogTransitionService.showDialog(this.mWindow, staticLayoutNode, this.overlayContainer, (Node)dialogNode, null);
+				}
 			}
 		}
 

@@ -77,20 +77,20 @@ public class DefaultFramePane extends ResizeableFramePane {
 	 * @param clientArea
 	 *            a client area
 	 */
-	public DefaultFramePane(@Nullable Pane clientArea) {
-		this(clientArea,false);
+	public DefaultFramePane(@Nullable Pane contentContainer) {
+		this(contentContainer,false);
 	}
 	
-	public DefaultFramePane(@Nullable Pane clientArea, boolean lighteight) {
+	public DefaultFramePane(@Nullable Pane contentContainer, boolean lighteight) {
 		super(lighteight);
 		if( lighteight ) {
 			setMinimizable(false);
 			setMaximizable(false);
 		}
 		clientAreaProperty().addListener(this::updateClientArea);
-		if (clientArea != null) {
-			clientArea.setId("client-area"); //$NON-NLS-1$
-			setContent(clientArea);
+		if (contentContainer != null) {
+			contentContainer.setId("client-area"); //$NON-NLS-1$
+			setContent(contentContainer);
 		}
 	}
 
@@ -148,6 +148,13 @@ public class DefaultFramePane extends ResizeableFramePane {
 	protected <N extends Node & TitleAreaNode> N createTitleBar() {
 		return (N) new TitleAreaNodeImpl();
 	}
+	
+	/**
+	 * Request the closing through the cancel icon in trim
+	 */
+	protected void requestCancelClose() {
+		close();
+	}
 
 	class TitleAreaNodeImpl extends ToolBar implements TitleAreaNode {
 		private static final int HEADER_HEIGHT = 28;
@@ -171,7 +178,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 			// add close min max
 			WindowButton closeButton = new WindowButton("close"); //$NON-NLS-1$
 			closeButton.setFocusTraversable(false);
-			closeButton.setOnAction(e -> close());
+			closeButton.setOnAction(e -> requestCancelClose());
 
 			this.minButton = new WindowButton("minimize"); //$NON-NLS-1$
 			this.minButton.setFocusTraversable(false);
@@ -189,7 +196,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 
 			getItems().addAll(this.titleLabel, spacer, windowBtns);
 		}
-
+		
 		@Override
 		public StringProperty titleProperty() {
 			return this.titleLabel.textProperty();
@@ -221,7 +228,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 		return this.clientArea;
 	}
 
-	private void updateClientArea(ObservableValue<? extends Node> o, Node oldClientArea, Node newClientArea) {
+	protected void updateClientArea(ObservableValue<? extends Node> o, Node oldClientArea, Node newClientArea) {
 		if (oldClientArea != null) {
 			((Pane) lookup("#client-area")).getChildren().remove(oldClientArea); //$NON-NLS-1$
 		}
