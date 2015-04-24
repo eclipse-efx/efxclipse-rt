@@ -12,7 +12,7 @@ public class FlyInTransitionService implements LightweightDialogTransitionServic
 
 	@Override
 	public void showDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node dialog, Runnable finished) {
-		TranslateTransition t = new TranslateTransition(Duration.millis(500),dialog);
+		TranslateTransition t = new TranslateTransition(Duration.millis(700),dialog);
 		t.setFromY(-1 * (dialog.getLayoutX() + dialog.maxHeight(-1)));
 		t.setToY(0);
 		t.setInterpolator(Interpolator.EASE_OUT);
@@ -26,7 +26,7 @@ public class FlyInTransitionService implements LightweightDialogTransitionServic
 
 	@Override
 	public void hideDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node dialog, Runnable finished) {
-		TranslateTransition t = new TranslateTransition(Duration.millis(500),dialog);
+		TranslateTransition t = new TranslateTransition(Duration.millis(700),dialog);
 		t.setFromY(0);
 		t.setToY(-1 * (dialog.getLayoutX() + dialog.maxHeight(-1)));
 		t.setInterpolator(Interpolator.EASE_OUT);
