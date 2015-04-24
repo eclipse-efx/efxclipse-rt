@@ -26,7 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public interface ThreadSynchronize {
 
 	/**
-	 * Sync with the ui thread und provide a result when done
+	 * Sync with the sync thread and provide a result when done
 	 * <p>
 	 * <b>WARNING: Using synchronized execute can easily lead to deadlocks. You
 	 * are better of using {@link #asyncExec(Callable)}</b>
@@ -41,7 +41,7 @@ public interface ThreadSynchronize {
 	<V> V syncExec(final Callable<V> callable, V defaultValue);
 
 	/**
-	 * Executes the runnable on the UI-Thread and blocks until the runnable is
+	 * Executes the runnable on the sync thread and blocks until the runnable is
 	 * finished
 	 * <p>
 	 * <b>WARNING: Using synchronized execute can easily lead to deadlocks. You
@@ -54,7 +54,7 @@ public interface ThreadSynchronize {
 	void syncExec(Runnable runnable);
 
 	/**
-	 * Schedules the runnable on the UI-Thread for execution and returns
+	 * Schedules the runnable on the sync thread for execution and returns
 	 * immediately
 	 *
 	 * @param callable
@@ -64,7 +64,7 @@ public interface ThreadSynchronize {
 	<V> Future<V> asyncExec(final Callable<V> callable);
 
 	/**
-	 * Schedules the runnable on the UI-Thread for execution and returns
+	 * Schedules the runnable on the sync thread for execution and returns
 	 * immediately
 	 *
 	 * @param runnable
@@ -110,7 +110,7 @@ public interface ThreadSynchronize {
 	}
 
 	/**
-	 * Wraps a consumer so that it is called on the UI thread.
+	 * Wraps a consumer so that it is called on the sync thread.
 	 * <p>
 	 * This is handy if you pass a {@link Consumer} as callback into some async
 	 * API
