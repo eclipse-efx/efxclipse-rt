@@ -22,6 +22,8 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Class to synchronize with a predefined thread e.g. the UI-Thread
+ * 
+ * @since 2.0
  */
 public interface ThreadSynchronize {
 
