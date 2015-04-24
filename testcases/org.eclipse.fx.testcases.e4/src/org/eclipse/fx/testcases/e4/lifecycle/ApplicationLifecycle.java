@@ -5,48 +5,47 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.fx.ui.services.restart.LifecycleRV;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
-import org.eclipse.fx.ui.services.sync.UISynchronize.BlockCondition;
 
 @SuppressWarnings("restriction")
 public class ApplicationLifecycle {
 	@PostContextCreate
 	LifecycleRV showStartUp(UISynchronize sync) {
-		BlockCondition<LifecycleRV> c = new BlockCondition<>();
 		Stage s = new Stage();
 		VBox box = new VBox();
+		AtomicReference<LifecycleRV> rv = new AtomicReference<>(LifecycleRV.CONTINUE);
 		{
 			Button b = new Button("Continue");
 			b.setMaxWidth(Double.MAX_VALUE);
-			b.setOnAction((e) -> c.release(LifecycleRV.CONTINUE));
+			b.setOnAction((e) -> {rv.set(LifecycleRV.CONTINUE); s.close();});
 			box.getChildren().add(b);
 		}
 		{
 			Button b = new Button("Shutdown");
 			b.setMaxWidth(Double.MAX_VALUE);
-			b.setOnAction((e) -> c.release(LifecycleRV.SHUTDOWN));
+			b.setOnAction((e) -> {rv.set(LifecycleRV.SHUTDOWN); s.close();});
 			box.getChildren().add(b);
 		}
 		{
 			Button b = new Button("Restart");
 			b.setMaxWidth(Double.MAX_VALUE);
-			b.setOnAction((e) -> c.release(LifecycleRV.RESTART));
+			b.setOnAction((e) -> {rv.set(LifecycleRV.RESTART); s.close();});
 			box.getChildren().add(b);
 		}
 		{
 			Button b = new Button("Restart with cleared State");
 			b.setMaxWidth(Double.MAX_VALUE);
-			b.setOnAction((e) -> c.release(LifecycleRV.RESTART_CLEAR_STATE));
+			b.setOnAction((e) -> {rv.set(LifecycleRV.RESTART_CLEAR_STATE); s.close();});
 			box.getChildren().add(b);
 		}
 		
 		s.setScene(new Scene(box,200,200));
-		s.show();
-		LifecycleRV rv = sync.block(c);
-		s.close();
+		s.showAndWait();
 		
-		return rv;
+		return rv.get();
 	}
 }

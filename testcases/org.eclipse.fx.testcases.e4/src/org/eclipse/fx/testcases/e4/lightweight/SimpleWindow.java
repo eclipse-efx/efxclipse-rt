@@ -7,11 +7,8 @@ import javafx.scene.control.Button;
 
 public class SimpleWindow extends DefaultFramePane {
 	public SimpleWindow() {
-		super(true);
+		super(new FillLayoutPane(),true);
 		setTitle("Bla Bla Bla");
-		FillLayoutPane fillLayoutPane = new FillLayoutPane();
-		fillLayoutPane.setId("client-area");
-		setContent(fillLayoutPane);
 		setClientArea(new Button("Hello World!!!!"));
 		setMaxSize(500, 500);
 	}
