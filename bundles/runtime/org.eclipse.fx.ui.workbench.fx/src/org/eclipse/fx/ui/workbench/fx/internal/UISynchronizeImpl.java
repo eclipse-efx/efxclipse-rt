@@ -18,11 +18,8 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.inject.Inject;
-
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize;
-import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
