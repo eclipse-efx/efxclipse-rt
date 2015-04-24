@@ -21,9 +21,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.inject.Inject;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -32,12 +38,31 @@ import javafx.util.Duration;
 /**
  * Implementation of the UISynchronize service for JavaFX
  */
+@Component(service = { UISynchronize.class, org.eclipse.e4.ui.di.UISynchronize.class, ThreadSynchronize.class })
 public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implements UISynchronize {
-	
-	@Inject
-	@Log
-	Logger logger;
-	
+	private LoggerFactory factory;
+	private Logger logger;
+
+	/**
+	 * Setting a new factory
+	 * 
+	 * @param factory
+	 *            the new factory
+	 */
+	@Reference(policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
+	public void setLoggerFactory(LoggerFactory factory) {
+		this.factory = factory;
+		this.logger = null;
+	}
+
+	@SuppressWarnings("null")
+	private Logger getLogger() {
+		if (this.logger == null) {
+			this.logger = this.factory.createLogger(getClass().getName());
+		}
+		return this.logger;
+	}
+
 	@Override
 	public <V> V syncExec(final Callable<V> callable, V defaultValue) {
 		if (javafx.application.Platform.isFxApplicationThread()) {
@@ -52,7 +77,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 			try {
 				return task.get();
 			} catch (InterruptedException | ExecutionException e) {
-				this.logger.error("Unable to wait until the task is completed", e); //$NON-NLS-1$
+				getLogger().error("Unable to wait until the task is completed", e); //$NON-NLS-1$
 			} finally {
 				task.cancel(true);
 			}
@@ -70,36 +95,36 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 			try {
 				task.get(); // wait for task to complete
 			} catch (InterruptedException | ExecutionException e) {
-				this.logger.error("Unable to wait until the task is completed", e); //$NON-NLS-1$
+				getLogger().error("Unable to wait until the task is completed", e); //$NON-NLS-1$
 			} finally {
 				task.cancel(true);
 			}
 		}
 	}
-	
+
 	@Override
 	public <V> Future<V> asyncExec(final Callable<V> callable) {
 		RunnableFuture<V> task = new FutureTask<V>(callable);
 		javafx.application.Platform.runLater(task);
 		return task;
 	}
-	
+
 	@Override
 	public void asyncExec(Runnable runnable) {
 		javafx.application.Platform.runLater(runnable);
 	}
-	
+
 	@Override
 	public Subscription scheduleExecution(long delay, Runnable runnable) {
 		final AtomicBoolean b = new AtomicBoolean(true);
 		Timeline t = new Timeline(new KeyFrame(Duration.millis(delay), (a) -> {
-			if( b.get() ) {
-				runnable.run();	
+			if (b.get()) {
+				runnable.run();
 			}
 		} ));
 		t.play();
 		return new Subscription() {
-			
+
 			@Override
 			public void dispose() {
 				b.set(false);
@@ -107,24 +132,23 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 			}
 		};
 	}
-	
+
 	@Override
 	public <T> CompletableFuture<T> scheduleExecution(long delay, Callable<T> runnable) {
 		CompletableFuture<T> future = new CompletableFuture<T>();
-		
+
 		Timeline t = new Timeline(new KeyFrame(Duration.millis(delay), (a) -> {
 			try {
-				if( ! future.isCancelled() ) {
-					future.complete(runnable.call());	
+				if (!future.isCancelled()) {
+					future.complete(runnable.call());
 				}
 			} catch (Exception e) {
 				future.completeExceptionally(e);
-			}	
+			}
 		} ));
 		t.play();
-		
+
 		return future;
 	}
-	
-}
 
+}

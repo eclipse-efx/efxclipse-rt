@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -45,7 +46,9 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.ui.services.Constants;
+import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.osgi.service.event.Event;
 
 @SuppressWarnings("restriction")
@@ -63,6 +66,15 @@ public class ControlPanel {
 	
 	@Inject
 	EHandlerService handlerService;
+	
+	@Inject
+	UISynchronize sync;
+	
+	@Inject
+	org.eclipse.e4.ui.di.UISynchronize e4Sync;
+	
+	@Inject
+	ThreadSynchronize coreSync;
 	
 	@SuppressWarnings("rawtypes")
 	@Inject
@@ -588,5 +600,10 @@ public class ControlPanel {
 	@Inject
 	public void setWindowFocusControl(@Named(Constants.WINDOW_FOCUS_NODE) @Optional Node node) {
 		System.err.println("WindowFocus@" + node);
+	}
+	
+	@PostConstruct
+	void initDone() {
+		System.err.println("SYNC: " + sync + " => " + e4Sync + " => " + coreSync);
 	}
 }

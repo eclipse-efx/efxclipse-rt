@@ -74,7 +74,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.restart.LifecycleRV;
@@ -112,16 +111,6 @@ public abstract class AbstractE4Application implements IApplication {
 	private IModelResourceHandler handler;
 
 	private static org.eclipse.fx.core.log.Logger LOGGER = LoggerCreator.createLogger(AbstractE4Application.class);
-
-	/**
-	 * Create a synchronizer instance who synchronizes between UI and none-UI
-	 * threads
-	 *
-	 * @param context
-	 *            the context
-	 * @return the instance
-	 */
-	protected abstract @NonNull UISynchronize createSynchronizer(@NonNull IEclipseContext context);
 
 	/**
 	 * Create a databinding realm
@@ -175,11 +164,6 @@ public abstract class AbstractE4Application implements IApplication {
 	public E4Workbench createE4Workbench(IApplicationContext applicationContext, final IEclipseContext appContext) {
 		ContextInjectionFactory.setDefault(appContext);
 
-		@NonNull
-		UISynchronize uiSync = createSynchronizer(appContext);
-		appContext.set(org.eclipse.e4.ui.di.UISynchronize.class, (org.eclipse.e4.ui.di.UISynchronize) uiSync);
-		appContext.set(UISynchronize.class, uiSync);
-		appContext.set(ThreadSynchronize.class, uiSync);
 		appContext.set(Realm.class, createRealm(appContext));
 		appContext.set(IApplicationContext.class, applicationContext);
 		appContext.set(EModelStylingService.class, new EModelStylingService() {

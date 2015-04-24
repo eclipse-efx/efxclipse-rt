@@ -13,10 +13,6 @@ package org.eclipse.fx.ui.workbench.fx;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.application.Application;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -39,7 +35,6 @@ import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
 import org.eclipse.fx.ui.workbench.fx.internal.GraphicsLoaderImpl;
-import org.eclipse.fx.ui.workbench.fx.internal.UISynchronizeImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.osgi.framework.Bundle;
@@ -49,6 +44,10 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 import org.osgi.service.prefs.BackingStoreException;
+
+import javafx.application.Application;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 /**
  * default e4 application
@@ -308,12 +307,6 @@ public class E4Application extends AbstractE4Application {
 
 		final Map<String, Object> map = new HashMap<String, Object>();
 		sendEvent(Constants.APPLICATION_LAUNCHED, map);
-	}
-
-	@SuppressWarnings("null")
-	@Override
-	protected UISynchronize createSynchronizer(IEclipseContext appContext) {
-		return ContextInjectionFactory.make(UISynchronizeImpl.class, appContext);
 	}
 
 	@Override
