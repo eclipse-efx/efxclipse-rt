@@ -74,6 +74,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.restart.LifecycleRV;
@@ -178,6 +179,7 @@ public abstract class AbstractE4Application implements IApplication {
 		UISynchronize uiSync = createSynchronizer(appContext);
 		appContext.set(org.eclipse.e4.ui.di.UISynchronize.class, (org.eclipse.e4.ui.di.UISynchronize) uiSync);
 		appContext.set(UISynchronize.class, uiSync);
+		appContext.set(ThreadSynchronize.class, uiSync);
 		appContext.set(Realm.class, createRealm(appContext));
 		appContext.set(IApplicationContext.class, applicationContext);
 		appContext.set(EModelStylingService.class, new EModelStylingService() {
