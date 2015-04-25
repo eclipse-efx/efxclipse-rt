@@ -34,6 +34,7 @@ import org.eclipse.fx.core.update.UpdateService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * Implementation of service based upon p2
@@ -110,7 +111,7 @@ public class UpdateServiceImpl implements UpdateService {
 	 * Set the provisioning agent
 	 * @param agent the provisioning agent
 	 */
-	@Reference
+	@Reference(cardinality=ReferenceCardinality.OPTIONAL)
 	public void setProvisioningAgent(IProvisioningAgent agent) {
 		// We need to keep the relation 0..1 because IProvisioningAgent is only loaded
 		// if the p2.core bundle is started!
