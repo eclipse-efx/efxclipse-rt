@@ -66,6 +66,8 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 				throw new RuntimeException(e);
 			}
 		} else {
+			// We could also use Display.getDefault().syncExec(Runnable); but
+			// to keep semantics the same as in JavaFX we use the same code future task
 			RunnableFuture<V> task = new FutureTask<V>(callable);
 			Display.getDefault().asyncExec(task);
 			try {
@@ -84,6 +86,8 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 		if (Display.getDefault().getThread() == Thread.currentThread()) {
 			runnable.run();
 		} else {
+			// We could also use Display.getDefault().syncExec(Runnable); but
+			// to keep semantics the same as in JavaFX we use the same code future task
 			RunnableFuture<?> task = new FutureTask<Void>(runnable, null);
 			Display.getDefault().asyncExec(task);
 			try {
