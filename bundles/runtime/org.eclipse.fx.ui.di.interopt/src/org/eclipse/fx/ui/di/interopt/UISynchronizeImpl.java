@@ -67,7 +67,7 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 			}
 		} else {
 			RunnableFuture<V> task = new FutureTask<V>(callable);
-			javafx.application.Platform.runLater(task);
+			Display.getDefault().asyncExec(task);
 			try {
 				return task.get();
 			} catch (InterruptedException | ExecutionException e) {
@@ -85,7 +85,7 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 			runnable.run();
 		} else {
 			RunnableFuture<?> task = new FutureTask<Void>(runnable, null);
-			javafx.application.Platform.runLater(task);
+			Display.getDefault().asyncExec(task);
 			try {
 				task.get(); // wait for task to complete
 			} catch (InterruptedException | ExecutionException e) {
