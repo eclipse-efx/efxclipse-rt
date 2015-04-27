@@ -38,7 +38,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * {@link Cell#setFont(javafx.scene.text.Font)} is delegated to {@link IItemFontProvider}</li>
  * </ul>
  */
-public class AdapterFactoryListCellFactory extends AdapterFactoryCellFactory implements Callback<@NonNull ListView<Object>, @NonNull ListCell<Object>> {
+public class AdapterFactoryListCellFactory<T> extends AdapterFactoryCellFactory implements Callback<@NonNull ListView<T>, @NonNull ListCell<T>> {
 
 	/**
 	 * Create a new adapter factory for list cells
@@ -51,9 +51,9 @@ public class AdapterFactoryListCellFactory extends AdapterFactoryCellFactory imp
 	}
 
 	@Override
-	public ListCell<Object> call(@NonNull ListView<Object> param) {
+	public ListCell<T> call(@NonNull ListView<T> param) {
 
-		final ListCell<Object> listCell = new ListCell<Object>() {
+		final ListCell<T> listCell = new ListCell<T>() {
 
 			Object currentItem = null;
 			ICellEditHandler cellEditHandler;
@@ -66,7 +66,7 @@ public class AdapterFactoryListCellFactory extends AdapterFactoryCellFactory imp
 			};
 
 			@Override
-			protected void updateItem(Object item, boolean empty) {
+			protected void updateItem(T item, boolean empty) {
 				super.updateItem(item, empty);
 
 				// check if the item changed
@@ -100,7 +100,7 @@ public class AdapterFactoryListCellFactory extends AdapterFactoryCellFactory imp
 			}
 
 			@Override
-			public void commitEdit(Object newValue) {
+			public void commitEdit(T newValue) {
 				super.commitEdit(newValue);
 				if (this.cellEditHandler != null)
 					this.cellEditHandler.commitEdit(this, newValue);
