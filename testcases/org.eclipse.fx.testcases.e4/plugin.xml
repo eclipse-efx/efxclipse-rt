@@ -27,6 +27,10 @@
                name="efx_TOOLITEM_TIMER_dummy"
                value="400">
          </property>
+         <property
+               name="rendererFactoryUri"
+               value="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.CustomRendererFactory">
+         </property>
       </product>
    </extension>
    <extension
