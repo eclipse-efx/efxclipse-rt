@@ -46,6 +46,7 @@ import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.fx.key.KeyBindingDispatcher;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
@@ -169,6 +170,27 @@ public class PartRenderingEngine implements IPresentationEngine {
 			}
 		};
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, childrenHandler);
+		
+		EventHandler selectedElementHandler = new EventHandler() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
+				if( changedObj instanceof MApplication ) {
+					Object activeWindow = event.getProperty(UIEvents.EventTags.NEW_VALUE);
+					if( activeWindow != null && activeWindow instanceof MWindow ) {
+						MWindow m = (MWindow) activeWindow;
+						if( m.getWidget() instanceof WWidget<?>) {
+							WWidget<?> w = (WWidget<?>) m.getWidget();
+							w.activate();
+						}
+					}
+				}
+			}
+		};
+		
+		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, selectedElementHandler);
+		
 	}
 
 	@Override

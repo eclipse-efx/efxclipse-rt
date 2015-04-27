@@ -514,6 +514,14 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				this.eventBroker.send(Constants.WINDOW_ACTIVATED, getDomElement());
 			}
 		}
+		
+		@Override
+		public void activate() {
+			super.activate();
+			if( this.stage != null && ! this.stage.isFocused() ) {
+				this.stage.requestFocus();	
+			}
+		}
 
 		private void handleFocusOwner(ObservableValue<? extends Node> observable, Node oldValue, Node _newValue) {
 			Node newValue = _newValue;

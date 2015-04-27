@@ -302,6 +302,9 @@
       <children xsi:type="menu:ToolControl" xmi:id="_0fID8BZuEeS6JMmOlvf6LA" elementId="org.eclipse.fx.testcases.e4.toolcontrol.4" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.tool.ProgressControl"/>
     </trimBars>
   </children>
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_IM_0AO0LEeSM24FHcGF0tg" elementId="org.eclipse.fx.testcases.e4.trimmedwindow.2ndTopLevelWindow" label="2nd top level window" x="300" y="300" width="400" height="400">
+    <children xsi:type="basic:Part" xmi:id="_eOrQkO0NEeSM24FHcGF0tg" elementId="org.eclipse.fx.testcases.e4.part.2ndWindowPart" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="2nd window part"/>
+  </children>
   <handlers xmi:id="_H2FJYOUcEeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.Handler0" command="_FEZr8OUcEeGP-5z69KadAQ"/>
   <handlers xmi:id="_0_q1EOqiEeGrz8mV_3Gr5A" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.Handler1" command="_3PQSEOqiEeGrz8mV_3Gr5A"/>
   <handlers xmi:id="_otsOgO6yEeG4lfn-YKJbJw" elementId="org.eclipse.fx.testcases.e4.handler.0" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.SwitchPerspectiveHandler" command="_kCbZQO6yEeG4lfn-YKJbJw"/>

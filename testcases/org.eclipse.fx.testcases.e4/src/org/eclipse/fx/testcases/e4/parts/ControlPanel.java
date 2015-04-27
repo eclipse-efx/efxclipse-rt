@@ -583,6 +583,17 @@ public class ControlPanel {
 			});
 			box.getChildren().add(button);
 		}
+		
+		{
+			Button button = new Button("Bring 2nd window to top");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					modelService.bringToTop(application.getChildren().get(1));
+				}
+			});
+			box.getChildren().add(button);
+		}
 
 		p.setTop(box);
 	}
