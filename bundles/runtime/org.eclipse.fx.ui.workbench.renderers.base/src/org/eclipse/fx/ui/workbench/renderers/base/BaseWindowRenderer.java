@@ -42,6 +42,7 @@ import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WTrimBar;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.eclipse.fx.ui.workbench.services.ELifecycleService;
@@ -408,7 +409,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		if (inContentProcessing(parentElement)|| ! isChildRenderedAndVisible(element)) {
 			return;
 		}
-
+		
 		if (element instanceof MWindowElement) {
 			WWindow<N> window = getWidget(parentElement);
 			if (window != null) {
@@ -430,6 +431,29 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 					window.addChildWindow(ww);	
 				} else {
 					this.logger.error("Widget for element '"+element+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+			}
+		} else if( element instanceof MTrimBar ) {
+			MTrimBar tm = (MTrimBar) element;
+			WTrimBar<MTrimBar> trimWidget = (WTrimBar<MTrimBar>) element.getWidget();
+			WWindow<MWindow> windowWidget = (WWindow<MWindow>) parentElement.getWidget();
+			if (trimWidget != null) {
+				trimWidget.addStyleClasses(tm.getSide().name());
+				switch (tm.getSide()) {
+				case TOP:
+					windowWidget.setTopTrim(trimWidget);
+					break;
+				case RIGHT:
+					windowWidget.setRightTrim(trimWidget);
+					break;
+				case BOTTOM:
+					windowWidget.setBottomTrim(trimWidget);
+					break;
+				case LEFT:
+					windowWidget.setLeftTrim(trimWidget);
+					break;
+				default:
+					break;
 				}
 			}
 		}

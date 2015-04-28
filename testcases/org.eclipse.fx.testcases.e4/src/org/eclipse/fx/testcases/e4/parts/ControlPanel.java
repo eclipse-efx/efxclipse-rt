@@ -33,6 +33,8 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
+import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.impl.BasicFactoryImpl;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledToolItem;
@@ -594,6 +596,19 @@ public class ControlPanel {
 			});
 			box.getChildren().add(button);
 		}
+		
+		{
+			Button button = new Button("Flip trimbar");
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					MTrimBar mTrimBar = ((MTrimmedWindow)window).getTrimBars().get(0);
+					mTrimBar.setToBeRendered(! mTrimBar.isToBeRendered());
+				}
+			});
+			box.getChildren().add(button);
+		}
+
 
 		p.setTop(box);
 	}
