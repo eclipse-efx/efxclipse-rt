@@ -604,6 +604,7 @@ public class ControlPanel {
 				public void handle(ActionEvent event) {
 					MTrimBar mTrimBar = ((MTrimmedWindow)window).getTrimBars().get(0);
 					mTrimBar.setToBeRendered(! mTrimBar.isToBeRendered());
+//					mTrimBar.setVisible( ! mTrimBar.isVisible() );
 				}
 			});
 			box.getChildren().add(button);

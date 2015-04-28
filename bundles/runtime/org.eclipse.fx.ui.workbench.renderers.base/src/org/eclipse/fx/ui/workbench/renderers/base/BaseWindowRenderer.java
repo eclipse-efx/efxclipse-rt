@@ -483,6 +483,31 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 					this.logger.error("Widget for element '"+changedObj+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
+		} else if( changedObj instanceof MTrimBar ) {
+			WWindow<N> windowWidget = getWidget(container);
+			if( windowWidget != null ) {
+				MTrimBar tm = (MTrimBar) changedObj;
+				WTrimBar<MTrimBar> trimWidget = (WTrimBar<MTrimBar>) changedObj.getWidget();
+				if( trimWidget != null ) {
+					trimWidget.addStyleClasses(tm.getSide().name());
+					switch (tm.getSide()) {
+					case TOP:
+						windowWidget.setTopTrim(null);
+						break;
+					case RIGHT:
+						windowWidget.setRightTrim(null);
+						break;
+					case BOTTOM:
+						windowWidget.setBottomTrim(null);
+						break;
+					case LEFT:
+						windowWidget.setLeftTrim(null);
+						break;
+					default:
+						break;
+					}
+				}
+			}
 		}
 	}
 
