@@ -173,7 +173,22 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, this::handleChildrenEvent);
 		eventBroker.subscribe(UIEvents.Window.TOPIC_WINDOWS, this::handleChildrenEvent);
+		eventBroker.subscribe(UIEvents.UILifeCycle.BRINGTOTOP, BaseWindowRenderer::handleBringToTop);
 		EventProcessor.attachVisibleProcessor(eventBroker, this); // this is for our children that come and go
+	}
+	
+	static void handleBringToTop(Event event) {
+		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
+		// check if the window brought to top is a none top level window
+		if( changedObj instanceof MWindow && ((MUIElement)changedObj).getParent() == null ) {
+			MWindow w = (MWindow) changedObj;
+			if( w.getWidget() instanceof WWidget<?> ) {
+				WWidget<?> widget = (WWidget<?>) w.getWidget();
+				if( widget != null ) {
+					widget.activate();
+				}				
+			}
+		}
 	}
 
 	void handleChildrenEvent(Event event) {
