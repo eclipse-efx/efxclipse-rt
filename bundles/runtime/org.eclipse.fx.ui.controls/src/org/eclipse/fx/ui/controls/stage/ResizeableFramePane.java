@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.stage;
 
-import java.util.function.Supplier;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -49,7 +47,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	private Node resizeCornerRightTop;
 	private Node resizeCornerLeftBottom;
 	private Node resizeCornerLeftTop;
-	
+
 	private BooleanProperty minimizable = new SimpleBooleanProperty(this, "minimizable", true); //$NON-NLS-1$
 	private BooleanProperty maximizable = new SimpleBooleanProperty(this, "maximizable", true); //$NON-NLS-1$
 	private BooleanProperty resizeable = new SimpleBooleanProperty(this, "resizeable", true); //$NON-NLS-1$
@@ -85,7 +83,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 				this.height = getStage().getHeight();
 				this.dragAnchor = new Point2D(event.getScreenX(), event.getScreenY());
 			} else if (type == MouseEvent.MOUSE_DRAGGED) {
-				if( ! isLightweight() ) {
+				if (!isLightweight()) {
 					double deltaX = event.getScreenX() - this.dragAnchor.getX();
 					double deltaY = event.getScreenY() - this.dragAnchor.getY();
 					// update(this.x, this.y, this.width, this.height, deltaX,
@@ -110,19 +108,25 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 						default:
 							break;
 						}
-					}					
+					}
 				}
 			}
 		}
 	}
 
 	/**
-	 * Create a new pane
+	 * Create a new pane which is used in a heavy-weight dialog
 	 */
 	public ResizeableFramePane() {
 		this(false);
 	}
-	
+
+	/**
+	 * A resizeable frame pane
+	 * 
+	 * @param lighweight
+	 *            <code>true</code> if used in a light-weight scenario
+	 */
 	public ResizeableFramePane(boolean lighweight) {
 		this.lightweight.set(lighweight);
 		Node windowNode = createWindowArea();
@@ -232,16 +236,16 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		node.setOnMousePressed(event -> {
 			this.mouseDragDeltaX = event.getSceneX();
 			this.mouseDragDeltaY = event.getSceneY();
-		});
+		} );
 		node.setOnMouseDragged(event -> {
 			getStage().setX(event.getScreenX() - this.mouseDragDeltaX);
 			getStage().setY(event.getScreenY() - this.mouseDragDeltaY);
-		});
+		} );
 		node.setOnMouseClicked(e -> {
 			if (e.getClickCount() > 1) {
 				maximize();
 			}
-		});
+		} );
 	}
 
 	/**
@@ -390,7 +394,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	 */
 	protected void maximize() {
 		// We are bound to the stage
-		if( ! isLightweight() ) {
+		if (!isLightweight()) {
 			Stage stage = getStage();
 			final double stageY = stage.getY();
 			final Screen screen = Screen.getScreensForRectangle(stage.getX(), stageY, 1, 1).get(0);
@@ -422,52 +426,68 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		// We are bound to the stage
 		FrameEvent evt = new FrameEvent(this, FrameEvent.CLOSING);
 		Event.fireEvent(this, evt);
-		if( ! evt.isConsumed() ) {
-			if( ! isLightweight() ) {
+		if (!evt.isConsumed()) {
+			if (!isLightweight()) {
 				((Stage) getScene().getWindow()).close();
 			}
 			Event.fireEvent(this, new FrameEvent(this, FrameEvent.CLOSED));
 		}
 	}
-	
+
 	/**
 	 * Minimize the window
 	 */
 	protected void minimize() {
 		// We are bound to the stage
-		if( ! isLightweight() ) {
+		if (!isLightweight()) {
 			((Stage) getScene().getWindow()).setIconified(true);
 		} else {
 			// We are embedded into a container do nothing
 		}
 	}
-	
+
 	@Override
 	public final void setMaximizable(boolean maximizeable) {
 		this.maximizable.set(maximizeable);
 	}
-	
+
+	/**
+	 * Observable property defining of the dialog is maximizable
+	 * 
+	 * @return the property
+	 */
 	public final BooleanProperty maximizableProperty() {
 		return this.maximizable;
 	}
-	
-	public final boolean getMaximizable() {
+
+	/**
+	 * @return check if maximizable
+	 */
+	public final boolean isMaximizable() {
 		return this.maximizable.get();
 	}
-	
+
 	@Override
 	public final void setMinimizable(boolean minimizable) {
 		this.minimizable.set(minimizable);
 	}
-	
+
+	/**
+	 * Observable property defining of the dialog is minimizable
+	 * 
+	 * @return the property
+	 */
 	public final BooleanProperty minimizableProperty() {
 		return this.minimizable;
 	}
-	
-	public final boolean getMinimizable() {
+
+	/**
+	 * @return check if the dialog is minizable
+	 */
+	public final boolean isMinimizable() {
 		return this.minimizable.get();
 	}
-	
+
 	@Override
 	public final void setResizeable(boolean resizable) {
 		this.resizeable.set(resizable);
@@ -525,12 +545,12 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	public final ReadOnlyBooleanProperty lightweightProperty() {
 		return this.lightweight.getReadOnlyProperty();
 	}
-	
+
 	/**
 	 * @return check if the frame is lightweight
 	 */
 	public final boolean isLightweight() {
 		return this.lightweightProperty().get();
 	}
-	
+
 }
