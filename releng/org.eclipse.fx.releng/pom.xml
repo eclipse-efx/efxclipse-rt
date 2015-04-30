@@ -24,6 +24,7 @@
 		<efx_shared_runtime>http://download.eclipse.org/efxclipse/runtime-shared-nightly/site/</efx_shared_runtime>
 		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/runtime-nightly</download-publish-path>
 		<eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-repo.url>
+		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/efxclipse/org.eclipse.efxclipse.git</tycho.scmUrl>
 	</properties>
 
 	<modules>
