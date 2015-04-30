@@ -4,7 +4,7 @@ Bundle-Name: Animationutils
 Bundle-SymbolicName: org.eclipse.fx.ui.animation;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-Vendor: BestSolution.at
+Bundle-Vendor: Eclipse.org
 Export-Package: org.eclipse.fx.ui.animation,
  org.eclipse.fx.ui.animation.morph,
  org.eclipse.fx.ui.animation.pagetransition,
