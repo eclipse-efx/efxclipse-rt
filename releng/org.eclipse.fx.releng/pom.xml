@@ -259,6 +259,9 @@
 						<archive>
 							<addMavenDescriptor>false</addMavenDescriptor>
 						</archive>
+						<sourceReferences>
+							<generate>true</generate>
+						</sourceReferences>
 					</configuration>
 				</plugin>
 			</plugins>
