@@ -15,17 +15,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioMenuItem;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination.ModifierValue;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -44,6 +33,16 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.util.NLS;
+
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination.ModifierValue;
 
 /**
  * default renderer for {@link MMenuItem}
@@ -133,13 +132,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 					}
 
 					if (MenuItemImpl.this.runnable != null) {
-						Platform.runLater(new Runnable() {
-
-							@Override
-							public void run() {
-								MenuItemImpl.this.runnable.run();
-							}
-						});
+						MenuItemImpl.this.runnable.run();
 					}
 				}
 			});
