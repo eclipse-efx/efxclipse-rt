@@ -12,6 +12,7 @@
  ******************************************************************************/
 package org.eclipse.fx.demo.contacts.processors;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -47,7 +48,7 @@ public abstract class AbstractThemeProcessor {
 		ServiceReference reference = context.getServiceReference(ThemeManager.class.getName());
 		ThemeManager themeManager = (ThemeManager) context.getService(reference);
 
-		List<Theme> themes = themeManager.getAvailableThemes();
+		Collection<Theme> themes = themeManager.getAvailableThemes().values();
 		if (themes.size() > 0) {
 			MApplication application = getApplication();
 
