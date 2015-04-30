@@ -30,3 +30,4 @@ Export-Package: org.eclipse.fx.ui.workbench.renderers.base;x-friends:="org.eclip
  org.eclipse.fx.ui.workbench.renderers.base.addons;x-friends:="org.eclipse.fx.ui.workbench.renderers.fx",
  org.eclipse.fx.ui.workbench.renderers.base.services;x-friends:="org.eclipse.fx.ui.workbench.renderers.fx",
  org.eclipse.fx.ui.workbench.renderers.base.widget;x-friends:="org.eclipse.fx.ui.workbench.renderers.fx"
+Bundle-Vendor: Eclipse.org

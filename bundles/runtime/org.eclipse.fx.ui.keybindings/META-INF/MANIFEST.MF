@@ -13,3 +13,4 @@ Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
  javax.inject;version="1.0.0"
 Export-Package: org.eclipse.fx.ui.keybindings,
  org.eclipse.fx.ui.keybindings.service
+Bundle-Vendor: Eclipse.org

@@ -33,3 +33,4 @@ Bundle-Activator: org.eclipse.fx.ui.workbench.base.internal.Activator
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/services/commandservice.xml,
  OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.MementoCF.xml
+Bundle-Vendor: Eclipse.org

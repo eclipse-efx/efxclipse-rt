@@ -23,3 +23,4 @@ Export-Package: org.eclipse.fx.ui.modelviewer
 Service-Component: OSGI-INF/services/registry.xml,
  OSGI-INF/services/defaultDelegates.xml
 Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse.org

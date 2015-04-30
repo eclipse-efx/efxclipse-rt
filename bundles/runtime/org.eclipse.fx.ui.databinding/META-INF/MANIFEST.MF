@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.core.databinding.observable;bundle-version="1.4.1",
  org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional
 Export-Package: org.eclipse.fx.ui.databinding,
  org.eclipse.fx.ui.databinding.converters
+Bundle-Vendor: Eclipse.org

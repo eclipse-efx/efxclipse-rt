@@ -12,3 +12,4 @@ Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/interoptfunction.xml,
  OSGI-INF/services/org.eclipse.fx.ui.di.interopt.UISynchronizeImpl.xml
 Import-Package: org.osgi.service.component.annotations
+Bundle-Vendor: Eclipse.org

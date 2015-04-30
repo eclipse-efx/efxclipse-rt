@@ -19,3 +19,4 @@ Import-Package: javax.annotation;version="1.2.0";resolution:=optional,
  javax.inject;version="1.0.0"
 Service-Component: OSGI-INF/lifecyclecomponent.xml
 Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse.org

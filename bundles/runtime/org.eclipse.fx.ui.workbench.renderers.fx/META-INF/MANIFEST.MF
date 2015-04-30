@@ -41,3 +41,4 @@ Export-Package: org.eclipse.fx.ui.workbench.renderers.fx,
  org.eclipse.fx.ui.workbench.renderers.fx.internal;x-internal:=true,
  org.eclipse.fx.ui.workbench.renderers.fx.services,
  org.eclipse.fx.ui.workbench.renderers.fx.widget
+Bundle-Vendor: Eclipse.org

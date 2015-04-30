@@ -39,3 +39,4 @@ Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/keylookup.xml,
  OSGI-INF/provider.xml,
  OSGI-INF/services/org.eclipse.fx.ui.workbench.fx.internal.UISynchronizeImpl.xml
+Bundle-Vendor: Eclipse.org
