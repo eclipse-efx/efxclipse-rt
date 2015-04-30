@@ -23,7 +23,7 @@
 		<platform-version>[3.7,3.8)</platform-version>
 		<download-publish-path>/home/data/httpd/download.eclipse.org/efxclipse/runtime-shared-nightly</download-publish-path>
 		<eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-repo.url>
-		<tycho.scmUrl>https://git.eclipse.org/gitroot/efxclipse/org.eclipse.efxclipse.git</tycho.scmUrl>
+		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/efxclipse/org.eclipse.efxclipse.git</tycho.scmUrl>
 	</properties>
 
 	<modules>
