@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.emf.edit.ui;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Cell;
 import javafx.scene.control.TableCell;
@@ -128,6 +129,14 @@ public class AdapterFactoryTableCellFactory<S, T> extends AdapterFactoryCellFact
 			}
 
 			void update(Object item) {
+				if (Platform.isFxApplicationThread()) {
+					updateOnFxThread(item);
+				} else {
+					Platform.runLater(() -> updateOnFxThread(item));
+				}
+			}
+
+			private void updateOnFxThread(Object item) {
 				applyTableItemProviderStyle(item, AdapterFactoryTableCellFactory.this.columnIndex, this, AdapterFactoryTableCellFactory.this.adapterFactory);
 			}
 

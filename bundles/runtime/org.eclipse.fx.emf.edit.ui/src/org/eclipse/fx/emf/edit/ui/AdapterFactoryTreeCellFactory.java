@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.emf.edit.ui;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Cell;
 import javafx.scene.control.TreeCell;
@@ -114,7 +115,14 @@ public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory imp
 			}
 
 			void update(Object item) {
-				// setText(item == null ? "null" : item.toString());
+				if (Platform.isFxApplicationThread()) {
+					updateOnFxThread(item);
+				} else {
+					Platform.runLater(() -> updateOnFxThread(item));
+				}
+			}
+
+			private void updateOnFxThread(Object item) {
 				if (item != null)
 					applyItemProviderStyle(item, this, AdapterFactoryTreeCellFactory.this.adapterFactory);
 				else {

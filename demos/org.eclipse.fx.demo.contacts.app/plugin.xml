@@ -21,7 +21,7 @@
          </property>
          <property
                name="cssTheme"
-               value="themes.dark">
+               value="dark">
          </property>
          <property
                name="startupForegroundColor"
@@ -36,24 +36,6 @@
                value="5,275,445,15">
          </property>
       </product>
-   </extension>
-    <extension
-         point="org.eclipse.fx.ui.theme">
-      <theme
-            basestylesheet="css/dark.css"
-            id="themes.dark"
-            name="Dark Gradient">
-      </theme>
-      <theme
-            basestylesheet="css/bright.css"
-            id="themes.bright"
-            name="Bright Gradient">
-      </theme>
-      <theme
-            basestylesheet="css/blue.css"
-            id="themes.blue"
-            name="Blue Gradient">
-      </theme>
    </extension>
    <extension
          id="modelContribution"

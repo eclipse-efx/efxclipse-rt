@@ -7,8 +7,10 @@
    </configIni>
 
    <launcherArgs>
-      <vmArgs>-Dosgi.framework.extensions=org.eclipse.fx.osgi</vmArgs>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+      <vmArgs>-Dorg.osgi.framework.bundle.parent=ext
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
@@ -26,15 +28,15 @@
    </launcher>
 
    <vm>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
 
    <plugins>
       <plugin id="com.ibm.icu"/>
       <plugin id="javax.annotation"/>
       <plugin id="javax.inject"/>
-      <plugin id="javax.servlet"/>
       <plugin id="javax.xml"/>
-      <plugin id="org.eclipse.ant.core"/>
+      <plugin id="org.apache.commons.lang"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.databinding"/>
@@ -46,7 +48,6 @@
       <plugin id="org.eclipse.core.jobs"/>
       <plugin id="org.eclipse.core.resources"/>
       <plugin id="org.eclipse.core.runtime"/>
-      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
       <plugin id="org.eclipse.core.variables"/>
       <plugin id="org.eclipse.e4.core.commands"/>
       <plugin id="org.eclipse.e4.core.contexts"/>
@@ -72,14 +73,17 @@
       <plugin id="org.eclipse.equinox.util"/>
       <plugin id="org.eclipse.fx.core"/>
       <plugin id="org.eclipse.fx.core.databinding"/>
+      <plugin id="org.eclipse.fx.core.di"/>
+      <plugin id="org.eclipse.fx.core.di.context"/>
+      <plugin id="org.eclipse.fx.core.fxml"/>
       <plugin id="org.eclipse.fx.demo.contacts"/>
       <plugin id="org.eclipse.fx.demo.contacts.app"/>
       <plugin id="org.eclipse.fx.demo.contacts.edit"/>
       <plugin id="org.eclipse.fx.emf.databinding"/>
       <plugin id="org.eclipse.fx.emf.edit.ui"/>
-      <plugin id="org.eclipse.fx.javafx"/>
-      <plugin id="org.eclipse.fx.osgi" fragment="true"/>
       <plugin id="org.eclipse.fx.osgi.util"/>
+      <plugin id="org.eclipse.fx.ui.animation"/>
+      <plugin id="org.eclipse.fx.ui.controls"/>
       <plugin id="org.eclipse.fx.ui.databinding"/>
       <plugin id="org.eclipse.fx.ui.di"/>
       <plugin id="org.eclipse.fx.ui.dialogs"/>
@@ -91,10 +95,11 @@
       <plugin id="org.eclipse.fx.ui.theme"/>
       <plugin id="org.eclipse.fx.ui.workbench.base"/>
       <plugin id="org.eclipse.fx.ui.workbench.fx"/>
-      <plugin id="org.eclipse.fx.ui.workbench.fx.controls"/>
       <plugin id="org.eclipse.fx.ui.workbench.renderers.base"/>
       <plugin id="org.eclipse.fx.ui.workbench.renderers.fx"/>
+      <plugin id="org.eclipse.fx.ui.workbench.services"/>
       <plugin id="org.eclipse.osgi"/>
+      <plugin id="org.eclipse.osgi.compatibility.state" fragment="true"/>
       <plugin id="org.eclipse.osgi.services"/>
    </plugins>
 

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.emf.edit.ui;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Cell;
 import javafx.scene.control.ListCell;
@@ -115,6 +116,14 @@ public class AdapterFactoryListCellFactory<T> extends AdapterFactoryCellFactory 
 			}
 
 			void update(Object item) {
+				if (Platform.isFxApplicationThread()) {
+					updateOnFxThread(item);
+				} else {
+					Platform.runLater(() -> updateOnFxThread(item));
+				}
+			}
+
+			private void updateOnFxThread(Object item) {
 				applyItemProviderStyle(item, this, AdapterFactoryListCellFactory.this.adapterFactory);
 			}
 
