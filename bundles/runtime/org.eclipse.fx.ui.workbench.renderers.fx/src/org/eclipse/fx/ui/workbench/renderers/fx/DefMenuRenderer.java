@@ -26,6 +26,9 @@ import javax.inject.Named;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
+import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
@@ -46,6 +49,9 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		Runnable showingCallback;
 		Runnable hidingCallback;
 		MenuItem item;
+
+		@Inject
+		GraphicsLoader graphicsLoader;
 
 		@Override
 		protected Menu createWidget() {
@@ -165,6 +171,16 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 			getWidget().getItems().remove(widget.getWidget());
 			if (getWidget().getItems().isEmpty()) {
 				getWidget().getItems().add(this.item);
+			}
+		}
+
+		@SuppressWarnings("null")
+		@Inject
+		public void setIconURI(@Named(UIEvents.UILabel.ICONURI) String uri) {
+			if (uri == null) {
+				getWidget().setGraphic(null);
+			} else {
+				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));
 			}
 		}
 
