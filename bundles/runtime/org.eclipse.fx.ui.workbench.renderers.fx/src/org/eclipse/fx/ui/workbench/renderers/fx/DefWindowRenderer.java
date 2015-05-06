@@ -631,7 +631,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			URI uri = URI.createURI(this.decorationFXML);
 
 			if (uri != null) {
-//				stage.initStyle(StageStyle.UNDECORATED);
+				stage.initStyle(StageStyle.UNDECORATED);
 
 				Bundle b = org.eclipse.core.runtime.Platform.getBundle(uri.segment(1));
 				if (b != null) {
