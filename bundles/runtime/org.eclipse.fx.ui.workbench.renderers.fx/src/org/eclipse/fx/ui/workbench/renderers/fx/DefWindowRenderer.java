@@ -99,6 +99,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -438,9 +439,12 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if (this.support3d && Platform.isSupported(ConditionalFeature.SCENE3D)) {
 				s = new Scene(this.rootPane, this.mWindow.getWidth(), this.mWindow.getHeight(), true);
 				s.setCamera(new PerspectiveCamera());
-
 			} else {
 				s = new Scene(this.rootPane, this.mWindow.getWidth(), this.mWindow.getHeight());
+			}
+			
+			if( this.stage.getStyle() == StageStyle.TRANSPARENT ) {
+				s.setFill(Color.TRANSPARENT);
 			}
 
 			// Add a css which sets defaults
@@ -627,7 +631,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			URI uri = URI.createURI(this.decorationFXML);
 
 			if (uri != null) {
-				stage.initStyle(StageStyle.UNDECORATED);
+//				stage.initStyle(StageStyle.UNDECORATED);
 
 				Bundle b = org.eclipse.core.runtime.Platform.getBundle(uri.segment(1));
 				if (b != null) {
