@@ -10,14 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.emf.edit.ui;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Control;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TreeItem;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -34,7 +32,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 public class AdapterFactoryTreeItem extends TreeItem<Object> {
 
 	final AdapterFactory adapterFactory;
-	final Control view;
 	final ObservableList<TreeItem<Object>> children;
 	final ITreeItemContentProvider provider;
 
@@ -43,14 +40,11 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	 * 
 	 * @param object
 	 *            the object
-	 * @param treeView
-	 *            the tree
 	 * @param adapterFactory
 	 *            the factory
 	 */
-	public AdapterFactoryTreeItem(Object object, Control treeView, AdapterFactory adapterFactory) {
+	public AdapterFactoryTreeItem(Object object, AdapterFactory adapterFactory) {
 		super(object);
-		this.view = treeView;
 		this.adapterFactory = adapterFactory;
 		this.children = FXCollections.unmodifiableObservableList(super.getChildren());
 
@@ -61,14 +55,13 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 			((Notifier) object).eAdapters().add(new AdapterImpl() {
 				@Override
 				public void notifyChanged(Notification msg) {
-					if (msg.getFeature() instanceof EReference)
-						updateChildren();
+					if (!msg.isTouch() && msg.getFeature() instanceof EReference)
+						updateChildren(msg);
 				}
-
 			});
 		}
 
-		updateChildren();
+		initializeChildren();
 	}
 
 	/**
@@ -79,71 +72,84 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	public ObservableList<TreeItem<Object>> getChildren() {
 		return this.children;
 	}
-
-	/**
-	 * Recreates the child tree items using the {@link ITreeItemContentProvider} and restores the selection
-	 * and expanded state of the tree items.
-	 */
-	void updateChildren() {
-		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
-
-		MultipleSelectionModel<?> selectionModel = CellUtil.getSelectionModel(this.view);
-		List<?> selection = selectionModel.getSelectedItems();
-		ArrayList<Object> selectedItems = new ArrayList<>();
-		ArrayList<TreeItem<?>> selectedTreeItems = new ArrayList<>();
-		ArrayList<Object> expandedItems = new ArrayList<>();
-
-		// remember the expanded items
-		for (TreeItem<Object> childTreeItem : childTreeItems) {
-			if (childTreeItem.isExpanded())
-				expandedItems.add(childTreeItem.getValue());
-		}
-
-		// remember the selected items
-		for (Object selectedTreeItem : selection) {
-			for (TreeItem<Object> childTreeItem : childTreeItems) {
-				if (selectedTreeItem == childTreeItem) {
-					selectedTreeItems.add(childTreeItem);
-					selectedItems.add(childTreeItem.getValue());
-				}
-			}
-		}
-
-		// clear the selection
-		for (TreeItem<?> selectedTreeItem : selectedTreeItems) {
-			int treeItemIndex = selectionModel.getSelectedItems().indexOf(selectedTreeItem);
-			int selectionIndex = selectionModel.getSelectedIndices().get(treeItemIndex).intValue();
-			selectionModel.clearSelection(selectionIndex);
-		}
-
-		// remove the old tree items
-		childTreeItems.clear();
-
+	
+	void initializeChildren() {
 		if (this.provider == null)
 			return;
 
-		// add the new tree items
+		// add the tree items
 		for (Object child : this.provider.getChildren(getValue())) {
-			AdapterFactoryTreeItem treeItem = new AdapterFactoryTreeItem(child, this.view, this.adapterFactory);
-
-			childTreeItems.add(treeItem);
-
-			// expand the new tree items
-			if (expandedItems.contains(child))
-				treeItem.setExpanded(true);
-
-			// restore the selection
-			if (selectedItems.contains(child) && "javafx.scene.control.TreeView$TreeViewBitSetSelectionModel".equals(selectionModel.getClass().getName())) { //$NON-NLS-1$
-				try {
-					Method m = selectionModel.getClass().getDeclaredMethod("select", new Class[] { TreeItem.class }); //$NON-NLS-1$
-					m.setAccessible(true);
-					m.invoke(selectionModel, treeItem);
-				} catch (Exception e) {
-					// do nothing
-				}
-			}
+			addNewChild(child, Notification.NO_INDEX);
 		}
+	}
 
+	void updateChildren(Notification msg) {
+		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
+		
+		switch (msg.getEventType()) {
+		case Notification.ADD:
+			addNewChild(msg.getNewValue(), msg.getPosition());
+			break;
+		case Notification.ADD_MANY:
+			List<?> newValues = (List<?>) msg.getNewValue();
+			int position = msg.getPosition();
+			if (position != Notification.NO_INDEX && position <= childTreeItems.size()) {
+				// reverse List, so items are added at correct position in backward order
+				Collections.reverse(newValues); 
+			}
+			newValues.forEach(newValue -> {
+				addNewChild(newValue, position);
+			});
+			break;
+		case Notification.REMOVE:
+			removeChild(msg.getOldValue());
+			break;
+		case Notification.REMOVE_MANY:
+			List<?> oldValues = (List<?>) msg.getOldValue();
+			oldValues.forEach(oldValue -> {
+				removeChild(oldValue);
+			});
+			break;
+		case Notification.SET:
+			childTreeItems.clear();
+			initializeChildren();
+			break;
+		case Notification.RESOLVE:
+			initializeChildren();
+			break;
+		case Notification.MOVE:
+			int index = ((Integer)msg.getOldValue()).intValue();
+			if (index >= 0 && index < childTreeItems.size()) {
+				TreeItem<Object> treeItem = childTreeItems.get(index);
+				childTreeItems.remove(treeItem);
+				childTreeItems.add(msg.getPosition(), treeItem);
+			}
+			break;
+		}
+	}
+
+	private void addNewChild(Object value, int position) {
+		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
+		AdapterFactoryTreeItem newTreeItem = new AdapterFactoryTreeItem(value, this.adapterFactory);
+		if (position == Notification.NO_INDEX || position > childTreeItems.size()) {
+			childTreeItems.add(newTreeItem);
+		} else {
+			childTreeItems.add(position, newTreeItem);
+		}
+	}
+	
+	private void removeChild(Object value) {
+		TreeItem<Object> treeItem = findTreeItemForValue(value);
+		if (treeItem != null) {
+			super.getChildren().remove(treeItem);
+		}
+	}
+
+	private TreeItem<Object> findTreeItemForValue(Object value) {
+		Optional<TreeItem<Object>> first = super.getChildren().stream().filter(item -> {
+			return item.getValue().equals(value);
+		}).findFirst();
+		return first.orElse(null);
 	}
 
 }

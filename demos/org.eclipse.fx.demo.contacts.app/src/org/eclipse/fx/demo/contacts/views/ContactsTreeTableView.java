@@ -73,7 +73,7 @@ public class ContactsTreeTableView {
 		emailColumn.setCellValueFactory(new TreeTableProxyCellValueFactory());
 
 		treeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		treeTableView.setRoot(new AdapterFactoryTreeItem(contactsManager.getRootGroup(), treeTableView, adapterFactory));
+		treeTableView.setRoot(new AdapterFactoryTreeItem(contactsManager.getRootGroup(), adapterFactory));
 
 		treeTableView.setShowRoot(false);
 		

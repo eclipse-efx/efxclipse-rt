@@ -43,7 +43,7 @@ public class ContactsTreeView {
 
 		// TreeView
 		TreeView<Object> treeView = new TreeView<>();
-		treeView.setRoot(new AdapterFactoryTreeItem(contactsManager.getRootGroup(), treeView, contactsManager.getAdapterFactory()));
+		treeView.setRoot(new AdapterFactoryTreeItem(contactsManager.getRootGroup(), contactsManager.getAdapterFactory()));
 		AdapterFactoryTreeCellFactory treeCellFactory = new AdapterFactoryTreeCellFactory(contactsManager.getAdapterFactory());
 
 		// add edit support
