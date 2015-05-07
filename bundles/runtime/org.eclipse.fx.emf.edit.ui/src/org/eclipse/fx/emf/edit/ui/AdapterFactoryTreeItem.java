@@ -23,7 +23,10 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.edit.provider.IChangeNotifier;
+import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.IViewerNotification;
 
 /**
  * A {@link TreeItem} that wraps an {@link AdapterFactory} and retrieves its children from the
@@ -48,10 +51,35 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 		this.adapterFactory = adapterFactory;
 		this.children = FXCollections.unmodifiableObservableList(super.getChildren());
 
-		Object adapter = adapterFactory.adapt(object, ITreeItemContentProvider.class);
-		this.provider = (adapter instanceof ITreeItemContentProvider) ? (ITreeItemContentProvider) adapter : null;
+		Object contentProvider = adapterFactory.adapt(object, ITreeItemContentProvider.class);
+		if (contentProvider instanceof ITreeItemContentProvider) {
+			this.provider = (ITreeItemContentProvider) contentProvider;
+		} else {
+			throw new IllegalArgumentException("Provided root object cannot be adapted."); //$NON-NLS-1$
+		}
 
-		if (object instanceof Notifier) {
+		if (this.provider instanceof IChangeNotifier) {
+			((IChangeNotifier) this.provider).addListener(new INotifyChangedListener() {
+				@Override
+				public void notifyChanged(Notification msg) {
+					if (!msg.isTouch() && msg.getFeature() instanceof EReference) {
+						if (msg instanceof IViewerNotification) {
+							processViewerNotification((IViewerNotification) msg);
+						} else {
+							updateChildren(msg);
+						}
+					}
+				}
+
+				private synchronized void processViewerNotification(IViewerNotification notification) {
+					if (notification.getElement() == null)
+						return;
+					if (getValue().equals(notification.getElement())) {
+						updateChildren(notification);
+					}
+				}
+			});
+		} else if (object instanceof Notifier) {
 			((Notifier) object).eAdapters().add(new AdapterImpl() {
 				@Override
 				public void notifyChanged(Notification msg) {
@@ -74,10 +102,6 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	}
 	
 	void initializeChildren() {
-		if (this.provider == null)
-			return;
-
-		// add the tree items
 		for (Object child : this.provider.getChildren(getValue())) {
 			addNewChild(child, Notification.NO_INDEX);
 		}
@@ -151,5 +175,5 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 		}).findFirst();
 		return first.orElse(null);
 	}
-
+	
 }
