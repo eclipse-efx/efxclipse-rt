@@ -10,3 +10,6 @@
 	-fx-image: url(icons/64/prj_obj.png);
 }
 
+#open-project-dialog .efx-dialog-title-image {
+	-fx-image: url(icons/64/prj_obj.png);
+}

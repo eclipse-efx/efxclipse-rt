@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_wXonkMhOEeSOf-VANz4pBA">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_z1w7UMhOEeSOf-VANz4pBA" featurename="commands" parentElementId="org.eclipse.fx.code.compensator.app">
+    <elements xsi:type="commands:Command" xmi:id="_3PZJkMhOEeSOf-VANz4pBA" elementId="org.eclipse.fx.code.compensator.project.ci.travis.command.openTravisViewer" commandName="Open Travis Viewer"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_6TrZ8MhOEeSOf-VANz4pBA" featurename="handlers" parentElementId="org.eclipse.fx.code.compensator.app">
+    <elements xsi:type="commands:Handler" xmi:id="_8YSWAMhOEeSOf-VANz4pBA" elementId="org.eclipse.fx.code.compensator.project.ci.travis.handler.0" contributionURI="bundleclass://org.eclipse.fx.code.compensator.project.ci.travis/org.eclipse.fx.code.compensator.project.ci.travis.OpenProjectViewerHandler" command="_3PZJkMhOEeSOf-VANz4pBA"/>
+  </fragments>
+</fragment:ModelFragments>

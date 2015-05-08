@@ -22,7 +22,7 @@ import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.code.compensator.project.jdt.internal.JDTPackageFragmentRootItem;
 import org.eclipse.fx.code.compensator.project.jdt.internal.JDTPathItem;
 import org.eclipse.fx.core.command.CommandService;
-import org.eclipse.fx.ui.controls.stage.DefaultWindowPane;
+import org.eclipse.fx.ui.controls.stage.DefaultTrimmedWindowPane;
 import org.eclipse.fx.ui.di.FXMLBuilder;
 import org.eclipse.fx.ui.di.FXMLBuilder.Data;
 import org.eclipse.fx.ui.di.FXMLLoader;
@@ -44,8 +44,8 @@ public class NewClassAction {
 				return data.getNode();
 			}
 			
-			protected org.eclipse.fx.ui.controls.stage.WindowPane getCustomWindowPane() {
-				return new DefaultWindowPane(new StackPane());
+			protected DefaultTrimmedWindowPane getCustomWindowPane() {
+				return new DefaultTrimmedWindowPane(new StackPane());
 			}
 		};
 		if( dialog.open() == TitleAreaDialog.OK_BUTTON ) {

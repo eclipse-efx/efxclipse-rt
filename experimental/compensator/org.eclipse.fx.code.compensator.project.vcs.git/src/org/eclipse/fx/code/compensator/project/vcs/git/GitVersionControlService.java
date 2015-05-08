@@ -13,7 +13,6 @@ import org.eclipse.fx.code.compensator.project.vcs.VCSRepositoryInstance;
 import org.eclipse.fx.code.compensator.project.vcs.VCSRootNavigatorItem;
 import org.eclipse.fx.code.compensator.project.vcs.VersionControlService;
 import org.eclipse.fx.core.ProgressReporter;
-import org.eclipse.fx.core.ReturnValue;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.UnsupportedCredentialItem;
@@ -40,7 +39,7 @@ public class GitVersionControlService implements VersionControlService {
 	}
 
 	@Override
-	public ReturnValue<URI> cloneRepository(Path localDirectory, String url, String username,
+	public URI cloneRepository(Path localDirectory, String url, String username,
 			String password, ProgressReporter reporter) {
 		if( url.startsWith("ssh:") ) {
 			url = "ssh://"+ username + "@" + url.substring("ssh://".length());
@@ -54,9 +53,10 @@ public class GitVersionControlService implements VersionControlService {
 			if( result == null ) {
 				throw new IllegalStateException();
 			}
-			return ReturnValue.ok(localDirectory.toUri());
+			return localDirectory.toUri();
 		} catch (GitAPIException e) {
-			return ReturnValue.error("Unable to clone repository", e);
+//			return ReturnValue.error("Unable to clone repository", e);
+			return null;
 		} finally {
 			if( result != null ) {
 				result.close();

@@ -17,10 +17,10 @@
 <booleanAttribute key="includeOptional" value="true"/>
 <stringAttribute key="location" value="${workspace_loc}/../runtime-org.eclipse.fx.code.compensator.app.product_2"/>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
-<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java SE 8 u40"/>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Java SE 8 u60"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-nl ${target.nl} -consoleLog -nosplash -console -consoleLog -clearPersistedState_"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dosgi.framework.extensions=org.eclipse.fx.osgi -Dorg.osgi.framework.bundle.parent=ext"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.osgi.framework.bundle.parent=ext"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.fx.code.compensator.app.product"/>
 <stringAttribute key="productFile" value="/org.eclipse.fx.code.compensator.app.product/org.eclipse.fx.code.compensator.app.product.product"/>
@@ -28,6 +28,7 @@
 <setEntry value="org.eclipse.fx.code.compensator.app.feature:default"/>
 <setEntry value="org.eclipse.fx.code.compensator.jdt.runtime.feature:default"/>
 <setEntry value="org.eclipse.fx.code.compensator.xtext.runtime.feature:default"/>
+<setEntry value="org.eclipse.fx.runtime.e4fx.feature:default"/>
 </setAttribute>
 <booleanAttribute key="show_selected_only" value="false"/>
 <booleanAttribute key="tracing" value="false"/>

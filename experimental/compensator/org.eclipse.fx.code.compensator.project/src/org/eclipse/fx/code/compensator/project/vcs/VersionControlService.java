@@ -7,13 +7,12 @@ import org.eclipse.fx.code.compensator.model.workbench.VCSRepository;
 import org.eclipse.fx.code.compensator.project.InstanceProject;
 import org.eclipse.fx.code.compensator.project.ProjectNavigatorItem;
 import org.eclipse.fx.core.ProgressReporter;
-import org.eclipse.fx.core.ReturnValue;
 
 public interface VersionControlService {
 	public String getId();
 	public String getLabel();
 	public String getIconURI();
-	public ReturnValue<URI> cloneRepository(Path localDirectory, String url, String username, String password, ProgressReporter reporter);
+	public URI cloneRepository(Path localDirectory, String url, String username, String password, ProgressReporter reporter);
 
 	public VCSRootNavigatorItem mapRepository(ProjectNavigatorItem parent, VCSRepositoryInstance instance);
 	public VCSRepositoryInstance createRepository(InstanceProject project, VCSRepository repository, String uri);

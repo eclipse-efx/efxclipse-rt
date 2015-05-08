@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="compensator-target" sequenceNumber="60">
+<?pde version="3.8"?><target name="compensator-target" sequenceNumber="87">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.fx.code.compensator.target.feature.feature.group" version="1.0.0.201502161457"/>
+<unit id="org.eclipse.fx.code.compensator.target.feature.feature.group" version="1.0.0.201505080930"/>
 <repository location="http://download.eclipse.org/efxclipse/compensator/target/site"/>
 </location>
 </locations>
 <includeBundles>
+<plugin id="ch.qos.logback.classic"/>
+<plugin id="ch.qos.logback.classic.source"/>
+<plugin id="ch.qos.logback.core"/>
+<plugin id="ch.qos.logback.core.source"/>
+<plugin id="ch.qos.logback.slf4j"/>
+<plugin id="ch.qos.logback.slf4j.source"/>
 <plugin id="com.google.gson" version="2.1.0.v201303041604"/>
+<plugin id="com.google.gson" version="2.2.4.v201311231704"/>
 <plugin id="com.google.guava"/>
 <plugin id="com.google.guava.source"/>
 <plugin id="com.google.inject"/>
 <plugin id="com.google.inject.source"/>
-<plugin id="com.ibm.icu"/>
 <plugin id="com.ibm.icu.base"/>
-<plugin id="com.ibm.icu.source"/>
+<plugin id="com.ibm.icu.base.source"/>
 <plugin id="com.jcraft.jsch"/>
 <plugin id="javaewah"/>
 <plugin id="javax.activation"/>
-<plugin id="javax.annotation"/>
+<plugin id="javax.annotation.jre"/>
 <plugin id="javax.el"/>
 <plugin id="javax.el.source"/>
 <plugin id="javax.inject"/>
@@ -214,6 +220,7 @@
 <plugin id="org.eclipse.equinox.registry"/>
 <plugin id="org.eclipse.equinox.registry.source"/>
 <plugin id="org.eclipse.equinox.security"/>
+<plugin id="org.eclipse.equinox.security.macosx"/>
 <plugin id="org.eclipse.equinox.security.source"/>
 <plugin id="org.eclipse.equinox.simpleconfigurator"/>
 <plugin id="org.eclipse.equinox.simpleconfigurator.manipulator"/>
@@ -245,10 +252,6 @@
 <plugin id="org.eclipse.fx.emf.edit.ui.source"/>
 <plugin id="org.eclipse.fx.formats.svg"/>
 <plugin id="org.eclipse.fx.formats.svg.source"/>
-<plugin id="org.eclipse.fx.javafx"/>
-<plugin id="org.eclipse.fx.javafx.source"/>
-<plugin id="org.eclipse.fx.osgi"/>
-<plugin id="org.eclipse.fx.osgi.source"/>
 <plugin id="org.eclipse.fx.osgi.util"/>
 <plugin id="org.eclipse.fx.osgi.util.source"/>
 <plugin id="org.eclipse.fx.ui.animation"/>
@@ -289,7 +292,6 @@
 <plugin id="org.eclipse.jdt.core"/>
 <plugin id="org.eclipse.jdt.core.source"/>
 <plugin id="org.eclipse.jdt.debug"/>
-<plugin id="org.eclipse.jdt.junit"/>
 <plugin id="org.eclipse.jdt.junit.core"/>
 <plugin id="org.eclipse.jdt.junit.runtime"/>
 <plugin id="org.eclipse.jdt.junit4.runtime"/>
@@ -311,6 +313,7 @@
 <plugin id="org.eclipse.jetty.util.source"/>
 <plugin id="org.eclipse.jgit"/>
 <plugin id="org.eclipse.osgi"/>
+<plugin id="org.eclipse.osgi.compatibility.state"/>
 <plugin id="org.eclipse.osgi.services"/>
 <plugin id="org.eclipse.osgi.services.source"/>
 <plugin id="org.eclipse.osgi.source"/>
@@ -328,16 +331,22 @@
 <plugin id="org.eclipse.xtext.xbase.lib"/>
 <plugin id="org.eclipse.xtext.xbase.lib.source"/>
 <plugin id="org.hamcrest.core"/>
+<plugin id="org.hamcrest.core.source"/>
 <plugin id="org.junit"/>
+<plugin id="org.junit.source"/>
 <plugin id="org.objectweb.asm"/>
 <plugin id="org.sat4j.core"/>
 <plugin id="org.sat4j.pb"/>
 <plugin id="org.slf4j.api"/>
 <plugin id="org.slf4j.ext"/>
 <plugin id="org.slf4j.ext.source"/>
+<plugin id="org.slf4j.impl.log4j12"/>
+<plugin id="org.slf4j.impl.log4j12.source"/>
 <plugin id="org.slf4j.jcl"/>
 <plugin id="org.slf4j.jcl.source"/>
 <plugin id="org.slf4j.jul"/>
 <plugin id="org.slf4j.jul.source"/>
+<plugin id="org.slf4j.log4j"/>
+<plugin id="org.slf4j.log4j.source"/>
 </includeBundles>
 </target>

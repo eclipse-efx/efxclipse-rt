@@ -29,7 +29,7 @@ import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
 import org.eclipse.fx.core.di.Service;
-import org.eclipse.fx.ui.controls.stage.DefaultWindowPane;
+import org.eclipse.fx.ui.controls.stage.DefaultTrimmedWindowPane;
 import org.eclipse.fx.ui.dialogs.TitleAreaDialog;
 import org.eclipse.fx.ui.panes.GridData;
 import org.eclipse.fx.ui.panes.GridLayoutPane;
@@ -62,8 +62,8 @@ public class NewLocalProject {
 				return NewLocalProject.this.createDialogContent(projectServices, versionControl, loader);
 			}
 			
-			protected org.eclipse.fx.ui.controls.stage.WindowPane getCustomWindowPane() {
-				return new DefaultWindowPane(new StackPane());
+			protected DefaultTrimmedWindowPane getCustomWindowPane() {
+				return new DefaultTrimmedWindowPane(new StackPane());
 			}
 		};
 		
