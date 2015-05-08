@@ -3,6 +3,7 @@
     -compensator-default-text: -fx-text-background-color;
 	/* @SuppressWarning */
     -compensator-extra1: /*#957d47*/ derive(-fx-text-background-color, 110%);
+	-fx-font-size: 1em;
 }
 
 .cell-text-extra {
@@ -14,5 +15,10 @@
 }
 
 .menu-bar {
+	-fx-background-color: transparent;
+}
+
+.overlay-container {
+	/*-fx-background-color: rgba(200,200,200,0.5);*/
 	-fx-background-color: transparent;
 }

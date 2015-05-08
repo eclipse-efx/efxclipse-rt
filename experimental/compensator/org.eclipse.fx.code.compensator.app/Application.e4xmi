@@ -2,6 +2,7 @@
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_fFsNwPG6EeOigcR0oBysUg" elementId="org.eclipse.fx.code.compensator.app" bindingContexts="_fFq_oPG6EeOigcR0oBysUg">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_xH6dEPG6EeOigcR0oBysUg" elementId="org.eclipse.fx.code.compensator.app.trimmedwindow.0" label="Bestsolution Compensator" bindingContexts="_fFsNwfG6EeOigcR0oBysUg" x="10" y="10" width="800" height="600">
     <persistedState key="efx.window.root.fxml" value="platform:/plugin/org.eclipse.fx.code.compensator.app/org/eclipse/fx/code/compensator/app/ApplicationDecoration.fxml"/>
+    <persistedState key="efx.window.stagestyle" value="TRANSPARENT"/>
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_mym9kPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.perspectivestack.0"/>
     <mainMenu xmi:id="_RTKZcPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.menu.0">
       <children xsi:type="menu:Menu" xmi:id="_SXdvEPNkEeOKm6R57HGa4g" elementId="org.eclipse.fx.code.compensator.app.menu.1" label="Application">
@@ -12,6 +13,7 @@
           <children xsi:type="menu:HandledMenuItem" xmi:id="_HP7AMHVIEeSh6_BeBEfIrA" elementId="org.eclipse.fx.code.compensator.app.handledmenuitem.4" label="Dark" type="Radio" command="_7TZj0HVHEeSh6_BeBEfIrA">
             <parameters xmi:id="_OIZ68HVIEeSh6_BeBEfIrA" elementId="org.eclipse.fx.code.compensator.app.parameter.1" name="themeId" value="dark"/>
           </children>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_5_iFgPVqEeSzM8h0i2FpIw" elementId="org.eclipse.fx.code.compensator.app.handledmenuitem.presentationMode" label="Presentation Mode" type="Check" command="_GWW4QPVrEeSzM8h0i2FpIw"/>
         </children>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_KY76wEdBEeSZQYCAvKFSig" elementId="org.eclipse.fx.code.compensator.app.handledmenuitem.1" label="Save" command="_3He4MEdAEeSZQYCAvKFSig"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_qTpF4ICyEeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.app.handledmenuitem.0" label="Exit" command="_krCpMICzEeSVlekWrdeFsw"/>
@@ -24,6 +26,7 @@
   <handlers xmi:id="_1quZ4HQwEeSQ0Pmwy73byg" elementId="org.eclipse.fx.code.compensator.app.handler.3" contributionURI="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.LoadFolder" command="_zuhL4HQwEeSQ0Pmwy73byg"/>
   <handlers xmi:id="_9c2joHVHEeSh6_BeBEfIrA" elementId="org.eclipse.fx.code.compensator.app.handler.4" contributionURI="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.ToggleThemeHandler" command="_7TZj0HVHEeSh6_BeBEfIrA"/>
   <handlers xmi:id="_CSlV0IC0EeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.app.handler.5" contributionURI="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.QuitApplication" command="_krCpMICzEeSVlekWrdeFsw"/>
+  <handlers xmi:id="_CdBPMPVrEeSzM8h0i2FpIw" elementId="org.eclipse.fx.code.compensator.app.handler.6" contributionURI="bundleclass://org.eclipse.fx.code.compensator.app/org.eclipse.fx.code.compensator.app.TogglePresentationModeHandler" command="_GWW4QPVrEeSzM8h0i2FpIw"/>
   <bindingTables xmi:id="_iCgYwFRVEeSOIvvv6jFM3A" elementId="org.eclipse.fx.code.compensator.app.bindingtable.0" bindingContext="_fFsNwfG6EeOigcR0oBysUg">
     <bindings xmi:id="_jaVuYFRVEeSOIvvv6jFM3A" elementId="org.eclipse.fx.code.compensator.app.keybinding.0" keySequence="M1+S" command="_3He4MEdAEeSZQYCAvKFSig"/>
     <bindings xmi:id="_FVcp4IC0EeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.app.keybinding.1" keySequence="M1+Q" command="_krCpMICzEeSVlekWrdeFsw"/>
@@ -40,6 +43,7 @@
     <parameters xmi:id="_Agpr0HVIEeSh6_BeBEfIrA" elementId="themeId" name="Theme Id" optional="false"/>
   </commands>
   <commands xmi:id="_krCpMICzEeSVlekWrdeFsw" elementId="org.eclipse.fx.code.compensator.app.command.7" commandName="Quit Application"/>
+  <commands xmi:id="_GWW4QPVrEeSzM8h0i2FpIw" elementId="org.eclipse.fx.code.compensator.app.command.togglePresentationMode" commandName="Toggle Presentation Mode"/>
   <addons xmi:id="_fFsNw_G6EeOigcR0oBysUg" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_fFsNxPG6EeOigcR0oBysUg" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_fFsNxfG6EeOigcR0oBysUg" elementId="org.eclipse.fx.ui.keybindings.e4.service" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingServiceAddon"/>

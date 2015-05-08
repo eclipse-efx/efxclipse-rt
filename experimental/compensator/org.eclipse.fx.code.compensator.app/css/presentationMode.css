@@ -1,0 +1,26 @@
+.root {
+	-fx-font-size: 20;
+}
+
+.styled-text-area .source-segment {
+	-fx-font-family: Courier;
+	-fx-font-size: 20;
+	/* @SuppressWarning */
+	-styled-text-color: black;
+	-fx-fill: -styled-text-color;
+}
+
+.styled-text-area .plain-source-segment {
+	-fx-font-family: Courier;
+	-fx-font-size: 20;
+}
+
+.styled-text-area .line-ruler-text {
+	-fx-font-family: Courier;
+	-fx-font-size: 20;
+}
+
+.styled-text-area .list-view {
+	/*@SuppressWarning */
+	-fx-fixed-cell-size: 23;
+}

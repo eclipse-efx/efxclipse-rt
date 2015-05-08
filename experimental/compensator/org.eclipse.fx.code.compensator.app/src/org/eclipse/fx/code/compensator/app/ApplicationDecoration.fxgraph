@@ -12,9 +12,10 @@ import javafx.scene.Group
 import org.eclipse.fx.ui.controls.stage.DefaultWindowPane
 import javafx.scene.layout.Pane
 import javafx.scene.layout.HBox
+import org.eclipse.fx.ui.controls.stage.DefaultTrimmedWindowPane
 
 component ApplicationDecoration styledwith "/css/default.css" {
-	DefaultWindowPane {
+	DefaultTrimmedWindowPane {
 		content : BorderPane {
 			top : ToolBar {
 				items : [
