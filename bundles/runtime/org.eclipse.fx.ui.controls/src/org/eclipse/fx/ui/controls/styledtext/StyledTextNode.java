@@ -36,6 +36,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.PathElement;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
 import org.eclipse.fx.core.Util;
 import org.eclipse.jdt.annotation.NonNull;
@@ -290,6 +291,7 @@ public class StyledTextNode extends Region {
 		this.originalText = text;
 
 		this.textNode = new Text(processText(text));
+		this.textNode.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
 		this.textNode.fillProperty().bind(fillProperty());
 		getChildren().add(this.textNode);
 		this.decorationStrategy.addListener(this::handleDecorationChange);
