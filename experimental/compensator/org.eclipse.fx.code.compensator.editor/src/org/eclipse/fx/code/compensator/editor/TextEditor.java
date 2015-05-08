@@ -10,9 +10,6 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor;
 
-import javafx.beans.property.Property;
-import javafx.scene.layout.BorderPane;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
@@ -23,7 +20,6 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.fx.code.compensator.editor.services.DocumentPersitenceService;
 import org.eclipse.fx.core.di.ContextValue;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
@@ -32,6 +28,9 @@ import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
+
+import javafx.beans.property.Property;
+import javafx.scene.layout.BorderPane;
 
 public class TextEditor {
 	public static final String DOCUMENT_URL = "documentUrl";
@@ -60,15 +59,14 @@ public class TextEditor {
 	@Optional
 	IAnnotationModel annotationModel;
 
-	StyledTextArea textArea;
-
 	String currentStyle;
 
 	String currentId;
+	private SourceViewer viewer;
 
 	@PostConstruct
 	public void initUI(BorderPane pane, IEventBroker broker) {
-		SourceViewer viewer = new SourceViewer();
+		viewer = new SourceViewer();
 		if( document instanceof IDocumentExtension3 ) {
 			((IDocumentExtension3)document).setDocumentPartitioner(configuration.getConfiguredDocumentPartitioning(viewer),partitioner);
 		} else {
@@ -108,10 +106,10 @@ public class TextEditor {
 	@Focus
 	void focused() {
 		activeInput.setValue(input);
-		textArea.requestFocus();
+		viewer.getTextWidget().requestFocus();
 		//TODO We should remember the caret offset
-		if( textArea.getCaretOffset() == -1 && textArea.getContent().getCharCount() > 0 ) {
-			textArea.setCaretOffset(0);
+		if( viewer.getTextWidget().getCaretOffset() == -1 && viewer.getTextWidget().getContent().getCharCount() > 0 ) {
+			viewer.getTextWidget().setCaretOffset(0);
 		}
 	}
 
