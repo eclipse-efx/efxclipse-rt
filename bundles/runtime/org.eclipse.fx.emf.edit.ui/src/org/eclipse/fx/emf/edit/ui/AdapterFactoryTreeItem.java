@@ -29,29 +29,37 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.IViewerNotification;
 
 /**
- * A {@link TreeItem} that wraps an {@link AdapterFactory} and retrieves its children from the
- * adapter-implemented {@link ITreeItemContentProvider} interface.
+ * A {@link TreeItem} that wraps an {@link AdapterFactory} and retrieves its
+ * children from the adapter-implemented {@link ITreeItemContentProvider}
+ * interface.
+ * 
+ * It is necessary to call {@link #dispose} on an instance to release the EMF
+ * change listeners.
  */
 public class AdapterFactoryTreeItem extends TreeItem<Object> {
 
-	final AdapterFactory adapterFactory;
-	final ObservableList<TreeItem<Object>> children;
-	final ITreeItemContentProvider provider;
+	final private AdapterFactory adapterFactory;
+	final private ObservableList<TreeItem<Object>> children;
+	final private ITreeItemContentProvider provider;
+
+	private AdapterImpl adapter = null;
+	private INotifyChangedListener changeListener = null;
 
 	/**
-	 * Create a new instance
+	 * Create a new instance. It is necessary to call {@link #dispose} on an
+	 * instance to release the EMF change listeners.
 	 * 
-	 * @param object
-	 *            the object
+	 * @param value
+	 *            the value of the tree item
 	 * @param adapterFactory
 	 *            the factory
 	 */
-	public AdapterFactoryTreeItem(Object object, AdapterFactory adapterFactory) {
-		super(object);
+	public AdapterFactoryTreeItem(Object value, AdapterFactory adapterFactory) {
+		super(value);
 		this.adapterFactory = adapterFactory;
 		this.children = FXCollections.unmodifiableObservableList(super.getChildren());
 
-		Object contentProvider = adapterFactory.adapt(object, ITreeItemContentProvider.class);
+		Object contentProvider = adapterFactory.adapt(value, ITreeItemContentProvider.class);
 		if (contentProvider instanceof ITreeItemContentProvider) {
 			this.provider = (ITreeItemContentProvider) contentProvider;
 		} else {
@@ -59,7 +67,17 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 		}
 
 		if (this.provider instanceof IChangeNotifier) {
-			((IChangeNotifier) this.provider).addListener(new INotifyChangedListener() {
+			((IChangeNotifier) this.provider).addListener(createNotifyChangedListener());
+		} else if (value instanceof Notifier) {
+			((Notifier) value).eAdapters().add(createAdapter());
+		}
+
+		initializeChildren();
+	}
+
+	private INotifyChangedListener createNotifyChangedListener() {
+		if (this.changeListener == null) {
+			this.changeListener = new INotifyChangedListener() {
 				@Override
 				public void notifyChanged(Notification msg) {
 					if (!msg.isTouch() && msg.getFeature() instanceof EReference) {
@@ -71,36 +89,56 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 					}
 				}
 
-				private synchronized void processViewerNotification(IViewerNotification notification) {
+				private void processViewerNotification(IViewerNotification notification) {
 					if (notification.getElement() == null)
 						return;
 					if (getValue().equals(notification.getElement())) {
 						updateChildren(notification);
 					}
 				}
-			});
-		} else if (object instanceof Notifier) {
-			((Notifier) object).eAdapters().add(new AdapterImpl() {
+			};
+		}
+		return this.changeListener;
+	}
+
+	private AdapterImpl createAdapter() {
+		if (this.adapter == null) {
+			this.adapter = new AdapterImpl() {
 				@Override
 				public void notifyChanged(Notification msg) {
 					if (!msg.isTouch() && msg.getFeature() instanceof EReference)
 						updateChildren(msg);
 				}
-			});
+			};
 		}
-
-		initializeChildren();
+		return this.adapter;
 	}
 
 	/**
-	 * This method overrides {@link TreeItem#getChildren()} and returns an unmodifiable {@link ObservableList}
-	 * as the children may only be changed via the underlying model.
+	 * Remove the EMF change listeners
+	 */
+	public void dispose() {
+		super.getChildren().forEach(childItem -> {
+			((AdapterFactoryTreeItem) childItem).dispose();
+		});
+		if (this.changeListener != null) {
+			((IChangeNotifier) this.provider).removeListener(this.changeListener);
+		}
+		if (this.adapter != null) {
+			((Notifier) getValue()).eAdapters().remove(this.adapter);
+		}
+	}
+
+	/**
+	 * This method overrides {@link TreeItem#getChildren()} and returns an
+	 * unmodifiable {@link ObservableList} as the children may only be changed
+	 * via the underlying model.
 	 */
 	@Override
 	public ObservableList<TreeItem<Object>> getChildren() {
 		return this.children;
 	}
-	
+
 	void initializeChildren() {
 		for (Object child : this.provider.getChildren(getValue())) {
 			addNewChild(child, Notification.NO_INDEX);
@@ -109,7 +147,7 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 
 	void updateChildren(Notification msg) {
 		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
-		
+
 		switch (msg.getEventType()) {
 		case Notification.ADD:
 			addNewChild(msg.getNewValue(), msg.getPosition());
@@ -118,8 +156,9 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 			List<?> newValues = (List<?>) msg.getNewValue();
 			int position = msg.getPosition();
 			if (position != Notification.NO_INDEX && position <= childTreeItems.size()) {
-				// reverse List, so items are added at correct position in backward order
-				Collections.reverse(newValues); 
+				// reverse List, so items are added at correct position in
+				// backward order
+				Collections.reverse(newValues);
 			}
 			newValues.forEach(newValue -> {
 				addNewChild(newValue, position);
@@ -142,7 +181,7 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 			initializeChildren();
 			break;
 		case Notification.MOVE:
-			int index = ((Integer)msg.getOldValue()).intValue();
+			int index = ((Integer) msg.getOldValue()).intValue();
 			if (index >= 0 && index < childTreeItems.size()) {
 				TreeItem<Object> treeItem = childTreeItems.get(index);
 				childTreeItems.remove(treeItem);
@@ -153,6 +192,8 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	}
 
 	private void addNewChild(Object value, int position) {
+		if (!this.provider.getChildren(getValue()).contains(value))
+			return;
 		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
 		AdapterFactoryTreeItem newTreeItem = new AdapterFactoryTreeItem(value, this.adapterFactory);
 		if (position == Notification.NO_INDEX || position > childTreeItems.size()) {
@@ -161,10 +202,11 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 			childTreeItems.add(position, newTreeItem);
 		}
 	}
-	
+
 	private void removeChild(Object value) {
 		TreeItem<Object> treeItem = findTreeItemForValue(value);
 		if (treeItem != null) {
+			((AdapterFactoryTreeItem) treeItem).dispose();
 			super.getChildren().remove(treeItem);
 		}
 	}
@@ -175,5 +217,5 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 		}).findFirst();
 		return first.orElse(null);
 	}
-	
+
 }
