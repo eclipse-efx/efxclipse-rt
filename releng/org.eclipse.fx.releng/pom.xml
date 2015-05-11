@@ -70,6 +70,7 @@
 		<module>../../bundles/runtime/org.eclipse.fx.formats.svg</module>
 
 		<module>../../bundles/runtime/javax.annotation.jre</module>
+		<module>../../bundles/runtime/javax.xml.jre</module>
 
 		<!-- Features -->
 		<module>../runtime/org.eclipse.fx.core.feature</module>
