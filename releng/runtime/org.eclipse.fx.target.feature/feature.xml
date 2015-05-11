@@ -1473,27 +1473,6 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          unpack="false"/>
 
    <plugin
-         id="javax.xml"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.xml.bind"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.xml.stream"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="com.ibm.icu.base"
          download-size="0"
          install-size="0"
@@ -2407,6 +2386,13 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
 
    <plugin
          id="org.apache.commons.jxpath.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.xml.jre"
          download-size="0"
          install-size="0"
          version="0.0.0"
