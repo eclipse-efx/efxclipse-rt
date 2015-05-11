@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="compensator-target" sequenceNumber="87">
+<?pde version="3.8"?><target name="compensator-target" sequenceNumber="88">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.fx.code.compensator.target.feature.feature.group" version="1.0.0.201505080930"/>
+<unit id="org.eclipse.fx.code.compensator.target.feature.feature.group" version="1.0.0.201505112052"/>
 <repository location="http://download.eclipse.org/efxclipse/compensator/target/site"/>
 </location>
 </locations>
@@ -13,8 +13,7 @@
 <plugin id="ch.qos.logback.core.source"/>
 <plugin id="ch.qos.logback.slf4j"/>
 <plugin id="ch.qos.logback.slf4j.source"/>
-<plugin id="com.google.gson" version="2.1.0.v201303041604"/>
-<plugin id="com.google.gson" version="2.2.4.v201311231704"/>
+<plugin id="com.google.gson"/>
 <plugin id="com.google.guava"/>
 <plugin id="com.google.guava.source"/>
 <plugin id="com.google.inject"/>
@@ -33,15 +32,15 @@
 <plugin id="javax.servlet.jsp"/>
 <plugin id="javax.servlet.jsp.source"/>
 <plugin id="javax.servlet.source"/>
-<plugin id="javax.xml"/>
-<plugin id="javax.xml.bind"/>
-<plugin id="javax.xml.stream"/>
+<plugin id="javax.xml.jre"/>
 <plugin id="org.antlr.runtime"/>
 <plugin id="org.apache.commons.cli"/>
 <plugin id="org.apache.commons.codec"/>
 <plugin id="org.apache.commons.codec.source"/>
 <plugin id="org.apache.commons.httpclient"/>
 <plugin id="org.apache.commons.httpclient.source"/>
+<plugin id="org.apache.commons.jxpath"/>
+<plugin id="org.apache.commons.jxpath.source"/>
 <plugin id="org.apache.commons.lang"/>
 <plugin id="org.apache.commons.lang.source"/>
 <plugin id="org.apache.commons.logging"/>
@@ -89,10 +88,15 @@
 <plugin id="org.eclipse.e4.core.contexts"/>
 <plugin id="org.eclipse.e4.core.contexts.source"/>
 <plugin id="org.eclipse.e4.core.di"/>
+<plugin id="org.eclipse.e4.core.di.annotations"/>
+<plugin id="org.eclipse.e4.core.di.annotations.source"/>
 <plugin id="org.eclipse.e4.core.di.extensions"/>
 <plugin id="org.eclipse.e4.core.di.extensions.source"/>
 <plugin id="org.eclipse.e4.core.di.source"/>
 <plugin id="org.eclipse.e4.core.services"/>
+<plugin id="org.eclipse.e4.core.services.source"/>
+<plugin id="org.eclipse.e4.emf.xpath"/>
+<plugin id="org.eclipse.e4.emf.xpath.source"/>
 <plugin id="org.eclipse.e4.ui.di"/>
 <plugin id="org.eclipse.e4.ui.di.source"/>
 <plugin id="org.eclipse.e4.ui.model.workbench"/>
@@ -332,7 +336,7 @@
 <plugin id="org.eclipse.xtext.xbase.lib.source"/>
 <plugin id="org.hamcrest.core"/>
 <plugin id="org.hamcrest.core.source"/>
-<plugin id="org.junit"/>
+<plugin id="org.junit" version="4.12.0.v201504281640"/>
 <plugin id="org.junit.source"/>
 <plugin id="org.objectweb.asm"/>
 <plugin id="org.sat4j.core"/>
@@ -348,5 +352,6 @@
 <plugin id="org.slf4j.jul.source"/>
 <plugin id="org.slf4j.log4j"/>
 <plugin id="org.slf4j.log4j.source"/>
+<plugin id="org.tukaani.xz"/>
 </includeBundles>
 </target>
