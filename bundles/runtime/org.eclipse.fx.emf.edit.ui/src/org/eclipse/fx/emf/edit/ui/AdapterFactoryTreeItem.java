@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
@@ -27,6 +26,7 @@ import org.eclipse.emf.edit.provider.IChangeNotifier;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.IViewerNotification;
+import org.eclipse.fx.ui.controls.tree.SortableTreeItem;
 
 /**
  * A {@link TreeItem} that wraps an {@link AdapterFactory} and retrieves its
@@ -35,11 +35,12 @@ import org.eclipse.emf.edit.provider.IViewerNotification;
  * 
  * It is necessary to call {@link #dispose} on an instance to release the EMF
  * change listeners.
+ * 
+ * @param <T> type of elements in the tree
  */
-public class AdapterFactoryTreeItem extends TreeItem<Object> {
+public class AdapterFactoryTreeItem<T> extends SortableTreeItem<T> {
 
 	final private AdapterFactory adapterFactory;
-	final private ObservableList<TreeItem<Object>> children;
 	final private ITreeItemContentProvider provider;
 
 	private AdapterImpl adapter = null;
@@ -54,11 +55,10 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	 * @param adapterFactory
 	 *            the factory
 	 */
-	public AdapterFactoryTreeItem(Object value, AdapterFactory adapterFactory) {
+	public AdapterFactoryTreeItem(T value, AdapterFactory adapterFactory) {
 		super(value);
 		this.adapterFactory = adapterFactory;
-		this.children = FXCollections.unmodifiableObservableList(super.getChildren());
-
+		
 		Object contentProvider = adapterFactory.adapt(value, ITreeItemContentProvider.class);
 		if (contentProvider instanceof ITreeItemContentProvider) {
 			this.provider = (ITreeItemContentProvider) contentProvider;
@@ -118,8 +118,8 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	 * Remove the EMF change listeners
 	 */
 	public void dispose() {
-		super.getChildren().forEach(childItem -> {
-			((AdapterFactoryTreeItem) childItem).dispose();
+		super.getInternalChildren().forEach(childItem -> {
+			((AdapterFactoryTreeItem<T>) childItem).dispose();
 		});
 		if (this.changeListener != null) {
 			((IChangeNotifier) this.provider).removeListener(this.changeListener);
@@ -129,16 +129,6 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 		}
 	}
 
-	/**
-	 * This method overrides {@link TreeItem#getChildren()} and returns an
-	 * unmodifiable {@link ObservableList} as the children may only be changed
-	 * via the underlying model.
-	 */
-	@Override
-	public ObservableList<TreeItem<Object>> getChildren() {
-		return this.children;
-	}
-
 	void initializeChildren() {
 		for (Object child : this.provider.getChildren(getValue())) {
 			addNewChild(child, Notification.NO_INDEX);
@@ -146,7 +136,7 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	}
 
 	void updateChildren(Notification msg) {
-		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
+		ObservableList<TreeItem<T>> childTreeItems = super.getInternalChildren();
 
 		switch (msg.getEventType()) {
 		case Notification.ADD:
@@ -183,7 +173,7 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 		case Notification.MOVE:
 			int index = ((Integer) msg.getOldValue()).intValue();
 			if (index >= 0 && index < childTreeItems.size()) {
-				TreeItem<Object> treeItem = childTreeItems.get(index);
+				TreeItem<T> treeItem = childTreeItems.get(index);
 				childTreeItems.remove(treeItem);
 				childTreeItems.add(msg.getPosition(), treeItem);
 			}
@@ -191,11 +181,12 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void addNewChild(Object value, int position) {
 		if (!this.provider.getChildren(getValue()).contains(value))
 			return;
-		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
-		AdapterFactoryTreeItem newTreeItem = new AdapterFactoryTreeItem(value, this.adapterFactory);
+		ObservableList<TreeItem<T>> childTreeItems = super.getInternalChildren();
+		AdapterFactoryTreeItem<T> newTreeItem = new AdapterFactoryTreeItem<T>((T)value, this.adapterFactory);
 		if (position == Notification.NO_INDEX || position > childTreeItems.size()) {
 			childTreeItems.add(newTreeItem);
 		} else {
@@ -204,15 +195,15 @@ public class AdapterFactoryTreeItem extends TreeItem<Object> {
 	}
 
 	private void removeChild(Object value) {
-		TreeItem<Object> treeItem = findTreeItemForValue(value);
+		TreeItem<T> treeItem = findTreeItemForValue(value);
 		if (treeItem != null) {
-			((AdapterFactoryTreeItem) treeItem).dispose();
-			super.getChildren().remove(treeItem);
+			((AdapterFactoryTreeItem<T>) treeItem).dispose();
+			super.getInternalChildren().remove(treeItem);
 		}
 	}
 
-	private TreeItem<Object> findTreeItemForValue(Object value) {
-		Optional<TreeItem<Object>> first = super.getChildren().stream().filter(item -> {
+	private TreeItem<T> findTreeItemForValue(Object value) {
+		Optional<TreeItem<T>> first = super.getInternalChildren().stream().filter(item -> {
 			return item.getValue().equals(value);
 		}).findFirst();
 		return first.orElse(null);
