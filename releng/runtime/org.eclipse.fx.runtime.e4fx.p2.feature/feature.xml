@@ -3,14 +3,14 @@
       id="org.eclipse.fx.runtime.e4fx.p2.feature"
       label="Feature"
       version="2.0.0.qualifier"
-      provider-name="BestSolution.at">
+      provider-name="Eclipse.org">
 
-   <description url="http://www.example.com/description">
+   <description>
       Feature defining the minimal set of bundles needed to add p2 update to your application
    </description>
 
-   <copyright url="http://www.bestsolution.at">
-      Copyright (c) 2015 BestSolution.at and others.
+   <copyright>
+      Copyright (c) 2015 Eclipse.org and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
