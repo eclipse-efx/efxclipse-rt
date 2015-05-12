@@ -11,6 +11,7 @@
 package org.eclipse.fx.emf.edit.ui;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -20,10 +21,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
@@ -56,6 +59,9 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 	@NonNull
 	protected IStructuredItemContentProvider provider;
 	/* package */final ObservableList<T> elements = FXCollections.observableArrayList();
+	
+	private INotifyChangedListener changeListener = null;
+	private Adapter adapter = null;
 
 	/**
 	 * Create an adapter for a list
@@ -65,7 +71,6 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 	 * @param root
 	 *            the root
 	 */
-	@SuppressWarnings({ "unchecked" })
 	public AdapterFactoryObservableList(@NonNull AdapterFactory adapterFactory, @NonNull final Object root) {
 		super();
 
@@ -78,30 +83,114 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 		else
 			throw new IllegalArgumentException("Provided root object cannot be adapted."); //$NON-NLS-1$
 
-		this.elements.addAll((Collection<? extends T>) this.provider.getElements(root));
+		this.elements.addAll(getProviderElements());
 
 		if (root instanceof Notifier) {
-			AdapterImpl adapter = new AdapterImpl() {
+			((Notifier) root).eAdapters().add(createAdapter());
+		} else if (root instanceof IChangeNotifier) {
+			((IChangeNotifier) root).addListener(createChangedListener());
+		}
+	}
 
+	private Adapter createAdapter() {
+		if (this.adapter == null) {
+			this.adapter = new AdapterImpl() {
 				@Override
 				public void notifyChanged(Notification msg) {
-					AdapterFactoryObservableList.this.elements.setAll((Collection<? extends T>) AdapterFactoryObservableList.this.provider.getElements(root));
+					updateInternalList(msg);
 				}
-
 			};
+		}
+		return this.adapter;
+	}
 
-			((Notifier) root).eAdapters().add(adapter);
-		} else if (root instanceof IChangeNotifier) {
-			((IChangeNotifier) root).addListener(new INotifyChangedListener() {
-
+	private INotifyChangedListener createChangedListener() {
+		if (this.changeListener == null) {
+			this.changeListener = new INotifyChangedListener() {
 				@Override
 				public void notifyChanged(Notification notification) {
-					AdapterFactoryObservableList.this.elements.setAll((Collection<? extends T>) AdapterFactoryObservableList.this.provider.getElements(root));
+					updateInternalList(notification);
 				}
-
-			});
+			};
 		}
+		return this.changeListener;
+	}
+	
+	/**
+	 * Remove the EMF change listeners
+	 */
+	public void dispose() {
+		if (this.changeListener != null) {
+			((IChangeNotifier) this.provider).removeListener(this.changeListener);
+		}
+		if (this.adapter != null) {
+			((Notifier) this.root).eAdapters().remove(this.adapter);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private Collection<? extends T> getProviderElements() {
+		return (Collection<? extends T>) this.provider.getElements(this.root);
+	}
+	
+	void updateInternalList(Notification msg) {
+		if (msg.isTouch())
+			return;
+		if (!(msg.getFeature() instanceof EReference))
+			return;
+		
+		switch (msg.getEventType()) {
+		case Notification.ADD:
+			addNewChild(msg.getNewValue(), msg.getPosition());
+			break;
+		case Notification.ADD_MANY:
+			List<?> newValues = (List<?>) msg.getNewValue();
+			int position = msg.getPosition();
+			if (position != Notification.NO_INDEX && position <= this.elements.size()) {
+				// reverse List, so items are added at correct position in backward order
+				Collections.reverse(newValues);
+			}
+			newValues.forEach(newValue -> {
+				addNewChild(newValue, position);
+			});
+			break;
+		case Notification.REMOVE:
+			removeChild(msg.getOldValue());
+			break;
+		case Notification.REMOVE_MANY:
+			List<?> oldValues = (List<?>) msg.getOldValue();
+			oldValues.forEach(oldValue -> {
+				removeChild(oldValue);
+			});
+			break;
+		case Notification.SET:
+		case Notification.RESOLVE:
+			this.elements.setAll(getProviderElements());
+			break;
+		case Notification.MOVE:
+			int index = ((Integer) msg.getOldValue()).intValue();
+			if (index >= 0 && index < this.elements.size()) {
+				T item = this.elements.get(index);
+				this.elements.remove(item);
+				this.elements.add(msg.getPosition(), item);
+			}
+			break;
+		}
+	}
 
+	@SuppressWarnings("unchecked")
+	private void addNewChild(Object value, int position) {
+		if (!getProviderElements().contains(value))
+			return;
+		if (position == Notification.NO_INDEX || position > this.elements.size()) {
+			this.elements.add((T)value);
+		} else {
+			this.elements.add(position, (T)value);
+		}
+	}
+	
+	private void removeChild(Object value) {
+		this.elements.remove(value);
 	}
 
 	@Override
