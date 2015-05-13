@@ -37,7 +37,8 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget.DragData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropData;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropLocation;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -117,34 +118,38 @@ public class DnDAddon {
 		MUIElement reference = d.reference;
 		@NonNull
 		MUIElement sourceElement = d.sourceElement;
-
-		switch (d.dropType) {
-		case AFTER:
-		case BEFORE:
-			if (reference != null) {
-				handleReorder(reference, sourceElement, d.dropType);
+		
+		if( d.dropType instanceof BasicDropLocation ) {
+			BasicDropLocation dd = (BasicDropLocation) d.dropType;
+			switch (dd) {
+			case AFTER:
+			case BEFORE:
+				if (reference != null) {
+					handleReorder(reference, sourceElement, dd);
+				}
+				break;
+			case DETACH:
+				if( this.dndService == null || (this.dndService.detachAllowed(sourceElement) && ! this.dndService.handleDetach(d.x, d.y, sourceElement)) ) {
+					handleDetach(sourceElement);	
+				}
+			case INSERT:
+				if (reference != null) {
+					handleInsert(reference, sourceElement);
+				}
+				break;
+			case SPLIT_BOTTOM:
+			case SPLIT_TOP:
+			case SPLIT_LEFT:
+			case SPLIT_RIGHT:
+				if (reference != null) {
+					handleSplit(reference, sourceElement, d.dropType);
+				}
+				break;
+			default:
+				break;
 			}
-			break;
-		case DETACH:
-			if( this.dndService == null || (this.dndService.detachAllowed(sourceElement) && ! this.dndService.handleDetach(d.x, d.y, sourceElement)) ) {
-				handleDetach(sourceElement);	
-			}
-		case INSERT:
-			if (reference != null) {
-				handleInsert(reference, sourceElement);
-			}
-			break;
-		case SPLIT_BOTTOM:
-		case SPLIT_TOP:
-		case SPLIT_LEFT:
-		case SPLIT_RIGHT:
-			if (reference != null) {
-				handleSplit(reference, sourceElement, d.dropType);
-			}
-			break;
-		default:
-			break;
 		}
+		
 
 		return null;
 	}
@@ -161,14 +166,14 @@ public class DnDAddon {
 		}
 	}
 
-	private void handleSplit(@NonNull MUIElement reference, @NonNull MUIElement sourceElement, @NonNull DropType dropType) {
+	private void handleSplit(@NonNull MUIElement reference, @NonNull MUIElement sourceElement, @NonNull DropLocation dropType) {
 		MElementContainer<MUIElement> parent = reference.getParent();
 		if( (MUIElement)parent instanceof MPartStack ) {
 			split(parent, sourceElement, dropType );
 		}
 	}
 	
-	private void split(MUIElement toSplit, MUIElement child, @NonNull DropType dropType) {
+	private void split(MUIElement toSplit, MUIElement child, @NonNull DropLocation dropType) {
 		// remove the moved element from its parent
 		child.setParent(null);
 		
@@ -190,8 +195,8 @@ public class DnDAddon {
 		
 		container.setToBeRendered(true);
 		container.setVisible(true);
-		container.setHorizontal(dropType == DropType.SPLIT_LEFT || dropType == DropType.SPLIT_RIGHT);
-		if( dropType == DropType.SPLIT_TOP || dropType == DropType.SPLIT_LEFT ) {
+		container.setHorizontal(dropType == BasicDropLocation.SPLIT_LEFT || dropType == BasicDropLocation.SPLIT_RIGHT);
+		if( dropType == BasicDropLocation.SPLIT_TOP || dropType == BasicDropLocation.SPLIT_LEFT ) {
 			container.getChildren().add((MPartSashContainerElement) childContainer);
 			container.getChildren().add((MPartSashContainerElement) toSplit);	
 		} else {
@@ -201,7 +206,7 @@ public class DnDAddon {
 		owner.getChildren().add(index, container);
 	}
 
-	private void handleReorder(@NonNull MUIElement reference, @NonNull MUIElement sourceElement, @NonNull DropType dropType) {
+	private void handleReorder(@NonNull MUIElement reference, @NonNull MUIElement sourceElement, @NonNull BasicDropLocation dropType) {
 		MElementContainer<MUIElement> sourceContainer = sourceElement.getParent();
 		MElementContainer<MUIElement> targetContainer = reference.getParent();
 
@@ -214,7 +219,7 @@ public class DnDAddon {
 
 				int idx = targetContainer.getChildren().indexOf(reference);
 
-				if (dropType == DropType.AFTER) {
+				if (dropType == BasicDropLocation.AFTER) {
 					idx += 1;
 				}
 
@@ -230,7 +235,7 @@ public class DnDAddon {
 			}
 		} else {
 			int idx = targetContainer.getChildren().indexOf(reference);
-			if (dropType == DropType.AFTER) {
+			if (dropType == BasicDropLocation.AFTER) {
 				idx += 1;
 			}
 

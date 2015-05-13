@@ -25,7 +25,8 @@ import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService.DnDFeedbackData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropData;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropLocation;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -195,7 +196,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 				MElementContainer<?> c = (MElementContainer<?>) m;
 				if (this.modelService.countRenderableChildren(c) == 0) {
 					@SuppressWarnings("all")
-					DropData d = new DropData(screenX(e), screenY(e), this.widget.getDomElement(), draggedElement, DropType.INSERT);
+					DropData d = new DropData(screenX(e), screenY(e), this.widget.getDomElement(), draggedElement, BasicDropLocation.INSERT);
 					dropDroppedCallback.call(d);
 					e.consume();
 					setDropComplete(e, true);
@@ -205,20 +206,20 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	}
 
 	@SuppressWarnings("all")
-	private @NonNull DropType getSplitType(Event e) {
+	private @NonNull DropLocation getSplitType(Event e) {
 		SplitAreas areas = calculateSplitAreas();
 
 		if (areas.left.contains(x(e), y(e))) {
-			return DropType.SPLIT_LEFT;
+			return BasicDropLocation.SPLIT_LEFT;
 		} else if (areas.right.contains(x(e), y(e))) {
-			return DropType.SPLIT_RIGHT;
+			return BasicDropLocation.SPLIT_RIGHT;
 		} else if (areas.top.contains(x(e), y(e))) {
-			return DropType.SPLIT_TOP;
+			return BasicDropLocation.SPLIT_TOP;
 		} else if (areas.bottom.contains(x(e), y(e))) {
-			return DropType.SPLIT_BOTTOM;
+			return BasicDropLocation.SPLIT_BOTTOM;
 		}
 
-		return DropType.SPLIT_BOTTOM;
+		return BasicDropLocation.SPLIT_BOTTOM;
 	}
 
 	private static double x(Event e) {

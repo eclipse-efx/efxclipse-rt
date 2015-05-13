@@ -140,7 +140,7 @@ public class DnDSupport extends BaseDnDSupport {
 				WStackItem<?, ?> sourceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.draggedTab.getUserData();
 				MStackElement domElement = sourceItem.getDomElement();
 				if (domElement != null) {
-					call.call(new DropData(data.x,data.y,null, domElement, org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.DETACH));
+					call.call(new DropData(data.x,data.y,null, domElement, org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.DETACH));
 				}
 			} else {
 				MStackElement reference = ((WStackItem<?, ?>) data.targetTab.getUserData()).getDomElement();
@@ -155,7 +155,7 @@ public class DnDSupport extends BaseDnDSupport {
 				}
 				
 				if (sourceReference != null) {
-					call.call(new DropData(data.x, data.y, reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE));
+					call.call(new DropData(data.x, data.y, reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.BEFORE));
 				} else {
 					LOGGER.error("Source item '" + data.draggedTab.getUserData() + "' has no dom element attached"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
@@ -187,7 +187,7 @@ public class DnDSupport extends BaseDnDSupport {
 			return;
 		}
 		
-		updateFeedback(new DnDFeedbackData(reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType.BEFORE, this.stack,
+		updateFeedback(new DnDFeedbackData(reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.BEFORE, this.stack,
 				new DnDFeedbackService.Region(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight())));
 	}
 

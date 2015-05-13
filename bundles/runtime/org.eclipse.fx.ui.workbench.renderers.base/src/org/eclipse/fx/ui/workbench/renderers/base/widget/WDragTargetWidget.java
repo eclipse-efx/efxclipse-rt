@@ -34,7 +34,7 @@ public interface WDragTargetWidget {
 	/**
 	 * The drop type
 	 */
-	public enum DropType {
+	public enum BasicDropLocation implements DropLocation {
 		/**
 		 * Before the reference element
 		 */
@@ -62,6 +62,13 @@ public interface WDragTargetWidget {
 					 */
 		SPLIT_RIGHT
 	}
+	
+	/**
+	 * Interface implemented by drop locations basic types are provided by {@link BasicDropLocation}
+	 */
+	public interface DropLocation {
+		// empty by default
+	}
 
 	/**
 	 * Drop data
@@ -81,7 +88,7 @@ public interface WDragTargetWidget {
 		 * The drop type
 		 */
 		@NonNull
-		public final DropType dropType;
+		public final DropLocation dropType;
 
 		/**
 		 * The x coordinate relative to the screen
@@ -107,7 +114,7 @@ public interface WDragTargetWidget {
 		 * @param dropType
 		 *            the drop type
 		 */
-		public DropData(double x, double y, @Nullable MUIElement reference, @NonNull MUIElement sourceElement, @NonNull DropType dropType) {
+		public DropData(double x, double y, @Nullable MUIElement reference, @NonNull MUIElement sourceElement, @NonNull DropLocation dropType) {
 			this.x = x;
 			this.y = y;
 			this.reference = reference;

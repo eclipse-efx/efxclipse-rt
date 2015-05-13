@@ -22,7 +22,7 @@ import org.eclipse.fx.ui.controls.markers.AreaOverlay.Area;
 import org.eclipse.fx.ui.controls.markers.PositionMarker;
 import org.eclipse.fx.ui.controls.markers.TabOutlineMarker;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 
 /**
@@ -37,10 +37,10 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 			WLayoutedWidget<?> l = (WLayoutedWidget<?>) widget;
 			Pane pane = (Pane) l.getStaticLayoutNode();
 			
-			if( data.dropType == DropType.SPLIT_BOTTOM ||
-					data.dropType == DropType.SPLIT_TOP ||
-					data.dropType == DropType.SPLIT_RIGHT ||
-					data.dropType == DropType.SPLIT_LEFT
+			if( data.dropType == BasicDropLocation.SPLIT_BOTTOM ||
+					data.dropType == BasicDropLocation.SPLIT_TOP ||
+					data.dropType == BasicDropLocation.SPLIT_RIGHT ||
+					data.dropType == BasicDropLocation.SPLIT_LEFT
 					) {
 				return handleSplit(pane, data);
 			} else if( data.reference instanceof MStackElement ) {
@@ -71,7 +71,7 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 		}
 		
 		overlay.setVisible(true);
-		overlay.updateActiveArea(toArea(data.dropType));
+		overlay.updateActiveArea(toArea((BasicDropLocation) data.dropType));
 		
 		return new MarkerFeedback(data) {
 			
@@ -82,7 +82,7 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 		};
 	}
 	
-	private static Area toArea(DropType type) {
+	private static Area toArea(BasicDropLocation type) {
 		switch (type) {
 		case SPLIT_BOTTOM:
 			return Area.BOTTOM;
@@ -125,7 +125,7 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 		double wDiff = w / 2;
 		double hDiff = ( h - h * ratio ) / 2;
 		
-		if( data.dropType == DropType.AFTER ) {
+		if( data.dropType == BasicDropLocation.AFTER ) {
 			marker.relocate(data.containerRegion.x + data.containerRegion.width - wDiff, data.containerRegion.y - hDiff);
 		} else {
 			marker.relocate(data.containerRegion.x  - wDiff, data.containerRegion.y - hDiff);
@@ -153,12 +153,12 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 		}
 		
 		if( marker == null ) {
-			marker = new TabOutlineMarker(layoutNode.getBoundsInLocal(), new BoundingBox(data.containerRegion.x, data.containerRegion.y, data.containerRegion.width, data.containerRegion.height), data.dropType == DropType.BEFORE);
+			marker = new TabOutlineMarker(layoutNode.getBoundsInLocal(), new BoundingBox(data.containerRegion.x, data.containerRegion.y, data.containerRegion.width, data.containerRegion.height), data.dropType == BasicDropLocation.BEFORE);
 			marker.setManaged(false);
 			marker.setMouseTransparent(true);
 			layoutNode.getChildren().add(marker);
 		} else {
-			marker.updateBounds(layoutNode.getBoundsInLocal(), new BoundingBox(data.containerRegion.x, data.containerRegion.y, data.containerRegion.width, data.containerRegion.height), data.dropType == DropType.BEFORE);
+			marker.updateBounds(layoutNode.getBoundsInLocal(), new BoundingBox(data.containerRegion.x, data.containerRegion.y, data.containerRegion.width, data.containerRegion.height), data.dropType == BasicDropLocation.BEFORE);
 			marker.setVisible(true);
 		}
 		

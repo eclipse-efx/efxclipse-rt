@@ -11,7 +11,7 @@
 package org.eclipse.fx.ui.workbench.renderers.base.services;
 
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropType;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropLocation;
 
 /**
  * Service that needs to be implemented to provide feedback for drag and drop
@@ -32,7 +32,7 @@ public interface DnDFeedbackService {
 		/**
 		 * The drop type
 		 */
-		public final DropType dropType;
+		public final DropLocation dropType;
 
 		/**
 		 * The container to show the feedback on
@@ -57,7 +57,7 @@ public interface DnDFeedbackService {
 		 * @param containerRegion
 		 *            the region of the reference element
 		 */
-		public DnDFeedbackData(MUIElement reference, MUIElement sourceElement, DropType dropType, MUIElement feedbackContainerElement, Region containerRegion) {
+		public DnDFeedbackData(MUIElement reference, MUIElement sourceElement, DropLocation dropType, MUIElement feedbackContainerElement, Region containerRegion) {
 			this.reference = reference;
 			this.sourceElement = sourceElement;
 			this.dropType = dropType;
