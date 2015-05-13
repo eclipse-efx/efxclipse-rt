@@ -119,38 +119,32 @@ public class DnDAddon {
 		@NonNull
 		MUIElement sourceElement = d.sourceElement;
 		
-		if( d.dropType instanceof BasicDropLocation ) {
-			BasicDropLocation dd = (BasicDropLocation) d.dropType;
-			switch (dd) {
-			case AFTER:
-			case BEFORE:
-				if (reference != null) {
-					handleReorder(reference, sourceElement, dd);
+		if( d.dropType.isReorder() ) {
+			if (reference != null ) {
+				if( this.dndService == null || (this.dndService.reorderAllowed(reference, sourceElement, d.dropType)) && ! this.dndService.handleReorder(reference, sourceElement, d.dropType)) {
+					if( d.dropType instanceof BasicDropLocation ) {
+						handleReorder(reference, sourceElement, (@NonNull BasicDropLocation) d.dropType);	
+					}
 				}
-				break;
-			case DETACH:
-				if( this.dndService == null || (this.dndService.detachAllowed(sourceElement) && ! this.dndService.handleDetach(d.x, d.y, sourceElement)) ) {
-					handleDetach(sourceElement);	
+			}
+		} else if( d.dropType.isDetach() ) {
+			if( this.dndService == null || (this.dndService.detachAllowed(sourceElement) && ! this.dndService.handleDetach(d.x, d.y, sourceElement)) ) {
+				handleDetach(sourceElement);	
+			}
+		} else if( d.dropType.isInsert() ) {
+			if (reference != null) {
+				if( this.dndService == null || (this.dndService.insertAllowed(reference, sourceElement)) && ! this.dndService.handleInsert(reference, sourceElement)) {
+					handleInsert(reference, sourceElement);	
 				}
-			case INSERT:
-				if (reference != null) {
-					handleInsert(reference, sourceElement);
-				}
-				break;
-			case SPLIT_BOTTOM:
-			case SPLIT_TOP:
-			case SPLIT_LEFT:
-			case SPLIT_RIGHT:
-				if (reference != null) {
+			}
+		} else if( d.dropType.isSplit() ) {
+			if (reference != null) {
+				if( this.dndService == null || (this.dndService.splitAllowed(reference, sourceElement, d.dropType)) && ! this.dndService.handleSplit(reference, sourceElement, d.dropType)) {
 					handleSplit(reference, sourceElement, d.dropType);
 				}
-				break;
-			default:
-				break;
 			}
 		}
 		
-
 		return null;
 	}
 	

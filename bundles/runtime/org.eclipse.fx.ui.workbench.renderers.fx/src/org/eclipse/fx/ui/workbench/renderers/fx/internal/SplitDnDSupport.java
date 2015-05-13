@@ -10,24 +10,24 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
+import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MGenericTile;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
-import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService.DnDFeedbackData;
+import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropLocation;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.services.ModelService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -53,8 +53,14 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	@Nullable
 	private final DnDService constraintService;
 
+	@NonNull
+	private ModelService efxModelService;
+
 	/**
 	 * Create new instance
+	 * 
+	 * @param efxModelService
+	 *            efx model service
 	 *
 	 * @param modelService
 	 *            the model service
@@ -65,8 +71,9 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	 * @param widget
 	 *            the widget
 	 */
-	public SplitDnDSupport(@NonNull EModelService modelService, @Nullable DnDService constraintService, @NonNull DnDFeedbackService feedbackService, WLayoutedWidget<M> widget) {
+	public SplitDnDSupport(@NonNull ModelService efxModelService, @NonNull EModelService modelService, @Nullable DnDService constraintService, @NonNull DnDFeedbackService feedbackService, WLayoutedWidget<M> widget) {
 		super(feedbackService);
+		this.efxModelService = efxModelService;
 		this.constraintService = constraintService;
 		this.modelService = modelService;
 		this.widget = widget;
@@ -83,14 +90,14 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		cleanup();
 	}
 
-	private MUIElement findElement(String objectId) {
-		EObject eo = (EObject) this.widget.getDomElement();
-		EObject rv = null;
-		if (eo != null) {
-			rv = ((XMIResource) eo.eResource()).getEObject(objectId);
-		}
-		if (rv instanceof MUIElement) {
-			return (MUIElement) rv;
+	private @Nullable MUIElement findElement(String objectId) {
+		@Nullable
+		M domElement = this.widget.getDomElement();
+		if( domElement != null ) {
+			MApplication root = this.efxModelService.getRoot(domElement);
+			if( root != null && objectId != null ) {
+				return this.efxModelService.getElementInstance(root, objectId);	
+			}
 		}
 		return null;
 	}
@@ -112,11 +119,22 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	private void _handleDragOver(Event e) {
 		@Nullable
 		M m = this.widget.getDomElement();
+
+		String content = DndTabPaneFactory.getDnDContent(e);
+		if( content == null ) {
+			return;
+		}
+
+		MUIElement findElement = findElement(content);
 		
-		if( m != null && this.constraintService != null && ! this.constraintService.splitAllowed(m) ) {
+		if( findElement == null ) {
 			return;
 		}
 		
+		if (m != null && this.constraintService != null && !this.constraintService.splitAllowed(m, findElement, getSplitType(e))) {
+			return;
+		}
+
 		if (this.widget.getDropDroppedCallback() != null) {
 			if (!DndTabPaneFactory.hasDnDContent(e)) {
 				return;
@@ -163,11 +181,22 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	private void _handleDragDropped(Event e) {
 		@Nullable
 		M m = this.widget.getDomElement();
+
+		String content = DndTabPaneFactory.getDnDContent(e);
 		
-		if( m != null && this.constraintService != null && ! this.constraintService.splitAllowed(m) ) {
+		if( content == null ) {
 			return;
 		}
 		
+		MUIElement findElement = findElement(content);
+		if( findElement == null ) {
+			return;
+		}
+		
+		if (m != null && this.constraintService != null && !this.constraintService.splitAllowed(m, findElement, getSplitType(e))) {
+			return;
+		}
+
 		@Nullable
 		WCallback<@NonNull DropData, @Nullable Void> dropDroppedCallback = this.widget.getDropDroppedCallback();
 		if (dropDroppedCallback != null) {
@@ -235,7 +264,7 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		}
 		return ((EFXDragEvent) e).getY();
 	}
-	
+
 	private static double screenX(Event e) {
 		if (e instanceof DragEvent) {
 			return ((DragEvent) e).getScreenX();

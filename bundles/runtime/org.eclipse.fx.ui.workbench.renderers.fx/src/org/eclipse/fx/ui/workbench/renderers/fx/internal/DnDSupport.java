@@ -14,8 +14,6 @@ import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory.DropType;
@@ -29,6 +27,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragSourceWidget.DragData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.DropData;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
+import org.eclipse.fx.ui.workbench.services.ModelService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -50,6 +49,9 @@ public class DnDSupport extends BaseDnDSupport {
 
 	@Nullable
 	private final DnDService dndService;
+	
+	@NonNull
+	private final ModelService modelService;
 
 	/**
 	 * Create a new dnd support instance
@@ -64,14 +66,17 @@ public class DnDSupport extends BaseDnDSupport {
 	 *            the stack working for
 	 * @param dndService
 	 *            the dnd service
+	 * @param modelService
+	 *            the model service
 	 */
 	public DnDSupport(@NonNull WCallback<@Nullable Void, @Nullable WCallback<@NonNull DragData, @NonNull Boolean>> dragStartCallbackProvider, @NonNull WCallback<@Nullable Void, @Nullable WCallback<@NonNull DropData, @Nullable Void>> dropCallbackProvider, @NonNull DnDFeedbackService feedbackService,
-			@NonNull MPartStack stack, @Nullable DnDService dndService) {
+			@NonNull MPartStack stack, @Nullable DnDService dndService, @NonNull ModelService modelService) {
 		super(feedbackService);
 		this.dndService = dndService;
 		this.dragStartCallbackProvider = dragStartCallbackProvider;
 		this.dropCallbackProvider = dropCallbackProvider;
 		this.stack = stack;
+		this.modelService = modelService;
 	}
 
 	/**
@@ -81,18 +86,16 @@ public class DnDSupport extends BaseDnDSupport {
 	 *            the tab
 	 * @return the tab
 	 */
-	@SuppressWarnings({ "static-method" })
 	public @NonNull String clipboardDataFunction(@NonNull GenericTab tab) {
 		MStackElement domElement = ((WStackItem<?, ?>) tab.getUserData()).getDomElement();
 		String rv = null;
 		if (domElement != null) {
-			EObject eo = (EObject) domElement;
-			rv = ((XMIResource) eo.eResource()).getID(eo);
+			rv = this.modelService.getUniqueId(domElement);
 		}
 		if (rv != null) {
 			return rv;
 		}
-		return System.identityHashCode(tab) + ""; //$NON-NLS-1$
+		throw new IllegalStateException("The model element has no ID"); //$NON-NLS-1$
 	}
 
 	/**
@@ -140,22 +143,23 @@ public class DnDSupport extends BaseDnDSupport {
 				WStackItem<?, ?> sourceItem = (org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem<?, ?>) data.draggedTab.getUserData();
 				MStackElement domElement = sourceItem.getDomElement();
 				if (domElement != null) {
-					call.call(new DropData(data.x,data.y,null, domElement, org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.DETACH));
+					call.call(new DropData(data.x, data.y, null, domElement, org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.DETACH));
 				}
 			} else {
 				MStackElement reference = ((WStackItem<?, ?>) data.targetTab.getUserData()).getDomElement();
 				MStackElement sourceReference = ((WStackItem<?, ?>) data.draggedTab.getUserData()).getDomElement();
-								
+
 				MElementContainer<MUIElement> parentRef = reference != null ? reference.getParent() : null;
 				MElementContainer<MUIElement> parentSource = sourceReference != null ? sourceReference.getParent() : null;
-				
-				if( parentRef != parentSource && sourceReference != null && this.dndService != null && ! this.dndService.repartentAllowed(sourceReference) ) {
+
+				if (parentRef != parentSource && sourceReference != null && this.dndService != null && !this.dndService.repartentAllowed(sourceReference)) {
 					cleanup();
 					return;
 				}
-				
+
 				if (sourceReference != null) {
-					call.call(new DropData(data.x, data.y, reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.BEFORE));
+					call.call(new DropData(data.x, data.y, reference, sourceReference,
+							data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.BEFORE));
 				} else {
 					LOGGER.error("Source item '" + data.draggedTab.getUserData() + "' has no dom element attached"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
@@ -175,20 +179,20 @@ public class DnDSupport extends BaseDnDSupport {
 			cleanup();
 			return;
 		}
-		
+
 		MStackElement reference = ((WStackItem<?, ?>) data.targetTab.getUserData()).getDomElement();
 		MStackElement sourceReference = ((WStackItem<?, ?>) data.draggedTab.getUserData()).getDomElement();
-		
+
 		MElementContainer<MUIElement> parentRef = reference != null ? reference.getParent() : null;
 		MElementContainer<MUIElement> parentSource = sourceReference != null ? sourceReference.getParent() : null;
-		
-		if( parentRef != parentSource && sourceReference != null && this.dndService != null && ! this.dndService.repartentAllowed(sourceReference) ) {
+
+		if (parentRef != parentSource && sourceReference != null && this.dndService != null && !this.dndService.repartentAllowed(sourceReference)) {
 			cleanup();
 			return;
 		}
-		
-		updateFeedback(new DnDFeedbackData(reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.BEFORE, this.stack,
-				new DnDFeedbackService.Region(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight())));
+
+		updateFeedback(new DnDFeedbackData(reference, sourceReference, data.dropType == DropType.AFTER ? org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.AFTER : org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation.BEFORE,
+				this.stack, new DnDFeedbackService.Region(data.bounds.getMinX(), data.bounds.getMinY(), data.bounds.getWidth(), data.bounds.getHeight())));
 	}
 
 	/**

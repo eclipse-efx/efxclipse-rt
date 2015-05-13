@@ -60,14 +60,63 @@ public interface WDragTargetWidget {
 		SPLIT_LEFT, /**
 					 * split horizontal and put the new item right to the other
 					 */
-		SPLIT_RIGHT
+		SPLIT_RIGHT;
+
+		@Override
+		public boolean isReorder() {
+			return this == BEFORE || this == AFTER;
+		}
+
+		@Override
+		public boolean isSplit() {
+			return this == SPLIT_TOP || this == SPLIT_BOTTOM || this == SPLIT_LEFT || this == SPLIT_RIGHT;
+		}
+
+		@Override
+		public boolean isInsert() {
+			return this == INSERT;
+		}
+
+		@Override
+		public boolean isDetach() {
+			return this == DETACH;
+		}
+
+		@Override
+		public boolean isCustom() {
+			return false;
+		}
 	}
-	
+
 	/**
-	 * Interface implemented by drop locations basic types are provided by {@link BasicDropLocation}
+	 * Interface implemented by drop locations basic types are provided by
+	 * {@link BasicDropLocation}
 	 */
 	public interface DropLocation {
-		// empty by default
+		/**
+		 * @return is it a reordering (might include a reparent)
+		 */
+		public boolean isReorder();
+
+		/**
+		 * @return if it is a split (might include a reparent)
+		 */
+		public boolean isSplit();
+
+		/**
+		 * @return if it is a insert (might include a reparent)
+		 */
+		public boolean isInsert();
+
+		/**
+		 * @return if it is a detach
+		 */
+		public boolean isDetach();
+
+		/**
+		 * @return if it is a custom type
+		 */
+		public boolean isCustom();
 	}
 
 	/**

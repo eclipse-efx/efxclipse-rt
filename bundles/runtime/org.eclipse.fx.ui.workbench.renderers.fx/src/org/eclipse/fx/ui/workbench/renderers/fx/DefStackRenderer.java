@@ -51,6 +51,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupport;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.PaginationItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.fx.ui.workbench.services.ModelService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -91,6 +92,10 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@Nullable
 		DnDService dndService;
 
+		@NonNull
+		@Inject
+		ModelService modelService;
+		
 		@NonNull
 		private final MPartStack domainElement;
 
@@ -168,7 +173,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 					(param) -> this.dragStartCallback,
 					(param) -> this.getDropDroppedCallback(),
 					this.dndFeedback,
-					this.domainElement,this.dndService);
+					this.domainElement,this.dndService, this.modelService);
 
 			TabPane p = DndTabPaneFactory.createDndTabPane((s) -> {
 				s.setStartFunction(dnd::handleDragStart);
