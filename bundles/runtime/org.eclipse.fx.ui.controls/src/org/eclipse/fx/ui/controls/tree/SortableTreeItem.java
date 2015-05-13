@@ -24,7 +24,7 @@ import javafx.scene.control.TreeItem;
  *
  * @param <T> The type of the {@link #getValue() value} property within {@link TreeItem}.
  */
-public class SortableTreeItem<T> extends TreeItem<T> {
+public class SortableTreeItem<T> extends FilterableTreeItem<T> {
 	final private SortedList<TreeItem<T>> sortedList;
 	private ObjectProperty<TreeItemComparator<T>> comparator = new SimpleObjectProperty<>();
 	
@@ -62,13 +62,13 @@ public class SortableTreeItem<T> extends TreeItem<T> {
 		return this.sortedList;
 	}
 	
-	/**
-	 * Returns the list of children that is backing the sorted list.
-	 * @return underlying list of children
-	 */
-	public ObservableList<TreeItem<T>> getInternalChildren() {
-		return super.getChildren();
-	}
+//	/**
+//	 * Returns the list of children that is backing the sorted list.
+//	 * @return underlying list of children
+//	 */
+//	public ObservableList<TreeItem<T>> getInternalChildren() {
+//		return super.getChildren();
+//	}
 
 	/**
 	 * @return the comparator property
