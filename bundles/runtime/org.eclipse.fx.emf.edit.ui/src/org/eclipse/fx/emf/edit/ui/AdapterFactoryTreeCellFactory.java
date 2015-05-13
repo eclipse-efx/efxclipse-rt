@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Cell;
 import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.util.Callback;
 
@@ -37,8 +38,10 @@ import org.eclipse.jdt.annotation.NonNull;
  * <code>-fx-background-color</code> are delegated to {@link IItemColorProvider}</li>
  * <li>{@link Cell#setFont(javafx.scene.text.Font)} is delegated to {@link IItemFontProvider}</li>
  * </ul>
+ * 
+ * @param <T> The type of the item contained within the {@link TreeItem} value
  */
-public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory implements Callback<TreeView<Object>, TreeCell<Object>> {
+public class AdapterFactoryTreeCellFactory<T> extends AdapterFactoryCellFactory implements Callback<TreeView<T>, TreeCell<T>> {
 
 	/**
 	 * Create a new tree factory
@@ -51,9 +54,9 @@ public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory imp
 	}
 
 	@Override
-	public TreeCell<Object> call(TreeView<Object> param) {
+	public TreeCell<T> call(TreeView<T> param) {
 
-		final TreeCell<Object> treeCell = new TreeCell<Object>() {
+		final TreeCell<T> treeCell = new TreeCell<T>() {
 
 			Object currentItem = null;
 			ICellEditHandler cellEditHandler;
@@ -74,7 +77,7 @@ public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory imp
 			}
 
 			@Override
-			public void commitEdit(Object newValue) {
+			public void commitEdit(T newValue) {
 				super.commitEdit(newValue);
 				if (this.cellEditHandler != null)
 					this.cellEditHandler.commitEdit(this, newValue);
@@ -89,7 +92,7 @@ public class AdapterFactoryTreeCellFactory extends AdapterFactoryCellFactory imp
 			}
 
 			@Override
-			protected void updateItem(Object item, boolean empty) {
+			protected void updateItem(T item, boolean empty) {
 				super.updateItem(item, empty);
 
 				// check if the item changed
