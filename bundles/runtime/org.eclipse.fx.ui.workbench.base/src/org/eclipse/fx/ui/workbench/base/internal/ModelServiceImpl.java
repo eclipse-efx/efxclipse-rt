@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.workbench.base.internal;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.fx.ui.workbench.services.ModelService;
 import org.eclipse.jdt.annotation.NonNull;
@@ -39,6 +40,12 @@ public class ModelServiceImpl implements ModelService {
 	@Override
 	public <M extends MApplicationElement> @Nullable M getElementInstance(@NonNull MApplication m, @NonNull String uniqueId) {
 		return (M) ((XMIResource) ((EObject)m).eResource()).getEObject(uniqueId);
+	}
+	
+	@Override
+	public MApplication getRoot(@NonNull MApplicationElement e) {
+		Resource eResource = ((EObject)e).eResource();
+		return eResource != null ? (MApplication) eResource.getContents().get(0) : null;
 	}
 
 }

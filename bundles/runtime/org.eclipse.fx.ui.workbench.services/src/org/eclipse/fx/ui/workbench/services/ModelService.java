@@ -41,4 +41,13 @@ public interface ModelService {
 	 * @return the instance or <code>null</code> if not found
 	 */
 	public @Nullable <M extends MApplicationElement> M getElementInstance(@NonNull MApplication m, @NonNull String uniqueId);
+
+	/**
+	 * Get the root element of the model
+	 * 
+	 * @param e
+	 *            the current element
+	 * @return the root element
+	 */
+	public @Nullable MApplication getRoot(@NonNull MApplicationElement e);
 }
