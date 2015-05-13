@@ -38,6 +38,8 @@ import org.eclipse.jdt.annotation.NonNull;
  * <li>
  * {@link Cell#setFont(javafx.scene.text.Font)} is delegated to {@link IItemFontProvider}</li>
  * </ul>
+ * 
+ * @param <T> The type of the item contained within the {@link ListView} value
  */
 public class AdapterFactoryListCellFactory<T> extends AdapterFactoryCellFactory implements Callback<@NonNull ListView<T>, @NonNull ListCell<T>> {
 
