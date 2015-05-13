@@ -114,6 +114,7 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 
 	@PreDestroy
 	void destroy() {
+		doCleanup();
 		if (this.nativeWidget != null) {
 			setUserData(null);
 		}
@@ -121,7 +122,6 @@ public abstract class WWidgetImpl<N, M extends MUIElement> implements WWidget<M>
 		this.domElement = null;
 		this.activationCallbacks.clear();
 		this.activationCallbacks = null;
-		doCleanup();
 	}
 
 	/**
