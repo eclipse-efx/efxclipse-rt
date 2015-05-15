@@ -26,7 +26,13 @@ import javafx.scene.control.TreeItem;
  */
 public class SortableTreeItem<T> extends FilterableTreeItem<T> {
 	final private SortedList<TreeItem<T>> sortedList;
-	private ObjectProperty<TreeItemComparator<T>> comparator = new SimpleObjectProperty<>();
+	
+	private ObjectProperty<TreeItemComparator<T>> comparator = new SimpleObjectProperty<TreeItemComparator<T>>() {
+        @Override
+		protected void invalidated() {
+            fireChildrenModificationEvent();
+        }
+    };
 	
 	/**
 	 * Creates a new {@link TreeItem} with sorted children. To enable sorting it is 
@@ -62,14 +68,6 @@ public class SortableTreeItem<T> extends FilterableTreeItem<T> {
 		return this.sortedList;
 	}
 	
-//	/**
-//	 * Returns the list of children that is backing the sorted list.
-//	 * @return underlying list of children
-//	 */
-//	public ObservableList<TreeItem<T>> getInternalChildren() {
-//		return super.getChildren();
-//	}
-
 	/**
 	 * @return the comparator property
 	 */
