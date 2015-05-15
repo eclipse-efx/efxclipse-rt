@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
@@ -26,6 +27,7 @@ public class FilterableTreeItemSample extends Application {
 	}
 	
 	private TextField filterField;
+	private FilterableTreeItem<Actor> folder1;
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -42,13 +44,14 @@ public class FilterableTreeItemSample extends Application {
 	private Parent createContents() {
         VBox vbox = new VBox(6);
         vbox.getChildren().add(createFilterPane());
+        vbox.getChildren().add(createAddItemPane());
         Node demoPane = createDemoPane();
         VBox.setVgrow(demoPane, Priority.ALWAYS);
         vbox.getChildren().add(demoPane);
         return new BorderPane(vbox);
     }
 
-    private Node createFilterPane() {
+	private Node createFilterPane() {
         filterField = new TextField();
         filterField.setPromptText("Enter filter text ...");
 
@@ -56,6 +59,26 @@ public class FilterableTreeItemSample extends Application {
         pane.setCollapsible(false);
         return pane;
     }
+	
+	private Node createAddItemPane() {
+		HBox box = new HBox(6);
+		TextField firstname = new TextField();
+		firstname.setPromptText("Enter first name ...");
+		TextField lastname = new TextField();
+		lastname.setPromptText("Enter last name ...");
+		
+		Button addBtn = new Button("Add new actor to \"Folder 1\"");
+		addBtn.setOnAction(event -> {
+			FilterableTreeItem<Actor> treeItem = new FilterableTreeItem<>(new Actor(firstname.getText(), lastname.getText()));
+			folder1.getInternalChildren().add(treeItem);
+		});
+		addBtn.disableProperty().bind(Bindings.isEmpty(lastname.textProperty()));
+		
+		box.getChildren().addAll(firstname, lastname, addBtn);
+		TitledPane pane = new TitledPane("Add new element", box);
+		pane.setCollapsible(false);
+        return pane;
+	}
 
     private Node createDemoPane() {
         HBox hbox = new HBox(6);
@@ -84,7 +107,7 @@ public class FilterableTreeItemSample extends Application {
 
     private FilterableTreeItem<Actor> getTreeModel() {
         FilterableTreeItem<Actor> root = new FilterableTreeItem<>(new Actor("Root"));
-        FilterableTreeItem<Actor> folder1 = createFolder("Folder 1");
+        folder1 = createFolder("Folder 1");
         folder1.setExpanded(true);
         root.getInternalChildren().add(folder1);
         root.getInternalChildren().add(createFolder("Folder 2"));
@@ -112,19 +135,7 @@ public class FilterableTreeItemSample extends Application {
 				new Actor("Denzel", "Washington"),
 				new Actor("Spencer", "Tracy"), 
 				new Actor("Laurence", "Olivier"), 
-				new Actor("Jack", "Lemmon"),
-				new Actor("Jeff", "Bridges"), 
-				new Actor("James", "Stewart"), 
-				new Actor("Sean", "Penn"), 
-				new Actor("Michael", "Caine"), 
-				new Actor("Morgan", "Freeman"), 
-				new Actor("Robert", "Duvall"), 
-				new Actor("Gene", "Hackman"), 
-				new Actor("Clint", "Eastwood"), 
-				new Actor("Gregory", "Peck"), 
-				new Actor("Robin", "Williams"), 
-				new Actor("Ben", "Kingsley"), 
-				new Actor("Philip", "Seymour Hoffman"));
+				new Actor("Jack", "Lemmon"));
 		return actorList;
 	}
 	

@@ -7,7 +7,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -29,6 +31,7 @@ public class SortableTreeItemSample extends Application {
 	
 	private ToggleGroup sortGroup;
 	private CheckBox cbReverse;
+	private SortableTreeItem<Actor> folder1;
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -45,6 +48,7 @@ public class SortableTreeItemSample extends Application {
 	private Parent createContents() {
 		VBox vbox = new VBox(6);
 		vbox.getChildren().add(createInputPane());
+		vbox.getChildren().add(createAddItemPane());
 		Node demoPane = createDemoPane();
 		VBox.setVgrow(demoPane, Priority.ALWAYS);
 		vbox.getChildren().add(demoPane);
@@ -81,6 +85,26 @@ public class SortableTreeItemSample extends Application {
         result.setCollapsible(false);
         return result;
     }
+	
+	private Node createAddItemPane() {
+		HBox box = new HBox(6);
+		TextField firstname = new TextField();
+		firstname.setPromptText("Enter first name ...");
+		TextField lastname = new TextField();
+		lastname.setPromptText("Enter last name ...");
+		
+		Button addBtn = new Button("Add new actor to \"Folder 1\"");
+		addBtn.setOnAction(event -> {
+			SortableTreeItem<Actor> treeItem = new SortableTreeItem<>(new Actor(firstname.getText(), lastname.getText()));
+			folder1.getInternalChildren().add(treeItem);
+		});
+		addBtn.disableProperty().bind(Bindings.isEmpty(lastname.textProperty()));
+		
+		box.getChildren().addAll(firstname, lastname, addBtn);
+		TitledPane pane = new TitledPane("Add new element", box);
+		pane.setCollapsible(false);
+		return pane;
+	}
 
 	private Node createDemoPane() {
 		HBox hbox = new HBox(6);
@@ -127,7 +151,7 @@ public class SortableTreeItemSample extends Application {
 
 	private SortableTreeItem<Actor> getTreeModel() {
 		SortableTreeItem<Actor> root = new SortableTreeItem<>(new Actor("Root"));
-		SortableTreeItem<Actor> folder1 = createFolder("Folder 1");
+		folder1 = createFolder("Folder 1");
 		folder1.setExpanded(true);
 		root.getInternalChildren().add(folder1);
 		root.getInternalChildren().add(createFolder("Folder 2"));
@@ -155,19 +179,7 @@ public class SortableTreeItemSample extends Application {
 				new Actor("Denzel", "Washington"),
 				new Actor("Spencer", "Tracy"), 
 				new Actor("Laurence", "Olivier"), 
-				new Actor("Jack", "Lemmon"),
-				new Actor("Jeff", "Bridges"), 
-				new Actor("James", "Stewart"), 
-				new Actor("Sean", "Penn"), 
-				new Actor("Michael", "Caine"), 
-				new Actor("Morgan", "Freeman"), 
-				new Actor("Robert", "Duvall"), 
-				new Actor("Gene", "Hackman"), 
-				new Actor("Clint", "Eastwood"), 
-				new Actor("Gregory", "Peck"), 
-				new Actor("Robin", "Williams"), 
-				new Actor("Ben", "Kingsley"), 
-				new Actor("Philip", "Seymour Hoffman"));
+				new Actor("Jack", "Lemmon"));
 		return actorList;
 	}
 
