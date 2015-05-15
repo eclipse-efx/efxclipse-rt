@@ -94,14 +94,14 @@ public class EFXDragEvent extends Event {
 
 		public void updateCoordinates(double screenX, double screenY) {
 			this.stage.setX(screenX - this.stage.getWidth() / 2);
-			this.stage.setY(screenY + this.stage.getHeight() / 2);
+			this.stage.setY(screenY + 20);
 		}
 
 		public void updateFeedback(Consumer<StackPane> consumer) {
 			consumer.accept((StackPane) this.stage.getScene().getRoot());
 			this.stage.sizeToScene();
-			this.stage.setX(this.screenX + this.stage.getWidth() / 2);
-			this.stage.setY(this.screenY + this.stage.getHeight() / 2);
+			this.stage.setX(this.screenX - this.stage.getWidth() / 2);
+			this.stage.setY(this.screenY + 20);
 			this.stage.show();
 		}
 
