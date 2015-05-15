@@ -84,6 +84,7 @@ public class EFXDragEvent extends Event {
 
 		public DragFeedback() {
 			this.stage = new Stage(StageStyle.TRANSPARENT);
+			this.stage.setUserData("findNodeExclude"); //$NON-NLS-1$
 			this.stage.setAlwaysOnTop(true);
 			StackPane root = new StackPane();
 			root.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -133,7 +134,9 @@ public class EFXDragEvent extends Event {
 		this.state.complete = complete;
 		if (eventType == DRAG_START) {
 			DRAGGED_CONTENT = null;
-			DRAG_FEEDBACK = new DragFeedback();
+			if( canShowFeedbackDragFeedback() ) {
+				DRAG_FEEDBACK = new DragFeedback();
+			}
 		} else if (eventType == DRAG_DONE) {
 			if (DRAG_FEEDBACK != null) {
 				DRAG_FEEDBACK.dispose();
@@ -238,5 +241,16 @@ public class EFXDragEvent extends Event {
 	 */
 	public boolean isComplete() {
 		return this.state.complete;
+	}
+	
+	/**
+	 * @return check if showing drag feedback is possible
+	 */
+	@SuppressWarnings("static-method")
+	public boolean canShowFeedbackDragFeedback() {
+		if( "Linux".equals(System.getProperty("os.name"))) { //$NON-NLS-1$ //$NON-NLS-2$
+			return false;
+		}
+		return true;
 	}
 }
