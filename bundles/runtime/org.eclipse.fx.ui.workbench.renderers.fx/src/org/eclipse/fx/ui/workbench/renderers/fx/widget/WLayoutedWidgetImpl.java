@@ -101,13 +101,13 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@NonNull
 	protected Node createStaticLayoutNode() {
 		Pane staticLayoutGroup = createStaticPane();
-		initDnd(staticLayoutGroup);
 		Node n = getWidgetNode();
 		if (n != null) {
 			staticLayoutGroup.getChildren().add(n);
 		} else {
 			this.logger.error("No widget node to attach"); //$NON-NLS-1$
 		}
+		initDnd(staticLayoutGroup);
 		return staticLayoutGroup;
 	}
 
