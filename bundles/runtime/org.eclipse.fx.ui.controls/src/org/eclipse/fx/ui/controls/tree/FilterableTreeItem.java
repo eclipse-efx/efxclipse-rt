@@ -96,6 +96,17 @@ public class FilterableTreeItem<T> extends TreeItem<T> {
 		TreeModificationEvent<T> event = new TreeModificationEvent<T>(TreeItem.childrenModificationEvent(), this);
 		Event.fireEvent(this, event);
 	}
+	
+	/*
+	 * Workaround while we wait for RT-40790. We need to override this otherwise the TreeView will
+	 * show collapse/expand controls for folders that are empty after filtering
+	 * @see https://javafx-jira.kenai.com/browse/RT-40790
+	 * @see javafx.scene.control.TreeItem#isLeaf()
+	 */
+	@Override
+	public boolean isLeaf() {
+		return getChildren().isEmpty();
+	}
 
 	/**
 	 * @return the predicate property
