@@ -131,6 +131,9 @@ public class Util {
 	 */
 	public static Node findNode(Node n, double screenX, double screenY) {
 		Node rv = null;
+		if( ! n.isVisible() ) {
+			return rv;
+		}
 		Point2D b = n.screenToLocal(screenX, screenY);
 		if (n.getBoundsInLocal().contains(b)) {
 			rv = n;
