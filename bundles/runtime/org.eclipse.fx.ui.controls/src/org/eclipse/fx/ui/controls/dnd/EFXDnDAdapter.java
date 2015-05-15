@@ -26,6 +26,7 @@ public class EFXDnDAdapter {
 	private final Node node;
 	private boolean dragInProgress;
 	private boolean dragStartSend;
+	private boolean dragStartFlag;
 	private BiFunction<EFXDnDAdapter, MouseEvent, Boolean> dragStartValidator;
 	private BiConsumer<EFXDnDAdapter, EFXDragEvent> dragStartConsumer;
 	private BiConsumer<EFXDnDAdapter, EFXDragEvent> dragDoneConsumer;
@@ -48,14 +49,16 @@ public class EFXDnDAdapter {
 	 * Enable dnd for the node
 	 */
 	public void enable() {
+		this.node.addEventHandler(MouseEvent.MOUSE_PRESSED, this::handleMousePressed);
 		this.node.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::handleMouseDragged);
 		this.node.addEventHandler(MouseEvent.MOUSE_RELEASED, this::handleMouseReleased);
 	}
-
+	
 	/**
 	 * Disable dnd for the node
 	 */
 	public void disable() {
+		this.node.removeEventHandler(MouseEvent.MOUSE_PRESSED, this::handleMousePressed);
 		this.node.removeEventHandler(MouseEvent.MOUSE_DRAGGED, this::handleMouseDragged);
 		this.node.removeEventHandler(MouseEvent.MOUSE_RELEASED, this::handleMouseReleased);
 	}
@@ -91,7 +94,16 @@ public class EFXDnDAdapter {
 		this.dragDoneConsumer = dragDoneConsumer;
 	}
 
+	private void handleMousePressed(MouseEvent e) {
+		this.dragStartFlag = true;
+	}
+
+	
 	private void handleMouseDragged(MouseEvent e) {
+		// Drag was started on a different node
+		if( ! this.dragStartFlag ) {
+			return;
+		}
 		if (!this.dragStartSend) {
 			if (this.dragStartValidator == null || !Boolean.FALSE.equals(this.dragStartValidator.apply(this, e))) {
 				EFXDragEvent event = new EFXDragEvent(this.node, this.node, EFXDragEvent.DRAG_START, e.getScreenX(), e.getScreenY(), false);
@@ -117,6 +129,7 @@ public class EFXDnDAdapter {
 
 	private void handleMouseReleased(MouseEvent e) {
 		this.dragStartSend = false;
+		this.dragStartFlag = false;
 		if (this.dragInProgress) {
 			Node node = Util.findNode(this.node.getScene().getWindow(), e.getScreenX(), e.getScreenY());
 			boolean isComplete = false;
