@@ -1,0 +1,7 @@
+package sample;
+
+public class MySample {
+	public void main(String[] args) {
+		Sytem.err.println("Hello World!");
+	}
+}

@@ -1,0 +1,66 @@
+.root {
+    -fx-base: #4d5052;
+    -fx-background: #4d5052;
+    -fx-control-inner-background: #4d5052;
+    -fx-text-base-color: #c7c7c7;
+    /* @SuppressWarning */
+    -compensator-default-text: -fx-text-background-color;
+	/* @SuppressWarning */
+    -compensator-extra1: /*#957d47*/ derive(-fx-text-background-color, -30%);
+}
+
+.cell-text-extra {
+	-fx-fill: -compensator-extra1;
+}
+
+.cell-text-default {
+	-fx-fill: -compensator-default-text;
+}
+
+.styled-text-area .list-view {
+	-fx-background-color: #393939;
+}
+
+.styled-text-area .list-cell:filled:focused:selected {
+	-fx-background-color: #414141;
+}
+
+.styled-text-area .line-ruler-text {
+	-fx-text-fill: #c7c7c7;
+}
+
+.styled-text-area .text-caret {
+	-fx-fill: #c7c7c7;
+	-fx-stroke: #c7c7c7;
+}
+
+.state.styled-text-area .selection-marker {
+	-fx-background-color: #2b5696;
+}
+
+
+
+
+
+
+.state.styled-text-area .state_default {
+	-styled-text-color: #b8c4d1;
+}
+
+.state.styled-text-area .state_keyword {
+	-styled-text-color: #d78b40;
+	-fx-font-weight: bold;
+}
+
+.state.styled-text-area .state_doc_default {
+	-styled-text-color: #929292;
+}
+
+
+.state-default-string {
+	-fx-fill: -compensator-default-text;
+}
+
+.state-type-info {
+	-fx-fill: -compensator-extra1;
+}

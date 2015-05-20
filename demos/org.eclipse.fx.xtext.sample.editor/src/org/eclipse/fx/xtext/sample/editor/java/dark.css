@@ -1,0 +1,100 @@
+.root {
+    -fx-base: #4d5052;
+    -fx-background: #4d5052;
+    -fx-control-inner-background: #4d5052;
+    -fx-text-base-color: #c7c7c7;
+    /* @SuppressWarning */
+    -compensator-default-text: -fx-text-background-color;
+	/* @SuppressWarning */
+    -compensator-extra1: /*#957d47*/ derive(-fx-text-background-color, -30%);
+}
+
+.cell-text-extra {
+	-fx-fill: -compensator-extra1;
+}
+
+.cell-text-default {
+	-fx-fill: -compensator-default-text;
+}
+
+.styled-text-area .list-view {
+	-fx-background-color: #393939;
+}
+
+.styled-text-area .list-cell:filled:focused:selected {
+	-fx-background-color: #414141;
+}
+
+.styled-text-area .line-ruler-text {
+	-fx-text-fill: #c7c7c7;
+}
+
+.styled-text-area .text-caret {
+	-fx-fill: #c7c7c7;
+	-fx-stroke: #c7c7c7;
+}
+
+.java.styled-text-area .selection-marker {
+	-fx-background-color: #2b5696;
+}
+
+.java.styled-text-area .java_string {
+	-styled-text-color: #7c986c;
+}
+
+.java.styled-text-area .java_default {
+	-styled-text-color: #b8c4d1;
+}
+
+.java.styled-text-area .java_annotation {
+	-styled-text-color: rgb(200, 200, 200);
+	-fx-font-weight: bold;
+}
+
+.java.styled-text-area .java_keyword {
+	-styled-text-color: #d78b40;
+	-fx-font-weight: bold;
+}
+
+.java.styled-text-area .java_operator {
+	-styled-text-color: #b8c4d1;
+}
+
+.java.styled-text-area .java_bracket {
+	-styled-text-color: #b8c4d1;
+}
+
+.java.styled-text-area .java_keyword_return {
+	-styled-text-color: #d78b40;
+	-fx-font-weight: bold;
+}
+
+.java.styled-text-area .java_comment_task_tag {
+	-styled-text-color: rgb(127, 159, 191);
+}
+
+.java.styled-text-area .java_doc_link {
+	-styled-text-color: #74a567;
+	-fx-font-weight: bold;
+}
+
+.java.styled-text-area .java_doc_default {
+	-styled-text-color: #74a567;
+}
+
+.java.styled-text-area .java_multi_line_comment {
+	-styled-text-color: #929292;
+}
+
+.java.styled-text-area .java_single_line_comment {
+	-styled-text-color: #929292;
+}
+
+.java.styled-text-area .java_doc_tag {
+	-fx-fill: #74a567;
+	-fx-font-weight: bold;
+}
+
+.java.styled-text-area .java_number {
+	-styled-text-color: #7c986c;	
+}

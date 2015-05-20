@@ -1,0 +1,8 @@
+.h1 {
+	-fx-font-size: 20pt;
+}
+
+.colorful {
+	-fx-font-weight: bold;
+	-fx-fill: linear-gradient( from 0.0% 0.0% to 100.0% 100.0%, rgb(128,179,128) 0.0, rgb(255,179,102) 100.0);
+}

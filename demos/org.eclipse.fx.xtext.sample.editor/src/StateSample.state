@@ -1,0 +1,13 @@
+/* This is an xtext sample */
+
+input signal TEST_IN
+output signal TEST_OUT
+
+
+state START
+	set TEST_IN = true
+end 
+
+state END
+	if TEST_IN == true goto END
+end

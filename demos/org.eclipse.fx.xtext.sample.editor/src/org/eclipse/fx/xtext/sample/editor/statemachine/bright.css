@@ -1,0 +1,42 @@
+.root {
+    /* @SuppressWarning */
+    -compensator-default-text: -fx-text-background-color;
+	/* @SuppressWarning */
+    -compensator-extra1: /*#957d47*/ derive(-fx-text-background-color, 110%);
+	-fx-font-size: 1em;
+}
+
+.cell-text-extra {
+	-fx-fill: -compensator-extra1;
+}
+
+.cell-text-default {
+	-fx-fill: -compensator-default-text;
+}
+
+.styled-text-area .list-view {
+	-fx-background-color: white;
+}
+
+.state.styled-text-area .state_default {
+	-styled-text-color: rgb(0,0,0);
+}
+
+.state.styled-text-area .state_keyword {
+	-styled-text-color: rgb(127, 0, 85);
+	-fx-font-weight: bold;
+}
+
+.state.styled-text-area .state_doc_default {
+	-styled-text-color: rgb(63, 127, 95);
+}
+
+
+
+.state-default-string {
+	-fx-fill: -compensator-default-text;
+}
+
+.state-type-info {
+	-fx-fill: -compensator-extra1;
+}
