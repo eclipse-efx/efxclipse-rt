@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * Context function creating a memento instance backed by the
  * {@link MApplicationElement}
  */
-@Component(service = { IContextFunction.class })
+@Component(service = { IContextFunction.class },property={"service.context.key=org.eclipse.fx.core.Memento"})
 public class MementoCF extends ContextFunction {
 	List<ObjectSerializer> serializers = new ArrayList<ObjectSerializer>();
 
@@ -85,11 +85,9 @@ public class MementoCF extends ContextFunction {
 
 		public String _get(String key, String defaultValue, String type) {
 			String rv = defaultValue;
-			if (type.equals(this.map.get(TYPE_PREFIX + key))) {
-				rv = this.map.get(key);
-				if (rv == null) {
-					rv = defaultValue;
-				}
+			rv = this.map.get(key);
+			if (rv == null) {
+				rv = defaultValue;
 			}
 			return rv;
 		}
