@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -38,7 +38,7 @@ public interface GenericObject {
 	/**
 	 * @return get all attributes
 	 */
-	public List<GenericAttribute<?>> getAttributes();
+	public Collection<GenericAttribute<?>> getAttributes();
 
 	/**
 	 * Check if a attribute exists
@@ -110,7 +110,7 @@ public interface GenericObject {
 		/**
 		 * @return the value
 		 */
-		public T getValue();
+		public <R extends T> @Nullable R getValue();
 
 		/**
 		 * Set a new value
