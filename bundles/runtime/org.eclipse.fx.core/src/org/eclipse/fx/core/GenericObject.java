@@ -110,7 +110,7 @@ public interface GenericObject {
 		/**
 		 * @return the value
 		 */
-		public <R extends T> @Nullable R getValue();
+		public <R> @Nullable R getValue();
 
 		/**
 		 * Set a new value

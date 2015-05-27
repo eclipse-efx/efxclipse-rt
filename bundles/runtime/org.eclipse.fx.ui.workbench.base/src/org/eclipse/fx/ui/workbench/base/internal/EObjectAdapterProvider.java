@@ -145,7 +145,7 @@ public class EObjectAdapterProvider implements AdapterProvider<EObject, GenericO
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public <R extends T> R getValue() {
+		public <R> R getValue() {
 			return (R) this.eo.eGet(this.f);
 		}
 
