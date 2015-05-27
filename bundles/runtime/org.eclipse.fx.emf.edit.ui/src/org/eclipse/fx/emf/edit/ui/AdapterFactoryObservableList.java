@@ -136,7 +136,7 @@ public class AdapterFactoryObservableList<T> implements ObservableList<T> {
 	void updateInternalList(Notification msg) {
 		if (msg.isTouch())
 			return;
-		if (!(msg.getFeature() instanceof EReference))
+		if (msg.getFeature() != null && !(msg.getFeature() instanceof EReference))
 			return;
 		
 		switch (msg.getEventType()) {
