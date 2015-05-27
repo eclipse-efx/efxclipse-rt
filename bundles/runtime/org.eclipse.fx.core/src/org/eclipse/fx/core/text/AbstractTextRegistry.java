@@ -10,10 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.core.text;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -29,10 +25,8 @@ import org.eclipse.fx.core.Subscription;
  *            the message class type
  * @since 1.1
  */
-public class AbstractTextRegistry<M> implements TextRegistry {
+public class AbstractTextRegistry<M> extends BasicTextRegistry implements TextRegistry {
 	private M messages;
-
-	Map<Consumer<String>, Supplier<String>> bindings = new HashMap<>();
 
 	/**
 	 * @return the current message class
@@ -78,15 +72,7 @@ public class AbstractTextRegistry<M> implements TextRegistry {
 	 */
 	@Override
 	public Subscription register(Consumer<String> consumer, Supplier<String> supplier) {
-		this.bindings.put(consumer, supplier);
-		consumer.accept(supplier.get());
-		return new Subscription() {
-
-			@Override
-			public void dispose() {
-				AbstractTextRegistry.this.bindings.remove(consumer);
-			}
-		};
+		return super.register(consumer, supplier);
 	}
 
 	/**
@@ -97,15 +83,6 @@ public class AbstractTextRegistry<M> implements TextRegistry {
 	public void updateMessages(M messages) {
 		this.messages = messages;
 		updateBindings();
-	}
-
-	@Override
-	public void updateBindings() {
-		Iterator<Entry<Consumer<String>, Supplier<String>>> it = this.bindings.entrySet().iterator();
-		while (it.hasNext()) {
-			Entry<Consumer<String>, Supplier<String>> next = it.next();
-			next.getKey().accept(next.getValue().get());
-		}
 	}
 	
 	@PreDestroy
