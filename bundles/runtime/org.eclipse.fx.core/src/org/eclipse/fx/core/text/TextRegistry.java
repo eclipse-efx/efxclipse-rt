@@ -36,4 +36,9 @@ public interface TextRegistry {
 	 * @return the subscription
 	 */
 	public Subscription register(Consumer<String> consumer, Supplier<String> supplier);
+	
+	/**
+	 * Force an update of all bindings
+	 */
+	public void updateBindings();
 }

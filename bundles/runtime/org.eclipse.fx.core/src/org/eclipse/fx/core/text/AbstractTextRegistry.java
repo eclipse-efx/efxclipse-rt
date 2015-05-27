@@ -96,13 +96,18 @@ public class AbstractTextRegistry<M> implements TextRegistry {
 	 */
 	public void updateMessages(M messages) {
 		this.messages = messages;
+		updateBindings();
+	}
+
+	@Override
+	public void updateBindings() {
 		Iterator<Entry<Consumer<String>, Supplier<String>>> it = this.bindings.entrySet().iterator();
 		while (it.hasNext()) {
 			Entry<Consumer<String>, Supplier<String>> next = it.next();
 			next.getKey().accept(next.getValue().get());
 		}
 	}
-
+	
 	@PreDestroy
 	void unregister() {
 		this.bindings.clear();
