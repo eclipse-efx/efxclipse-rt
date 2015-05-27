@@ -29,7 +29,7 @@ import org.eclipse.fx.core.Subscription;
  *            the message class type
  * @since 1.1
  */
-public class AbstractTextRegistry<M> {
+public class AbstractTextRegistry<M> implements TextRegistry {
 	private M messages;
 
 	Map<Consumer<String>, Supplier<String>> bindings = new HashMap<>();
@@ -76,6 +76,7 @@ public class AbstractTextRegistry<M> {
 	 * @param supplier the supplier
 	 * @return the subscription
 	 */
+	@Override
 	public Subscription register(Consumer<String> consumer, Supplier<String> supplier) {
 		this.bindings.put(consumer, supplier);
 		consumer.accept(supplier.get());
