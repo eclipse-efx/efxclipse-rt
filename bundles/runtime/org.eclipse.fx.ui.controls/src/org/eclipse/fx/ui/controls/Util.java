@@ -32,6 +32,11 @@ import javafx.stage.Window;
  */
 public class Util {
 	/**
+	 * Tag used to exclude a node from finding
+	 */
+	public static final String FIND_NODE_EXCLUDE = "findNodeExclude"; //$NON-NLS-1$
+
+	/**
 	 * Dump the scene graph to a formatted string
 	 *
 	 * @param n
@@ -110,7 +115,7 @@ public class Util {
 		Iterator<Window> impl_getWindows = Window.impl_getWindows();
 		while (impl_getWindows.hasNext()) {
 			Window window = impl_getWindows.next();
-			if (new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
+			if (!FIND_NODE_EXCLUDE.equals(window.getUserData()) && new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
 				return findNode(window.getScene().getRoot(), screenX, screenY);
 			}
 		}
@@ -131,7 +136,7 @@ public class Util {
 	 */
 	public static Node findNode(Node n, double screenX, double screenY) {
 		Node rv = null;
-		if( ! n.isVisible() ) {
+		if (!n.isVisible()) {
 			return rv;
 		}
 		Point2D b = n.screenToLocal(screenX, screenY);
