@@ -138,8 +138,7 @@ public class StyledTextArea extends Control {
 		setFocusTraversable(true);
 	}
 
-//FIXME Upgrade once build server is on u40	
-//	 @Override
+	 @Override
 	 public String getUserAgentStylesheet() {
 		 return getClass().getResource("styledtextarea.css").toExternalForm(); //$NON-NLS-1$
 	 }

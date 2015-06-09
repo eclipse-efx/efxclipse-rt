@@ -33,6 +33,7 @@ import javafx.scene.text.Font;
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
  * </p>
+ * 
  * @noreference
  */
 public class TextStyle {
@@ -281,12 +282,18 @@ public class TextStyle {
 		this.stylename = stylename;
 	}
 
-	public void addStyleClass(String styleClass) {
-		if( decorationStyleClasses == null ) {
-			decorationStyleClasses = new ArrayList<>();
-		}
-		decorationStyleClasses.add(styleClass);
-	}
+//	/**
+//	 * Add a decoration class
+//	 * 
+//	 * @param styleClass
+//	 *            the style class for the decorator
+//	 */
+//	public void addStyleClass(String styleClass) {
+//		if (this.decorationStyleClasses == null) {
+//			this.decorationStyleClasses = new ArrayList<>();
+//		}
+//		this.decorationStyleClasses.add(styleClass);
+//	}
 
 	/**
 	 * Create a new text style with the specified font, foreground and
@@ -302,8 +309,7 @@ public class TextStyle {
 	 * @param background
 	 *            the background color of the style, <code>null</code> if none
 	 */
-	public TextStyle(String stylename, Font font, Color foreground,
-			Color background) {
+	public TextStyle(String stylename, Font font, Color foreground, Color background) {
 		// if (font != null && font.isDisposed()) SWT.error
 		// (SWT.ERROR_INVALID_ARGUMENT);
 		// if (foreground != null && foreground.isDisposed()) SWT.error
@@ -567,15 +573,20 @@ public class TextStyle {
 			buffer.append("underline="); //$NON-NLS-1$
 			switch (this.underlineStyle) {
 			case UNDERLINE_SINGLE:
-				buffer.append("single");break; //$NON-NLS-1$
+				buffer.append("single"); //$NON-NLS-1$
+				break;
 			case UNDERLINE_DOUBLE:
-				buffer.append("double");break; //$NON-NLS-1$
+				buffer.append("double"); //$NON-NLS-1$
+				break;
 			case UNDERLINE_SQUIGGLE:
-				buffer.append("squiggle");break; //$NON-NLS-1$
+				buffer.append("squiggle"); //$NON-NLS-1$
+				break;
 			case UNDERLINE_ERROR:
-				buffer.append("error");break; //$NON-NLS-1$
+				buffer.append("error"); //$NON-NLS-1$
+				break;
 			case UNDERLINE_LINK:
-				buffer.append("link");break; //$NON-NLS-1$
+				buffer.append("link"); //$NON-NLS-1$
+				break;
 			}
 			if (this.underlineColor != null) {
 				buffer.append(", underlineColor="); //$NON-NLS-1$
@@ -597,11 +608,14 @@ public class TextStyle {
 			buffer.append("border="); //$NON-NLS-1$
 			switch (this.borderStyle) {
 			case BORDER_SOLID:
-				buffer.append("solid");break; //$NON-NLS-1$
+				buffer.append("solid"); //$NON-NLS-1$
+				break;
 			case BORDER_DOT:
-				buffer.append("dot");break; //$NON-NLS-1$
+				buffer.append("dot"); //$NON-NLS-1$
+				break;
 			case BORDER_DASH:
-				buffer.append("dash");break; //$NON-NLS-1$
+				buffer.append("dash"); //$NON-NLS-1$
+				break;
 			}
 			if (this.borderColor != null) {
 				buffer.append(", borderColor="); //$NON-NLS-1$
@@ -615,8 +629,8 @@ public class TextStyle {
 			buffer.append(this.rise);
 		}
 		// if (metrics != null) {
-		//		if (buffer.length() > startLength) buffer.append(", "); //$NON-NLS-1$
-		//		buffer.append("metrics="); //$NON-NLS-1$
+		// if (buffer.length() > startLength) buffer.append(", "); //$NON-NLS-1$
+		// buffer.append("metrics="); //$NON-NLS-1$
 		// buffer.append(metrics);
 		// }
 		buffer.append("}"); //$NON-NLS-1$
