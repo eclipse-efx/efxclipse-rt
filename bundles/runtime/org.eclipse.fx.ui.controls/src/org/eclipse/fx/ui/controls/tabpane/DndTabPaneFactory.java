@@ -108,10 +108,10 @@ public final class DndTabPaneFactory {
 	 * @return the content
 	 */
 	public static boolean hasDnDContent(Event e) {
-		if( e instanceof DragEvent ) {
-			return ((DragEvent)e).getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE);
-		} else if( e instanceof EFXDragEvent ) {
-			return ((EFXDragEvent)e).getDraggedContent() != null;
+		if (e instanceof DragEvent) {
+			return ((DragEvent) e).getDragboard().hasContent(DnDTabPaneSkin.TAB_MOVE);
+		} else if (e instanceof EFXDragEvent) {
+			return ((EFXDragEvent) e).getDraggedContent() != null;
 		}
 		return false;
 	}
@@ -124,10 +124,10 @@ public final class DndTabPaneFactory {
 	 * @return the return value
 	 */
 	public static String getDnDContent(Event e) {
-		if( e instanceof DragEvent ) {
-			return (String) ((DragEvent)e).getDragboard().getContent(DnDTabPaneSkin.TAB_MOVE);	
-		} else if( e instanceof EFXDragEvent ) {
-			return (String) ((EFXDragEvent)e).getDraggedContent();
+		if (e instanceof DragEvent) {
+			return (String) ((DragEvent) e).getDragboard().getContent(DnDTabPaneSkin.TAB_MOVE);
+		} else if (e instanceof EFXDragEvent) {
+			return (String) ((EFXDragEvent) e).getDraggedContent();
 		}
 		return null;
 	}
@@ -410,12 +410,12 @@ public final class DndTabPaneFactory {
 		 * The drop type
 		 */
 		public final @NonNull DropType dropType;
-		
+
 		/**
 		 * The x coordinate relative to the screen
 		 */
 		public final double x;
-		
+
 		/**
 		 * The y coordinate relative to the screen
 		 */
@@ -424,6 +424,12 @@ public final class DndTabPaneFactory {
 		/**
 		 * Create drop data
 		 * 
+		 * @param x
+		 *            the x coordinate
+		 * 
+		 * @param y
+		 *            the y coordinate
+		 * 
 		 * @param draggedTab
 		 *            the dragged tab
 		 * @param targetTab
@@ -431,7 +437,7 @@ public final class DndTabPaneFactory {
 		 * @param dropType
 		 *            the drop type
 		 */
-		public DroppedData(double x, double y,@NonNull GenericTab draggedTab, @NonNull GenericTab targetTab, @NonNull DropType dropType) {
+		public DroppedData(double x, double y, @NonNull GenericTab draggedTab, @NonNull GenericTab targetTab, @NonNull DropType dropType) {
 			this.x = x;
 			this.y = y;
 			this.draggedTab = draggedTab;
