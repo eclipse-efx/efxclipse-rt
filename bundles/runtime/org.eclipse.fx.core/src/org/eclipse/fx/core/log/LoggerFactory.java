@@ -10,12 +10,13 @@
  *******************************************************************************/
 package org.eclipse.fx.core.log;
 
+import org.eclipse.fx.core.RankedService;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * A factory service to create a logger instance
  */
-public interface LoggerFactory /* Make it extend RankedService in 2.0*/ {
+public interface LoggerFactory extends RankedService {
 	/**
 	 * Create an instance of a logger
 	 * @param name the name of the logger
