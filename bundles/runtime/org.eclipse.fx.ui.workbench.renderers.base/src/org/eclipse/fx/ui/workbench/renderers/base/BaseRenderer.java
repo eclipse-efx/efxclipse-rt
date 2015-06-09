@@ -35,6 +35,7 @@ import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.MUILabel;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.ApplicationElement;
@@ -46,6 +47,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
@@ -660,14 +662,28 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            true of focus is required
 	 */
 	protected void activate(@NonNull MPart element, boolean requiresFocus) {
+		this.logger.debug("Activating " + element); //$NON-NLS-1$
 		IEclipseContext curContext = getModelContext(element);
 		if (curContext != null) {
+			printContextHierarchy(this.logger, curContext);
 			EPartService ps = (EPartService) curContext.get(EPartService.class.getName());
+			this.logger.debug("activating with: " + ps); //$NON-NLS-1$
+			this.logger.debug("The window: " + curContext.get(MWindow.class)); //$NON-NLS-1$
 			if (ps != null)
 				ps.activate(element, requiresFocus);
 		}
 	}
-
+	
+	private static final void printContextHierarchy(Logger logger, IEclipseContext c) {
+		if( logger.isEnabled(Level.DEBUG) ) {
+			IEclipseContext context = c;
+			logger.debug("=== Context ==="); //$NON-NLS-1$
+			do {
+				logger.debug(context+""); //$NON-NLS-1$
+			} while( (context = context.getParent()) != null );			
+		}
+	}
+	
 	@Override
 	public final void processContent(@NonNull M element) {
 		try {
