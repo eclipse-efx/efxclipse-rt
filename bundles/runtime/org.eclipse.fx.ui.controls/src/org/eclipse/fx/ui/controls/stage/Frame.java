@@ -15,6 +15,8 @@ import javafx.scene.Node;
 
 /**
  * Base interface for all window structures
+ * 
+ * @since 2.0
  */
 public interface Frame extends EventTarget {
 	/**
@@ -24,7 +26,7 @@ public interface Frame extends EventTarget {
 	 *            the title
 	 */
 	public abstract void setTitle(String title);
-	
+
 	/**
 	 * Set the client area node
 	 * 
@@ -32,8 +34,28 @@ public interface Frame extends EventTarget {
 	 *            the client area node
 	 */
 	public abstract void setClientArea(Node node);
-	
+
+	/**
+	 * Set if the dialog is resizable
+	 * 
+	 * @param resizable
+	 *            <code>true</code> to support resizable
+	 */
 	public void setResizeable(boolean resizable);
+
+	/**
+	 * Set if the dialog is minimizable
+	 * 
+	 * @param minimizable
+	 *            <code>true</code> to support minimizable
+	 */
 	public void setMinimizable(boolean minimizable);
-	public void setMaximizable(boolean maximizeable);
+
+	/**
+	 * Set if the dialog is maximizable
+	 * 
+	 * @param maximizable
+	 *            <code>true</code> to support maximizable
+	 */
+	public void setMaximizable(boolean maximizable);
 }

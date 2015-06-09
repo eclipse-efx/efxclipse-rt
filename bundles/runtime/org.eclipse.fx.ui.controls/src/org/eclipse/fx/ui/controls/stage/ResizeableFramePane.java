@@ -493,7 +493,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		this.resizeable.set(resizable);
 	}
 
-	final int width = 5;
+	final int width = 10;
 
 	@Override
 	protected void layoutChildren() {

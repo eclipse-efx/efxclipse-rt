@@ -60,30 +60,44 @@ public class DefaultFramePane extends ResizeableFramePane {
 	private TitleAreaNode dialogAreaNode;
 
 	/**
-	 * Create a default window pane
+	 * Create a default (heavyweight) window pane
 	 */
 	public DefaultFramePane() {
 		this(null);
 	}
-	
+
+	/**
+	 * Create a new pane
+	 * 
+	 * @param lightweight
+	 *            <code>true</code> to make it lightweight
+	 */
 	public DefaultFramePane(boolean lightweight) {
-		this(null,lightweight);
+		this(null, lightweight);
 	}
 
 	/**
-	 * Create a default window pane with a default client area as
+	 * Create a default window pane (heavyweight) with a default client area as
 	 * {@link #setContent(Node)}
 	 * 
-	 * @param clientArea
-	 *            a client area
+	 * @param contentContainer
+	 *            a contentContainer area
 	 */
 	public DefaultFramePane(@Nullable Pane contentContainer) {
-		this(contentContainer,false);
+		this(contentContainer, false);
 	}
-	
-	public DefaultFramePane(@Nullable Pane contentContainer, boolean lighteight) {
-		super(lighteight);
-		if( lighteight ) {
+
+	/**
+	 * Create a default frame pane
+	 * 
+	 * @param contentContainer
+	 *            the content container
+	 * @param lightweight
+	 *            <code>true</code> to make it lightweight
+	 */
+	public DefaultFramePane(@Nullable Pane contentContainer, boolean lightweight) {
+		super(lightweight);
+		if (lightweight) {
 			setMinimizable(false);
 			setMaximizable(false);
 		}
@@ -133,11 +147,11 @@ public class DefaultFramePane extends ResizeableFramePane {
 	}
 
 	private void handleStageAttached() {
-		if( ! isLightweight() ) {
+		if (!isLightweight()) {
 			handleFocus(getStage().focusedProperty());
 			if (getStage().getModality() == Modality.WINDOW_MODAL) {
 				this.dialogAreaNode.getMinButton().setVisible(false);
-			}			
+			}
 		}
 	}
 
@@ -148,7 +162,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 	protected <N extends Node & TitleAreaNode> N createTitleBar() {
 		return (N) new TitleAreaNodeImpl();
 	}
-	
+
 	/**
 	 * Request the closing through the cancel icon in trim
 	 */
@@ -184,7 +198,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 			this.minButton.setFocusTraversable(false);
 			this.minButton.setOnAction(e -> minimize());
 			this.minButton.visibleProperty().bind(minimizableProperty());
-			
+
 			WindowButton maxButton = new WindowButton("maximize"); //$NON-NLS-1$
 			maxButton.setFocusTraversable(false);
 			maxButton.setOnAction(e -> maximize());
@@ -196,7 +210,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 
 			getItems().addAll(this.titleLabel, spacer, windowBtns);
 		}
-		
+
 		@Override
 		public StringProperty titleProperty() {
 			return this.titleLabel.textProperty();
@@ -228,6 +242,16 @@ public class DefaultFramePane extends ResizeableFramePane {
 		return this.clientArea;
 	}
 
+	/**
+	 * Update the client area node
+	 * 
+	 * @param o
+	 *            the property
+	 * @param oldClientArea
+	 *            the old value for the client area
+	 * @param newClientArea
+	 *            the new value for the client area
+	 */
 	protected void updateClientArea(ObservableValue<? extends Node> o, Node oldClientArea, Node newClientArea) {
 		if (oldClientArea != null) {
 			((Pane) lookup("#client-area")).getChildren().remove(oldClientArea); //$NON-NLS-1$
@@ -255,8 +279,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 		}
 	}
 
-	// FIXME Once the build server is on u40
-	// @Override
+	@Override
 	public String getUserAgentStylesheet() {
 		return DefaultFramePane.class.getResource("window.css").toExternalForm(); //$NON-NLS-1$
 	}
