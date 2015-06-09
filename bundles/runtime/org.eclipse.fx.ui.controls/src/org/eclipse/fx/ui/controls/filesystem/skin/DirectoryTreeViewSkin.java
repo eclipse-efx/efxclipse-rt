@@ -78,7 +78,6 @@ public class DirectoryTreeViewSkin extends
 		return e.getName();
 	}
 
-	@SuppressWarnings("null")
 	private void handleSelectionChange(Observable o) {
 		this.selectedItems.setAll(this.tree.getSelectionModel()
 				.getSelectedItems().stream().map(t -> t.getValue())

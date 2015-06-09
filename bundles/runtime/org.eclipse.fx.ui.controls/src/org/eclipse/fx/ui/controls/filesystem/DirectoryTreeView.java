@@ -109,8 +109,7 @@ public class DirectoryTreeView extends Control {
 		this.iconSizeProperty().set(iconSize);
 	}
 
-	// Requires 8u40 to compile
-	// @Override
+	@Override
 	public final String getUserAgentStylesheet() {
 		return DirectoryView.class.getResource("skin/default.css") //$NON-NLS-1$
 				.toExternalForm();
