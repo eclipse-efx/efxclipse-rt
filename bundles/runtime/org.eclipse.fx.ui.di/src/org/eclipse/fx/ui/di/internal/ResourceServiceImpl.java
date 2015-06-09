@@ -22,7 +22,7 @@ import javafx.scene.image.Image;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
-import org.eclipse.fx.osgi.util.LoggerCreator;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.di.ResourceProviderService;
 import org.eclipse.fx.ui.di.ResourceService;
 import org.eclipse.jdt.annotation.NonNull;
