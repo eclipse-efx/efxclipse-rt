@@ -78,6 +78,8 @@ import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.restart.LifecycleRV;
 import org.eclipse.fx.ui.services.restart.RestartService;
+import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
+import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultProgressState;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.base.internal.Activator;
 import org.eclipse.fx.ui.workbench.base.internal.LoggerProviderImpl;
@@ -201,6 +203,18 @@ public abstract class AbstractE4Application implements IApplication {
 			throw new IllegalStateException("Core services not available. Please make sure that a declarative service implementation (such as the bundle 'org.eclipse.equinox.ds') is available!"); //$NON-NLS-1$
 		}
 
+		
+		StartupProgressTrackerService startupProgressTrackerService = appContext.get(StartupProgressTrackerService.class);
+		if( startupProgressTrackerService != null ) {
+			try {
+				ContextInjectionFactory.inject(startupProgressTrackerService, appContext);	
+			} catch( Throwable t ) {
+				LOGGER.error("Could not fully initialize the startup tracker", t); //$NON-NLS-1$
+			}
+			
+			startupProgressTrackerService.stateReached(DefaultProgressState.DI_SYSTEM_INITIALIZED);	
+		}
+		
 		// Get the factory to create DI instances with
 		IContributionFactory factory = (IContributionFactory) appContext.get(IContributionFactory.class.getName());
 
@@ -215,6 +229,11 @@ public abstract class AbstractE4Application implements IApplication {
 				rv = invokePostContextCreate(appContext);
 			}
 		}
+		
+		if( startupProgressTrackerService != null ) {
+			startupProgressTrackerService.stateReached(DefaultProgressState.POST_CONTEXT_LF_FINISHED);	
+		}
+		
 		switch (rv) {
 		case RESTART_CLEAR_STATE:
 			RestartPreferenceUtil prefUtil = ContextInjectionFactory.make(RestartPreferenceUtil.class, appContext);

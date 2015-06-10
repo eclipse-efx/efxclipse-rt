@@ -30,6 +30,8 @@ import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.osgi.util.AbstractJFXApplication;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
+import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
+import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultProgressState;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
@@ -90,13 +92,20 @@ public class E4Application extends AbstractE4Application {
 	public Object start(IApplicationContext context) throws Exception {
 		SELF = this;
 		this.applicationContext = context;
-		this.applicationContext.applicationRunning();
-
+		
 		Bundle b = FrameworkUtil.getBundle(AbstractJFXApplication.class);
 		BundleContext bundleContext = b.getBundleContext();
 		ServiceReference<EventAdmin> ref = bundleContext.getServiceReference(EventAdmin.class);
 		if (ref != null) {
 			this.eventAdmin = bundleContext.getService(ref);
+		}
+		
+		ServiceReference<StartupProgressTrackerService> serviceReference = bundleContext.getServiceReference(StartupProgressTrackerService.class);
+		if( serviceReference != null ) {
+			bundleContext.getService(serviceReference).osgiApplicationLaunched(this.applicationContext);
+		} else {
+			// if the service is not available we make sure to bring the splash down
+			this.applicationContext.applicationRunning();
 		}
 
 		launchE4JavaFxApplication();
@@ -125,7 +134,14 @@ public class E4Application extends AbstractE4Application {
 	 *            {@link Application}.
 	 */
 	public void jfxStart(IApplicationContext context, Application jfxApplication, Stage primaryStage) {
+		Bundle b = FrameworkUtil.getBundle(AbstractJFXApplication.class);
+		BundleContext bundleContext = b.getBundleContext();
 
+		ServiceReference<StartupProgressTrackerService> serviceReference = bundleContext.getServiceReference(StartupProgressTrackerService.class);
+		if( serviceReference != null ) {
+			bundleContext.getService(serviceReference).stateReached(DefaultProgressState.JAVAFX_INITIALIZED);
+		}
+		
 		Runnable startRunnable = new Runnable() {
 			@Override
 			public void run() {
@@ -254,6 +270,7 @@ public class E4Application extends AbstractE4Application {
 		// life-cycle manager and
 		// @PostContextCreate implementations.
 		this.workbenchContext.set(Application.class, jfxApplication);
+		this.workbenchContext.set(IApplicationContext.class, context);
 		this.workbenchContext.set(PRIMARY_STAGE_KEY, primaryStage);
 		this.workbench = createE4Workbench(context, this.workbenchContext);
 		return this.workbench != null;
@@ -303,10 +320,16 @@ public class E4Application extends AbstractE4Application {
 	 *            the {@link IApplicationContext}.
 	 */
 	protected void postJfxStarted(final IApplicationContext context) {
-		context.applicationRunning();
-
 		final Map<String, Object> map = new HashMap<String, Object>();
 		sendEvent(Constants.APPLICATION_LAUNCHED, map);
+		
+		Bundle b = FrameworkUtil.getBundle(AbstractJFXApplication.class);
+		BundleContext bundleContext = b.getBundleContext();
+
+		ServiceReference<StartupProgressTrackerService> serviceReference = bundleContext.getServiceReference(StartupProgressTrackerService.class);
+		if( serviceReference != null ) {
+			bundleContext.getService(serviceReference).stateReached(DefaultProgressState.WORKBENCH_GUI_SHOWING);
+		}
 	}
 
 	@Override
