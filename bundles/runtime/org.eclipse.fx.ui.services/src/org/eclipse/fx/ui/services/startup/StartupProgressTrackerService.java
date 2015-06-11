@@ -64,7 +64,7 @@ public interface StartupProgressTrackerService {
 									 */
 		WORKBENCH_GUI_SHOWING,
 		/**
-		 * 
+		 * State reached when check for workspace could not be locked
 		 */
 		LOCATION_CHECK_FAILED
 	}
