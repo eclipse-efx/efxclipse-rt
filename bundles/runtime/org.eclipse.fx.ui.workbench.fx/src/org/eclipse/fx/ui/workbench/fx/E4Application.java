@@ -138,9 +138,13 @@ public class E4Application extends AbstractE4Application {
 		BundleContext bundleContext = b.getBundleContext();
 
 		ServiceReference<StartupProgressTrackerService> serviceReference = bundleContext.getServiceReference(StartupProgressTrackerService.class);
+		StartupProgressTrackerService service = null;
 		if( serviceReference != null ) {
-			bundleContext.getService(serviceReference).stateReached(DefaultProgressState.JAVAFX_INITIALIZED);
+			service = bundleContext.getService(serviceReference);
+			service.stateReached(DefaultProgressState.JAVAFX_INITIALIZED);
 		}
+		
+		StartupProgressTrackerService fservice = service;
 		
 		Runnable startRunnable = new Runnable() {
 			@Override
@@ -166,8 +170,13 @@ public class E4Application extends AbstractE4Application {
 				uiSync.syncExec(() -> {
 					E4Application.this.instanceLocation = (Location) wbContext.get(E4Workbench.INSTANCE_LOCATION);
 					try {
-						if (!checkInstanceLocation(E4Application.this.instanceLocation, wbContext))
+						if (!checkInstanceLocation(E4Application.this.instanceLocation, wbContext)) {
+							if( fservice != null ) {
+								fservice.stateReached(DefaultProgressState.LOCATION_CHECK_FAILED);
+							}
 							return;
+						}
+							
 						// Create and run the UI (if any)
 						workbench.createAndRunUI(E4Application.this.workbench.getApplication());
 					} finally {

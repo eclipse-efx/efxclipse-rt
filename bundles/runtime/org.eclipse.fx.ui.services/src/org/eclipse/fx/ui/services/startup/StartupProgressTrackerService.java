@@ -62,7 +62,11 @@ public interface StartupProgressTrackerService {
 		POST_CONTEXT_LF_FINISHED, /**
 									 * The workbench UI is shown
 									 */
-		WORKBENCH_GUI_SHOWING
+		WORKBENCH_GUI_SHOWING,
+		/**
+		 * 
+		 */
+		LOCATION_CHECK_FAILED
 	}
 
 	/**
