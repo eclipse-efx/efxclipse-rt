@@ -11,7 +11,8 @@
 package org.eclipse.fx.ui.workbench.services.lifecycle.internal;
 
 import java.lang.annotation.Annotation;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -20,6 +21,7 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.MContribution;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.fx.ui.workbench.services.ELifecycleService;
@@ -44,15 +46,17 @@ public class LifecycleServiceImpl implements ELifecycleService {
 	@Override
 	public void registerLifecycleURI(MUIElement element, String lifecycleURI) {
 		@SuppressWarnings("unchecked")
-		Set<@NonNull Object> contributions = (Set<@NonNull Object>) element.getTransientData().get(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY);
+		Map<@NonNull String,@NonNull Object> contributions = (Map<@NonNull String,@NonNull Object>) element.getTransientData().get(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY);
 		if (contributions == null) {
-			contributions = new HashSet<>();
+			contributions = new HashMap<>();
 			element.getTransientData().put(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY, contributions);
 		}
 
-		Object object = this.factory.create(lifecycleURI, this.app.getContext());
-		if (object != null) {
-			contributions.add(object);
+		if( ! contributions.containsKey(lifecycleURI) ) {
+			Object object = this.factory.create(lifecycleURI, this.app.getContext());
+			if (object != null) {
+				contributions.put(lifecycleURI,object);
+			}
 		}
 	}
 
@@ -62,17 +66,36 @@ public class LifecycleServiceImpl implements ELifecycleService {
 	}
 
 	private static boolean validateLifecycleAnnotation(Class<? extends Annotation> clazz, IEclipseContext parentContext, IEclipseContext partContext, MUIElement part) {
+		// If the object itself is a contribution we can check the
+		// lifecycle stuff as well on the contribution
+		if( part instanceof MContribution ) {
+			MContribution c = (MContribution) part;
+			if( c.getObject() != null ) {
+				Object invokeResult = ContextInjectionFactory.invoke(c.getObject(), clazz, parentContext, partContext, Boolean.TRUE);
+				if (invokeResult != null && invokeResult instanceof Boolean) {// supports
+					// void
+					// methods
+					boolean res = ((Boolean) invokeResult).booleanValue();
+					if (!res) {
+						return false;
+					}
+				}
+			}
+		}
+
 		@SuppressWarnings("unchecked")
-		Set<@NonNull Object> set = (Set<@NonNull Object>) part.getTransientData().get(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY);
-		if (set != null) {
-			for (Object object : set) {
+		Map<@NonNull String,@NonNull Object> contributions = (Map<@NonNull String,@NonNull Object>) part.getTransientData().get(LifecycleAddon.LIFECYCLE_TRANSIENT_KEY);
+		if (contributions != null) {
+			for (Object object : contributions.values()) {
 				Object invokeResult = ContextInjectionFactory.invoke(object, clazz, parentContext, partContext, Boolean.TRUE);
 				if (invokeResult != null && invokeResult instanceof Boolean) {// supports
 																				// void
 																				// methods
 					boolean res = ((Boolean) invokeResult).booleanValue();
-					if (!res)
+					if (!res) {
 						return false;
+					}
+						
 				}
 			}
 		}
