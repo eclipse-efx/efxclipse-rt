@@ -100,6 +100,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -247,6 +248,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private static final String KEY_STAGE_DECORATION = "efx.window.decoration.fxml"; //$NON-NLS-1$
 
 		private static final String KEY_STAGE_STYLE = "efx.window.stagestyle"; //$NON-NLS-1$
+		private static final String KEY_STAGE_MODALITY = "efx.window.stagemodality"; //$NON-NLS-1$
 		private static final String KEY_STAGE_UNDECORATED_DEPRECATED = "efx.window.undecorated"; //$NON-NLS-1$
 
 		private static final String KEY_STAGE_ROOT_CONTENT = "efx.window.root.fxml"; //$NON-NLS-1$
@@ -388,6 +390,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					this.mWindow.getTags().remove(BaseWindowRenderer.TAG_SHELLMAXIMIZED);
 				}
 			});
+			if( this.mWindow.getPersistedState().containsKey(KEY_STAGE_MODALITY) ) {
+				this.stage.initModality(Modality.valueOf(this.mWindow.getPersistedState().get(KEY_STAGE_MODALITY)));
+			}
+			
 			this.stage.fullScreenProperty().addListener(this::handleFullscreen);
 
 			if (this.dispatcher != null) {
@@ -505,6 +511,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private void handledFocus(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 			if (newValue.booleanValue()) {
 				activateWindow();
+			} else {
+				deactivate();
 			}
 		}
 
@@ -567,7 +575,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					Collections.reverse(newTreeReversed);
 
 					this.queuedTree = activationTree;
-
+					
 					// Delay the execution maybe there's an intermediate
 					// state we are not interested in
 					// http://javafx-jira.kenai.com/browse/RT-24069
