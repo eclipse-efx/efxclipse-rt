@@ -17,6 +17,11 @@ import java.util.List;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -153,5 +158,30 @@ public class Util {
 			}
 		}
 		return rv;
+	}
+
+	/**
+	 * Get the window property of a node
+	 * 
+	 * @param n
+	 *            the node the window property to observe
+	 * @return the property
+	 */
+	public static ObservableValue<Window> windowProperty(Node n) {
+		ObjectProperty<Window> w = new SimpleObjectProperty<Window>();
+
+		ChangeListener<Window> l = (o, oldV, newV) -> w.set(newV);
+
+		n.sceneProperty().addListener((o, oldV, newV) -> {
+			if (oldV != null) {
+				oldV.windowProperty().removeListener(l);
+			}
+
+			if (newV != null) {
+				newV.windowProperty().addListener(l);
+			}
+		});
+
+		return w;
 	}
 }
