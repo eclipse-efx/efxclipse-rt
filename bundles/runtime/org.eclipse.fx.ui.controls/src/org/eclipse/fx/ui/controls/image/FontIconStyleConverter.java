@@ -14,7 +14,7 @@ import javafx.css.ParsedValue;
 import javafx.css.StyleConverter;
 import javafx.scene.text.Font;
 
-import com.sun.javafx.Utils;
+//import com.sun.javafx.Utils;
 
 /**
  * Convert the string into an icon
@@ -25,7 +25,7 @@ public class FontIconStyleConverter extends StyleConverter<String, FontIcon> {
 	@Override
 	public FontIcon convert(ParsedValue<String, FontIcon> value, Font font) {
 		String v = value.getValue();
-		v = Utils.convertUnicode(v);
+//		v = Utils.convertUnicode(v);
 		
 		if (v.length() == 1) {
 			char c = v.charAt(0);
