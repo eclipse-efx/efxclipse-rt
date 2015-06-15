@@ -196,6 +196,10 @@ public class StyledTextArea extends Control {
 		} else {
 			// move selection to keep same text selected
 			setSelection(new TextSelection(getSelection().offset + newLength - replacedLength, getSelection().length)/*, true, false*/);
+			if( getSelection().length > 0 ) {
+				int delta = this.lastTextChangeNewCharCount - this.lastTextChangeReplaceCharCount;
+				this.caretOffsetProperty.set(Math.max(0,Math.min(getCharCount()-1,getCaretOffset() + delta)));
+			}
 		}
 	}
 
