@@ -14,6 +14,11 @@ package org.eclipse.fx.ui.controls.styledtext;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 
+import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
+import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -28,11 +33,6 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.DataFormat;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
-
-import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
-import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Control which allows to implemented a code-editor
@@ -155,6 +155,13 @@ public class StyledTextArea extends Control {
 		// lastTextChangeReplaceCharCount = event.replaceCharCount;
 
 		this.renderer.textChanging(event);
+		
+		// Update the caret offset if it is greater than the length of the content.
+		// This is necessary since style range API may be called between the
+		// handleTextChanging and handleTextChanged events and this API sets the
+		// caretOffset.
+		int newEndOfText = getContent().getCharCount() - event.replaceCharCount + event.newCharCount;
+		if (getCaretOffset() > newEndOfText) setCaretOffset(newEndOfText/*, SWT.DEFAULT*/); 
 	}
 
 	void handleTextSet(TextChangedEvent event) {
