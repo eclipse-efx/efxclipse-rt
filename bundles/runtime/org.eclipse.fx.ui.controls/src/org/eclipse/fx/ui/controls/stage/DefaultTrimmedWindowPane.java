@@ -312,7 +312,7 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 		close();
 	}
 	
-	class TitleAreaNodeImpl extends ToolBar implements TitleAreaNode {
+	class TitleAreaNodeImpl extends HBox implements TitleAreaNode {
 		private static final int HEADER_HEIGHT = 28;
 		private Label titleLabel;
 		private WindowButton minButton;
@@ -348,7 +348,7 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 			windowBtns.getStyleClass().add("window-buttons"); //$NON-NLS-1$
 			windowBtns.getChildren().addAll(this.minButton, maxButton, closeButton);
 
-			getItems().addAll(this.titleLabel, spacer, windowBtns);
+			getChildren().addAll(this.titleLabel, spacer, windowBtns);
 		}
 		
 		
