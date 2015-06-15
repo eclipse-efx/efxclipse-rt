@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 
 /**
  * A trimmed window who delegates to the real window
+ * 
+ * @since 2.0
  */
 public class HeavyWeightTrimmedWindow extends BorderPane implements TrimmedWindow {
 	private BorderPane trimPane;
