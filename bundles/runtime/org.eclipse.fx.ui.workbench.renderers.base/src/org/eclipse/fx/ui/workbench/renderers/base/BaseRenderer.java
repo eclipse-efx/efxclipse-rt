@@ -80,11 +80,13 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	// /**
 	// * Key used to store the localized label in the context
 	// */
-	//	public static final String ATTRIBUTE_localizedLabel = "localizedLabel"; //$NON-NLS-1$
+	// public static final String ATTRIBUTE_localizedLabel = "localizedLabel";
+	// //$NON-NLS-1$
 	// /**
 	// * Key used to store the localized tooltip in the context
 	// */
-	//	public static final String ATTRIBUTE_localizedTooltip = "localizedTooltip"; //$NON-NLS-1$
+	// public static final String ATTRIBUTE_localizedTooltip =
+	// "localizedTooltip"; //$NON-NLS-1$
 
 	@Inject
 	IEclipseContext _context; // The
@@ -389,7 +391,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	@SuppressWarnings("null")
 	void handleEvent(Event event) {
-//		System.err.println("EVENT: " + this + " ===> " + event);
+		// System.err.println("EVENT: " + this + " ===> " + event);
 		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
 		if (!(changedObj instanceof MUIElement)) {
 			return;
@@ -434,7 +436,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 							Entry<String, String> entry = (Entry<String, String>) newValue;
 							ctx.set(attributeName + "_" //$NON-NLS-1$
 									+ entry.getKey(), entry.getValue());
-						} else if( attributeName.equals(UIEvents.ApplicationElement.TAGS) ) {
+						} else if (attributeName.equals(UIEvents.ApplicationElement.TAGS)) {
 							ctx.set(ApplicationElement.TAGS, new ArrayList<>(e.getTags()));
 						} else {
 							ctx.set(attributeName, newValue);
@@ -673,17 +675,17 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 				ps.activate(element, requiresFocus);
 		}
 	}
-	
+
 	private static final void printContextHierarchy(Logger logger, IEclipseContext c) {
-		if( logger.isEnabled(Level.DEBUG) ) {
+		if (logger.isEnabled(Level.DEBUG)) {
 			IEclipseContext context = c;
 			logger.debug("=== Context ==="); //$NON-NLS-1$
 			do {
-				logger.debug(context+""); //$NON-NLS-1$
-			} while( (context = context.getParent()) != null );			
+				logger.debug(context + ""); //$NON-NLS-1$
+			} while ((context = context.getParent()) != null);
 		}
 	}
-	
+
 	@Override
 	public final void processContent(@NonNull M element) {
 		try {
@@ -750,7 +752,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		List<MUIElement> list = (List<MUIElement>) container.eGet(eElement.eContainmentFeature());
 		int idx = 0;
 		for (MUIElement u : list) {
-			if( u == null ) {
+			if (u == null) {
 				getLogger().error("Found a null element in " + list); //$NON-NLS-1$
 				continue;
 			}
@@ -849,6 +851,28 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 				this.currentActiveLeafRAT = null;
 				return false;
 			}
+		}
+	}
+
+	/**
+	 * Populate the context with all interfaces from this model element type
+	 * 
+	 * @param element
+	 *            the element
+	 * @param context
+	 *            the context
+	 * @param clazz
+	 *            the root interface type
+	 */
+	public static <M extends MApplicationElement> void populateModelInterfaces(M element, IEclipseContext context, Class<M> clazz) {
+		populateModelInterfaces(element, context, clazz.getInterfaces());
+	}
+
+	private static void populateModelInterfaces(MApplicationElement element, IEclipseContext context, Class<?>[] interfaces) {
+		for (Class<?> intf : interfaces) {
+			context.set(intf.getName(), element);
+
+			populateModelInterfaces(element, context, intf.getInterfaces());
 		}
 	}
 }
