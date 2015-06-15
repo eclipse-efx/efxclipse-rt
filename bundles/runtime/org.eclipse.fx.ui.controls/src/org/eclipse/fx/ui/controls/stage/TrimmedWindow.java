@@ -13,11 +13,11 @@ package org.eclipse.fx.ui.controls.stage;
 import javafx.scene.Node;
 
 /**
- * Optional interface implemented by a window pane to support adding trim area
+ * Interface implemented by a window pane to support adding trim area
  * 
  * @since 2.0
  */
-public interface TrimmedWindow {
+public interface TrimmedWindow extends Window {
 	/**
 	 * Set a top trim node
 	 * 
