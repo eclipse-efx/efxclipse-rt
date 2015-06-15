@@ -12,6 +12,7 @@ package org.eclipse.fx.ui.workbench.renderers.base;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
+import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
@@ -26,6 +27,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolControl;
 public abstract class BaseToolControlRenderer<N> extends BaseRenderer<MToolControl, WToolControl<N>> {
 	private static final String LOCAL_CONTEXT = "efx_toolcontrol_context"; //$NON-NLS-1$
 
+	@SuppressWarnings("null")
 	@Override
 	protected void doProcessContent(MToolControl element) {
 		WToolControl<N> widget = getWidget(element);
@@ -46,7 +48,7 @@ public abstract class BaseToolControlRenderer<N> extends BaseRenderer<MToolContr
 			cl = cl.getSuperclass();
 		} while (!cl.getName().equals("java.lang.Object")); //$NON-NLS-1$
 		
-		context.set(MToolControl.class.getName(), element);
+		populateModelInterfaces(element, context, MToolControl.class);
 
 		IContributionFactory contributionFactory = (IContributionFactory) context.get(IContributionFactory.class.getName());
 		Object newPart = contributionFactory.create(element.getContributionURI(), context);
