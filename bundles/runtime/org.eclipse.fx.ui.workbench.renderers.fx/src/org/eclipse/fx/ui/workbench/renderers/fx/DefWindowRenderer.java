@@ -408,7 +408,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			if (this.rootFXML != null) {
 				this.rootPane = createRootContainer(stage);
-				((org.eclipse.fx.ui.controls.stage.Window) this.rootPane).setClientArea(this.trimPane);
+				((org.eclipse.fx.ui.controls.stage.Frame) this.rootPane).setClientArea(this.trimPane);
 			} else {
 				BorderPane rootPane = new BorderPane() {
 					@Override
