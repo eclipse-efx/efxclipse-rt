@@ -45,6 +45,8 @@ public abstract class BaseToolControlRenderer<N> extends BaseRenderer<MToolContr
 			context.set(cl.getName(), widget.getWidget());
 			cl = cl.getSuperclass();
 		} while (!cl.getName().equals("java.lang.Object")); //$NON-NLS-1$
+		
+		context.set(MToolControl.class.getName(), element);
 
 		IContributionFactory contributionFactory = (IContributionFactory) context.get(IContributionFactory.class.getName());
 		Object newPart = contributionFactory.create(element.getContributionURI(), context);
