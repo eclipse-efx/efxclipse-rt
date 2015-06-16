@@ -907,7 +907,7 @@ class DefaultContent implements StyledTextContent {
 		TextChangedEvent textSet = TextChangedEvent.textSet(this);
 
 		for (TextChangeListener l : this.textListeners) {
-			l.textChanged(textSet);
+			l.textSet(textSet);
 		}
 	}
 
