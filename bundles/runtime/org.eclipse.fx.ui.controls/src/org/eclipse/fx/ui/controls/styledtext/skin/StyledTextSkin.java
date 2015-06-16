@@ -759,7 +759,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		}
 
 		public void refresh() {
-			getChildren().filtered(n -> n instanceof LineInfo).forEach( n -> ((LineInfo)n).calculateContent());
+			getChildren().stream().filter(n -> n instanceof LineInfo).forEach( n -> ((LineInfo)n).calculateContent());
 		}
 	}
 
