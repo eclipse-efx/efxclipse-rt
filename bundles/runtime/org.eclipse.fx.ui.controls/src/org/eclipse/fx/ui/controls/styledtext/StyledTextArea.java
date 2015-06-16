@@ -170,11 +170,17 @@ public class StyledTextArea extends Control {
 	}
 
 	void handleTextSet(TextChangedEvent event) {
+		int newCharCount = getCharCount();
+		if( this.caretOffsetProperty.get() > newCharCount ) {
+			this.caretOffsetProperty.set(newCharCount);
+		}
+		
 		// in SWT this is done in reset()
 		clearSelection();
 		
-//		int newCharCount = getCharCount();
-//		lastCharCount = newCharCount;
+		if( getSkin() instanceof StyledTextSkin ) {
+			((StyledTextSkin)getSkin()).recalculateItems();
+		}
 	}
 
 	void handleTextChanged(TextChangedEvent event) {
