@@ -8,16 +8,61 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.core.log;
+package org.eclipse.fx.core.internal;
+
+import java.util.WeakHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Handler;
 
 import javax.inject.Provider;
 
 import org.eclipse.fx.core.RankedService;
+import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.LoggerFactory;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- * Concreate implementation for a logger factory using {@link java.util.logging.Logger}
+ * Concrete implementation for a logger factory using
+ * {@link java.util.logging.Logger}
  */
+@Component(service = LoggerFactory.class)
 public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory>, RankedService {
+
+	private CopyOnWriteArrayList<java.util.logging.Handler> handlers = new CopyOnWriteArrayList<>();
+	private WeakHashMap<LoggerImpl, Boolean> activeLoggers = new WeakHashMap<>();
+	
+	/**
+	 * Register a handler
+	 * 
+	 * @param handler
+	 *            the new handler
+	 */
+	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
+	public void registerHandler(Handler handler) {
+		this.handlers.add(handler);
+		synchronized (this.activeLoggers) {
+			this.activeLoggers.keySet().forEach( (l) -> l.getLogger().addHandler(handler));
+		}
+	}
+	
+	/**
+	 * Unregister a handler
+	 * 
+	 * @param handler
+	 *            the new handler
+	 */
+	public void unregisterHandler(Handler handler) {
+		synchronized (this.handlers) {
+			this.handlers.add(handler);
+			synchronized (this.activeLoggers) {
+				this.activeLoggers.keySet().forEach( (l) -> l.getLogger().removeHandler(handler));
+			}
+		}
+	}
 
 	@Override
 	public int getRanking() {
@@ -31,20 +76,28 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 
 	@Override
 	public Logger createLogger(String name) {
-		return new LoggerImpl(name);
+		LoggerImpl loggerImpl = new LoggerImpl(name);
+		if( ! this.handlers.isEmpty() ) {
+			java.util.logging.Logger logger = loggerImpl.getLogger();
+			this.handlers.forEach(logger::addHandler);
+			synchronized (this.activeLoggers) {
+				this.activeLoggers.put(loggerImpl, Boolean.TRUE);				
+			}
+		}
+		return loggerImpl;
 	}
 
 	static class LoggerImpl implements Logger {
 		private java.util.logging.Logger logger;
 
 		private String name;
-
+		
 		public LoggerImpl(String name) {
 			this.name = name;
 		}
 
-		private java.util.logging.Logger getLogger() {
-			if( this.logger == null ) {
+		java.util.logging.Logger getLogger() {
+			if (this.logger == null) {
 				this.logger = java.util.logging.Logger.getLogger(this.name);
 			}
 			return this.logger;
@@ -74,13 +127,12 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			java.util.logging.Level jlevel = toLogLevel(level);
 
 			StackTraceElement frame = null;
-			StackTraceElement[] e  = Thread.currentThread().getStackTrace();
+			StackTraceElement[] e = Thread.currentThread().getStackTrace();
 			if (e.length > 2) {
 				for (int i = 2; i < e.length; i++) {
 					if (getClass().getName().equals(e[i].getClassName())) {
 						continue;
-					}
-					else {
+					} else {
 						frame = e[i];
 						break;
 					}
@@ -90,15 +142,13 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			if (t == null) {
 				if (frame != null) {
 					getLogger().logp(jlevel, frame.getClassName(), frame.getMethodName(), message);
-				}
-				else {
+				} else {
 					getLogger().log(jlevel, message);
 				}
 			} else {
 				if (frame != null) {
 					getLogger().logp(jlevel, frame.getClassName(), frame.getMethodName(), message, t);
-				}
-				else {
+				} else {
 					getLogger().log(jlevel, message, t);
 				}
 			}
@@ -177,7 +227,6 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			logInternal(Level.INFO, message, null);
 		}
 
-
 		@Override
 		public void info(String message, Throwable t) {
 			if (!isEnabled(Level.INFO)) {
@@ -209,7 +258,6 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			}
 			logInternal(Level.ERROR, message, null);
 		}
-
 
 		@Override
 		public void error(String message, Throwable t) {

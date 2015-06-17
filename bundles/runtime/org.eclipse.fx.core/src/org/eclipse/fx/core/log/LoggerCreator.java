@@ -11,6 +11,7 @@
 package org.eclipse.fx.core.log;
 
 import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.internal.JUtilLoggerFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
