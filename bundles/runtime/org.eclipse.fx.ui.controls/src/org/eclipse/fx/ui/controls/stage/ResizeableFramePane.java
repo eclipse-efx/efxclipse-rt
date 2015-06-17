@@ -102,13 +102,15 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		public void handle(MouseEvent event) {
 			EventType<? extends MouseEvent> type = event.getEventType();
 
-			if (type == MouseEvent.MOUSE_PRESSED) {
+			if( type == MouseEvent.MOUSE_RELEASED ) {
+				this.dragAnchor = null;
+			} else if (type == MouseEvent.MOUSE_PRESSED) {
 				this.x = getStage().getX();
 				this.y = getStage().getY();
 				this.width = getStage().getWidth();
 				this.height = getStage().getHeight();
 				this.dragAnchor = new Point2D(event.getScreenX(), event.getScreenY());
-			} else if (type == MouseEvent.MOUSE_DRAGGED) {
+			} else if (type == MouseEvent.MOUSE_DRAGGED && this.dragAnchor != null) {
 				if (!isLightweight()) {
 					double deltaX = event.getScreenX() - this.dragAnchor.getX();
 					double deltaY = event.getScreenY() - this.dragAnchor.getY();
@@ -205,6 +207,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		ResizeHandler resizeHandler = new ResizeHandler(Location.BOTTOM);
 		this.resizeBottom.setOnMousePressed(resizeHandler);
 		this.resizeBottom.setOnMouseDragged(resizeHandler);
+		this.resizeBottom.setOnMouseReleased(resizeHandler);
 	}
 
 	private void initResizeTop() {
@@ -215,6 +218,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		ResizeHandler h = new ResizeHandler(Location.TOP);
 		this.resizeTop.setOnMousePressed(h);
 		this.resizeTop.setOnMouseDragged(h);
+		this.resizeTop.setOnMouseReleased(h);
 	}
 
 	private void initResizeLeft() {
@@ -225,6 +229,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		ResizeHandler h = new ResizeHandler(Location.LEFT);
 		this.resizeLeft.setOnMousePressed(h);
 		this.resizeLeft.setOnMouseDragged(h);
+		this.resizeLeft.setOnMouseReleased(h);
 	}
 
 	private void initResizeRight() {
@@ -235,6 +240,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		ResizeHandler h = new ResizeHandler(Location.RIGHT);
 		this.resizeRight.setOnMousePressed(h);
 		this.resizeRight.setOnMouseDragged(h);
+		this.resizeRight.setOnMouseReleased(h);
 	}
 
 	private void initResizeCornerRightBottom() {
@@ -245,6 +251,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		ResizeHandler h = new ResizeHandler(Location.BOTTOM, Location.RIGHT);
 		this.resizeCornerRightBottom.setOnMousePressed(h);
 		this.resizeCornerRightBottom.setOnMouseDragged(h);
+		this.resizeCornerRightBottom.setOnMouseReleased(h);
 	}
 
 	private void initResizeCornerRightTop() {
@@ -255,6 +262,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		ResizeHandler h = new ResizeHandler(Location.TOP, Location.RIGHT);
 		this.resizeCornerRightTop.setOnMousePressed(h);
 		this.resizeCornerRightTop.setOnMouseDragged(h);
+		this.resizeCornerRightTop.setOnMouseReleased(h);
 	}
 
 	private void initResizeCornerLeftBottom() {
@@ -265,6 +273,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		ResizeHandler h = new ResizeHandler(Location.BOTTOM, Location.LEFT);
 		this.resizeCornerLeftBottom.setOnMousePressed(h);
 		this.resizeCornerLeftBottom.setOnMouseDragged(h);
+		this.resizeCornerLeftBottom.setOnMouseReleased(h);
 	}
 
 	private void initResizeCornerLeftTop() {
@@ -275,6 +284,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		ResizeHandler h = new ResizeHandler(Location.TOP, Location.LEFT);
 		this.resizeCornerLeftTop.setOnMousePressed(h);
 		this.resizeCornerLeftTop.setOnMouseDragged(h);
+		this.resizeCornerLeftTop.setOnMouseReleased(h);
 	}
 
 	/**
