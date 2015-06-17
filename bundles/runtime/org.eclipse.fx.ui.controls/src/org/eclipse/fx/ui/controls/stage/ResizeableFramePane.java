@@ -10,12 +10,14 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.stage;
 
+import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -27,6 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * A window pane who has handles at the borders to resize it
@@ -53,6 +56,8 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	private BooleanProperty resizeable = new SimpleBooleanProperty(this, "resizeable", true); //$NON-NLS-1$
 	private ReadOnlyBooleanWrapper lightweight = new ReadOnlyBooleanWrapper(this, "lightweight", false); //$NON-NLS-1$
 
+	private ReadOnlyBooleanWrapper maximized = new ReadOnlyBooleanWrapper(this, "maximized", false); //$NON-NLS-1$
+	
 	enum Location {
 		TOP, LEFT, RIGHT, BOTTOM
 	}
@@ -114,6 +119,8 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		}
 	}
 
+	private ObservableValue<Window> windowProperty; 
+	
 	/**
 	 * Create a new pane which is used in a heavy-weight dialog
 	 */
@@ -132,6 +139,29 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		Node windowNode = createWindowArea();
 		getChildren().add(windowNode);
 		initResize();
+		if( ! lighweight ) {
+			this.windowProperty = org.eclipse.fx.ui.controls.Util.windowProperty(this); 
+			this.windowProperty.addListener( (o, oldV, newV) -> {
+				if( oldV != null ) {
+					oldV.widthProperty().removeListener(this::handleStageChange);
+					oldV.heightProperty().removeListener(this::handleStageChange);
+					oldV.xProperty().removeListener(this::handleStageChange);
+					oldV.yProperty().removeListener(this::handleStageChange);
+				}
+				
+				if( newV != null ) {
+					newV.widthProperty().addListener(this::handleStageChange);
+					newV.heightProperty().addListener(this::handleStageChange);
+					newV.xProperty().addListener(this::handleStageChange);
+					newV.yProperty().addListener(this::handleStageChange);
+				}
+			} );
+		}
+	}
+	
+	private void handleStageChange(Observable o, Number oldVal, Number newVal) {
+		getStyleClass().remove("window-maximized"); //$NON-NLS-1$
+		this.maximized.set(false);
 	}
 
 	private void initResize() {
@@ -243,7 +273,12 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		} );
 		node.setOnMouseClicked(e -> {
 			if (e.getClickCount() > 1) {
-				maximize();
+				if( this.maximized.get() ) {
+					restore();
+				} else {
+					maximize();
+				}
+				
 			}
 		} );
 	}
@@ -398,25 +433,43 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 			Stage stage = getStage();
 			final double stageY = stage.getY();
 			final Screen screen = Screen.getScreensForRectangle(stage.getX(), stageY, 1, 1).get(0);
-			Rectangle2D bounds = screen.getVisualBounds();
-			if (bounds.getMinX() == stage.getX() && bounds.getMinY() == stageY && bounds.getWidth() == stage.getWidth() && bounds.getHeight() == stage.getHeight()) {
-				if (this.backupWindowBounds != null) {
-					stage.setX(this.backupWindowBounds.getMinX());
-					stage.setY(this.backupWindowBounds.getMinY());
-					stage.setWidth(this.backupWindowBounds.getWidth());
-					stage.setHeight(this.backupWindowBounds.getHeight());
-				}
-			} else {
-				this.backupWindowBounds = new Rectangle2D(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
-				final double newStageY = screen.getVisualBounds().getMinY();
-				stage.setX(screen.getVisualBounds().getMinX());
-				stage.setY(newStageY);
-				stage.setWidth(screen.getVisualBounds().getWidth());
-				stage.setHeight(screen.getVisualBounds().getHeight());
-			}
+			
+			this.backupWindowBounds = new Rectangle2D(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
+			final double newStageY = screen.getVisualBounds().getMinY();
+			stage.setX(screen.getVisualBounds().getMinX());
+			stage.setY(newStageY);
+			stage.setWidth(screen.getVisualBounds().getWidth());
+			stage.setHeight(screen.getVisualBounds().getHeight());
+			getStyleClass().add("window-maximized"); //$NON-NLS-1$
+//			stage.setMaximized(true);
+			this.maximized.set(true);
 		} else {
 			// We are embedded into a container do nothing
 		}
+	}
+	
+	/**
+	 * Restore the window to original size
+	 */
+	protected void restore() {
+		if( ! isLightweight() ) {
+			if (this.backupWindowBounds != null) {
+				Stage stage = getStage();
+				stage.setX(this.backupWindowBounds.getMinX());
+				stage.setY(this.backupWindowBounds.getMinY());
+				stage.setWidth(this.backupWindowBounds.getWidth());
+				stage.setHeight(this.backupWindowBounds.getHeight());
+				stage.setMaximized(false);
+				this.backupWindowBounds = null;
+			}			
+		}
+	}
+	
+	/**
+	 * @return The current state of the maximized property
+	 */
+	protected ReadOnlyBooleanProperty maximizedProperty() {
+		return this.maximized.getReadOnlyProperty();
 	}
 
 	/**
@@ -440,7 +493,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	protected void minimize() {
 		// We are bound to the stage
 		if (!isLightweight()) {
-			((Stage) getScene().getWindow()).setIconified(true);
+			getStage().setIconified(true);
 		} else {
 			// We are embedded into a container do nothing
 		}
