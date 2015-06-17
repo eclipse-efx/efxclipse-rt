@@ -14,14 +14,21 @@ import java.text.MessageFormat;
 
 import javax.inject.Provider;
 
+import org.apache.log4j.Appender;
 import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.fx.core.RankedService;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * Factory to create a logger backed by log4j
  */
+@Component(service = LoggerFactory.class, property = "service.ranking:Integer=1")
 public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory>, RankedService {
 
 	/**
@@ -29,9 +36,32 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 	 */
 	public Log4JLoggerFactory() {
 		String properties = System.getProperty("efxclipse.log4.properties"); //$NON-NLS-1$
-		if( properties != null ) {
-			PropertyConfigurator.configure( properties );
+		if (properties != null) {
+			PropertyConfigurator.configure(properties);
 		}
+	}
+
+	/**
+	 * Add an appender
+	 * 
+	 * @param appender
+	 *            the appender to add
+	 */
+	@SuppressWarnings("static-method")
+	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC, policyOption = ReferencePolicyOption.GREEDY)
+	public void registerAppender(Appender appender) {
+		org.apache.log4j.Logger.getRootLogger().addAppender(appender);
+	}
+
+	/**
+	 * Remove the appender
+	 * 
+	 * @param appender
+	 *            the appender to remove
+	 */
+	@SuppressWarnings("static-method")
+	public void unregisterAppender(Appender appender) {
+		org.apache.log4j.Logger.getRootLogger().addAppender(appender);
 	}
 
 	@Override
@@ -59,7 +89,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		}
 
 		private org.apache.log4j.Logger getLogger() {
-			if( this.logger == null ) {
+			if (this.logger == null) {
 				this.logger = org.apache.log4j.Logger.getLogger(this.name);
 			}
 			return this.logger;
@@ -97,7 +127,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		@Override
 		public void logf(Level level, String pattern, Object... args) {
 			org.apache.log4j.Level log4jLevel = toLog4JLevel(level);
-			if( getLogger().isEnabledFor(log4jLevel) ) {
+			if (getLogger().isEnabledFor(log4jLevel)) {
 				getLogger().log(log4jLevel, MessageFormat.format(pattern, args));
 			}
 		}
@@ -105,7 +135,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		@Override
 		public void logf(Level level, String pattern, Throwable t, Object... args) {
 			org.apache.log4j.Level log4jLevel = toLog4JLevel(level);
-			if( getLogger().isEnabledFor(log4jLevel) ) {
+			if (getLogger().isEnabledFor(log4jLevel)) {
 				getLogger().log(log4jLevel, MessageFormat.format(pattern, args), t);
 			}
 		}
@@ -125,61 +155,61 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		@SuppressWarnings("all")
 		@Override
 		public void info(String message) {
-			log(Level.INFO,message);
+			log(Level.INFO, message);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void warning(String message) {
-			log(Level.WARNING,message);
+			log(Level.WARNING, message);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void error(String message) {
-			log(Level.ERROR,message);
+			log(Level.ERROR, message);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void fatal(String message) {
-			log(Level.FATAL,message);
+			log(Level.FATAL, message);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void trace(String message, Throwable t) {
-			log(Level.TRACE,message,t);
+			log(Level.TRACE, message, t);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void debug(String message, Throwable t) {
-			log(Level.DEBUG,message,t);
+			log(Level.DEBUG, message, t);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void info(String message, Throwable t) {
-			log(Level.INFO,message,t);
+			log(Level.INFO, message, t);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void warning(String message, Throwable t) {
-			log(Level.WARNING,message,t);
+			log(Level.WARNING, message, t);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void error(String message, Throwable t) {
-			log(Level.ERROR,message,t);
+			log(Level.ERROR, message, t);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void fatal(String message, Throwable t) {
-			log(Level.FATAL,message,t);
+			log(Level.FATAL, message, t);
 		}
 
 		@SuppressWarnings("all")
@@ -191,67 +221,67 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		@SuppressWarnings("all")
 		@Override
 		public void debugf(String pattern, Object... args) {
-			logf(Level.DEBUG,pattern,args);
+			logf(Level.DEBUG, pattern, args);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void infof(String pattern, Object... args) {
-			logf(Level.INFO,pattern,args);
+			logf(Level.INFO, pattern, args);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void warningf(String pattern, Object... args) {
-			logf(Level.WARNING,pattern,args);
+			logf(Level.WARNING, pattern, args);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void errorf(String pattern, Object... args) {
-			logf(Level.ERROR,pattern,args);
+			logf(Level.ERROR, pattern, args);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void fatalf(String pattern, Object... args) {
-			logf(Level.FATAL,pattern,args);
+			logf(Level.FATAL, pattern, args);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void tracef(String pattern, Throwable t, Object... args) {
-			logf(Level.TRACE,pattern,t,args);
+			logf(Level.TRACE, pattern, t, args);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void debugf(String pattern, Throwable t, Object... args) {
-			logf(Level.DEBUG,pattern,t,args);
+			logf(Level.DEBUG, pattern, t, args);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void infof(String pattern, Throwable t, Object... args) {
-			logf(Level.INFO,pattern,t,args);
+			logf(Level.INFO, pattern, t, args);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void warningf(String pattern, Throwable t, Object... args) {
-			logf(Level.WARNING,pattern,t,args);
+			logf(Level.WARNING, pattern, t, args);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void errorf(String pattern, Throwable t, Object... args) {
-			logf(Level.ERROR,pattern,t,args);
+			logf(Level.ERROR, pattern, t, args);
 		}
 
 		@SuppressWarnings("all")
 		@Override
 		public void fatalf(String pattern, Throwable t, Object... args) {
-			logf(Level.FATAL,pattern,t,args);
+			logf(Level.FATAL, pattern, t, args);
 		}
 
 		@Override
