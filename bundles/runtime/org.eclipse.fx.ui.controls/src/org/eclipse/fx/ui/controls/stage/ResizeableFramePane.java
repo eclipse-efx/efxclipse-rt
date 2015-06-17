@@ -12,12 +12,17 @@ package org.eclipse.fx.ui.controls.stage;
 
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.css.CssMetaData;
+import javafx.css.SimpleStyleableDoubleProperty;
+import javafx.css.StyleConverter;
+import javafx.css.StyleableDoubleProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -37,6 +42,21 @@ import javafx.stage.Window;
  * @since 2.0
  */
 public abstract class ResizeableFramePane extends StackPane implements Frame {
+	private static final CssMetaData<ResizeableFramePane, Number> RESIZE_HANDLE_SIZE = new CssMetaData<ResizeableFramePane, Number>(
+			"-efx-resize-handle-size", StyleConverter.getSizeConverter(), Double.valueOf(5)) { //$NON-NLS-1$
+
+		@Override
+		public boolean isSettable(ResizeableFramePane n) {
+			return (n.resizeHandleSize == null) || !n.resizeHandleSize.isBound();
+		}
+
+		@Override
+		public StyleableDoubleProperty getStyleableProperty(ResizeableFramePane n) {
+			return (StyleableDoubleProperty) n.resizeHandleSize;
+		}
+	};
+	
+	
 	private Rectangle2D backupWindowBounds;
 	private double mouseDragDeltaX;
 	private double mouseDragDeltaY;
@@ -57,7 +77,8 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	private ReadOnlyBooleanWrapper lightweight = new ReadOnlyBooleanWrapper(this, "lightweight", false); //$NON-NLS-1$
 
 	private ReadOnlyBooleanWrapper maximized = new ReadOnlyBooleanWrapper(this, "maximized", false); //$NON-NLS-1$
-	
+	DoubleProperty resizeHandleSize = new SimpleStyleableDoubleProperty(RESIZE_HANDLE_SIZE, this, "resizeHandleSize", Double.valueOf(5)); //$NON-NLS-1$
+
 	enum Location {
 		TOP, LEFT, RIGHT, BOTTOM
 	}
@@ -119,8 +140,8 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		}
 	}
 
-	private ObservableValue<Window> windowProperty; 
-	
+	private ObservableValue<Window> windowProperty;
+
 	/**
 	 * Create a new pane which is used in a heavy-weight dialog
 	 */
@@ -139,26 +160,26 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		Node windowNode = createWindowArea();
 		getChildren().add(windowNode);
 		initResize();
-		if( ! lighweight ) {
-			this.windowProperty = org.eclipse.fx.ui.controls.Util.windowProperty(this); 
-			this.windowProperty.addListener( (o, oldV, newV) -> {
-				if( oldV != null ) {
+		if (!lighweight) {
+			this.windowProperty = org.eclipse.fx.ui.controls.Util.windowProperty(this);
+			this.windowProperty.addListener((o, oldV, newV) -> {
+				if (oldV != null) {
 					oldV.widthProperty().removeListener(this::handleStageChange);
 					oldV.heightProperty().removeListener(this::handleStageChange);
 					oldV.xProperty().removeListener(this::handleStageChange);
 					oldV.yProperty().removeListener(this::handleStageChange);
 				}
-				
-				if( newV != null ) {
+
+				if (newV != null) {
 					newV.widthProperty().addListener(this::handleStageChange);
 					newV.heightProperty().addListener(this::handleStageChange);
 					newV.xProperty().addListener(this::handleStageChange);
 					newV.yProperty().addListener(this::handleStageChange);
 				}
-			} );
+			});
 		}
 	}
-	
+
 	private void handleStageChange(Observable o, Number oldVal, Number newVal) {
 		getStyleClass().remove("window-maximized"); //$NON-NLS-1$
 		this.maximized.set(false);
@@ -266,21 +287,21 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		node.setOnMousePressed(event -> {
 			this.mouseDragDeltaX = event.getSceneX();
 			this.mouseDragDeltaY = event.getSceneY();
-		} );
+		});
 		node.setOnMouseDragged(event -> {
 			getStage().setX(event.getScreenX() - this.mouseDragDeltaX);
 			getStage().setY(event.getScreenY() - this.mouseDragDeltaY);
-		} );
+		});
 		node.setOnMouseClicked(e -> {
 			if (e.getClickCount() > 1) {
-				if( this.maximized.get() ) {
+				if (this.maximized.get()) {
 					restore();
 				} else {
 					maximize();
 				}
-				
+
 			}
-		} );
+		});
 	}
 
 	/**
@@ -433,7 +454,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 			Stage stage = getStage();
 			final double stageY = stage.getY();
 			final Screen screen = Screen.getScreensForRectangle(stage.getX(), stageY, 1, 1).get(0);
-			
+
 			this.backupWindowBounds = new Rectangle2D(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
 			final double newStageY = screen.getVisualBounds().getMinY();
 			stage.setX(screen.getVisualBounds().getMinX());
@@ -441,18 +462,18 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 			stage.setWidth(screen.getVisualBounds().getWidth());
 			stage.setHeight(screen.getVisualBounds().getHeight());
 			getStyleClass().add("window-maximized"); //$NON-NLS-1$
-//			stage.setMaximized(true);
+			// stage.setMaximized(true);
 			this.maximized.set(true);
 		} else {
 			// We are embedded into a container do nothing
 		}
 	}
-	
+
 	/**
 	 * Restore the window to original size
 	 */
 	protected void restore() {
-		if( ! isLightweight() ) {
+		if (!isLightweight()) {
 			if (this.backupWindowBounds != null) {
 				Stage stage = getStage();
 				stage.setX(this.backupWindowBounds.getMinX());
@@ -461,10 +482,10 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 				stage.setHeight(this.backupWindowBounds.getHeight());
 				stage.setMaximized(false);
 				this.backupWindowBounds = null;
-			}			
+			}
 		}
 	}
-	
+
 	/**
 	 * @return The current state of the maximized property
 	 */
@@ -546,48 +567,70 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		this.resizeable.set(resizable);
 	}
 
-	final int width = 10;
+	/**
+	 * @return the resize handle size
+	 */
+	public double getResizeHandleSize() {
+		return this.resizeHandleSize.get();
+	}
+
+	/**
+	 * Set a handle size
+	 * 
+	 * @param size
+	 *            the size
+	 */
+	public void setResizeHandleSize(double size) {
+		this.resizeHandleSize.set(size);
+	}
+	
+	/**
+	 * @return property to observe the size
+	 */
+	public DoubleProperty resizeHandleSize() {
+		return this.resizeHandleSize;
+	}
 
 	@Override
 	protected void layoutChildren() {
 		super.layoutChildren();
 		if (this.resizeLeft != null) {
-			this.resizeLeft.resizeRelocate(0, this.width, this.width, getHeight() - 2 * this.width);
+			this.resizeLeft.resizeRelocate(0, this.getResizeHandleSize(), this.getResizeHandleSize(), getHeight() - 2 * this.getResizeHandleSize());
 			this.resizeLeft.visibleProperty().bind(this.resizeable);
 		}
 
 		if (this.resizeRight != null) {
-			this.resizeRight.resizeRelocate(getWidth() - this.width, this.width, this.width, getHeight() - 2 * this.width);
+			this.resizeRight.resizeRelocate(getWidth() - this.getResizeHandleSize(), this.getResizeHandleSize(), this.getResizeHandleSize(), getHeight() - 2 * this.getResizeHandleSize());
 			this.resizeRight.visibleProperty().bind(this.resizeable);
 		}
 
 		if (this.resizeTop != null) {
-			this.resizeTop.resizeRelocate(this.width, 0, getWidth() - this.width, this.width);
+			this.resizeTop.resizeRelocate(this.getResizeHandleSize(), 0, getWidth() - this.getResizeHandleSize(), this.getResizeHandleSize());
 			this.resizeTop.visibleProperty().bind(this.resizeable);
 		}
 
 		if (this.resizeBottom != null) {
-			this.resizeBottom.resizeRelocate(this.width, getHeight() - this.width, getWidth() - this.width, this.width);
+			this.resizeBottom.resizeRelocate(this.getResizeHandleSize(), getHeight() - this.getResizeHandleSize(), getWidth() - this.getResizeHandleSize(), this.getResizeHandleSize());
 			this.resizeBottom.visibleProperty().bind(this.resizeable);
 		}
 
 		if (this.resizeCornerRightBottom != null) {
-			this.resizeCornerRightBottom.resizeRelocate(getWidth() - this.width, getHeight() - this.width, this.width, this.width);
+			this.resizeCornerRightBottom.resizeRelocate(getWidth() - this.getResizeHandleSize(), getHeight() - this.getResizeHandleSize(), this.getResizeHandleSize(), this.getResizeHandleSize());
 			this.resizeCornerRightBottom.visibleProperty().bind(this.resizeable);
 		}
 
 		if (this.resizeCornerRightTop != null) {
-			this.resizeCornerRightTop.resizeRelocate(getWidth() - this.width, 0, this.width, this.width);
+			this.resizeCornerRightTop.resizeRelocate(getWidth() - this.getResizeHandleSize(), 0, this.getResizeHandleSize(), this.getResizeHandleSize());
 			this.resizeCornerRightTop.visibleProperty().bind(this.resizeable);
 		}
 
 		if (this.resizeCornerLeftBottom != null) {
-			this.resizeCornerLeftBottom.resizeRelocate(0, getHeight() - this.width, this.width, this.width);
+			this.resizeCornerLeftBottom.resizeRelocate(0, getHeight() - this.getResizeHandleSize(), this.getResizeHandleSize(), this.getResizeHandleSize());
 			this.resizeCornerLeftBottom.visibleProperty().bind(this.resizeable);
 		}
 
 		if (this.resizeCornerLeftTop != null) {
-			this.resizeCornerLeftTop.resizeRelocate(0, 0, this.width, this.width);
+			this.resizeCornerLeftTop.resizeRelocate(0, 0, this.getResizeHandleSize(), this.getResizeHandleSize());
 			this.resizeCornerLeftTop.visibleProperty().bind(this.resizeable);
 		}
 	}
