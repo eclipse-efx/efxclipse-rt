@@ -15,14 +15,14 @@
     -fx-background-color: linear-gradient(#595959, #474747 37%, #343434);
 }
 
-.default-window > * > .window-header > * > .window-title {
+.default-window > * > .window-header > .window-title {
     -fx-padding: 0 0 0 0;
     -fx-alignment: center;
     /*-fx-text-fill: #808080;*/
     -fx-text-fill: #ebebeb;
 }
 
-.default-window:active > * > .window-header > * > .window-title {
+.default-window:active > * > .window-header > .window-title {
     -fx-text-fill: #ebebeb;
 }
 
