@@ -205,12 +205,14 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 			}
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		public void setAccelerator(KeySequence sequence) {
 			if (sequence != null && sequence.getKeyStrokes().length == 1) {
 				KeyStroke k = sequence.getKeyStrokes()[0];
 
 				KeyCode keyCode = null;
+				@SuppressWarnings("deprecation")
 				List<KeyCode> collect = Arrays.asList(KeyCode.values()).stream().filter(code -> {
 					return code.impl_getCode() == k.getKeyCode();
 				}).collect(Collectors.toList());
@@ -222,7 +224,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 							new KeyCodeCombination(keyCode, k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCommandModifier() ? ModifierValue.DOWN
 									: ModifierValue.ANY, ModifierValue.ANY));
 				} else {
-					String message = NLS.bind("No JavaFX KeyBinding found [keyCode={0}, character={1}]", k.getKeyCode(), (char) k.getKeyCode());
+					String message = NLS.bind("No JavaFX KeyBinding found [keyCode={0}, character={1}]", Integer.valueOf(k.getKeyCode()), Character.valueOf((char) k.getKeyCode())); //$NON-NLS-1$
 					this.logger.warning(message);
 				}
 			} else {
