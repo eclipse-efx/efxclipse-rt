@@ -13,7 +13,6 @@ package org.eclipse.fx.ui.controls.tree;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TreeItem;
 
@@ -27,12 +26,7 @@ import javafx.scene.control.TreeItem;
 public class SortableTreeItem<T> extends FilterableTreeItem<T> {
 	final private SortedList<TreeItem<T>> sortedList;
 	
-	private ObjectProperty<TreeItemComparator<T>> comparator = new SimpleObjectProperty<TreeItemComparator<T>>() {
-        @Override
-		protected void invalidated() {
-            fireChildrenModificationEvent();
-        }
-    };
+	private ObjectProperty<TreeItemComparator<T>> comparator = new SimpleObjectProperty<TreeItemComparator<T>>();
 	
 	/**
 	 * Creates a new {@link TreeItem} with sorted children. To enable sorting it is 
@@ -54,20 +48,9 @@ public class SortableTreeItem<T> extends FilterableTreeItem<T> {
 				this.comparator.bind(((SortableTreeItem<T>) nV).comparatorProperty());
 			}
 		});
+		setHiddenFieldChildren(this.sortedList);
 	}
 
-	/**
-	 * This method overrides {@link TreeItem#getChildren()} and returns an
-	 * unmodifiable {@link SortedList} as the children may only be changed
-	 * via the underlying model.
-	 * 
-	 * @see #getInternalChildren()
-	 */
-	@Override
-	public ObservableList<TreeItem<T>> getChildren() {
-		return this.sortedList;
-	}
-	
 	/**
 	 * @return the comparator property
 	 */
