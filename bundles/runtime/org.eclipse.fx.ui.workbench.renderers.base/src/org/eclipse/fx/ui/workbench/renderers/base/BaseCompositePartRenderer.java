@@ -204,6 +204,9 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 		if (widget != null) {
 			sash.removeItem(widget);
 		}
+		if( container.getSelectedElement() == changedObj ) {
+			container.setSelectedElement(null);
+		}
 	}
 
 	void handleChildrenAddition(@NonNull MCompositePart parent, Collection<MPartSashContainerElement> elements) {

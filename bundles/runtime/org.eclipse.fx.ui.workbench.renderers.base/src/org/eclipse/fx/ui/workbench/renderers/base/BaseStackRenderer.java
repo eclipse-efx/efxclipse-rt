@@ -542,7 +542,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			if (context != null) {
 				IEclipseContext newParentContext = this.modelService.getContainingContext(element);
 				if (context.getParent() != newParentContext) {
-					context.setParent(newParentContext);
+					Util.setParentContext(context, newParentContext);
 				}
 			}
 		}
