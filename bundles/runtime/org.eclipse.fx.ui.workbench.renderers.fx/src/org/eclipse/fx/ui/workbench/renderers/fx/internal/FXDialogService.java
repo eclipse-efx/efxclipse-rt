@@ -26,55 +26,65 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WDialogHost;
 
 import javafx.scene.Node;
 
+/**
+ * Basic service used to display dialogs in the UI
+ */
 public class FXDialogService implements LightWeightDialogService {
 	private final IEclipseContext context;
-	
+
 	@Log
 	@Inject
 	private Logger logger;
-	
+
+	/**
+	 * Create a new instance
+	 * 
+	 * @param context
+	 *            the context
+	 */
 	@Inject
 	public FXDialogService(IEclipseContext context) {
 		this.context = context;
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Node & Frame> T openDialog(Class<T> dialogClass, ModalityScope scope) {
 		WDialogHost host = null;
-		
-		if( scope == ModalityScope.WINDOW ) {
+
+		if (scope == ModalityScope.WINDOW) {
 			MWindow window = this.context.get(MWindow.class);
 			host = (WDialogHost) window.getWidget();
-		} else if( scope == ModalityScope.PERSPECTIVE ) {
+		} else if (scope == ModalityScope.PERSPECTIVE) {
 			MPerspective perspective = this.context.get(MPerspective.class);
-			
-			if( perspective == null ) {
+
+			if (perspective == null) {
 				return openDialog(dialogClass, ModalityScope.WINDOW);
 			} else {
 				host = (WDialogHost) perspective.getWidget();
 			}
-		} else if( scope == ModalityScope.PART ) {
+		} else if (scope == ModalityScope.PART) {
 			MPart part = this.context.get(MPart.class);
-			
-			if( part == null ) {
+
+			if (part == null) {
 				return openDialog(dialogClass, ModalityScope.PERSPECTIVE);
 			} else {
 				host = (WDialogHost) part.getWidget();
 			}
-		} 
-		
-		if( host != null ) {
+		}
+
+		if (host != null) {
 			WDialogHost fhost = host;
 			IEclipseContext dialogContext = this.context.createChild();
 			Node dialogInstance = (Node) ContextInjectionFactory.make(dialogClass, dialogContext);
 			dialogInstance.addEventHandler(FrameEvent.CLOSED, e -> {
 				fhost.setDialog(null);
 			});
-			
+
 			fhost.setDialog(dialogInstance);
 			return (T) dialogInstance;
 		} else {
-			this.logger.error("Could not find a host for '"+dialogClass+"'");  //$NON-NLS-1$//$NON-NLS-2$
+			this.logger.error("Could not find a host for '" + dialogClass + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			throw new IllegalStateException();
 		}
 	}

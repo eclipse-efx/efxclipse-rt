@@ -93,21 +93,53 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 	private @Nullable MUIElement findElement(String objectId) {
 		@Nullable
 		M domElement = this.widget.getDomElement();
-		if( domElement != null ) {
+		if (domElement != null) {
 			MApplication root = this.efxModelService.getRoot(domElement);
-			if( root != null && objectId != null ) {
-				return this.efxModelService.getElementInstance(root, objectId);	
+			if (root != null && objectId != null) {
+				return this.efxModelService.getElementInstance(root, objectId);
 			}
 		}
 		return null;
 	}
 
+	/**
+	 * Handle the drag over
+	 * 
+	 * @param e
+	 *            the event
+	 */
 	public void handleDragOver(EFXDragEvent e) {
 		_handleDragOver(e);
 	}
 
+	/**
+	 * Handle the drag over
+	 * 
+	 * @param e
+	 *            the event
+	 */
 	public void handleDragOver(DragEvent e) {
 		_handleDragOver(e);
+	}
+
+	/**
+	 * Handle the drop
+	 * 
+	 * @param e
+	 *            the event
+	 */
+	public void handleDragDropped(EFXDragEvent e) {
+		_handleDragDropped(e);
+	}
+
+	/**
+	 * Handle the drop
+	 * 
+	 * @param e
+	 *            the event
+	 */
+	public void handleDragDropped(DragEvent e) {
+		_handleDragDropped(e);
 	}
 
 	/**
@@ -121,16 +153,16 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		M m = this.widget.getDomElement();
 
 		String content = DndTabPaneFactory.getDnDContent(e);
-		if( content == null ) {
+		if (content == null) {
 			return;
 		}
 
 		MUIElement findElement = findElement(content);
-		
-		if( findElement == null ) {
+
+		if (findElement == null) {
 			return;
 		}
-		
+
 		if (m != null && this.constraintService != null && !this.constraintService.splitAllowed(m, findElement, getSplitType(e))) {
 			return;
 		}
@@ -164,14 +196,6 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		}
 	}
 
-	public void handleDragDropped(EFXDragEvent e) {
-		_handleDragDropped(e);
-	}
-
-	public void handleDragDropped(DragEvent e) {
-		_handleDragDropped(e);
-	}
-
 	/**
 	 * Handle the drag
 	 *
@@ -183,16 +207,16 @@ public class SplitDnDSupport<M extends MUIElement> extends BaseDnDSupport {
 		M m = this.widget.getDomElement();
 
 		String content = DndTabPaneFactory.getDnDContent(e);
-		
-		if( content == null ) {
+
+		if (content == null) {
 			return;
 		}
-		
+
 		MUIElement findElement = findElement(content);
-		if( findElement == null ) {
+		if (findElement == null) {
 			return;
 		}
-		
+
 		if (m != null && this.constraintService != null && !this.constraintService.splitAllowed(m, findElement, getSplitType(e))) {
 			return;
 		}

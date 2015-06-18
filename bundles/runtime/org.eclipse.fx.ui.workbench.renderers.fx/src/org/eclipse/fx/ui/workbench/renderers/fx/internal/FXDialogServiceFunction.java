@@ -17,8 +17,10 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.ui.workbench.renderers.base.Util;
 import org.osgi.service.component.annotations.Component;
 
+@SuppressWarnings("javadoc")
 @Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.ui.services.dialog.LightWeightDialogService"})
 public class FXDialogServiceFunction extends ContextFunction {
+	@SuppressWarnings("null")
 	@Override
 	public Object compute(IEclipseContext context) {
 		if( ! Util.isLocalHandlerContext(context) ) {

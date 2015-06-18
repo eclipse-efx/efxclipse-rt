@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2015 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
 import java.util.ArrayList;
@@ -10,42 +20,26 @@ import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.fx.EMFUri;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 
+@SuppressWarnings("javadoc")
 public class MultiMessageDialogContent extends BorderPane {
-		public final TableView<Row> tabView;
-		final GraphicsLoader graphicsLoader;
+		public final ListView<Row> tabView;
 
 		public MultiMessageDialogContent(String message, Collection<MPart> parts, GraphicsLoader graphicsLoader) {
-			this.graphicsLoader = graphicsLoader;
 			Label l = new Label(message);
 			setTop(l);
 
-			this.tabView = new TableView<Row>();
-
-			{
-				TableColumn<Row, Boolean> column = new TableColumn<Row, Boolean>();
-				column.setCellFactory(this::createCheckboxCell);
-				column.setOnEditCommit((event) -> event.getRowValue().selected.set(event.getNewValue().booleanValue()));
-				column.setCellValueFactory(new PropertyValueFactory<Row, Boolean>("selected")); //$NON-NLS-1$
-				this.tabView.getColumns().add(column);
-			}
-
-			{
-				TableColumn<Row, MPart> column = new TableColumn<Row, MPart>();
-				column.setCellFactory(this::createTextCell);
-				column.setCellValueFactory(new PropertyValueFactory<Row, MPart>("element")); //$NON-NLS-1$
-				this.tabView.getColumns().add(column);
-			}
-			this.tabView.setEditable(true);
+			this.tabView = new ListView<>();
+			this.tabView.setCellFactory(v -> {
+				return new CheckboxCell(graphicsLoader);
+			});
 
 			List<Row> list = new ArrayList<Row>();
 			for (MPart m : parts) {
@@ -55,50 +49,33 @@ public class MultiMessageDialogContent extends BorderPane {
 			setCenter(this.tabView);
 		}
 		
-		TableCell<Row, Boolean> createCheckboxCell(final TableColumn<Row, Boolean> param) {
-			final CheckBox checkBox = new CheckBox();
-			final TableCell<Row, Boolean> cell = new TableCell<Row, Boolean>() {
-
-				@Override
-				protected void updateItem(Boolean item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item == null) {
-						checkBox.setDisable(true);
-						checkBox.setSelected(false);
-						checkBox.setOnAction(null);
-					} else {
-						checkBox.setDisable(false);
-						checkBox.setSelected(item.booleanValue());
-						checkBox.setOnAction(new EventHandler<ActionEvent>() {
-
-							@Override
-							public void handle(ActionEvent event) {
-								MultiMessageDialogContent.this.tabView.edit(0, param);
-								commitEdit(Boolean.valueOf(checkBox.isSelected()));
-							}
-						});
-					}
+		static class CheckboxCell extends ListCell<Row> {
+			private CheckBox checkbox = new CheckBox();
+			private Row row;
+			private GraphicsLoader loader;
+			
+			public CheckboxCell(GraphicsLoader loader) {
+				this.loader = loader;
+			}
+			
+			@SuppressWarnings("null")
+			@Override
+			protected void updateItem(Row item, boolean empty) {
+				super.updateItem(item, empty);
+				if( this.row != null ) {
+					this.checkbox.selectedProperty().unbindBidirectional(this.row.selectedProperty());
 				}
-			};
-
-			cell.setGraphic(checkBox);
-			return cell;
-		}
-
-		TableCell<Row, MPart> createTextCell(TableColumn<Row, MPart> param) {
-			return new TableCell<Row, MPart>() {
-				@SuppressWarnings("null")
-				@Override
-				protected void updateItem(MPart item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item != null) {
-						setText(item.getLocalizedLabel());
-						String uri = item.getIconURI();
-						if (uri != null) {
-							setGraphic(MultiMessageDialogContent.this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));
-						}
+				this.row = item;
+				if( this.row != null && ! empty ) {
+					this.checkbox.selectedProperty().bindBidirectional(this.row.selectedProperty());
+					String uri = item.getElement().getIconURI();
+					Node n = null;
+					if (uri != null) {
+						n = this.loader.getGraphicsNode(new EMFUri(URI.createURI(uri)));
 					}
+					setGraphic(new HBox(this.checkbox,new Label(this.row.getElement().getLocalizedLabel(),n)));
 				}
-			};
+			}
 		}
+		
 	}
