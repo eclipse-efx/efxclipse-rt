@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -43,6 +44,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.ui.controls.stage.FrameEvent;
 import org.eclipse.fx.ui.controls.stage.TrimmedWindow;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
 import org.eclipse.fx.ui.dialogs.Dialog;
@@ -65,33 +67,26 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.Messages;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.MultiMessageDialog;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.MultiMessageDialogContent;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.Row;
 import org.eclipse.fx.ui.workbench.renderers.fx.services.LightweightDialogTransitionService;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.Bundle;
 
+import com.sun.javafx.tk.Toolkit;
+
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -133,15 +128,43 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 		GraphicsLoader graphicsLoader = modelContext.get(GraphicsLoader.class);
 
-		MultiMessageDialog d = new MultiMessageDialog((Stage) widget.getWidget(), dirtyParts, graphicsLoader);
-		if (d.open() == Dialog.OK_BUTTON) {
-			List<MPart> parts = d.getSelectedParts();
-			Arrays.fill(response, Save.NO);
-			for (MPart p : parts) {
-				response[parts.indexOf(p)] = Save.YES;
-			}
-		} else {
+		if( element.getTags().contains("efx-lightweight-dialogs") ) { //$NON-NLS-1$ 
 			Arrays.fill(response, Save.CANCEL);
+			MultiMessageDialogContent multiMessageDialogContent = new MultiMessageDialogContent(this.messages.DefWindowRenderer_MultiMessageDialog_Message, dirtyParts, graphicsLoader);
+			org.eclipse.fx.ui.controls.dialog.Dialog d = new org.eclipse.fx.ui.controls.dialog.Dialog(multiMessageDialogContent, this.messages.DefWindowRenderer_MultiMessageDialog_Title) {
+				@Override
+				protected void handleOk() {
+					List<MPart> parts = new ArrayList<MPart>();
+					for (Row r : multiMessageDialogContent.tabView.getItems()) {
+						if (r.isSelected()) {
+							parts.add(r.element.get());
+						}
+					}
+					
+					Arrays.fill(response, Save.NO);
+					for (MPart p : parts) {
+						response[parts.indexOf(p)] = Save.YES;
+					}
+					super.handleOk();
+				}
+			};
+			d.getButtonList().addAll(d.createOKButton(), d.createCancelButton());
+			((WWindowImpl)element.getWidget()).setDialog(d);
+			String id = UUID.randomUUID().toString();
+			d.addEventHandler(FrameEvent.CLOSED, (e) -> Toolkit.getToolkit().exitNestedEventLoop(id, null));
+			Toolkit.getToolkit().enterNestedEventLoop(id);
+			((WWindowImpl)element.getWidget()).setDialog(null);
+		} else {
+			MultiMessageDialog d = new MultiMessageDialog((Stage) widget.getWidget(), dirtyParts, graphicsLoader, this.messages.DefWindowRenderer_MultiMessageDialog_Title, this.messages.DefWindowRenderer_MultiMessageDialog_Message);
+			if (d.open() == Dialog.OK_BUTTON) {
+				List<MPart> parts = d.getSelectedParts();
+				Arrays.fill(response, Save.NO);
+				for (MPart p : parts) {
+					response[parts.indexOf(p)] = Save.YES;
+				}
+			} else {
+				Arrays.fill(response, Save.CANCEL);
+			}
 		}
 
 		return Arrays.asList(response);
@@ -149,18 +172,38 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 	@Override
 	protected Save promptToSave(MWindow element, MPart dirtyPart, WWindow<Stage> widget) {
-		QuestionCancelResult r = MessageDialog.openQuestionCancelDialog((Stage) widget.getWidget(), this.messages.DefWindowRenderer_promptToSave_Title, this.messages.DefWindowRenderer_promptToSave_Message(dirtyPart.getLocalizedLabel()));
+		if( element.getTags().contains("efx-lightweight-dialogs") ) { //$NON-NLS-1$ 
+			org.eclipse.fx.ui.controls.dialog.MessageDialog.QuestionCancelResult r = org.eclipse.fx.ui.controls.dialog.MessageDialog.openQuestionCancelDialog(
+					this.messages.DefWindowRenderer_promptToSave_Title, 
+					this.messages.DefWindowRenderer_promptToSave_Message(dirtyPart.getLocalizedLabel()),
+					(d) -> {
+						((WWindowImpl)element.getWidget()).setDialog(d);
+					});
+			((WWindowImpl)element.getWidget()).setDialog(null);
+			switch (r) {
+			case CANCEL:
+				return Save.CANCEL;
+			case NO:
+				return Save.NO;
+			case YES:
+				return Save.YES;
+			}
 
-		switch (r) {
-		case CANCEL:
 			return Save.CANCEL;
-		case NO:
-			return Save.NO;
-		case YES:
-			return Save.YES;
-		}
+		} else {
+			QuestionCancelResult r = MessageDialog.openQuestionCancelDialog((Stage) widget.getWidget(), this.messages.DefWindowRenderer_promptToSave_Title, this.messages.DefWindowRenderer_promptToSave_Message(dirtyPart.getLocalizedLabel()));
 
-		return Save.CANCEL;
+			switch (r) {
+			case CANCEL:
+				return Save.CANCEL;
+			case NO:
+				return Save.NO;
+			case YES:
+				return Save.YES;
+			}
+
+			return Save.CANCEL;
+		}
 	}
 
 	@Override
@@ -350,7 +393,28 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				}
 			} else {
 				if (this.overlayContainer == null) {
-					this.overlayContainer = new StackPane();
+					this.overlayContainer = new StackPane() {
+						@Override
+						protected void layoutChildren() {
+							Insets insets = getInsets();
+					        final double w = getWidth() - insets.getLeft() - insets.getRight();
+					        final double h = getHeight() - insets.getTop() - insets.getBottom();
+					        
+					        for( Node n : getManagedChildren() ) {
+					        	double x,y;
+					        	n.autosize();
+					        	if( n instanceof Region ) {
+					        		System.err.println(((Region) n).getWidth());
+					        		x = (w / 2) - (Math.min(w,((Region) n).getWidth()) / 2);
+					        		y = (h / 2) - (Math.min(h,((Region) n).getHeight()) / 2);
+					        	} else {
+					        		x = (w / 2) - (Math.min(w,n.prefWidth(-1)) / 2);
+					        		y = (h / 2) - (Math.min(h,n.prefHeight(-1)) / 2);
+					        	}
+					        	n.relocate(x, y);
+					        }
+						}
+					};
 					this.overlayContainer.getStyleClass().add("overlay-container"); //$NON-NLS-1$
 					this.overlayContainer.setManaged(false);
 					this.overlayContainer.setMouseTransparent(false);
@@ -1074,150 +1138,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			this.contentPane.getChildren().add(idx, (Node) widget.getStaticLayoutNode());
 		}
 	}
-
-	class MultiMessageDialog extends Dialog {
-		private Collection<MPart> parts;
-		TableView<Row> tabView;
-
-		GraphicsLoader graphicsLoader;
-		private List<MPart> selectedParts;
-
-		public MultiMessageDialog(Window parent, Collection<MPart> parts, GraphicsLoader graphicsLoader) {
-			super(parent, DefWindowRenderer.this.messages.DefWindowRenderer_MultiMessageDialog_Title);
-			this.parts = parts;
-			this.graphicsLoader = graphicsLoader;
-		}
-
-		public List<MPart> getSelectedParts() {
-			return this.selectedParts;
-		}
-
-		@Override
-		protected void okPressed() {
-			this.selectedParts = new ArrayList<MPart>();
-			for (Row r : this.tabView.getItems()) {
-				if (r.isSelected()) {
-					this.selectedParts.add(r.element.get());
-				}
-			}
-			super.okPressed();
-		}
-
-		@Override
-		protected Node createDialogArea() {
-			BorderPane p = new BorderPane();
-			Label l = new Label(DefWindowRenderer.this.messages.DefWindowRenderer_MultiMessageDialog_Message);
-			p.setTop(l);
-
-			this.tabView = new TableView<Row>();
-
-			{
-				TableColumn<Row, Boolean> column = new TableColumn<Row, Boolean>();
-				column.setCellFactory(this::createCheckboxCell);
-				column.setOnEditCommit((event) -> event.getRowValue().selected.set(event.getNewValue().booleanValue()));
-				column.setCellValueFactory(new PropertyValueFactory<Row, Boolean>("selected")); //$NON-NLS-1$
-				this.tabView.getColumns().add(column);
-			}
-
-			{
-				TableColumn<Row, MPart> column = new TableColumn<Row, MPart>();
-				column.setCellFactory(this::createTextCell);
-				column.setCellValueFactory(new PropertyValueFactory<Row, MPart>("element")); //$NON-NLS-1$
-				this.tabView.getColumns().add(column);
-			}
-			this.tabView.setEditable(true);
-
-			List<Row> list = new ArrayList<Row>();
-			for (MPart m : this.parts) {
-				list.add(new Row(m));
-			}
-			this.tabView.setItems(FXCollections.observableArrayList(list));
-			p.setCenter(this.tabView);
-
-			return p;
-		}
-
-		TableCell<Row, Boolean> createCheckboxCell(final TableColumn<Row, Boolean> param) {
-			final CheckBox checkBox = new CheckBox();
-			final TableCell<Row, Boolean> cell = new TableCell<Row, Boolean>() {
-
-				@Override
-				protected void updateItem(Boolean item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item == null) {
-						checkBox.setDisable(true);
-						checkBox.setSelected(false);
-						checkBox.setOnAction(null);
-					} else {
-						checkBox.setDisable(false);
-						checkBox.setSelected(item.booleanValue());
-						checkBox.setOnAction(new EventHandler<ActionEvent>() {
-
-							@Override
-							public void handle(ActionEvent event) {
-								MultiMessageDialog.this.tabView.edit(0, param);
-								commitEdit(Boolean.valueOf(checkBox.isSelected()));
-							}
-						});
-					}
-				}
-			};
-
-			cell.setGraphic(checkBox);
-			return cell;
-		}
-
-		TableCell<Row, MPart> createTextCell(TableColumn<Row, MPart> param) {
-			return new TableCell<DefWindowRenderer.Row, MPart>() {
-				@SuppressWarnings("null")
-				@Override
-				protected void updateItem(MPart item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item != null) {
-						setText(item.getLocalizedLabel());
-						String uri = item.getIconURI();
-						if (uri != null) {
-							setGraphic(MultiMessageDialog.this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));
-						}
-					}
-				}
-			};
-		}
-	}
-
-	static class Row {
-		BooleanProperty selected = new SimpleBooleanProperty(this, "selected", true); //$NON-NLS-1$
-		ObjectProperty<MPart> element = new SimpleObjectProperty<MPart>(this, "element"); //$NON-NLS-1$
-
-		public Row(MPart element) {
-			this.element.set(element);
-		}
-
-		public boolean isSelected() {
-			return this.selected.get();
-		}
-
-		public void setSelected(boolean value) {
-			this.selected.set(value);
-		}
-
-		public BooleanProperty selectedProperty() {
-			return this.selected;
-		}
-
-		public MPart getElement() {
-			return this.element.get();
-		}
-
-		public void setElement(MPart value) {
-			this.element.set(value);
-		}
-
-		public ObjectProperty<MPart> elementProperty() {
-			return this.element;
-		}
-	}
-
+	
 	static class WindowResizeButton extends Region {
 		double dragOffsetX;
 		double dragOffsetY;
