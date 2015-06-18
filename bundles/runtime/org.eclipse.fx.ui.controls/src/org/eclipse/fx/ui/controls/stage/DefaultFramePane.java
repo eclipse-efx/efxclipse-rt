@@ -22,7 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -170,7 +169,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 		close();
 	}
 
-	class TitleAreaNodeImpl extends ToolBar implements TitleAreaNode {
+	class TitleAreaNodeImpl extends HBox implements TitleAreaNode {
 		private static final int HEADER_HEIGHT = 28;
 		private Label titleLabel;
 		private WindowButton minButton;
@@ -208,7 +207,7 @@ public class DefaultFramePane extends ResizeableFramePane {
 			windowBtns.getStyleClass().add("window-buttons"); //$NON-NLS-1$
 			windowBtns.getChildren().addAll(this.minButton, maxButton, closeButton);
 
-			getItems().addAll(this.titleLabel, spacer, windowBtns);
+			getChildren().addAll(this.titleLabel, spacer, windowBtns);
 		}
 
 		@Override
