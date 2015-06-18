@@ -68,13 +68,7 @@ public class Dialog extends DefaultFramePane {
 	 *            the title displayed on the frame
 	 */
 	public <D extends Pane & DialogContentPane> Dialog(D pane, Node clientArea, String frameTitle) {
-		this(pane, clientArea, new DialogMessageProviderImpl() {
-
-			@Override
-			public String frameTitle() {
-				return frameTitle;
-			}
-		});
+		this(pane, clientArea, DialogMessagesProvider.createDefaultRegistry(frameTitle));
 	}
 
 	/**

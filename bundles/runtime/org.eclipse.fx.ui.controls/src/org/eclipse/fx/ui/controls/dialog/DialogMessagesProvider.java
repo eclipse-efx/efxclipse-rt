@@ -19,38 +19,55 @@ import org.eclipse.fx.core.text.TextRegistry;
  */
 public interface DialogMessagesProvider extends TextRegistry {
 	/**
+	 * Create a default registry
+	 * 
+	 * @param frameTitle
+	 *            the title shown on the frame
+	 * @return a simple registry
+	 */
+	public static DialogMessagesProvider createDefaultRegistry(String frameTitle) {
+		return new DialogMessageProviderImpl() {
+
+			@Override
+			public String frameTitle() {
+				return frameTitle;
+			}
+		};
+	}
+
+	/**
 	 * @return the title of the frame
 	 */
 	public String frameTitle();
-	
+
 	/**
 	 * @return the ok message
 	 */
 	public default String ok() {
 		return ResourceBundle.getBundle("org.eclipse.fx.ui.controls.dialog.messages").getString("ok"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
-	
+
 	/**
 	 * @return the cancel message
 	 */
 	public default String cancel() {
 		return ResourceBundle.getBundle("org.eclipse.fx.ui.controls.dialog.messages").getString("cancel"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
-	
+
 	/**
 	 * @return the close message
 	 */
 	public default String close() {
 		return ResourceBundle.getBundle("org.eclipse.fx.ui.controls.dialog.messages").getString("close"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
-	
+
 	/**
 	 * @return the close message
 	 */
 	public default String yes() {
 		return ResourceBundle.getBundle("org.eclipse.fx.ui.controls.dialog.messages").getString("yes"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
-	
+
 	/**
 	 * @return the close message
 	 */

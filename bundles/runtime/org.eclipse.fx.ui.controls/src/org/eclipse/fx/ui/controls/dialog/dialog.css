@@ -33,3 +33,27 @@
 	-fx-padding: 10px;
 	-fx-background-color: derive(-fx-background, 20%);
 }
+
+.efx-messagedialog-error ImageView.efx-messagedialog-icon {
+	-fx-image: url("icons/dialog-error.png");
+}
+
+.efx-messagedialog-information ImageView.efx-messagedialog-icon {
+	-fx-image: url("icons/dialog-information.png");
+}
+
+.efx-messagedialog-warning ImageView.efx-messagedialog-icon {
+	-fx-image: url("icons/dialog-warning.png");
+}
+
+.efx-messagedialog-confirm ImageView.efx-messagedialog-icon {
+	-fx-image: url("icons/preferences-desktop-notification.png");
+}
+
+.efx-messagedialog-question ImageView.efx-messagedialog-icon {
+	-fx-image: url("icons/system-help.png");
+}
+
+.efx-messagedialog-question_cancel ImageView.efx-messagedialog-icon {
+	-fx-image: url("icons/system-help.png");
+}
