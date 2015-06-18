@@ -34,6 +34,18 @@
 	-fx-image: url(file_48.png);
 }
 
+.label.fileSmall {
+	-fx-graphic: url(file_16.png);
+}
+
+.label.fileMedium {
+	-fx-graphic: url(file_32.png);
+}
+
+.label.fileBig {
+	-fx-graphic: url(file_48.png);
+}
+
 .preview.resourceName {
 	-fx-font-weight: bold;
 	-fx-font-size: 1.2em;

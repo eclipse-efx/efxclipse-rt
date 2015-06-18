@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import javafx.event.Event;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
+import javafx.scene.Node;
 
 /**
  * A resource event
@@ -55,7 +56,7 @@ public class ResourceEvent<T extends ResourceItem> extends Event {
 	 * @return a new event
 	 */
 	public static <@NonNull T extends ResourceItem> ResourceEvent<T> createOpenResource(
-			DirectoryView view, List<T> resourceItems) {
+			Node view, List<T> resourceItems) {
 		return new ResourceEvent<>(view, view, openResourceEvent(),
 				resourceItems);
 	}

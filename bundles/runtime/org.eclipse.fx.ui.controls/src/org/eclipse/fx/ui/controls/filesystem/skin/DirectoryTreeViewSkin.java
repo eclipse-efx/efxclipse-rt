@@ -67,6 +67,11 @@ public class DirectoryTreeViewSkin extends
 		this.tree.setShowRoot(false);
 		this.tree.getSelectionModel().getSelectedItems()
 				.addListener(this::handleSelectionChange);
+		this.tree.setOnMouseClicked( e -> {
+			if( e.getClickCount() > 1 ) {
+				getBehavior().openSelectedResources();
+			}
+		});
 		getChildren().add(this.tree);
 
 		control.rootDirectoriesProperty().addListener(this::rebuildTable);
