@@ -37,6 +37,7 @@ public class MultiMessageDialogContent extends BorderPane {
 			setTop(l);
 
 			this.tabView = new ListView<>();
+			this.tabView.setPrefHeight(200);
 			this.tabView.setCellFactory(v -> {
 				return new CheckboxCell(graphicsLoader);
 			});
