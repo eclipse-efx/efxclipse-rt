@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  * 
  * @since 2.0
  */
-public class HeavyWeightTrimmedWindow extends BorderPane implements TrimmedWindow {
+public class NativeDecoratedTrimmedWindow extends BorderPane implements TrimmedWindow {
 	private BorderPane trimPane;
 	private javafx.stage.Stage w;
 	private boolean resizable;
@@ -33,7 +33,7 @@ public class HeavyWeightTrimmedWindow extends BorderPane implements TrimmedWindo
 	/**
 	 * Create a new window
 	 */
-	public HeavyWeightTrimmedWindow() {
+	public NativeDecoratedTrimmedWindow() {
 		this.trimPane = new BorderPane();
 		setCenter(this.trimPane);
 		Util.windowProperty(this).addListener((o, oldV, newV) -> {
@@ -68,19 +68,39 @@ public class HeavyWeightTrimmedWindow extends BorderPane implements TrimmedWindo
 	protected ObjectProperty<Node> menuBarProperty() {
 		return topProperty();
 	}
-	
+
+	/**
+	 * Property to put the top trim to
+	 * 
+	 * @return the property
+	 */
 	protected ObjectProperty<Node> topTrimProperty() {
 		return this.trimPane.topProperty();
 	}
-	
+
+	/**
+	 * Property to put the left trim
+	 * 
+	 * @return the property
+	 */
 	protected ObjectProperty<Node> leftTrimProperty() {
 		return this.trimPane.leftProperty();
 	}
-	
+
+	/**
+	 * Property to put the right trim
+	 * 
+	 * @return the property
+	 */
 	protected ObjectProperty<Node> rightTrimProperty() {
 		return this.trimPane.rightProperty();
 	}
-	
+
+	/**
+	 * Property to put the bottom trim
+	 * 
+	 * @return the property
+	 */
 	protected ObjectProperty<Node> bottomTrimProperty() {
 		return this.trimPane.bottomProperty();
 	}
