@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.code.editor.hsl.internal.HSLModelCF">
+   <implementation class="org.eclipse.fx.code.editor.hsl.internal.HSLModelCF"/>
+   <service>
+      <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
+   </service>
+   <property name="service.context.key" value="org.eclipse.fx.code.compensator.hsl.hSL.Model"/>
+   <reference bind="registerProvider" cardinality="0..n" interface="org.eclipse.fx.code.editor.hsl.HSLModelProvider" name="registerProvider" policy="dynamic" policy-option="greedy" unbind="unregisterProvider"/>
+</scr:component>

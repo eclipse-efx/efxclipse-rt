@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Hsl
+Bundle-SymbolicName: org.eclipse.fx.code.editor.hsl
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: javax.inject,
+ org.eclipse.e4.core.di.annotations,
+ org.osgi.service.component.annotations;version="1.2.0"
+Require-Bundle: org.eclipse.fx.code.compensator.hsl,
+ org.eclipse.fx.text.ui;bundle-version="1.0.0",
+ org.eclipse.fx.code.compensator.editor,
+ org.eclipse.fx.core.di,
+ org.eclipse.e4.core.contexts
+Export-Package: org.eclipse.fx.code.editor.hsl
+Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.hsl.internal.HSLModelCF.xml
+Bundle-ActivationPolicy: lazy
