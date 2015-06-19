@@ -11,7 +11,7 @@ import javafx.util.Duration;
 public abstract class FadeDialogTranstionService implements LightweightDialogTransitionService {
 	
 	@Override
-	public void showDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node dialog, Runnable finished) {
+	public void showDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node grayArea, Node dialog, Runnable finished) {
 		dialogOverlayContainer.setOpacity(0);
 		FadeTransition fd = new FadeTransition(Duration.millis(300),dialogOverlayContainer);
 		fd.setFromValue(0);
@@ -28,7 +28,7 @@ public abstract class FadeDialogTranstionService implements LightweightDialogTra
 	}
 	
 	@Override
-	public void hideDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node dialog, Runnable finished) {
+	public void hideDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node grayArea, Node dialog, Runnable finished) {
 		FadeTransition fd = new FadeTransition(Duration.millis(300),dialogOverlayContainer);
 		fd.setFromValue(1);
 		fd.setToValue(0);

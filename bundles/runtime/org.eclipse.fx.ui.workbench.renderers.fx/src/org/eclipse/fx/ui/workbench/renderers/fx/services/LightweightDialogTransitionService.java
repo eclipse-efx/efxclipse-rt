@@ -6,6 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 public interface LightweightDialogTransitionService {
-	public void showDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node dialog, Runnable finished);
-	public void hideDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node dialog, Runnable finished);
+	public void showDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node grayArea, Node dialog, Runnable finished);
+	public void hideDialog(MUIElement container, Pane containerNode, Pane dialogOverlayContainer, Node grayArea, Node dialog, Runnable finished);
 }

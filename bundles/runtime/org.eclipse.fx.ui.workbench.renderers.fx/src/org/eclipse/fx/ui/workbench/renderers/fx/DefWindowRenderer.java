@@ -382,7 +382,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if (dialogNode == null) {
 				if (this.overlayContainer != null) {
 					if( this.dialogTransitionService != null ) {
-						this.dialogTransitionService.hideDialog(this.mWindow, staticLayoutNode, this.overlayContainer, this.overlayContainer.getChildren().size() == 1 ? this.overlayContainer.getChildren().get(0) : null, () -> {
+						this.dialogTransitionService.hideDialog(this.mWindow, staticLayoutNode, this.overlayContainer, this.overlayContainer, this.overlayContainer.getChildren().size() == 1 ? this.overlayContainer.getChildren().get(0) : null, () -> {
 							((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
 							this.overlayContainer.getChildren().clear();
 						});
@@ -404,7 +404,6 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					        	double x,y;
 					        	n.autosize();
 					        	if( n instanceof Region ) {
-					        		System.err.println(((Region) n).getWidth());
 					        		x = (w / 2) - (Math.min(w,((Region) n).getWidth()) / 2);
 					        		y = (h / 2) - (Math.min(h,((Region) n).getHeight()) / 2);
 					        	} else {
@@ -426,9 +425,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				
 				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 				this.overlayContainer.getChildren().setAll((Node)dialogNode);
+				this.overlayContainer.layout();
 				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
 				if( this.dialogTransitionService != null ) {
-					this.dialogTransitionService.showDialog(this.mWindow, staticLayoutNode, this.overlayContainer, (Node)dialogNode, null);
+					this.dialogTransitionService.showDialog(this.mWindow, staticLayoutNode, this.overlayContainer, this.overlayContainer, (Node)dialogNode, null);
 				}
 			}
 		}
