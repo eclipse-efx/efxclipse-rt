@@ -10,7 +10,6 @@
 *******************************************************************************/
 package org.eclipse.fx.code.compensator.editor.internal;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,6 +26,7 @@ import org.eclipse.fx.code.compensator.editor.TextEditor;
 import org.eclipse.fx.code.compensator.editor.URIProvider;
 import org.eclipse.fx.code.compensator.editor.services.ContentTypeDetector;
 import org.eclipse.fx.core.URI;
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.di.Service;
 
 public class FileInput implements Input<String>, ContentTypeProvider, URIProvider {
@@ -48,15 +48,8 @@ public class FileInput implements Input<String>, ContentTypeProvider, URIProvide
 	@Override
 	public String getData() {
 		if( data == null ) {
-			try(BufferedReader reader = Files.newBufferedReader(path)) {
-				StringBuilder b = new StringBuilder();
-				String line;
-				while( (line = reader.readLine()) != null ) {
-					//FIXME We need to replace TABs for now
-					b.append(line.replaceAll("\t", "    ")+"\n");
-				}
-				reader.close();
-				data = b.toString();
+			try {
+				data = Util.slurpFileContent(path);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
