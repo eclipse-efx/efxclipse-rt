@@ -79,6 +79,7 @@ public class TextEditor {
 			@Override
 			public void documentChanged(DocumentEvent event) {
 				broker.send(org.eclipse.fx.code.compensator.editor.Constants.EDITOR_DOCUMENT_MODIFIED, TextEditor.this);
+				broker.send(org.eclipse.fx.code.compensator.editor.Constants.EDITOR_DOCUMENT_MODIFICATION, new SourceChange(input, event.fOffset, event.fLength, event.fText));
 			}
 
 			@Override
