@@ -88,4 +88,43 @@ public class FXDialogService implements LightWeightDialogService {
 			throw new IllegalStateException();
 		}
 	}
+	
+	@Override
+	public <T extends Node & Frame> void openDialog(T dialog, ModalityScope scope) {
+		WDialogHost host = null;
+
+		if (scope == ModalityScope.WINDOW) {
+			MWindow window = this.context.get(MWindow.class);
+			host = (WDialogHost) window.getWidget();
+		} else if (scope == ModalityScope.PERSPECTIVE) {
+			MPerspective perspective = this.context.get(MPerspective.class);
+
+			if (perspective == null) {
+				openDialog(dialog, ModalityScope.WINDOW);
+			} else {
+				host = (WDialogHost) perspective.getWidget();
+			}
+		} else if (scope == ModalityScope.PART) {
+			MPart part = this.context.get(MPart.class);
+
+			if (part == null) {
+				openDialog(dialog, ModalityScope.PERSPECTIVE);
+			} else {
+				host = (WDialogHost) part.getWidget();
+			}
+		}
+
+		if (host != null) {
+			WDialogHost fhost = host;
+			IEclipseContext dialogContext = this.context.createChild();
+			Node dialogInstance = dialog;
+			dialogInstance.addEventHandler(FrameEvent.CLOSED, e -> {
+				fhost.setDialog(null);
+			});
+
+			fhost.setDialog(dialogInstance);
+		} else {
+			throw new IllegalStateException();
+		}
+	}
 }

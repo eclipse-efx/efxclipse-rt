@@ -22,4 +22,5 @@ public interface LightWeightDialogService {
 	}
 	
 	public <T extends Node & Frame> T openDialog(Class<T> dialogClass, ModalityScope scope);
+	public <T extends Node & Frame> void openDialog(T dialog, ModalityScope scope);
 }
