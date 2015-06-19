@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -153,7 +157,8 @@ public class Util {
 	}
 
 	@SuppressWarnings("null")
-	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
+	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor,
+			@NonNull Class<S> serviceClass) {
 		if (isOsgiEnv()) {
 			List<Class<?>> cl = new ArrayList<>();
 			if (requestor != null) {
@@ -164,11 +169,13 @@ public class Util {
 
 			try {
 				@SuppressWarnings("unchecked")
-				ServiceReference<S>[] serviceReferences = (ServiceReference<S>[]) ctx.getServiceReferences(serviceClass.getName(), null);
+				ServiceReference<S>[] serviceReferences = (ServiceReference<S>[]) ctx
+						.getServiceReferences(serviceClass.getName(), null);
 				if (serviceReferences == null) {
 					return Collections.emptyList();
 				}
-				return Stream.of(serviceReferences).map(r -> new CompareableService<>(r, ctx.getService(r))).sorted().map(s -> s.instance).collect(Collectors.toList());
+				return Stream.of(serviceReferences).map(r -> new CompareableService<>(r, ctx.getService(r))).sorted()
+						.map(s -> s.instance).collect(Collectors.toList());
 			} catch (InvalidSyntaxException e) {
 				throw new IllegalStateException(e);
 			}
@@ -229,7 +236,8 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor, @NonNull Class<S> serviceClass) {
+	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor,
+			@NonNull Class<S> serviceClass) {
 		return _lookupServiceList(requestor, serviceClass);
 	}
 
@@ -245,4 +253,22 @@ public class Util {
 		return _lookupServiceList(null, serviceClass);
 	}
 
+	/**
+	 * Read the content for the given path
+	 * 
+	 * @param path
+	 *            the path
+	 * @return the content
+	 * @throws IOException
+	 *             if an I/O error occurs
+	 * @since 2.0
+	 */
+	public static String slurpFileContent(Path path) throws IOException {
+		byte[] buf = new byte[(int) Files.size(path)];
+
+		try (InputStream in = Files.newInputStream(path)) {
+			in.read(buf);
+			return new String(buf);
+		}
+	}
 }
