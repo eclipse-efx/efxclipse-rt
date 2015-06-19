@@ -35,6 +35,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 /**
  * A window pane who has handles at the borders to resize it
@@ -507,14 +508,19 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	 * Close the window
 	 */
 	protected void close() {
-		// We are bound to the stage
-		FrameEvent evt = new FrameEvent(this, FrameEvent.CLOSING);
-		Event.fireEvent(this, evt);
-		if (!evt.isConsumed()) {
-			if (!isLightweight()) {
-				((Stage) getScene().getWindow()).close();
+		if( isLightweight() ) {
+			// We are bound to the stage
+			FrameEvent evt = new FrameEvent(this, FrameEvent.CLOSING);
+			Event.fireEvent(this, evt);
+			if (!evt.isConsumed()) {
+				Event.fireEvent(this, new FrameEvent(this, FrameEvent.CLOSED));
+			}			
+		} else {
+			WindowEvent event = new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST);
+			Event.fireEvent(getStage(), event);
+			if( ! event.isConsumed() ) {
+				getStage().close();
 			}
-			Event.fireEvent(this, new FrameEvent(this, FrameEvent.CLOSED));
 		}
 	}
 
