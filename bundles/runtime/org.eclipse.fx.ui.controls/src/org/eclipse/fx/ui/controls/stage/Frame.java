@@ -58,4 +58,9 @@ public interface Frame extends EventTarget {
 	 *            <code>true</code> to support maximizable
 	 */
 	public void setMaximizable(boolean maximizable);
+	
+	/**
+	 * Close the window
+	 */
+	public void close();
 }

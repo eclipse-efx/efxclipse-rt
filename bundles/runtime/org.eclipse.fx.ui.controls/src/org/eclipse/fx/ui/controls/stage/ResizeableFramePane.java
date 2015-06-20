@@ -507,7 +507,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	/**
 	 * Close the window
 	 */
-	protected void close() {
+	public void close() {
 		if( isLightweight() ) {
 			// We are bound to the stage
 			FrameEvent evt = new FrameEvent(this, FrameEvent.CLOSING);

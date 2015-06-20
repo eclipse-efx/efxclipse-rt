@@ -158,4 +158,8 @@ public class NativeDecoratedTrimmedWindow extends BorderPane implements TrimmedW
 		bottomProperty().set(node);
 	}
 
+	@Override
+	public void close() {
+		this.w.close();
+	}
 }
