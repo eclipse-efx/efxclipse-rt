@@ -26,6 +26,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -688,7 +689,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 							loader.resourceBundle(resourceBundle);
 						}
 
-						return (Pane) loader.load();
+						Pane load = (Pane) loader.load();
+						ContextInjectionFactory.inject(load, this.context);
+						return load;
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
