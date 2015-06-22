@@ -111,7 +111,7 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	@SuppressWarnings("null")
 	@Inject
 	public BaseWorkbenchRendererFactory(@NonNull IEclipseContext context) {
-		this.context = context.createChild();
+		this.context = context.createChild("BaseWorkbenchRendererFactory"); //$NON-NLS-1$
 		this.context.set(RendererFactory.class, this);
 		this.context.set(SHARED_ELEMENTS_MAP, new HashMap<UIElement, Set<MPlaceholder>>());
 	}
