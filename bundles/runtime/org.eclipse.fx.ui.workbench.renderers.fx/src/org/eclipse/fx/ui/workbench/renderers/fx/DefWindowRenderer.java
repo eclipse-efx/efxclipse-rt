@@ -238,10 +238,6 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		private boolean fullscreen;
 
-		@Inject
-		@NonNull
-		IEclipseContext context;
-
 		IEclipseContext modelContext;
 
 		@NonNull
@@ -683,14 +679,14 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 						}
 
 						@SuppressWarnings("null")
-						InjectingFXMLLoader<Node> loader = InjectingFXMLLoader.create(this.context, b, sb.toString());
+						InjectingFXMLLoader<Node> loader = InjectingFXMLLoader.create(this.modelContext, b, sb.toString());
 						ResourceBundle resourceBundle = this.localizationService.getLocalization(b, Locale.getDefault().toString());
 						if (resourceBundle != null) {
 							loader.resourceBundle(resourceBundle);
 						}
 
 						Pane load = (Pane) loader.load();
-						ContextInjectionFactory.inject(load, this.context);
+						ContextInjectionFactory.inject(load, this.modelContext);
 						return load;
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -721,7 +717,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 						}
 
 						@SuppressWarnings("null")
-						InjectingFXMLLoader<Node> loader = InjectingFXMLLoader.create(this.context, b, sb.toString());
+						InjectingFXMLLoader<Node> loader = InjectingFXMLLoader.create(this.modelContext, b, sb.toString());
 						ResourceBundle resourceBundle = this.localizationService.getLocalization(b, Locale.getDefault().toString());
 						if (resourceBundle != null) {
 							loader.resourceBundle(resourceBundle);
