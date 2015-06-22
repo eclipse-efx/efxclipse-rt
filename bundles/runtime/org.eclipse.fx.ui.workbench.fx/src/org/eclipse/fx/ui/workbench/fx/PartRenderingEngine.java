@@ -40,6 +40,7 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
@@ -410,11 +411,15 @@ public class PartRenderingEngine implements IPresentationEngine {
 		IEclipseContext lclContext = ctxt.getContext();
 		if (lclContext != null) {
 			IEclipseContext parentContext = lclContext.getParent();
-			IEclipseContext child = parentContext.getActiveChild();
-			if (child == lclContext) {
-				child.deactivate();
+			if( parentContext != null ) {
+				IEclipseContext child = parentContext.getActiveChild();
+				if (child == lclContext) {
+					child.deactivate();
+				}
+			} else {
+				System.err.println("Strange: " + lclContext + " has no parent!");  //$NON-NLS-1$//$NON-NLS-2$
 			}
-
+			
 			ctxt.setContext(null);
 			lclContext.dispose();
 		}
