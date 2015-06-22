@@ -44,6 +44,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.ui.controls.stage.Frame;
 import org.eclipse.fx.ui.controls.stage.FrameEvent;
 import org.eclipse.fx.ui.controls.stage.TrimmedWindow;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
@@ -916,7 +917,12 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Override
 		public void close() {
-			getWidget().close();
+			if( this.rootPane instanceof Frame ) {
+				((Frame)this.rootPane).close();
+			} else {
+				getWidget().close();
+			}
+			
 		}
 
 		@Override
