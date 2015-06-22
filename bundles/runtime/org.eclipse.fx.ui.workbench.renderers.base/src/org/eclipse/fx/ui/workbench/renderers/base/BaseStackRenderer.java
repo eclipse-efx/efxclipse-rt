@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -373,6 +374,22 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				}
 			}
 			parent.getChildren().removeAll(removeOnHideList);
+		}
+		
+		if( parent.getSelectedElement() != null ) {
+			if( parent.getChildren().isEmpty() ) {
+				parent.setSelectedElement(null);
+			} else {
+				Optional<MStackElement> first = parent.getChildren().stream().filter( c -> c == parent.getSelectedElement() && c.isVisible()).findFirst();
+				if( ! first.isPresent()) {
+					first = parent.getChildren().stream().filter( c -> c.isVisible()).findFirst();
+					if( first.isPresent() ) {
+						parent.setSelectedElement(first.get());
+					} else {
+						parent.setSelectedElement(null);
+					}
+				}
+			}
 		}
 	}
 
