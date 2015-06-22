@@ -288,6 +288,8 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 				// Set the render flag for other windows
 				// TODO What do we do with: other top-level windows, ...
+				// TODO I think we need to call removeGUI() for the top level because
+				// if we don't we see strange invalid context types sticking around in PartRenderingEngine.clearContext
 				MWindow element = param.getDomElement();
 				if (element != null && !((MApplicationElement) element.getParent() instanceof MApplication)) {
 					element.setToBeRendered(false);
