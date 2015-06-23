@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -31,6 +32,7 @@ import org.eclipse.e4.ui.internal.workbench.ContributionsAnalyzer;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MCoreExpression;
+import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.MUILabel;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
@@ -51,6 +53,8 @@ import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 import org.eclipse.fx.ui.workbench.services.EModelStylingService;
@@ -785,6 +789,94 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the element
 	 */
 	protected abstract void doProcessContent(@NonNull M element);
+
+	/**
+	 * Check that the selected element is a valid one or if not set the
+	 * selection to the first item in the container or <code>null</code>
+	 * 
+	 * @param element
+	 *            the element
+	 */
+	@SuppressWarnings("null")
+	protected void checkSelectedElement(MUIElement element) {
+		if (element instanceof MElementContainer<?>) {
+			@SuppressWarnings("unchecked")
+			MElementContainer<MUIElement> parent = (MElementContainer<MUIElement>) element;
+			if (parent.getSelectedElement() != null) {
+				if (parent.getChildren().isEmpty()) {
+					parent.setSelectedElement(null);
+				} else {
+					Optional<MUIElement> first = parent.getChildren().stream().filter(c -> c == parent.getSelectedElement() && isChildRenderedAndVisible(c)).findFirst();
+					if (!first.isPresent()) {
+						first = parent.getChildren().stream().filter(c -> isChildRenderedAndVisible(c)).findFirst();
+						if (first.isPresent()) {
+							parent.setSelectedElement(first.get());
+						} else {
+							parent.setSelectedElement(null);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Fix the context hierarchy
+	 * 
+	 * @param elements
+	 *            the elements
+	 */
+	protected void fixContextHierarchy(@NonNull Collection<@NonNull ? extends MUIElement> elements) {
+		elements.stream().forEach(this::fixContextHierarchy);
+	}
+
+	/**
+	 * Fix the context hierarchy for given element
+	 * 
+	 * @param element
+	 *            the element
+	 */
+	protected void fixContextHierarchy(@NonNull MUIElement element) {
+		MUIElement tmp = element;
+		if (!tmp.isToBeRendered()) {
+			return;
+		}
+
+		if (tmp instanceof MPlaceholder && tmp.getWidget() != null) {
+			MPlaceholder ph = (MPlaceholder) tmp;
+			MUIElement ref = ph.getRef();
+
+			if (ref.getCurSharedRef() != ph) {
+				ref.setCurSharedRef(ph);
+				WPlaceholderWidget placeholder = (WPlaceholderWidget) ph.getWidget();
+				@SuppressWarnings("unchecked")
+				WLayoutedWidget<MUIElement> content = (WLayoutedWidget<MUIElement>) ref.getWidget();
+				placeholder.setContent(content);
+			}
+
+			tmp = ref;
+		}
+
+		if (tmp instanceof MContext) {
+			IEclipseContext context = ((MContext) tmp).getContext();
+			if (context != null) {
+				IEclipseContext newParentContext = this.modelService.getContainingContext(tmp);
+				if (context.getParent() != newParentContext) {
+					Util.setParentContext(context, newParentContext);
+				}
+			}
+		}
+
+		// Currently not supported in the model but will very likely be in
+		// future
+		if (tmp instanceof MElementContainer<?>) {
+			MElementContainer<?> container = (MElementContainer<?>) tmp;
+			List<MUIElement> kids = new ArrayList<MUIElement>(container.getChildren());
+			for (MUIElement childElement : kids) {
+				fixContextHierarchy(childElement);
+			}
+		}
+	}
 
 	@Override
 	public void focus(@NonNull MUIElement element) {

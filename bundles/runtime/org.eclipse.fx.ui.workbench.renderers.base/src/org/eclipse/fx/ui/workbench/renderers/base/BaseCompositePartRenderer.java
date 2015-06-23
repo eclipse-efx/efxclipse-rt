@@ -233,6 +233,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 				hideChild(parent, element);
 			}
 		}
+		checkSelectedElement(parent);
 	}
 
 	void handleSelectedElement(MCompositePart parent, MPartSashContainerElement oldElement, MPartSashContainerElement newElement) {

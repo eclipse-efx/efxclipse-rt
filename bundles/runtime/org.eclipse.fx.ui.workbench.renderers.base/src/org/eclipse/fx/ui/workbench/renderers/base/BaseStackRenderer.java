@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -24,7 +23,6 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
@@ -38,7 +36,6 @@ import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.eclipse.fx.ui.workbench.services.ELifecycleService;
@@ -334,7 +331,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				}
 			}
 		}
-
+		
+		//TODO THIS NEEDS TO BE MOVED TO THE CHILD ADDITION HANDLER!!!!
+		fixContextHierarchy(elements);
+		
 		// Ensure an element is selected see 436659
 		if( parent.getSelectedElement() == null ) {
 			if( ! widget.getItems().isEmpty() ) {
@@ -376,21 +376,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			parent.getChildren().removeAll(removeOnHideList);
 		}
 		
-		if( parent.getSelectedElement() != null ) {
-			if( parent.getChildren().isEmpty() ) {
-				parent.setSelectedElement(null);
-			} else {
-				Optional<MStackElement> first = parent.getChildren().stream().filter( c -> c == parent.getSelectedElement() && c.isVisible()).findFirst();
-				if( ! first.isPresent()) {
-					first = parent.getChildren().stream().filter( c -> c.isVisible()).findFirst();
-					if( first.isPresent() ) {
-						parent.setSelectedElement(first.get());
-					} else {
-						parent.setSelectedElement(null);
-					}
-				}
-			}
-		}
+		checkSelectedElement(parent);
 	}
 
 	@NonNull
@@ -422,7 +408,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		for (WStackItem<I, IC> i : stack.getItems()) {
 			if (i.getDomElement() == newElement) {
 				stack.selectItem(idx);
-				showElementRecursive(newElement);
+				fixContextHierarchy(newElement);
 				return;
 			}
 			idx++;
@@ -433,7 +419,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		childRendered(parent, newElement);
 		stack.selectItem(parent.getChildren().indexOf(newElement));
 		// TODO Should we do the traversal before???
-		showElementRecursive(newElement);
+		fixContextHierarchy(newElement);
 	}
 
 	boolean handleStackItemClose(@NonNull MStackElement e, @NonNull WStackItem<I, IC> item) {
@@ -529,49 +515,6 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		Boolean b = (Boolean) this.application.getContext().get("__efx_engine_shutdown"); //$NON-NLS-1$
 		if ((b == null || ! b.booleanValue()) && changedObj.getTags().contains(EPartService.REMOVE_ON_HIDE_TAG)) {
 			container.getChildren().remove(changedObj);
-		}
-	}
-
-	@SuppressWarnings("null")
-	private void showElementRecursive(@NonNull MUIElement tmp) {
-		MUIElement element = tmp;
-		if (!element.isToBeRendered()) {
-			return;
-		}
-
-		if (element instanceof MPlaceholder && element.getWidget() != null) {
-			MPlaceholder ph = (MPlaceholder) element;
-			MUIElement ref = ph.getRef();
-
-			if (ref.getCurSharedRef() != ph) {
-				ref.setCurSharedRef(ph);
-				WPlaceholderWidget placeholder = (WPlaceholderWidget) ph.getWidget();
-				@SuppressWarnings("unchecked")
-				WLayoutedWidget<MUIElement> content = (WLayoutedWidget<MUIElement>) ref.getWidget();
-				placeholder.setContent(content);
-			}
-
-			element = ref;
-		}
-
-		if (element instanceof MContext) {
-			IEclipseContext context = ((MContext) element).getContext();
-			if (context != null) {
-				IEclipseContext newParentContext = this.modelService.getContainingContext(element);
-				if (context.getParent() != newParentContext) {
-					Util.setParentContext(context, newParentContext);
-				}
-			}
-		}
-
-		// Currently not supported in the model but will very likely be in
-		// future
-		if (element instanceof MElementContainer<?>) {
-			MElementContainer<?> container = (MElementContainer<?>) element;
-			List<MUIElement> kids = new ArrayList<MUIElement>(container.getChildren());
-			for (MUIElement childElement : kids) {
-				showElementRecursive(childElement);
-			}
 		}
 	}
 }

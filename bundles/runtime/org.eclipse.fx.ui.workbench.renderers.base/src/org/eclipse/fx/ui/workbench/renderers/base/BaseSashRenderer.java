@@ -187,6 +187,7 @@ public abstract class BaseSashRenderer<N> extends BaseRenderer<MPartSashContaine
 				hideChild(parent, element);
 			}
 		}
+		checkSelectedElement(parent);
 	}
 
 	void handleSelectedElement(MPartSashContainer parent, MPartSashContainerElement oldElement, MPartSashContainerElement newElement) {
