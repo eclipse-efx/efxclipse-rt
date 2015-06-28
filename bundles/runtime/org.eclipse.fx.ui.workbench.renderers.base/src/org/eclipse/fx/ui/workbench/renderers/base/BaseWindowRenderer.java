@@ -34,10 +34,12 @@ import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindowElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler;
 import org.eclipse.e4.ui.workbench.modeling.IWindowCloseHandler;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
@@ -153,10 +155,15 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	 */
 	public static final String TAG_SECONDARY_WINDOW = "secondaryMainWindow"; //$NON-NLS-1$
 
+	/**
+	 * Tag marking a window who has to be removed when hidden
+	 */
+	public static final String TAG_REMOVE_ON_HIDE = EPartService.REMOVE_ON_HIDE_TAG;
+
 	@Inject
 	@Log
 	Logger logger;
-	
+
 	@Inject
 	ELifecycleService lifecycleService;
 
@@ -169,70 +176,81 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		registerEventListener(eventBroker, UIEvents.Window.TOPIC_HEIGHT);
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_LABEL);
 		registerEventListener(eventBroker, UIEvents.UILabel.TOPIC_TOOLTIP);
-		registerEventListener(eventBroker, UIEvents.UIElement.TOPIC_VISIBLE); // This is to check our own visible flag
-		
+		registerEventListener(eventBroker, UIEvents.UIElement.TOPIC_VISIBLE); // This
+																				// is
+																				// to
+																				// check
+																				// our
+																				// own
+																				// visible
+																				// flag
+
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, this::handleChildrenEvent);
 		eventBroker.subscribe(UIEvents.Window.TOPIC_WINDOWS, this::handleChildrenEvent);
 		eventBroker.subscribe(UIEvents.UILifeCycle.BRINGTOTOP, BaseWindowRenderer::handleBringToTop);
-		EventProcessor.attachVisibleProcessor(eventBroker, this); // this is for our children that come and go
+		EventProcessor.attachVisibleProcessor(eventBroker, this); // this is for
+																	// our
+																	// children
+																	// that come
+																	// and go
 	}
-	
+
 	static void handleBringToTop(Event event) {
 		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
 		// check if the window brought to top is a none top level window
-		if( changedObj instanceof MWindow && ((MUIElement)changedObj).getParent() == null ) {
+		if (changedObj instanceof MWindow && ((MUIElement) changedObj).getParent() == null) {
 			MWindow w = (MWindow) changedObj;
-			if( w.getWidget() instanceof WWidget<?> ) {
+			if (w.getWidget() instanceof WWidget<?>) {
 				WWidget<?> widget = (WWidget<?>) w.getWidget();
-				if( widget != null ) {
+				if (widget != null) {
 					widget.activate();
-				}				
+				}
 			}
 		}
 	}
 
 	void handleChildrenEvent(Event event) {
-	    Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
-        if (changedObj instanceof MWindow) {
-            MWindow window = (MWindow) changedObj;
-            if (BaseWindowRenderer.this == window.getRenderer()) {
-                String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
-                if (UIEvents.EventTypes.ADD.equals(eventType)) {
-                    MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.NEW_VALUE);
-                    if (element instanceof MWindow) {
-                        handleWindowAdd((MWindow) element);
-                    } else if (element instanceof MWindowElement) {
-                        handleChildAdd(window, (MWindowElement) element);
-                    }
-                } else if (UIEvents.EventTypes.REMOVE.equals(eventType)) {
-                    MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.OLD_VALUE);
-                    if (element instanceof MWindow) {
-                        handleWindowRemove(window, (MWindow) element);
-                    } else if (element instanceof MWindowElement) {
-                        handleChildRemove(window, (MWindowElement) element);
-                    }
-                }
-            }
-        }
+		Object changedObj = event.getProperty(UIEvents.EventTags.ELEMENT);
+		if (changedObj instanceof MWindow) {
+			MWindow window = (MWindow) changedObj;
+			if (BaseWindowRenderer.this == window.getRenderer()) {
+				String eventType = (String) event.getProperty(UIEvents.EventTags.TYPE);
+				if (UIEvents.EventTypes.ADD.equals(eventType)) {
+					MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.NEW_VALUE);
+					if (element instanceof MWindow) {
+						handleWindowAdd((MWindow) element);
+					} else if (element instanceof MWindowElement) {
+						handleChildAdd(window, (MWindowElement) element);
+					}
+				} else if (UIEvents.EventTypes.REMOVE.equals(eventType)) {
+					MUIElement element = (MUIElement) event.getProperty(UIEvents.EventTags.OLD_VALUE);
+					if (element instanceof MWindow) {
+						handleWindowRemove(window, (MWindow) element);
+					} else if (element instanceof MWindowElement) {
+						handleChildRemove(window, (MWindowElement) element);
+					}
+				}
+			}
+		}
 	}
-	
+
 	void handleWindowAdd(@NonNull MWindow element) {
 		engineCreateWidget(element);
 	}
 
 	void handleWindowRemove(@NonNull MWindow parent, @NonNull MWindow element) {
-	    if (element.isToBeRendered() && element.getWidget() != null) {
-            hideChild(parent, element);
-	    }
+		if (element.isToBeRendered() && element.getWidget() != null) {
+			hideChild(parent, element);
+		}
 	}
 
 	void handleChildAdd(@NonNull MWindow window, @NonNull MWindowElement element) {
-	    if(element.getWidget() != null) {
-	        // e.g. detaching something into a new window
-	        childRendered(window, element);    
-	    } else {
-	        engineCreateWidget(element);
-	    }
+		if (element.getWidget() != null) {
+			// e.g. detaching something into a new window
+			childRendered(window, element);
+		} else {
+			engineCreateWidget(element);
+		}
 	}
 
 	void handleChildRemove(@NonNull MWindow window, MWindowElement element) {
@@ -269,16 +287,16 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 			public Boolean call(WWindow<N> param) {
 				@Nullable
 				IEclipseContext modelContext = getModelContext(element);
-				if( modelContext != null ) {
+				if (modelContext != null) {
 					IWindowCloseHandler closeHandler = modelContext.get(IWindowCloseHandler.class);
-					if( closeHandler != null ) {
+					if (closeHandler != null) {
 						boolean close = closeHandler.close(element);
-						if( ! close ) {
+						if (!close) {
 							return Boolean.FALSE;
 						}
 					}
-					
-					if( ! BaseWindowRenderer.this.lifecycleService.validateAnnotation(PreClose.class, element, modelContext) ) {
+
+					if (!BaseWindowRenderer.this.lifecycleService.validateAnnotation(PreClose.class, element, modelContext)) {
 						return Boolean.FALSE;
 					}
 				} else {
@@ -288,21 +306,48 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 				// Set the render flag for other windows
 				// TODO What do we do with: other top-level windows, ...
-				// TODO I think we need to call removeGUI() for the top level because
-				// if we don't we see strange invalid context types sticking around in PartRenderingEngine.clearContext
+				// TODO I think we need to call removeGUI() for the top level
+				// because
+				// if we don't we see strange invalid context types sticking
+				// around in PartRenderingEngine.clearContext
 				MWindow element = param.getDomElement();
 				if (element != null && !((MApplicationElement) element.getParent() instanceof MApplication)) {
 					element.setToBeRendered(false);
 				}
+
+				if (element != null && shouldRemoveWindowFromModel(element)) {
+					element.setToBeRendered(false);
+					EObject eo = (EObject) element;
+					EStructuralFeature feature = eo.eContainingFeature();
+					if (feature.isMany()) {
+						List<?> l = (List<?>) eo.eContainer().eGet(feature);
+						l.remove(eo);
+					} else {
+						eo.eContainer().eSet(feature, null);
+					}
+				}
+
 				return Boolean.TRUE;
 			}
 		});
 		IEclipseContext modelContext = getModelContext(element);
-		if( modelContext != null ) {
-			modelContext.set(ISaveHandler.class, new DefaultSaveHandler(element, widget));	
+		if (modelContext != null) {
+			modelContext.set(ISaveHandler.class, new DefaultSaveHandler(element, widget));
 		} else {
 			getLogger().error("The model context is null which is not expected at this point"); //$NON-NLS-1$
 		}
+	}
+
+	/**
+	 * Check if the element should be removed from the model
+	 * 
+	 * @param element
+	 *            the element
+	 * @return <code>true</code> if it should be removed
+	 */
+	@SuppressWarnings("static-method")
+	protected boolean shouldRemoveWindowFromModel(MWindow element) {
+		return element != null && ((EObject)element).eContainer() instanceof MApplication && element.getTags().contains(TAG_REMOVE_ON_HIDE);
 	}
 
 	/**
@@ -337,15 +382,15 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 	public void doProcessContent(MWindow element) {
 		WWindow<N> windowWidget = getWidget(element);
 
-		if( windowWidget == null ) {
-			getLogger().error("Could not find widget for '"+element+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+		if (windowWidget == null) {
+			getLogger().error("Could not find widget for '" + element + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
-		
+
 		Object nativeWidget = windowWidget.getWidget();
 
 		element.getContext().set(nativeWidget.getClass().getName(), nativeWidget);
-		
+
 		if (element.getMainMenu() != null) {
 			WLayoutedWidget<MMenu> menuWidget = engineCreateWidget(element.getMainMenu());
 			if (menuWidget != null) {
@@ -386,7 +431,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				if (widget != null) {
 					windowWidget.addChild(widget);
 				} else {
-					this.logger.error("Widget for element '"+e+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+					this.logger.error("Widget for element '" + e + "' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
 		}
@@ -397,10 +442,10 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				if (widget != null) {
 					@SuppressWarnings("unchecked")
 					WWindow<N> ww = (WWindow<N>) w.getWidget();
-					if( ww != null ) {
+					if (ww != null) {
 						windowWidget.addChildWindow(ww);
 					} else {
-						this.logger.error("Widget for element '"+w+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+						this.logger.error("Widget for element '" + w + "' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				}
 			}
@@ -423,20 +468,20 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 	@Override
 	public void childRendered(MWindow parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement)|| ! isChildRenderedAndVisible(element)) {
+		if (inContentProcessing(parentElement) || !isChildRenderedAndVisible(element)) {
 			return;
 		}
-		
+
 		if (element instanceof MWindowElement) {
 			WWindow<N> window = getWidget(parentElement);
 			if (window != null) {
 				int idx = getRenderedIndex(parentElement, element);
 				@SuppressWarnings("unchecked")
 				WLayoutedWidget<MWindowElement> widget = (WLayoutedWidget<MWindowElement>) element.getWidget();
-				if( widget != null ) {
-					window.addChild(idx, widget);	
+				if (widget != null) {
+					window.addChild(idx, widget);
 				} else {
-					this.logger.error("Widget for element '"+element+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+					this.logger.error("Widget for element '" + element + "' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
 		} else if (element instanceof MWindow) {
@@ -444,13 +489,13 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 			if (window != null) {
 				@SuppressWarnings("unchecked")
 				WWindow<N> ww = (WWindow<N>) element.getWidget();
-				if( ww != null ) {
-					window.addChildWindow(ww);	
+				if (ww != null) {
+					window.addChildWindow(ww);
 				} else {
-					this.logger.error("Widget for element '"+element+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+					this.logger.error("Widget for element '" + element + "' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
-		} else if( element instanceof MTrimBar ) {
+		} else if (element instanceof MTrimBar) {
 			MTrimBar tm = (MTrimBar) element;
 			WTrimBar<MTrimBar> trimWidget = (WTrimBar<MTrimBar>) element.getWidget();
 			WWindow<MWindow> windowWidget = (WWindow<MWindow>) parentElement.getWidget();
@@ -483,10 +528,10 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 			if (window != null) {
 				@SuppressWarnings("unchecked")
 				WLayoutedWidget<MWindowElement> widget = (WLayoutedWidget<MWindowElement>) changedObj.getWidget();
-				if( widget != null ) {
+				if (widget != null) {
 					window.removeChild(widget);
 				} else {
-					this.logger.error("Widget for element '"+changedObj+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+					this.logger.error("Widget for element '" + changedObj + "' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
 		} else if (changedObj instanceof MWindow) {
@@ -494,18 +539,18 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 			if (window != null) {
 				@SuppressWarnings("unchecked")
 				WWindow<N> ww = (WWindow<N>) changedObj.getWidget();
-				if( ww != null ) {
-					window.removeChildWindow(ww);	
+				if (ww != null) {
+					window.removeChildWindow(ww);
 				} else {
-					this.logger.error("Widget for element '"+changedObj+"' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
+					this.logger.error("Widget for element '" + changedObj + "' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
-		} else if( changedObj instanceof MTrimBar ) {
+		} else if (changedObj instanceof MTrimBar) {
 			WWindow<N> windowWidget = getWidget(container);
-			if( windowWidget != null ) {
+			if (windowWidget != null) {
 				MTrimBar tm = (MTrimBar) changedObj;
 				WTrimBar<MTrimBar> trimWidget = (WTrimBar<MTrimBar>) changedObj.getWidget();
-				if( trimWidget != null ) {
+				if (trimWidget != null) {
 					trimWidget.addStyleClasses(tm.getSide().name());
 					switch (tm.getSide()) {
 					case TOP:
