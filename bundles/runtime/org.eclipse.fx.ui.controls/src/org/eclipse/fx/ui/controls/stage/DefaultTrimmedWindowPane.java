@@ -308,7 +308,7 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 	 * Request the closing through the cancel icon in trim
 	 */
 	protected void requestCancelClose() {
-		close();
+		close(true);
 	}
 	
 	class TitleAreaNodeImpl extends HBox implements TitleAreaNode {

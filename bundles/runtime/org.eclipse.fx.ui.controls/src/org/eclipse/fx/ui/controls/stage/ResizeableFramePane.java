@@ -43,8 +43,7 @@ import javafx.stage.WindowEvent;
  * @since 2.0
  */
 public abstract class ResizeableFramePane extends StackPane implements Frame {
-	private static final CssMetaData<ResizeableFramePane, Number> RESIZE_HANDLE_SIZE = new CssMetaData<ResizeableFramePane, Number>(
-			"-efx-resize-handle-size", StyleConverter.getSizeConverter(), Double.valueOf(5)) { //$NON-NLS-1$
+	private static final CssMetaData<ResizeableFramePane, Number> RESIZE_HANDLE_SIZE = new CssMetaData<ResizeableFramePane, Number>("-efx-resize-handle-size", StyleConverter.getSizeConverter(), Double.valueOf(5)) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(ResizeableFramePane n) {
@@ -56,8 +55,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 			return (StyleableDoubleProperty) n.resizeHandleSize;
 		}
 	};
-	
-	
+
 	private Rectangle2D backupWindowBounds;
 	private double mouseDragDeltaX;
 	private double mouseDragDeltaY;
@@ -103,7 +101,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 		public void handle(MouseEvent event) {
 			EventType<? extends MouseEvent> type = event.getEventType();
 
-			if( type == MouseEvent.MOUSE_RELEASED ) {
+			if (type == MouseEvent.MOUSE_RELEASED) {
 				this.dragAnchor = null;
 			} else if (type == MouseEvent.MOUSE_PRESSED) {
 				this.x = getStage().getX();
@@ -507,18 +505,42 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	/**
 	 * Close the window
 	 */
+	@Override
 	public void close() {
-		if( isLightweight() ) {
+		close(false);
+	}
+
+	/**
+	 * Close window but don't send
+	 * <ul>
+	 * <li>{@link FrameEvent#CLOSING} if the frame is lightweight</li>
+	 * <li>{@link WindowEvent#WINDOW_CLOSE_REQUEST} if the frame is heavyweight
+	 * </li>
+	 * </ul>
+	 * 
+	 * @param uiInteraction
+	 *            if closed by user interaction and events need to be fired
+	 */
+	protected void close(boolean uiInteraction) {
+		if (isLightweight()) {
 			// We are bound to the stage
-			FrameEvent evt = new FrameEvent(this, FrameEvent.CLOSING);
-			Event.fireEvent(this, evt);
-			if (!evt.isConsumed()) {
+			if (uiInteraction) {
+				FrameEvent evt = new FrameEvent(this, FrameEvent.CLOSING);
+				Event.fireEvent(this, evt);
+				if (!evt.isConsumed()) {
+					Event.fireEvent(this, new FrameEvent(this, FrameEvent.CLOSED));
+				}
+			} else {
 				Event.fireEvent(this, new FrameEvent(this, FrameEvent.CLOSED));
-			}			
+			}
 		} else {
-			WindowEvent event = new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST);
-			Event.fireEvent(getStage(), event);
-			if( ! event.isConsumed() ) {
+			if (uiInteraction) {
+				WindowEvent event = new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST);
+				Event.fireEvent(getStage(), event);
+				if (!event.isConsumed()) {
+					getStage().close();
+				}
+			} else {
 				getStage().close();
 			}
 		}
@@ -599,7 +621,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	public void setResizeHandleSize(double size) {
 		this.resizeHandleSize.set(size);
 	}
-	
+
 	/**
 	 * @return property to observe the size
 	 */
