@@ -219,6 +219,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 					engineCreateWidget(element);
 				} else {
 					childRendered(parent, element);
+					fixContextHierarchy(elements);
 				}
 			}
 		}
