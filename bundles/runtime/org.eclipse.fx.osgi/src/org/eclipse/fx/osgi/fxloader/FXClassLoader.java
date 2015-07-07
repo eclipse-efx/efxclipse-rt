@@ -41,6 +41,7 @@ public class FXClassLoader extends ClassLoaderHook {
 	private boolean swtAvailable;
 	private BundleContext frameworkContext;
 	
+	@SuppressWarnings("resource")
 	@Override
 	public Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
 		if( (name.startsWith("javafx") //$NON-NLS-1$
@@ -55,7 +56,12 @@ public class FXClassLoader extends ClassLoaderHook {
 				|| name.startsWith("com.sun.scenario") //$NON-NLS-1$
 				|| name.startsWith("com.sun.webkit") //$NON-NLS-1$
 				) && ! moduleClassLoader.getBundle().getSymbolicName().equals("org.eclipse.swt")) { //$NON-NLS-1$
-			return getFXClassloader().loadClass(name);
+			URLClassLoader fxClassloader = getFXClassloader();
+			if( fxClassloader != null ) {
+				return fxClassloader.loadClass(name);	
+			} else {
+				throw new ClassNotFoundException("Unable to locate JavaFX. Please make sure you have a JDK with JavaFX installed eg on Linux you require an Orqcle JDK"); //$NON-NLS-1$
+			}
 		}
 		
 		return super.postFindClass(name, moduleClassLoader);
