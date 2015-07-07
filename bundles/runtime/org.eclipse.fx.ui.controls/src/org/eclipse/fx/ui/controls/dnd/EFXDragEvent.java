@@ -23,6 +23,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Popup;
+import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -78,19 +80,25 @@ public class EFXDragEvent extends Event {
 	}
 
 	static class DragFeedback {
-		Stage stage;
+		PopupWindow stage;
 		double screenX;
 		double screenY;
+		Node n;
 
-		public DragFeedback() {
-			this.stage = new Stage(StageStyle.TRANSPARENT);
+		public DragFeedback(Node n) {
+			this.n = n;
+			this.stage = new PopupWindow() {
+				// Empty
+			};
 			this.stage.setUserData("findNodeExclude"); //$NON-NLS-1$
-			this.stage.setAlwaysOnTop(true);
+//			this.stage.setAlwaysOnTop(true);
 			StackPane root = new StackPane();
 			root.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-			Scene value = new Scene(root);
-			value.setFill(Color.TRANSPARENT);
-			this.stage.setScene(value);
+//			Scene value = new Scene(root);
+//			value.setFill(Color.TRANSPARENT);
+//			this.stage.setScene(value);
+			this.stage.getScene().getStylesheets().setAll(n.getScene().getStylesheets());
+			this.stage.getScene().setRoot(root);
 		}
 
 		public void updateCoordinates(double screenX, double screenY) {
@@ -103,11 +111,11 @@ public class EFXDragEvent extends Event {
 			this.stage.sizeToScene();
 			this.stage.setX(this.screenX - this.stage.getWidth() / 2);
 			this.stage.setY(this.screenY + 20);
-			this.stage.show();
+			this.stage.show(n.getScene().getWindow());
 		}
 
 		public void dispose() {
-			this.stage.close();
+			this.stage.hide();
 		}
 	}
 
@@ -135,7 +143,7 @@ public class EFXDragEvent extends Event {
 		if (eventType == DRAG_START) {
 			DRAGGED_CONTENT = null;
 			if( canShowFeedbackDragFeedback() ) {
-				DRAG_FEEDBACK = new DragFeedback();
+				DRAG_FEEDBACK = new DragFeedback((Node) source);
 			}
 		} else if (eventType == DRAG_DONE) {
 			if (DRAG_FEEDBACK != null) {
