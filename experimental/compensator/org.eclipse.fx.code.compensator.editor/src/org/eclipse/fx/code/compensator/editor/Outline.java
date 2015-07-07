@@ -20,6 +20,6 @@ public interface Outline {
 		public CharSequence getLabel();
 		public Node getGraphic();
 		public OutlineItem getParent();
-		public ObservableList<OutlineItem> getChildren();
+		public ObservableList<? extends OutlineItem> getChildren();
 	}
 }
