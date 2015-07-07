@@ -60,7 +60,7 @@ public class FXClassLoader extends ClassLoaderHook {
 			if( fxClassloader != null ) {
 				return fxClassloader.loadClass(name);	
 			} else {
-				throw new ClassNotFoundException("Unable to locate JavaFX. Please make sure you have a JDK with JavaFX installed eg on Linux you require an Orqcle JDK"); //$NON-NLS-1$
+				throw new ClassNotFoundException("Unable to locate JavaFX. Please make sure you have a JDK with JavaFX installed eg on Linux you require an Oracle JDK"); //$NON-NLS-1$
 			}
 		}
 		
