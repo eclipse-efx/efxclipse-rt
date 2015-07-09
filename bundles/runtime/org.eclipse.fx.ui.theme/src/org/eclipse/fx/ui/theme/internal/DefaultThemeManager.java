@@ -11,17 +11,9 @@
 package org.eclipse.fx.ui.theme.internal;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-
-import javafx.beans.InvalidationListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener.Change;
-import javafx.collections.ObservableMap;
-import javafx.scene.Scene;
 
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
@@ -33,6 +25,14 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
+
+import javafx.beans.InvalidationListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.scene.Scene;
 
 /**
  * Default implementation of a theme manager
@@ -49,12 +49,23 @@ public class DefaultThemeManager implements ThemeManager {
 	@SuppressWarnings("null")
 	private final @NonNull ObservableMap<@NonNull String, @NonNull Theme> unmodifiableThemes = FXCollections.unmodifiableObservableMap(this.themes);
 	private String currentThemeId;
-	List<Scene> managedScenes = new ArrayList<Scene>();
+	ObservableList<Scene> managedScenes = FXCollections.observableArrayList();
 
 	/**
 	 * Create a new theme manager instance
 	 */
 	public DefaultThemeManager() {
+		this.managedScenes.addListener((ListChangeListener<Scene>) change -> {
+			@Nullable
+			Theme currentTheme = getCurrentTheme();
+			if (currentTheme == null)
+				return;
+			while (change.next()) {
+				for (Scene scene :change.getAddedSubList()) {
+					applyThemeToScene(currentTheme, scene);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -118,15 +129,17 @@ public class DefaultThemeManager implements ThemeManager {
 	private void setTheme(Theme theme) {
 		theme.getStylesheetURL().addListener(this::handleStylesheetUrlChange);
 		for (Scene scene : this.managedScenes) {
-			for (URL url : theme.getStylesheetURL()) {
-				if (theme.getId().equals(this.currentThemeId)) {
-					if (scene.getRoot() != null) {
-						scene.getRoot().getStyleClass().remove(getCSSClassname(theme.getId()));
-						scene.getRoot().getStyleClass().add(getCSSClassname(theme.getId()));
-					}
-					scene.getStylesheets().add(url.toExternalForm());
-				}
-			}			
+			applyThemeToScene(theme, scene);
+		}
+	}
+
+	private static void applyThemeToScene(Theme theme, Scene scene) {
+		for (URL url : theme.getStylesheetURL()) {
+			if (scene.getRoot() != null) {
+				scene.getRoot().getStyleClass().remove(getCSSClassname(theme.getId()));
+				scene.getRoot().getStyleClass().add(getCSSClassname(theme.getId()));
+			}
+			scene.getStylesheets().add(url.toExternalForm());
 		}
 	}
 

@@ -10,12 +10,15 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.tree;
 
+import org.eclipse.fx.core.ReflectionUtil;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.Event;
 import javafx.scene.control.TreeItem;
 
 /**
@@ -30,14 +33,10 @@ import javafx.scene.control.TreeItem;
  * @param <T> The type of the {@link #getValue() value} property within {@link TreeItem}.
  */
 public class FilterableTreeItem<T> extends TreeItem<T> {
+	final private ObservableList<TreeItem<T>> sourceList;
 	final private FilteredList<TreeItem<T>> filteredList;
 	
-	private ObjectProperty<TreeItemPredicate<T>> predicate = new SimpleObjectProperty<TreeItemPredicate<T>>() {
-        @Override
-		protected void invalidated() {
-            fireChildrenModificationEvent();
-        }
-    };
+	private ObjectProperty<TreeItemPredicate<T>> predicate = new SimpleObjectProperty<TreeItemPredicate<T>>();
 	
 	/**
 	 * Creates a new {@link TreeItem} with sorted children. To enable sorting it is 
@@ -48,7 +47,8 @@ public class FilterableTreeItem<T> extends TreeItem<T> {
 	 */
 	public FilterableTreeItem(T value) {
 		super(value);
-		this.filteredList = new FilteredList<>(super.getChildren());
+		this.sourceList = FXCollections.observableArrayList();
+		this.filteredList = new FilteredList<>(this.sourceList);
 		this.filteredList.predicateProperty().bind(Bindings.createObjectBinding(() -> {
 			return child -> {
 				// Set the predicate of child items to force filtering
@@ -66,18 +66,20 @@ public class FilterableTreeItem<T> extends TreeItem<T> {
 				return this.predicate.get().test(this, child.getValue());
 			};
 		}, this.predicate));
+
+		setHiddenFieldChildren(this.filteredList); 
 	}
 
 	/**
-	 * This method overrides {@link TreeItem#getChildren()} and returns an
-	 * unmodifiable {@link FilteredList} as the children may only be changed
-	 * via the underlying model.
-	 * 
-	 * @see #getInternalChildren()
+	 * Set the hidden private field {@link TreeItem#children} through reflection and hook the hidden
+	 * {@link ListChangeListener} in {@link TreeItem#childrenListener} to the list
+	 * @param list the list to set
 	 */
-	@Override
-	public ObservableList<TreeItem<T>> getChildren() {
-		return this.filteredList;
+	@SuppressWarnings({ "unchecked", "javadoc" })
+	protected void setHiddenFieldChildren(ObservableList<TreeItem<T>> list) {
+		ReflectionUtil.setFieldValue(this, "children", list); //$NON-NLS-1$
+		Object childrenListener = ReflectionUtil.getFieldValue(this, "childrenListener"); //$NON-NLS-1$
+		list.addListener((ListChangeListener<? super TreeItem<T>>) childrenListener);
 	}
 	
 	/**
@@ -85,29 +87,9 @@ public class FilterableTreeItem<T> extends TreeItem<T> {
 	 * @return underlying list of children
 	 */
 	public ObservableList<TreeItem<T>> getInternalChildren() {
-		return super.getChildren();
+		return this.sourceList;
 	}
 	
-	/*
-	 * Currently we need to fire this event to update the tree view on changes to the filter
-	 * predicate, otherwise the displayed contents will not be updated: Tested with 8u45
-	 */
-	void fireChildrenModificationEvent() {
-		TreeModificationEvent<T> event = new TreeModificationEvent<T>(TreeItem.childrenModificationEvent(), this);
-		Event.fireEvent(this, event);
-	}
-	
-	/*
-	 * Workaround while we wait for RT-40790. We need to override this otherwise the TreeView will
-	 * show collapse/expand controls for folders that are empty after filtering
-	 * @see https://javafx-jira.kenai.com/browse/RT-40790
-	 * @see javafx.scene.control.TreeItem#isLeaf()
-	 */
-	@Override
-	public boolean isLeaf() {
-		return getChildren().isEmpty();
-	}
-
 	/**
 	 * @return the predicate property
 	 */
