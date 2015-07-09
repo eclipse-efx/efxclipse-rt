@@ -62,8 +62,11 @@ public class CleanUpAddon {
 				return;
 			}
 
-			if (container instanceof MWindow && containerParent instanceof MApplication) {
-				return;
+			if (container instanceof MWindow 
+					&& containerParent instanceof MApplication) {
+				if( ! container.getTags().contains(BaseWindowRenderer.TAG_SECONDARY_WINDOW) ) {
+					return;	
+				}
 			}
 
 			this.synchronize.scheduleExecution(200, () -> {
