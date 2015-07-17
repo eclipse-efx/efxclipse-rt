@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.controls.styledtext.skin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -382,7 +383,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 		@Override
 		protected void updateItem(Line arg0, boolean arg1) {
-			if( arg0 != null && ! arg1 ) {			
+			if( arg0 != null && ! arg1 ) {
 				this.domainElement = arg0;
 				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(this);
 				if (lineInfo == null) {
@@ -415,15 +416,22 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				} else {
 //					System.err.println("MODIFIED: " + this.currentSegments + " vs " + segments);
 				}
-				
+
 				this.currentSegments = segments;
-				
+
 				List<@NonNull StyledTextNode> texts = new ArrayList<>();
-				
+
 				for (final Segment seg : this.currentSegments) {
 					StyledTextNode t = new StyledTextNode(seg.text);
 					if( seg.style.stylename != null ) {
-						t.getStyleClass().setAll("source-segment",seg.style.stylename); //$NON-NLS-1$
+						if( seg.style.stylename.contains(".") ) { //$NON-NLS-1$
+							List<String> styles = new ArrayList<String>(Arrays.asList(seg.style.stylename.split("\\."))); //$NON-NLS-1$
+							styles.add(0,"source-segment"); //$NON-NLS-1$
+							t.getStyleClass().setAll(styles);
+						} else {
+							t.getStyleClass().setAll("source-segment",seg.style.stylename); //$NON-NLS-1$
+						}
+
 					} else {
 						if (seg.style.foreground != null) {
 							t.getStyleClass().setAll("plain-source-segment"); //$NON-NLS-1$
@@ -464,9 +472,9 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					block.setCaretIndex(-1);
 				}
 			} else {
-//FIND OUT WHY WE CLEAR SO OFTEN				
+//FIND OUT WHY WE CLEAR SO OFTEN
 //				System.err.println("CLEARING GRAPHICS: " + this + " => " + this.domainElement);
-				
+
 				setGraphic(null);
 				this.domainElement = null;
 				this.currentSegments = null;
