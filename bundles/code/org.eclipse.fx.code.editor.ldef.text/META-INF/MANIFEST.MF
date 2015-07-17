@@ -2,14 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Text
 Bundle-SymbolicName: org.eclipse.fx.code.editor.ldef.text
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.fx.text,
  org.eclipse.fx.code.editor.ldef,
  org.eclipse.e4.core.contexts,
  org.eclipse.fx.code.editor,
- org.eclipse.fx.core;bundle-version="2.1.0"
-Import-Package: org.osgi.service.component.annotations
+ org.eclipse.fx.core;bundle-version="2.1.0",
+ org.eclipse.emf.ecore;bundle-version="2.11.0"
+Import-Package: javax.inject,
+ org.osgi.service.component.annotations
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.ldef.text.internal.LDefModelCF.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.ldef.text.internal.LDefDocumentPartitionerProvider.xml
 Bundle-ActivationPolicy: lazy
