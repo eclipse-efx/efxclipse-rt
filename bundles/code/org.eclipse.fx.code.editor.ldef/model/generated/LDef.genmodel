@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.fx.code.editor.ldef/src-gen" editDirectory="/org.eclipse.fx.code.editor.ldef.edit/src"
+    editorDirectory="/org.eclipse.fx.code.editor.ldef.editor/src" modelPluginID="org.eclipse.fx.code.editor.ldef"
+    forceOverwrite="true" modelName="LDef" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="org.eclipse.fx.code.editor.ldef.edit"
+    editorPluginID="org.eclipse.fx.code.editor.ldef.editor" runtimeVersion="2.11">
+  <genPackages prefix="LDef" basePackage="org.eclipse.fx.code.editor.ldef" disposableProviderFactory="true"
+      fileExtensions="ldef" ecorePackage="LDef.ecore#/">
+    <genClasses ecoreClass="LDef.ecore#//LDef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//LDef/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LDef/paritioning"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LDef/lexicalHighlighting"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Paritioning">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitioner"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Partition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition/name"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Partitioner"/>
+    <genClasses ecoreClass="LDef.ecore#//Paritioner_JS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Paritioner_JS/scriptURI"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Partitioner_Rule">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Partitioner_Rule/ruleList"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Partition_Rule">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LDef.ecore#//Partition_Rule/parition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_Rule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_Rule/endSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_Rule/escapeSeq"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Partition_SingleLineRule"/>
+    <genClasses ecoreClass="LDef.ecore#//Partition_MultiLineRule"/>
+    <genClasses ecoreClass="LDef.ecore#//LexicalHighlighting">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LexicalHighlighting/list"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//LexicalPartitionHighlighting">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LDef.ecore#//LexicalPartitionHighlighting/partition"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//LexicalPartitionHighlighting_JS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//LexicalPartitionHighlighting_JS/scriptURI"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//LexicalPartitionHighlighting_Rule">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LexicalPartitionHighlighting_Rule/tokenList"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Token">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Token/default"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Token/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Token/scannerList"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Scanner"/>
+    <genClasses ecoreClass="LDef.ecore#//Scanner_Keyword">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_Keyword/keywords"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Keyword">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Keyword/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Keyword/version"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Scanner_Rule"/>
+    <genClasses ecoreClass="LDef.ecore#//Scanner_SingleLineRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/endSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/escapeSeq"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Scanner_MultiLineRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/endSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/escapeSeq"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Scanner_CharacterRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_CharacterRule/characters"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Scanner_JSRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_JSRule/fileURI"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Scanner_WhitespaceRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_WhitespaceRule/characters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_WhitespaceRule/javawhitespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_WhitespaceRule/fileURI"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

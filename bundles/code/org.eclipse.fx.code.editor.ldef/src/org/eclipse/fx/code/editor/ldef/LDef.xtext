@@ -1,0 +1,110 @@
+grammar org.eclipse.fx.code.editor.ldef.LDef with org.eclipse.xtext.common.Terminals
+
+generate lDef "http://www.eclipse.org/fx/code/editor/ldef/LDef"
+
+LDef:
+	name=ID '{'
+		paritioning=Paritioning
+		lexicalHighlighting=LexicalHighlighting
+	'}'
+;
+
+Paritioning:
+	'partitioning' '{'
+		partitions += Partition+
+		partitioner = Partitioner
+	'}'
+;
+
+Partition:
+	'partition' name=ID
+;
+
+Partitioner:
+	Partitioner_Rule | Paritioner_JS
+;
+
+Paritioner_JS:
+	'script' scriptURI=STRING
+;
+
+Partitioner_Rule:
+	'rule' '{'
+		ruleList+=Partition_Rule+
+	'}'
+;
+
+Partition_Rule:
+	Partition_SingleLineRule | Partition_MultiLineRule
+;
+
+Partition_SingleLineRule:
+	'single_line' parition=[Partition|ID] startSeq=STRING '=>' endSeq=STRING? ('escaped' 'by' escapeSeq=STRING)?
+;
+
+Partition_MultiLineRule:
+	'multi_line' parition=[Partition|ID] startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
+;
+
+// -----------------------------------------------------
+
+LexicalHighlighting:
+	'lexical_highlighting' '{'
+		list += LexicalPartitionHighlighting+
+	'}'
+;
+
+LexicalPartitionHighlighting:
+	LexicalPartitionHighlighting_Rule | LexicalPartitionHighlighting_JS
+;
+
+LexicalPartitionHighlighting_JS:
+	'script' partition=[Partition|ID] scriptURI=STRING
+;
+
+LexicalPartitionHighlighting_Rule:
+	'rule' partition=[Partition|ID] '{'
+		tokenList+=Token+
+
+	'}'
+;
+
+Token:
+	default?='default'? name=ID ('{' scannerList+=Scanner+ '}')?
+;
+
+Scanner:
+	Scanner_Keyword | Scanner_Rule
+;
+
+Scanner_Keyword:
+	'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']'
+;
+
+Keyword:
+	name=STRING ('since' version=STRING)?
+;
+
+Scanner_Rule:
+	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule | Scanner_WhitespaceRule
+;
+
+Scanner_SingleLineRule:
+	'single_line' startSeq=STRING '=>' endSeq=STRING? ('escaped' 'by' escapeSeq=STRING)?
+;
+
+Scanner_MultiLineRule:
+	'multi_line' startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
+;
+
+Scanner_CharacterRule:
+	'character' '[' characters+=STRING (',' characters+=STRING)* ']'
+;
+
+Scanner_JSRule:
+	'script' fileURI=STRING
+;
+
+Scanner_WhitespaceRule:
+	'whitespace' (('[' characters+=STRING (',' characters+=STRING )* ']') | javawhitespace?='javawhitespace' | fileURI=STRING)
+;
