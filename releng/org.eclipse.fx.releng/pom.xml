@@ -72,6 +72,19 @@
 		<module>../../bundles/runtime/javax.annotation.jre</module>
 		<module>../../bundles/runtime/javax.xml.jre</module>
 
+		<!-- Code -->
+		<module>../../bundles/code/org.eclipse.fx.text</module>
+		<module>../../bundles/code/org.eclipse.fx.text.ui</module>
+		<module>../../bundles/code/org.eclipse.fx.code.editor</module>
+		<module>../../bundles/code/org.eclipse.fx.code.editor.e4</module>
+		<module>../../bundles/code/org.eclipse.fx.code.editor.fx</module>
+		<module>../../bundles/code/org.eclipse.fx.code.editor.fx.e4</module>
+		<module>../../bundles/code/org.eclipse.fx.code.outline</module>
+		<module>../../bundles/code/org.eclipse.fx.code.outline.e4</module>
+		<module>../../bundles/code/org.eclipse.fx.code.editor.ldef</module>
+		<module>../../bundles/code/org.eclipse.fx.code.editor.ldef.text</module>
+		<module>../../bundles/code/org.eclipse.fx.code.editor.ldef.text.fx</module>
+
 		<!-- Features -->
 		<module>../runtime/org.eclipse.fx.core.feature</module>
 		<module>../runtime/org.eclipse.fx.runtime.feature</module>
@@ -80,6 +93,7 @@
 		<module>../runtime/org.eclipse.fx.target.feature</module>
 		<module>../runtime/org.eclipse.fx.target.rcp.feature</module>
 		<module>../runtime/org.eclipse.fx.target.rcp4.feature</module>
+		<module>../code/org.eclipse.fx.code.target.feature</module>
 
 		<module>../org.eclipse.fx.updatesite</module>
 		<module>../org.eclipse.fx.runtime.doc</module>
@@ -97,7 +111,7 @@
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/</url>
 		</repository>
-		<!-- repository> <id>xtext</id> <layout>p2</layout> <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url> 
+		<!-- repository> <id>xtext</id> <layout>p2</layout> <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
 			</repository -->
 		<repository>
 			<id>efx-shared-runtime</id>
@@ -114,8 +128,8 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
-		<!-- pluginRepository> <id>eclipse</id> <url>${eclipse-repo.url}</url> 
-			<releases> <enabled>true</enabled> </releases> <snapshots> <enabled>true</enabled> 
+		<!-- pluginRepository> <id>eclipse</id> <url>${eclipse-repo.url}</url>
+			<releases> <enabled>true</enabled> </releases> <snapshots> <enabled>true</enabled>
 			</snapshots> </pluginRepository -->
 		<pluginRepository>
 			<id>eclipse-cbi-releases</id>
@@ -248,7 +262,7 @@
 					<artifactId>tycho-packaging-plugin</artifactId>
 					<version>${tycho-version}</version>
 					<dependencies>
-						<!-- dependency> <groupId>org.eclipse.tycho.extras</groupId> <artifactId>tycho-buildtimestamp-jgit</artifactId> 
+						<!-- dependency> <groupId>org.eclipse.tycho.extras</groupId> <artifactId>tycho-buildtimestamp-jgit</artifactId>
 							<version>${tycho-extras-version}</version> </dependency -->
 						<dependency>
 							<groupId>org.eclipse.tycho.extras</groupId>
