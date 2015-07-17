@@ -8,11 +8,12 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.code.editor;
+package org.eclipse.fx.code.editor.fx.services;
 
 import java.util.List;
 import java.util.concurrent.Future;
 
+import org.eclipse.fx.code.editor.Input;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 public interface ProposalComputer {

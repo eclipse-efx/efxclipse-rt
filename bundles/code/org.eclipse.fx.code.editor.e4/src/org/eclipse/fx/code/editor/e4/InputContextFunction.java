@@ -3,8 +3,8 @@ package org.eclipse.fx.code.editor.e4;
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
-import org.eclipse.fx.code.editor.TextEditor;
 import org.eclipse.fx.code.editor.services.InputTypeProvider;
 import org.eclipse.fx.core.di.context.TypeProviderContextFunction;
 import org.osgi.service.component.annotations.Component;
@@ -17,7 +17,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class InputContextFunction extends TypeProviderContextFunction<String,Input<?>,InputTypeProvider> {
 
 	public InputContextFunction() {
-		super(TextEditor.DOCUMENT_URL);
+		super(Constants.DOCUMENT_URL);
 	}
 
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
@@ -34,7 +34,7 @@ public class InputContextFunction extends TypeProviderContextFunction<String,Inp
 		super.preTypeCreation(context);
 
 		MPart part = context.get(MPart.class);
-		context.set(TextEditor.DOCUMENT_URL, part.getPersistedState().get(TextEditor.DOCUMENT_URL));
-		context.set(TextEditor.VCS_URL, part.getPersistedState().get(TextEditor.VCS_URL));
+		context.set(Constants.DOCUMENT_URL, part.getPersistedState().get(Constants.DOCUMENT_URL));
+		context.set(Constants.VCS_URL, part.getPersistedState().get(Constants.VCS_URL));
 	}
 }

@@ -8,7 +8,7 @@
 * Contributors:
 * 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
 *******************************************************************************/
-package org.eclipse.fx.code.editor;
+package org.eclipse.fx.code.editor.fx;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -18,6 +18,9 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.fx.code.editor.Constants;
+import org.eclipse.fx.code.editor.Input;
+import org.eclipse.fx.code.editor.SourceChange;
 import org.eclipse.fx.code.editor.services.DocumentPersitenceService;
 import org.eclipse.fx.core.di.ContextValue;
 import org.eclipse.jface.text.DocumentEvent;
@@ -33,8 +36,6 @@ import javafx.beans.property.Property;
 import javafx.scene.layout.BorderPane;
 
 public class TextEditor {
-	public static final String DOCUMENT_URL = "documentUrl";
-	public static final String VCS_URL = "vcsUrl";
 
 	@Inject
 	IDocument document;

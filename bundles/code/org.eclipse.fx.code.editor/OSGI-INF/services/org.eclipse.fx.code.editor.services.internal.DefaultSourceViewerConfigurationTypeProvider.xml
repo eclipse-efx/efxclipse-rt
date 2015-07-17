@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.code.editor.services.internal.DefaultSourceViewerConfigurationTypeProvider">
-   <implementation class="org.eclipse.fx.code.editor.services.internal.DefaultSourceViewerConfigurationTypeProvider"/>
-   <service>
-      <provide interface="org.eclipse.fx.code.editor.services.SourceViewerConfigurationTypeProvider"/>
-   </service>
-</scr:component>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.code.editor.e4.SourceViewerConfigurationContextFunction">
-   <implementation class="org.eclipse.fx.code.editor.e4.SourceViewerConfigurationContextFunction"/>
-   <service>
-      <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
-   </service>
-   <property name="service.context.key" value="org.eclipse.jface.text.source.SourceViewerConfiguration"/>
-   <reference bind="registerService" cardinality="0..n" interface="org.eclipse.fx.code.editor.services.SourceViewerConfigurationTypeProvider" name="registerService" policy="dynamic" policy-option="greedy" unbind="unregisterService"/>
-</scr:component>

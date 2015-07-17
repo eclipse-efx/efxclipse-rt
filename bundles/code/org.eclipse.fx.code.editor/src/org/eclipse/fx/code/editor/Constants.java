@@ -6,4 +6,8 @@ public class Constants {
 	public static final String EDITOR_DOCUMENT_SAVED = "org/eclipse/fx/code/compansator/editor/documentSaved";
 
 	public static final String OUTLINE_RELOAD = "org/eclipse/fx/code/compensator/editor/Outline/reload";
+
+	public static final String DOCUMENT_URL = "documentUrl";
+	public static final String VCS_URL = "vcsUrl";
+
 }

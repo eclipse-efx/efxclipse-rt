@@ -1,9 +1,10 @@
-package org.eclipse.fx.code.editor.e4;
+package org.eclipse.fx.code.editor.fx.e4;
 
 import java.util.Map;
 
 import org.eclipse.e4.core.contexts.IContextFunction;
-import org.eclipse.fx.code.editor.services.PresentationReconcilerTypeProvider;
+import org.eclipse.fx.code.editor.e4.InputBasedContextFunction;
+import org.eclipse.fx.code.editor.fx.services.PresentationReconcilerTypeProvider;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

@@ -1,4 +1,4 @@
-package org.eclipse.fx.code.editor.services.internal;
+package org.eclipse.fx.code.editor.fx.services.internal;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,8 +8,8 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.fx.code.editor.Input;
-import org.eclipse.fx.code.editor.ProposalComputer;
-import org.eclipse.fx.code.editor.ProposalComputer.ProposalContext;
+import org.eclipse.fx.code.editor.fx.services.ProposalComputer;
+import org.eclipse.fx.code.editor.fx.services.ProposalComputer.ProposalContext;
 import org.eclipse.fx.core.di.Service;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
