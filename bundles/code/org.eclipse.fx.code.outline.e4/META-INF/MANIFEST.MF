@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: E4
+Bundle-SymbolicName: org.eclipse.fx.code.outline.e4
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.e4.core.contexts,
+ org.eclipse.fx.code.outline,
+ org.eclipse.e4.core.services,
+ org.eclipse.osgi.services;bundle-version="3.5.0",
+ org.eclipse.fx.core,
+ org.eclipse.fx.core.di.context,
+ org.eclipse.e4.core.di;bundle-version="1.5.0"
+Import-Package: org.eclipse.fx.code.editor
+Service-Component: OSGI-INF/services/org.eclipse.fx.code.outline.e4.ActiveOutlineContextFunction.xml
+Bundle-ActivationPolicy: lazy

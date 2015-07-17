@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.code.editor.e4.ProposalComputerTypeProviderContextFunction">
+   <implementation class="org.eclipse.fx.code.editor.e4.ProposalComputerTypeProviderContextFunction"/>
+   <service>
+      <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
+   </service>
+   <property name="service.context.key" value="org.eclipse.fx.code.editor.ProposalComputer"/>
+   <reference bind="registerService" cardinality="0..n" interface="org.eclipse.fx.code.editor.services.ProposalComputerTypeProvider" name="registerService" policy="dynamic" policy-option="greedy" unbind="unregisterService"/>
+</scr:component>
