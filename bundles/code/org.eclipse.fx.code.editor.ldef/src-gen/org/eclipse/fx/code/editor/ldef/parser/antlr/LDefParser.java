@@ -25,7 +25,7 @@ public class LDefParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPars
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "LDef";
+		return "Root";
 	}
 	
 	public LDefGrammarAccess getGrammarAccess() {

@@ -2,7 +2,25 @@ grammar org.eclipse.fx.code.editor.ldef.LDef with org.eclipse.xtext.common.Termi
 
 generate lDef "http://www.eclipse.org/fx/code/editor/ldef/LDef"
 
-LDef:
+Root:
+	'package' name=QualifiedName
+	imports+=Import*
+	languageDefinition=LanguageDef
+;
+
+ValidID:
+	ID;
+
+QualifiedName:
+  ValidID (=>'.' ValidID)*;
+
+QualifiedNameWithWildCard :
+	QualifiedName  ('.' '*')?;
+
+Import:
+	'import' importedNamespace=QualifiedNameWithWildCard;
+
+LanguageDef:
 	name=ID '{'
 		paritioning=Paritioning
 		lexicalHighlighting=LexicalHighlighting

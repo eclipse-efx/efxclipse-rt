@@ -23,13 +23,31 @@ public interface LDefFactory extends EFactory
   LDefFactory eINSTANCE = org.eclipse.fx.code.editor.ldef.lDef.impl.LDefFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>LDef</em>'.
+   * Returns a new object of class '<em>Root</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>LDef</em>'.
+   * @return a new object of class '<em>Root</em>'.
    * @generated
    */
-  LDef createLDef();
+  Root createRoot();
+
+  /**
+   * Returns a new object of class '<em>Import</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Import</em>'.
+   * @generated
+   */
+  Import createImport();
+
+  /**
+   * Returns a new object of class '<em>Language Def</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Language Def</em>'.
+   * @generated
+   */
+  LanguageDef createLanguageDef();
 
   /**
    * Returns a new object of class '<em>Paritioning</em>'.

@@ -14,7 +14,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
-@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.ldef.lDef.LDef"})
+@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.ldef.lDef.LanguageDef"})
 public class LDefModelCF extends ContextFunction {
 	private List<LDefModelProvider> providerList = new ArrayList<>();
 

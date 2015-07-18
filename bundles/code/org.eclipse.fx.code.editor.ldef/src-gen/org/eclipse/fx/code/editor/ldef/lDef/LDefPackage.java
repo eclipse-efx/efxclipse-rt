@@ -57,14 +57,14 @@ public interface LDefPackage extends EPackage
   LDefPackage eINSTANCE = org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LDefImpl <em>LDef</em>}' class.
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.RootImpl <em>Root</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefImpl
-   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLDef()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.RootImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getRoot()
    * @generated
    */
-  int LDEF = 0;
+  int ROOT = 0;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -73,7 +73,81 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LDEF__NAME = 0;
+  int ROOT__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Imports</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROOT__IMPORTS = 1;
+
+  /**
+   * The feature id for the '<em><b>Language Definition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROOT__LANGUAGE_DEFINITION = 2;
+
+  /**
+   * The number of structural features of the '<em>Root</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROOT_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ImportImpl <em>Import</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ImportImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getImport()
+   * @generated
+   */
+  int IMPORT = 1;
+
+  /**
+   * The feature id for the '<em><b>Imported Namespace</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IMPORT__IMPORTED_NAMESPACE = 0;
+
+  /**
+   * The number of structural features of the '<em>Import</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IMPORT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl <em>Language Def</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLanguageDef()
+   * @generated
+   */
+  int LANGUAGE_DEF = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LANGUAGE_DEF__NAME = 0;
 
   /**
    * The feature id for the '<em><b>Paritioning</b></em>' containment reference.
@@ -82,7 +156,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LDEF__PARITIONING = 1;
+  int LANGUAGE_DEF__PARITIONING = 1;
 
   /**
    * The feature id for the '<em><b>Lexical Highlighting</b></em>' containment reference.
@@ -91,16 +165,16 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LDEF__LEXICAL_HIGHLIGHTING = 2;
+  int LANGUAGE_DEF__LEXICAL_HIGHLIGHTING = 2;
 
   /**
-   * The number of structural features of the '<em>LDef</em>' class.
+   * The number of structural features of the '<em>Language Def</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LDEF_FEATURE_COUNT = 3;
+  int LANGUAGE_DEF_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ParitioningImpl <em>Paritioning</em>}' class.
@@ -110,7 +184,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getParitioning()
    * @generated
    */
-  int PARITIONING = 1;
+  int PARITIONING = 3;
 
   /**
    * The feature id for the '<em><b>Partitions</b></em>' containment reference list.
@@ -147,7 +221,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition()
    * @generated
    */
-  int PARTITION = 2;
+  int PARTITION = 4;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -175,7 +249,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartitioner()
    * @generated
    */
-  int PARTITIONER = 3;
+  int PARTITIONER = 5;
 
   /**
    * The number of structural features of the '<em>Partitioner</em>' class.
@@ -194,7 +268,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getParitioner_JS()
    * @generated
    */
-  int PARITIONER_JS = 4;
+  int PARITIONER_JS = 6;
 
   /**
    * The feature id for the '<em><b>Script URI</b></em>' attribute.
@@ -222,7 +296,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartitioner_Rule()
    * @generated
    */
-  int PARTITIONER_RULE = 5;
+  int PARTITIONER_RULE = 7;
 
   /**
    * The feature id for the '<em><b>Rule List</b></em>' containment reference list.
@@ -250,7 +324,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_Rule()
    * @generated
    */
-  int PARTITION_RULE = 6;
+  int PARTITION_RULE = 8;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -305,7 +379,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_SingleLineRule()
    * @generated
    */
-  int PARTITION_SINGLE_LINE_RULE = 7;
+  int PARTITION_SINGLE_LINE_RULE = 9;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -360,7 +434,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_MultiLineRule()
    * @generated
    */
-  int PARTITION_MULTI_LINE_RULE = 8;
+  int PARTITION_MULTI_LINE_RULE = 10;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -415,7 +489,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalHighlighting()
    * @generated
    */
-  int LEXICAL_HIGHLIGHTING = 9;
+  int LEXICAL_HIGHLIGHTING = 11;
 
   /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
@@ -443,7 +517,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING = 10;
+  int LEXICAL_PARTITION_HIGHLIGHTING = 12;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -471,7 +545,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_JS()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 11;
+  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 13;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -508,7 +582,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_Rule()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 12;
+  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 14;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -545,7 +619,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getToken()
    * @generated
    */
-  int TOKEN = 13;
+  int TOKEN = 15;
 
   /**
    * The feature id for the '<em><b>Default</b></em>' attribute.
@@ -591,7 +665,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner()
    * @generated
    */
-  int SCANNER = 14;
+  int SCANNER = 16;
 
   /**
    * The number of structural features of the '<em>Scanner</em>' class.
@@ -610,7 +684,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Keyword()
    * @generated
    */
-  int SCANNER_KEYWORD = 15;
+  int SCANNER_KEYWORD = 17;
 
   /**
    * The feature id for the '<em><b>Keywords</b></em>' containment reference list.
@@ -638,7 +712,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getKeyword()
    * @generated
    */
-  int KEYWORD = 16;
+  int KEYWORD = 18;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -675,7 +749,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Rule()
    * @generated
    */
-  int SCANNER_RULE = 17;
+  int SCANNER_RULE = 19;
 
   /**
    * The number of structural features of the '<em>Scanner Rule</em>' class.
@@ -694,7 +768,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_SingleLineRule()
    * @generated
    */
-  int SCANNER_SINGLE_LINE_RULE = 18;
+  int SCANNER_SINGLE_LINE_RULE = 20;
 
   /**
    * The feature id for the '<em><b>Start Seq</b></em>' attribute.
@@ -740,7 +814,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_MultiLineRule()
    * @generated
    */
-  int SCANNER_MULTI_LINE_RULE = 19;
+  int SCANNER_MULTI_LINE_RULE = 21;
 
   /**
    * The feature id for the '<em><b>Start Seq</b></em>' attribute.
@@ -786,7 +860,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_CharacterRule()
    * @generated
    */
-  int SCANNER_CHARACTER_RULE = 20;
+  int SCANNER_CHARACTER_RULE = 22;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -814,7 +888,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_JSRule()
    * @generated
    */
-  int SCANNER_JS_RULE = 21;
+  int SCANNER_JS_RULE = 23;
 
   /**
    * The feature id for the '<em><b>File URI</b></em>' attribute.
@@ -842,7 +916,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_WhitespaceRule()
    * @generated
    */
-  int SCANNER_WHITESPACE_RULE = 22;
+  int SCANNER_WHITESPACE_RULE = 24;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -882,47 +956,111 @@ public interface LDefPackage extends EPackage
 
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.LDef <em>LDef</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Root <em>Root</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>LDef</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LDef
+   * @return the meta object for class '<em>Root</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Root
    * @generated
    */
-  EClass getLDef();
+  EClass getRoot();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.LDef#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Root#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LDef#getName()
-   * @see #getLDef()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Root#getName()
+   * @see #getRoot()
    * @generated
    */
-  EAttribute getLDef_Name();
+  EAttribute getRoot_Name();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.LDef#getParitioning <em>Paritioning</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.eclipse.fx.code.editor.ldef.lDef.Root#getImports <em>Imports</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Imports</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Root#getImports()
+   * @see #getRoot()
+   * @generated
+   */
+  EReference getRoot_Imports();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.Root#getLanguageDefinition <em>Language Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Language Definition</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Root#getLanguageDefinition()
+   * @see #getRoot()
+   * @generated
+   */
+  EReference getRoot_LanguageDefinition();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Import <em>Import</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Import</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Import
+   * @generated
+   */
+  EClass getImport();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Import#getImportedNamespace <em>Imported Namespace</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Imported Namespace</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Import#getImportedNamespace()
+   * @see #getImport()
+   * @generated
+   */
+  EAttribute getImport_ImportedNamespace();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef <em>Language Def</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Language Def</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LanguageDef
+   * @generated
+   */
+  EClass getLanguageDef();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getName()
+   * @see #getLanguageDef()
+   * @generated
+   */
+  EAttribute getLanguageDef_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getParitioning <em>Paritioning</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Paritioning</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LDef#getParitioning()
-   * @see #getLDef()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getParitioning()
+   * @see #getLanguageDef()
    * @generated
    */
-  EReference getLDef_Paritioning();
+  EReference getLanguageDef_Paritioning();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.LDef#getLexicalHighlighting <em>Lexical Highlighting</em>}'.
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getLexicalHighlighting <em>Lexical Highlighting</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Lexical Highlighting</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LDef#getLexicalHighlighting()
-   * @see #getLDef()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getLexicalHighlighting()
+   * @see #getLanguageDef()
    * @generated
    */
-  EReference getLDef_LexicalHighlighting();
+  EReference getLanguageDef_LexicalHighlighting();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Paritioning <em>Paritioning</em>}'.
@@ -1498,14 +1636,14 @@ public interface LDefPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LDefImpl <em>LDef</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.RootImpl <em>Root</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefImpl
-     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLDef()
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.RootImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getRoot()
      * @generated
      */
-    EClass LDEF = eINSTANCE.getLDef();
+    EClass ROOT = eINSTANCE.getRoot();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1513,7 +1651,59 @@ public interface LDefPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute LDEF__NAME = eINSTANCE.getLDef_Name();
+    EAttribute ROOT__NAME = eINSTANCE.getRoot_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Imports</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ROOT__IMPORTS = eINSTANCE.getRoot_Imports();
+
+    /**
+     * The meta object literal for the '<em><b>Language Definition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ROOT__LANGUAGE_DEFINITION = eINSTANCE.getRoot_LanguageDefinition();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ImportImpl <em>Import</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ImportImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getImport()
+     * @generated
+     */
+    EClass IMPORT = eINSTANCE.getImport();
+
+    /**
+     * The meta object literal for the '<em><b>Imported Namespace</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute IMPORT__IMPORTED_NAMESPACE = eINSTANCE.getImport_ImportedNamespace();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl <em>Language Def</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLanguageDef()
+     * @generated
+     */
+    EClass LANGUAGE_DEF = eINSTANCE.getLanguageDef();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LANGUAGE_DEF__NAME = eINSTANCE.getLanguageDef_Name();
 
     /**
      * The meta object literal for the '<em><b>Paritioning</b></em>' containment reference feature.
@@ -1521,7 +1711,7 @@ public interface LDefPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LDEF__PARITIONING = eINSTANCE.getLDef_Paritioning();
+    EReference LANGUAGE_DEF__PARITIONING = eINSTANCE.getLanguageDef_Paritioning();
 
     /**
      * The meta object literal for the '<em><b>Lexical Highlighting</b></em>' containment reference feature.
@@ -1529,7 +1719,7 @@ public interface LDefPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LDEF__LEXICAL_HIGHLIGHTING = eINSTANCE.getLDef_LexicalHighlighting();
+    EReference LANGUAGE_DEF__LEXICAL_HIGHLIGHTING = eINSTANCE.getLanguageDef_LexicalHighlighting();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ParitioningImpl <em>Paritioning</em>}' class.

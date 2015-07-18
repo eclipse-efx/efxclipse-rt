@@ -72,10 +72,24 @@ public class LDefSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case LDefPackage.LDEF:
+      case LDefPackage.ROOT:
       {
-        LDef lDef = (LDef)theEObject;
-        T result = caseLDef(lDef);
+        Root root = (Root)theEObject;
+        T result = caseRoot(root);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.IMPORT:
+      {
+        Import import_ = (Import)theEObject;
+        T result = caseImport(import_);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.LANGUAGE_DEF:
+      {
+        LanguageDef languageDef = (LanguageDef)theEObject;
+        T result = caseLanguageDef(languageDef);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -256,17 +270,49 @@ public class LDefSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>LDef</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Root</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>LDef</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Root</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseLDef(LDef object)
+  public T caseRoot(Root object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Import</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Import</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseImport(Import object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Language Def</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Language Def</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLanguageDef(LanguageDef object)
   {
     return null;
   }

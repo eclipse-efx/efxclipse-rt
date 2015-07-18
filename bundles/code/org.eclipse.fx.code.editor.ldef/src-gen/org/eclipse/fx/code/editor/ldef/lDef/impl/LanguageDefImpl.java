@@ -11,27 +11,27 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.fx.code.editor.ldef.lDef.LDef;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
+import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting;
 import org.eclipse.fx.code.editor.ldef.lDef.Paritioning;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>LDef</b></em>'.
+ * An implementation of the model object '<em><b>Language Def</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LDefImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LDefImpl#getParitioning <em>Paritioning</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LDefImpl#getLexicalHighlighting <em>Lexical Highlighting</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl#getParitioning <em>Paritioning</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl#getLexicalHighlighting <em>Lexical Highlighting</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
+public class LanguageDefImpl extends MinimalEObjectImpl.Container implements LanguageDef
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -78,7 +78,7 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
    * <!-- end-user-doc -->
    * @generated
    */
-  protected LDefImpl()
+  protected LanguageDefImpl()
   {
     super();
   }
@@ -91,7 +91,7 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
   @Override
   protected EClass eStaticClass()
   {
-    return LDefPackage.Literals.LDEF;
+    return LDefPackage.Literals.LANGUAGE_DEF;
   }
 
   /**
@@ -114,7 +114,7 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.LDEF__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.LANGUAGE_DEF__NAME, oldName, name));
   }
 
   /**
@@ -138,7 +138,7 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
     paritioning = newParitioning;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LDefPackage.LDEF__PARITIONING, oldParitioning, newParitioning);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LDefPackage.LANGUAGE_DEF__PARITIONING, oldParitioning, newParitioning);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -155,14 +155,14 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
     {
       NotificationChain msgs = null;
       if (paritioning != null)
-        msgs = ((InternalEObject)paritioning).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LDefPackage.LDEF__PARITIONING, null, msgs);
+        msgs = ((InternalEObject)paritioning).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LDefPackage.LANGUAGE_DEF__PARITIONING, null, msgs);
       if (newParitioning != null)
-        msgs = ((InternalEObject)newParitioning).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LDefPackage.LDEF__PARITIONING, null, msgs);
+        msgs = ((InternalEObject)newParitioning).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LDefPackage.LANGUAGE_DEF__PARITIONING, null, msgs);
       msgs = basicSetParitioning(newParitioning, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.LDEF__PARITIONING, newParitioning, newParitioning));
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.LANGUAGE_DEF__PARITIONING, newParitioning, newParitioning));
   }
 
   /**
@@ -186,7 +186,7 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
     lexicalHighlighting = newLexicalHighlighting;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LDefPackage.LDEF__LEXICAL_HIGHLIGHTING, oldLexicalHighlighting, newLexicalHighlighting);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING, oldLexicalHighlighting, newLexicalHighlighting);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -203,14 +203,14 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
     {
       NotificationChain msgs = null;
       if (lexicalHighlighting != null)
-        msgs = ((InternalEObject)lexicalHighlighting).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LDefPackage.LDEF__LEXICAL_HIGHLIGHTING, null, msgs);
+        msgs = ((InternalEObject)lexicalHighlighting).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING, null, msgs);
       if (newLexicalHighlighting != null)
-        msgs = ((InternalEObject)newLexicalHighlighting).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LDefPackage.LDEF__LEXICAL_HIGHLIGHTING, null, msgs);
+        msgs = ((InternalEObject)newLexicalHighlighting).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING, null, msgs);
       msgs = basicSetLexicalHighlighting(newLexicalHighlighting, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.LDEF__LEXICAL_HIGHLIGHTING, newLexicalHighlighting, newLexicalHighlighting));
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING, newLexicalHighlighting, newLexicalHighlighting));
   }
 
   /**
@@ -223,9 +223,9 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
   {
     switch (featureID)
     {
-      case LDefPackage.LDEF__PARITIONING:
+      case LDefPackage.LANGUAGE_DEF__PARITIONING:
         return basicSetParitioning(null, msgs);
-      case LDefPackage.LDEF__LEXICAL_HIGHLIGHTING:
+      case LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING:
         return basicSetLexicalHighlighting(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -241,11 +241,11 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
   {
     switch (featureID)
     {
-      case LDefPackage.LDEF__NAME:
+      case LDefPackage.LANGUAGE_DEF__NAME:
         return getName();
-      case LDefPackage.LDEF__PARITIONING:
+      case LDefPackage.LANGUAGE_DEF__PARITIONING:
         return getParitioning();
-      case LDefPackage.LDEF__LEXICAL_HIGHLIGHTING:
+      case LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING:
         return getLexicalHighlighting();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -261,13 +261,13 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
   {
     switch (featureID)
     {
-      case LDefPackage.LDEF__NAME:
+      case LDefPackage.LANGUAGE_DEF__NAME:
         setName((String)newValue);
         return;
-      case LDefPackage.LDEF__PARITIONING:
+      case LDefPackage.LANGUAGE_DEF__PARITIONING:
         setParitioning((Paritioning)newValue);
         return;
-      case LDefPackage.LDEF__LEXICAL_HIGHLIGHTING:
+      case LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING:
         setLexicalHighlighting((LexicalHighlighting)newValue);
         return;
     }
@@ -284,13 +284,13 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
   {
     switch (featureID)
     {
-      case LDefPackage.LDEF__NAME:
+      case LDefPackage.LANGUAGE_DEF__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case LDefPackage.LDEF__PARITIONING:
+      case LDefPackage.LANGUAGE_DEF__PARITIONING:
         setParitioning((Paritioning)null);
         return;
-      case LDefPackage.LDEF__LEXICAL_HIGHLIGHTING:
+      case LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING:
         setLexicalHighlighting((LexicalHighlighting)null);
         return;
     }
@@ -307,11 +307,11 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
   {
     switch (featureID)
     {
-      case LDefPackage.LDEF__NAME:
+      case LDefPackage.LANGUAGE_DEF__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case LDefPackage.LDEF__PARITIONING:
+      case LDefPackage.LANGUAGE_DEF__PARITIONING:
         return paritioning != null;
-      case LDefPackage.LDEF__LEXICAL_HIGHLIGHTING:
+      case LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING:
         return lexicalHighlighting != null;
     }
     return super.eIsSet(featureID);
@@ -334,4 +334,4 @@ public class LDefImpl extends MinimalEObjectImpl.Container implements LDef
     return result.toString();
   }
 
-} //LDefImpl
+} //LanguageDefImpl

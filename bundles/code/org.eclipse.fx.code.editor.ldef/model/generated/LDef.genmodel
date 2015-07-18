@@ -7,10 +7,18 @@
     editorPluginID="org.eclipse.fx.code.editor.ldef.editor" runtimeVersion="2.11">
   <genPackages prefix="LDef" basePackage="org.eclipse.fx.code.editor.ldef" disposableProviderFactory="true"
       fileExtensions="ldef" ecorePackage="LDef.ecore#/">
-    <genClasses ecoreClass="LDef.ecore#//LDef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//LDef/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LDef/paritioning"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LDef/lexicalHighlighting"/>
+    <genClasses ecoreClass="LDef.ecore#//Root">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Root/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Root/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Root/languageDefinition"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Import">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Import/importedNamespace"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//LanguageDef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//LanguageDef/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LanguageDef/paritioning"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LanguageDef/lexicalHighlighting"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Paritioning">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitions"/>

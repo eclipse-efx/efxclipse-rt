@@ -6,23 +6,23 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>LDef</b></em>'.
+ * A representation of the model object '<em><b>Language Def</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LDef#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LDef#getParitioning <em>Paritioning</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LDef#getLexicalHighlighting <em>Lexical Highlighting</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getParitioning <em>Paritioning</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getLexicalHighlighting <em>Lexical Highlighting</em>}</li>
  * </ul>
  *
- * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLDef()
+ * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLanguageDef()
  * @model
  * @generated
  */
-public interface LDef extends EObject
+public interface LanguageDef extends EObject
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -34,14 +34,14 @@ public interface LDef extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLDef_Name()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLanguageDef_Name()
    * @model
    * @generated
    */
   String getName();
 
   /**
-   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.LDef#getName <em>Name</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Name</em>' attribute.
@@ -60,14 +60,14 @@ public interface LDef extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Paritioning</em>' containment reference.
    * @see #setParitioning(Paritioning)
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLDef_Paritioning()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLanguageDef_Paritioning()
    * @model containment="true"
    * @generated
    */
   Paritioning getParitioning();
 
   /**
-   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.LDef#getParitioning <em>Paritioning</em>}' containment reference.
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getParitioning <em>Paritioning</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Paritioning</em>' containment reference.
@@ -86,14 +86,14 @@ public interface LDef extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Lexical Highlighting</em>' containment reference.
    * @see #setLexicalHighlighting(LexicalHighlighting)
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLDef_LexicalHighlighting()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLanguageDef_LexicalHighlighting()
    * @model containment="true"
    * @generated
    */
   LexicalHighlighting getLexicalHighlighting();
 
   /**
-   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.LDef#getLexicalHighlighting <em>Lexical Highlighting</em>}' containment reference.
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getLexicalHighlighting <em>Lexical Highlighting</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Lexical Highlighting</em>' containment reference.
@@ -102,4 +102,4 @@ public interface LDef extends EObject
    */
   void setLexicalHighlighting(LexicalHighlighting value);
 
-} // LDef
+} // LanguageDef

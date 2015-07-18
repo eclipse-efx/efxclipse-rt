@@ -18,8 +18,140 @@ import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class LDefElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LDef");
+	public class RootElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Root");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cPackageKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameQualifiedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cImportsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cImportsImportParserRuleCall_2_0 = (RuleCall)cImportsAssignment_2.eContents().get(0);
+		private final Assignment cLanguageDefinitionAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cLanguageDefinitionLanguageDefParserRuleCall_3_0 = (RuleCall)cLanguageDefinitionAssignment_3.eContents().get(0);
+		
+		//Root:
+		//	"package" name=QualifiedName imports+=Import* languageDefinition=LanguageDef;
+		@Override public ParserRule getRule() { return rule; }
+
+		//"package" name=QualifiedName imports+=Import* languageDefinition=LanguageDef
+		public Group getGroup() { return cGroup; }
+
+		//"package"
+		public Keyword getPackageKeyword_0() { return cPackageKeyword_0; }
+
+		//name=QualifiedName
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//QualifiedName
+		public RuleCall getNameQualifiedNameParserRuleCall_1_0() { return cNameQualifiedNameParserRuleCall_1_0; }
+
+		//imports+=Import*
+		public Assignment getImportsAssignment_2() { return cImportsAssignment_2; }
+
+		//Import
+		public RuleCall getImportsImportParserRuleCall_2_0() { return cImportsImportParserRuleCall_2_0; }
+
+		//languageDefinition=LanguageDef
+		public Assignment getLanguageDefinitionAssignment_3() { return cLanguageDefinitionAssignment_3; }
+
+		//LanguageDef
+		public RuleCall getLanguageDefinitionLanguageDefParserRuleCall_3_0() { return cLanguageDefinitionLanguageDefParserRuleCall_3_0; }
+	}
+
+	public class ValidIDElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValidID");
+		private final RuleCall cIDTerminalRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//ValidID:
+		//	ID;
+		@Override public ParserRule getRule() { return rule; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall() { return cIDTerminalRuleCall; }
+	}
+
+	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedName");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cValidIDParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cValidIDParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		
+		//QualifiedName:
+		//	ValidID ("." ValidID)*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//ValidID ("." ValidID)*
+		public Group getGroup() { return cGroup; }
+
+		//ValidID
+		public RuleCall getValidIDParserRuleCall_0() { return cValidIDParserRuleCall_0; }
+
+		//(=> "." ValidID)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//=> "."
+		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
+
+		//ValidID
+		public RuleCall getValidIDParserRuleCall_1_1() { return cValidIDParserRuleCall_1_1; }
+	}
+
+	public class QualifiedNameWithWildCardElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedNameWithWildCard");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cQualifiedNameParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Keyword cAsteriskKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		
+		//QualifiedNameWithWildCard:
+		//	QualifiedName ("." "*")?;
+		@Override public ParserRule getRule() { return rule; }
+
+		//QualifiedName ("." "*")?
+		public Group getGroup() { return cGroup; }
+
+		//QualifiedName
+		public RuleCall getQualifiedNameParserRuleCall_0() { return cQualifiedNameParserRuleCall_0; }
+
+		//("." "*")?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"."
+		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
+
+		//"*"
+		public Keyword getAsteriskKeyword_1_1() { return cAsteriskKeyword_1_1; }
+	}
+
+	public class ImportElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Import");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cImportKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cImportedNamespaceAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cImportedNamespaceQualifiedNameWithWildCardParserRuleCall_1_0 = (RuleCall)cImportedNamespaceAssignment_1.eContents().get(0);
+		
+		//Import:
+		//	"import" importedNamespace=QualifiedNameWithWildCard;
+		@Override public ParserRule getRule() { return rule; }
+
+		//"import" importedNamespace=QualifiedNameWithWildCard
+		public Group getGroup() { return cGroup; }
+
+		//"import"
+		public Keyword getImportKeyword_0() { return cImportKeyword_0; }
+
+		//importedNamespace=QualifiedNameWithWildCard
+		public Assignment getImportedNamespaceAssignment_1() { return cImportedNamespaceAssignment_1; }
+
+		//QualifiedNameWithWildCard
+		public RuleCall getImportedNamespaceQualifiedNameWithWildCardParserRuleCall_1_0() { return cImportedNamespaceQualifiedNameWithWildCardParserRuleCall_1_0; }
+	}
+
+	public class LanguageDefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LanguageDef");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
@@ -30,7 +162,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLexicalHighlightingLexicalHighlightingParserRuleCall_3_0 = (RuleCall)cLexicalHighlightingAssignment_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//LDef:
+		//LanguageDef:
 		//	name=ID "{" paritioning=Paritioning lexicalHighlighting=LexicalHighlighting "}";
 		@Override public ParserRule getRule() { return rule; }
 
@@ -933,7 +1065,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	private final LDefElements pLDef;
+	private final RootElements pRoot;
+	private final ValidIDElements pValidID;
+	private final QualifiedNameElements pQualifiedName;
+	private final QualifiedNameWithWildCardElements pQualifiedNameWithWildCard;
+	private final ImportElements pImport;
+	private final LanguageDefElements pLanguageDef;
 	private final ParitioningElements pParitioning;
 	private final PartitionElements pPartition;
 	private final PartitionerElements pPartitioner;
@@ -966,7 +1103,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
-		this.pLDef = new LDefElements();
+		this.pRoot = new RootElements();
+		this.pValidID = new ValidIDElements();
+		this.pQualifiedName = new QualifiedNameElements();
+		this.pQualifiedNameWithWildCard = new QualifiedNameWithWildCardElements();
+		this.pImport = new ImportElements();
+		this.pLanguageDef = new LanguageDefElements();
 		this.pParitioning = new ParitioningElements();
 		this.pPartition = new PartitionElements();
 		this.pPartitioner = new PartitionerElements();
@@ -1018,14 +1160,64 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//LDef:
-	//	name=ID "{" paritioning=Paritioning lexicalHighlighting=LexicalHighlighting "}";
-	public LDefElements getLDefAccess() {
-		return pLDef;
+	//Root:
+	//	"package" name=QualifiedName imports+=Import* languageDefinition=LanguageDef;
+	public RootElements getRootAccess() {
+		return pRoot;
 	}
 	
-	public ParserRule getLDefRule() {
-		return getLDefAccess().getRule();
+	public ParserRule getRootRule() {
+		return getRootAccess().getRule();
+	}
+
+	//ValidID:
+	//	ID;
+	public ValidIDElements getValidIDAccess() {
+		return pValidID;
+	}
+	
+	public ParserRule getValidIDRule() {
+		return getValidIDAccess().getRule();
+	}
+
+	//QualifiedName:
+	//	ValidID ("." ValidID)*;
+	public QualifiedNameElements getQualifiedNameAccess() {
+		return pQualifiedName;
+	}
+	
+	public ParserRule getQualifiedNameRule() {
+		return getQualifiedNameAccess().getRule();
+	}
+
+	//QualifiedNameWithWildCard:
+	//	QualifiedName ("." "*")?;
+	public QualifiedNameWithWildCardElements getQualifiedNameWithWildCardAccess() {
+		return pQualifiedNameWithWildCard;
+	}
+	
+	public ParserRule getQualifiedNameWithWildCardRule() {
+		return getQualifiedNameWithWildCardAccess().getRule();
+	}
+
+	//Import:
+	//	"import" importedNamespace=QualifiedNameWithWildCard;
+	public ImportElements getImportAccess() {
+		return pImport;
+	}
+	
+	public ParserRule getImportRule() {
+		return getImportAccess().getRule();
+	}
+
+	//LanguageDef:
+	//	name=ID "{" paritioning=Paritioning lexicalHighlighting=LexicalHighlighting "}";
+	public LanguageDefElements getLanguageDefAccess() {
+		return pLanguageDef;
+	}
+	
+	public ParserRule getLanguageDefRule() {
+		return getLanguageDefAccess().getRule();
 	}
 
 	//Paritioning:

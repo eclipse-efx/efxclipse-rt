@@ -75,9 +75,19 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
     new LDefSwitch<Adapter>()
     {
       @Override
-      public Adapter caseLDef(LDef object)
+      public Adapter caseRoot(Root object)
       {
-        return createLDefAdapter();
+        return createRootAdapter();
+      }
+      @Override
+      public Adapter caseImport(Import object)
+      {
+        return createImportAdapter();
+      }
+      @Override
+      public Adapter caseLanguageDef(LanguageDef object)
+      {
+        return createLanguageDefAdapter();
       }
       @Override
       public Adapter caseParitioning(Paritioning object)
@@ -212,16 +222,46 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.LDef <em>LDef</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.Root <em>Root</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LDef
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Root
    * @generated
    */
-  public Adapter createLDefAdapter()
+  public Adapter createRootAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.Import <em>Import</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Import
+   * @generated
+   */
+  public Adapter createImportAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef <em>Language Def</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LanguageDef
+   * @generated
+   */
+  public Adapter createLanguageDefAdapter()
   {
     return null;
   }

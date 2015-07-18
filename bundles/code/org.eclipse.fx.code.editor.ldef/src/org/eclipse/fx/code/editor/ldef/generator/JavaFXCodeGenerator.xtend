@@ -1,6 +1,5 @@
 package org.eclipse.fx.code.editor.ldef.generator
 
-import org.eclipse.fx.code.editor.ldef.lDef.LDef
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule
@@ -10,13 +9,14 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Rule
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule
 import org.eclipse.fx.code.editor.ldef.lDef.Token
+import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef
 
 class JavaFXCodeGenerator {
-	def generate(LDef model, String basePackage, IFileSystemAccess access) {
+	def generate(LanguageDef model, String basePackage, IFileSystemAccess access) {
 
 	}
 
-	def generateRulePartitioner(LDef model, String basePackage) '''
+	def generateRulePartitioner(LanguageDef model, String basePackage) '''
 	package «basePackage»;
 
 	public class «model.name.toFirstUpper»PartitionScanner() extends org.eclipse.jface.text.rules.RuleBasedPartitionScanner {
@@ -30,7 +30,7 @@ class JavaFXCodeGenerator {
 	}
 	'''
 
-	def generatePresentationReconciler(LDef model, String basePackage) '''
+	def generatePresentationReconciler(LanguageDef model, String basePackage) '''
 	package «basePackage»;
 
 	public class «model.name.toFirstUpper»PresentationReconciler extends org.eclipse.jface.text.presentation.PresentationReconciler {
@@ -48,7 +48,7 @@ class JavaFXCodeGenerator {
 	}
 	'''
 
-	def generateScanner(LDef model, LexicalPartitionHighlighting_Rule highlighter, String basePackage) '''
+	def generateScanner(LanguageDef model, LexicalPartitionHighlighting_Rule highlighter, String basePackage) '''
 	package «basePackage»;
 
 	public class «model.name.toFirstUpper»«highlighter.partition.name» extends org.eclipse.jface.text.rules.RuleBasedScanner {

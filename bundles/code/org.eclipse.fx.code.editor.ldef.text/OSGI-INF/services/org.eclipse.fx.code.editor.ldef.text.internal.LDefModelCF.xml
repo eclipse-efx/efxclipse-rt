@@ -4,6 +4,6 @@
    <service>
       <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
    </service>
-   <property name="service.context.key" value="org.eclipse.fx.code.editor.ldef.lDef.LDef"/>
+   <property name="service.context.key" value="org.eclipse.fx.code.editor.ldef.lDef.LanguageDef"/>
    <reference bind="registerProvider" cardinality="0..n" interface="org.eclipse.fx.code.editor.ldef.text.LDefModelProvider" name="registerProvider" policy="dynamic" policy-option="greedy" unbind="unregisterProvider"/>
 </scr:component>

@@ -6,9 +6,10 @@ package org.eclipse.fx.code.editor.ldef.serializer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.fx.code.editor.ldef.lDef.Import;
 import org.eclipse.fx.code.editor.ldef.lDef.Keyword;
-import org.eclipse.fx.code.editor.ldef.lDef.LDef;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
+import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_JS;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_Rule;
@@ -18,6 +19,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
+import org.eclipse.fx.code.editor.ldef.lDef.Root;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
@@ -46,11 +48,14 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	@Override
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == LDefPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case LDefPackage.IMPORT:
+				sequence_Import(context, (Import) semanticObject); 
+				return; 
 			case LDefPackage.KEYWORD:
 				sequence_Keyword(context, (Keyword) semanticObject); 
 				return; 
-			case LDefPackage.LDEF:
-				sequence_LDef(context, (LDef) semanticObject); 
+			case LDefPackage.LANGUAGE_DEF:
+				sequence_LanguageDef(context, (LanguageDef) semanticObject); 
 				return; 
 			case LDefPackage.LEXICAL_HIGHLIGHTING:
 				sequence_LexicalHighlighting(context, (LexicalHighlighting) semanticObject); 
@@ -79,6 +84,9 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case LDefPackage.PARTITIONER_RULE:
 				sequence_Partitioner_Rule(context, (Partitioner_Rule) semanticObject); 
 				return; 
+			case LDefPackage.ROOT:
+				sequence_Root(context, (Root) semanticObject); 
+				return; 
 			case LDefPackage.SCANNER_CHARACTER_RULE:
 				sequence_Scanner_CharacterRule(context, (Scanner_CharacterRule) semanticObject); 
 				return; 
@@ -106,6 +114,22 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
+	 *     importedNamespace=QualifiedNameWithWildCard
+	 */
+	protected void sequence_Import(EObject context, Import semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.IMPORT__IMPORTED_NAMESPACE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.IMPORT__IMPORTED_NAMESPACE));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getImportAccess().getImportedNamespaceQualifiedNameWithWildCardParserRuleCall_1_0(), semanticObject.getImportedNamespace());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (name=STRING version=STRING?)
 	 */
 	protected void sequence_Keyword(EObject context, Keyword semanticObject) {
@@ -117,20 +141,20 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Constraint:
 	 *     (name=ID paritioning=Paritioning lexicalHighlighting=LexicalHighlighting)
 	 */
-	protected void sequence_LDef(EObject context, LDef semanticObject) {
+	protected void sequence_LanguageDef(EObject context, LanguageDef semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.LDEF__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.LDEF__NAME));
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.LDEF__PARITIONING) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.LDEF__PARITIONING));
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.LDEF__LEXICAL_HIGHLIGHTING) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.LDEF__LEXICAL_HIGHLIGHTING));
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.LANGUAGE_DEF__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.LANGUAGE_DEF__NAME));
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.LANGUAGE_DEF__PARITIONING) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.LANGUAGE_DEF__PARITIONING));
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getLDefAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getLDefAccess().getParitioningParitioningParserRuleCall_2_0(), semanticObject.getParitioning());
-		feeder.accept(grammarAccess.getLDefAccess().getLexicalHighlightingLexicalHighlightingParserRuleCall_3_0(), semanticObject.getLexicalHighlighting());
+		feeder.accept(grammarAccess.getLanguageDefAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getLanguageDefAccess().getParitioningParitioningParserRuleCall_2_0(), semanticObject.getParitioning());
+		feeder.accept(grammarAccess.getLanguageDefAccess().getLexicalHighlightingLexicalHighlightingParserRuleCall_3_0(), semanticObject.getLexicalHighlighting());
 		feeder.finish();
 	}
 	
@@ -236,6 +260,15 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ruleList+=Partition_Rule+
 	 */
 	protected void sequence_Partitioner_Rule(EObject context, Partitioner_Rule semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=QualifiedName imports+=Import* languageDefinition=LanguageDef)
+	 */
+	protected void sequence_Root(EObject context, Root semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

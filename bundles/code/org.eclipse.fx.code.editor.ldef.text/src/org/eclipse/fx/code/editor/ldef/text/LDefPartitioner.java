@@ -2,7 +2,7 @@ package org.eclipse.fx.code.editor.ldef.text;
 
 import javax.inject.Inject;
 
-import org.eclipse.fx.code.editor.ldef.lDef.LDef;
+import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
 import org.eclipse.fx.code.editor.ldef.text.internal.LDefRuleBasedPartitionScanner;
@@ -13,11 +13,11 @@ import org.eclipse.jface.text.rules.IPartitionTokenScanner;
 public class LDefPartitioner extends FastPartitioner {
 
 	@Inject
-	public LDefPartitioner(LDef m) {
+	public LDefPartitioner(LanguageDef m) {
 		super(getScanner(m), getParitions(m));
 	}
 
-	private static IPartitionTokenScanner getScanner(LDef m) {
+	private static IPartitionTokenScanner getScanner(LanguageDef m) {
 		Partitioner partitioner = m.getParitioning().getPartitioner();
 		IPartitionTokenScanner scanner = null;
 		if( partitioner instanceof Partitioner_Rule ) {
@@ -26,7 +26,7 @@ public class LDefPartitioner extends FastPartitioner {
 		return scanner;
 	}
 
-	private static String[] getParitions(LDef m) {
+	private static String[] getParitions(LanguageDef m) {
 		return m.getParitioning().getPartitions()
 				.stream().filter( p  -> ! p.getName().equals(IDocument.DEFAULT_CONTENT_TYPE))
 				.map((p) -> p.getName())

@@ -9,10 +9,11 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.fx.code.editor.ldef.lDef.Import;
 import org.eclipse.fx.code.editor.ldef.lDef.Keyword;
-import org.eclipse.fx.code.editor.ldef.lDef.LDef;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefFactory;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
+import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_JS;
@@ -25,6 +26,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
+import org.eclipse.fx.code.editor.ldef.lDef.Root;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
@@ -48,7 +50,21 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass lDefEClass = null;
+  private EClass rootEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass importEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass languageDefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -272,9 +288,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getLDef()
+  public EClass getRoot()
   {
-    return lDefEClass;
+    return rootEClass;
   }
 
   /**
@@ -282,9 +298,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getLDef_Name()
+  public EAttribute getRoot_Name()
   {
-    return (EAttribute)lDefEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)rootEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -292,9 +308,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getLDef_Paritioning()
+  public EReference getRoot_Imports()
   {
-    return (EReference)lDefEClass.getEStructuralFeatures().get(1);
+    return (EReference)rootEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -302,9 +318,69 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getLDef_LexicalHighlighting()
+  public EReference getRoot_LanguageDefinition()
   {
-    return (EReference)lDefEClass.getEStructuralFeatures().get(2);
+    return (EReference)rootEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getImport()
+  {
+    return importEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getImport_ImportedNamespace()
+  {
+    return (EAttribute)importEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLanguageDef()
+  {
+    return languageDefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLanguageDef_Name()
+  {
+    return (EAttribute)languageDefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLanguageDef_Paritioning()
+  {
+    return (EReference)languageDefEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLanguageDef_LexicalHighlighting()
+  {
+    return (EReference)languageDefEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -857,10 +933,18 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     isCreated = true;
 
     // Create classes and their features
-    lDefEClass = createEClass(LDEF);
-    createEAttribute(lDefEClass, LDEF__NAME);
-    createEReference(lDefEClass, LDEF__PARITIONING);
-    createEReference(lDefEClass, LDEF__LEXICAL_HIGHLIGHTING);
+    rootEClass = createEClass(ROOT);
+    createEAttribute(rootEClass, ROOT__NAME);
+    createEReference(rootEClass, ROOT__IMPORTS);
+    createEReference(rootEClass, ROOT__LANGUAGE_DEFINITION);
+
+    importEClass = createEClass(IMPORT);
+    createEAttribute(importEClass, IMPORT__IMPORTED_NAMESPACE);
+
+    languageDefEClass = createEClass(LANGUAGE_DEF);
+    createEAttribute(languageDefEClass, LANGUAGE_DEF__NAME);
+    createEReference(languageDefEClass, LANGUAGE_DEF__PARITIONING);
+    createEReference(languageDefEClass, LANGUAGE_DEF__LEXICAL_HIGHLIGHTING);
 
     paritioningEClass = createEClass(PARITIONING);
     createEReference(paritioningEClass, PARITIONING__PARTITIONS);
@@ -981,10 +1065,18 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     scanner_WhitespaceRuleEClass.getESuperTypes().add(this.getScanner_Rule());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(lDefEClass, LDef.class, "LDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getLDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, LDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLDef_Paritioning(), this.getParitioning(), null, "paritioning", null, 0, 1, LDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLDef_LexicalHighlighting(), this.getLexicalHighlighting(), null, "lexicalHighlighting", null, 0, 1, LDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRoot_Name(), ecorePackage.getEString(), "name", null, 0, 1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRoot_Imports(), this.getImport(), null, "imports", null, 0, -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRoot_LanguageDefinition(), this.getLanguageDef(), null, "languageDefinition", null, 0, 1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getImport_ImportedNamespace(), ecorePackage.getEString(), "importedNamespace", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(languageDefEClass, LanguageDef.class, "LanguageDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLanguageDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, LanguageDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLanguageDef_Paritioning(), this.getParitioning(), null, "paritioning", null, 0, 1, LanguageDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLanguageDef_LexicalHighlighting(), this.getLexicalHighlighting(), null, "lexicalHighlighting", null, 0, 1, LanguageDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(paritioningEClass, Paritioning.class, "Paritioning", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getParitioning_Partitions(), this.getPartition(), null, "partitions", null, 0, -1, Paritioning.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

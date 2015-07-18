@@ -64,7 +64,9 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
   {
     switch (eClass.getClassifierID())
     {
-      case LDefPackage.LDEF: return createLDef();
+      case LDefPackage.ROOT: return createRoot();
+      case LDefPackage.IMPORT: return createImport();
+      case LDefPackage.LANGUAGE_DEF: return createLanguageDef();
       case LDefPackage.PARITIONING: return createParitioning();
       case LDefPackage.PARTITION: return createPartition();
       case LDefPackage.PARTITIONER: return createPartitioner();
@@ -97,10 +99,32 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public LDef createLDef()
+  public Root createRoot()
   {
-    LDefImpl lDef = new LDefImpl();
-    return lDef;
+    RootImpl root = new RootImpl();
+    return root;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Import createImport()
+  {
+    ImportImpl import_ = new ImportImpl();
+    return import_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LanguageDef createLanguageDef()
+  {
+    LanguageDefImpl languageDef = new LanguageDefImpl();
+    return languageDef;
   }
 
   /**
