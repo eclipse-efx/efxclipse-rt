@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.Platform;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
@@ -95,7 +94,7 @@ public class FastPartitioner implements IDocumentPartitioner, IDocumentPartition
 	 */
 	private Position[] fCachedPositions= null;
 	/** Debug option for cache consistency checking. */
-	private static final boolean CHECK_CACHE_CONSISTENCY= "true".equalsIgnoreCase(Platform.getDebugOption("org.eclipse.jface.text/debug/FastPartitioner/PositionCache"));  //$NON-NLS-1$//$NON-NLS-2$;
+	private static final boolean CHECK_CACHE_CONSISTENCY= false;//"true".equalsIgnoreCase(Platform.getDebugOption("org.eclipse.jface.text/debug/FastPartitioner/PositionCache"));  //$NON-NLS-1$//$NON-NLS-2$;
 
 	/**
 	 * Creates a new partitioner that uses the given scanner and may return
