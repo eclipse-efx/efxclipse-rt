@@ -43,7 +43,13 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScannerAccess().getAlternatives(), "rule__Scanner__Alternatives");
 					put(grammarAccess.getScanner_RuleAccess().getAlternatives(), "rule__Scanner_Rule__Alternatives");
 					put(grammarAccess.getScanner_WhitespaceRuleAccess().getAlternatives_1(), "rule__Scanner_WhitespaceRule__Alternatives_1");
-					put(grammarAccess.getLDefAccess().getGroup(), "rule__LDef__Group__0");
+					put(grammarAccess.getRootAccess().getGroup(), "rule__Root__Group__0");
+					put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
+					put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
+					put(grammarAccess.getQualifiedNameWithWildCardAccess().getGroup(), "rule__QualifiedNameWithWildCard__Group__0");
+					put(grammarAccess.getQualifiedNameWithWildCardAccess().getGroup_1(), "rule__QualifiedNameWithWildCard__Group_1__0");
+					put(grammarAccess.getImportAccess().getGroup(), "rule__Import__Group__0");
+					put(grammarAccess.getLanguageDefAccess().getGroup(), "rule__LanguageDef__Group__0");
 					put(grammarAccess.getParitioningAccess().getGroup(), "rule__Paritioning__Group__0");
 					put(grammarAccess.getPartitionAccess().getGroup(), "rule__Partition__Group__0");
 					put(grammarAccess.getParitioner_JSAccess().getGroup(), "rule__Paritioner_JS__Group__0");
@@ -71,9 +77,13 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScanner_WhitespaceRuleAccess().getGroup(), "rule__Scanner_WhitespaceRule__Group__0");
 					put(grammarAccess.getScanner_WhitespaceRuleAccess().getGroup_1_0(), "rule__Scanner_WhitespaceRule__Group_1_0__0");
 					put(grammarAccess.getScanner_WhitespaceRuleAccess().getGroup_1_0_2(), "rule__Scanner_WhitespaceRule__Group_1_0_2__0");
-					put(grammarAccess.getLDefAccess().getNameAssignment_0(), "rule__LDef__NameAssignment_0");
-					put(grammarAccess.getLDefAccess().getParitioningAssignment_2(), "rule__LDef__ParitioningAssignment_2");
-					put(grammarAccess.getLDefAccess().getLexicalHighlightingAssignment_3(), "rule__LDef__LexicalHighlightingAssignment_3");
+					put(grammarAccess.getRootAccess().getNameAssignment_1(), "rule__Root__NameAssignment_1");
+					put(grammarAccess.getRootAccess().getImportsAssignment_2(), "rule__Root__ImportsAssignment_2");
+					put(grammarAccess.getRootAccess().getLanguageDefinitionAssignment_3(), "rule__Root__LanguageDefinitionAssignment_3");
+					put(grammarAccess.getImportAccess().getImportedNamespaceAssignment_1(), "rule__Import__ImportedNamespaceAssignment_1");
+					put(grammarAccess.getLanguageDefAccess().getNameAssignment_0(), "rule__LanguageDef__NameAssignment_0");
+					put(grammarAccess.getLanguageDefAccess().getParitioningAssignment_2(), "rule__LanguageDef__ParitioningAssignment_2");
+					put(grammarAccess.getLanguageDefAccess().getLexicalHighlightingAssignment_3(), "rule__LanguageDef__LexicalHighlightingAssignment_3");
 					put(grammarAccess.getParitioningAccess().getPartitionsAssignment_2(), "rule__Paritioning__PartitionsAssignment_2");
 					put(grammarAccess.getParitioningAccess().getPartitionerAssignment_3(), "rule__Paritioning__PartitionerAssignment_3");
 					put(grammarAccess.getPartitionAccess().getNameAssignment_1(), "rule__Partition__NameAssignment_1");
@@ -122,7 +132,7 @@ public class LDefParser extends AbstractContentAssistParser {
 	protected Collection<FollowElement> getFollowElements(AbstractInternalContentAssistParser parser) {
 		try {
 			org.eclipse.fx.code.editor.ldef.ui.contentassist.antlr.internal.InternalLDefParser typedParser = (org.eclipse.fx.code.editor.ldef.ui.contentassist.antlr.internal.InternalLDefParser) parser;
-			typedParser.entryRuleLDef();
+			typedParser.entryRuleRoot();
 			return typedParser.getFollowElements();
 		} catch(RecognitionException ex) {
 			throw new RuntimeException(ex);
