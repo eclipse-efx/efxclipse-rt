@@ -28,7 +28,21 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.xtext.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.xtext.util"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.xtext.util.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -42,7 +56,21 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.xtext.common.types.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.xtext.xbase"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.xtext.xbase.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -56,7 +84,21 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.xtext.generator.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.emf.codegen.ecore"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.codegen.ecore.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -70,7 +112,21 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.emf.mwe.utils.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.emf.mwe2.launch"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.mwe2.launch.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -84,7 +140,21 @@
          unpack="false"/>
 
    <plugin
+         id="org.antlr.runtime.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.objectweb.asm"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.objectweb.asm.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -98,7 +168,21 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.fx.text.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.fx.text.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.text.ui.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -112,7 +196,21 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.fx.code.editor.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.fx.code.editor.e4"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.code.editor.e4.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -126,7 +224,21 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.fx.code.editor.fx.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.fx.code.editor.fx.e4"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.code.editor.fx.e4.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -140,13 +252,32 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.fx.code.editor.ldef.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.fx.code.editor.ldef.text"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
+         id="org.eclipse.fx.code.editor.ldef.text.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
          id="org.eclipse.fx.code.editor.ldef.text.fx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.fx.code.editor.ldef.text.fx.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -159,7 +290,21 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.fx.code.outline.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.fx.code.outline.e4"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.code.outline.e4.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
