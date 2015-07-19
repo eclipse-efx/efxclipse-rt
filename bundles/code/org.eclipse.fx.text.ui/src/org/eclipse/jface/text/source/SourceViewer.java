@@ -21,7 +21,6 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.StyledTextLine;
-import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ISynchronizable;
 import org.eclipse.jface.text.Position;
@@ -37,13 +36,12 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 	private IAnnotationModel fVisualAnnotationModel;
 	protected final static Object MODEL_ANNOTATION_MODEL= new Object();
 	private Map<String, AnnotationPresenter> presenterMap = new HashMap<>();
-	private GraphicsLoader graphicsLoader;
 
 	@Override
 	public void configure(SourceViewerConfiguration configuration) {
 		if (getTextWidget() == null)
 			return;
-		
+
 		getTextWidget().getStyleClass().add(configuration.getStyleclassName());
 
 //		if( configuration.getDefaultStylesheet().getValue() != null ) {
@@ -99,11 +97,10 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		}
 
 		if( configuration.getAnnotationPresenters() != null ) {
-			configuration.getAnnotationPresenters().stream().forEach(p -> p.getTypes().forEach( s -> presenterMap.put(s,p)));	
+			configuration.getAnnotationPresenters().stream().forEach(p -> p.getTypes().forEach( s -> presenterMap.put(s,p)));
 		}
-		
+
 //		presenterMap.putAll(configuration.getAnnotationPresenters().stream().collect(Collectors.toMap(p -> p.getType(), p -> p)));
-		graphicsLoader = configuration.getGraphicsLoader();
 
 		AnnotationPainter annotationPainter = configuration.getAnnotationPainter(this);
 		if( annotationModel != null && annotationPainter != null ) {
@@ -123,7 +120,7 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 			if( l.getLineIndex() == getTextWidget().getContent().getLineAtOffset(position.offset) ) {
 				AnnotationPresenter annotationPresenter = presenterMap.get(a.getType());
 				if( annotationPresenter != null ) {
-					return annotationPresenter.getPresentation(a, graphicsLoader);
+					return annotationPresenter.getPresentation(a);
 				}
 				return null;
 			}

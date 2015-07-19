@@ -13,9 +13,6 @@ package org.eclipse.jface.text.source;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -32,7 +29,7 @@ public abstract class SourceViewerConfiguration {
 		reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
 		return reconciler;
 	}
-	
+
 	public abstract String getStyleclassName();
 
 	public IReconciler getReconciler(ISourceViewer sourceViewer) {
@@ -55,10 +52,4 @@ public abstract class SourceViewerConfiguration {
 		return null;
 	}
 
-	@Inject
-	GraphicsLoader graphicsLoader;
-
-	public GraphicsLoader getGraphicsLoader() {
-		return graphicsLoader;
-	}
 }
