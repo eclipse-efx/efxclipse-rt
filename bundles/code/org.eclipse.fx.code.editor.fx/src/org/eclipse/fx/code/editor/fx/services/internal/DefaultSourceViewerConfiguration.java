@@ -10,7 +10,6 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.fx.services.ProposalComputer;
 import org.eclipse.fx.code.editor.fx.services.ProposalComputer.ProposalContext;
-import org.eclipse.fx.core.di.Service;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
@@ -22,11 +21,11 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
 public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration {
-	private Input<?> input;
-	private PresentationReconciler reconciler;
-	private ProposalComputer proposalComputer;
-	private IAnnotationModel annotationModel;
-	private List<AnnotationPresenter> annotationPresenters;
+	private final Input<?> input;
+	private final PresentationReconciler reconciler;
+	private final ProposalComputer proposalComputer;
+	private final IAnnotationModel annotationModel;
+	private final List<AnnotationPresenter> annotationPresenters;
 
 	@Inject
 	public DefaultSourceViewerConfiguration(
@@ -34,12 +33,16 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			PresentationReconciler reconciler,
 			@Optional ProposalComputer proposalComputer,
 			@Optional IAnnotationModel annotationModel,
-			@Service List<AnnotationPresenter> annotationPresenters) {
+			@Optional AnnotationPresenter presenter) {
 		this.input = input;
 		this.reconciler = reconciler;
 		this.proposalComputer = proposalComputer;
 		this.annotationModel = annotationModel;
-		this.annotationPresenters = annotationPresenters;
+		if( presenter != null ) {
+			this.annotationPresenters = Collections.singletonList(presenter);
+		} else {
+			this.annotationPresenters = Collections.emptyList();
+		}
 	}
 
 	@Override

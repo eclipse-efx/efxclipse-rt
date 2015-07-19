@@ -15,4 +15,5 @@ Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.4.0",
 Import-Package: org.osgi.service.component.annotations
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.PresentationReconcilerContextFunction.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.SourceViewerConfigurationContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.ProposalComputerTypeProviderContextFunction.xml
+ OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.ProposalComputerTypeProviderContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.AnnotationPresenterContextFunction.xml

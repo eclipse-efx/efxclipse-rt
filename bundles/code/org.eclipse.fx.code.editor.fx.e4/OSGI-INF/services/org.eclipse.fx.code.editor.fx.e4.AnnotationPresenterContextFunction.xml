@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.code.editor.fx.e4.AnnotationPresenterContextFunction">
+   <implementation class="org.eclipse.fx.code.editor.fx.e4.AnnotationPresenterContextFunction"/>
+   <service>
+      <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
+   </service>
+   <property name="service.context.key" value="org.eclipse.jface.text.source.AnnotationPresenter"/>
+   <reference bind="registerService" cardinality="0..n" interface="org.eclipse.fx.code.editor.fx.services.AnnotationPresenterTypeProvider" name="registerService" policy="dynamic" policy-option="greedy" unbind="unregisterService"/>
+</scr:component>

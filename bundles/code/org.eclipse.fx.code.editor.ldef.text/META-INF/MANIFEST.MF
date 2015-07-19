@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.fx.text,
  org.eclipse.e4.core.contexts,
  org.eclipse.fx.code.editor,
  org.eclipse.fx.core;bundle-version="2.1.0",
- org.eclipse.emf.ecore;bundle-version="2.11.0"
+ org.eclipse.emf.ecore;bundle-version="2.11.0",
+ com.ibm.icu.base;bundle-version="54.1.1"
 Import-Package: javax.inject,
  org.osgi.service.component.annotations
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.ldef.text.internal.LDefModelCF.xml,
