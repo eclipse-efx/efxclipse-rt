@@ -37,7 +37,7 @@ import org.osgi.service.event.EventHandler;
 /**
  * Context function creating an event system
  */
-@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.core.event.EventSystem"})
+@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.core.event.EventBus"})
 public class EventSystemContextFunction extends ContextFunction {
 	@Override
 	public Object compute(IEclipseContext context) {
