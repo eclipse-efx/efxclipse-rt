@@ -50,13 +50,11 @@ public class TextEditor {
 
 	private Input<?> input;
 
-	Property<Input<?>> activeInput;
+	private Property<Input<?>> activeInput;
 
 	private IAnnotationModel annotationModel;
 
-	String currentStyle;
-
-	String currentId;
+	private EventBus eventBus;
 
 	private SourceViewer viewer;
 
@@ -115,8 +113,14 @@ public class TextEditor {
 		this.activeInput = activeInput;
 	}
 
+	@Inject
+	@Optional
+	public void setEventBus(EventBus eventBus) {
+		this.eventBus = eventBus;
+	}
+
 	@PostConstruct
-	public void initUI(BorderPane pane, EventBus broker) {
+	public void initUI(BorderPane pane) {
 		viewer = new SourceViewer();
 		if( document instanceof IDocumentExtension3 ) {
 			((IDocumentExtension3)document).setDocumentPartitioner(configuration.getConfiguredDocumentPartitioning(viewer),partitioner);
@@ -129,8 +133,11 @@ public class TextEditor {
 
 			@Override
 			public void documentChanged(DocumentEvent event) {
-				broker.publish(Constants.EDITOR_DOCUMENT_MODIFIED, TextEditor.this, true);
-				broker.publish(Constants.EDITOR_DOCUMENT_MODIFICATION, new SourceChange(input, event.fOffset, event.fLength, event.fText),true);
+				if( eventBus != null ) {
+					eventBus.publish(Constants.EDITOR_DOCUMENT_MODIFIED, TextEditor.this, true);
+					//TODO Should the source change even really be triggered by the editor??
+					eventBus.publish(Constants.EDITOR_DOCUMENT_MODIFICATION, new SourceChange(input, event.fOffset, event.fLength, event.fText),true);
+				}
 			}
 
 			@Override
@@ -148,10 +155,13 @@ public class TextEditor {
 	}
 
 	@Persist
-	void save(EventBus broker) {
+	void save() {
 		if( persistenceService.persist(input, document) ) {
-			broker.publish(Constants.OUTLINE_RELOAD, input, true);
-			broker.publish(Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this,true);
+			if( eventBus != null ) {
+				//TODO Should the outline reload really be sent by the editor?
+				eventBus.publish(Constants.OUTLINE_RELOAD, input, true);
+				eventBus.publish(Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this,true);
+			}
 		} else {
 			//TODO Handle that
 		}
