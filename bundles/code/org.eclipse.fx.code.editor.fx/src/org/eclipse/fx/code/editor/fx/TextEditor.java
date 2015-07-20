@@ -15,7 +15,6 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.fx.code.editor.Constants;
@@ -23,6 +22,7 @@ import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.SourceChange;
 import org.eclipse.fx.code.editor.services.DocumentPersitenceService;
 import org.eclipse.fx.core.di.ContextValue;
+import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
@@ -35,38 +35,88 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import javafx.beans.property.Property;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * Component setting up a JavaFX text editor
+ */
 public class TextEditor {
 
-	@Inject
-	IDocument document;
+	private IDocument document;
 
-	@Inject
-	SourceViewerConfiguration configuration;
+	private SourceViewerConfiguration configuration;
 
-	@Inject
-	IDocumentPartitioner partitioner;
+	private IDocumentPartitioner partitioner;
 
-	@Inject
-	DocumentPersitenceService persistenceService;
+	private DocumentPersitenceService persistenceService;
 
-	@Inject
-	Input<?> input;
+	private Input<?> input;
 
-	@Inject
-	@ContextValue("activeInput")
 	Property<Input<?>> activeInput;
 
-	@Inject
-	@Optional
-	IAnnotationModel annotationModel;
+	private IAnnotationModel annotationModel;
 
 	String currentStyle;
 
 	String currentId;
+
 	private SourceViewer viewer;
 
+	@Inject
+	public void setDocument(IDocument document) {
+		if( viewer != null ) {
+			throw new IllegalArgumentException("The document has to be set before the editor is initialized");
+		}
+		this.document = document;
+	}
+
+	@Inject
+	public void setSourceViewerConfiguration(SourceViewerConfiguration configuration) {
+		if( viewer != null ) {
+			throw new IllegalArgumentException("The configuration has to be set before the editor is initialized");
+		}
+		this.configuration = configuration;
+	}
+
+	@Inject
+	public void setPartitioner(IDocumentPartitioner partitioner) {
+		if( viewer != null ) {
+			throw new IllegalArgumentException("The partitioner has to be set before the editor is initialized");
+		}
+
+		this.partitioner = partitioner;
+	}
+
+	@Inject
+	public void setPersistenceService(DocumentPersitenceService persistenceService) {
+		this.persistenceService = persistenceService;
+	}
+
+	@Inject
+	public void setInput(Input<?> input) {
+		if( viewer != null ) {
+			throw new IllegalArgumentException("The input has to be set before the editor is initialized");
+		}
+
+		this.input = input;
+	}
+
+	@Inject
+	@Optional
+	public void setAnnotationModel(IAnnotationModel annotationModel) {
+		if( viewer != null ) {
+			throw new IllegalArgumentException("The annotation model has to be set before the editor is initialized");
+		}
+
+		this.annotationModel = annotationModel;
+	}
+
+	@Inject
+	@Optional
+	public void setActiveInputTracker(@ContextValue("activeInput") Property<Input<?>> activeInput) {
+		this.activeInput = activeInput;
+	}
+
 	@PostConstruct
-	public void initUI(BorderPane pane, IEventBroker broker) {
+	public void initUI(BorderPane pane, EventBus broker) {
 		viewer = new SourceViewer();
 		if( document instanceof IDocumentExtension3 ) {
 			((IDocumentExtension3)document).setDocumentPartitioner(configuration.getConfiguredDocumentPartitioning(viewer),partitioner);
@@ -79,8 +129,8 @@ public class TextEditor {
 
 			@Override
 			public void documentChanged(DocumentEvent event) {
-				broker.send(Constants.EDITOR_DOCUMENT_MODIFIED, TextEditor.this);
-				broker.send(Constants.EDITOR_DOCUMENT_MODIFICATION, new SourceChange(input, event.fOffset, event.fLength, event.fText));
+				broker.publish(Constants.EDITOR_DOCUMENT_MODIFIED, TextEditor.this, true);
+				broker.publish(Constants.EDITOR_DOCUMENT_MODIFICATION, new SourceChange(input, event.fOffset, event.fLength, event.fText),true);
 			}
 
 			@Override
@@ -92,14 +142,16 @@ public class TextEditor {
 		viewer.configure(configuration);
 		viewer.setDocument(document, annotationModel);
 		pane.setCenter(viewer);
-		activeInput.setValue(input);
+		if( activeInput != null ) {
+			activeInput.setValue(input);
+		}
 	}
 
 	@Persist
-	void save(IEventBroker broker) {
+	void save(EventBus broker) {
 		if( persistenceService.persist(input, document) ) {
-			broker.send(Constants.OUTLINE_RELOAD, input);
-			broker.send(Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this);
+			broker.publish(Constants.OUTLINE_RELOAD, input, true);
+			broker.publish(Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this,true);
 		} else {
 			//TODO Handle that
 		}
@@ -107,7 +159,10 @@ public class TextEditor {
 
 	@Focus
 	void focused() {
-		activeInput.setValue(input);
+		if( activeInput != null ) {
+			activeInput.setValue(input);
+		}
+
 		viewer.getTextWidget().requestFocus();
 		//TODO We should remember the caret offset
 		if( viewer.getTextWidget().getCaretOffset() == -1 && viewer.getTextWidget().getContent().getCharCount() > 0 ) {
@@ -117,7 +172,7 @@ public class TextEditor {
 
 	@PreDestroy
 	void destroy() {
-		if( activeInput.getValue() == input ) {
+		if( activeInput != null && activeInput.getValue() == input ) {
 			activeInput.setValue(null);
 		}
 		this.input.dispose();
