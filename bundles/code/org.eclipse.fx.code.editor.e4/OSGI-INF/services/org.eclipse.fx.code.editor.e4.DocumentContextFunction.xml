@@ -5,5 +5,5 @@
       <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
    </service>
    <property name="service.context.key" value="org.eclipse.jface.text.IDocument"/>
-   <reference bind="registerService" cardinality="0..n" interface="org.eclipse.fx.code.editor.services.DocumentFactory" name="registerService" policy="dynamic" policy-option="greedy" unbind="unregisterService"/>
+   <reference bind="registerService" cardinality="0..n" interface="org.eclipse.fx.code.editor.services.DocumentTypeProvider" name="registerService" policy="dynamic" policy-option="greedy" unbind="unregisterService"/>
 </scr:component>
