@@ -1,4 +1,4 @@
-package org.eclipse.fx.code.editor;
+package org.eclipse.fx.code.editor.fx;
 
 import java.net.URL;
 
