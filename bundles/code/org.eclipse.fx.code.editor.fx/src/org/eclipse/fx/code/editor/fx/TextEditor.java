@@ -28,7 +28,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IDocumentPartitioner;
-import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
@@ -51,8 +50,6 @@ public class TextEditor {
 	private Input<?> input;
 
 	private Property<Input<?>> activeInput;
-
-	private IAnnotationModel annotationModel;
 
 	private EventBus eventBus;
 
@@ -99,16 +96,6 @@ public class TextEditor {
 
 	@Inject
 	@Optional
-	public void setAnnotationModel(IAnnotationModel annotationModel) {
-		if( viewer != null ) {
-			throw new IllegalArgumentException("The annotation model has to be set before the editor is initialized");
-		}
-
-		this.annotationModel = annotationModel;
-	}
-
-	@Inject
-	@Optional
 	public void setActiveInputTracker(@ContextValue("activeInput") Property<Input<?>> activeInput) {
 		this.activeInput = activeInput;
 	}
@@ -147,7 +134,7 @@ public class TextEditor {
 		});
 
 		viewer.configure(configuration);
-		viewer.setDocument(document, annotationModel);
+		viewer.setDocument(document, configuration.getAnnotationModel());
 		pane.setCenter(viewer);
 		if( activeInput != null ) {
 			activeInput.setValue(input);
