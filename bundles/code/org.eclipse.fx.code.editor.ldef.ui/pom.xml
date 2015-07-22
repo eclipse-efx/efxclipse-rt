@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>e(fx)clipse - IDE - LDef Editor</name>
+	<groupId>org.eclipse.fx.ide</groupId>
+	<artifactId>org.eclipse.fx.code.editor.ldef.ui</artifactId>
+	<packaging>eclipse-plugin</packaging>
+
+	<parent>
+		<groupId>org.eclipse.fx.ide</groupId>
+		<artifactId>releng</artifactId>
+		<relativePath>../../../releng/org.eclipse.fx.ide.releng/pom.xml</relativePath>
+		<version>2.1.0-SNAPSHOT</version>
+	</parent>
+
+	<build>
+		<resources>
+			<!-- to ensure that the feature lookup of the ui test works -->
+			<resource>
+				<directory>.</directory>
+				<includes>
+					<include>META-INF/</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
