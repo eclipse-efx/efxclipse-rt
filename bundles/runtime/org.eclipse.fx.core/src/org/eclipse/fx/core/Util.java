@@ -12,6 +12,8 @@ package org.eclipse.fx.core;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -21,16 +23,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Class with static utility methods
@@ -45,7 +40,7 @@ public class Util {
 
 	/**
 	 * Make use the value is not null
-	 * 
+	 *
 	 * @param value
 	 *            the nullable value
 	 * @param defaultValue
@@ -78,70 +73,12 @@ public class Util {
 		return isOSGi.booleanValue();
 	}
 
-	private static BundleContext getContext(List<Class<?>> classList) {
-		for (Class<?> cl : classList) {
-			Bundle b = FrameworkUtil.getBundle(cl);
-			BundleContext ctx = null;
-			if (b != null) {
-				ctx = b.getBundleContext();
-				if (ctx != null) {
-					return ctx;
-				}
-			}
-		}
-
-		Bundle b = FrameworkUtil.getBundle(Util.class);
-		BundleContext ctx = null;
-
-		if (b != null) {
-			ctx = b.getBundleContext();
-		}
-
-		if (ctx == null) {
-			throw new IllegalStateException("Unable to get a bundle context"); //$NON-NLS-1$
-		}
-
-		return ctx;
-	}
-
 	private static <S> @Nullable S _lookupService(@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
 		List<@NonNull S> _lookupServiceList = _lookupServiceList(requestor, serviceClass);
 		if (!_lookupServiceList.isEmpty()) {
 			return _lookupServiceList.get(0);
 		}
 		return null;
-	}
-
-	static class CompareableService<@NonNull S> implements Comparable<CompareableService<S>> {
-		private final ServiceReference<S> r;
-		final S instance;
-
-		public CompareableService(ServiceReference<S> r, S instance) {
-			this.r = r;
-			this.instance = instance;
-		}
-
-		private static int getRanking(ServiceReference<?> r) {
-			Object v = r.getProperty("service.ranking"); //$NON-NLS-1$
-			if (v instanceof Integer) {
-				return ((Integer) v).intValue();
-			}
-			return 0;
-		}
-
-		@Override
-		public int compareTo(CompareableService<S> o) {
-			int i1;
-			int i2;
-			if (this.instance instanceof RankedService && o.instance instanceof RankedService) {
-				i1 = ((RankedService) this.instance).getRanking();
-				i2 = ((RankedService) o.instance).getRanking();
-			} else {
-				i1 = getRanking(this.r);
-				i2 = getRanking(o.r);
-			}
-			return -1 * Integer.compare(i1, i2);
-		}
 	}
 
 	private static Map<Class<?>, ServiceLoader<?>> LOADER_CACHE = new HashMap<Class<?>, ServiceLoader<?>>();
@@ -160,26 +97,7 @@ public class Util {
 	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor,
 			@NonNull Class<S> serviceClass) {
 		if (isOsgiEnv()) {
-			List<Class<?>> cl = new ArrayList<>();
-			if (requestor != null) {
-				cl.add(requestor);
-			}
-			cl.add(serviceClass);
-			BundleContext ctx = getContext(cl);
-
-			try {
-				@SuppressWarnings("unchecked")
-				ServiceReference<S>[] serviceReferences = (ServiceReference<S>[]) ctx
-						.getServiceReferences(serviceClass.getName(), null);
-				if (serviceReferences == null) {
-					return Collections.emptyList();
-				}
-				return Stream.of(serviceReferences).map(r -> new CompareableService<>(r, ctx.getService(r))).sorted()
-						.map(s -> s.instance).collect(Collectors.toList());
-			} catch (InvalidSyntaxException e) {
-				throw new IllegalStateException(e);
-			}
-
+			return OSGiUtil.lookupServiceList(requestor, serviceClass);
 		} else {
 			ServiceLoader<S> serviceLoader = getLoader(serviceClass);
 			Iterator<S> iterator = serviceLoader.iterator();
@@ -255,7 +173,7 @@ public class Util {
 
 	/**
 	 * Read the content for the given path
-	 * 
+	 *
 	 * @param path
 	 *            the path
 	 * @return the content
@@ -270,5 +188,45 @@ public class Util {
 			in.read(buf);
 			return new String(buf);
 		}
+	}
+
+	/**
+	 * Read the input stream into a string
+	 *
+	 * @param in
+	 *            the stream
+	 * @param charset
+	 *            the charset to be used
+	 * @return the string
+	 */
+	public static String readToString(InputStream in, Charset charset) {
+		return readToString(in, 1024, charset);
+	}
+
+	/**
+	 * Read the input stream into a string
+	 *
+	 * @param in
+	 *            the stream
+	 * @param bufferLength
+	 *            the buffer length
+	 * @param charset
+	 *            the charset
+	 * @return the string
+	 */
+	public static String readToString(InputStream in, int bufferLength, Charset charset) {
+		StringBuilder b = new StringBuilder();
+		char[] buf = new char[bufferLength];
+		InputStreamReader r = new InputStreamReader(in, charset);
+		int l;
+		try {
+			while ((l = r.read(buf, 0, bufferLength)) != -1) {
+				b.append(buf, 0, l);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return b.toString();
 	}
 }
