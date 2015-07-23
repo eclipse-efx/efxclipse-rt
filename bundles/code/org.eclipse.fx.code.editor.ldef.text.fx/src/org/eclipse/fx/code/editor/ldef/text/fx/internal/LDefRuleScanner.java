@@ -22,7 +22,6 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.CombinedWordRule;
 import org.eclipse.jface.text.rules.IRule;
@@ -65,19 +64,6 @@ public class LDefRuleScanner extends RuleBasedScanner {
 							token,
 							sml.getEscapeSeq() != null ? sml.getEscapeSeq().charAt(0) : 0,
 							false);
-				} else if( ru instanceof Scanner_WhitespaceRule ) {
-					Scanner_WhitespaceRule wru = (Scanner_WhitespaceRule) ru;
-					if( wru.isJavawhitespace() ) {
-						rules[i++] = new WhitespaceRule(new IWhitespaceDetector() {
-
-							@Override
-							public boolean isWhitespace(char c) {
-								return Character.isWhitespace(c);
-							}
-						});
-					} else {
-						rules[i++] = new WhitespaceRule(wru.getFileURI() != null ? new JSWSDectector() : new FixedCharacterWSDetector(wru.getCharacters()));
-					}
 				} else if( ru instanceof Scanner_CharacterRule ) {
 					Scanner_CharacterRule scr = (Scanner_CharacterRule) ru;
 					char[] c = new char[scr.getCharacters().size()];
@@ -90,6 +76,21 @@ public class LDefRuleScanner extends RuleBasedScanner {
 				}
 			}
 		}
+
+		if( scanner.getWhitespace() != null ) {
+			if( scanner.getWhitespace().isJavawhitespace() ) {
+				rules[i++] = new WhitespaceRule(new IWhitespaceDetector() {
+
+					@Override
+					public boolean isWhitespace(char c) {
+						return Character.isWhitespace(c);
+					}
+				});
+			} else {
+				rules[i++] = new WhitespaceRule(scanner.getWhitespace().getFileURI() != null ? new JSWSDectector() : new FixedCharacterWSDetector(scanner.getWhitespace().getCharacters()));
+			}
+		}
+
 
 		if( ! keyWordList.isEmpty() ) {
 			JavaLikeWordDetector wordDetector= new JavaLikeWordDetector();
@@ -118,6 +119,10 @@ public class LDefRuleScanner extends RuleBasedScanner {
 		}
 
 		if( hasKeyGroup ) {
+			rv += 1;
+		}
+
+		if(scanner.getWhitespace() != null) {
 			rv += 1;
 		}
 
