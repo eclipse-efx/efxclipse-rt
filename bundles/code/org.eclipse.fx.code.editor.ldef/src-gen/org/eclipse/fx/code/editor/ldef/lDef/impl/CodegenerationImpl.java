@@ -4,24 +4,26 @@ package org.eclipse.fx.code.editor.ldef.lDef.impl;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.fx.code.editor.ldef.lDef.Codegeneration;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
-import org.eclipse.fx.code.editor.ldef.lDef.SWTIntegration;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>SWT Integration</b></em>'.
+ * An implementation of the model object '<em><b>Codegeneration</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class SWTIntegrationImpl extends CodeIntegrationImpl implements SWTIntegration
+public class CodegenerationImpl extends MinimalEObjectImpl.Container implements Codegeneration
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected SWTIntegrationImpl()
+  protected CodegenerationImpl()
   {
     super();
   }
@@ -34,7 +36,7 @@ public class SWTIntegrationImpl extends CodeIntegrationImpl implements SWTIntegr
   @Override
   protected EClass eStaticClass()
   {
-    return LDefPackage.Literals.SWT_INTEGRATION;
+    return LDefPackage.Literals.CODEGENERATION;
   }
 
-} //SWTIntegrationImpl
+} //CodegenerationImpl

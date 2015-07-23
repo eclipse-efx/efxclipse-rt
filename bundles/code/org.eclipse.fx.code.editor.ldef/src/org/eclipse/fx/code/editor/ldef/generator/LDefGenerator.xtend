@@ -23,7 +23,7 @@ class LDefGenerator implements IGenerator {
 		val root = resource.contents.head as Root
 		if( root.languageDefinition.integration != null ) {
 			if( ! root.languageDefinition.integration.codeIntegrationList.filter(typeof(JavaFXIntegration)).empty ) {
-				generator.generate(root.languageDefinition, root.name, fsa);
+				generator.generate(root.languageDefinition, fsa);
 			}
 		}
 	}

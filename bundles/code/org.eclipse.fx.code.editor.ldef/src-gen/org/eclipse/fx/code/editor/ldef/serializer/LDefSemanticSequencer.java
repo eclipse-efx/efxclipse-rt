@@ -8,6 +8,7 @@ import com.google.inject.Provider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.code.editor.ldef.lDef.Import;
 import org.eclipse.fx.code.editor.ldef.lDef.Integration;
+import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration;
 import org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration;
 import org.eclipse.fx.code.editor.ldef.lDef.Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
@@ -22,7 +23,6 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Root;
-import org.eclipse.fx.code.editor.ldef.lDef.SWTIntegration;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
@@ -56,6 +56,9 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case LDefPackage.INTEGRATION:
 				sequence_Integration(context, (Integration) semanticObject); 
+				return; 
+			case LDefPackage.JAVA_CODE_GENERATION:
+				sequence_JavaCodeGeneration(context, (JavaCodeGeneration) semanticObject); 
 				return; 
 			case LDefPackage.JAVA_FX_INTEGRATION:
 				sequence_JavaFXIntegration(context, (JavaFXIntegration) semanticObject); 
@@ -95,9 +98,6 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case LDefPackage.ROOT:
 				sequence_Root(context, (Root) semanticObject); 
-				return; 
-			case LDefPackage.SWT_INTEGRATION:
-				sequence_SWTIntegration(context, (SWTIntegration) semanticObject); 
 				return; 
 			case LDefPackage.SCANNER_CHARACTER_RULE:
 				sequence_Scanner_CharacterRule(context, (Scanner_CharacterRule) semanticObject); 
@@ -151,7 +151,23 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (codegen?='codegeneration'? e4?='e4'?)
+	 *     name=STRING
+	 */
+	protected void sequence_JavaCodeGeneration(EObject context, JavaCodeGeneration semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.JAVA_CODE_GENERATION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.JAVA_CODE_GENERATION__NAME));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getJavaCodeGenerationAccess().getNameSTRINGTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     codegenerationList+=Codegeneration+
 	 */
 	protected void sequence_JavaFXIntegration(EObject context, JavaFXIntegration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -286,15 +302,6 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (name=QualifiedName imports+=Import* languageDefinition=LanguageDef)
 	 */
 	protected void sequence_Root(EObject context, Root semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (codegen?='codegeneration'? e4?='e4'?)
-	 */
-	protected void sequence_SWTIntegration(EObject context, SWTIntegration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

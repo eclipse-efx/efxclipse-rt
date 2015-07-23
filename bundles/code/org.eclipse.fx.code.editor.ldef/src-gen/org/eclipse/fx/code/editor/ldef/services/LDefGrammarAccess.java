@@ -236,22 +236,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class CodeIntegrationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CodeIntegration");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cJavaFXIntegrationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cSWTIntegrationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cJavaFXIntegrationParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//CodeIntegration:
-		//	JavaFXIntegration | SWTIntegration;
+		//CodeIntegration: // | SWTIntegration
+		//	JavaFXIntegration;
 		@Override public ParserRule getRule() { return rule; }
 
-		//JavaFXIntegration | SWTIntegration
-		public Alternatives getAlternatives() { return cAlternatives; }
-
+		//// | SWTIntegration
 		//JavaFXIntegration
-		public RuleCall getJavaFXIntegrationParserRuleCall_0() { return cJavaFXIntegrationParserRuleCall_0; }
-
-		//SWTIntegration
-		public RuleCall getSWTIntegrationParserRuleCall_1() { return cSWTIntegrationParserRuleCall_1; }
+		public RuleCall getJavaFXIntegrationParserRuleCall() { return cJavaFXIntegrationParserRuleCall; }
 	}
 
 	public class JavaFXIntegrationElements extends AbstractParserRuleElementFinder {
@@ -259,18 +252,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cJavafxKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Action cJavaFXIntegrationAction_2 = (Action)cGroup.eContents().get(2);
-		private final Assignment cCodegenAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cCodegenCodegenerationKeyword_3_0 = (Keyword)cCodegenAssignment_3.eContents().get(0);
-		private final Assignment cE4Assignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Keyword cE4E4Keyword_4_0 = (Keyword)cE4Assignment_4.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cCodegenerationListAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cCodegenerationListCodegenerationParserRuleCall_2_0 = (RuleCall)cCodegenerationListAssignment_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//JavaFXIntegration:
-		//	"javafx" "{" {JavaFXIntegration} codegen?="codegeneration"? e4?="e4"? "}";
+		//	"javafx" "{" codegenerationList+=Codegeneration+ "}";
 		@Override public ParserRule getRule() { return rule; }
 
-		//"javafx" "{" {JavaFXIntegration} codegen?="codegeneration"? e4?="e4"? "}"
+		//"javafx" "{" codegenerationList+=Codegeneration+ "}"
 		public Group getGroup() { return cGroup; }
 
 		//"javafx"
@@ -279,67 +269,50 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
 
-		//{JavaFXIntegration}
-		public Action getJavaFXIntegrationAction_2() { return cJavaFXIntegrationAction_2; }
+		//codegenerationList+=Codegeneration+
+		public Assignment getCodegenerationListAssignment_2() { return cCodegenerationListAssignment_2; }
 
-		//codegen?="codegeneration"?
-		public Assignment getCodegenAssignment_3() { return cCodegenAssignment_3; }
-
-		//"codegeneration"
-		public Keyword getCodegenCodegenerationKeyword_3_0() { return cCodegenCodegenerationKeyword_3_0; }
-
-		//e4?="e4"?
-		public Assignment getE4Assignment_4() { return cE4Assignment_4; }
-
-		//"e4"
-		public Keyword getE4E4Keyword_4_0() { return cE4E4Keyword_4_0; }
+		//Codegeneration
+		public RuleCall getCodegenerationListCodegenerationParserRuleCall_2_0() { return cCodegenerationListCodegenerationParserRuleCall_2_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
-	public class SWTIntegrationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SWTIntegration");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cSwtKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Action cSWTIntegrationAction_2 = (Action)cGroup.eContents().get(2);
-		private final Assignment cCodegenAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cCodegenCodegenerationKeyword_3_0 = (Keyword)cCodegenAssignment_3.eContents().get(0);
-		private final Assignment cE4Assignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Keyword cE4E4Keyword_4_0 = (Keyword)cE4Assignment_4.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+	public class CodegenerationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Codegeneration");
+		private final RuleCall cJavaCodeGenerationParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//SWTIntegration:
-		//	"swt" "{" {SWTIntegration} codegen?="codegeneration"? e4?="e4"? "}";
+		//Codegeneration:
+		//	JavaCodeGeneration;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"swt" "{" {SWTIntegration} codegen?="codegeneration"? e4?="e4"? "}"
+		//JavaCodeGeneration
+		public RuleCall getJavaCodeGenerationParserRuleCall() { return cJavaCodeGenerationParserRuleCall; }
+	}
+
+	public class JavaCodeGenerationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "JavaCodeGeneration");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cJavaKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameSTRINGTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		
+		//JavaCodeGeneration:
+		//	"java" name=STRING;
+		@Override public ParserRule getRule() { return rule; }
+
+		//"java" name=STRING
 		public Group getGroup() { return cGroup; }
 
-		//"swt"
-		public Keyword getSwtKeyword_0() { return cSwtKeyword_0; }
+		//"java"
+		public Keyword getJavaKeyword_0() { return cJavaKeyword_0; }
 
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		//name=STRING
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
-		//{SWTIntegration}
-		public Action getSWTIntegrationAction_2() { return cSWTIntegrationAction_2; }
-
-		//codegen?="codegeneration"?
-		public Assignment getCodegenAssignment_3() { return cCodegenAssignment_3; }
-
-		//"codegeneration"
-		public Keyword getCodegenCodegenerationKeyword_3_0() { return cCodegenCodegenerationKeyword_3_0; }
-
-		//e4?="e4"?
-		public Assignment getE4Assignment_4() { return cE4Assignment_4; }
-
-		//"e4"
-		public Keyword getE4E4Keyword_4_0() { return cE4E4Keyword_4_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+		//STRING
+		public RuleCall getNameSTRINGTerminalRuleCall_1_0() { return cNameSTRINGTerminalRuleCall_1_0; }
 	}
 
 	public class ParitioningElements extends AbstractParserRuleElementFinder {
@@ -353,6 +326,13 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPartitionerPartitionerParserRuleCall_3_0 = (RuleCall)cPartitionerAssignment_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
+		////SWTIntegration:
+		////	'swt' '{'
+		////		{SWTIntegration}
+		////		codegen?='codegeneration'?
+		////		e4?='e4'?
+		////	'}'
+		////;
 		//Paritioning:
 		//	"partitioning" "{" partitions+=Partition+ partitioner=Partitioner "}";
 		@Override public ParserRule getRule() { return rule; }
@@ -1226,7 +1206,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	private final IntegrationElements pIntegration;
 	private final CodeIntegrationElements pCodeIntegration;
 	private final JavaFXIntegrationElements pJavaFXIntegration;
-	private final SWTIntegrationElements pSWTIntegration;
+	private final CodegenerationElements pCodegeneration;
+	private final JavaCodeGenerationElements pJavaCodeGeneration;
 	private final ParitioningElements pParitioning;
 	private final PartitionElements pPartition;
 	private final PartitionerElements pPartitioner;
@@ -1268,7 +1249,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		this.pIntegration = new IntegrationElements();
 		this.pCodeIntegration = new CodeIntegrationElements();
 		this.pJavaFXIntegration = new JavaFXIntegrationElements();
-		this.pSWTIntegration = new SWTIntegrationElements();
+		this.pCodegeneration = new CodegenerationElements();
+		this.pJavaCodeGeneration = new JavaCodeGenerationElements();
 		this.pParitioning = new ParitioningElements();
 		this.pPartition = new PartitionElements();
 		this.pPartitioner = new PartitionerElements();
@@ -1390,8 +1372,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntegrationAccess().getRule();
 	}
 
-	//CodeIntegration:
-	//	JavaFXIntegration | SWTIntegration;
+	//CodeIntegration: // | SWTIntegration
+	//	JavaFXIntegration;
 	public CodeIntegrationElements getCodeIntegrationAccess() {
 		return pCodeIntegration;
 	}
@@ -1401,7 +1383,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JavaFXIntegration:
-	//	"javafx" "{" {JavaFXIntegration} codegen?="codegeneration"? e4?="e4"? "}";
+	//	"javafx" "{" codegenerationList+=Codegeneration+ "}";
 	public JavaFXIntegrationElements getJavaFXIntegrationAccess() {
 		return pJavaFXIntegration;
 	}
@@ -1410,16 +1392,33 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		return getJavaFXIntegrationAccess().getRule();
 	}
 
-	//SWTIntegration:
-	//	"swt" "{" {SWTIntegration} codegen?="codegeneration"? e4?="e4"? "}";
-	public SWTIntegrationElements getSWTIntegrationAccess() {
-		return pSWTIntegration;
+	//Codegeneration:
+	//	JavaCodeGeneration;
+	public CodegenerationElements getCodegenerationAccess() {
+		return pCodegeneration;
 	}
 	
-	public ParserRule getSWTIntegrationRule() {
-		return getSWTIntegrationAccess().getRule();
+	public ParserRule getCodegenerationRule() {
+		return getCodegenerationAccess().getRule();
 	}
 
+	//JavaCodeGeneration:
+	//	"java" name=STRING;
+	public JavaCodeGenerationElements getJavaCodeGenerationAccess() {
+		return pJavaCodeGeneration;
+	}
+	
+	public ParserRule getJavaCodeGenerationRule() {
+		return getJavaCodeGenerationAccess().getRule();
+	}
+
+	////SWTIntegration:
+	////	'swt' '{'
+	////		{SWTIntegration}
+	////		codegen?='codegeneration'?
+	////		e4?='e4'?
+	////	'}'
+	////;
 	//Paritioning:
 	//	"partitioning" "{" partitions+=Partition+ partitioner=Partitioner "}";
 	public ParitioningElements getParitioningAccess() {

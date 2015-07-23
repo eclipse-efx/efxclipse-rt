@@ -224,31 +224,13 @@ public interface LDefPackage extends EPackage
   int CODE_INTEGRATION = 4;
 
   /**
-   * The feature id for the '<em><b>Codegen</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CODE_INTEGRATION__CODEGEN = 0;
-
-  /**
-   * The feature id for the '<em><b>E4</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CODE_INTEGRATION__E4 = 1;
-
-  /**
    * The number of structural features of the '<em>Code Integration</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CODE_INTEGRATION_FEATURE_COUNT = 2;
+  int CODE_INTEGRATION_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.JavaFXIntegrationImpl <em>Java FX Integration</em>}' class.
@@ -261,22 +243,13 @@ public interface LDefPackage extends EPackage
   int JAVA_FX_INTEGRATION = 5;
 
   /**
-   * The feature id for the '<em><b>Codegen</b></em>' attribute.
+   * The feature id for the '<em><b>Codegeneration List</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int JAVA_FX_INTEGRATION__CODEGEN = CODE_INTEGRATION__CODEGEN;
-
-  /**
-   * The feature id for the '<em><b>E4</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JAVA_FX_INTEGRATION__E4 = CODE_INTEGRATION__E4;
+  int JAVA_FX_INTEGRATION__CODEGENERATION_LIST = CODE_INTEGRATION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Java FX Integration</em>' class.
@@ -285,44 +258,54 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int JAVA_FX_INTEGRATION_FEATURE_COUNT = CODE_INTEGRATION_FEATURE_COUNT + 0;
+  int JAVA_FX_INTEGRATION_FEATURE_COUNT = CODE_INTEGRATION_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.SWTIntegrationImpl <em>SWT Integration</em>}' class.
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.CodegenerationImpl <em>Codegeneration</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.SWTIntegrationImpl
-   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getSWTIntegration()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.CodegenerationImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getCodegeneration()
    * @generated
    */
-  int SWT_INTEGRATION = 6;
+  int CODEGENERATION = 6;
 
   /**
-   * The feature id for the '<em><b>Codegen</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWT_INTEGRATION__CODEGEN = CODE_INTEGRATION__CODEGEN;
-
-  /**
-   * The feature id for the '<em><b>E4</b></em>' attribute.
+   * The number of structural features of the '<em>Codegeneration</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SWT_INTEGRATION__E4 = CODE_INTEGRATION__E4;
+  int CODEGENERATION_FEATURE_COUNT = 0;
 
   /**
-   * The number of structural features of the '<em>SWT Integration</em>' class.
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.JavaCodeGenerationImpl <em>Java Code Generation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.JavaCodeGenerationImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getJavaCodeGeneration()
+   * @generated
+   */
+  int JAVA_CODE_GENERATION = 7;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SWT_INTEGRATION_FEATURE_COUNT = CODE_INTEGRATION_FEATURE_COUNT + 0;
+  int JAVA_CODE_GENERATION__NAME = CODEGENERATION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Java Code Generation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JAVA_CODE_GENERATION_FEATURE_COUNT = CODEGENERATION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ParitioningImpl <em>Paritioning</em>}' class.
@@ -332,7 +315,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getParitioning()
    * @generated
    */
-  int PARITIONING = 7;
+  int PARITIONING = 8;
 
   /**
    * The feature id for the '<em><b>Partitions</b></em>' containment reference list.
@@ -369,7 +352,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition()
    * @generated
    */
-  int PARTITION = 8;
+  int PARTITION = 9;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -397,7 +380,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartitioner()
    * @generated
    */
-  int PARTITIONER = 9;
+  int PARTITIONER = 10;
 
   /**
    * The number of structural features of the '<em>Partitioner</em>' class.
@@ -416,7 +399,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getParitioner_JS()
    * @generated
    */
-  int PARITIONER_JS = 10;
+  int PARITIONER_JS = 11;
 
   /**
    * The feature id for the '<em><b>Script URI</b></em>' attribute.
@@ -444,7 +427,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartitioner_Rule()
    * @generated
    */
-  int PARTITIONER_RULE = 11;
+  int PARTITIONER_RULE = 12;
 
   /**
    * The feature id for the '<em><b>Rule List</b></em>' containment reference list.
@@ -472,7 +455,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_Rule()
    * @generated
    */
-  int PARTITION_RULE = 12;
+  int PARTITION_RULE = 13;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -527,7 +510,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_SingleLineRule()
    * @generated
    */
-  int PARTITION_SINGLE_LINE_RULE = 13;
+  int PARTITION_SINGLE_LINE_RULE = 14;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -582,7 +565,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_MultiLineRule()
    * @generated
    */
-  int PARTITION_MULTI_LINE_RULE = 14;
+  int PARTITION_MULTI_LINE_RULE = 15;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -637,7 +620,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalHighlighting()
    * @generated
    */
-  int LEXICAL_HIGHLIGHTING = 15;
+  int LEXICAL_HIGHLIGHTING = 16;
 
   /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
@@ -665,7 +648,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING = 16;
+  int LEXICAL_PARTITION_HIGHLIGHTING = 17;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -693,7 +676,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_JS()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 17;
+  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 18;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -730,7 +713,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_Rule()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 18;
+  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 19;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -776,7 +759,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getToken()
    * @generated
    */
-  int TOKEN = 19;
+  int TOKEN = 20;
 
   /**
    * The feature id for the '<em><b>Default</b></em>' attribute.
@@ -822,7 +805,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner()
    * @generated
    */
-  int SCANNER = 20;
+  int SCANNER = 21;
 
   /**
    * The number of structural features of the '<em>Scanner</em>' class.
@@ -841,7 +824,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Keyword()
    * @generated
    */
-  int SCANNER_KEYWORD = 21;
+  int SCANNER_KEYWORD = 22;
 
   /**
    * The feature id for the '<em><b>Keywords</b></em>' containment reference list.
@@ -869,7 +852,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getKeyword()
    * @generated
    */
-  int KEYWORD = 22;
+  int KEYWORD = 23;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -906,7 +889,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Rule()
    * @generated
    */
-  int SCANNER_RULE = 23;
+  int SCANNER_RULE = 24;
 
   /**
    * The number of structural features of the '<em>Scanner Rule</em>' class.
@@ -925,7 +908,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_SingleLineRule()
    * @generated
    */
-  int SCANNER_SINGLE_LINE_RULE = 24;
+  int SCANNER_SINGLE_LINE_RULE = 25;
 
   /**
    * The feature id for the '<em><b>Start Seq</b></em>' attribute.
@@ -971,7 +954,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_MultiLineRule()
    * @generated
    */
-  int SCANNER_MULTI_LINE_RULE = 25;
+  int SCANNER_MULTI_LINE_RULE = 26;
 
   /**
    * The feature id for the '<em><b>Start Seq</b></em>' attribute.
@@ -1017,7 +1000,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_CharacterRule()
    * @generated
    */
-  int SCANNER_CHARACTER_RULE = 26;
+  int SCANNER_CHARACTER_RULE = 27;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -1045,7 +1028,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_JSRule()
    * @generated
    */
-  int SCANNER_JS_RULE = 27;
+  int SCANNER_JS_RULE = 28;
 
   /**
    * The feature id for the '<em><b>File URI</b></em>' attribute.
@@ -1073,7 +1056,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getWhitespaceRule()
    * @generated
    */
-  int WHITESPACE_RULE = 28;
+  int WHITESPACE_RULE = 29;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -1262,28 +1245,6 @@ public interface LDefPackage extends EPackage
   EClass getCodeIntegration();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.CodeIntegration#isCodegen <em>Codegen</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Codegen</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.CodeIntegration#isCodegen()
-   * @see #getCodeIntegration()
-   * @generated
-   */
-  EAttribute getCodeIntegration_Codegen();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.CodeIntegration#isE4 <em>E4</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>E4</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.CodeIntegration#isE4()
-   * @see #getCodeIntegration()
-   * @generated
-   */
-  EAttribute getCodeIntegration_E4();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration <em>Java FX Integration</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1294,14 +1255,46 @@ public interface LDefPackage extends EPackage
   EClass getJavaFXIntegration();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.SWTIntegration <em>SWT Integration</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration#getCodegenerationList <em>Codegeneration List</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>SWT Integration</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.SWTIntegration
+   * @return the meta object for the containment reference list '<em>Codegeneration List</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration#getCodegenerationList()
+   * @see #getJavaFXIntegration()
    * @generated
    */
-  EClass getSWTIntegration();
+  EReference getJavaFXIntegration_CodegenerationList();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Codegeneration <em>Codegeneration</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Codegeneration</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Codegeneration
+   * @generated
+   */
+  EClass getCodegeneration();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration <em>Java Code Generation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Java Code Generation</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration
+   * @generated
+   */
+  EClass getJavaCodeGeneration();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration#getName()
+   * @see #getJavaCodeGeneration()
+   * @generated
+   */
+  EAttribute getJavaCodeGeneration_Name();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Paritioning <em>Paritioning</em>}'.
@@ -2010,22 +2003,6 @@ public interface LDefPackage extends EPackage
     EClass CODE_INTEGRATION = eINSTANCE.getCodeIntegration();
 
     /**
-     * The meta object literal for the '<em><b>Codegen</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute CODE_INTEGRATION__CODEGEN = eINSTANCE.getCodeIntegration_Codegen();
-
-    /**
-     * The meta object literal for the '<em><b>E4</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute CODE_INTEGRATION__E4 = eINSTANCE.getCodeIntegration_E4();
-
-    /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.JavaFXIntegrationImpl <em>Java FX Integration</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2036,14 +2013,40 @@ public interface LDefPackage extends EPackage
     EClass JAVA_FX_INTEGRATION = eINSTANCE.getJavaFXIntegration();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.SWTIntegrationImpl <em>SWT Integration</em>}' class.
+     * The meta object literal for the '<em><b>Codegeneration List</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.SWTIntegrationImpl
-     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getSWTIntegration()
      * @generated
      */
-    EClass SWT_INTEGRATION = eINSTANCE.getSWTIntegration();
+    EReference JAVA_FX_INTEGRATION__CODEGENERATION_LIST = eINSTANCE.getJavaFXIntegration_CodegenerationList();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.CodegenerationImpl <em>Codegeneration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.CodegenerationImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getCodegeneration()
+     * @generated
+     */
+    EClass CODEGENERATION = eINSTANCE.getCodegeneration();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.JavaCodeGenerationImpl <em>Java Code Generation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.JavaCodeGenerationImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getJavaCodeGeneration()
+     * @generated
+     */
+    EClass JAVA_CODE_GENERATION = eINSTANCE.getJavaCodeGeneration();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute JAVA_CODE_GENERATION__NAME = eINSTANCE.getJavaCodeGeneration_Name();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ParitioningImpl <em>Paritioning</em>}' class.

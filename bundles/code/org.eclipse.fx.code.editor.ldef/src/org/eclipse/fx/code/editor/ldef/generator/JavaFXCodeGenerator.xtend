@@ -13,16 +13,25 @@ import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule
 import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule
+import org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration
+import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration
 
 class JavaFXCodeGenerator {
-	def generate(LanguageDef model, String basePackage, IFileSystemAccess access) {
-		access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PartitionScanner.java",generateRulePartitioner(model,basePackage))
-		access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"Partitioner.java",generatePartitioner(model,basePackage))
+	def generate(LanguageDef model, IFileSystemAccess access) {
+		val javaFXIntegration = model.integration.codeIntegrationList.filter(typeof(JavaFXIntegration)).head
+		if( javaFXIntegration != null ) {
+			val javaCodeGen = javaFXIntegration.codegenerationList.filter(typeof(JavaCodeGeneration)).head
+			if( javaCodeGen != null ) {
+				val basePackage = javaCodeGen.name;
+				access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PartitionScanner.java",generateRulePartitioner(model,basePackage))
+				access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"Partitioner.java",generatePartitioner(model,basePackage))
 
-		access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PresentationReconciler.java",generatePresentationReconciler(model,basePackage))
-		for( h : model.lexicalHighlighting.list ) {
-			if( h instanceof LexicalPartitionHighlighting_Rule ) {
-				access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+h.partition.name+".java",generateScanner(model,h,basePackage))
+				access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PresentationReconciler.java",generatePresentationReconciler(model,basePackage))
+				for( h : model.lexicalHighlighting.list ) {
+					if( h instanceof LexicalPartitionHighlighting_Rule ) {
+						access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+h.partition.name+".java",generateScanner(model,h,basePackage))
+					}
+				}
 			}
 		}
 	}

@@ -474,9 +474,9 @@ ruleCodeIntegration returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+
     { 
-        newCompositeNode(grammarAccess.getCodeIntegrationAccess().getJavaFXIntegrationParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getCodeIntegrationAccess().getJavaFXIntegrationParserRuleCall()); 
     }
     this_JavaFXIntegration_0=ruleJavaFXIntegration
     { 
@@ -484,16 +484,6 @@ ruleCodeIntegration returns [EObject current=null]
         afterParserOrEnumRuleCall();
     }
 
-    |
-    { 
-        newCompositeNode(grammarAccess.getCodeIntegrationAccess().getSWTIntegrationParserRuleCall_1()); 
-    }
-    this_SWTIntegration_1=ruleSWTIntegration
-    { 
-        $current = $this_SWTIntegration_1.current; 
-        afterParserOrEnumRuleCall();
-    }
-)
 ;
 
 
@@ -523,44 +513,26 @@ ruleJavaFXIntegration returns [EObject current=null]
     	newLeafNode(otherlv_1, grammarAccess.getJavaFXIntegrationAccess().getLeftCurlyBracketKeyword_1());
     }
 (
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getJavaFXIntegrationAccess().getJavaFXIntegrationAction_2(),
-            $current);
-    }
-)(
 (
-		lv_codegen_3_0=	'codegeneration' 
-    {
-        newLeafNode(lv_codegen_3_0, grammarAccess.getJavaFXIntegrationAccess().getCodegenCodegenerationKeyword_3_0());
-    }
- 
-	    {
+		{ 
+	        newCompositeNode(grammarAccess.getJavaFXIntegrationAccess().getCodegenerationListCodegenerationParserRuleCall_2_0()); 
+	    }
+		lv_codegenerationList_2_0=ruleCodegeneration		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getJavaFXIntegrationRule());
+	            $current = createModelElementForParent(grammarAccess.getJavaFXIntegrationRule());
 	        }
-       		setWithLastConsumed($current, "codegen", true, "codegeneration");
+       		add(
+       			$current, 
+       			"codegenerationList",
+        		lv_codegenerationList_2_0, 
+        		"Codegeneration");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?(
-(
-		lv_e4_4_0=	'e4' 
+)+	otherlv_3='}' 
     {
-        newLeafNode(lv_e4_4_0, grammarAccess.getJavaFXIntegrationAccess().getE4E4Keyword_4_0());
-    }
- 
-	    {
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getJavaFXIntegrationRule());
-	        }
-       		setWithLastConsumed($current, "e4", true, "e4");
-	    }
-
-)
-)?	otherlv_5='}' 
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getJavaFXIntegrationAccess().getRightCurlyBracketKeyword_5());
+    	newLeafNode(otherlv_3, grammarAccess.getJavaFXIntegrationAccess().getRightCurlyBracketKeyword_3());
     }
 )
 ;
@@ -569,69 +541,73 @@ ruleJavaFXIntegration returns [EObject current=null]
 
 
 
-// Entry rule entryRuleSWTIntegration
-entryRuleSWTIntegration returns [EObject current=null] 
+// Entry rule entryRuleCodegeneration
+entryRuleCodegeneration returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getSWTIntegrationRule()); }
-	 iv_ruleSWTIntegration=ruleSWTIntegration 
-	 { $current=$iv_ruleSWTIntegration.current; } 
+	{ newCompositeNode(grammarAccess.getCodegenerationRule()); }
+	 iv_ruleCodegeneration=ruleCodegeneration 
+	 { $current=$iv_ruleCodegeneration.current; } 
 	 EOF 
 ;
 
-// Rule SWTIntegration
-ruleSWTIntegration returns [EObject current=null] 
+// Rule Codegeneration
+ruleCodegeneration returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='swt' 
-    {
-    	newLeafNode(otherlv_0, grammarAccess.getSWTIntegrationAccess().getSwtKeyword_0());
+
+    { 
+        newCompositeNode(grammarAccess.getCodegenerationAccess().getJavaCodeGenerationParserRuleCall()); 
     }
-	otherlv_1='{' 
+    this_JavaCodeGeneration_0=ruleJavaCodeGeneration
+    { 
+        $current = $this_JavaCodeGeneration_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+;
+
+
+
+
+
+// Entry rule entryRuleJavaCodeGeneration
+entryRuleJavaCodeGeneration returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getJavaCodeGenerationRule()); }
+	 iv_ruleJavaCodeGeneration=ruleJavaCodeGeneration 
+	 { $current=$iv_ruleJavaCodeGeneration.current; } 
+	 EOF 
+;
+
+// Rule JavaCodeGeneration
+ruleJavaCodeGeneration returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='java' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getSWTIntegrationAccess().getLeftCurlyBracketKeyword_1());
+    	newLeafNode(otherlv_0, grammarAccess.getJavaCodeGenerationAccess().getJavaKeyword_0());
     }
 (
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getSWTIntegrationAccess().getSWTIntegrationAction_2(),
-            $current);
-    }
-)(
 (
-		lv_codegen_3_0=	'codegeneration' 
-    {
-        newLeafNode(lv_codegen_3_0, grammarAccess.getSWTIntegrationAccess().getCodegenCodegenerationKeyword_3_0());
-    }
- 
-	    {
+		lv_name_1_0=RULE_STRING
+		{
+			newLeafNode(lv_name_1_0, grammarAccess.getJavaCodeGenerationAccess().getNameSTRINGTerminalRuleCall_1_0()); 
+		}
+		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSWTIntegrationRule());
+	            $current = createModelElement(grammarAccess.getJavaCodeGenerationRule());
 	        }
-       		setWithLastConsumed($current, "codegen", true, "codegeneration");
+       		setWithLastConsumed(
+       			$current, 
+       			"name",
+        		lv_name_1_0, 
+        		"STRING");
 	    }
 
 )
-)?(
-(
-		lv_e4_4_0=	'e4' 
-    {
-        newLeafNode(lv_e4_4_0, grammarAccess.getSWTIntegrationAccess().getE4E4Keyword_4_0());
-    }
- 
-	    {
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSWTIntegrationRule());
-	        }
-       		setWithLastConsumed($current, "e4", true, "e4");
-	    }
-
-)
-)?	otherlv_5='}' 
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getSWTIntegrationAccess().getRightCurlyBracketKeyword_5());
-    }
-)
+))
 ;
 
 

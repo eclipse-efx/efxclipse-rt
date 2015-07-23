@@ -35,24 +35,30 @@ Integration:
 ;
 
 CodeIntegration:
-	JavaFXIntegration | SWTIntegration
+	JavaFXIntegration // | SWTIntegration
 ;
 
 JavaFXIntegration:
 	'javafx' '{'
-		{JavaFXIntegration}
-		codegen?='codegeneration'?
-		e4?='e4'?
+		codegenerationList += Codegeneration+
 	'}'
 ;
 
-SWTIntegration:
-	'swt' '{'
-		{SWTIntegration}
-		codegen?='codegeneration'?
-		e4?='e4'?
-	'}'
+Codegeneration:
+	JavaCodeGeneration
 ;
+
+JavaCodeGeneration:
+	'java' name=STRING
+;
+
+//SWTIntegration:
+//	'swt' '{'
+//		{SWTIntegration}
+//		codegen?='codegeneration'?
+//		e4?='e4'?
+//	'}'
+//;
 
 Paritioning:
 	'partitioning' '{'

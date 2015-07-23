@@ -70,7 +70,8 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
       case LDefPackage.INTEGRATION: return createIntegration();
       case LDefPackage.CODE_INTEGRATION: return createCodeIntegration();
       case LDefPackage.JAVA_FX_INTEGRATION: return createJavaFXIntegration();
-      case LDefPackage.SWT_INTEGRATION: return createSWTIntegration();
+      case LDefPackage.CODEGENERATION: return createCodegeneration();
+      case LDefPackage.JAVA_CODE_GENERATION: return createJavaCodeGeneration();
       case LDefPackage.PARITIONING: return createParitioning();
       case LDefPackage.PARTITION: return createPartition();
       case LDefPackage.PARTITIONER: return createPartitioner();
@@ -169,10 +170,21 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public SWTIntegration createSWTIntegration()
+  public Codegeneration createCodegeneration()
   {
-    SWTIntegrationImpl swtIntegration = new SWTIntegrationImpl();
-    return swtIntegration;
+    CodegenerationImpl codegeneration = new CodegenerationImpl();
+    return codegeneration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public JavaCodeGeneration createJavaCodeGeneration()
+  {
+    JavaCodeGenerationImpl javaCodeGeneration = new JavaCodeGenerationImpl();
+    return javaCodeGeneration;
   }
 
   /**

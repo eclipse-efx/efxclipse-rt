@@ -115,11 +115,18 @@ public class LDefSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LDefPackage.SWT_INTEGRATION:
+      case LDefPackage.CODEGENERATION:
       {
-        SWTIntegration swtIntegration = (SWTIntegration)theEObject;
-        T result = caseSWTIntegration(swtIntegration);
-        if (result == null) result = caseCodeIntegration(swtIntegration);
+        Codegeneration codegeneration = (Codegeneration)theEObject;
+        T result = caseCodegeneration(codegeneration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.JAVA_CODE_GENERATION:
+      {
+        JavaCodeGeneration javaCodeGeneration = (JavaCodeGeneration)theEObject;
+        T result = caseJavaCodeGeneration(javaCodeGeneration);
+        if (result == null) result = caseCodegeneration(javaCodeGeneration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -394,17 +401,33 @@ public class LDefSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>SWT Integration</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Codegeneration</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>SWT Integration</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Codegeneration</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSWTIntegration(SWTIntegration object)
+  public T caseCodegeneration(Codegeneration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Java Code Generation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Java Code Generation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJavaCodeGeneration(JavaCodeGeneration object)
   {
     return null;
   }

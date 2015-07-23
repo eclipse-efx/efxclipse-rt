@@ -105,9 +105,14 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createJavaFXIntegrationAdapter();
       }
       @Override
-      public Adapter caseSWTIntegration(SWTIntegration object)
+      public Adapter caseCodegeneration(Codegeneration object)
       {
-        return createSWTIntegrationAdapter();
+        return createCodegenerationAdapter();
+      }
+      @Override
+      public Adapter caseJavaCodeGeneration(JavaCodeGeneration object)
+      {
+        return createJavaCodeGenerationAdapter();
       }
       @Override
       public Adapter caseParitioning(Paritioning object)
@@ -332,16 +337,31 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.SWTIntegration <em>SWT Integration</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.Codegeneration <em>Codegeneration</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.SWTIntegration
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Codegeneration
    * @generated
    */
-  public Adapter createSWTIntegrationAdapter()
+  public Adapter createCodegenerationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration <em>Java Code Generation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration
+   * @generated
+   */
+  public Adapter createJavaCodeGenerationAdapter()
   {
     return null;
   }

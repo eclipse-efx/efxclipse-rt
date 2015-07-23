@@ -37,7 +37,6 @@ public class LDefParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getCodeIntegrationAccess().getAlternatives(), "rule__CodeIntegration__Alternatives");
 					put(grammarAccess.getPartitionerAccess().getAlternatives(), "rule__Partitioner__Alternatives");
 					put(grammarAccess.getPartition_RuleAccess().getAlternatives(), "rule__Partition_Rule__Alternatives");
 					put(grammarAccess.getLexicalPartitionHighlightingAccess().getAlternatives(), "rule__LexicalPartitionHighlighting__Alternatives");
@@ -53,7 +52,7 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLanguageDefAccess().getGroup(), "rule__LanguageDef__Group__0");
 					put(grammarAccess.getIntegrationAccess().getGroup(), "rule__Integration__Group__0");
 					put(grammarAccess.getJavaFXIntegrationAccess().getGroup(), "rule__JavaFXIntegration__Group__0");
-					put(grammarAccess.getSWTIntegrationAccess().getGroup(), "rule__SWTIntegration__Group__0");
+					put(grammarAccess.getJavaCodeGenerationAccess().getGroup(), "rule__JavaCodeGeneration__Group__0");
 					put(grammarAccess.getParitioningAccess().getGroup(), "rule__Paritioning__Group__0");
 					put(grammarAccess.getPartitionAccess().getGroup(), "rule__Partition__Group__0");
 					put(grammarAccess.getParitioner_JSAccess().getGroup(), "rule__Paritioner_JS__Group__0");
@@ -90,10 +89,8 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLanguageDefAccess().getLexicalHighlightingAssignment_3(), "rule__LanguageDef__LexicalHighlightingAssignment_3");
 					put(grammarAccess.getLanguageDefAccess().getIntegrationAssignment_4(), "rule__LanguageDef__IntegrationAssignment_4");
 					put(grammarAccess.getIntegrationAccess().getCodeIntegrationListAssignment_2(), "rule__Integration__CodeIntegrationListAssignment_2");
-					put(grammarAccess.getJavaFXIntegrationAccess().getCodegenAssignment_3(), "rule__JavaFXIntegration__CodegenAssignment_3");
-					put(grammarAccess.getJavaFXIntegrationAccess().getE4Assignment_4(), "rule__JavaFXIntegration__E4Assignment_4");
-					put(grammarAccess.getSWTIntegrationAccess().getCodegenAssignment_3(), "rule__SWTIntegration__CodegenAssignment_3");
-					put(grammarAccess.getSWTIntegrationAccess().getE4Assignment_4(), "rule__SWTIntegration__E4Assignment_4");
+					put(grammarAccess.getJavaFXIntegrationAccess().getCodegenerationListAssignment_2(), "rule__JavaFXIntegration__CodegenerationListAssignment_2");
+					put(grammarAccess.getJavaCodeGenerationAccess().getNameAssignment_1(), "rule__JavaCodeGeneration__NameAssignment_1");
 					put(grammarAccess.getParitioningAccess().getPartitionsAssignment_2(), "rule__Paritioning__PartitionsAssignment_2");
 					put(grammarAccess.getParitioningAccess().getPartitionerAssignment_3(), "rule__Paritioning__PartitionerAssignment_3");
 					put(grammarAccess.getPartitionAccess().getNameAssignment_1(), "rule__Partition__NameAssignment_1");

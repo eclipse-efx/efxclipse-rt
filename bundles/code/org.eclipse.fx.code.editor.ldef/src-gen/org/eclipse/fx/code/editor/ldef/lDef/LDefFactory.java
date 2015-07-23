@@ -77,13 +77,22 @@ public interface LDefFactory extends EFactory
   JavaFXIntegration createJavaFXIntegration();
 
   /**
-   * Returns a new object of class '<em>SWT Integration</em>'.
+   * Returns a new object of class '<em>Codegeneration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>SWT Integration</em>'.
+   * @return a new object of class '<em>Codegeneration</em>'.
    * @generated
    */
-  SWTIntegration createSWTIntegration();
+  Codegeneration createCodegeneration();
+
+  /**
+   * Returns a new object of class '<em>Java Code Generation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Java Code Generation</em>'.
+   * @generated
+   */
+  JavaCodeGeneration createJavaCodeGeneration();
 
   /**
    * Returns a new object of class '<em>Paritioning</em>'.

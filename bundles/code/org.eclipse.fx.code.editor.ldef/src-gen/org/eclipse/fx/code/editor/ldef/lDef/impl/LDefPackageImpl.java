@@ -10,8 +10,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.fx.code.editor.ldef.lDef.CodeIntegration;
+import org.eclipse.fx.code.editor.ldef.lDef.Codegeneration;
 import org.eclipse.fx.code.editor.ldef.lDef.Import;
 import org.eclipse.fx.code.editor.ldef.lDef.Integration;
+import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration;
 import org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration;
 import org.eclipse.fx.code.editor.ldef.lDef.Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefFactory;
@@ -30,7 +32,6 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Root;
-import org.eclipse.fx.code.editor.ldef.lDef.SWTIntegration;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
@@ -96,7 +97,14 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass swtIntegrationEClass = null;
+  private EClass codegenerationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass javaCodeGenerationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -460,26 +468,6 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getCodeIntegration_Codegen()
-  {
-    return (EAttribute)codeIntegrationEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getCodeIntegration_E4()
-  {
-    return (EAttribute)codeIntegrationEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getJavaFXIntegration()
   {
     return javaFXIntegrationEClass;
@@ -490,9 +478,39 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSWTIntegration()
+  public EReference getJavaFXIntegration_CodegenerationList()
   {
-    return swtIntegrationEClass;
+    return (EReference)javaFXIntegrationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCodegeneration()
+  {
+    return codegenerationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getJavaCodeGeneration()
+  {
+    return javaCodeGenerationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getJavaCodeGeneration_Name()
+  {
+    return (EAttribute)javaCodeGenerationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1073,12 +1091,14 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     createEReference(integrationEClass, INTEGRATION__CODE_INTEGRATION_LIST);
 
     codeIntegrationEClass = createEClass(CODE_INTEGRATION);
-    createEAttribute(codeIntegrationEClass, CODE_INTEGRATION__CODEGEN);
-    createEAttribute(codeIntegrationEClass, CODE_INTEGRATION__E4);
 
     javaFXIntegrationEClass = createEClass(JAVA_FX_INTEGRATION);
+    createEReference(javaFXIntegrationEClass, JAVA_FX_INTEGRATION__CODEGENERATION_LIST);
 
-    swtIntegrationEClass = createEClass(SWT_INTEGRATION);
+    codegenerationEClass = createEClass(CODEGENERATION);
+
+    javaCodeGenerationEClass = createEClass(JAVA_CODE_GENERATION);
+    createEAttribute(javaCodeGenerationEClass, JAVA_CODE_GENERATION__NAME);
 
     paritioningEClass = createEClass(PARITIONING);
     createEReference(paritioningEClass, PARITIONING__PARTITIONS);
@@ -1186,7 +1206,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
 
     // Add supertypes to classes
     javaFXIntegrationEClass.getESuperTypes().add(this.getCodeIntegration());
-    swtIntegrationEClass.getESuperTypes().add(this.getCodeIntegration());
+    javaCodeGenerationEClass.getESuperTypes().add(this.getCodegeneration());
     paritioner_JSEClass.getESuperTypes().add(this.getPartitioner());
     partitioner_RuleEClass.getESuperTypes().add(this.getPartitioner());
     partition_SingleLineRuleEClass.getESuperTypes().add(this.getPartition_Rule());
@@ -1219,12 +1239,14 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     initEReference(getIntegration_CodeIntegrationList(), this.getCodeIntegration(), null, "codeIntegrationList", null, 0, -1, Integration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(codeIntegrationEClass, CodeIntegration.class, "CodeIntegration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getCodeIntegration_Codegen(), ecorePackage.getEBoolean(), "codegen", null, 0, 1, CodeIntegration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCodeIntegration_E4(), ecorePackage.getEBoolean(), "e4", null, 0, 1, CodeIntegration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(javaFXIntegrationEClass, JavaFXIntegration.class, "JavaFXIntegration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getJavaFXIntegration_CodegenerationList(), this.getCodegeneration(), null, "codegenerationList", null, 0, -1, JavaFXIntegration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(swtIntegrationEClass, SWTIntegration.class, "SWTIntegration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(codegenerationEClass, Codegeneration.class, "Codegeneration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(javaCodeGenerationEClass, JavaCodeGeneration.class, "JavaCodeGeneration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getJavaCodeGeneration_Name(), ecorePackage.getEString(), "name", null, 0, 1, JavaCodeGeneration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(paritioningEClass, Paritioning.class, "Paritioning", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getParitioning_Partitions(), this.getPartition(), null, "partitions", null, 0, -1, Paritioning.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

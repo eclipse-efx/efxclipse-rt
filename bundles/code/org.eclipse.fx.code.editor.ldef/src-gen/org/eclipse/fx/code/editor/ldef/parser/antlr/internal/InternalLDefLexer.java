@@ -20,7 +20,6 @@ public class InternalLDefLexer extends Lexer {
     public static final int T__16=16;
     public static final int T__38=38;
     public static final int T__17=17;
-    public static final int T__39=39;
     public static final int T__18=18;
     public static final int T__11=11;
     public static final int T__33=33;
@@ -47,7 +46,6 @@ public class InternalLDefLexer extends Lexer {
     public static final int T__23=23;
     public static final int T__24=24;
     public static final int T__25=25;
-    public static final int T__40=40;
     public static final int T__20=20;
     public static final int T__21=21;
 
@@ -233,10 +231,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:19:7: ( 'codegeneration' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:19:9: 'codegeneration'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:19:7: ( 'java' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:19:9: 'java'
             {
-            match("codegeneration"); 
+            match("java"); 
 
 
             }
@@ -254,10 +252,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:20:7: ( 'e4' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:20:9: 'e4'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:20:7: ( 'partitioning' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:20:9: 'partitioning'
             {
-            match("e4"); 
+            match("partitioning"); 
 
 
             }
@@ -275,10 +273,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:21:7: ( 'swt' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:21:9: 'swt'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:21:7: ( 'partition' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:21:9: 'partition'
             {
-            match("swt"); 
+            match("partition"); 
 
 
             }
@@ -296,10 +294,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:22:7: ( 'partitioning' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:22:9: 'partitioning'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:22:7: ( 'script' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:22:9: 'script'
             {
-            match("partitioning"); 
+            match("script"); 
 
 
             }
@@ -317,10 +315,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:23:7: ( 'partition' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:23:9: 'partition'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:23:7: ( 'rule' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:23:9: 'rule'
             {
-            match("partition"); 
+            match("rule"); 
 
 
             }
@@ -338,10 +336,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:24:7: ( 'script' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:24:9: 'script'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:24:7: ( 'single_line' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:24:9: 'single_line'
             {
-            match("script"); 
+            match("single_line"); 
 
 
             }
@@ -359,10 +357,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:25:7: ( 'rule' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:25:9: 'rule'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:25:7: ( '=>' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:25:9: '=>'
             {
-            match("rule"); 
+            match("=>"); 
 
 
             }
@@ -380,10 +378,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:26:7: ( 'single_line' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:26:9: 'single_line'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:26:7: ( 'escaped' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:26:9: 'escaped'
             {
-            match("single_line"); 
+            match("escaped"); 
 
 
             }
@@ -401,10 +399,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:27:7: ( '=>' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:27:9: '=>'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:27:7: ( 'by' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:27:9: 'by'
             {
-            match("=>"); 
+            match("by"); 
 
 
             }
@@ -422,10 +420,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:28:7: ( 'escaped' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:28:9: 'escaped'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:28:7: ( 'multi_line' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:28:9: 'multi_line'
             {
-            match("escaped"); 
+            match("multi_line"); 
 
 
             }
@@ -443,10 +441,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:29:7: ( 'by' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:29:9: 'by'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:29:7: ( 'lexical_highlighting' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:29:9: 'lexical_highlighting'
             {
-            match("by"); 
+            match("lexical_highlighting"); 
 
 
             }
@@ -464,10 +462,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:30:7: ( 'multi_line' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:30:9: 'multi_line'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:30:7: ( 'default' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:30:9: 'default'
             {
-            match("multi_line"); 
+            match("default"); 
 
 
             }
@@ -485,10 +483,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:31:7: ( 'lexical_highlighting' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:31:9: 'lexical_highlighting'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:31:7: ( 'keywords' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:31:9: 'keywords'
             {
-            match("lexical_highlighting"); 
+            match("keywords"); 
 
 
             }
@@ -506,11 +504,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:32:7: ( 'default' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:32:9: 'default'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:32:7: ( '[' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:32:9: '['
             {
-            match("default"); 
-
+            match('['); 
 
             }
 
@@ -527,11 +524,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:33:7: ( 'keywords' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:33:9: 'keywords'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:33:7: ( ',' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:33:9: ','
             {
-            match("keywords"); 
-
+            match(','); 
 
             }
 
@@ -548,10 +544,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:34:7: ( '[' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:34:9: '['
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:34:7: ( ']' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:34:9: ']'
             {
-            match('['); 
+            match(']'); 
 
             }
 
@@ -568,10 +564,11 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:35:7: ( ',' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:35:9: ','
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:35:7: ( 'since' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:35:9: 'since'
             {
-            match(','); 
+            match("since"); 
+
 
             }
 
@@ -588,10 +585,11 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:36:7: ( ']' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:36:9: ']'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:36:7: ( 'character' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:36:9: 'character'
             {
-            match(']'); 
+            match("character"); 
+
 
             }
 
@@ -608,10 +606,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:37:7: ( 'since' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:37:9: 'since'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:37:7: ( 'whitespace' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:37:9: 'whitespace'
             {
-            match("since"); 
+            match("whitespace"); 
 
 
             }
@@ -629,50 +627,8 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:38:7: ( 'character' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:38:9: 'character'
-            {
-            match("character"); 
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "T__38"
-
-    // $ANTLR start "T__39"
-    public final void mT__39() throws RecognitionException {
-        try {
-            int _type = T__39;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:39:7: ( 'whitespace' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:39:9: 'whitespace'
-            {
-            match("whitespace"); 
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "T__39"
-
-    // $ANTLR start "T__40"
-    public final void mT__40() throws RecognitionException {
-        try {
-            int _type = T__40;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:40:7: ( 'javawhitespace' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:40:9: 'javawhitespace'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:38:7: ( 'javawhitespace' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:38:9: 'javawhitespace'
             {
             match("javawhitespace"); 
 
@@ -685,17 +641,17 @@ public class InternalLDefLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "T__40"
+    // $ANTLR end "T__38"
 
     // $ANTLR start "RULE_ID"
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2084:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2084:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2060:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2060:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2084:11: ( '^' )?
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2060:11: ( '^' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -704,7 +660,7 @@ public class InternalLDefLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2084:11: '^'
+                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2060:11: '^'
                     {
                     match('^'); 
 
@@ -722,7 +678,7 @@ public class InternalLDefLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2084:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2060:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -771,10 +727,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2086:10: ( ( '0' .. '9' )+ )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2086:12: ( '0' .. '9' )+
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2062:10: ( ( '0' .. '9' )+ )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2062:12: ( '0' .. '9' )+
             {
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2086:12: ( '0' .. '9' )+
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2062:12: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -788,7 +744,7 @@ public class InternalLDefLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2086:13: '0' .. '9'
+            	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2062:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -820,10 +776,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:13: ( ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:15: ( '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -841,10 +797,10 @@ public class InternalLDefLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:16: '\"' ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:20: ( '\\\\' . | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop4:
                     do {
                         int alt4=3;
@@ -860,7 +816,7 @@ public class InternalLDefLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:21: '\\\\' .
+                    	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:21: '\\\\' .
                     	    {
                     	    match('\\'); 
                     	    matchAny(); 
@@ -868,7 +824,7 @@ public class InternalLDefLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:28: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:28: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -893,10 +849,10 @@ public class InternalLDefLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:48: '\\'' ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:53: ( '\\\\' . | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -912,7 +868,7 @@ public class InternalLDefLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:54: '\\\\' .
+                    	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:54: '\\\\' .
                     	    {
                     	    match('\\'); 
                     	    matchAny(); 
@@ -920,7 +876,7 @@ public class InternalLDefLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2088:61: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2064:61: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -963,12 +919,12 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2090:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2090:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2066:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2066:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2090:24: ( options {greedy=false; } : . )*
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2066:24: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -993,7 +949,7 @@ public class InternalLDefLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2090:52: .
+            	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2066:52: .
             	    {
             	    matchAny(); 
 
@@ -1023,12 +979,12 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2092:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2092:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2068:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2068:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2092:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2068:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -1041,7 +997,7 @@ public class InternalLDefLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2092:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2068:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1061,7 +1017,7 @@ public class InternalLDefLexer extends Lexer {
                 }
             } while (true);
 
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2092:40: ( ( '\\r' )? '\\n' )?
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2068:40: ( ( '\\r' )? '\\n' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -1070,9 +1026,9 @@ public class InternalLDefLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2092:41: ( '\\r' )? '\\n'
+                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2068:41: ( '\\r' )? '\\n'
                     {
-                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2092:41: ( '\\r' )?
+                    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2068:41: ( '\\r' )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1081,7 +1037,7 @@ public class InternalLDefLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2092:41: '\\r'
+                            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2068:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1113,10 +1069,10 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2094:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2094:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2070:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2070:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2094:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2070:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt11=0;
             loop11:
             do {
@@ -1170,8 +1126,8 @@ public class InternalLDefLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2096:16: ( . )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2096:18: .
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2072:16: ( . )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:2072:18: .
             {
             matchAny(); 
 
@@ -1186,8 +1142,8 @@ public class InternalLDefLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt12=37;
+        // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt12=35;
         alt12 = dfa12.predict(input);
         switch (alt12) {
             case 1 :
@@ -1387,63 +1343,49 @@ public class InternalLDefLexer extends Lexer {
                 }
                 break;
             case 29 :
-                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:178: T__39
-                {
-                mT__39(); 
-
-                }
-                break;
-            case 30 :
-                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:184: T__40
-                {
-                mT__40(); 
-
-                }
-                break;
-            case 31 :
-                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:190: RULE_ID
+                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:178: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
-            case 32 :
-                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:198: RULE_INT
+            case 30 :
+                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:186: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 33 :
-                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:207: RULE_STRING
+            case 31 :
+                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:195: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 34 :
-                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:219: RULE_ML_COMMENT
+            case 32 :
+                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:207: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 35 :
-                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:235: RULE_SL_COMMENT
+            case 33 :
+                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:223: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 36 :
-                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:251: RULE_WS
+            case 34 :
+                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:239: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 37 :
-                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:259: RULE_ANY_OTHER
+            case 35 :
+                // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1:247: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -1457,19 +1399,19 @@ public class InternalLDefLexer extends Lexer {
 
     protected DFA12 dfa12 = new DFA12(this);
     static final String DFA12_eotS =
-        "\1\uffff\1\37\2\uffff\1\37\2\uffff\5\37\1\35\5\37\3\uffff\1\37\1\35\2\uffff\3\35\2\uffff\1\37\3\uffff\2\37\2\uffff\3\37\1\105\5\37\1\uffff\1\113\4\37\3\uffff\1\37\5\uffff\7\37\1\uffff\1\37\1\131\3\37\1\uffff\15\37\1\uffff\3\37\1\157\20\37\1\u0080\1\uffff\7\37\1\u0088\1\37\1\u008a\4\37\1\u008f\1\37\1\uffff\5\37\1\u0096\1\37\1\uffff\1\37\1\uffff\3\37\1\u009c\1\uffff\3\37\1\u00a0\2\37\1\uffff\5\37\1\uffff\3\37\1\uffff\1\u00ab\1\37\1\u00ae\3\37\1\u00b2\3\37\1\uffff\2\37\1\uffff\3\37\1\uffff\1\37\1\u00bc\1\37\1\u00be\1\37\1\u00c0\2\37\1\u00c3\1\uffff\1\37\1\uffff\1\u00c5\1\uffff\2\37\1\uffff\1\37\1\uffff\3\37\1\u00cc\1\u00cd\1\37\2\uffff\5\37\1\u00d4\1\uffff";
+        "\1\uffff\1\37\2\uffff\1\37\2\uffff\3\37\1\35\6\37\3\uffff\2\37\1\35\2\uffff\3\35\2\uffff\1\37\3\uffff\2\37\2\uffff\4\37\1\uffff\1\37\1\104\4\37\3\uffff\2\37\5\uffff\11\37\1\uffff\12\37\1\141\3\37\1\145\15\37\1\uffff\2\37\1\165\1\uffff\11\37\1\177\1\37\1\u0081\1\37\1\u0083\1\37\1\uffff\7\37\1\u008c\1\37\1\uffff\1\37\1\uffff\1\37\1\uffff\1\37\1\u0091\2\37\1\u0094\3\37\1\uffff\4\37\1\uffff\2\37\1\uffff\1\u009e\2\37\1\u00a2\5\37\1\uffff\1\u00a8\2\37\1\uffff\3\37\1\u00ae\1\37\1\uffff\1\u00b0\1\37\1\u00b2\1\37\1\u00b4\1\uffff\1\37\1\uffff\1\u00b6\1\uffff\1\37\1\uffff\1\37\1\uffff\2\37\1\u00bb\1\37\1\uffff\5\37\1\u00c2\1\uffff";
     static final String DFA12_eofS =
-        "\u00d5\uffff";
+        "\u00c3\uffff";
     static final String DFA12_minS =
-        "\1\0\1\141\2\uffff\1\155\2\uffff\1\141\1\150\1\64\1\143\1\165\1\76\1\171\1\165\3\145\3\uffff\1\150\1\101\2\uffff\2\0\1\52\2\uffff\1\143\3\uffff\1\160\1\164\2\uffff\1\166\1\144\1\141\1\60\1\143\1\164\1\162\1\156\1\154\1\uffff\1\60\1\154\1\170\1\146\1\171\3\uffff\1\151\5\uffff\1\153\1\164\1\157\1\145\1\141\1\145\1\162\1\uffff\1\141\1\60\1\151\1\143\1\145\1\uffff\1\164\1\151\1\141\1\167\1\164\1\141\1\151\1\162\1\147\1\146\1\147\1\141\1\160\1\uffff\1\160\1\154\1\145\1\60\1\151\1\143\1\165\1\157\1\145\1\147\2\164\1\162\1\170\1\150\1\145\1\143\1\145\1\164\1\145\1\60\1\uffff\1\137\1\141\1\154\1\162\1\163\1\145\1\151\1\60\1\141\1\60\1\151\1\156\1\164\1\144\1\60\1\137\1\uffff\2\154\1\164\1\144\1\160\1\60\1\157\1\uffff\1\164\1\uffff\1\164\2\145\1\60\1\uffff\1\154\1\151\1\137\1\60\1\163\1\141\1\uffff\1\156\1\151\1\145\2\162\1\uffff\1\151\1\156\1\150\1\uffff\1\60\1\143\1\60\1\157\1\163\1\141\1\60\1\156\1\145\1\151\1\uffff\1\145\1\156\1\uffff\1\156\1\160\1\164\1\uffff\1\145\1\60\1\147\1\60\1\147\1\60\1\141\1\151\1\60\1\uffff\1\150\1\uffff\1\60\1\uffff\1\143\1\157\1\uffff\1\154\1\uffff\1\145\1\156\1\151\2\60\1\147\2\uffff\1\150\1\164\1\151\1\156\1\147\1\60\1\uffff";
+        "\1\0\1\141\2\uffff\1\155\2\uffff\1\141\1\143\1\165\1\76\1\163\1\171\1\165\3\145\3\uffff\2\150\1\101\2\uffff\2\0\1\52\2\uffff\1\143\3\uffff\1\160\1\164\2\uffff\1\166\1\162\1\156\1\154\1\uffff\1\143\1\60\1\154\1\170\1\146\1\171\3\uffff\1\141\1\151\5\uffff\1\153\1\164\1\157\1\145\1\141\1\151\1\143\1\145\1\141\1\uffff\1\164\1\151\1\141\1\167\1\162\1\164\1\141\1\151\1\162\1\147\1\60\1\160\1\154\1\145\1\60\1\160\1\151\1\143\1\165\1\157\1\141\1\145\1\147\2\164\1\162\1\170\1\150\1\uffff\1\164\1\145\1\60\1\uffff\1\145\1\137\1\141\1\154\1\162\1\143\1\163\1\145\1\151\1\60\1\141\1\60\1\151\1\60\1\137\1\uffff\1\144\2\154\1\164\1\144\1\164\1\160\1\60\1\157\1\uffff\1\164\1\uffff\1\164\1\uffff\1\154\1\60\1\151\1\137\1\60\1\163\1\145\1\141\1\uffff\1\156\1\151\1\145\1\151\1\uffff\1\156\1\150\1\uffff\1\60\1\162\1\143\1\60\1\157\1\163\1\156\1\145\1\151\1\uffff\1\60\1\145\1\156\1\uffff\1\156\1\160\1\145\1\60\1\147\1\uffff\1\60\1\147\1\60\1\141\1\60\1\uffff\1\150\1\uffff\1\60\1\uffff\1\143\1\uffff\1\154\1\uffff\1\145\1\151\1\60\1\147\1\uffff\1\150\1\164\1\151\1\156\1\147\1\60\1\uffff";
     static final String DFA12_maxS =
-        "\1\uffff\1\141\2\uffff\1\156\2\uffff\1\141\1\157\1\163\1\167\1\165\1\76\1\171\1\165\3\145\3\uffff\1\150\1\172\2\uffff\2\uffff\1\57\2\uffff\1\162\3\uffff\1\160\1\164\2\uffff\1\166\1\144\1\141\1\172\1\143\1\164\1\162\1\156\1\154\1\uffff\1\172\1\154\1\170\1\146\1\171\3\uffff\1\151\5\uffff\1\153\1\164\1\157\1\145\1\141\1\145\1\162\1\uffff\1\141\1\172\1\151\1\147\1\145\1\uffff\1\164\1\151\1\141\1\167\1\164\1\141\1\151\1\162\1\147\1\167\1\147\1\141\1\160\1\uffff\1\160\1\154\1\145\1\172\1\151\1\143\1\165\1\157\1\145\1\147\2\164\1\162\1\170\1\150\1\145\1\143\1\145\1\164\1\145\1\172\1\uffff\1\137\1\141\1\154\1\162\1\163\1\145\1\151\1\172\1\141\1\172\1\151\1\156\1\164\1\144\1\172\1\137\1\uffff\2\154\1\164\1\144\1\160\1\172\1\157\1\uffff\1\164\1\uffff\1\164\2\145\1\172\1\uffff\1\154\1\151\1\137\1\172\1\163\1\141\1\uffff\1\156\1\151\1\145\2\162\1\uffff\1\151\1\156\1\150\1\uffff\1\172\1\143\1\172\1\157\1\163\1\141\1\172\1\156\1\145\1\151\1\uffff\1\145\1\156\1\uffff\1\156\1\160\1\164\1\uffff\1\145\1\172\1\147\1\172\1\147\1\172\1\141\1\151\1\172\1\uffff\1\150\1\uffff\1\172\1\uffff\1\143\1\157\1\uffff\1\154\1\uffff\1\145\1\156\1\151\2\172\1\147\2\uffff\1\150\1\164\1\151\1\156\1\147\1\172\1\uffff";
+        "\1\uffff\1\141\2\uffff\1\156\2\uffff\1\141\1\151\1\165\1\76\1\163\1\171\1\165\3\145\3\uffff\2\150\1\172\2\uffff\2\uffff\1\57\2\uffff\1\162\3\uffff\1\160\1\164\2\uffff\1\166\1\162\1\156\1\154\1\uffff\1\143\1\172\1\154\1\170\1\146\1\171\3\uffff\1\141\1\151\5\uffff\1\153\1\164\1\157\1\145\1\141\1\151\1\147\1\145\1\141\1\uffff\1\164\1\151\1\141\1\167\1\162\1\164\1\141\1\151\1\162\1\147\1\172\1\160\1\154\1\145\1\172\1\160\1\151\1\143\1\165\1\157\1\141\1\145\1\147\2\164\1\162\1\170\1\150\1\uffff\1\164\1\145\1\172\1\uffff\1\145\1\137\1\141\1\154\1\162\1\143\1\163\1\145\1\151\1\172\1\141\1\172\1\151\1\172\1\137\1\uffff\1\144\2\154\1\164\1\144\1\164\1\160\1\172\1\157\1\uffff\1\164\1\uffff\1\164\1\uffff\1\154\1\172\1\151\1\137\1\172\1\163\1\145\1\141\1\uffff\1\156\1\151\1\145\1\151\1\uffff\1\156\1\150\1\uffff\1\172\1\162\1\143\1\172\1\157\1\163\1\156\1\145\1\151\1\uffff\1\172\1\145\1\156\1\uffff\1\156\1\160\1\145\1\172\1\147\1\uffff\1\172\1\147\1\172\1\141\1\172\1\uffff\1\150\1\uffff\1\172\1\uffff\1\143\1\uffff\1\154\1\uffff\1\145\1\151\1\172\1\147\1\uffff\1\150\1\164\1\151\1\156\1\147\1\172\1\uffff";
     static final String DFA12_acceptS =
-        "\2\uffff\1\2\1\3\1\uffff\1\5\1\6\13\uffff\1\30\1\31\1\32\2\uffff\1\37\1\40\3\uffff\1\44\1\45\1\uffff\1\37\1\2\1\3\2\uffff\1\5\1\6\11\uffff\1\21\5\uffff\1\30\1\31\1\32\1\uffff\1\40\1\41\1\42\1\43\1\44\7\uffff\1\12\5\uffff\1\23\15\uffff\1\13\25\uffff\1\17\20\uffff\1\33\7\uffff\1\4\1\uffff\1\10\4\uffff\1\16\6\uffff\1\1\5\uffff\1\22\3\uffff\1\26\12\uffff\1\27\2\uffff\1\15\3\uffff\1\34\11\uffff\1\24\1\uffff\1\35\1\uffff\1\7\2\uffff\1\20\1\uffff\1\14\6\uffff\1\36\1\11\6\uffff\1\25";
+        "\2\uffff\1\2\1\3\1\uffff\1\5\1\6\12\uffff\1\26\1\27\1\30\3\uffff\1\35\1\36\3\uffff\1\42\1\43\1\uffff\1\35\1\2\1\3\2\uffff\1\5\1\6\4\uffff\1\17\6\uffff\1\26\1\27\1\30\2\uffff\1\36\1\37\1\40\1\41\1\42\11\uffff\1\21\34\uffff\1\11\3\uffff\1\15\17\uffff\1\31\11\uffff\1\4\1\uffff\1\10\1\uffff\1\14\10\uffff\1\1\4\uffff\1\20\2\uffff\1\24\11\uffff\1\25\3\uffff\1\13\5\uffff\1\32\5\uffff\1\22\1\uffff\1\33\1\uffff\1\7\1\uffff\1\16\1\uffff\1\12\4\uffff\1\34\6\uffff\1\23";
     static final String DFA12_specialS =
-        "\1\0\30\uffff\1\1\1\2\u00ba\uffff}>";
+        "\1\2\30\uffff\1\0\1\1\u00a8\uffff}>";
     static final String[] DFA12_transitionS = {
-            "\11\35\2\34\2\35\1\34\22\35\1\34\1\35\1\31\4\35\1\32\2\35\1\3\1\35\1\23\1\35\1\2\1\33\12\30\3\35\1\14\3\35\32\27\1\22\1\35\1\24\1\26\1\27\1\35\1\27\1\15\1\10\1\20\1\11\3\27\1\4\1\7\1\21\1\17\1\16\2\27\1\1\1\27\1\13\1\12\3\27\1\25\3\27\1\5\1\35\1\6\uff82\35",
+            "\11\35\2\34\2\35\1\34\22\35\1\34\1\35\1\31\4\35\1\32\2\35\1\3\1\35\1\22\1\35\1\2\1\33\12\30\3\35\1\12\3\35\32\27\1\21\1\35\1\23\1\26\1\27\1\35\1\27\1\14\1\24\1\17\1\13\3\27\1\4\1\7\1\20\1\16\1\15\2\27\1\1\1\27\1\11\1\10\3\27\1\25\3\27\1\5\1\35\1\6\uff82\35",
             "\1\36",
             "",
             "",
@@ -1477,98 +1419,100 @@ public class InternalLDefLexer extends Lexer {
             "",
             "",
             "\1\46",
-            "\1\50\6\uffff\1\47",
-            "\1\51\76\uffff\1\52",
-            "\1\54\5\uffff\1\55\15\uffff\1\53",
+            "\1\47\5\uffff\1\50",
+            "\1\51",
+            "\1\52",
+            "\1\53",
+            "\1\54",
+            "\1\55",
             "\1\56",
             "\1\57",
             "\1\60",
-            "\1\61",
-            "\1\62",
-            "\1\63",
+            "",
+            "",
+            "",
             "\1\64",
-            "",
-            "",
-            "",
-            "\1\70",
+            "\1\65",
             "\32\37\4\uffff\1\37\1\uffff\32\37",
             "",
             "",
-            "\0\72",
-            "\0\72",
-            "\1\73\4\uffff\1\74",
+            "\0\67",
+            "\0\67",
+            "\1\70\4\uffff\1\71",
             "",
             "",
-            "\1\76\16\uffff\1\77",
+            "\1\73\16\uffff\1\74",
             "",
             "",
             "",
+            "\1\75",
+            "\1\76",
+            "",
+            "",
+            "\1\77",
             "\1\100",
             "\1\101",
-            "",
-            "",
             "\1\102",
+            "",
             "\1\103",
-            "\1\104",
             "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\105",
             "\1\106",
             "\1\107",
             "\1\110",
+            "",
+            "",
+            "",
             "\1\111",
             "\1\112",
             "",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "",
+            "",
+            "",
+            "",
+            "\1\113",
             "\1\114",
             "\1\115",
             "\1\116",
             "\1\117",
-            "",
-            "",
-            "",
             "\1\120",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\121",
-            "\1\122",
+            "\1\122\3\uffff\1\121",
             "\1\123",
             "\1\124",
+            "",
             "\1\125",
             "\1\126",
             "\1\127",
-            "",
             "\1\130",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\131",
             "\1\132",
-            "\1\134\3\uffff\1\133",
+            "\1\133",
+            "\1\134",
             "\1\135",
-            "",
             "\1\136",
-            "\1\137",
-            "\1\140",
-            "\1\141",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\5\37\1\137\20\37\1\140\3\37",
             "\1\142",
             "\1\143",
             "\1\144",
-            "\1\145",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "\1\146",
-            "\1\147\20\uffff\1\150",
+            "\1\147",
+            "\1\150",
             "\1\151",
             "\1\152",
             "\1\153",
-            "",
             "\1\154",
             "\1\155",
             "\1\156",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\157",
             "\1\160",
             "\1\161",
             "\1\162",
+            "",
             "\1\163",
             "\1\164",
-            "\1\165",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "",
             "\1\166",
             "\1\167",
             "\1\170",
@@ -1578,108 +1522,88 @@ public class InternalLDefLexer extends Lexer {
             "\1\174",
             "\1\175",
             "\1\176",
-            "\1\177",
             "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "",
-            "\1\u0081",
+            "\1\u0080",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "\1\u0082",
-            "\1\u0083",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "\1\u0084",
+            "",
             "\1\u0085",
             "\1\u0086",
             "\1\u0087",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\u0088",
             "\1\u0089",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\u008a",
             "\1\u008b",
-            "\1\u008c",
-            "\1\u008d",
-            "\1\u008e",
             "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "\1\u0090",
+            "\1\u008d",
             "",
-            "\1\u0091",
+            "\1\u008e",
+            "",
+            "\1\u008f",
+            "",
+            "\1\u0090",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "\1\u0092",
             "\1\u0093",
-            "\1\u0094",
-            "\1\u0095",
             "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\u0095",
+            "\1\u0096",
             "\1\u0097",
             "",
             "\1\u0098",
-            "",
             "\1\u0099",
             "\1\u009a",
             "\1\u009b",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "",
+            "\1\u009c",
             "\1\u009d",
-            "\1\u009e",
-            "\1\u009f",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "\1\u00a1",
-            "\1\u00a2",
             "",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\u009f",
+            "\1\u00a0",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\10\37\1\u00a1\21\37",
             "\1\u00a3",
             "\1\u00a4",
             "\1\u00a5",
             "\1\u00a6",
             "\1\u00a7",
             "",
-            "\1\u00a8",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "\1\u00a9",
             "\1\u00aa",
             "",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\u00ab",
             "\1\u00ac",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\10\37\1\u00ad\21\37",
+            "\1\u00ad",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "\1\u00af",
-            "\1\u00b0",
+            "",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "\1\u00b1",
             "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             "\1\u00b3",
-            "\1\u00b4",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "",
             "\1\u00b5",
             "",
-            "\1\u00b6",
+            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "",
             "\1\u00b7",
             "",
             "\1\u00b8",
+            "",
             "\1\u00b9",
             "\1\u00ba",
-            "",
-            "\1\u00bb",
             "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\u00bc",
+            "",
             "\1\u00bd",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\u00be",
             "\1\u00bf",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
+            "\1\u00c0",
             "\1\u00c1",
-            "\1\u00c2",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "",
-            "\1\u00c4",
-            "",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "",
-            "\1\u00c6",
-            "\1\u00c7",
-            "",
-            "\1\u00c8",
-            "",
-            "\1\u00c9",
-            "\1\u00ca",
-            "\1\u00cb",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
-            "\1\u00ce",
-            "",
-            "",
-            "\1\u00cf",
-            "\1\u00d0",
-            "\1\u00d1",
-            "\1\u00d2",
-            "\1\u00d3",
             "\12\37\7\uffff\32\37\4\uffff\1\37\1\uffff\32\37",
             ""
     };
@@ -1714,13 +1638,33 @@ public class InternalLDefLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
+                        int LA12_25 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA12_25>='\u0000' && LA12_25<='\uFFFF')) ) {s = 55;}
+
+                        else s = 29;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA12_26 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA12_26>='\u0000' && LA12_26<='\uFFFF')) ) {s = 55;}
+
+                        else s = 29;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
                         int LA12_0 = input.LA(1);
 
                         s = -1;
@@ -1738,31 +1682,31 @@ public class InternalLDefLexer extends Lexer {
 
                         else if ( (LA12_0=='j') ) {s = 7;}
 
-                        else if ( (LA12_0=='c') ) {s = 8;}
+                        else if ( (LA12_0=='s') ) {s = 8;}
 
-                        else if ( (LA12_0=='e') ) {s = 9;}
+                        else if ( (LA12_0=='r') ) {s = 9;}
 
-                        else if ( (LA12_0=='s') ) {s = 10;}
+                        else if ( (LA12_0=='=') ) {s = 10;}
 
-                        else if ( (LA12_0=='r') ) {s = 11;}
+                        else if ( (LA12_0=='e') ) {s = 11;}
 
-                        else if ( (LA12_0=='=') ) {s = 12;}
+                        else if ( (LA12_0=='b') ) {s = 12;}
 
-                        else if ( (LA12_0=='b') ) {s = 13;}
+                        else if ( (LA12_0=='m') ) {s = 13;}
 
-                        else if ( (LA12_0=='m') ) {s = 14;}
+                        else if ( (LA12_0=='l') ) {s = 14;}
 
-                        else if ( (LA12_0=='l') ) {s = 15;}
+                        else if ( (LA12_0=='d') ) {s = 15;}
 
-                        else if ( (LA12_0=='d') ) {s = 16;}
+                        else if ( (LA12_0=='k') ) {s = 16;}
 
-                        else if ( (LA12_0=='k') ) {s = 17;}
+                        else if ( (LA12_0=='[') ) {s = 17;}
 
-                        else if ( (LA12_0=='[') ) {s = 18;}
+                        else if ( (LA12_0==',') ) {s = 18;}
 
-                        else if ( (LA12_0==',') ) {s = 19;}
+                        else if ( (LA12_0==']') ) {s = 19;}
 
-                        else if ( (LA12_0==']') ) {s = 20;}
+                        else if ( (LA12_0=='c') ) {s = 20;}
 
                         else if ( (LA12_0=='w') ) {s = 21;}
 
@@ -1781,26 +1725,6 @@ public class InternalLDefLexer extends Lexer {
                         else if ( ((LA12_0>='\t' && LA12_0<='\n')||LA12_0=='\r'||LA12_0==' ') ) {s = 28;}
 
                         else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\u001F')||LA12_0=='!'||(LA12_0>='#' && LA12_0<='&')||(LA12_0>='(' && LA12_0<=')')||LA12_0=='+'||LA12_0=='-'||(LA12_0>=':' && LA12_0<='<')||(LA12_0>='>' && LA12_0<='@')||LA12_0=='\\'||LA12_0=='`'||LA12_0=='|'||(LA12_0>='~' && LA12_0<='\uFFFF')) ) {s = 29;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA12_25 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA12_25>='\u0000' && LA12_25<='\uFFFF')) ) {s = 58;}
-
-                        else s = 29;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA12_26 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA12_26>='\u0000' && LA12_26<='\uFFFF')) ) {s = 58;}
-
-                        else s = 29;
 
                         if ( s>=0 ) return s;
                         break;

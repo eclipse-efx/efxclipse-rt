@@ -24,12 +24,14 @@
     <genClasses ecoreClass="LDef.ecore#//Integration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Integration/codeIntegrationList"/>
     </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//CodeIntegration">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//CodeIntegration/codegen"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//CodeIntegration/e4"/>
+    <genClasses ecoreClass="LDef.ecore#//CodeIntegration"/>
+    <genClasses ecoreClass="LDef.ecore#//JavaFXIntegration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//JavaFXIntegration/codegenerationList"/>
     </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//JavaFXIntegration"/>
-    <genClasses ecoreClass="LDef.ecore#//SWTIntegration"/>
+    <genClasses ecoreClass="LDef.ecore#//Codegeneration"/>
+    <genClasses ecoreClass="LDef.ecore#//JavaCodeGeneration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//JavaCodeGeneration/name"/>
+    </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Paritioning">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitioner"/>
