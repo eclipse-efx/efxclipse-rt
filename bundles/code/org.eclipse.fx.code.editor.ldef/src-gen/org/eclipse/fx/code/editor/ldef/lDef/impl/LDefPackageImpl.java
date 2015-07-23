@@ -38,8 +38,8 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Token;
+import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule;
 
 /**
  * <!-- begin-user-doc -->
@@ -250,7 +250,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass scanner_WhitespaceRuleEClass = null;
+  private EClass whitespaceRuleEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -740,9 +740,19 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getLexicalPartitionHighlighting_Rule_TokenList()
+  public EReference getLexicalPartitionHighlighting_Rule_Whitespace()
   {
     return (EReference)lexicalPartitionHighlighting_RuleEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLexicalPartitionHighlighting_Rule_TokenList()
+  {
+    return (EReference)lexicalPartitionHighlighting_RuleEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -980,9 +990,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getScanner_WhitespaceRule()
+  public EClass getWhitespaceRule()
   {
-    return scanner_WhitespaceRuleEClass;
+    return whitespaceRuleEClass;
   }
 
   /**
@@ -990,9 +1000,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getScanner_WhitespaceRule_Characters()
+  public EAttribute getWhitespaceRule_Characters()
   {
-    return (EAttribute)scanner_WhitespaceRuleEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)whitespaceRuleEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1000,9 +1010,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getScanner_WhitespaceRule_Javawhitespace()
+  public EAttribute getWhitespaceRule_Javawhitespace()
   {
-    return (EAttribute)scanner_WhitespaceRuleEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)whitespaceRuleEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1010,9 +1020,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getScanner_WhitespaceRule_FileURI()
+  public EAttribute getWhitespaceRule_FileURI()
   {
-    return (EAttribute)scanner_WhitespaceRuleEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)whitespaceRuleEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1105,6 +1115,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     createEAttribute(lexicalPartitionHighlighting_JSEClass, LEXICAL_PARTITION_HIGHLIGHTING_JS__SCRIPT_URI);
 
     lexicalPartitionHighlighting_RuleEClass = createEClass(LEXICAL_PARTITION_HIGHLIGHTING_RULE);
+    createEReference(lexicalPartitionHighlighting_RuleEClass, LEXICAL_PARTITION_HIGHLIGHTING_RULE__WHITESPACE);
     createEReference(lexicalPartitionHighlighting_RuleEClass, LEXICAL_PARTITION_HIGHLIGHTING_RULE__TOKEN_LIST);
 
     tokenEClass = createEClass(TOKEN);
@@ -1139,10 +1150,10 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     scanner_JSRuleEClass = createEClass(SCANNER_JS_RULE);
     createEAttribute(scanner_JSRuleEClass, SCANNER_JS_RULE__FILE_URI);
 
-    scanner_WhitespaceRuleEClass = createEClass(SCANNER_WHITESPACE_RULE);
-    createEAttribute(scanner_WhitespaceRuleEClass, SCANNER_WHITESPACE_RULE__CHARACTERS);
-    createEAttribute(scanner_WhitespaceRuleEClass, SCANNER_WHITESPACE_RULE__JAVAWHITESPACE);
-    createEAttribute(scanner_WhitespaceRuleEClass, SCANNER_WHITESPACE_RULE__FILE_URI);
+    whitespaceRuleEClass = createEClass(WHITESPACE_RULE);
+    createEAttribute(whitespaceRuleEClass, WHITESPACE_RULE__CHARACTERS);
+    createEAttribute(whitespaceRuleEClass, WHITESPACE_RULE__JAVAWHITESPACE);
+    createEAttribute(whitespaceRuleEClass, WHITESPACE_RULE__FILE_URI);
   }
 
   /**
@@ -1188,7 +1199,6 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     scanner_MultiLineRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scanner_CharacterRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scanner_JSRuleEClass.getESuperTypes().add(this.getScanner_Rule());
-    scanner_WhitespaceRuleEClass.getESuperTypes().add(this.getScanner_Rule());
 
     // Initialize classes and features; add operations and parameters
     initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1251,6 +1261,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     initEAttribute(getLexicalPartitionHighlighting_JS_ScriptURI(), ecorePackage.getEString(), "scriptURI", null, 0, 1, LexicalPartitionHighlighting_JS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(lexicalPartitionHighlighting_RuleEClass, LexicalPartitionHighlighting_Rule.class, "LexicalPartitionHighlighting_Rule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLexicalPartitionHighlighting_Rule_Whitespace(), this.getWhitespaceRule(), null, "whitespace", null, 0, 1, LexicalPartitionHighlighting_Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLexicalPartitionHighlighting_Rule_TokenList(), this.getToken(), null, "tokenList", null, 0, -1, LexicalPartitionHighlighting_Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(tokenEClass, Token.class, "Token", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1285,10 +1296,10 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     initEClass(scanner_JSRuleEClass, Scanner_JSRule.class, "Scanner_JSRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScanner_JSRule_FileURI(), ecorePackage.getEString(), "fileURI", null, 0, 1, Scanner_JSRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(scanner_WhitespaceRuleEClass, Scanner_WhitespaceRule.class, "Scanner_WhitespaceRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getScanner_WhitespaceRule_Characters(), ecorePackage.getEString(), "characters", null, 0, -1, Scanner_WhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getScanner_WhitespaceRule_Javawhitespace(), ecorePackage.getEBoolean(), "javawhitespace", null, 0, 1, Scanner_WhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getScanner_WhitespaceRule_FileURI(), ecorePackage.getEString(), "fileURI", null, 0, 1, Scanner_WhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(whitespaceRuleEClass, WhitespaceRule.class, "WhitespaceRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getWhitespaceRule_Characters(), ecorePackage.getEString(), "characters", null, 0, -1, WhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getWhitespaceRule_Javawhitespace(), ecorePackage.getEBoolean(), "javawhitespace", null, 0, 1, WhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getWhitespaceRule_FileURI(), ecorePackage.getEString(), "fileURI", null, 0, 1, WhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

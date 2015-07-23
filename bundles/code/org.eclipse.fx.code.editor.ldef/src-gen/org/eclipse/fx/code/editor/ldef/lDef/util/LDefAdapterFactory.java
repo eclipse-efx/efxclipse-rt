@@ -215,9 +215,9 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createScanner_JSRuleAdapter();
       }
       @Override
-      public Adapter caseScanner_WhitespaceRule(Scanner_WhitespaceRule object)
+      public Adapter caseWhitespaceRule(WhitespaceRule object)
       {
-        return createScanner_WhitespaceRuleAdapter();
+        return createWhitespaceRuleAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -662,16 +662,16 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule <em>Scanner Whitespace Rule</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule <em>Whitespace Rule</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule
+   * @see org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule
    * @generated
    */
-  public Adapter createScanner_WhitespaceRuleAdapter()
+  public Adapter createWhitespaceRuleAdapter()
   {
     return null;
   }

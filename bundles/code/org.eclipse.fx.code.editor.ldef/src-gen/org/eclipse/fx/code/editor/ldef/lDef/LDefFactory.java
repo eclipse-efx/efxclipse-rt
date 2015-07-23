@@ -275,13 +275,13 @@ public interface LDefFactory extends EFactory
   Scanner_JSRule createScanner_JSRule();
 
   /**
-   * Returns a new object of class '<em>Scanner Whitespace Rule</em>'.
+   * Returns a new object of class '<em>Whitespace Rule</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Scanner Whitespace Rule</em>'.
+   * @return a new object of class '<em>Whitespace Rule</em>'.
    * @generated
    */
-  Scanner_WhitespaceRule createScanner_WhitespaceRule();
+  WhitespaceRule createWhitespaceRule();
 
   /**
    * Returns the package supported by this factory.

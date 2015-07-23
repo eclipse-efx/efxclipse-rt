@@ -28,8 +28,8 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Token;
+import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule;
 import org.eclipse.fx.code.editor.ldef.services.LDefGrammarAccess;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
@@ -114,11 +114,11 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case LDefPackage.SCANNER_SINGLE_LINE_RULE:
 				sequence_Scanner_SingleLineRule(context, (Scanner_SingleLineRule) semanticObject); 
 				return; 
-			case LDefPackage.SCANNER_WHITESPACE_RULE:
-				sequence_Scanner_WhitespaceRule(context, (Scanner_WhitespaceRule) semanticObject); 
-				return; 
 			case LDefPackage.TOKEN:
 				sequence_Token(context, (Token) semanticObject); 
+				return; 
+			case LDefPackage.WHITESPACE_RULE:
+				sequence_WhitespaceRule(context, (WhitespaceRule) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -206,7 +206,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (partition=[Partition|ID] tokenList+=Token+)
+	 *     (partition=[Partition|ID] whitespace=WhitespaceRule? tokenList+=Token+)
 	 */
 	protected void sequence_LexicalPartitionHighlighting_Rule(EObject context, LexicalPartitionHighlighting_Rule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -353,18 +353,18 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     ((characters+=STRING characters+=STRING*) | javawhitespace?='javawhitespace' | fileURI=STRING)
+	 *     (default?='default'? name=ID scannerList+=Scanner*)
 	 */
-	protected void sequence_Scanner_WhitespaceRule(EObject context, Scanner_WhitespaceRule semanticObject) {
+	protected void sequence_Token(EObject context, Token semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     (default?='default'? name=ID scannerList+=Scanner*)
+	 *     ((characters+=STRING characters+=STRING*) | javawhitespace?='javawhitespace' | fileURI=STRING)
 	 */
-	protected void sequence_Token(EObject context, Token semanticObject) {
+	protected void sequence_WhitespaceRule(EObject context, WhitespaceRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

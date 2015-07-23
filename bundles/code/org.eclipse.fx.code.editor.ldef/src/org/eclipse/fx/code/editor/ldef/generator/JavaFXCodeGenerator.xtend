@@ -11,8 +11,8 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule
 import org.eclipse.fx.code.editor.ldef.lDef.Token
 import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule
+import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule
 
 class JavaFXCodeGenerator {
 	def generate(LanguageDef model, String basePackage, IFileSystemAccess access) {
@@ -82,13 +82,16 @@ class JavaFXCodeGenerator {
 					setDefaultReturnToken(«t.name»Token);
 				«ENDIF»
 			«ENDFOR»
-			org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[«addKeywordGroup(countRules(highlighter), highlighter)»];
+			org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[«addWhitespaceRule(addKeywordGroup(countRules(highlighter), highlighter), highlighter.whitespace)»];
 			«var count = 0»
 			«FOR t : highlighter.tokenList»
 				«FOR s : t.scannerList.filter[ s | s instanceof Scanner_Rule ]»
 					rules[«count++»] = «generateScannerRule(t,s as Scanner_Rule)»
 				«ENDFOR»
 			«ENDFOR»
+			«IF highlighter.whitespace != null»
+			rules[«count++»] = «generateWhitespaceRule(highlighter.whitespace)»
+			«ENDIF»
 
 			«IF hasKeywordGroup(highlighter)»
 			org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
@@ -127,6 +130,13 @@ class JavaFXCodeGenerator {
 		return count;
 	}
 
+	def static addWhitespaceRule(int count, WhitespaceRule r) {
+		if( r != null ) {
+			return count + 1;
+		}
+		return count;
+	}
+
 	def static countRules(LexicalPartitionHighlighting_Rule highlighter) {
 		var c = 0
 		for( t : highlighter.tokenList ) {
@@ -151,7 +161,7 @@ class JavaFXCodeGenerator {
 		«IF r.escapeSeq != null», '«r.escapeSeq.charAt(0)»'«ENDIF»);
 	'''
 
-	def dispatch generateScannerRule(Token t, Scanner_WhitespaceRule r) '''
+	def generateWhitespaceRule(WhitespaceRule r) '''
 	«IF r.isJavawhitespace»
 	new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 	«ELSE»

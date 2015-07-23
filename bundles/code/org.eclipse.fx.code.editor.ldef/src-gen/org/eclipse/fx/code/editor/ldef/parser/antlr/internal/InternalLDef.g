@@ -1310,31 +1310,49 @@ ruleLexicalPartitionHighlighting_Rule returns [EObject current=null]
 	}
 
 )
-)	otherlv_2='{' 
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getWhitespaceWhitespaceRuleParserRuleCall_2_0()); 
+	    }
+		lv_whitespace_2_0=ruleWhitespaceRule		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLexicalPartitionHighlighting_RuleRule());
+	        }
+       		set(
+       			$current, 
+       			"whitespace",
+        		lv_whitespace_2_0, 
+        		"WhitespaceRule");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?	otherlv_3='{' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getLeftCurlyBracketKeyword_2());
+    	newLeafNode(otherlv_3, grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getLeftCurlyBracketKeyword_3());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getTokenListTokenParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getTokenListTokenParserRuleCall_4_0()); 
 	    }
-		lv_tokenList_3_0=ruleToken		{
+		lv_tokenList_4_0=ruleToken		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLexicalPartitionHighlighting_RuleRule());
 	        }
        		add(
        			$current, 
        			"tokenList",
-        		lv_tokenList_3_0, 
+        		lv_tokenList_4_0, 
         		"Token");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)+	otherlv_4='}' 
+)+	otherlv_5='}' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getRightCurlyBracketKeyword_4());
+    	newLeafNode(otherlv_5, grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getRightCurlyBracketKeyword_5());
     }
 )
 ;
@@ -1650,16 +1668,6 @@ ruleScanner_Rule returns [EObject current=null]
         $current = $this_Scanner_JSRule_3.current; 
         afterParserOrEnumRuleCall();
     }
-
-    |
-    { 
-        newCompositeNode(grammarAccess.getScanner_RuleAccess().getScanner_WhitespaceRuleParserRuleCall_4()); 
-    }
-    this_Scanner_WhitespaceRule_4=ruleScanner_WhitespaceRule
-    { 
-        $current = $this_Scanner_WhitespaceRule_4.current; 
-        afterParserOrEnumRuleCall();
-    }
 )
 ;
 
@@ -1965,37 +1973,37 @@ ruleScanner_JSRule returns [EObject current=null]
 
 
 
-// Entry rule entryRuleScanner_WhitespaceRule
-entryRuleScanner_WhitespaceRule returns [EObject current=null] 
+// Entry rule entryRuleWhitespaceRule
+entryRuleWhitespaceRule returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getScanner_WhitespaceRuleRule()); }
-	 iv_ruleScanner_WhitespaceRule=ruleScanner_WhitespaceRule 
-	 { $current=$iv_ruleScanner_WhitespaceRule.current; } 
+	{ newCompositeNode(grammarAccess.getWhitespaceRuleRule()); }
+	 iv_ruleWhitespaceRule=ruleWhitespaceRule 
+	 { $current=$iv_ruleWhitespaceRule.current; } 
 	 EOF 
 ;
 
-// Rule Scanner_WhitespaceRule
-ruleScanner_WhitespaceRule returns [EObject current=null] 
+// Rule WhitespaceRule
+ruleWhitespaceRule returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
 (	otherlv_0='whitespace' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getScanner_WhitespaceRuleAccess().getWhitespaceKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getWhitespaceRuleAccess().getWhitespaceKeyword_0());
     }
 ((	otherlv_1='[' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getScanner_WhitespaceRuleAccess().getLeftSquareBracketKeyword_1_0_0());
+    	newLeafNode(otherlv_1, grammarAccess.getWhitespaceRuleAccess().getLeftSquareBracketKeyword_1_0_0());
     }
 (
 (
 		lv_characters_2_0=RULE_STRING
 		{
-			newLeafNode(lv_characters_2_0, grammarAccess.getScanner_WhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_1_0_1_0()); 
+			newLeafNode(lv_characters_2_0, grammarAccess.getWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_1_0_1_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getScanner_WhitespaceRuleRule());
+	            $current = createModelElement(grammarAccess.getWhitespaceRuleRule());
 	        }
        		addWithLastConsumed(
        			$current, 
@@ -2007,17 +2015,17 @@ ruleScanner_WhitespaceRule returns [EObject current=null]
 )
 )(	otherlv_3=',' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getScanner_WhitespaceRuleAccess().getCommaKeyword_1_0_2_0());
+    	newLeafNode(otherlv_3, grammarAccess.getWhitespaceRuleAccess().getCommaKeyword_1_0_2_0());
     }
 (
 (
 		lv_characters_4_0=RULE_STRING
 		{
-			newLeafNode(lv_characters_4_0, grammarAccess.getScanner_WhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_1_0_2_1_0()); 
+			newLeafNode(lv_characters_4_0, grammarAccess.getWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_1_0_2_1_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getScanner_WhitespaceRuleRule());
+	            $current = createModelElement(grammarAccess.getWhitespaceRuleRule());
 	        }
        		addWithLastConsumed(
        			$current, 
@@ -2029,19 +2037,19 @@ ruleScanner_WhitespaceRule returns [EObject current=null]
 )
 ))*	otherlv_5=']' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getScanner_WhitespaceRuleAccess().getRightSquareBracketKeyword_1_0_3());
+    	newLeafNode(otherlv_5, grammarAccess.getWhitespaceRuleAccess().getRightSquareBracketKeyword_1_0_3());
     }
 )
     |(
 (
 		lv_javawhitespace_6_0=	'javawhitespace' 
     {
-        newLeafNode(lv_javawhitespace_6_0, grammarAccess.getScanner_WhitespaceRuleAccess().getJavawhitespaceJavawhitespaceKeyword_1_1_0());
+        newLeafNode(lv_javawhitespace_6_0, grammarAccess.getWhitespaceRuleAccess().getJavawhitespaceJavawhitespaceKeyword_1_1_0());
     }
  
 	    {
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getScanner_WhitespaceRuleRule());
+	            $current = createModelElement(grammarAccess.getWhitespaceRuleRule());
 	        }
        		setWithLastConsumed($current, "javawhitespace", true, "javawhitespace");
 	    }
@@ -2052,11 +2060,11 @@ ruleScanner_WhitespaceRule returns [EObject current=null]
 (
 		lv_fileURI_7_0=RULE_STRING
 		{
-			newLeafNode(lv_fileURI_7_0, grammarAccess.getScanner_WhitespaceRuleAccess().getFileURISTRINGTerminalRuleCall_1_2_0()); 
+			newLeafNode(lv_fileURI_7_0, grammarAccess.getWhitespaceRuleAccess().getFileURISTRINGTerminalRuleCall_1_2_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getScanner_WhitespaceRuleRule());
+	            $current = createModelElement(grammarAccess.getWhitespaceRuleRule());
 	        }
        		setWithLastConsumed(
        			$current, 

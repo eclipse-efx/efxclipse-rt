@@ -11,28 +11,29 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule;
+import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Scanner Whitespace Rule</b></em>'.
+ * An implementation of the model object '<em><b>Whitespace Rule</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_WhitespaceRuleImpl#getCharacters <em>Characters</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_WhitespaceRuleImpl#isJavawhitespace <em>Javawhitespace</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_WhitespaceRuleImpl#getFileURI <em>File URI</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.WhitespaceRuleImpl#getCharacters <em>Characters</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.WhitespaceRuleImpl#isJavawhitespace <em>Javawhitespace</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.WhitespaceRuleImpl#getFileURI <em>File URI</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scanner_WhitespaceRule
+public class WhitespaceRuleImpl extends MinimalEObjectImpl.Container implements WhitespaceRule
 {
   /**
    * The cached value of the '{@link #getCharacters() <em>Characters</em>}' attribute list.
@@ -89,7 +90,7 @@ public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scan
    * <!-- end-user-doc -->
    * @generated
    */
-  protected Scanner_WhitespaceRuleImpl()
+  protected WhitespaceRuleImpl()
   {
     super();
   }
@@ -102,7 +103,7 @@ public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scan
   @Override
   protected EClass eStaticClass()
   {
-    return LDefPackage.Literals.SCANNER_WHITESPACE_RULE;
+    return LDefPackage.Literals.WHITESPACE_RULE;
   }
 
   /**
@@ -114,7 +115,7 @@ public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scan
   {
     if (characters == null)
     {
-      characters = new EDataTypeEList<String>(String.class, this, LDefPackage.SCANNER_WHITESPACE_RULE__CHARACTERS);
+      characters = new EDataTypeEList<String>(String.class, this, LDefPackage.WHITESPACE_RULE__CHARACTERS);
     }
     return characters;
   }
@@ -139,7 +140,7 @@ public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scan
     boolean oldJavawhitespace = javawhitespace;
     javawhitespace = newJavawhitespace;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_WHITESPACE_RULE__JAVAWHITESPACE, oldJavawhitespace, javawhitespace));
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.WHITESPACE_RULE__JAVAWHITESPACE, oldJavawhitespace, javawhitespace));
   }
 
   /**
@@ -162,7 +163,7 @@ public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scan
     String oldFileURI = fileURI;
     fileURI = newFileURI;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_WHITESPACE_RULE__FILE_URI, oldFileURI, fileURI));
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.WHITESPACE_RULE__FILE_URI, oldFileURI, fileURI));
   }
 
   /**
@@ -175,11 +176,11 @@ public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scan
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_WHITESPACE_RULE__CHARACTERS:
+      case LDefPackage.WHITESPACE_RULE__CHARACTERS:
         return getCharacters();
-      case LDefPackage.SCANNER_WHITESPACE_RULE__JAVAWHITESPACE:
+      case LDefPackage.WHITESPACE_RULE__JAVAWHITESPACE:
         return isJavawhitespace();
-      case LDefPackage.SCANNER_WHITESPACE_RULE__FILE_URI:
+      case LDefPackage.WHITESPACE_RULE__FILE_URI:
         return getFileURI();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -196,14 +197,14 @@ public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scan
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_WHITESPACE_RULE__CHARACTERS:
+      case LDefPackage.WHITESPACE_RULE__CHARACTERS:
         getCharacters().clear();
         getCharacters().addAll((Collection<? extends String>)newValue);
         return;
-      case LDefPackage.SCANNER_WHITESPACE_RULE__JAVAWHITESPACE:
+      case LDefPackage.WHITESPACE_RULE__JAVAWHITESPACE:
         setJavawhitespace((Boolean)newValue);
         return;
-      case LDefPackage.SCANNER_WHITESPACE_RULE__FILE_URI:
+      case LDefPackage.WHITESPACE_RULE__FILE_URI:
         setFileURI((String)newValue);
         return;
     }
@@ -220,13 +221,13 @@ public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scan
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_WHITESPACE_RULE__CHARACTERS:
+      case LDefPackage.WHITESPACE_RULE__CHARACTERS:
         getCharacters().clear();
         return;
-      case LDefPackage.SCANNER_WHITESPACE_RULE__JAVAWHITESPACE:
+      case LDefPackage.WHITESPACE_RULE__JAVAWHITESPACE:
         setJavawhitespace(JAVAWHITESPACE_EDEFAULT);
         return;
-      case LDefPackage.SCANNER_WHITESPACE_RULE__FILE_URI:
+      case LDefPackage.WHITESPACE_RULE__FILE_URI:
         setFileURI(FILE_URI_EDEFAULT);
         return;
     }
@@ -243,11 +244,11 @@ public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scan
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_WHITESPACE_RULE__CHARACTERS:
+      case LDefPackage.WHITESPACE_RULE__CHARACTERS:
         return characters != null && !characters.isEmpty();
-      case LDefPackage.SCANNER_WHITESPACE_RULE__JAVAWHITESPACE:
+      case LDefPackage.WHITESPACE_RULE__JAVAWHITESPACE:
         return javawhitespace != JAVAWHITESPACE_EDEFAULT;
-      case LDefPackage.SCANNER_WHITESPACE_RULE__FILE_URI:
+      case LDefPackage.WHITESPACE_RULE__FILE_URI:
         return FILE_URI_EDEFAULT == null ? fileURI != null : !FILE_URI_EDEFAULT.equals(fileURI);
     }
     return super.eIsSet(featureID);
@@ -274,4 +275,4 @@ public class Scanner_WhitespaceRuleImpl extends Scanner_RuleImpl implements Scan
     return result.toString();
   }
 
-} //Scanner_WhitespaceRuleImpl
+} //WhitespaceRuleImpl

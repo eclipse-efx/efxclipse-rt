@@ -67,6 +67,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scriptURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LexicalPartitionHighlighting_Rule" eSuperTypes="#//LexicalPartitionHighlighting">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="whitespace" eType="#//WhitespaceRule"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tokenList" upperBound="-1"
         eType="#//Token" containment="true"/>
   </eClassifiers>
@@ -103,7 +105,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Scanner_JSRule" eSuperTypes="#//Scanner_Rule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Scanner_WhitespaceRule" eSuperTypes="#//Scanner_Rule">
+  <eClassifiers xsi:type="ecore:EClass" name="WhitespaceRule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="characters" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="javawhitespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>

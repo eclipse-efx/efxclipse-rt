@@ -62,6 +62,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//LexicalPartitionHighlighting_JS/scriptURI"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//LexicalPartitionHighlighting_Rule">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LexicalPartitionHighlighting_Rule/whitespace"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LexicalPartitionHighlighting_Rule/tokenList"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Token">
@@ -94,10 +95,10 @@
     <genClasses ecoreClass="LDef.ecore#//Scanner_JSRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_JSRule/fileURI"/>
     </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//Scanner_WhitespaceRule">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_WhitespaceRule/characters"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_WhitespaceRule/javawhitespace"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_WhitespaceRule/fileURI"/>
+    <genClasses ecoreClass="LDef.ecore#//WhitespaceRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//WhitespaceRule/characters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//WhitespaceRule/javawhitespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//WhitespaceRule/fileURI"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -108,7 +108,7 @@ LexicalPartitionHighlighting_JS:
 ;
 
 LexicalPartitionHighlighting_Rule:
-	'rule' partition=[Partition|ID] '{'
+	'rule' partition=[Partition|ID] (whitespace=WhitespaceRule)? '{'
 		tokenList+=Token+
 
 	'}'
@@ -131,7 +131,7 @@ Keyword:
 ;
 
 Scanner_Rule:
-	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule | Scanner_WhitespaceRule
+	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule
 ;
 
 Scanner_SingleLineRule:
@@ -150,6 +150,6 @@ Scanner_JSRule:
 	'script' fileURI=STRING
 ;
 
-Scanner_WhitespaceRule:
+WhitespaceRule:
 	'whitespace' (('[' characters+=STRING (',' characters+=STRING )* ']') | javawhitespace?='javawhitespace' | fileURI=STRING)
 ;

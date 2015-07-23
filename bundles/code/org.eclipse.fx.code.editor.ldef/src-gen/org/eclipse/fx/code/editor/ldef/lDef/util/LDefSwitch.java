@@ -286,12 +286,10 @@ public class LDefSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LDefPackage.SCANNER_WHITESPACE_RULE:
+      case LDefPackage.WHITESPACE_RULE:
       {
-        Scanner_WhitespaceRule scanner_WhitespaceRule = (Scanner_WhitespaceRule)theEObject;
-        T result = caseScanner_WhitespaceRule(scanner_WhitespaceRule);
-        if (result == null) result = caseScanner_Rule(scanner_WhitespaceRule);
-        if (result == null) result = caseScanner(scanner_WhitespaceRule);
+        WhitespaceRule whitespaceRule = (WhitespaceRule)theEObject;
+        T result = caseWhitespaceRule(whitespaceRule);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -748,17 +746,17 @@ public class LDefSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Scanner Whitespace Rule</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Whitespace Rule</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scanner Whitespace Rule</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Whitespace Rule</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseScanner_WhitespaceRule(Scanner_WhitespaceRule object)
+  public T caseWhitespaceRule(WhitespaceRule object)
   {
     return null;
   }

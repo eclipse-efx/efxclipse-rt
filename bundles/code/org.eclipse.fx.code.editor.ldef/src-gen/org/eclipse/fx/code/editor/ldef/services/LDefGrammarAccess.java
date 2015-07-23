@@ -734,16 +734,18 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPartitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cPartitionPartitionCrossReference_1_0 = (CrossReference)cPartitionAssignment_1.eContents().get(0);
 		private final RuleCall cPartitionPartitionIDTerminalRuleCall_1_0_1 = (RuleCall)cPartitionPartitionCrossReference_1_0.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cTokenListAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTokenListTokenParserRuleCall_3_0 = (RuleCall)cTokenListAssignment_3.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cWhitespaceAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWhitespaceWhitespaceRuleParserRuleCall_2_0 = (RuleCall)cWhitespaceAssignment_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cTokenListAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cTokenListTokenParserRuleCall_4_0 = (RuleCall)cTokenListAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//LexicalPartitionHighlighting_Rule:
-		//	"rule" partition=[Partition] "{" tokenList+=Token+ "}";
+		//	"rule" partition=[Partition] whitespace=WhitespaceRule? "{" tokenList+=Token+ "}";
 		@Override public ParserRule getRule() { return rule; }
 
-		//"rule" partition=[Partition] "{" tokenList+=Token+ "}"
+		//"rule" partition=[Partition] whitespace=WhitespaceRule? "{" tokenList+=Token+ "}"
 		public Group getGroup() { return cGroup; }
 
 		//"rule"
@@ -758,17 +760,23 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getPartitionPartitionIDTerminalRuleCall_1_0_1() { return cPartitionPartitionIDTerminalRuleCall_1_0_1; }
 
+		//whitespace=WhitespaceRule?
+		public Assignment getWhitespaceAssignment_2() { return cWhitespaceAssignment_2; }
+
+		//WhitespaceRule
+		public RuleCall getWhitespaceWhitespaceRuleParserRuleCall_2_0() { return cWhitespaceWhitespaceRuleParserRuleCall_2_0; }
+
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 
 		//tokenList+=Token+
-		public Assignment getTokenListAssignment_3() { return cTokenListAssignment_3; }
+		public Assignment getTokenListAssignment_4() { return cTokenListAssignment_4; }
 
 		//Token
-		public RuleCall getTokenListTokenParserRuleCall_3_0() { return cTokenListTokenParserRuleCall_3_0; }
+		public RuleCall getTokenListTokenParserRuleCall_4_0() { return cTokenListTokenParserRuleCall_4_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
 
 	public class TokenElements extends AbstractParserRuleElementFinder {
@@ -930,13 +938,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cScanner_MultiLineRuleParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cScanner_CharacterRuleParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cScanner_JSRuleParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cScanner_WhitespaceRuleParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//Scanner_Rule:
-		//	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule | Scanner_WhitespaceRule;
+		//	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule;
 		@Override public ParserRule getRule() { return rule; }
 
-		//Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule | Scanner_WhitespaceRule
+		//Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Scanner_SingleLineRule
@@ -950,9 +957,6 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Scanner_JSRule
 		public RuleCall getScanner_JSRuleParserRuleCall_3() { return cScanner_JSRuleParserRuleCall_3; }
-
-		//Scanner_WhitespaceRule
-		public RuleCall getScanner_WhitespaceRuleParserRuleCall_4() { return cScanner_WhitespaceRuleParserRuleCall_4; }
 	}
 
 	public class Scanner_SingleLineRuleElements extends AbstractParserRuleElementFinder {
@@ -1139,8 +1143,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getFileURISTRINGTerminalRuleCall_1_0() { return cFileURISTRINGTerminalRuleCall_1_0; }
 	}
 
-	public class Scanner_WhitespaceRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_WhitespaceRule");
+	public class WhitespaceRuleElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WhitespaceRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cWhitespaceKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
@@ -1158,7 +1162,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cFileURIAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
 		private final RuleCall cFileURISTRINGTerminalRuleCall_1_2_0 = (RuleCall)cFileURIAssignment_1_2.eContents().get(0);
 		
-		//Scanner_WhitespaceRule:
+		//WhitespaceRule:
 		//	"whitespace" ("[" characters+=STRING ("," characters+=STRING)* "]" | javawhitespace?="javawhitespace" |
 		//	fileURI=STRING);
 		@Override public ParserRule getRule() { return rule; }
@@ -1244,7 +1248,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	private final Scanner_MultiLineRuleElements pScanner_MultiLineRule;
 	private final Scanner_CharacterRuleElements pScanner_CharacterRule;
 	private final Scanner_JSRuleElements pScanner_JSRule;
-	private final Scanner_WhitespaceRuleElements pScanner_WhitespaceRule;
+	private final WhitespaceRuleElements pWhitespaceRule;
 	
 	private final Grammar grammar;
 
@@ -1286,7 +1290,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		this.pScanner_MultiLineRule = new Scanner_MultiLineRuleElements();
 		this.pScanner_CharacterRule = new Scanner_CharacterRuleElements();
 		this.pScanner_JSRule = new Scanner_JSRuleElements();
-		this.pScanner_WhitespaceRule = new Scanner_WhitespaceRuleElements();
+		this.pWhitespaceRule = new WhitespaceRuleElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1528,7 +1532,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//LexicalPartitionHighlighting_Rule:
-	//	"rule" partition=[Partition] "{" tokenList+=Token+ "}";
+	//	"rule" partition=[Partition] whitespace=WhitespaceRule? "{" tokenList+=Token+ "}";
 	public LexicalPartitionHighlighting_RuleElements getLexicalPartitionHighlighting_RuleAccess() {
 		return pLexicalPartitionHighlighting_Rule;
 	}
@@ -1578,7 +1582,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_Rule:
-	//	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule | Scanner_WhitespaceRule;
+	//	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule;
 	public Scanner_RuleElements getScanner_RuleAccess() {
 		return pScanner_Rule;
 	}
@@ -1627,15 +1631,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		return getScanner_JSRuleAccess().getRule();
 	}
 
-	//Scanner_WhitespaceRule:
+	//WhitespaceRule:
 	//	"whitespace" ("[" characters+=STRING ("," characters+=STRING)* "]" | javawhitespace?="javawhitespace" |
 	//	fileURI=STRING);
-	public Scanner_WhitespaceRuleElements getScanner_WhitespaceRuleAccess() {
-		return pScanner_WhitespaceRule;
+	public WhitespaceRuleElements getWhitespaceRuleAccess() {
+		return pWhitespaceRule;
 	}
 	
-	public ParserRule getScanner_WhitespaceRuleRule() {
-		return getScanner_WhitespaceRuleAccess().getRule();
+	public ParserRule getWhitespaceRuleRule() {
+		return getWhitespaceRuleAccess().getRule();
 	}
 
 	//terminal ID:

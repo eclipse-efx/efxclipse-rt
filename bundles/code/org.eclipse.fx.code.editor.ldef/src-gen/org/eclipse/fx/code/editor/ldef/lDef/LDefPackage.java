@@ -742,13 +742,22 @@ public interface LDefPackage extends EPackage
   int LEXICAL_PARTITION_HIGHLIGHTING_RULE__PARTITION = LEXICAL_PARTITION_HIGHLIGHTING__PARTITION;
 
   /**
+   * The feature id for the '<em><b>Whitespace</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LEXICAL_PARTITION_HIGHLIGHTING_RULE__WHITESPACE = LEXICAL_PARTITION_HIGHLIGHTING_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Token List</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_RULE__TOKEN_LIST = LEXICAL_PARTITION_HIGHLIGHTING_FEATURE_COUNT + 0;
+  int LEXICAL_PARTITION_HIGHLIGHTING_RULE__TOKEN_LIST = LEXICAL_PARTITION_HIGHLIGHTING_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Lexical Partition Highlighting Rule</em>' class.
@@ -757,7 +766,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_RULE_FEATURE_COUNT = LEXICAL_PARTITION_HIGHLIGHTING_FEATURE_COUNT + 1;
+  int LEXICAL_PARTITION_HIGHLIGHTING_RULE_FEATURE_COUNT = LEXICAL_PARTITION_HIGHLIGHTING_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.TokenImpl <em>Token</em>}' class.
@@ -1057,14 +1066,14 @@ public interface LDefPackage extends EPackage
   int SCANNER_JS_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_WhitespaceRuleImpl <em>Scanner Whitespace Rule</em>}' class.
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.WhitespaceRuleImpl <em>Whitespace Rule</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_WhitespaceRuleImpl
-   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_WhitespaceRule()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.WhitespaceRuleImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getWhitespaceRule()
    * @generated
    */
-  int SCANNER_WHITESPACE_RULE = 28;
+  int WHITESPACE_RULE = 28;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -1073,7 +1082,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_WHITESPACE_RULE__CHARACTERS = SCANNER_RULE_FEATURE_COUNT + 0;
+  int WHITESPACE_RULE__CHARACTERS = 0;
 
   /**
    * The feature id for the '<em><b>Javawhitespace</b></em>' attribute.
@@ -1082,7 +1091,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_WHITESPACE_RULE__JAVAWHITESPACE = SCANNER_RULE_FEATURE_COUNT + 1;
+  int WHITESPACE_RULE__JAVAWHITESPACE = 1;
 
   /**
    * The feature id for the '<em><b>File URI</b></em>' attribute.
@@ -1091,16 +1100,16 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_WHITESPACE_RULE__FILE_URI = SCANNER_RULE_FEATURE_COUNT + 2;
+  int WHITESPACE_RULE__FILE_URI = 2;
 
   /**
-   * The number of structural features of the '<em>Scanner Whitespace Rule</em>' class.
+   * The number of structural features of the '<em>Whitespace Rule</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_WHITESPACE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 3;
+  int WHITESPACE_RULE_FEATURE_COUNT = 3;
 
 
   /**
@@ -1547,6 +1556,17 @@ public interface LDefPackage extends EPackage
   EClass getLexicalPartitionHighlighting_Rule();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_Rule#getWhitespace <em>Whitespace</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Whitespace</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_Rule#getWhitespace()
+   * @see #getLexicalPartitionHighlighting_Rule()
+   * @generated
+   */
+  EReference getLexicalPartitionHighlighting_Rule_Whitespace();
+
+  /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_Rule#getTokenList <em>Token List</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1802,47 +1822,47 @@ public interface LDefPackage extends EPackage
   EAttribute getScanner_JSRule_FileURI();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule <em>Scanner Whitespace Rule</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule <em>Whitespace Rule</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Scanner Whitespace Rule</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule
+   * @return the meta object for class '<em>Whitespace Rule</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule
    * @generated
    */
-  EClass getScanner_WhitespaceRule();
+  EClass getWhitespaceRule();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule#getCharacters <em>Characters</em>}'.
+   * Returns the meta object for the attribute list '{@link org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule#getCharacters <em>Characters</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute list '<em>Characters</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule#getCharacters()
-   * @see #getScanner_WhitespaceRule()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule#getCharacters()
+   * @see #getWhitespaceRule()
    * @generated
    */
-  EAttribute getScanner_WhitespaceRule_Characters();
+  EAttribute getWhitespaceRule_Characters();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule#isJavawhitespace <em>Javawhitespace</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule#isJavawhitespace <em>Javawhitespace</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Javawhitespace</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule#isJavawhitespace()
-   * @see #getScanner_WhitespaceRule()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule#isJavawhitespace()
+   * @see #getWhitespaceRule()
    * @generated
    */
-  EAttribute getScanner_WhitespaceRule_Javawhitespace();
+  EAttribute getWhitespaceRule_Javawhitespace();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule#getFileURI <em>File URI</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule#getFileURI <em>File URI</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>File URI</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_WhitespaceRule#getFileURI()
-   * @see #getScanner_WhitespaceRule()
+   * @see org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule#getFileURI()
+   * @see #getWhitespaceRule()
    * @generated
    */
-  EAttribute getScanner_WhitespaceRule_FileURI();
+  EAttribute getWhitespaceRule_FileURI();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -2242,6 +2262,14 @@ public interface LDefPackage extends EPackage
     EClass LEXICAL_PARTITION_HIGHLIGHTING_RULE = eINSTANCE.getLexicalPartitionHighlighting_Rule();
 
     /**
+     * The meta object literal for the '<em><b>Whitespace</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LEXICAL_PARTITION_HIGHLIGHTING_RULE__WHITESPACE = eINSTANCE.getLexicalPartitionHighlighting_Rule_Whitespace();
+
+    /**
      * The meta object literal for the '<em><b>Token List</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2452,14 +2480,14 @@ public interface LDefPackage extends EPackage
     EAttribute SCANNER_JS_RULE__FILE_URI = eINSTANCE.getScanner_JSRule_FileURI();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_WhitespaceRuleImpl <em>Scanner Whitespace Rule</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.WhitespaceRuleImpl <em>Whitespace Rule</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_WhitespaceRuleImpl
-     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_WhitespaceRule()
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.WhitespaceRuleImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getWhitespaceRule()
      * @generated
      */
-    EClass SCANNER_WHITESPACE_RULE = eINSTANCE.getScanner_WhitespaceRule();
+    EClass WHITESPACE_RULE = eINSTANCE.getWhitespaceRule();
 
     /**
      * The meta object literal for the '<em><b>Characters</b></em>' attribute list feature.
@@ -2467,7 +2495,7 @@ public interface LDefPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SCANNER_WHITESPACE_RULE__CHARACTERS = eINSTANCE.getScanner_WhitespaceRule_Characters();
+    EAttribute WHITESPACE_RULE__CHARACTERS = eINSTANCE.getWhitespaceRule_Characters();
 
     /**
      * The meta object literal for the '<em><b>Javawhitespace</b></em>' attribute feature.
@@ -2475,7 +2503,7 @@ public interface LDefPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SCANNER_WHITESPACE_RULE__JAVAWHITESPACE = eINSTANCE.getScanner_WhitespaceRule_Javawhitespace();
+    EAttribute WHITESPACE_RULE__JAVAWHITESPACE = eINSTANCE.getWhitespaceRule_Javawhitespace();
 
     /**
      * The meta object literal for the '<em><b>File URI</b></em>' attribute feature.
@@ -2483,7 +2511,7 @@ public interface LDefPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SCANNER_WHITESPACE_RULE__FILE_URI = eINSTANCE.getScanner_WhitespaceRule_FileURI();
+    EAttribute WHITESPACE_RULE__FILE_URI = eINSTANCE.getWhitespaceRule_FileURI();
 
   }
 

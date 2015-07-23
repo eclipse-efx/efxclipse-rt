@@ -43,7 +43,7 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLexicalPartitionHighlightingAccess().getAlternatives(), "rule__LexicalPartitionHighlighting__Alternatives");
 					put(grammarAccess.getScannerAccess().getAlternatives(), "rule__Scanner__Alternatives");
 					put(grammarAccess.getScanner_RuleAccess().getAlternatives(), "rule__Scanner_Rule__Alternatives");
-					put(grammarAccess.getScanner_WhitespaceRuleAccess().getAlternatives_1(), "rule__Scanner_WhitespaceRule__Alternatives_1");
+					put(grammarAccess.getWhitespaceRuleAccess().getAlternatives_1(), "rule__WhitespaceRule__Alternatives_1");
 					put(grammarAccess.getRootAccess().getGroup(), "rule__Root__Group__0");
 					put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 					put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
@@ -78,9 +78,9 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScanner_CharacterRuleAccess().getGroup(), "rule__Scanner_CharacterRule__Group__0");
 					put(grammarAccess.getScanner_CharacterRuleAccess().getGroup_3(), "rule__Scanner_CharacterRule__Group_3__0");
 					put(grammarAccess.getScanner_JSRuleAccess().getGroup(), "rule__Scanner_JSRule__Group__0");
-					put(grammarAccess.getScanner_WhitespaceRuleAccess().getGroup(), "rule__Scanner_WhitespaceRule__Group__0");
-					put(grammarAccess.getScanner_WhitespaceRuleAccess().getGroup_1_0(), "rule__Scanner_WhitespaceRule__Group_1_0__0");
-					put(grammarAccess.getScanner_WhitespaceRuleAccess().getGroup_1_0_2(), "rule__Scanner_WhitespaceRule__Group_1_0_2__0");
+					put(grammarAccess.getWhitespaceRuleAccess().getGroup(), "rule__WhitespaceRule__Group__0");
+					put(grammarAccess.getWhitespaceRuleAccess().getGroup_1_0(), "rule__WhitespaceRule__Group_1_0__0");
+					put(grammarAccess.getWhitespaceRuleAccess().getGroup_1_0_2(), "rule__WhitespaceRule__Group_1_0_2__0");
 					put(grammarAccess.getRootAccess().getNameAssignment_1(), "rule__Root__NameAssignment_1");
 					put(grammarAccess.getRootAccess().getImportsAssignment_2(), "rule__Root__ImportsAssignment_2");
 					put(grammarAccess.getRootAccess().getLanguageDefinitionAssignment_3(), "rule__Root__LanguageDefinitionAssignment_3");
@@ -111,7 +111,8 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getPartitionAssignment_1(), "rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1");
 					put(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getScriptURIAssignment_2(), "rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2");
 					put(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getPartitionAssignment_1(), "rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1");
-					put(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getTokenListAssignment_3(), "rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_3");
+					put(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getWhitespaceAssignment_2(), "rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2");
+					put(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getTokenListAssignment_4(), "rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4");
 					put(grammarAccess.getTokenAccess().getDefaultAssignment_0(), "rule__Token__DefaultAssignment_0");
 					put(grammarAccess.getTokenAccess().getNameAssignment_1(), "rule__Token__NameAssignment_1");
 					put(grammarAccess.getTokenAccess().getScannerListAssignment_2_1(), "rule__Token__ScannerListAssignment_2_1");
@@ -128,10 +129,10 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScanner_CharacterRuleAccess().getCharactersAssignment_2(), "rule__Scanner_CharacterRule__CharactersAssignment_2");
 					put(grammarAccess.getScanner_CharacterRuleAccess().getCharactersAssignment_3_1(), "rule__Scanner_CharacterRule__CharactersAssignment_3_1");
 					put(grammarAccess.getScanner_JSRuleAccess().getFileURIAssignment_1(), "rule__Scanner_JSRule__FileURIAssignment_1");
-					put(grammarAccess.getScanner_WhitespaceRuleAccess().getCharactersAssignment_1_0_1(), "rule__Scanner_WhitespaceRule__CharactersAssignment_1_0_1");
-					put(grammarAccess.getScanner_WhitespaceRuleAccess().getCharactersAssignment_1_0_2_1(), "rule__Scanner_WhitespaceRule__CharactersAssignment_1_0_2_1");
-					put(grammarAccess.getScanner_WhitespaceRuleAccess().getJavawhitespaceAssignment_1_1(), "rule__Scanner_WhitespaceRule__JavawhitespaceAssignment_1_1");
-					put(grammarAccess.getScanner_WhitespaceRuleAccess().getFileURIAssignment_1_2(), "rule__Scanner_WhitespaceRule__FileURIAssignment_1_2");
+					put(grammarAccess.getWhitespaceRuleAccess().getCharactersAssignment_1_0_1(), "rule__WhitespaceRule__CharactersAssignment_1_0_1");
+					put(grammarAccess.getWhitespaceRuleAccess().getCharactersAssignment_1_0_2_1(), "rule__WhitespaceRule__CharactersAssignment_1_0_2_1");
+					put(grammarAccess.getWhitespaceRuleAccess().getJavawhitespaceAssignment_1_1(), "rule__WhitespaceRule__JavawhitespaceAssignment_1_1");
+					put(grammarAccess.getWhitespaceRuleAccess().getFileURIAssignment_1_2(), "rule__WhitespaceRule__FileURIAssignment_1_2");
 				}
 			};
 		}

@@ -92,7 +92,7 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
       case LDefPackage.SCANNER_MULTI_LINE_RULE: return createScanner_MultiLineRule();
       case LDefPackage.SCANNER_CHARACTER_RULE: return createScanner_CharacterRule();
       case LDefPackage.SCANNER_JS_RULE: return createScanner_JSRule();
-      case LDefPackage.SCANNER_WHITESPACE_RULE: return createScanner_WhitespaceRule();
+      case LDefPackage.WHITESPACE_RULE: return createWhitespaceRule();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -411,10 +411,10 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Scanner_WhitespaceRule createScanner_WhitespaceRule()
+  public WhitespaceRule createWhitespaceRule()
   {
-    Scanner_WhitespaceRuleImpl scanner_WhitespaceRule = new Scanner_WhitespaceRuleImpl();
-    return scanner_WhitespaceRule;
+    WhitespaceRuleImpl whitespaceRule = new WhitespaceRuleImpl();
+    return whitespaceRule;
   }
 
   /**
