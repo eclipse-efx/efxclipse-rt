@@ -141,13 +141,18 @@ public class TextEditor {
 	}
 
 	@Persist
-	void save() {
+	public void save() {
 		input.persist();
+		documentSaved();
 		if( eventBus != null ) {
 			//TODO Should the outline reload really be sent by the editor?
 			eventBus.publish(Constants.OUTLINE_RELOAD, input, true);
 			eventBus.publish(Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this,true);
 		}
+	}
+
+	protected void documentSaved() {
+
 	}
 
 	@Focus
