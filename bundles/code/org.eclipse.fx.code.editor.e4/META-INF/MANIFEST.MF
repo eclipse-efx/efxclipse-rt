@@ -16,7 +16,6 @@ Import-Package: org.osgi.service.component.annotations
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.e4.DocumentContextFunction.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.e4.DocumentPartitionerContextFunction.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.e4.InputContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.e4.AnnotationModelContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.e4.StringInputContextFunction.xml
+ OSGI-INF/services/org.eclipse.fx.code.editor.e4.AnnotationModelContextFunction.xml
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.fx.code.editor.e4

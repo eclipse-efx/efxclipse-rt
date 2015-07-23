@@ -142,6 +142,7 @@ public class TextEditor {
 
 	@Persist
 	public void save() {
+		input.setText(document.get());
 		input.persist();
 		documentSaved();
 		if( eventBus != null ) {
