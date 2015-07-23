@@ -112,10 +112,13 @@ public class TextEditor {
 
 			@Override
 			public void documentChanged(DocumentEvent event) {
+				SourceChange sourceChange = new SourceChange(input, event.fOffset, event.fLength, event.fText);
+				documentModified(sourceChange);
+
 				if( eventBus != null ) {
 					eventBus.publish(Constants.EDITOR_DOCUMENT_MODIFIED, TextEditor.this, true);
 					//TODO Should the source change even really be triggered by the editor??
-					eventBus.publish(Constants.EDITOR_DOCUMENT_MODIFICATION, new SourceChange(input, event.fOffset, event.fLength, event.fText),true);
+					eventBus.publish(Constants.EDITOR_DOCUMENT_MODIFICATION, sourceChange,true);
 				}
 			}
 
@@ -131,6 +134,10 @@ public class TextEditor {
 		if( activeInput != null ) {
 			activeInput.setValue(input);
 		}
+	}
+
+	protected void documentModified(SourceChange event) {
+
 	}
 
 	@Persist
