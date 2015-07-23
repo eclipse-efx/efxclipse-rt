@@ -19,7 +19,17 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//LanguageDef/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LanguageDef/paritioning"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LanguageDef/lexicalHighlighting"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LanguageDef/integration"/>
     </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Integration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Integration/codeIntegrationList"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//CodeIntegration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//CodeIntegration/codegen"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//CodeIntegration/e4"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//JavaFXIntegration"/>
+    <genClasses ecoreClass="LDef.ecore#//SWTIntegration"/>
     <genClasses ecoreClass="LDef.ecore#//Paritioning">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitioner"/>

@@ -8,6 +8,7 @@ import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.fx.code.editor.ldef.lDef.Root
 import com.google.inject.Inject
+import org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration
 
 /**
  * Generates code from your model files on save.
@@ -20,6 +21,10 @@ class LDefGenerator implements IGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
 		val root = resource.contents.head as Root
-		generator.generate(root.languageDefinition, root.name, fsa);
+		if( root.languageDefinition.integration != null ) {
+			if( ! root.languageDefinition.integration.codeIntegrationList.filter(typeof(JavaFXIntegration)).empty ) {
+				generator.generate(root.languageDefinition, root.name, fsa);
+			}
+		}
 	}
 }

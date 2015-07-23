@@ -380,9 +380,256 @@ ruleLanguageDef returns [EObject current=null]
 	    }
 
 )
-)	otherlv_4='}' 
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLanguageDefAccess().getIntegrationIntegrationParserRuleCall_4_0()); 
+	    }
+		lv_integration_4_0=ruleIntegration		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLanguageDefRule());
+	        }
+       		set(
+       			$current, 
+       			"integration",
+        		lv_integration_4_0, 
+        		"Integration");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?	otherlv_5='}' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getLanguageDefAccess().getRightCurlyBracketKeyword_4());
+    	newLeafNode(otherlv_5, grammarAccess.getLanguageDefAccess().getRightCurlyBracketKeyword_5());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleIntegration
+entryRuleIntegration returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getIntegrationRule()); }
+	 iv_ruleIntegration=ruleIntegration 
+	 { $current=$iv_ruleIntegration.current; } 
+	 EOF 
+;
+
+// Rule Integration
+ruleIntegration returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='integration' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getIntegrationAccess().getIntegrationKeyword_0());
+    }
+	otherlv_1='{' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getIntegrationAccess().getLeftCurlyBracketKeyword_1());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getIntegrationAccess().getCodeIntegrationListCodeIntegrationParserRuleCall_2_0()); 
+	    }
+		lv_codeIntegrationList_2_0=ruleCodeIntegration		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getIntegrationRule());
+	        }
+       		add(
+       			$current, 
+       			"codeIntegrationList",
+        		lv_codeIntegrationList_2_0, 
+        		"CodeIntegration");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)+	otherlv_3='}' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getIntegrationAccess().getRightCurlyBracketKeyword_3());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleCodeIntegration
+entryRuleCodeIntegration returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getCodeIntegrationRule()); }
+	 iv_ruleCodeIntegration=ruleCodeIntegration 
+	 { $current=$iv_ruleCodeIntegration.current; } 
+	 EOF 
+;
+
+// Rule CodeIntegration
+ruleCodeIntegration returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+    { 
+        newCompositeNode(grammarAccess.getCodeIntegrationAccess().getJavaFXIntegrationParserRuleCall_0()); 
+    }
+    this_JavaFXIntegration_0=ruleJavaFXIntegration
+    { 
+        $current = $this_JavaFXIntegration_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getCodeIntegrationAccess().getSWTIntegrationParserRuleCall_1()); 
+    }
+    this_SWTIntegration_1=ruleSWTIntegration
+    { 
+        $current = $this_SWTIntegration_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleJavaFXIntegration
+entryRuleJavaFXIntegration returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getJavaFXIntegrationRule()); }
+	 iv_ruleJavaFXIntegration=ruleJavaFXIntegration 
+	 { $current=$iv_ruleJavaFXIntegration.current; } 
+	 EOF 
+;
+
+// Rule JavaFXIntegration
+ruleJavaFXIntegration returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='javafx' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getJavaFXIntegrationAccess().getJavafxKeyword_0());
+    }
+	otherlv_1='{' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getJavaFXIntegrationAccess().getLeftCurlyBracketKeyword_1());
+    }
+(
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getJavaFXIntegrationAccess().getJavaFXIntegrationAction_2(),
+            $current);
+    }
+)(
+(
+		lv_codegen_3_0=	'codegeneration' 
+    {
+        newLeafNode(lv_codegen_3_0, grammarAccess.getJavaFXIntegrationAccess().getCodegenCodegenerationKeyword_3_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getJavaFXIntegrationRule());
+	        }
+       		setWithLastConsumed($current, "codegen", true, "codegeneration");
+	    }
+
+)
+)?(
+(
+		lv_e4_4_0=	'e4' 
+    {
+        newLeafNode(lv_e4_4_0, grammarAccess.getJavaFXIntegrationAccess().getE4E4Keyword_4_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getJavaFXIntegrationRule());
+	        }
+       		setWithLastConsumed($current, "e4", true, "e4");
+	    }
+
+)
+)?	otherlv_5='}' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getJavaFXIntegrationAccess().getRightCurlyBracketKeyword_5());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleSWTIntegration
+entryRuleSWTIntegration returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getSWTIntegrationRule()); }
+	 iv_ruleSWTIntegration=ruleSWTIntegration 
+	 { $current=$iv_ruleSWTIntegration.current; } 
+	 EOF 
+;
+
+// Rule SWTIntegration
+ruleSWTIntegration returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='swt' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getSWTIntegrationAccess().getSwtKeyword_0());
+    }
+	otherlv_1='{' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getSWTIntegrationAccess().getLeftCurlyBracketKeyword_1());
+    }
+(
+    {
+        $current = forceCreateModelElement(
+            grammarAccess.getSWTIntegrationAccess().getSWTIntegrationAction_2(),
+            $current);
+    }
+)(
+(
+		lv_codegen_3_0=	'codegeneration' 
+    {
+        newLeafNode(lv_codegen_3_0, grammarAccess.getSWTIntegrationAccess().getCodegenCodegenerationKeyword_3_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSWTIntegrationRule());
+	        }
+       		setWithLastConsumed($current, "codegen", true, "codegeneration");
+	    }
+
+)
+)?(
+(
+		lv_e4_4_0=	'e4' 
+    {
+        newLeafNode(lv_e4_4_0, grammarAccess.getSWTIntegrationAccess().getE4E4Keyword_4_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSWTIntegrationRule());
+	        }
+       		setWithLastConsumed($current, "e4", true, "e4");
+	    }
+
+)
+)?	otherlv_5='}' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getSWTIntegrationAccess().getRightCurlyBracketKeyword_5());
     }
 )
 ;

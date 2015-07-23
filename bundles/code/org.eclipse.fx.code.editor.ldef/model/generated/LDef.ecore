@@ -18,7 +18,19 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="lexicalHighlighting" eType="#//LexicalHighlighting"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="integration" eType="#//Integration"
+        containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Integration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="codeIntegrationList" upperBound="-1"
+        eType="#//CodeIntegration" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeIntegration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="codegen" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="e4" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JavaFXIntegration" eSuperTypes="#//CodeIntegration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SWTIntegration" eSuperTypes="#//CodeIntegration"/>
   <eClassifiers xsi:type="ecore:EClass" name="Paritioning">
     <eStructuralFeatures xsi:type="ecore:EReference" name="partitions" upperBound="-1"
         eType="#//Partition" containment="true"/>

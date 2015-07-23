@@ -67,6 +67,10 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
       case LDefPackage.ROOT: return createRoot();
       case LDefPackage.IMPORT: return createImport();
       case LDefPackage.LANGUAGE_DEF: return createLanguageDef();
+      case LDefPackage.INTEGRATION: return createIntegration();
+      case LDefPackage.CODE_INTEGRATION: return createCodeIntegration();
+      case LDefPackage.JAVA_FX_INTEGRATION: return createJavaFXIntegration();
+      case LDefPackage.SWT_INTEGRATION: return createSWTIntegration();
       case LDefPackage.PARITIONING: return createParitioning();
       case LDefPackage.PARTITION: return createPartition();
       case LDefPackage.PARTITIONER: return createPartitioner();
@@ -125,6 +129,50 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
   {
     LanguageDefImpl languageDef = new LanguageDefImpl();
     return languageDef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Integration createIntegration()
+  {
+    IntegrationImpl integration = new IntegrationImpl();
+    return integration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CodeIntegration createCodeIntegration()
+  {
+    CodeIntegrationImpl codeIntegration = new CodeIntegrationImpl();
+    return codeIntegration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public JavaFXIntegration createJavaFXIntegration()
+  {
+    JavaFXIntegrationImpl javaFXIntegration = new JavaFXIntegrationImpl();
+    return javaFXIntegration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SWTIntegration createSWTIntegration()
+  {
+    SWTIntegrationImpl swtIntegration = new SWTIntegrationImpl();
+    return swtIntegration;
   }
 
   /**

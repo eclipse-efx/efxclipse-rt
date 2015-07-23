@@ -90,6 +90,26 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createLanguageDefAdapter();
       }
       @Override
+      public Adapter caseIntegration(Integration object)
+      {
+        return createIntegrationAdapter();
+      }
+      @Override
+      public Adapter caseCodeIntegration(CodeIntegration object)
+      {
+        return createCodeIntegrationAdapter();
+      }
+      @Override
+      public Adapter caseJavaFXIntegration(JavaFXIntegration object)
+      {
+        return createJavaFXIntegrationAdapter();
+      }
+      @Override
+      public Adapter caseSWTIntegration(SWTIntegration object)
+      {
+        return createSWTIntegrationAdapter();
+      }
+      @Override
       public Adapter caseParitioning(Paritioning object)
       {
         return createParitioningAdapter();
@@ -262,6 +282,66 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLanguageDefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.Integration <em>Integration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Integration
+   * @generated
+   */
+  public Adapter createIntegrationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.CodeIntegration <em>Code Integration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.CodeIntegration
+   * @generated
+   */
+  public Adapter createCodeIntegrationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration <em>Java FX Integration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration
+   * @generated
+   */
+  public Adapter createJavaFXIntegrationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.SWTIntegration <em>SWT Integration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.SWTIntegration
+   * @generated
+   */
+  public Adapter createSWTIntegrationAdapter()
   {
     return null;
   }

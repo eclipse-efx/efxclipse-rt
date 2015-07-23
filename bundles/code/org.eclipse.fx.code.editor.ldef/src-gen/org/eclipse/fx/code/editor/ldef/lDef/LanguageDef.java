@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getParitioning <em>Paritioning</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getLexicalHighlighting <em>Lexical Highlighting</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getIntegration <em>Integration</em>}</li>
  * </ul>
  *
  * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLanguageDef()
@@ -101,5 +102,31 @@ public interface LanguageDef extends EObject
    * @generated
    */
   void setLexicalHighlighting(LexicalHighlighting value);
+
+  /**
+   * Returns the value of the '<em><b>Integration</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Integration</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Integration</em>' containment reference.
+   * @see #setIntegration(Integration)
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLanguageDef_Integration()
+   * @model containment="true"
+   * @generated
+   */
+  Integration getIntegration();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.LanguageDef#getIntegration <em>Integration</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Integration</em>' containment reference.
+   * @see #getIntegration()
+   * @generated
+   */
+  void setIntegration(Integration value);
 
 } // LanguageDef

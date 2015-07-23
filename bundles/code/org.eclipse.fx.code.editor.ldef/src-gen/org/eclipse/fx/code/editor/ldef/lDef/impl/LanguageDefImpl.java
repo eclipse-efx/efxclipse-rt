@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.fx.code.editor.ldef.lDef.Integration;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
 import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting;
@@ -27,6 +28,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Paritioning;
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl#getParitioning <em>Paritioning</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl#getLexicalHighlighting <em>Lexical Highlighting</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LanguageDefImpl#getIntegration <em>Integration</em>}</li>
  * </ul>
  *
  * @generated
@@ -72,6 +74,16 @@ public class LanguageDefImpl extends MinimalEObjectImpl.Container implements Lan
    * @ordered
    */
   protected LexicalHighlighting lexicalHighlighting;
+
+  /**
+   * The cached value of the '{@link #getIntegration() <em>Integration</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIntegration()
+   * @generated
+   * @ordered
+   */
+  protected Integration integration;
 
   /**
    * <!-- begin-user-doc -->
@@ -218,6 +230,54 @@ public class LanguageDefImpl extends MinimalEObjectImpl.Container implements Lan
    * <!-- end-user-doc -->
    * @generated
    */
+  public Integration getIntegration()
+  {
+    return integration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetIntegration(Integration newIntegration, NotificationChain msgs)
+  {
+    Integration oldIntegration = integration;
+    integration = newIntegration;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LDefPackage.LANGUAGE_DEF__INTEGRATION, oldIntegration, newIntegration);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setIntegration(Integration newIntegration)
+  {
+    if (newIntegration != integration)
+    {
+      NotificationChain msgs = null;
+      if (integration != null)
+        msgs = ((InternalEObject)integration).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LDefPackage.LANGUAGE_DEF__INTEGRATION, null, msgs);
+      if (newIntegration != null)
+        msgs = ((InternalEObject)newIntegration).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LDefPackage.LANGUAGE_DEF__INTEGRATION, null, msgs);
+      msgs = basicSetIntegration(newIntegration, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.LANGUAGE_DEF__INTEGRATION, newIntegration, newIntegration));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -227,6 +287,8 @@ public class LanguageDefImpl extends MinimalEObjectImpl.Container implements Lan
         return basicSetParitioning(null, msgs);
       case LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING:
         return basicSetLexicalHighlighting(null, msgs);
+      case LDefPackage.LANGUAGE_DEF__INTEGRATION:
+        return basicSetIntegration(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -247,6 +309,8 @@ public class LanguageDefImpl extends MinimalEObjectImpl.Container implements Lan
         return getParitioning();
       case LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING:
         return getLexicalHighlighting();
+      case LDefPackage.LANGUAGE_DEF__INTEGRATION:
+        return getIntegration();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -269,6 +333,9 @@ public class LanguageDefImpl extends MinimalEObjectImpl.Container implements Lan
         return;
       case LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING:
         setLexicalHighlighting((LexicalHighlighting)newValue);
+        return;
+      case LDefPackage.LANGUAGE_DEF__INTEGRATION:
+        setIntegration((Integration)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -293,6 +360,9 @@ public class LanguageDefImpl extends MinimalEObjectImpl.Container implements Lan
       case LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING:
         setLexicalHighlighting((LexicalHighlighting)null);
         return;
+      case LDefPackage.LANGUAGE_DEF__INTEGRATION:
+        setIntegration((Integration)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -313,6 +383,8 @@ public class LanguageDefImpl extends MinimalEObjectImpl.Container implements Lan
         return paritioning != null;
       case LDefPackage.LANGUAGE_DEF__LEXICAL_HIGHLIGHTING:
         return lexicalHighlighting != null;
+      case LDefPackage.LANGUAGE_DEF__INTEGRATION:
+        return integration != null;
     }
     return super.eIsSet(featureID);
   }

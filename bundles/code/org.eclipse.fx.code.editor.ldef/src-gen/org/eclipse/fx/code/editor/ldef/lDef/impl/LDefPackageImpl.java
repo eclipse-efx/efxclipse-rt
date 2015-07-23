@@ -9,7 +9,10 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.fx.code.editor.ldef.lDef.CodeIntegration;
 import org.eclipse.fx.code.editor.ldef.lDef.Import;
+import org.eclipse.fx.code.editor.ldef.lDef.Integration;
+import org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration;
 import org.eclipse.fx.code.editor.ldef.lDef.Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefFactory;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
@@ -27,6 +30,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Root;
+import org.eclipse.fx.code.editor.ldef.lDef.SWTIntegration;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
@@ -65,6 +69,34 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * @generated
    */
   private EClass languageDefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass integrationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass codeIntegrationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass javaFXIntegrationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass swtIntegrationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -381,6 +413,86 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
   public EReference getLanguageDef_LexicalHighlighting()
   {
     return (EReference)languageDefEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLanguageDef_Integration()
+  {
+    return (EReference)languageDefEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIntegration()
+  {
+    return integrationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIntegration_CodeIntegrationList()
+  {
+    return (EReference)integrationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCodeIntegration()
+  {
+    return codeIntegrationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCodeIntegration_Codegen()
+  {
+    return (EAttribute)codeIntegrationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCodeIntegration_E4()
+  {
+    return (EAttribute)codeIntegrationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getJavaFXIntegration()
+  {
+    return javaFXIntegrationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSWTIntegration()
+  {
+    return swtIntegrationEClass;
   }
 
   /**
@@ -945,6 +1057,18 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     createEAttribute(languageDefEClass, LANGUAGE_DEF__NAME);
     createEReference(languageDefEClass, LANGUAGE_DEF__PARITIONING);
     createEReference(languageDefEClass, LANGUAGE_DEF__LEXICAL_HIGHLIGHTING);
+    createEReference(languageDefEClass, LANGUAGE_DEF__INTEGRATION);
+
+    integrationEClass = createEClass(INTEGRATION);
+    createEReference(integrationEClass, INTEGRATION__CODE_INTEGRATION_LIST);
+
+    codeIntegrationEClass = createEClass(CODE_INTEGRATION);
+    createEAttribute(codeIntegrationEClass, CODE_INTEGRATION__CODEGEN);
+    createEAttribute(codeIntegrationEClass, CODE_INTEGRATION__E4);
+
+    javaFXIntegrationEClass = createEClass(JAVA_FX_INTEGRATION);
+
+    swtIntegrationEClass = createEClass(SWT_INTEGRATION);
 
     paritioningEClass = createEClass(PARITIONING);
     createEReference(paritioningEClass, PARITIONING__PARTITIONS);
@@ -1050,6 +1174,8 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    javaFXIntegrationEClass.getESuperTypes().add(this.getCodeIntegration());
+    swtIntegrationEClass.getESuperTypes().add(this.getCodeIntegration());
     paritioner_JSEClass.getESuperTypes().add(this.getPartitioner());
     partitioner_RuleEClass.getESuperTypes().add(this.getPartitioner());
     partition_SingleLineRuleEClass.getESuperTypes().add(this.getPartition_Rule());
@@ -1077,6 +1203,18 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     initEAttribute(getLanguageDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, LanguageDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLanguageDef_Paritioning(), this.getParitioning(), null, "paritioning", null, 0, 1, LanguageDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLanguageDef_LexicalHighlighting(), this.getLexicalHighlighting(), null, "lexicalHighlighting", null, 0, 1, LanguageDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLanguageDef_Integration(), this.getIntegration(), null, "integration", null, 0, 1, LanguageDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(integrationEClass, Integration.class, "Integration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getIntegration_CodeIntegrationList(), this.getCodeIntegration(), null, "codeIntegrationList", null, 0, -1, Integration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(codeIntegrationEClass, CodeIntegration.class, "CodeIntegration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getCodeIntegration_Codegen(), ecorePackage.getEBoolean(), "codegen", null, 0, 1, CodeIntegration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCodeIntegration_E4(), ecorePackage.getEBoolean(), "e4", null, 0, 1, CodeIntegration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(javaFXIntegrationEClass, JavaFXIntegration.class, "JavaFXIntegration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(swtIntegrationEClass, SWTIntegration.class, "SWTIntegration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(paritioningEClass, Paritioning.class, "Paritioning", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getParitioning_Partitions(), this.getPartition(), null, "partitions", null, 0, -1, Paritioning.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -50,6 +50,42 @@ public interface LDefFactory extends EFactory
   LanguageDef createLanguageDef();
 
   /**
+   * Returns a new object of class '<em>Integration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Integration</em>'.
+   * @generated
+   */
+  Integration createIntegration();
+
+  /**
+   * Returns a new object of class '<em>Code Integration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Code Integration</em>'.
+   * @generated
+   */
+  CodeIntegration createCodeIntegration();
+
+  /**
+   * Returns a new object of class '<em>Java FX Integration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Java FX Integration</em>'.
+   * @generated
+   */
+  JavaFXIntegration createJavaFXIntegration();
+
+  /**
+   * Returns a new object of class '<em>SWT Integration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>SWT Integration</em>'.
+   * @generated
+   */
+  SWTIntegration createSWTIntegration();
+
+  /**
    * Returns a new object of class '<em>Paritioning</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

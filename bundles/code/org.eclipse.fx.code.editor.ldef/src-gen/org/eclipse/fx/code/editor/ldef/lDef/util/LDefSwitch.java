@@ -93,6 +93,36 @@ public class LDefSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case LDefPackage.INTEGRATION:
+      {
+        Integration integration = (Integration)theEObject;
+        T result = caseIntegration(integration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.CODE_INTEGRATION:
+      {
+        CodeIntegration codeIntegration = (CodeIntegration)theEObject;
+        T result = caseCodeIntegration(codeIntegration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.JAVA_FX_INTEGRATION:
+      {
+        JavaFXIntegration javaFXIntegration = (JavaFXIntegration)theEObject;
+        T result = caseJavaFXIntegration(javaFXIntegration);
+        if (result == null) result = caseCodeIntegration(javaFXIntegration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.SWT_INTEGRATION:
+      {
+        SWTIntegration swtIntegration = (SWTIntegration)theEObject;
+        T result = caseSWTIntegration(swtIntegration);
+        if (result == null) result = caseCodeIntegration(swtIntegration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case LDefPackage.PARITIONING:
       {
         Paritioning paritioning = (Paritioning)theEObject;
@@ -313,6 +343,70 @@ public class LDefSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLanguageDef(LanguageDef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Integration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Integration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseIntegration(Integration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Code Integration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Code Integration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCodeIntegration(CodeIntegration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Java FX Integration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Java FX Integration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJavaFXIntegration(JavaFXIntegration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>SWT Integration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>SWT Integration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSWTIntegration(SWTIntegration object)
   {
     return null;
   }

@@ -24,6 +24,33 @@ LanguageDef:
 	name=ID '{'
 		paritioning=Paritioning
 		lexicalHighlighting=LexicalHighlighting
+		integration=Integration?
+	'}'
+;
+
+Integration:
+	'integration' '{'
+		codeIntegrationList+=CodeIntegration+
+	'}'
+;
+
+CodeIntegration:
+	JavaFXIntegration | SWTIntegration
+;
+
+JavaFXIntegration:
+	'javafx' '{'
+		{JavaFXIntegration}
+		codegen?='codegeneration'?
+		e4?='e4'?
+	'}'
+;
+
+SWTIntegration:
+	'swt' '{'
+		{SWTIntegration}
+		codegen?='codegeneration'?
+		e4?='e4'?
 	'}'
 ;
 
