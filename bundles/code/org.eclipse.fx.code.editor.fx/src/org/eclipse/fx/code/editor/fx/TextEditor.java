@@ -20,7 +20,6 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.SourceChange;
-import org.eclipse.fx.code.editor.services.DocumentPersitenceService;
 import org.eclipse.fx.core.di.ContextValue;
 import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.jface.text.DocumentEvent;
@@ -44,8 +43,6 @@ public class TextEditor {
 	private SourceViewerConfiguration configuration;
 
 	private IDocumentPartitioner partitioner;
-
-	private DocumentPersitenceService persistenceService;
 
 	private Input<?> input;
 
@@ -78,11 +75,6 @@ public class TextEditor {
 		}
 
 		this.partitioner = partitioner;
-	}
-
-	@Inject
-	public void setPersistenceService(DocumentPersitenceService persistenceService) {
-		this.persistenceService = persistenceService;
 	}
 
 	@Inject
@@ -143,14 +135,11 @@ public class TextEditor {
 
 	@Persist
 	void save() {
-		if( persistenceService.persist(input, document) ) {
-			if( eventBus != null ) {
-				//TODO Should the outline reload really be sent by the editor?
-				eventBus.publish(Constants.OUTLINE_RELOAD, input, true);
-				eventBus.publish(Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this,true);
-			}
-		} else {
-			//TODO Handle that
+		input.persist();
+		if( eventBus != null ) {
+			//TODO Should the outline reload really be sent by the editor?
+			eventBus.publish(Constants.OUTLINE_RELOAD, input, true);
+			eventBus.publish(Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this,true);
 		}
 	}
 
