@@ -15,6 +15,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule
 import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule
 import org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration
 import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration
+import org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration
 
 class JavaFXCodeGenerator {
 	def generate(LanguageDef model, IFileSystemAccess access) {
@@ -33,8 +34,53 @@ class JavaFXCodeGenerator {
 					}
 				}
 			}
+
+			val e4CodeGen = javaFXIntegration.codegenerationList.filter(typeof(E4CodeGeneration)).head
+			if( e4CodeGen != null ) {
+				if( javaCodeGen != null ) {
+					val basePackage = javaCodeGen.name;
+					access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"DocumentPartitionerTypeProvider.java",generateDocumentPartitionerTypeProvider(model,basePackage))
+					access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PresentationReconcilerTypeProvider.java",generatePresentationReconcilerTypeProvider(model,basePackage))
+				} else {
+					// TODO need to generate LDef model integration
+				}
+			}
 		}
 	}
+
+	def generateDocumentPartitionerTypeProvider(LanguageDef model, String basePackage) '''
+	package «basePackage»;
+
+	@org.osgi.service.component.annotations.Component
+	public class «model.name.toFirstUpper»DocumentPartitionerTypeProvider implements org.eclipse.fx.code.editor.services.DocumentPartitionerTypeProvider {
+		@Override
+		public Class<? extends org.eclipse.jface.text.IDocumentPartitioner> getType(org.eclipse.fx.code.editor.Input<?> s) {
+			return «model.name.toFirstUpper»Partitioner.class;
+		}
+
+		public boolean test(org.eclipse.fx.code.editor.Input<?> t) {
+			return (t instanceof org.eclipse.fx.code.editor.services.URIProvider) && ((org.eclipse.fx.code.editor.services.URIProvider)t).getURI().lastSegment().endsWith(".«model.name»");
+		}
+	}
+	'''
+
+	def generatePresentationReconcilerTypeProvider(LanguageDef model, String basePackage) '''
+	package «basePackage»;
+
+	@org.osgi.service.component.annotations.Component
+	public class «model.name.toFirstUpper»PresentationReconcilerTypeProvider implements org.eclipse.fx.code.editor.fx.services.PresentationReconcilerTypeProvider {
+
+		@Override
+		public Class<? extends org.eclipse.jface.text.presentation.PresentationReconciler> getType(org.eclipse.fx.code.editor.Input<?> s) {
+			return «model.name.toFirstUpper»PresentationReconciler.class;
+		}
+
+		@Override
+		public boolean test(org.eclipse.fx.code.editor.Input<?> t) {
+			return (t instanceof org.eclipse.fx.code.editor.services.URIProvider) && ((org.eclipse.fx.code.editor.services.URIProvider)t).getURI().lastSegment().endsWith(".dart");
+		}
+	}
+	'''
 
 	def generatePartitioner(LanguageDef model, String basePackage) '''
 	package «basePackage»;

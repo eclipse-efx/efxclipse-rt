@@ -95,6 +95,15 @@ public interface LDefFactory extends EFactory
   JavaCodeGeneration createJavaCodeGeneration();
 
   /**
+   * Returns a new object of class '<em>E4 Code Generation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>E4 Code Generation</em>'.
+   * @generated
+   */
+  E4CodeGeneration createE4CodeGeneration();
+
+  /**
    * Returns a new object of class '<em>Paritioning</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

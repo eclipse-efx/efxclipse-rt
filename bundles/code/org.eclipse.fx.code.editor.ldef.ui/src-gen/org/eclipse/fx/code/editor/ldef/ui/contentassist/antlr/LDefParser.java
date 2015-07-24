@@ -37,6 +37,7 @@ public class LDefParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getCodegenerationAccess().getAlternatives(), "rule__Codegeneration__Alternatives");
 					put(grammarAccess.getPartitionerAccess().getAlternatives(), "rule__Partitioner__Alternatives");
 					put(grammarAccess.getPartition_RuleAccess().getAlternatives(), "rule__Partition_Rule__Alternatives");
 					put(grammarAccess.getLexicalPartitionHighlightingAccess().getAlternatives(), "rule__LexicalPartitionHighlighting__Alternatives");
@@ -53,6 +54,7 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntegrationAccess().getGroup(), "rule__Integration__Group__0");
 					put(grammarAccess.getJavaFXIntegrationAccess().getGroup(), "rule__JavaFXIntegration__Group__0");
 					put(grammarAccess.getJavaCodeGenerationAccess().getGroup(), "rule__JavaCodeGeneration__Group__0");
+					put(grammarAccess.getE4CodeGenerationAccess().getGroup(), "rule__E4CodeGeneration__Group__0");
 					put(grammarAccess.getParitioningAccess().getGroup(), "rule__Paritioning__Group__0");
 					put(grammarAccess.getPartitionAccess().getGroup(), "rule__Partition__Group__0");
 					put(grammarAccess.getParitioner_JSAccess().getGroup(), "rule__Paritioner_JS__Group__0");
@@ -91,6 +93,7 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntegrationAccess().getCodeIntegrationListAssignment_2(), "rule__Integration__CodeIntegrationListAssignment_2");
 					put(grammarAccess.getJavaFXIntegrationAccess().getCodegenerationListAssignment_2(), "rule__JavaFXIntegration__CodegenerationListAssignment_2");
 					put(grammarAccess.getJavaCodeGenerationAccess().getNameAssignment_1(), "rule__JavaCodeGeneration__NameAssignment_1");
+					put(grammarAccess.getE4CodeGenerationAccess().getIconPathAssignment_1(), "rule__E4CodeGeneration__IconPathAssignment_1");
 					put(grammarAccess.getParitioningAccess().getPartitionsAssignment_2(), "rule__Paritioning__PartitionsAssignment_2");
 					put(grammarAccess.getParitioningAccess().getPartitionerAssignment_3(), "rule__Paritioning__PartitionerAssignment_3");
 					put(grammarAccess.getPartitionAccess().getNameAssignment_1(), "rule__Partition__NameAssignment_1");

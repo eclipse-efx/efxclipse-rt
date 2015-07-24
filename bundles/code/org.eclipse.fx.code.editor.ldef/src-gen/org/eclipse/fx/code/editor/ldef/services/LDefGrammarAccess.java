@@ -281,14 +281,22 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class CodegenerationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Codegeneration");
-		private final RuleCall cJavaCodeGenerationParserRuleCall = (RuleCall)rule.eContents().get(1);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cJavaCodeGenerationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cE4CodeGenerationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//Codegeneration:
-		//	JavaCodeGeneration;
+		//	JavaCodeGeneration | E4CodeGeneration;
 		@Override public ParserRule getRule() { return rule; }
 
+		//JavaCodeGeneration | E4CodeGeneration
+		public Alternatives getAlternatives() { return cAlternatives; }
+
 		//JavaCodeGeneration
-		public RuleCall getJavaCodeGenerationParserRuleCall() { return cJavaCodeGenerationParserRuleCall; }
+		public RuleCall getJavaCodeGenerationParserRuleCall_0() { return cJavaCodeGenerationParserRuleCall_0; }
+
+		//E4CodeGeneration
+		public RuleCall getE4CodeGenerationParserRuleCall_1() { return cE4CodeGenerationParserRuleCall_1; }
 	}
 
 	public class JavaCodeGenerationElements extends AbstractParserRuleElementFinder {
@@ -313,6 +321,30 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_1_0() { return cNameSTRINGTerminalRuleCall_1_0; }
+	}
+
+	public class E4CodeGenerationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "E4CodeGeneration");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cE4Keyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cIconPathAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cIconPathSTRINGTerminalRuleCall_1_0 = (RuleCall)cIconPathAssignment_1.eContents().get(0);
+		
+		//E4CodeGeneration:
+		//	"e4" iconPath=STRING;
+		@Override public ParserRule getRule() { return rule; }
+
+		//"e4" iconPath=STRING
+		public Group getGroup() { return cGroup; }
+
+		//"e4"
+		public Keyword getE4Keyword_0() { return cE4Keyword_0; }
+
+		//iconPath=STRING
+		public Assignment getIconPathAssignment_1() { return cIconPathAssignment_1; }
+
+		//STRING
+		public RuleCall getIconPathSTRINGTerminalRuleCall_1_0() { return cIconPathSTRINGTerminalRuleCall_1_0; }
 	}
 
 	public class ParitioningElements extends AbstractParserRuleElementFinder {
@@ -1208,6 +1240,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	private final JavaFXIntegrationElements pJavaFXIntegration;
 	private final CodegenerationElements pCodegeneration;
 	private final JavaCodeGenerationElements pJavaCodeGeneration;
+	private final E4CodeGenerationElements pE4CodeGeneration;
 	private final ParitioningElements pParitioning;
 	private final PartitionElements pPartition;
 	private final PartitionerElements pPartitioner;
@@ -1251,6 +1284,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		this.pJavaFXIntegration = new JavaFXIntegrationElements();
 		this.pCodegeneration = new CodegenerationElements();
 		this.pJavaCodeGeneration = new JavaCodeGenerationElements();
+		this.pE4CodeGeneration = new E4CodeGenerationElements();
 		this.pParitioning = new ParitioningElements();
 		this.pPartition = new PartitionElements();
 		this.pPartitioner = new PartitionerElements();
@@ -1393,7 +1427,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Codegeneration:
-	//	JavaCodeGeneration;
+	//	JavaCodeGeneration | E4CodeGeneration;
 	public CodegenerationElements getCodegenerationAccess() {
 		return pCodegeneration;
 	}
@@ -1410,6 +1444,16 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getJavaCodeGenerationRule() {
 		return getJavaCodeGenerationAccess().getRule();
+	}
+
+	//E4CodeGeneration:
+	//	"e4" iconPath=STRING;
+	public E4CodeGenerationElements getE4CodeGenerationAccess() {
+		return pE4CodeGeneration;
+	}
+	
+	public ParserRule getE4CodeGenerationRule() {
+		return getE4CodeGenerationAccess().getRule();
 	}
 
 	////SWTIntegration:

@@ -45,11 +45,15 @@ JavaFXIntegration:
 ;
 
 Codegeneration:
-	JavaCodeGeneration
+	JavaCodeGeneration | E4CodeGeneration
 ;
 
 JavaCodeGeneration:
 	'java' name=STRING
+;
+
+E4CodeGeneration:
+	'e4' iconPath=STRING
 ;
 
 //SWTIntegration:

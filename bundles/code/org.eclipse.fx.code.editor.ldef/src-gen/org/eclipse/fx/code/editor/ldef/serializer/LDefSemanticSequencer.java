@@ -6,6 +6,7 @@ package org.eclipse.fx.code.editor.ldef.serializer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration;
 import org.eclipse.fx.code.editor.ldef.lDef.Import;
 import org.eclipse.fx.code.editor.ldef.lDef.Integration;
 import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration;
@@ -51,6 +52,9 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	@Override
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == LDefPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case LDefPackage.E4_CODE_GENERATION:
+				sequence_E4CodeGeneration(context, (E4CodeGeneration) semanticObject); 
+				return; 
 			case LDefPackage.IMPORT:
 				sequence_Import(context, (Import) semanticObject); 
 				return; 
@@ -123,6 +127,22 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Constraint:
+	 *     iconPath=STRING
+	 */
+	protected void sequence_E4CodeGeneration(EObject context, E4CodeGeneration semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.E4_CODE_GENERATION__ICON_PATH) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.E4_CODE_GENERATION__ICON_PATH));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getE4CodeGenerationAccess().getIconPathSTRINGTerminalRuleCall_1_0(), semanticObject.getIconPath());
+		feeder.finish();
+	}
+	
 	
 	/**
 	 * Constraint:

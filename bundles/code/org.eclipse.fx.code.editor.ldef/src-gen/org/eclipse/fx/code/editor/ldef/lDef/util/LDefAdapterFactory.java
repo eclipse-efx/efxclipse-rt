@@ -115,6 +115,11 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createJavaCodeGenerationAdapter();
       }
       @Override
+      public Adapter caseE4CodeGeneration(E4CodeGeneration object)
+      {
+        return createE4CodeGenerationAdapter();
+      }
+      @Override
       public Adapter caseParitioning(Paritioning object)
       {
         return createParitioningAdapter();
@@ -362,6 +367,21 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createJavaCodeGenerationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration <em>E4 Code Generation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration
+   * @generated
+   */
+  public Adapter createE4CodeGenerationAdapter()
   {
     return null;
   }

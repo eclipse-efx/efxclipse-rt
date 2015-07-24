@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.fx.code.editor.ldef.lDef.CodeIntegration;
 import org.eclipse.fx.code.editor.ldef.lDef.Codegeneration;
+import org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration;
 import org.eclipse.fx.code.editor.ldef.lDef.Import;
 import org.eclipse.fx.code.editor.ldef.lDef.Integration;
 import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration;
@@ -105,6 +106,13 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * @generated
    */
   private EClass javaCodeGenerationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass e4CodeGenerationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -511,6 +519,26 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
   public EAttribute getJavaCodeGeneration_Name()
   {
     return (EAttribute)javaCodeGenerationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getE4CodeGeneration()
+  {
+    return e4CodeGenerationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getE4CodeGeneration_IconPath()
+  {
+    return (EAttribute)e4CodeGenerationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1100,6 +1128,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     javaCodeGenerationEClass = createEClass(JAVA_CODE_GENERATION);
     createEAttribute(javaCodeGenerationEClass, JAVA_CODE_GENERATION__NAME);
 
+    e4CodeGenerationEClass = createEClass(E4_CODE_GENERATION);
+    createEAttribute(e4CodeGenerationEClass, E4_CODE_GENERATION__ICON_PATH);
+
     paritioningEClass = createEClass(PARITIONING);
     createEReference(paritioningEClass, PARITIONING__PARTITIONS);
     createEReference(paritioningEClass, PARITIONING__PARTITIONER);
@@ -1207,6 +1238,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     // Add supertypes to classes
     javaFXIntegrationEClass.getESuperTypes().add(this.getCodeIntegration());
     javaCodeGenerationEClass.getESuperTypes().add(this.getCodegeneration());
+    e4CodeGenerationEClass.getESuperTypes().add(this.getCodegeneration());
     paritioner_JSEClass.getESuperTypes().add(this.getPartitioner());
     partitioner_RuleEClass.getESuperTypes().add(this.getPartitioner());
     partition_SingleLineRuleEClass.getESuperTypes().add(this.getPartition_Rule());
@@ -1247,6 +1279,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
 
     initEClass(javaCodeGenerationEClass, JavaCodeGeneration.class, "JavaCodeGeneration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getJavaCodeGeneration_Name(), ecorePackage.getEString(), "name", null, 0, 1, JavaCodeGeneration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(e4CodeGenerationEClass, E4CodeGeneration.class, "E4CodeGeneration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getE4CodeGeneration_IconPath(), ecorePackage.getEString(), "iconPath", null, 0, 1, E4CodeGeneration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(paritioningEClass, Paritioning.class, "Paritioning", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getParitioning_Partitions(), this.getPartition(), null, "partitions", null, 0, -1, Paritioning.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

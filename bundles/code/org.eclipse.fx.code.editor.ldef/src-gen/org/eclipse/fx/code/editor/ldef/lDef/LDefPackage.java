@@ -308,6 +308,34 @@ public interface LDefPackage extends EPackage
   int JAVA_CODE_GENERATION_FEATURE_COUNT = CODEGENERATION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.E4CodeGenerationImpl <em>E4 Code Generation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.E4CodeGenerationImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getE4CodeGeneration()
+   * @generated
+   */
+  int E4_CODE_GENERATION = 8;
+
+  /**
+   * The feature id for the '<em><b>Icon Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int E4_CODE_GENERATION__ICON_PATH = CODEGENERATION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>E4 Code Generation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int E4_CODE_GENERATION_FEATURE_COUNT = CODEGENERATION_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ParitioningImpl <em>Paritioning</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -315,7 +343,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getParitioning()
    * @generated
    */
-  int PARITIONING = 8;
+  int PARITIONING = 9;
 
   /**
    * The feature id for the '<em><b>Partitions</b></em>' containment reference list.
@@ -352,7 +380,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition()
    * @generated
    */
-  int PARTITION = 9;
+  int PARTITION = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -380,7 +408,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartitioner()
    * @generated
    */
-  int PARTITIONER = 10;
+  int PARTITIONER = 11;
 
   /**
    * The number of structural features of the '<em>Partitioner</em>' class.
@@ -399,7 +427,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getParitioner_JS()
    * @generated
    */
-  int PARITIONER_JS = 11;
+  int PARITIONER_JS = 12;
 
   /**
    * The feature id for the '<em><b>Script URI</b></em>' attribute.
@@ -427,7 +455,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartitioner_Rule()
    * @generated
    */
-  int PARTITIONER_RULE = 12;
+  int PARTITIONER_RULE = 13;
 
   /**
    * The feature id for the '<em><b>Rule List</b></em>' containment reference list.
@@ -455,7 +483,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_Rule()
    * @generated
    */
-  int PARTITION_RULE = 13;
+  int PARTITION_RULE = 14;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -510,7 +538,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_SingleLineRule()
    * @generated
    */
-  int PARTITION_SINGLE_LINE_RULE = 14;
+  int PARTITION_SINGLE_LINE_RULE = 15;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -565,7 +593,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_MultiLineRule()
    * @generated
    */
-  int PARTITION_MULTI_LINE_RULE = 15;
+  int PARTITION_MULTI_LINE_RULE = 16;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -620,7 +648,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalHighlighting()
    * @generated
    */
-  int LEXICAL_HIGHLIGHTING = 16;
+  int LEXICAL_HIGHLIGHTING = 17;
 
   /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
@@ -648,7 +676,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING = 17;
+  int LEXICAL_PARTITION_HIGHLIGHTING = 18;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -676,7 +704,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_JS()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 18;
+  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 19;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -713,7 +741,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_Rule()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 19;
+  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 20;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -759,7 +787,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getToken()
    * @generated
    */
-  int TOKEN = 20;
+  int TOKEN = 21;
 
   /**
    * The feature id for the '<em><b>Default</b></em>' attribute.
@@ -805,7 +833,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner()
    * @generated
    */
-  int SCANNER = 21;
+  int SCANNER = 22;
 
   /**
    * The number of structural features of the '<em>Scanner</em>' class.
@@ -824,7 +852,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Keyword()
    * @generated
    */
-  int SCANNER_KEYWORD = 22;
+  int SCANNER_KEYWORD = 23;
 
   /**
    * The feature id for the '<em><b>Keywords</b></em>' containment reference list.
@@ -852,7 +880,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getKeyword()
    * @generated
    */
-  int KEYWORD = 23;
+  int KEYWORD = 24;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -889,7 +917,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Rule()
    * @generated
    */
-  int SCANNER_RULE = 24;
+  int SCANNER_RULE = 25;
 
   /**
    * The number of structural features of the '<em>Scanner Rule</em>' class.
@@ -908,7 +936,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_SingleLineRule()
    * @generated
    */
-  int SCANNER_SINGLE_LINE_RULE = 25;
+  int SCANNER_SINGLE_LINE_RULE = 26;
 
   /**
    * The feature id for the '<em><b>Start Seq</b></em>' attribute.
@@ -954,7 +982,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_MultiLineRule()
    * @generated
    */
-  int SCANNER_MULTI_LINE_RULE = 26;
+  int SCANNER_MULTI_LINE_RULE = 27;
 
   /**
    * The feature id for the '<em><b>Start Seq</b></em>' attribute.
@@ -1000,7 +1028,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_CharacterRule()
    * @generated
    */
-  int SCANNER_CHARACTER_RULE = 27;
+  int SCANNER_CHARACTER_RULE = 28;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -1028,7 +1056,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_JSRule()
    * @generated
    */
-  int SCANNER_JS_RULE = 28;
+  int SCANNER_JS_RULE = 29;
 
   /**
    * The feature id for the '<em><b>File URI</b></em>' attribute.
@@ -1056,7 +1084,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getWhitespaceRule()
    * @generated
    */
-  int WHITESPACE_RULE = 29;
+  int WHITESPACE_RULE = 30;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -1295,6 +1323,27 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EAttribute getJavaCodeGeneration_Name();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration <em>E4 Code Generation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>E4 Code Generation</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration
+   * @generated
+   */
+  EClass getE4CodeGeneration();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration#getIconPath <em>Icon Path</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Icon Path</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration#getIconPath()
+   * @see #getE4CodeGeneration()
+   * @generated
+   */
+  EAttribute getE4CodeGeneration_IconPath();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Paritioning <em>Paritioning</em>}'.
@@ -2047,6 +2096,24 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EAttribute JAVA_CODE_GENERATION__NAME = eINSTANCE.getJavaCodeGeneration_Name();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.E4CodeGenerationImpl <em>E4 Code Generation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.E4CodeGenerationImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getE4CodeGeneration()
+     * @generated
+     */
+    EClass E4_CODE_GENERATION = eINSTANCE.getE4CodeGeneration();
+
+    /**
+     * The meta object literal for the '<em><b>Icon Path</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute E4_CODE_GENERATION__ICON_PATH = eINSTANCE.getE4CodeGeneration_IconPath();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ParitioningImpl <em>Paritioning</em>}' class.

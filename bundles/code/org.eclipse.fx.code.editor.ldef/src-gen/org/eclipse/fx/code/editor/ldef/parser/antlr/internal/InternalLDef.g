@@ -555,9 +555,9 @@ ruleCodegeneration returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-
+(
     { 
-        newCompositeNode(grammarAccess.getCodegenerationAccess().getJavaCodeGenerationParserRuleCall()); 
+        newCompositeNode(grammarAccess.getCodegenerationAccess().getJavaCodeGenerationParserRuleCall_0()); 
     }
     this_JavaCodeGeneration_0=ruleJavaCodeGeneration
     { 
@@ -565,6 +565,16 @@ ruleCodegeneration returns [EObject current=null]
         afterParserOrEnumRuleCall();
     }
 
+    |
+    { 
+        newCompositeNode(grammarAccess.getCodegenerationAccess().getE4CodeGenerationParserRuleCall_1()); 
+    }
+    this_E4CodeGeneration_1=ruleE4CodeGeneration
+    { 
+        $current = $this_E4CodeGeneration_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
 ;
 
 
@@ -603,6 +613,49 @@ ruleJavaCodeGeneration returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
+        		"STRING");
+	    }
+
+)
+))
+;
+
+
+
+
+
+// Entry rule entryRuleE4CodeGeneration
+entryRuleE4CodeGeneration returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getE4CodeGenerationRule()); }
+	 iv_ruleE4CodeGeneration=ruleE4CodeGeneration 
+	 { $current=$iv_ruleE4CodeGeneration.current; } 
+	 EOF 
+;
+
+// Rule E4CodeGeneration
+ruleE4CodeGeneration returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='e4' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getE4CodeGenerationAccess().getE4Keyword_0());
+    }
+(
+(
+		lv_iconPath_1_0=RULE_STRING
+		{
+			newLeafNode(lv_iconPath_1_0, grammarAccess.getE4CodeGenerationAccess().getIconPathSTRINGTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getE4CodeGenerationRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"iconPath",
+        		lv_iconPath_1_0, 
         		"STRING");
 	    }
 
