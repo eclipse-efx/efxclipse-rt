@@ -10,4 +10,6 @@ public class Constants {
 	public static final String DOCUMENT_URL = "documentUrl";
 	public static final String VCS_URL = "vcsUrl";
 
+	public static final String EDITOR_CONTAINER_TAG = "editorContainer";
+
 }

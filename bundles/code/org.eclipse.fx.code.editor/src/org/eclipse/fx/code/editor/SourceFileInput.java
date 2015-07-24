@@ -6,19 +6,27 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class SourceFileInput implements StringInput {
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.eclipse.fx.code.editor.services.URIProvider;
+import org.eclipse.fx.core.URI;
+import org.eclipse.fx.core.adapter.Adapt;
+
+public class SourceFileInput implements StringInput, URIProvider {
 	private final Path path;
 	private final Charset charSet;
 	private String data;
 	private String savedData;
 
+	@Inject
+	public SourceFileInput(@Adapt @Named(Constants.DOCUMENT_URL) Path path) {
+		this(path,StandardCharsets.UTF_8);
+	}
+
 	public SourceFileInput(Path path, Charset charSet) {
 		this.path = path;
 		this.charSet = charSet;
-	}
-
-	public SourceFileInput(Path path) {
-		this(path,StandardCharsets.UTF_8);
 	}
 
 	@Override
@@ -56,6 +64,11 @@ public class SourceFileInput implements StringInput {
 	@Override
 	public void reset() {
 		data = savedData;
+	}
+
+	@Override
+	public URI getURI() {
+		return URI.create(path.toUri().toString());
 	}
 
 }
