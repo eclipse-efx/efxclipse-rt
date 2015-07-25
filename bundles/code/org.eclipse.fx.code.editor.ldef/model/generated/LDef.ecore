@@ -30,13 +30,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="codegenerationList" upperBound="-1"
         eType="#//Codegeneration" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Codegeneration"/>
-  <eClassifiers xsi:type="ecore:EClass" name="JavaCodeGeneration" eSuperTypes="#//Codegeneration">
+  <eClassifiers xsi:type="ecore:EClass" name="Codegeneration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="E4CodeGeneration" eSuperTypes="#//Codegeneration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="iconPath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JavaCodeGeneration" eSuperTypes="#//Codegeneration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="E4CodeGeneration" eSuperTypes="#//Codegeneration"/>
   <eClassifiers xsi:type="ecore:EClass" name="Paritioning">
     <eStructuralFeatures xsi:type="ecore:EReference" name="partitions" upperBound="-1"
         eType="#//Partition" containment="true"/>

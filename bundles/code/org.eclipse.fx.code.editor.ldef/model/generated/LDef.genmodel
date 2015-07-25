@@ -28,13 +28,11 @@
     <genClasses ecoreClass="LDef.ecore#//JavaFXIntegration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//JavaFXIntegration/codegenerationList"/>
     </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//Codegeneration"/>
-    <genClasses ecoreClass="LDef.ecore#//JavaCodeGeneration">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//JavaCodeGeneration/name"/>
+    <genClasses ecoreClass="LDef.ecore#//Codegeneration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Codegeneration/name"/>
     </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//E4CodeGeneration">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//E4CodeGeneration/iconPath"/>
-    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//JavaCodeGeneration"/>
+    <genClasses ecoreClass="LDef.ecore#//E4CodeGeneration"/>
     <genClasses ecoreClass="LDef.ecore#//Paritioning">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitioner"/>

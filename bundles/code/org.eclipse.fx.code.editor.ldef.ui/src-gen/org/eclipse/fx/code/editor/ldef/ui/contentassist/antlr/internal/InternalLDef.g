@@ -2164,11 +2164,11 @@ rule__E4CodeGeneration__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getE4CodeGenerationAccess().getE4Keyword_0()); }
+{ before(grammarAccess.getE4CodeGenerationAccess().getE4CodeGenerationAction_0()); }
+(
 
-	'e4' 
-
-{ after(grammarAccess.getE4CodeGenerationAccess().getE4Keyword_0()); }
+)
+{ after(grammarAccess.getE4CodeGenerationAccess().getE4CodeGenerationAction_0()); }
 )
 
 ;
@@ -2183,6 +2183,7 @@ rule__E4CodeGeneration__Group__1
     }
 :
 	rule__E4CodeGeneration__Group__1__Impl
+	rule__E4CodeGeneration__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -2194,15 +2195,47 @@ rule__E4CodeGeneration__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getE4CodeGenerationAccess().getIconPathAssignment_1()); }
-(rule__E4CodeGeneration__IconPathAssignment_1)
-{ after(grammarAccess.getE4CodeGenerationAccess().getIconPathAssignment_1()); }
+{ before(grammarAccess.getE4CodeGenerationAccess().getE4Keyword_1()); }
+
+	'e4' 
+
+{ after(grammarAccess.getE4CodeGenerationAccess().getE4Keyword_1()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+rule__E4CodeGeneration__Group__2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__E4CodeGeneration__Group__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__E4CodeGeneration__Group__2__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getE4CodeGenerationAccess().getNameAssignment_2()); }
+(rule__E4CodeGeneration__NameAssignment_2)
+{ after(grammarAccess.getE4CodeGenerationAccess().getNameAssignment_2()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
 
 
 
@@ -5391,14 +5424,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__E4CodeGeneration__IconPathAssignment_1
+rule__E4CodeGeneration__NameAssignment_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getE4CodeGenerationAccess().getIconPathSTRINGTerminalRuleCall_1_0()); }
-	RULE_STRING{ after(grammarAccess.getE4CodeGenerationAccess().getIconPathSTRINGTerminalRuleCall_1_0()); }
+{ before(grammarAccess.getE4CodeGenerationAccess().getNameSTRINGTerminalRuleCall_2_0()); }
+	RULE_STRING{ after(grammarAccess.getE4CodeGenerationAccess().getNameSTRINGTerminalRuleCall_2_0()); }
 )
 
 ;

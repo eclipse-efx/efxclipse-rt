@@ -271,13 +271,22 @@ public interface LDefPackage extends EPackage
   int CODEGENERATION = 6;
 
   /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CODEGENERATION__NAME = 0;
+
+  /**
    * The number of structural features of the '<em>Codegeneration</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CODEGENERATION_FEATURE_COUNT = 0;
+  int CODEGENERATION_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.JavaCodeGenerationImpl <em>Java Code Generation</em>}' class.
@@ -296,7 +305,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int JAVA_CODE_GENERATION__NAME = CODEGENERATION_FEATURE_COUNT + 0;
+  int JAVA_CODE_GENERATION__NAME = CODEGENERATION__NAME;
 
   /**
    * The number of structural features of the '<em>Java Code Generation</em>' class.
@@ -305,7 +314,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int JAVA_CODE_GENERATION_FEATURE_COUNT = CODEGENERATION_FEATURE_COUNT + 1;
+  int JAVA_CODE_GENERATION_FEATURE_COUNT = CODEGENERATION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.E4CodeGenerationImpl <em>E4 Code Generation</em>}' class.
@@ -318,13 +327,13 @@ public interface LDefPackage extends EPackage
   int E4_CODE_GENERATION = 8;
 
   /**
-   * The feature id for the '<em><b>Icon Path</b></em>' attribute.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int E4_CODE_GENERATION__ICON_PATH = CODEGENERATION_FEATURE_COUNT + 0;
+  int E4_CODE_GENERATION__NAME = CODEGENERATION__NAME;
 
   /**
    * The number of structural features of the '<em>E4 Code Generation</em>' class.
@@ -333,7 +342,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int E4_CODE_GENERATION_FEATURE_COUNT = CODEGENERATION_FEATURE_COUNT + 1;
+  int E4_CODE_GENERATION_FEATURE_COUNT = CODEGENERATION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ParitioningImpl <em>Paritioning</em>}' class.
@@ -1304,6 +1313,17 @@ public interface LDefPackage extends EPackage
   EClass getCodegeneration();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Codegeneration#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Codegeneration#getName()
+   * @see #getCodegeneration()
+   * @generated
+   */
+  EAttribute getCodegeneration_Name();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration <em>Java Code Generation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1314,17 +1334,6 @@ public interface LDefPackage extends EPackage
   EClass getJavaCodeGeneration();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration#getName()
-   * @see #getJavaCodeGeneration()
-   * @generated
-   */
-  EAttribute getJavaCodeGeneration_Name();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration <em>E4 Code Generation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1333,17 +1342,6 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EClass getE4CodeGeneration();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration#getIconPath <em>Icon Path</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Icon Path</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration#getIconPath()
-   * @see #getE4CodeGeneration()
-   * @generated
-   */
-  EAttribute getE4CodeGeneration_IconPath();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Paritioning <em>Paritioning</em>}'.
@@ -2080,6 +2078,14 @@ public interface LDefPackage extends EPackage
     EClass CODEGENERATION = eINSTANCE.getCodegeneration();
 
     /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CODEGENERATION__NAME = eINSTANCE.getCodegeneration_Name();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.JavaCodeGenerationImpl <em>Java Code Generation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2090,14 +2096,6 @@ public interface LDefPackage extends EPackage
     EClass JAVA_CODE_GENERATION = eINSTANCE.getJavaCodeGeneration();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute JAVA_CODE_GENERATION__NAME = eINSTANCE.getJavaCodeGeneration_Name();
-
-    /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.E4CodeGenerationImpl <em>E4 Code Generation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2106,14 +2104,6 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EClass E4_CODE_GENERATION = eINSTANCE.getE4CodeGeneration();
-
-    /**
-     * The meta object literal for the '<em><b>Icon Path</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute E4_CODE_GENERATION__ICON_PATH = eINSTANCE.getE4CodeGeneration_IconPath();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ParitioningImpl <em>Paritioning</em>}' class.

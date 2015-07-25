@@ -130,16 +130,16 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     iconPath=STRING
+	 *     name=STRING
 	 */
 	protected void sequence_E4CodeGeneration(EObject context, E4CodeGeneration semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.E4_CODE_GENERATION__ICON_PATH) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.E4_CODE_GENERATION__ICON_PATH));
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.CODEGENERATION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.CODEGENERATION__NAME));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getE4CodeGenerationAccess().getIconPathSTRINGTerminalRuleCall_1_0(), semanticObject.getIconPath());
+		feeder.accept(grammarAccess.getE4CodeGenerationAccess().getNameSTRINGTerminalRuleCall_2_0(), semanticObject.getName());
 		feeder.finish();
 	}
 	
@@ -175,8 +175,8 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 */
 	protected void sequence_JavaCodeGeneration(EObject context, JavaCodeGeneration semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.JAVA_CODE_GENERATION__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.JAVA_CODE_GENERATION__NAME));
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.CODEGENERATION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.CODEGENERATION__NAME));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);

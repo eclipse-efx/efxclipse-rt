@@ -53,7 +53,8 @@ JavaCodeGeneration:
 ;
 
 E4CodeGeneration:
-	'e4' iconPath=STRING
+	{E4CodeGeneration}
+	'e4' name=STRING
 ;
 
 //SWTIntegration:

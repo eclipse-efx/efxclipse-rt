@@ -326,25 +326,29 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	public class E4CodeGenerationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "E4CodeGeneration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cE4Keyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cIconPathAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cIconPathSTRINGTerminalRuleCall_1_0 = (RuleCall)cIconPathAssignment_1.eContents().get(0);
+		private final Action cE4CodeGenerationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cE4Keyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameSTRINGTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		
 		//E4CodeGeneration:
-		//	"e4" iconPath=STRING;
+		//	{E4CodeGeneration} "e4" name=STRING;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"e4" iconPath=STRING
+		//{E4CodeGeneration} "e4" name=STRING
 		public Group getGroup() { return cGroup; }
 
-		//"e4"
-		public Keyword getE4Keyword_0() { return cE4Keyword_0; }
+		//{E4CodeGeneration}
+		public Action getE4CodeGenerationAction_0() { return cE4CodeGenerationAction_0; }
 
-		//iconPath=STRING
-		public Assignment getIconPathAssignment_1() { return cIconPathAssignment_1; }
+		//"e4"
+		public Keyword getE4Keyword_1() { return cE4Keyword_1; }
+
+		//name=STRING
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
 		//STRING
-		public RuleCall getIconPathSTRINGTerminalRuleCall_1_0() { return cIconPathSTRINGTerminalRuleCall_1_0; }
+		public RuleCall getNameSTRINGTerminalRuleCall_2_0() { return cNameSTRINGTerminalRuleCall_2_0; }
 	}
 
 	public class ParitioningElements extends AbstractParserRuleElementFinder {
@@ -1447,7 +1451,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//E4CodeGeneration:
-	//	"e4" iconPath=STRING;
+	//	{E4CodeGeneration} "e4" name=STRING;
 	public E4CodeGenerationElements getE4CodeGenerationAccess() {
 		return pE4CodeGeneration;
 	}

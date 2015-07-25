@@ -93,7 +93,7 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntegrationAccess().getCodeIntegrationListAssignment_2(), "rule__Integration__CodeIntegrationListAssignment_2");
 					put(grammarAccess.getJavaFXIntegrationAccess().getCodegenerationListAssignment_2(), "rule__JavaFXIntegration__CodegenerationListAssignment_2");
 					put(grammarAccess.getJavaCodeGenerationAccess().getNameAssignment_1(), "rule__JavaCodeGeneration__NameAssignment_1");
-					put(grammarAccess.getE4CodeGenerationAccess().getIconPathAssignment_1(), "rule__E4CodeGeneration__IconPathAssignment_1");
+					put(grammarAccess.getE4CodeGenerationAccess().getNameAssignment_2(), "rule__E4CodeGeneration__NameAssignment_2");
 					put(grammarAccess.getParitioningAccess().getPartitionsAssignment_2(), "rule__Paritioning__PartitionsAssignment_2");
 					put(grammarAccess.getParitioningAccess().getPartitionerAssignment_3(), "rule__Paritioning__PartitionerAssignment_3");
 					put(grammarAccess.getPartitionAccess().getNameAssignment_1(), "rule__Partition__NameAssignment_1");

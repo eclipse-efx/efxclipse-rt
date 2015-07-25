@@ -506,6 +506,16 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getCodegeneration_Name()
+  {
+    return (EAttribute)codegenerationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getJavaCodeGeneration()
   {
     return javaCodeGenerationEClass;
@@ -516,29 +526,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getJavaCodeGeneration_Name()
-  {
-    return (EAttribute)javaCodeGenerationEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getE4CodeGeneration()
   {
     return e4CodeGenerationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getE4CodeGeneration_IconPath()
-  {
-    return (EAttribute)e4CodeGenerationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1124,12 +1114,11 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     createEReference(javaFXIntegrationEClass, JAVA_FX_INTEGRATION__CODEGENERATION_LIST);
 
     codegenerationEClass = createEClass(CODEGENERATION);
+    createEAttribute(codegenerationEClass, CODEGENERATION__NAME);
 
     javaCodeGenerationEClass = createEClass(JAVA_CODE_GENERATION);
-    createEAttribute(javaCodeGenerationEClass, JAVA_CODE_GENERATION__NAME);
 
     e4CodeGenerationEClass = createEClass(E4_CODE_GENERATION);
-    createEAttribute(e4CodeGenerationEClass, E4_CODE_GENERATION__ICON_PATH);
 
     paritioningEClass = createEClass(PARITIONING);
     createEReference(paritioningEClass, PARITIONING__PARTITIONS);
@@ -1276,12 +1265,11 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     initEReference(getJavaFXIntegration_CodegenerationList(), this.getCodegeneration(), null, "codegenerationList", null, 0, -1, JavaFXIntegration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(codegenerationEClass, Codegeneration.class, "Codegeneration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getCodegeneration_Name(), ecorePackage.getEString(), "name", null, 0, 1, Codegeneration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(javaCodeGenerationEClass, JavaCodeGeneration.class, "JavaCodeGeneration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getJavaCodeGeneration_Name(), ecorePackage.getEString(), "name", null, 0, 1, JavaCodeGeneration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(e4CodeGenerationEClass, E4CodeGeneration.class, "E4CodeGeneration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getE4CodeGeneration_IconPath(), ecorePackage.getEString(), "iconPath", null, 0, 1, E4CodeGeneration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(paritioningEClass, Paritioning.class, "Paritioning", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getParitioning_Partitions(), this.getPartition(), null, "partitions", null, 0, -1, Paritioning.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -638,15 +638,21 @@ ruleE4CodeGeneration returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='e4' 
+((
     {
-    	newLeafNode(otherlv_0, grammarAccess.getE4CodeGenerationAccess().getE4Keyword_0());
+        $current = forceCreateModelElement(
+            grammarAccess.getE4CodeGenerationAccess().getE4CodeGenerationAction_0(),
+            $current);
+    }
+)	otherlv_1='e4' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getE4CodeGenerationAccess().getE4Keyword_1());
     }
 (
 (
-		lv_iconPath_1_0=RULE_STRING
+		lv_name_2_0=RULE_STRING
 		{
-			newLeafNode(lv_iconPath_1_0, grammarAccess.getE4CodeGenerationAccess().getIconPathSTRINGTerminalRuleCall_1_0()); 
+			newLeafNode(lv_name_2_0, grammarAccess.getE4CodeGenerationAccess().getNameSTRINGTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -654,8 +660,8 @@ ruleE4CodeGeneration returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"iconPath",
-        		lv_iconPath_1_0, 
+       			"name",
+        		lv_name_2_0, 
         		"STRING");
 	    }
 

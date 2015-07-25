@@ -38,9 +38,10 @@ class JavaFXCodeGenerator {
 			val e4CodeGen = javaFXIntegration.codegenerationList.filter(typeof(E4CodeGeneration)).head
 			if( e4CodeGen != null ) {
 				if( javaCodeGen != null ) {
-					val basePackage = javaCodeGen.name;
-					access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"DocumentPartitionerTypeProvider.java",generateDocumentPartitionerTypeProvider(model,basePackage))
-					access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PresentationReconcilerTypeProvider.java",generatePresentationReconcilerTypeProvider(model,basePackage))
+					val basePackage = e4CodeGen.name
+					val javaBasePackage = javaCodeGen.name
+					access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"DocumentPartitionerTypeProvider.java",generateDocumentPartitionerTypeProvider(model,basePackage,javaBasePackage))
+					access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PresentationReconcilerTypeProvider.java",generatePresentationReconcilerTypeProvider(model,basePackage,javaBasePackage))
 				} else {
 					// TODO need to generate LDef model integration
 				}
@@ -48,14 +49,14 @@ class JavaFXCodeGenerator {
 		}
 	}
 
-	def generateDocumentPartitionerTypeProvider(LanguageDef model, String basePackage) '''
+	def generateDocumentPartitionerTypeProvider(LanguageDef model, String basePackage, String javaBasePackage) '''
 	package «basePackage»;
 
 	@org.osgi.service.component.annotations.Component
 	public class «model.name.toFirstUpper»DocumentPartitionerTypeProvider implements org.eclipse.fx.code.editor.services.DocumentPartitionerTypeProvider {
 		@Override
 		public Class<? extends org.eclipse.jface.text.IDocumentPartitioner> getType(org.eclipse.fx.code.editor.Input<?> s) {
-			return «model.name.toFirstUpper»Partitioner.class;
+			return «javaBasePackage».«model.name.toFirstUpper»Partitioner.class;
 		}
 
 		public boolean test(org.eclipse.fx.code.editor.Input<?> t) {
@@ -64,7 +65,7 @@ class JavaFXCodeGenerator {
 	}
 	'''
 
-	def generatePresentationReconcilerTypeProvider(LanguageDef model, String basePackage) '''
+	def generatePresentationReconcilerTypeProvider(LanguageDef model, String basePackage, String javaBasePackage) '''
 	package «basePackage»;
 
 	@org.osgi.service.component.annotations.Component
@@ -72,7 +73,7 @@ class JavaFXCodeGenerator {
 
 		@Override
 		public Class<? extends org.eclipse.jface.text.presentation.PresentationReconciler> getType(org.eclipse.fx.code.editor.Input<?> s) {
-			return «model.name.toFirstUpper»PresentationReconciler.class;
+			return «javaBasePackage».«model.name.toFirstUpper»PresentationReconciler.class;
 		}
 
 		@Override
