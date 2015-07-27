@@ -1,8 +1,9 @@
-package org.eclipse.fx.code.editor.e4;
+package org.eclipse.fx.code.editor.e4.internal;
 
 import java.util.Map;
 
 import org.eclipse.e4.core.contexts.IContextFunction;
+import org.eclipse.fx.code.editor.e4.InputBasedContextFunction;
 import org.eclipse.fx.code.editor.services.DocumentPartitionerTypeProvider;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.osgi.service.component.annotations.Component;

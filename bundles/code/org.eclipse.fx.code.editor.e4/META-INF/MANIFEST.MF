@@ -11,11 +11,18 @@ Require-Bundle: org.eclipse.e4.core.contexts,
  org.eclipse.e4.ui.model.workbench,
  org.eclipse.fx.text.ui;bundle-version="1.0.0",
  org.eclipse.fx.core.di.context,
- org.eclipse.fx.core;bundle-version="2.1.0"
-Import-Package: org.osgi.service.component.annotations
-Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.e4.DocumentContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.e4.DocumentPartitionerContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.e4.InputContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.e4.AnnotationModelContextFunction.xml
+ org.eclipse.fx.core;bundle-version="2.1.0",
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.e4.core.services,
+ org.eclipse.osgi.services,
+ org.eclipse.e4.ui.di
+Import-Package: javax.inject;version="1.0.0",
+ org.osgi.service.component.annotations
+Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.DocumentPartitionerContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.AnnotationModelContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.DocumentContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.InputContextFunction.xml
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.fx.code.editor.e4
+Export-Package: org.eclipse.fx.code.editor.e4,
+ org.eclipse.fx.code.editor.e4.addons,
+ org.eclipse.fx.code.editor.e4.handlers

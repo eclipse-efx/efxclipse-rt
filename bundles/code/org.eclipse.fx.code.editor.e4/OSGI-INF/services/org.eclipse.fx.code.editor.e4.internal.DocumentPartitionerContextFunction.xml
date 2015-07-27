@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.code.editor.e4.DocumentPartitionerContextFunction">
-   <implementation class="org.eclipse.fx.code.editor.e4.DocumentPartitionerContextFunction"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.code.editor.e4.internal.DocumentPartitionerContextFunction">
+   <implementation class="org.eclipse.fx.code.editor.e4.internal.DocumentPartitionerContextFunction"/>
    <service>
       <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
    </service>

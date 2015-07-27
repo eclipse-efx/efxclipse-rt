@@ -1,4 +1,4 @@
-package org.eclipse.fx.code.editor.e4;
+package org.eclipse.fx.code.editor.e4.internal;
 
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;

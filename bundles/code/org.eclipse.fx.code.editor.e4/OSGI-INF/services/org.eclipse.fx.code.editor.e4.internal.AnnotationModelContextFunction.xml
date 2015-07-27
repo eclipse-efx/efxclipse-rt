@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.code.editor.e4.AnnotationModelContextFunction">
-   <implementation class="org.eclipse.fx.code.editor.e4.AnnotationModelContextFunction"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.code.editor.e4.internal.AnnotationModelContextFunction">
+   <implementation class="org.eclipse.fx.code.editor.e4.internal.AnnotationModelContextFunction"/>
    <service>
       <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
    </service>

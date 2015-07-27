@@ -1,4 +1,4 @@
-package org.eclipse.fx.code.editor.fx.e4;
+package org.eclipse.fx.code.editor.fx.e4.internal;
 
 import java.util.Collections;
 import java.util.List;

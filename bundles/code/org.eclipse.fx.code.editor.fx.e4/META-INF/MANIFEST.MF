@@ -18,8 +18,8 @@ Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.4.0",
  org.eclipse.fx.core.di
 Import-Package: javax.inject,
  org.osgi.service.component.annotations
-Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.PresentationReconcilerContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.SourceViewerConfigurationContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.ProposalComputerTypeProviderContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.AnnotationPresenterContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.TextEditorOpenerContextFunction.xml
+Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.SourceViewerConfigurationContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.ProposalComputerTypeProviderContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.TextEditorOpenerContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.PresentationReconcilerContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.AnnotationPresenterContextFunction.xml
