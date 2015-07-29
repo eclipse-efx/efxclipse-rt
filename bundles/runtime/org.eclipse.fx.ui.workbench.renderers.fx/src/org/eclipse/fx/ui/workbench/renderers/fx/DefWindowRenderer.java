@@ -1038,7 +1038,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		 */
 		@Inject
 		public void setImageUrl(@Named(UIEvents.UILabel.ICONURI) @Optional String iconUri) {
-			if (iconUri != null) {
+			if (iconUri != null && !iconUri.isEmpty()) {
 
 				String[] split = iconUri.split(";"); //$NON-NLS-1$
 				List<Image> images = new ArrayList<>();
