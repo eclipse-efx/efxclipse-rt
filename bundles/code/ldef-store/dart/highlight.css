@@ -1,0 +1,65 @@
+.styled-text-area .dart.dart_default {
+	-styled-text-color: rgb(0, 0, 0);
+}
+
+.styled-text-area .dart.dart_operator {
+	-styled-text-color: rgb(0, 0, 0);
+}
+
+.styled-text-area .dart.dart_bracket {
+	-styled-text-color: rgb(0, 0, 0);
+}
+
+.styled-text-area .dart.dart_keyword {
+	-styled-text-color: rgb(127, 0, 85);
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .dart.dart_keyword_1 {
+	-styled-text-color: rgb(127, 0, 85);
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .dart.dart_keyword_2 {
+	-styled-text-color: rgb(127, 0, 85);
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .dart.dart_single_line_comment {
+	-styled-text-color: rgb(63, 127, 95);
+}
+
+.styled-text-area .dart.dart_multi_line_comment {
+	-styled-text-color: rgb(63, 127, 95);
+}
+
+.styled-text-area .dart.dart_string {
+	-styled-text-color: rgb(42, 0, 255);
+}
+
+.styled-text-area .dart.dart_string_inter {
+	-styled-text-color: rgb(42, 0, 255);
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .dart.dart_builtin_types {
+	-styled-text-color: #74a567;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .dart.dart_doc {
+	-styled-text-color: rgb(63, 95, 191);
+}
+
+.styled-text-area .dart.dart_doc_reference {
+	-styled-text-color: rgb(63, 95, 191);
+	-fx-font-weight: bold;
+}
+
+.dart-element-name {
+
+}
+
+.dart-type-info {
+	-fx-fill: lightgray;
+}
