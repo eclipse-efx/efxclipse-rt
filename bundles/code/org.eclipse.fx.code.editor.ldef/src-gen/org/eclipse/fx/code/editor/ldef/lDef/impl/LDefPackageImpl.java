@@ -1014,9 +1014,19 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getScanner_PatternRule_ContentPattern()
+  public EAttribute getScanner_PatternRule_Length()
   {
     return (EAttribute)scanner_PatternRuleEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getScanner_PatternRule_ContentPattern()
+  {
+    return (EAttribute)scanner_PatternRuleEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1224,6 +1234,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
 
     scanner_PatternRuleEClass = createEClass(SCANNER_PATTERN_RULE);
     createEAttribute(scanner_PatternRuleEClass, SCANNER_PATTERN_RULE__START_PATTERN);
+    createEAttribute(scanner_PatternRuleEClass, SCANNER_PATTERN_RULE__LENGTH);
     createEAttribute(scanner_PatternRuleEClass, SCANNER_PATTERN_RULE__CONTENT_PATTERN);
 
     scanner_CharacterRuleEClass = createEClass(SCANNER_CHARACTER_RULE);
@@ -1380,6 +1391,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
 
     initEClass(scanner_PatternRuleEClass, Scanner_PatternRule.class, "Scanner_PatternRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScanner_PatternRule_StartPattern(), ecorePackage.getEString(), "startPattern", null, 0, 1, Scanner_PatternRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getScanner_PatternRule_Length(), ecorePackage.getEInt(), "length", null, 0, 1, Scanner_PatternRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScanner_PatternRule_ContentPattern(), ecorePackage.getEString(), "contentPattern", null, 0, 1, Scanner_PatternRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scanner_CharacterRuleEClass, Scanner_CharacterRule.class, "Scanner_CharacterRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

@@ -231,7 +231,7 @@ class JavaFXCodeGenerator {
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_PatternRule r) '''
-	new org.eclipse.fx.text.RegexRule(«t.name»Token, java.util.regex.Pattern.compile("«r.startPattern»"),1,java.util.regex.Pattern.compile("«r.contentPattern»"));
+	new org.eclipse.fx.text.RegexRule(«t.name»Token, java.util.regex.Pattern.compile("«r.startPattern»"),«Math.max(1,r.length)»,java.util.regex.Pattern.compile("«r.contentPattern»"));
 	'''
 
 	def dispatch generatePartitionRule(Partition_SingleLineRule r) '''

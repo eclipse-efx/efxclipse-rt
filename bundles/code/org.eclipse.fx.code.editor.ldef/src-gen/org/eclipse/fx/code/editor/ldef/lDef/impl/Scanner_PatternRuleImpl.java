@@ -20,6 +20,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl#getStartPattern <em>Start Pattern</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl#getLength <em>Length</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl#getContentPattern <em>Content Pattern</em>}</li>
  * </ul>
  *
@@ -46,6 +47,26 @@ public class Scanner_PatternRuleImpl extends Scanner_RuleImpl implements Scanner
    * @ordered
    */
   protected String startPattern = START_PATTERN_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getLength() <em>Length</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLength()
+   * @generated
+   * @ordered
+   */
+  protected static final int LENGTH_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getLength() <em>Length</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLength()
+   * @generated
+   * @ordered
+   */
+  protected int length = LENGTH_EDEFAULT;
 
   /**
    * The default value of the '{@link #getContentPattern() <em>Content Pattern</em>}' attribute.
@@ -116,6 +137,29 @@ public class Scanner_PatternRuleImpl extends Scanner_RuleImpl implements Scanner
    * <!-- end-user-doc -->
    * @generated
    */
+  public int getLength()
+  {
+    return length;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLength(int newLength)
+  {
+    int oldLength = length;
+    length = newLength;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_PATTERN_RULE__LENGTH, oldLength, length));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getContentPattern()
   {
     return contentPattern;
@@ -146,6 +190,8 @@ public class Scanner_PatternRuleImpl extends Scanner_RuleImpl implements Scanner
     {
       case LDefPackage.SCANNER_PATTERN_RULE__START_PATTERN:
         return getStartPattern();
+      case LDefPackage.SCANNER_PATTERN_RULE__LENGTH:
+        return getLength();
       case LDefPackage.SCANNER_PATTERN_RULE__CONTENT_PATTERN:
         return getContentPattern();
     }
@@ -164,6 +210,9 @@ public class Scanner_PatternRuleImpl extends Scanner_RuleImpl implements Scanner
     {
       case LDefPackage.SCANNER_PATTERN_RULE__START_PATTERN:
         setStartPattern((String)newValue);
+        return;
+      case LDefPackage.SCANNER_PATTERN_RULE__LENGTH:
+        setLength((Integer)newValue);
         return;
       case LDefPackage.SCANNER_PATTERN_RULE__CONTENT_PATTERN:
         setContentPattern((String)newValue);
@@ -185,6 +234,9 @@ public class Scanner_PatternRuleImpl extends Scanner_RuleImpl implements Scanner
       case LDefPackage.SCANNER_PATTERN_RULE__START_PATTERN:
         setStartPattern(START_PATTERN_EDEFAULT);
         return;
+      case LDefPackage.SCANNER_PATTERN_RULE__LENGTH:
+        setLength(LENGTH_EDEFAULT);
+        return;
       case LDefPackage.SCANNER_PATTERN_RULE__CONTENT_PATTERN:
         setContentPattern(CONTENT_PATTERN_EDEFAULT);
         return;
@@ -204,6 +256,8 @@ public class Scanner_PatternRuleImpl extends Scanner_RuleImpl implements Scanner
     {
       case LDefPackage.SCANNER_PATTERN_RULE__START_PATTERN:
         return START_PATTERN_EDEFAULT == null ? startPattern != null : !START_PATTERN_EDEFAULT.equals(startPattern);
+      case LDefPackage.SCANNER_PATTERN_RULE__LENGTH:
+        return length != LENGTH_EDEFAULT;
       case LDefPackage.SCANNER_PATTERN_RULE__CONTENT_PATTERN:
         return CONTENT_PATTERN_EDEFAULT == null ? contentPattern != null : !CONTENT_PATTERN_EDEFAULT.equals(contentPattern);
     }
@@ -223,6 +277,8 @@ public class Scanner_PatternRuleImpl extends Scanner_RuleImpl implements Scanner
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (startPattern: ");
     result.append(startPattern);
+    result.append(", length: ");
+    result.append(length);
     result.append(", contentPattern: ");
     result.append(contentPattern);
     result.append(')');

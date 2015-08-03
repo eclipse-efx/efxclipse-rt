@@ -104,6 +104,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scanner_PatternRule" eSuperTypes="#//Scanner_Rule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="length" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contentPattern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scanner_CharacterRule" eSuperTypes="#//Scanner_Rule">

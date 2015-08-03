@@ -985,20 +985,21 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSingle_lineKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cStartSeqAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cStartSeqSTRINGTerminalRuleCall_1_0 = (RuleCall)cStartSeqAssignment_1.eContents().get(0);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cEndSeqAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cEndSeqSTRINGTerminalRuleCall_3_0 = (RuleCall)cEndSeqAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cEscapedKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Keyword cByKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cEscapeSeqAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_4_2_0 = (RuleCall)cEscapeSeqAssignment_4_2.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cEndSeqAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cEndSeqSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cEndSeqAssignment_2_1.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cEscapedKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cByKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Assignment cEscapeSeqAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_3_2_0 = (RuleCall)cEscapeSeqAssignment_3_2.eContents().get(0);
 		
 		//Scanner_SingleLineRule:
-		//	"single_line" startSeq=STRING "=>" endSeq=STRING? ("escaped" "by" escapeSeq=STRING)?;
+		//	"single_line" startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"single_line" startSeq=STRING "=>" endSeq=STRING? ("escaped" "by" escapeSeq=STRING)?
+		//"single_line" startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//"single_line"
@@ -1010,29 +1011,32 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
 
+		//("=>" endSeq=STRING?)?
+		public Group getGroup_2() { return cGroup_2; }
+
 		//"=>"
-		public Keyword getEqualsSignGreaterThanSignKeyword_2() { return cEqualsSignGreaterThanSignKeyword_2; }
+		public Keyword getEqualsSignGreaterThanSignKeyword_2_0() { return cEqualsSignGreaterThanSignKeyword_2_0; }
 
 		//endSeq=STRING?
-		public Assignment getEndSeqAssignment_3() { return cEndSeqAssignment_3; }
+		public Assignment getEndSeqAssignment_2_1() { return cEndSeqAssignment_2_1; }
 
 		//STRING
-		public RuleCall getEndSeqSTRINGTerminalRuleCall_3_0() { return cEndSeqSTRINGTerminalRuleCall_3_0; }
+		public RuleCall getEndSeqSTRINGTerminalRuleCall_2_1_0() { return cEndSeqSTRINGTerminalRuleCall_2_1_0; }
 
 		//("escaped" "by" escapeSeq=STRING)?
-		public Group getGroup_4() { return cGroup_4; }
+		public Group getGroup_3() { return cGroup_3; }
 
 		//"escaped"
-		public Keyword getEscapedKeyword_4_0() { return cEscapedKeyword_4_0; }
+		public Keyword getEscapedKeyword_3_0() { return cEscapedKeyword_3_0; }
 
 		//"by"
-		public Keyword getByKeyword_4_1() { return cByKeyword_4_1; }
+		public Keyword getByKeyword_3_1() { return cByKeyword_3_1; }
 
 		//escapeSeq=STRING
-		public Assignment getEscapeSeqAssignment_4_2() { return cEscapeSeqAssignment_4_2; }
+		public Assignment getEscapeSeqAssignment_3_2() { return cEscapeSeqAssignment_3_2; }
 
 		//STRING
-		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_4_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_4_2_0; }
+		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_3_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_3_2_0; }
 	}
 
 	public class Scanner_MultiLineRuleElements extends AbstractParserRuleElementFinder {
@@ -1097,15 +1101,17 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPatternKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cStartPatternAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cStartPatternSTRINGTerminalRuleCall_1_0 = (RuleCall)cStartPatternAssignment_1.eContents().get(0);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cContentPatternAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cContentPatternSTRINGTerminalRuleCall_3_0 = (RuleCall)cContentPatternAssignment_3.eContents().get(0);
+		private final Assignment cLengthAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cLengthINTTerminalRuleCall_2_0 = (RuleCall)cLengthAssignment_2.eContents().get(0);
+		private final Keyword cContainingKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cContentPatternAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cContentPatternSTRINGTerminalRuleCall_4_0 = (RuleCall)cContentPatternAssignment_4.eContents().get(0);
 		
 		//Scanner_PatternRule:
-		//	"pattern" startPattern=STRING "=>" contentPattern=STRING;
+		//	"pattern" startPattern=STRING length=INT? "containing" contentPattern=STRING;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"pattern" startPattern=STRING "=>" contentPattern=STRING
+		//"pattern" startPattern=STRING length=INT? "containing" contentPattern=STRING
 		public Group getGroup() { return cGroup; }
 
 		//"pattern"
@@ -1117,14 +1123,20 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartPatternSTRINGTerminalRuleCall_1_0() { return cStartPatternSTRINGTerminalRuleCall_1_0; }
 
-		//"=>"
-		public Keyword getEqualsSignGreaterThanSignKeyword_2() { return cEqualsSignGreaterThanSignKeyword_2; }
+		//length=INT?
+		public Assignment getLengthAssignment_2() { return cLengthAssignment_2; }
+
+		//INT
+		public RuleCall getLengthINTTerminalRuleCall_2_0() { return cLengthINTTerminalRuleCall_2_0; }
+
+		//"containing"
+		public Keyword getContainingKeyword_3() { return cContainingKeyword_3; }
 
 		//contentPattern=STRING
-		public Assignment getContentPatternAssignment_3() { return cContentPatternAssignment_3; }
+		public Assignment getContentPatternAssignment_4() { return cContentPatternAssignment_4; }
 
 		//STRING
-		public RuleCall getContentPatternSTRINGTerminalRuleCall_3_0() { return cContentPatternSTRINGTerminalRuleCall_3_0; }
+		public RuleCall getContentPatternSTRINGTerminalRuleCall_4_0() { return cContentPatternSTRINGTerminalRuleCall_4_0; }
 	}
 
 	public class Scanner_CharacterRuleElements extends AbstractParserRuleElementFinder {
@@ -1681,7 +1693,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_SingleLineRule:
-	//	"single_line" startSeq=STRING "=>" endSeq=STRING? ("escaped" "by" escapeSeq=STRING)?;
+	//	"single_line" startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
 	public Scanner_SingleLineRuleElements getScanner_SingleLineRuleAccess() {
 		return pScanner_SingleLineRule;
 	}
@@ -1701,7 +1713,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_PatternRule:
-	//	"pattern" startPattern=STRING "=>" contentPattern=STRING;
+	//	"pattern" startPattern=STRING length=INT? "containing" contentPattern=STRING;
 	public Scanner_PatternRuleElements getScanner_PatternRuleAccess() {
 		return pScanner_PatternRule;
 	}

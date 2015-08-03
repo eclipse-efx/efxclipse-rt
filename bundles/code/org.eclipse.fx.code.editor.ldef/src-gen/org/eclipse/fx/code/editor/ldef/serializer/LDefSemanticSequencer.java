@@ -375,20 +375,10 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (startPattern=STRING contentPattern=STRING)
+	 *     (startPattern=STRING length=INT? contentPattern=STRING)
 	 */
 	protected void sequence_Scanner_PatternRule(EObject context, Scanner_PatternRule semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_PATTERN_RULE__START_PATTERN) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_PATTERN_RULE__START_PATTERN));
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_PATTERN_RULE__CONTENT_PATTERN) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_PATTERN_RULE__CONTENT_PATTERN));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getScanner_PatternRuleAccess().getStartPatternSTRINGTerminalRuleCall_1_0(), semanticObject.getStartPattern());
-		feeder.accept(grammarAccess.getScanner_PatternRuleAccess().getContentPatternSTRINGTerminalRuleCall_3_0(), semanticObject.getContentPattern());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

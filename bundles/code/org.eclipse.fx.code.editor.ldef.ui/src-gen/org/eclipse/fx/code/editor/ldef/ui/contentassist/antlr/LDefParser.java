@@ -73,7 +73,8 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeywordAccess().getGroup(), "rule__Keyword__Group__0");
 					put(grammarAccess.getKeywordAccess().getGroup_1(), "rule__Keyword__Group_1__0");
 					put(grammarAccess.getScanner_SingleLineRuleAccess().getGroup(), "rule__Scanner_SingleLineRule__Group__0");
-					put(grammarAccess.getScanner_SingleLineRuleAccess().getGroup_4(), "rule__Scanner_SingleLineRule__Group_4__0");
+					put(grammarAccess.getScanner_SingleLineRuleAccess().getGroup_2(), "rule__Scanner_SingleLineRule__Group_2__0");
+					put(grammarAccess.getScanner_SingleLineRuleAccess().getGroup_3(), "rule__Scanner_SingleLineRule__Group_3__0");
 					put(grammarAccess.getScanner_MultiLineRuleAccess().getGroup(), "rule__Scanner_MultiLineRule__Group__0");
 					put(grammarAccess.getScanner_MultiLineRuleAccess().getGroup_4(), "rule__Scanner_MultiLineRule__Group_4__0");
 					put(grammarAccess.getScanner_PatternRuleAccess().getGroup(), "rule__Scanner_PatternRule__Group__0");
@@ -122,13 +123,14 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeywordAccess().getNameAssignment_0(), "rule__Keyword__NameAssignment_0");
 					put(grammarAccess.getKeywordAccess().getVersionAssignment_1_1(), "rule__Keyword__VersionAssignment_1_1");
 					put(grammarAccess.getScanner_SingleLineRuleAccess().getStartSeqAssignment_1(), "rule__Scanner_SingleLineRule__StartSeqAssignment_1");
-					put(grammarAccess.getScanner_SingleLineRuleAccess().getEndSeqAssignment_3(), "rule__Scanner_SingleLineRule__EndSeqAssignment_3");
-					put(grammarAccess.getScanner_SingleLineRuleAccess().getEscapeSeqAssignment_4_2(), "rule__Scanner_SingleLineRule__EscapeSeqAssignment_4_2");
+					put(grammarAccess.getScanner_SingleLineRuleAccess().getEndSeqAssignment_2_1(), "rule__Scanner_SingleLineRule__EndSeqAssignment_2_1");
+					put(grammarAccess.getScanner_SingleLineRuleAccess().getEscapeSeqAssignment_3_2(), "rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2");
 					put(grammarAccess.getScanner_MultiLineRuleAccess().getStartSeqAssignment_1(), "rule__Scanner_MultiLineRule__StartSeqAssignment_1");
 					put(grammarAccess.getScanner_MultiLineRuleAccess().getEndSeqAssignment_3(), "rule__Scanner_MultiLineRule__EndSeqAssignment_3");
 					put(grammarAccess.getScanner_MultiLineRuleAccess().getEscapeSeqAssignment_4_2(), "rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2");
 					put(grammarAccess.getScanner_PatternRuleAccess().getStartPatternAssignment_1(), "rule__Scanner_PatternRule__StartPatternAssignment_1");
-					put(grammarAccess.getScanner_PatternRuleAccess().getContentPatternAssignment_3(), "rule__Scanner_PatternRule__ContentPatternAssignment_3");
+					put(grammarAccess.getScanner_PatternRuleAccess().getLengthAssignment_2(), "rule__Scanner_PatternRule__LengthAssignment_2");
+					put(grammarAccess.getScanner_PatternRuleAccess().getContentPatternAssignment_4(), "rule__Scanner_PatternRule__ContentPatternAssignment_4");
 					put(grammarAccess.getScanner_CharacterRuleAccess().getCharactersAssignment_2(), "rule__Scanner_CharacterRule__CharactersAssignment_2");
 					put(grammarAccess.getScanner_CharacterRuleAccess().getCharactersAssignment_3_1(), "rule__Scanner_CharacterRule__CharactersAssignment_3_1");
 					put(grammarAccess.getScanner_JSRuleAccess().getFileURIAssignment_1(), "rule__Scanner_JSRule__FileURIAssignment_1");

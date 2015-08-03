@@ -146,7 +146,7 @@ Scanner_Rule:
 ;
 
 Scanner_SingleLineRule:
-	'single_line' startSeq=STRING '=>' endSeq=STRING? ('escaped' 'by' escapeSeq=STRING)?
+	'single_line' startSeq=STRING ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
 ;
 
 Scanner_MultiLineRule:
@@ -154,7 +154,7 @@ Scanner_MultiLineRule:
 ;
 
 Scanner_PatternRule:
-	'pattern' startPattern=STRING '=>' contentPattern=STRING
+	'pattern' startPattern=STRING (length=INT)? 'containing' contentPattern=STRING
 ;
 
 Scanner_CharacterRule:

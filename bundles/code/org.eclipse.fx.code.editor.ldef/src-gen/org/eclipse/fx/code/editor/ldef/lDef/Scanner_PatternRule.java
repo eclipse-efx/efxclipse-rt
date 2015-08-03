@@ -13,6 +13,7 @@ package org.eclipse.fx.code.editor.ldef.lDef;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getStartPattern <em>Start Pattern</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getLength <em>Length</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getContentPattern <em>Content Pattern</em>}</li>
  * </ul>
  *
@@ -47,6 +48,32 @@ public interface Scanner_PatternRule extends Scanner_Rule
    * @generated
    */
   void setStartPattern(String value);
+
+  /**
+   * Returns the value of the '<em><b>Length</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Length</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Length</em>' attribute.
+   * @see #setLength(int)
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScanner_PatternRule_Length()
+   * @model
+   * @generated
+   */
+  int getLength();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getLength <em>Length</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Length</em>' attribute.
+   * @see #getLength()
+   * @generated
+   */
+  void setLength(int value);
 
   /**
    * Returns the value of the '<em><b>Content Pattern</b></em>' attribute.

@@ -1756,15 +1756,15 @@ ruleScanner_SingleLineRule returns [EObject current=null]
 	    }
 
 )
-)	otherlv_2='=>' 
+)(	otherlv_2='=>' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getScanner_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getScanner_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_2_0());
     }
 (
 (
 		lv_endSeq_3_0=RULE_STRING
 		{
-			newLeafNode(lv_endSeq_3_0, grammarAccess.getScanner_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_3_0()); 
+			newLeafNode(lv_endSeq_3_0, grammarAccess.getScanner_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_2_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1778,19 +1778,19 @@ ruleScanner_SingleLineRule returns [EObject current=null]
 	    }
 
 )
-)?(	otherlv_4='escaped' 
+)?)?(	otherlv_4='escaped' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getScanner_SingleLineRuleAccess().getEscapedKeyword_4_0());
+    	newLeafNode(otherlv_4, grammarAccess.getScanner_SingleLineRuleAccess().getEscapedKeyword_3_0());
     }
 	otherlv_5='by' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getScanner_SingleLineRuleAccess().getByKeyword_4_1());
+    	newLeafNode(otherlv_5, grammarAccess.getScanner_SingleLineRuleAccess().getByKeyword_3_1());
     }
 (
 (
 		lv_escapeSeq_6_0=RULE_STRING
 		{
-			newLeafNode(lv_escapeSeq_6_0, grammarAccess.getScanner_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_4_2_0()); 
+			newLeafNode(lv_escapeSeq_6_0, grammarAccess.getScanner_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_3_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1938,15 +1938,33 @@ ruleScanner_PatternRule returns [EObject current=null]
 	    }
 
 )
-)	otherlv_2='=>' 
+)(
+(
+		lv_length_2_0=RULE_INT
+		{
+			newLeafNode(lv_length_2_0, grammarAccess.getScanner_PatternRuleAccess().getLengthINTTerminalRuleCall_2_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScanner_PatternRuleRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"length",
+        		lv_length_2_0, 
+        		"INT");
+	    }
+
+)
+)?	otherlv_3='containing' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getScanner_PatternRuleAccess().getEqualsSignGreaterThanSignKeyword_2());
+    	newLeafNode(otherlv_3, grammarAccess.getScanner_PatternRuleAccess().getContainingKeyword_3());
     }
 (
 (
-		lv_contentPattern_3_0=RULE_STRING
+		lv_contentPattern_4_0=RULE_STRING
 		{
-			newLeafNode(lv_contentPattern_3_0, grammarAccess.getScanner_PatternRuleAccess().getContentPatternSTRINGTerminalRuleCall_3_0()); 
+			newLeafNode(lv_contentPattern_4_0, grammarAccess.getScanner_PatternRuleAccess().getContentPatternSTRINGTerminalRuleCall_4_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1955,7 +1973,7 @@ ruleScanner_PatternRule returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"contentPattern",
-        		lv_contentPattern_3_0, 
+        		lv_contentPattern_4_0, 
         		"STRING");
 	    }
 

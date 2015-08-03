@@ -11,6 +11,8 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
+import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
 import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 
@@ -18,10 +20,12 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class LDefSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected LDefGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_2_0_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (LDefGrammarAccess) access;
+		match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getScanner_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_2_0());
 	}
 	
 	@Override
@@ -36,8 +40,22 @@ public class LDefSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			acceptNodes(getLastNavigableState(), syntaxNodes);
+			if(match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_2_0_q.equals(syntax))
+				emit_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     '=>'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     startSeq=STRING (ambiguity) 'escaped' 'by' escapeSeq=STRING
+	 *     startSeq=STRING (ambiguity) (rule end)
+	 */
+	protected void emit_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 }

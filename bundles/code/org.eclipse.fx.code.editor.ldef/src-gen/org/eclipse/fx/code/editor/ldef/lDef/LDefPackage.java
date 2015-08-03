@@ -1049,13 +1049,22 @@ public interface LDefPackage extends EPackage
   int SCANNER_PATTERN_RULE__START_PATTERN = SCANNER_RULE_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Length</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_PATTERN_RULE__LENGTH = SCANNER_RULE_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>Content Pattern</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_PATTERN_RULE__CONTENT_PATTERN = SCANNER_RULE_FEATURE_COUNT + 1;
+  int SCANNER_PATTERN_RULE__CONTENT_PATTERN = SCANNER_RULE_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Scanner Pattern Rule</em>' class.
@@ -1064,7 +1073,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_PATTERN_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 2;
+  int SCANNER_PATTERN_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_CharacterRuleImpl <em>Scanner Character Rule</em>}' class.
@@ -1878,6 +1887,17 @@ public interface LDefPackage extends EPackage
   EAttribute getScanner_PatternRule_StartPattern();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getLength <em>Length</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Length</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getLength()
+   * @see #getScanner_PatternRule()
+   * @generated
+   */
+  EAttribute getScanner_PatternRule_Length();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getContentPattern <em>Content Pattern</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2589,6 +2609,14 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EAttribute SCANNER_PATTERN_RULE__START_PATTERN = eINSTANCE.getScanner_PatternRule_StartPattern();
+
+    /**
+     * The meta object literal for the '<em><b>Length</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_PATTERN_RULE__LENGTH = eINSTANCE.getScanner_PatternRule_Length();
 
     /**
      * The meta object literal for the '<em><b>Content Pattern</b></em>' attribute feature.
