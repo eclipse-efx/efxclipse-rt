@@ -1030,6 +1030,43 @@ public interface LDefPackage extends EPackage
   int SCANNER_MULTI_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 3;
 
   /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl <em>Scanner Pattern Rule</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_PatternRule()
+   * @generated
+   */
+  int SCANNER_PATTERN_RULE = 28;
+
+  /**
+   * The feature id for the '<em><b>Start Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_PATTERN_RULE__START_PATTERN = SCANNER_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Content Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_PATTERN_RULE__CONTENT_PATTERN = SCANNER_RULE_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Scanner Pattern Rule</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_PATTERN_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_CharacterRuleImpl <em>Scanner Character Rule</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1037,7 +1074,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_CharacterRule()
    * @generated
    */
-  int SCANNER_CHARACTER_RULE = 28;
+  int SCANNER_CHARACTER_RULE = 29;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -1065,7 +1102,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_JSRule()
    * @generated
    */
-  int SCANNER_JS_RULE = 29;
+  int SCANNER_JS_RULE = 30;
 
   /**
    * The feature id for the '<em><b>File URI</b></em>' attribute.
@@ -1093,7 +1130,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getWhitespaceRule()
    * @generated
    */
-  int WHITESPACE_RULE = 30;
+  int WHITESPACE_RULE = 31;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -1820,6 +1857,38 @@ public interface LDefPackage extends EPackage
   EAttribute getScanner_MultiLineRule_EscapeSeq();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule <em>Scanner Pattern Rule</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scanner Pattern Rule</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule
+   * @generated
+   */
+  EClass getScanner_PatternRule();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getStartPattern <em>Start Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Pattern</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getStartPattern()
+   * @see #getScanner_PatternRule()
+   * @generated
+   */
+  EAttribute getScanner_PatternRule_StartPattern();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getContentPattern <em>Content Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Content Pattern</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getContentPattern()
+   * @see #getScanner_PatternRule()
+   * @generated
+   */
+  EAttribute getScanner_PatternRule_ContentPattern();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule <em>Scanner Character Rule</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2502,6 +2571,32 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EAttribute SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ = eINSTANCE.getScanner_MultiLineRule_EscapeSeq();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl <em>Scanner Pattern Rule</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_PatternRule()
+     * @generated
+     */
+    EClass SCANNER_PATTERN_RULE = eINSTANCE.getScanner_PatternRule();
+
+    /**
+     * The meta object literal for the '<em><b>Start Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_PATTERN_RULE__START_PATTERN = eINSTANCE.getScanner_PatternRule_StartPattern();
+
+    /**
+     * The meta object literal for the '<em><b>Content Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_PATTERN_RULE__CONTENT_PATTERN = eINSTANCE.getScanner_PatternRule_ContentPattern();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_CharacterRuleImpl <em>Scanner Character Rule</em>}' class.

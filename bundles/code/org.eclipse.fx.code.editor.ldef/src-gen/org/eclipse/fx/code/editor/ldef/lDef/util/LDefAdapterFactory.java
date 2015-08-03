@@ -215,6 +215,11 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createScanner_MultiLineRuleAdapter();
       }
       @Override
+      public Adapter caseScanner_PatternRule(Scanner_PatternRule object)
+      {
+        return createScanner_PatternRuleAdapter();
+      }
+      @Override
       public Adapter caseScanner_CharacterRule(Scanner_CharacterRule object)
       {
         return createScanner_CharacterRuleAdapter();
@@ -667,6 +672,21 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScanner_MultiLineRuleAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule <em>Scanner Pattern Rule</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule
+   * @generated
+   */
+  public Adapter createScanner_PatternRuleAdapter()
   {
     return null;
   }

@@ -38,6 +38,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
+import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Token;
@@ -246,6 +247,13 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * @generated
    */
   private EClass scanner_MultiLineRuleEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass scanner_PatternRuleEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -986,6 +994,36 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getScanner_PatternRule()
+  {
+    return scanner_PatternRuleEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getScanner_PatternRule_StartPattern()
+  {
+    return (EAttribute)scanner_PatternRuleEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getScanner_PatternRule_ContentPattern()
+  {
+    return (EAttribute)scanner_PatternRuleEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getScanner_CharacterRule()
   {
     return scanner_CharacterRuleEClass;
@@ -1184,6 +1222,10 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     createEAttribute(scanner_MultiLineRuleEClass, SCANNER_MULTI_LINE_RULE__END_SEQ);
     createEAttribute(scanner_MultiLineRuleEClass, SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ);
 
+    scanner_PatternRuleEClass = createEClass(SCANNER_PATTERN_RULE);
+    createEAttribute(scanner_PatternRuleEClass, SCANNER_PATTERN_RULE__START_PATTERN);
+    createEAttribute(scanner_PatternRuleEClass, SCANNER_PATTERN_RULE__CONTENT_PATTERN);
+
     scanner_CharacterRuleEClass = createEClass(SCANNER_CHARACTER_RULE);
     createEAttribute(scanner_CharacterRuleEClass, SCANNER_CHARACTER_RULE__CHARACTERS);
 
@@ -1238,6 +1280,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     scanner_RuleEClass.getESuperTypes().add(this.getScanner());
     scanner_SingleLineRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scanner_MultiLineRuleEClass.getESuperTypes().add(this.getScanner_Rule());
+    scanner_PatternRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scanner_CharacterRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scanner_JSRuleEClass.getESuperTypes().add(this.getScanner_Rule());
 
@@ -1334,6 +1377,10 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     initEAttribute(getScanner_MultiLineRule_StartSeq(), ecorePackage.getEString(), "startSeq", null, 0, 1, Scanner_MultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScanner_MultiLineRule_EndSeq(), ecorePackage.getEString(), "endSeq", null, 0, 1, Scanner_MultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScanner_MultiLineRule_EscapeSeq(), ecorePackage.getEString(), "escapeSeq", null, 0, 1, Scanner_MultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(scanner_PatternRuleEClass, Scanner_PatternRule.class, "Scanner_PatternRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getScanner_PatternRule_StartPattern(), ecorePackage.getEString(), "startPattern", null, 0, 1, Scanner_PatternRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getScanner_PatternRule_ContentPattern(), ecorePackage.getEString(), "contentPattern", null, 0, 1, Scanner_PatternRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scanner_CharacterRuleEClass, Scanner_CharacterRule.class, "Scanner_CharacterRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScanner_CharacterRule_Characters(), ecorePackage.getEString(), "characters", null, 0, -1, Scanner_CharacterRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -76,6 +76,7 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScanner_SingleLineRuleAccess().getGroup_4(), "rule__Scanner_SingleLineRule__Group_4__0");
 					put(grammarAccess.getScanner_MultiLineRuleAccess().getGroup(), "rule__Scanner_MultiLineRule__Group__0");
 					put(grammarAccess.getScanner_MultiLineRuleAccess().getGroup_4(), "rule__Scanner_MultiLineRule__Group_4__0");
+					put(grammarAccess.getScanner_PatternRuleAccess().getGroup(), "rule__Scanner_PatternRule__Group__0");
 					put(grammarAccess.getScanner_CharacterRuleAccess().getGroup(), "rule__Scanner_CharacterRule__Group__0");
 					put(grammarAccess.getScanner_CharacterRuleAccess().getGroup_3(), "rule__Scanner_CharacterRule__Group_3__0");
 					put(grammarAccess.getScanner_JSRuleAccess().getGroup(), "rule__Scanner_JSRule__Group__0");
@@ -126,6 +127,8 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScanner_MultiLineRuleAccess().getStartSeqAssignment_1(), "rule__Scanner_MultiLineRule__StartSeqAssignment_1");
 					put(grammarAccess.getScanner_MultiLineRuleAccess().getEndSeqAssignment_3(), "rule__Scanner_MultiLineRule__EndSeqAssignment_3");
 					put(grammarAccess.getScanner_MultiLineRuleAccess().getEscapeSeqAssignment_4_2(), "rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2");
+					put(grammarAccess.getScanner_PatternRuleAccess().getStartPatternAssignment_1(), "rule__Scanner_PatternRule__StartPatternAssignment_1");
+					put(grammarAccess.getScanner_PatternRuleAccess().getContentPatternAssignment_3(), "rule__Scanner_PatternRule__ContentPatternAssignment_3");
 					put(grammarAccess.getScanner_CharacterRuleAccess().getCharactersAssignment_2(), "rule__Scanner_CharacterRule__CharactersAssignment_2");
 					put(grammarAccess.getScanner_CharacterRuleAccess().getCharactersAssignment_3_1(), "rule__Scanner_CharacterRule__CharactersAssignment_3_1");
 					put(grammarAccess.getScanner_JSRuleAccess().getFileURIAssignment_1(), "rule__Scanner_JSRule__FileURIAssignment_1");

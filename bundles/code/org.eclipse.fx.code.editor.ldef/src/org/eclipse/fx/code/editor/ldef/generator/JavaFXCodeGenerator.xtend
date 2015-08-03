@@ -16,6 +16,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule
 import org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration
 import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration
 import org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration
+import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule
 
 class JavaFXCodeGenerator {
 	def generate(LanguageDef model, IFileSystemAccess access) {
@@ -227,6 +228,10 @@ class JavaFXCodeGenerator {
 
 	def dispatch generateScannerRule(Token t, Scanner_CharacterRule r) '''
 	new org.eclipse.jface.text.source.CharacterRule(«t.name»Token, new char[] {«r.characters.map["'"+it.escapeChar+"'"].join(",")»});
+	'''
+
+	def dispatch generateScannerRule(Token t, Scanner_PatternRule r) '''
+	new org.eclipse.fx.text.RegexRule(«t.name»Token, java.util.regex.Pattern.compile("«r.startPattern»"),1,java.util.regex.Pattern.compile("«r.contentPattern»"));
 	'''
 
 	def dispatch generatePartitionRule(Partition_SingleLineRule r) '''

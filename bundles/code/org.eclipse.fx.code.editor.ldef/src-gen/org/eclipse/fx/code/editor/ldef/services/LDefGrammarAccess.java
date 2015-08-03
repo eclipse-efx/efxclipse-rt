@@ -954,12 +954,13 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cScanner_MultiLineRuleParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cScanner_CharacterRuleParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cScanner_JSRuleParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cScanner_PatternRuleParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//Scanner_Rule:
-		//	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule;
+		//	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule | Scanner_PatternRule;
 		@Override public ParserRule getRule() { return rule; }
 
-		//Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule
+		//Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule | Scanner_PatternRule
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Scanner_SingleLineRule
@@ -973,6 +974,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Scanner_JSRule
 		public RuleCall getScanner_JSRuleParserRuleCall_3() { return cScanner_JSRuleParserRuleCall_3; }
+
+		//Scanner_PatternRule
+		public RuleCall getScanner_PatternRuleParserRuleCall_4() { return cScanner_PatternRuleParserRuleCall_4; }
 	}
 
 	public class Scanner_SingleLineRuleElements extends AbstractParserRuleElementFinder {
@@ -1085,6 +1089,42 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_4_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_4_2_0; }
+	}
+
+	public class Scanner_PatternRuleElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_PatternRule");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cPatternKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cStartPatternAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cStartPatternSTRINGTerminalRuleCall_1_0 = (RuleCall)cStartPatternAssignment_1.eContents().get(0);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cContentPatternAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cContentPatternSTRINGTerminalRuleCall_3_0 = (RuleCall)cContentPatternAssignment_3.eContents().get(0);
+		
+		//Scanner_PatternRule:
+		//	"pattern" startPattern=STRING "=>" contentPattern=STRING;
+		@Override public ParserRule getRule() { return rule; }
+
+		//"pattern" startPattern=STRING "=>" contentPattern=STRING
+		public Group getGroup() { return cGroup; }
+
+		//"pattern"
+		public Keyword getPatternKeyword_0() { return cPatternKeyword_0; }
+
+		//startPattern=STRING
+		public Assignment getStartPatternAssignment_1() { return cStartPatternAssignment_1; }
+
+		//STRING
+		public RuleCall getStartPatternSTRINGTerminalRuleCall_1_0() { return cStartPatternSTRINGTerminalRuleCall_1_0; }
+
+		//"=>"
+		public Keyword getEqualsSignGreaterThanSignKeyword_2() { return cEqualsSignGreaterThanSignKeyword_2; }
+
+		//contentPattern=STRING
+		public Assignment getContentPatternAssignment_3() { return cContentPatternAssignment_3; }
+
+		//STRING
+		public RuleCall getContentPatternSTRINGTerminalRuleCall_3_0() { return cContentPatternSTRINGTerminalRuleCall_3_0; }
 	}
 
 	public class Scanner_CharacterRuleElements extends AbstractParserRuleElementFinder {
@@ -1264,6 +1304,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	private final Scanner_RuleElements pScanner_Rule;
 	private final Scanner_SingleLineRuleElements pScanner_SingleLineRule;
 	private final Scanner_MultiLineRuleElements pScanner_MultiLineRule;
+	private final Scanner_PatternRuleElements pScanner_PatternRule;
 	private final Scanner_CharacterRuleElements pScanner_CharacterRule;
 	private final Scanner_JSRuleElements pScanner_JSRule;
 	private final WhitespaceRuleElements pWhitespaceRule;
@@ -1308,6 +1349,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		this.pScanner_Rule = new Scanner_RuleElements();
 		this.pScanner_SingleLineRule = new Scanner_SingleLineRuleElements();
 		this.pScanner_MultiLineRule = new Scanner_MultiLineRuleElements();
+		this.pScanner_PatternRule = new Scanner_PatternRuleElements();
 		this.pScanner_CharacterRule = new Scanner_CharacterRuleElements();
 		this.pScanner_JSRule = new Scanner_JSRuleElements();
 		this.pWhitespaceRule = new WhitespaceRuleElements();
@@ -1629,7 +1671,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_Rule:
-	//	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule;
+	//	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule | Scanner_PatternRule;
 	public Scanner_RuleElements getScanner_RuleAccess() {
 		return pScanner_Rule;
 	}
@@ -1656,6 +1698,16 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getScanner_MultiLineRuleRule() {
 		return getScanner_MultiLineRuleAccess().getRule();
+	}
+
+	//Scanner_PatternRule:
+	//	"pattern" startPattern=STRING "=>" contentPattern=STRING;
+	public Scanner_PatternRuleElements getScanner_PatternRuleAccess() {
+		return pScanner_PatternRule;
+	}
+	
+	public ParserRule getScanner_PatternRuleRule() {
+		return getScanner_PatternRuleAccess().getRule();
 	}
 
 	//Scanner_CharacterRule:

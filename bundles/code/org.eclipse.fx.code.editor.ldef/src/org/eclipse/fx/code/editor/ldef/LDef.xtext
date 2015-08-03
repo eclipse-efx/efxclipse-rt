@@ -142,7 +142,7 @@ Keyword:
 ;
 
 Scanner_Rule:
-	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule
+	Scanner_SingleLineRule | Scanner_MultiLineRule | Scanner_CharacterRule | Scanner_JSRule | Scanner_PatternRule
 ;
 
 Scanner_SingleLineRule:
@@ -151,6 +151,10 @@ Scanner_SingleLineRule:
 
 Scanner_MultiLineRule:
 	'multi_line' startSeq=STRING '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
+;
+
+Scanner_PatternRule:
+	'pattern' startPattern=STRING '=>' contentPattern=STRING
 ;
 
 Scanner_CharacterRule:

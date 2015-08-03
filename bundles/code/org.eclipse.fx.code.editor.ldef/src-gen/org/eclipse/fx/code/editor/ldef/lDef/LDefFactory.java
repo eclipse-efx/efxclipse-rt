@@ -275,6 +275,15 @@ public interface LDefFactory extends EFactory
   Scanner_MultiLineRule createScanner_MultiLineRule();
 
   /**
+   * Returns a new object of class '<em>Scanner Pattern Rule</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scanner Pattern Rule</em>'.
+   * @generated
+   */
+  Scanner_PatternRule createScanner_PatternRule();
+
+  /**
    * Returns a new object of class '<em>Scanner Character Rule</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

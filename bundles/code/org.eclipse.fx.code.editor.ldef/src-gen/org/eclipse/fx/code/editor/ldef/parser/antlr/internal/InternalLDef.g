@@ -1703,6 +1703,16 @@ ruleScanner_Rule returns [EObject current=null]
         $current = $this_Scanner_JSRule_3.current; 
         afterParserOrEnumRuleCall();
     }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getScanner_RuleAccess().getScanner_PatternRuleParserRuleCall_4()); 
+    }
+    this_Scanner_PatternRule_4=ruleScanner_PatternRule
+    { 
+        $current = $this_Scanner_PatternRule_4.current; 
+        afterParserOrEnumRuleCall();
+    }
 )
 ;
 
@@ -1886,6 +1896,71 @@ ruleScanner_MultiLineRule returns [EObject current=null]
 
 )
 ))?)
+;
+
+
+
+
+
+// Entry rule entryRuleScanner_PatternRule
+entryRuleScanner_PatternRule returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getScanner_PatternRuleRule()); }
+	 iv_ruleScanner_PatternRule=ruleScanner_PatternRule 
+	 { $current=$iv_ruleScanner_PatternRule.current; } 
+	 EOF 
+;
+
+// Rule Scanner_PatternRule
+ruleScanner_PatternRule returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='pattern' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getScanner_PatternRuleAccess().getPatternKeyword_0());
+    }
+(
+(
+		lv_startPattern_1_0=RULE_STRING
+		{
+			newLeafNode(lv_startPattern_1_0, grammarAccess.getScanner_PatternRuleAccess().getStartPatternSTRINGTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScanner_PatternRuleRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"startPattern",
+        		lv_startPattern_1_0, 
+        		"STRING");
+	    }
+
+)
+)	otherlv_2='=>' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getScanner_PatternRuleAccess().getEqualsSignGreaterThanSignKeyword_2());
+    }
+(
+(
+		lv_contentPattern_3_0=RULE_STRING
+		{
+			newLeafNode(lv_contentPattern_3_0, grammarAccess.getScanner_PatternRuleAccess().getContentPatternSTRINGTerminalRuleCall_3_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScanner_PatternRuleRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"contentPattern",
+        		lv_contentPattern_3_0, 
+        		"STRING");
+	    }
+
+)
+))
 ;
 
 

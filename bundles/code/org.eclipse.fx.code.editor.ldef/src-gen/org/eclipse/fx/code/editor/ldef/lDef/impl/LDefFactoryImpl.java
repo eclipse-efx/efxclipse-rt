@@ -92,6 +92,7 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
       case LDefPackage.SCANNER_RULE: return createScanner_Rule();
       case LDefPackage.SCANNER_SINGLE_LINE_RULE: return createScanner_SingleLineRule();
       case LDefPackage.SCANNER_MULTI_LINE_RULE: return createScanner_MultiLineRule();
+      case LDefPackage.SCANNER_PATTERN_RULE: return createScanner_PatternRule();
       case LDefPackage.SCANNER_CHARACTER_RULE: return createScanner_CharacterRule();
       case LDefPackage.SCANNER_JS_RULE: return createScanner_JSRule();
       case LDefPackage.WHITESPACE_RULE: return createWhitespaceRule();
@@ -406,6 +407,17 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
   {
     Scanner_MultiLineRuleImpl scanner_MultiLineRule = new Scanner_MultiLineRuleImpl();
     return scanner_MultiLineRule;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Scanner_PatternRule createScanner_PatternRule()
+  {
+    Scanner_PatternRuleImpl scanner_PatternRule = new Scanner_PatternRuleImpl();
+    return scanner_PatternRule;
   }
 
   /**

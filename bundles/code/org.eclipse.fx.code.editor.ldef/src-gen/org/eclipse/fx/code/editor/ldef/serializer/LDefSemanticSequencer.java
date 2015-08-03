@@ -28,6 +28,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
+import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Token;
 import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule;
@@ -114,6 +115,9 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case LDefPackage.SCANNER_MULTI_LINE_RULE:
 				sequence_Scanner_MultiLineRule(context, (Scanner_MultiLineRule) semanticObject); 
+				return; 
+			case LDefPackage.SCANNER_PATTERN_RULE:
+				sequence_Scanner_PatternRule(context, (Scanner_PatternRule) semanticObject); 
 				return; 
 			case LDefPackage.SCANNER_SINGLE_LINE_RULE:
 				sequence_Scanner_SingleLineRule(context, (Scanner_SingleLineRule) semanticObject); 
@@ -366,6 +370,25 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 */
 	protected void sequence_Scanner_MultiLineRule(EObject context, Scanner_MultiLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (startPattern=STRING contentPattern=STRING)
+	 */
+	protected void sequence_Scanner_PatternRule(EObject context, Scanner_PatternRule semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_PATTERN_RULE__START_PATTERN) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_PATTERN_RULE__START_PATTERN));
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_PATTERN_RULE__CONTENT_PATTERN) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_PATTERN_RULE__CONTENT_PATTERN));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getScanner_PatternRuleAccess().getStartPatternSTRINGTerminalRuleCall_1_0(), semanticObject.getStartPattern());
+		feeder.accept(grammarAccess.getScanner_PatternRuleAccess().getContentPatternSTRINGTerminalRuleCall_3_0(), semanticObject.getContentPattern());
+		feeder.finish();
 	}
 	
 	

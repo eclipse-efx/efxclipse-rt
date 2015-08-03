@@ -92,6 +92,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/escapeSeq"/>
     </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Scanner_PatternRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_PatternRule/startPattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_PatternRule/contentPattern"/>
+    </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Scanner_CharacterRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_CharacterRule/characters"/>
     </genClasses>
