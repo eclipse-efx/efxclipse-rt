@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import org.eclipse.fx.code.editor.ldef.lDef.Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_Rule;
@@ -21,7 +22,9 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
+import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
+import org.eclipse.fx.text.RegexRule;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.CombinedWordRule;
 import org.eclipse.jface.text.rules.IRule;
@@ -73,6 +76,9 @@ public class LDefRuleScanner extends RuleBasedScanner {
 					rules[i++] = new CharacterRule(token, c);
 				} else if( ru instanceof Scanner_Keyword ) {
 					keyWordList.put(token,(Scanner_Keyword) ru);
+				} else if( ru instanceof Scanner_PatternRule ) {
+					Scanner_PatternRule rr = (Scanner_PatternRule) ru;
+					rules[i++] = new RegexRule(token, Pattern.compile(rr.getStartPattern()), Math.max(1,rr.getLength()),Pattern.compile(rr.getContentPattern()));
 				}
 			}
 		}
