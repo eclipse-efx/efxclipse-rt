@@ -71,7 +71,7 @@ public abstract class ServiceFactoryContextFunction<S, T, O extends ObjectFactor
 			context.set(cacheKey, o);
 			return o;
 		} else {
-			return null;
+			throw new IllegalStateException("Unable to find a service factory for the source value '"+sourceValue+"'");  //$NON-NLS-1$//$NON-NLS-2$
 		}
 	}
 
