@@ -17,6 +17,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration
 import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration
 import org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule
+import org.eclipse.fx.code.editor.ldef.lDef.Codegeneration
 
 class JavaFXCodeGenerator {
 	def generate(LanguageDef model, IFileSystemAccess access) {
@@ -24,14 +25,17 @@ class JavaFXCodeGenerator {
 		if( javaFXIntegration != null ) {
 			val javaCodeGen = javaFXIntegration.codegenerationList.filter(typeof(JavaCodeGeneration)).head
 			if( javaCodeGen != null ) {
+				val project = javaCodeGen.findProjectResource()
+				val prefix = if( project == null ) "" else "/"+project+"/src/";
+				System.err.println("PREFIX: " + prefix);
 				val basePackage = javaCodeGen.name;
-				access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PartitionScanner.java",generateRulePartitioner(model,basePackage))
-				access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"Partitioner.java",generatePartitioner(model,basePackage))
+				access.generateFile(prefix + basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PartitionScanner.java",generateRulePartitioner(model,basePackage))
+				access.generateFile(prefix + basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"Partitioner.java",generatePartitioner(model,basePackage))
 
-				access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PresentationReconciler.java",generatePresentationReconciler(model,basePackage))
+				access.generateFile(prefix + basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PresentationReconciler.java",generatePresentationReconciler(model,basePackage))
 				for( h : model.lexicalHighlighting.list ) {
 					if( h instanceof LexicalPartitionHighlighting_Rule ) {
-						access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+h.partition.name+".java",generateScanner(model,h,basePackage))
+						access.generateFile(prefix + basePackage.replace(".","/")+"/"+model.name.toFirstUpper+h.partition.name+".java",generateScanner(model,h,basePackage))
 					}
 				}
 			}
@@ -48,6 +52,10 @@ class JavaFXCodeGenerator {
 				}
 			}
 		}
+	}
+
+	def findProjectResource(Codegeneration codeGen) {
+		return codeGen.configValue.findFirst[key == "project"]?.simpleValue
 	}
 
 	def generateDocumentPartitionerTypeProvider(LanguageDef model, String basePackage, String javaBasePackage) '''

@@ -104,6 +104,15 @@ public interface LDefFactory extends EFactory
   E4CodeGeneration createE4CodeGeneration();
 
   /**
+   * Returns a new object of class '<em>Config Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Config Value</em>'.
+   * @generated
+   */
+  ConfigValue createConfigValue();
+
+  /**
    * Returns a new object of class '<em>Paritioning</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

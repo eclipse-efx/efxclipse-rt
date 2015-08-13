@@ -138,6 +138,13 @@ public class LDefSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case LDefPackage.CONFIG_VALUE:
+      {
+        ConfigValue configValue = (ConfigValue)theEObject;
+        T result = caseConfigValue(configValue);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case LDefPackage.PARITIONING:
       {
         Paritioning paritioning = (Paritioning)theEObject;
@@ -461,6 +468,22 @@ public class LDefSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseE4CodeGeneration(E4CodeGeneration object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Config Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Config Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConfigValue(ConfigValue object)
   {
     return null;
   }

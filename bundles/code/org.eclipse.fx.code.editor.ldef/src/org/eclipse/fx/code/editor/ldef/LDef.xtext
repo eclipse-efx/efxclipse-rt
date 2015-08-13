@@ -49,13 +49,24 @@ Codegeneration:
 ;
 
 JavaCodeGeneration:
-	'java' name=STRING
+	'java' name=STRING ('{'
+		configValue+=ConfigValue+
+	'}')?
 ;
 
 E4CodeGeneration:
-	{E4CodeGeneration}
-	'e4' name=STRING
+	'e4' name=STRING ('{'
+		configValue+=ConfigValue+
+	'}')?
 ;
+
+ConfigValue:
+	key=ID ':' ( simpleValue=STRING | ('{'
+		children+=ConfigValue+
+		'}'
+	) )
+;
+
 
 //SWTIntegration:
 //	'swt' '{'

@@ -305,12 +305,17 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cJavaKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameSTRINGTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftCurlyBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cConfigValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cConfigValueConfigValueParserRuleCall_2_1_0 = (RuleCall)cConfigValueAssignment_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//JavaCodeGeneration:
-		//	"java" name=STRING;
+		//	"java" name=STRING ("{" configValue+=ConfigValue+ "}")?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"java" name=STRING
+		//"java" name=STRING ("{" configValue+=ConfigValue+ "}")?
 		public Group getGroup() { return cGroup; }
 
 		//"java"
@@ -321,34 +326,121 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_1_0() { return cNameSTRINGTerminalRuleCall_1_0; }
+
+		//("{" configValue+=ConfigValue+ "}")?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
+
+		//configValue+=ConfigValue+
+		public Assignment getConfigValueAssignment_2_1() { return cConfigValueAssignment_2_1; }
+
+		//ConfigValue
+		public RuleCall getConfigValueConfigValueParserRuleCall_2_1_0() { return cConfigValueConfigValueParserRuleCall_2_1_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
 	}
 
 	public class E4CodeGenerationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "E4CodeGeneration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cE4CodeGenerationAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cE4Keyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameSTRINGTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Keyword cE4Keyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameSTRINGTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftCurlyBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cConfigValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cConfigValueConfigValueParserRuleCall_2_1_0 = (RuleCall)cConfigValueAssignment_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//E4CodeGeneration:
-		//	{E4CodeGeneration} "e4" name=STRING;
+		//	"e4" name=STRING ("{" configValue+=ConfigValue+ "}")?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//{E4CodeGeneration} "e4" name=STRING
+		//"e4" name=STRING ("{" configValue+=ConfigValue+ "}")?
 		public Group getGroup() { return cGroup; }
 
-		//{E4CodeGeneration}
-		public Action getE4CodeGenerationAction_0() { return cE4CodeGenerationAction_0; }
-
 		//"e4"
-		public Keyword getE4Keyword_1() { return cE4Keyword_1; }
+		public Keyword getE4Keyword_0() { return cE4Keyword_0; }
 
 		//name=STRING
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
 		//STRING
-		public RuleCall getNameSTRINGTerminalRuleCall_2_0() { return cNameSTRINGTerminalRuleCall_2_0; }
+		public RuleCall getNameSTRINGTerminalRuleCall_1_0() { return cNameSTRINGTerminalRuleCall_1_0; }
+
+		//("{" configValue+=ConfigValue+ "}")?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
+
+		//configValue+=ConfigValue+
+		public Assignment getConfigValueAssignment_2_1() { return cConfigValueAssignment_2_1; }
+
+		//ConfigValue
+		public RuleCall getConfigValueConfigValueParserRuleCall_2_1_0() { return cConfigValueConfigValueParserRuleCall_2_1_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
+	}
+
+	public class ConfigValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConfigValue");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cKeyIDTerminalRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
+		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cSimpleValueAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final RuleCall cSimpleValueSTRINGTerminalRuleCall_2_0_0 = (RuleCall)cSimpleValueAssignment_2_0.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cAlternatives_2.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Assignment cChildrenAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
+		private final RuleCall cChildrenConfigValueParserRuleCall_2_1_1_0 = (RuleCall)cChildrenAssignment_2_1_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_2_1_2 = (Keyword)cGroup_2_1.eContents().get(2);
+		
+		//ConfigValue:
+		//	key=ID ":" (simpleValue=STRING | "{" children+=ConfigValue+ "}");
+		@Override public ParserRule getRule() { return rule; }
+
+		//key=ID ":" (simpleValue=STRING | "{" children+=ConfigValue+ "}")
+		public Group getGroup() { return cGroup; }
+
+		//key=ID
+		public Assignment getKeyAssignment_0() { return cKeyAssignment_0; }
+
+		//ID
+		public RuleCall getKeyIDTerminalRuleCall_0_0() { return cKeyIDTerminalRuleCall_0_0; }
+
+		//":"
+		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
+
+		//simpleValue=STRING | "{" children+=ConfigValue+ "}"
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+
+		//simpleValue=STRING
+		public Assignment getSimpleValueAssignment_2_0() { return cSimpleValueAssignment_2_0; }
+
+		//STRING
+		public RuleCall getSimpleValueSTRINGTerminalRuleCall_2_0_0() { return cSimpleValueSTRINGTerminalRuleCall_2_0_0; }
+
+		//"{" children+=ConfigValue+ "}"
+		public Group getGroup_2_1() { return cGroup_2_1; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_2_1_0() { return cLeftCurlyBracketKeyword_2_1_0; }
+
+		//children+=ConfigValue+
+		public Assignment getChildrenAssignment_2_1_1() { return cChildrenAssignment_2_1_1; }
+
+		//ConfigValue
+		public RuleCall getChildrenConfigValueParserRuleCall_2_1_1_0() { return cChildrenConfigValueParserRuleCall_2_1_1_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_2_1_2() { return cRightCurlyBracketKeyword_2_1_2; }
 	}
 
 	public class ParitioningElements extends AbstractParserRuleElementFinder {
@@ -1297,6 +1389,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	private final CodegenerationElements pCodegeneration;
 	private final JavaCodeGenerationElements pJavaCodeGeneration;
 	private final E4CodeGenerationElements pE4CodeGeneration;
+	private final ConfigValueElements pConfigValue;
 	private final ParitioningElements pParitioning;
 	private final PartitionElements pPartition;
 	private final PartitionerElements pPartitioner;
@@ -1342,6 +1435,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		this.pCodegeneration = new CodegenerationElements();
 		this.pJavaCodeGeneration = new JavaCodeGenerationElements();
 		this.pE4CodeGeneration = new E4CodeGenerationElements();
+		this.pConfigValue = new ConfigValueElements();
 		this.pParitioning = new ParitioningElements();
 		this.pPartition = new PartitionElements();
 		this.pPartitioner = new PartitionerElements();
@@ -1495,7 +1589,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JavaCodeGeneration:
-	//	"java" name=STRING;
+	//	"java" name=STRING ("{" configValue+=ConfigValue+ "}")?;
 	public JavaCodeGenerationElements getJavaCodeGenerationAccess() {
 		return pJavaCodeGeneration;
 	}
@@ -1505,13 +1599,23 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//E4CodeGeneration:
-	//	{E4CodeGeneration} "e4" name=STRING;
+	//	"e4" name=STRING ("{" configValue+=ConfigValue+ "}")?;
 	public E4CodeGenerationElements getE4CodeGenerationAccess() {
 		return pE4CodeGeneration;
 	}
 	
 	public ParserRule getE4CodeGenerationRule() {
 		return getE4CodeGenerationAccess().getRule();
+	}
+
+	//ConfigValue:
+	//	key=ID ":" (simpleValue=STRING | "{" children+=ConfigValue+ "}");
+	public ConfigValueElements getConfigValueAccess() {
+		return pConfigValue;
+	}
+	
+	public ParserRule getConfigValueRule() {
+		return getConfigValueAccess().getRule();
 	}
 
 	////SWTIntegration:

@@ -3,7 +3,13 @@
  */
 package org.eclipse.fx.code.editor.ldef.ui;
 
+import org.eclipse.fx.code.editor.ldef.ui.fsa.LDefFilesystemAccess;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess;
+import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2;
+import org.eclipse.xtext.generator.IFileSystemAccess;
+
+import com.google.inject.Binder;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -11,5 +17,12 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class LDefUiModule extends org.eclipse.fx.code.editor.ldef.ui.AbstractLDefUiModule {
 	public LDefUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
+
+	}
+
+	@Override
+	public void configure(Binder binder) {
+		super.configure(binder);
+		binder.bind(EclipseResourceFileSystemAccess2.class).to(LDefFilesystemAccess.class);
 	}
 }

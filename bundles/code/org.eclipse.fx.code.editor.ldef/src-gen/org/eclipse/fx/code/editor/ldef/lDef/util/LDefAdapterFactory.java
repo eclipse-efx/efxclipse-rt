@@ -120,6 +120,11 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createE4CodeGenerationAdapter();
       }
       @Override
+      public Adapter caseConfigValue(ConfigValue object)
+      {
+        return createConfigValueAdapter();
+      }
+      @Override
       public Adapter caseParitioning(Paritioning object)
       {
         return createParitioningAdapter();
@@ -387,6 +392,21 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createE4CodeGenerationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.ConfigValue <em>Config Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ConfigValue
+   * @generated
+   */
+  public Adapter createConfigValueAdapter()
   {
     return null;
   }

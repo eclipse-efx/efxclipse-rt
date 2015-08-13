@@ -280,13 +280,22 @@ public interface LDefPackage extends EPackage
   int CODEGENERATION__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Config Value</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CODEGENERATION__CONFIG_VALUE = 1;
+
+  /**
    * The number of structural features of the '<em>Codegeneration</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CODEGENERATION_FEATURE_COUNT = 1;
+  int CODEGENERATION_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.JavaCodeGenerationImpl <em>Java Code Generation</em>}' class.
@@ -306,6 +315,15 @@ public interface LDefPackage extends EPackage
    * @ordered
    */
   int JAVA_CODE_GENERATION__NAME = CODEGENERATION__NAME;
+
+  /**
+   * The feature id for the '<em><b>Config Value</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int JAVA_CODE_GENERATION__CONFIG_VALUE = CODEGENERATION__CONFIG_VALUE;
 
   /**
    * The number of structural features of the '<em>Java Code Generation</em>' class.
@@ -336,6 +354,15 @@ public interface LDefPackage extends EPackage
   int E4_CODE_GENERATION__NAME = CODEGENERATION__NAME;
 
   /**
+   * The feature id for the '<em><b>Config Value</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int E4_CODE_GENERATION__CONFIG_VALUE = CODEGENERATION__CONFIG_VALUE;
+
+  /**
    * The number of structural features of the '<em>E4 Code Generation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -345,6 +372,52 @@ public interface LDefPackage extends EPackage
   int E4_CODE_GENERATION_FEATURE_COUNT = CODEGENERATION_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ConfigValueImpl <em>Config Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ConfigValueImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getConfigValue()
+   * @generated
+   */
+  int CONFIG_VALUE = 9;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIG_VALUE__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Simple Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIG_VALUE__SIMPLE_VALUE = 1;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIG_VALUE__CHILDREN = 2;
+
+  /**
+   * The number of structural features of the '<em>Config Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIG_VALUE_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ParitioningImpl <em>Paritioning</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -352,7 +425,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getParitioning()
    * @generated
    */
-  int PARITIONING = 9;
+  int PARITIONING = 10;
 
   /**
    * The feature id for the '<em><b>Partitions</b></em>' containment reference list.
@@ -389,7 +462,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition()
    * @generated
    */
-  int PARTITION = 10;
+  int PARTITION = 11;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -417,7 +490,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartitioner()
    * @generated
    */
-  int PARTITIONER = 11;
+  int PARTITIONER = 12;
 
   /**
    * The number of structural features of the '<em>Partitioner</em>' class.
@@ -436,7 +509,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getParitioner_JS()
    * @generated
    */
-  int PARITIONER_JS = 12;
+  int PARITIONER_JS = 13;
 
   /**
    * The feature id for the '<em><b>Script URI</b></em>' attribute.
@@ -464,7 +537,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartitioner_Rule()
    * @generated
    */
-  int PARTITIONER_RULE = 13;
+  int PARTITIONER_RULE = 14;
 
   /**
    * The feature id for the '<em><b>Rule List</b></em>' containment reference list.
@@ -492,7 +565,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_Rule()
    * @generated
    */
-  int PARTITION_RULE = 14;
+  int PARTITION_RULE = 15;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -547,7 +620,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_SingleLineRule()
    * @generated
    */
-  int PARTITION_SINGLE_LINE_RULE = 15;
+  int PARTITION_SINGLE_LINE_RULE = 16;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -602,7 +675,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_MultiLineRule()
    * @generated
    */
-  int PARTITION_MULTI_LINE_RULE = 16;
+  int PARTITION_MULTI_LINE_RULE = 17;
 
   /**
    * The feature id for the '<em><b>Parition</b></em>' reference.
@@ -657,7 +730,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalHighlighting()
    * @generated
    */
-  int LEXICAL_HIGHLIGHTING = 17;
+  int LEXICAL_HIGHLIGHTING = 18;
 
   /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
@@ -685,7 +758,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING = 18;
+  int LEXICAL_PARTITION_HIGHLIGHTING = 19;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -713,7 +786,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_JS()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 19;
+  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 20;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -750,7 +823,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_Rule()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 20;
+  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 21;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -796,7 +869,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getToken()
    * @generated
    */
-  int TOKEN = 21;
+  int TOKEN = 22;
 
   /**
    * The feature id for the '<em><b>Default</b></em>' attribute.
@@ -842,7 +915,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner()
    * @generated
    */
-  int SCANNER = 22;
+  int SCANNER = 23;
 
   /**
    * The number of structural features of the '<em>Scanner</em>' class.
@@ -861,7 +934,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Keyword()
    * @generated
    */
-  int SCANNER_KEYWORD = 23;
+  int SCANNER_KEYWORD = 24;
 
   /**
    * The feature id for the '<em><b>Keywords</b></em>' containment reference list.
@@ -889,7 +962,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getKeyword()
    * @generated
    */
-  int KEYWORD = 24;
+  int KEYWORD = 25;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -926,7 +999,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Rule()
    * @generated
    */
-  int SCANNER_RULE = 25;
+  int SCANNER_RULE = 26;
 
   /**
    * The number of structural features of the '<em>Scanner Rule</em>' class.
@@ -945,7 +1018,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_SingleLineRule()
    * @generated
    */
-  int SCANNER_SINGLE_LINE_RULE = 26;
+  int SCANNER_SINGLE_LINE_RULE = 27;
 
   /**
    * The feature id for the '<em><b>Start Seq</b></em>' attribute.
@@ -991,7 +1064,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_MultiLineRule()
    * @generated
    */
-  int SCANNER_MULTI_LINE_RULE = 27;
+  int SCANNER_MULTI_LINE_RULE = 28;
 
   /**
    * The feature id for the '<em><b>Start Seq</b></em>' attribute.
@@ -1037,7 +1110,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_PatternRule()
    * @generated
    */
-  int SCANNER_PATTERN_RULE = 28;
+  int SCANNER_PATTERN_RULE = 29;
 
   /**
    * The feature id for the '<em><b>Start Pattern</b></em>' attribute.
@@ -1083,7 +1156,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_CharacterRule()
    * @generated
    */
-  int SCANNER_CHARACTER_RULE = 29;
+  int SCANNER_CHARACTER_RULE = 30;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -1111,7 +1184,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_JSRule()
    * @generated
    */
-  int SCANNER_JS_RULE = 30;
+  int SCANNER_JS_RULE = 31;
 
   /**
    * The feature id for the '<em><b>File URI</b></em>' attribute.
@@ -1139,7 +1212,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getWhitespaceRule()
    * @generated
    */
-  int WHITESPACE_RULE = 31;
+  int WHITESPACE_RULE = 32;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -1370,6 +1443,17 @@ public interface LDefPackage extends EPackage
   EAttribute getCodegeneration_Name();
 
   /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.fx.code.editor.ldef.lDef.Codegeneration#getConfigValue <em>Config Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Config Value</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Codegeneration#getConfigValue()
+   * @see #getCodegeneration()
+   * @generated
+   */
+  EReference getCodegeneration_ConfigValue();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration <em>Java Code Generation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1388,6 +1472,49 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EClass getE4CodeGeneration();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.ConfigValue <em>Config Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Config Value</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ConfigValue
+   * @generated
+   */
+  EClass getConfigValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.ConfigValue#getKey <em>Key</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ConfigValue#getKey()
+   * @see #getConfigValue()
+   * @generated
+   */
+  EAttribute getConfigValue_Key();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.ConfigValue#getSimpleValue <em>Simple Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Simple Value</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ConfigValue#getSimpleValue()
+   * @see #getConfigValue()
+   * @generated
+   */
+  EAttribute getConfigValue_SimpleValue();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.fx.code.editor.ldef.lDef.ConfigValue#getChildren <em>Children</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Children</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ConfigValue#getChildren()
+   * @see #getConfigValue()
+   * @generated
+   */
+  EReference getConfigValue_Children();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Paritioning <em>Paritioning</em>}'.
@@ -2175,6 +2302,14 @@ public interface LDefPackage extends EPackage
     EAttribute CODEGENERATION__NAME = eINSTANCE.getCodegeneration_Name();
 
     /**
+     * The meta object literal for the '<em><b>Config Value</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CODEGENERATION__CONFIG_VALUE = eINSTANCE.getCodegeneration_ConfigValue();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.JavaCodeGenerationImpl <em>Java Code Generation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2193,6 +2328,40 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EClass E4_CODE_GENERATION = eINSTANCE.getE4CodeGeneration();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ConfigValueImpl <em>Config Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ConfigValueImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getConfigValue()
+     * @generated
+     */
+    EClass CONFIG_VALUE = eINSTANCE.getConfigValue();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONFIG_VALUE__KEY = eINSTANCE.getConfigValue_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Simple Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONFIG_VALUE__SIMPLE_VALUE = eINSTANCE.getConfigValue_SimpleValue();
+
+    /**
+     * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONFIG_VALUE__CHILDREN = eINSTANCE.getConfigValue_Children();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ParitioningImpl <em>Paritioning</em>}' class.

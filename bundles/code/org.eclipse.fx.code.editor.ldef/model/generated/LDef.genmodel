@@ -30,9 +30,15 @@
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Codegeneration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Codegeneration/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Codegeneration/configValue"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//JavaCodeGeneration"/>
     <genClasses ecoreClass="LDef.ecore#//E4CodeGeneration"/>
+    <genClasses ecoreClass="LDef.ecore#//ConfigValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ConfigValue/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ConfigValue/simpleValue"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//ConfigValue/children"/>
+    </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Paritioning">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Paritioning/partitioner"/>
