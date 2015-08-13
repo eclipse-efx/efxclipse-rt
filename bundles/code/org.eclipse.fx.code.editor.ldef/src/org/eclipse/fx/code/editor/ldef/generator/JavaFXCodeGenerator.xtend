@@ -27,7 +27,6 @@ class JavaFXCodeGenerator {
 			if( javaCodeGen != null ) {
 				val project = javaCodeGen.findProjectResource()
 				val prefix = if( project == null ) "" else "/"+project+"/src/";
-				System.err.println("PREFIX: " + prefix);
 				val basePackage = javaCodeGen.name;
 				access.generateFile(prefix + basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PartitionScanner.java",generateRulePartitioner(model,basePackage))
 				access.generateFile(prefix + basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"Partitioner.java",generatePartitioner(model,basePackage))
@@ -45,8 +44,11 @@ class JavaFXCodeGenerator {
 				if( javaCodeGen != null ) {
 					val basePackage = e4CodeGen.name
 					val javaBasePackage = javaCodeGen.name
-					access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"DocumentPartitionerTypeProvider.java",generateDocumentPartitionerTypeProvider(model,basePackage,javaBasePackage))
-					access.generateFile(basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PresentationReconcilerTypeProvider.java",generatePresentationReconcilerTypeProvider(model,basePackage,javaBasePackage))
+					val project = e4CodeGen.findProjectResource()
+					val prefix = if( project == null ) "" else "/"+project+"/src/";
+
+					access.generateFile(prefix + basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"DocumentPartitionerTypeProvider.java",generateDocumentPartitionerTypeProvider(model,basePackage,javaBasePackage))
+					access.generateFile(prefix + basePackage.replace(".","/")+"/"+model.name.toFirstUpper+"PresentationReconcilerTypeProvider.java",generatePresentationReconcilerTypeProvider(model,basePackage,javaBasePackage))
 				} else {
 					// TODO need to generate LDef model integration
 				}
