@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.eclipse.fx.code.editor.ldef.ui
-Bundle-Vendor: My Company
+Bundle-Name: Language DSL Eclipse Editor
+Bundle-Vendor: Eclipse.org
 Bundle-Version: 2.1.0.qualifier
 Bundle-SymbolicName: org.eclipse.fx.code.editor.ldef.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
