@@ -19,7 +19,6 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
-import org.eclipse.fx.code.editor.SourceChange;
 import org.eclipse.fx.core.di.ContextValue;
 import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.jface.text.DocumentEvent;
@@ -112,13 +111,8 @@ public class TextEditor {
 
 			@Override
 			public void documentChanged(DocumentEvent event) {
-				SourceChange sourceChange = new SourceChange(input, event.fOffset, event.fLength, event.fText);
-				documentModified(sourceChange);
-
 				if( eventBus != null ) {
 					eventBus.publish(Constants.EDITOR_DOCUMENT_MODIFIED, TextEditor.this, true);
-					//TODO Should the source change even really be triggered by the editor??
-					eventBus.publish(Constants.EDITOR_DOCUMENT_MODIFICATION, sourceChange,true);
 				}
 			}
 
@@ -136,13 +130,8 @@ public class TextEditor {
 		}
 	}
 
-	protected void documentModified(SourceChange event) {
-
-	}
-
 	@Persist
 	public void save() {
-		input.setText(document.get());
 		input.persist();
 		documentSaved();
 		if( eventBus != null ) {
@@ -174,7 +163,6 @@ public class TextEditor {
 		if( activeInput != null && activeInput.getValue() == input ) {
 			activeInput.setValue(null);
 		}
-		this.input.dispose();
 		this.input = null;
 	}
 }

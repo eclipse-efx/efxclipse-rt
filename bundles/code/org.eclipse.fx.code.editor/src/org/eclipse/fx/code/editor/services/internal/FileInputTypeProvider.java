@@ -3,7 +3,7 @@ package org.eclipse.fx.code.editor.services.internal;
 import java.net.URI;
 
 import org.eclipse.fx.code.editor.Input;
-import org.eclipse.fx.code.editor.SourceFileInput;
+import org.eclipse.fx.code.editor.LocalSourceFileInput;
 import org.eclipse.fx.code.editor.services.InputTypeProvider;
 import org.osgi.service.component.annotations.Component;
 
@@ -12,7 +12,7 @@ public class FileInputTypeProvider implements InputTypeProvider {
 
 	@Override
 	public Class<? extends Input<?>> getType(String s) {
-		return SourceFileInput.class;
+		return LocalSourceFileInput.class;
 	}
 
 	@Override

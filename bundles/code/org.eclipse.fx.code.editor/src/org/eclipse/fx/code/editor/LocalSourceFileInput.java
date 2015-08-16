@@ -6,31 +6,46 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.fx.code.editor.services.URIProvider;
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.adapter.Adapt;
+import org.eclipse.fx.core.event.EventBus;
 
-public class SourceFileInput implements StringInput, URIProvider {
+public class LocalSourceFileInput implements StringInput, URIProvider {
 	private final Path path;
 	private final Charset charSet;
 	private String data;
 	private String savedData;
+	private EventBus eventBus;
 
 	@Inject
-	public SourceFileInput(@Adapt @Named(Constants.DOCUMENT_URL) Path path) {
-		this(path,StandardCharsets.UTF_8);
+	public LocalSourceFileInput(@Adapt @Named(Constants.DOCUMENT_URL) Path path, EventBus eventBus) {
+		this(path,StandardCharsets.UTF_8, eventBus);
 	}
 
-	public SourceFileInput(Path path, Charset charSet) {
+	public LocalSourceFileInput(Path path, Charset charSet, EventBus eventBus) {
 		this.path = path;
 		this.charSet = charSet;
+		this.eventBus = eventBus;
+		eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_CREATED, this, true);
 	}
 
+	public Path getPath() {
+		return path;
+	}
+
+	@PreDestroy
 	@Override
-	public void dispose() {
+	public final void dispose() {
+		doDispose();
+	}
+
+	protected void doDispose() {
+		eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_DISPOSED, this, true);
 	}
 
 	@Override
@@ -71,4 +86,15 @@ public class SourceFileInput implements StringInput, URIProvider {
 		return URI.create(path.toUri().toString());
 	}
 
+	@Override
+	public void updateData(int offset, int length, String replacement) {
+		StringBuilder b = new StringBuilder(data.length() - length + replacement.length());
+		b.append(data.substring(0, offset));
+		b.append(replacement);
+		b.append(data.substring(offset+length,data.length()));
+		data = b.toString();
+
+		SourceFileChange sourceChange = new SourceFileChange(this, offset, length, replacement);
+		eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_MODIFIED, sourceChange, true);
+	}
 }
