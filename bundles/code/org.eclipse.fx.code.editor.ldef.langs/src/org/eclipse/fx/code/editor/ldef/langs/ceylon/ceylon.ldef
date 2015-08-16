@@ -1,0 +1,62 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+ceylon {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __ceylon_multi_line_api_comment
+		partition __ceylon_single_line_comment
+		partition __ceylon_multi_line_comment
+		partition __ceylon_string
+		rule {
+			single_line __ceylon_single_line_comment 	"//" 	=> ''
+			multi_line __ceylon_multi_line_api_comment 	"/**" 	=> "*/"
+			multi_line __ceylon_multi_line_comment 		"/*" 	=> "*/"
+			multi_line __ceylon_string 					'"' 	=> '"'
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type whitespace javawhitespace {
+			default ceylon_default
+			ceylon_keyword {
+				keywords [
+						"abstracts", 	"alias", 		"assembly", "assert", 		"assign"
+    				, 	"break", 		"case", 		"catch",	"class",		"continue"
+	    			,	"dynamic",		"else",			"exists",	"extends",		"finally"
+	    			,	"for",			"function",		"given",	"if",			"import"
+	    			,	"in",			"interface",	"is",		"let",			"module"
+	    			,	"new",			"nonempty",		"object",	"of",			"out"
+	    			,	"outer",		"package",		"return",	"satisfies",	"super"
+	    			,	"switch",		"then",			"this",		"throw",		"try"
+	    			,	"value",		"void",			"while"
+				]
+			}
+			ceylon_annotation {
+				keywords [
+						"abstract", "actual", 	"annotation", 	"default", "deprecated"
+					, 	"doc", 		"by", 		"formal", 		"final", 	"late"
+					, 	"license", 	"native", 	"optional", 	"sealed", 	"see"
+					, 	"shared", 	"throws", 	"tagged", 		"variable"
+				]
+			}
+		}
+		rule __ceylon_multi_line_api_comment {
+			default ceylon_api_doc_default
+		}
+		rule __ceylon_single_line_comment {
+			default ceylon_doc_default
+		}
+		rule __ceylon_multi_line_comment {
+			default ceylon_doc_default
+		}
+		rule __ceylon_string {
+			default ceylon_string
+		}
+	}
+	integration {
+		javafx {
+			java "org.eclipse.fx.code.editor.ldef.langs.fx.ceylon" {
+				project : "org.eclipse.fx.code.editor.ldef.langs.fx"
+			}
+		}
+	}
+}

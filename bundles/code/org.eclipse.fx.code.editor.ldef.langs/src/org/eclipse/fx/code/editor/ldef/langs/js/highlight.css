@@ -1,0 +1,25 @@
+.styled-text-area .js.js_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .js.js_operator {
+	-styled-text-color: -source-editor-operator;
+}
+
+.styled-text-area .js.js_bracket {
+	-styled-text-color: -source-editor-bracket;
+}
+
+.styled-text-area .js.js_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .js.js_doc_default {
+	-styled-text-color: -source-editor-doc;
+}
+
+.styled-text-area .js.js_string {
+	-styled-text-color: -source-editor-string;
+}
+

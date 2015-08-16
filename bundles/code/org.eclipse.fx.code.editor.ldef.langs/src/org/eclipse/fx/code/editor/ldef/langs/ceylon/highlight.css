@@ -1,0 +1,25 @@
+.styled-text-area .ceylon.ceylon_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .ceylon.ceylon_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .ceylon.ceylon_doc_default {
+	-styled-text-color: -source-editor-doc;
+}
+
+.styled-text-area .ceylon.ceylon_string {
+	-styled-text-color: -source-editor-string;
+}
+
+.styled-text-area .ceylon.ceylon_annotation {
+	-styled-text-color: -source-editor-annotation;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .ceylon.ceylon_api_doc_default {
+	-styled-text-color: -source-editor-api-doc;
+}

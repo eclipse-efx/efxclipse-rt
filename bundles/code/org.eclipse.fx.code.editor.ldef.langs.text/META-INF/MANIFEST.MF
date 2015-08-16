@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Text
+Bundle-SymbolicName: org.eclipse.fx.code.editor.ldef.langs.text
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.osgi.service.component.annotations
+Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.ldef.langs.text.LDefDefaultModelProvider.xml
+Require-Bundle: org.eclipse.fx.code.editor.ldef.text,
+ org.eclipse.fx.code.editor.ldef,
+ org.eclipse.fx.code.editor,
+ org.eclipse.fx.core
+Bundle-ActivationPolicy: lazy

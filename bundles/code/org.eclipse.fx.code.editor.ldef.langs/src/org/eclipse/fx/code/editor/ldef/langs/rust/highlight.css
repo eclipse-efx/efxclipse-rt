@@ -1,0 +1,41 @@
+.styled-text-area .rust.rust_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .rust.rust_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .rust.rust_function {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .rust.rust_type {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .rust.rust_types {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .rust.rust_self {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .rust.rust_constants {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .rust.rust_doc_default {
+	-styled-text-color: -source-editor-doc;
+}
+
+.styled-text-area .rust.rust_string {
+	-styled-text-color: -source-editor-string;
+}

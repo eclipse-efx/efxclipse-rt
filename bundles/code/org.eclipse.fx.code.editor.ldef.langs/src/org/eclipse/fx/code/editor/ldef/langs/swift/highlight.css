@@ -1,0 +1,33 @@
+.styled-text-area .swift.swift_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .swift.swift_operator {
+	-styled-text-color: -source-editor-operator;
+}
+
+.styled-text-area .swift.swift_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .swift.swift_builtin_type {
+	-styled-text-color: -source-editor-buitin-type;
+}
+
+.styled-text-area .swift.swift_doc_default {
+	-styled-text-color: -source-editor-doc;
+}
+
+.styled-text-area .swift.swift_string {
+	-styled-text-color: -source-editor-string;
+}
+
+.styled-text-area .swift.swift_number {
+	-styled-text-color: -source-editor-number;
+}
+
+.styled-text-area .swift.swift_annotation {
+	-styled-text-color: -source-editor-annotation;
+	-fx-font-weight: bold;
+}

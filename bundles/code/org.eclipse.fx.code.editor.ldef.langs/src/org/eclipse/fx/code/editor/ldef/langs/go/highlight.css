@@ -1,0 +1,31 @@
+.styled-text-area .go.go_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .go.go_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .go.go_types {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .go.go_builtin_constants {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .go.go_builtin_functions {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .go.go_doc_default {
+	-styled-text-color: -source-editor-doc;
+}
+
+.styled-text-area .go.go_string {
+	-styled-text-color: -source-editor-string;
+}

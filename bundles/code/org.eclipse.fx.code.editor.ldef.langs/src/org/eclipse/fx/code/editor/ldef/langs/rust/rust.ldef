@@ -1,0 +1,72 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+rust {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __rust_single_line_comment
+		partition __rust_multi_line_comment
+		partition __rust_string
+		rule {
+			single_line __rust_single_line_comment 	"//" 	=> ''
+			multi_line 	__rust_multi_line_comment 	"/*" 	=> "*/"
+			single_line __rust_string 				'"' 	=> '"'
+			single_line __rust_string 				"'" 	=> "'"
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type whitespace javawhitespace {
+			default rust_default
+			rust_function {
+				keywords ["fn"]
+			}
+			rust_type {
+				keywords ["type"]
+			}
+			rust_keyword {
+				keywords [
+						"abstract",	"alignof",	"as",		"become",	"box",		"break"
+					,	"const",	"continue",	"crate", 	"do",	 	"else",		"enum"
+					,	"extern",	"final",	"for",		"if",		"impl",		"in"
+					,	"let",		"loop",		"macro",	"match",	"mod",		"move"
+					,	"mut",		"offsetof",	"override",	"priv",		"proc",		"pub"
+					,	"pure",		"ref",		"return",	"sizeof",	"static",	"struct"
+					,	"super",	"trait",	"typeof",	"unsafe",	"unsized",	"use"
+					,	"virtual",	"where",	"while",	"yield"
+				]
+			}
+			rust_types {
+				keywords [
+							"bool", "isize", 	"usize", 	"i8", 	"i16"
+						,	"i32",	"i64",		"u8",		"u16",	"u32"
+						,	"u64",	"f32",		"f64",		"char",	"str"
+				]
+			}
+			rust_self {
+				keywords [
+					"self", "Self"
+				]
+			}
+			rust_constants {
+				keywords [
+					"true","false"
+				]
+			}
+		}
+		rule __rust_single_line_comment {
+			default rust_doc_default
+		}
+		rule __rust_multi_line_comment {
+			default rust_doc_default
+		}
+		rule __rust_string {
+			default rust_string
+		}
+	}
+	integration {
+		javafx {
+			java "org.eclipse.fx.code.editor.ldef.langs.fx.rust" {
+				project : "org.eclipse.fx.code.editor.ldef.langs.fx"
+			}
+		}
+	}
+}

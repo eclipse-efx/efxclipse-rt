@@ -1,0 +1,61 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+kotlin {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __kotlin_multi_line_api_comment
+		partition __kotlin_single_line_comment
+		partition __kotlin_multi_line_comment
+		partition __kotlin_string
+		rule {
+			single_line __kotlin_single_line_comment 	"//" 	=> ''
+			multi_line __kotlin_multi_line_api_comment 	"/**" 	=> "*/"
+			multi_line __kotlin_multi_line_comment 		"/*" 	=> "*/"
+			single_line __kotlin_string 				'"' 	=> '"'
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type {
+			default kotlin_default
+			kotlin_keyword {
+				keywords [
+							"break",		"continue",		"return",		"if",		"else",		"when"
+						,	"do",			"for",			"while",		"as",		"in",		"is"
+						,	"by",			"get",			"set",			"out",		"super",	"this"
+						,	"This",			"where",		"try",			"catch",	"finally",	"throw"
+						,	"import",		"package",		"annotation",	"companion","enum",		"inner"
+						,	"internal",		"private",		"protected",	"public",	"abstract",	"final"
+						,	"open",			"override",		"sealed",		"vararg",	"dynamic",	"class"
+						,	"object",		"interface",	"trait",		"fun",		"val",		"var"
+						,	"constructor",	"init",			"typealias"
+						,	"data",			"inline", 		"reified",		"native", 	"synchronized"
+						,	"transient",	"volatile"
+				]
+			}
+			kotlin_literals {
+				keywords [
+						"true", "false", "null"
+				]
+			}
+		}
+		rule __kotlin_multi_line_api_comment {
+			default kotlin_api_doc_default
+		}
+		rule __kotlin_single_line_comment {
+			default kotlin_doc_default
+		}
+		rule __kotlin_multi_line_comment {
+			default kotlin_doc_default
+		}
+		rule __kotlin_string {
+			default kotlin_string
+		}
+	}
+	integration {
+		javafx {
+			java "org.eclipse.fx.code.editor.ldef.langs.fx.kotlin" {
+				project : "org.eclipse.fx.code.editor.ldef.langs.fx"
+			}
+		}
+	}
+}
