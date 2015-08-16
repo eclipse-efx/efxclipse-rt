@@ -1,0 +1,71 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+groovy {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __groovy_apidoc
+		partition __groovy_multiline_comment
+		partition __groovy_singleline_comment
+		partition __groovy_string
+		partition __groovy_character
+		rule {
+			multi_line __groovy_apidoc "/**" => "*/"
+			multi_line __groovy_multiline_comment "/*" => "*/"
+			single_line __groovy_string "\"" => "\""
+			single_line __groovy_character "'" => "'"
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type whitespace javawhitespace {
+			default groovy_default
+			groovy_keyword {
+				keywords [
+					"abstract", 	"as", 			"assert", 		"break",
+					"case",			"catch",		"class", 		"const",
+					"continue",		"def",			"default", 		"do",
+					"else",			"enum", 		"extends", 		"false",
+					"final",		"finally",		"for",			"goto",
+					"if",			"implements", 	"import",		"in",
+					"instanceof",	"interface",	"native",		"new",
+					"null",			"package",		"private",		"protected",
+					"public",		"static",		"strictfp",		"super",
+					"switch",		"synchronized",	"this",			"threadsafe",
+					"throw",		"throws",		"transient",	"true",
+					"try",			"void",			"volatile",		"while",
+					"return"
+				]
+			}
+			groovy_builtin_type {
+				keywords [
+					"boolean", "byte", "char", "short", "int", "long", "double", "float"
+				]
+			}
+		}
+		rule __groovy_apidoc {
+			default groovy_api_doc_default
+		}
+		rule __groovy_character {
+			default groovy_string
+		}
+		rule __groovy_string {
+			default groovy_string
+			groovy_string_inter {
+				single_line "${" => "}"
+				pattern "\\$" containing "\\w"
+			}
+		}
+		rule __groovy_multiline_comment {
+			default groovy_doc_default
+		}
+		rule __groovy_singleline_comment {
+			default groovy_doc_default
+		}
+	}
+	integration {
+		javafx {
+			java "org.eclipse.fx.code.editor.ldef.langs.fx.groovy" {
+				project : "org.eclipse.fx.code.editor.ldef.langs.fx"
+			}
+		}
+	}
+}

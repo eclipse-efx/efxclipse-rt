@@ -1,0 +1,30 @@
+.styled-text-area .groovy.groovy_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .groovy.groovy_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .groovy.groovy_builtin_type {
+	-styled-text-color: -source-editor-buitin-type;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .groovy.groovy_string {
+	-styled-text-color: -source-editor-string;
+}
+
+.styled-text-area .groovy.groovy_string_inter {
+	-styled-text-color: -source-editor-string;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .groovy.groovy_api_doc_default {
+	-styled-text-color: -source-editor-api-doc;
+}
+
+.styled-text-area .groovy.groovy_doc_default {
+	-styled-text-color: -source-editor-doc
+}
