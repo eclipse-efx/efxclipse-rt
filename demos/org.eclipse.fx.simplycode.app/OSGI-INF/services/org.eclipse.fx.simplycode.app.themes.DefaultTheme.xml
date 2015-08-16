@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.simplycode.app.themes.DefaultTheme">
+   <implementation class="org.eclipse.fx.simplycode.app.themes.DefaultTheme"/>
+   <service>
+      <provide interface="org.eclipse.fx.ui.services.theme.Theme"/>
+   </service>
+   <reference bind="registerMultiURLStylesheet" cardinality="0..n" interface="org.eclipse.fx.ui.services.theme.MultiURLStylesheet" name="registerMultiURLStylesheet" policy="dynamic" unbind="unregisterMultiURLStylesheet"/>
+   <reference bind="registerStylesheet" cardinality="0..n" interface="org.eclipse.fx.ui.services.theme.Stylesheet" name="registerStylesheet" policy="dynamic" unbind="unregisterStylesheet"/>
+</scr:component>

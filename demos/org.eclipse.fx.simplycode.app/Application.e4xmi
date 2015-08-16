@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmi:id="_5jLXkTuxEeW_pv6K11JvGw" elementId="org.eclipse.e4.application" bindingContexts="_5jLXkDuxEeW_pv6K11JvGw">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_xnrEIDuyEeW_pv6K11JvGw" elementId="org.eclipse.fx.simplycode.app.trimmedwindow.simplycode" label="Simply Code">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_PK21MDuzEeW_pv6K11JvGw" elementId="org.eclipse.fx.simplycode.app.partsashcontainer.0" horizontal="true">
+      <children xsi:type="basic:Part" xmi:id="_0KUAADuyEeW_pv6K11JvGw" elementId="org.eclipse.fx.simplycode.app.part.0" containerData="30" contributionURI="bundleclass://org.eclipse.fx.simplycode.app/org.eclipse.fx.simplycode.app.parts.ProjectExplorer"/>
+      <children xsi:type="basic:PartStack" xmi:id="_zlEk8DuyEeW_pv6K11JvGw" elementId="org.eclipse.fx.simplycode.app.partstack.0" containerData="70">
+        <tags>editorContainer</tags>
+      </children>
+    </children>
+  </children>
+  <rootContext xmi:id="_5jLXkDuxEeW_pv6K11JvGw" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_5jLXkjuxEeW_pv6K11JvGw" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_5jLXkzuxEeW_pv6K11JvGw" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <addons xmi:id="_5jLXlDuxEeW_pv6K11JvGw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_5jLXlTuxEeW_pv6K11JvGw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_5jLXljuxEeW_pv6K11JvGw" elementId="org.eclipse.fx.ui.keybindings.e4.service" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingServiceAddon"/>
+  <addons xmi:id="_5jLXlzuxEeW_pv6K11JvGw" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_5jLXmDuxEeW_pv6K11JvGw" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_5jLXmTuxEeW_pv6K11JvGw" elementId="org.eclipse.fx.ui.keybindings.e4.model" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingProcessingAddon"/>
+  <addons xmi:id="_5jLXmjuxEeW_pv6K11JvGw" elementId="org.eclipse.e4.ui.workbench.addons.HandlerProcessingAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+  <addons xmi:id="_GGjbYEBOEeWOGdqHuxjO6w" elementId="org.eclipse.fx.simplycode.app.addon.0" contributionURI="bundleclass://org.eclipse.fx.code.editor.e4/org.eclipse.fx.code.editor.e4.addons.DirtyStateTrackingAddon"/>
+</application:Application>

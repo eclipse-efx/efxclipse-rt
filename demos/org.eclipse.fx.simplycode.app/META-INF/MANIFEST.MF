@@ -1,0 +1,32 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: My Sample App
+Bundle-SymbolicName: org.eclipse.fx.simplycode.app; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.fx.ui.workbench.fx,
+ org.eclipse.e4.ui.model.workbench,
+ org.eclipse.e4.core.services,
+ org.eclipse.e4.core.di,
+ org.eclipse.e4.ui.di,
+ org.eclipse.e4.core.di.extensions,
+ org.eclipse.fx.ui.theme,
+ org.eclipse.fx.ui.di,
+ org.eclipse.e4.core.contexts,
+ org.eclipse.fx.core.databinding,
+ org.eclipse.fx.ui.databinding,
+ org.eclipse.core.databinding,
+ org.eclipse.core.databinding.observable,
+ org.eclipse.core.databinding.property,
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.e4.ui.services,
+ org.eclipse.fx.ui.services,
+ org.eclipse.fx.core;bundle-version="2.1.0",
+ org.eclipse.fx.code.editor;bundle-version="2.1.0",
+ org.eclipse.fx.ui.controls;bundle-version="2.1.0",
+ org.eclipse.jdt.annotation;bundle-version="2.0.100";resolution:=optional,
+ org.eclipse.osgi.services,
+ org.eclipse.fx.code.editor.e4;bundle-version="2.1.0"
+Import-Package: javax.inject;version="1.0.0"
+Service-Component: OSGI-INF/services/org.eclipse.fx.simplycode.app.themes.DefaultTheme.xml
