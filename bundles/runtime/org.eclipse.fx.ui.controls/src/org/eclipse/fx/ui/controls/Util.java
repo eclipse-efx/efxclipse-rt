@@ -13,7 +13,10 @@ package org.eclipse.fx.ui.controls;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
 
@@ -21,6 +24,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -99,7 +104,7 @@ public class Util {
 
 	/**
 	 * Find a node in all windows
-	 * 
+	 *
 	 * @param w
 	 *            the preferred window
 	 * @param screenX
@@ -129,7 +134,7 @@ public class Util {
 	/**
 	 * Find all node at the given x/y location starting the search from the
 	 * given node
-	 * 
+	 *
 	 * @param n
 	 *            the node to use as the start
 	 * @param screenX
@@ -161,7 +166,7 @@ public class Util {
 
 	/**
 	 * Get the window property of a node
-	 * 
+	 *
 	 * @param n
 	 *            the node the window property to observe
 	 * @return the property
@@ -182,5 +187,66 @@ public class Util {
 		});
 
 		return w;
+	}
+
+	/**
+	 * Bind the content to the source list to the target and apply the converter
+	 * in between
+	 *
+	 * @param target
+	 *            the target list
+	 * @param sourceList
+	 *            the source list
+	 * @param converterFunction
+	 *            the function used to convert
+	 * @return the subscription to dispose the binding
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static <T, E> Subscription bindContent(List<? extends T> target, ObservableList<E> sourceList, Function<E, T> converterFunction) {
+		List<T> list = sourceList.stream().map(converterFunction).collect(Collectors.toList());
+
+		if( target instanceof ObservableList<?> ) {
+			((ObservableList)target).setAll(list);
+		} else {
+			target.clear();
+			((List)target).addAll(list);
+		}
+
+		ListChangeListener<E> l = change -> {
+			while (change.next()) {
+				if (change.wasPermutated()) {
+					list.subList(change.getFrom(), change.getTo()).clear();
+					list.addAll(change.getFrom(), transformList(change.getList().subList(change.getFrom(), change.getTo()), converterFunction));
+				} else {
+					if (change.wasRemoved()) {
+						list.subList(change.getFrom(), change.getFrom() + change.getRemovedSize()).clear();
+					}
+					if (change.wasAdded()) {
+						list.addAll(change.getFrom(), transformList(change.getAddedSubList(), converterFunction));
+					}
+				}
+			}
+		};
+		sourceList.addListener(l);
+		return new Subscription() {
+
+			@Override
+			public void dispose() {
+				sourceList.removeListener(l);
+			}
+		};
+	}
+
+	/**
+	 * Transform the list to another list
+	 *
+	 * @param list
+	 *            the list
+	 * @param converterFunction
+	 *            the converter function
+	 * @return the list
+	 */
+	public static <T, E> List<T> transformList(List<? extends E> list, Function<E, T> converterFunction) {
+		return list.stream().map(converterFunction).collect(Collectors.toList());
 	}
 }
