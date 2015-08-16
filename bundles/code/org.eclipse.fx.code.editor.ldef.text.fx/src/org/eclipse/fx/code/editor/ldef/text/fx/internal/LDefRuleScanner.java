@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import org.eclipse.fx.code.editor.ldef.lDef.Keyword;
+import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
@@ -44,7 +45,7 @@ public class LDefRuleScanner extends RuleBasedScanner {
 		int i = 0;
 		Map<Token,Scanner_Keyword> keyWordList = new HashMap<>();
 		for( org.eclipse.fx.code.editor.ldef.lDef.Token st : scanner.getTokenList() ) {
-			Token token = new Token(new TextAttribute("dart." + st.getName()));
+			Token token = new Token(new TextAttribute(((LanguageDef)scanner.eContainer().eContainer()).getName() + "." + st.getName()));
 			if( st.isDefault() ) {
 				defaultToken = token;
 				setDefaultReturnToken(token);
