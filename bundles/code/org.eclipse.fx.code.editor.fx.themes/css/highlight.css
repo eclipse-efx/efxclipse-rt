@@ -1,3 +1,18 @@
+.root {
+	-type-info-color: lightgray;
+}
+
 .styled-text-area .list-view {
 	-fx-background-color: white;
+
+	-source-editor-code: rgb(0, 0, 0);
+	-source-editor-operator: rgb(0, 0, 0);
+	-source-editor-bracket: rgb(0, 0, 0);
+	-source-editor-keyword: rgb(127, 0, 85);
+	-source-editor-string:  rgb(42, 0, 255);
+	-source-editor-number:  rgb(42, 0, 255);
+	-source-editor-doc: rgb(63, 127, 95);
+	-source-editor-api-doc:  rgb(63, 95, 191);
+	-source-editor-buitin-type: #74a567;
+	-source-editor-annotation: rgb(200, 200, 200);
 }

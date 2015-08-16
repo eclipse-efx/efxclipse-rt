@@ -1,5 +1,19 @@
+.root {
+	-type-info-color: lightgray;
+}
+
 .source-viewer.styled-text-area .selection-marker {
 	-fx-background-color: #2b5696;
+
+	-source-editor-code: #b8c4d1;
+	-source-editor-operator: #b8c4d1;
+	-source-editor-bracket: #b8c4d1;
+	-source-editor-keyword: #d78b40;
+	-source-editor-string:  #7c986c;
+	-source-editor-doc: #929292;
+	-source-editor-api-doc: #74a567;
+	-source-editor-buitin-type: #74a567;
+	-source-editor-annotation: rgb(200, 200, 200);
 }
 
 .styled-text-area .list-view {
