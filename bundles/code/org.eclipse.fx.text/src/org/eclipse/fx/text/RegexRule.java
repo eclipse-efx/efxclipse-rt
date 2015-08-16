@@ -34,7 +34,6 @@ public class RegexRule implements IRule {
 		}
 
 		if( startPattern.matcher(b.toString()).matches() ) {
-			System.err.println("MATCHED =======> " + b);
 			String input;
 			do {
 				readCount++;
