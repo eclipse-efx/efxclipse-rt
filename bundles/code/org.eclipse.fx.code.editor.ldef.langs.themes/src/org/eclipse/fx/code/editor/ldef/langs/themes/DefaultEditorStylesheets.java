@@ -27,6 +27,8 @@ public class DefaultEditorStylesheets implements MultiURLStylesheet {
 					, new URL("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/go/highlight.css")
 					, new URL("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/rust/highlight.css")
 					, new URL("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/swift/highlight.css")
+					, new URL("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/groovy/groovy.css")
+					, new URL("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/python/python.css")
 			);
 		} catch (MalformedURLException e) {
 		}
