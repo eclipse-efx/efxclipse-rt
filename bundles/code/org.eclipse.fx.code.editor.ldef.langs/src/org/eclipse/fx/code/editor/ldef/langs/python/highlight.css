@@ -1,0 +1,25 @@
+.styled-text-area .python.python_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .python.python_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .python.python_builtin_type {
+	-styled-text-color: -source-editor-buitin-type;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .python.python_string {
+	-styled-text-color: -source-editor-string;
+}
+
+.styled-text-area .python.python_api_doc_default {
+	-styled-text-color: -source-editor-api-doc;
+}
+
+.styled-text-area .python.python_doc_default {
+	-styled-text-color: -source-editor-doc
+}
