@@ -19,6 +19,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.internal.CanvasGC;
 import org.eclipse.swt.internal.Util;
 
@@ -51,7 +52,7 @@ public class Image extends Resource implements Drawable {
 					(int) image.getWidth(), (int) image.getHeight());
 			stream.close();
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new SWTException();
 		}
 	}
 
@@ -197,7 +198,7 @@ public class Image extends Resource implements Drawable {
 		PaletteData paletteData = new PaletteData(0xFF0000, 0xFF00, 0xFF);
 		int width = (int) image.getWidth();
 		int height = (int) image.getHeight();
-		
+
 		ImageData imageData = new ImageData(width, height,32, paletteData);
 		byte[] maskData = new byte[(width + 7) / 8 * height];
 		PixelReader reader = image.getPixelReader();
@@ -233,15 +234,15 @@ public class Image extends Resource implements Drawable {
 	public void dispose() {
 		image = null;
 	}
-	
+
 	@Override
 	public DrawableGC internal_new_GC() {
 		return new CanvasGC(image);
 	}
-	
+
 	@Override
 	public void internal_dispose_GC(DrawableGC gc) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
