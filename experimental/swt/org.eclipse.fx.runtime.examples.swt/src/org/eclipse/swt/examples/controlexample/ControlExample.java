@@ -62,7 +62,7 @@ public class ControlExample {
 	/**
 	 * Creates an instance of a ControlExample embedded inside
 	 * the supplied parent Composite.
-	 * 
+	 *
 	 * @param parent the container of the example
 	 */
 	public ControlExample(Composite parent) {
@@ -75,8 +75,8 @@ public class ControlExample {
 		    item.setControl (tabs [i].createTabFolderPage (tabFolder));
 		    item.setData (tabs [i]);
 		}
-		
-//FIXME PORTING TO FX		
+
+//FIXME PORTING TO FX
 //		/* Workaround: if the tab folder is wider than the screen,
 //		 * Mac platforms clip instead of somehow scrolling the tab items.
 //		 * We try to recover some width by using shorter tab names. */
@@ -121,14 +121,14 @@ public class ControlExample {
 //			new ToolBarTab (this),
 //			new ToolTipTab (this),
 			new TreeTab (this),
-//			new BrowserTab (this),
+			new BrowserTab (this)
 		};
 	}
 
 	/**
 	 * Disposes of all resources associated with a particular
 	 * instance of the ControlExample.
-	 */	
+	 */
 	public void dispose() {
 		/*
 		 * Destroy any shells that may have been created
@@ -156,7 +156,7 @@ public class ControlExample {
 			images = null;
 		}
 	}
-	
+
 	/**
 	 * Gets a string from the resource bundle.
 	 * We don't want to crash because of a missing String.
@@ -169,7 +169,7 @@ public class ControlExample {
 			return key;
 		} catch (NullPointerException e) {
 			return "!" + key + "!"; //$NON-NLS-1$ //$NON-NLS-2$
-		}			
+		}
 	}
 
 	/**
@@ -248,14 +248,14 @@ public class ControlExample {
 //		instance.dispose();
 //		display.dispose();
 	}
-	
+
 	/**
 	 * Grabs input focus.
 	 */
 	public void setFocus() {
 		tabFolder.setFocus();
 	}
-	
+
 	/**
 	 * Sets the size of the shell to it's "packed" size,
 	 * unless that makes it larger than the monitor it is being displayed on,
@@ -266,7 +266,7 @@ public class ControlExample {
 //FIXME PORT TO FX		Rectangle monitorArea = shell.getMonitor().getClientArea();
 //		shell.setSize(Math.min(size.x, monitorArea.width), Math.min(size.y, monitorArea.height));
 	}
-	
-	
+
+
 }
 

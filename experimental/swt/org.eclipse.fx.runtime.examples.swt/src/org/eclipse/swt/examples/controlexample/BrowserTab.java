@@ -27,51 +27,51 @@ class BrowserTab extends Tab {
 	/* Example widgets and groups that contain them */
 	Browser browser;
 	Group browserGroup;
-	
+
 	/* Style widgets added to the "Style" group */
 	Button mozillaButton, webKitButton;
-	
+
 	String errorMessage, lastText, lastUrl;
-	
+
 	/**
 	 * Creates the Tab within a given instance of ControlExample.
 	 */
 	BrowserTab(ControlExample instance) {
 		super(instance);
 	}
-	
+
 	void createBackgroundModeGroup () {
 		// Browser does not need a background mode group.
 	}
-	
+
 	void createColorAndFontGroup () {
 		// Browser does not need a color and font group.
 	}
-	
+
 	/**
 	 * Creates the "Example" group.
 	 */
 	void createExampleGroup () {
 		super.createExampleGroup ();
-		
+
 		/* Create a group for the browser */
 		browserGroup = new Group (exampleGroup, SWT.NONE);
 		browserGroup.setLayout (new GridLayout ());
 		browserGroup.setLayoutData (new GridData (SWT.FILL, SWT.FILL, true, true));
 		browserGroup.setText ("Browser");
 	}
-	
+
 	/**
 	 * Creates the "Example" widgets.
 	 */
 	void createExampleWidgets () {
-		
+
 		/* Compute the widget style */
 		int style = getDefaultStyle();
 		if (borderButton.getSelection ()) style |= SWT.BORDER;
 		if (mozillaButton.getSelection ()) style |= SWT.MOZILLA;
 		if (webKitButton.getSelection ()) style |= SWT.WEBKIT;
-		
+
 		/* Create the example widgets */
 		try {
 			browser = new Browser (browserGroup, style);
@@ -114,7 +114,7 @@ class BrowserTab extends Tab {
 		}
 		lastText = lastUrl = null;
 	}
-	
+
 	/**
 	 * Creates the "Other" group.  This is typically
 	 * a child of the "Control" group.
@@ -123,7 +123,7 @@ class BrowserTab extends Tab {
 		super.createOtherGroup ();
 		backgroundImageButton.dispose ();
 	}
-	
+
 	/**
 	 * Creates the "Size" group.  The "Size" group contains
 	 * controls that allow the user to change the size of
@@ -131,7 +131,7 @@ class BrowserTab extends Tab {
 	 */
 	void createSizeGroup () {
 		super.createSizeGroup ();
-		
+
 		/* Set the default state for Browser to fill horizontally & vertically. */
 		fillHButton.setSelection (true);
 		fillVButton.setSelection (true);
@@ -142,7 +142,7 @@ class BrowserTab extends Tab {
 	 */
 	void createStyleGroup () {
 		super.createStyleGroup ();
-	
+
 		/* Create the extra widgets */
 		mozillaButton = new Button (styleGroup, SWT.CHECK);
 		mozillaButton.setText ("SWT.MOZILLA");
@@ -161,7 +161,7 @@ class BrowserTab extends Tab {
 		borderButton = new Button (styleGroup, SWT.CHECK);
 		borderButton.setText ("SWT.BORDER");
 	}
-	
+
 	/**
 	 * Creates the tab folder page.
 	 *
@@ -182,7 +182,7 @@ class BrowserTab extends Tab {
 				setExampleWidgetSize ();
 			}
 		});
-		
+
 		/*
 		 * Add a selection listener to the tabFolder to bring up a
 		 * dialog if this platform does not support the Browser.
@@ -196,7 +196,7 @@ class BrowserTab extends Tab {
 				}
 			}
 		});
-		
+
 		return tabFolderPage;
 	}
 
@@ -216,12 +216,12 @@ class BrowserTab extends Tab {
 				}
 			}
 		}
-		super.disposeExampleWidgets();	
+		super.disposeExampleWidgets();
 	}
 
 	public static String getContents(InputStream in) throws IOException {
 		BufferedReader br= new BufferedReader(new InputStreamReader(in));
-		
+
 		StringBuffer sb= new StringBuffer(300);
 		try {
 			int read= 0;
@@ -235,7 +235,7 @@ class BrowserTab extends Tab {
 
 	/**
 	 * Gets the list of custom event names.
-	 * 
+	 *
 	 * @return an array containing custom event names
 	 */
 	String [] getCustomEventNames () {
@@ -243,7 +243,7 @@ class BrowserTab extends Tab {
 				"OpenWindowListener", "ProgressListener", "StatusTextListener", "TitleListener",
 				"VisibilityWindowListener"};
 	}
-	
+
 	/**
 	 * Gets the "Example" widget children.
 	 */
@@ -266,19 +266,19 @@ class BrowserTab extends Tab {
 	String getTabText () {
 		return "Browser";
 	}
-	
+
 	/**
 	 * Hooks the custom listener specified by eventName.
 	 */
 	void hookCustomListener (final String eventName) {
 		if (browser == null) return;
-		if (eventName == "AuthenticationListener") {
-			browser.addAuthenticationListener(new AuthenticationListener () {
-				public void authenticate(AuthenticationEvent event) {
-					log (eventName, event);
-				}
-			});
-		}
+//		if (eventName == "AuthenticationListener") {
+//			browser.addAuthenticationListener(new AuthenticationListener () {
+//				public void authenticate(AuthenticationEvent event) {
+//					log (eventName, event);
+//				}
+//			});
+//		}
 		if (eventName == "CloseWindowListener") {
 			browser.addCloseWindowListener (new CloseWindowListener () {
 				public void close(WindowEvent event) {
@@ -342,7 +342,7 @@ class BrowserTab extends Tab {
 	boolean rtlSupport() {
 		return false;
 	}
-	
+
 	/**
 	 * Sets the state of the "Example" widgets.
 	 */
