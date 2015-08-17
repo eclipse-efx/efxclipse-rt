@@ -23,11 +23,11 @@ import org.eclipse.swt.graphics.Rectangle;
 public class Canvas extends Composite {
 	private Caret caret;
 	private Region scrollable;
-	
+
 	private boolean focusListenerAttached;
 	private javafx.scene.canvas.Canvas nativeCanvas;
 	private IME ime;
-	
+
 	public Canvas(Composite parent, int style) {
 		super(parent,style);
 	}
@@ -35,13 +35,13 @@ public class Canvas extends Composite {
 	Canvas(Display display, int style) {
 		super(display,style);
 	}
-	
+
 	@Override
 	protected Region createWidget() {
 		scrollable = super.createWidget();
 		return scrollable;
 	}
-	
+
 	@Override
 	protected FXLayoutPane internal_createLayoutPane() {
 		return new FXLayoutPane(this) {
@@ -55,7 +55,7 @@ public class Canvas extends Composite {
 			}
 		};
 	}
-	
+
 	public void setCaret(Caret caret) {
 		if( this.caret != null ) {
 			this.caret.internal_hide();
@@ -69,20 +69,20 @@ public class Canvas extends Composite {
 			}
 			internal_enableFocusTraversable();
 			if( scrollable.isFocused() ) {
-				this.caret.internal_show();	
+				this.caret.internal_show();
 			}
 			((FXLayoutPane)internal_getNativeControl()).getChildren().add(this.caret.internal_getNativeObject());
 		}
 		internal_getNativeControl().layout();
 	}
-	
+
 	public Caret getCaret() {
 		return caret;
 	}
-	
+
 	private InvalidationListener getFocusChangeListener() {
 		return new InvalidationListener() {
-			
+
 			@Override
 			public void invalidated(Observable observable) {
 				if( caret != null ) {
@@ -95,13 +95,13 @@ public class Canvas extends Composite {
 			}
 		};
 	}
-	
+
 	public void scroll (int destX, int destY, int x, int y, int width, int height, boolean all) {
 //		nativeCanvas.getGraphicsContext2D().translate(destX - x, destY - y);
 //		nativeCanvas.getGraphicsContext2D().save();
 		redraw();
 	}
-	
+
 	@Override
 	protected javafx.scene.canvas.Canvas internal_initCanvas() {
 		javafx.scene.canvas.Canvas c = super.internal_initCanvas();
@@ -110,18 +110,28 @@ public class Canvas extends Composite {
 		}
 		return c;
 	}
-	
+
+	@Override
+	protected double internal_getClientAreaWidth() {
+		return internal_getNativeObject().getWidth();
+	}
+
+	 @Override
+	protected double internal_getClientAreaHeight() {
+		return internal_getNativeObject().getHeight();
+	}
+
 	public void drawBackground (GC gc, int x, int y, int width, int height) {
 		Color bg = gc.getBackground();
 		gc.setBackground(getBackground());
 		gc.fillRectangle(x, y, width, height);
 		gc.setBackground(bg);
 	}
-	
+
 	public IME getIME () {
 		return ime;
 	}
-	
+
 	public void setIME (IME ime) {
 		this.ime = ime;
 	}
