@@ -12,6 +12,8 @@ package org.eclipse.fx.ui.controls.dnd;
 
 import java.util.function.Consumer;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.Event;
 import javafx.event.EventTarget;
 import javafx.event.EventType;
@@ -36,7 +38,7 @@ public class EFXDragEvent extends Event {
 	private static DragFeedback DRAG_FEEDBACK = null;
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -59,7 +61,7 @@ public class EFXDragEvent extends Event {
 	 * Event fired when dropped
 	 */
 	public static final EventType<EFXDragEvent> DRAG_DROPPED = new EventType<EFXDragEvent>(EFXDragEvent.ANY, "DRAG_DROPPED"); //$NON-NLS-1$
-	
+
 	/**
 	 * Event fired when drag exits the area
 	 */
@@ -90,6 +92,7 @@ public class EFXDragEvent extends Event {
 			this.stage = new PopupWindow() {
 				// Empty
 			};
+			this.stage.setAutoFix(false);
 			this.stage.setUserData("findNodeExclude"); //$NON-NLS-1$
 //			this.stage.setAlwaysOnTop(true);
 			StackPane root = new StackPane();
@@ -121,7 +124,7 @@ public class EFXDragEvent extends Event {
 
 	/**
 	 * Create a new drag event
-	 * 
+	 *
 	 * @param source
 	 *            the source
 	 * @param target
@@ -159,7 +162,7 @@ public class EFXDragEvent extends Event {
 
 	/**
 	 * Update the drag feedback
-	 * 
+	 *
 	 * @param consumer
 	 *            the consumer
 	 */
@@ -172,7 +175,7 @@ public class EFXDragEvent extends Event {
 
 	/**
 	 * Update the screen location while no drag over events occur
-	 * 
+	 *
 	 * @param screenX
 	 *            the screen x
 	 * @param screenY
@@ -214,7 +217,7 @@ public class EFXDragEvent extends Event {
 
 	/**
 	 * Setting the drag content
-	 * 
+	 *
 	 * @param content
 	 *            the content
 	 */
@@ -234,7 +237,7 @@ public class EFXDragEvent extends Event {
 
 	/**
 	 * Set the drag to be complete. Only to call when {@link #DRAG_DROPPED}
-	 * 
+	 *
 	 * @param complete
 	 *            <code>true</code> when completed
 	 */
@@ -250,7 +253,7 @@ public class EFXDragEvent extends Event {
 	public boolean isComplete() {
 		return this.state.complete;
 	}
-	
+
 	/**
 	 * @return check if showing drag feedback is possible
 	 */
