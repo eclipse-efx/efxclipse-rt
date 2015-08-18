@@ -33,6 +33,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindowElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
+import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler;
@@ -55,7 +56,7 @@ import org.osgi.service.event.Event;
 
 /**
  * Base renderer for {@link MWindow}
- * 
+ *
  * @param <N>
  *            the native widget type
  */
@@ -67,7 +68,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		private MWindow element;
 		@NonNull
 		private WWindow<N> widget;
-		
+
 		DefaultSaveHandler(@NonNull MWindow element, @NonNull WWindow<N> widget) {
 			this.element = element;
 			this.widget = widget;
@@ -166,6 +167,9 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 	@Inject
 	ELifecycleService lifecycleService;
+
+	@Inject
+	IPresentationEngine presentationEngine;
 
 	@SuppressWarnings("null")
 	@PostConstruct
@@ -316,7 +320,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				}
 
 				if (element != null && shouldRemoveWindowFromModel(element)) {
-					element.setToBeRendered(false);
+					BaseWindowRenderer.this.presentationEngine.removeGui(element);
 					EObject eo = (EObject) element;
 					EStructuralFeature feature = eo.eContainingFeature();
 					if (feature.isMany()) {
@@ -340,7 +344,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 	/**
 	 * Check if the element should be removed from the model
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @return <code>true</code> if it should be removed
@@ -352,7 +356,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 	/**
 	 * Show a prompt to inform the user about dirty parts
-	 * 
+	 *
 	 * @param element
 	 *            the parent
 	 * @param dirtyParts
@@ -366,7 +370,7 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 
 	/**
 	 * Show a prompt to inform the user that <b>one</b> part is dirty
-	 * 
+	 *
 	 * @param element
 	 *            the parent
 	 * @param dirtyPart
