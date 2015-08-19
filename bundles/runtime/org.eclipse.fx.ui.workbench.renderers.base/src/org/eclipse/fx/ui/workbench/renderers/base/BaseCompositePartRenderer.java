@@ -33,6 +33,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCompositePart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.service.event.Event;
@@ -40,7 +41,7 @@ import org.osgi.service.event.EventHandler;
 
 /**
  * Base renderer for {@link MCompositePart}
- * 
+ *
  * @param <N>
  *            the native widget
  */
@@ -63,7 +64,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 		registerEventListener(eventBroker, UIEvents.Part.TOPIC_LOCALIZED_DESCRIPTION);
 
 		registerEventListener(eventBroker, UIEvents.Dirtyable.TOPIC_DIRTY);
-		
+
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, new EventHandler() {
 
 			@Override
@@ -102,7 +103,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 		});
 		EventProcessor.attachVisibleProcessor(eventBroker, this);
 		eventBroker.subscribe(UIEvents.UIElement.TOPIC_CONTAINERDATA, new EventHandler() {
-			
+
 			@Override
 			public void handleEvent(Event event) {
 				MUIElement changedObj = (MUIElement) event.getProperty(UIEvents.EventTags.ELEMENT);
@@ -112,7 +113,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 						@Nullable
 						WCompositePart<N> widget = getWidget((MCompositePart)(MUIElement)parent);
 						if( widget != null ) {
-							widget.updateLayout();	
+							widget.updateLayout();
 						} else {
 							getLogger().error("Could not find widget for '"+parent+"'");  //$NON-NLS-1$//$NON-NLS-2$
 						}
@@ -162,9 +163,11 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 			cl = cl.getSuperclass();
 		} while (cl != Object.class);
 
-		IContributionFactory contributionFactory = element.getContext().get(IContributionFactory.class);
-		Object newPart = contributionFactory.create(element.getContributionURI(), element.getContext());
-		element.setObject(newPart);
+		if( element.getContributionURI() != null ) {
+			IContributionFactory contributionFactory = element.getContext().get(IContributionFactory.class);
+			Object newPart = contributionFactory.create(element.getContributionURI(), element.getContext());
+			element.setObject(newPart);
+		}
 	}
 
 	@SuppressWarnings("null")
@@ -185,7 +188,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 		WLayoutedWidget<MPartSashContainerElement> w = (WLayoutedWidget<MPartSashContainerElement>) element.getWidget();
 		if( w != null ) {
 			List<@NonNull WLayoutedWidget<MPartSashContainerElement>> l = Collections.singletonList(w);
-			sash.addItems(idx, l);	
+			sash.addItems(idx, l);
 		} else {
 			this.logger.error("The widget for element '"+element+"' should not be null");  //$NON-NLS-1$//$NON-NLS-2$
 		}
@@ -204,7 +207,7 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 		if (widget != null) {
 			sash.removeItem(widget);
 		}
-		if( container.getSelectedElement() == changedObj ) {
+		if( container.getSelectedElement() == changedObj && (widget != null && widget.getWidgetState() != WidgetState.IN_TEAR_DOWN) ) {
 			container.setSelectedElement(null);
 		}
 	}
