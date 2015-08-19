@@ -331,10 +331,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				}
 			}
 		}
-		
+
 		//TODO THIS NEEDS TO BE MOVED TO THE CHILD ADDITION HANDLER!!!!
 		fixContextHierarchy(elements);
-		
+
 		// Ensure an element is selected see 436659
 		if( parent.getSelectedElement() == null ) {
 			if( ! widget.getItems().isEmpty() ) {
@@ -375,7 +375,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			}
 			parent.getChildren().removeAll(removeOnHideList);
 		}
-		
+
 		checkSelectedElement(parent);
 	}
 
@@ -420,6 +420,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		stack.selectItem(parent.getChildren().indexOf(newElement));
 		// TODO Should we do the traversal before???
 		fixContextHierarchy(newElement);
+		activateLeafPart(newElement);
 	}
 
 	boolean handleStackItemClose(@NonNull MStackElement e, @NonNull WStackItem<I, IC> item) {

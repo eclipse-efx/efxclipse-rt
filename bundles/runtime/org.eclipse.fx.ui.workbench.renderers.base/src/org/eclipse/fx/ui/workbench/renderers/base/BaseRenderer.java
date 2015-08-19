@@ -52,9 +52,9 @@ import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.Logger.Level;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPlaceholderWidget;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WPropertyChangeHandler.WPropertyChangeEvent;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 import org.eclipse.fx.ui.workbench.services.EModelStylingService;
@@ -793,7 +793,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	/**
 	 * Check that the selected element is a valid one or if not set the
 	 * selection to the first item in the container or <code>null</code>
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 */
@@ -822,7 +822,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Fix the context hierarchy
-	 * 
+	 *
 	 * @param elements
 	 *            the elements
 	 */
@@ -831,8 +831,48 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	}
 
 	/**
+	 * Activates the leaf part
+	 *
+	 * @param element
+	 *            the element
+	 */
+	protected void activateLeafPart(MUIElement element) {
+		// Ensure that when the window is showing that we have the MPart
+		// activated
+		// as stored in the model
+		MUIElement e2 = element;
+		int deadlockCount = 0;
+
+		while (e2 != null) {
+			if (e2 instanceof MElementContainer<?>) {
+				if (((MElementContainer<?>) e2).getSelectedElement() == null && element instanceof MPart) {
+					break;
+				}
+				e2 = ((MElementContainer<?>) e2).getSelectedElement();
+			}
+
+			if (e2 instanceof MPlaceholder) {
+				e2 = ((MPlaceholder) e2).getRef();
+			}
+
+			if (deadlockCount++ > 100) {
+				this.logger.error("Possible deadlock - Unable to restore focus to appropriate element"); //$NON-NLS-1$
+				return;
+			}
+
+			if (e2 instanceof MPart && !(e2 instanceof MElementContainer<?>)) {
+				break;
+			}
+		}
+
+		if (e2 != element && e2 != null && e2 instanceof MPart) {
+			activate((MPart) e2, false);
+		}
+	}
+
+	/**
 	 * Fix the context hierarchy for given element
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 */
@@ -948,7 +988,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 
 	/**
 	 * Populate the context with all interfaces from this model element type
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @param context

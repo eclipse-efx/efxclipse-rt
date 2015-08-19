@@ -19,6 +19,7 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenu;
@@ -143,6 +144,10 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 			@Override
 			public Void call(Boolean param) {
 				if (param.booleanValue()) {
+					MElementContainer<MUIElement> parent = element.getParent();
+					if( parent.getSelectedElement() != element ) {
+						element.getParent().setSelectedElement(element);
+					}
 					boolean requiresFocus = requiresFocus(widget);
 					if (requiresFocus) {
 						activate(element, true);
