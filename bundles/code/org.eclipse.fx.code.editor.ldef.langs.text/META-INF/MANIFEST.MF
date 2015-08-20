@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Text
+Bundle-Name: Integration of DSL models into e4
 Bundle-SymbolicName: org.eclipse.fx.code.editor.ldef.langs.text
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.fx.code.editor.ldef.text,
  org.eclipse.fx.code.editor,
  org.eclipse.fx.core
 Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse.org

@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Fx
+Bundle-Name: Basic editor APIs for JavaFX
 Bundle-SymbolicName: org.eclipse.fx.code.editor.fx
 Bundle-Version: 2.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -17,3 +17,4 @@ Require-Bundle: org.eclipse.e4.core.di.annotations;bundle-version="1.4.0",
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.fx.services.internal.DefaultSourceViewerConfigurationTypeProvider.xml
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.fx.code.editor.fx.services
+Bundle-Vendor: Eclipse.org

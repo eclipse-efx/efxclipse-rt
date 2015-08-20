@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Text
+Bundle-Name: Editor configuration based on the LDef-Files
 Bundle-SymbolicName: org.eclipse.fx.code.editor.ldef.text
 Bundle-Version: 2.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -17,3 +17,4 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.ldef.text.intern
  OSGI-INF/services/org.eclipse.fx.code.editor.ldef.text.internal.LDefDocumentPartitionerProvider.xml
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.fx.code.editor.ldef.text
+Bundle-Vendor: Eclipse.org

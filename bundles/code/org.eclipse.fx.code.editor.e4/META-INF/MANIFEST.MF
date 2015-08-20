@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: E4
+Bundle-Name: Basic service APIs for an Editor into Eclipse 4
 Bundle-SymbolicName: org.eclipse.fx.code.editor.e4
 Bundle-Version: 2.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -26,3 +26,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.fx.code.editor.e4,
  org.eclipse.fx.code.editor.e4.addons,
  org.eclipse.fx.code.editor.e4.handlers
+Bundle-Vendor: Eclipse.org
