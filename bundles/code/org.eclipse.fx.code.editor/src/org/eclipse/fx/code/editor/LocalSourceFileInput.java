@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,6 +32,10 @@ public class LocalSourceFileInput implements StringInput, URIProvider {
 		this.path = path;
 		this.charSet = charSet;
 		this.eventBus = eventBus;
+	}
+
+	@PostConstruct
+	protected void init() {
 		eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_CREATED, this, true);
 	}
 

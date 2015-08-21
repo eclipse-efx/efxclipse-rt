@@ -8,10 +8,9 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.code.outline.services;
+package org.eclipse.fx.code.editor.fx.services;
 
 import org.eclipse.fx.code.editor.services.InputDependentTypeProviderService;
-import org.eclipse.fx.code.outline.Outline;
 
-public interface OutlineTypeProvider extends InputDependentTypeProviderService<Outline> {
+public interface OutlineTypeProviderService extends InputDependentTypeProviderService<Outline> {
 }

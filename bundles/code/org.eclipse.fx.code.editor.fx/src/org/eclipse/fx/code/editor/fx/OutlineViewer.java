@@ -1,46 +1,32 @@
-package org.eclipse.fx.code.outline;
+package org.eclipse.fx.code.editor.fx;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.fx.code.outline.Outline.OutlineItem;
-import org.eclipse.fx.core.URI;
+import org.eclipse.fx.code.editor.fx.services.Outline;
+import org.eclipse.fx.code.editor.fx.services.Outline.OutlineItem;
 import org.eclipse.fx.ui.controls.tree.SimpleTreeCell;
-import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 
 import javafx.collections.ListChangeListener.Change;
-import javafx.scene.control.Label;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 
-public class FileOutlineViewer {
-	private final GraphicsLoader nodeProvider;
+public class OutlineViewer {
 	private Map<Outline, TreeView<OutlineItem>> treeCache = new WeakHashMap<>();
 
 	private final BorderPane container;
 
 	@Inject
-	public FileOutlineViewer(BorderPane container, GraphicsLoader nodeProvider) {
+	public OutlineViewer(BorderPane container) {
 		this.container = container;
-		this.nodeProvider = nodeProvider;
-	}
-
-	@PostConstruct
-	public void initUI() {
-		HBox b = new HBox();
-		b.getStyleClass().add("tool-bar");
-		b.getChildren().add(new Label("Outline", nodeProvider.getGraphicsNode(URI.createPlatformPluginURI("org.eclipse.fx.code.compensator.editor","css/icons/16/outline_co.png"))));
-		container.setTop(b);
 	}
 
 	private TreeView<OutlineItem> createView() {

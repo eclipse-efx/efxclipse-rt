@@ -8,7 +8,7 @@
  * Contributors:
  *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.fx.code.outline;
+package org.eclipse.fx.code.editor.fx.services;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;

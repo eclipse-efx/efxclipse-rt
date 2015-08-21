@@ -1,4 +1,4 @@
-package org.eclipse.fx.code.outline.e4;
+package org.eclipse.fx.code.editor.fx.e4.internal;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -10,8 +10,8 @@ import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
-import org.eclipse.fx.code.outline.Outline;
-import org.eclipse.fx.code.outline.services.OutlineTypeProvider;
+import org.eclipse.fx.code.editor.fx.services.Outline;
+import org.eclipse.fx.code.editor.fx.services.OutlineTypeProviderService;
 import org.eclipse.fx.core.di.context.ServiceContextFunction;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -20,17 +20,17 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 @Component(service=IContextFunction.class,property={"service.context.key=activeOutline"})
-public class ActiveOutlineContextFunction extends ServiceContextFunction<OutlineTypeProvider> {
+public class ActiveOutlineContextFunction extends ServiceContextFunction<OutlineTypeProviderService> {
 	private Map<Input<?>, Outline> outlineCache = new WeakHashMap<>();
 
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
 	@Override
-	protected void registerService(OutlineTypeProvider service, Map<String, Object> properties) {
+	protected void registerService(OutlineTypeProviderService service, Map<String, Object> properties) {
 		super.registerService(service, properties);
 	}
 
 	@Override
-	protected void unregisterService(OutlineTypeProvider service) {
+	protected void unregisterService(OutlineTypeProviderService service) {
 		super.unregisterService(service);
 	}
 
