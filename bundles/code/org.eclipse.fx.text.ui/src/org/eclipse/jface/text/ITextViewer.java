@@ -15,5 +15,6 @@ public interface ITextViewer {
 	StyledTextArea getTextWidget();
 	public boolean overlapsWithVisibleRegion(int start, int length);
 	public void invalidateTextPresentation();
-
+	void setVisibleRegion(int offset, int length);
+	void resetVisibleRegion();
 }

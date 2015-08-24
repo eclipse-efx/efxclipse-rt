@@ -563,6 +563,40 @@ public class TextViewer extends Viewer implements
 //		setRedraw(redraw, -1);
 	}
 
+	public void setVisibleRegion(int start, int length) {
+
+		IRegion region= getVisibleRegion();
+		if (start == region.getOffset() && length == region.getLength()) {
+			// nothing to change
+			return;
+		}
+
+		setRedraw(false);
+		try {
+
+			IDocument slaveDocument= createSlaveDocument(getVisibleDocument());
+			if (updateSlaveDocument(slaveDocument, start, length))
+				setVisibleDocument(slaveDocument);
+
+		} catch (BadLocationException x) {
+			throw new IllegalArgumentException("TextViewer.error.invalid_visible_region_2"); //$NON-NLS-1$
+		} finally {
+			setRedraw(true);
+		}
+	}
+
+	public void resetVisibleRegion() {
+		ISlaveDocumentManager manager= getSlaveDocumentManager();
+		if (manager != null) {
+			IDocument slave= getVisibleDocument();
+			IDocument master= manager.getMasterDocument(slave);
+			if (master != null) {
+				setVisibleDocument(master);
+				manager.freeSlaveDocument(slave);
+			}
+		}
+	}
+
 	class VisibleDocumentListener implements IDocumentListener {
 
 		public void documentAboutToBeChanged(DocumentEvent e) {

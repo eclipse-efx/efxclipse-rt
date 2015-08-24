@@ -22,8 +22,10 @@ import javafx.scene.Node;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.StyledTextLine;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ISynchronizable;
 import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -36,6 +38,7 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 	private IAnnotationModel fVisualAnnotationModel;
 	protected final static Object MODEL_ANNOTATION_MODEL= new Object();
 	private Map<String, AnnotationPresenter> presenterMap = new HashMap<>();
+	private Annotation fRangeIndicator;
 
 	@Override
 	public void configure(SourceViewerConfiguration configuration) {
@@ -83,11 +86,10 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 				@Override
 				public void modelChanged(IAnnotationModel model) {
-					if( ! scheduled ) {
-						scheduled = true;
+					if( ! this.scheduled ) {
+						this.scheduled = true;
 						Platform.runLater(() -> {
-							scheduled = false;
-							System.err.println("REFRESHING");
+							this.scheduled = false;
 							getTextWidget().refreshLineRuler();
 						});
 					}
@@ -97,7 +99,7 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		}
 
 		if( configuration.getAnnotationPresenters() != null ) {
-			configuration.getAnnotationPresenters().stream().forEach(p -> p.getTypes().forEach( s -> presenterMap.put(s,p)));
+			configuration.getAnnotationPresenters().stream().forEach(p -> p.getTypes().forEach( s -> this.presenterMap.put(s,p)));
 		}
 
 //		presenterMap.putAll(configuration.getAnnotationPresenters().stream().collect(Collectors.toMap(p -> p.getType(), p -> p)));
@@ -112,13 +114,13 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 	private Node annotationFactory(StyledTextLine l) {
 		//TODO Should use IAnnotationExtension2
 		@SuppressWarnings("unchecked")
-		Iterator<Annotation> annotationIterator = fVisualAnnotationModel.getAnnotationIterator();
+		Iterator<Annotation> annotationIterator = this.fVisualAnnotationModel.getAnnotationIterator();
 		while( annotationIterator.hasNext() ) {
 			Annotation a = annotationIterator.next();
-			Position position = fVisualAnnotationModel.getPosition(a);
+			Position position = this.fVisualAnnotationModel.getPosition(a);
 
 			if( l.getLineIndex() == getTextWidget().getContent().getLineAtOffset(position.offset) ) {
-				AnnotationPresenter annotationPresenter = presenterMap.get(a.getType());
+				AnnotationPresenter annotationPresenter = this.presenterMap.get(a.getType());
 				if( annotationPresenter != null ) {
 					return annotationPresenter.getPresentation(a);
 				}
@@ -134,14 +136,14 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 	 * @since 3.1
 	 */
 	protected void disposeVisualAnnotationModel() {
-		if (fVisualAnnotationModel != null) {
+		if (this.fVisualAnnotationModel != null) {
 			if (getDocument() != null)
-				fVisualAnnotationModel.disconnect(getDocument());
+				this.fVisualAnnotationModel.disconnect(getDocument());
 
-			if ( fVisualAnnotationModel instanceof IAnnotationModelExtension)
-				((IAnnotationModelExtension)fVisualAnnotationModel).removeAnnotationModel(MODEL_ANNOTATION_MODEL);
+			if ( this.fVisualAnnotationModel instanceof IAnnotationModelExtension)
+				((IAnnotationModelExtension)this.fVisualAnnotationModel).removeAnnotationModel(MODEL_ANNOTATION_MODEL);
 
-			fVisualAnnotationModel= null;
+			this.fVisualAnnotationModel= null;
 		}
 	}
 
@@ -152,6 +154,7 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 	 * @return the visual annotation model on top of the given annotation model
 	 * @since 3.0
 	 */
+	@SuppressWarnings("static-method")
 	protected IAnnotationModel createVisualAnnotationModel(IAnnotationModel annotationModel) {
 		IAnnotationModelExtension model= new AnnotationModel();
 		model.addAnnotationModel(MODEL_ANNOTATION_MODEL, annotationModel);
@@ -167,15 +170,15 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		disposeVisualAnnotationModel();
 
 		if (annotationModel != null && document != null) {
-			fVisualAnnotationModel= createVisualAnnotationModel(annotationModel);
+			this.fVisualAnnotationModel= createVisualAnnotationModel(annotationModel);
 
 			// Make sure the visual model uses the same lock as the underlying model
-			if (annotationModel instanceof ISynchronizable && fVisualAnnotationModel instanceof ISynchronizable) {
-				ISynchronizable sync= (ISynchronizable)fVisualAnnotationModel;
+			if (annotationModel instanceof ISynchronizable && this.fVisualAnnotationModel instanceof ISynchronizable) {
+				ISynchronizable sync= (ISynchronizable)this.fVisualAnnotationModel;
 				sync.setLockObject(((ISynchronizable)annotationModel).getLockObject());
 			}
 
-			fVisualAnnotationModel.connect(document);
+			this.fVisualAnnotationModel.connect(document);
 		}
 
 		if (modelRangeOffset == -1 && modelRangeLength == -1)
@@ -186,6 +189,29 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 	@Override
 	public IAnnotationModel getAnnotationModel() {
-		return fVisualAnnotationModel;
+		if (this.fVisualAnnotationModel instanceof IAnnotationModelExtension) {
+			IAnnotationModelExtension extension= (IAnnotationModelExtension) this.fVisualAnnotationModel;
+			return extension.getAnnotationModel(MODEL_ANNOTATION_MODEL);
+		}
+		return null;
 	}
+
+	public IAnnotationModel getVisualAnnotationModel() {
+		return this.fVisualAnnotationModel;
+	}
+
+	public void setRangeIndicator(Annotation rangeIndicator) {
+		this.fRangeIndicator= rangeIndicator;
+	}
+
+	public IRegion getRangeIndication() {
+		if (this.fRangeIndicator != null && this.fVisualAnnotationModel != null) {
+			Position position= this.fVisualAnnotationModel.getPosition(this.fRangeIndicator);
+			if (position != null)
+				return new Region(position.getOffset(), position.getLength());
+		}
+
+		return null;
+	}
+
 }
