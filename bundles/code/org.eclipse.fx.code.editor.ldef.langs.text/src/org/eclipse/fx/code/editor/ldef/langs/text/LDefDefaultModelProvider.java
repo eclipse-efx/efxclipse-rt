@@ -16,7 +16,8 @@ import org.osgi.service.component.annotations.Component;
 
 @Component(service={LDefModelProvider.class,LDefDefaultModelProvider.class})
 public class LDefDefaultModelProvider implements LDefModelProvider {
-	private final Map<String,LanguageDef> definitionList = new HashMap<>();
+	private final Map<String,URI> definitionURI = new HashMap<>();
+	private final Map<String,LanguageDef> definitionCache = new HashMap<>();
 	private ResourceSetImpl rs;
 
 	public LDefDefaultModelProvider() {
@@ -32,11 +33,11 @@ public class LDefDefaultModelProvider implements LDefModelProvider {
 		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/swift/swift.ldef"),"swift");
 		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/groovy/groovy.ldef"),"groovy");
 		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/python/python.ldef"),"python");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/python/php.ldef"),"php");
 	}
 
 	private void register(URI uri, String fileSuffix) {
-		Resource resource = rs.getResource(uri, true);
-		definitionList.put(fileSuffix, ((Root) resource.getContents().get(0)).getLanguageDefinition());
+		definitionURI.put(fileSuffix, uri);
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class LDefDefaultModelProvider implements LDefModelProvider {
 			String lastSegment = uri.lastSegment();
 			int idx = lastSegment.lastIndexOf('.');
 			if( idx != -1 ) {
-				return definitionList.containsKey(lastSegment.substring(idx+1));
+				return definitionURI.containsKey(lastSegment.substring(idx+1));
 			}
 		}
 		return false;
@@ -66,6 +67,14 @@ public class LDefDefaultModelProvider implements LDefModelProvider {
 	}
 
 	public LanguageDef getModelByExtension(String extension) {
-		return definitionList.get(extension);
+		LanguageDef def = definitionCache.get(extension);
+
+		if( def == null ) {
+			Resource resource = rs.getResource(definitionURI.get(extension), true);
+			def = ((Root) resource.getContents().get(0)).getLanguageDefinition();
+			definitionCache.put(extension, def);
+		}
+
+		return def;
 	}
 }
