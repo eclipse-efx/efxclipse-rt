@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Integration of DSL models into e4
+Bundle-Name: Integration of DSL models into OSGi
 Bundle-SymbolicName: org.eclipse.fx.code.editor.ldef.langs.text
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.osgi.service.component.annotations
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.ldef.langs.text.LDefDefaultModelProvider.xml

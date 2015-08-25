@@ -11,12 +11,12 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.eclipse.fx.code.editor.services.URIProvider;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.adapter.Adapt;
 import org.eclipse.fx.core.event.EventBus;
 
-public class LocalSourceFileInput implements StringInput, URIProvider {
+public class LocalSourceFileInput implements SourceFileInput {
 	private final Path path;
 	private final Charset charSet;
 	private String data;
@@ -24,11 +24,11 @@ public class LocalSourceFileInput implements StringInput, URIProvider {
 	private EventBus eventBus;
 
 	@Inject
-	public LocalSourceFileInput(@Adapt @Named(Constants.DOCUMENT_URL) Path path, EventBus eventBus) {
+	public LocalSourceFileInput(@Adapt @Named(Constants.DOCUMENT_URL) Path path, @Optional EventBus eventBus) {
 		this(path,StandardCharsets.UTF_8, eventBus);
 	}
 
-	public LocalSourceFileInput(Path path, Charset charSet, EventBus eventBus) {
+	public LocalSourceFileInput(Path path, Charset charSet, @Optional EventBus eventBus) {
 		this.path = path;
 		this.charSet = charSet;
 		this.eventBus = eventBus;
@@ -36,7 +36,9 @@ public class LocalSourceFileInput implements StringInput, URIProvider {
 
 	@PostConstruct
 	protected void init() {
-		eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_CREATED, this, true);
+		if( eventBus != null ) {
+			eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_CREATED, this, true);
+		}
 	}
 
 	public Path getPath() {
@@ -50,7 +52,9 @@ public class LocalSourceFileInput implements StringInput, URIProvider {
 	}
 
 	protected void doDispose() {
-		eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_DISPOSED, this, true);
+		if( eventBus != null ) {
+			eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_DISPOSED, this, true);
+		}
 	}
 
 	@Override
@@ -76,6 +80,9 @@ public class LocalSourceFileInput implements StringInput, URIProvider {
 		try {
 			Files.write(path, data.getBytes(charSet));
 			savedData = data;
+			if( eventBus != null ) {
+				eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_SAVED, this, true);
+			}
 		} catch (IOException e) {
 			throw new RuntimeException("Unable to write content to file '"+path+"'", e);
 		}
@@ -99,7 +106,9 @@ public class LocalSourceFileInput implements StringInput, URIProvider {
 		b.append(data.substring(offset+length,data.length()));
 		data = b.toString();
 
-		SourceFileChange sourceChange = new SourceFileChange(this, offset, length, replacement);
-		eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_MODIFIED, sourceChange, true);
+		if( eventBus != null ) {
+			SourceFileChange sourceChange = new SourceFileChange(this, offset, length, replacement);
+			eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_MODIFIED, sourceChange, true);
+		}
 	}
 }
