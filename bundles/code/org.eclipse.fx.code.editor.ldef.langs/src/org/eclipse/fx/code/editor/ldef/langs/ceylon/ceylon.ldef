@@ -11,7 +11,7 @@ ceylon {
 			single_line __ceylon_single_line_comment 	"//" 	=> ''
 			multi_line __ceylon_multi_line_api_comment 	"/**" 	=> "*/"
 			multi_line __ceylon_multi_line_comment 		"/*" 	=> "*/"
-			multi_line __ceylon_string 					'"' 	=> '"'
+			multi_line __ceylon_string 					'"' 	=> '"' escaped by "\\"
 		}
 	}
 	lexical_highlighting {

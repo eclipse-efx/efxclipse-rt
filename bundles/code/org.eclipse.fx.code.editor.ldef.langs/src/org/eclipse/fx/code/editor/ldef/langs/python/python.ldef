@@ -7,10 +7,10 @@ py {
 		partition __python_singleline_comment
 		partition __python_string
 		rule {
-      		single_line __python_string '"' => '"'
+      		single_line __python_string '"' => '"' escaped by "\\"
       		single_line __python_singleline_comment '#' => ''
       		multi_line __python_multiline_comment "'''" => "'''"
-      		single_line __python_string "'" => "'"
+      		single_line __python_string "'" => "'" escaped by "\\"
 		}
 	}
 	lexical_highlighting {

@@ -17,12 +17,12 @@ public class GoPartitionScanner extends org.eclipse.jface.text.rules.RuleBasedPa
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__go_string")
-			);
+			, '\\');
 		pr[3] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__go_string")
-			);
+			, '\\');
 		pr[4] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "`"
 			, "`"

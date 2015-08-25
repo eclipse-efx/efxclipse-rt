@@ -17,12 +17,12 @@ public class JsPartitionScanner extends org.eclipse.jface.text.rules.RuleBasedPa
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__js_string")
-			);
+			, '\\');
 		pr[3] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__js_string")
-			);
+			, '\\');
 		setPredicateRules(pr);
 	}
 }

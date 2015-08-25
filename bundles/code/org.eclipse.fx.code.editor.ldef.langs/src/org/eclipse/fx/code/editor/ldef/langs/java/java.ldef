@@ -11,8 +11,8 @@ package org.eclipse.fx.code.editor.ldef.langs
 			single_line __java_single_line_comment 		"//" 	=> ''
 			multi_line __java_multi_line_api_comment 	"/**" 	=> "*/"
 			multi_line __java_multi_line_comment 		"/*" 	=> "*/"
-			single_line __java_string 					"'"	 	=> "'"
-			single_line __java_string 					'"' 	=> '"'
+			single_line __java_string 					"'"	 	=> "'" escaped by "\\"
+			single_line __java_string 					'"' 	=> '"' escaped by "\\"
 		}
 	}
 	lexical_highlighting {

@@ -9,8 +9,8 @@ js {
 		rule {
 			single_line __js_single_line_comment 	"//" 	=> ''
 			multi_line __js_multi_line_comment 		"/*" 	=> "*/"
-			single_line __js_string 				"'"	 	=> "'"
-			single_line __js_string 				'"' 	=> '"'
+			single_line __js_string 				"'"	 	=> "'" escaped by "\\"
+			single_line __js_string 				'"' 	=> '"' escaped by "\\"
 		}
 	}
 	lexical_highlighting {

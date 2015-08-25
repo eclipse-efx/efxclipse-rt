@@ -9,7 +9,7 @@ swift {
 		rule {
 			single_line __swift_single_line_comment 	"//" 	=> ''
 			multi_line __swift_multi_line_comment 		"/*" 	=> "*/"
-			single_line __swift_string 				'"' 	=> '"'
+			single_line __swift_string 				'"' 	=> '"' escaped by "\\"
 		}
 	}
 	lexical_highlighting {

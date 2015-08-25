@@ -22,7 +22,7 @@ public class CeylonPartitionScanner extends org.eclipse.jface.text.rules.RuleBas
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__ceylon_string")
-			);
+			, '\\');
 		setPredicateRules(pr);
 	}
 }

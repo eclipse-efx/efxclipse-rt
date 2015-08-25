@@ -17,12 +17,12 @@ public class RustPartitionScanner extends org.eclipse.jface.text.rules.RuleBased
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__rust_string")
-			);
+			, '\\');
 		pr[3] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__rust_string")
-			);
+			, '\\');
 		setPredicateRules(pr);
 	}
 }

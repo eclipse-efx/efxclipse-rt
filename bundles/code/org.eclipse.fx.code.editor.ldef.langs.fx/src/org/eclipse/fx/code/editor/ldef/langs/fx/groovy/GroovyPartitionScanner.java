@@ -17,12 +17,12 @@ public class GroovyPartitionScanner extends org.eclipse.jface.text.rules.RuleBas
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__groovy_string")
-			);
+			, '\\');
 		pr[3] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__groovy_character")
-			);
+			, '\\');
 		setPredicateRules(pr);
 	}
 }

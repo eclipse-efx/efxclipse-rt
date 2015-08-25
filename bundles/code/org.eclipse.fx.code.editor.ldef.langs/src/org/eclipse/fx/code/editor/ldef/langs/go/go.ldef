@@ -9,8 +9,8 @@ go {
 		rule {
 			single_line __go_single_line_comment 	"//" 	=> ''
 			multi_line 	__go_multi_line_comment 	"/*" 	=> "*/"
-			single_line __go_string 				'"' 	=> '"'
-			single_line __go_string 				"'" 	=> "'"
+			single_line __go_string 				'"' 	=> '"' escaped by "\\"
+			single_line __go_string 				"'" 	=> "'" escaped by "\\"
 			single_line __go_string 				'`' 	=> '`'
 		}
 	}

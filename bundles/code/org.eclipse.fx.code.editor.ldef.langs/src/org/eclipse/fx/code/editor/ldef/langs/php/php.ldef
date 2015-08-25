@@ -6,8 +6,8 @@ php {
 		partition __php_multiline_comment
 		partition __php_string
 		rule {
-			single_line __php_string '"' => '"'
-			single_line __php_string "'" => "'"
+			single_line __php_string '"' => '"' escaped by "\\"
+			single_line __php_string "'" => "'" escaped by "\\"
 			multi_line __php_multiline_comment "/*" => "*/"
 		}
 	}

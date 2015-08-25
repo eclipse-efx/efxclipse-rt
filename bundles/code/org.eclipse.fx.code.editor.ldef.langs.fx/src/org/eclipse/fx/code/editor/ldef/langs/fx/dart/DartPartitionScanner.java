@@ -7,12 +7,12 @@ public class DartPartitionScanner extends org.eclipse.jface.text.rules.RuleBased
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__dart_string")
-			);
+			, '\\');
 		pr[1] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__dart_string")
-			);
+			, '\\');
 		pr[2] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "///"
 			, ""

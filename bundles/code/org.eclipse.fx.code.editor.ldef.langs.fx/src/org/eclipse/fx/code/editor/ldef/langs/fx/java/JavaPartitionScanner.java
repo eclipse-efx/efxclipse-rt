@@ -22,12 +22,12 @@ public class JavaPartitionScanner extends org.eclipse.jface.text.rules.RuleBased
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__java_string")
-			);
+			, '\\');
 		pr[4] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__java_string")
-			);
+			, '\\');
 		setPredicateRules(pr);
 	}
 }

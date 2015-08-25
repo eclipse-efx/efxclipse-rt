@@ -11,8 +11,8 @@ groovy {
 		rule {
 			multi_line __groovy_apidoc "/**" => "*/"
 			multi_line __groovy_multiline_comment "/*" => "*/"
-			single_line __groovy_string "\"" => "\""
-			single_line __groovy_character "'" => "'"
+			single_line __groovy_string "\"" => "\"" escaped by "\\"
+			single_line __groovy_character "'" => "'" escaped by "\\"
 		}
 	}
 	lexical_highlighting {

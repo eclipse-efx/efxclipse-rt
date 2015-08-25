@@ -9,8 +9,8 @@ rust {
 		rule {
 			single_line __rust_single_line_comment 	"//" 	=> ''
 			multi_line 	__rust_multi_line_comment 	"/*" 	=> "*/"
-			single_line __rust_string 				'"' 	=> '"'
-			single_line __rust_string 				"'" 	=> "'"
+			single_line __rust_string 				'"' 	=> '"' escaped by "\\"
+			single_line __rust_string 				"'" 	=> "'" escaped by "\\"
 		}
 	}
 	lexical_highlighting {
