@@ -6,15 +6,15 @@ Bundle-Version: 2.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.fx.text;bundle-version="2.1.0",
  org.eclipse.fx.text.ui;bundle-version="2.1.0"
-Export-Package: org.eclipse.fx.code.editor.ldef.langs.fx.ceylon,
- org.eclipse.fx.code.editor.ldef.langs.fx.dart,
- org.eclipse.fx.code.editor.ldef.langs.fx.go,
- org.eclipse.fx.code.editor.ldef.langs.fx.groovy,
- org.eclipse.fx.code.editor.ldef.langs.fx.java,
- org.eclipse.fx.code.editor.ldef.langs.fx.js,
- org.eclipse.fx.code.editor.ldef.langs.fx.kotlin,
- org.eclipse.fx.code.editor.ldef.langs.fx.python,
- org.eclipse.fx.code.editor.ldef.langs.fx.rust,
- org.eclipse.fx.code.editor.ldef.langs.fx.swift,
- org.eclipse.fx.code.editor.ldef.langs.fx.xml
+Export-Package: org.eclipse.fx.code.editor.ldef.langs.fx.ceylon;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.langs.fx.dart;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.langs.fx.go;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.langs.fx.groovy;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.langs.fx.java;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.langs.fx.js;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.langs.fx.kotlin;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.langs.fx.python;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.langs.fx.rust;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.langs.fx.swift;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.langs.fx.xml;x-internal:=true
 Bundle-Vendor: Eclipse.org

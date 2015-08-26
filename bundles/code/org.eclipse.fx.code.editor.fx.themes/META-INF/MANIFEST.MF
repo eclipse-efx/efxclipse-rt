@@ -8,5 +8,5 @@ Import-Package: org.osgi.service.component.annotations
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.fx.themes.internal.DefaultEditorStylesheet.xml
 Require-Bundle: org.eclipse.fx.ui.services
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.fx.code.editor.fx.themes
+Export-Package: org.eclipse.fx.code.editor.fx.themes;x-internal:=true
 Bundle-Vendor: Eclipse.org
