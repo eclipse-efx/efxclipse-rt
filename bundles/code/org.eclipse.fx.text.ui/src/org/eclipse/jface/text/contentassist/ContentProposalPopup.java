@@ -12,9 +12,11 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PopupControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -25,7 +27,7 @@ import org.eclipse.jface.text.ITextViewer;
 
 public class ContentProposalPopup {
 	private ITextViewer viewer;
-	private Stage stage;
+	private PopupWindow stage;
 	private ListView<ICompletionProposal> proposalList;
 	private String prefix;
 	private int offset;
@@ -44,7 +46,9 @@ public class ContentProposalPopup {
 		this.proposalList.getSelectionModel().select(0);
 		this.stage.setX(position.getX());
 		this.stage.setY(position.getY());
-		this.stage.show();
+		this.stage.setWidth(300);
+		this.stage.setHeight(200);
+		this.stage.show(viewer.getTextWidget().getScene().getWindow());
 		this.stage.requestFocus();
 	}
 
@@ -66,16 +70,16 @@ public class ContentProposalPopup {
 
 		if (character.charAt(0) > 0x1F
 	            && character.charAt(0) != 0x7F ) {
-			try {
-				this.prefix = prefix+character;
-				viewer.getDocument().replace(offset, 0, character);
+//			try {
+				this.prefix = this.prefix+character;
+//				viewer.getDocument().replace(offset, 0, character);
 				this.offset += event.getCharacter().length();
-				viewer.getTextWidget().setCaretOffset(offset);
+//				viewer.getTextWidget().setCaretOffset(offset);
 				updateProposals();
-			} catch (BadLocationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			} catch (BadLocationException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 	}
 
@@ -86,14 +90,14 @@ public class ContentProposalPopup {
 			proposalList.scrollTo(0);
 			proposalList.getSelectionModel().select(0);
 		} else {
-			stage.close();
+			stage.hide();
 		}
 	}
 
 	private void handleKeyPressed(KeyEvent event) {
 		if( event.getCode() == KeyCode.ESCAPE ) {
 			event.consume();
-			stage.close();
+			stage.hide();
 		} else if( event.getCode() == KeyCode.BACK_SPACE ) {
 			event.consume();
 			this.offset -= 1;
@@ -129,19 +133,24 @@ public class ContentProposalPopup {
 			IDocument document = viewer.getDocument();
 			selectedItem.apply(document);
 			viewer.getTextWidget().setSelection(selectedItem.getSelection(document));
-			stage.close();
+			stage.hide();
 		}
 	}
 
 	private void setup() {
 		if( stage == null ) {
-			stage = new Stage(StageStyle.TRANSPARENT);
-			stage.initOwner(viewer.getTextWidget().getScene().getWindow());
+			stage = new PopupWindow() {
+
+			};
+			stage.setAutoFix(false);
+			stage.setWidth(300);
+			stage.setHeight(200);
 			BorderPane p = new BorderPane();
-			Scene s = new Scene(p,300,200);
-			s.addEventFilter(KeyEvent.KEY_TYPED, this::handleKeyTyped);
-			s.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
-			s.getStylesheets().addAll(viewer.getTextWidget().getScene().getStylesheets());
+			p.setPrefHeight(200);
+			p.setPrefWidth(400);
+			stage.getScene().addEventFilter(KeyEvent.KEY_TYPED, this::handleKeyTyped);
+			stage.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
+			stage.getScene().getStylesheets().addAll(viewer.getTextWidget().getScene().getStylesheets());
 			proposalList = new ListView<>();
 			proposalList.setOnMouseClicked((e) -> {
 				if(e.getClickCount() == 1) {
@@ -156,10 +165,10 @@ public class ContentProposalPopup {
 
 			proposalList.setCellFactory((v) -> new SimpleListCell<ICompletionProposal>(label,graphic,css));
 			p.setCenter(proposalList);
-			stage.setScene(s);
+			stage.getScene().setRoot(p);
 			stage.focusedProperty().addListener((o) -> {
-				if( ! stage.isFocused() ) {
-					Platform.runLater(stage::close);
+				if( stage != null && ! stage.isFocused() ) {
+					Platform.runLater(stage::hide);
 				}
 			});
 			// Fix CSS warnings
