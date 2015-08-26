@@ -56,4 +56,8 @@ public @interface Preference {
 	 * @return the key in the node
 	 */
 	String key();
+	/**
+	 * @return the desired type if no generics are used
+	 */
+	Class<?> type() default Object.class;
 }

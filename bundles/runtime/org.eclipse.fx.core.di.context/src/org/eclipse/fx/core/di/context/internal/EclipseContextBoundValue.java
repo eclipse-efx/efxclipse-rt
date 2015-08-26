@@ -34,7 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Implementation of a ContextBoundValue
- * 
+ *
  * @param <T>
  *            the type
  */
@@ -51,19 +51,19 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	private AdapterService adapterService;
 	@Nullable
 	private T value;
-	
+
 	@Inject
 	@Optional
 	@Nullable
 	IEventBroker eventBroker;
-	
+
 	@Inject
 	@Log
 	private Logger logger;
 
 	/**
 	 * Create a new bound value
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 * @param adapterService
@@ -77,7 +77,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 
 	/**
 	 * Setting the context key
-	 * 
+	 *
 	 * @param contextKey
 	 *            the key
 	 */
@@ -100,7 +100,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 		if (this.callbacks != null) {
 			for (Callback<?> c : this.callbacks.toArray(new Callback<?>[0])) {
 				try {
-					((Callback<T>) c).call(o);	
+					((Callback<T>) c).call(o);
 				} catch(Throwable t) {
 					this.logger.error("Failed while executing callback", t); //$NON-NLS-1$
 				}
@@ -165,7 +165,6 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 		};
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public <A> A adaptTo(@NonNull Class<A> adapt) {
 		return this.adapterService.adapt(this, adapt, new ValueAccessImpl(this.context));
@@ -182,11 +181,11 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 		if (disposalCallbacks != null) {
 			for (Callback<?> callback : disposalCallbacks.toArray(new Callback<?>[0])) {
 				try {
-					callback.call(null);	
+					callback.call(null);
 				} catch(Throwable t) {
 					this.logger.error("Failure while executing clean up callback", t); //$NON-NLS-1$
 				}
-				
+
 			}
 			disposalCallbacks.clear();
 		}
@@ -209,7 +208,6 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 			return (O) this.context.get(key);
 		}
 
-		@SuppressWarnings("null")
 		@Override
 		public <O> O getValue(@NonNull Class<O> key) {
 			return this.context.get(key);

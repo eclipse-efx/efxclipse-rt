@@ -19,10 +19,13 @@ import javax.inject.Inject;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.fx.core.Callback;
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.adapter.AdapterService;
+import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
@@ -61,6 +64,25 @@ public class PreferenceValue<T> implements Value<T> {
 	@Nullable
 	private IPreferenceChangeListener listener;
 
+	@NonNull
+	private AdapterService adapterService;
+
+	@NonNull
+	private IEclipseContext context;
+
+	/**
+	 * Create a new preference value
+	 * @param context the context
+	 *
+	 * @param adapterService
+	 *            the service
+	 */
+	@Inject
+	public PreferenceValue(@NonNull IEclipseContext context, @NonNull AdapterService adapterService) {
+		this.context = context;
+		this.adapterService = adapterService;
+	}
+
 	/**
 	 * Initialize the value
 	 *
@@ -78,7 +100,7 @@ public class PreferenceValue<T> implements Value<T> {
 		this.contextKey = contextKey;
 
 		IPreferenceChangeListener listener = event -> {
-			if( contextKey.equals(event.getKey()) ) {
+			if (contextKey.equals(event.getKey())) {
 				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, cl));
 			}
 		};
@@ -175,17 +197,15 @@ public class PreferenceValue<T> implements Value<T> {
 		};
 	}
 
-	// @SuppressWarnings("null")
-	// @Override
-	// public <A> A adaptTo(@NonNull Class<A> adapt) {
-	// return this.adapterService.adapt(this, adapt, new
-	// ValueAccessImpl(this.preference));
-	// }
-	//
-	// @Override
-	// public boolean canAdaptTo(Class<?> adapt) {
-	// return this.adapterService.canAdapt(this, adapt);
-	// }
+	@Override
+	public <A> A adaptTo(@NonNull Class<A> adapt) {
+		return this.adapterService.adapt(this, adapt, new ValueAccessImpl(this.context));
+	}
+
+	@Override
+	public boolean canAdaptTo(Class<?> adapt) {
+		return this.adapterService.canAdapt(this, adapt);
+	}
 
 	@PreDestroy
 	void dispose() {
@@ -207,31 +227,30 @@ public class PreferenceValue<T> implements Value<T> {
 		this.value = null;
 		IEclipsePreferences preference = this.preference;
 		IPreferenceChangeListener listener = this.listener;
-		if( preference != null && listener != null ) {
+		if (preference != null && listener != null) {
 			preference.removePreferenceChangeListener(listener);
 		}
 		this.preference = null;
 		this.listener = null;
 	}
 
-	// static class ValueAccessImpl implements ValueAccess {
-	// private final IEclipsePreferences context;
-	//
-	// public ValueAccessImpl(IEclipsePreferences context) {
-	// this.context = context;
-	// }
-	//
-	// @SuppressWarnings("unchecked")
-	// @Override
-	// public <O> O getValue(String key) {
-	// return (O) this.context.get(key);
-	// }
-	//
-	// @SuppressWarnings("null")
-	// @Override
-	// public <O> O getValue(@NonNull Class<O> key) {
-	// return this.context.get(key);
-	// }
-	//
-	// }
+	static class ValueAccessImpl implements ValueAccess {
+		private final IEclipseContext context;
+
+		public ValueAccessImpl(IEclipseContext context) {
+			this.context = context;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public <O> O getValue(String key) {
+			return (O) this.context.get(key);
+		}
+
+		@Override
+		public <O> O getValue(@NonNull Class<O> key) {
+			return this.context.get(key);
+		}
+
+	}
 }

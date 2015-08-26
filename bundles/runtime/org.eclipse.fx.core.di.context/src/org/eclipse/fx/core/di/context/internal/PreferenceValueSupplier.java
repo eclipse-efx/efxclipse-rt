@@ -28,6 +28,7 @@ import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.preferences.Preference;
 import org.eclipse.fx.core.preferences.Value;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 
@@ -85,6 +86,9 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		Class<?> descriptorsClass = getDesiredClass(descriptor.getDesiredType());
 		String nodePath = getNodePath(descriptor, requestor.getRequestingObjectClass());
 
+		if (nodePath == null  || nodePath.length() == 0)
+			return IInjector.NOT_A_VALUE;
+
 		IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(nodePath);
 
 		if (preferences == null) {
@@ -92,25 +96,47 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		}
 
 		String key = getKey(descriptor);
-		if (key == null) {
+		if (key == null || key.length() == 0) {
 			return IInjector.NOT_A_VALUE;
 		}
 
-		if (Value.class.equals(descriptorsClass)) {
-			Requestor<?> r = (Requestor<?>) requestor;
+		if( descriptorsClass.equals(boolean.class)
+				|| descriptorsClass.equals(Boolean.class)
+				|| descriptorsClass.equals(int.class)
+				|| descriptorsClass.equals(Integer.class)
+				|| descriptorsClass.equals(double.class)
+				|| descriptorsClass.equals(Double.class)
+				|| descriptorsClass.equals(float.class)
+				|| descriptorsClass.equals(Float.class)
+				|| descriptorsClass.equals(long.class)
+				|| descriptorsClass.equals(Long.class)
+				|| descriptorsClass.equals(String.class)) {
+			if (track)
+				addListener(nodePath, key, requestor);
+
+			return getValue(preferences, key, descriptorsClass);
+		}
+
+		Class<?> type = descriptor.getQualifier(Preference.class).type();
+		if( type == Object.class && descriptor.getDesiredType() instanceof ParameterizedType ) {
 			Type t = ((ParameterizedType) descriptor.getDesiredType()).getActualTypeArguments()[0];
-			PreferenceValue<?> v = r.getInjector().make(PreferenceValue.class, r.getPrimarySupplier());
-			v.init(key, preferences,
-					t instanceof ParameterizedType ? (Class<?>) ((ParameterizedType) t).getRawType() : (Class<?>) t);
-			return v;
+			type = t instanceof ParameterizedType ? (Class<?>) ((ParameterizedType) t).getRawType() : (Class<?>) t;
 		}
 
-		if (nodePath == null || key.length() == 0 || nodePath.length() == 0)
+		if( type == Object.class ) {
 			return IInjector.NOT_A_VALUE;
-		if (track)
-			addListener(nodePath, key, requestor);
+		}
 
-		return getValue(preferences, key, descriptorsClass);
+		Requestor<?> r = (Requestor<?>) requestor;
+		PreferenceValue<?> v = r.getInjector().make(PreferenceValue.class, r.getPrimarySupplier());
+		v.init(key, preferences, type);
+
+		if(descriptorsClass != Value.class ) {
+			return v.adaptTo(descriptorsClass);
+		}
+
+		return v;
+
 	}
 
 	/**

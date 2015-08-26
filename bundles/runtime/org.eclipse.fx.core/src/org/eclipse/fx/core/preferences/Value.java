@@ -12,6 +12,7 @@ package org.eclipse.fx.core.preferences;
 
 import org.eclipse.fx.core.Callback;
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.adapter.Adaptable;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -21,7 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @param <T>
  *            the type
  */
-public interface Value<T> {
+public interface Value<T> extends Adaptable {
 	/**
 	 * @return the current value
 	 */
@@ -56,37 +57,37 @@ public interface Value<T> {
 	@NonNull
 	public Subscription subscribeOnDispose(@NonNull Callback<Void> callback);
 
-//	/**
-//	 * Allows to adapt the type to the given type.
-//	 *
-//	 * By default the following adapters are available:
-//	 * <ul>
-//	 * <li>Eclipse Databinding - {@link org.eclipse.core.databinding.observable.value.IObservableValue}</li>
-//	 * <li>JavaFX property - {@link javafx.beans.property.Property}</li>
-//	 * </ul>
-//	 *
-//	 * @param adapt
-//	 *            the type to adapt to
-//	 * @return the adapted type
-//	 * @see Adaptable#adaptTo(Class)
-//	 */
-//	@SuppressWarnings("javadoc")
-//	@Override
-//	@Nullable
-//	public <A> A adaptTo(@NonNull Class<A> adapt);
-//
-//	/**
-//	 * Test if the instance can be adapted to the target
-//	 *
-//	 * By default the following adapters are available:
-//	 * <ul>
-//	 * <li>Eclipse Databinding - {@link org.eclipse.core.databinding.observable.value.IObservableValue}</li>
-//	 * <li>JavaFX property - {@link javafx.beans.property.Property}</li>
-//	 * </ul>
-//	 *
-//	 * @see Adaptable#canAdaptTo(Class)
-//	 */
-//	@Override
-//	@SuppressWarnings("javadoc")
-//	public boolean canAdaptTo(@NonNull Class<?> adapt);
+	/**
+	 * Allows to adapt the type to the given type.
+	 *
+	 * By default the following adapters are available:
+	 * <ul>
+	 * <li>Eclipse Databinding - {@link org.eclipse.core.databinding.observable.value.IObservableValue}</li>
+	 * <li>JavaFX property - {@link javafx.beans.property.Property}</li>
+	 * </ul>
+	 *
+	 * @param adapt
+	 *            the type to adapt to
+	 * @return the adapted type
+	 * @see Adaptable#adaptTo(Class)
+	 */
+	@SuppressWarnings("javadoc")
+	@Override
+	@Nullable
+	public <A> A adaptTo(@NonNull Class<A> adapt);
+
+	/**
+	 * Test if the instance can be adapted to the target
+	 *
+	 * By default the following adapters are available:
+	 * <ul>
+	 * <li>Eclipse Databinding - {@link org.eclipse.core.databinding.observable.value.IObservableValue}</li>
+	 * <li>JavaFX property - {@link javafx.beans.property.Property}</li>
+	 * </ul>
+	 *
+	 * @see Adaptable#canAdaptTo(Class)
+	 */
+	@Override
+	@SuppressWarnings("javadoc")
+	public boolean canAdaptTo(@NonNull Class<?> adapt);
 }
