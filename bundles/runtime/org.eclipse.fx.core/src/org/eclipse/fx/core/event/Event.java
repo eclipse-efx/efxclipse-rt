@@ -14,14 +14,20 @@ import org.eclipse.fx.core.KeyValueStore;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * Event published on the event system
+ * Event published on the event system.
+ *
+ * <p>
+ * This is a value-based class; use of identity-sensitive operations (including
+ * reference equality (==), identity hash code, or synchronization) on instances
+ * of Event may have unpredictable results and should be avoided.
+ * </p>
  *
  * @param <T>
  *            the type
  *
  * @since 2.1.0
  */
-public class Event<@Nullable T> {
+public final class Event<@Nullable T> {
 	private final String topic;
 	private final T data;
 	private final KeyValueStore<String, Object> properties;
