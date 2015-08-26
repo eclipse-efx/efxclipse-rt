@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.fx.core.di;bundle-version="0.9.0",
  org.eclipse.e4.core.di,
  org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
  org.eclipse.e4.core.services,
- org.eclipse.osgi.services
+ org.eclipse.osgi.services,
+ org.eclipse.equinox.preferences;bundle-version="3.5.300"
 Import-Package: javax.annotation;version="1.1.0";resolution:=optional,
  javax.inject;version="1.0.0",
  org.osgi.framework;version="1.8.0"

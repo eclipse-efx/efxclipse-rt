@@ -16,6 +16,7 @@ Export-Package: org.eclipse.fx.core,
  org.eclipse.fx.core.function,
  org.eclipse.fx.core.log,
  org.eclipse.fx.core.operation,
+ org.eclipse.fx.core.preferences,
  org.eclipse.fx.core.text,
  org.eclipse.fx.core.update
 Bundle-Vendor: %Bundle-Vendor
