@@ -72,7 +72,7 @@ public class LDefRuleScanner extends RuleBasedScanner {
 					Scanner_CharacterRule scr = (Scanner_CharacterRule) ru;
 					char[] c = new char[scr.getCharacters().size()];
 					for( int j = 0; j < c.length; j++ ) {
-						c[j] = scr.getCharacters().get(0).charAt(0);
+						c[j] = scr.getCharacters().get(j).charAt(0);
 					}
 					rules[i++] = new CharacterRule(token, c);
 				} else if( ru instanceof Scanner_Keyword ) {
