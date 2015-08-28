@@ -15,6 +15,8 @@ import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,6 +45,7 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 	}
 
 	static class WMenuImpl extends WWidgetImpl<ToolItemMenu, MMenu> implements WMenu<ToolItemMenu> {
+		private ToggleGroup group;
 		private SplitMenuButton button;
 		Runnable showingCallback;
 		Runnable hidingCallback;
@@ -77,7 +80,7 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 		public void addStyleClasses(String... classnames) {
 			getWidget().getStyleClass().addAll(classnames);
 		}
-		
+
 		@Override
 		public void removeStyleClasses(List<String> classnames) {
 			getWidget().getStyleClass().removeAll(classnames);
@@ -110,11 +113,23 @@ public class DefToolItemMenuRenderer extends BaseMenuRenderer<ToolItemMenu> {
 
 		@Override
 		public void addElement(WMenuElement<MMenuElement> widget) {
+			if (widget.getWidget() instanceof Toggle) {
+				if (this.group == null) {
+					this.group = new ToggleGroup();
+				}
+				((Toggle) widget.getWidget()).setToggleGroup(this.group);
+			}
 			getWidget().getItems().add((MenuItem) widget.getWidget());
 		}
 
 		@Override
 		public void addElement(int idx, WMenuElement<MMenuElement> widget) {
+			if (widget.getWidget() instanceof Toggle) {
+				if (this.group == null) {
+					this.group = new ToggleGroup();
+				}
+				((Toggle) widget.getWidget()).setToggleGroup(this.group);
+			}
 			getWidget().getItems().add(idx, (MenuItem) widget.getWidget());
 		}
 
