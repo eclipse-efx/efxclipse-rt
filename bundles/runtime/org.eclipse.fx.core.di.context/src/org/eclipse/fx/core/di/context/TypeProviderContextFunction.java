@@ -88,8 +88,7 @@ public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderSe
 
 		preTypeCreation(context);
 
-		@SuppressWarnings("unchecked")
-		S s = (S) context.get(this.selectorTypeKey);
+		S s = getSelectorValue(context);
 
 		Optional<? extends T> value;
 		synchronized (this.registry) {
@@ -104,6 +103,18 @@ public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderSe
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Get the selector value
+	 *
+	 * @param context
+	 *            the context
+	 * @return the value
+	 */
+	@SuppressWarnings("unchecked")
+	protected S getSelectorValue(IEclipseContext context) {
+		return (S) context.get(this.selectorTypeKey);
 	}
 
 	@Override
