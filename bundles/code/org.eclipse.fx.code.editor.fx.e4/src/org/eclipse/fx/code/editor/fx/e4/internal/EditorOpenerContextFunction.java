@@ -2,10 +2,10 @@ package org.eclipse.fx.code.editor.fx.e4.internal;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
@@ -16,20 +16,61 @@ import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.code.editor.Constants;
-import org.eclipse.fx.code.editor.services.FileIconProvider;
 import org.eclipse.fx.code.editor.services.EditorOpener;
+import org.eclipse.fx.code.editor.services.EditorOpenerTypeProvider;
+import org.eclipse.fx.code.editor.services.FileIconProvider;
+import org.eclipse.fx.core.RankedObjectRegistry;
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.di.Service;
+import org.eclipse.fx.core.di.context.ServiceContextFunction;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 @Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.services.EditorOpener"})
-public class EditorOpenerContextFunction extends ContextFunction {
+public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOpenerTypeProvider> {
+
+	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
 	@Override
-	public Object compute(IEclipseContext context) {
-		return ContextInjectionFactory.make(TextEditorOpenHelper.class, context);
+	public void registerService(EditorOpenerTypeProvider service, Map<String, Object> properties) {
+		super.registerService(service, properties);
 	}
 
-	public static class TextEditorOpenHelper implements EditorOpener {
+	@Override
+	public void unregisterService(EditorOpenerTypeProvider service) {
+		super.unregisterService(service);
+	}
+
+	@Override
+	public Object compute(IEclipseContext context) {
+
+		return new ProxyEditorOpener(context,registry);
+	}
+
+	public static class ProxyEditorOpener implements EditorOpener {
+		private final IEclipseContext context;
+		private final RankedObjectRegistry<EditorOpenerTypeProvider> objectRegistry;
+
+		public ProxyEditorOpener(IEclipseContext context, RankedObjectRegistry<EditorOpenerTypeProvider> objectRegistry) {
+			this.context = context;
+			this.objectRegistry = objectRegistry;
+		}
+
+		@Override
+		public void openEditor(String uri) {
+			EditorOpener opener = objectRegistry.getRankedElements()
+				.stream()
+				.filter( e -> e.test(uri))
+				.map( e -> (EditorOpener)ContextInjectionFactory.make(e.getType(uri), context))
+				.findFirst()
+				.orElseGet( () -> (EditorOpener)ContextInjectionFactory.make(DefaultEditorOpener.class, context));
+			opener.openEditor(uri);
+		}
+	}
+
+	public static class DefaultEditorOpener implements EditorOpener {
 		@Inject
 		MWindow window;
 
