@@ -26,6 +26,7 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
+import org.eclipse.e4.ui.model.application.ui.basic.MCompositePart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
@@ -424,7 +425,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	}
 
 	boolean handleStackItemClose(@NonNull MStackElement e, @NonNull WStackItem<I, IC> item) {
-		MPart part = getPart(e);
+		MPart part = e instanceof MCompositePart ? (MPart) e : getPart(e);
 		if( part == null ) {
 			getLogger().error("Unable to extract part from '"+e+"'");  //$NON-NLS-1$//$NON-NLS-2$
 			return true;
