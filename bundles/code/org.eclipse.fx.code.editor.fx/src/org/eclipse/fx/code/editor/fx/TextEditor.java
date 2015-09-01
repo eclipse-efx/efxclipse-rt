@@ -17,14 +17,10 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
-import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.core.di.ContextValue;
-import org.eclipse.fx.core.event.EventBus;
-import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
-import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
@@ -46,8 +42,6 @@ public class TextEditor {
 	private Input<?> input;
 
 	private Property<Input<?>> activeInput;
-
-	private EventBus eventBus;
 
 	private SourceViewer viewer;
 
@@ -91,12 +85,6 @@ public class TextEditor {
 		this.activeInput = activeInput;
 	}
 
-	@Inject
-	@Optional
-	public void setEventBus(EventBus eventBus) {
-		this.eventBus = eventBus;
-	}
-
 	@PostConstruct
 	public void initUI(BorderPane pane) {
 		viewer = new SourceViewer();
@@ -134,11 +122,6 @@ public class TextEditor {
 	public void save() {
 		input.persist();
 		documentSaved();
-		if( eventBus != null ) {
-			//TODO Should the outline reload really be sent by the editor?
-			eventBus.publish(Constants.OUTLINE_RELOAD, input, true);
-//			eventBus.publish(Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this,true);
-		}
 	}
 
 	protected void documentSaved() {
