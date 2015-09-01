@@ -29,24 +29,6 @@ import org.eclipse.fx.core.TypeProviderService;
  */
 public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderService<S, T>>
 		extends ServiceContextFunction<P> {
-	static class Registration<P> implements Comparable<Registration<P>> {
-		final int rank;
-		final P provider;
-
-		public Registration(int rank, P provider) {
-			this.rank = rank;
-			this.provider = provider;
-		}
-
-		@Override
-		public int compareTo(Registration<P> o) {
-			int v = Integer.compare(this.rank, o.rank);
-			if (v == 0) {
-				v = this.provider.getClass().toString().compareTo(o.provider.getClass().getName());
-			}
-			return v;
-		}
-	}
 
 	private final String selectorTypeKey;
 
