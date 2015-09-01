@@ -8,7 +8,7 @@ public class Constants {
 	public static final String TOPIC_SOURCE_FILE_INPUT_DISPOSED = "at/bestsolution/dart/editor/file-input/disposed";
 	public static final String TOPIC_SOURCE_FILE_INPUT_SAVED = "at/bestsolution/dart/editor/file-input/saved";
 
-	public static final String OUTLINE_RELOAD = "at/bestsolution/dart/editor/Outline/reload";
+//	public static final String OUTLINE_RELOAD = "at/bestsolution/dart/editor/Outline/reload";
 
 	public static final String DOCUMENT_URL = "documentUrl";
 	public static final String VCS_URL = "vcsUrl";

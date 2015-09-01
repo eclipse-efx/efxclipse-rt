@@ -23,6 +23,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class ActiveOutlineContextFunction extends ServiceContextFunction<OutlineTypeProviderService> {
 	private Map<Input<?>, Outline> outlineCache = new WeakHashMap<>();
 
+	public ActiveOutlineContextFunction() {
+		System.err.println("ACTIVE OUTLINE");
+	}
+
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
 	@Override
 	protected void registerService(OutlineTypeProviderService service, Map<String, Object> properties) {
@@ -40,14 +44,6 @@ public class ActiveOutlineContextFunction extends ServiceContextFunction<Outline
 		if( outerContext.containsKey("_local_rat") ) {
 			return null;
 		}
-
-		outerContext.get(IEventBroker.class).subscribe(Constants.OUTLINE_RELOAD, (e) -> {
-			Input<?> input = (Input<?>) e.getProperty(IEventBroker.DATA);
-			outlineCache.remove(input);
-			if( outerContext.get("activeInput") == input ) {
-				outerContext.set("activeOutline",createOutline(outerContext));
-			}
-		});
 
 		outerContext.set("_local_rat", Boolean.TRUE);
 		outerContext.runAndTrack(new RunAndTrack() {
