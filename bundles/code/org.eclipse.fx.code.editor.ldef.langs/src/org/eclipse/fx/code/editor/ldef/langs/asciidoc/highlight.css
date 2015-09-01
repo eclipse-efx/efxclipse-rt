@@ -1,0 +1,81 @@
+.styled-text-area .adoc.adoc_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .adoc.adoc_section_0 {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_section_1 {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_section_2 {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_section_3 {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_section_4 {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_section_5 {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_mono_bold_italic {
+	-styled-text-color: -source-editor-code;
+	-fx-font-style: italic;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_bold_italic {
+	-styled-text-color: -source-editor-code;
+	-fx-font-style: italic;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_mono_bold {
+	-styled-text-color: -source-editor-code;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_mono_italic {
+	-styled-text-color: -source-editor-code;
+	-fx-font-style: italic;
+}
+
+.styled-text-area .adoc.adoc_italic {
+	-styled-text-color: -source-editor-code;
+	-fx-font-style: italic;
+}
+
+.styled-text-area .adoc.adoc_bold {
+	-styled-text-color: -source-editor-code;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_literal {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .adoc.adoc_super {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .adoc.adoc_sub {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .adoc.adoc_comment {
+	-styled-text-color: -source-editor-doc;
+}

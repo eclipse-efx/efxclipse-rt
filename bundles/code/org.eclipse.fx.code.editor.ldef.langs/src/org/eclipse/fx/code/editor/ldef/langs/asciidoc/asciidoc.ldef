@@ -1,0 +1,85 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+adoc {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __adoc_multiline_code
+		partition __adoc_multiline_comment
+		partition __adoc_singleline_comment
+		rule {
+			multi_line __adoc_multiline_code "----" => "----"
+			multi_line __adoc_multiline_comment "////" => "////"
+			single_line __adoc_singleline_comment "//" => ""
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type whitespace javawhitespace {
+			default adoc_default
+			adoc_section_0 {
+				single_line "= " => "" // TODO Needs column 0
+			}
+			adoc_section_1 {
+				single_line "== " => "" // TODO Needs column 0
+			}
+			adoc_section_2 {
+				single_line "=== " => "" // TODO Needs column 0
+			}
+			adoc_section_3 {
+				single_line "==== " => "" // TODO Needs column 0
+			}
+			adoc_section_4 {
+				single_line "===== " => "" // TODO Needs column 0
+			}
+			adoc_section_5 {
+				single_line "====== " => "" // TODO Needs column 0
+			}
+			adoc_mono_bold_italic {
+				multi_line "``**__" => "__**``"
+				multi_line "`*_" => "_*`"
+			}
+			adoc_bold_italic {
+				multi_line "**_" => "_**"
+				multi_line "*_" => "_*"
+			}
+			adoc_mono_bold {
+				multi_line "`*" => "*`"
+				multi_line "``**" => "**``"
+			}
+			adoc_mono_italic {
+				multi_line "`_" => "_`"
+				multi_line "``__" => "__``"
+			}
+			adoc_italic {
+				multi_line "__" => "__"
+				multi_line "_" => "_"
+			}
+			adoc_bold {
+				multi_line "**" => "**"
+//				multi_line "*" => "*"  // TODO Must not be column 0
+			}
+			adoc_literal {
+				multi_line "``" => "``"
+				multi_line "`" => "`"
+			}
+			adoc_super {
+				single_line "^" => "^"
+			}
+			adoc_sub {
+				single_line "~" => "~"
+			}
+		}
+		rule __adoc_multiline_comment {
+			default adoc_comment
+		}
+		rule __adoc_singleline_comment {
+			default adoc_comment
+		}
+	}
+	integration {
+		javafx {
+			java "org.eclipse.fx.code.editor.ldef.langs.fx.asciidoc" {
+				project : "org.eclipse.fx.code.editor.ldef.langs.fx"
+			}
+		}
+	}
+}
