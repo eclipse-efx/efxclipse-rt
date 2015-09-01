@@ -117,7 +117,9 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	@Nullable
 	MPart getPart(@NonNull MUIElement tmp) {
 		MUIElement element = tmp;
-		if (element instanceof MPlaceholder) {
+		if( element instanceof MPart ) {
+			return (MPart) element;
+		} else if (element instanceof MPlaceholder) {
 			return (MPart) ((MPlaceholder) element).getRef();
 		} else if (element instanceof MElementContainer<?>) {
 			@SuppressWarnings("unchecked")
