@@ -1,5 +1,8 @@
 package org.eclipse.fx.code.editor.e4.addons;
 
+import java.net.MalformedURLException;
+import java.nio.file.Paths;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -11,6 +14,10 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.fx.code.editor.Constants;
+import org.eclipse.fx.code.editor.Input;
+import org.eclipse.fx.code.editor.SourceFileChange;
+import org.eclipse.fx.code.editor.services.URIProvider;
+import org.eclipse.fx.core.URI;
 import org.osgi.service.event.Event;
 
 public class DirtyStateTrackingAddon {
@@ -29,8 +36,8 @@ public class DirtyStateTrackingAddon {
 
 	@PostConstruct
 	void init() {
-		broker.subscribe(Constants.EDITOR_DOCUMENT_MODIFIED, this::handleDocumentModified);
-		broker.subscribe(Constants.EDITOR_DOCUMENT_SAVED, this::handleDocumentSaved);
+		broker.subscribe(Constants.TOPIC_SOURCE_FILE_INPUT_MODIFIED, this::handleDocumentModified);
+		broker.subscribe(Constants.TOPIC_SOURCE_FILE_INPUT_SAVED, this::handleDocumentSaved);
 		broker.subscribe(UIEvents.Dirtyable.TOPIC_DIRTY, this::handlePartDirty);
 	}
 
@@ -43,10 +50,19 @@ public class DirtyStateTrackingAddon {
 	}
 
 	void handleDocumentSaved(Event event) {
-		Object theEditor = event.getProperty(IEventBroker.DATA);
+		Input<?> input = (Input<?>) event.getProperty(IEventBroker.DATA);
+		String tmpUri = "";
+		try {
+			tmpUri = java.net.URI.create(((URIProvider)input).getURI().toString()).toURL().toExternalForm();
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		};
+
+		String uri = tmpUri;
 		modelService.findElements(application, MPart.class, EModelService.ANYWHERE, (e) -> {
 			if( e instanceof MPart) {
-				return ((MPart) e).getObject() == theEditor;
+				return ((MPart) e).getContext() != null && uri.equals(((MPart) e).getContext().getLocal(Constants.DOCUMENT_URL));
 			}
 			return false;
 		}).forEach((e) -> {
@@ -55,10 +71,19 @@ public class DirtyStateTrackingAddon {
 	}
 
 	void handleDocumentModified(Event event) {
-		Object theEditor = event.getProperty(IEventBroker.DATA);
+		SourceFileChange change = (SourceFileChange) event.getProperty(IEventBroker.DATA);
+		String tmpUri = "";
+		try {
+			tmpUri = java.net.URI.create(((URIProvider)change.input).getURI().toString()).toURL().toExternalForm();
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		};
+
+		String uri = tmpUri;
 		modelService.findElements(application, MPart.class, EModelService.ANYWHERE, (e) -> {
 			if( e instanceof MPart) {
-				return ((MPart) e).getObject() == theEditor;
+				return ((MPart) e).getContext() != null && uri.equals(((MPart) e).getContext().getLocal(Constants.DOCUMENT_URL));
 			}
 			return false;
 		}).forEach((e) -> {

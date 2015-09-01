@@ -107,20 +107,20 @@ public class TextEditor {
 		}
 		document.setDocumentPartitioner(partitioner);
 		partitioner.connect(document);
-		document.addDocumentListener(new IDocumentListener() {
-
-			@Override
-			public void documentChanged(DocumentEvent event) {
-				if( eventBus != null ) {
-					eventBus.publish(Constants.EDITOR_DOCUMENT_MODIFIED, TextEditor.this, true);
-				}
-			}
-
-			@Override
-			public void documentAboutToBeChanged(DocumentEvent event) {
-
-			}
-		});
+//		document.addDocumentListener(new IDocumentListener() {
+//
+//			@Override
+//			public void documentChanged(DocumentEvent event) {
+//				if( eventBus != null ) {
+//					eventBus.publish(Constants.EDITOR_DOCUMENT_MODIFIED, TextEditor.this, true);
+//				}
+//			}
+//
+//			@Override
+//			public void documentAboutToBeChanged(DocumentEvent event) {
+//
+//			}
+//		});
 
 		viewer.configure(configuration);
 		viewer.setDocument(document, configuration.getAnnotationModel());
@@ -137,7 +137,7 @@ public class TextEditor {
 		if( eventBus != null ) {
 			//TODO Should the outline reload really be sent by the editor?
 			eventBus.publish(Constants.OUTLINE_RELOAD, input, true);
-			eventBus.publish(Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this,true);
+//			eventBus.publish(Constants.EDITOR_DOCUMENT_SAVED, TextEditor.this,true);
 		}
 	}
 
