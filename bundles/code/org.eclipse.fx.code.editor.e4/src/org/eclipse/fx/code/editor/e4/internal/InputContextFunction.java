@@ -2,6 +2,8 @@ package org.eclipse.fx.code.editor.e4.internal;
 
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.ui.model.application.ui.MContext;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
@@ -33,8 +35,20 @@ public class InputContextFunction extends TypeProviderContextFunction<String,Inp
 	protected void preTypeCreation(IEclipseContext context) {
 		super.preTypeCreation(context);
 
-		MPart part = context.get(MPart.class);
-		context.set(Constants.DOCUMENT_URL, part.getPersistedState().get(Constants.DOCUMENT_URL));
-		context.set(Constants.VCS_URL, part.getPersistedState().get(Constants.VCS_URL));
+		MUIElement owner = context.get(MUIElement.class);
+
+		while( owner != null && ! owner.getPersistedState().containsKey(Constants.DOCUMENT_URL) ) {
+			owner = owner.getParent();
+			if( owner instanceof MContext && ((MContext) owner).getContext() != null ) {
+				context = ((MContext) owner).getContext();
+			}
+		}
+
+		if( owner != null && ! context.containsKey(Constants.DOCUMENT_URL) ) {
+			context.set(Constants.DOCUMENT_URL, owner.getPersistedState().get(Constants.DOCUMENT_URL));
+			context.set(Constants.VCS_URL, owner.getPersistedState().get(Constants.VCS_URL));
+		} else {
+			throw new IllegalStateException("Unable to detect element with " + Constants.DOCUMENT_URL);
+		}
 	}
 }
