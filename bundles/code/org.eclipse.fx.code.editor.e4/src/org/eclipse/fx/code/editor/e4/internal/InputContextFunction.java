@@ -45,7 +45,7 @@ public class InputContextFunction extends TypeProviderContextFunction<String,Inp
 		}
 
 		if( owner != null ) {
-			if( context.containsKey(Constants.DOCUMENT_URL) ) {
+			if( ! context.containsKey(Constants.DOCUMENT_URL) ) {
 				context.set(Constants.DOCUMENT_URL, owner.getPersistedState().get(Constants.DOCUMENT_URL));
 				context.set(Constants.VCS_URL, owner.getPersistedState().get(Constants.VCS_URL));
 			}
