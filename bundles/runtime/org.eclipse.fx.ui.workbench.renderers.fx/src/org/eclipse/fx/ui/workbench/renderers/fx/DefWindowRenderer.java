@@ -78,6 +78,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.Bundle;
 
+import com.google.common.base.Strings;
 import com.sun.javafx.tk.Toolkit;
 
 import javafx.application.ConditionalFeature;
@@ -1038,7 +1039,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		 */
 		@Inject
 		public void setImageUrl(@Named(UIEvents.UILabel.ICONURI) @Optional String iconUri) {
-			if (iconUri != null && !iconUri.isEmpty()) {
+			if (!Strings.isNullOrEmpty(iconUri)) {
 
 				String[] split = iconUri.split(";"); //$NON-NLS-1$
 				List<Image> images = new ArrayList<>();

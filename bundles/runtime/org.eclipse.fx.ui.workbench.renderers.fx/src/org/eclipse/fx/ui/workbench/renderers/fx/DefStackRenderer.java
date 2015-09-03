@@ -14,21 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.control.Pagination;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.Tooltip;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.util.Callback;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -54,6 +39,23 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.fx.ui.workbench.services.ModelService;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+
+import com.google.common.base.Strings;
+
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.Pagination;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.util.Callback;
 
 /**
  * default renderer for {@link MPartStack}
@@ -443,8 +445,9 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@SuppressWarnings("null")
 		@Inject
 		public void setIcon(@Named(UIEvents.UILabel.ICONURI) @Optional String iconUri) {
-			if (iconUri != null) {
-				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(iconUri))));
+			if (!Strings.isNullOrEmpty(iconUri)) {
+				EMFUri uri = new EMFUri(URI.createURI(iconUri));
+				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(uri));
 			} else {
 				getWidget().setGraphic(null);
 			}
