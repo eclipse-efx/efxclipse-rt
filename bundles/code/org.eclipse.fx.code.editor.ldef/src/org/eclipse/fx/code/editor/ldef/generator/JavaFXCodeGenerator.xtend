@@ -217,7 +217,7 @@ class JavaFXCodeGenerator {
 	def dispatch generateScannerRule(Token t, Scanner_SingleLineRule r) '''
 	new org.eclipse.jface.text.rules.SingleLineRule(
 		  "«r.startSeq.escapeString»"
-		, "«r.endSeq.escapeString»"
+		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, «t.name»Token
 		«IF r.escapeSeq != null», '«r.escapeSeq.charAt(0)»'«ENDIF»);
 	'''
@@ -249,7 +249,7 @@ class JavaFXCodeGenerator {
 	def dispatch generatePartitionRule(Partition_SingleLineRule r) '''
 	new org.eclipse.jface.text.rules.SingleLineRule(
 		  "«r.startSeq.escapeString»"
-		, "«r.endSeq.escapeString»"
+		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
 		«IF r.escapeSeq != null», '«r.escapeSeq.escapeChar»'«ENDIF»);
 	'''
