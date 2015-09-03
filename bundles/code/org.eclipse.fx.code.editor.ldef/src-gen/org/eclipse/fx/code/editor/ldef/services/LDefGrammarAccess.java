@@ -619,20 +619,21 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cParitionPartitionIDTerminalRuleCall_1_0_1 = (RuleCall)cParitionPartitionCrossReference_1_0.eContents().get(1);
 		private final Assignment cStartSeqAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cStartSeqSTRINGTerminalRuleCall_2_0 = (RuleCall)cStartSeqAssignment_2.eContents().get(0);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cEndSeqAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cEndSeqSTRINGTerminalRuleCall_4_0 = (RuleCall)cEndSeqAssignment_4.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cEscapedKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Keyword cByKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final Assignment cEscapeSeqAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cEndSeqAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cEndSeqSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cEndSeqAssignment_3_1.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cEscapedKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Keyword cByKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
+		private final Assignment cEscapeSeqAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
+		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_4_2_0 = (RuleCall)cEscapeSeqAssignment_4_2.eContents().get(0);
 		
 		//Partition_SingleLineRule:
-		//	"single_line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING? ("escaped" "by" escapeSeq=STRING)?;
+		//	"single_line" parition=[Partition] startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"single_line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING? ("escaped" "by" escapeSeq=STRING)?
+		//"single_line" parition=[Partition] startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//"single_line"
@@ -653,29 +654,32 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_2_0() { return cStartSeqSTRINGTerminalRuleCall_2_0; }
 
+		//("=>" endSeq=STRING?)?
+		public Group getGroup_3() { return cGroup_3; }
+
 		//"=>"
-		public Keyword getEqualsSignGreaterThanSignKeyword_3() { return cEqualsSignGreaterThanSignKeyword_3; }
+		public Keyword getEqualsSignGreaterThanSignKeyword_3_0() { return cEqualsSignGreaterThanSignKeyword_3_0; }
 
 		//endSeq=STRING?
-		public Assignment getEndSeqAssignment_4() { return cEndSeqAssignment_4; }
+		public Assignment getEndSeqAssignment_3_1() { return cEndSeqAssignment_3_1; }
 
 		//STRING
-		public RuleCall getEndSeqSTRINGTerminalRuleCall_4_0() { return cEndSeqSTRINGTerminalRuleCall_4_0; }
+		public RuleCall getEndSeqSTRINGTerminalRuleCall_3_1_0() { return cEndSeqSTRINGTerminalRuleCall_3_1_0; }
 
 		//("escaped" "by" escapeSeq=STRING)?
-		public Group getGroup_5() { return cGroup_5; }
+		public Group getGroup_4() { return cGroup_4; }
 
 		//"escaped"
-		public Keyword getEscapedKeyword_5_0() { return cEscapedKeyword_5_0; }
+		public Keyword getEscapedKeyword_4_0() { return cEscapedKeyword_4_0; }
 
 		//"by"
-		public Keyword getByKeyword_5_1() { return cByKeyword_5_1; }
+		public Keyword getByKeyword_4_1() { return cByKeyword_4_1; }
 
 		//escapeSeq=STRING
-		public Assignment getEscapeSeqAssignment_5_2() { return cEscapeSeqAssignment_5_2; }
+		public Assignment getEscapeSeqAssignment_4_2() { return cEscapeSeqAssignment_4_2; }
 
 		//STRING
-		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_5_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_5_2_0; }
+		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_4_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_4_2_0; }
 	}
 
 	public class Partition_MultiLineRuleElements extends AbstractParserRuleElementFinder {
@@ -1686,7 +1690,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition_SingleLineRule:
-	//	"single_line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING? ("escaped" "by" escapeSeq=STRING)?;
+	//	"single_line" parition=[Partition] startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
 	public Partition_SingleLineRuleElements getPartition_SingleLineRuleAccess() {
 		return pPartition_SingleLineRule;
 	}

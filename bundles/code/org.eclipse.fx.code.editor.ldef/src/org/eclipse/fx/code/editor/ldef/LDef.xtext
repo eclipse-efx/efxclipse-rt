@@ -106,7 +106,7 @@ Partition_Rule:
 ;
 
 Partition_SingleLineRule:
-	'single_line' parition=[Partition|ID] startSeq=STRING '=>' endSeq=STRING? ('escaped' 'by' escapeSeq=STRING)?
+	'single_line' parition=[Partition|ID] startSeq=STRING ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
 ;
 
 Partition_MultiLineRule:

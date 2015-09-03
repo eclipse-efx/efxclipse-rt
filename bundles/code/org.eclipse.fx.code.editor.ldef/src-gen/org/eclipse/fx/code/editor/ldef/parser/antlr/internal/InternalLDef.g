@@ -1142,15 +1142,15 @@ rulePartition_SingleLineRule returns [EObject current=null]
 	    }
 
 )
-)	otherlv_3='=>' 
+)(	otherlv_3='=>' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getPartition_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3());
+    	newLeafNode(otherlv_3, grammarAccess.getPartition_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3_0());
     }
 (
 (
 		lv_endSeq_4_0=RULE_STRING
 		{
-			newLeafNode(lv_endSeq_4_0, grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_0()); 
+			newLeafNode(lv_endSeq_4_0, grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_3_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1164,19 +1164,19 @@ rulePartition_SingleLineRule returns [EObject current=null]
 	    }
 
 )
-)?(	otherlv_5='escaped' 
+)?)?(	otherlv_5='escaped' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getPartition_SingleLineRuleAccess().getEscapedKeyword_5_0());
+    	newLeafNode(otherlv_5, grammarAccess.getPartition_SingleLineRuleAccess().getEscapedKeyword_4_0());
     }
 	otherlv_6='by' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getPartition_SingleLineRuleAccess().getByKeyword_5_1());
+    	newLeafNode(otherlv_6, grammarAccess.getPartition_SingleLineRuleAccess().getByKeyword_4_1());
     }
 (
 (
 		lv_escapeSeq_7_0=RULE_STRING
 		{
-			newLeafNode(lv_escapeSeq_7_0, grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
+			newLeafNode(lv_escapeSeq_7_0, grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_4_2_0()); 
 		}
 		{
 	        if ($current==null) {

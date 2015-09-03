@@ -65,7 +65,8 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParitioner_JSAccess().getGroup(), "rule__Paritioner_JS__Group__0");
 					put(grammarAccess.getPartitioner_RuleAccess().getGroup(), "rule__Partitioner_Rule__Group__0");
 					put(grammarAccess.getPartition_SingleLineRuleAccess().getGroup(), "rule__Partition_SingleLineRule__Group__0");
-					put(grammarAccess.getPartition_SingleLineRuleAccess().getGroup_5(), "rule__Partition_SingleLineRule__Group_5__0");
+					put(grammarAccess.getPartition_SingleLineRuleAccess().getGroup_3(), "rule__Partition_SingleLineRule__Group_3__0");
+					put(grammarAccess.getPartition_SingleLineRuleAccess().getGroup_4(), "rule__Partition_SingleLineRule__Group_4__0");
 					put(grammarAccess.getPartition_MultiLineRuleAccess().getGroup(), "rule__Partition_MultiLineRule__Group__0");
 					put(grammarAccess.getPartition_MultiLineRuleAccess().getGroup_5(), "rule__Partition_MultiLineRule__Group_5__0");
 					put(grammarAccess.getLexicalHighlightingAccess().getGroup(), "rule__LexicalHighlighting__Group__0");
@@ -113,8 +114,8 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPartitioner_RuleAccess().getRuleListAssignment_2(), "rule__Partitioner_Rule__RuleListAssignment_2");
 					put(grammarAccess.getPartition_SingleLineRuleAccess().getParitionAssignment_1(), "rule__Partition_SingleLineRule__ParitionAssignment_1");
 					put(grammarAccess.getPartition_SingleLineRuleAccess().getStartSeqAssignment_2(), "rule__Partition_SingleLineRule__StartSeqAssignment_2");
-					put(grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqAssignment_4(), "rule__Partition_SingleLineRule__EndSeqAssignment_4");
-					put(grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqAssignment_5_2(), "rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2");
+					put(grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqAssignment_3_1(), "rule__Partition_SingleLineRule__EndSeqAssignment_3_1");
+					put(grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqAssignment_4_2(), "rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2");
 					put(grammarAccess.getPartition_MultiLineRuleAccess().getParitionAssignment_1(), "rule__Partition_MultiLineRule__ParitionAssignment_1");
 					put(grammarAccess.getPartition_MultiLineRuleAccess().getStartSeqAssignment_2(), "rule__Partition_MultiLineRule__StartSeqAssignment_2");
 					put(grammarAccess.getPartition_MultiLineRuleAccess().getEndSeqAssignment_4(), "rule__Partition_MultiLineRule__EndSeqAssignment_4");

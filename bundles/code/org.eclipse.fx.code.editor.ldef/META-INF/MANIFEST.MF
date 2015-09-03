@@ -16,16 +16,16 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.eclipse.fx.code.editor.ldef,
- org.eclipse.fx.code.editor.ldef.services,
- org.eclipse.fx.code.editor.ldef.lDef,
- org.eclipse.fx.code.editor.ldef.lDef.impl,
- org.eclipse.fx.code.editor.ldef.lDef.util,
- org.eclipse.fx.code.editor.ldef.serializer,
- org.eclipse.fx.code.editor.ldef.parser.antlr,
- org.eclipse.fx.code.editor.ldef.parser.antlr.internal,
- org.eclipse.fx.code.editor.ldef.validation,
- org.eclipse.fx.code.editor.ldef.scoping,
- org.eclipse.fx.code.editor.ldef.generator,
- org.eclipse.fx.code.editor.ldef.formatting
+Export-Package: org.eclipse.fx.code.editor.ldef;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.formatting;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.generator;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.lDef;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.lDef.impl;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.lDef.util;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.parser.antlr;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.parser.antlr.internal;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.scoping;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.serializer;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.services;x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.validation;x-internal:=true
 

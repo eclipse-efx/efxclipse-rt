@@ -9556,24 +9556,45 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_SingleLineRule__Group__3__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3291:1: rule__Partition_SingleLineRule__Group__3__Impl : ( '=>' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3291:1: rule__Partition_SingleLineRule__Group__3__Impl : ( ( rule__Partition_SingleLineRule__Group_3__0 )? ) ;
     public final void rule__Partition_SingleLineRule__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3295:1: ( ( '=>' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3296:1: ( '=>' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3295:1: ( ( ( rule__Partition_SingleLineRule__Group_3__0 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3296:1: ( ( rule__Partition_SingleLineRule__Group_3__0 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3296:1: ( '=>' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3297:1: '=>'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3296:1: ( ( rule__Partition_SingleLineRule__Group_3__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3297:1: ( rule__Partition_SingleLineRule__Group_3__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPartition_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3()); 
+               before(grammarAccess.getPartition_SingleLineRuleAccess().getGroup_3()); 
             }
-            match(input,27,FOLLOW_27_in_rule__Partition_SingleLineRule__Group__3__Impl6695); if (state.failed) return ;
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3298:1: ( rule__Partition_SingleLineRule__Group_3__0 )?
+            int alt22=2;
+            int LA22_0 = input.LA(1);
+
+            if ( (LA22_0==27) ) {
+                alt22=1;
+            }
+            switch (alt22) {
+                case 1 :
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3298:2: rule__Partition_SingleLineRule__Group_3__0
+                    {
+                    pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_3__0_in_rule__Partition_SingleLineRule__Group__3__Impl6694);
+                    rule__Partition_SingleLineRule__Group_3__0();
+
+                    state._fsp--;
+                    if (state.failed) return ;
+
+                    }
+                    break;
+
+            }
+
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPartition_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3()); 
+               after(grammarAccess.getPartition_SingleLineRuleAccess().getGroup_3()); 
             }
 
             }
@@ -9597,22 +9618,17 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_SingleLineRule__Group__4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3310:1: rule__Partition_SingleLineRule__Group__4 : rule__Partition_SingleLineRule__Group__4__Impl rule__Partition_SingleLineRule__Group__5 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3308:1: rule__Partition_SingleLineRule__Group__4 : rule__Partition_SingleLineRule__Group__4__Impl ;
     public final void rule__Partition_SingleLineRule__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3314:1: ( rule__Partition_SingleLineRule__Group__4__Impl rule__Partition_SingleLineRule__Group__5 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3315:2: rule__Partition_SingleLineRule__Group__4__Impl rule__Partition_SingleLineRule__Group__5
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3312:1: ( rule__Partition_SingleLineRule__Group__4__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3313:2: rule__Partition_SingleLineRule__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group__4__Impl_in_rule__Partition_SingleLineRule__Group__46726);
+            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group__4__Impl_in_rule__Partition_SingleLineRule__Group__46725);
             rule__Partition_SingleLineRule__Group__4__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group__5_in_rule__Partition_SingleLineRule__Group__46729);
-            rule__Partition_SingleLineRule__Group__5();
 
             state._fsp--;
             if (state.failed) return ;
@@ -9635,34 +9651,34 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_SingleLineRule__Group__4__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3322:1: rule__Partition_SingleLineRule__Group__4__Impl : ( ( rule__Partition_SingleLineRule__EndSeqAssignment_4 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3319:1: rule__Partition_SingleLineRule__Group__4__Impl : ( ( rule__Partition_SingleLineRule__Group_4__0 )? ) ;
     public final void rule__Partition_SingleLineRule__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3326:1: ( ( ( rule__Partition_SingleLineRule__EndSeqAssignment_4 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3327:1: ( ( rule__Partition_SingleLineRule__EndSeqAssignment_4 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3323:1: ( ( ( rule__Partition_SingleLineRule__Group_4__0 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3324:1: ( ( rule__Partition_SingleLineRule__Group_4__0 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3327:1: ( ( rule__Partition_SingleLineRule__EndSeqAssignment_4 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3328:1: ( rule__Partition_SingleLineRule__EndSeqAssignment_4 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3324:1: ( ( rule__Partition_SingleLineRule__Group_4__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3325:1: ( rule__Partition_SingleLineRule__Group_4__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqAssignment_4()); 
+               before(grammarAccess.getPartition_SingleLineRuleAccess().getGroup_4()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3329:1: ( rule__Partition_SingleLineRule__EndSeqAssignment_4 )?
-            int alt22=2;
-            int LA22_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3326:1: ( rule__Partition_SingleLineRule__Group_4__0 )?
+            int alt23=2;
+            int LA23_0 = input.LA(1);
 
-            if ( (LA22_0==RULE_STRING) ) {
-                alt22=1;
+            if ( (LA23_0==28) ) {
+                alt23=1;
             }
-            switch (alt22) {
+            switch (alt23) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3329:2: rule__Partition_SingleLineRule__EndSeqAssignment_4
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3326:2: rule__Partition_SingleLineRule__Group_4__0
                     {
-                    pushFollow(FOLLOW_rule__Partition_SingleLineRule__EndSeqAssignment_4_in_rule__Partition_SingleLineRule__Group__4__Impl6756);
-                    rule__Partition_SingleLineRule__EndSeqAssignment_4();
+                    pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_4__0_in_rule__Partition_SingleLineRule__Group__4__Impl6752);
+                    rule__Partition_SingleLineRule__Group_4__0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -9673,7 +9689,7 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqAssignment_4()); 
+               after(grammarAccess.getPartition_SingleLineRuleAccess().getGroup_4()); 
             }
 
             }
@@ -9696,18 +9712,23 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Partition_SingleLineRule__Group__4__Impl"
 
 
-    // $ANTLR start "rule__Partition_SingleLineRule__Group__5"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3339:1: rule__Partition_SingleLineRule__Group__5 : rule__Partition_SingleLineRule__Group__5__Impl ;
-    public final void rule__Partition_SingleLineRule__Group__5() throws RecognitionException {
+    // $ANTLR start "rule__Partition_SingleLineRule__Group_3__0"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3346:1: rule__Partition_SingleLineRule__Group_3__0 : rule__Partition_SingleLineRule__Group_3__0__Impl rule__Partition_SingleLineRule__Group_3__1 ;
+    public final void rule__Partition_SingleLineRule__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3343:1: ( rule__Partition_SingleLineRule__Group__5__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3344:2: rule__Partition_SingleLineRule__Group__5__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3350:1: ( rule__Partition_SingleLineRule__Group_3__0__Impl rule__Partition_SingleLineRule__Group_3__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3351:2: rule__Partition_SingleLineRule__Group_3__0__Impl rule__Partition_SingleLineRule__Group_3__1
             {
-            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group__5__Impl_in_rule__Partition_SingleLineRule__Group__56787);
-            rule__Partition_SingleLineRule__Group__5__Impl();
+            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_3__0__Impl_in_rule__Partition_SingleLineRule__Group_3__06793);
+            rule__Partition_SingleLineRule__Group_3__0__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_3__1_in_rule__Partition_SingleLineRule__Group_3__06796);
+            rule__Partition_SingleLineRule__Group_3__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -9726,38 +9747,112 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Partition_SingleLineRule__Group__5"
+    // $ANTLR end "rule__Partition_SingleLineRule__Group_3__0"
 
 
-    // $ANTLR start "rule__Partition_SingleLineRule__Group__5__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3350:1: rule__Partition_SingleLineRule__Group__5__Impl : ( ( rule__Partition_SingleLineRule__Group_5__0 )? ) ;
-    public final void rule__Partition_SingleLineRule__Group__5__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Partition_SingleLineRule__Group_3__0__Impl"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3358:1: rule__Partition_SingleLineRule__Group_3__0__Impl : ( '=>' ) ;
+    public final void rule__Partition_SingleLineRule__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3354:1: ( ( ( rule__Partition_SingleLineRule__Group_5__0 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3355:1: ( ( rule__Partition_SingleLineRule__Group_5__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3362:1: ( ( '=>' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3363:1: ( '=>' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3355:1: ( ( rule__Partition_SingleLineRule__Group_5__0 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3356:1: ( rule__Partition_SingleLineRule__Group_5__0 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3363:1: ( '=>' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3364:1: '=>'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPartition_SingleLineRuleAccess().getGroup_5()); 
+               before(grammarAccess.getPartition_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3_0()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3357:1: ( rule__Partition_SingleLineRule__Group_5__0 )?
-            int alt23=2;
-            int LA23_0 = input.LA(1);
+            match(input,27,FOLLOW_27_in_rule__Partition_SingleLineRule__Group_3__0__Impl6824); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getPartition_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3_0()); 
+            }
 
-            if ( (LA23_0==28) ) {
-                alt23=1;
             }
-            switch (alt23) {
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Partition_SingleLineRule__Group_3__0__Impl"
+
+
+    // $ANTLR start "rule__Partition_SingleLineRule__Group_3__1"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3377:1: rule__Partition_SingleLineRule__Group_3__1 : rule__Partition_SingleLineRule__Group_3__1__Impl ;
+    public final void rule__Partition_SingleLineRule__Group_3__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3381:1: ( rule__Partition_SingleLineRule__Group_3__1__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3382:2: rule__Partition_SingleLineRule__Group_3__1__Impl
+            {
+            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_3__1__Impl_in_rule__Partition_SingleLineRule__Group_3__16855);
+            rule__Partition_SingleLineRule__Group_3__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Partition_SingleLineRule__Group_3__1"
+
+
+    // $ANTLR start "rule__Partition_SingleLineRule__Group_3__1__Impl"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3388:1: rule__Partition_SingleLineRule__Group_3__1__Impl : ( ( rule__Partition_SingleLineRule__EndSeqAssignment_3_1 )? ) ;
+    public final void rule__Partition_SingleLineRule__Group_3__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3392:1: ( ( ( rule__Partition_SingleLineRule__EndSeqAssignment_3_1 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3393:1: ( ( rule__Partition_SingleLineRule__EndSeqAssignment_3_1 )? )
+            {
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3393:1: ( ( rule__Partition_SingleLineRule__EndSeqAssignment_3_1 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3394:1: ( rule__Partition_SingleLineRule__EndSeqAssignment_3_1 )?
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqAssignment_3_1()); 
+            }
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3395:1: ( rule__Partition_SingleLineRule__EndSeqAssignment_3_1 )?
+            int alt24=2;
+            int LA24_0 = input.LA(1);
+
+            if ( (LA24_0==RULE_STRING) ) {
+                alt24=1;
+            }
+            switch (alt24) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3357:2: rule__Partition_SingleLineRule__Group_5__0
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3395:2: rule__Partition_SingleLineRule__EndSeqAssignment_3_1
                     {
-                    pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_5__0_in_rule__Partition_SingleLineRule__Group__5__Impl6814);
-                    rule__Partition_SingleLineRule__Group_5__0();
+                    pushFollow(FOLLOW_rule__Partition_SingleLineRule__EndSeqAssignment_3_1_in_rule__Partition_SingleLineRule__Group_3__1__Impl6882);
+                    rule__Partition_SingleLineRule__EndSeqAssignment_3_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -9768,7 +9863,7 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPartition_SingleLineRuleAccess().getGroup_5()); 
+               after(grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqAssignment_3_1()); 
             }
 
             }
@@ -9788,105 +9883,26 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Partition_SingleLineRule__Group__5__Impl"
+    // $ANTLR end "rule__Partition_SingleLineRule__Group_3__1__Impl"
 
 
-    // $ANTLR start "rule__Partition_SingleLineRule__Group_5__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3379:1: rule__Partition_SingleLineRule__Group_5__0 : rule__Partition_SingleLineRule__Group_5__0__Impl rule__Partition_SingleLineRule__Group_5__1 ;
-    public final void rule__Partition_SingleLineRule__Group_5__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3383:1: ( rule__Partition_SingleLineRule__Group_5__0__Impl rule__Partition_SingleLineRule__Group_5__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3384:2: rule__Partition_SingleLineRule__Group_5__0__Impl rule__Partition_SingleLineRule__Group_5__1
-            {
-            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_5__0__Impl_in_rule__Partition_SingleLineRule__Group_5__06857);
-            rule__Partition_SingleLineRule__Group_5__0__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_5__1_in_rule__Partition_SingleLineRule__Group_5__06860);
-            rule__Partition_SingleLineRule__Group_5__1();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Partition_SingleLineRule__Group_5__0"
-
-
-    // $ANTLR start "rule__Partition_SingleLineRule__Group_5__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3391:1: rule__Partition_SingleLineRule__Group_5__0__Impl : ( 'escaped' ) ;
-    public final void rule__Partition_SingleLineRule__Group_5__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Partition_SingleLineRule__Group_4__0"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3409:1: rule__Partition_SingleLineRule__Group_4__0 : rule__Partition_SingleLineRule__Group_4__0__Impl rule__Partition_SingleLineRule__Group_4__1 ;
+    public final void rule__Partition_SingleLineRule__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3395:1: ( ( 'escaped' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3396:1: ( 'escaped' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3413:1: ( rule__Partition_SingleLineRule__Group_4__0__Impl rule__Partition_SingleLineRule__Group_4__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3414:2: rule__Partition_SingleLineRule__Group_4__0__Impl rule__Partition_SingleLineRule__Group_4__1
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3396:1: ( 'escaped' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3397:1: 'escaped'
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getPartition_SingleLineRuleAccess().getEscapedKeyword_5_0()); 
-            }
-            match(input,28,FOLLOW_28_in_rule__Partition_SingleLineRule__Group_5__0__Impl6888); if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getPartition_SingleLineRuleAccess().getEscapedKeyword_5_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Partition_SingleLineRule__Group_5__0__Impl"
-
-
-    // $ANTLR start "rule__Partition_SingleLineRule__Group_5__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3410:1: rule__Partition_SingleLineRule__Group_5__1 : rule__Partition_SingleLineRule__Group_5__1__Impl rule__Partition_SingleLineRule__Group_5__2 ;
-    public final void rule__Partition_SingleLineRule__Group_5__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3414:1: ( rule__Partition_SingleLineRule__Group_5__1__Impl rule__Partition_SingleLineRule__Group_5__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3415:2: rule__Partition_SingleLineRule__Group_5__1__Impl rule__Partition_SingleLineRule__Group_5__2
-            {
-            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_5__1__Impl_in_rule__Partition_SingleLineRule__Group_5__16919);
-            rule__Partition_SingleLineRule__Group_5__1__Impl();
+            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_4__0__Impl_in_rule__Partition_SingleLineRule__Group_4__06917);
+            rule__Partition_SingleLineRule__Group_4__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_5__2_in_rule__Partition_SingleLineRule__Group_5__16922);
-            rule__Partition_SingleLineRule__Group_5__2();
+            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_4__1_in_rule__Partition_SingleLineRule__Group_4__06920);
+            rule__Partition_SingleLineRule__Group_4__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -9905,28 +9921,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Partition_SingleLineRule__Group_5__1"
+    // $ANTLR end "rule__Partition_SingleLineRule__Group_4__0"
 
 
-    // $ANTLR start "rule__Partition_SingleLineRule__Group_5__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3422:1: rule__Partition_SingleLineRule__Group_5__1__Impl : ( 'by' ) ;
-    public final void rule__Partition_SingleLineRule__Group_5__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Partition_SingleLineRule__Group_4__0__Impl"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3421:1: rule__Partition_SingleLineRule__Group_4__0__Impl : ( 'escaped' ) ;
+    public final void rule__Partition_SingleLineRule__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3426:1: ( ( 'by' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3427:1: ( 'by' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3425:1: ( ( 'escaped' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3426:1: ( 'escaped' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3427:1: ( 'by' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3428:1: 'by'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3426:1: ( 'escaped' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3427:1: 'escaped'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPartition_SingleLineRuleAccess().getByKeyword_5_1()); 
+               before(grammarAccess.getPartition_SingleLineRuleAccess().getEscapedKeyword_4_0()); 
             }
-            match(input,29,FOLLOW_29_in_rule__Partition_SingleLineRule__Group_5__1__Impl6950); if (state.failed) return ;
+            match(input,28,FOLLOW_28_in_rule__Partition_SingleLineRule__Group_4__0__Impl6948); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPartition_SingleLineRuleAccess().getByKeyword_5_1()); 
+               after(grammarAccess.getPartition_SingleLineRuleAccess().getEscapedKeyword_4_0()); 
             }
 
             }
@@ -9946,21 +9962,26 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Partition_SingleLineRule__Group_5__1__Impl"
+    // $ANTLR end "rule__Partition_SingleLineRule__Group_4__0__Impl"
 
 
-    // $ANTLR start "rule__Partition_SingleLineRule__Group_5__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3441:1: rule__Partition_SingleLineRule__Group_5__2 : rule__Partition_SingleLineRule__Group_5__2__Impl ;
-    public final void rule__Partition_SingleLineRule__Group_5__2() throws RecognitionException {
+    // $ANTLR start "rule__Partition_SingleLineRule__Group_4__1"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3440:1: rule__Partition_SingleLineRule__Group_4__1 : rule__Partition_SingleLineRule__Group_4__1__Impl rule__Partition_SingleLineRule__Group_4__2 ;
+    public final void rule__Partition_SingleLineRule__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3445:1: ( rule__Partition_SingleLineRule__Group_5__2__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3446:2: rule__Partition_SingleLineRule__Group_5__2__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3444:1: ( rule__Partition_SingleLineRule__Group_4__1__Impl rule__Partition_SingleLineRule__Group_4__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3445:2: rule__Partition_SingleLineRule__Group_4__1__Impl rule__Partition_SingleLineRule__Group_4__2
             {
-            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_5__2__Impl_in_rule__Partition_SingleLineRule__Group_5__26981);
-            rule__Partition_SingleLineRule__Group_5__2__Impl();
+            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_4__1__Impl_in_rule__Partition_SingleLineRule__Group_4__16979);
+            rule__Partition_SingleLineRule__Group_4__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_4__2_in_rule__Partition_SingleLineRule__Group_4__16982);
+            rule__Partition_SingleLineRule__Group_4__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -9979,38 +10000,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Partition_SingleLineRule__Group_5__2"
+    // $ANTLR end "rule__Partition_SingleLineRule__Group_4__1"
 
 
-    // $ANTLR start "rule__Partition_SingleLineRule__Group_5__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3452:1: rule__Partition_SingleLineRule__Group_5__2__Impl : ( ( rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2 ) ) ;
-    public final void rule__Partition_SingleLineRule__Group_5__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Partition_SingleLineRule__Group_4__1__Impl"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3452:1: rule__Partition_SingleLineRule__Group_4__1__Impl : ( 'by' ) ;
+    public final void rule__Partition_SingleLineRule__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3456:1: ( ( ( rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3457:1: ( ( rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3456:1: ( ( 'by' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3457:1: ( 'by' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3457:1: ( ( rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3458:1: ( rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3457:1: ( 'by' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3458:1: 'by'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqAssignment_5_2()); 
+               before(grammarAccess.getPartition_SingleLineRuleAccess().getByKeyword_4_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3459:1: ( rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3459:2: rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2
-            {
-            pushFollow(FOLLOW_rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2_in_rule__Partition_SingleLineRule__Group_5__2__Impl7008);
-            rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
+            match(input,29,FOLLOW_29_in_rule__Partition_SingleLineRule__Group_4__1__Impl7010); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqAssignment_5_2()); 
+               after(grammarAccess.getPartition_SingleLineRuleAccess().getByKeyword_4_1()); 
             }
 
             }
@@ -10030,25 +10041,109 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Partition_SingleLineRule__Group_5__2__Impl"
+    // $ANTLR end "rule__Partition_SingleLineRule__Group_4__1__Impl"
+
+
+    // $ANTLR start "rule__Partition_SingleLineRule__Group_4__2"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3471:1: rule__Partition_SingleLineRule__Group_4__2 : rule__Partition_SingleLineRule__Group_4__2__Impl ;
+    public final void rule__Partition_SingleLineRule__Group_4__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3475:1: ( rule__Partition_SingleLineRule__Group_4__2__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3476:2: rule__Partition_SingleLineRule__Group_4__2__Impl
+            {
+            pushFollow(FOLLOW_rule__Partition_SingleLineRule__Group_4__2__Impl_in_rule__Partition_SingleLineRule__Group_4__27041);
+            rule__Partition_SingleLineRule__Group_4__2__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Partition_SingleLineRule__Group_4__2"
+
+
+    // $ANTLR start "rule__Partition_SingleLineRule__Group_4__2__Impl"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3482:1: rule__Partition_SingleLineRule__Group_4__2__Impl : ( ( rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2 ) ) ;
+    public final void rule__Partition_SingleLineRule__Group_4__2__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3486:1: ( ( ( rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3487:1: ( ( rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2 ) )
+            {
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3487:1: ( ( rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3488:1: ( rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2 )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqAssignment_4_2()); 
+            }
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3489:1: ( rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3489:2: rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2
+            {
+            pushFollow(FOLLOW_rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2_in_rule__Partition_SingleLineRule__Group_4__2__Impl7068);
+            rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqAssignment_4_2()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Partition_SingleLineRule__Group_4__2__Impl"
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3475:1: rule__Partition_MultiLineRule__Group__0 : rule__Partition_MultiLineRule__Group__0__Impl rule__Partition_MultiLineRule__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3505:1: rule__Partition_MultiLineRule__Group__0 : rule__Partition_MultiLineRule__Group__0__Impl rule__Partition_MultiLineRule__Group__1 ;
     public final void rule__Partition_MultiLineRule__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3479:1: ( rule__Partition_MultiLineRule__Group__0__Impl rule__Partition_MultiLineRule__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3480:2: rule__Partition_MultiLineRule__Group__0__Impl rule__Partition_MultiLineRule__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3509:1: ( rule__Partition_MultiLineRule__Group__0__Impl rule__Partition_MultiLineRule__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3510:2: rule__Partition_MultiLineRule__Group__0__Impl rule__Partition_MultiLineRule__Group__1
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__0__Impl_in_rule__Partition_MultiLineRule__Group__07044);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__0__Impl_in_rule__Partition_MultiLineRule__Group__07104);
             rule__Partition_MultiLineRule__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__1_in_rule__Partition_MultiLineRule__Group__07047);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__1_in_rule__Partition_MultiLineRule__Group__07107);
             rule__Partition_MultiLineRule__Group__1();
 
             state._fsp--;
@@ -10072,22 +10167,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3487:1: rule__Partition_MultiLineRule__Group__0__Impl : ( 'multi_line' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3517:1: rule__Partition_MultiLineRule__Group__0__Impl : ( 'multi_line' ) ;
     public final void rule__Partition_MultiLineRule__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3491:1: ( ( 'multi_line' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3492:1: ( 'multi_line' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3521:1: ( ( 'multi_line' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3522:1: ( 'multi_line' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3492:1: ( 'multi_line' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3493:1: 'multi_line'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3522:1: ( 'multi_line' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3523:1: 'multi_line'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getMulti_lineKeyword_0()); 
             }
-            match(input,30,FOLLOW_30_in_rule__Partition_MultiLineRule__Group__0__Impl7075); if (state.failed) return ;
+            match(input,30,FOLLOW_30_in_rule__Partition_MultiLineRule__Group__0__Impl7135); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartition_MultiLineRuleAccess().getMulti_lineKeyword_0()); 
             }
@@ -10113,21 +10208,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3506:1: rule__Partition_MultiLineRule__Group__1 : rule__Partition_MultiLineRule__Group__1__Impl rule__Partition_MultiLineRule__Group__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3536:1: rule__Partition_MultiLineRule__Group__1 : rule__Partition_MultiLineRule__Group__1__Impl rule__Partition_MultiLineRule__Group__2 ;
     public final void rule__Partition_MultiLineRule__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3510:1: ( rule__Partition_MultiLineRule__Group__1__Impl rule__Partition_MultiLineRule__Group__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3511:2: rule__Partition_MultiLineRule__Group__1__Impl rule__Partition_MultiLineRule__Group__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3540:1: ( rule__Partition_MultiLineRule__Group__1__Impl rule__Partition_MultiLineRule__Group__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3541:2: rule__Partition_MultiLineRule__Group__1__Impl rule__Partition_MultiLineRule__Group__2
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__1__Impl_in_rule__Partition_MultiLineRule__Group__17106);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__1__Impl_in_rule__Partition_MultiLineRule__Group__17166);
             rule__Partition_MultiLineRule__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__2_in_rule__Partition_MultiLineRule__Group__17109);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__2_in_rule__Partition_MultiLineRule__Group__17169);
             rule__Partition_MultiLineRule__Group__2();
 
             state._fsp--;
@@ -10151,25 +10246,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3518:1: rule__Partition_MultiLineRule__Group__1__Impl : ( ( rule__Partition_MultiLineRule__ParitionAssignment_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3548:1: rule__Partition_MultiLineRule__Group__1__Impl : ( ( rule__Partition_MultiLineRule__ParitionAssignment_1 ) ) ;
     public final void rule__Partition_MultiLineRule__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3522:1: ( ( ( rule__Partition_MultiLineRule__ParitionAssignment_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3523:1: ( ( rule__Partition_MultiLineRule__ParitionAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3552:1: ( ( ( rule__Partition_MultiLineRule__ParitionAssignment_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3553:1: ( ( rule__Partition_MultiLineRule__ParitionAssignment_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3523:1: ( ( rule__Partition_MultiLineRule__ParitionAssignment_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3524:1: ( rule__Partition_MultiLineRule__ParitionAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3553:1: ( ( rule__Partition_MultiLineRule__ParitionAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3554:1: ( rule__Partition_MultiLineRule__ParitionAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getParitionAssignment_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3525:1: ( rule__Partition_MultiLineRule__ParitionAssignment_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3525:2: rule__Partition_MultiLineRule__ParitionAssignment_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3555:1: ( rule__Partition_MultiLineRule__ParitionAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3555:2: rule__Partition_MultiLineRule__ParitionAssignment_1
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__ParitionAssignment_1_in_rule__Partition_MultiLineRule__Group__1__Impl7136);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__ParitionAssignment_1_in_rule__Partition_MultiLineRule__Group__1__Impl7196);
             rule__Partition_MultiLineRule__ParitionAssignment_1();
 
             state._fsp--;
@@ -10202,21 +10297,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3535:1: rule__Partition_MultiLineRule__Group__2 : rule__Partition_MultiLineRule__Group__2__Impl rule__Partition_MultiLineRule__Group__3 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3565:1: rule__Partition_MultiLineRule__Group__2 : rule__Partition_MultiLineRule__Group__2__Impl rule__Partition_MultiLineRule__Group__3 ;
     public final void rule__Partition_MultiLineRule__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3539:1: ( rule__Partition_MultiLineRule__Group__2__Impl rule__Partition_MultiLineRule__Group__3 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3540:2: rule__Partition_MultiLineRule__Group__2__Impl rule__Partition_MultiLineRule__Group__3
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3569:1: ( rule__Partition_MultiLineRule__Group__2__Impl rule__Partition_MultiLineRule__Group__3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3570:2: rule__Partition_MultiLineRule__Group__2__Impl rule__Partition_MultiLineRule__Group__3
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__2__Impl_in_rule__Partition_MultiLineRule__Group__27166);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__2__Impl_in_rule__Partition_MultiLineRule__Group__27226);
             rule__Partition_MultiLineRule__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__3_in_rule__Partition_MultiLineRule__Group__27169);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__3_in_rule__Partition_MultiLineRule__Group__27229);
             rule__Partition_MultiLineRule__Group__3();
 
             state._fsp--;
@@ -10240,25 +10335,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3547:1: rule__Partition_MultiLineRule__Group__2__Impl : ( ( rule__Partition_MultiLineRule__StartSeqAssignment_2 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3577:1: rule__Partition_MultiLineRule__Group__2__Impl : ( ( rule__Partition_MultiLineRule__StartSeqAssignment_2 ) ) ;
     public final void rule__Partition_MultiLineRule__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3551:1: ( ( ( rule__Partition_MultiLineRule__StartSeqAssignment_2 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3552:1: ( ( rule__Partition_MultiLineRule__StartSeqAssignment_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3581:1: ( ( ( rule__Partition_MultiLineRule__StartSeqAssignment_2 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3582:1: ( ( rule__Partition_MultiLineRule__StartSeqAssignment_2 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3552:1: ( ( rule__Partition_MultiLineRule__StartSeqAssignment_2 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3553:1: ( rule__Partition_MultiLineRule__StartSeqAssignment_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3582:1: ( ( rule__Partition_MultiLineRule__StartSeqAssignment_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3583:1: ( rule__Partition_MultiLineRule__StartSeqAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getStartSeqAssignment_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3554:1: ( rule__Partition_MultiLineRule__StartSeqAssignment_2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3554:2: rule__Partition_MultiLineRule__StartSeqAssignment_2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3584:1: ( rule__Partition_MultiLineRule__StartSeqAssignment_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3584:2: rule__Partition_MultiLineRule__StartSeqAssignment_2
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__StartSeqAssignment_2_in_rule__Partition_MultiLineRule__Group__2__Impl7196);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__StartSeqAssignment_2_in_rule__Partition_MultiLineRule__Group__2__Impl7256);
             rule__Partition_MultiLineRule__StartSeqAssignment_2();
 
             state._fsp--;
@@ -10291,21 +10386,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3564:1: rule__Partition_MultiLineRule__Group__3 : rule__Partition_MultiLineRule__Group__3__Impl rule__Partition_MultiLineRule__Group__4 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3594:1: rule__Partition_MultiLineRule__Group__3 : rule__Partition_MultiLineRule__Group__3__Impl rule__Partition_MultiLineRule__Group__4 ;
     public final void rule__Partition_MultiLineRule__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3568:1: ( rule__Partition_MultiLineRule__Group__3__Impl rule__Partition_MultiLineRule__Group__4 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3569:2: rule__Partition_MultiLineRule__Group__3__Impl rule__Partition_MultiLineRule__Group__4
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3598:1: ( rule__Partition_MultiLineRule__Group__3__Impl rule__Partition_MultiLineRule__Group__4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3599:2: rule__Partition_MultiLineRule__Group__3__Impl rule__Partition_MultiLineRule__Group__4
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__3__Impl_in_rule__Partition_MultiLineRule__Group__37226);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__3__Impl_in_rule__Partition_MultiLineRule__Group__37286);
             rule__Partition_MultiLineRule__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__4_in_rule__Partition_MultiLineRule__Group__37229);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__4_in_rule__Partition_MultiLineRule__Group__37289);
             rule__Partition_MultiLineRule__Group__4();
 
             state._fsp--;
@@ -10329,22 +10424,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__3__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3576:1: rule__Partition_MultiLineRule__Group__3__Impl : ( '=>' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3606:1: rule__Partition_MultiLineRule__Group__3__Impl : ( '=>' ) ;
     public final void rule__Partition_MultiLineRule__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3580:1: ( ( '=>' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3581:1: ( '=>' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3610:1: ( ( '=>' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3611:1: ( '=>' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3581:1: ( '=>' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3582:1: '=>'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3611:1: ( '=>' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3612:1: '=>'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3()); 
             }
-            match(input,27,FOLLOW_27_in_rule__Partition_MultiLineRule__Group__3__Impl7257); if (state.failed) return ;
+            match(input,27,FOLLOW_27_in_rule__Partition_MultiLineRule__Group__3__Impl7317); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartition_MultiLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3()); 
             }
@@ -10370,21 +10465,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3595:1: rule__Partition_MultiLineRule__Group__4 : rule__Partition_MultiLineRule__Group__4__Impl rule__Partition_MultiLineRule__Group__5 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3625:1: rule__Partition_MultiLineRule__Group__4 : rule__Partition_MultiLineRule__Group__4__Impl rule__Partition_MultiLineRule__Group__5 ;
     public final void rule__Partition_MultiLineRule__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3599:1: ( rule__Partition_MultiLineRule__Group__4__Impl rule__Partition_MultiLineRule__Group__5 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3600:2: rule__Partition_MultiLineRule__Group__4__Impl rule__Partition_MultiLineRule__Group__5
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3629:1: ( rule__Partition_MultiLineRule__Group__4__Impl rule__Partition_MultiLineRule__Group__5 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3630:2: rule__Partition_MultiLineRule__Group__4__Impl rule__Partition_MultiLineRule__Group__5
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__4__Impl_in_rule__Partition_MultiLineRule__Group__47288);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__4__Impl_in_rule__Partition_MultiLineRule__Group__47348);
             rule__Partition_MultiLineRule__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__5_in_rule__Partition_MultiLineRule__Group__47291);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__5_in_rule__Partition_MultiLineRule__Group__47351);
             rule__Partition_MultiLineRule__Group__5();
 
             state._fsp--;
@@ -10408,25 +10503,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__4__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3607:1: rule__Partition_MultiLineRule__Group__4__Impl : ( ( rule__Partition_MultiLineRule__EndSeqAssignment_4 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3637:1: rule__Partition_MultiLineRule__Group__4__Impl : ( ( rule__Partition_MultiLineRule__EndSeqAssignment_4 ) ) ;
     public final void rule__Partition_MultiLineRule__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3611:1: ( ( ( rule__Partition_MultiLineRule__EndSeqAssignment_4 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3612:1: ( ( rule__Partition_MultiLineRule__EndSeqAssignment_4 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3641:1: ( ( ( rule__Partition_MultiLineRule__EndSeqAssignment_4 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3642:1: ( ( rule__Partition_MultiLineRule__EndSeqAssignment_4 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3612:1: ( ( rule__Partition_MultiLineRule__EndSeqAssignment_4 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3613:1: ( rule__Partition_MultiLineRule__EndSeqAssignment_4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3642:1: ( ( rule__Partition_MultiLineRule__EndSeqAssignment_4 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3643:1: ( rule__Partition_MultiLineRule__EndSeqAssignment_4 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getEndSeqAssignment_4()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3614:1: ( rule__Partition_MultiLineRule__EndSeqAssignment_4 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3614:2: rule__Partition_MultiLineRule__EndSeqAssignment_4
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3644:1: ( rule__Partition_MultiLineRule__EndSeqAssignment_4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3644:2: rule__Partition_MultiLineRule__EndSeqAssignment_4
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__EndSeqAssignment_4_in_rule__Partition_MultiLineRule__Group__4__Impl7318);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__EndSeqAssignment_4_in_rule__Partition_MultiLineRule__Group__4__Impl7378);
             rule__Partition_MultiLineRule__EndSeqAssignment_4();
 
             state._fsp--;
@@ -10459,16 +10554,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__5"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3624:1: rule__Partition_MultiLineRule__Group__5 : rule__Partition_MultiLineRule__Group__5__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3654:1: rule__Partition_MultiLineRule__Group__5 : rule__Partition_MultiLineRule__Group__5__Impl ;
     public final void rule__Partition_MultiLineRule__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3628:1: ( rule__Partition_MultiLineRule__Group__5__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3629:2: rule__Partition_MultiLineRule__Group__5__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3658:1: ( rule__Partition_MultiLineRule__Group__5__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3659:2: rule__Partition_MultiLineRule__Group__5__Impl
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__5__Impl_in_rule__Partition_MultiLineRule__Group__57348);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group__5__Impl_in_rule__Partition_MultiLineRule__Group__57408);
             rule__Partition_MultiLineRule__Group__5__Impl();
 
             state._fsp--;
@@ -10492,33 +10587,33 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group__5__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3635:1: rule__Partition_MultiLineRule__Group__5__Impl : ( ( rule__Partition_MultiLineRule__Group_5__0 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3665:1: rule__Partition_MultiLineRule__Group__5__Impl : ( ( rule__Partition_MultiLineRule__Group_5__0 )? ) ;
     public final void rule__Partition_MultiLineRule__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3639:1: ( ( ( rule__Partition_MultiLineRule__Group_5__0 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3640:1: ( ( rule__Partition_MultiLineRule__Group_5__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3669:1: ( ( ( rule__Partition_MultiLineRule__Group_5__0 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3670:1: ( ( rule__Partition_MultiLineRule__Group_5__0 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3640:1: ( ( rule__Partition_MultiLineRule__Group_5__0 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3641:1: ( rule__Partition_MultiLineRule__Group_5__0 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3670:1: ( ( rule__Partition_MultiLineRule__Group_5__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3671:1: ( rule__Partition_MultiLineRule__Group_5__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getGroup_5()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3642:1: ( rule__Partition_MultiLineRule__Group_5__0 )?
-            int alt24=2;
-            int LA24_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3672:1: ( rule__Partition_MultiLineRule__Group_5__0 )?
+            int alt25=2;
+            int LA25_0 = input.LA(1);
 
-            if ( (LA24_0==28) ) {
-                alt24=1;
+            if ( (LA25_0==28) ) {
+                alt25=1;
             }
-            switch (alt24) {
+            switch (alt25) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3642:2: rule__Partition_MultiLineRule__Group_5__0
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3672:2: rule__Partition_MultiLineRule__Group_5__0
                     {
-                    pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__0_in_rule__Partition_MultiLineRule__Group__5__Impl7375);
+                    pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__0_in_rule__Partition_MultiLineRule__Group__5__Impl7435);
                     rule__Partition_MultiLineRule__Group_5__0();
 
                     state._fsp--;
@@ -10554,21 +10649,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group_5__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3664:1: rule__Partition_MultiLineRule__Group_5__0 : rule__Partition_MultiLineRule__Group_5__0__Impl rule__Partition_MultiLineRule__Group_5__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3694:1: rule__Partition_MultiLineRule__Group_5__0 : rule__Partition_MultiLineRule__Group_5__0__Impl rule__Partition_MultiLineRule__Group_5__1 ;
     public final void rule__Partition_MultiLineRule__Group_5__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3668:1: ( rule__Partition_MultiLineRule__Group_5__0__Impl rule__Partition_MultiLineRule__Group_5__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3669:2: rule__Partition_MultiLineRule__Group_5__0__Impl rule__Partition_MultiLineRule__Group_5__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3698:1: ( rule__Partition_MultiLineRule__Group_5__0__Impl rule__Partition_MultiLineRule__Group_5__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3699:2: rule__Partition_MultiLineRule__Group_5__0__Impl rule__Partition_MultiLineRule__Group_5__1
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__0__Impl_in_rule__Partition_MultiLineRule__Group_5__07418);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__0__Impl_in_rule__Partition_MultiLineRule__Group_5__07478);
             rule__Partition_MultiLineRule__Group_5__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__1_in_rule__Partition_MultiLineRule__Group_5__07421);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__1_in_rule__Partition_MultiLineRule__Group_5__07481);
             rule__Partition_MultiLineRule__Group_5__1();
 
             state._fsp--;
@@ -10592,22 +10687,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group_5__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3676:1: rule__Partition_MultiLineRule__Group_5__0__Impl : ( 'escaped' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3706:1: rule__Partition_MultiLineRule__Group_5__0__Impl : ( 'escaped' ) ;
     public final void rule__Partition_MultiLineRule__Group_5__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3680:1: ( ( 'escaped' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3681:1: ( 'escaped' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3710:1: ( ( 'escaped' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3711:1: ( 'escaped' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3681:1: ( 'escaped' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3682:1: 'escaped'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3711:1: ( 'escaped' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3712:1: 'escaped'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getEscapedKeyword_5_0()); 
             }
-            match(input,28,FOLLOW_28_in_rule__Partition_MultiLineRule__Group_5__0__Impl7449); if (state.failed) return ;
+            match(input,28,FOLLOW_28_in_rule__Partition_MultiLineRule__Group_5__0__Impl7509); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartition_MultiLineRuleAccess().getEscapedKeyword_5_0()); 
             }
@@ -10633,21 +10728,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group_5__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3695:1: rule__Partition_MultiLineRule__Group_5__1 : rule__Partition_MultiLineRule__Group_5__1__Impl rule__Partition_MultiLineRule__Group_5__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3725:1: rule__Partition_MultiLineRule__Group_5__1 : rule__Partition_MultiLineRule__Group_5__1__Impl rule__Partition_MultiLineRule__Group_5__2 ;
     public final void rule__Partition_MultiLineRule__Group_5__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3699:1: ( rule__Partition_MultiLineRule__Group_5__1__Impl rule__Partition_MultiLineRule__Group_5__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3700:2: rule__Partition_MultiLineRule__Group_5__1__Impl rule__Partition_MultiLineRule__Group_5__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3729:1: ( rule__Partition_MultiLineRule__Group_5__1__Impl rule__Partition_MultiLineRule__Group_5__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3730:2: rule__Partition_MultiLineRule__Group_5__1__Impl rule__Partition_MultiLineRule__Group_5__2
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__1__Impl_in_rule__Partition_MultiLineRule__Group_5__17480);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__1__Impl_in_rule__Partition_MultiLineRule__Group_5__17540);
             rule__Partition_MultiLineRule__Group_5__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__2_in_rule__Partition_MultiLineRule__Group_5__17483);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__2_in_rule__Partition_MultiLineRule__Group_5__17543);
             rule__Partition_MultiLineRule__Group_5__2();
 
             state._fsp--;
@@ -10671,22 +10766,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group_5__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3707:1: rule__Partition_MultiLineRule__Group_5__1__Impl : ( 'by' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3737:1: rule__Partition_MultiLineRule__Group_5__1__Impl : ( 'by' ) ;
     public final void rule__Partition_MultiLineRule__Group_5__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3711:1: ( ( 'by' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3712:1: ( 'by' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3741:1: ( ( 'by' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3742:1: ( 'by' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3712:1: ( 'by' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3713:1: 'by'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3742:1: ( 'by' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3743:1: 'by'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getByKeyword_5_1()); 
             }
-            match(input,29,FOLLOW_29_in_rule__Partition_MultiLineRule__Group_5__1__Impl7511); if (state.failed) return ;
+            match(input,29,FOLLOW_29_in_rule__Partition_MultiLineRule__Group_5__1__Impl7571); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartition_MultiLineRuleAccess().getByKeyword_5_1()); 
             }
@@ -10712,16 +10807,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group_5__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3726:1: rule__Partition_MultiLineRule__Group_5__2 : rule__Partition_MultiLineRule__Group_5__2__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3756:1: rule__Partition_MultiLineRule__Group_5__2 : rule__Partition_MultiLineRule__Group_5__2__Impl ;
     public final void rule__Partition_MultiLineRule__Group_5__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3730:1: ( rule__Partition_MultiLineRule__Group_5__2__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3731:2: rule__Partition_MultiLineRule__Group_5__2__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3760:1: ( rule__Partition_MultiLineRule__Group_5__2__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3761:2: rule__Partition_MultiLineRule__Group_5__2__Impl
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__2__Impl_in_rule__Partition_MultiLineRule__Group_5__27542);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__Group_5__2__Impl_in_rule__Partition_MultiLineRule__Group_5__27602);
             rule__Partition_MultiLineRule__Group_5__2__Impl();
 
             state._fsp--;
@@ -10745,25 +10840,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__Group_5__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3737:1: rule__Partition_MultiLineRule__Group_5__2__Impl : ( ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3767:1: rule__Partition_MultiLineRule__Group_5__2__Impl : ( ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 ) ) ;
     public final void rule__Partition_MultiLineRule__Group_5__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3741:1: ( ( ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3742:1: ( ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3771:1: ( ( ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3772:1: ( ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3742:1: ( ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3743:1: ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3772:1: ( ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3773:1: ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getEscapeSeqAssignment_5_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3744:1: ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3744:2: rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3774:1: ( rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3774:2: rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2
             {
-            pushFollow(FOLLOW_rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2_in_rule__Partition_MultiLineRule__Group_5__2__Impl7569);
+            pushFollow(FOLLOW_rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2_in_rule__Partition_MultiLineRule__Group_5__2__Impl7629);
             rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2();
 
             state._fsp--;
@@ -10796,21 +10891,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalHighlighting__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3760:1: rule__LexicalHighlighting__Group__0 : rule__LexicalHighlighting__Group__0__Impl rule__LexicalHighlighting__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3790:1: rule__LexicalHighlighting__Group__0 : rule__LexicalHighlighting__Group__0__Impl rule__LexicalHighlighting__Group__1 ;
     public final void rule__LexicalHighlighting__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3764:1: ( rule__LexicalHighlighting__Group__0__Impl rule__LexicalHighlighting__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3765:2: rule__LexicalHighlighting__Group__0__Impl rule__LexicalHighlighting__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3794:1: ( rule__LexicalHighlighting__Group__0__Impl rule__LexicalHighlighting__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3795:2: rule__LexicalHighlighting__Group__0__Impl rule__LexicalHighlighting__Group__1
             {
-            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__0__Impl_in_rule__LexicalHighlighting__Group__07605);
+            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__0__Impl_in_rule__LexicalHighlighting__Group__07665);
             rule__LexicalHighlighting__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__1_in_rule__LexicalHighlighting__Group__07608);
+            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__1_in_rule__LexicalHighlighting__Group__07668);
             rule__LexicalHighlighting__Group__1();
 
             state._fsp--;
@@ -10834,22 +10929,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalHighlighting__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3772:1: rule__LexicalHighlighting__Group__0__Impl : ( 'lexical_highlighting' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3802:1: rule__LexicalHighlighting__Group__0__Impl : ( 'lexical_highlighting' ) ;
     public final void rule__LexicalHighlighting__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3776:1: ( ( 'lexical_highlighting' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3777:1: ( 'lexical_highlighting' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3806:1: ( ( 'lexical_highlighting' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3807:1: ( 'lexical_highlighting' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3777:1: ( 'lexical_highlighting' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3778:1: 'lexical_highlighting'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3807:1: ( 'lexical_highlighting' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3808:1: 'lexical_highlighting'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalHighlightingAccess().getLexical_highlightingKeyword_0()); 
             }
-            match(input,31,FOLLOW_31_in_rule__LexicalHighlighting__Group__0__Impl7636); if (state.failed) return ;
+            match(input,31,FOLLOW_31_in_rule__LexicalHighlighting__Group__0__Impl7696); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLexicalHighlightingAccess().getLexical_highlightingKeyword_0()); 
             }
@@ -10875,21 +10970,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalHighlighting__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3791:1: rule__LexicalHighlighting__Group__1 : rule__LexicalHighlighting__Group__1__Impl rule__LexicalHighlighting__Group__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3821:1: rule__LexicalHighlighting__Group__1 : rule__LexicalHighlighting__Group__1__Impl rule__LexicalHighlighting__Group__2 ;
     public final void rule__LexicalHighlighting__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3795:1: ( rule__LexicalHighlighting__Group__1__Impl rule__LexicalHighlighting__Group__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3796:2: rule__LexicalHighlighting__Group__1__Impl rule__LexicalHighlighting__Group__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3825:1: ( rule__LexicalHighlighting__Group__1__Impl rule__LexicalHighlighting__Group__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3826:2: rule__LexicalHighlighting__Group__1__Impl rule__LexicalHighlighting__Group__2
             {
-            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__1__Impl_in_rule__LexicalHighlighting__Group__17667);
+            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__1__Impl_in_rule__LexicalHighlighting__Group__17727);
             rule__LexicalHighlighting__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__2_in_rule__LexicalHighlighting__Group__17670);
+            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__2_in_rule__LexicalHighlighting__Group__17730);
             rule__LexicalHighlighting__Group__2();
 
             state._fsp--;
@@ -10913,22 +11008,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalHighlighting__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3803:1: rule__LexicalHighlighting__Group__1__Impl : ( '{' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3833:1: rule__LexicalHighlighting__Group__1__Impl : ( '{' ) ;
     public final void rule__LexicalHighlighting__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3807:1: ( ( '{' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3808:1: ( '{' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3837:1: ( ( '{' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3838:1: ( '{' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3808:1: ( '{' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3809:1: '{'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3838:1: ( '{' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3839:1: '{'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalHighlightingAccess().getLeftCurlyBracketKeyword_1()); 
             }
-            match(input,15,FOLLOW_15_in_rule__LexicalHighlighting__Group__1__Impl7698); if (state.failed) return ;
+            match(input,15,FOLLOW_15_in_rule__LexicalHighlighting__Group__1__Impl7758); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLexicalHighlightingAccess().getLeftCurlyBracketKeyword_1()); 
             }
@@ -10954,21 +11049,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalHighlighting__Group__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3822:1: rule__LexicalHighlighting__Group__2 : rule__LexicalHighlighting__Group__2__Impl rule__LexicalHighlighting__Group__3 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3852:1: rule__LexicalHighlighting__Group__2 : rule__LexicalHighlighting__Group__2__Impl rule__LexicalHighlighting__Group__3 ;
     public final void rule__LexicalHighlighting__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3826:1: ( rule__LexicalHighlighting__Group__2__Impl rule__LexicalHighlighting__Group__3 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3827:2: rule__LexicalHighlighting__Group__2__Impl rule__LexicalHighlighting__Group__3
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3856:1: ( rule__LexicalHighlighting__Group__2__Impl rule__LexicalHighlighting__Group__3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3857:2: rule__LexicalHighlighting__Group__2__Impl rule__LexicalHighlighting__Group__3
             {
-            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__2__Impl_in_rule__LexicalHighlighting__Group__27729);
+            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__2__Impl_in_rule__LexicalHighlighting__Group__27789);
             rule__LexicalHighlighting__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__3_in_rule__LexicalHighlighting__Group__27732);
+            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__3_in_rule__LexicalHighlighting__Group__27792);
             rule__LexicalHighlighting__Group__3();
 
             state._fsp--;
@@ -10992,28 +11087,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalHighlighting__Group__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3834:1: rule__LexicalHighlighting__Group__2__Impl : ( ( ( rule__LexicalHighlighting__ListAssignment_2 ) ) ( ( rule__LexicalHighlighting__ListAssignment_2 )* ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3864:1: rule__LexicalHighlighting__Group__2__Impl : ( ( ( rule__LexicalHighlighting__ListAssignment_2 ) ) ( ( rule__LexicalHighlighting__ListAssignment_2 )* ) ) ;
     public final void rule__LexicalHighlighting__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3838:1: ( ( ( ( rule__LexicalHighlighting__ListAssignment_2 ) ) ( ( rule__LexicalHighlighting__ListAssignment_2 )* ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3839:1: ( ( ( rule__LexicalHighlighting__ListAssignment_2 ) ) ( ( rule__LexicalHighlighting__ListAssignment_2 )* ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3868:1: ( ( ( ( rule__LexicalHighlighting__ListAssignment_2 ) ) ( ( rule__LexicalHighlighting__ListAssignment_2 )* ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3869:1: ( ( ( rule__LexicalHighlighting__ListAssignment_2 ) ) ( ( rule__LexicalHighlighting__ListAssignment_2 )* ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3839:1: ( ( ( rule__LexicalHighlighting__ListAssignment_2 ) ) ( ( rule__LexicalHighlighting__ListAssignment_2 )* ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3840:1: ( ( rule__LexicalHighlighting__ListAssignment_2 ) ) ( ( rule__LexicalHighlighting__ListAssignment_2 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3869:1: ( ( ( rule__LexicalHighlighting__ListAssignment_2 ) ) ( ( rule__LexicalHighlighting__ListAssignment_2 )* ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3870:1: ( ( rule__LexicalHighlighting__ListAssignment_2 ) ) ( ( rule__LexicalHighlighting__ListAssignment_2 )* )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3840:1: ( ( rule__LexicalHighlighting__ListAssignment_2 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3841:1: ( rule__LexicalHighlighting__ListAssignment_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3870:1: ( ( rule__LexicalHighlighting__ListAssignment_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3871:1: ( rule__LexicalHighlighting__ListAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalHighlightingAccess().getListAssignment_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3842:1: ( rule__LexicalHighlighting__ListAssignment_2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3842:2: rule__LexicalHighlighting__ListAssignment_2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3872:1: ( rule__LexicalHighlighting__ListAssignment_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3872:2: rule__LexicalHighlighting__ListAssignment_2
             {
-            pushFollow(FOLLOW_rule__LexicalHighlighting__ListAssignment_2_in_rule__LexicalHighlighting__Group__2__Impl7761);
+            pushFollow(FOLLOW_rule__LexicalHighlighting__ListAssignment_2_in_rule__LexicalHighlighting__Group__2__Impl7821);
             rule__LexicalHighlighting__ListAssignment_2();
 
             state._fsp--;
@@ -11027,28 +11122,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3845:1: ( ( rule__LexicalHighlighting__ListAssignment_2 )* )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3846:1: ( rule__LexicalHighlighting__ListAssignment_2 )*
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3875:1: ( ( rule__LexicalHighlighting__ListAssignment_2 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3876:1: ( rule__LexicalHighlighting__ListAssignment_2 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalHighlightingAccess().getListAssignment_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3847:1: ( rule__LexicalHighlighting__ListAssignment_2 )*
-            loop25:
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3877:1: ( rule__LexicalHighlighting__ListAssignment_2 )*
+            loop26:
             do {
-                int alt25=2;
-                int LA25_0 = input.LA(1);
+                int alt26=2;
+                int LA26_0 = input.LA(1);
 
-                if ( ((LA25_0>=24 && LA25_0<=25)) ) {
-                    alt25=1;
+                if ( ((LA26_0>=24 && LA26_0<=25)) ) {
+                    alt26=1;
                 }
 
 
-                switch (alt25) {
+                switch (alt26) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3847:2: rule__LexicalHighlighting__ListAssignment_2
+            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3877:2: rule__LexicalHighlighting__ListAssignment_2
             	    {
-            	    pushFollow(FOLLOW_rule__LexicalHighlighting__ListAssignment_2_in_rule__LexicalHighlighting__Group__2__Impl7773);
+            	    pushFollow(FOLLOW_rule__LexicalHighlighting__ListAssignment_2_in_rule__LexicalHighlighting__Group__2__Impl7833);
             	    rule__LexicalHighlighting__ListAssignment_2();
 
             	    state._fsp--;
@@ -11058,7 +11153,7 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop25;
+            	    break loop26;
                 }
             } while (true);
 
@@ -11090,16 +11185,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalHighlighting__Group__3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3858:1: rule__LexicalHighlighting__Group__3 : rule__LexicalHighlighting__Group__3__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3888:1: rule__LexicalHighlighting__Group__3 : rule__LexicalHighlighting__Group__3__Impl ;
     public final void rule__LexicalHighlighting__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3862:1: ( rule__LexicalHighlighting__Group__3__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3863:2: rule__LexicalHighlighting__Group__3__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3892:1: ( rule__LexicalHighlighting__Group__3__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3893:2: rule__LexicalHighlighting__Group__3__Impl
             {
-            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__3__Impl_in_rule__LexicalHighlighting__Group__37806);
+            pushFollow(FOLLOW_rule__LexicalHighlighting__Group__3__Impl_in_rule__LexicalHighlighting__Group__37866);
             rule__LexicalHighlighting__Group__3__Impl();
 
             state._fsp--;
@@ -11123,22 +11218,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalHighlighting__Group__3__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3869:1: rule__LexicalHighlighting__Group__3__Impl : ( '}' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3899:1: rule__LexicalHighlighting__Group__3__Impl : ( '}' ) ;
     public final void rule__LexicalHighlighting__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3873:1: ( ( '}' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3874:1: ( '}' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3903:1: ( ( '}' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3904:1: ( '}' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3874:1: ( '}' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3875:1: '}'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3904:1: ( '}' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3905:1: '}'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalHighlightingAccess().getRightCurlyBracketKeyword_3()); 
             }
-            match(input,16,FOLLOW_16_in_rule__LexicalHighlighting__Group__3__Impl7834); if (state.failed) return ;
+            match(input,16,FOLLOW_16_in_rule__LexicalHighlighting__Group__3__Impl7894); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLexicalHighlightingAccess().getRightCurlyBracketKeyword_3()); 
             }
@@ -11164,21 +11259,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_JS__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3896:1: rule__LexicalPartitionHighlighting_JS__Group__0 : rule__LexicalPartitionHighlighting_JS__Group__0__Impl rule__LexicalPartitionHighlighting_JS__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3926:1: rule__LexicalPartitionHighlighting_JS__Group__0 : rule__LexicalPartitionHighlighting_JS__Group__0__Impl rule__LexicalPartitionHighlighting_JS__Group__1 ;
     public final void rule__LexicalPartitionHighlighting_JS__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3900:1: ( rule__LexicalPartitionHighlighting_JS__Group__0__Impl rule__LexicalPartitionHighlighting_JS__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3901:2: rule__LexicalPartitionHighlighting_JS__Group__0__Impl rule__LexicalPartitionHighlighting_JS__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3930:1: ( rule__LexicalPartitionHighlighting_JS__Group__0__Impl rule__LexicalPartitionHighlighting_JS__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3931:2: rule__LexicalPartitionHighlighting_JS__Group__0__Impl rule__LexicalPartitionHighlighting_JS__Group__1
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__0__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__07873);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__0__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__07933);
             rule__LexicalPartitionHighlighting_JS__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__1_in_rule__LexicalPartitionHighlighting_JS__Group__07876);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__1_in_rule__LexicalPartitionHighlighting_JS__Group__07936);
             rule__LexicalPartitionHighlighting_JS__Group__1();
 
             state._fsp--;
@@ -11202,22 +11297,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_JS__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3908:1: rule__LexicalPartitionHighlighting_JS__Group__0__Impl : ( 'script' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3938:1: rule__LexicalPartitionHighlighting_JS__Group__0__Impl : ( 'script' ) ;
     public final void rule__LexicalPartitionHighlighting_JS__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3912:1: ( ( 'script' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3913:1: ( 'script' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3942:1: ( ( 'script' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3943:1: ( 'script' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3913:1: ( 'script' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3914:1: 'script'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3943:1: ( 'script' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3944:1: 'script'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getScriptKeyword_0()); 
             }
-            match(input,24,FOLLOW_24_in_rule__LexicalPartitionHighlighting_JS__Group__0__Impl7904); if (state.failed) return ;
+            match(input,24,FOLLOW_24_in_rule__LexicalPartitionHighlighting_JS__Group__0__Impl7964); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getScriptKeyword_0()); 
             }
@@ -11243,21 +11338,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_JS__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3927:1: rule__LexicalPartitionHighlighting_JS__Group__1 : rule__LexicalPartitionHighlighting_JS__Group__1__Impl rule__LexicalPartitionHighlighting_JS__Group__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3957:1: rule__LexicalPartitionHighlighting_JS__Group__1 : rule__LexicalPartitionHighlighting_JS__Group__1__Impl rule__LexicalPartitionHighlighting_JS__Group__2 ;
     public final void rule__LexicalPartitionHighlighting_JS__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3931:1: ( rule__LexicalPartitionHighlighting_JS__Group__1__Impl rule__LexicalPartitionHighlighting_JS__Group__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3932:2: rule__LexicalPartitionHighlighting_JS__Group__1__Impl rule__LexicalPartitionHighlighting_JS__Group__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3961:1: ( rule__LexicalPartitionHighlighting_JS__Group__1__Impl rule__LexicalPartitionHighlighting_JS__Group__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3962:2: rule__LexicalPartitionHighlighting_JS__Group__1__Impl rule__LexicalPartitionHighlighting_JS__Group__2
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__1__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__17935);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__1__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__17995);
             rule__LexicalPartitionHighlighting_JS__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__2_in_rule__LexicalPartitionHighlighting_JS__Group__17938);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__2_in_rule__LexicalPartitionHighlighting_JS__Group__17998);
             rule__LexicalPartitionHighlighting_JS__Group__2();
 
             state._fsp--;
@@ -11281,25 +11376,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_JS__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3939:1: rule__LexicalPartitionHighlighting_JS__Group__1__Impl : ( ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3969:1: rule__LexicalPartitionHighlighting_JS__Group__1__Impl : ( ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 ) ) ;
     public final void rule__LexicalPartitionHighlighting_JS__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3943:1: ( ( ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3944:1: ( ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3973:1: ( ( ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3974:1: ( ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3944:1: ( ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3945:1: ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3974:1: ( ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3975:1: ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getPartitionAssignment_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3946:1: ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3946:2: rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3976:1: ( rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3976:2: rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1_in_rule__LexicalPartitionHighlighting_JS__Group__1__Impl7965);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1_in_rule__LexicalPartitionHighlighting_JS__Group__1__Impl8025);
             rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1();
 
             state._fsp--;
@@ -11332,16 +11427,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_JS__Group__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3956:1: rule__LexicalPartitionHighlighting_JS__Group__2 : rule__LexicalPartitionHighlighting_JS__Group__2__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3986:1: rule__LexicalPartitionHighlighting_JS__Group__2 : rule__LexicalPartitionHighlighting_JS__Group__2__Impl ;
     public final void rule__LexicalPartitionHighlighting_JS__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3960:1: ( rule__LexicalPartitionHighlighting_JS__Group__2__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3961:2: rule__LexicalPartitionHighlighting_JS__Group__2__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3990:1: ( rule__LexicalPartitionHighlighting_JS__Group__2__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3991:2: rule__LexicalPartitionHighlighting_JS__Group__2__Impl
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__2__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__27995);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__2__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__28055);
             rule__LexicalPartitionHighlighting_JS__Group__2__Impl();
 
             state._fsp--;
@@ -11365,25 +11460,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_JS__Group__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3967:1: rule__LexicalPartitionHighlighting_JS__Group__2__Impl : ( ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3997:1: rule__LexicalPartitionHighlighting_JS__Group__2__Impl : ( ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 ) ) ;
     public final void rule__LexicalPartitionHighlighting_JS__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3971:1: ( ( ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3972:1: ( ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4001:1: ( ( ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4002:1: ( ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3972:1: ( ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3973:1: ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4002:1: ( ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4003:1: ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getScriptURIAssignment_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3974:1: ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3974:2: rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4004:1: ( rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4004:2: rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2_in_rule__LexicalPartitionHighlighting_JS__Group__2__Impl8022);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2_in_rule__LexicalPartitionHighlighting_JS__Group__2__Impl8082);
             rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2();
 
             state._fsp--;
@@ -11416,21 +11511,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3990:1: rule__LexicalPartitionHighlighting_Rule__Group__0 : rule__LexicalPartitionHighlighting_Rule__Group__0__Impl rule__LexicalPartitionHighlighting_Rule__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4020:1: rule__LexicalPartitionHighlighting_Rule__Group__0 : rule__LexicalPartitionHighlighting_Rule__Group__0__Impl rule__LexicalPartitionHighlighting_Rule__Group__1 ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3994:1: ( rule__LexicalPartitionHighlighting_Rule__Group__0__Impl rule__LexicalPartitionHighlighting_Rule__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:3995:2: rule__LexicalPartitionHighlighting_Rule__Group__0__Impl rule__LexicalPartitionHighlighting_Rule__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4024:1: ( rule__LexicalPartitionHighlighting_Rule__Group__0__Impl rule__LexicalPartitionHighlighting_Rule__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4025:2: rule__LexicalPartitionHighlighting_Rule__Group__0__Impl rule__LexicalPartitionHighlighting_Rule__Group__1
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__0__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__08058);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__0__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__08118);
             rule__LexicalPartitionHighlighting_Rule__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__1_in_rule__LexicalPartitionHighlighting_Rule__Group__08061);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__1_in_rule__LexicalPartitionHighlighting_Rule__Group__08121);
             rule__LexicalPartitionHighlighting_Rule__Group__1();
 
             state._fsp--;
@@ -11454,22 +11549,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4002:1: rule__LexicalPartitionHighlighting_Rule__Group__0__Impl : ( 'rule' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4032:1: rule__LexicalPartitionHighlighting_Rule__Group__0__Impl : ( 'rule' ) ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4006:1: ( ( 'rule' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4007:1: ( 'rule' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4036:1: ( ( 'rule' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4037:1: ( 'rule' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4007:1: ( 'rule' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4008:1: 'rule'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4037:1: ( 'rule' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4038:1: 'rule'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getRuleKeyword_0()); 
             }
-            match(input,25,FOLLOW_25_in_rule__LexicalPartitionHighlighting_Rule__Group__0__Impl8089); if (state.failed) return ;
+            match(input,25,FOLLOW_25_in_rule__LexicalPartitionHighlighting_Rule__Group__0__Impl8149); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getRuleKeyword_0()); 
             }
@@ -11495,21 +11590,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4021:1: rule__LexicalPartitionHighlighting_Rule__Group__1 : rule__LexicalPartitionHighlighting_Rule__Group__1__Impl rule__LexicalPartitionHighlighting_Rule__Group__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4051:1: rule__LexicalPartitionHighlighting_Rule__Group__1 : rule__LexicalPartitionHighlighting_Rule__Group__1__Impl rule__LexicalPartitionHighlighting_Rule__Group__2 ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4025:1: ( rule__LexicalPartitionHighlighting_Rule__Group__1__Impl rule__LexicalPartitionHighlighting_Rule__Group__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4026:2: rule__LexicalPartitionHighlighting_Rule__Group__1__Impl rule__LexicalPartitionHighlighting_Rule__Group__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4055:1: ( rule__LexicalPartitionHighlighting_Rule__Group__1__Impl rule__LexicalPartitionHighlighting_Rule__Group__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4056:2: rule__LexicalPartitionHighlighting_Rule__Group__1__Impl rule__LexicalPartitionHighlighting_Rule__Group__2
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__1__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__18120);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__1__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__18180);
             rule__LexicalPartitionHighlighting_Rule__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__2_in_rule__LexicalPartitionHighlighting_Rule__Group__18123);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__2_in_rule__LexicalPartitionHighlighting_Rule__Group__18183);
             rule__LexicalPartitionHighlighting_Rule__Group__2();
 
             state._fsp--;
@@ -11533,25 +11628,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4033:1: rule__LexicalPartitionHighlighting_Rule__Group__1__Impl : ( ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4063:1: rule__LexicalPartitionHighlighting_Rule__Group__1__Impl : ( ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 ) ) ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4037:1: ( ( ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4038:1: ( ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4067:1: ( ( ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4068:1: ( ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4038:1: ( ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4039:1: ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4068:1: ( ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4069:1: ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getPartitionAssignment_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4040:1: ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4040:2: rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4070:1: ( rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4070:2: rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1_in_rule__LexicalPartitionHighlighting_Rule__Group__1__Impl8150);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1_in_rule__LexicalPartitionHighlighting_Rule__Group__1__Impl8210);
             rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1();
 
             state._fsp--;
@@ -11584,21 +11679,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4050:1: rule__LexicalPartitionHighlighting_Rule__Group__2 : rule__LexicalPartitionHighlighting_Rule__Group__2__Impl rule__LexicalPartitionHighlighting_Rule__Group__3 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4080:1: rule__LexicalPartitionHighlighting_Rule__Group__2 : rule__LexicalPartitionHighlighting_Rule__Group__2__Impl rule__LexicalPartitionHighlighting_Rule__Group__3 ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4054:1: ( rule__LexicalPartitionHighlighting_Rule__Group__2__Impl rule__LexicalPartitionHighlighting_Rule__Group__3 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4055:2: rule__LexicalPartitionHighlighting_Rule__Group__2__Impl rule__LexicalPartitionHighlighting_Rule__Group__3
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4084:1: ( rule__LexicalPartitionHighlighting_Rule__Group__2__Impl rule__LexicalPartitionHighlighting_Rule__Group__3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4085:2: rule__LexicalPartitionHighlighting_Rule__Group__2__Impl rule__LexicalPartitionHighlighting_Rule__Group__3
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__2__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__28180);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__2__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__28240);
             rule__LexicalPartitionHighlighting_Rule__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__3_in_rule__LexicalPartitionHighlighting_Rule__Group__28183);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__3_in_rule__LexicalPartitionHighlighting_Rule__Group__28243);
             rule__LexicalPartitionHighlighting_Rule__Group__3();
 
             state._fsp--;
@@ -11622,33 +11717,33 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4062:1: rule__LexicalPartitionHighlighting_Rule__Group__2__Impl : ( ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4092:1: rule__LexicalPartitionHighlighting_Rule__Group__2__Impl : ( ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )? ) ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4066:1: ( ( ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4067:1: ( ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4096:1: ( ( ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4097:1: ( ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4067:1: ( ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4068:1: ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4097:1: ( ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4098:1: ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getWhitespaceAssignment_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4069:1: ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )?
-            int alt26=2;
-            int LA26_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4099:1: ( rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 )?
+            int alt27=2;
+            int LA27_0 = input.LA(1);
 
-            if ( (LA26_0==40) ) {
-                alt26=1;
+            if ( (LA27_0==40) ) {
+                alt27=1;
             }
-            switch (alt26) {
+            switch (alt27) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4069:2: rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4099:2: rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2
                     {
-                    pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2_in_rule__LexicalPartitionHighlighting_Rule__Group__2__Impl8210);
+                    pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2_in_rule__LexicalPartitionHighlighting_Rule__Group__2__Impl8270);
                     rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2();
 
                     state._fsp--;
@@ -11684,21 +11779,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4079:1: rule__LexicalPartitionHighlighting_Rule__Group__3 : rule__LexicalPartitionHighlighting_Rule__Group__3__Impl rule__LexicalPartitionHighlighting_Rule__Group__4 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4109:1: rule__LexicalPartitionHighlighting_Rule__Group__3 : rule__LexicalPartitionHighlighting_Rule__Group__3__Impl rule__LexicalPartitionHighlighting_Rule__Group__4 ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4083:1: ( rule__LexicalPartitionHighlighting_Rule__Group__3__Impl rule__LexicalPartitionHighlighting_Rule__Group__4 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4084:2: rule__LexicalPartitionHighlighting_Rule__Group__3__Impl rule__LexicalPartitionHighlighting_Rule__Group__4
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4113:1: ( rule__LexicalPartitionHighlighting_Rule__Group__3__Impl rule__LexicalPartitionHighlighting_Rule__Group__4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4114:2: rule__LexicalPartitionHighlighting_Rule__Group__3__Impl rule__LexicalPartitionHighlighting_Rule__Group__4
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__3__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__38241);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__3__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__38301);
             rule__LexicalPartitionHighlighting_Rule__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__4_in_rule__LexicalPartitionHighlighting_Rule__Group__38244);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__4_in_rule__LexicalPartitionHighlighting_Rule__Group__38304);
             rule__LexicalPartitionHighlighting_Rule__Group__4();
 
             state._fsp--;
@@ -11722,22 +11817,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__3__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4091:1: rule__LexicalPartitionHighlighting_Rule__Group__3__Impl : ( '{' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4121:1: rule__LexicalPartitionHighlighting_Rule__Group__3__Impl : ( '{' ) ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4095:1: ( ( '{' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4096:1: ( '{' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4125:1: ( ( '{' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4126:1: ( '{' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4096:1: ( '{' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4097:1: '{'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4126:1: ( '{' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4127:1: '{'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getLeftCurlyBracketKeyword_3()); 
             }
-            match(input,15,FOLLOW_15_in_rule__LexicalPartitionHighlighting_Rule__Group__3__Impl8272); if (state.failed) return ;
+            match(input,15,FOLLOW_15_in_rule__LexicalPartitionHighlighting_Rule__Group__3__Impl8332); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getLeftCurlyBracketKeyword_3()); 
             }
@@ -11763,21 +11858,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4110:1: rule__LexicalPartitionHighlighting_Rule__Group__4 : rule__LexicalPartitionHighlighting_Rule__Group__4__Impl rule__LexicalPartitionHighlighting_Rule__Group__5 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4140:1: rule__LexicalPartitionHighlighting_Rule__Group__4 : rule__LexicalPartitionHighlighting_Rule__Group__4__Impl rule__LexicalPartitionHighlighting_Rule__Group__5 ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4114:1: ( rule__LexicalPartitionHighlighting_Rule__Group__4__Impl rule__LexicalPartitionHighlighting_Rule__Group__5 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4115:2: rule__LexicalPartitionHighlighting_Rule__Group__4__Impl rule__LexicalPartitionHighlighting_Rule__Group__5
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4144:1: ( rule__LexicalPartitionHighlighting_Rule__Group__4__Impl rule__LexicalPartitionHighlighting_Rule__Group__5 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4145:2: rule__LexicalPartitionHighlighting_Rule__Group__4__Impl rule__LexicalPartitionHighlighting_Rule__Group__5
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__48303);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__48363);
             rule__LexicalPartitionHighlighting_Rule__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__5_in_rule__LexicalPartitionHighlighting_Rule__Group__48306);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__5_in_rule__LexicalPartitionHighlighting_Rule__Group__48366);
             rule__LexicalPartitionHighlighting_Rule__Group__5();
 
             state._fsp--;
@@ -11801,28 +11896,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__4__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4122:1: rule__LexicalPartitionHighlighting_Rule__Group__4__Impl : ( ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) ) ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4152:1: rule__LexicalPartitionHighlighting_Rule__Group__4__Impl : ( ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) ) ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* ) ) ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4126:1: ( ( ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) ) ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4127:1: ( ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) ) ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4156:1: ( ( ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) ) ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4157:1: ( ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) ) ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4127:1: ( ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) ) ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4128:1: ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) ) ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4157:1: ( ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) ) ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4158:1: ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) ) ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4128:1: ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4129:1: ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4158:1: ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4159:1: ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getTokenListAssignment_4()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4130:1: ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4130:2: rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4160:1: ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4160:2: rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4_in_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl8335);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4_in_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl8395);
             rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4();
 
             state._fsp--;
@@ -11836,28 +11931,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4133:1: ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4134:1: ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )*
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4163:1: ( ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4164:1: ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getTokenListAssignment_4()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4135:1: ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )*
-            loop27:
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4165:1: ( rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 )*
+            loop28:
             do {
-                int alt27=2;
-                int LA27_0 = input.LA(1);
+                int alt28=2;
+                int LA28_0 = input.LA(1);
 
-                if ( (LA27_0==RULE_ID||LA27_0==41) ) {
-                    alt27=1;
+                if ( (LA28_0==RULE_ID||LA28_0==41) ) {
+                    alt28=1;
                 }
 
 
-                switch (alt27) {
+                switch (alt28) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4135:2: rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4
+            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4165:2: rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4
             	    {
-            	    pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4_in_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl8347);
+            	    pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4_in_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl8407);
             	    rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4();
 
             	    state._fsp--;
@@ -11867,7 +11962,7 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop27;
+            	    break loop28;
                 }
             } while (true);
 
@@ -11899,16 +11994,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__5"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4146:1: rule__LexicalPartitionHighlighting_Rule__Group__5 : rule__LexicalPartitionHighlighting_Rule__Group__5__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4176:1: rule__LexicalPartitionHighlighting_Rule__Group__5 : rule__LexicalPartitionHighlighting_Rule__Group__5__Impl ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4150:1: ( rule__LexicalPartitionHighlighting_Rule__Group__5__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4151:2: rule__LexicalPartitionHighlighting_Rule__Group__5__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4180:1: ( rule__LexicalPartitionHighlighting_Rule__Group__5__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4181:2: rule__LexicalPartitionHighlighting_Rule__Group__5__Impl
             {
-            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__5__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__58380);
+            pushFollow(FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__5__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__58440);
             rule__LexicalPartitionHighlighting_Rule__Group__5__Impl();
 
             state._fsp--;
@@ -11932,22 +12027,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__Group__5__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4157:1: rule__LexicalPartitionHighlighting_Rule__Group__5__Impl : ( '}' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4187:1: rule__LexicalPartitionHighlighting_Rule__Group__5__Impl : ( '}' ) ;
     public final void rule__LexicalPartitionHighlighting_Rule__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4161:1: ( ( '}' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4162:1: ( '}' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4191:1: ( ( '}' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4192:1: ( '}' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4162:1: ( '}' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4163:1: '}'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4192:1: ( '}' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4193:1: '}'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getRightCurlyBracketKeyword_5()); 
             }
-            match(input,16,FOLLOW_16_in_rule__LexicalPartitionHighlighting_Rule__Group__5__Impl8408); if (state.failed) return ;
+            match(input,16,FOLLOW_16_in_rule__LexicalPartitionHighlighting_Rule__Group__5__Impl8468); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getRightCurlyBracketKeyword_5()); 
             }
@@ -11973,21 +12068,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4188:1: rule__Token__Group__0 : rule__Token__Group__0__Impl rule__Token__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4218:1: rule__Token__Group__0 : rule__Token__Group__0__Impl rule__Token__Group__1 ;
     public final void rule__Token__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4192:1: ( rule__Token__Group__0__Impl rule__Token__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4193:2: rule__Token__Group__0__Impl rule__Token__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4222:1: ( rule__Token__Group__0__Impl rule__Token__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4223:2: rule__Token__Group__0__Impl rule__Token__Group__1
             {
-            pushFollow(FOLLOW_rule__Token__Group__0__Impl_in_rule__Token__Group__08451);
+            pushFollow(FOLLOW_rule__Token__Group__0__Impl_in_rule__Token__Group__08511);
             rule__Token__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Token__Group__1_in_rule__Token__Group__08454);
+            pushFollow(FOLLOW_rule__Token__Group__1_in_rule__Token__Group__08514);
             rule__Token__Group__1();
 
             state._fsp--;
@@ -12011,33 +12106,33 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4200:1: rule__Token__Group__0__Impl : ( ( rule__Token__DefaultAssignment_0 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4230:1: rule__Token__Group__0__Impl : ( ( rule__Token__DefaultAssignment_0 )? ) ;
     public final void rule__Token__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4204:1: ( ( ( rule__Token__DefaultAssignment_0 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4205:1: ( ( rule__Token__DefaultAssignment_0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4234:1: ( ( ( rule__Token__DefaultAssignment_0 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4235:1: ( ( rule__Token__DefaultAssignment_0 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4205:1: ( ( rule__Token__DefaultAssignment_0 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4206:1: ( rule__Token__DefaultAssignment_0 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4235:1: ( ( rule__Token__DefaultAssignment_0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4236:1: ( rule__Token__DefaultAssignment_0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTokenAccess().getDefaultAssignment_0()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4207:1: ( rule__Token__DefaultAssignment_0 )?
-            int alt28=2;
-            int LA28_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4237:1: ( rule__Token__DefaultAssignment_0 )?
+            int alt29=2;
+            int LA29_0 = input.LA(1);
 
-            if ( (LA28_0==41) ) {
-                alt28=1;
+            if ( (LA29_0==41) ) {
+                alt29=1;
             }
-            switch (alt28) {
+            switch (alt29) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4207:2: rule__Token__DefaultAssignment_0
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4237:2: rule__Token__DefaultAssignment_0
                     {
-                    pushFollow(FOLLOW_rule__Token__DefaultAssignment_0_in_rule__Token__Group__0__Impl8481);
+                    pushFollow(FOLLOW_rule__Token__DefaultAssignment_0_in_rule__Token__Group__0__Impl8541);
                     rule__Token__DefaultAssignment_0();
 
                     state._fsp--;
@@ -12073,21 +12168,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4217:1: rule__Token__Group__1 : rule__Token__Group__1__Impl rule__Token__Group__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4247:1: rule__Token__Group__1 : rule__Token__Group__1__Impl rule__Token__Group__2 ;
     public final void rule__Token__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4221:1: ( rule__Token__Group__1__Impl rule__Token__Group__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4222:2: rule__Token__Group__1__Impl rule__Token__Group__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4251:1: ( rule__Token__Group__1__Impl rule__Token__Group__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4252:2: rule__Token__Group__1__Impl rule__Token__Group__2
             {
-            pushFollow(FOLLOW_rule__Token__Group__1__Impl_in_rule__Token__Group__18512);
+            pushFollow(FOLLOW_rule__Token__Group__1__Impl_in_rule__Token__Group__18572);
             rule__Token__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Token__Group__2_in_rule__Token__Group__18515);
+            pushFollow(FOLLOW_rule__Token__Group__2_in_rule__Token__Group__18575);
             rule__Token__Group__2();
 
             state._fsp--;
@@ -12111,25 +12206,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4229:1: rule__Token__Group__1__Impl : ( ( rule__Token__NameAssignment_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4259:1: rule__Token__Group__1__Impl : ( ( rule__Token__NameAssignment_1 ) ) ;
     public final void rule__Token__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4233:1: ( ( ( rule__Token__NameAssignment_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4234:1: ( ( rule__Token__NameAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4263:1: ( ( ( rule__Token__NameAssignment_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4264:1: ( ( rule__Token__NameAssignment_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4234:1: ( ( rule__Token__NameAssignment_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4235:1: ( rule__Token__NameAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4264:1: ( ( rule__Token__NameAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4265:1: ( rule__Token__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTokenAccess().getNameAssignment_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4236:1: ( rule__Token__NameAssignment_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4236:2: rule__Token__NameAssignment_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4266:1: ( rule__Token__NameAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4266:2: rule__Token__NameAssignment_1
             {
-            pushFollow(FOLLOW_rule__Token__NameAssignment_1_in_rule__Token__Group__1__Impl8542);
+            pushFollow(FOLLOW_rule__Token__NameAssignment_1_in_rule__Token__Group__1__Impl8602);
             rule__Token__NameAssignment_1();
 
             state._fsp--;
@@ -12162,16 +12257,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4246:1: rule__Token__Group__2 : rule__Token__Group__2__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4276:1: rule__Token__Group__2 : rule__Token__Group__2__Impl ;
     public final void rule__Token__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4250:1: ( rule__Token__Group__2__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4251:2: rule__Token__Group__2__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4280:1: ( rule__Token__Group__2__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4281:2: rule__Token__Group__2__Impl
             {
-            pushFollow(FOLLOW_rule__Token__Group__2__Impl_in_rule__Token__Group__28572);
+            pushFollow(FOLLOW_rule__Token__Group__2__Impl_in_rule__Token__Group__28632);
             rule__Token__Group__2__Impl();
 
             state._fsp--;
@@ -12195,33 +12290,33 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4257:1: rule__Token__Group__2__Impl : ( ( rule__Token__Group_2__0 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4287:1: rule__Token__Group__2__Impl : ( ( rule__Token__Group_2__0 )? ) ;
     public final void rule__Token__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4261:1: ( ( ( rule__Token__Group_2__0 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4262:1: ( ( rule__Token__Group_2__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4291:1: ( ( ( rule__Token__Group_2__0 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4292:1: ( ( rule__Token__Group_2__0 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4262:1: ( ( rule__Token__Group_2__0 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4263:1: ( rule__Token__Group_2__0 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4292:1: ( ( rule__Token__Group_2__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4293:1: ( rule__Token__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTokenAccess().getGroup_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4264:1: ( rule__Token__Group_2__0 )?
-            int alt29=2;
-            int LA29_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4294:1: ( rule__Token__Group_2__0 )?
+            int alt30=2;
+            int LA30_0 = input.LA(1);
 
-            if ( (LA29_0==15) ) {
-                alt29=1;
+            if ( (LA30_0==15) ) {
+                alt30=1;
             }
-            switch (alt29) {
+            switch (alt30) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4264:2: rule__Token__Group_2__0
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4294:2: rule__Token__Group_2__0
                     {
-                    pushFollow(FOLLOW_rule__Token__Group_2__0_in_rule__Token__Group__2__Impl8599);
+                    pushFollow(FOLLOW_rule__Token__Group_2__0_in_rule__Token__Group__2__Impl8659);
                     rule__Token__Group_2__0();
 
                     state._fsp--;
@@ -12257,21 +12352,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group_2__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4280:1: rule__Token__Group_2__0 : rule__Token__Group_2__0__Impl rule__Token__Group_2__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4310:1: rule__Token__Group_2__0 : rule__Token__Group_2__0__Impl rule__Token__Group_2__1 ;
     public final void rule__Token__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4284:1: ( rule__Token__Group_2__0__Impl rule__Token__Group_2__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4285:2: rule__Token__Group_2__0__Impl rule__Token__Group_2__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4314:1: ( rule__Token__Group_2__0__Impl rule__Token__Group_2__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4315:2: rule__Token__Group_2__0__Impl rule__Token__Group_2__1
             {
-            pushFollow(FOLLOW_rule__Token__Group_2__0__Impl_in_rule__Token__Group_2__08636);
+            pushFollow(FOLLOW_rule__Token__Group_2__0__Impl_in_rule__Token__Group_2__08696);
             rule__Token__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Token__Group_2__1_in_rule__Token__Group_2__08639);
+            pushFollow(FOLLOW_rule__Token__Group_2__1_in_rule__Token__Group_2__08699);
             rule__Token__Group_2__1();
 
             state._fsp--;
@@ -12295,22 +12390,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group_2__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4292:1: rule__Token__Group_2__0__Impl : ( '{' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4322:1: rule__Token__Group_2__0__Impl : ( '{' ) ;
     public final void rule__Token__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4296:1: ( ( '{' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4297:1: ( '{' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4326:1: ( ( '{' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4327:1: ( '{' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4297:1: ( '{' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4298:1: '{'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4327:1: ( '{' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4328:1: '{'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTokenAccess().getLeftCurlyBracketKeyword_2_0()); 
             }
-            match(input,15,FOLLOW_15_in_rule__Token__Group_2__0__Impl8667); if (state.failed) return ;
+            match(input,15,FOLLOW_15_in_rule__Token__Group_2__0__Impl8727); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTokenAccess().getLeftCurlyBracketKeyword_2_0()); 
             }
@@ -12336,21 +12431,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group_2__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4311:1: rule__Token__Group_2__1 : rule__Token__Group_2__1__Impl rule__Token__Group_2__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4341:1: rule__Token__Group_2__1 : rule__Token__Group_2__1__Impl rule__Token__Group_2__2 ;
     public final void rule__Token__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4315:1: ( rule__Token__Group_2__1__Impl rule__Token__Group_2__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4316:2: rule__Token__Group_2__1__Impl rule__Token__Group_2__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4345:1: ( rule__Token__Group_2__1__Impl rule__Token__Group_2__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4346:2: rule__Token__Group_2__1__Impl rule__Token__Group_2__2
             {
-            pushFollow(FOLLOW_rule__Token__Group_2__1__Impl_in_rule__Token__Group_2__18698);
+            pushFollow(FOLLOW_rule__Token__Group_2__1__Impl_in_rule__Token__Group_2__18758);
             rule__Token__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Token__Group_2__2_in_rule__Token__Group_2__18701);
+            pushFollow(FOLLOW_rule__Token__Group_2__2_in_rule__Token__Group_2__18761);
             rule__Token__Group_2__2();
 
             state._fsp--;
@@ -12374,28 +12469,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group_2__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4323:1: rule__Token__Group_2__1__Impl : ( ( ( rule__Token__ScannerListAssignment_2_1 ) ) ( ( rule__Token__ScannerListAssignment_2_1 )* ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4353:1: rule__Token__Group_2__1__Impl : ( ( ( rule__Token__ScannerListAssignment_2_1 ) ) ( ( rule__Token__ScannerListAssignment_2_1 )* ) ) ;
     public final void rule__Token__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4327:1: ( ( ( ( rule__Token__ScannerListAssignment_2_1 ) ) ( ( rule__Token__ScannerListAssignment_2_1 )* ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4328:1: ( ( ( rule__Token__ScannerListAssignment_2_1 ) ) ( ( rule__Token__ScannerListAssignment_2_1 )* ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4357:1: ( ( ( ( rule__Token__ScannerListAssignment_2_1 ) ) ( ( rule__Token__ScannerListAssignment_2_1 )* ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4358:1: ( ( ( rule__Token__ScannerListAssignment_2_1 ) ) ( ( rule__Token__ScannerListAssignment_2_1 )* ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4328:1: ( ( ( rule__Token__ScannerListAssignment_2_1 ) ) ( ( rule__Token__ScannerListAssignment_2_1 )* ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4329:1: ( ( rule__Token__ScannerListAssignment_2_1 ) ) ( ( rule__Token__ScannerListAssignment_2_1 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4358:1: ( ( ( rule__Token__ScannerListAssignment_2_1 ) ) ( ( rule__Token__ScannerListAssignment_2_1 )* ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4359:1: ( ( rule__Token__ScannerListAssignment_2_1 ) ) ( ( rule__Token__ScannerListAssignment_2_1 )* )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4329:1: ( ( rule__Token__ScannerListAssignment_2_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4330:1: ( rule__Token__ScannerListAssignment_2_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4359:1: ( ( rule__Token__ScannerListAssignment_2_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4360:1: ( rule__Token__ScannerListAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTokenAccess().getScannerListAssignment_2_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4331:1: ( rule__Token__ScannerListAssignment_2_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4331:2: rule__Token__ScannerListAssignment_2_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4361:1: ( rule__Token__ScannerListAssignment_2_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4361:2: rule__Token__ScannerListAssignment_2_1
             {
-            pushFollow(FOLLOW_rule__Token__ScannerListAssignment_2_1_in_rule__Token__Group_2__1__Impl8730);
+            pushFollow(FOLLOW_rule__Token__ScannerListAssignment_2_1_in_rule__Token__Group_2__1__Impl8790);
             rule__Token__ScannerListAssignment_2_1();
 
             state._fsp--;
@@ -12409,28 +12504,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4334:1: ( ( rule__Token__ScannerListAssignment_2_1 )* )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4335:1: ( rule__Token__ScannerListAssignment_2_1 )*
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4364:1: ( ( rule__Token__ScannerListAssignment_2_1 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4365:1: ( rule__Token__ScannerListAssignment_2_1 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTokenAccess().getScannerListAssignment_2_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4336:1: ( rule__Token__ScannerListAssignment_2_1 )*
-            loop30:
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4366:1: ( rule__Token__ScannerListAssignment_2_1 )*
+            loop31:
             do {
-                int alt30=2;
-                int LA30_0 = input.LA(1);
+                int alt31=2;
+                int LA31_0 = input.LA(1);
 
-                if ( (LA30_0==24||LA30_0==26||LA30_0==30||LA30_0==32||LA30_0==37||LA30_0==39) ) {
-                    alt30=1;
+                if ( (LA31_0==24||LA31_0==26||LA31_0==30||LA31_0==32||LA31_0==37||LA31_0==39) ) {
+                    alt31=1;
                 }
 
 
-                switch (alt30) {
+                switch (alt31) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4336:2: rule__Token__ScannerListAssignment_2_1
+            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4366:2: rule__Token__ScannerListAssignment_2_1
             	    {
-            	    pushFollow(FOLLOW_rule__Token__ScannerListAssignment_2_1_in_rule__Token__Group_2__1__Impl8742);
+            	    pushFollow(FOLLOW_rule__Token__ScannerListAssignment_2_1_in_rule__Token__Group_2__1__Impl8802);
             	    rule__Token__ScannerListAssignment_2_1();
 
             	    state._fsp--;
@@ -12440,7 +12535,7 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop30;
+            	    break loop31;
                 }
             } while (true);
 
@@ -12472,16 +12567,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group_2__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4347:1: rule__Token__Group_2__2 : rule__Token__Group_2__2__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4377:1: rule__Token__Group_2__2 : rule__Token__Group_2__2__Impl ;
     public final void rule__Token__Group_2__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4351:1: ( rule__Token__Group_2__2__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4352:2: rule__Token__Group_2__2__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4381:1: ( rule__Token__Group_2__2__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4382:2: rule__Token__Group_2__2__Impl
             {
-            pushFollow(FOLLOW_rule__Token__Group_2__2__Impl_in_rule__Token__Group_2__28775);
+            pushFollow(FOLLOW_rule__Token__Group_2__2__Impl_in_rule__Token__Group_2__28835);
             rule__Token__Group_2__2__Impl();
 
             state._fsp--;
@@ -12505,22 +12600,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__Group_2__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4358:1: rule__Token__Group_2__2__Impl : ( '}' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4388:1: rule__Token__Group_2__2__Impl : ( '}' ) ;
     public final void rule__Token__Group_2__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4362:1: ( ( '}' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4363:1: ( '}' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4392:1: ( ( '}' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4393:1: ( '}' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4363:1: ( '}' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4364:1: '}'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4393:1: ( '}' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4394:1: '}'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTokenAccess().getRightCurlyBracketKeyword_2_2()); 
             }
-            match(input,16,FOLLOW_16_in_rule__Token__Group_2__2__Impl8803); if (state.failed) return ;
+            match(input,16,FOLLOW_16_in_rule__Token__Group_2__2__Impl8863); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTokenAccess().getRightCurlyBracketKeyword_2_2()); 
             }
@@ -12546,21 +12641,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4383:1: rule__Scanner_Keyword__Group__0 : rule__Scanner_Keyword__Group__0__Impl rule__Scanner_Keyword__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4413:1: rule__Scanner_Keyword__Group__0 : rule__Scanner_Keyword__Group__0__Impl rule__Scanner_Keyword__Group__1 ;
     public final void rule__Scanner_Keyword__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4387:1: ( rule__Scanner_Keyword__Group__0__Impl rule__Scanner_Keyword__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4388:2: rule__Scanner_Keyword__Group__0__Impl rule__Scanner_Keyword__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4417:1: ( rule__Scanner_Keyword__Group__0__Impl rule__Scanner_Keyword__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4418:2: rule__Scanner_Keyword__Group__0__Impl rule__Scanner_Keyword__Group__1
             {
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__0__Impl_in_rule__Scanner_Keyword__Group__08840);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__0__Impl_in_rule__Scanner_Keyword__Group__08900);
             rule__Scanner_Keyword__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__1_in_rule__Scanner_Keyword__Group__08843);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__1_in_rule__Scanner_Keyword__Group__08903);
             rule__Scanner_Keyword__Group__1();
 
             state._fsp--;
@@ -12584,22 +12679,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4395:1: rule__Scanner_Keyword__Group__0__Impl : ( 'keywords' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4425:1: rule__Scanner_Keyword__Group__0__Impl : ( 'keywords' ) ;
     public final void rule__Scanner_Keyword__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4399:1: ( ( 'keywords' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4400:1: ( 'keywords' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4429:1: ( ( 'keywords' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4430:1: ( 'keywords' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4400:1: ( 'keywords' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4401:1: 'keywords'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4430:1: ( 'keywords' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4431:1: 'keywords'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_KeywordAccess().getKeywordsKeyword_0()); 
             }
-            match(input,32,FOLLOW_32_in_rule__Scanner_Keyword__Group__0__Impl8871); if (state.failed) return ;
+            match(input,32,FOLLOW_32_in_rule__Scanner_Keyword__Group__0__Impl8931); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_KeywordAccess().getKeywordsKeyword_0()); 
             }
@@ -12625,21 +12720,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4414:1: rule__Scanner_Keyword__Group__1 : rule__Scanner_Keyword__Group__1__Impl rule__Scanner_Keyword__Group__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4444:1: rule__Scanner_Keyword__Group__1 : rule__Scanner_Keyword__Group__1__Impl rule__Scanner_Keyword__Group__2 ;
     public final void rule__Scanner_Keyword__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4418:1: ( rule__Scanner_Keyword__Group__1__Impl rule__Scanner_Keyword__Group__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4419:2: rule__Scanner_Keyword__Group__1__Impl rule__Scanner_Keyword__Group__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4448:1: ( rule__Scanner_Keyword__Group__1__Impl rule__Scanner_Keyword__Group__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4449:2: rule__Scanner_Keyword__Group__1__Impl rule__Scanner_Keyword__Group__2
             {
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__1__Impl_in_rule__Scanner_Keyword__Group__18902);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__1__Impl_in_rule__Scanner_Keyword__Group__18962);
             rule__Scanner_Keyword__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__2_in_rule__Scanner_Keyword__Group__18905);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__2_in_rule__Scanner_Keyword__Group__18965);
             rule__Scanner_Keyword__Group__2();
 
             state._fsp--;
@@ -12663,22 +12758,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4426:1: rule__Scanner_Keyword__Group__1__Impl : ( '[' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4456:1: rule__Scanner_Keyword__Group__1__Impl : ( '[' ) ;
     public final void rule__Scanner_Keyword__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4430:1: ( ( '[' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4431:1: ( '[' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4460:1: ( ( '[' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4461:1: ( '[' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4431:1: ( '[' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4432:1: '['
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4461:1: ( '[' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4462:1: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_KeywordAccess().getLeftSquareBracketKeyword_1()); 
             }
-            match(input,33,FOLLOW_33_in_rule__Scanner_Keyword__Group__1__Impl8933); if (state.failed) return ;
+            match(input,33,FOLLOW_33_in_rule__Scanner_Keyword__Group__1__Impl8993); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_KeywordAccess().getLeftSquareBracketKeyword_1()); 
             }
@@ -12704,21 +12799,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4445:1: rule__Scanner_Keyword__Group__2 : rule__Scanner_Keyword__Group__2__Impl rule__Scanner_Keyword__Group__3 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4475:1: rule__Scanner_Keyword__Group__2 : rule__Scanner_Keyword__Group__2__Impl rule__Scanner_Keyword__Group__3 ;
     public final void rule__Scanner_Keyword__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4449:1: ( rule__Scanner_Keyword__Group__2__Impl rule__Scanner_Keyword__Group__3 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4450:2: rule__Scanner_Keyword__Group__2__Impl rule__Scanner_Keyword__Group__3
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4479:1: ( rule__Scanner_Keyword__Group__2__Impl rule__Scanner_Keyword__Group__3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4480:2: rule__Scanner_Keyword__Group__2__Impl rule__Scanner_Keyword__Group__3
             {
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__2__Impl_in_rule__Scanner_Keyword__Group__28964);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__2__Impl_in_rule__Scanner_Keyword__Group__29024);
             rule__Scanner_Keyword__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__3_in_rule__Scanner_Keyword__Group__28967);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__3_in_rule__Scanner_Keyword__Group__29027);
             rule__Scanner_Keyword__Group__3();
 
             state._fsp--;
@@ -12742,25 +12837,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4457:1: rule__Scanner_Keyword__Group__2__Impl : ( ( rule__Scanner_Keyword__KeywordsAssignment_2 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4487:1: rule__Scanner_Keyword__Group__2__Impl : ( ( rule__Scanner_Keyword__KeywordsAssignment_2 ) ) ;
     public final void rule__Scanner_Keyword__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4461:1: ( ( ( rule__Scanner_Keyword__KeywordsAssignment_2 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4462:1: ( ( rule__Scanner_Keyword__KeywordsAssignment_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4491:1: ( ( ( rule__Scanner_Keyword__KeywordsAssignment_2 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4492:1: ( ( rule__Scanner_Keyword__KeywordsAssignment_2 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4462:1: ( ( rule__Scanner_Keyword__KeywordsAssignment_2 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4463:1: ( rule__Scanner_Keyword__KeywordsAssignment_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4492:1: ( ( rule__Scanner_Keyword__KeywordsAssignment_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4493:1: ( rule__Scanner_Keyword__KeywordsAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_KeywordAccess().getKeywordsAssignment_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4464:1: ( rule__Scanner_Keyword__KeywordsAssignment_2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4464:2: rule__Scanner_Keyword__KeywordsAssignment_2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4494:1: ( rule__Scanner_Keyword__KeywordsAssignment_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4494:2: rule__Scanner_Keyword__KeywordsAssignment_2
             {
-            pushFollow(FOLLOW_rule__Scanner_Keyword__KeywordsAssignment_2_in_rule__Scanner_Keyword__Group__2__Impl8994);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__KeywordsAssignment_2_in_rule__Scanner_Keyword__Group__2__Impl9054);
             rule__Scanner_Keyword__KeywordsAssignment_2();
 
             state._fsp--;
@@ -12793,21 +12888,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group__3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4474:1: rule__Scanner_Keyword__Group__3 : rule__Scanner_Keyword__Group__3__Impl rule__Scanner_Keyword__Group__4 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4504:1: rule__Scanner_Keyword__Group__3 : rule__Scanner_Keyword__Group__3__Impl rule__Scanner_Keyword__Group__4 ;
     public final void rule__Scanner_Keyword__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4478:1: ( rule__Scanner_Keyword__Group__3__Impl rule__Scanner_Keyword__Group__4 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4479:2: rule__Scanner_Keyword__Group__3__Impl rule__Scanner_Keyword__Group__4
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4508:1: ( rule__Scanner_Keyword__Group__3__Impl rule__Scanner_Keyword__Group__4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4509:2: rule__Scanner_Keyword__Group__3__Impl rule__Scanner_Keyword__Group__4
             {
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__3__Impl_in_rule__Scanner_Keyword__Group__39024);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__3__Impl_in_rule__Scanner_Keyword__Group__39084);
             rule__Scanner_Keyword__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__4_in_rule__Scanner_Keyword__Group__39027);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__4_in_rule__Scanner_Keyword__Group__39087);
             rule__Scanner_Keyword__Group__4();
 
             state._fsp--;
@@ -12831,37 +12926,37 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group__3__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4486:1: rule__Scanner_Keyword__Group__3__Impl : ( ( rule__Scanner_Keyword__Group_3__0 )* ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4516:1: rule__Scanner_Keyword__Group__3__Impl : ( ( rule__Scanner_Keyword__Group_3__0 )* ) ;
     public final void rule__Scanner_Keyword__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4490:1: ( ( ( rule__Scanner_Keyword__Group_3__0 )* ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4491:1: ( ( rule__Scanner_Keyword__Group_3__0 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4520:1: ( ( ( rule__Scanner_Keyword__Group_3__0 )* ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4521:1: ( ( rule__Scanner_Keyword__Group_3__0 )* )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4491:1: ( ( rule__Scanner_Keyword__Group_3__0 )* )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4492:1: ( rule__Scanner_Keyword__Group_3__0 )*
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4521:1: ( ( rule__Scanner_Keyword__Group_3__0 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4522:1: ( rule__Scanner_Keyword__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_KeywordAccess().getGroup_3()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4493:1: ( rule__Scanner_Keyword__Group_3__0 )*
-            loop31:
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4523:1: ( rule__Scanner_Keyword__Group_3__0 )*
+            loop32:
             do {
-                int alt31=2;
-                int LA31_0 = input.LA(1);
+                int alt32=2;
+                int LA32_0 = input.LA(1);
 
-                if ( (LA31_0==35) ) {
-                    alt31=1;
+                if ( (LA32_0==35) ) {
+                    alt32=1;
                 }
 
 
-                switch (alt31) {
+                switch (alt32) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4493:2: rule__Scanner_Keyword__Group_3__0
+            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4523:2: rule__Scanner_Keyword__Group_3__0
             	    {
-            	    pushFollow(FOLLOW_rule__Scanner_Keyword__Group_3__0_in_rule__Scanner_Keyword__Group__3__Impl9054);
+            	    pushFollow(FOLLOW_rule__Scanner_Keyword__Group_3__0_in_rule__Scanner_Keyword__Group__3__Impl9114);
             	    rule__Scanner_Keyword__Group_3__0();
 
             	    state._fsp--;
@@ -12871,7 +12966,7 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop31;
+            	    break loop32;
                 }
             } while (true);
 
@@ -12900,16 +12995,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group__4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4503:1: rule__Scanner_Keyword__Group__4 : rule__Scanner_Keyword__Group__4__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4533:1: rule__Scanner_Keyword__Group__4 : rule__Scanner_Keyword__Group__4__Impl ;
     public final void rule__Scanner_Keyword__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4507:1: ( rule__Scanner_Keyword__Group__4__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4508:2: rule__Scanner_Keyword__Group__4__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4537:1: ( rule__Scanner_Keyword__Group__4__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4538:2: rule__Scanner_Keyword__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__4__Impl_in_rule__Scanner_Keyword__Group__49085);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group__4__Impl_in_rule__Scanner_Keyword__Group__49145);
             rule__Scanner_Keyword__Group__4__Impl();
 
             state._fsp--;
@@ -12933,22 +13028,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group__4__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4514:1: rule__Scanner_Keyword__Group__4__Impl : ( ']' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4544:1: rule__Scanner_Keyword__Group__4__Impl : ( ']' ) ;
     public final void rule__Scanner_Keyword__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4518:1: ( ( ']' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4519:1: ( ']' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4548:1: ( ( ']' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4549:1: ( ']' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4519:1: ( ']' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4520:1: ']'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4549:1: ( ']' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4550:1: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_KeywordAccess().getRightSquareBracketKeyword_4()); 
             }
-            match(input,34,FOLLOW_34_in_rule__Scanner_Keyword__Group__4__Impl9113); if (state.failed) return ;
+            match(input,34,FOLLOW_34_in_rule__Scanner_Keyword__Group__4__Impl9173); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_KeywordAccess().getRightSquareBracketKeyword_4()); 
             }
@@ -12974,21 +13069,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group_3__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4543:1: rule__Scanner_Keyword__Group_3__0 : rule__Scanner_Keyword__Group_3__0__Impl rule__Scanner_Keyword__Group_3__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4573:1: rule__Scanner_Keyword__Group_3__0 : rule__Scanner_Keyword__Group_3__0__Impl rule__Scanner_Keyword__Group_3__1 ;
     public final void rule__Scanner_Keyword__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4547:1: ( rule__Scanner_Keyword__Group_3__0__Impl rule__Scanner_Keyword__Group_3__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4548:2: rule__Scanner_Keyword__Group_3__0__Impl rule__Scanner_Keyword__Group_3__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4577:1: ( rule__Scanner_Keyword__Group_3__0__Impl rule__Scanner_Keyword__Group_3__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4578:2: rule__Scanner_Keyword__Group_3__0__Impl rule__Scanner_Keyword__Group_3__1
             {
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group_3__0__Impl_in_rule__Scanner_Keyword__Group_3__09154);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group_3__0__Impl_in_rule__Scanner_Keyword__Group_3__09214);
             rule__Scanner_Keyword__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group_3__1_in_rule__Scanner_Keyword__Group_3__09157);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group_3__1_in_rule__Scanner_Keyword__Group_3__09217);
             rule__Scanner_Keyword__Group_3__1();
 
             state._fsp--;
@@ -13012,22 +13107,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group_3__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4555:1: rule__Scanner_Keyword__Group_3__0__Impl : ( ',' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4585:1: rule__Scanner_Keyword__Group_3__0__Impl : ( ',' ) ;
     public final void rule__Scanner_Keyword__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4559:1: ( ( ',' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4560:1: ( ',' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4589:1: ( ( ',' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4590:1: ( ',' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4560:1: ( ',' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4561:1: ','
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4590:1: ( ',' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4591:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_KeywordAccess().getCommaKeyword_3_0()); 
             }
-            match(input,35,FOLLOW_35_in_rule__Scanner_Keyword__Group_3__0__Impl9185); if (state.failed) return ;
+            match(input,35,FOLLOW_35_in_rule__Scanner_Keyword__Group_3__0__Impl9245); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_KeywordAccess().getCommaKeyword_3_0()); 
             }
@@ -13053,16 +13148,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group_3__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4574:1: rule__Scanner_Keyword__Group_3__1 : rule__Scanner_Keyword__Group_3__1__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4604:1: rule__Scanner_Keyword__Group_3__1 : rule__Scanner_Keyword__Group_3__1__Impl ;
     public final void rule__Scanner_Keyword__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4578:1: ( rule__Scanner_Keyword__Group_3__1__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4579:2: rule__Scanner_Keyword__Group_3__1__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4608:1: ( rule__Scanner_Keyword__Group_3__1__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4609:2: rule__Scanner_Keyword__Group_3__1__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_Keyword__Group_3__1__Impl_in_rule__Scanner_Keyword__Group_3__19216);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__Group_3__1__Impl_in_rule__Scanner_Keyword__Group_3__19276);
             rule__Scanner_Keyword__Group_3__1__Impl();
 
             state._fsp--;
@@ -13086,25 +13181,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__Group_3__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4585:1: rule__Scanner_Keyword__Group_3__1__Impl : ( ( rule__Scanner_Keyword__KeywordsAssignment_3_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4615:1: rule__Scanner_Keyword__Group_3__1__Impl : ( ( rule__Scanner_Keyword__KeywordsAssignment_3_1 ) ) ;
     public final void rule__Scanner_Keyword__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4589:1: ( ( ( rule__Scanner_Keyword__KeywordsAssignment_3_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4590:1: ( ( rule__Scanner_Keyword__KeywordsAssignment_3_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4619:1: ( ( ( rule__Scanner_Keyword__KeywordsAssignment_3_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4620:1: ( ( rule__Scanner_Keyword__KeywordsAssignment_3_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4590:1: ( ( rule__Scanner_Keyword__KeywordsAssignment_3_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4591:1: ( rule__Scanner_Keyword__KeywordsAssignment_3_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4620:1: ( ( rule__Scanner_Keyword__KeywordsAssignment_3_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4621:1: ( rule__Scanner_Keyword__KeywordsAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_KeywordAccess().getKeywordsAssignment_3_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4592:1: ( rule__Scanner_Keyword__KeywordsAssignment_3_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4592:2: rule__Scanner_Keyword__KeywordsAssignment_3_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4622:1: ( rule__Scanner_Keyword__KeywordsAssignment_3_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4622:2: rule__Scanner_Keyword__KeywordsAssignment_3_1
             {
-            pushFollow(FOLLOW_rule__Scanner_Keyword__KeywordsAssignment_3_1_in_rule__Scanner_Keyword__Group_3__1__Impl9243);
+            pushFollow(FOLLOW_rule__Scanner_Keyword__KeywordsAssignment_3_1_in_rule__Scanner_Keyword__Group_3__1__Impl9303);
             rule__Scanner_Keyword__KeywordsAssignment_3_1();
 
             state._fsp--;
@@ -13137,21 +13232,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Keyword__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4606:1: rule__Keyword__Group__0 : rule__Keyword__Group__0__Impl rule__Keyword__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4636:1: rule__Keyword__Group__0 : rule__Keyword__Group__0__Impl rule__Keyword__Group__1 ;
     public final void rule__Keyword__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4610:1: ( rule__Keyword__Group__0__Impl rule__Keyword__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4611:2: rule__Keyword__Group__0__Impl rule__Keyword__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4640:1: ( rule__Keyword__Group__0__Impl rule__Keyword__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4641:2: rule__Keyword__Group__0__Impl rule__Keyword__Group__1
             {
-            pushFollow(FOLLOW_rule__Keyword__Group__0__Impl_in_rule__Keyword__Group__09277);
+            pushFollow(FOLLOW_rule__Keyword__Group__0__Impl_in_rule__Keyword__Group__09337);
             rule__Keyword__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Keyword__Group__1_in_rule__Keyword__Group__09280);
+            pushFollow(FOLLOW_rule__Keyword__Group__1_in_rule__Keyword__Group__09340);
             rule__Keyword__Group__1();
 
             state._fsp--;
@@ -13175,25 +13270,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Keyword__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4618:1: rule__Keyword__Group__0__Impl : ( ( rule__Keyword__NameAssignment_0 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4648:1: rule__Keyword__Group__0__Impl : ( ( rule__Keyword__NameAssignment_0 ) ) ;
     public final void rule__Keyword__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4622:1: ( ( ( rule__Keyword__NameAssignment_0 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4623:1: ( ( rule__Keyword__NameAssignment_0 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4652:1: ( ( ( rule__Keyword__NameAssignment_0 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4653:1: ( ( rule__Keyword__NameAssignment_0 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4623:1: ( ( rule__Keyword__NameAssignment_0 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4624:1: ( rule__Keyword__NameAssignment_0 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4653:1: ( ( rule__Keyword__NameAssignment_0 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4654:1: ( rule__Keyword__NameAssignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeywordAccess().getNameAssignment_0()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4625:1: ( rule__Keyword__NameAssignment_0 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4625:2: rule__Keyword__NameAssignment_0
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4655:1: ( rule__Keyword__NameAssignment_0 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4655:2: rule__Keyword__NameAssignment_0
             {
-            pushFollow(FOLLOW_rule__Keyword__NameAssignment_0_in_rule__Keyword__Group__0__Impl9307);
+            pushFollow(FOLLOW_rule__Keyword__NameAssignment_0_in_rule__Keyword__Group__0__Impl9367);
             rule__Keyword__NameAssignment_0();
 
             state._fsp--;
@@ -13226,16 +13321,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Keyword__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4635:1: rule__Keyword__Group__1 : rule__Keyword__Group__1__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4665:1: rule__Keyword__Group__1 : rule__Keyword__Group__1__Impl ;
     public final void rule__Keyword__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4639:1: ( rule__Keyword__Group__1__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4640:2: rule__Keyword__Group__1__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4669:1: ( rule__Keyword__Group__1__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4670:2: rule__Keyword__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__Keyword__Group__1__Impl_in_rule__Keyword__Group__19337);
+            pushFollow(FOLLOW_rule__Keyword__Group__1__Impl_in_rule__Keyword__Group__19397);
             rule__Keyword__Group__1__Impl();
 
             state._fsp--;
@@ -13259,33 +13354,33 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Keyword__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4646:1: rule__Keyword__Group__1__Impl : ( ( rule__Keyword__Group_1__0 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4676:1: rule__Keyword__Group__1__Impl : ( ( rule__Keyword__Group_1__0 )? ) ;
     public final void rule__Keyword__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4650:1: ( ( ( rule__Keyword__Group_1__0 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4651:1: ( ( rule__Keyword__Group_1__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4680:1: ( ( ( rule__Keyword__Group_1__0 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4681:1: ( ( rule__Keyword__Group_1__0 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4651:1: ( ( rule__Keyword__Group_1__0 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4652:1: ( rule__Keyword__Group_1__0 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4681:1: ( ( rule__Keyword__Group_1__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4682:1: ( rule__Keyword__Group_1__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeywordAccess().getGroup_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4653:1: ( rule__Keyword__Group_1__0 )?
-            int alt32=2;
-            int LA32_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4683:1: ( rule__Keyword__Group_1__0 )?
+            int alt33=2;
+            int LA33_0 = input.LA(1);
 
-            if ( (LA32_0==36) ) {
-                alt32=1;
+            if ( (LA33_0==36) ) {
+                alt33=1;
             }
-            switch (alt32) {
+            switch (alt33) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4653:2: rule__Keyword__Group_1__0
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4683:2: rule__Keyword__Group_1__0
                     {
-                    pushFollow(FOLLOW_rule__Keyword__Group_1__0_in_rule__Keyword__Group__1__Impl9364);
+                    pushFollow(FOLLOW_rule__Keyword__Group_1__0_in_rule__Keyword__Group__1__Impl9424);
                     rule__Keyword__Group_1__0();
 
                     state._fsp--;
@@ -13321,21 +13416,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Keyword__Group_1__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4667:1: rule__Keyword__Group_1__0 : rule__Keyword__Group_1__0__Impl rule__Keyword__Group_1__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4697:1: rule__Keyword__Group_1__0 : rule__Keyword__Group_1__0__Impl rule__Keyword__Group_1__1 ;
     public final void rule__Keyword__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4671:1: ( rule__Keyword__Group_1__0__Impl rule__Keyword__Group_1__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4672:2: rule__Keyword__Group_1__0__Impl rule__Keyword__Group_1__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4701:1: ( rule__Keyword__Group_1__0__Impl rule__Keyword__Group_1__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4702:2: rule__Keyword__Group_1__0__Impl rule__Keyword__Group_1__1
             {
-            pushFollow(FOLLOW_rule__Keyword__Group_1__0__Impl_in_rule__Keyword__Group_1__09399);
+            pushFollow(FOLLOW_rule__Keyword__Group_1__0__Impl_in_rule__Keyword__Group_1__09459);
             rule__Keyword__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Keyword__Group_1__1_in_rule__Keyword__Group_1__09402);
+            pushFollow(FOLLOW_rule__Keyword__Group_1__1_in_rule__Keyword__Group_1__09462);
             rule__Keyword__Group_1__1();
 
             state._fsp--;
@@ -13359,22 +13454,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Keyword__Group_1__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4679:1: rule__Keyword__Group_1__0__Impl : ( 'since' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4709:1: rule__Keyword__Group_1__0__Impl : ( 'since' ) ;
     public final void rule__Keyword__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4683:1: ( ( 'since' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4684:1: ( 'since' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4713:1: ( ( 'since' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4714:1: ( 'since' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4684:1: ( 'since' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4685:1: 'since'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4714:1: ( 'since' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4715:1: 'since'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeywordAccess().getSinceKeyword_1_0()); 
             }
-            match(input,36,FOLLOW_36_in_rule__Keyword__Group_1__0__Impl9430); if (state.failed) return ;
+            match(input,36,FOLLOW_36_in_rule__Keyword__Group_1__0__Impl9490); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeywordAccess().getSinceKeyword_1_0()); 
             }
@@ -13400,16 +13495,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Keyword__Group_1__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4698:1: rule__Keyword__Group_1__1 : rule__Keyword__Group_1__1__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4728:1: rule__Keyword__Group_1__1 : rule__Keyword__Group_1__1__Impl ;
     public final void rule__Keyword__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4702:1: ( rule__Keyword__Group_1__1__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4703:2: rule__Keyword__Group_1__1__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4732:1: ( rule__Keyword__Group_1__1__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4733:2: rule__Keyword__Group_1__1__Impl
             {
-            pushFollow(FOLLOW_rule__Keyword__Group_1__1__Impl_in_rule__Keyword__Group_1__19461);
+            pushFollow(FOLLOW_rule__Keyword__Group_1__1__Impl_in_rule__Keyword__Group_1__19521);
             rule__Keyword__Group_1__1__Impl();
 
             state._fsp--;
@@ -13433,25 +13528,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Keyword__Group_1__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4709:1: rule__Keyword__Group_1__1__Impl : ( ( rule__Keyword__VersionAssignment_1_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4739:1: rule__Keyword__Group_1__1__Impl : ( ( rule__Keyword__VersionAssignment_1_1 ) ) ;
     public final void rule__Keyword__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4713:1: ( ( ( rule__Keyword__VersionAssignment_1_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4714:1: ( ( rule__Keyword__VersionAssignment_1_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4743:1: ( ( ( rule__Keyword__VersionAssignment_1_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4744:1: ( ( rule__Keyword__VersionAssignment_1_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4714:1: ( ( rule__Keyword__VersionAssignment_1_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4715:1: ( rule__Keyword__VersionAssignment_1_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4744:1: ( ( rule__Keyword__VersionAssignment_1_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4745:1: ( rule__Keyword__VersionAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeywordAccess().getVersionAssignment_1_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4716:1: ( rule__Keyword__VersionAssignment_1_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4716:2: rule__Keyword__VersionAssignment_1_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4746:1: ( rule__Keyword__VersionAssignment_1_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4746:2: rule__Keyword__VersionAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__Keyword__VersionAssignment_1_1_in_rule__Keyword__Group_1__1__Impl9488);
+            pushFollow(FOLLOW_rule__Keyword__VersionAssignment_1_1_in_rule__Keyword__Group_1__1__Impl9548);
             rule__Keyword__VersionAssignment_1_1();
 
             state._fsp--;
@@ -13484,21 +13579,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4730:1: rule__Scanner_SingleLineRule__Group__0 : rule__Scanner_SingleLineRule__Group__0__Impl rule__Scanner_SingleLineRule__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4760:1: rule__Scanner_SingleLineRule__Group__0 : rule__Scanner_SingleLineRule__Group__0__Impl rule__Scanner_SingleLineRule__Group__1 ;
     public final void rule__Scanner_SingleLineRule__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4734:1: ( rule__Scanner_SingleLineRule__Group__0__Impl rule__Scanner_SingleLineRule__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4735:2: rule__Scanner_SingleLineRule__Group__0__Impl rule__Scanner_SingleLineRule__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4764:1: ( rule__Scanner_SingleLineRule__Group__0__Impl rule__Scanner_SingleLineRule__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4765:2: rule__Scanner_SingleLineRule__Group__0__Impl rule__Scanner_SingleLineRule__Group__1
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__0__Impl_in_rule__Scanner_SingleLineRule__Group__09522);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__0__Impl_in_rule__Scanner_SingleLineRule__Group__09582);
             rule__Scanner_SingleLineRule__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__1_in_rule__Scanner_SingleLineRule__Group__09525);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__1_in_rule__Scanner_SingleLineRule__Group__09585);
             rule__Scanner_SingleLineRule__Group__1();
 
             state._fsp--;
@@ -13522,22 +13617,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4742:1: rule__Scanner_SingleLineRule__Group__0__Impl : ( 'single_line' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4772:1: rule__Scanner_SingleLineRule__Group__0__Impl : ( 'single_line' ) ;
     public final void rule__Scanner_SingleLineRule__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4746:1: ( ( 'single_line' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4747:1: ( 'single_line' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4776:1: ( ( 'single_line' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4777:1: ( 'single_line' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4747:1: ( 'single_line' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4748:1: 'single_line'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4777:1: ( 'single_line' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4778:1: 'single_line'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getSingle_lineKeyword_0()); 
             }
-            match(input,26,FOLLOW_26_in_rule__Scanner_SingleLineRule__Group__0__Impl9553); if (state.failed) return ;
+            match(input,26,FOLLOW_26_in_rule__Scanner_SingleLineRule__Group__0__Impl9613); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_SingleLineRuleAccess().getSingle_lineKeyword_0()); 
             }
@@ -13563,21 +13658,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4761:1: rule__Scanner_SingleLineRule__Group__1 : rule__Scanner_SingleLineRule__Group__1__Impl rule__Scanner_SingleLineRule__Group__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4791:1: rule__Scanner_SingleLineRule__Group__1 : rule__Scanner_SingleLineRule__Group__1__Impl rule__Scanner_SingleLineRule__Group__2 ;
     public final void rule__Scanner_SingleLineRule__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4765:1: ( rule__Scanner_SingleLineRule__Group__1__Impl rule__Scanner_SingleLineRule__Group__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4766:2: rule__Scanner_SingleLineRule__Group__1__Impl rule__Scanner_SingleLineRule__Group__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4795:1: ( rule__Scanner_SingleLineRule__Group__1__Impl rule__Scanner_SingleLineRule__Group__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4796:2: rule__Scanner_SingleLineRule__Group__1__Impl rule__Scanner_SingleLineRule__Group__2
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__1__Impl_in_rule__Scanner_SingleLineRule__Group__19584);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__1__Impl_in_rule__Scanner_SingleLineRule__Group__19644);
             rule__Scanner_SingleLineRule__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__2_in_rule__Scanner_SingleLineRule__Group__19587);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__2_in_rule__Scanner_SingleLineRule__Group__19647);
             rule__Scanner_SingleLineRule__Group__2();
 
             state._fsp--;
@@ -13601,25 +13696,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4773:1: rule__Scanner_SingleLineRule__Group__1__Impl : ( ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4803:1: rule__Scanner_SingleLineRule__Group__1__Impl : ( ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 ) ) ;
     public final void rule__Scanner_SingleLineRule__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4777:1: ( ( ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4778:1: ( ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4807:1: ( ( ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4808:1: ( ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4778:1: ( ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4779:1: ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4808:1: ( ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4809:1: ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getStartSeqAssignment_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4780:1: ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4780:2: rule__Scanner_SingleLineRule__StartSeqAssignment_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4810:1: ( rule__Scanner_SingleLineRule__StartSeqAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4810:2: rule__Scanner_SingleLineRule__StartSeqAssignment_1
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__StartSeqAssignment_1_in_rule__Scanner_SingleLineRule__Group__1__Impl9614);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__StartSeqAssignment_1_in_rule__Scanner_SingleLineRule__Group__1__Impl9674);
             rule__Scanner_SingleLineRule__StartSeqAssignment_1();
 
             state._fsp--;
@@ -13652,21 +13747,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4790:1: rule__Scanner_SingleLineRule__Group__2 : rule__Scanner_SingleLineRule__Group__2__Impl rule__Scanner_SingleLineRule__Group__3 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4820:1: rule__Scanner_SingleLineRule__Group__2 : rule__Scanner_SingleLineRule__Group__2__Impl rule__Scanner_SingleLineRule__Group__3 ;
     public final void rule__Scanner_SingleLineRule__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4794:1: ( rule__Scanner_SingleLineRule__Group__2__Impl rule__Scanner_SingleLineRule__Group__3 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4795:2: rule__Scanner_SingleLineRule__Group__2__Impl rule__Scanner_SingleLineRule__Group__3
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4824:1: ( rule__Scanner_SingleLineRule__Group__2__Impl rule__Scanner_SingleLineRule__Group__3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4825:2: rule__Scanner_SingleLineRule__Group__2__Impl rule__Scanner_SingleLineRule__Group__3
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__2__Impl_in_rule__Scanner_SingleLineRule__Group__29644);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__2__Impl_in_rule__Scanner_SingleLineRule__Group__29704);
             rule__Scanner_SingleLineRule__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__3_in_rule__Scanner_SingleLineRule__Group__29647);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__3_in_rule__Scanner_SingleLineRule__Group__29707);
             rule__Scanner_SingleLineRule__Group__3();
 
             state._fsp--;
@@ -13690,33 +13785,33 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4802:1: rule__Scanner_SingleLineRule__Group__2__Impl : ( ( rule__Scanner_SingleLineRule__Group_2__0 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4832:1: rule__Scanner_SingleLineRule__Group__2__Impl : ( ( rule__Scanner_SingleLineRule__Group_2__0 )? ) ;
     public final void rule__Scanner_SingleLineRule__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4806:1: ( ( ( rule__Scanner_SingleLineRule__Group_2__0 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4807:1: ( ( rule__Scanner_SingleLineRule__Group_2__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4836:1: ( ( ( rule__Scanner_SingleLineRule__Group_2__0 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4837:1: ( ( rule__Scanner_SingleLineRule__Group_2__0 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4807:1: ( ( rule__Scanner_SingleLineRule__Group_2__0 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4808:1: ( rule__Scanner_SingleLineRule__Group_2__0 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4837:1: ( ( rule__Scanner_SingleLineRule__Group_2__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4838:1: ( rule__Scanner_SingleLineRule__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getGroup_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4809:1: ( rule__Scanner_SingleLineRule__Group_2__0 )?
-            int alt33=2;
-            int LA33_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4839:1: ( rule__Scanner_SingleLineRule__Group_2__0 )?
+            int alt34=2;
+            int LA34_0 = input.LA(1);
 
-            if ( (LA33_0==27) ) {
-                alt33=1;
+            if ( (LA34_0==27) ) {
+                alt34=1;
             }
-            switch (alt33) {
+            switch (alt34) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4809:2: rule__Scanner_SingleLineRule__Group_2__0
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4839:2: rule__Scanner_SingleLineRule__Group_2__0
                     {
-                    pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_2__0_in_rule__Scanner_SingleLineRule__Group__2__Impl9674);
+                    pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_2__0_in_rule__Scanner_SingleLineRule__Group__2__Impl9734);
                     rule__Scanner_SingleLineRule__Group_2__0();
 
                     state._fsp--;
@@ -13752,16 +13847,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group__3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4819:1: rule__Scanner_SingleLineRule__Group__3 : rule__Scanner_SingleLineRule__Group__3__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4849:1: rule__Scanner_SingleLineRule__Group__3 : rule__Scanner_SingleLineRule__Group__3__Impl ;
     public final void rule__Scanner_SingleLineRule__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4823:1: ( rule__Scanner_SingleLineRule__Group__3__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4824:2: rule__Scanner_SingleLineRule__Group__3__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4853:1: ( rule__Scanner_SingleLineRule__Group__3__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4854:2: rule__Scanner_SingleLineRule__Group__3__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__3__Impl_in_rule__Scanner_SingleLineRule__Group__39705);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group__3__Impl_in_rule__Scanner_SingleLineRule__Group__39765);
             rule__Scanner_SingleLineRule__Group__3__Impl();
 
             state._fsp--;
@@ -13785,33 +13880,33 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group__3__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4830:1: rule__Scanner_SingleLineRule__Group__3__Impl : ( ( rule__Scanner_SingleLineRule__Group_3__0 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4860:1: rule__Scanner_SingleLineRule__Group__3__Impl : ( ( rule__Scanner_SingleLineRule__Group_3__0 )? ) ;
     public final void rule__Scanner_SingleLineRule__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4834:1: ( ( ( rule__Scanner_SingleLineRule__Group_3__0 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4835:1: ( ( rule__Scanner_SingleLineRule__Group_3__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4864:1: ( ( ( rule__Scanner_SingleLineRule__Group_3__0 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4865:1: ( ( rule__Scanner_SingleLineRule__Group_3__0 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4835:1: ( ( rule__Scanner_SingleLineRule__Group_3__0 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4836:1: ( rule__Scanner_SingleLineRule__Group_3__0 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4865:1: ( ( rule__Scanner_SingleLineRule__Group_3__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4866:1: ( rule__Scanner_SingleLineRule__Group_3__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getGroup_3()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4837:1: ( rule__Scanner_SingleLineRule__Group_3__0 )?
-            int alt34=2;
-            int LA34_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4867:1: ( rule__Scanner_SingleLineRule__Group_3__0 )?
+            int alt35=2;
+            int LA35_0 = input.LA(1);
 
-            if ( (LA34_0==28) ) {
-                alt34=1;
+            if ( (LA35_0==28) ) {
+                alt35=1;
             }
-            switch (alt34) {
+            switch (alt35) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4837:2: rule__Scanner_SingleLineRule__Group_3__0
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4867:2: rule__Scanner_SingleLineRule__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__0_in_rule__Scanner_SingleLineRule__Group__3__Impl9732);
+                    pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__0_in_rule__Scanner_SingleLineRule__Group__3__Impl9792);
                     rule__Scanner_SingleLineRule__Group_3__0();
 
                     state._fsp--;
@@ -13847,21 +13942,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group_2__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4855:1: rule__Scanner_SingleLineRule__Group_2__0 : rule__Scanner_SingleLineRule__Group_2__0__Impl rule__Scanner_SingleLineRule__Group_2__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4885:1: rule__Scanner_SingleLineRule__Group_2__0 : rule__Scanner_SingleLineRule__Group_2__0__Impl rule__Scanner_SingleLineRule__Group_2__1 ;
     public final void rule__Scanner_SingleLineRule__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4859:1: ( rule__Scanner_SingleLineRule__Group_2__0__Impl rule__Scanner_SingleLineRule__Group_2__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4860:2: rule__Scanner_SingleLineRule__Group_2__0__Impl rule__Scanner_SingleLineRule__Group_2__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4889:1: ( rule__Scanner_SingleLineRule__Group_2__0__Impl rule__Scanner_SingleLineRule__Group_2__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4890:2: rule__Scanner_SingleLineRule__Group_2__0__Impl rule__Scanner_SingleLineRule__Group_2__1
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_2__0__Impl_in_rule__Scanner_SingleLineRule__Group_2__09771);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_2__0__Impl_in_rule__Scanner_SingleLineRule__Group_2__09831);
             rule__Scanner_SingleLineRule__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_2__1_in_rule__Scanner_SingleLineRule__Group_2__09774);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_2__1_in_rule__Scanner_SingleLineRule__Group_2__09834);
             rule__Scanner_SingleLineRule__Group_2__1();
 
             state._fsp--;
@@ -13885,22 +13980,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group_2__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4867:1: rule__Scanner_SingleLineRule__Group_2__0__Impl : ( '=>' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4897:1: rule__Scanner_SingleLineRule__Group_2__0__Impl : ( '=>' ) ;
     public final void rule__Scanner_SingleLineRule__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4871:1: ( ( '=>' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4872:1: ( '=>' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4901:1: ( ( '=>' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4902:1: ( '=>' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4872:1: ( '=>' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4873:1: '=>'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4902:1: ( '=>' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4903:1: '=>'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_2_0()); 
             }
-            match(input,27,FOLLOW_27_in_rule__Scanner_SingleLineRule__Group_2__0__Impl9802); if (state.failed) return ;
+            match(input,27,FOLLOW_27_in_rule__Scanner_SingleLineRule__Group_2__0__Impl9862); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_2_0()); 
             }
@@ -13926,16 +14021,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group_2__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4886:1: rule__Scanner_SingleLineRule__Group_2__1 : rule__Scanner_SingleLineRule__Group_2__1__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4916:1: rule__Scanner_SingleLineRule__Group_2__1 : rule__Scanner_SingleLineRule__Group_2__1__Impl ;
     public final void rule__Scanner_SingleLineRule__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4890:1: ( rule__Scanner_SingleLineRule__Group_2__1__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4891:2: rule__Scanner_SingleLineRule__Group_2__1__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4920:1: ( rule__Scanner_SingleLineRule__Group_2__1__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4921:2: rule__Scanner_SingleLineRule__Group_2__1__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_2__1__Impl_in_rule__Scanner_SingleLineRule__Group_2__19833);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_2__1__Impl_in_rule__Scanner_SingleLineRule__Group_2__19893);
             rule__Scanner_SingleLineRule__Group_2__1__Impl();
 
             state._fsp--;
@@ -13959,33 +14054,33 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group_2__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4897:1: rule__Scanner_SingleLineRule__Group_2__1__Impl : ( ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4927:1: rule__Scanner_SingleLineRule__Group_2__1__Impl : ( ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )? ) ;
     public final void rule__Scanner_SingleLineRule__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4901:1: ( ( ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4902:1: ( ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4931:1: ( ( ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4932:1: ( ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4902:1: ( ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4903:1: ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4932:1: ( ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4933:1: ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getEndSeqAssignment_2_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4904:1: ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )?
-            int alt35=2;
-            int LA35_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4934:1: ( rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 )?
+            int alt36=2;
+            int LA36_0 = input.LA(1);
 
-            if ( (LA35_0==RULE_STRING) ) {
-                alt35=1;
+            if ( (LA36_0==RULE_STRING) ) {
+                alt36=1;
             }
-            switch (alt35) {
+            switch (alt36) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4904:2: rule__Scanner_SingleLineRule__EndSeqAssignment_2_1
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4934:2: rule__Scanner_SingleLineRule__EndSeqAssignment_2_1
                     {
-                    pushFollow(FOLLOW_rule__Scanner_SingleLineRule__EndSeqAssignment_2_1_in_rule__Scanner_SingleLineRule__Group_2__1__Impl9860);
+                    pushFollow(FOLLOW_rule__Scanner_SingleLineRule__EndSeqAssignment_2_1_in_rule__Scanner_SingleLineRule__Group_2__1__Impl9920);
                     rule__Scanner_SingleLineRule__EndSeqAssignment_2_1();
 
                     state._fsp--;
@@ -14021,21 +14116,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group_3__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4918:1: rule__Scanner_SingleLineRule__Group_3__0 : rule__Scanner_SingleLineRule__Group_3__0__Impl rule__Scanner_SingleLineRule__Group_3__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4948:1: rule__Scanner_SingleLineRule__Group_3__0 : rule__Scanner_SingleLineRule__Group_3__0__Impl rule__Scanner_SingleLineRule__Group_3__1 ;
     public final void rule__Scanner_SingleLineRule__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4922:1: ( rule__Scanner_SingleLineRule__Group_3__0__Impl rule__Scanner_SingleLineRule__Group_3__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4923:2: rule__Scanner_SingleLineRule__Group_3__0__Impl rule__Scanner_SingleLineRule__Group_3__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4952:1: ( rule__Scanner_SingleLineRule__Group_3__0__Impl rule__Scanner_SingleLineRule__Group_3__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4953:2: rule__Scanner_SingleLineRule__Group_3__0__Impl rule__Scanner_SingleLineRule__Group_3__1
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__0__Impl_in_rule__Scanner_SingleLineRule__Group_3__09895);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__0__Impl_in_rule__Scanner_SingleLineRule__Group_3__09955);
             rule__Scanner_SingleLineRule__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__1_in_rule__Scanner_SingleLineRule__Group_3__09898);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__1_in_rule__Scanner_SingleLineRule__Group_3__09958);
             rule__Scanner_SingleLineRule__Group_3__1();
 
             state._fsp--;
@@ -14059,22 +14154,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group_3__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4930:1: rule__Scanner_SingleLineRule__Group_3__0__Impl : ( 'escaped' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4960:1: rule__Scanner_SingleLineRule__Group_3__0__Impl : ( 'escaped' ) ;
     public final void rule__Scanner_SingleLineRule__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4934:1: ( ( 'escaped' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4935:1: ( 'escaped' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4964:1: ( ( 'escaped' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4965:1: ( 'escaped' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4935:1: ( 'escaped' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4936:1: 'escaped'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4965:1: ( 'escaped' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4966:1: 'escaped'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getEscapedKeyword_3_0()); 
             }
-            match(input,28,FOLLOW_28_in_rule__Scanner_SingleLineRule__Group_3__0__Impl9926); if (state.failed) return ;
+            match(input,28,FOLLOW_28_in_rule__Scanner_SingleLineRule__Group_3__0__Impl9986); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_SingleLineRuleAccess().getEscapedKeyword_3_0()); 
             }
@@ -14100,21 +14195,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group_3__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4949:1: rule__Scanner_SingleLineRule__Group_3__1 : rule__Scanner_SingleLineRule__Group_3__1__Impl rule__Scanner_SingleLineRule__Group_3__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4979:1: rule__Scanner_SingleLineRule__Group_3__1 : rule__Scanner_SingleLineRule__Group_3__1__Impl rule__Scanner_SingleLineRule__Group_3__2 ;
     public final void rule__Scanner_SingleLineRule__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4953:1: ( rule__Scanner_SingleLineRule__Group_3__1__Impl rule__Scanner_SingleLineRule__Group_3__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4954:2: rule__Scanner_SingleLineRule__Group_3__1__Impl rule__Scanner_SingleLineRule__Group_3__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4983:1: ( rule__Scanner_SingleLineRule__Group_3__1__Impl rule__Scanner_SingleLineRule__Group_3__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4984:2: rule__Scanner_SingleLineRule__Group_3__1__Impl rule__Scanner_SingleLineRule__Group_3__2
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__1__Impl_in_rule__Scanner_SingleLineRule__Group_3__19957);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__1__Impl_in_rule__Scanner_SingleLineRule__Group_3__110017);
             rule__Scanner_SingleLineRule__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__2_in_rule__Scanner_SingleLineRule__Group_3__19960);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__2_in_rule__Scanner_SingleLineRule__Group_3__110020);
             rule__Scanner_SingleLineRule__Group_3__2();
 
             state._fsp--;
@@ -14138,22 +14233,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group_3__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4961:1: rule__Scanner_SingleLineRule__Group_3__1__Impl : ( 'by' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4991:1: rule__Scanner_SingleLineRule__Group_3__1__Impl : ( 'by' ) ;
     public final void rule__Scanner_SingleLineRule__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4965:1: ( ( 'by' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4966:1: ( 'by' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4995:1: ( ( 'by' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4996:1: ( 'by' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4966:1: ( 'by' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4967:1: 'by'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4996:1: ( 'by' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4997:1: 'by'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getByKeyword_3_1()); 
             }
-            match(input,29,FOLLOW_29_in_rule__Scanner_SingleLineRule__Group_3__1__Impl9988); if (state.failed) return ;
+            match(input,29,FOLLOW_29_in_rule__Scanner_SingleLineRule__Group_3__1__Impl10048); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_SingleLineRuleAccess().getByKeyword_3_1()); 
             }
@@ -14179,16 +14274,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group_3__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4980:1: rule__Scanner_SingleLineRule__Group_3__2 : rule__Scanner_SingleLineRule__Group_3__2__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5010:1: rule__Scanner_SingleLineRule__Group_3__2 : rule__Scanner_SingleLineRule__Group_3__2__Impl ;
     public final void rule__Scanner_SingleLineRule__Group_3__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4984:1: ( rule__Scanner_SingleLineRule__Group_3__2__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4985:2: rule__Scanner_SingleLineRule__Group_3__2__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5014:1: ( rule__Scanner_SingleLineRule__Group_3__2__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5015:2: rule__Scanner_SingleLineRule__Group_3__2__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__2__Impl_in_rule__Scanner_SingleLineRule__Group_3__210019);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__Group_3__2__Impl_in_rule__Scanner_SingleLineRule__Group_3__210079);
             rule__Scanner_SingleLineRule__Group_3__2__Impl();
 
             state._fsp--;
@@ -14212,25 +14307,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__Group_3__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4991:1: rule__Scanner_SingleLineRule__Group_3__2__Impl : ( ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5021:1: rule__Scanner_SingleLineRule__Group_3__2__Impl : ( ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 ) ) ;
     public final void rule__Scanner_SingleLineRule__Group_3__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4995:1: ( ( ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4996:1: ( ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5025:1: ( ( ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5026:1: ( ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4996:1: ( ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4997:1: ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5026:1: ( ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5027:1: ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getEscapeSeqAssignment_3_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4998:1: ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4998:2: rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5028:1: ( rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5028:2: rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2
             {
-            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2_in_rule__Scanner_SingleLineRule__Group_3__2__Impl10046);
+            pushFollow(FOLLOW_rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2_in_rule__Scanner_SingleLineRule__Group_3__2__Impl10106);
             rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2();
 
             state._fsp--;
@@ -14263,21 +14358,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5014:1: rule__Scanner_MultiLineRule__Group__0 : rule__Scanner_MultiLineRule__Group__0__Impl rule__Scanner_MultiLineRule__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5044:1: rule__Scanner_MultiLineRule__Group__0 : rule__Scanner_MultiLineRule__Group__0__Impl rule__Scanner_MultiLineRule__Group__1 ;
     public final void rule__Scanner_MultiLineRule__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5018:1: ( rule__Scanner_MultiLineRule__Group__0__Impl rule__Scanner_MultiLineRule__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5019:2: rule__Scanner_MultiLineRule__Group__0__Impl rule__Scanner_MultiLineRule__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5048:1: ( rule__Scanner_MultiLineRule__Group__0__Impl rule__Scanner_MultiLineRule__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5049:2: rule__Scanner_MultiLineRule__Group__0__Impl rule__Scanner_MultiLineRule__Group__1
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__0__Impl_in_rule__Scanner_MultiLineRule__Group__010082);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__0__Impl_in_rule__Scanner_MultiLineRule__Group__010142);
             rule__Scanner_MultiLineRule__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__1_in_rule__Scanner_MultiLineRule__Group__010085);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__1_in_rule__Scanner_MultiLineRule__Group__010145);
             rule__Scanner_MultiLineRule__Group__1();
 
             state._fsp--;
@@ -14301,22 +14396,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5026:1: rule__Scanner_MultiLineRule__Group__0__Impl : ( 'multi_line' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5056:1: rule__Scanner_MultiLineRule__Group__0__Impl : ( 'multi_line' ) ;
     public final void rule__Scanner_MultiLineRule__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5030:1: ( ( 'multi_line' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5031:1: ( 'multi_line' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5060:1: ( ( 'multi_line' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5061:1: ( 'multi_line' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5031:1: ( 'multi_line' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5032:1: 'multi_line'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5061:1: ( 'multi_line' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5062:1: 'multi_line'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getMulti_lineKeyword_0()); 
             }
-            match(input,30,FOLLOW_30_in_rule__Scanner_MultiLineRule__Group__0__Impl10113); if (state.failed) return ;
+            match(input,30,FOLLOW_30_in_rule__Scanner_MultiLineRule__Group__0__Impl10173); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_MultiLineRuleAccess().getMulti_lineKeyword_0()); 
             }
@@ -14342,21 +14437,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5045:1: rule__Scanner_MultiLineRule__Group__1 : rule__Scanner_MultiLineRule__Group__1__Impl rule__Scanner_MultiLineRule__Group__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5075:1: rule__Scanner_MultiLineRule__Group__1 : rule__Scanner_MultiLineRule__Group__1__Impl rule__Scanner_MultiLineRule__Group__2 ;
     public final void rule__Scanner_MultiLineRule__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5049:1: ( rule__Scanner_MultiLineRule__Group__1__Impl rule__Scanner_MultiLineRule__Group__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5050:2: rule__Scanner_MultiLineRule__Group__1__Impl rule__Scanner_MultiLineRule__Group__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5079:1: ( rule__Scanner_MultiLineRule__Group__1__Impl rule__Scanner_MultiLineRule__Group__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5080:2: rule__Scanner_MultiLineRule__Group__1__Impl rule__Scanner_MultiLineRule__Group__2
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__1__Impl_in_rule__Scanner_MultiLineRule__Group__110144);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__1__Impl_in_rule__Scanner_MultiLineRule__Group__110204);
             rule__Scanner_MultiLineRule__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__2_in_rule__Scanner_MultiLineRule__Group__110147);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__2_in_rule__Scanner_MultiLineRule__Group__110207);
             rule__Scanner_MultiLineRule__Group__2();
 
             state._fsp--;
@@ -14380,25 +14475,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5057:1: rule__Scanner_MultiLineRule__Group__1__Impl : ( ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5087:1: rule__Scanner_MultiLineRule__Group__1__Impl : ( ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 ) ) ;
     public final void rule__Scanner_MultiLineRule__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5061:1: ( ( ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5062:1: ( ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5091:1: ( ( ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5092:1: ( ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5062:1: ( ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5063:1: ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5092:1: ( ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5093:1: ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getStartSeqAssignment_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5064:1: ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5064:2: rule__Scanner_MultiLineRule__StartSeqAssignment_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5094:1: ( rule__Scanner_MultiLineRule__StartSeqAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5094:2: rule__Scanner_MultiLineRule__StartSeqAssignment_1
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__StartSeqAssignment_1_in_rule__Scanner_MultiLineRule__Group__1__Impl10174);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__StartSeqAssignment_1_in_rule__Scanner_MultiLineRule__Group__1__Impl10234);
             rule__Scanner_MultiLineRule__StartSeqAssignment_1();
 
             state._fsp--;
@@ -14431,21 +14526,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5074:1: rule__Scanner_MultiLineRule__Group__2 : rule__Scanner_MultiLineRule__Group__2__Impl rule__Scanner_MultiLineRule__Group__3 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5104:1: rule__Scanner_MultiLineRule__Group__2 : rule__Scanner_MultiLineRule__Group__2__Impl rule__Scanner_MultiLineRule__Group__3 ;
     public final void rule__Scanner_MultiLineRule__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5078:1: ( rule__Scanner_MultiLineRule__Group__2__Impl rule__Scanner_MultiLineRule__Group__3 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5079:2: rule__Scanner_MultiLineRule__Group__2__Impl rule__Scanner_MultiLineRule__Group__3
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5108:1: ( rule__Scanner_MultiLineRule__Group__2__Impl rule__Scanner_MultiLineRule__Group__3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5109:2: rule__Scanner_MultiLineRule__Group__2__Impl rule__Scanner_MultiLineRule__Group__3
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__2__Impl_in_rule__Scanner_MultiLineRule__Group__210204);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__2__Impl_in_rule__Scanner_MultiLineRule__Group__210264);
             rule__Scanner_MultiLineRule__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__3_in_rule__Scanner_MultiLineRule__Group__210207);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__3_in_rule__Scanner_MultiLineRule__Group__210267);
             rule__Scanner_MultiLineRule__Group__3();
 
             state._fsp--;
@@ -14469,22 +14564,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5086:1: rule__Scanner_MultiLineRule__Group__2__Impl : ( '=>' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5116:1: rule__Scanner_MultiLineRule__Group__2__Impl : ( '=>' ) ;
     public final void rule__Scanner_MultiLineRule__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5090:1: ( ( '=>' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5091:1: ( '=>' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5120:1: ( ( '=>' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5121:1: ( '=>' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5091:1: ( '=>' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5092:1: '=>'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5121:1: ( '=>' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5122:1: '=>'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getEqualsSignGreaterThanSignKeyword_2()); 
             }
-            match(input,27,FOLLOW_27_in_rule__Scanner_MultiLineRule__Group__2__Impl10235); if (state.failed) return ;
+            match(input,27,FOLLOW_27_in_rule__Scanner_MultiLineRule__Group__2__Impl10295); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_MultiLineRuleAccess().getEqualsSignGreaterThanSignKeyword_2()); 
             }
@@ -14510,21 +14605,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group__3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5105:1: rule__Scanner_MultiLineRule__Group__3 : rule__Scanner_MultiLineRule__Group__3__Impl rule__Scanner_MultiLineRule__Group__4 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5135:1: rule__Scanner_MultiLineRule__Group__3 : rule__Scanner_MultiLineRule__Group__3__Impl rule__Scanner_MultiLineRule__Group__4 ;
     public final void rule__Scanner_MultiLineRule__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5109:1: ( rule__Scanner_MultiLineRule__Group__3__Impl rule__Scanner_MultiLineRule__Group__4 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5110:2: rule__Scanner_MultiLineRule__Group__3__Impl rule__Scanner_MultiLineRule__Group__4
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5139:1: ( rule__Scanner_MultiLineRule__Group__3__Impl rule__Scanner_MultiLineRule__Group__4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5140:2: rule__Scanner_MultiLineRule__Group__3__Impl rule__Scanner_MultiLineRule__Group__4
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__3__Impl_in_rule__Scanner_MultiLineRule__Group__310266);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__3__Impl_in_rule__Scanner_MultiLineRule__Group__310326);
             rule__Scanner_MultiLineRule__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__4_in_rule__Scanner_MultiLineRule__Group__310269);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__4_in_rule__Scanner_MultiLineRule__Group__310329);
             rule__Scanner_MultiLineRule__Group__4();
 
             state._fsp--;
@@ -14548,25 +14643,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group__3__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5117:1: rule__Scanner_MultiLineRule__Group__3__Impl : ( ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5147:1: rule__Scanner_MultiLineRule__Group__3__Impl : ( ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 ) ) ;
     public final void rule__Scanner_MultiLineRule__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5121:1: ( ( ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5122:1: ( ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5151:1: ( ( ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5152:1: ( ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5122:1: ( ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5123:1: ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5152:1: ( ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5153:1: ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getEndSeqAssignment_3()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5124:1: ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5124:2: rule__Scanner_MultiLineRule__EndSeqAssignment_3
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5154:1: ( rule__Scanner_MultiLineRule__EndSeqAssignment_3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5154:2: rule__Scanner_MultiLineRule__EndSeqAssignment_3
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__EndSeqAssignment_3_in_rule__Scanner_MultiLineRule__Group__3__Impl10296);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__EndSeqAssignment_3_in_rule__Scanner_MultiLineRule__Group__3__Impl10356);
             rule__Scanner_MultiLineRule__EndSeqAssignment_3();
 
             state._fsp--;
@@ -14599,16 +14694,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group__4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5134:1: rule__Scanner_MultiLineRule__Group__4 : rule__Scanner_MultiLineRule__Group__4__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5164:1: rule__Scanner_MultiLineRule__Group__4 : rule__Scanner_MultiLineRule__Group__4__Impl ;
     public final void rule__Scanner_MultiLineRule__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5138:1: ( rule__Scanner_MultiLineRule__Group__4__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5139:2: rule__Scanner_MultiLineRule__Group__4__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5168:1: ( rule__Scanner_MultiLineRule__Group__4__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5169:2: rule__Scanner_MultiLineRule__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__4__Impl_in_rule__Scanner_MultiLineRule__Group__410326);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group__4__Impl_in_rule__Scanner_MultiLineRule__Group__410386);
             rule__Scanner_MultiLineRule__Group__4__Impl();
 
             state._fsp--;
@@ -14632,33 +14727,33 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group__4__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5145:1: rule__Scanner_MultiLineRule__Group__4__Impl : ( ( rule__Scanner_MultiLineRule__Group_4__0 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5175:1: rule__Scanner_MultiLineRule__Group__4__Impl : ( ( rule__Scanner_MultiLineRule__Group_4__0 )? ) ;
     public final void rule__Scanner_MultiLineRule__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5149:1: ( ( ( rule__Scanner_MultiLineRule__Group_4__0 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5150:1: ( ( rule__Scanner_MultiLineRule__Group_4__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5179:1: ( ( ( rule__Scanner_MultiLineRule__Group_4__0 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5180:1: ( ( rule__Scanner_MultiLineRule__Group_4__0 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5150:1: ( ( rule__Scanner_MultiLineRule__Group_4__0 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5151:1: ( rule__Scanner_MultiLineRule__Group_4__0 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5180:1: ( ( rule__Scanner_MultiLineRule__Group_4__0 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5181:1: ( rule__Scanner_MultiLineRule__Group_4__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getGroup_4()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5152:1: ( rule__Scanner_MultiLineRule__Group_4__0 )?
-            int alt36=2;
-            int LA36_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5182:1: ( rule__Scanner_MultiLineRule__Group_4__0 )?
+            int alt37=2;
+            int LA37_0 = input.LA(1);
 
-            if ( (LA36_0==28) ) {
-                alt36=1;
+            if ( (LA37_0==28) ) {
+                alt37=1;
             }
-            switch (alt36) {
+            switch (alt37) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5152:2: rule__Scanner_MultiLineRule__Group_4__0
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5182:2: rule__Scanner_MultiLineRule__Group_4__0
                     {
-                    pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__0_in_rule__Scanner_MultiLineRule__Group__4__Impl10353);
+                    pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__0_in_rule__Scanner_MultiLineRule__Group__4__Impl10413);
                     rule__Scanner_MultiLineRule__Group_4__0();
 
                     state._fsp--;
@@ -14694,21 +14789,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group_4__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5172:1: rule__Scanner_MultiLineRule__Group_4__0 : rule__Scanner_MultiLineRule__Group_4__0__Impl rule__Scanner_MultiLineRule__Group_4__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5202:1: rule__Scanner_MultiLineRule__Group_4__0 : rule__Scanner_MultiLineRule__Group_4__0__Impl rule__Scanner_MultiLineRule__Group_4__1 ;
     public final void rule__Scanner_MultiLineRule__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5176:1: ( rule__Scanner_MultiLineRule__Group_4__0__Impl rule__Scanner_MultiLineRule__Group_4__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5177:2: rule__Scanner_MultiLineRule__Group_4__0__Impl rule__Scanner_MultiLineRule__Group_4__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5206:1: ( rule__Scanner_MultiLineRule__Group_4__0__Impl rule__Scanner_MultiLineRule__Group_4__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5207:2: rule__Scanner_MultiLineRule__Group_4__0__Impl rule__Scanner_MultiLineRule__Group_4__1
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__0__Impl_in_rule__Scanner_MultiLineRule__Group_4__010394);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__0__Impl_in_rule__Scanner_MultiLineRule__Group_4__010454);
             rule__Scanner_MultiLineRule__Group_4__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__1_in_rule__Scanner_MultiLineRule__Group_4__010397);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__1_in_rule__Scanner_MultiLineRule__Group_4__010457);
             rule__Scanner_MultiLineRule__Group_4__1();
 
             state._fsp--;
@@ -14732,22 +14827,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group_4__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5184:1: rule__Scanner_MultiLineRule__Group_4__0__Impl : ( 'escaped' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5214:1: rule__Scanner_MultiLineRule__Group_4__0__Impl : ( 'escaped' ) ;
     public final void rule__Scanner_MultiLineRule__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5188:1: ( ( 'escaped' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5189:1: ( 'escaped' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5218:1: ( ( 'escaped' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5219:1: ( 'escaped' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5189:1: ( 'escaped' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5190:1: 'escaped'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5219:1: ( 'escaped' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5220:1: 'escaped'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getEscapedKeyword_4_0()); 
             }
-            match(input,28,FOLLOW_28_in_rule__Scanner_MultiLineRule__Group_4__0__Impl10425); if (state.failed) return ;
+            match(input,28,FOLLOW_28_in_rule__Scanner_MultiLineRule__Group_4__0__Impl10485); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_MultiLineRuleAccess().getEscapedKeyword_4_0()); 
             }
@@ -14773,21 +14868,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group_4__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5203:1: rule__Scanner_MultiLineRule__Group_4__1 : rule__Scanner_MultiLineRule__Group_4__1__Impl rule__Scanner_MultiLineRule__Group_4__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5233:1: rule__Scanner_MultiLineRule__Group_4__1 : rule__Scanner_MultiLineRule__Group_4__1__Impl rule__Scanner_MultiLineRule__Group_4__2 ;
     public final void rule__Scanner_MultiLineRule__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5207:1: ( rule__Scanner_MultiLineRule__Group_4__1__Impl rule__Scanner_MultiLineRule__Group_4__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5208:2: rule__Scanner_MultiLineRule__Group_4__1__Impl rule__Scanner_MultiLineRule__Group_4__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5237:1: ( rule__Scanner_MultiLineRule__Group_4__1__Impl rule__Scanner_MultiLineRule__Group_4__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5238:2: rule__Scanner_MultiLineRule__Group_4__1__Impl rule__Scanner_MultiLineRule__Group_4__2
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__1__Impl_in_rule__Scanner_MultiLineRule__Group_4__110456);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__1__Impl_in_rule__Scanner_MultiLineRule__Group_4__110516);
             rule__Scanner_MultiLineRule__Group_4__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__2_in_rule__Scanner_MultiLineRule__Group_4__110459);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__2_in_rule__Scanner_MultiLineRule__Group_4__110519);
             rule__Scanner_MultiLineRule__Group_4__2();
 
             state._fsp--;
@@ -14811,22 +14906,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group_4__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5215:1: rule__Scanner_MultiLineRule__Group_4__1__Impl : ( 'by' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5245:1: rule__Scanner_MultiLineRule__Group_4__1__Impl : ( 'by' ) ;
     public final void rule__Scanner_MultiLineRule__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5219:1: ( ( 'by' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5220:1: ( 'by' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5249:1: ( ( 'by' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5250:1: ( 'by' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5220:1: ( 'by' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5221:1: 'by'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5250:1: ( 'by' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5251:1: 'by'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getByKeyword_4_1()); 
             }
-            match(input,29,FOLLOW_29_in_rule__Scanner_MultiLineRule__Group_4__1__Impl10487); if (state.failed) return ;
+            match(input,29,FOLLOW_29_in_rule__Scanner_MultiLineRule__Group_4__1__Impl10547); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_MultiLineRuleAccess().getByKeyword_4_1()); 
             }
@@ -14852,16 +14947,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group_4__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5234:1: rule__Scanner_MultiLineRule__Group_4__2 : rule__Scanner_MultiLineRule__Group_4__2__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5264:1: rule__Scanner_MultiLineRule__Group_4__2 : rule__Scanner_MultiLineRule__Group_4__2__Impl ;
     public final void rule__Scanner_MultiLineRule__Group_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5238:1: ( rule__Scanner_MultiLineRule__Group_4__2__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5239:2: rule__Scanner_MultiLineRule__Group_4__2__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5268:1: ( rule__Scanner_MultiLineRule__Group_4__2__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5269:2: rule__Scanner_MultiLineRule__Group_4__2__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__2__Impl_in_rule__Scanner_MultiLineRule__Group_4__210518);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__Group_4__2__Impl_in_rule__Scanner_MultiLineRule__Group_4__210578);
             rule__Scanner_MultiLineRule__Group_4__2__Impl();
 
             state._fsp--;
@@ -14885,25 +14980,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__Group_4__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5245:1: rule__Scanner_MultiLineRule__Group_4__2__Impl : ( ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5275:1: rule__Scanner_MultiLineRule__Group_4__2__Impl : ( ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 ) ) ;
     public final void rule__Scanner_MultiLineRule__Group_4__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5249:1: ( ( ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5250:1: ( ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5279:1: ( ( ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5280:1: ( ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5250:1: ( ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5251:1: ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5280:1: ( ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5281:1: ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getEscapeSeqAssignment_4_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5252:1: ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5252:2: rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5282:1: ( rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5282:2: rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2
             {
-            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2_in_rule__Scanner_MultiLineRule__Group_4__2__Impl10545);
+            pushFollow(FOLLOW_rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2_in_rule__Scanner_MultiLineRule__Group_4__2__Impl10605);
             rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2();
 
             state._fsp--;
@@ -14936,21 +15031,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5268:1: rule__Scanner_PatternRule__Group__0 : rule__Scanner_PatternRule__Group__0__Impl rule__Scanner_PatternRule__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5298:1: rule__Scanner_PatternRule__Group__0 : rule__Scanner_PatternRule__Group__0__Impl rule__Scanner_PatternRule__Group__1 ;
     public final void rule__Scanner_PatternRule__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5272:1: ( rule__Scanner_PatternRule__Group__0__Impl rule__Scanner_PatternRule__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5273:2: rule__Scanner_PatternRule__Group__0__Impl rule__Scanner_PatternRule__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5302:1: ( rule__Scanner_PatternRule__Group__0__Impl rule__Scanner_PatternRule__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5303:2: rule__Scanner_PatternRule__Group__0__Impl rule__Scanner_PatternRule__Group__1
             {
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__0__Impl_in_rule__Scanner_PatternRule__Group__010581);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__0__Impl_in_rule__Scanner_PatternRule__Group__010641);
             rule__Scanner_PatternRule__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__1_in_rule__Scanner_PatternRule__Group__010584);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__1_in_rule__Scanner_PatternRule__Group__010644);
             rule__Scanner_PatternRule__Group__1();
 
             state._fsp--;
@@ -14974,22 +15069,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5280:1: rule__Scanner_PatternRule__Group__0__Impl : ( 'pattern' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5310:1: rule__Scanner_PatternRule__Group__0__Impl : ( 'pattern' ) ;
     public final void rule__Scanner_PatternRule__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5284:1: ( ( 'pattern' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5285:1: ( 'pattern' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5314:1: ( ( 'pattern' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5315:1: ( 'pattern' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5285:1: ( 'pattern' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5286:1: 'pattern'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5315:1: ( 'pattern' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5316:1: 'pattern'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_PatternRuleAccess().getPatternKeyword_0()); 
             }
-            match(input,37,FOLLOW_37_in_rule__Scanner_PatternRule__Group__0__Impl10612); if (state.failed) return ;
+            match(input,37,FOLLOW_37_in_rule__Scanner_PatternRule__Group__0__Impl10672); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_PatternRuleAccess().getPatternKeyword_0()); 
             }
@@ -15015,21 +15110,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5299:1: rule__Scanner_PatternRule__Group__1 : rule__Scanner_PatternRule__Group__1__Impl rule__Scanner_PatternRule__Group__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5329:1: rule__Scanner_PatternRule__Group__1 : rule__Scanner_PatternRule__Group__1__Impl rule__Scanner_PatternRule__Group__2 ;
     public final void rule__Scanner_PatternRule__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5303:1: ( rule__Scanner_PatternRule__Group__1__Impl rule__Scanner_PatternRule__Group__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5304:2: rule__Scanner_PatternRule__Group__1__Impl rule__Scanner_PatternRule__Group__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5333:1: ( rule__Scanner_PatternRule__Group__1__Impl rule__Scanner_PatternRule__Group__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5334:2: rule__Scanner_PatternRule__Group__1__Impl rule__Scanner_PatternRule__Group__2
             {
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__1__Impl_in_rule__Scanner_PatternRule__Group__110643);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__1__Impl_in_rule__Scanner_PatternRule__Group__110703);
             rule__Scanner_PatternRule__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__2_in_rule__Scanner_PatternRule__Group__110646);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__2_in_rule__Scanner_PatternRule__Group__110706);
             rule__Scanner_PatternRule__Group__2();
 
             state._fsp--;
@@ -15053,25 +15148,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5311:1: rule__Scanner_PatternRule__Group__1__Impl : ( ( rule__Scanner_PatternRule__StartPatternAssignment_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5341:1: rule__Scanner_PatternRule__Group__1__Impl : ( ( rule__Scanner_PatternRule__StartPatternAssignment_1 ) ) ;
     public final void rule__Scanner_PatternRule__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5315:1: ( ( ( rule__Scanner_PatternRule__StartPatternAssignment_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5316:1: ( ( rule__Scanner_PatternRule__StartPatternAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5345:1: ( ( ( rule__Scanner_PatternRule__StartPatternAssignment_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5346:1: ( ( rule__Scanner_PatternRule__StartPatternAssignment_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5316:1: ( ( rule__Scanner_PatternRule__StartPatternAssignment_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5317:1: ( rule__Scanner_PatternRule__StartPatternAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5346:1: ( ( rule__Scanner_PatternRule__StartPatternAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5347:1: ( rule__Scanner_PatternRule__StartPatternAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_PatternRuleAccess().getStartPatternAssignment_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5318:1: ( rule__Scanner_PatternRule__StartPatternAssignment_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5318:2: rule__Scanner_PatternRule__StartPatternAssignment_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5348:1: ( rule__Scanner_PatternRule__StartPatternAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5348:2: rule__Scanner_PatternRule__StartPatternAssignment_1
             {
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__StartPatternAssignment_1_in_rule__Scanner_PatternRule__Group__1__Impl10673);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__StartPatternAssignment_1_in_rule__Scanner_PatternRule__Group__1__Impl10733);
             rule__Scanner_PatternRule__StartPatternAssignment_1();
 
             state._fsp--;
@@ -15104,21 +15199,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__Group__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5328:1: rule__Scanner_PatternRule__Group__2 : rule__Scanner_PatternRule__Group__2__Impl rule__Scanner_PatternRule__Group__3 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5358:1: rule__Scanner_PatternRule__Group__2 : rule__Scanner_PatternRule__Group__2__Impl rule__Scanner_PatternRule__Group__3 ;
     public final void rule__Scanner_PatternRule__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5332:1: ( rule__Scanner_PatternRule__Group__2__Impl rule__Scanner_PatternRule__Group__3 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5333:2: rule__Scanner_PatternRule__Group__2__Impl rule__Scanner_PatternRule__Group__3
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5362:1: ( rule__Scanner_PatternRule__Group__2__Impl rule__Scanner_PatternRule__Group__3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5363:2: rule__Scanner_PatternRule__Group__2__Impl rule__Scanner_PatternRule__Group__3
             {
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__2__Impl_in_rule__Scanner_PatternRule__Group__210703);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__2__Impl_in_rule__Scanner_PatternRule__Group__210763);
             rule__Scanner_PatternRule__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__3_in_rule__Scanner_PatternRule__Group__210706);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__3_in_rule__Scanner_PatternRule__Group__210766);
             rule__Scanner_PatternRule__Group__3();
 
             state._fsp--;
@@ -15142,33 +15237,33 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__Group__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5340:1: rule__Scanner_PatternRule__Group__2__Impl : ( ( rule__Scanner_PatternRule__LengthAssignment_2 )? ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5370:1: rule__Scanner_PatternRule__Group__2__Impl : ( ( rule__Scanner_PatternRule__LengthAssignment_2 )? ) ;
     public final void rule__Scanner_PatternRule__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5344:1: ( ( ( rule__Scanner_PatternRule__LengthAssignment_2 )? ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5345:1: ( ( rule__Scanner_PatternRule__LengthAssignment_2 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5374:1: ( ( ( rule__Scanner_PatternRule__LengthAssignment_2 )? ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5375:1: ( ( rule__Scanner_PatternRule__LengthAssignment_2 )? )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5345:1: ( ( rule__Scanner_PatternRule__LengthAssignment_2 )? )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5346:1: ( rule__Scanner_PatternRule__LengthAssignment_2 )?
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5375:1: ( ( rule__Scanner_PatternRule__LengthAssignment_2 )? )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5376:1: ( rule__Scanner_PatternRule__LengthAssignment_2 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_PatternRuleAccess().getLengthAssignment_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5347:1: ( rule__Scanner_PatternRule__LengthAssignment_2 )?
-            int alt37=2;
-            int LA37_0 = input.LA(1);
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5377:1: ( rule__Scanner_PatternRule__LengthAssignment_2 )?
+            int alt38=2;
+            int LA38_0 = input.LA(1);
 
-            if ( (LA37_0==RULE_INT) ) {
-                alt37=1;
+            if ( (LA38_0==RULE_INT) ) {
+                alt38=1;
             }
-            switch (alt37) {
+            switch (alt38) {
                 case 1 :
-                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5347:2: rule__Scanner_PatternRule__LengthAssignment_2
+                    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5377:2: rule__Scanner_PatternRule__LengthAssignment_2
                     {
-                    pushFollow(FOLLOW_rule__Scanner_PatternRule__LengthAssignment_2_in_rule__Scanner_PatternRule__Group__2__Impl10733);
+                    pushFollow(FOLLOW_rule__Scanner_PatternRule__LengthAssignment_2_in_rule__Scanner_PatternRule__Group__2__Impl10793);
                     rule__Scanner_PatternRule__LengthAssignment_2();
 
                     state._fsp--;
@@ -15204,21 +15299,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__Group__3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5357:1: rule__Scanner_PatternRule__Group__3 : rule__Scanner_PatternRule__Group__3__Impl rule__Scanner_PatternRule__Group__4 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5387:1: rule__Scanner_PatternRule__Group__3 : rule__Scanner_PatternRule__Group__3__Impl rule__Scanner_PatternRule__Group__4 ;
     public final void rule__Scanner_PatternRule__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5361:1: ( rule__Scanner_PatternRule__Group__3__Impl rule__Scanner_PatternRule__Group__4 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5362:2: rule__Scanner_PatternRule__Group__3__Impl rule__Scanner_PatternRule__Group__4
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5391:1: ( rule__Scanner_PatternRule__Group__3__Impl rule__Scanner_PatternRule__Group__4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5392:2: rule__Scanner_PatternRule__Group__3__Impl rule__Scanner_PatternRule__Group__4
             {
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__3__Impl_in_rule__Scanner_PatternRule__Group__310764);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__3__Impl_in_rule__Scanner_PatternRule__Group__310824);
             rule__Scanner_PatternRule__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__4_in_rule__Scanner_PatternRule__Group__310767);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__4_in_rule__Scanner_PatternRule__Group__310827);
             rule__Scanner_PatternRule__Group__4();
 
             state._fsp--;
@@ -15242,22 +15337,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__Group__3__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5369:1: rule__Scanner_PatternRule__Group__3__Impl : ( 'containing' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5399:1: rule__Scanner_PatternRule__Group__3__Impl : ( 'containing' ) ;
     public final void rule__Scanner_PatternRule__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5373:1: ( ( 'containing' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5374:1: ( 'containing' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5403:1: ( ( 'containing' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5404:1: ( 'containing' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5374:1: ( 'containing' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5375:1: 'containing'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5404:1: ( 'containing' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5405:1: 'containing'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_PatternRuleAccess().getContainingKeyword_3()); 
             }
-            match(input,38,FOLLOW_38_in_rule__Scanner_PatternRule__Group__3__Impl10795); if (state.failed) return ;
+            match(input,38,FOLLOW_38_in_rule__Scanner_PatternRule__Group__3__Impl10855); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_PatternRuleAccess().getContainingKeyword_3()); 
             }
@@ -15283,16 +15378,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__Group__4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5388:1: rule__Scanner_PatternRule__Group__4 : rule__Scanner_PatternRule__Group__4__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5418:1: rule__Scanner_PatternRule__Group__4 : rule__Scanner_PatternRule__Group__4__Impl ;
     public final void rule__Scanner_PatternRule__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5392:1: ( rule__Scanner_PatternRule__Group__4__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5393:2: rule__Scanner_PatternRule__Group__4__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5422:1: ( rule__Scanner_PatternRule__Group__4__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5423:2: rule__Scanner_PatternRule__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__4__Impl_in_rule__Scanner_PatternRule__Group__410826);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__Group__4__Impl_in_rule__Scanner_PatternRule__Group__410886);
             rule__Scanner_PatternRule__Group__4__Impl();
 
             state._fsp--;
@@ -15316,25 +15411,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__Group__4__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5399:1: rule__Scanner_PatternRule__Group__4__Impl : ( ( rule__Scanner_PatternRule__ContentPatternAssignment_4 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5429:1: rule__Scanner_PatternRule__Group__4__Impl : ( ( rule__Scanner_PatternRule__ContentPatternAssignment_4 ) ) ;
     public final void rule__Scanner_PatternRule__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5403:1: ( ( ( rule__Scanner_PatternRule__ContentPatternAssignment_4 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5404:1: ( ( rule__Scanner_PatternRule__ContentPatternAssignment_4 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5433:1: ( ( ( rule__Scanner_PatternRule__ContentPatternAssignment_4 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5434:1: ( ( rule__Scanner_PatternRule__ContentPatternAssignment_4 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5404:1: ( ( rule__Scanner_PatternRule__ContentPatternAssignment_4 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5405:1: ( rule__Scanner_PatternRule__ContentPatternAssignment_4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5434:1: ( ( rule__Scanner_PatternRule__ContentPatternAssignment_4 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5435:1: ( rule__Scanner_PatternRule__ContentPatternAssignment_4 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_PatternRuleAccess().getContentPatternAssignment_4()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5406:1: ( rule__Scanner_PatternRule__ContentPatternAssignment_4 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5406:2: rule__Scanner_PatternRule__ContentPatternAssignment_4
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5436:1: ( rule__Scanner_PatternRule__ContentPatternAssignment_4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5436:2: rule__Scanner_PatternRule__ContentPatternAssignment_4
             {
-            pushFollow(FOLLOW_rule__Scanner_PatternRule__ContentPatternAssignment_4_in_rule__Scanner_PatternRule__Group__4__Impl10853);
+            pushFollow(FOLLOW_rule__Scanner_PatternRule__ContentPatternAssignment_4_in_rule__Scanner_PatternRule__Group__4__Impl10913);
             rule__Scanner_PatternRule__ContentPatternAssignment_4();
 
             state._fsp--;
@@ -15367,21 +15462,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5426:1: rule__Scanner_CharacterRule__Group__0 : rule__Scanner_CharacterRule__Group__0__Impl rule__Scanner_CharacterRule__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5456:1: rule__Scanner_CharacterRule__Group__0 : rule__Scanner_CharacterRule__Group__0__Impl rule__Scanner_CharacterRule__Group__1 ;
     public final void rule__Scanner_CharacterRule__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5430:1: ( rule__Scanner_CharacterRule__Group__0__Impl rule__Scanner_CharacterRule__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5431:2: rule__Scanner_CharacterRule__Group__0__Impl rule__Scanner_CharacterRule__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5460:1: ( rule__Scanner_CharacterRule__Group__0__Impl rule__Scanner_CharacterRule__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5461:2: rule__Scanner_CharacterRule__Group__0__Impl rule__Scanner_CharacterRule__Group__1
             {
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__0__Impl_in_rule__Scanner_CharacterRule__Group__010893);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__0__Impl_in_rule__Scanner_CharacterRule__Group__010953);
             rule__Scanner_CharacterRule__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__1_in_rule__Scanner_CharacterRule__Group__010896);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__1_in_rule__Scanner_CharacterRule__Group__010956);
             rule__Scanner_CharacterRule__Group__1();
 
             state._fsp--;
@@ -15405,22 +15500,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5438:1: rule__Scanner_CharacterRule__Group__0__Impl : ( 'character' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5468:1: rule__Scanner_CharacterRule__Group__0__Impl : ( 'character' ) ;
     public final void rule__Scanner_CharacterRule__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5442:1: ( ( 'character' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5443:1: ( 'character' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5472:1: ( ( 'character' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5473:1: ( 'character' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5443:1: ( 'character' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5444:1: 'character'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5473:1: ( 'character' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5474:1: 'character'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_CharacterRuleAccess().getCharacterKeyword_0()); 
             }
-            match(input,39,FOLLOW_39_in_rule__Scanner_CharacterRule__Group__0__Impl10924); if (state.failed) return ;
+            match(input,39,FOLLOW_39_in_rule__Scanner_CharacterRule__Group__0__Impl10984); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_CharacterRuleAccess().getCharacterKeyword_0()); 
             }
@@ -15446,21 +15541,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5457:1: rule__Scanner_CharacterRule__Group__1 : rule__Scanner_CharacterRule__Group__1__Impl rule__Scanner_CharacterRule__Group__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5487:1: rule__Scanner_CharacterRule__Group__1 : rule__Scanner_CharacterRule__Group__1__Impl rule__Scanner_CharacterRule__Group__2 ;
     public final void rule__Scanner_CharacterRule__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5461:1: ( rule__Scanner_CharacterRule__Group__1__Impl rule__Scanner_CharacterRule__Group__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5462:2: rule__Scanner_CharacterRule__Group__1__Impl rule__Scanner_CharacterRule__Group__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5491:1: ( rule__Scanner_CharacterRule__Group__1__Impl rule__Scanner_CharacterRule__Group__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5492:2: rule__Scanner_CharacterRule__Group__1__Impl rule__Scanner_CharacterRule__Group__2
             {
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__1__Impl_in_rule__Scanner_CharacterRule__Group__110955);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__1__Impl_in_rule__Scanner_CharacterRule__Group__111015);
             rule__Scanner_CharacterRule__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__2_in_rule__Scanner_CharacterRule__Group__110958);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__2_in_rule__Scanner_CharacterRule__Group__111018);
             rule__Scanner_CharacterRule__Group__2();
 
             state._fsp--;
@@ -15484,22 +15579,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5469:1: rule__Scanner_CharacterRule__Group__1__Impl : ( '[' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5499:1: rule__Scanner_CharacterRule__Group__1__Impl : ( '[' ) ;
     public final void rule__Scanner_CharacterRule__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5473:1: ( ( '[' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5474:1: ( '[' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5503:1: ( ( '[' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5504:1: ( '[' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5474:1: ( '[' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5475:1: '['
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5504:1: ( '[' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5505:1: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_CharacterRuleAccess().getLeftSquareBracketKeyword_1()); 
             }
-            match(input,33,FOLLOW_33_in_rule__Scanner_CharacterRule__Group__1__Impl10986); if (state.failed) return ;
+            match(input,33,FOLLOW_33_in_rule__Scanner_CharacterRule__Group__1__Impl11046); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_CharacterRuleAccess().getLeftSquareBracketKeyword_1()); 
             }
@@ -15525,21 +15620,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5488:1: rule__Scanner_CharacterRule__Group__2 : rule__Scanner_CharacterRule__Group__2__Impl rule__Scanner_CharacterRule__Group__3 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5518:1: rule__Scanner_CharacterRule__Group__2 : rule__Scanner_CharacterRule__Group__2__Impl rule__Scanner_CharacterRule__Group__3 ;
     public final void rule__Scanner_CharacterRule__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5492:1: ( rule__Scanner_CharacterRule__Group__2__Impl rule__Scanner_CharacterRule__Group__3 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5493:2: rule__Scanner_CharacterRule__Group__2__Impl rule__Scanner_CharacterRule__Group__3
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5522:1: ( rule__Scanner_CharacterRule__Group__2__Impl rule__Scanner_CharacterRule__Group__3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5523:2: rule__Scanner_CharacterRule__Group__2__Impl rule__Scanner_CharacterRule__Group__3
             {
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__2__Impl_in_rule__Scanner_CharacterRule__Group__211017);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__2__Impl_in_rule__Scanner_CharacterRule__Group__211077);
             rule__Scanner_CharacterRule__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__3_in_rule__Scanner_CharacterRule__Group__211020);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__3_in_rule__Scanner_CharacterRule__Group__211080);
             rule__Scanner_CharacterRule__Group__3();
 
             state._fsp--;
@@ -15563,25 +15658,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5500:1: rule__Scanner_CharacterRule__Group__2__Impl : ( ( rule__Scanner_CharacterRule__CharactersAssignment_2 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5530:1: rule__Scanner_CharacterRule__Group__2__Impl : ( ( rule__Scanner_CharacterRule__CharactersAssignment_2 ) ) ;
     public final void rule__Scanner_CharacterRule__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5504:1: ( ( ( rule__Scanner_CharacterRule__CharactersAssignment_2 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5505:1: ( ( rule__Scanner_CharacterRule__CharactersAssignment_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5534:1: ( ( ( rule__Scanner_CharacterRule__CharactersAssignment_2 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5535:1: ( ( rule__Scanner_CharacterRule__CharactersAssignment_2 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5505:1: ( ( rule__Scanner_CharacterRule__CharactersAssignment_2 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5506:1: ( rule__Scanner_CharacterRule__CharactersAssignment_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5535:1: ( ( rule__Scanner_CharacterRule__CharactersAssignment_2 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5536:1: ( rule__Scanner_CharacterRule__CharactersAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_CharacterRuleAccess().getCharactersAssignment_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5507:1: ( rule__Scanner_CharacterRule__CharactersAssignment_2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5507:2: rule__Scanner_CharacterRule__CharactersAssignment_2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5537:1: ( rule__Scanner_CharacterRule__CharactersAssignment_2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5537:2: rule__Scanner_CharacterRule__CharactersAssignment_2
             {
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__CharactersAssignment_2_in_rule__Scanner_CharacterRule__Group__2__Impl11047);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__CharactersAssignment_2_in_rule__Scanner_CharacterRule__Group__2__Impl11107);
             rule__Scanner_CharacterRule__CharactersAssignment_2();
 
             state._fsp--;
@@ -15614,21 +15709,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group__3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5517:1: rule__Scanner_CharacterRule__Group__3 : rule__Scanner_CharacterRule__Group__3__Impl rule__Scanner_CharacterRule__Group__4 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5547:1: rule__Scanner_CharacterRule__Group__3 : rule__Scanner_CharacterRule__Group__3__Impl rule__Scanner_CharacterRule__Group__4 ;
     public final void rule__Scanner_CharacterRule__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5521:1: ( rule__Scanner_CharacterRule__Group__3__Impl rule__Scanner_CharacterRule__Group__4 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5522:2: rule__Scanner_CharacterRule__Group__3__Impl rule__Scanner_CharacterRule__Group__4
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5551:1: ( rule__Scanner_CharacterRule__Group__3__Impl rule__Scanner_CharacterRule__Group__4 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5552:2: rule__Scanner_CharacterRule__Group__3__Impl rule__Scanner_CharacterRule__Group__4
             {
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__3__Impl_in_rule__Scanner_CharacterRule__Group__311077);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__3__Impl_in_rule__Scanner_CharacterRule__Group__311137);
             rule__Scanner_CharacterRule__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__4_in_rule__Scanner_CharacterRule__Group__311080);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__4_in_rule__Scanner_CharacterRule__Group__311140);
             rule__Scanner_CharacterRule__Group__4();
 
             state._fsp--;
@@ -15652,37 +15747,37 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group__3__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5529:1: rule__Scanner_CharacterRule__Group__3__Impl : ( ( rule__Scanner_CharacterRule__Group_3__0 )* ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5559:1: rule__Scanner_CharacterRule__Group__3__Impl : ( ( rule__Scanner_CharacterRule__Group_3__0 )* ) ;
     public final void rule__Scanner_CharacterRule__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5533:1: ( ( ( rule__Scanner_CharacterRule__Group_3__0 )* ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5534:1: ( ( rule__Scanner_CharacterRule__Group_3__0 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5563:1: ( ( ( rule__Scanner_CharacterRule__Group_3__0 )* ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5564:1: ( ( rule__Scanner_CharacterRule__Group_3__0 )* )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5534:1: ( ( rule__Scanner_CharacterRule__Group_3__0 )* )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5535:1: ( rule__Scanner_CharacterRule__Group_3__0 )*
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5564:1: ( ( rule__Scanner_CharacterRule__Group_3__0 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5565:1: ( rule__Scanner_CharacterRule__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_CharacterRuleAccess().getGroup_3()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5536:1: ( rule__Scanner_CharacterRule__Group_3__0 )*
-            loop38:
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5566:1: ( rule__Scanner_CharacterRule__Group_3__0 )*
+            loop39:
             do {
-                int alt38=2;
-                int LA38_0 = input.LA(1);
+                int alt39=2;
+                int LA39_0 = input.LA(1);
 
-                if ( (LA38_0==35) ) {
-                    alt38=1;
+                if ( (LA39_0==35) ) {
+                    alt39=1;
                 }
 
 
-                switch (alt38) {
+                switch (alt39) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5536:2: rule__Scanner_CharacterRule__Group_3__0
+            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5566:2: rule__Scanner_CharacterRule__Group_3__0
             	    {
-            	    pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group_3__0_in_rule__Scanner_CharacterRule__Group__3__Impl11107);
+            	    pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group_3__0_in_rule__Scanner_CharacterRule__Group__3__Impl11167);
             	    rule__Scanner_CharacterRule__Group_3__0();
 
             	    state._fsp--;
@@ -15692,7 +15787,7 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop38;
+            	    break loop39;
                 }
             } while (true);
 
@@ -15721,16 +15816,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group__4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5546:1: rule__Scanner_CharacterRule__Group__4 : rule__Scanner_CharacterRule__Group__4__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5576:1: rule__Scanner_CharacterRule__Group__4 : rule__Scanner_CharacterRule__Group__4__Impl ;
     public final void rule__Scanner_CharacterRule__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5550:1: ( rule__Scanner_CharacterRule__Group__4__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5551:2: rule__Scanner_CharacterRule__Group__4__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5580:1: ( rule__Scanner_CharacterRule__Group__4__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5581:2: rule__Scanner_CharacterRule__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__4__Impl_in_rule__Scanner_CharacterRule__Group__411138);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group__4__Impl_in_rule__Scanner_CharacterRule__Group__411198);
             rule__Scanner_CharacterRule__Group__4__Impl();
 
             state._fsp--;
@@ -15754,22 +15849,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group__4__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5557:1: rule__Scanner_CharacterRule__Group__4__Impl : ( ']' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5587:1: rule__Scanner_CharacterRule__Group__4__Impl : ( ']' ) ;
     public final void rule__Scanner_CharacterRule__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5561:1: ( ( ']' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5562:1: ( ']' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5591:1: ( ( ']' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5592:1: ( ']' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5562:1: ( ']' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5563:1: ']'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5592:1: ( ']' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5593:1: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_CharacterRuleAccess().getRightSquareBracketKeyword_4()); 
             }
-            match(input,34,FOLLOW_34_in_rule__Scanner_CharacterRule__Group__4__Impl11166); if (state.failed) return ;
+            match(input,34,FOLLOW_34_in_rule__Scanner_CharacterRule__Group__4__Impl11226); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_CharacterRuleAccess().getRightSquareBracketKeyword_4()); 
             }
@@ -15795,21 +15890,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group_3__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5586:1: rule__Scanner_CharacterRule__Group_3__0 : rule__Scanner_CharacterRule__Group_3__0__Impl rule__Scanner_CharacterRule__Group_3__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5616:1: rule__Scanner_CharacterRule__Group_3__0 : rule__Scanner_CharacterRule__Group_3__0__Impl rule__Scanner_CharacterRule__Group_3__1 ;
     public final void rule__Scanner_CharacterRule__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5590:1: ( rule__Scanner_CharacterRule__Group_3__0__Impl rule__Scanner_CharacterRule__Group_3__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5591:2: rule__Scanner_CharacterRule__Group_3__0__Impl rule__Scanner_CharacterRule__Group_3__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5620:1: ( rule__Scanner_CharacterRule__Group_3__0__Impl rule__Scanner_CharacterRule__Group_3__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5621:2: rule__Scanner_CharacterRule__Group_3__0__Impl rule__Scanner_CharacterRule__Group_3__1
             {
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group_3__0__Impl_in_rule__Scanner_CharacterRule__Group_3__011207);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group_3__0__Impl_in_rule__Scanner_CharacterRule__Group_3__011267);
             rule__Scanner_CharacterRule__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group_3__1_in_rule__Scanner_CharacterRule__Group_3__011210);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group_3__1_in_rule__Scanner_CharacterRule__Group_3__011270);
             rule__Scanner_CharacterRule__Group_3__1();
 
             state._fsp--;
@@ -15833,22 +15928,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group_3__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5598:1: rule__Scanner_CharacterRule__Group_3__0__Impl : ( ',' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5628:1: rule__Scanner_CharacterRule__Group_3__0__Impl : ( ',' ) ;
     public final void rule__Scanner_CharacterRule__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5602:1: ( ( ',' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5603:1: ( ',' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5632:1: ( ( ',' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5633:1: ( ',' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5603:1: ( ',' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5604:1: ','
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5633:1: ( ',' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5634:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_CharacterRuleAccess().getCommaKeyword_3_0()); 
             }
-            match(input,35,FOLLOW_35_in_rule__Scanner_CharacterRule__Group_3__0__Impl11238); if (state.failed) return ;
+            match(input,35,FOLLOW_35_in_rule__Scanner_CharacterRule__Group_3__0__Impl11298); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_CharacterRuleAccess().getCommaKeyword_3_0()); 
             }
@@ -15874,16 +15969,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group_3__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5617:1: rule__Scanner_CharacterRule__Group_3__1 : rule__Scanner_CharacterRule__Group_3__1__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5647:1: rule__Scanner_CharacterRule__Group_3__1 : rule__Scanner_CharacterRule__Group_3__1__Impl ;
     public final void rule__Scanner_CharacterRule__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5621:1: ( rule__Scanner_CharacterRule__Group_3__1__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5622:2: rule__Scanner_CharacterRule__Group_3__1__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5651:1: ( rule__Scanner_CharacterRule__Group_3__1__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5652:2: rule__Scanner_CharacterRule__Group_3__1__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group_3__1__Impl_in_rule__Scanner_CharacterRule__Group_3__111269);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__Group_3__1__Impl_in_rule__Scanner_CharacterRule__Group_3__111329);
             rule__Scanner_CharacterRule__Group_3__1__Impl();
 
             state._fsp--;
@@ -15907,25 +16002,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__Group_3__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5628:1: rule__Scanner_CharacterRule__Group_3__1__Impl : ( ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5658:1: rule__Scanner_CharacterRule__Group_3__1__Impl : ( ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 ) ) ;
     public final void rule__Scanner_CharacterRule__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5632:1: ( ( ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5633:1: ( ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5662:1: ( ( ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5663:1: ( ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5633:1: ( ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5634:1: ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5663:1: ( ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5664:1: ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_CharacterRuleAccess().getCharactersAssignment_3_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5635:1: ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5635:2: rule__Scanner_CharacterRule__CharactersAssignment_3_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5665:1: ( rule__Scanner_CharacterRule__CharactersAssignment_3_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5665:2: rule__Scanner_CharacterRule__CharactersAssignment_3_1
             {
-            pushFollow(FOLLOW_rule__Scanner_CharacterRule__CharactersAssignment_3_1_in_rule__Scanner_CharacterRule__Group_3__1__Impl11296);
+            pushFollow(FOLLOW_rule__Scanner_CharacterRule__CharactersAssignment_3_1_in_rule__Scanner_CharacterRule__Group_3__1__Impl11356);
             rule__Scanner_CharacterRule__CharactersAssignment_3_1();
 
             state._fsp--;
@@ -15958,21 +16053,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_JSRule__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5649:1: rule__Scanner_JSRule__Group__0 : rule__Scanner_JSRule__Group__0__Impl rule__Scanner_JSRule__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5679:1: rule__Scanner_JSRule__Group__0 : rule__Scanner_JSRule__Group__0__Impl rule__Scanner_JSRule__Group__1 ;
     public final void rule__Scanner_JSRule__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5653:1: ( rule__Scanner_JSRule__Group__0__Impl rule__Scanner_JSRule__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5654:2: rule__Scanner_JSRule__Group__0__Impl rule__Scanner_JSRule__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5683:1: ( rule__Scanner_JSRule__Group__0__Impl rule__Scanner_JSRule__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5684:2: rule__Scanner_JSRule__Group__0__Impl rule__Scanner_JSRule__Group__1
             {
-            pushFollow(FOLLOW_rule__Scanner_JSRule__Group__0__Impl_in_rule__Scanner_JSRule__Group__011330);
+            pushFollow(FOLLOW_rule__Scanner_JSRule__Group__0__Impl_in_rule__Scanner_JSRule__Group__011390);
             rule__Scanner_JSRule__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Scanner_JSRule__Group__1_in_rule__Scanner_JSRule__Group__011333);
+            pushFollow(FOLLOW_rule__Scanner_JSRule__Group__1_in_rule__Scanner_JSRule__Group__011393);
             rule__Scanner_JSRule__Group__1();
 
             state._fsp--;
@@ -15996,22 +16091,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_JSRule__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5661:1: rule__Scanner_JSRule__Group__0__Impl : ( 'script' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5691:1: rule__Scanner_JSRule__Group__0__Impl : ( 'script' ) ;
     public final void rule__Scanner_JSRule__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5665:1: ( ( 'script' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5666:1: ( 'script' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5695:1: ( ( 'script' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5696:1: ( 'script' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5666:1: ( 'script' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5667:1: 'script'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5696:1: ( 'script' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5697:1: 'script'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_JSRuleAccess().getScriptKeyword_0()); 
             }
-            match(input,24,FOLLOW_24_in_rule__Scanner_JSRule__Group__0__Impl11361); if (state.failed) return ;
+            match(input,24,FOLLOW_24_in_rule__Scanner_JSRule__Group__0__Impl11421); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_JSRuleAccess().getScriptKeyword_0()); 
             }
@@ -16037,16 +16132,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_JSRule__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5680:1: rule__Scanner_JSRule__Group__1 : rule__Scanner_JSRule__Group__1__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5710:1: rule__Scanner_JSRule__Group__1 : rule__Scanner_JSRule__Group__1__Impl ;
     public final void rule__Scanner_JSRule__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5684:1: ( rule__Scanner_JSRule__Group__1__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5685:2: rule__Scanner_JSRule__Group__1__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5714:1: ( rule__Scanner_JSRule__Group__1__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5715:2: rule__Scanner_JSRule__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__Scanner_JSRule__Group__1__Impl_in_rule__Scanner_JSRule__Group__111392);
+            pushFollow(FOLLOW_rule__Scanner_JSRule__Group__1__Impl_in_rule__Scanner_JSRule__Group__111452);
             rule__Scanner_JSRule__Group__1__Impl();
 
             state._fsp--;
@@ -16070,25 +16165,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_JSRule__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5691:1: rule__Scanner_JSRule__Group__1__Impl : ( ( rule__Scanner_JSRule__FileURIAssignment_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5721:1: rule__Scanner_JSRule__Group__1__Impl : ( ( rule__Scanner_JSRule__FileURIAssignment_1 ) ) ;
     public final void rule__Scanner_JSRule__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5695:1: ( ( ( rule__Scanner_JSRule__FileURIAssignment_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5696:1: ( ( rule__Scanner_JSRule__FileURIAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5725:1: ( ( ( rule__Scanner_JSRule__FileURIAssignment_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5726:1: ( ( rule__Scanner_JSRule__FileURIAssignment_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5696:1: ( ( rule__Scanner_JSRule__FileURIAssignment_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5697:1: ( rule__Scanner_JSRule__FileURIAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5726:1: ( ( rule__Scanner_JSRule__FileURIAssignment_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5727:1: ( rule__Scanner_JSRule__FileURIAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_JSRuleAccess().getFileURIAssignment_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5698:1: ( rule__Scanner_JSRule__FileURIAssignment_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5698:2: rule__Scanner_JSRule__FileURIAssignment_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5728:1: ( rule__Scanner_JSRule__FileURIAssignment_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5728:2: rule__Scanner_JSRule__FileURIAssignment_1
             {
-            pushFollow(FOLLOW_rule__Scanner_JSRule__FileURIAssignment_1_in_rule__Scanner_JSRule__Group__1__Impl11419);
+            pushFollow(FOLLOW_rule__Scanner_JSRule__FileURIAssignment_1_in_rule__Scanner_JSRule__Group__1__Impl11479);
             rule__Scanner_JSRule__FileURIAssignment_1();
 
             state._fsp--;
@@ -16121,21 +16216,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5712:1: rule__WhitespaceRule__Group__0 : rule__WhitespaceRule__Group__0__Impl rule__WhitespaceRule__Group__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5742:1: rule__WhitespaceRule__Group__0 : rule__WhitespaceRule__Group__0__Impl rule__WhitespaceRule__Group__1 ;
     public final void rule__WhitespaceRule__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5716:1: ( rule__WhitespaceRule__Group__0__Impl rule__WhitespaceRule__Group__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5717:2: rule__WhitespaceRule__Group__0__Impl rule__WhitespaceRule__Group__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5746:1: ( rule__WhitespaceRule__Group__0__Impl rule__WhitespaceRule__Group__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5747:2: rule__WhitespaceRule__Group__0__Impl rule__WhitespaceRule__Group__1
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group__0__Impl_in_rule__WhitespaceRule__Group__011453);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group__0__Impl_in_rule__WhitespaceRule__Group__011513);
             rule__WhitespaceRule__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group__1_in_rule__WhitespaceRule__Group__011456);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group__1_in_rule__WhitespaceRule__Group__011516);
             rule__WhitespaceRule__Group__1();
 
             state._fsp--;
@@ -16159,22 +16254,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5724:1: rule__WhitespaceRule__Group__0__Impl : ( 'whitespace' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5754:1: rule__WhitespaceRule__Group__0__Impl : ( 'whitespace' ) ;
     public final void rule__WhitespaceRule__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5728:1: ( ( 'whitespace' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5729:1: ( 'whitespace' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5758:1: ( ( 'whitespace' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5759:1: ( 'whitespace' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5729:1: ( 'whitespace' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5730:1: 'whitespace'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5759:1: ( 'whitespace' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5760:1: 'whitespace'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getWhitespaceKeyword_0()); 
             }
-            match(input,40,FOLLOW_40_in_rule__WhitespaceRule__Group__0__Impl11484); if (state.failed) return ;
+            match(input,40,FOLLOW_40_in_rule__WhitespaceRule__Group__0__Impl11544); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWhitespaceRuleAccess().getWhitespaceKeyword_0()); 
             }
@@ -16200,16 +16295,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5743:1: rule__WhitespaceRule__Group__1 : rule__WhitespaceRule__Group__1__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5773:1: rule__WhitespaceRule__Group__1 : rule__WhitespaceRule__Group__1__Impl ;
     public final void rule__WhitespaceRule__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5747:1: ( rule__WhitespaceRule__Group__1__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5748:2: rule__WhitespaceRule__Group__1__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5777:1: ( rule__WhitespaceRule__Group__1__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5778:2: rule__WhitespaceRule__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group__1__Impl_in_rule__WhitespaceRule__Group__111515);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group__1__Impl_in_rule__WhitespaceRule__Group__111575);
             rule__WhitespaceRule__Group__1__Impl();
 
             state._fsp--;
@@ -16233,25 +16328,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5754:1: rule__WhitespaceRule__Group__1__Impl : ( ( rule__WhitespaceRule__Alternatives_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5784:1: rule__WhitespaceRule__Group__1__Impl : ( ( rule__WhitespaceRule__Alternatives_1 ) ) ;
     public final void rule__WhitespaceRule__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5758:1: ( ( ( rule__WhitespaceRule__Alternatives_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5759:1: ( ( rule__WhitespaceRule__Alternatives_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5788:1: ( ( ( rule__WhitespaceRule__Alternatives_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5789:1: ( ( rule__WhitespaceRule__Alternatives_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5759:1: ( ( rule__WhitespaceRule__Alternatives_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5760:1: ( rule__WhitespaceRule__Alternatives_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5789:1: ( ( rule__WhitespaceRule__Alternatives_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5790:1: ( rule__WhitespaceRule__Alternatives_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getAlternatives_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5761:1: ( rule__WhitespaceRule__Alternatives_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5761:2: rule__WhitespaceRule__Alternatives_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5791:1: ( rule__WhitespaceRule__Alternatives_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5791:2: rule__WhitespaceRule__Alternatives_1
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__Alternatives_1_in_rule__WhitespaceRule__Group__1__Impl11542);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Alternatives_1_in_rule__WhitespaceRule__Group__1__Impl11602);
             rule__WhitespaceRule__Alternatives_1();
 
             state._fsp--;
@@ -16284,21 +16379,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5775:1: rule__WhitespaceRule__Group_1_0__0 : rule__WhitespaceRule__Group_1_0__0__Impl rule__WhitespaceRule__Group_1_0__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5805:1: rule__WhitespaceRule__Group_1_0__0 : rule__WhitespaceRule__Group_1_0__0__Impl rule__WhitespaceRule__Group_1_0__1 ;
     public final void rule__WhitespaceRule__Group_1_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5779:1: ( rule__WhitespaceRule__Group_1_0__0__Impl rule__WhitespaceRule__Group_1_0__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5780:2: rule__WhitespaceRule__Group_1_0__0__Impl rule__WhitespaceRule__Group_1_0__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5809:1: ( rule__WhitespaceRule__Group_1_0__0__Impl rule__WhitespaceRule__Group_1_0__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5810:2: rule__WhitespaceRule__Group_1_0__0__Impl rule__WhitespaceRule__Group_1_0__1
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__0__Impl_in_rule__WhitespaceRule__Group_1_0__011576);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__0__Impl_in_rule__WhitespaceRule__Group_1_0__011636);
             rule__WhitespaceRule__Group_1_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__1_in_rule__WhitespaceRule__Group_1_0__011579);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__1_in_rule__WhitespaceRule__Group_1_0__011639);
             rule__WhitespaceRule__Group_1_0__1();
 
             state._fsp--;
@@ -16322,22 +16417,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5787:1: rule__WhitespaceRule__Group_1_0__0__Impl : ( '[' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5817:1: rule__WhitespaceRule__Group_1_0__0__Impl : ( '[' ) ;
     public final void rule__WhitespaceRule__Group_1_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5791:1: ( ( '[' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5792:1: ( '[' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5821:1: ( ( '[' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5822:1: ( '[' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5792:1: ( '[' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5793:1: '['
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5822:1: ( '[' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5823:1: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getLeftSquareBracketKeyword_1_0_0()); 
             }
-            match(input,33,FOLLOW_33_in_rule__WhitespaceRule__Group_1_0__0__Impl11607); if (state.failed) return ;
+            match(input,33,FOLLOW_33_in_rule__WhitespaceRule__Group_1_0__0__Impl11667); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWhitespaceRuleAccess().getLeftSquareBracketKeyword_1_0_0()); 
             }
@@ -16363,21 +16458,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5806:1: rule__WhitespaceRule__Group_1_0__1 : rule__WhitespaceRule__Group_1_0__1__Impl rule__WhitespaceRule__Group_1_0__2 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5836:1: rule__WhitespaceRule__Group_1_0__1 : rule__WhitespaceRule__Group_1_0__1__Impl rule__WhitespaceRule__Group_1_0__2 ;
     public final void rule__WhitespaceRule__Group_1_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5810:1: ( rule__WhitespaceRule__Group_1_0__1__Impl rule__WhitespaceRule__Group_1_0__2 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5811:2: rule__WhitespaceRule__Group_1_0__1__Impl rule__WhitespaceRule__Group_1_0__2
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5840:1: ( rule__WhitespaceRule__Group_1_0__1__Impl rule__WhitespaceRule__Group_1_0__2 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5841:2: rule__WhitespaceRule__Group_1_0__1__Impl rule__WhitespaceRule__Group_1_0__2
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__1__Impl_in_rule__WhitespaceRule__Group_1_0__111638);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__1__Impl_in_rule__WhitespaceRule__Group_1_0__111698);
             rule__WhitespaceRule__Group_1_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__2_in_rule__WhitespaceRule__Group_1_0__111641);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__2_in_rule__WhitespaceRule__Group_1_0__111701);
             rule__WhitespaceRule__Group_1_0__2();
 
             state._fsp--;
@@ -16401,25 +16496,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5818:1: rule__WhitespaceRule__Group_1_0__1__Impl : ( ( rule__WhitespaceRule__CharactersAssignment_1_0_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5848:1: rule__WhitespaceRule__Group_1_0__1__Impl : ( ( rule__WhitespaceRule__CharactersAssignment_1_0_1 ) ) ;
     public final void rule__WhitespaceRule__Group_1_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5822:1: ( ( ( rule__WhitespaceRule__CharactersAssignment_1_0_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5823:1: ( ( rule__WhitespaceRule__CharactersAssignment_1_0_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5852:1: ( ( ( rule__WhitespaceRule__CharactersAssignment_1_0_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5853:1: ( ( rule__WhitespaceRule__CharactersAssignment_1_0_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5823:1: ( ( rule__WhitespaceRule__CharactersAssignment_1_0_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5824:1: ( rule__WhitespaceRule__CharactersAssignment_1_0_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5853:1: ( ( rule__WhitespaceRule__CharactersAssignment_1_0_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5854:1: ( rule__WhitespaceRule__CharactersAssignment_1_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getCharactersAssignment_1_0_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5825:1: ( rule__WhitespaceRule__CharactersAssignment_1_0_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5825:2: rule__WhitespaceRule__CharactersAssignment_1_0_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5855:1: ( rule__WhitespaceRule__CharactersAssignment_1_0_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5855:2: rule__WhitespaceRule__CharactersAssignment_1_0_1
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__CharactersAssignment_1_0_1_in_rule__WhitespaceRule__Group_1_0__1__Impl11668);
+            pushFollow(FOLLOW_rule__WhitespaceRule__CharactersAssignment_1_0_1_in_rule__WhitespaceRule__Group_1_0__1__Impl11728);
             rule__WhitespaceRule__CharactersAssignment_1_0_1();
 
             state._fsp--;
@@ -16452,21 +16547,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0__2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5835:1: rule__WhitespaceRule__Group_1_0__2 : rule__WhitespaceRule__Group_1_0__2__Impl rule__WhitespaceRule__Group_1_0__3 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5865:1: rule__WhitespaceRule__Group_1_0__2 : rule__WhitespaceRule__Group_1_0__2__Impl rule__WhitespaceRule__Group_1_0__3 ;
     public final void rule__WhitespaceRule__Group_1_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5839:1: ( rule__WhitespaceRule__Group_1_0__2__Impl rule__WhitespaceRule__Group_1_0__3 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5840:2: rule__WhitespaceRule__Group_1_0__2__Impl rule__WhitespaceRule__Group_1_0__3
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5869:1: ( rule__WhitespaceRule__Group_1_0__2__Impl rule__WhitespaceRule__Group_1_0__3 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5870:2: rule__WhitespaceRule__Group_1_0__2__Impl rule__WhitespaceRule__Group_1_0__3
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__2__Impl_in_rule__WhitespaceRule__Group_1_0__211698);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__2__Impl_in_rule__WhitespaceRule__Group_1_0__211758);
             rule__WhitespaceRule__Group_1_0__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__3_in_rule__WhitespaceRule__Group_1_0__211701);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__3_in_rule__WhitespaceRule__Group_1_0__211761);
             rule__WhitespaceRule__Group_1_0__3();
 
             state._fsp--;
@@ -16490,37 +16585,37 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0__2__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5847:1: rule__WhitespaceRule__Group_1_0__2__Impl : ( ( rule__WhitespaceRule__Group_1_0_2__0 )* ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5877:1: rule__WhitespaceRule__Group_1_0__2__Impl : ( ( rule__WhitespaceRule__Group_1_0_2__0 )* ) ;
     public final void rule__WhitespaceRule__Group_1_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5851:1: ( ( ( rule__WhitespaceRule__Group_1_0_2__0 )* ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5852:1: ( ( rule__WhitespaceRule__Group_1_0_2__0 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5881:1: ( ( ( rule__WhitespaceRule__Group_1_0_2__0 )* ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5882:1: ( ( rule__WhitespaceRule__Group_1_0_2__0 )* )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5852:1: ( ( rule__WhitespaceRule__Group_1_0_2__0 )* )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5853:1: ( rule__WhitespaceRule__Group_1_0_2__0 )*
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5882:1: ( ( rule__WhitespaceRule__Group_1_0_2__0 )* )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5883:1: ( rule__WhitespaceRule__Group_1_0_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getGroup_1_0_2()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5854:1: ( rule__WhitespaceRule__Group_1_0_2__0 )*
-            loop39:
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5884:1: ( rule__WhitespaceRule__Group_1_0_2__0 )*
+            loop40:
             do {
-                int alt39=2;
-                int LA39_0 = input.LA(1);
+                int alt40=2;
+                int LA40_0 = input.LA(1);
 
-                if ( (LA39_0==35) ) {
-                    alt39=1;
+                if ( (LA40_0==35) ) {
+                    alt40=1;
                 }
 
 
-                switch (alt39) {
+                switch (alt40) {
             	case 1 :
-            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5854:2: rule__WhitespaceRule__Group_1_0_2__0
+            	    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5884:2: rule__WhitespaceRule__Group_1_0_2__0
             	    {
-            	    pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0_2__0_in_rule__WhitespaceRule__Group_1_0__2__Impl11728);
+            	    pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0_2__0_in_rule__WhitespaceRule__Group_1_0__2__Impl11788);
             	    rule__WhitespaceRule__Group_1_0_2__0();
 
             	    state._fsp--;
@@ -16530,7 +16625,7 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop39;
+            	    break loop40;
                 }
             } while (true);
 
@@ -16559,16 +16654,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0__3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5864:1: rule__WhitespaceRule__Group_1_0__3 : rule__WhitespaceRule__Group_1_0__3__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5894:1: rule__WhitespaceRule__Group_1_0__3 : rule__WhitespaceRule__Group_1_0__3__Impl ;
     public final void rule__WhitespaceRule__Group_1_0__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5868:1: ( rule__WhitespaceRule__Group_1_0__3__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5869:2: rule__WhitespaceRule__Group_1_0__3__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5898:1: ( rule__WhitespaceRule__Group_1_0__3__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5899:2: rule__WhitespaceRule__Group_1_0__3__Impl
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__3__Impl_in_rule__WhitespaceRule__Group_1_0__311759);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0__3__Impl_in_rule__WhitespaceRule__Group_1_0__311819);
             rule__WhitespaceRule__Group_1_0__3__Impl();
 
             state._fsp--;
@@ -16592,22 +16687,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0__3__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5875:1: rule__WhitespaceRule__Group_1_0__3__Impl : ( ']' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5905:1: rule__WhitespaceRule__Group_1_0__3__Impl : ( ']' ) ;
     public final void rule__WhitespaceRule__Group_1_0__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5879:1: ( ( ']' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5880:1: ( ']' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5909:1: ( ( ']' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5910:1: ( ']' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5880:1: ( ']' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5881:1: ']'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5910:1: ( ']' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5911:1: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getRightSquareBracketKeyword_1_0_3()); 
             }
-            match(input,34,FOLLOW_34_in_rule__WhitespaceRule__Group_1_0__3__Impl11787); if (state.failed) return ;
+            match(input,34,FOLLOW_34_in_rule__WhitespaceRule__Group_1_0__3__Impl11847); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWhitespaceRuleAccess().getRightSquareBracketKeyword_1_0_3()); 
             }
@@ -16633,21 +16728,21 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0_2__0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5902:1: rule__WhitespaceRule__Group_1_0_2__0 : rule__WhitespaceRule__Group_1_0_2__0__Impl rule__WhitespaceRule__Group_1_0_2__1 ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5932:1: rule__WhitespaceRule__Group_1_0_2__0 : rule__WhitespaceRule__Group_1_0_2__0__Impl rule__WhitespaceRule__Group_1_0_2__1 ;
     public final void rule__WhitespaceRule__Group_1_0_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5906:1: ( rule__WhitespaceRule__Group_1_0_2__0__Impl rule__WhitespaceRule__Group_1_0_2__1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5907:2: rule__WhitespaceRule__Group_1_0_2__0__Impl rule__WhitespaceRule__Group_1_0_2__1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5936:1: ( rule__WhitespaceRule__Group_1_0_2__0__Impl rule__WhitespaceRule__Group_1_0_2__1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5937:2: rule__WhitespaceRule__Group_1_0_2__0__Impl rule__WhitespaceRule__Group_1_0_2__1
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0_2__0__Impl_in_rule__WhitespaceRule__Group_1_0_2__011826);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0_2__0__Impl_in_rule__WhitespaceRule__Group_1_0_2__011886);
             rule__WhitespaceRule__Group_1_0_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0_2__1_in_rule__WhitespaceRule__Group_1_0_2__011829);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0_2__1_in_rule__WhitespaceRule__Group_1_0_2__011889);
             rule__WhitespaceRule__Group_1_0_2__1();
 
             state._fsp--;
@@ -16671,22 +16766,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0_2__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5914:1: rule__WhitespaceRule__Group_1_0_2__0__Impl : ( ',' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5944:1: rule__WhitespaceRule__Group_1_0_2__0__Impl : ( ',' ) ;
     public final void rule__WhitespaceRule__Group_1_0_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5918:1: ( ( ',' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5919:1: ( ',' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5948:1: ( ( ',' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5949:1: ( ',' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5919:1: ( ',' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5920:1: ','
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5949:1: ( ',' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5950:1: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getCommaKeyword_1_0_2_0()); 
             }
-            match(input,35,FOLLOW_35_in_rule__WhitespaceRule__Group_1_0_2__0__Impl11857); if (state.failed) return ;
+            match(input,35,FOLLOW_35_in_rule__WhitespaceRule__Group_1_0_2__0__Impl11917); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWhitespaceRuleAccess().getCommaKeyword_1_0_2_0()); 
             }
@@ -16712,16 +16807,16 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0_2__1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5933:1: rule__WhitespaceRule__Group_1_0_2__1 : rule__WhitespaceRule__Group_1_0_2__1__Impl ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5963:1: rule__WhitespaceRule__Group_1_0_2__1 : rule__WhitespaceRule__Group_1_0_2__1__Impl ;
     public final void rule__WhitespaceRule__Group_1_0_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5937:1: ( rule__WhitespaceRule__Group_1_0_2__1__Impl )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5938:2: rule__WhitespaceRule__Group_1_0_2__1__Impl
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5967:1: ( rule__WhitespaceRule__Group_1_0_2__1__Impl )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5968:2: rule__WhitespaceRule__Group_1_0_2__1__Impl
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0_2__1__Impl_in_rule__WhitespaceRule__Group_1_0_2__111888);
+            pushFollow(FOLLOW_rule__WhitespaceRule__Group_1_0_2__1__Impl_in_rule__WhitespaceRule__Group_1_0_2__111948);
             rule__WhitespaceRule__Group_1_0_2__1__Impl();
 
             state._fsp--;
@@ -16745,25 +16840,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__Group_1_0_2__1__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5944:1: rule__WhitespaceRule__Group_1_0_2__1__Impl : ( ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5974:1: rule__WhitespaceRule__Group_1_0_2__1__Impl : ( ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 ) ) ;
     public final void rule__WhitespaceRule__Group_1_0_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5948:1: ( ( ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5949:1: ( ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5978:1: ( ( ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5979:1: ( ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5949:1: ( ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5950:1: ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5979:1: ( ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5980:1: ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getCharactersAssignment_1_0_2_1()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5951:1: ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5951:2: rule__WhitespaceRule__CharactersAssignment_1_0_2_1
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5981:1: ( rule__WhitespaceRule__CharactersAssignment_1_0_2_1 )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5981:2: rule__WhitespaceRule__CharactersAssignment_1_0_2_1
             {
-            pushFollow(FOLLOW_rule__WhitespaceRule__CharactersAssignment_1_0_2_1_in_rule__WhitespaceRule__Group_1_0_2__1__Impl11915);
+            pushFollow(FOLLOW_rule__WhitespaceRule__CharactersAssignment_1_0_2_1_in_rule__WhitespaceRule__Group_1_0_2__1__Impl11975);
             rule__WhitespaceRule__CharactersAssignment_1_0_2_1();
 
             state._fsp--;
@@ -16796,22 +16891,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Root__NameAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5966:1: rule__Root__NameAssignment_1 : ( ruleQualifiedName ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5996:1: rule__Root__NameAssignment_1 : ( ruleQualifiedName ) ;
     public final void rule__Root__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5970:1: ( ( ruleQualifiedName ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5971:1: ( ruleQualifiedName )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6000:1: ( ( ruleQualifiedName ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6001:1: ( ruleQualifiedName )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5971:1: ( ruleQualifiedName )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5972:1: ruleQualifiedName
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6001:1: ( ruleQualifiedName )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6002:1: ruleQualifiedName
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootAccess().getNameQualifiedNameParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleQualifiedName_in_rule__Root__NameAssignment_111954);
+            pushFollow(FOLLOW_ruleQualifiedName_in_rule__Root__NameAssignment_112014);
             ruleQualifiedName();
 
             state._fsp--;
@@ -16841,22 +16936,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Root__ImportsAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5981:1: rule__Root__ImportsAssignment_2 : ( ruleImport ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6011:1: rule__Root__ImportsAssignment_2 : ( ruleImport ) ;
     public final void rule__Root__ImportsAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5985:1: ( ( ruleImport ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5986:1: ( ruleImport )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6015:1: ( ( ruleImport ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6016:1: ( ruleImport )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5986:1: ( ruleImport )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5987:1: ruleImport
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6016:1: ( ruleImport )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6017:1: ruleImport
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootAccess().getImportsImportParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleImport_in_rule__Root__ImportsAssignment_211985);
+            pushFollow(FOLLOW_ruleImport_in_rule__Root__ImportsAssignment_212045);
             ruleImport();
 
             state._fsp--;
@@ -16886,22 +16981,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Root__LanguageDefinitionAssignment_3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:5996:1: rule__Root__LanguageDefinitionAssignment_3 : ( ruleLanguageDef ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6026:1: rule__Root__LanguageDefinitionAssignment_3 : ( ruleLanguageDef ) ;
     public final void rule__Root__LanguageDefinitionAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6000:1: ( ( ruleLanguageDef ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6001:1: ( ruleLanguageDef )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6030:1: ( ( ruleLanguageDef ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6031:1: ( ruleLanguageDef )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6001:1: ( ruleLanguageDef )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6002:1: ruleLanguageDef
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6031:1: ( ruleLanguageDef )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6032:1: ruleLanguageDef
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootAccess().getLanguageDefinitionLanguageDefParserRuleCall_3_0()); 
             }
-            pushFollow(FOLLOW_ruleLanguageDef_in_rule__Root__LanguageDefinitionAssignment_312016);
+            pushFollow(FOLLOW_ruleLanguageDef_in_rule__Root__LanguageDefinitionAssignment_312076);
             ruleLanguageDef();
 
             state._fsp--;
@@ -16931,22 +17026,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Import__ImportedNamespaceAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6011:1: rule__Import__ImportedNamespaceAssignment_1 : ( ruleQualifiedNameWithWildCard ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6041:1: rule__Import__ImportedNamespaceAssignment_1 : ( ruleQualifiedNameWithWildCard ) ;
     public final void rule__Import__ImportedNamespaceAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6015:1: ( ( ruleQualifiedNameWithWildCard ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6016:1: ( ruleQualifiedNameWithWildCard )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6045:1: ( ( ruleQualifiedNameWithWildCard ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6046:1: ( ruleQualifiedNameWithWildCard )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6016:1: ( ruleQualifiedNameWithWildCard )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6017:1: ruleQualifiedNameWithWildCard
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6046:1: ( ruleQualifiedNameWithWildCard )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6047:1: ruleQualifiedNameWithWildCard
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getImportAccess().getImportedNamespaceQualifiedNameWithWildCardParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleQualifiedNameWithWildCard_in_rule__Import__ImportedNamespaceAssignment_112047);
+            pushFollow(FOLLOW_ruleQualifiedNameWithWildCard_in_rule__Import__ImportedNamespaceAssignment_112107);
             ruleQualifiedNameWithWildCard();
 
             state._fsp--;
@@ -16976,22 +17071,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LanguageDef__NameAssignment_0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6026:1: rule__LanguageDef__NameAssignment_0 : ( RULE_ID ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6056:1: rule__LanguageDef__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__LanguageDef__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6030:1: ( ( RULE_ID ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6031:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6060:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6061:1: ( RULE_ID )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6031:1: ( RULE_ID )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6032:1: RULE_ID
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6061:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6062:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLanguageDefAccess().getNameIDTerminalRuleCall_0_0()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__LanguageDef__NameAssignment_012078); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__LanguageDef__NameAssignment_012138); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLanguageDefAccess().getNameIDTerminalRuleCall_0_0()); 
             }
@@ -17017,22 +17112,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LanguageDef__ParitioningAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6041:1: rule__LanguageDef__ParitioningAssignment_2 : ( ruleParitioning ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6071:1: rule__LanguageDef__ParitioningAssignment_2 : ( ruleParitioning ) ;
     public final void rule__LanguageDef__ParitioningAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6045:1: ( ( ruleParitioning ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6046:1: ( ruleParitioning )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6075:1: ( ( ruleParitioning ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6076:1: ( ruleParitioning )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6046:1: ( ruleParitioning )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6047:1: ruleParitioning
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6076:1: ( ruleParitioning )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6077:1: ruleParitioning
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLanguageDefAccess().getParitioningParitioningParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleParitioning_in_rule__LanguageDef__ParitioningAssignment_212109);
+            pushFollow(FOLLOW_ruleParitioning_in_rule__LanguageDef__ParitioningAssignment_212169);
             ruleParitioning();
 
             state._fsp--;
@@ -17062,22 +17157,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LanguageDef__LexicalHighlightingAssignment_3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6056:1: rule__LanguageDef__LexicalHighlightingAssignment_3 : ( ruleLexicalHighlighting ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6086:1: rule__LanguageDef__LexicalHighlightingAssignment_3 : ( ruleLexicalHighlighting ) ;
     public final void rule__LanguageDef__LexicalHighlightingAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6060:1: ( ( ruleLexicalHighlighting ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6061:1: ( ruleLexicalHighlighting )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6090:1: ( ( ruleLexicalHighlighting ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6091:1: ( ruleLexicalHighlighting )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6061:1: ( ruleLexicalHighlighting )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6062:1: ruleLexicalHighlighting
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6091:1: ( ruleLexicalHighlighting )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6092:1: ruleLexicalHighlighting
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLanguageDefAccess().getLexicalHighlightingLexicalHighlightingParserRuleCall_3_0()); 
             }
-            pushFollow(FOLLOW_ruleLexicalHighlighting_in_rule__LanguageDef__LexicalHighlightingAssignment_312140);
+            pushFollow(FOLLOW_ruleLexicalHighlighting_in_rule__LanguageDef__LexicalHighlightingAssignment_312200);
             ruleLexicalHighlighting();
 
             state._fsp--;
@@ -17107,22 +17202,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LanguageDef__IntegrationAssignment_4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6071:1: rule__LanguageDef__IntegrationAssignment_4 : ( ruleIntegration ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6101:1: rule__LanguageDef__IntegrationAssignment_4 : ( ruleIntegration ) ;
     public final void rule__LanguageDef__IntegrationAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6075:1: ( ( ruleIntegration ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6076:1: ( ruleIntegration )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6105:1: ( ( ruleIntegration ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6106:1: ( ruleIntegration )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6076:1: ( ruleIntegration )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6077:1: ruleIntegration
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6106:1: ( ruleIntegration )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6107:1: ruleIntegration
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLanguageDefAccess().getIntegrationIntegrationParserRuleCall_4_0()); 
             }
-            pushFollow(FOLLOW_ruleIntegration_in_rule__LanguageDef__IntegrationAssignment_412171);
+            pushFollow(FOLLOW_ruleIntegration_in_rule__LanguageDef__IntegrationAssignment_412231);
             ruleIntegration();
 
             state._fsp--;
@@ -17152,22 +17247,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Integration__CodeIntegrationListAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6086:1: rule__Integration__CodeIntegrationListAssignment_2 : ( ruleCodeIntegration ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6116:1: rule__Integration__CodeIntegrationListAssignment_2 : ( ruleCodeIntegration ) ;
     public final void rule__Integration__CodeIntegrationListAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6090:1: ( ( ruleCodeIntegration ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6091:1: ( ruleCodeIntegration )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6120:1: ( ( ruleCodeIntegration ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6121:1: ( ruleCodeIntegration )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6091:1: ( ruleCodeIntegration )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6092:1: ruleCodeIntegration
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6121:1: ( ruleCodeIntegration )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6122:1: ruleCodeIntegration
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntegrationAccess().getCodeIntegrationListCodeIntegrationParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleCodeIntegration_in_rule__Integration__CodeIntegrationListAssignment_212202);
+            pushFollow(FOLLOW_ruleCodeIntegration_in_rule__Integration__CodeIntegrationListAssignment_212262);
             ruleCodeIntegration();
 
             state._fsp--;
@@ -17197,22 +17292,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JavaFXIntegration__CodegenerationListAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6101:1: rule__JavaFXIntegration__CodegenerationListAssignment_2 : ( ruleCodegeneration ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6131:1: rule__JavaFXIntegration__CodegenerationListAssignment_2 : ( ruleCodegeneration ) ;
     public final void rule__JavaFXIntegration__CodegenerationListAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6105:1: ( ( ruleCodegeneration ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6106:1: ( ruleCodegeneration )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6135:1: ( ( ruleCodegeneration ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6136:1: ( ruleCodegeneration )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6106:1: ( ruleCodegeneration )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6107:1: ruleCodegeneration
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6136:1: ( ruleCodegeneration )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6137:1: ruleCodegeneration
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJavaFXIntegrationAccess().getCodegenerationListCodegenerationParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleCodegeneration_in_rule__JavaFXIntegration__CodegenerationListAssignment_212233);
+            pushFollow(FOLLOW_ruleCodegeneration_in_rule__JavaFXIntegration__CodegenerationListAssignment_212293);
             ruleCodegeneration();
 
             state._fsp--;
@@ -17242,22 +17337,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JavaCodeGeneration__NameAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6116:1: rule__JavaCodeGeneration__NameAssignment_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6146:1: rule__JavaCodeGeneration__NameAssignment_1 : ( RULE_STRING ) ;
     public final void rule__JavaCodeGeneration__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6120:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6121:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6150:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6151:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6121:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6122:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6151:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6152:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJavaCodeGenerationAccess().getNameSTRINGTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__JavaCodeGeneration__NameAssignment_112264); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__JavaCodeGeneration__NameAssignment_112324); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getJavaCodeGenerationAccess().getNameSTRINGTerminalRuleCall_1_0()); 
             }
@@ -17283,22 +17378,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JavaCodeGeneration__ConfigValueAssignment_2_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6131:1: rule__JavaCodeGeneration__ConfigValueAssignment_2_1 : ( ruleConfigValue ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6161:1: rule__JavaCodeGeneration__ConfigValueAssignment_2_1 : ( ruleConfigValue ) ;
     public final void rule__JavaCodeGeneration__ConfigValueAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6135:1: ( ( ruleConfigValue ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6136:1: ( ruleConfigValue )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6165:1: ( ( ruleConfigValue ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6166:1: ( ruleConfigValue )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6136:1: ( ruleConfigValue )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6137:1: ruleConfigValue
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6166:1: ( ruleConfigValue )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6167:1: ruleConfigValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJavaCodeGenerationAccess().getConfigValueConfigValueParserRuleCall_2_1_0()); 
             }
-            pushFollow(FOLLOW_ruleConfigValue_in_rule__JavaCodeGeneration__ConfigValueAssignment_2_112295);
+            pushFollow(FOLLOW_ruleConfigValue_in_rule__JavaCodeGeneration__ConfigValueAssignment_2_112355);
             ruleConfigValue();
 
             state._fsp--;
@@ -17328,22 +17423,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__E4CodeGeneration__NameAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6146:1: rule__E4CodeGeneration__NameAssignment_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6176:1: rule__E4CodeGeneration__NameAssignment_1 : ( RULE_STRING ) ;
     public final void rule__E4CodeGeneration__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6150:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6151:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6180:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6181:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6151:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6152:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6181:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6182:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getE4CodeGenerationAccess().getNameSTRINGTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__E4CodeGeneration__NameAssignment_112326); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__E4CodeGeneration__NameAssignment_112386); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getE4CodeGenerationAccess().getNameSTRINGTerminalRuleCall_1_0()); 
             }
@@ -17369,22 +17464,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__E4CodeGeneration__ConfigValueAssignment_2_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6161:1: rule__E4CodeGeneration__ConfigValueAssignment_2_1 : ( ruleConfigValue ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6191:1: rule__E4CodeGeneration__ConfigValueAssignment_2_1 : ( ruleConfigValue ) ;
     public final void rule__E4CodeGeneration__ConfigValueAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6165:1: ( ( ruleConfigValue ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6166:1: ( ruleConfigValue )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6195:1: ( ( ruleConfigValue ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6196:1: ( ruleConfigValue )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6166:1: ( ruleConfigValue )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6167:1: ruleConfigValue
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6196:1: ( ruleConfigValue )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6197:1: ruleConfigValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getE4CodeGenerationAccess().getConfigValueConfigValueParserRuleCall_2_1_0()); 
             }
-            pushFollow(FOLLOW_ruleConfigValue_in_rule__E4CodeGeneration__ConfigValueAssignment_2_112357);
+            pushFollow(FOLLOW_ruleConfigValue_in_rule__E4CodeGeneration__ConfigValueAssignment_2_112417);
             ruleConfigValue();
 
             state._fsp--;
@@ -17414,22 +17509,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConfigValue__KeyAssignment_0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6176:1: rule__ConfigValue__KeyAssignment_0 : ( RULE_ID ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6206:1: rule__ConfigValue__KeyAssignment_0 : ( RULE_ID ) ;
     public final void rule__ConfigValue__KeyAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6180:1: ( ( RULE_ID ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6181:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6210:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6211:1: ( RULE_ID )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6181:1: ( RULE_ID )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6182:1: RULE_ID
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6211:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6212:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConfigValueAccess().getKeyIDTerminalRuleCall_0_0()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ConfigValue__KeyAssignment_012388); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ConfigValue__KeyAssignment_012448); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getConfigValueAccess().getKeyIDTerminalRuleCall_0_0()); 
             }
@@ -17455,22 +17550,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConfigValue__SimpleValueAssignment_2_0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6191:1: rule__ConfigValue__SimpleValueAssignment_2_0 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6221:1: rule__ConfigValue__SimpleValueAssignment_2_0 : ( RULE_STRING ) ;
     public final void rule__ConfigValue__SimpleValueAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6195:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6196:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6225:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6226:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6196:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6197:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6226:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6227:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConfigValueAccess().getSimpleValueSTRINGTerminalRuleCall_2_0_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__ConfigValue__SimpleValueAssignment_2_012419); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__ConfigValue__SimpleValueAssignment_2_012479); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getConfigValueAccess().getSimpleValueSTRINGTerminalRuleCall_2_0_0()); 
             }
@@ -17496,22 +17591,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConfigValue__ChildrenAssignment_2_1_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6206:1: rule__ConfigValue__ChildrenAssignment_2_1_1 : ( ruleConfigValue ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6236:1: rule__ConfigValue__ChildrenAssignment_2_1_1 : ( ruleConfigValue ) ;
     public final void rule__ConfigValue__ChildrenAssignment_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6210:1: ( ( ruleConfigValue ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6211:1: ( ruleConfigValue )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6240:1: ( ( ruleConfigValue ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6241:1: ( ruleConfigValue )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6211:1: ( ruleConfigValue )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6212:1: ruleConfigValue
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6241:1: ( ruleConfigValue )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6242:1: ruleConfigValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getConfigValueAccess().getChildrenConfigValueParserRuleCall_2_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleConfigValue_in_rule__ConfigValue__ChildrenAssignment_2_1_112450);
+            pushFollow(FOLLOW_ruleConfigValue_in_rule__ConfigValue__ChildrenAssignment_2_1_112510);
             ruleConfigValue();
 
             state._fsp--;
@@ -17541,22 +17636,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Paritioning__PartitionsAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6221:1: rule__Paritioning__PartitionsAssignment_2 : ( rulePartition ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6251:1: rule__Paritioning__PartitionsAssignment_2 : ( rulePartition ) ;
     public final void rule__Paritioning__PartitionsAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6225:1: ( ( rulePartition ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6226:1: ( rulePartition )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6255:1: ( ( rulePartition ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6256:1: ( rulePartition )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6226:1: ( rulePartition )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6227:1: rulePartition
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6256:1: ( rulePartition )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6257:1: rulePartition
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParitioningAccess().getPartitionsPartitionParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_rulePartition_in_rule__Paritioning__PartitionsAssignment_212481);
+            pushFollow(FOLLOW_rulePartition_in_rule__Paritioning__PartitionsAssignment_212541);
             rulePartition();
 
             state._fsp--;
@@ -17586,22 +17681,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Paritioning__PartitionerAssignment_3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6236:1: rule__Paritioning__PartitionerAssignment_3 : ( rulePartitioner ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6266:1: rule__Paritioning__PartitionerAssignment_3 : ( rulePartitioner ) ;
     public final void rule__Paritioning__PartitionerAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6240:1: ( ( rulePartitioner ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6241:1: ( rulePartitioner )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6270:1: ( ( rulePartitioner ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6271:1: ( rulePartitioner )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6241:1: ( rulePartitioner )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6242:1: rulePartitioner
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6271:1: ( rulePartitioner )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6272:1: rulePartitioner
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParitioningAccess().getPartitionerPartitionerParserRuleCall_3_0()); 
             }
-            pushFollow(FOLLOW_rulePartitioner_in_rule__Paritioning__PartitionerAssignment_312512);
+            pushFollow(FOLLOW_rulePartitioner_in_rule__Paritioning__PartitionerAssignment_312572);
             rulePartitioner();
 
             state._fsp--;
@@ -17631,22 +17726,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition__NameAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6251:1: rule__Partition__NameAssignment_1 : ( RULE_ID ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6281:1: rule__Partition__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__Partition__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6255:1: ( ( RULE_ID ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6256:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6285:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6286:1: ( RULE_ID )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6256:1: ( RULE_ID )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6257:1: RULE_ID
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6286:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6287:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartitionAccess().getNameIDTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Partition__NameAssignment_112543); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Partition__NameAssignment_112603); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartitionAccess().getNameIDTerminalRuleCall_1_0()); 
             }
@@ -17672,22 +17767,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Paritioner_JS__ScriptURIAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6266:1: rule__Paritioner_JS__ScriptURIAssignment_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6296:1: rule__Paritioner_JS__ScriptURIAssignment_1 : ( RULE_STRING ) ;
     public final void rule__Paritioner_JS__ScriptURIAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6270:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6271:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6300:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6301:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6271:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6272:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6301:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6302:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParitioner_JSAccess().getScriptURISTRINGTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Paritioner_JS__ScriptURIAssignment_112574); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Paritioner_JS__ScriptURIAssignment_112634); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getParitioner_JSAccess().getScriptURISTRINGTerminalRuleCall_1_0()); 
             }
@@ -17713,22 +17808,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partitioner_Rule__RuleListAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6281:1: rule__Partitioner_Rule__RuleListAssignment_2 : ( rulePartition_Rule ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6311:1: rule__Partitioner_Rule__RuleListAssignment_2 : ( rulePartition_Rule ) ;
     public final void rule__Partitioner_Rule__RuleListAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6285:1: ( ( rulePartition_Rule ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6286:1: ( rulePartition_Rule )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6315:1: ( ( rulePartition_Rule ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6316:1: ( rulePartition_Rule )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6286:1: ( rulePartition_Rule )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6287:1: rulePartition_Rule
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6316:1: ( rulePartition_Rule )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6317:1: rulePartition_Rule
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartitioner_RuleAccess().getRuleListPartition_RuleParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_rulePartition_Rule_in_rule__Partitioner_Rule__RuleListAssignment_212605);
+            pushFollow(FOLLOW_rulePartition_Rule_in_rule__Partitioner_Rule__RuleListAssignment_212665);
             rulePartition_Rule();
 
             state._fsp--;
@@ -17758,28 +17853,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_SingleLineRule__ParitionAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6296:1: rule__Partition_SingleLineRule__ParitionAssignment_1 : ( ( RULE_ID ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6326:1: rule__Partition_SingleLineRule__ParitionAssignment_1 : ( ( RULE_ID ) ) ;
     public final void rule__Partition_SingleLineRule__ParitionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6300:1: ( ( ( RULE_ID ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6301:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6330:1: ( ( ( RULE_ID ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6331:1: ( ( RULE_ID ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6301:1: ( ( RULE_ID ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6302:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6331:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6332:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_SingleLineRuleAccess().getParitionPartitionCrossReference_1_0()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6303:1: ( RULE_ID )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6304:1: RULE_ID
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6333:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6334:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_SingleLineRuleAccess().getParitionPartitionIDTerminalRuleCall_1_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Partition_SingleLineRule__ParitionAssignment_112640); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Partition_SingleLineRule__ParitionAssignment_112700); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartition_SingleLineRuleAccess().getParitionPartitionIDTerminalRuleCall_1_0_1()); 
             }
@@ -17811,22 +17906,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_SingleLineRule__StartSeqAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6315:1: rule__Partition_SingleLineRule__StartSeqAssignment_2 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6345:1: rule__Partition_SingleLineRule__StartSeqAssignment_2 : ( RULE_STRING ) ;
     public final void rule__Partition_SingleLineRule__StartSeqAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6319:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6320:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6349:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6350:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6320:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6321:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6350:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6351:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_SingleLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__StartSeqAssignment_212675); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__StartSeqAssignment_212735); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartition_SingleLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_2_0()); 
             }
@@ -17851,25 +17946,25 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Partition_SingleLineRule__StartSeqAssignment_2"
 
 
-    // $ANTLR start "rule__Partition_SingleLineRule__EndSeqAssignment_4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6330:1: rule__Partition_SingleLineRule__EndSeqAssignment_4 : ( RULE_STRING ) ;
-    public final void rule__Partition_SingleLineRule__EndSeqAssignment_4() throws RecognitionException {
+    // $ANTLR start "rule__Partition_SingleLineRule__EndSeqAssignment_3_1"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6360:1: rule__Partition_SingleLineRule__EndSeqAssignment_3_1 : ( RULE_STRING ) ;
+    public final void rule__Partition_SingleLineRule__EndSeqAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6334:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6335:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6364:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6365:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6335:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6336:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6365:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6366:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_0()); 
+               before(grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_3_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__EndSeqAssignment_412706); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__EndSeqAssignment_3_112766); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_0()); 
+               after(grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_3_1_0()); 
             }
 
             }
@@ -17889,28 +17984,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Partition_SingleLineRule__EndSeqAssignment_4"
+    // $ANTLR end "rule__Partition_SingleLineRule__EndSeqAssignment_3_1"
 
 
-    // $ANTLR start "rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6345:1: rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2 : ( RULE_STRING ) ;
-    public final void rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2() throws RecognitionException {
+    // $ANTLR start "rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2"
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6375:1: rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2 : ( RULE_STRING ) ;
+    public final void rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6349:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6350:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6379:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6380:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6350:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6351:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6380:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6381:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
+               before(grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_4_2_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__EscapeSeqAssignment_5_212737); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__EscapeSeqAssignment_4_212797); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
+               after(grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_4_2_0()); 
             }
 
             }
@@ -17930,32 +18025,32 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2"
+    // $ANTLR end "rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2"
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__ParitionAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6360:1: rule__Partition_MultiLineRule__ParitionAssignment_1 : ( ( RULE_ID ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6390:1: rule__Partition_MultiLineRule__ParitionAssignment_1 : ( ( RULE_ID ) ) ;
     public final void rule__Partition_MultiLineRule__ParitionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6364:1: ( ( ( RULE_ID ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6365:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6394:1: ( ( ( RULE_ID ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6395:1: ( ( RULE_ID ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6365:1: ( ( RULE_ID ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6366:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6395:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6396:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getParitionPartitionCrossReference_1_0()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6367:1: ( RULE_ID )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6368:1: RULE_ID
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6397:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6398:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getParitionPartitionIDTerminalRuleCall_1_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Partition_MultiLineRule__ParitionAssignment_112772); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Partition_MultiLineRule__ParitionAssignment_112832); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartition_MultiLineRuleAccess().getParitionPartitionIDTerminalRuleCall_1_0_1()); 
             }
@@ -17987,22 +18082,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__StartSeqAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6379:1: rule__Partition_MultiLineRule__StartSeqAssignment_2 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6409:1: rule__Partition_MultiLineRule__StartSeqAssignment_2 : ( RULE_STRING ) ;
     public final void rule__Partition_MultiLineRule__StartSeqAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6383:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6384:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6413:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6414:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6384:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6385:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6414:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6415:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__StartSeqAssignment_212807); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__StartSeqAssignment_212867); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartition_MultiLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_2_0()); 
             }
@@ -18028,22 +18123,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__EndSeqAssignment_4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6394:1: rule__Partition_MultiLineRule__EndSeqAssignment_4 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6424:1: rule__Partition_MultiLineRule__EndSeqAssignment_4 : ( RULE_STRING ) ;
     public final void rule__Partition_MultiLineRule__EndSeqAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6398:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6399:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6428:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6429:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6399:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6400:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6429:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6430:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__EndSeqAssignment_412838); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__EndSeqAssignment_412898); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartition_MultiLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_0()); 
             }
@@ -18069,22 +18164,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6409:1: rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6439:1: rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2 : ( RULE_STRING ) ;
     public final void rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6413:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6414:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6443:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6444:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6414:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6415:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6444:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6445:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPartition_MultiLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__EscapeSeqAssignment_5_212869); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__EscapeSeqAssignment_5_212929); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPartition_MultiLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
             }
@@ -18110,22 +18205,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalHighlighting__ListAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6424:1: rule__LexicalHighlighting__ListAssignment_2 : ( ruleLexicalPartitionHighlighting ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6454:1: rule__LexicalHighlighting__ListAssignment_2 : ( ruleLexicalPartitionHighlighting ) ;
     public final void rule__LexicalHighlighting__ListAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6428:1: ( ( ruleLexicalPartitionHighlighting ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6429:1: ( ruleLexicalPartitionHighlighting )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6458:1: ( ( ruleLexicalPartitionHighlighting ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6459:1: ( ruleLexicalPartitionHighlighting )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6429:1: ( ruleLexicalPartitionHighlighting )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6430:1: ruleLexicalPartitionHighlighting
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6459:1: ( ruleLexicalPartitionHighlighting )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6460:1: ruleLexicalPartitionHighlighting
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalHighlightingAccess().getListLexicalPartitionHighlightingParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleLexicalPartitionHighlighting_in_rule__LexicalHighlighting__ListAssignment_212900);
+            pushFollow(FOLLOW_ruleLexicalPartitionHighlighting_in_rule__LexicalHighlighting__ListAssignment_212960);
             ruleLexicalPartitionHighlighting();
 
             state._fsp--;
@@ -18155,28 +18250,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6439:1: rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 : ( ( RULE_ID ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6469:1: rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1 : ( ( RULE_ID ) ) ;
     public final void rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6443:1: ( ( ( RULE_ID ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6444:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6473:1: ( ( ( RULE_ID ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6474:1: ( ( RULE_ID ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6444:1: ( ( RULE_ID ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6445:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6474:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6475:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getPartitionPartitionCrossReference_1_0()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6446:1: ( RULE_ID )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6447:1: RULE_ID
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6476:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6477:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getPartitionPartitionIDTerminalRuleCall_1_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__LexicalPartitionHighlighting_JS__PartitionAssignment_112935); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__LexicalPartitionHighlighting_JS__PartitionAssignment_112995); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getPartitionPartitionIDTerminalRuleCall_1_0_1()); 
             }
@@ -18208,22 +18303,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6458:1: rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6488:1: rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2 : ( RULE_STRING ) ;
     public final void rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6462:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6463:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6492:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6493:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6463:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6464:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6493:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6494:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getScriptURISTRINGTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_212970); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_213030); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getScriptURISTRINGTerminalRuleCall_2_0()); 
             }
@@ -18249,28 +18344,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6473:1: rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 : ( ( RULE_ID ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6503:1: rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1 : ( ( RULE_ID ) ) ;
     public final void rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6477:1: ( ( ( RULE_ID ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6478:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6507:1: ( ( ( RULE_ID ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6508:1: ( ( RULE_ID ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6478:1: ( ( RULE_ID ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6479:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6508:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6509:1: ( RULE_ID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getPartitionPartitionCrossReference_1_0()); 
             }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6480:1: ( RULE_ID )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6481:1: RULE_ID
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6510:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6511:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getPartitionPartitionIDTerminalRuleCall_1_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_113005); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_113065); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getPartitionPartitionIDTerminalRuleCall_1_0_1()); 
             }
@@ -18302,22 +18397,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6492:1: rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 : ( ruleWhitespaceRule ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6522:1: rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2 : ( ruleWhitespaceRule ) ;
     public final void rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6496:1: ( ( ruleWhitespaceRule ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6497:1: ( ruleWhitespaceRule )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6526:1: ( ( ruleWhitespaceRule ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6527:1: ( ruleWhitespaceRule )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6497:1: ( ruleWhitespaceRule )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6498:1: ruleWhitespaceRule
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6527:1: ( ruleWhitespaceRule )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6528:1: ruleWhitespaceRule
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getWhitespaceWhitespaceRuleParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleWhitespaceRule_in_rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_213040);
+            pushFollow(FOLLOW_ruleWhitespaceRule_in_rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_213100);
             ruleWhitespaceRule();
 
             state._fsp--;
@@ -18347,22 +18442,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6507:1: rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 : ( ruleToken ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6537:1: rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4 : ( ruleToken ) ;
     public final void rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6511:1: ( ( ruleToken ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6512:1: ( ruleToken )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6541:1: ( ( ruleToken ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6542:1: ( ruleToken )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6512:1: ( ruleToken )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6513:1: ruleToken
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6542:1: ( ruleToken )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6543:1: ruleToken
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getTokenListTokenParserRuleCall_4_0()); 
             }
-            pushFollow(FOLLOW_ruleToken_in_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_413071);
+            pushFollow(FOLLOW_ruleToken_in_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_413131);
             ruleToken();
 
             state._fsp--;
@@ -18392,28 +18487,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__DefaultAssignment_0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6522:1: rule__Token__DefaultAssignment_0 : ( ( 'default' ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6552:1: rule__Token__DefaultAssignment_0 : ( ( 'default' ) ) ;
     public final void rule__Token__DefaultAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6526:1: ( ( ( 'default' ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6527:1: ( ( 'default' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6556:1: ( ( ( 'default' ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6557:1: ( ( 'default' ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6527:1: ( ( 'default' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6528:1: ( 'default' )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTokenAccess().getDefaultDefaultKeyword_0_0()); 
-            }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6529:1: ( 'default' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6530:1: 'default'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6557:1: ( ( 'default' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6558:1: ( 'default' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTokenAccess().getDefaultDefaultKeyword_0_0()); 
             }
-            match(input,41,FOLLOW_41_in_rule__Token__DefaultAssignment_013107); if (state.failed) return ;
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6559:1: ( 'default' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6560:1: 'default'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getTokenAccess().getDefaultDefaultKeyword_0_0()); 
+            }
+            match(input,41,FOLLOW_41_in_rule__Token__DefaultAssignment_013167); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTokenAccess().getDefaultDefaultKeyword_0_0()); 
             }
@@ -18445,22 +18540,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__NameAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6545:1: rule__Token__NameAssignment_1 : ( RULE_ID ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6575:1: rule__Token__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__Token__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6549:1: ( ( RULE_ID ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6550:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6579:1: ( ( RULE_ID ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6580:1: ( RULE_ID )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6550:1: ( RULE_ID )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6551:1: RULE_ID
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6580:1: ( RULE_ID )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6581:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTokenAccess().getNameIDTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Token__NameAssignment_113146); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Token__NameAssignment_113206); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTokenAccess().getNameIDTerminalRuleCall_1_0()); 
             }
@@ -18486,22 +18581,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Token__ScannerListAssignment_2_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6560:1: rule__Token__ScannerListAssignment_2_1 : ( ruleScanner ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6590:1: rule__Token__ScannerListAssignment_2_1 : ( ruleScanner ) ;
     public final void rule__Token__ScannerListAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6564:1: ( ( ruleScanner ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6565:1: ( ruleScanner )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6594:1: ( ( ruleScanner ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6595:1: ( ruleScanner )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6565:1: ( ruleScanner )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6566:1: ruleScanner
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6595:1: ( ruleScanner )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6596:1: ruleScanner
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTokenAccess().getScannerListScannerParserRuleCall_2_1_0()); 
             }
-            pushFollow(FOLLOW_ruleScanner_in_rule__Token__ScannerListAssignment_2_113177);
+            pushFollow(FOLLOW_ruleScanner_in_rule__Token__ScannerListAssignment_2_113237);
             ruleScanner();
 
             state._fsp--;
@@ -18531,22 +18626,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__KeywordsAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6575:1: rule__Scanner_Keyword__KeywordsAssignment_2 : ( ruleKeyword ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6605:1: rule__Scanner_Keyword__KeywordsAssignment_2 : ( ruleKeyword ) ;
     public final void rule__Scanner_Keyword__KeywordsAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6579:1: ( ( ruleKeyword ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6580:1: ( ruleKeyword )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6609:1: ( ( ruleKeyword ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6610:1: ( ruleKeyword )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6580:1: ( ruleKeyword )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6581:1: ruleKeyword
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6610:1: ( ruleKeyword )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6611:1: ruleKeyword
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_KeywordAccess().getKeywordsKeywordParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleKeyword_in_rule__Scanner_Keyword__KeywordsAssignment_213208);
+            pushFollow(FOLLOW_ruleKeyword_in_rule__Scanner_Keyword__KeywordsAssignment_213268);
             ruleKeyword();
 
             state._fsp--;
@@ -18576,22 +18671,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_Keyword__KeywordsAssignment_3_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6590:1: rule__Scanner_Keyword__KeywordsAssignment_3_1 : ( ruleKeyword ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6620:1: rule__Scanner_Keyword__KeywordsAssignment_3_1 : ( ruleKeyword ) ;
     public final void rule__Scanner_Keyword__KeywordsAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6594:1: ( ( ruleKeyword ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6595:1: ( ruleKeyword )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6624:1: ( ( ruleKeyword ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6625:1: ( ruleKeyword )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6595:1: ( ruleKeyword )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6596:1: ruleKeyword
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6625:1: ( ruleKeyword )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6626:1: ruleKeyword
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_KeywordAccess().getKeywordsKeywordParserRuleCall_3_1_0()); 
             }
-            pushFollow(FOLLOW_ruleKeyword_in_rule__Scanner_Keyword__KeywordsAssignment_3_113239);
+            pushFollow(FOLLOW_ruleKeyword_in_rule__Scanner_Keyword__KeywordsAssignment_3_113299);
             ruleKeyword();
 
             state._fsp--;
@@ -18621,22 +18716,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Keyword__NameAssignment_0"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6605:1: rule__Keyword__NameAssignment_0 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6635:1: rule__Keyword__NameAssignment_0 : ( RULE_STRING ) ;
     public final void rule__Keyword__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6609:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6610:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6639:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6640:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6610:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6611:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6640:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6641:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeywordAccess().getNameSTRINGTerminalRuleCall_0_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Keyword__NameAssignment_013270); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Keyword__NameAssignment_013330); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeywordAccess().getNameSTRINGTerminalRuleCall_0_0()); 
             }
@@ -18662,22 +18757,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Keyword__VersionAssignment_1_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6620:1: rule__Keyword__VersionAssignment_1_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6650:1: rule__Keyword__VersionAssignment_1_1 : ( RULE_STRING ) ;
     public final void rule__Keyword__VersionAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6624:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6625:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6654:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6655:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6625:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6626:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6655:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6656:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeywordAccess().getVersionSTRINGTerminalRuleCall_1_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Keyword__VersionAssignment_1_113301); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Keyword__VersionAssignment_1_113361); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeywordAccess().getVersionSTRINGTerminalRuleCall_1_1_0()); 
             }
@@ -18703,22 +18798,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__StartSeqAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6635:1: rule__Scanner_SingleLineRule__StartSeqAssignment_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6665:1: rule__Scanner_SingleLineRule__StartSeqAssignment_1 : ( RULE_STRING ) ;
     public final void rule__Scanner_SingleLineRule__StartSeqAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6639:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6640:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6669:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6670:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6640:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6641:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6670:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6671:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__StartSeqAssignment_113332); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__StartSeqAssignment_113392); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_SingleLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_1_0()); 
             }
@@ -18744,22 +18839,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__EndSeqAssignment_2_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6650:1: rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6680:1: rule__Scanner_SingleLineRule__EndSeqAssignment_2_1 : ( RULE_STRING ) ;
     public final void rule__Scanner_SingleLineRule__EndSeqAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6654:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6655:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6684:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6685:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6655:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6656:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6685:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6686:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_2_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__EndSeqAssignment_2_113363); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__EndSeqAssignment_2_113423); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_2_1_0()); 
             }
@@ -18785,22 +18880,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6665:1: rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6695:1: rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2 : ( RULE_STRING ) ;
     public final void rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6669:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6670:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6699:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6700:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6670:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6671:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6700:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6701:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_3_2_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_213394); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_213454); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_3_2_0()); 
             }
@@ -18826,22 +18921,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__StartSeqAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6680:1: rule__Scanner_MultiLineRule__StartSeqAssignment_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6710:1: rule__Scanner_MultiLineRule__StartSeqAssignment_1 : ( RULE_STRING ) ;
     public final void rule__Scanner_MultiLineRule__StartSeqAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6684:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6685:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6714:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6715:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6685:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6686:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6715:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6716:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__StartSeqAssignment_113425); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__StartSeqAssignment_113485); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_MultiLineRuleAccess().getStartSeqSTRINGTerminalRuleCall_1_0()); 
             }
@@ -18867,22 +18962,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__EndSeqAssignment_3"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6695:1: rule__Scanner_MultiLineRule__EndSeqAssignment_3 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6725:1: rule__Scanner_MultiLineRule__EndSeqAssignment_3 : ( RULE_STRING ) ;
     public final void rule__Scanner_MultiLineRule__EndSeqAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6699:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6700:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6729:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6730:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6700:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6701:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6730:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6731:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_3_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__EndSeqAssignment_313456); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__EndSeqAssignment_313516); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_MultiLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_3_0()); 
             }
@@ -18908,22 +19003,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6710:1: rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6740:1: rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2 : ( RULE_STRING ) ;
     public final void rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6714:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6715:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6744:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6745:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6715:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6716:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6745:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6746:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_MultiLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_4_2_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_213487); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_213547); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_MultiLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_4_2_0()); 
             }
@@ -18949,22 +19044,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__StartPatternAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6725:1: rule__Scanner_PatternRule__StartPatternAssignment_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6755:1: rule__Scanner_PatternRule__StartPatternAssignment_1 : ( RULE_STRING ) ;
     public final void rule__Scanner_PatternRule__StartPatternAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6729:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6730:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6759:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6760:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6730:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6731:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6760:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6761:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_PatternRuleAccess().getStartPatternSTRINGTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_PatternRule__StartPatternAssignment_113518); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_PatternRule__StartPatternAssignment_113578); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_PatternRuleAccess().getStartPatternSTRINGTerminalRuleCall_1_0()); 
             }
@@ -18990,22 +19085,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__LengthAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6740:1: rule__Scanner_PatternRule__LengthAssignment_2 : ( RULE_INT ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6770:1: rule__Scanner_PatternRule__LengthAssignment_2 : ( RULE_INT ) ;
     public final void rule__Scanner_PatternRule__LengthAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6744:1: ( ( RULE_INT ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6745:1: ( RULE_INT )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6774:1: ( ( RULE_INT ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6775:1: ( RULE_INT )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6745:1: ( RULE_INT )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6746:1: RULE_INT
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6775:1: ( RULE_INT )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6776:1: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_PatternRuleAccess().getLengthINTTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Scanner_PatternRule__LengthAssignment_213549); if (state.failed) return ;
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Scanner_PatternRule__LengthAssignment_213609); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_PatternRuleAccess().getLengthINTTerminalRuleCall_2_0()); 
             }
@@ -19031,22 +19126,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_PatternRule__ContentPatternAssignment_4"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6755:1: rule__Scanner_PatternRule__ContentPatternAssignment_4 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6785:1: rule__Scanner_PatternRule__ContentPatternAssignment_4 : ( RULE_STRING ) ;
     public final void rule__Scanner_PatternRule__ContentPatternAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6759:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6760:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6789:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6790:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6760:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6761:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6790:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6791:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_PatternRuleAccess().getContentPatternSTRINGTerminalRuleCall_4_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_PatternRule__ContentPatternAssignment_413580); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_PatternRule__ContentPatternAssignment_413640); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_PatternRuleAccess().getContentPatternSTRINGTerminalRuleCall_4_0()); 
             }
@@ -19072,22 +19167,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__CharactersAssignment_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6770:1: rule__Scanner_CharacterRule__CharactersAssignment_2 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6800:1: rule__Scanner_CharacterRule__CharactersAssignment_2 : ( RULE_STRING ) ;
     public final void rule__Scanner_CharacterRule__CharactersAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6774:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6775:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6804:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6805:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6775:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6776:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6805:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6806:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_CharacterRuleAccess().getCharactersSTRINGTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_CharacterRule__CharactersAssignment_213611); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_CharacterRule__CharactersAssignment_213671); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_CharacterRuleAccess().getCharactersSTRINGTerminalRuleCall_2_0()); 
             }
@@ -19113,22 +19208,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_CharacterRule__CharactersAssignment_3_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6785:1: rule__Scanner_CharacterRule__CharactersAssignment_3_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6815:1: rule__Scanner_CharacterRule__CharactersAssignment_3_1 : ( RULE_STRING ) ;
     public final void rule__Scanner_CharacterRule__CharactersAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6789:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6790:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6819:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6820:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6790:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6791:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6820:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6821:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_CharacterRuleAccess().getCharactersSTRINGTerminalRuleCall_3_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_CharacterRule__CharactersAssignment_3_113642); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_CharacterRule__CharactersAssignment_3_113702); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_CharacterRuleAccess().getCharactersSTRINGTerminalRuleCall_3_1_0()); 
             }
@@ -19154,22 +19249,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scanner_JSRule__FileURIAssignment_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6800:1: rule__Scanner_JSRule__FileURIAssignment_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6830:1: rule__Scanner_JSRule__FileURIAssignment_1 : ( RULE_STRING ) ;
     public final void rule__Scanner_JSRule__FileURIAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6804:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6805:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6834:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6835:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6805:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6806:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6835:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6836:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScanner_JSRuleAccess().getFileURISTRINGTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_JSRule__FileURIAssignment_113673); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Scanner_JSRule__FileURIAssignment_113733); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getScanner_JSRuleAccess().getFileURISTRINGTerminalRuleCall_1_0()); 
             }
@@ -19195,22 +19290,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__CharactersAssignment_1_0_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6815:1: rule__WhitespaceRule__CharactersAssignment_1_0_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6845:1: rule__WhitespaceRule__CharactersAssignment_1_0_1 : ( RULE_STRING ) ;
     public final void rule__WhitespaceRule__CharactersAssignment_1_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6819:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6820:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6849:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6850:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6820:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6821:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6850:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6851:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_1_0_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__WhitespaceRule__CharactersAssignment_1_0_113704); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__WhitespaceRule__CharactersAssignment_1_0_113764); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_1_0_1_0()); 
             }
@@ -19236,22 +19331,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__CharactersAssignment_1_0_2_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6830:1: rule__WhitespaceRule__CharactersAssignment_1_0_2_1 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6860:1: rule__WhitespaceRule__CharactersAssignment_1_0_2_1 : ( RULE_STRING ) ;
     public final void rule__WhitespaceRule__CharactersAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6834:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6835:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6864:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6865:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6835:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6836:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6865:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6866:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_1_0_2_1_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__WhitespaceRule__CharactersAssignment_1_0_2_113735); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__WhitespaceRule__CharactersAssignment_1_0_2_113795); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWhitespaceRuleAccess().getCharactersSTRINGTerminalRuleCall_1_0_2_1_0()); 
             }
@@ -19277,28 +19372,28 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__JavawhitespaceAssignment_1_1"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6845:1: rule__WhitespaceRule__JavawhitespaceAssignment_1_1 : ( ( 'javawhitespace' ) ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6875:1: rule__WhitespaceRule__JavawhitespaceAssignment_1_1 : ( ( 'javawhitespace' ) ) ;
     public final void rule__WhitespaceRule__JavawhitespaceAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6849:1: ( ( ( 'javawhitespace' ) ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6850:1: ( ( 'javawhitespace' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6879:1: ( ( ( 'javawhitespace' ) ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6880:1: ( ( 'javawhitespace' ) )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6850:1: ( ( 'javawhitespace' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6851:1: ( 'javawhitespace' )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getWhitespaceRuleAccess().getJavawhitespaceJavawhitespaceKeyword_1_1_0()); 
-            }
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6852:1: ( 'javawhitespace' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6853:1: 'javawhitespace'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6880:1: ( ( 'javawhitespace' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6881:1: ( 'javawhitespace' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getJavawhitespaceJavawhitespaceKeyword_1_1_0()); 
             }
-            match(input,42,FOLLOW_42_in_rule__WhitespaceRule__JavawhitespaceAssignment_1_113771); if (state.failed) return ;
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6882:1: ( 'javawhitespace' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6883:1: 'javawhitespace'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getWhitespaceRuleAccess().getJavawhitespaceJavawhitespaceKeyword_1_1_0()); 
+            }
+            match(input,42,FOLLOW_42_in_rule__WhitespaceRule__JavawhitespaceAssignment_1_113831); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWhitespaceRuleAccess().getJavawhitespaceJavawhitespaceKeyword_1_1_0()); 
             }
@@ -19330,22 +19425,22 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__WhitespaceRule__FileURIAssignment_1_2"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6868:1: rule__WhitespaceRule__FileURIAssignment_1_2 : ( RULE_STRING ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6898:1: rule__WhitespaceRule__FileURIAssignment_1_2 : ( RULE_STRING ) ;
     public final void rule__WhitespaceRule__FileURIAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6872:1: ( ( RULE_STRING ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6873:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6902:1: ( ( RULE_STRING ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6903:1: ( RULE_STRING )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6873:1: ( RULE_STRING )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6874:1: RULE_STRING
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6903:1: ( RULE_STRING )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:6904:1: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWhitespaceRuleAccess().getFileURISTRINGTerminalRuleCall_1_2_0()); 
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__WhitespaceRule__FileURIAssignment_1_213810); if (state.failed) return ;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__WhitespaceRule__FileURIAssignment_1_213870); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWhitespaceRuleAccess().getFileURISTRINGTerminalRuleCall_1_2_0()); 
             }
@@ -19673,297 +19768,299 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__1__Impl_in_rule__Partition_SingleLineRule__Group__16544 = new BitSet(new long[]{0x0000000000000020L});
     public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__2_in_rule__Partition_SingleLineRule__Group__16547 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Partition_SingleLineRule__ParitionAssignment_1_in_rule__Partition_SingleLineRule__Group__1__Impl6574 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__2__Impl_in_rule__Partition_SingleLineRule__Group__26604 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__2__Impl_in_rule__Partition_SingleLineRule__Group__26604 = new BitSet(new long[]{0x0000000018000000L});
     public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__3_in_rule__Partition_SingleLineRule__Group__26607 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Partition_SingleLineRule__StartSeqAssignment_2_in_rule__Partition_SingleLineRule__Group__2__Impl6634 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__3__Impl_in_rule__Partition_SingleLineRule__Group__36664 = new BitSet(new long[]{0x0000000010000020L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__3__Impl_in_rule__Partition_SingleLineRule__Group__36664 = new BitSet(new long[]{0x0000000018000000L});
     public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__4_in_rule__Partition_SingleLineRule__Group__36667 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_rule__Partition_SingleLineRule__Group__3__Impl6695 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__4__Impl_in_rule__Partition_SingleLineRule__Group__46726 = new BitSet(new long[]{0x0000000010000020L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__5_in_rule__Partition_SingleLineRule__Group__46729 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__EndSeqAssignment_4_in_rule__Partition_SingleLineRule__Group__4__Impl6756 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__5__Impl_in_rule__Partition_SingleLineRule__Group__56787 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_5__0_in_rule__Partition_SingleLineRule__Group__5__Impl6814 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_5__0__Impl_in_rule__Partition_SingleLineRule__Group_5__06857 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_5__1_in_rule__Partition_SingleLineRule__Group_5__06860 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_rule__Partition_SingleLineRule__Group_5__0__Impl6888 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_5__1__Impl_in_rule__Partition_SingleLineRule__Group_5__16919 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_5__2_in_rule__Partition_SingleLineRule__Group_5__16922 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__Partition_SingleLineRule__Group_5__1__Impl6950 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_5__2__Impl_in_rule__Partition_SingleLineRule__Group_5__26981 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__EscapeSeqAssignment_5_2_in_rule__Partition_SingleLineRule__Group_5__2__Impl7008 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__0__Impl_in_rule__Partition_MultiLineRule__Group__07044 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__1_in_rule__Partition_MultiLineRule__Group__07047 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__Partition_MultiLineRule__Group__0__Impl7075 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__1__Impl_in_rule__Partition_MultiLineRule__Group__17106 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__2_in_rule__Partition_MultiLineRule__Group__17109 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__ParitionAssignment_1_in_rule__Partition_MultiLineRule__Group__1__Impl7136 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__2__Impl_in_rule__Partition_MultiLineRule__Group__27166 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__3_in_rule__Partition_MultiLineRule__Group__27169 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__StartSeqAssignment_2_in_rule__Partition_MultiLineRule__Group__2__Impl7196 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__3__Impl_in_rule__Partition_MultiLineRule__Group__37226 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__4_in_rule__Partition_MultiLineRule__Group__37229 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_rule__Partition_MultiLineRule__Group__3__Impl7257 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__4__Impl_in_rule__Partition_MultiLineRule__Group__47288 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__5_in_rule__Partition_MultiLineRule__Group__47291 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__EndSeqAssignment_4_in_rule__Partition_MultiLineRule__Group__4__Impl7318 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__5__Impl_in_rule__Partition_MultiLineRule__Group__57348 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__0_in_rule__Partition_MultiLineRule__Group__5__Impl7375 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__0__Impl_in_rule__Partition_MultiLineRule__Group_5__07418 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__1_in_rule__Partition_MultiLineRule__Group_5__07421 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_rule__Partition_MultiLineRule__Group_5__0__Impl7449 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__1__Impl_in_rule__Partition_MultiLineRule__Group_5__17480 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__2_in_rule__Partition_MultiLineRule__Group_5__17483 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__Partition_MultiLineRule__Group_5__1__Impl7511 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__2__Impl_in_rule__Partition_MultiLineRule__Group_5__27542 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2_in_rule__Partition_MultiLineRule__Group_5__2__Impl7569 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__0__Impl_in_rule__LexicalHighlighting__Group__07605 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__1_in_rule__LexicalHighlighting__Group__07608 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_rule__LexicalHighlighting__Group__0__Impl7636 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__1__Impl_in_rule__LexicalHighlighting__Group__17667 = new BitSet(new long[]{0x0000000003000000L});
-    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__2_in_rule__LexicalHighlighting__Group__17670 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_rule__LexicalHighlighting__Group__1__Impl7698 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__2__Impl_in_rule__LexicalHighlighting__Group__27729 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__3_in_rule__LexicalHighlighting__Group__27732 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalHighlighting__ListAssignment_2_in_rule__LexicalHighlighting__Group__2__Impl7761 = new BitSet(new long[]{0x0000000003000002L});
-    public static final BitSet FOLLOW_rule__LexicalHighlighting__ListAssignment_2_in_rule__LexicalHighlighting__Group__2__Impl7773 = new BitSet(new long[]{0x0000000003000002L});
-    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__3__Impl_in_rule__LexicalHighlighting__Group__37806 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_rule__LexicalHighlighting__Group__3__Impl7834 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__0__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__07873 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__1_in_rule__LexicalPartitionHighlighting_JS__Group__07876 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_24_in_rule__LexicalPartitionHighlighting_JS__Group__0__Impl7904 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__1__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__17935 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__2_in_rule__LexicalPartitionHighlighting_JS__Group__17938 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1_in_rule__LexicalPartitionHighlighting_JS__Group__1__Impl7965 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__2__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__27995 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2_in_rule__LexicalPartitionHighlighting_JS__Group__2__Impl8022 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__0__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__08058 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__1_in_rule__LexicalPartitionHighlighting_Rule__Group__08061 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_25_in_rule__LexicalPartitionHighlighting_Rule__Group__0__Impl8089 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__1__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__18120 = new BitSet(new long[]{0x0000010000008000L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__2_in_rule__LexicalPartitionHighlighting_Rule__Group__18123 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1_in_rule__LexicalPartitionHighlighting_Rule__Group__1__Impl8150 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__2__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__28180 = new BitSet(new long[]{0x0000010000008000L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__3_in_rule__LexicalPartitionHighlighting_Rule__Group__28183 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2_in_rule__LexicalPartitionHighlighting_Rule__Group__2__Impl8210 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__3__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__38241 = new BitSet(new long[]{0x0000020000000010L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__4_in_rule__LexicalPartitionHighlighting_Rule__Group__38244 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_rule__LexicalPartitionHighlighting_Rule__Group__3__Impl8272 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__48303 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__5_in_rule__LexicalPartitionHighlighting_Rule__Group__48306 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4_in_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl8335 = new BitSet(new long[]{0x0000020000000012L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4_in_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl8347 = new BitSet(new long[]{0x0000020000000012L});
-    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__5__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__58380 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_rule__LexicalPartitionHighlighting_Rule__Group__5__Impl8408 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Token__Group__0__Impl_in_rule__Token__Group__08451 = new BitSet(new long[]{0x0000020000000010L});
-    public static final BitSet FOLLOW_rule__Token__Group__1_in_rule__Token__Group__08454 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Token__DefaultAssignment_0_in_rule__Token__Group__0__Impl8481 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Token__Group__1__Impl_in_rule__Token__Group__18512 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_rule__Token__Group__2_in_rule__Token__Group__18515 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Token__NameAssignment_1_in_rule__Token__Group__1__Impl8542 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Token__Group__2__Impl_in_rule__Token__Group__28572 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Token__Group_2__0_in_rule__Token__Group__2__Impl8599 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Token__Group_2__0__Impl_in_rule__Token__Group_2__08636 = new BitSet(new long[]{0x000000A145000000L});
-    public static final BitSet FOLLOW_rule__Token__Group_2__1_in_rule__Token__Group_2__08639 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_rule__Token__Group_2__0__Impl8667 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Token__Group_2__1__Impl_in_rule__Token__Group_2__18698 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_rule__Token__Group_2__2_in_rule__Token__Group_2__18701 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Token__ScannerListAssignment_2_1_in_rule__Token__Group_2__1__Impl8730 = new BitSet(new long[]{0x000000A145000002L});
-    public static final BitSet FOLLOW_rule__Token__ScannerListAssignment_2_1_in_rule__Token__Group_2__1__Impl8742 = new BitSet(new long[]{0x000000A145000002L});
-    public static final BitSet FOLLOW_rule__Token__Group_2__2__Impl_in_rule__Token__Group_2__28775 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_rule__Token__Group_2__2__Impl8803 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__0__Impl_in_rule__Scanner_Keyword__Group__08840 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__1_in_rule__Scanner_Keyword__Group__08843 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_rule__Scanner_Keyword__Group__0__Impl8871 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__1__Impl_in_rule__Scanner_Keyword__Group__18902 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__2_in_rule__Scanner_Keyword__Group__18905 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_rule__Scanner_Keyword__Group__1__Impl8933 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__2__Impl_in_rule__Scanner_Keyword__Group__28964 = new BitSet(new long[]{0x0000000C00000000L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__3_in_rule__Scanner_Keyword__Group__28967 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__KeywordsAssignment_2_in_rule__Scanner_Keyword__Group__2__Impl8994 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__3__Impl_in_rule__Scanner_Keyword__Group__39024 = new BitSet(new long[]{0x0000000C00000000L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__4_in_rule__Scanner_Keyword__Group__39027 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group_3__0_in_rule__Scanner_Keyword__Group__3__Impl9054 = new BitSet(new long[]{0x0000000800000002L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__4__Impl_in_rule__Scanner_Keyword__Group__49085 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_rule__Scanner_Keyword__Group__4__Impl9113 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group_3__0__Impl_in_rule__Scanner_Keyword__Group_3__09154 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group_3__1_in_rule__Scanner_Keyword__Group_3__09157 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_35_in_rule__Scanner_Keyword__Group_3__0__Impl9185 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group_3__1__Impl_in_rule__Scanner_Keyword__Group_3__19216 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_Keyword__KeywordsAssignment_3_1_in_rule__Scanner_Keyword__Group_3__1__Impl9243 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Keyword__Group__0__Impl_in_rule__Keyword__Group__09277 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_rule__Keyword__Group__1_in_rule__Keyword__Group__09280 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Keyword__NameAssignment_0_in_rule__Keyword__Group__0__Impl9307 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Keyword__Group__1__Impl_in_rule__Keyword__Group__19337 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Keyword__Group_1__0_in_rule__Keyword__Group__1__Impl9364 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Keyword__Group_1__0__Impl_in_rule__Keyword__Group_1__09399 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Keyword__Group_1__1_in_rule__Keyword__Group_1__09402 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_rule__Keyword__Group_1__0__Impl9430 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Keyword__Group_1__1__Impl_in_rule__Keyword__Group_1__19461 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Keyword__VersionAssignment_1_1_in_rule__Keyword__Group_1__1__Impl9488 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__0__Impl_in_rule__Scanner_SingleLineRule__Group__09522 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__1_in_rule__Scanner_SingleLineRule__Group__09525 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_rule__Scanner_SingleLineRule__Group__0__Impl9553 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__1__Impl_in_rule__Scanner_SingleLineRule__Group__19584 = new BitSet(new long[]{0x0000000018000000L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__2_in_rule__Scanner_SingleLineRule__Group__19587 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__StartSeqAssignment_1_in_rule__Scanner_SingleLineRule__Group__1__Impl9614 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__2__Impl_in_rule__Scanner_SingleLineRule__Group__29644 = new BitSet(new long[]{0x0000000018000000L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__3_in_rule__Scanner_SingleLineRule__Group__29647 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_2__0_in_rule__Scanner_SingleLineRule__Group__2__Impl9674 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__3__Impl_in_rule__Scanner_SingleLineRule__Group__39705 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__0_in_rule__Scanner_SingleLineRule__Group__3__Impl9732 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_2__0__Impl_in_rule__Scanner_SingleLineRule__Group_2__09771 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_2__1_in_rule__Scanner_SingleLineRule__Group_2__09774 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_rule__Scanner_SingleLineRule__Group_2__0__Impl9802 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_2__1__Impl_in_rule__Scanner_SingleLineRule__Group_2__19833 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__EndSeqAssignment_2_1_in_rule__Scanner_SingleLineRule__Group_2__1__Impl9860 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__0__Impl_in_rule__Scanner_SingleLineRule__Group_3__09895 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__1_in_rule__Scanner_SingleLineRule__Group_3__09898 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_rule__Scanner_SingleLineRule__Group_3__0__Impl9926 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__1__Impl_in_rule__Scanner_SingleLineRule__Group_3__19957 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__2_in_rule__Scanner_SingleLineRule__Group_3__19960 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__Scanner_SingleLineRule__Group_3__1__Impl9988 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__2__Impl_in_rule__Scanner_SingleLineRule__Group_3__210019 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2_in_rule__Scanner_SingleLineRule__Group_3__2__Impl10046 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__0__Impl_in_rule__Scanner_MultiLineRule__Group__010082 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__1_in_rule__Scanner_MultiLineRule__Group__010085 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_rule__Scanner_MultiLineRule__Group__0__Impl10113 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__1__Impl_in_rule__Scanner_MultiLineRule__Group__110144 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__2_in_rule__Scanner_MultiLineRule__Group__110147 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__StartSeqAssignment_1_in_rule__Scanner_MultiLineRule__Group__1__Impl10174 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__2__Impl_in_rule__Scanner_MultiLineRule__Group__210204 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__3_in_rule__Scanner_MultiLineRule__Group__210207 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_rule__Scanner_MultiLineRule__Group__2__Impl10235 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__3__Impl_in_rule__Scanner_MultiLineRule__Group__310266 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__4_in_rule__Scanner_MultiLineRule__Group__310269 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__EndSeqAssignment_3_in_rule__Scanner_MultiLineRule__Group__3__Impl10296 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__4__Impl_in_rule__Scanner_MultiLineRule__Group__410326 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__0_in_rule__Scanner_MultiLineRule__Group__4__Impl10353 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__0__Impl_in_rule__Scanner_MultiLineRule__Group_4__010394 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__1_in_rule__Scanner_MultiLineRule__Group_4__010397 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_rule__Scanner_MultiLineRule__Group_4__0__Impl10425 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__1__Impl_in_rule__Scanner_MultiLineRule__Group_4__110456 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__2_in_rule__Scanner_MultiLineRule__Group_4__110459 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_rule__Scanner_MultiLineRule__Group_4__1__Impl10487 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__2__Impl_in_rule__Scanner_MultiLineRule__Group_4__210518 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2_in_rule__Scanner_MultiLineRule__Group_4__2__Impl10545 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__0__Impl_in_rule__Scanner_PatternRule__Group__010581 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__1_in_rule__Scanner_PatternRule__Group__010584 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_37_in_rule__Scanner_PatternRule__Group__0__Impl10612 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__1__Impl_in_rule__Scanner_PatternRule__Group__110643 = new BitSet(new long[]{0x0000004000000040L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__2_in_rule__Scanner_PatternRule__Group__110646 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__StartPatternAssignment_1_in_rule__Scanner_PatternRule__Group__1__Impl10673 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__2__Impl_in_rule__Scanner_PatternRule__Group__210703 = new BitSet(new long[]{0x0000004000000040L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__3_in_rule__Scanner_PatternRule__Group__210706 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__LengthAssignment_2_in_rule__Scanner_PatternRule__Group__2__Impl10733 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__3__Impl_in_rule__Scanner_PatternRule__Group__310764 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__4_in_rule__Scanner_PatternRule__Group__310767 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_38_in_rule__Scanner_PatternRule__Group__3__Impl10795 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__4__Impl_in_rule__Scanner_PatternRule__Group__410826 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_PatternRule__ContentPatternAssignment_4_in_rule__Scanner_PatternRule__Group__4__Impl10853 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__0__Impl_in_rule__Scanner_CharacterRule__Group__010893 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__1_in_rule__Scanner_CharacterRule__Group__010896 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_rule__Scanner_CharacterRule__Group__0__Impl10924 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__1__Impl_in_rule__Scanner_CharacterRule__Group__110955 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__2_in_rule__Scanner_CharacterRule__Group__110958 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_rule__Scanner_CharacterRule__Group__1__Impl10986 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__2__Impl_in_rule__Scanner_CharacterRule__Group__211017 = new BitSet(new long[]{0x0000000C00000000L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__3_in_rule__Scanner_CharacterRule__Group__211020 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__CharactersAssignment_2_in_rule__Scanner_CharacterRule__Group__2__Impl11047 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__3__Impl_in_rule__Scanner_CharacterRule__Group__311077 = new BitSet(new long[]{0x0000000C00000000L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__4_in_rule__Scanner_CharacterRule__Group__311080 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group_3__0_in_rule__Scanner_CharacterRule__Group__3__Impl11107 = new BitSet(new long[]{0x0000000800000002L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__4__Impl_in_rule__Scanner_CharacterRule__Group__411138 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_rule__Scanner_CharacterRule__Group__4__Impl11166 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group_3__0__Impl_in_rule__Scanner_CharacterRule__Group_3__011207 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group_3__1_in_rule__Scanner_CharacterRule__Group_3__011210 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_35_in_rule__Scanner_CharacterRule__Group_3__0__Impl11238 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group_3__1__Impl_in_rule__Scanner_CharacterRule__Group_3__111269 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__CharactersAssignment_3_1_in_rule__Scanner_CharacterRule__Group_3__1__Impl11296 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_JSRule__Group__0__Impl_in_rule__Scanner_JSRule__Group__011330 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__Scanner_JSRule__Group__1_in_rule__Scanner_JSRule__Group__011333 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_24_in_rule__Scanner_JSRule__Group__0__Impl11361 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_JSRule__Group__1__Impl_in_rule__Scanner_JSRule__Group__111392 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Scanner_JSRule__FileURIAssignment_1_in_rule__Scanner_JSRule__Group__1__Impl11419 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group__0__Impl_in_rule__WhitespaceRule__Group__011453 = new BitSet(new long[]{0x0000040200000020L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group__1_in_rule__WhitespaceRule__Group__011456 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_rule__WhitespaceRule__Group__0__Impl11484 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group__1__Impl_in_rule__WhitespaceRule__Group__111515 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Alternatives_1_in_rule__WhitespaceRule__Group__1__Impl11542 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__0__Impl_in_rule__WhitespaceRule__Group_1_0__011576 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__1_in_rule__WhitespaceRule__Group_1_0__011579 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_rule__WhitespaceRule__Group_1_0__0__Impl11607 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__1__Impl_in_rule__WhitespaceRule__Group_1_0__111638 = new BitSet(new long[]{0x0000000C00000000L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__2_in_rule__WhitespaceRule__Group_1_0__111641 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__CharactersAssignment_1_0_1_in_rule__WhitespaceRule__Group_1_0__1__Impl11668 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__2__Impl_in_rule__WhitespaceRule__Group_1_0__211698 = new BitSet(new long[]{0x0000000C00000000L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__3_in_rule__WhitespaceRule__Group_1_0__211701 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0_2__0_in_rule__WhitespaceRule__Group_1_0__2__Impl11728 = new BitSet(new long[]{0x0000000800000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__3__Impl_in_rule__WhitespaceRule__Group_1_0__311759 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_rule__WhitespaceRule__Group_1_0__3__Impl11787 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0_2__0__Impl_in_rule__WhitespaceRule__Group_1_0_2__011826 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0_2__1_in_rule__WhitespaceRule__Group_1_0_2__011829 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_35_in_rule__WhitespaceRule__Group_1_0_2__0__Impl11857 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0_2__1__Impl_in_rule__WhitespaceRule__Group_1_0_2__111888 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WhitespaceRule__CharactersAssignment_1_0_2_1_in_rule__WhitespaceRule__Group_1_0_2__1__Impl11915 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleQualifiedName_in_rule__Root__NameAssignment_111954 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleImport_in_rule__Root__ImportsAssignment_211985 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLanguageDef_in_rule__Root__LanguageDefinitionAssignment_312016 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleQualifiedNameWithWildCard_in_rule__Import__ImportedNamespaceAssignment_112047 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__LanguageDef__NameAssignment_012078 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleParitioning_in_rule__LanguageDef__ParitioningAssignment_212109 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLexicalHighlighting_in_rule__LanguageDef__LexicalHighlightingAssignment_312140 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIntegration_in_rule__LanguageDef__IntegrationAssignment_412171 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCodeIntegration_in_rule__Integration__CodeIntegrationListAssignment_212202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCodegeneration_in_rule__JavaFXIntegration__CodegenerationListAssignment_212233 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__JavaCodeGeneration__NameAssignment_112264 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleConfigValue_in_rule__JavaCodeGeneration__ConfigValueAssignment_2_112295 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__E4CodeGeneration__NameAssignment_112326 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleConfigValue_in_rule__E4CodeGeneration__ConfigValueAssignment_2_112357 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__ConfigValue__KeyAssignment_012388 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__ConfigValue__SimpleValueAssignment_2_012419 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleConfigValue_in_rule__ConfigValue__ChildrenAssignment_2_1_112450 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePartition_in_rule__Paritioning__PartitionsAssignment_212481 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePartitioner_in_rule__Paritioning__PartitionerAssignment_312512 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Partition__NameAssignment_112543 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Paritioner_JS__ScriptURIAssignment_112574 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePartition_Rule_in_rule__Partitioner_Rule__RuleListAssignment_212605 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Partition_SingleLineRule__ParitionAssignment_112640 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__StartSeqAssignment_212675 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__EndSeqAssignment_412706 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__EscapeSeqAssignment_5_212737 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Partition_MultiLineRule__ParitionAssignment_112772 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__StartSeqAssignment_212807 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__EndSeqAssignment_412838 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__EscapeSeqAssignment_5_212869 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLexicalPartitionHighlighting_in_rule__LexicalHighlighting__ListAssignment_212900 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__LexicalPartitionHighlighting_JS__PartitionAssignment_112935 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_212970 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_113005 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleWhitespaceRule_in_rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_213040 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleToken_in_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_413071 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_rule__Token__DefaultAssignment_013107 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Token__NameAssignment_113146 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleScanner_in_rule__Token__ScannerListAssignment_2_113177 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleKeyword_in_rule__Scanner_Keyword__KeywordsAssignment_213208 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleKeyword_in_rule__Scanner_Keyword__KeywordsAssignment_3_113239 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Keyword__NameAssignment_013270 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Keyword__VersionAssignment_1_113301 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__StartSeqAssignment_113332 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__EndSeqAssignment_2_113363 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_213394 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__StartSeqAssignment_113425 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__EndSeqAssignment_313456 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_213487 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_PatternRule__StartPatternAssignment_113518 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__Scanner_PatternRule__LengthAssignment_213549 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_PatternRule__ContentPatternAssignment_413580 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_CharacterRule__CharactersAssignment_213611 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_CharacterRule__CharactersAssignment_3_113642 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_JSRule__FileURIAssignment_113673 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__WhitespaceRule__CharactersAssignment_1_0_113704 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__WhitespaceRule__CharactersAssignment_1_0_2_113735 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_rule__WhitespaceRule__JavawhitespaceAssignment_1_113771 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__WhitespaceRule__FileURIAssignment_1_213810 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_3__0_in_rule__Partition_SingleLineRule__Group__3__Impl6694 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group__4__Impl_in_rule__Partition_SingleLineRule__Group__46725 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_4__0_in_rule__Partition_SingleLineRule__Group__4__Impl6752 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_3__0__Impl_in_rule__Partition_SingleLineRule__Group_3__06793 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_3__1_in_rule__Partition_SingleLineRule__Group_3__06796 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_rule__Partition_SingleLineRule__Group_3__0__Impl6824 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_3__1__Impl_in_rule__Partition_SingleLineRule__Group_3__16855 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__EndSeqAssignment_3_1_in_rule__Partition_SingleLineRule__Group_3__1__Impl6882 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_4__0__Impl_in_rule__Partition_SingleLineRule__Group_4__06917 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_4__1_in_rule__Partition_SingleLineRule__Group_4__06920 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__Partition_SingleLineRule__Group_4__0__Impl6948 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_4__1__Impl_in_rule__Partition_SingleLineRule__Group_4__16979 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_4__2_in_rule__Partition_SingleLineRule__Group_4__16982 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__Partition_SingleLineRule__Group_4__1__Impl7010 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__Group_4__2__Impl_in_rule__Partition_SingleLineRule__Group_4__27041 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_SingleLineRule__EscapeSeqAssignment_4_2_in_rule__Partition_SingleLineRule__Group_4__2__Impl7068 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__0__Impl_in_rule__Partition_MultiLineRule__Group__07104 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__1_in_rule__Partition_MultiLineRule__Group__07107 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__Partition_MultiLineRule__Group__0__Impl7135 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__1__Impl_in_rule__Partition_MultiLineRule__Group__17166 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__2_in_rule__Partition_MultiLineRule__Group__17169 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__ParitionAssignment_1_in_rule__Partition_MultiLineRule__Group__1__Impl7196 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__2__Impl_in_rule__Partition_MultiLineRule__Group__27226 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__3_in_rule__Partition_MultiLineRule__Group__27229 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__StartSeqAssignment_2_in_rule__Partition_MultiLineRule__Group__2__Impl7256 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__3__Impl_in_rule__Partition_MultiLineRule__Group__37286 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__4_in_rule__Partition_MultiLineRule__Group__37289 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_rule__Partition_MultiLineRule__Group__3__Impl7317 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__4__Impl_in_rule__Partition_MultiLineRule__Group__47348 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__5_in_rule__Partition_MultiLineRule__Group__47351 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__EndSeqAssignment_4_in_rule__Partition_MultiLineRule__Group__4__Impl7378 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group__5__Impl_in_rule__Partition_MultiLineRule__Group__57408 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__0_in_rule__Partition_MultiLineRule__Group__5__Impl7435 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__0__Impl_in_rule__Partition_MultiLineRule__Group_5__07478 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__1_in_rule__Partition_MultiLineRule__Group_5__07481 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__Partition_MultiLineRule__Group_5__0__Impl7509 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__1__Impl_in_rule__Partition_MultiLineRule__Group_5__17540 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__2_in_rule__Partition_MultiLineRule__Group_5__17543 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__Partition_MultiLineRule__Group_5__1__Impl7571 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__Group_5__2__Impl_in_rule__Partition_MultiLineRule__Group_5__27602 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Partition_MultiLineRule__EscapeSeqAssignment_5_2_in_rule__Partition_MultiLineRule__Group_5__2__Impl7629 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__0__Impl_in_rule__LexicalHighlighting__Group__07665 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__1_in_rule__LexicalHighlighting__Group__07668 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_rule__LexicalHighlighting__Group__0__Impl7696 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__1__Impl_in_rule__LexicalHighlighting__Group__17727 = new BitSet(new long[]{0x0000000003000000L});
+    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__2_in_rule__LexicalHighlighting__Group__17730 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_15_in_rule__LexicalHighlighting__Group__1__Impl7758 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__2__Impl_in_rule__LexicalHighlighting__Group__27789 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__3_in_rule__LexicalHighlighting__Group__27792 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalHighlighting__ListAssignment_2_in_rule__LexicalHighlighting__Group__2__Impl7821 = new BitSet(new long[]{0x0000000003000002L});
+    public static final BitSet FOLLOW_rule__LexicalHighlighting__ListAssignment_2_in_rule__LexicalHighlighting__Group__2__Impl7833 = new BitSet(new long[]{0x0000000003000002L});
+    public static final BitSet FOLLOW_rule__LexicalHighlighting__Group__3__Impl_in_rule__LexicalHighlighting__Group__37866 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_rule__LexicalHighlighting__Group__3__Impl7894 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__0__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__07933 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__1_in_rule__LexicalPartitionHighlighting_JS__Group__07936 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_rule__LexicalPartitionHighlighting_JS__Group__0__Impl7964 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__1__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__17995 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__2_in_rule__LexicalPartitionHighlighting_JS__Group__17998 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1_in_rule__LexicalPartitionHighlighting_JS__Group__1__Impl8025 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__Group__2__Impl_in_rule__LexicalPartitionHighlighting_JS__Group__28055 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2_in_rule__LexicalPartitionHighlighting_JS__Group__2__Impl8082 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__0__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__08118 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__1_in_rule__LexicalPartitionHighlighting_Rule__Group__08121 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_25_in_rule__LexicalPartitionHighlighting_Rule__Group__0__Impl8149 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__1__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__18180 = new BitSet(new long[]{0x0000010000008000L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__2_in_rule__LexicalPartitionHighlighting_Rule__Group__18183 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1_in_rule__LexicalPartitionHighlighting_Rule__Group__1__Impl8210 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__2__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__28240 = new BitSet(new long[]{0x0000010000008000L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__3_in_rule__LexicalPartitionHighlighting_Rule__Group__28243 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_2_in_rule__LexicalPartitionHighlighting_Rule__Group__2__Impl8270 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__3__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__38301 = new BitSet(new long[]{0x0000020000000010L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__4_in_rule__LexicalPartitionHighlighting_Rule__Group__38304 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_15_in_rule__LexicalPartitionHighlighting_Rule__Group__3__Impl8332 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__48363 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__5_in_rule__LexicalPartitionHighlighting_Rule__Group__48366 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4_in_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl8395 = new BitSet(new long[]{0x0000020000000012L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_4_in_rule__LexicalPartitionHighlighting_Rule__Group__4__Impl8407 = new BitSet(new long[]{0x0000020000000012L});
+    public static final BitSet FOLLOW_rule__LexicalPartitionHighlighting_Rule__Group__5__Impl_in_rule__LexicalPartitionHighlighting_Rule__Group__58440 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_rule__LexicalPartitionHighlighting_Rule__Group__5__Impl8468 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Token__Group__0__Impl_in_rule__Token__Group__08511 = new BitSet(new long[]{0x0000020000000010L});
+    public static final BitSet FOLLOW_rule__Token__Group__1_in_rule__Token__Group__08514 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Token__DefaultAssignment_0_in_rule__Token__Group__0__Impl8541 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Token__Group__1__Impl_in_rule__Token__Group__18572 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_rule__Token__Group__2_in_rule__Token__Group__18575 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Token__NameAssignment_1_in_rule__Token__Group__1__Impl8602 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Token__Group__2__Impl_in_rule__Token__Group__28632 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Token__Group_2__0_in_rule__Token__Group__2__Impl8659 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Token__Group_2__0__Impl_in_rule__Token__Group_2__08696 = new BitSet(new long[]{0x000000A145000000L});
+    public static final BitSet FOLLOW_rule__Token__Group_2__1_in_rule__Token__Group_2__08699 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_15_in_rule__Token__Group_2__0__Impl8727 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Token__Group_2__1__Impl_in_rule__Token__Group_2__18758 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_rule__Token__Group_2__2_in_rule__Token__Group_2__18761 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Token__ScannerListAssignment_2_1_in_rule__Token__Group_2__1__Impl8790 = new BitSet(new long[]{0x000000A145000002L});
+    public static final BitSet FOLLOW_rule__Token__ScannerListAssignment_2_1_in_rule__Token__Group_2__1__Impl8802 = new BitSet(new long[]{0x000000A145000002L});
+    public static final BitSet FOLLOW_rule__Token__Group_2__2__Impl_in_rule__Token__Group_2__28835 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_rule__Token__Group_2__2__Impl8863 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__0__Impl_in_rule__Scanner_Keyword__Group__08900 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__1_in_rule__Scanner_Keyword__Group__08903 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rule__Scanner_Keyword__Group__0__Impl8931 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__1__Impl_in_rule__Scanner_Keyword__Group__18962 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__2_in_rule__Scanner_Keyword__Group__18965 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_rule__Scanner_Keyword__Group__1__Impl8993 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__2__Impl_in_rule__Scanner_Keyword__Group__29024 = new BitSet(new long[]{0x0000000C00000000L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__3_in_rule__Scanner_Keyword__Group__29027 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__KeywordsAssignment_2_in_rule__Scanner_Keyword__Group__2__Impl9054 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__3__Impl_in_rule__Scanner_Keyword__Group__39084 = new BitSet(new long[]{0x0000000C00000000L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__4_in_rule__Scanner_Keyword__Group__39087 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group_3__0_in_rule__Scanner_Keyword__Group__3__Impl9114 = new BitSet(new long[]{0x0000000800000002L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group__4__Impl_in_rule__Scanner_Keyword__Group__49145 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_rule__Scanner_Keyword__Group__4__Impl9173 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group_3__0__Impl_in_rule__Scanner_Keyword__Group_3__09214 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group_3__1_in_rule__Scanner_Keyword__Group_3__09217 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_35_in_rule__Scanner_Keyword__Group_3__0__Impl9245 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__Group_3__1__Impl_in_rule__Scanner_Keyword__Group_3__19276 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_Keyword__KeywordsAssignment_3_1_in_rule__Scanner_Keyword__Group_3__1__Impl9303 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Keyword__Group__0__Impl_in_rule__Keyword__Group__09337 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_rule__Keyword__Group__1_in_rule__Keyword__Group__09340 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Keyword__NameAssignment_0_in_rule__Keyword__Group__0__Impl9367 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Keyword__Group__1__Impl_in_rule__Keyword__Group__19397 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Keyword__Group_1__0_in_rule__Keyword__Group__1__Impl9424 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Keyword__Group_1__0__Impl_in_rule__Keyword__Group_1__09459 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Keyword__Group_1__1_in_rule__Keyword__Group_1__09462 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_rule__Keyword__Group_1__0__Impl9490 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Keyword__Group_1__1__Impl_in_rule__Keyword__Group_1__19521 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Keyword__VersionAssignment_1_1_in_rule__Keyword__Group_1__1__Impl9548 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__0__Impl_in_rule__Scanner_SingleLineRule__Group__09582 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__1_in_rule__Scanner_SingleLineRule__Group__09585 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_26_in_rule__Scanner_SingleLineRule__Group__0__Impl9613 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__1__Impl_in_rule__Scanner_SingleLineRule__Group__19644 = new BitSet(new long[]{0x0000000018000000L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__2_in_rule__Scanner_SingleLineRule__Group__19647 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__StartSeqAssignment_1_in_rule__Scanner_SingleLineRule__Group__1__Impl9674 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__2__Impl_in_rule__Scanner_SingleLineRule__Group__29704 = new BitSet(new long[]{0x0000000018000000L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__3_in_rule__Scanner_SingleLineRule__Group__29707 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_2__0_in_rule__Scanner_SingleLineRule__Group__2__Impl9734 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group__3__Impl_in_rule__Scanner_SingleLineRule__Group__39765 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__0_in_rule__Scanner_SingleLineRule__Group__3__Impl9792 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_2__0__Impl_in_rule__Scanner_SingleLineRule__Group_2__09831 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_2__1_in_rule__Scanner_SingleLineRule__Group_2__09834 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_rule__Scanner_SingleLineRule__Group_2__0__Impl9862 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_2__1__Impl_in_rule__Scanner_SingleLineRule__Group_2__19893 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__EndSeqAssignment_2_1_in_rule__Scanner_SingleLineRule__Group_2__1__Impl9920 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__0__Impl_in_rule__Scanner_SingleLineRule__Group_3__09955 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__1_in_rule__Scanner_SingleLineRule__Group_3__09958 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__Scanner_SingleLineRule__Group_3__0__Impl9986 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__1__Impl_in_rule__Scanner_SingleLineRule__Group_3__110017 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__2_in_rule__Scanner_SingleLineRule__Group_3__110020 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__Scanner_SingleLineRule__Group_3__1__Impl10048 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__Group_3__2__Impl_in_rule__Scanner_SingleLineRule__Group_3__210079 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_2_in_rule__Scanner_SingleLineRule__Group_3__2__Impl10106 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__0__Impl_in_rule__Scanner_MultiLineRule__Group__010142 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__1_in_rule__Scanner_MultiLineRule__Group__010145 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rule__Scanner_MultiLineRule__Group__0__Impl10173 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__1__Impl_in_rule__Scanner_MultiLineRule__Group__110204 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__2_in_rule__Scanner_MultiLineRule__Group__110207 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__StartSeqAssignment_1_in_rule__Scanner_MultiLineRule__Group__1__Impl10234 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__2__Impl_in_rule__Scanner_MultiLineRule__Group__210264 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__3_in_rule__Scanner_MultiLineRule__Group__210267 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_rule__Scanner_MultiLineRule__Group__2__Impl10295 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__3__Impl_in_rule__Scanner_MultiLineRule__Group__310326 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__4_in_rule__Scanner_MultiLineRule__Group__310329 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__EndSeqAssignment_3_in_rule__Scanner_MultiLineRule__Group__3__Impl10356 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group__4__Impl_in_rule__Scanner_MultiLineRule__Group__410386 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__0_in_rule__Scanner_MultiLineRule__Group__4__Impl10413 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__0__Impl_in_rule__Scanner_MultiLineRule__Group_4__010454 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__1_in_rule__Scanner_MultiLineRule__Group_4__010457 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_rule__Scanner_MultiLineRule__Group_4__0__Impl10485 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__1__Impl_in_rule__Scanner_MultiLineRule__Group_4__110516 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__2_in_rule__Scanner_MultiLineRule__Group_4__110519 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_rule__Scanner_MultiLineRule__Group_4__1__Impl10547 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__Group_4__2__Impl_in_rule__Scanner_MultiLineRule__Group_4__210578 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_2_in_rule__Scanner_MultiLineRule__Group_4__2__Impl10605 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__0__Impl_in_rule__Scanner_PatternRule__Group__010641 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__1_in_rule__Scanner_PatternRule__Group__010644 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_37_in_rule__Scanner_PatternRule__Group__0__Impl10672 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__1__Impl_in_rule__Scanner_PatternRule__Group__110703 = new BitSet(new long[]{0x0000004000000040L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__2_in_rule__Scanner_PatternRule__Group__110706 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__StartPatternAssignment_1_in_rule__Scanner_PatternRule__Group__1__Impl10733 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__2__Impl_in_rule__Scanner_PatternRule__Group__210763 = new BitSet(new long[]{0x0000004000000040L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__3_in_rule__Scanner_PatternRule__Group__210766 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__LengthAssignment_2_in_rule__Scanner_PatternRule__Group__2__Impl10793 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__3__Impl_in_rule__Scanner_PatternRule__Group__310824 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__4_in_rule__Scanner_PatternRule__Group__310827 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_rule__Scanner_PatternRule__Group__3__Impl10855 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__Group__4__Impl_in_rule__Scanner_PatternRule__Group__410886 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_PatternRule__ContentPatternAssignment_4_in_rule__Scanner_PatternRule__Group__4__Impl10913 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__0__Impl_in_rule__Scanner_CharacterRule__Group__010953 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__1_in_rule__Scanner_CharacterRule__Group__010956 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_rule__Scanner_CharacterRule__Group__0__Impl10984 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__1__Impl_in_rule__Scanner_CharacterRule__Group__111015 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__2_in_rule__Scanner_CharacterRule__Group__111018 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_rule__Scanner_CharacterRule__Group__1__Impl11046 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__2__Impl_in_rule__Scanner_CharacterRule__Group__211077 = new BitSet(new long[]{0x0000000C00000000L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__3_in_rule__Scanner_CharacterRule__Group__211080 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__CharactersAssignment_2_in_rule__Scanner_CharacterRule__Group__2__Impl11107 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__3__Impl_in_rule__Scanner_CharacterRule__Group__311137 = new BitSet(new long[]{0x0000000C00000000L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__4_in_rule__Scanner_CharacterRule__Group__311140 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group_3__0_in_rule__Scanner_CharacterRule__Group__3__Impl11167 = new BitSet(new long[]{0x0000000800000002L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group__4__Impl_in_rule__Scanner_CharacterRule__Group__411198 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_rule__Scanner_CharacterRule__Group__4__Impl11226 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group_3__0__Impl_in_rule__Scanner_CharacterRule__Group_3__011267 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group_3__1_in_rule__Scanner_CharacterRule__Group_3__011270 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_35_in_rule__Scanner_CharacterRule__Group_3__0__Impl11298 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__Group_3__1__Impl_in_rule__Scanner_CharacterRule__Group_3__111329 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_CharacterRule__CharactersAssignment_3_1_in_rule__Scanner_CharacterRule__Group_3__1__Impl11356 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_JSRule__Group__0__Impl_in_rule__Scanner_JSRule__Group__011390 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__Scanner_JSRule__Group__1_in_rule__Scanner_JSRule__Group__011393 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_rule__Scanner_JSRule__Group__0__Impl11421 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_JSRule__Group__1__Impl_in_rule__Scanner_JSRule__Group__111452 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Scanner_JSRule__FileURIAssignment_1_in_rule__Scanner_JSRule__Group__1__Impl11479 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group__0__Impl_in_rule__WhitespaceRule__Group__011513 = new BitSet(new long[]{0x0000040200000020L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group__1_in_rule__WhitespaceRule__Group__011516 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_rule__WhitespaceRule__Group__0__Impl11544 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group__1__Impl_in_rule__WhitespaceRule__Group__111575 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Alternatives_1_in_rule__WhitespaceRule__Group__1__Impl11602 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__0__Impl_in_rule__WhitespaceRule__Group_1_0__011636 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__1_in_rule__WhitespaceRule__Group_1_0__011639 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_rule__WhitespaceRule__Group_1_0__0__Impl11667 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__1__Impl_in_rule__WhitespaceRule__Group_1_0__111698 = new BitSet(new long[]{0x0000000C00000000L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__2_in_rule__WhitespaceRule__Group_1_0__111701 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__CharactersAssignment_1_0_1_in_rule__WhitespaceRule__Group_1_0__1__Impl11728 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__2__Impl_in_rule__WhitespaceRule__Group_1_0__211758 = new BitSet(new long[]{0x0000000C00000000L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__3_in_rule__WhitespaceRule__Group_1_0__211761 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0_2__0_in_rule__WhitespaceRule__Group_1_0__2__Impl11788 = new BitSet(new long[]{0x0000000800000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0__3__Impl_in_rule__WhitespaceRule__Group_1_0__311819 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_rule__WhitespaceRule__Group_1_0__3__Impl11847 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0_2__0__Impl_in_rule__WhitespaceRule__Group_1_0_2__011886 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0_2__1_in_rule__WhitespaceRule__Group_1_0_2__011889 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_35_in_rule__WhitespaceRule__Group_1_0_2__0__Impl11917 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__Group_1_0_2__1__Impl_in_rule__WhitespaceRule__Group_1_0_2__111948 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WhitespaceRule__CharactersAssignment_1_0_2_1_in_rule__WhitespaceRule__Group_1_0_2__1__Impl11975 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleQualifiedName_in_rule__Root__NameAssignment_112014 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleImport_in_rule__Root__ImportsAssignment_212045 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLanguageDef_in_rule__Root__LanguageDefinitionAssignment_312076 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleQualifiedNameWithWildCard_in_rule__Import__ImportedNamespaceAssignment_112107 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__LanguageDef__NameAssignment_012138 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleParitioning_in_rule__LanguageDef__ParitioningAssignment_212169 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLexicalHighlighting_in_rule__LanguageDef__LexicalHighlightingAssignment_312200 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIntegration_in_rule__LanguageDef__IntegrationAssignment_412231 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCodeIntegration_in_rule__Integration__CodeIntegrationListAssignment_212262 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCodegeneration_in_rule__JavaFXIntegration__CodegenerationListAssignment_212293 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__JavaCodeGeneration__NameAssignment_112324 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleConfigValue_in_rule__JavaCodeGeneration__ConfigValueAssignment_2_112355 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__E4CodeGeneration__NameAssignment_112386 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleConfigValue_in_rule__E4CodeGeneration__ConfigValueAssignment_2_112417 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__ConfigValue__KeyAssignment_012448 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__ConfigValue__SimpleValueAssignment_2_012479 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleConfigValue_in_rule__ConfigValue__ChildrenAssignment_2_1_112510 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePartition_in_rule__Paritioning__PartitionsAssignment_212541 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePartitioner_in_rule__Paritioning__PartitionerAssignment_312572 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Partition__NameAssignment_112603 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Paritioner_JS__ScriptURIAssignment_112634 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePartition_Rule_in_rule__Partitioner_Rule__RuleListAssignment_212665 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Partition_SingleLineRule__ParitionAssignment_112700 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__StartSeqAssignment_212735 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__EndSeqAssignment_3_112766 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_SingleLineRule__EscapeSeqAssignment_4_212797 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Partition_MultiLineRule__ParitionAssignment_112832 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__StartSeqAssignment_212867 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__EndSeqAssignment_412898 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Partition_MultiLineRule__EscapeSeqAssignment_5_212929 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLexicalPartitionHighlighting_in_rule__LexicalHighlighting__ListAssignment_212960 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__LexicalPartitionHighlighting_JS__PartitionAssignment_112995 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_213030 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_113065 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleWhitespaceRule_in_rule__LexicalPartitionHighlighting_Rule__WhitespaceAssignment_213100 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleToken_in_rule__LexicalPartitionHighlighting_Rule__TokenListAssignment_413131 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_rule__Token__DefaultAssignment_013167 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Token__NameAssignment_113206 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleScanner_in_rule__Token__ScannerListAssignment_2_113237 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleKeyword_in_rule__Scanner_Keyword__KeywordsAssignment_213268 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleKeyword_in_rule__Scanner_Keyword__KeywordsAssignment_3_113299 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Keyword__NameAssignment_013330 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Keyword__VersionAssignment_1_113361 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__StartSeqAssignment_113392 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__EndSeqAssignment_2_113423 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_SingleLineRule__EscapeSeqAssignment_3_213454 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__StartSeqAssignment_113485 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__EndSeqAssignment_313516 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_MultiLineRule__EscapeSeqAssignment_4_213547 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_PatternRule__StartPatternAssignment_113578 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Scanner_PatternRule__LengthAssignment_213609 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_PatternRule__ContentPatternAssignment_413640 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_CharacterRule__CharactersAssignment_213671 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_CharacterRule__CharactersAssignment_3_113702 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Scanner_JSRule__FileURIAssignment_113733 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__WhitespaceRule__CharactersAssignment_1_0_113764 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__WhitespaceRule__CharactersAssignment_1_0_2_113795 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_rule__WhitespaceRule__JavawhitespaceAssignment_1_113831 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__WhitespaceRule__FileURIAssignment_1_213870 = new BitSet(new long[]{0x0000000000000002L});
 
 }
