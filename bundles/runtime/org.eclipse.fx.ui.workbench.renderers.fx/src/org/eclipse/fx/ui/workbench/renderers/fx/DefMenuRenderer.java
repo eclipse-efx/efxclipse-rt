@@ -12,14 +12,6 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 
 import java.util.List;
 
-import javafx.application.Platform;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -33,6 +25,16 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseMenuRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuElement;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
+
+import com.google.common.base.Strings;
+
+import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 
 /**
  * default renderer for {@link MMenu}
@@ -177,7 +179,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		@SuppressWarnings("null")
 		@Inject
 		public void setIconURI(@Named(UIEvents.UILabel.ICONURI) String uri) {
-			if (uri == null || uri.trim().isEmpty()) {
+			if (Strings.isNullOrEmpty(uri)) {
 				getWidget().setGraphic(null);
 			} else {
 				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));

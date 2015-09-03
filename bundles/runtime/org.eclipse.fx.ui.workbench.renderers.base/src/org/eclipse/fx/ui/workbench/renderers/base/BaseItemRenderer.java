@@ -36,6 +36,8 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import com.google.common.base.Strings;
+
 /**
  * Base renderer for item base elements
  * 
@@ -92,7 +94,7 @@ public abstract class BaseItemRenderer<M extends MUIElement, W extends WWidget<M
 			return null;
 		}
 
-		if (item.getCommand().getElementId() == null || item.getCommand().getElementId().trim().isEmpty()) {
+		if (Strings.isNullOrEmpty(item.getCommand().getElementId())) {
 			getLogger().error("No command id assigned to " //$NON-NLS-1$
 					+ item.getCommand().getElementId());
 			return null;

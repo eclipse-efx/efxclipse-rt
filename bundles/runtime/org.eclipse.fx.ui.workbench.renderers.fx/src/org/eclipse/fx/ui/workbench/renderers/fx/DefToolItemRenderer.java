@@ -12,16 +12,6 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 
 import java.util.List;
 
-import javafx.event.ActionEvent;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.SplitMenuButton;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -36,6 +26,18 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseToolItemRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
+
+import com.google.common.base.Strings;
+
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
 
 /**
  * Default renderer for tool items
@@ -145,7 +147,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		@SuppressWarnings("null")
 		@Inject
 		public void setIconURI(@Named(UIEvents.UILabel.ICONURI) String uri) {
-			if (uri == null || uri.trim().isEmpty()) {
+			if (Strings.isNullOrEmpty(uri)) {
 				getWidget().setGraphic(null);
 			} else {
 				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));

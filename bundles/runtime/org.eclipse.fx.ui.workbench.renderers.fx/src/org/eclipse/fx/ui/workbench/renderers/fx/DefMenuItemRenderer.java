@@ -34,6 +34,8 @@ import org.eclipse.fx.ui.workbench.renderers.fx.widget.WWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.util.NLS;
 
+import com.google.common.base.Strings;
+
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -180,7 +182,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		@SuppressWarnings("null")
 		@Inject
 		public void setIconURI(@Named(UIEvents.UILabel.ICONURI) String uri) {
-			if (uri == null || uri.trim().isEmpty()) {
+			if (Strings.isNullOrEmpty(uri)) {
 				getWidget().setGraphic(null);
 			} else {
 				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));

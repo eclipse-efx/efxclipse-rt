@@ -19,6 +19,8 @@ import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.LoggerFactory;
 
+import com.google.common.base.Strings;
+
 /**
  * DI Extension to inject {@link Log} into your DI-Bean
  */
@@ -34,7 +36,7 @@ public class LoggerSupplier extends ExtendedObjectSupplier {
 
 		String loggerName = descriptor.getQualifier(Log.class).value(); 
 		
-		if( loggerName == null || loggerName.isEmpty() ) {
+		if( Strings.isNullOrEmpty(loggerName) ) {
 			loggerName = requestor.getRequestingObjectClass().getName();
 		}
 		
