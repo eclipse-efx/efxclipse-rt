@@ -164,6 +164,7 @@ class JavaFXCodeGenerator {
 			org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
 			org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, «highlighter.tokenList.findFirst[t|t.^default].name»Token);
 			«FOR t : highlighter.tokenList»
+			{
 				«FOR kw : t.scannerList.filter[s | s instanceof Scanner_Keyword]»
 					org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher «t.name»WordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
 					«FOR w : (kw as Scanner_Keyword).keywords»
@@ -171,6 +172,7 @@ class JavaFXCodeGenerator {
 					«ENDFOR»
 					combinedWordRule.addWordMatcher(«t.name»WordRule);
 				«ENDFOR»
+			}
 			«ENDFOR»
 			rules[«count++»] = combinedWordRule;
 			«ENDIF»
@@ -249,7 +251,7 @@ class JavaFXCodeGenerator {
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
-		«IF r.escapeSeq != null», '«r.escapeSeq.charAt(0)»'«ENDIF»);
+		«IF r.escapeSeq != null», '«r.escapeSeq.escapeChar»'«ENDIF»);
 	'''
 
 	def dispatch generatePartitionRule(Partition_MultiLineRule r) '''
@@ -257,7 +259,7 @@ class JavaFXCodeGenerator {
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
-		«IF r.escapeSeq != null», '«r.escapeSeq.charAt(0)»'«ENDIF»);
+		«IF r.escapeSeq != null», '«r.escapeSeq.escapeChar»'«ENDIF»);
 	'''
 
 	def static escapeString(String data) {
