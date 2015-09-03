@@ -64,7 +64,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 
 		/**
 		 * Create an instance of a tool item
-		 * 
+		 *
 		 * @param domElement
 		 *            the model element
 		 */
@@ -100,7 +100,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 
 		/**
 		 * Update the label
-		 * 
+		 *
 		 * @param label
 		 *            the label
 		 */
@@ -111,7 +111,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 
 		/**
 		 * Update the tooltip
-		 * 
+		 *
 		 * @param tooltip
 		 *            the tooltip
 		 */
@@ -126,7 +126,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 
 		/**
 		 * Update the enabled state
-		 * 
+		 *
 		 * @param enabled
 		 *            the enabled state
 		 */
@@ -138,14 +138,14 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 
 		/**
 		 * Update the icon uri
-		 * 
+		 *
 		 * @param uri
 		 *            the icon uri
 		 */
 		@SuppressWarnings("null")
 		@Inject
 		public void setIconURI(@Named(UIEvents.UILabel.ICONURI) String uri) {
-			if (uri == null) {
+			if (uri == null || uri.trim().isEmpty()) {
 				getWidget().setGraphic(null);
 			} else {
 				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));
@@ -154,7 +154,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 
 		/**
 		 * Update the selection state
-		 * 
+		 *
 		 * @param selected
 		 *            the new state
 		 */
@@ -189,7 +189,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		protected ButtonBase createWidget() {
 			ButtonBase b = internalCreateWidget();
 			b.setOnAction(this::handleOnAction);
-			return b; 
+			return b;
 		}
 
 		void handleOnAction(ActionEvent e) {
@@ -197,7 +197,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 				this.onActionCallback.run();
 			}
 		}
-		
+
 		@NonNull
 		private ButtonBase internalCreateWidget() {
 			switch (this.type) {
@@ -228,7 +228,7 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		public void addStyleClasses(String... classnames) {
 			getWidget().getStyleClass().addAll(classnames);
 		}
-		
+
 		@Override
 		public void removeStyleClasses(List<String> classnames) {
 			getWidget().getStyleClass().removeAll(classnames);

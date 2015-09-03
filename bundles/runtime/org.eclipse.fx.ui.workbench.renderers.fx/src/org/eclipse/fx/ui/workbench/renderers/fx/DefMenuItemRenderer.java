@@ -62,10 +62,10 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 
 		@Inject
 		GraphicsLoader graphicsLoader;
-		
+
 		@Inject @Log
 		private Logger logger;
-		
+
 		@Inject
 		public MenuItemImpl(@Named("type") ItemType type) {
 			this.type = type;
@@ -180,7 +180,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 		@SuppressWarnings("null")
 		@Inject
 		public void setIconURI(@Named(UIEvents.UILabel.ICONURI) String uri) {
-			if (uri == null) {
+			if (uri == null || uri.trim().isEmpty()) {
 				getWidget().setGraphic(null);
 			} else {
 				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));
@@ -218,7 +218,7 @@ public class DefMenuItemRenderer extends BaseMenuItemRenderer<MenuItem> {
 				}).collect(Collectors.toList());
 				if (collect.size() > 0)
 					keyCode = collect.get(0);
-				
+
 				if (keyCode != null) {
 					getWidget().setAccelerator(
 							new KeyCodeCombination(keyCode, k.hasShiftModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCtrlModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasAltModifier() ? ModifierValue.DOWN : ModifierValue.ANY, k.hasCommandModifier() ? ModifierValue.DOWN

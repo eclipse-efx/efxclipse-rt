@@ -177,7 +177,7 @@ public class DefMenuRenderer extends BaseMenuRenderer<Menu> {
 		@SuppressWarnings("null")
 		@Inject
 		public void setIconURI(@Named(UIEvents.UILabel.ICONURI) String uri) {
-			if (uri == null) {
+			if (uri == null || uri.trim().isEmpty()) {
 				getWidget().setGraphic(null);
 			} else {
 				getWidget().setGraphic(this.graphicsLoader.getGraphicsNode(new EMFUri(URI.createURI(uri))));
