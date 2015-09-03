@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.fx.ui.controls.filesystem.DirItem;
 import org.eclipse.fx.ui.controls.filesystem.DirectoryTreeView;
+import org.eclipse.fx.ui.controls.filesystem.FileItem;
 import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
 import org.eclipse.fx.ui.controls.filesystem.ResourceTreeView;
 import org.eclipse.fx.ui.controls.filesystem.behavior.ResourceTreeViewBehavior;
@@ -73,7 +74,7 @@ public class ResourceTreeViewSkin extends
 				getBehavior().openSelectedResources();
 			}
 		});
-		
+
 		getChildren().add(this.tree);
 
 		control.rootDirectoriesProperty().addListener(this::rebuildTable);
@@ -101,7 +102,7 @@ public class ResourceTreeViewSkin extends
 				return Collections.singletonList("folderMedium"); //$NON-NLS-1$
 			default:
 				return Collections.singletonList("folderBig"); //$NON-NLS-1$
-			}			
+			}
 		} else {
 			switch (getSkinnable().getIconSize()) {
 			case SMALL:
@@ -136,17 +137,17 @@ public class ResourceTreeViewSkin extends
 					} else {
 						return new FileTreeItem(c);
 					}
-						
+
 				})
 				.collect(Collectors.toList()));
 	};
-	
+
 	static class FileTreeItem extends TreeItem<ResourceItem> {
 
 		public FileTreeItem(ResourceItem value) {
 			super(value);
 		}
-		
+
 	}
 
 	static class DirTreeItem extends LazyTreeItem<ResourceItem> {
@@ -178,6 +179,10 @@ public class ResourceTreeViewSkin extends
 									.filter(c -> c instanceof DirItem)
 									.map((c) -> new DirTreeItem((DirItem) c))
 									.collect(Collectors.toList()));
+					getChildren().addAll(change.getAddedSubList().stream()
+							.filter(c -> c instanceof FileItem)
+							.map((c) -> new FileTreeItem((FileItem) c))
+							.collect(Collectors.toList()));
 				}
 
 			}
