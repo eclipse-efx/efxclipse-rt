@@ -28,9 +28,10 @@ import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.preferences.Preference;
 import org.eclipse.fx.core.preferences.Value;
-import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
+
+import com.google.common.base.Strings;
 
 /**
  * Supplier for {@link Preference}
@@ -205,7 +206,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		Preference qualifier = descriptor.getQualifier(Preference.class);
 		String nodePath = qualifier.nodePath();
 
-		if (nodePath == null || nodePath.length() == 0) {
+		if (Strings.isNullOrEmpty(nodePath)) {
 			if (requestingObject == null)
 				return null;
 			nodePath = FrameworkUtil.getBundle(requestingObject).getSymbolicName();
