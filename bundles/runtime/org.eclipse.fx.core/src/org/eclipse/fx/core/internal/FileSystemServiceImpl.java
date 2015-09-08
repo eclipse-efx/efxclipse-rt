@@ -30,6 +30,7 @@ import java.util.function.BiConsumer;
 import org.eclipse.fx.core.FilesystemService;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.URI;
+import org.eclipse.fx.core.log.LoggerCreator;
 
 /**
  * Implementation of a file system
@@ -113,6 +114,7 @@ public class FileSystemServiceImpl implements FilesystemService {
 			return s;
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		public void run() {
 			while (true) {
@@ -120,6 +122,7 @@ public class FileSystemServiceImpl implements FilesystemService {
 				try {
 					key = this.watcher.take();
 				} catch (Exception x) {
+					LoggerCreator.createLogger(getClass()).warning("File watcher failed. Watching ended", x); //$NON-NLS-1$
 					return;
 				}
 
@@ -151,14 +154,14 @@ public class FileSystemServiceImpl implements FilesystemService {
 		synchronized void removeSubscription(PathSubscription subscription) {
 			synchronized (this.subscriptions) {
 				List<PathSubscription> list = this.subscriptions.get(subscription.register);
-				
+
 				if( list != null ) {
 					list.remove(subscription);
 					if( list.isEmpty() ) {
 						this.subscriptions.remove(subscription.register);
 					}
 				}
-				
+
 				if (this.subscriptions.isEmpty()) {
 					try {
 						Runtime.getRuntime().removeShutdownHook(this.shutdownCleanup);
@@ -166,7 +169,7 @@ public class FileSystemServiceImpl implements FilesystemService {
 					} catch (IOException e) {
 						// ignore
 					}
-				}				
+				}
 			}
 		}
 
