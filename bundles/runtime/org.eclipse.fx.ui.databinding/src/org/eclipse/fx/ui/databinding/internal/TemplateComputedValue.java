@@ -12,6 +12,7 @@ package org.eclipse.fx.ui.databinding.internal;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,19 +20,32 @@ import org.eclipse.core.databinding.observable.value.ComputedValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A computed value using the the message template
  */
 public final class TemplateComputedValue extends ComputedValue {
 	@NonNull
-	private List<@NonNull IObservableValue> values;
+	private final List<@NonNull Struct> values;
 	@NonNull
-	private String template;
+	private final String template;
+	@NonNull
+	private final BiFunction<IValueProperty, Object, Object> converter;
+
+	final static class Struct {
+		final IValueProperty property;
+		final IObservableValue value;
+
+		public Struct(IValueProperty property, Object o) {
+			this.property = property;
+			this.value = property.observe(o);
+		}
+	}
 
 	/**
 	 * Create a template value
-	 * 
+	 *
 	 * @param o
 	 *            the value
 	 * @param template
@@ -39,21 +53,40 @@ public final class TemplateComputedValue extends ComputedValue {
 	 * @param properties
 	 *            the properties
 	 */
-	@SuppressWarnings("null")
 	public TemplateComputedValue(@NonNull Object o, @NonNull String template, @NonNull IValueProperty[] properties) {
+		this(o, template, properties, (p, v) -> v);
+	}
+
+	/**
+	 * Create a template value
+	 *
+	 * @param o
+	 *            the value
+	 * @param template
+	 *            the template
+	 * @param properties
+	 *            the properties
+	 * @param converter
+	 *            the converter
+	 * @since 2.2.0
+	 */
+	@SuppressWarnings("null")
+	public TemplateComputedValue(@NonNull Object o, @NonNull String template, @NonNull IValueProperty[] properties,
+			@NonNull BiFunction<@NonNull IValueProperty, @Nullable Object, @Nullable Object> converter) {
 		this.template = template;
-		this.values = Stream.of(properties).map((p) -> p.observe(o)).collect(Collectors.toList());
+		this.values = Stream.of(properties).map((p) -> new Struct(p, o)).collect(Collectors.toList());
+		this.converter = converter;
 	}
 
 	@Override
 	protected Object calculate() {
-		Object[] v = this.values.stream().map((o) -> o.getValue()).toArray();
+		Object[] v = this.values.stream().map((o) -> this.converter.apply(o.property, o.value.getValue())).toArray();
 		return MessageFormat.format(this.template, v);
 	}
 
 	@Override
 	public synchronized void dispose() {
 		super.dispose();
-		this.values.forEach((v) -> v.dispose());
+		this.values.forEach((v) -> v.value.dispose());
 	}
 }

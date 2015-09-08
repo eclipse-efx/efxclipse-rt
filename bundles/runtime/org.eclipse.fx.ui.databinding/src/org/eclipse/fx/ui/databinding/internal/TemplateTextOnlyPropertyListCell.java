@@ -12,28 +12,33 @@ package org.eclipse.fx.ui.databinding.internal;
 
 import javafx.scene.control.ListCell;
 
+import java.util.function.BiFunction;
+
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.fx.core.databinding.AdapterFactory;
 import org.eclipse.fx.core.databinding.ObservableWritableValue;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A {@link ListCell} only updating the text-property
- * 
+ *
  * @param <O>
  *            the type
  */
 public final class TemplateTextOnlyPropertyListCell<O> extends ListCell<O> {
 	private IObservableValue currentObservable;
 	@NonNull
-	private IValueProperty[] properties;
+	private final IValueProperty[] properties;
 	@NonNull
-	private String template;
+	private final String template;
+	@Nullable
+	private final BiFunction<@NonNull IValueProperty, @Nullable Object, @Nullable Object> converter;
 
 	/**
 	 * Create a new cell
-	 * 
+	 *
 	 * @param template
 	 *            the template to use
 	 * @param properties
@@ -41,6 +46,26 @@ public final class TemplateTextOnlyPropertyListCell<O> extends ListCell<O> {
 	 */
 	public TemplateTextOnlyPropertyListCell(@NonNull String template, @NonNull IValueProperty... properties) {
 		this.template = template;
+		this.properties = properties;
+		this.converter = null;
+	}
+
+	/**
+	 * Create a new cell
+	 *
+	 * @param template
+	 *            the template to use
+	 * @param converter
+	 *            converter for property values
+	 * @param properties
+	 *            the properties
+	 * @since 2.1.0
+	 */
+	public TemplateTextOnlyPropertyListCell(@NonNull String template,
+			@NonNull BiFunction<@NonNull IValueProperty, @Nullable Object, @Nullable Object> converter,
+			@NonNull IValueProperty... properties) {
+		this.template = template;
+		this.converter = converter;
 		this.properties = properties;
 	}
 
@@ -52,7 +77,11 @@ public final class TemplateTextOnlyPropertyListCell<O> extends ListCell<O> {
 		textProperty().unbind();
 
 		if (item != null && !empty) {
-			this.currentObservable = new TemplateComputedValue(item, this.template, this.properties);
+			if( this.converter != null ) {
+				this.currentObservable = new TemplateComputedValue(item, this.template, this.properties, this.converter);
+			} else {
+				this.currentObservable = new TemplateComputedValue(item, this.template, this.properties);
+			}
 			ObservableWritableValue<String> adapt = AdapterFactory.<String> adapt(this.currentObservable);
 			textProperty().bind(adapt);
 		} else {
