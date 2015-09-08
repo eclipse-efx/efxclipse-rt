@@ -43,17 +43,17 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 public class UpdateServiceImpl implements UpdateService {
 	private Logger logger;
 	private LoggerFactory factory;
-	
+
 	private IProvisioningAgent provisioningAgent;
 
 	static class P2UpdateCheckRV implements UpdatePlan {
 		@NonNull
 		public final UpdateOperation updateOperation;
-		
+
 		public P2UpdateCheckRV(@NonNull UpdateOperation updateOperation) {
 			this.updateOperation = updateOperation;
 		}
-		
+
 		@Override
 		public CancelableOperation<UpdateResult> runUpdate(ProgressReporter progressReporter) {
 			ProgressMonitorAdapter a = new ProgressMonitorAdapter(progressReporter);
@@ -65,7 +65,7 @@ public class UpdateServiceImpl implements UpdateService {
 				public void done(IJobChangeEvent event) {
 					IStatus s = event.getResult();
 					if( s.isOK() ) {
-						op.completed(new P2UpdateRV());	
+						op.completed(new P2UpdateRV());
 					} else {
 						op.completeExceptionally(new StatusException(fromStatus(s)));
 					}
@@ -82,7 +82,7 @@ public class UpdateServiceImpl implements UpdateService {
 
 	/**
 	 * Set the factory to create a logger
-	 * 
+	 *
 	 * @param factory
 	 *            the factory
 	 */
@@ -96,7 +96,7 @@ public class UpdateServiceImpl implements UpdateService {
 
 	/**
 	 * Unset the factory for the logger
-	 * 
+	 *
 	 * @param factory
 	 *            the factory
 	 */
@@ -105,6 +105,14 @@ public class UpdateServiceImpl implements UpdateService {
 			this.factory = null;
 			this.logger = null;
 		}
+	}
+
+	@SuppressWarnings("null")
+	Logger getLogger() {
+		if( this.logger == null ) {
+			this.logger = this.factory.createLogger(getClass().getName());
+		}
+		return this.logger;
 	}
 
 	/**
@@ -117,7 +125,7 @@ public class UpdateServiceImpl implements UpdateService {
 		// if the p2.core bundle is started!
 		this.provisioningAgent = agent;
 	}
-	
+
 	/**
 	 * Unset the provisioning agent
 	 * @param agent the provisioning agent
@@ -128,7 +136,7 @@ public class UpdateServiceImpl implements UpdateService {
 		}
 	}
 
-//Why is that not allowed???	
+//Why is that not allowed???
 	@NonNull
 	static Status fromStatus(@NonNull IStatus s) {
 		switch (s.getSeverity()) {
@@ -142,10 +150,15 @@ public class UpdateServiceImpl implements UpdateService {
 			return Status.ok();
 		}
 	}
-	
+
 	@Override
 	public SimpleCancelableOperation<Optional<UpdatePlan>> checkUpdate(ProgressReporter reporter) {
+		getLogger().debug("Check for updates"); //$NON-NLS-1$
+
+		getLogger().debug(() -> "Created provisioning session with " + this.provisioningAgent); //$NON-NLS-1$
 		final ProvisioningSession session = new ProvisioningSession(this.provisioningAgent);
+		getLogger().debug(() -> "Provisioning session is " + session); //$NON-NLS-1$
+
 		ProgressMonitorAdapter a = new ProgressMonitorAdapter(reporter);
 
 		SimpleCancelableOperation<Optional<UpdatePlan>> op = new SimpleCancelableOperation<>(() -> a.setCanceled(true));
@@ -153,25 +166,33 @@ public class UpdateServiceImpl implements UpdateService {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
+				getLogger().debug("Update job is started"); //$NON-NLS-1$
 				if( a.isCanceled() ) {
+					getLogger().debug("Update has been canceled"); //$NON-NLS-1$
 					return org.eclipse.core.runtime.Status.CANCEL_STATUS;
 				}
-				
+
 				try {
 					UpdateOperation o = new UpdateOperation(session);
+					getLogger().debug("Resolving update operation"); //$NON-NLS-1$
 					IStatus s = o.resolveModal(a);
 					if( s.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE ) {
+						getLogger().debug("Nothing found to update"); //$NON-NLS-1$
 						op.completed(Optional.empty());
 					} else if( s.isOK() ) {
 						if( o.getProvisioningJob(new NullProgressMonitor()) != null ) {
-							op.completed(Optional.of(new P2UpdateCheckRV(o)));	
+							getLogger().debug("Updates available"); //$NON-NLS-1$
+							op.completed(Optional.of(new P2UpdateCheckRV(o)));
 						} else {
+							getLogger().debug("Unable to get a provisioning job"); //$NON-NLS-1$
 							op.completeExceptionally(new StatusException(Status.status(State.ERROR, 0, "No provisioning job available", null))); //$NON-NLS-1$
 						}
 					} else {
+						getLogger().debug(() -> "Update check failed: " + s); //$NON-NLS-1$
 						op.completeExceptionally(new StatusException(fromStatus(s)));
 					}
 				} catch(Throwable t) {
+					getLogger().debug("Update check failed with an exception", t); //$NON-NLS-1$
 					op.completeExceptionally(new StatusException(Status.status(State.ERROR, 0, "Check for update failed unexpectedly", t))); //$NON-NLS-1$
 				}
 				return org.eclipse.core.runtime.Status.OK_STATUS;
