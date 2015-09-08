@@ -36,11 +36,11 @@ import org.osgi.framework.wiring.BundleWiring;
 public class FXClassLoader extends ClassLoaderHook {
 	private static final String FX_SYMBOLIC_NAME = "org.eclipse.fx.javafx"; //$NON-NLS-1$
 	private static final String SWT_SYMBOLIC_NAME = "org.eclipse.swt"; //$NON-NLS-1$
-	
+
 	private URLClassLoader classLoader;
 	private boolean swtAvailable;
 	private BundleContext frameworkContext;
-	
+
 	@SuppressWarnings("resource")
 	@Override
 	public Class<?> postFindClass(String name, ModuleClassLoader moduleClassLoader) throws ClassNotFoundException {
@@ -59,20 +59,20 @@ public class FXClassLoader extends ClassLoaderHook {
 				) && ! moduleClassLoader.getBundle().getSymbolicName().equals("org.eclipse.swt")) { //$NON-NLS-1$
 			URLClassLoader fxClassloader = getFXClassloader();
 			if( fxClassloader != null ) {
-				return fxClassloader.loadClass(name);	
+				return fxClassloader.loadClass(name);
 			} else {
 				throw new ClassNotFoundException("Unable to locate JavaFX. Please make sure you have a JDK with JavaFX installed eg on Linux you require an Oracle JDK"); //$NON-NLS-1$
 			}
 		}
-		
+
 		return super.postFindClass(name, moduleClassLoader);
 	}
-	
+
 	private URLClassLoader getFXClassloader() {
 		if( this.classLoader == null ) {
 			ClassLoader swtClassloader = getSWTClassloader(this.frameworkContext);
 			this.swtAvailable = swtClassloader != null;
-			this.classLoader = createJREBundledClassloader(swtClassloader == null ? ClassLoader.getSystemClassLoader() : swtClassloader, swtClassloader != null); 
+			this.classLoader = createJREBundledClassloader(swtClassloader == null ? ClassLoader.getSystemClassLoader() : swtClassloader, swtClassloader != null);
 		}
 		return this.classLoader;
 	}
@@ -94,7 +94,7 @@ public class FXClassLoader extends ClassLoaderHook {
 		}
 		return super.createClassLoader(parent, configuration, delegate, generation);
 	}
-	
+
 	private static ClassLoader getSWTClassloader(BundleContext context) {
 		try {
 			// Should we better use findProviders() see PackageAdminImpl?
@@ -113,7 +113,7 @@ public class FXClassLoader extends ClassLoaderHook {
 						}
 						return b.adapt(BundleWiring.class).getClassLoader();
 					}
-					
+
 				}
 			}
 		} catch(Throwable t) {
@@ -121,19 +121,19 @@ public class FXClassLoader extends ClassLoaderHook {
 			t.printStackTrace();
 		}
 
-		
+
 		return null;
 	}
-	
+
 
 	static class FXModuleClassloader extends ModuleClassLoader {
 		private final EquinoxConfiguration configuration;
 		private final BundleLoader delegate;
 		private final Generation generation;
-		
+
 		private ClasspathManager classpathManager;
 		boolean flag;
-		
+
 		public FXModuleClassloader(final boolean isSWT, final URLClassLoader fxClassloader,
 				ClassLoader parent, EquinoxConfiguration configuration,
 				BundleLoader delegate, Generation generation) {
@@ -148,8 +148,8 @@ public class FXClassLoader extends ClassLoaderHook {
 					if( FXClassloaderConfigurator.DEBUG ) {
 						System.err.println("FXModuleClassloader#findLocalClass trying to load class '"+classname+"'");  //$NON-NLS-1$//$NON-NLS-2$
 					}
-					
-					if(isSWT && ! FXModuleClassloader.this.flag && "javafx.embed.swt.FXCanvas".equals(classname) ) { //$NON-NLS-1$					
+
+					if(isSWT && ! FXModuleClassloader.this.flag && "javafx.embed.swt.FXCanvas".equals(classname) ) { //$NON-NLS-1$
 						Boolean b = Boolean.FALSE;
 						FXModuleClassloader.this.flag = true;
 						try {
@@ -166,21 +166,21 @@ public class FXClassLoader extends ClassLoaderHook {
 								b = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3").get(null);  //$NON-NLS-1$//$NON-NLS-2$
 							} else {
 								if( FXClassloaderConfigurator.DEBUG ) {
-									System.err.println("FXModuleClassloader#findLocalClass - OS is '"+value+"' no need to get upset all is fine"); //$NON-NLS-1$ //$NON-NLS-2$	
+									System.err.println("FXModuleClassloader#findLocalClass - OS is '"+value+"' no need to get upset all is fine"); //$NON-NLS-1$ //$NON-NLS-2$
 								}
 							}
 						} catch (Throwable e) {
 							System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
 							e.printStackTrace();
 						}
-						
+
 						if( b.booleanValue() ) {
 							if( FXClassloaderConfigurator.DEBUG ) {
 								System.err.println("FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
 							}
 							throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
 						}
-						
+
 						try {
 							if( FXClassloaderConfigurator.DEBUG ) {
 								System.err.println("FXModuleClassloader#findLocalClass - We need to disable implicit exiting when running in embedded mode"); //$NON-NLS-1$
@@ -191,15 +191,15 @@ public class FXClassLoader extends ClassLoaderHook {
 							e.printStackTrace();
 						}
 					}
-					
+
 					return fxClassloader.loadClass(classname);
 				}
-				
+
 				@Override
 				public URL findLocalResource(String resource) {
 					return fxClassloader.getResource(resource);
 				}
-				
+
 				@Override
 				public Enumeration<URL> findLocalResources(String resource) {
 					try {
@@ -226,7 +226,7 @@ public class FXClassLoader extends ClassLoaderHook {
 		public ClasspathManager getClasspathManager() {
 			return this.classpathManager;
 		}
-		
+
 		@Override
 		protected EquinoxConfiguration getConfiguration() {
 			return this.configuration;
@@ -305,13 +305,13 @@ public class FXClassLoader extends ClassLoaderHook {
 								System.err
 										.println("FXClassLoader#createJREBundledClassloader - Delegate to system classloader"); //$NON-NLS-1$
 							}
-							
+
 							return new URLClassLoader(
 									new URL[] { swtFX.getCanonicalFile()
 											.toURI().toURL() },
 									new SWTFXClassloader(parent, extClassLoader));
 						}
-						
+
 						if (FXClassloaderConfigurator.DEBUG) {
 							System.err
 									.println("FXClassLoader#createJREBundledClassloader - Using an URL classloader"); //$NON-NLS-1$
@@ -350,7 +350,7 @@ public class FXClassLoader extends ClassLoaderHook {
 					} catch (Throwable t) {
 						t.printStackTrace();
 					}
-					
+
 					if (FXClassloaderConfigurator.DEBUG) {
 						System.err
 								.println("FXClassLoader#createJREBundledClassloader - Using an URL classloader"); //$NON-NLS-1$
@@ -392,10 +392,10 @@ public class FXClassLoader extends ClassLoaderHook {
 
 		return null;
 	}
-	
+
 	static class EmptyEnumeration implements Enumeration<URL> {
 		static Enumeration<URL> INSTANCE = new EmptyEnumeration();
-		
+
 		@Override
 		public boolean hasMoreElements() {
 			return false;
@@ -405,14 +405,14 @@ public class FXClassLoader extends ClassLoaderHook {
 		public URL nextElement() {
 			return null;
 		}
-		
+
 	}
 
 	static class SWTFXClassloader extends ClassLoader {
 		private final ClassLoader lastResortLoader;
 		private final ClassLoader primaryLoader;
 		private Boolean checkFlag = null;
-		
+
 		public SWTFXClassloader(ClassLoader lastResortLoader,
 				ClassLoader primaryLoader) {
 			this.lastResortLoader = lastResortLoader;
@@ -429,7 +429,7 @@ public class FXClassLoader extends ClassLoaderHook {
 			if( name.startsWith("javafx.embed.swt") ) { //$NON-NLS-1$
 				if( this.checkFlag == null ) {
 					this.checkFlag = Boolean.TRUE;
-					
+
 					Boolean b = Boolean.FALSE;
 					try {
 						if( FXClassloaderConfigurator.DEBUG ) {
@@ -445,28 +445,21 @@ public class FXClassLoader extends ClassLoaderHook {
 							b = (Boolean) loadClass("org.eclipse.swt.internal.gtk.OS").getDeclaredField("GTK3").get(null);  //$NON-NLS-1$//$NON-NLS-2$
 						} else {
 							if( FXClassloaderConfigurator.DEBUG ) {
-								System.err.println("FXModuleClassloader#findLocalClass - OS is '"+value+"' no need to get upset all is fine"); //$NON-NLS-1$ //$NON-NLS-2$	
+								System.err.println("FXModuleClassloader#findLocalClass - OS is '"+value+"' no need to get upset all is fine"); //$NON-NLS-1$ //$NON-NLS-2$
 							}
 						}
 					} catch (Throwable e) {
 						System.err.println("FXModuleClassloader#findLocalClass - Failed to check for Gtk3"); //$NON-NLS-1$
 						e.printStackTrace();
 					}
-					
+
 					if( b.booleanValue() ) {
 						if( FXClassloaderConfigurator.DEBUG ) {
 							System.err.println("FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
 						}
 						throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
 					}
-					
-					if( b.booleanValue() ) {
-						if( FXClassloaderConfigurator.DEBUG ) {
-							System.err.println("FXModuleClassloader#findLocalClass - We are on GTK3 - too bad need to disable JavaFX for now else we'll crash the JVM"); //$NON-NLS-1$
-						}
-						throw new ClassNotFoundException("SWT is running with GTK3 but JavaFX is linked against GTK2"); //$NON-NLS-1$
-					}
-					
+
 					try {
 						loadClass("javafx.application.Platform").getDeclaredMethod("setImplicitExit", boolean.class).invoke(null, Boolean.FALSE);//$NON-NLS-1$ //$NON-NLS-2$
 					} catch (Throwable e) {
@@ -489,8 +482,8 @@ public class FXClassLoader extends ClassLoaderHook {
 					System.err.println("FXClassLoader.SWTFXClassloader#findClass - ClassNotFoundException thrown"); //$NON-NLS-1$
 					System.err.println("FXClassLoader.SWTFXClassloader#findClass - Loading " + name + " with last resort"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
-				
-				try {					
+
+				try {
 					Class<?> loadClass = this.lastResortLoader.loadClass(name);
 					if (FXClassloaderConfigurator.DEBUG) {
 						System.err.println("FXClassLoader.SWTFXClassloader#findClass - Result " + name + " " + loadClass); //$NON-NLS-1$ //$NON-NLS-2$
@@ -498,7 +491,7 @@ public class FXClassLoader extends ClassLoaderHook {
 					return loadClass;
 				} catch (ClassNotFoundException tmp) {
 					if( FXClassloaderConfigurator.DEBUG ) {
-						System.err.println("FXClassLoader.SWTFXClassloader#findClass - Even last resort was unable to load " + name); //$NON-NLS-1$	
+						System.err.println("FXClassLoader.SWTFXClassloader#findClass - Even last resort was unable to load " + name); //$NON-NLS-1$
 					}
 					throw c;
 				}
