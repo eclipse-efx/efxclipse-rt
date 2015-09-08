@@ -34,10 +34,10 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 
 	private CopyOnWriteArrayList<java.util.logging.Handler> handlers = new CopyOnWriteArrayList<>();
 	private WeakHashMap<LoggerImpl, Boolean> activeLoggers = new WeakHashMap<>();
-	
+
 	/**
 	 * Register a handler
-	 * 
+	 *
 	 * @param handler
 	 *            the new handler
 	 */
@@ -48,19 +48,17 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			this.activeLoggers.keySet().forEach( (l) -> l.getLogger().addHandler(handler));
 		}
 	}
-	
+
 	/**
 	 * Unregister a handler
-	 * 
+	 *
 	 * @param handler
 	 *            the new handler
 	 */
 	public void unregisterHandler(Handler handler) {
-		synchronized (this.handlers) {
-			this.handlers.add(handler);
-			synchronized (this.activeLoggers) {
-				this.activeLoggers.keySet().forEach( (l) -> l.getLogger().removeHandler(handler));
-			}
+		this.handlers.add(handler);
+		synchronized (this.activeLoggers) {
+			this.activeLoggers.keySet().forEach( (l) -> l.getLogger().removeHandler(handler));
 		}
 	}
 
@@ -81,7 +79,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 			java.util.logging.Logger logger = loggerImpl.getLogger();
 			this.handlers.forEach(logger::addHandler);
 			synchronized (this.activeLoggers) {
-				this.activeLoggers.put(loggerImpl, Boolean.TRUE);				
+				this.activeLoggers.put(loggerImpl, Boolean.TRUE);
 			}
 		}
 		return loggerImpl;
@@ -91,7 +89,7 @@ public class JUtilLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		private java.util.logging.Logger logger;
 
 		private String name;
-		
+
 		public LoggerImpl(String name) {
 			this.name = name;
 		}
