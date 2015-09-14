@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     Tom Schindl <tom.schindl@bestsolution.at> - initial API and implementation
+ *     Thorsten Hake <mail@thorsten-hake.com> - test for Bug 477344
  *******************************************************************************/
 package org.eclipse.fx.core.di.context.tests;
 
@@ -106,6 +107,23 @@ public class ContextBoundValueTestCase {
 	}
 	
 	/**
+	 *
+	 */
+	public static class ContextConsistency {
+		@Inject
+		@ContextValue("simpleValue")
+		ContextBoundValue<String> value;
+
+		/**
+		 * @param contextValue
+		 */
+		@Inject
+		public void testInjection(@Optional @Named("simpleValue") final String contextValue) {
+			Assert.assertEquals(contextValue, this.value.getValue());
+		}
+	}
+
+	/**
 	 * 
 	 */
 	@Test
@@ -193,5 +211,25 @@ public class ContextBoundValueTestCase {
 		DirectObservableInject directObservableInject = ContextInjectionFactory.make(DirectObservableInject.class, serviceContext);
 		Assert.assertNotNull(directObservableInject.value);
 		Assert.assertEquals(r, directObservableInject.value.getRealm());
+	}
+
+	/**
+	 * This test case checks whether the value of the ContexBoundValue equals the value that will be injected
+	 * from the context.
+	 */
+	@Test
+	public void testContextConsistency() {
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		// resetting context variable
+		serviceContext.remove("simpleValue");
+		// We have to create several instances of the test class, as the
+		// IEclipseContext#runAndTrack does not guarantee an order of injection.
+		// Having multiple objects injected increases the chances.
+		for (int i = 0; i < 10; i++) {
+			ContextInjectionFactory.make(ContextConsistency.class, serviceContext);
+		}
+		// Now change the context value, assertion will be done in
+		// ContextConsistency
+		serviceContext.set("simpleValue", "New Value!"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }
