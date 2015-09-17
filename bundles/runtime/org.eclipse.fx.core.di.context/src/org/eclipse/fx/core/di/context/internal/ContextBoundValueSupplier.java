@@ -20,14 +20,15 @@ import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.di.ContextBoundValue;
 import org.eclipse.fx.core.di.ContextValue;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Supplier which handles the {@link ContextValue}
  */
 @SuppressWarnings("restriction")
+@Component(service=ExtendedObjectSupplier.class,property="dependency.injection.annotation:String=org.eclipse.fx.core.di.ContextValue")
 public class ContextBoundValueSupplier extends ExtendedObjectSupplier {
-	
-	@SuppressWarnings("null")
+
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
 		ContextValue qualifier = descriptor.getQualifier(ContextValue.class);
@@ -38,11 +39,11 @@ public class ContextBoundValueSupplier extends ExtendedObjectSupplier {
 		if( desiredClass == null ) {
 			return IInjector.NOT_A_VALUE;
 		}
-		
+
 		Requestor<?> r = (Requestor<?>) requestor;
 		EclipseContextBoundValue<?> c = r.getInjector().make(EclipseContextBoundValue.class, r.getPrimarySupplier());
 		c.setContextKey(qualifier.value());
-		
+
 		if( desiredClass == ContextBoundValue.class) {
 			return c;
 		} else {

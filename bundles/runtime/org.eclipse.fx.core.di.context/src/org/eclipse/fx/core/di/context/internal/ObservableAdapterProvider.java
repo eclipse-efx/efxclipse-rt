@@ -21,11 +21,13 @@ import org.eclipse.fx.core.adapter.AdapterProvider;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
 import org.eclipse.fx.core.di.ContextBoundValue;
 import org.eclipse.jdt.annotation.Nullable;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Eclipse Databinding Observable Adapter
  */
 @SuppressWarnings("rawtypes")
+@Component
 public class ObservableAdapterProvider implements AdapterProvider<ContextBoundValue, IObservableValue> {
 	/**
 	 * Private class that adapts represents an ContextBoundValue as an IObservableValue.
@@ -34,16 +36,16 @@ public class ObservableAdapterProvider implements AdapterProvider<ContextBoundVa
 	private static class ContextBoundObservableValue extends AbstractObservableValue{
 		private ContextBoundValue sourceObject;
 		private Object valueType;
-		
+
 		private Subscription currentSubscription;
-		
+
 		final class ContextBoundValueChanged implements Callback{
 			private Object lastValue = doGetValue();
-			
+
 			public ContextBoundValueChanged() {
 				super();
 			}
-			
+
 			@SuppressWarnings("synthetic-access")
 			@Override
 			public void call(@Nullable Object value) {
@@ -54,21 +56,21 @@ public class ObservableAdapterProvider implements AdapterProvider<ContextBoundVa
 					}
 				});
 			}
-			
+
 		}
-		
+
 		public ContextBoundObservableValue(Realm realm, ContextBoundValue boundValue) {
 			this(realm,boundValue,null);
-			
+
 		}
 		public ContextBoundObservableValue( Realm realm, ContextBoundValue boundValue, Object valueType) {
 			super(realm);
 			this.sourceObject = boundValue;
 			this.valueType = valueType;
 		}
-		
+
 		@Override
-		public Object getValueType() {				
+		public Object getValueType() {
 			return this.valueType;
 		}
 
@@ -82,7 +84,7 @@ public class ObservableAdapterProvider implements AdapterProvider<ContextBoundVa
 		protected void doSetValue(Object value) {
 			 this.sourceObject.publish(value);
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void firstListenerAdded(){
@@ -96,7 +98,7 @@ public class ObservableAdapterProvider implements AdapterProvider<ContextBoundVa
 			}
 		}
 	}
-	
+
 	@Override
 	public Class<ContextBoundValue> getSourceType() {
 		return ContextBoundValue.class;
@@ -116,30 +118,30 @@ public class ObservableAdapterProvider implements AdapterProvider<ContextBoundVa
 	@Override
 	public IObservableValue adapt(final ContextBoundValue sourceObject, Class<IObservableValue> targetType, ValueAccess... valueAccess) {
 		Realm r = null;
-		
+
 		for( ValueAccess a : valueAccess ) {
 			r = a.getValue(Realm.class);
 			if( r != null ) {
 				break;
 			}
 		}
-		
+
 		if( r == null ) {
 			r = Realm.getDefault();
 		}
-		
+
 		if( r == null ) {
 			r = new Realm() {
-				
+
 				@Override
 				public boolean isCurrent() {
 					return true;
 				}
 			};
 		}
-		
+
 		final IObservableValue w = new ContextBoundObservableValue(r,sourceObject);
-	
+
 		sourceObject.subscribeOnDispose(new Callback<Void>() {
 
 			@Override

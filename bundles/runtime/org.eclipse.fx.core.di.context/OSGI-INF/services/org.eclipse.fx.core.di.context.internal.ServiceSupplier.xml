@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.core.di.context.servicesupplier">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.core.di.context.internal.ServiceSupplier">
    <implementation class="org.eclipse.fx.core.di.context.internal.ServiceSupplier"/>
    <service>
       <provide interface="org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier"/>

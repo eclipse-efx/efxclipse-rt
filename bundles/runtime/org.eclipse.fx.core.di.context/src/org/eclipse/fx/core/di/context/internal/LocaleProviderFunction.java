@@ -13,14 +13,17 @@ package org.eclipse.fx.core.di.context.internal;
 import java.util.Locale;
 
 import org.eclipse.e4.core.contexts.ContextFunction;
+import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.translation.TranslationService;
 import org.eclipse.fx.core.text.LocaleProvider;
 import org.eclipse.jdt.annotation.NonNull;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Context function contributing a {@link LocaleProvider}
  */
+@Component(service=IContextFunction.class,property="service.context.key:String=org.eclipse.fx.core.text.LocaleProvider")
 public class LocaleProviderFunction extends ContextFunction {
 	@Override
 	public Object compute(IEclipseContext context) {

@@ -19,11 +19,13 @@ import org.eclipse.fx.core.Callback;
 import org.eclipse.fx.core.adapter.AdapterProvider;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
 import org.eclipse.fx.core.di.ContextBoundValue;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * JavaFX Property adapter provider
  */
 @SuppressWarnings("rawtypes")
+@Component
 public class PropertyAdapterProvider implements AdapterProvider<ContextBoundValue, Property> {
 
 	@Override
@@ -46,7 +48,7 @@ public class PropertyAdapterProvider implements AdapterProvider<ContextBoundValu
 	public Property adapt(final ContextBoundValue sourceObject, Class<Property> targetType, ValueAccess... valueAccess) {
 		final SimpleObjectProperty<Object> rv = new SimpleObjectProperty<>(sourceObject.getValue());
 		final InvalidationListener l = new InvalidationListener() {
-			
+
 			@Override
 			public void invalidated(Observable observable) {
 				sourceObject.publish(rv.get());

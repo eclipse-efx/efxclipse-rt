@@ -29,11 +29,13 @@ import org.eclipse.fx.core.adapter.Adapt;
 import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
 import org.eclipse.jdt.annotation.Nullable;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Supplier working for {@link Adapt}
  */
 @SuppressWarnings("restriction")
+@Component(service=ExtendedObjectSupplier.class,property="dependency.injection.annotation:String=org.eclipse.fx.core.adapter.Adapt")
 public class AdaptValueSupplier extends ExtendedObjectSupplier {
 
 	@Override
@@ -116,7 +118,6 @@ public class AdaptValueSupplier extends ExtendedObjectSupplier {
 			return (O) this.context.get(key);
 		}
 
-		@SuppressWarnings("null")
 		@Override
 		public <O> O getValue(Class<O> key) {
 			return this.context.get(key);

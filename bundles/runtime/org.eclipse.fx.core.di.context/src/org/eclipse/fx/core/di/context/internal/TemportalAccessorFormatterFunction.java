@@ -15,10 +15,12 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.core.text.TemporalAccessorFormatter;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * {@link IContextFunction} to create {@link TemporalAccessorFormatter}
  */
+@Component(service=IContextFunction.class,property="service.context.key:String=org.eclipse.fx.core.text.TemporalAccessorFormatter")
 public class TemportalAccessorFormatterFunction extends ContextFunction {
 	@Override
 	public Object compute(IEclipseContext context) {

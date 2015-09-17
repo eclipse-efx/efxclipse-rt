@@ -36,6 +36,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Supplier for {@link Service}
@@ -43,6 +44,7 @@ import org.osgi.framework.ServiceReference;
  * @since 1.2
  */
 @SuppressWarnings("restriction")
+@Component(service=ExtendedObjectSupplier.class,property="dependency.injection.annotation:String=org.eclipse.fx.core.di.Service")
 public class ServiceSupplier extends ExtendedObjectSupplier {
 
 	static class ServiceHandler implements ServiceListener {
