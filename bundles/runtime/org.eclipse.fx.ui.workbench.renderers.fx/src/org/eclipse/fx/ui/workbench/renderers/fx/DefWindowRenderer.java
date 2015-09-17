@@ -93,10 +93,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -112,7 +116,10 @@ import javafx.stage.WindowEvent;
 public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	private static final String CSS_TRIM_CONTAINER = "window-trim-container"; //$NON-NLS-1$
 	private static final String CSS_CONTENT_CONTAINER = "window-content-container"; //$NON-NLS-1$
-
+	
+	private static final String ID_CLIENT_AREA = "client-area"; //$NON-NLS-1$
+	private static final String ID_MENU_BAR_AREA = "menu-bar-area"; //$NON-NLS-1$
+	
 	@Inject
 	@Translation
 	@NonNull
@@ -471,8 +478,22 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			if (this.rootFXML != null) {
 				this.rootPane = createRootContainer(stage);
-				((org.eclipse.fx.ui.controls.stage.Frame) this.rootPane).setClientArea(this.trimPane);
-			} else {
+				if (this.rootPane != null) {
+					if (this.rootPane instanceof BorderPane) {
+						Node clientArea = this.rootPane.lookup("#" + ID_CLIENT_AREA); //$NON-NLS-1$
+						if (clientArea != null) {
+							addNodeToCustomParent(ID_CLIENT_AREA, this.trimPane, clientArea);
+						} else {
+							((BorderPane) this.rootPane).setCenter(this.trimPane);
+						}
+					} else if (this.rootPane instanceof org.eclipse.fx.ui.controls.stage.Frame) {
+						((org.eclipse.fx.ui.controls.stage.Frame) this.rootPane).setClientArea(this.trimPane);
+					} else {
+						this.logger.warning("Unhandled type of root pane: " + this.rootPane.getClass().getName()); //$NON-NLS-1$
+					}
+				}
+			} 
+			if (this.rootPane == null) {
 				BorderPane rootPane = new BorderPane() {
 					@Override
 					protected void layoutChildren() {
@@ -757,7 +778,13 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				if (this.rootPane instanceof org.eclipse.fx.ui.controls.stage.Window) {
 					((org.eclipse.fx.ui.controls.stage.Window) this.rootPane).setMenuBar(n);
 				} else {
-					((BorderPane) this.rootPane).setTop(n);
+					// Check if a custom location for the MenuBar has been provided
+					Node menuBarArea = this.rootPane.lookup("#" + ID_MENU_BAR_AREA); //$NON-NLS-1$
+					if (menuBarArea != null) {
+						addNodeToCustomParent(ID_MENU_BAR_AREA, n, menuBarArea);
+					} else {
+						((BorderPane) this.rootPane).setTop(n);
+					}
 				}
 
 			} else {
@@ -767,6 +794,29 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					this.decoratorPane.setBottom((Node) menuWidget.getStaticLayoutNode());
 				}
 
+			}
+		}
+
+		private void addNodeToCustomParent(String id, Node node, Node customParent) {
+			if (customParent instanceof BorderPane) {
+				if (id.equals(ID_MENU_BAR_AREA))
+					((BorderPane)customParent).setTop(node);
+				else
+					((BorderPane)customParent).setCenter(node);
+			} else if (customParent instanceof Pane) {
+				((Pane)customParent).getChildren().add(0, node);
+				if (customParent instanceof HBox) {
+					HBox.setHgrow(node, Priority.ALWAYS);
+				} else if (customParent instanceof HBox) {
+					VBox.setVgrow(node, Priority.ALWAYS);
+				} else if (customParent instanceof AnchorPane) {
+					AnchorPane.setTopAnchor(node, new Double(0));
+					AnchorPane.setRightAnchor(node, new Double(0));
+					AnchorPane.setBottomAnchor(node, new Double(0));
+					AnchorPane.setLeftAnchor(node, new Double(0));
+				}
+			} else {
+				this.logger.error("Could not add child to customParent: Expecting BorderPane or Pane"); //$NON-NLS-1$
 			}
 		}
 
