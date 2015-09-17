@@ -164,15 +164,15 @@ class JavaFXCodeGenerator {
 			org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
 			org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, «highlighter.tokenList.findFirst[t|t.^default].name»Token);
 			«FOR t : highlighter.tokenList»
-			{
 				«FOR kw : t.scannerList.filter[s | s instanceof Scanner_Keyword]»
+				{
 					org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher «t.name»WordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
 					«FOR w : (kw as Scanner_Keyword).keywords»
 					«t.name»WordRule.addWord("«w.name»", «t.name»Token);
 					«ENDFOR»
 					combinedWordRule.addWordMatcher(«t.name»WordRule);
+				}
 				«ENDFOR»
-			}
 			«ENDFOR»
 			rules[«count++»] = combinedWordRule;
 			«ENDIF»
