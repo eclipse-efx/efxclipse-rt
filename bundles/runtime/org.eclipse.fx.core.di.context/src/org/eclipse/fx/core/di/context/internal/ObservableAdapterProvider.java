@@ -130,11 +130,10 @@ public class ObservableAdapterProvider implements AdapterProvider<ContextBoundVa
 		
 		if( r == null ) {
 			r = new Realm() {
-				private Thread t = Thread.currentThread();
 				
 				@Override
 				public boolean isCurrent() {
-					return this.t == Thread.currentThread();
+					return true;
 				}
 			};
 		}

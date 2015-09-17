@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -348,5 +349,36 @@ public class ContextBoundValueTestCase {
 		}
 		Assert.assertTrue("No assertion failed exception should be thrown", !exceptionThrown); //$NON-NLS-1$
 		Assert.assertTrue("Did not receive a value change event", eventReceived.await(10, TimeUnit.SECONDS)); //$NON-NLS-1$
+	}
+	
+	/**
+	 * @throws InterruptedException
+	 */
+	@Test
+	public void testDefaultRealm() throws InterruptedException{
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		IEclipseContext usedContext = serviceContext.createChild();
+		CountDownLatch sync = new CountDownLatch(2);
+		AtomicBoolean creatorThreadCurrent = new AtomicBoolean();
+		AtomicBoolean independentThreadCurrent = new AtomicBoolean();
+		AtomicReference<Realm> realmOfCreatedObservable = new AtomicReference<>();
+		Thread threadWithoutRealm = new Thread(() -> {
+			ObservableInject inject = ContextInjectionFactory.make(ObservableInject.class, usedContext);
+			realmOfCreatedObservable.set(inject.observableValue.getRealm());
+			//Spawn a new Thread
+			Thread threadObservableNotCreatedIn = new Thread(() -> {
+				independentThreadCurrent.set(realmOfCreatedObservable.get().isCurrent());				
+				sync.countDown();
+			});
+			threadObservableNotCreatedIn.start();
+			creatorThreadCurrent.set(realmOfCreatedObservable.get().isCurrent());
+			sync.countDown();
+		});
+		threadWithoutRealm.start();
+		Assert.assertTrue(sync.await(2,TimeUnit.SECONDS));
+		Assert.assertTrue("Expecting default realm to be always the current realm, this is not the case for the creator thread.", creatorThreadCurrent.get()); //$NON-NLS-1$
+		Assert.assertTrue("Expecting default realm to be always the current realm, this is not the case for a thread without a realm.", independentThreadCurrent.get()); //$NON-NLS-1$
+		Assert.assertTrue("Expecting default realm to be always the current realm, this is not the case for the main thread.", realmOfCreatedObservable.get().isCurrent()); //$NON-NLS-1$
+		usedContext.dispose();
 	}
 }
