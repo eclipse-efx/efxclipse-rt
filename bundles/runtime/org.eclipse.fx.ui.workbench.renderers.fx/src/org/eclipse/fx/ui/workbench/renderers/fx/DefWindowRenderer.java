@@ -116,10 +116,10 @@ import javafx.stage.WindowEvent;
 public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	private static final String CSS_TRIM_CONTAINER = "window-trim-container"; //$NON-NLS-1$
 	private static final String CSS_CONTENT_CONTAINER = "window-content-container"; //$NON-NLS-1$
-	
+
 	private static final String ID_CLIENT_AREA = "client-area"; //$NON-NLS-1$
 	private static final String ID_MENU_BAR_AREA = "menu-bar-area"; //$NON-NLS-1$
-	
+
 	@Inject
 	@Translation
 	@NonNull
@@ -138,7 +138,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 		GraphicsLoader graphicsLoader = modelContext.get(GraphicsLoader.class);
 
-		if( element.getTags().contains("efx-lightweight-dialogs") ) { //$NON-NLS-1$ 
+		if( element.getTags().contains("efx-lightweight-dialogs") ) { //$NON-NLS-1$
 			Arrays.fill(response, Save.CANCEL);
 			MultiMessageDialogContent multiMessageDialogContent = new MultiMessageDialogContent(this.messages.DefWindowRenderer_MultiMessageDialog_Message, dirtyParts, graphicsLoader);
 			org.eclipse.fx.ui.controls.dialog.Dialog d = new org.eclipse.fx.ui.controls.dialog.Dialog(multiMessageDialogContent, this.messages.DefWindowRenderer_MultiMessageDialog_Title) {
@@ -150,7 +150,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 							parts.add(r.element.get());
 						}
 					}
-					
+
 					Arrays.fill(response, Save.NO);
 					for (MPart p : parts) {
 						response[parts.indexOf(p)] = Save.YES;
@@ -182,9 +182,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 	@Override
 	protected Save promptToSave(MWindow element, MPart dirtyPart, WWindow<Stage> widget) {
-		if( element.getTags().contains("efx-lightweight-dialogs") ) { //$NON-NLS-1$ 
+		if( element.getTags().contains("efx-lightweight-dialogs") ) { //$NON-NLS-1$
 			org.eclipse.fx.ui.controls.dialog.MessageDialog.QuestionCancelResult r = org.eclipse.fx.ui.controls.dialog.MessageDialog.openQuestionCancelDialog(
-					this.messages.DefWindowRenderer_promptToSave_Title, 
+					this.messages.DefWindowRenderer_promptToSave_Title,
 					this.messages.DefWindowRenderer_promptToSave_Message(dirtyPart.getLocalizedLabel()),
 					(d) -> {
 						((WWindowImpl)element.getWidget()).setDialog(d);
@@ -262,7 +262,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Inject
 		@Optional
 		WindowTransitionService<Stage> windowTransitionService;
-		
+
 		@Inject
 		@Optional
 		LightweightDialogTransitionService dialogTransitionService;
@@ -394,7 +394,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 						});
 					} else {
 						((Pane) staticLayoutNode).getChildren().remove(this.overlayContainer);
-						this.overlayContainer.getChildren().clear();						
+						this.overlayContainer.getChildren().clear();
 					}
 				}
 			} else {
@@ -405,7 +405,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 							Insets insets = getInsets();
 					        final double w = getWidth() - insets.getLeft() - insets.getRight();
 					        final double h = getHeight() - insets.getTop() - insets.getBottom();
-					        
+
 					        for( Node n : getManagedChildren() ) {
 					        	double x,y;
 					        	n.autosize();
@@ -428,7 +428,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 						this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 					});
 				}
-				
+
 				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 				this.overlayContainer.getChildren().setAll((Node)dialogNode);
 				this.overlayContainer.layout();
@@ -463,7 +463,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if( this.mWindow.getPersistedState().containsKey(KEY_STAGE_MODALITY) ) {
 				this.stage.initModality(Modality.valueOf(this.mWindow.getPersistedState().get(KEY_STAGE_MODALITY)));
 			}
-			
+
 			this.stage.fullScreenProperty().addListener(this::handleFullscreen);
 
 			if (this.dispatcher != null) {
@@ -479,20 +479,20 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if (this.rootFXML != null) {
 				this.rootPane = createRootContainer(stage);
 				if (this.rootPane != null) {
-					if (this.rootPane instanceof BorderPane) {
+					if (this.rootPane instanceof org.eclipse.fx.ui.controls.stage.Frame) {
+						((org.eclipse.fx.ui.controls.stage.Frame) this.rootPane).setClientArea(this.trimPane);
+					} else if (this.rootPane instanceof BorderPane) {
 						Node clientArea = this.rootPane.lookup("#" + ID_CLIENT_AREA); //$NON-NLS-1$
 						if (clientArea != null) {
 							addNodeToCustomParent(ID_CLIENT_AREA, this.trimPane, clientArea);
 						} else {
 							((BorderPane) this.rootPane).setCenter(this.trimPane);
 						}
-					} else if (this.rootPane instanceof org.eclipse.fx.ui.controls.stage.Frame) {
-						((org.eclipse.fx.ui.controls.stage.Frame) this.rootPane).setClientArea(this.trimPane);
 					} else {
 						this.logger.warning("Unhandled type of root pane: " + this.rootPane.getClass().getName()); //$NON-NLS-1$
 					}
 				}
-			} 
+			}
 			if (this.rootPane == null) {
 				BorderPane rootPane = new BorderPane() {
 					@Override
@@ -532,7 +532,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			} else {
 				s = new Scene(this.rootPane, this.mWindow.getWidth(), this.mWindow.getHeight());
 			}
-			
+
 			if( this.stage.getStyle() == StageStyle.TRANSPARENT ) {
 				s.setFill(Color.TRANSPARENT);
 			}
@@ -581,7 +581,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				}
 			}
 		}
-		
+
 		@SuppressWarnings("null")
 		@Override
 		public @NonNull Node getStaticLayoutNode() {
@@ -610,12 +610,12 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				this.eventBroker.send(Constants.WINDOW_ACTIVATED, getDomElement());
 			}
 		}
-		
+
 		@Override
 		public void activate() {
 			super.activate();
 			if( this.stage != null && ! this.stage.isFocused() ) {
-				this.stage.requestFocus();	
+				this.stage.requestFocus();
 			}
 		}
 
@@ -659,7 +659,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					Collections.reverse(newTreeReversed);
 
 					this.queuedTree = activationTree;
-					
+
 					// Delay the execution maybe there's an intermediate
 					// state we are not interested in
 					// http://javafx-jira.kenai.com/browse/RT-24069
@@ -917,7 +917,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		/**
 		 * Set the new tags list
-		 * 
+		 *
 		 * @param tags
 		 *            the tags
 		 */
@@ -972,7 +972,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			} else {
 				getWidget().close();
 			}
-			
+
 		}
 
 		@Override
@@ -1194,7 +1194,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			this.contentPane.getChildren().add(idx, (Node) widget.getStaticLayoutNode());
 		}
 	}
-	
+
 	static class WindowResizeButton extends Region {
 		double dragOffsetX;
 		double dragOffsetY;
