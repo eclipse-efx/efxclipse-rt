@@ -15,10 +15,12 @@ import javafx.scene.text.Text;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextNode.DecorationStrategy;
 import org.eclipse.jdt.annotation.NonNull;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Strategy who creates an underlined text
  */
+@Component
 public class UnderlineStrategyFactory implements DecorationStrategyFactory {
 
 	@Override

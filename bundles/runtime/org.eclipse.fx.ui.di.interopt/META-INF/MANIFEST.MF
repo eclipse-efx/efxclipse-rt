@@ -6,10 +6,11 @@ Bundle-Version: 2.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.swt;bundle-version="3.100.1";resolution:=optional,
  org.eclipse.e4.core.contexts;bundle-version="1.2.0",
- org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
- org.eclipse.fx.core
+ org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional
 Bundle-ActivationPolicy: lazy
-Service-Component: OSGI-INF/interoptfunction.xml,
- OSGI-INF/services/org.eclipse.fx.ui.di.interopt.UISynchronizeImpl.xml
-Import-Package: org.osgi.service.component.annotations
+Service-Component: OSGI-INF/services/org.eclipse.fx.ui.di.interopt.UISynchronizeImpl.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.di.interopt.InteroptContextFunction.xml
+Import-Package: org.eclipse.fx.core;version="2.2.0",
+ org.eclipse.fx.core.log;version="2.2.0",
+ org.osgi.service.component.annotations
 Bundle-Vendor: Eclipse.org

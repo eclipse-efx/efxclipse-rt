@@ -5,5 +5,5 @@
       <provide interface="org.eclipse.fx.core.ThreadSynchronize"/>
    </service>
    <property name="service.ranking" type="Integer" value="-1"/>
-   <reference bind="setLoggerFactory" cardinality="1..1" interface="org.eclipse.fx.core.log.LoggerFactory" name="LoggerFactory" policy="dynamic" policy-option="greedy"/>
+   <reference bind="setLoggerFactory" cardinality="1..1" interface="org.eclipse.fx.core.log.LoggerFactory" name="LoggerFactory" policy="dynamic" policy-option="greedy" unbind="unsetLoggerFactory"/>
 </scr:component>

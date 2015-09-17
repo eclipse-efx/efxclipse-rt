@@ -32,14 +32,14 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * Implementation of the UISynchronize service for JavaFX
  */
 // Make sure none interopt services win all time!
-@Component(service = { ThreadSynchronize.class }, property={"service.ranking:Integer=-1"})
+@Component(service = { ThreadSynchronize.class }, property = { "service.ranking:Integer=-1" })
 public class UISynchronizeImpl implements ThreadSynchronize {
 	private LoggerFactory factory;
 	private Logger logger;
 
 	/**
 	 * Setting a new factory
-	 * 
+	 *
 	 * @param factory
 	 *            the new factory
 	 */
@@ -47,6 +47,19 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 	public void setLoggerFactory(LoggerFactory factory) {
 		this.factory = factory;
 		this.logger = null;
+	}
+
+	/**
+	 * Unset the logger factory
+	 *
+	 * @param factory
+	 *            the factory to remove
+	 */
+	public void unsetLoggerFactory(LoggerFactory factory) {
+		if (this.factory == factory) {
+			this.factory = null;
+			this.logger = null;
+		}
 	}
 
 	@SuppressWarnings("null")
@@ -67,7 +80,8 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 			}
 		} else {
 			// We could also use Display.getDefault().syncExec(Runnable); but
-			// to keep semantics the same as in JavaFX we use the same code future task
+			// to keep semantics the same as in JavaFX we use the same code
+			// future task
 			RunnableFuture<V> task = new FutureTask<V>(callable);
 			Display.getDefault().asyncExec(task);
 			try {
@@ -87,7 +101,8 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 			runnable.run();
 		} else {
 			// We could also use Display.getDefault().syncExec(Runnable); but
-			// to keep semantics the same as in JavaFX we use the same code future task
+			// to keep semantics the same as in JavaFX we use the same code
+			// future task
 			RunnableFuture<?> task = new FutureTask<Void>(runnable, null);
 			Display.getDefault().asyncExec(task);
 			try {
@@ -121,8 +136,8 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 			}
 		};
 		Display display = Display.getDefault();
-		display.timerExec((int)delay, wrapper);
-		
+		display.timerExec((int) delay, wrapper);
+
 		return new Subscription() {
 
 			@Override
@@ -136,9 +151,9 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 	@Override
 	public <T> CompletableFuture<T> scheduleExecution(long delay, Callable<T> runnable) {
 		CompletableFuture<T> future = new CompletableFuture<T>();
-		
+
 		Display display = Display.getDefault();
-		display.timerExec((int)delay, () -> {
+		display.timerExec((int) delay, () -> {
 			try {
 				if (!future.isCancelled()) {
 					future.complete(runnable.call());
@@ -147,7 +162,7 @@ public class UISynchronizeImpl implements ThreadSynchronize {
 				future.completeExceptionally(e);
 			}
 		});
-		
+
 		return future;
 	}
 

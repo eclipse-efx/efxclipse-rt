@@ -18,14 +18,17 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
 import org.eclipse.e4.core.contexts.ContextFunction;
+import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Context function who can adapt an {@link Composite} and a {@link JPanel} to a
  * {@link BorderPane}
  */
+@Component(service=IContextFunction.class,property="service.context.key:String=javafx.scene.layout.BorderPane")
 public class InteroptContextFunction extends ContextFunction {
 
 	@Override
