@@ -90,7 +90,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 			}
 		});
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	void notifySubscriptions(@Nullable T newValue){
 		if (this.callbacks != null) {
@@ -109,7 +109,7 @@ public class EclipseContextBoundValue<T> implements ContextBoundValue<T> {
 	@Nullable
 	public T getValue() {
 		if (this.contextKey == null) {
-			// If no contextKey has been set, the value is always null. 
+			// If no contextKey has been set, the value is always null.
 			// This needs to be done in order to be conform to the ContextBoundValue interface
 			return null;
 		}

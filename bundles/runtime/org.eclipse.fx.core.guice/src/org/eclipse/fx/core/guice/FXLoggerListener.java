@@ -33,7 +33,7 @@ import com.google.inject.spi.TypeListener;
  * </pre>
  */
 public class FXLoggerListener implements TypeListener {
-	
+
 	@Override
 	public <T> void hear(TypeLiteral<T> typeLiteral, TypeEncounter<T> typeEncounter) {
 		 for (Field field : typeLiteral.getRawType().getDeclaredFields()) {
@@ -45,34 +45,34 @@ public class FXLoggerListener implements TypeListener {
 				 if( loggerName == null ) {
 					 loggerName = "unknown"; //$NON-NLS-1$
 				 }
-				 
+
 				 Provider<LoggerFactory> provider = typeEncounter.getProvider(LoggerFactory.class);
 				 if( provider == null ) {
 					 throw new IllegalStateException("No " + LoggerFactory.class + " provider registered");  //$NON-NLS-1$//$NON-NLS-2$
 				 }
-				 
+
 				 typeEncounter.register(new FieldLoggerInjector<T>(field,loggerName,provider));
 			 }
 		 }
 	}
-	
+
 	static class FieldLoggerInjector<T> implements MembersInjector<T> {
 		@NonNull
 		private Provider<LoggerFactory> provider;
-		
+
 		@NonNull
 		private Field field;
-		
+
 		@NonNull
 		private String loggerName;
-		
+
 		public FieldLoggerInjector(@NonNull Field field, @NonNull String loggerName, @NonNull Provider<LoggerFactory> provider) {
 			this.provider = provider;
 			this.field = field;
 			this.loggerName = loggerName;
 			this.field.setAccessible(true);
 		}
-		
+
 		@Override
 		public void injectMembers(T instance) {
 			Logger logger = this.provider.get().createLogger(this.loggerName);
