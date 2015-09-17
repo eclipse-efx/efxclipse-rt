@@ -31,12 +31,14 @@ import org.eclipse.fx.core.FilesystemService;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.log.LoggerCreator;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Implementation of a file system
  *
  * @since 1.2
  */
+@Component
 public class FileSystemServiceImpl implements FilesystemService {
 	private CheckThread thread;
 

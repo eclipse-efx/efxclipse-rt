@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.core.adapterservice">
-   <implementation class="org.eclipse.fx.core.adapter.internal.AdapterServiceImpl"/>
-   <service>
-      <provide interface="org.eclipse.fx.core.adapter.AdapterService"/>
-   </service>
-   <reference bind="registerAdapterProviderService" cardinality="0..n" interface="org.eclipse.fx.core.adapter.AdapterProvider" name="AdapterProvider" policy="dynamic" unbind="unregisterAdapterProviderService"/>
-</scr:component>

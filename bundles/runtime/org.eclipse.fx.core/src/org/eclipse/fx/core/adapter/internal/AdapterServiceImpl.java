@@ -18,21 +18,27 @@ import java.util.Map;
 import org.eclipse.fx.core.adapter.AdapterProvider;
 import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.jdt.annotation.NonNull;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * Default implementation of the adapter service
  */
+@Component
 public class AdapterServiceImpl implements AdapterService {
 	@NonNull
 	private Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap = new HashMap<>();
 
 	/**
 	 * Register provider services
-	 * 
+	 *
 	 * @param service
 	 *            the service to register
 	 */
 	@SuppressWarnings("unchecked")
+	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policyOption=ReferencePolicyOption.GREEDY)
 	public void registerAdapterProviderService(AdapterProvider<?, ?> service) {
 		synchronized (this.adapterMap) {
 			Map<Class<Object>, List<AdapterProvider<Object, Object>>> map = this.adapterMap.get(service.getSourceType());
@@ -52,7 +58,7 @@ public class AdapterServiceImpl implements AdapterService {
 
 	/**
 	 * Unregister a provider service
-	 * 
+	 *
 	 * @param service
 	 *            the service to unregister
 	 */
@@ -62,10 +68,10 @@ public class AdapterServiceImpl implements AdapterService {
 			if (map != null) {
 				List<AdapterProvider<Object, Object>> list = map.get(service.getTargetType());
 				if (list != null) {
-					list.remove(service);		
+					list.remove(service);
 				}
 			}
-		}			
+		}
 	}
 
 
@@ -74,30 +80,30 @@ public class AdapterServiceImpl implements AdapterService {
 		if( sourceObject == null ) {
 			return true;
 		}
-		
+
 		return canAdaptRec(sourceObject, sourceObject.getClass(), targetType);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private boolean canAdaptRec(@NonNull Object sourceObject, Class<?> sourceType, @NonNull Class<?> targetType) {
 		boolean adapt = canAdapt(this.adapterMap, sourceObject, (Class<Object>)sourceType, (Class<Object>)targetType);
 		if( adapt ) {
 			return true;
 		}
-		
+
 		for( Class<?> i : sourceType.getInterfaces()  ) {
 			if( canAdapt(this.adapterMap, sourceObject, (Class<Object>) i, (Class<Object>)targetType) ) {
 				return true;
 			}
 		}
-		
+
 		if( sourceType.getSuperclass() != Object.class ) {
 			return canAdaptRec(sourceObject, sourceType.getSuperclass(), targetType);
 		}
-		
+
 		return false;
 	}
-	
+
 	private static boolean canAdapt(Map<Class<Object>, Map<Class<Object>, List<AdapterProvider<Object, Object>>>> adapterMap, @NonNull Object sourceObject, Class<Object> source, @NonNull Class<Object> target) {
 		Map<Class<Object>, List<AdapterProvider<Object, Object>>> map = adapterMap.get(source);
 		if( map != null ) {
@@ -121,25 +127,25 @@ public class AdapterServiceImpl implements AdapterService {
 		}
 		return (A) adaptRec(sourceObject, sourceObject.getClass(), targetType, valueAccess);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private Object adaptRec(@NonNull Object sourceObject, Class<?> sourceType, @NonNull Class<?> targetType, ValueAccess[] valueAccess) {
 		Object adapt = adapt(this.adapterMap, sourceObject, (Class<Object>)sourceType, (Class<Object>)targetType, valueAccess);
 		if( adapt != null ) {
 			return adapt;
 		}
-		
+
 		for( Class<?> i : sourceType.getInterfaces()  ) {
 			adapt = adapt(this.adapterMap, sourceObject,(Class<Object>) i, (Class<Object>)targetType, valueAccess);
 			if( adapt != null ) {
 				return adapt;
 			}
 		}
-		
+
 		if( sourceType.getSuperclass() != Object.class ) {
 			return adaptRec(sourceObject, sourceType.getSuperclass(), targetType, valueAccess);
 		}
-		
+
 		return null;
 	}
 
