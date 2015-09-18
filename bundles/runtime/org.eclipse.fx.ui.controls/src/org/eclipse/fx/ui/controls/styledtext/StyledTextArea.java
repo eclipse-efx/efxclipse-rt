@@ -92,7 +92,7 @@ public class StyledTextArea extends Control {
 	private final StyledTextRenderer renderer = new StyledTextRenderer();
 
 	@NonNull
-	private final IntegerProperty caretOffsetProperty = new SimpleIntegerProperty(this, "caretOffset", -1); //$NON-NLS-1$
+	private final IntegerProperty caretOffsetProperty = new SimpleIntegerProperty(this, "caretOffset", 0); //$NON-NLS-1$
 
 	@NonNull
 	private final BooleanProperty lineRulerVisible = new SimpleBooleanProperty(this, "lineRulerVisible"); //$NON-NLS-1$
@@ -174,10 +174,10 @@ public class StyledTextArea extends Control {
 		if( this.caretOffsetProperty.get() > newCharCount ) {
 			this.caretOffsetProperty.set(newCharCount);
 		}
-		
+
 		// in SWT this is done in reset()
 		clearSelection();
-		
+
 		if( getSkin() instanceof StyledTextSkin ) {
 			((StyledTextSkin)getSkin()).recalculateItems();
 		}
@@ -190,11 +190,11 @@ public class StyledTextArea extends Control {
 		}
 
 		updateSelection(this.lastTextChangeStart, this.lastTextChangeReplaceCharCount, this.lastTextChangeNewCharCount);
-		
+
 		// lastCharCount += lastTextChangeNewCharCount;
 		// lastCharCount -= lastTextChangeReplaceCharCount;
 	}
-	
+
 	void updateSelection(int startOffset, int replacedLength, int newLength) {
 		if (getSelection().offset + getSelection().length > startOffset && getSelection().offset < startOffset + replacedLength) {
 			// selection intersects replaced text. set caret behind text change
