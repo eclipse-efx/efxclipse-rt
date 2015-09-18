@@ -15,8 +15,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -34,7 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A text layout container who is able to show selection
- * 
+ *
  * @since 2.0
  */
 public class StyledTextLayoutContainer extends Region {
@@ -115,12 +118,27 @@ public class StyledTextLayoutContainer extends Region {
 	private Timeline flashTimeline;
 	int caretIndex = -1;
 
+	private final ReadOnlyBooleanProperty ownerFocusedProperty;
+
 	/**
 	 * Create a container to layout text and allows to show e.g. a selection
 	 * range
 	 */
-	@SuppressWarnings("null")
 	public StyledTextLayoutContainer() {
+		this(new SimpleBooleanProperty(true));
+	}
+
+	/**
+	 * Create a container to layout text and allows to show e.g. a selection
+	 * range
+	 *
+	 * @param ownerFocusedProperty
+	 *            property identifing if the owner of the text container has the
+	 *            input focus
+	 */
+	@SuppressWarnings("null")
+	public StyledTextLayoutContainer(ReadOnlyBooleanProperty ownerFocusedProperty) {
+		this.ownerFocusedProperty = ownerFocusedProperty;
 		getStyleClass().add("styled-text-layout-container"); //$NON-NLS-1$
 		this.textNodes.addListener(this::recalculateOffset);
 		this.selectionMarker.setVisible(false);
@@ -138,7 +156,12 @@ public class StyledTextLayoutContainer extends Region {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				StyledTextLayoutContainer.this.caret.setVisible(StyledTextLayoutContainer.this.caretIndex != -1);
+				if( ! ownerFocusedProperty.get() ) {
+					StyledTextLayoutContainer.this.caret.setVisible(false);
+				} else {
+					StyledTextLayoutContainer.this.caret.setVisible(StyledTextLayoutContainer.this.caretIndex != -1);
+				}
+
 			}
 		};
 
@@ -155,6 +178,11 @@ public class StyledTextLayoutContainer extends Region {
 		Bindings.bindContent(this.textLayoutNode.getChildren(), this.textNodes);
 		getChildren().setAll(this.selectionMarker, this.textLayoutNode, this.caret);
 		selectionProperty().addListener(this::handleSelectionChange);
+		ownerFocusedProperty.addListener( o -> {
+			if( ! ownerFocusedProperty.get() ) {
+				this.caret.setVisible(false);
+			}
+		});
 	}
 
 	private int getEndOffset() {
@@ -240,15 +268,15 @@ public class StyledTextLayoutContainer extends Region {
 			this.textLayoutNode.applyCss();
 			for (StyledTextNode t : this.textNodes) {
 				t.applyCss();
-				if (t.getStartOffset() <= this.caretIndex && ( t.getEndOffset() > this.caretIndex || this.textNodes.get(this.textNodes.size()-1) == t )) {
+				if (t.getStartOffset() <= this.caretIndex && (t.getEndOffset() > this.caretIndex || this.textNodes.get(this.textNodes.size() - 1) == t)) {
 					double caretX = t.getCharLocation(this.caretIndex - t.getStartOffset());
 					double x = this.textLayoutNode.localToParent(t.getBoundsInParent().getMinX(), 0).getX() + caretX;
 					double h = t.prefHeight(-1);
 
 					this.caret.setStartX(x);
 					this.caret.setEndX(x);
-					this.caret.setStartY(getInsets().getTop()+1);
-					this.caret.setEndY(h + getInsets().getTop()+1);
+					this.caret.setStartY(getInsets().getTop() + 1);
+					this.caret.setEndY(h + getInsets().getTop() + 1);
 					this.caret.toFront();
 					return;
 				}
@@ -276,7 +304,7 @@ public class StyledTextLayoutContainer extends Region {
 
 	/**
 	 * Find the caret index at the give point
-	 * 
+	 *
 	 * @param point
 	 *            the point relative to coordinate system of this node
 	 * @return the index or <code>-1</code> if not found
@@ -302,14 +330,18 @@ public class StyledTextLayoutContainer extends Region {
 
 	/**
 	 * Set the caret to show at the given index
-	 * 
+	 *
 	 * @param index
 	 *            the index or <code>-1</code> if caret is to be hidden
 	 */
 	public void setCaretIndex(int index) {
 		if (index >= 0) {
 			this.caretIndex = index;
-			this.caret.setVisible(true);
+			if( this.ownerFocusedProperty.get() ) {
+				this.caret.setVisible(true);
+			} else {
+				this.caret.setVisible(false);
+			}
 			this.flashTimeline.play();
 			requestLayout();
 		} else {
@@ -322,7 +354,7 @@ public class StyledTextLayoutContainer extends Region {
 
 	/**
 	 * Find the position of a the caret at a given index
-	 * 
+	 *
 	 * @param index
 	 *            the index
 	 * @return the location relative to this node or <code>null</code>

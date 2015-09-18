@@ -402,7 +402,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 				if( block == null ) {
 //					System.err.println("CREATING NEW GRAPHIC BLOCK: " + this + " => " + this.domainElement);
-					block = new StyledTextLayoutContainer();
+					block = new StyledTextLayoutContainer(getSkinnable().focusedProperty());
 					block.getStyleClass().add("source-segment-container"); //$NON-NLS-1$
 					setGraphic(block);
 //					getSkinnable().requestLayout();
