@@ -12,14 +12,17 @@ package org.eclipse.fx.ui.workbench.base.internal;
 
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
+import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.core.command.CommandService;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Function to create {@link CommandService}
  *
  * @since 1.2
  */
+@Component(service=IContextFunction.class,property="service.context.key:String=org.eclipse.fx.core.command.CommandService")
 public class CommandServiceImplCF extends ContextFunction {
 	@Override
 	public Object compute(IEclipseContext context) {

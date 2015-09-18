@@ -20,10 +20,12 @@ import org.eclipse.fx.ui.keybindings.ParseException;
 import org.eclipse.fx.ui.keybindings.TriggerSequence;
 import org.eclipse.fx.ui.keybindings.service.BindingFactory;
 import org.eclipse.jdt.annotation.NonNull;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Factory to crate bindings
  */
+@Component
 public class BindingFactoryImpl implements BindingFactory {
 
 	@Override
@@ -40,12 +42,12 @@ public class BindingFactoryImpl implements BindingFactory {
 	public @NonNull KeySequence getKeySequenceInstance(@NonNull KeySequence keySequence, @NonNull KeyStroke stroke) {
 		return KeySequenceImpl.getInstance(keySequence, stroke);
 	}
-	
+
 	@Override
 	public @NonNull KeySequence getKeySequenceInstance() {
 		return KeySequenceImpl.getInstance();
 	}
-	
+
 	@Override
 	public @NonNull KeyStroke getKeyStrokeInstance(@NonNull KeyLookup lookup, int modifierKeys, int naturalKey) {
 		return KeyStrokeImpl.getInstance(lookup, modifierKeys, naturalKey);

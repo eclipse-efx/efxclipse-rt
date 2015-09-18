@@ -169,6 +169,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 		};
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, childrenHandler);
 
+		//FIXME THIS IS BAD BECAUSE WE GET A DEP ON THE RENDERER IMPL!!!
 		EventHandler selectedElementHandler = new EventHandler() {
 
 			@Override
@@ -437,7 +438,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 		} else {
 			// render the selected one first
 			createGui(selected);
-			
+
 			for (MWindow window : this.app.getChildren()) {
 				if (selected != window) {
 					createGui(window);
@@ -451,6 +452,10 @@ public class PartRenderingEngine implements IPresentationEngine {
 			MUIElement element = selected;
 			while (element != null) {
 				if (element instanceof MElementContainer<?>) {
+					if( ((MElementContainer<?>) element).getSelectedElement() == null
+							&& element instanceof MPart) {
+						break;
+					}
 					element = ((MElementContainer<?>) element).getSelectedElement();
 				}
 
@@ -468,11 +473,11 @@ public class PartRenderingEngine implements IPresentationEngine {
 				}
 
 			}
-			
+
 			if (element != null) {
 				focusGui(element);
 			}
-			
+
 
 		}
 		return null;

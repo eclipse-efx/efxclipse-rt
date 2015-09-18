@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.ui.theme.thememanager">
-   <implementation class="org.eclipse.fx.ui.theme.internal.DefaultThemeManager"/>
-   <service>
-      <provide interface="org.eclipse.fx.ui.services.theme.ThemeManager"/>
-   </service>
-   <reference bind="registerTheme" cardinality="0..n" interface="org.eclipse.fx.ui.services.theme.Theme" name="Theme" policy="dynamic" unbind="unregisterTheme"/>
-</scr:component>

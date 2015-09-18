@@ -12,12 +12,15 @@ package org.eclipse.fx.ui.di.internal;
 
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
+import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.ui.di.internal.ResourceServiceImpl.ResourcePool;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Context function who creates a resource pool
  */
+@Component(service=IContextFunction.class,property="service.context.key:String=org.eclipse.fx.ui.di.ResourcePool")
 public class ResourcePoolFactory extends ContextFunction {
 
 	@Override

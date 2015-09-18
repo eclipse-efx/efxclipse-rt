@@ -18,15 +18,17 @@ import javafx.scene.input.KeyCode;
 import org.eclipse.fx.ui.keybindings.KeyLookup;
 import org.eclipse.osgi.service.environment.Constants;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * <p>
  * A look-up table for the formal grammar for keys, and the integer values they
  * represent.
  * </p>
- * 
+ *
  * @since 3.1
  */
+@Component
 public final class FxKeyLookup implements KeyLookup {
 
 	/**
@@ -46,7 +48,7 @@ public final class FxKeyLookup implements KeyLookup {
 	 * <code>String</code>) to integer value (<code>Integer</code>).
 	 */
 	private final Map<String, Integer> naturalKeyTable = new HashMap<String, Integer>();
-	
+
 	/**
 	 * Constant for the ALT modifier
 	 */
@@ -405,7 +407,7 @@ public final class FxKeyLookup implements KeyLookup {
 
 	  return ZERO_LENGTH_STRING + ((char) key);
 	 }
-	
+
 	@Override
 	public final int formalKeyLookup(final String name) {
 		final Object value = this.naturalKeyTable.get(name);

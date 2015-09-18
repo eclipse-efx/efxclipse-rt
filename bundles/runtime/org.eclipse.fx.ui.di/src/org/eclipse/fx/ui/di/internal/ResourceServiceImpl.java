@@ -32,10 +32,12 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Resource service implementation
  */
+@Component
 public class ResourceServiceImpl implements ResourceService {
 	static class PooledResource<@Nullable T> implements IPooledResource<T> {
 		int count;
@@ -192,7 +194,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 	/**
 	 * Remove a resource from the pool
-	 * 
+	 *
 	 * @param resource
 	 *            the resource to remove
 	 */

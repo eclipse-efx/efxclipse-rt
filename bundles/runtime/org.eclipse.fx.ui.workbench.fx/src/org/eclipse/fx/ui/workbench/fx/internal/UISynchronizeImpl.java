@@ -42,7 +42,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 
 	/**
 	 * Setting a new factory
-	 * 
+	 *
 	 * @param factory
 	 *            the new factory
 	 */
@@ -50,6 +50,19 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 	public void setLoggerFactory(LoggerFactory factory) {
 		this.factory = factory;
 		this.logger = null;
+	}
+
+	/**
+	 * Unset the logger factory
+	 *
+	 * @param factory
+	 *            the factory
+	 */
+	public void unsetLoggerFactory(LoggerFactory factory) {
+		if (this.factory == factory) {
+			this.factory = null;
+			this.logger = null;
+		}
 	}
 
 	@SuppressWarnings("null")
@@ -118,7 +131,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 			if (b.get()) {
 				runnable.run();
 			}
-		} ));
+		}));
 		t.play();
 		return new Subscription() {
 
@@ -142,7 +155,7 @@ public class UISynchronizeImpl extends org.eclipse.e4.ui.di.UISynchronize implem
 			} catch (Exception e) {
 				future.completeExceptionally(e);
 			}
-		} ));
+		}));
 		t.play();
 
 		return future;

@@ -23,11 +23,13 @@ import org.eclipse.fx.ui.controls.markers.PositionMarker;
 import org.eclipse.fx.ui.controls.markers.TabOutlineMarker;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WDragTargetWidget.BasicDropLocation;
+import org.osgi.service.component.annotations.Component;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 
 /**
  * Feedback for DnD
  */
+@Component
 public class DefaultDnDFeedback implements DnDFeedbackService {
 
 	@Override
@@ -36,7 +38,7 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 		if( widget instanceof WLayoutedWidget<?> ) {
 			WLayoutedWidget<?> l = (WLayoutedWidget<?>) widget;
 			Pane pane = (Pane) l.getStaticLayoutNode();
-			
+
 			if( data.dropType == BasicDropLocation.SPLIT_BOTTOM ||
 					data.dropType == BasicDropLocation.SPLIT_TOP ||
 					data.dropType == BasicDropLocation.SPLIT_RIGHT ||
@@ -51,10 +53,10 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 				}
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	private static MarkerFeedback handleSplit(Pane layoutNode, DnDFeedbackData data) {
 		Optional<Node> first = layoutNode.getChildren().stream().filter(n -> n instanceof AreaOverlay).findFirst();
 		AreaOverlay overlay;
@@ -69,19 +71,19 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 			layoutNode.heightProperty().addListener((o) -> overlay.resizeRelocate(0,0,layoutNode.getWidth(), layoutNode.getHeight()));
 			overlay.resizeRelocate(0,0,layoutNode.getWidth(), layoutNode.getHeight());
 		}
-		
+
 		overlay.setVisible(true);
 		overlay.updateActiveArea(toArea((BasicDropLocation) data.dropType));
-		
+
 		return new MarkerFeedback(data) {
-			
+
 			@Override
 			public void hide() {
 				overlay.setVisible(false);
 			}
 		};
 	}
-	
+
 	private static Area toArea(BasicDropLocation type) {
 		switch (type) {
 		case SPLIT_BOTTOM:
@@ -97,7 +99,7 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 		}
 		return Area.NONE;
 	}
-	
+
 	private static MarkerFeedback handleReorder(Pane layoutNode, DnDFeedbackData data) {
 		PositionMarker marker = null;
 		for( Node n : layoutNode.getChildren() ) {
@@ -105,36 +107,36 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 				marker = (PositionMarker) n;
 			}
 		}
-		
+
 		if( marker == null ) {
 			marker = new PositionMarker();
 			marker.setManaged(false);
 			layoutNode.getChildren().add(marker);
 		} else {
-			marker.setVisible(true);	
+			marker.setVisible(true);
 		}
-		
+
 		double w = marker.getBoundsInLocal().getWidth();
 		double h = marker.getBoundsInLocal().getHeight();
-		
+
 		double ratio = data.containerRegion.height / h;
 		ratio += 0.1;
 		marker.setScaleX(ratio);
 		marker.setScaleY(ratio);
-		
+
 		double wDiff = w / 2;
 		double hDiff = ( h - h * ratio ) / 2;
-		
+
 		if( data.dropType == BasicDropLocation.AFTER ) {
 			marker.relocate(data.containerRegion.x + data.containerRegion.width - wDiff, data.containerRegion.y - hDiff);
 		} else {
 			marker.relocate(data.containerRegion.x  - wDiff, data.containerRegion.y - hDiff);
 		}
-		
+
 		final PositionMarker fmarker = marker;
-		
+
 		return new MarkerFeedback(data) {
-			
+
 			@Override
 			public void hide() {
 				fmarker.setVisible(false);
@@ -145,13 +147,13 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 	@SuppressWarnings("null")
 	private static MarkerFeedback handleMove(Pane layoutNode, DnDFeedbackData data) {
 		TabOutlineMarker marker = null;
-		
+
 		for( Node n : layoutNode.getChildren() ) {
 			if( n instanceof TabOutlineMarker ) {
 				marker = (TabOutlineMarker) n;
 			}
 		}
-		
+
 		if( marker == null ) {
 			marker = new TabOutlineMarker(layoutNode.getBoundsInLocal(), new BoundingBox(data.containerRegion.x, data.containerRegion.y, data.containerRegion.width, data.containerRegion.height), data.dropType == BasicDropLocation.BEFORE);
 			marker.setManaged(false);
@@ -161,11 +163,11 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 			marker.updateBounds(layoutNode.getBoundsInLocal(), new BoundingBox(data.containerRegion.x, data.containerRegion.y, data.containerRegion.width, data.containerRegion.height), data.dropType == BasicDropLocation.BEFORE);
 			marker.setVisible(true);
 		}
-		
+
 		final TabOutlineMarker fmarker = marker;
-		
+
 		return new MarkerFeedback(data) {
-			
+
 			@Override
 			public void hide() {
 				fmarker.setVisible(false);

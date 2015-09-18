@@ -12,12 +12,15 @@ package org.eclipse.fx.ui.workbench.renderers.fx.internal;
 
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
+import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.services.EMenuService;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Context function to create a {@link EMenuService}
  */
+@Component(service=IContextFunction.class,property="service.context.key:String=org.eclipse.e4.ui.services.EMenuService")
 public class PartPopupMenuServiceFunction extends ContextFunction {
 
 	@Override

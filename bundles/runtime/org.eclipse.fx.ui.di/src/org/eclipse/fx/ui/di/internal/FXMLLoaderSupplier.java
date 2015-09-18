@@ -27,11 +27,13 @@ import org.eclipse.fx.ui.di.InjectingFXMLLoader;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * DI Supplier to inject {@link FXMLLoader} into your DI-Bean
  */
 @SuppressWarnings("restriction")
+@Component(service=ExtendedObjectSupplier.class,property="dependency.injection.annotation:String=org.eclipse.fx.ui.di.FXMLLoader")
 public class FXMLLoaderSupplier extends ExtendedObjectSupplier {
 
 	@Override

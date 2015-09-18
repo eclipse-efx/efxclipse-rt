@@ -23,10 +23,15 @@ import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader.Util;
 import org.eclipse.fx.ui.services.resources.ImageProvider;
 import org.eclipse.jdt.annotation.Nullable;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * Collect providers
  */
+@Component(service=ProviderComponent.class)
 public class ProviderComponent {
 	static class RankedEntry<E> implements Comparable<RankedEntry<E>> {
 		public final int ranking;
@@ -55,12 +60,13 @@ public class ProviderComponent {
 
 	/**
 	 * Register a new image provider
-	 * 
+	 *
 	 * @param provider
 	 *            the provider
 	 * @param parameters
 	 *            the service parameters
 	 */
+	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policyOption=ReferencePolicyOption.GREEDY)
 	public void addImageProvider(ImageProvider provider, Map<String, Object> parameters) {
 		synchronized (this.imageProviderBySuffix) {
 			for (String suffix : provider.getFileSuffix()) {
@@ -88,7 +94,7 @@ public class ProviderComponent {
 
 	/**
 	 * Remove a image provider
-	 * 
+	 *
 	 * @param provider
 	 *            the provider
 	 */
@@ -108,12 +114,13 @@ public class ProviderComponent {
 
 	/**
 	 * Add a graphic provider
-	 * 
+	 *
 	 * @param provider
 	 *            the provider
 	 * @param parameters
 	 *            the service parameters
 	 */
+	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policyOption=ReferencePolicyOption.GREEDY)
 	public void addGraphicNodeProvider(GraphicNodeProvider provider, Map<String, Object> parameters) {
 		synchronized (this.graphicProviderBySuffix) {
 			for (String suffix : provider.getFileSuffix()) {
@@ -141,7 +148,7 @@ public class ProviderComponent {
 
 	/**
 	 * Remove a graphic node provider
-	 * 
+	 *
 	 * @param provider
 	 *            the provider
 	 */
@@ -161,7 +168,7 @@ public class ProviderComponent {
 
 	/**
 	 * Resolve the graphic node for an uri
-	 * 
+	 *
 	 * @param uri
 	 *            the uri
 	 * @return the node
@@ -196,7 +203,7 @@ public class ProviderComponent {
 
 	/**
 	 * Get image provider for an uri
-	 * 
+	 *
 	 * @param uri
 	 *            the uri
 	 * @return the image provider
@@ -251,10 +258,11 @@ public class ProviderComponent {
 
 	/**
 	 * Set a logger factory
-	 * 
+	 *
 	 * @param factory
 	 *            the factory
 	 */
+	@Reference
 	public synchronized void setLoggerFactory(LoggerFactory factory) {
 		this.loggerFactory = factory;
 		if (this.logger != null) {
@@ -264,7 +272,7 @@ public class ProviderComponent {
 
 	/**
 	 * Remove a logger factory
-	 * 
+	 *
 	 * @param factory
 	 *            the factory
 	 */

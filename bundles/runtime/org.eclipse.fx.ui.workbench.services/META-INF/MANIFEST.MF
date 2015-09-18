@@ -11,13 +11,14 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="1.1.0",
  org.eclipse.e4.core.services;bundle-version="1.2.0",
  org.eclipse.e4.core.di;bundle-version="1.4.0",
  org.eclipse.emf.common,
- org.eclipse.emf.ecore;bundle-version="2.10.0",
- org.eclipse.osgi.services
-Export-Package: org.eclipse.fx.ui.workbench.services,
- org.eclipse.fx.ui.workbench.services.lifecycle,
- org.eclipse.fx.ui.workbench.services.lifecycle.annotation
+ org.eclipse.emf.ecore;bundle-version="2.10.0"
+Export-Package: org.eclipse.fx.ui.workbench.services;version="2.2.0",
+ org.eclipse.fx.ui.workbench.services.lifecycle;version="2.2.0",
+ org.eclipse.fx.ui.workbench.services.lifecycle.annotation;version="2.2.0"
 Import-Package: javax.annotation;version="1.2.0";resolution:=optional,
- javax.inject;version="1.0.0"
-Service-Component: OSGI-INF/lifecyclecomponent.xml
+ javax.inject;version="1.0.0",
+ org.osgi.service.component.annotations;version="1.2.0",
+ org.osgi.service.event;version="1.3.1"
+Service-Component: OSGI-INF/services/org.eclipse.fx.ui.workbench.services.lifecycle.internal.LifecycleContextFunction.xml
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Eclipse.org

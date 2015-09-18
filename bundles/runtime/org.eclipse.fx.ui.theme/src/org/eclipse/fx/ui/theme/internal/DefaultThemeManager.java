@@ -23,6 +23,10 @@ import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
@@ -37,6 +41,7 @@ import javafx.scene.Scene;
 /**
  * Default implementation of a theme manager
  */
+@Component
 public class DefaultThemeManager implements ThemeManager {
 	static final String ATT_ID = "id"; //$NON-NLS-1$
 	static final String ATT_NAME = "name"; //$NON-NLS-1$
@@ -95,24 +100,24 @@ public class DefaultThemeManager implements ThemeManager {
 	private static @NonNull String getCSSClassname(@NonNull String id) {
 		return id.replace('.', '-');
 	}
-	
+
 	private void handleStylesheetUrlChange(Change<? extends URL> change) {
 		while(change.next()) {
 			for (Scene scene : this.managedScenes) {
 				for( URL url : change.getRemoved() ) {
 					scene.getStylesheets().remove(url.toExternalForm());
 				}
-				
+
 				for( URL url : change.getAddedSubList() ) {
 					scene.getStylesheets().add(url.toExternalForm());
 				}
 			}
 		}
 	}
-	
+
 	private void unsetTheme(Theme theme) {
 		theme.getStylesheetURL().removeListener(this::handleStylesheetUrlChange);
-		
+
 		for (Scene scene : this.managedScenes) {
 			Collection<Theme> availableThemes = getAvailableThemes().values();
 			for (Theme t : availableThemes) {
@@ -125,7 +130,7 @@ public class DefaultThemeManager implements ThemeManager {
 			}
 		}
 	}
-	
+
 	private void setTheme(Theme theme) {
 		theme.getStylesheetURL().addListener(this::handleStylesheetUrlChange);
 		for (Scene scene : this.managedScenes) {
@@ -149,13 +154,13 @@ public class DefaultThemeManager implements ThemeManager {
 			if( this.currentThemeId != null && this.themes.containsKey(this.currentThemeId) ) {
 				unsetTheme(this.themes.get(this.currentThemeId));
 			}
-			
+
 			this.currentThemeId = id;
-			
+
 			Theme theme = this.themes.get(id);
-			
+
 			setTheme(theme);
-			
+
 			EventAdmin eventAdmin = getEventAdmin();
 			if (eventAdmin != null) {
 				eventAdmin.sendEvent(new Event(Constants.THEME_CHANGED, Collections.singletonMap("org.eclipse.e4.data", id))); //$NON-NLS-1$
@@ -233,6 +238,7 @@ public class DefaultThemeManager implements ThemeManager {
 	 * @param theme
 	 *            the theme
 	 */
+	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policyOption=ReferencePolicyOption.GREEDY)
 	public void registerTheme(@NonNull Theme theme) {
 		synchronized (this.themes) {
 			this.themes.put(theme.getId(),theme);
