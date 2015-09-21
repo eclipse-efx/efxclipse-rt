@@ -34,6 +34,8 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Token;
+import org.eclipse.fx.code.editor.ldef.lDef.TokenVisual;
+import org.eclipse.fx.code.editor.ldef.lDef.TokenVisuals;
 import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule;
 import org.eclipse.fx.code.editor.ldef.services.LDefGrammarAccess;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -136,6 +138,12 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case LDefPackage.TOKEN:
 				sequence_Token(context, (Token) semanticObject); 
+				return; 
+			case LDefPackage.TOKEN_VISUAL:
+				sequence_TokenVisual(context, (TokenVisual) semanticObject); 
+				return; 
+			case LDefPackage.TOKEN_VISUALS:
+				sequence_TokenVisuals(context, (TokenVisuals) semanticObject); 
 				return; 
 			case LDefPackage.WHITESPACE_RULE:
 				sequence_WhitespaceRule(context, (WhitespaceRule) semanticObject); 
@@ -241,7 +249,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     list+=LexicalPartitionHighlighting+
+	 *     (list+=LexicalPartitionHighlighting+ vistual=TokenVisuals?)
 	 */
 	protected void sequence_LexicalHighlighting(EObject context, LexicalHighlighting semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -412,6 +420,24 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (startSeq=STRING check=Check? endSeq=STRING? escapeSeq=STRING?)
 	 */
 	protected void sequence_Scanner_SingleLineRule(EObject context, Scanner_SingleLineRule semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (token=[Token|ID] colorSpec=STRING bold?='bold'? italic?='italic'?)
+	 */
+	protected void sequence_TokenVisual(EObject context, TokenVisual semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     tokenVisuals+=TokenVisual+
+	 */
+	protected void sequence_TokenVisuals(EObject context, TokenVisuals semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
