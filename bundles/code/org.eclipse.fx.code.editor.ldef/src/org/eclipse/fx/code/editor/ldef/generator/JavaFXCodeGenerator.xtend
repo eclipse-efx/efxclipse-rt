@@ -217,19 +217,19 @@ class JavaFXCodeGenerator {
 	}
 
 	def dispatch generateScannerRule(Token t, Scanner_SingleLineRule r) '''
-	new org.eclipse.jface.text.rules.SingleLineRule(
+	«IF r.check != null»org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, «t.name»Token
-		«IF r.escapeSeq != null», '«r.escapeSeq.charAt(0)»'«ENDIF»);
+		«IF r.escapeSeq != null», '«r.escapeSeq.charAt(0)»'«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_MultiLineRule r) '''
-	new org.eclipse.jface.text.rules.MultiLineRule(
+	«IF r.check != null»org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.MultiLineRule(
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, «t.name»Token
-		«IF r.escapeSeq != null», '«r.escapeSeq.charAt(0)»'«ENDIF»);
+		«IF r.escapeSeq != null», '«r.escapeSeq.charAt(0)»'«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def generateWhitespaceRule(WhitespaceRule r) '''
@@ -241,11 +241,11 @@ class JavaFXCodeGenerator {
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_CharacterRule r) '''
-	new org.eclipse.jface.text.source.CharacterRule(«t.name»Token, new char[] {«r.characters.map["'"+it.escapeChar+"'"].join(",")»});
+	«IF r.check != null»org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.source.CharacterRule(«t.name»Token, new char[] {«r.characters.map["'"+it.escapeChar+"'"].join(",")»})«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_PatternRule r) '''
-	new org.eclipse.fx.text.RegexRule(«t.name»Token, java.util.regex.Pattern.compile("«r.startPattern.replace('\\','\\\\')»"),«Math.max(1,r.length)»,java.util.regex.Pattern.compile("«r.contentPattern.replace('\\','\\\\')»"));
+	«IF r.check != null»org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.fx.text.RegexRule(«t.name»Token, java.util.regex.Pattern.compile("«r.startPattern.replace('\\','\\\\')»"),«Math.max(1,r.length)»,java.util.regex.Pattern.compile("«r.contentPattern.replace('\\','\\\\')»"))«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch generatePartitionRule(Partition_SingleLineRule r) '''
