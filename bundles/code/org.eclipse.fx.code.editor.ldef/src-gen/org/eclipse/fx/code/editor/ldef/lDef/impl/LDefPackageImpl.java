@@ -9,10 +9,12 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.fx.code.editor.ldef.lDef.Check;
 import org.eclipse.fx.code.editor.ldef.lDef.CodeIntegration;
 import org.eclipse.fx.code.editor.ldef.lDef.Codegeneration;
 import org.eclipse.fx.code.editor.ldef.lDef.ConfigValue;
 import org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration;
+import org.eclipse.fx.code.editor.ldef.lDef.Equals;
 import org.eclipse.fx.code.editor.ldef.lDef.Import;
 import org.eclipse.fx.code.editor.ldef.lDef.Integration;
 import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration;
@@ -33,6 +35,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
+import org.eclipse.fx.code.editor.ldef.lDef.Range;
 import org.eclipse.fx.code.editor.ldef.lDef.Root;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
@@ -276,6 +279,27 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * @generated
    */
   private EClass scanner_JSRuleEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass checkEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass equalsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass rangeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -732,9 +756,19 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getPartition_Rule_Check()
+  {
+    return (EReference)partition_RuleEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getPartition_Rule_EndSeq()
   {
-    return (EAttribute)partition_RuleEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)partition_RuleEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -744,7 +778,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    */
   public EAttribute getPartition_Rule_EscapeSeq()
   {
-    return (EAttribute)partition_RuleEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)partition_RuleEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -972,6 +1006,16 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getScanner_Rule_Check()
+  {
+    return (EReference)scanner_RuleEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getScanner_SingleLineRule()
   {
     return scanner_SingleLineRuleEClass;
@@ -1132,6 +1176,86 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getCheck()
+  {
+    return checkEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEquals()
+  {
+    return equalsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEquals_Value()
+  {
+    return (EAttribute)equalsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getRange()
+  {
+    return rangeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRange_LtIncl()
+  {
+    return (EAttribute)rangeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRange_MinValue()
+  {
+    return (EAttribute)rangeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRange_MaxValue()
+  {
+    return (EAttribute)rangeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRange_GtIncl()
+  {
+    return (EAttribute)rangeEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getWhitespaceRule()
   {
     return whitespaceRuleEClass;
@@ -1250,6 +1374,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     partition_RuleEClass = createEClass(PARTITION_RULE);
     createEReference(partition_RuleEClass, PARTITION_RULE__PARITION);
     createEAttribute(partition_RuleEClass, PARTITION_RULE__START_SEQ);
+    createEReference(partition_RuleEClass, PARTITION_RULE__CHECK);
     createEAttribute(partition_RuleEClass, PARTITION_RULE__END_SEQ);
     createEAttribute(partition_RuleEClass, PARTITION_RULE__ESCAPE_SEQ);
 
@@ -1285,6 +1410,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     createEAttribute(keywordEClass, KEYWORD__VERSION);
 
     scanner_RuleEClass = createEClass(SCANNER_RULE);
+    createEReference(scanner_RuleEClass, SCANNER_RULE__CHECK);
 
     scanner_SingleLineRuleEClass = createEClass(SCANNER_SINGLE_LINE_RULE);
     createEAttribute(scanner_SingleLineRuleEClass, SCANNER_SINGLE_LINE_RULE__START_SEQ);
@@ -1306,6 +1432,17 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
 
     scanner_JSRuleEClass = createEClass(SCANNER_JS_RULE);
     createEAttribute(scanner_JSRuleEClass, SCANNER_JS_RULE__FILE_URI);
+
+    checkEClass = createEClass(CHECK);
+
+    equalsEClass = createEClass(EQUALS);
+    createEAttribute(equalsEClass, EQUALS__VALUE);
+
+    rangeEClass = createEClass(RANGE);
+    createEAttribute(rangeEClass, RANGE__LT_INCL);
+    createEAttribute(rangeEClass, RANGE__MIN_VALUE);
+    createEAttribute(rangeEClass, RANGE__MAX_VALUE);
+    createEAttribute(rangeEClass, RANGE__GT_INCL);
 
     whitespaceRuleEClass = createEClass(WHITESPACE_RULE);
     createEAttribute(whitespaceRuleEClass, WHITESPACE_RULE__CHARACTERS);
@@ -1358,6 +1495,8 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     scanner_PatternRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scanner_CharacterRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scanner_JSRuleEClass.getESuperTypes().add(this.getScanner_Rule());
+    equalsEClass.getESuperTypes().add(this.getCheck());
+    rangeEClass.getESuperTypes().add(this.getCheck());
 
     // Initialize classes and features; add operations and parameters
     initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1413,6 +1552,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     initEClass(partition_RuleEClass, Partition_Rule.class, "Partition_Rule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPartition_Rule_Parition(), this.getPartition(), null, "parition", null, 0, 1, Partition_Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPartition_Rule_StartSeq(), ecorePackage.getEString(), "startSeq", null, 0, 1, Partition_Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPartition_Rule_Check(), this.getCheck(), null, "check", null, 0, 1, Partition_Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPartition_Rule_EndSeq(), ecorePackage.getEString(), "endSeq", null, 0, 1, Partition_Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPartition_Rule_EscapeSeq(), ecorePackage.getEString(), "escapeSeq", null, 0, 1, Partition_Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1448,6 +1588,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     initEAttribute(getKeyword_Version(), ecorePackage.getEString(), "version", null, 0, 1, Keyword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scanner_RuleEClass, Scanner_Rule.class, "Scanner_Rule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getScanner_Rule_Check(), this.getCheck(), null, "check", null, 0, 1, Scanner_Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scanner_SingleLineRuleEClass, Scanner_SingleLineRule.class, "Scanner_SingleLineRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScanner_SingleLineRule_StartSeq(), ecorePackage.getEString(), "startSeq", null, 0, 1, Scanner_SingleLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1469,6 +1610,17 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
 
     initEClass(scanner_JSRuleEClass, Scanner_JSRule.class, "Scanner_JSRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScanner_JSRule_FileURI(), ecorePackage.getEString(), "fileURI", null, 0, 1, Scanner_JSRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(checkEClass, Check.class, "Check", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(equalsEClass, Equals.class, "Equals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEquals_Value(), ecorePackage.getEInt(), "value", null, 0, 1, Equals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(rangeEClass, Range.class, "Range", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRange_LtIncl(), ecorePackage.getEString(), "ltIncl", null, 0, 1, Range.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRange_MinValue(), ecorePackage.getEInt(), "minValue", null, 0, -1, Range.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRange_MaxValue(), ecorePackage.getEInt(), "maxValue", null, 0, -1, Range.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRange_GtIncl(), ecorePackage.getEString(), "gtIncl", null, 0, 1, Range.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(whitespaceRuleEClass, WhitespaceRule.class, "WhitespaceRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getWhitespaceRule_Characters(), ecorePackage.getEString(), "characters", null, 0, -1, WhitespaceRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

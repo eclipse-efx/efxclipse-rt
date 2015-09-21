@@ -317,6 +317,29 @@ public class LDefSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case LDefPackage.CHECK:
+      {
+        Check check = (Check)theEObject;
+        T result = caseCheck(check);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.EQUALS:
+      {
+        Equals equals = (Equals)theEObject;
+        T result = caseEquals(equals);
+        if (result == null) result = caseCheck(equals);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.RANGE:
+      {
+        Range range = (Range)theEObject;
+        T result = caseRange(range);
+        if (result == null) result = caseCheck(range);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case LDefPackage.WHITESPACE_RULE:
       {
         WhitespaceRule whitespaceRule = (WhitespaceRule)theEObject;
@@ -836,6 +859,54 @@ public class LDefSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseScanner_JSRule(Scanner_JSRule object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Check</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Check</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCheck(Check object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Equals</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Equals</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEquals(Equals object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Range</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Range</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRange(Range object)
   {
     return null;
   }

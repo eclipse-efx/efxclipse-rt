@@ -235,6 +235,21 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createScanner_JSRuleAdapter();
       }
       @Override
+      public Adapter caseCheck(Check object)
+      {
+        return createCheckAdapter();
+      }
+      @Override
+      public Adapter caseEquals(Equals object)
+      {
+        return createEqualsAdapter();
+      }
+      @Override
+      public Adapter caseRange(Range object)
+      {
+        return createRangeAdapter();
+      }
+      @Override
       public Adapter caseWhitespaceRule(WhitespaceRule object)
       {
         return createWhitespaceRuleAdapter();
@@ -737,6 +752,51 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScanner_JSRuleAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.Check <em>Check</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Check
+   * @generated
+   */
+  public Adapter createCheckAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.Equals <em>Equals</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Equals
+   * @generated
+   */
+  public Adapter createEqualsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.Range <em>Range</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Range
+   * @generated
+   */
+  public Adapter createRangeAdapter()
   {
     return null;
   }

@@ -1,0 +1,41 @@
+.styled-text-area .php.php_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .php.php_operator {
+	-styled-text-color: -source-editor-operator;
+}
+
+.styled-text-area .php.php_bracket {
+	-styled-text-color: -source-editor-bracket;
+}
+
+.styled-text-area .php.php_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .php.php_doc_default {
+	-styled-text-color: -source-editor-doc;
+}
+
+.styled-text-area .php.php_string {
+	-styled-text-color: -source-editor-string;
+}
+
+.styled-text-area .php.php_string_inter {
+	-styled-text-color: -source-editor-string;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .php.php_builtin_functions {
+	-styled-text-color: -source-editor-buitin-type;
+}
+
+.styled-text-area .php.php_builtin_classes {
+	-styled-text-color: -source-editor-buitin-type;
+}
+
+.styled-text-area .php.php_compile_constants {
+	-fx-font-weight: bold;
+}

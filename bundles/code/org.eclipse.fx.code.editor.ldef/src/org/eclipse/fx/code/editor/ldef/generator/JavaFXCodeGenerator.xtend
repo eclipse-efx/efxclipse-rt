@@ -18,6 +18,8 @@ import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration
 import org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule
 import org.eclipse.fx.code.editor.ldef.lDef.Codegeneration
+import org.eclipse.fx.code.editor.ldef.lDef.Range
+import org.eclipse.fx.code.editor.ldef.lDef.Equals
 
 class JavaFXCodeGenerator {
 	def generate(LanguageDef model, IFileSystemAccess access) {
@@ -247,20 +249,42 @@ class JavaFXCodeGenerator {
 	'''
 
 	def dispatch generatePartitionRule(Partition_SingleLineRule r) '''
-	new org.eclipse.jface.text.rules.SingleLineRule(
+	«IF r.check != null»org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
-		«IF r.escapeSeq != null», '«r.escapeSeq.escapeChar»'«ENDIF»);
+		«IF r.escapeSeq != null», '«r.escapeSeq.escapeChar»'«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch generatePartitionRule(Partition_MultiLineRule r) '''
-	new org.eclipse.jface.text.rules.MultiLineRule(
+	«IF r.check != null»org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.MultiLineRule(
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
-		«IF r.escapeSeq != null», '«r.escapeSeq.escapeChar»'«ENDIF»);
+		«IF r.escapeSeq != null», '«r.escapeSeq.escapeChar»'«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
+
+	def dispatch static toPredicate(Equals range) '''
+	return v -> v == «range.value»
+	'''
+
+	def dispatch static toPredicate(Range range) '''
+	«IF range.minValue.size == 1 && range.maxValue.size == 1»
+	return v -> «range.minValue.head» «range.ltIncl.toLtOperator» v && v «range.gtIncl.toLtOperator» «range.maxValue.head»
+	«ELSEIF range.minValue.size == 1»
+	return v -> «range.minValue.head» «range.ltIncl.toLtOperator» v
+	«ELSEIF range.maxValue.size == 1»
+	return v -> v «range.gtIncl.toLtOperator» «range.maxValue.head»
+	«ENDIF»
+	'''
+
+	def static toLtOperator(String b) {
+		if( b == "(" ) {
+			return "<="
+		} else {
+			return "<"
+		}
+	}
 
 	def static escapeString(String data) {
 		return data.replaceAll('"','\\\\"');

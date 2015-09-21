@@ -96,6 +96,9 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
       case LDefPackage.SCANNER_PATTERN_RULE: return createScanner_PatternRule();
       case LDefPackage.SCANNER_CHARACTER_RULE: return createScanner_CharacterRule();
       case LDefPackage.SCANNER_JS_RULE: return createScanner_JSRule();
+      case LDefPackage.CHECK: return createCheck();
+      case LDefPackage.EQUALS: return createEquals();
+      case LDefPackage.RANGE: return createRange();
       case LDefPackage.WHITESPACE_RULE: return createWhitespaceRule();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -452,6 +455,39 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
   {
     Scanner_JSRuleImpl scanner_JSRule = new Scanner_JSRuleImpl();
     return scanner_JSRule;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Check createCheck()
+  {
+    CheckImpl check = new CheckImpl();
+    return check;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Equals createEquals()
+  {
+    EqualsImpl equals = new EqualsImpl();
+    return equals;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Range createRange()
+  {
+    RangeImpl range = new RangeImpl();
+    return range;
   }
 
   /**

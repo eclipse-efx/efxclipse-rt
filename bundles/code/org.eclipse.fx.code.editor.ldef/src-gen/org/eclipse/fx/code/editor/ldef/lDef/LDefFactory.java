@@ -311,6 +311,33 @@ public interface LDefFactory extends EFactory
   Scanner_JSRule createScanner_JSRule();
 
   /**
+   * Returns a new object of class '<em>Check</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Check</em>'.
+   * @generated
+   */
+  Check createCheck();
+
+  /**
+   * Returns a new object of class '<em>Equals</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Equals</em>'.
+   * @generated
+   */
+  Equals createEquals();
+
+  /**
+   * Returns a new object of class '<em>Range</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Range</em>'.
+   * @generated
+   */
+  Range createRange();
+
+  /**
    * Returns a new object of class '<em>Whitespace Rule</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

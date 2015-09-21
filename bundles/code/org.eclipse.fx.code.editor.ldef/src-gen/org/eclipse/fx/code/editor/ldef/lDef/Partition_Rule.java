@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getParition <em>Parition</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getStartSeq <em>Start Seq</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getCheck <em>Check</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getEndSeq <em>End Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getEscapeSeq <em>Escape Seq</em>}</li>
  * </ul>
@@ -76,6 +77,32 @@ public interface Partition_Rule extends EObject
    * @generated
    */
   void setStartSeq(String value);
+
+  /**
+   * Returns the value of the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Check</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Check</em>' containment reference.
+   * @see #setCheck(Check)
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getPartition_Rule_Check()
+   * @model containment="true"
+   * @generated
+   */
+  Check getCheck();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getCheck <em>Check</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Check</em>' containment reference.
+   * @see #getCheck()
+   * @generated
+   */
+  void setCheck(Check value);
 
   /**
    * Returns the value of the '<em><b>End Seq</b></em>' attribute.
