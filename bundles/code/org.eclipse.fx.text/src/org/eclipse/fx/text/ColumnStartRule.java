@@ -17,7 +17,7 @@ public class ColumnStartRule implements IRule {
 	}
 
 	@Override
-	public IToken evaluate(ICharacterScanner scanner) {
+	public final IToken evaluate(ICharacterScanner scanner) {
 		if( columnCheck.test(scanner.getColumn()) ) {
 			return rule.evaluate(scanner);
 		}
