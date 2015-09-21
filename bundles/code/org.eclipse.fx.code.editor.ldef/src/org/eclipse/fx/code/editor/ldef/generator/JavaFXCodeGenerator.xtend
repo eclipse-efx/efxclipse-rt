@@ -279,7 +279,7 @@ class JavaFXCodeGenerator {
 	'''
 
 	def static toLtOperator(String b) {
-		if( b == "(" ) {
+		if( b == "(" || b == ")" ) {
 			return "<"
 		} else {
 			return "<="

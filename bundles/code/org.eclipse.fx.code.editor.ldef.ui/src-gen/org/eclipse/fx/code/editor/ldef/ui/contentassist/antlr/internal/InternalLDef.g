@@ -1432,19 +1432,19 @@ rule__Range__GtInclAlternatives_5_0
     }
 :
 (
-{ before(grammarAccess.getRangeAccess().getGtInclLeftParenthesisKeyword_5_0_0()); }
+{ before(grammarAccess.getRangeAccess().getGtInclRightParenthesisKeyword_5_0_0()); }
 
-	'(' 
+	')' 
 
-{ after(grammarAccess.getRangeAccess().getGtInclLeftParenthesisKeyword_5_0_0()); }
+{ after(grammarAccess.getRangeAccess().getGtInclRightParenthesisKeyword_5_0_0()); }
 )
 
     |(
-{ before(grammarAccess.getRangeAccess().getGtInclLeftSquareBracketKeyword_5_0_1()); }
+{ before(grammarAccess.getRangeAccess().getGtInclRightSquareBracketKeyword_5_0_1()); }
 
-	'[' 
+	']' 
 
-{ after(grammarAccess.getRangeAccess().getGtInclLeftSquareBracketKeyword_5_0_1()); }
+{ after(grammarAccess.getRangeAccess().getGtInclRightSquareBracketKeyword_5_0_1()); }
 )
 
 ;

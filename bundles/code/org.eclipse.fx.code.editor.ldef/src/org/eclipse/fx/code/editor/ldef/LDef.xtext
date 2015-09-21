@@ -196,7 +196,7 @@ Equals:
 ;
 
 Range:
-	'in' ltIncl=('('|'[') (minValue+=INT)? ',' (maxValue+=INT)? gtIncl=('('|'[')
+	'in' ltIncl=('('|'[') (minValue+=INT)? ',' (maxValue+=INT)? gtIncl=(')'|']')
 ;
 
 WhitespaceRule:

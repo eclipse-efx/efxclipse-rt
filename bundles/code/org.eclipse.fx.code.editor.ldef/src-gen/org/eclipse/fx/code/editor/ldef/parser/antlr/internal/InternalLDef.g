@@ -2718,9 +2718,9 @@ ruleRange returns [EObject current=null]
 )?(
 (
 (
-		lv_gtIncl_5_1=	'(' 
+		lv_gtIncl_5_1=	')' 
     {
-        newLeafNode(lv_gtIncl_5_1, grammarAccess.getRangeAccess().getGtInclLeftParenthesisKeyword_5_0_0());
+        newLeafNode(lv_gtIncl_5_1, grammarAccess.getRangeAccess().getGtInclRightParenthesisKeyword_5_0_0());
     }
  
 	    {
@@ -2730,9 +2730,9 @@ ruleRange returns [EObject current=null]
        		setWithLastConsumed($current, "gtIncl", lv_gtIncl_5_1, null);
 	    }
 
-    |		lv_gtIncl_5_2=	'[' 
+    |		lv_gtIncl_5_2=	']' 
     {
-        newLeafNode(lv_gtIncl_5_2, grammarAccess.getRangeAccess().getGtInclLeftSquareBracketKeyword_5_0_1());
+        newLeafNode(lv_gtIncl_5_2, grammarAccess.getRangeAccess().getGtInclRightSquareBracketKeyword_5_0_1());
     }
  
 	    {

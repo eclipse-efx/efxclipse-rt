@@ -354,7 +354,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     ((ltIncl='(' | ltIncl='[') minValue+=INT? maxValue+=INT? (gtIncl='(' | gtIncl='['))
+	 *     ((ltIncl='(' | ltIncl='[') minValue+=INT? maxValue+=INT? (gtIncl=')' | gtIncl=']'))
 	 */
 	protected void sequence_Range(EObject context, Range semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

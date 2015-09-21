@@ -1,4 +1,5 @@
 '('=48
+')'=49
 '*'=13
 ','=40
 '.'=12
@@ -23,7 +24,7 @@
 'italic'=36
 'java'=19
 'javafx'=18
-'javawhitespace'=50
+'javawhitespace'=51
 'keywords'=38
 'lexical_highlighting'=32
 'multi_line'=31
@@ -35,7 +36,7 @@
 'script'=24
 'since'=42
 'single_line'=26
-'whitespace'=49
+'whitespace'=50
 '{'=15
 '}'=16
 RULE_ANY_OTHER=10
@@ -85,3 +86,4 @@ T__47=47
 T__48=48
 T__49=49
 T__50=50
+T__51=51

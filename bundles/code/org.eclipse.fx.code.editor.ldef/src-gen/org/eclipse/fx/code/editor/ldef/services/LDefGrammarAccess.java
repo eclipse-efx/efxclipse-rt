@@ -1578,14 +1578,14 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cMaxValueINTTerminalRuleCall_4_0 = (RuleCall)cMaxValueAssignment_4.eContents().get(0);
 		private final Assignment cGtInclAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final Alternatives cGtInclAlternatives_5_0 = (Alternatives)cGtInclAssignment_5.eContents().get(0);
-		private final Keyword cGtInclLeftParenthesisKeyword_5_0_0 = (Keyword)cGtInclAlternatives_5_0.eContents().get(0);
-		private final Keyword cGtInclLeftSquareBracketKeyword_5_0_1 = (Keyword)cGtInclAlternatives_5_0.eContents().get(1);
+		private final Keyword cGtInclRightParenthesisKeyword_5_0_0 = (Keyword)cGtInclAlternatives_5_0.eContents().get(0);
+		private final Keyword cGtInclRightSquareBracketKeyword_5_0_1 = (Keyword)cGtInclAlternatives_5_0.eContents().get(1);
 		
 		//Range:
-		//	"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=("(" | "[");
+		//	"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=(")" | "]");
 		@Override public ParserRule getRule() { return rule; }
 
-		//"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=("(" | "[")
+		//"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=(")" | "]")
 		public Group getGroup() { return cGroup; }
 
 		//"in"
@@ -1618,17 +1618,17 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getMaxValueINTTerminalRuleCall_4_0() { return cMaxValueINTTerminalRuleCall_4_0; }
 
-		//gtIncl=("(" | "[")
+		//gtIncl=(")" | "]")
 		public Assignment getGtInclAssignment_5() { return cGtInclAssignment_5; }
 
-		//"(" | "["
+		//")" | "]"
 		public Alternatives getGtInclAlternatives_5_0() { return cGtInclAlternatives_5_0; }
 
-		//"("
-		public Keyword getGtInclLeftParenthesisKeyword_5_0_0() { return cGtInclLeftParenthesisKeyword_5_0_0; }
+		//")"
+		public Keyword getGtInclRightParenthesisKeyword_5_0_0() { return cGtInclRightParenthesisKeyword_5_0_0; }
 
-		//"["
-		public Keyword getGtInclLeftSquareBracketKeyword_5_0_1() { return cGtInclLeftSquareBracketKeyword_5_0_1; }
+		//"]"
+		public Keyword getGtInclRightSquareBracketKeyword_5_0_1() { return cGtInclRightSquareBracketKeyword_5_0_1; }
 	}
 
 	public class WhitespaceRuleElements extends AbstractParserRuleElementFinder {
@@ -2227,7 +2227,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Range:
-	//	"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=("(" | "[");
+	//	"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=(")" | "]");
 	public RangeElements getRangeAccess() {
 		return pRange;
 	}
