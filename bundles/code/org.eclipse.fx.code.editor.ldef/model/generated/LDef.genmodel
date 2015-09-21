@@ -56,6 +56,7 @@
     <genClasses ecoreClass="LDef.ecore#//Partition_Rule">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LDef.ecore#//Partition_Rule/parition"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_Rule/startSeq"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Partition_Rule/check"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_Rule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_Rule/escapeSeq"/>
     </genClasses>
@@ -87,7 +88,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Keyword/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Keyword/version"/>
     </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//Scanner_Rule"/>
+    <genClasses ecoreClass="LDef.ecore#//Scanner_Rule">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_Rule/check"/>
+    </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Scanner_SingleLineRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/startSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/endSeq"/>
@@ -108,6 +111,16 @@
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Scanner_JSRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_JSRule/fileURI"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Check"/>
+    <genClasses ecoreClass="LDef.ecore#//Equals">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Equals/value"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Range">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Range/ltIncl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Range/minValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Range/maxValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Range/gtIncl"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//WhitespaceRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//WhitespaceRule/characters"/>

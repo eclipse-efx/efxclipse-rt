@@ -586,13 +586,22 @@ public interface LDefPackage extends EPackage
   int PARTITION_RULE__START_SEQ = 1;
 
   /**
+   * The feature id for the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_RULE__CHECK = 2;
+
+  /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARTITION_RULE__END_SEQ = 2;
+  int PARTITION_RULE__END_SEQ = 3;
 
   /**
    * The feature id for the '<em><b>Escape Seq</b></em>' attribute.
@@ -601,7 +610,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_RULE__ESCAPE_SEQ = 3;
+  int PARTITION_RULE__ESCAPE_SEQ = 4;
 
   /**
    * The number of structural features of the '<em>Partition Rule</em>' class.
@@ -610,7 +619,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_RULE_FEATURE_COUNT = 4;
+  int PARTITION_RULE_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_SingleLineRuleImpl <em>Partition Single Line Rule</em>}' class.
@@ -639,6 +648,15 @@ public interface LDefPackage extends EPackage
    * @ordered
    */
   int PARTITION_SINGLE_LINE_RULE__START_SEQ = PARTITION_RULE__START_SEQ;
+
+  /**
+   * The feature id for the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_SINGLE_LINE_RULE__CHECK = PARTITION_RULE__CHECK;
 
   /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
@@ -694,6 +712,15 @@ public interface LDefPackage extends EPackage
    * @ordered
    */
   int PARTITION_MULTI_LINE_RULE__START_SEQ = PARTITION_RULE__START_SEQ;
+
+  /**
+   * The feature id for the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_MULTI_LINE_RULE__CHECK = PARTITION_RULE__CHECK;
 
   /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
@@ -1002,13 +1029,22 @@ public interface LDefPackage extends EPackage
   int SCANNER_RULE = 26;
 
   /**
+   * The feature id for the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_RULE__CHECK = SCANNER_FEATURE_COUNT + 0;
+
+  /**
    * The number of structural features of the '<em>Scanner Rule</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_RULE_FEATURE_COUNT = SCANNER_FEATURE_COUNT + 0;
+  int SCANNER_RULE_FEATURE_COUNT = SCANNER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_SingleLineRuleImpl <em>Scanner Single Line Rule</em>}' class.
@@ -1019,6 +1055,15 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   int SCANNER_SINGLE_LINE_RULE = 27;
+
+  /**
+   * The feature id for the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_SINGLE_LINE_RULE__CHECK = SCANNER_RULE__CHECK;
 
   /**
    * The feature id for the '<em><b>Start Seq</b></em>' attribute.
@@ -1067,6 +1112,15 @@ public interface LDefPackage extends EPackage
   int SCANNER_MULTI_LINE_RULE = 28;
 
   /**
+   * The feature id for the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_MULTI_LINE_RULE__CHECK = SCANNER_RULE__CHECK;
+
+  /**
    * The feature id for the '<em><b>Start Seq</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1111,6 +1165,15 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   int SCANNER_PATTERN_RULE = 29;
+
+  /**
+   * The feature id for the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_PATTERN_RULE__CHECK = SCANNER_RULE__CHECK;
 
   /**
    * The feature id for the '<em><b>Start Pattern</b></em>' attribute.
@@ -1159,6 +1222,15 @@ public interface LDefPackage extends EPackage
   int SCANNER_CHARACTER_RULE = 30;
 
   /**
+   * The feature id for the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CHARACTER_RULE__CHECK = SCANNER_RULE__CHECK;
+
+  /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1187,6 +1259,15 @@ public interface LDefPackage extends EPackage
   int SCANNER_JS_RULE = 31;
 
   /**
+   * The feature id for the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_JS_RULE__CHECK = SCANNER_RULE__CHECK;
+
+  /**
    * The feature id for the '<em><b>File URI</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1205,6 +1286,108 @@ public interface LDefPackage extends EPackage
   int SCANNER_JS_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.CheckImpl <em>Check</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.CheckImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getCheck()
+   * @generated
+   */
+  int CHECK = 32;
+
+  /**
+   * The number of structural features of the '<em>Check</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHECK_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.EqualsImpl <em>Equals</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.EqualsImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getEquals()
+   * @generated
+   */
+  int EQUALS = 33;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUALS__VALUE = CHECK_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Equals</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUALS_FEATURE_COUNT = CHECK_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.RangeImpl <em>Range</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.RangeImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getRange()
+   * @generated
+   */
+  int RANGE = 34;
+
+  /**
+   * The feature id for the '<em><b>Lt Incl</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE__LT_INCL = CHECK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Min Value</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE__MIN_VALUE = CHECK_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Max Value</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE__MAX_VALUE = CHECK_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Gt Incl</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE__GT_INCL = CHECK_FEATURE_COUNT + 3;
+
+  /**
+   * The number of structural features of the '<em>Range</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE_FEATURE_COUNT = CHECK_FEATURE_COUNT + 4;
+
+  /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.WhitespaceRuleImpl <em>Whitespace Rule</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1212,7 +1395,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getWhitespaceRule()
    * @generated
    */
-  int WHITESPACE_RULE = 32;
+  int WHITESPACE_RULE = 35;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -1654,6 +1837,17 @@ public interface LDefPackage extends EPackage
   EAttribute getPartition_Rule_StartSeq();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getCheck <em>Check</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Check</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getCheck()
+   * @see #getPartition_Rule()
+   * @generated
+   */
+  EReference getPartition_Rule_Check();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getEndSeq <em>End Seq</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1907,6 +2101,17 @@ public interface LDefPackage extends EPackage
   EClass getScanner_Rule();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_Rule#getCheck <em>Check</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Check</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_Rule#getCheck()
+   * @see #getScanner_Rule()
+   * @generated
+   */
+  EReference getScanner_Rule_Check();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule <em>Scanner Single Line Rule</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2076,6 +2281,91 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EAttribute getScanner_JSRule_FileURI();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Check <em>Check</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Check</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Check
+   * @generated
+   */
+  EClass getCheck();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Equals <em>Equals</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Equals</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Equals
+   * @generated
+   */
+  EClass getEquals();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Equals#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Equals#getValue()
+   * @see #getEquals()
+   * @generated
+   */
+  EAttribute getEquals_Value();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Range <em>Range</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Range</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Range
+   * @generated
+   */
+  EClass getRange();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Range#getLtIncl <em>Lt Incl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Lt Incl</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Range#getLtIncl()
+   * @see #getRange()
+   * @generated
+   */
+  EAttribute getRange_LtIncl();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.fx.code.editor.ldef.lDef.Range#getMinValue <em>Min Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Min Value</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Range#getMinValue()
+   * @see #getRange()
+   * @generated
+   */
+  EAttribute getRange_MinValue();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.fx.code.editor.ldef.lDef.Range#getMaxValue <em>Max Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Max Value</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Range#getMaxValue()
+   * @see #getRange()
+   * @generated
+   */
+  EAttribute getRange_MaxValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Range#getGtIncl <em>Gt Incl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Gt Incl</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Range#getGtIncl()
+   * @see #getRange()
+   * @generated
+   */
+  EAttribute getRange_GtIncl();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule <em>Whitespace Rule</em>}'.
@@ -2480,6 +2770,14 @@ public interface LDefPackage extends EPackage
     EAttribute PARTITION_RULE__START_SEQ = eINSTANCE.getPartition_Rule_StartSeq();
 
     /**
+     * The meta object literal for the '<em><b>Check</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PARTITION_RULE__CHECK = eINSTANCE.getPartition_Rule_Check();
+
+    /**
      * The meta object literal for the '<em><b>End Seq</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2694,6 +2992,14 @@ public interface LDefPackage extends EPackage
     EClass SCANNER_RULE = eINSTANCE.getScanner_Rule();
 
     /**
+     * The meta object literal for the '<em><b>Check</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCANNER_RULE__CHECK = eINSTANCE.getScanner_Rule_Check();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_SingleLineRuleImpl <em>Scanner Single Line Rule</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2830,6 +3136,76 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EAttribute SCANNER_JS_RULE__FILE_URI = eINSTANCE.getScanner_JSRule_FileURI();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.CheckImpl <em>Check</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.CheckImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getCheck()
+     * @generated
+     */
+    EClass CHECK = eINSTANCE.getCheck();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.EqualsImpl <em>Equals</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.EqualsImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getEquals()
+     * @generated
+     */
+    EClass EQUALS = eINSTANCE.getEquals();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EQUALS__VALUE = eINSTANCE.getEquals_Value();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.RangeImpl <em>Range</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.RangeImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getRange()
+     * @generated
+     */
+    EClass RANGE = eINSTANCE.getRange();
+
+    /**
+     * The meta object literal for the '<em><b>Lt Incl</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RANGE__LT_INCL = eINSTANCE.getRange_LtIncl();
+
+    /**
+     * The meta object literal for the '<em><b>Min Value</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RANGE__MIN_VALUE = eINSTANCE.getRange_MinValue();
+
+    /**
+     * The meta object literal for the '<em><b>Max Value</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RANGE__MAX_VALUE = eINSTANCE.getRange_MaxValue();
+
+    /**
+     * The meta object literal for the '<em><b>Gt Incl</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RANGE__GT_INCL = eINSTANCE.getRange_GtIncl();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.WhitespaceRuleImpl <em>Whitespace Rule</em>}' class.

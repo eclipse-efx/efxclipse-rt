@@ -8,6 +8,7 @@ import com.google.inject.Provider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.code.editor.ldef.lDef.ConfigValue;
 import org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration;
+import org.eclipse.fx.code.editor.ldef.lDef.Equals;
 import org.eclipse.fx.code.editor.ldef.lDef.Import;
 import org.eclipse.fx.code.editor.ldef.lDef.Integration;
 import org.eclipse.fx.code.editor.ldef.lDef.JavaCodeGeneration;
@@ -24,6 +25,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
+import org.eclipse.fx.code.editor.ldef.lDef.Range;
 import org.eclipse.fx.code.editor.ldef.lDef.Root;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
@@ -59,6 +61,9 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case LDefPackage.E4_CODE_GENERATION:
 				sequence_E4CodeGeneration(context, (E4CodeGeneration) semanticObject); 
+				return; 
+			case LDefPackage.EQUALS:
+				sequence_Equals(context, (Equals) semanticObject); 
 				return; 
 			case LDefPackage.IMPORT:
 				sequence_Import(context, (Import) semanticObject); 
@@ -104,6 +109,9 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case LDefPackage.PARTITIONER_RULE:
 				sequence_Partitioner_Rule(context, (Partitioner_Rule) semanticObject); 
+				return; 
+			case LDefPackage.RANGE:
+				sequence_Range(context, (Range) semanticObject); 
 				return; 
 			case LDefPackage.ROOT:
 				sequence_Root(context, (Root) semanticObject); 
@@ -151,6 +159,22 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 */
 	protected void sequence_E4CodeGeneration(EObject context, E4CodeGeneration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     value=INT
+	 */
+	protected void sequence_Equals(EObject context, Equals semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.EQUALS__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.EQUALS__VALUE));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getEqualsAccess().getValueINTTerminalRuleCall_1_0(), semanticObject.getValue());
+		feeder.finish();
 	}
 	
 	
@@ -279,7 +303,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (parition=[Partition|ID] startSeq=STRING endSeq=STRING escapeSeq=STRING?)
+	 *     (parition=[Partition|ID] startSeq=STRING check=Check? endSeq=STRING escapeSeq=STRING?)
 	 */
 	protected void sequence_Partition_MultiLineRule(EObject context, Partition_MultiLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -304,7 +328,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (parition=[Partition|ID] startSeq=STRING endSeq=STRING? escapeSeq=STRING?)
+	 *     (parition=[Partition|ID] startSeq=STRING check=Check? endSeq=STRING? escapeSeq=STRING?)
 	 */
 	protected void sequence_Partition_SingleLineRule(EObject context, Partition_SingleLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -322,6 +346,15 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
+	 *     ((ltIncl='(' | ltIncl='[') minValue+=INT? maxValue+=INT? (gtIncl='(' | gtIncl='['))
+	 */
+	protected void sequence_Range(EObject context, Range semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (name=QualifiedName imports+=Import* languageDefinition=LanguageDef)
 	 */
 	protected void sequence_Root(EObject context, Root semanticObject) {
@@ -331,7 +364,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (characters+=STRING characters+=STRING*)
+	 *     (characters+=STRING characters+=STRING* check=Check?)
 	 */
 	protected void sequence_Scanner_CharacterRule(EObject context, Scanner_CharacterRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -340,17 +373,10 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     fileURI=STRING
+	 *     (fileURI=STRING check=Check?)
 	 */
 	protected void sequence_Scanner_JSRule(EObject context, Scanner_JSRule semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_JS_RULE__FILE_URI) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_JS_RULE__FILE_URI));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getScanner_JSRuleAccess().getFileURISTRINGTerminalRuleCall_1_0(), semanticObject.getFileURI());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -365,7 +391,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (startSeq=STRING endSeq=STRING escapeSeq=STRING?)
+	 *     (startSeq=STRING check=Check? endSeq=STRING escapeSeq=STRING?)
 	 */
 	protected void sequence_Scanner_MultiLineRule(EObject context, Scanner_MultiLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -374,7 +400,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (startPattern=STRING length=INT? contentPattern=STRING)
+	 *     (startPattern=STRING length=INT? check=Check? contentPattern=STRING)
 	 */
 	protected void sequence_Scanner_PatternRule(EObject context, Scanner_PatternRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -383,7 +409,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     (startSeq=STRING endSeq=STRING? escapeSeq=STRING?)
+	 *     (startSeq=STRING check=Check? endSeq=STRING? escapeSeq=STRING?)
 	 */
 	protected void sequence_Scanner_SingleLineRule(EObject context, Scanner_SingleLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -3,6 +3,7 @@
 package org.eclipse.fx.code.editor.ldef.lDef.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -10,6 +11,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.fx.code.editor.ldef.lDef.Check;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule;
@@ -24,6 +26,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule;
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_RuleImpl#getParition <em>Parition</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_RuleImpl#getStartSeq <em>Start Seq</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_RuleImpl#getCheck <em>Check</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_RuleImpl#getEndSeq <em>End Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_RuleImpl#getEscapeSeq <em>Escape Seq</em>}</li>
  * </ul>
@@ -61,6 +64,16 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
    * @ordered
    */
   protected String startSeq = START_SEQ_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getCheck() <em>Check</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getCheck()
+   * @generated
+   * @ordered
+   */
+  protected Check check;
 
   /**
    * The default value of the '{@link #getEndSeq() <em>End Seq</em>}' attribute.
@@ -194,6 +207,54 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  public Check getCheck()
+  {
+    return check;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetCheck(Check newCheck, NotificationChain msgs)
+  {
+    Check oldCheck = check;
+    check = newCheck;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LDefPackage.PARTITION_RULE__CHECK, oldCheck, newCheck);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setCheck(Check newCheck)
+  {
+    if (newCheck != check)
+    {
+      NotificationChain msgs = null;
+      if (check != null)
+        msgs = ((InternalEObject)check).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LDefPackage.PARTITION_RULE__CHECK, null, msgs);
+      if (newCheck != null)
+        msgs = ((InternalEObject)newCheck).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LDefPackage.PARTITION_RULE__CHECK, null, msgs);
+      msgs = basicSetCheck(newCheck, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.PARTITION_RULE__CHECK, newCheck, newCheck));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getEndSeq()
   {
     return endSeq;
@@ -241,6 +302,22 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    */
   @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case LDefPackage.PARTITION_RULE__CHECK:
+        return basicSetCheck(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -250,6 +327,8 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
         return basicGetParition();
       case LDefPackage.PARTITION_RULE__START_SEQ:
         return getStartSeq();
+      case LDefPackage.PARTITION_RULE__CHECK:
+        return getCheck();
       case LDefPackage.PARTITION_RULE__END_SEQ:
         return getEndSeq();
       case LDefPackage.PARTITION_RULE__ESCAPE_SEQ:
@@ -273,6 +352,9 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
         return;
       case LDefPackage.PARTITION_RULE__START_SEQ:
         setStartSeq((String)newValue);
+        return;
+      case LDefPackage.PARTITION_RULE__CHECK:
+        setCheck((Check)newValue);
         return;
       case LDefPackage.PARTITION_RULE__END_SEQ:
         setEndSeq((String)newValue);
@@ -300,6 +382,9 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
       case LDefPackage.PARTITION_RULE__START_SEQ:
         setStartSeq(START_SEQ_EDEFAULT);
         return;
+      case LDefPackage.PARTITION_RULE__CHECK:
+        setCheck((Check)null);
+        return;
       case LDefPackage.PARTITION_RULE__END_SEQ:
         setEndSeq(END_SEQ_EDEFAULT);
         return;
@@ -324,6 +409,8 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
         return parition != null;
       case LDefPackage.PARTITION_RULE__START_SEQ:
         return START_SEQ_EDEFAULT == null ? startSeq != null : !START_SEQ_EDEFAULT.equals(startSeq);
+      case LDefPackage.PARTITION_RULE__CHECK:
+        return check != null;
       case LDefPackage.PARTITION_RULE__END_SEQ:
         return END_SEQ_EDEFAULT == null ? endSeq != null : !END_SEQ_EDEFAULT.equals(endSeq);
       case LDefPackage.PARTITION_RULE__ESCAPE_SEQ:

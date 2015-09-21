@@ -620,20 +620,26 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStartSeqAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cStartSeqSTRINGTerminalRuleCall_2_0 = (RuleCall)cStartSeqAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cEndSeqAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cEndSeqSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cEndSeqAssignment_3_1.eContents().get(0);
+		private final Keyword cColKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cCheckAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_3_1_0 = (RuleCall)cCheckAssignment_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cEscapedKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Keyword cByKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cEscapeSeqAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_4_2_0 = (RuleCall)cEscapeSeqAssignment_4_2.eContents().get(0);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cEndSeqAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cEndSeqSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cEndSeqAssignment_4_1.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cEscapedKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Keyword cByKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Assignment cEscapeSeqAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
 		
 		//Partition_SingleLineRule:
-		//	"single_line" parition=[Partition] startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
+		//	"single_line" parition=[Partition] startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by"
+		//	escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"single_line" parition=[Partition] startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?
+		//"single_line" parition=[Partition] startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by"
+		//escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//"single_line"
@@ -654,32 +660,44 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_2_0() { return cStartSeqSTRINGTerminalRuleCall_2_0; }
 
-		//("=>" endSeq=STRING?)?
+		//("col" check=Check)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//"=>"
-		public Keyword getEqualsSignGreaterThanSignKeyword_3_0() { return cEqualsSignGreaterThanSignKeyword_3_0; }
+		//"col"
+		public Keyword getColKeyword_3_0() { return cColKeyword_3_0; }
 
-		//endSeq=STRING?
-		public Assignment getEndSeqAssignment_3_1() { return cEndSeqAssignment_3_1; }
+		//check=Check
+		public Assignment getCheckAssignment_3_1() { return cCheckAssignment_3_1; }
 
-		//STRING
-		public RuleCall getEndSeqSTRINGTerminalRuleCall_3_1_0() { return cEndSeqSTRINGTerminalRuleCall_3_1_0; }
+		//Check
+		public RuleCall getCheckCheckParserRuleCall_3_1_0() { return cCheckCheckParserRuleCall_3_1_0; }
 
-		//("escaped" "by" escapeSeq=STRING)?
+		//("=>" endSeq=STRING?)?
 		public Group getGroup_4() { return cGroup_4; }
 
-		//"escaped"
-		public Keyword getEscapedKeyword_4_0() { return cEscapedKeyword_4_0; }
+		//"=>"
+		public Keyword getEqualsSignGreaterThanSignKeyword_4_0() { return cEqualsSignGreaterThanSignKeyword_4_0; }
 
-		//"by"
-		public Keyword getByKeyword_4_1() { return cByKeyword_4_1; }
-
-		//escapeSeq=STRING
-		public Assignment getEscapeSeqAssignment_4_2() { return cEscapeSeqAssignment_4_2; }
+		//endSeq=STRING?
+		public Assignment getEndSeqAssignment_4_1() { return cEndSeqAssignment_4_1; }
 
 		//STRING
-		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_4_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_4_2_0; }
+		public RuleCall getEndSeqSTRINGTerminalRuleCall_4_1_0() { return cEndSeqSTRINGTerminalRuleCall_4_1_0; }
+
+		//("escaped" "by" escapeSeq=STRING)?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//"escaped"
+		public Keyword getEscapedKeyword_5_0() { return cEscapedKeyword_5_0; }
+
+		//"by"
+		public Keyword getByKeyword_5_1() { return cByKeyword_5_1; }
+
+		//escapeSeq=STRING
+		public Assignment getEscapeSeqAssignment_5_2() { return cEscapeSeqAssignment_5_2; }
+
+		//STRING
+		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_5_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_5_2_0; }
 	}
 
 	public class Partition_MultiLineRuleElements extends AbstractParserRuleElementFinder {
@@ -691,20 +709,26 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cParitionPartitionIDTerminalRuleCall_1_0_1 = (RuleCall)cParitionPartitionCrossReference_1_0.eContents().get(1);
 		private final Assignment cStartSeqAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cStartSeqSTRINGTerminalRuleCall_2_0 = (RuleCall)cStartSeqAssignment_2.eContents().get(0);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cEndSeqAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cEndSeqSTRINGTerminalRuleCall_4_0 = (RuleCall)cEndSeqAssignment_4.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cEscapedKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Keyword cByKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final Assignment cEscapeSeqAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cColKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cCheckAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_3_1_0 = (RuleCall)cCheckAssignment_3_1.eContents().get(0);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cEndSeqAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cEndSeqSTRINGTerminalRuleCall_5_0 = (RuleCall)cEndSeqAssignment_5.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cEscapedKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Keyword cByKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
+		private final Assignment cEscapeSeqAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
+		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_6_2_0 = (RuleCall)cEscapeSeqAssignment_6_2.eContents().get(0);
 		
 		//Partition_MultiLineRule:
-		//	"multi_line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+		//	"multi_line" parition=[Partition] startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by"
+		//	escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"multi_line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?
+		//"multi_line" parition=[Partition] startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by"
+		//escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//"multi_line"
@@ -725,29 +749,41 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_2_0() { return cStartSeqSTRINGTerminalRuleCall_2_0; }
 
+		//("col" check=Check)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"col"
+		public Keyword getColKeyword_3_0() { return cColKeyword_3_0; }
+
+		//check=Check
+		public Assignment getCheckAssignment_3_1() { return cCheckAssignment_3_1; }
+
+		//Check
+		public RuleCall getCheckCheckParserRuleCall_3_1_0() { return cCheckCheckParserRuleCall_3_1_0; }
+
 		//"=>"
-		public Keyword getEqualsSignGreaterThanSignKeyword_3() { return cEqualsSignGreaterThanSignKeyword_3; }
+		public Keyword getEqualsSignGreaterThanSignKeyword_4() { return cEqualsSignGreaterThanSignKeyword_4; }
 
 		//endSeq=STRING
-		public Assignment getEndSeqAssignment_4() { return cEndSeqAssignment_4; }
+		public Assignment getEndSeqAssignment_5() { return cEndSeqAssignment_5; }
 
 		//STRING
-		public RuleCall getEndSeqSTRINGTerminalRuleCall_4_0() { return cEndSeqSTRINGTerminalRuleCall_4_0; }
+		public RuleCall getEndSeqSTRINGTerminalRuleCall_5_0() { return cEndSeqSTRINGTerminalRuleCall_5_0; }
 
 		//("escaped" "by" escapeSeq=STRING)?
-		public Group getGroup_5() { return cGroup_5; }
+		public Group getGroup_6() { return cGroup_6; }
 
 		//"escaped"
-		public Keyword getEscapedKeyword_5_0() { return cEscapedKeyword_5_0; }
+		public Keyword getEscapedKeyword_6_0() { return cEscapedKeyword_6_0; }
 
 		//"by"
-		public Keyword getByKeyword_5_1() { return cByKeyword_5_1; }
+		public Keyword getByKeyword_6_1() { return cByKeyword_6_1; }
 
 		//escapeSeq=STRING
-		public Assignment getEscapeSeqAssignment_5_2() { return cEscapeSeqAssignment_5_2; }
+		public Assignment getEscapeSeqAssignment_6_2() { return cEscapeSeqAssignment_6_2; }
 
 		//STRING
-		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_5_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_5_2_0; }
+		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_6_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_6_2_0; }
 	}
 
 	public class LexicalHighlightingElements extends AbstractParserRuleElementFinder {
@@ -1082,20 +1118,24 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStartSeqAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cStartSeqSTRINGTerminalRuleCall_1_0 = (RuleCall)cStartSeqAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cEndSeqAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cEndSeqSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cEndSeqAssignment_2_1.eContents().get(0);
+		private final Keyword cColKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cCheckAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_2_1_0 = (RuleCall)cCheckAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cEscapedKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Keyword cByKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
-		private final Assignment cEscapeSeqAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
-		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_3_2_0 = (RuleCall)cEscapeSeqAssignment_3_2.eContents().get(0);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cEndSeqAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cEndSeqSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cEndSeqAssignment_3_1.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cEscapedKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Keyword cByKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
+		private final Assignment cEscapeSeqAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
+		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_4_2_0 = (RuleCall)cEscapeSeqAssignment_4_2.eContents().get(0);
 		
 		//Scanner_SingleLineRule:
-		//	"single_line" startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
+		//	"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"single_line" startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?
+		//"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//"single_line"
@@ -1107,73 +1147,29 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
 
-		//("=>" endSeq=STRING?)?
+		//("col" check=Check)?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"=>"
-		public Keyword getEqualsSignGreaterThanSignKeyword_2_0() { return cEqualsSignGreaterThanSignKeyword_2_0; }
+		//"col"
+		public Keyword getColKeyword_2_0() { return cColKeyword_2_0; }
 
-		//endSeq=STRING?
-		public Assignment getEndSeqAssignment_2_1() { return cEndSeqAssignment_2_1; }
+		//check=Check
+		public Assignment getCheckAssignment_2_1() { return cCheckAssignment_2_1; }
 
-		//STRING
-		public RuleCall getEndSeqSTRINGTerminalRuleCall_2_1_0() { return cEndSeqSTRINGTerminalRuleCall_2_1_0; }
+		//Check
+		public RuleCall getCheckCheckParserRuleCall_2_1_0() { return cCheckCheckParserRuleCall_2_1_0; }
 
-		//("escaped" "by" escapeSeq=STRING)?
+		//("=>" endSeq=STRING?)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//"escaped"
-		public Keyword getEscapedKeyword_3_0() { return cEscapedKeyword_3_0; }
-
-		//"by"
-		public Keyword getByKeyword_3_1() { return cByKeyword_3_1; }
-
-		//escapeSeq=STRING
-		public Assignment getEscapeSeqAssignment_3_2() { return cEscapeSeqAssignment_3_2; }
-
-		//STRING
-		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_3_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_3_2_0; }
-	}
-
-	public class Scanner_MultiLineRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_MultiLineRule");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cMulti_lineKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cStartSeqAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cStartSeqSTRINGTerminalRuleCall_1_0 = (RuleCall)cStartSeqAssignment_1.eContents().get(0);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cEndSeqAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cEndSeqSTRINGTerminalRuleCall_3_0 = (RuleCall)cEndSeqAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cEscapedKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Keyword cByKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cEscapeSeqAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_4_2_0 = (RuleCall)cEscapeSeqAssignment_4_2.eContents().get(0);
-		
-		//Scanner_MultiLineRule:
-		//	"multi_line" startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
-		@Override public ParserRule getRule() { return rule; }
-
-		//"multi_line" startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?
-		public Group getGroup() { return cGroup; }
-
-		//"multi_line"
-		public Keyword getMulti_lineKeyword_0() { return cMulti_lineKeyword_0; }
-
-		//startSeq=STRING
-		public Assignment getStartSeqAssignment_1() { return cStartSeqAssignment_1; }
-
-		//STRING
-		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
-
 		//"=>"
-		public Keyword getEqualsSignGreaterThanSignKeyword_2() { return cEqualsSignGreaterThanSignKeyword_2; }
+		public Keyword getEqualsSignGreaterThanSignKeyword_3_0() { return cEqualsSignGreaterThanSignKeyword_3_0; }
 
-		//endSeq=STRING
-		public Assignment getEndSeqAssignment_3() { return cEndSeqAssignment_3; }
+		//endSeq=STRING?
+		public Assignment getEndSeqAssignment_3_1() { return cEndSeqAssignment_3_1; }
 
 		//STRING
-		public RuleCall getEndSeqSTRINGTerminalRuleCall_3_0() { return cEndSeqSTRINGTerminalRuleCall_3_0; }
+		public RuleCall getEndSeqSTRINGTerminalRuleCall_3_1_0() { return cEndSeqSTRINGTerminalRuleCall_3_1_0; }
 
 		//("escaped" "by" escapeSeq=STRING)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -1191,6 +1187,78 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_4_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_4_2_0; }
 	}
 
+	public class Scanner_MultiLineRuleElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_MultiLineRule");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cMulti_lineKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cStartSeqAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cStartSeqSTRINGTerminalRuleCall_1_0 = (RuleCall)cStartSeqAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cColKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cCheckAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_2_1_0 = (RuleCall)cCheckAssignment_2_1.eContents().get(0);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cEndSeqAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cEndSeqSTRINGTerminalRuleCall_4_0 = (RuleCall)cEndSeqAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cEscapedKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Keyword cByKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Assignment cEscapeSeqAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
+		
+		//Scanner_MultiLineRule:
+		//	"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+		@Override public ParserRule getRule() { return rule; }
+
+		//"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?
+		public Group getGroup() { return cGroup; }
+
+		//"multi_line"
+		public Keyword getMulti_lineKeyword_0() { return cMulti_lineKeyword_0; }
+
+		//startSeq=STRING
+		public Assignment getStartSeqAssignment_1() { return cStartSeqAssignment_1; }
+
+		//STRING
+		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
+
+		//("col" check=Check)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"col"
+		public Keyword getColKeyword_2_0() { return cColKeyword_2_0; }
+
+		//check=Check
+		public Assignment getCheckAssignment_2_1() { return cCheckAssignment_2_1; }
+
+		//Check
+		public RuleCall getCheckCheckParserRuleCall_2_1_0() { return cCheckCheckParserRuleCall_2_1_0; }
+
+		//"=>"
+		public Keyword getEqualsSignGreaterThanSignKeyword_3() { return cEqualsSignGreaterThanSignKeyword_3; }
+
+		//endSeq=STRING
+		public Assignment getEndSeqAssignment_4() { return cEndSeqAssignment_4; }
+
+		//STRING
+		public RuleCall getEndSeqSTRINGTerminalRuleCall_4_0() { return cEndSeqSTRINGTerminalRuleCall_4_0; }
+
+		//("escaped" "by" escapeSeq=STRING)?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//"escaped"
+		public Keyword getEscapedKeyword_5_0() { return cEscapedKeyword_5_0; }
+
+		//"by"
+		public Keyword getByKeyword_5_1() { return cByKeyword_5_1; }
+
+		//escapeSeq=STRING
+		public Assignment getEscapeSeqAssignment_5_2() { return cEscapeSeqAssignment_5_2; }
+
+		//STRING
+		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_5_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_5_2_0; }
+	}
+
 	public class Scanner_PatternRuleElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_PatternRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1199,15 +1267,19 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStartPatternSTRINGTerminalRuleCall_1_0 = (RuleCall)cStartPatternAssignment_1.eContents().get(0);
 		private final Assignment cLengthAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cLengthINTTerminalRuleCall_2_0 = (RuleCall)cLengthAssignment_2.eContents().get(0);
-		private final Keyword cContainingKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cContentPatternAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cContentPatternSTRINGTerminalRuleCall_4_0 = (RuleCall)cContentPatternAssignment_4.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cColKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cCheckAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_3_1_0 = (RuleCall)cCheckAssignment_3_1.eContents().get(0);
+		private final Keyword cContainingKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cContentPatternAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cContentPatternSTRINGTerminalRuleCall_5_0 = (RuleCall)cContentPatternAssignment_5.eContents().get(0);
 		
 		//Scanner_PatternRule:
-		//	"pattern" startPattern=STRING length=INT? "containing" contentPattern=STRING;
+		//	"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern=STRING;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"pattern" startPattern=STRING length=INT? "containing" contentPattern=STRING
+		//"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern=STRING
 		public Group getGroup() { return cGroup; }
 
 		//"pattern"
@@ -1225,14 +1297,26 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getLengthINTTerminalRuleCall_2_0() { return cLengthINTTerminalRuleCall_2_0; }
 
+		//("col" check=Check)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"col"
+		public Keyword getColKeyword_3_0() { return cColKeyword_3_0; }
+
+		//check=Check
+		public Assignment getCheckAssignment_3_1() { return cCheckAssignment_3_1; }
+
+		//Check
+		public RuleCall getCheckCheckParserRuleCall_3_1_0() { return cCheckCheckParserRuleCall_3_1_0; }
+
 		//"containing"
-		public Keyword getContainingKeyword_3() { return cContainingKeyword_3; }
+		public Keyword getContainingKeyword_4() { return cContainingKeyword_4; }
 
 		//contentPattern=STRING
-		public Assignment getContentPatternAssignment_4() { return cContentPatternAssignment_4; }
+		public Assignment getContentPatternAssignment_5() { return cContentPatternAssignment_5; }
 
 		//STRING
-		public RuleCall getContentPatternSTRINGTerminalRuleCall_4_0() { return cContentPatternSTRINGTerminalRuleCall_4_0; }
+		public RuleCall getContentPatternSTRINGTerminalRuleCall_5_0() { return cContentPatternSTRINGTerminalRuleCall_5_0; }
 	}
 
 	public class Scanner_CharacterRuleElements extends AbstractParserRuleElementFinder {
@@ -1247,12 +1331,16 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cCharactersAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cCharactersSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cCharactersAssignment_3_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cColKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cCheckAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_5_1_0 = (RuleCall)cCheckAssignment_5_1.eContents().get(0);
 		
 		//Scanner_CharacterRule:
-		//	"character" "[" characters+=STRING ("," characters+=STRING)* "]";
+		//	"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"character" "[" characters+=STRING ("," characters+=STRING)* "]"
+		//"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)?
 		public Group getGroup() { return cGroup; }
 
 		//"character"
@@ -1281,6 +1369,18 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"]"
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
+
+		//("col" check=Check)?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//"col"
+		public Keyword getColKeyword_5_0() { return cColKeyword_5_0; }
+
+		//check=Check
+		public Assignment getCheckAssignment_5_1() { return cCheckAssignment_5_1; }
+
+		//Check
+		public RuleCall getCheckCheckParserRuleCall_5_1_0() { return cCheckCheckParserRuleCall_5_1_0; }
 	}
 
 	public class Scanner_JSRuleElements extends AbstractParserRuleElementFinder {
@@ -1289,12 +1389,16 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cScriptKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cFileURIAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cFileURISTRINGTerminalRuleCall_1_0 = (RuleCall)cFileURIAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cColKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cCheckAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_2_1_0 = (RuleCall)cCheckAssignment_2_1.eContents().get(0);
 		
 		//Scanner_JSRule:
-		//	"script" fileURI=STRING;
+		//	"script" fileURI=STRING ("col" check=Check)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"script" fileURI=STRING
+		//"script" fileURI=STRING ("col" check=Check)?
 		public Group getGroup() { return cGroup; }
 
 		//"script"
@@ -1305,6 +1409,130 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getFileURISTRINGTerminalRuleCall_1_0() { return cFileURISTRINGTerminalRuleCall_1_0; }
+
+		//("col" check=Check)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"col"
+		public Keyword getColKeyword_2_0() { return cColKeyword_2_0; }
+
+		//check=Check
+		public Assignment getCheckAssignment_2_1() { return cCheckAssignment_2_1; }
+
+		//Check
+		public RuleCall getCheckCheckParserRuleCall_2_1_0() { return cCheckCheckParserRuleCall_2_1_0; }
+	}
+
+	public class CheckElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Check");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cRangeParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cEqualsParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//Check:
+		//	Range | Equals;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Range | Equals
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Range
+		public RuleCall getRangeParserRuleCall_0() { return cRangeParserRuleCall_0; }
+
+		//Equals
+		public RuleCall getEqualsParserRuleCall_1() { return cEqualsParserRuleCall_1; }
+	}
+
+	public class EqualsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Equals");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cEqKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cValueINTTerminalRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		
+		//Equals:
+		//	"eq" value=INT;
+		@Override public ParserRule getRule() { return rule; }
+
+		//"eq" value=INT
+		public Group getGroup() { return cGroup; }
+
+		//"eq"
+		public Keyword getEqKeyword_0() { return cEqKeyword_0; }
+
+		//value=INT
+		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
+
+		//INT
+		public RuleCall getValueINTTerminalRuleCall_1_0() { return cValueINTTerminalRuleCall_1_0; }
+	}
+
+	public class RangeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Range");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cInKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cLtInclAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Alternatives cLtInclAlternatives_1_0 = (Alternatives)cLtInclAssignment_1.eContents().get(0);
+		private final Keyword cLtInclLeftParenthesisKeyword_1_0_0 = (Keyword)cLtInclAlternatives_1_0.eContents().get(0);
+		private final Keyword cLtInclLeftSquareBracketKeyword_1_0_1 = (Keyword)cLtInclAlternatives_1_0.eContents().get(1);
+		private final Assignment cMinValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cMinValueINTTerminalRuleCall_2_0 = (RuleCall)cMinValueAssignment_2.eContents().get(0);
+		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cMaxValueAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cMaxValueINTTerminalRuleCall_4_0 = (RuleCall)cMaxValueAssignment_4.eContents().get(0);
+		private final Assignment cGtInclAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final Alternatives cGtInclAlternatives_5_0 = (Alternatives)cGtInclAssignment_5.eContents().get(0);
+		private final Keyword cGtInclLeftParenthesisKeyword_5_0_0 = (Keyword)cGtInclAlternatives_5_0.eContents().get(0);
+		private final Keyword cGtInclLeftSquareBracketKeyword_5_0_1 = (Keyword)cGtInclAlternatives_5_0.eContents().get(1);
+		
+		//Range:
+		//	"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=("(" | "[");
+		@Override public ParserRule getRule() { return rule; }
+
+		//"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=("(" | "[")
+		public Group getGroup() { return cGroup; }
+
+		//"in"
+		public Keyword getInKeyword_0() { return cInKeyword_0; }
+
+		//ltIncl=("(" | "[")
+		public Assignment getLtInclAssignment_1() { return cLtInclAssignment_1; }
+
+		//"(" | "["
+		public Alternatives getLtInclAlternatives_1_0() { return cLtInclAlternatives_1_0; }
+
+		//"("
+		public Keyword getLtInclLeftParenthesisKeyword_1_0_0() { return cLtInclLeftParenthesisKeyword_1_0_0; }
+
+		//"["
+		public Keyword getLtInclLeftSquareBracketKeyword_1_0_1() { return cLtInclLeftSquareBracketKeyword_1_0_1; }
+
+		//minValue+=INT?
+		public Assignment getMinValueAssignment_2() { return cMinValueAssignment_2; }
+
+		//INT
+		public RuleCall getMinValueINTTerminalRuleCall_2_0() { return cMinValueINTTerminalRuleCall_2_0; }
+
+		//","
+		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
+
+		//maxValue+=INT?
+		public Assignment getMaxValueAssignment_4() { return cMaxValueAssignment_4; }
+
+		//INT
+		public RuleCall getMaxValueINTTerminalRuleCall_4_0() { return cMaxValueINTTerminalRuleCall_4_0; }
+
+		//gtIncl=("(" | "[")
+		public Assignment getGtInclAssignment_5() { return cGtInclAssignment_5; }
+
+		//"(" | "["
+		public Alternatives getGtInclAlternatives_5_0() { return cGtInclAlternatives_5_0; }
+
+		//"("
+		public Keyword getGtInclLeftParenthesisKeyword_5_0_0() { return cGtInclLeftParenthesisKeyword_5_0_0; }
+
+		//"["
+		public Keyword getGtInclLeftSquareBracketKeyword_5_0_1() { return cGtInclLeftSquareBracketKeyword_5_0_1; }
 	}
 
 	public class WhitespaceRuleElements extends AbstractParserRuleElementFinder {
@@ -1416,6 +1644,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	private final Scanner_PatternRuleElements pScanner_PatternRule;
 	private final Scanner_CharacterRuleElements pScanner_CharacterRule;
 	private final Scanner_JSRuleElements pScanner_JSRule;
+	private final CheckElements pCheck;
+	private final EqualsElements pEquals;
+	private final RangeElements pRange;
 	private final WhitespaceRuleElements pWhitespaceRule;
 	
 	private final Grammar grammar;
@@ -1462,6 +1693,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		this.pScanner_PatternRule = new Scanner_PatternRuleElements();
 		this.pScanner_CharacterRule = new Scanner_CharacterRuleElements();
 		this.pScanner_JSRule = new Scanner_JSRuleElements();
+		this.pCheck = new CheckElements();
+		this.pEquals = new EqualsElements();
+		this.pRange = new RangeElements();
 		this.pWhitespaceRule = new WhitespaceRuleElements();
 	}
 	
@@ -1690,7 +1924,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition_SingleLineRule:
-	//	"single_line" parition=[Partition] startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
+	//	"single_line" parition=[Partition] startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by"
+	//	escapeSeq=STRING)?;
 	public Partition_SingleLineRuleElements getPartition_SingleLineRuleAccess() {
 		return pPartition_SingleLineRule;
 	}
@@ -1700,7 +1935,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition_MultiLineRule:
-	//	"multi_line" parition=[Partition] startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+	//	"multi_line" parition=[Partition] startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by"
+	//	escapeSeq=STRING)?;
 	public Partition_MultiLineRuleElements getPartition_MultiLineRuleAccess() {
 		return pPartition_MultiLineRule;
 	}
@@ -1801,7 +2037,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_SingleLineRule:
-	//	"single_line" startSeq=STRING ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
+	//	"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
 	public Scanner_SingleLineRuleElements getScanner_SingleLineRuleAccess() {
 		return pScanner_SingleLineRule;
 	}
@@ -1811,7 +2047,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_MultiLineRule:
-	//	"multi_line" startSeq=STRING "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+	//	"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
 	public Scanner_MultiLineRuleElements getScanner_MultiLineRuleAccess() {
 		return pScanner_MultiLineRule;
 	}
@@ -1821,7 +2057,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_PatternRule:
-	//	"pattern" startPattern=STRING length=INT? "containing" contentPattern=STRING;
+	//	"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern=STRING;
 	public Scanner_PatternRuleElements getScanner_PatternRuleAccess() {
 		return pScanner_PatternRule;
 	}
@@ -1831,7 +2067,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_CharacterRule:
-	//	"character" "[" characters+=STRING ("," characters+=STRING)* "]";
+	//	"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)?;
 	public Scanner_CharacterRuleElements getScanner_CharacterRuleAccess() {
 		return pScanner_CharacterRule;
 	}
@@ -1841,13 +2077,43 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_JSRule:
-	//	"script" fileURI=STRING;
+	//	"script" fileURI=STRING ("col" check=Check)?;
 	public Scanner_JSRuleElements getScanner_JSRuleAccess() {
 		return pScanner_JSRule;
 	}
 	
 	public ParserRule getScanner_JSRuleRule() {
 		return getScanner_JSRuleAccess().getRule();
+	}
+
+	//Check:
+	//	Range | Equals;
+	public CheckElements getCheckAccess() {
+		return pCheck;
+	}
+	
+	public ParserRule getCheckRule() {
+		return getCheckAccess().getRule();
+	}
+
+	//Equals:
+	//	"eq" value=INT;
+	public EqualsElements getEqualsAccess() {
+		return pEquals;
+	}
+	
+	public ParserRule getEqualsRule() {
+		return getEqualsAccess().getRule();
+	}
+
+	//Range:
+	//	"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=("(" | "[");
+	public RangeElements getRangeAccess() {
+		return pRange;
+	}
+	
+	public ParserRule getRangeRule() {
+		return getRangeAccess().getRule();
 	}
 
 	//WhitespaceRule:

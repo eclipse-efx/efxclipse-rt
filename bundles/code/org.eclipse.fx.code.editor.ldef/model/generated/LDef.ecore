@@ -63,6 +63,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Partition_Rule">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parition" eType="#//Partition"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startSeq" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="check" eType="#//Check"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endSeq" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="escapeSeq" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -99,7 +101,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Scanner_Rule" eSuperTypes="#//Scanner"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Scanner_Rule" eSuperTypes="#//Scanner">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="check" eType="#//Check"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scanner_SingleLineRule" eSuperTypes="#//Scanner_Rule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startSeq" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endSeq" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -121,6 +126,18 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Scanner_JSRule" eSuperTypes="#//Scanner_Rule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Check"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Equals" eSuperTypes="#//Check">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Range" eSuperTypes="#//Check">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ltIncl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minValue" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxValue" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gtIncl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="WhitespaceRule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="characters" unique="false"

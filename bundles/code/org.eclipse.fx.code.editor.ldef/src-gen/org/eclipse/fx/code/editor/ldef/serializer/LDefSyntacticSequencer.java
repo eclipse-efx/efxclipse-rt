@@ -20,14 +20,14 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class LDefSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected LDefGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q;
-	protected AbstractElementAlias match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_2_0_q;
+	protected AbstractElementAlias match_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_4_0_q;
+	protected AbstractElementAlias match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (LDefGrammarAccess) access;
-		match_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getPartition_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3_0());
-		match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_2_0_q = new TokenAlias(false, true, grammarAccess.getScanner_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_2_0());
+		match_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_4_0_q = new TokenAlias(false, true, grammarAccess.getPartition_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_4_0());
+		match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q = new TokenAlias(false, true, grammarAccess.getScanner_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_3_0());
 	}
 	
 	@Override
@@ -42,10 +42,10 @@ public class LDefSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q.equals(syntax))
-				emit_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_2_0_q.equals(syntax))
-				emit_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_2_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if(match_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_4_0_q.equals(syntax))
+				emit_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_4_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q.equals(syntax))
+				emit_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -55,10 +55,12 @@ public class LDefSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     '=>'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     check=Check (ambiguity) 'escaped' 'by' escapeSeq=STRING
+	 *     check=Check (ambiguity) (rule end)
 	 *     startSeq=STRING (ambiguity) 'escaped' 'by' escapeSeq=STRING
 	 *     startSeq=STRING (ambiguity) (rule end)
 	 */
-	protected void emit_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_4_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -67,10 +69,12 @@ public class LDefSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     '=>'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     check=Check (ambiguity) 'escaped' 'by' escapeSeq=STRING
+	 *     check=Check (ambiguity) (rule end)
 	 *     startSeq=STRING (ambiguity) 'escaped' 'by' escapeSeq=STRING
 	 *     startSeq=STRING (ambiguity) (rule end)
 	 */
-	protected void emit_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
