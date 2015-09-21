@@ -217,7 +217,7 @@ class JavaFXCodeGenerator {
 	}
 
 	def dispatch generateScannerRule(Token t, Scanner_SingleLineRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
+	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, «t.name»Token
@@ -225,7 +225,7 @@ class JavaFXCodeGenerator {
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_MultiLineRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.MultiLineRule(
+	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.MultiLineRule(
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, «t.name»Token
@@ -241,15 +241,15 @@ class JavaFXCodeGenerator {
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_CharacterRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.source.CharacterRule(«t.name»Token, new char[] {«r.characters.map["'"+it.escapeChar+"'"].join(",")»})«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
+	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.source.CharacterRule(«t.name»Token, new char[] {«r.characters.map["'"+it.escapeChar+"'"].join(",")»})«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_PatternRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.fx.text.RegexRule(«t.name»Token, java.util.regex.Pattern.compile("«r.startPattern.replace('\\','\\\\')»"),«Math.max(1,r.length)»,java.util.regex.Pattern.compile("«r.contentPattern.replace('\\','\\\\')»"))«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
+	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.fx.text.RegexRule(«t.name»Token, java.util.regex.Pattern.compile("«r.startPattern.replace('\\','\\\\')»"),«Math.max(1,r.length)»,java.util.regex.Pattern.compile("«r.contentPattern.replace('\\','\\\\')»"))«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch generatePartitionRule(Partition_SingleLineRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
+	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
@@ -257,7 +257,7 @@ class JavaFXCodeGenerator {
 	'''
 
 	def dispatch generatePartitionRule(Partition_MultiLineRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.MultiLineRule(
+	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.MultiLineRule(
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
