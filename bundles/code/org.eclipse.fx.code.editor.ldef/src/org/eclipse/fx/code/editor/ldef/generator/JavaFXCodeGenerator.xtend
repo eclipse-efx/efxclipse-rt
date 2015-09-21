@@ -265,7 +265,7 @@ class JavaFXCodeGenerator {
 	'''
 
 	def dispatch static toPredicate(Equals range) '''
-	return v -> v == «range.value»
+	v -> v == «range.value»
 	'''
 
 	def dispatch static toPredicate(Range range) '''
