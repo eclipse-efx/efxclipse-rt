@@ -221,7 +221,8 @@ class JavaFXCodeGenerator {
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, «t.name»Token
-		«IF r.escapeSeq != null», '«r.escapeSeq.charAt(0)»'«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
+		, «IF r.escapeSeq != null»'«r.escapeSeq.charAt(0)»'«ELSE»(char)0«ENDIF»
+		, true)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_MultiLineRule r) '''
@@ -229,7 +230,8 @@ class JavaFXCodeGenerator {
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, «t.name»Token
-		«IF r.escapeSeq != null», '«r.escapeSeq.charAt(0)»'«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
+		, «IF r.escapeSeq != null»'«r.escapeSeq.charAt(0)»'«ELSE»(char)0«ENDIF»
+		, true)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def generateWhitespaceRule(WhitespaceRule r) '''
@@ -253,7 +255,8 @@ class JavaFXCodeGenerator {
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
-		«IF r.escapeSeq != null», '«r.escapeSeq.escapeChar»'«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
+		, «IF r.escapeSeq != null»'«r.escapeSeq.charAt(0)»'«ELSE»(char)0«ENDIF»
+		, true)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch generatePartitionRule(Partition_MultiLineRule r) '''
@@ -261,7 +264,8 @@ class JavaFXCodeGenerator {
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
-		«IF r.escapeSeq != null», '«r.escapeSeq.escapeChar»'«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
+		, «IF r.escapeSeq != null»'«r.escapeSeq.charAt(0)»'«ELSE»(char)0«ENDIF»
+		, true)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch static toPredicate(Equals range) '''
