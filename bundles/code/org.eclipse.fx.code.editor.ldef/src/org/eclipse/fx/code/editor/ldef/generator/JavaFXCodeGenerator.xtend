@@ -270,11 +270,11 @@ class JavaFXCodeGenerator {
 
 	def dispatch static toPredicate(Range range) '''
 	«IF range.minValue.size == 1 && range.maxValue.size == 1»
-	return v -> «range.minValue.head» «range.ltIncl.toLtOperator» v && v «range.gtIncl.toLtOperator» «range.maxValue.head»
+	v -> «range.minValue.head» «range.ltIncl.toLtOperator» v && v «range.gtIncl.toLtOperator» «range.maxValue.head»
 	«ELSEIF range.minValue.size == 1»
-	return v -> «range.minValue.head» «range.ltIncl.toLtOperator» v
+	v -> «range.minValue.head» «range.ltIncl.toLtOperator» v
 	«ELSEIF range.maxValue.size == 1»
-	return v -> v «range.gtIncl.toLtOperator» «range.maxValue.head»
+	v -> v «range.gtIncl.toLtOperator» «range.maxValue.head»
 	«ENDIF»
 	'''
 
