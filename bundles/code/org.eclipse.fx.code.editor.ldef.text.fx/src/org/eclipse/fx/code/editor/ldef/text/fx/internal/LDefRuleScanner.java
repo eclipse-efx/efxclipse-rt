@@ -25,6 +25,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
+import org.eclipse.fx.code.editor.ldef.text.Util;
 import org.eclipse.fx.text.RegexRule;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.CombinedWordRule;
@@ -54,32 +55,34 @@ public class LDefRuleScanner extends RuleBasedScanner {
 			for (Scanner ru : st.getScannerList()) {
 				if( ru instanceof Scanner_SingleLineRule ) {
 					Scanner_SingleLineRule sru = (Scanner_SingleLineRule) ru;
-					rules[i++] = new SingleLineRule(
+					String endSeq = sru.getEndSeq();
+					rules[i++] = Util.wrap(sru.getCheck(),new SingleLineRule(
 							sru.getStartSeq(),
-							sru.getEndSeq(),
+							endSeq,
 							token,
 							sru.getEscapeSeq() != null ? sru.getEscapeSeq().charAt(0) : 0,
-							false);
+							endSeq == null || endSeq.isEmpty()));
 				} else if( ru instanceof Scanner_MultiLineRule ) {
 					Scanner_MultiLineRule sml = (Scanner_MultiLineRule) ru;
-					rules[i++] = new MultiLineRule(
+					String endSeq = sml.getEndSeq();
+					rules[i++] = Util.wrap(sml.getCheck(),new MultiLineRule(
 							sml.getStartSeq(),
-							sml.getEndSeq(),
+							endSeq,
 							token,
 							sml.getEscapeSeq() != null ? sml.getEscapeSeq().charAt(0) : 0,
-							false);
+							endSeq == null || endSeq.isEmpty()));
 				} else if( ru instanceof Scanner_CharacterRule ) {
 					Scanner_CharacterRule scr = (Scanner_CharacterRule) ru;
 					char[] c = new char[scr.getCharacters().size()];
 					for( int j = 0; j < c.length; j++ ) {
 						c[j] = scr.getCharacters().get(j).charAt(0);
 					}
-					rules[i++] = new CharacterRule(token, c);
+					rules[i++] = Util.wrap(scr.getCheck(),new CharacterRule(token, c));
 				} else if( ru instanceof Scanner_Keyword ) {
 					keyWordList.put(token,(Scanner_Keyword) ru);
 				} else if( ru instanceof Scanner_PatternRule ) {
 					Scanner_PatternRule rr = (Scanner_PatternRule) ru;
-					rules[i++] = new RegexRule(token, Pattern.compile(rr.getStartPattern()), Math.max(1,rr.getLength()),Pattern.compile(rr.getContentPattern()));
+					rules[i++] = Util.wrap(rr.getCheck(),new RegexRule(token, Pattern.compile(rr.getStartPattern()), Math.max(1,rr.getLength()),Pattern.compile(rr.getContentPattern())));
 				}
 			}
 		}

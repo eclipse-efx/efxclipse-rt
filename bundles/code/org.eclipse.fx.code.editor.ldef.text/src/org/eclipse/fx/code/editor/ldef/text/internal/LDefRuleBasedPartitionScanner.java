@@ -14,12 +14,14 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
+import org.eclipse.fx.code.editor.ldef.text.Util;
 import org.eclipse.jface.text.rules.IPredicateRule;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
 import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 
+@SuppressWarnings("restriction")
 public class LDefRuleBasedPartitionScanner extends RuleBasedPartitionScanner {
 	public LDefRuleBasedPartitionScanner(Partitioner_Rule paritioner) {
 		IPredicateRule[] pr = new IPredicateRule[paritioner.getRuleList().size()];
@@ -28,11 +30,16 @@ public class LDefRuleBasedPartitionScanner extends RuleBasedPartitionScanner {
 		for( Partition_Rule r : paritioner.getRuleList() ) {
 			if( r instanceof Partition_SingleLineRule ) {
 				Partition_SingleLineRule sr = (Partition_SingleLineRule) r;
-				pr[i] = new SingleLineRule(sr.getStartSeq(), sr.getEndSeq(), new Token(sr.getParition().getName()), sr.getEscapeSeq() != null ? sr.getEndSeq().charAt(0) : 0, false);
+				String endSeq = sr.getEndSeq();
+				pr[i] = new SingleLineRule(sr.getStartSeq(), endSeq, new Token(sr.getParition().getName()), sr.getEscapeSeq() != null ? endSeq.charAt(0) : 0, endSeq == null || endSeq.isEmpty());
 			} else if( r instanceof Partition_MultiLineRule ) {
 				Partition_MultiLineRule mr = (Partition_MultiLineRule) r;
-				pr[i] = new MultiLineRule(mr.getStartSeq(), mr.getEndSeq(), new Token(mr.getParition().getName()), mr.getEscapeSeq() != null ? mr.getEscapeSeq().charAt(0) : 0, false);
+				String endSeq = mr.getEndSeq();
+				pr[i] = new MultiLineRule(mr.getStartSeq(), endSeq, new Token(mr.getParition().getName()), mr.getEscapeSeq() != null ? mr.getEscapeSeq().charAt(0) : 0, endSeq == null || endSeq.isEmpty());
 			}
+
+			pr[i] = (IPredicateRule) Util.wrap(r.getCheck(),pr[i]);
+
 			i++;
 		}
 		setPredicateRules(pr);
