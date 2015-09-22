@@ -79,3 +79,29 @@
 .styled-text-area .adoc.adoc_comment {
 	-styled-text-color: -source-editor-doc;
 }
+
+.styled-text-area .adoc.adoc_header_attribute {
+	-styled-text-color: -source-editor-annotation;
+}
+
+.styled-text-area .adoc.adoc_admonition {
+	-styled-text-color: -source-editor-code;
+	-fx-background-color: -source-editor-buitin-type;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .adoc.adoc_block {
+	-styled-text-color: -source-editor-code;
+	-fx-background-color:  -source-editor-annotation;
+}
+
+.styled-text-area .adoc.adoc_code {
+	-styled-text-color: -source-editor-code;
+	-fx-background-color:  rgb(230,230,230);
+}
+
+.styled-text-area .adoc.adoc_header {
+	-styled-text-color: -source-editor-code;
+	-fx-font-weight: bold;
+	-fx-background-color: rgb(255,115,0);
+}
