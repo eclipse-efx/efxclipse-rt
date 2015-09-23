@@ -45,7 +45,6 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 
 	@Override
 	public Object compute(IEclipseContext context) {
-
 		return new ProxyEditorOpener(context,registry);
 	}
 
@@ -59,14 +58,26 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 		}
 
 		@Override
-		public void openEditor(String uri) {
+		public boolean openEditor(String uri) {
 			EditorOpener opener = objectRegistry.getRankedElements()
 				.stream()
 				.filter( e -> e.test(uri))
 				.map( e -> (EditorOpener)ContextInjectionFactory.make(e.getType(uri), context))
+				.filter( e -> e.test(uri))
 				.findFirst()
 				.orElseGet( () -> (EditorOpener)ContextInjectionFactory.make(DefaultEditorOpener.class, context));
-			opener.openEditor(uri);
+			boolean success = opener.openEditor(uri);
+
+			if( ! success ) {
+				success = ContextInjectionFactory.make(DefaultEditorOpener.class, context).openEditor(uri);
+			}
+
+			return success;
+		}
+
+		@Override
+		public boolean test(String uri) {
+			return true;
 		}
 	}
 
@@ -86,7 +97,7 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
-		public void openEditor(String uri) {
+		public boolean openEditor(String uri) {
 			List<MPart> list = modelService.findElements(application, MPart.class, EModelService.ANYWHERE, (p) -> {
 				return uri.equals(p.getPersistedState().get(Constants.DOCUMENT_URL));
 			});
@@ -121,6 +132,12 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 				EPartService partService = context.get(EPartService.class);
 				partService.activate(part);
 			}
+			return true;
+		}
+
+		@Override
+		public boolean test(String uri) {
+			return true;
 		}
 	}
 }
