@@ -13,6 +13,8 @@ package org.eclipse.fx.ui.controls;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -20,19 +22,24 @@ import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
 /**
  * Utility methods
@@ -205,11 +212,11 @@ public class Util {
 	public static <T, E> Subscription bindContent(List<? extends T> target, ObservableList<E> sourceList, Function<E, T> converterFunction) {
 		List<T> list = sourceList.stream().map(converterFunction).collect(Collectors.toList());
 
-		if( target instanceof ObservableList<?> ) {
-			((ObservableList)target).setAll(list);
+		if (target instanceof ObservableList<?>) {
+			((ObservableList) target).setAll(list);
 		} else {
 			target.clear();
-			((List)target).addAll(list);
+			((List) target).addAll(list);
 		}
 
 		ListChangeListener<E> l = change -> {
@@ -248,5 +255,43 @@ public class Util {
 	 */
 	public static <T, E> List<T> transformList(List<? extends E> list, Function<E, T> converterFunction) {
 		return list.stream().map(converterFunction).collect(Collectors.toList());
+	}
+
+	/**
+	 * Install a hover callback
+	 *
+	 * @param node
+	 *            the node the hover is installed on
+	 * @param delay
+	 *            the delay
+	 * @param hoverConsumer
+	 *            the consumer
+	 * @return subscription
+	 */
+	public static Subscription installHoverCallback(Node node, Duration delay, Consumer<MouseEvent> hoverConsumer) {
+		Timeline t = new Timeline(new KeyFrame(delay));
+		AtomicReference<MouseEvent> event = new AtomicReference<>();
+		t.setOnFinished(e -> {
+			if (event.get() != null) {
+				hoverConsumer.accept(event.get());
+			}
+		});
+
+		EventHandler<MouseEvent> moveHandler = e -> {
+			event.set(e);
+			t.stop();
+			t.playFromStart();
+		};
+		EventHandler<MouseEvent> exitHandler = e -> {
+			t.stop();
+		};
+
+		node.addEventHandler(MouseEvent.MOUSE_MOVED, moveHandler);
+		node.addEventHandler(MouseEvent.MOUSE_EXITED, exitHandler);
+
+		return () -> {
+			node.removeEventHandler(MouseEvent.MOUSE_MOVED, moveHandler);
+			node.removeEventHandler(MouseEvent.MOUSE_EXITED, exitHandler);
+		};
 	}
 }
