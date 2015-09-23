@@ -26,9 +26,7 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
-import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
-import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
@@ -39,8 +37,8 @@ import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler;
-import org.eclipse.e4.ui.workbench.modeling.IWindowCloseHandler;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
+import org.eclipse.e4.ui.workbench.modeling.IWindowCloseHandler;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.fx.core.log.Log;
@@ -432,28 +430,16 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 		}
 
 		for (MWindowElement e : element.getChildren()) {
-			if (isChildRenderedAndVisible(e)) {
-				WLayoutedWidget<MWindowElement> widget = engineCreateWidget(e);
-				if (widget != null) {
-					windowWidget.addChild(widget);
-				} else {
-					this.logger.error("Widget for element '" + e + "' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
-				}
+			WLayoutedWidget<MWindowElement> widget = engineCreateWidget(e);
+			if (widget != null && isChildRenderedAndVisible(e)) {
+				windowWidget.addChild(widget);
 			}
 		}
 
 		for (MWindow w : element.getWindows()) {
-			if (isChildRenderedAndVisible(w)) {
-				WWidget<MWindow> widget = engineCreateWidget(w);
-				if (widget != null) {
-					@SuppressWarnings("unchecked")
-					WWindow<N> ww = (WWindow<N>) w.getWidget();
-					if (ww != null) {
-						windowWidget.addChildWindow(ww);
-					} else {
-						this.logger.error("Widget for element '" + w + "' should not be null"); //$NON-NLS-1$ //$NON-NLS-2$
-					}
-				}
+			WWindow<MWindow> widget = engineCreateWidget(w);
+			if (widget != null && isChildRenderedAndVisible(w)) {
+				windowWidget.addChildWindow(widget);
 			}
 		}
 	}
