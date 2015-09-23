@@ -7,22 +7,26 @@ public class GroovyPartitionScanner extends org.eclipse.jface.text.rules.RuleBas
 			  "/**"
 			, "*/"
 			, new org.eclipse.jface.text.rules.Token("__groovy_apidoc")
-			);
+			, (char)0
+			, false);
 		pr[1] = new org.eclipse.jface.text.rules.MultiLineRule(
 			  "/*"
 			, "*/"
 			, new org.eclipse.jface.text.rules.Token("__groovy_multiline_comment")
-			);
+			, (char)0
+			, false);
 		pr[2] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__groovy_string")
-			, '\\');
+			, '\\'
+			, false);
 		pr[3] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__groovy_character")
-			, '\\');
+			, '\\'
+			, false);
 		setPredicateRules(pr);
 	}
 }

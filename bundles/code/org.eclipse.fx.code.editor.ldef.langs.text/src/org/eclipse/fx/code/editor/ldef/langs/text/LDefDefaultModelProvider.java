@@ -33,7 +33,10 @@ public class LDefDefaultModelProvider implements LDefModelProvider {
 		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/swift/swift.ldef"),"swift");
 		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/groovy/groovy.ldef"),"groovy");
 		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/python/python.ldef"),"python");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/python/php.ldef"),"php");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/php/php.ldef"),"php");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/asciidoc/asciidoc.ldef"),"adoc");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/ceylon/ceylon.ldef"),"ceylon");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/kotlin/kotlin.ldef"),"kotlin");
 	}
 
 	private void register(URI uri, String fileSuffix) {

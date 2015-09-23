@@ -14,12 +14,14 @@ public class Xml__xml_tag extends org.eclipse.jface.text.rules.RuleBasedScanner 
 			  "\""
 			, "\""
 			, xml_property_valueToken
-			);
+			, (char)0
+			, false);
 		rules[3] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "'"
 			, "'"
 			, xml_property_valueToken
-			);
+			, (char)0
+			, false);
 		rules[4] = new org.eclipse.jface.text.source.CharacterRule(xml_equalsToken, new char[] {'='});
 		rules[5] = new org.eclipse.fx.text.RegexRule(xml_property_nameToken, java.util.regex.Pattern.compile("\\w"),1,java.util.regex.Pattern.compile("\\w"));
 

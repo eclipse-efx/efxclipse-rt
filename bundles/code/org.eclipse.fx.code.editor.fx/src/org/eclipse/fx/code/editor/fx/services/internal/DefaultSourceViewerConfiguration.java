@@ -10,6 +10,8 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.fx.services.ProposalComputer;
 import org.eclipse.fx.code.editor.fx.services.ProposalComputer.ProposalContext;
+import org.eclipse.fx.code.editor.fx.services.TextHoverMap;
+import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
@@ -26,6 +28,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	private final ProposalComputer proposalComputer;
 	private final IAnnotationModel annotationModel;
 	private final List<AnnotationPresenter> annotationPresenters;
+	private final TextHoverMap hoverMap;
 
 	@Inject
 	public DefaultSourceViewerConfiguration(
@@ -33,8 +36,10 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			PresentationReconciler reconciler,
 			@Optional ProposalComputer proposalComputer,
 			@Optional IAnnotationModel annotationModel,
-			@Optional AnnotationPresenter presenter) {
+			@Optional AnnotationPresenter presenter,
+			@Optional TextHoverMap hoverMap) {
 		this.input = input;
+		this.hoverMap = hoverMap;
 		this.reconciler = reconciler;
 		this.proposalComputer = proposalComputer;
 		this.annotationModel = annotationModel;
@@ -83,5 +88,13 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	@Override
 	public List<AnnotationPresenter> getAnnotationPresenters() {
 		return annotationPresenters;
+	}
+
+	@Override
+	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
+		if( hoverMap != null ) {
+			return hoverMap.getHoverMap().get(contentType);
+		}
+		return super.getTextHover(sourceViewer, contentType);
 	}
 }

@@ -7,22 +7,26 @@ public class JsPartitionScanner extends org.eclipse.jface.text.rules.RuleBasedPa
 			  "//"
 			, ""
 			, new org.eclipse.jface.text.rules.Token("__js_single_line_comment")
-			);
+			, (char)0
+			, true);
 		pr[1] = new org.eclipse.jface.text.rules.MultiLineRule(
 			  "/*"
 			, "*/"
 			, new org.eclipse.jface.text.rules.Token("__js_multi_line_comment")
-			);
+			, (char)0
+			, false);
 		pr[2] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__js_string")
-			, '\\');
+			, '\\'
+			, false);
 		pr[3] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__js_string")
-			, '\\');
+			, '\\'
+			, false);
 		setPredicateRules(pr);
 	}
 }

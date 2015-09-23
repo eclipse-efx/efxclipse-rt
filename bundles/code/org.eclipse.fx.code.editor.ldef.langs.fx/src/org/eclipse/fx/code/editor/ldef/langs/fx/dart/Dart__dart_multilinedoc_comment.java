@@ -10,7 +10,8 @@ public class Dart__dart_multilinedoc_comment extends org.eclipse.jface.text.rule
 			  "["
 			, "]"
 			, dart_doc_referenceToken
-			);
+			, (char)0
+			, false);
 
 		setRules(rules);
 	}

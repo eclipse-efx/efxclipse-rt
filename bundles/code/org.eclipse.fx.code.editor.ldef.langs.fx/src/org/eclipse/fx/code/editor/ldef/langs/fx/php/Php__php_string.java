@@ -10,7 +10,8 @@ public class Php__php_string extends org.eclipse.jface.text.rules.RuleBasedScann
 			  "${"
 			, "}"
 			, php_string_interToken
-			);
+			, (char)0
+			, false);
 		rules[1] = new org.eclipse.fx.text.RegexRule(php_string_interToken, java.util.regex.Pattern.compile("\\$"),1,java.util.regex.Pattern.compile("\\w"));
 
 		setRules(rules);

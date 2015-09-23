@@ -11,5 +11,11 @@ public class AdocPresentationReconciler extends org.eclipse.jface.text.presentat
 		org.eclipse.jface.text.rules.DefaultDamagerRepairer __adoc_singleline_commentDamageRepairer = new org.eclipse.jface.text.rules.DefaultDamagerRepairer(new Adoc__adoc_singleline_comment());
 		setDamager(__adoc_singleline_commentDamageRepairer, "__adoc_singleline_comment");
 		setRepairer(__adoc_singleline_commentDamageRepairer, "__adoc_singleline_comment");
+		org.eclipse.jface.text.rules.DefaultDamagerRepairer __adoc_literal_blockDamageRepairer = new org.eclipse.jface.text.rules.DefaultDamagerRepairer(new Adoc__adoc_literal_block());
+		setDamager(__adoc_literal_blockDamageRepairer, "__adoc_literal_block");
+		setRepairer(__adoc_literal_blockDamageRepairer, "__adoc_literal_block");
+		org.eclipse.jface.text.rules.DefaultDamagerRepairer __adoc_multiline_codeDamageRepairer = new org.eclipse.jface.text.rules.DefaultDamagerRepairer(new Adoc__adoc_multiline_code());
+		setDamager(__adoc_multiline_codeDamageRepairer, "__adoc_multiline_code");
+		setRepairer(__adoc_multiline_codeDamageRepairer, "__adoc_multiline_code");
 	}
 }

@@ -7,22 +7,26 @@ public class KotlinPartitionScanner extends org.eclipse.jface.text.rules.RuleBas
 			  "//"
 			, ""
 			, new org.eclipse.jface.text.rules.Token("__kotlin_single_line_comment")
-			);
+			, (char)0
+			, true);
 		pr[1] = new org.eclipse.jface.text.rules.MultiLineRule(
 			  "/**"
 			, "*/"
 			, new org.eclipse.jface.text.rules.Token("__kotlin_multi_line_api_comment")
-			);
+			, (char)0
+			, false);
 		pr[2] = new org.eclipse.jface.text.rules.MultiLineRule(
 			  "/*"
 			, "*/"
 			, new org.eclipse.jface.text.rules.Token("__kotlin_multi_line_comment")
-			);
+			, (char)0
+			, false);
 		pr[3] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__kotlin_string")
-			, '\\');
+			, '\\'
+			, false);
 		setPredicateRules(pr);
 	}
 }

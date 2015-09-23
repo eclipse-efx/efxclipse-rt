@@ -16,3 +16,10 @@
 	-source-editor-buitin-type: #74a567;
 	-source-editor-annotation: rgb(200, 200, 200);
 }
+
+.styled-text-hover {
+	-fx-background-color: #ecebec;
+	-fx-background-radius: 5;
+	-fx-padding: 10;
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 10, 0.0 , 0 , 3 );
+}

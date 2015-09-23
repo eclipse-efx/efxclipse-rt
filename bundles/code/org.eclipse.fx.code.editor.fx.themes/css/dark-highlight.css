@@ -32,3 +32,14 @@
 	-fx-fill: #c7c7c7;
 	-fx-stroke: #c7c7c7;
 }
+
+.styled-text-hover-text {
+	-fx-text-fill: #b8c4d1;
+}
+
+.styled-text-hover {
+	-fx-background-color: #2b5696;
+	-fx-background-radius: 5;
+	-fx-padding: 10;
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 10, 0.0 , 0 , 3 );
+}
