@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.ui.controls.image.fontawesome.AwesomeIconFontProvider">
+   <implementation class="org.eclipse.fx.ui.controls.image.fontawesome.AwesomeIconFontProvider"/>
+   <service>
+      <provide interface="org.eclipse.fx.ui.controls.image.spi.IconFontProvider"/>
+   </service>
+</scr:component>
