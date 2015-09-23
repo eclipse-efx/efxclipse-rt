@@ -24,6 +24,7 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.StyledTextLine;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ISynchronizable;
+import org.eclipse.jface.text.ITextViewerExtension2;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.TextViewer;
@@ -108,6 +109,12 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		if( annotationModel != null && annotationPainter != null ) {
 			annotationModel.addAnnotationModelListener(annotationPainter);
 			addTextPresentationListener(annotationPainter);
+		}
+
+		String[] types= configuration.getConfiguredContentTypes(this);
+		for (int i= 0; i < types.length; i++) {
+			String t = types[i];
+			setTextHover(configuration.getTextHover(this, t), t, ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
 		}
 	}
 

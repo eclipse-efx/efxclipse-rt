@@ -13,8 +13,11 @@
 package org.eclipse.jface.text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javafx.scene.layout.AnchorPane;
 
@@ -50,6 +53,8 @@ public class TextViewer extends Viewer implements
 	private final String MARK_POSITION_CATEGORY="__mark_category_" + hashCode(); //$NON-NLS-1$
 	private final IPositionUpdater fMarkPositionUpdater= new DefaultPositionUpdater(MARK_POSITION_CATEGORY);
 	private List fTextPresentationListeners;
+	protected Map<TextHoverKey,ITextHover> fTextHovers;
+	private TextViewerHoverManager fTextHoverManager;
 
 	public TextViewer() {
 		createControl();
@@ -90,6 +95,10 @@ public class TextViewer extends Viewer implements
 
 	public void setDocumentPartitioning(String partitioning) {
 		fPartitioning= partitioning;
+	}
+
+	protected String getDocumentPartitioning() {
+		return fPartitioning;
 	}
 
 	/**
@@ -751,6 +760,75 @@ public class TextViewer extends Viewer implements
 		}
 	}
 
+	@Override
+	public void setTextHover(ITextHover textViewerHover, String contentType, int stateMask) {
+		TextHoverKey key= new TextHoverKey(contentType, stateMask);
+		if (textViewerHover != null) {
+			if (fTextHovers == null) {
+				fTextHovers= new HashMap<>();
+			}
+			fTextHovers.put(key, textViewerHover);
+		} else if (fTextHovers != null)
+			fTextHovers.remove(key);
+
+		ensureHoverControlManagerInstalled();
+	}
+
+	@Override
+	public void removeTextHovers(String contentType) {
+		if (fTextHovers == null)
+			return;
+
+		Iterator iter= new HashSet<>(fTextHovers.keySet()).iterator();
+		while (iter.hasNext()) {
+			TextHoverKey key= (TextHoverKey)iter.next();
+			if (key.fContentType.equals(contentType))
+				fTextHovers.remove(key);
+		}
+	}
+
+	protected ITextHover getTextHover(int offset, int stateMask) {
+		if (fTextHovers == null)
+			return null;
+
+		IDocument document= getDocument();
+		if (document == null)
+			return null;
+
+		try {
+			String contentType = TextUtilities.getContentType(document, getDocumentPartitioning(), offset, true);
+			System.err.println(offset + " - " + contentType);
+			TextHoverKey key= new TextHoverKey(contentType, stateMask);
+			Object textHover= fTextHovers.get(key);
+			if (textHover == null) {
+				// Use default text hover
+				key.setStateMask(ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
+				textHover= fTextHovers.get(key);
+			}
+			return (ITextHover) textHover;
+		} catch (BadLocationException x) {
+//			if (TRACE_ERRORS)
+//				System.out.println(JFaceTextMessages.getString("TextViewer.error.bad_location.selectContentTypePlugin")); //$NON-NLS-1$
+		}
+		return null;
+	}
+
+//	@Override
+//	public ITextHover getCurrentTextHover() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+	private void ensureHoverControlManagerInstalled() {
+		if (fTextHovers != null && !fTextHovers.isEmpty() /*&& fHoverControlCreator != null*/ && fTextHoverManager == null) {
+			fTextHoverManager= new TextViewerHoverManager(this/*, fHoverControlCreator*/);
+			fTextHoverManager.install(this.getTextWidget());
+//			fTextHoverManager.setSizeConstraints(TEXT_HOVER_WIDTH_CHARS, TEXT_HOVER_HEIGHT_CHARS, false, true);
+//			fTextHoverManager.setInformationControlReplacer(new StickyHoverManager(this));
+		}
+	}
+
+
 	/**
 	 * The viewer's rewrite target.
 	 * @since 2.0
@@ -794,6 +872,59 @@ public class TextViewer extends Viewer implements
 //TODO needs porting
 		public void restore(boolean restoreViewport) {
 
+		}
+	}
+
+	/**
+	 * Value object used as key in the text hover configuration table. It is
+	 * modifiable only inside this compilation unit to allow the reuse of created
+	 * objects for efficiency reasons
+	 *
+	 * @since 2.1
+	 */
+	protected class TextHoverKey {
+
+		/** The content type this key belongs to */
+		private String fContentType;
+		/** The state mask */
+		private int fStateMask;
+
+		/**
+		 * Creates a new text hover key for the given content type and state mask.
+		 *
+		 * @param contentType the content type
+		 * @param stateMask the state mask
+		 */
+		protected TextHoverKey(String contentType, int stateMask) {
+			Assert.isNotNull(contentType);
+			fContentType= contentType;
+			fStateMask= stateMask;
+		}
+
+		/*
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		public boolean equals(Object obj) {
+			if (obj == null || obj.getClass() != getClass())
+				return false;
+			TextHoverKey textHoverKey= (TextHoverKey)obj;
+			return textHoverKey.fContentType.equals(fContentType) && textHoverKey.fStateMask == fStateMask;
+		}
+
+		/*
+		 * @see java.lang.Object#hashCode()
+		 */
+		public int hashCode() {
+	 		return fStateMask << 16 | fContentType.hashCode();
+		}
+
+		/**
+		 * Sets the state mask of this text hover key.
+		 *
+		 * @param stateMask the state mask
+		 */
+		private void setStateMask(int stateMask) {
+			fStateMask= stateMask;
 		}
 	}
 }

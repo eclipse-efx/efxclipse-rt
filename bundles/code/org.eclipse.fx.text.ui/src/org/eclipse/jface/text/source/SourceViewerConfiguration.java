@@ -13,7 +13,9 @@ package org.eclipse.jface.text.source;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
+import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
@@ -50,6 +52,14 @@ public abstract class SourceViewerConfiguration {
 
 	public AnnotationPainter getAnnotationPainter(ISourceViewer sourceViewer) {
 		return null;
+	}
+
+	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
+		return null;
+	}
+
+	public String[] getConfiguredContentTypes(SourceViewer sourceViewer) {
+		return new String[] { IDocument.DEFAULT_CONTENT_TYPE };
 	}
 
 }
