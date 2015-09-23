@@ -221,7 +221,7 @@ class JavaFXCodeGenerator {
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, «t.name»Token
-		, «IF r.escapeSeq != null»'«r.escapeSeq.charAt(0)»'«ELSE»(char)0«ENDIF»
+		, «IF r.escapeSeq != null»'«r.escapeSeq.escapeChar»'«ELSE»(char)0«ENDIF»
 		, «IF r.endSeq == null || r.endSeq.isEmpty»true«ELSE»false«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
@@ -230,7 +230,7 @@ class JavaFXCodeGenerator {
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, «t.name»Token
-		, «IF r.escapeSeq != null»'«r.escapeSeq.charAt(0)»'«ELSE»(char)0«ENDIF»
+		, «IF r.escapeSeq != null»'«r.escapeSeq.escapeChar»'«ELSE»(char)0«ENDIF»
 		, «IF r.endSeq == null || r.endSeq.isEmpty»true«ELSE»false«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
@@ -255,7 +255,7 @@ class JavaFXCodeGenerator {
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
-		, «IF r.escapeSeq != null»'«r.escapeSeq.charAt(0)»'«ELSE»(char)0«ENDIF»
+		, «IF r.escapeSeq != null»'«r.escapeSeq.escapeChar»'«ELSE»(char)0«ENDIF»
 		, «IF r.endSeq == null || r.endSeq.isEmpty»true«ELSE»false«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
@@ -264,7 +264,7 @@ class JavaFXCodeGenerator {
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
-		, «IF r.escapeSeq != null»'«r.escapeSeq.charAt(0)»'«ELSE»(char)0«ENDIF»
+		, «IF r.escapeSeq != null»'«r.escapeSeq.escapeChar»'«ELSE»(char)0«ENDIF»
 		, «IF r.endSeq == null || r.endSeq.isEmpty»true«ELSE»false«ENDIF»)«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
