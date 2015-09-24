@@ -63,5 +63,5 @@ public @interface Preference {
 	/**
 	 * @return a default value
 	 */
-	String defaultValue() default "";
+	String defaultValue() default "EFX__NO_VALUE__";
 }

@@ -115,6 +115,9 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		Preference p = descriptor.getQualifier(Preference.class);
 
 		String defaultValue = p.defaultValue();
+		if( "EFX__NO_VALUE__".equals(defaultValue) ) { //$NON-NLS-1$
+			defaultValue = null;
+		}
 
 		if (descriptorsClass.equals(boolean.class) || descriptorsClass.equals(Boolean.class) || descriptorsClass.equals(int.class) || descriptorsClass.equals(Integer.class) || descriptorsClass.equals(double.class) || descriptorsClass.equals(Double.class) || descriptorsClass.equals(float.class)
 				|| descriptorsClass.equals(Float.class) || descriptorsClass.equals(long.class) || descriptorsClass.equals(Long.class) || descriptorsClass.equals(String.class)) {
