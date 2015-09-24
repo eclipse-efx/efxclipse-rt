@@ -130,6 +130,19 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 			getLogger().error("Could not find widget for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
+
+		Class<?> cl = sash.getWidget().getClass();
+		do {
+			element.getContext().set(cl.getName(), sash.getWidget());
+			cl = cl.getSuperclass();
+		} while (cl != Object.class);
+
+		if( element.getContributionURI() != null ) {
+			IContributionFactory contributionFactory = element.getContext().get(IContributionFactory.class);
+			Object newPart = contributionFactory.create(element.getContributionURI(), element.getContext());
+			element.setObject(newPart);
+		}
+
 		List<WLayoutedWidget<MPartSashContainerElement>> list = new ArrayList<WLayoutedWidget<MPartSashContainerElement>>();
 
 		for (MPartSashContainerElement e : element.getChildren()) {
@@ -156,18 +169,6 @@ public abstract class BaseCompositePartRenderer<N> extends BaseRenderer<MComposi
 		}
 
 		sash.addItems(list);
-
-		Class<?> cl = sash.getWidget().getClass();
-		do {
-			element.getContext().set(cl.getName(), sash.getWidget());
-			cl = cl.getSuperclass();
-		} while (cl != Object.class);
-
-		if( element.getContributionURI() != null ) {
-			IContributionFactory contributionFactory = element.getContext().get(IContributionFactory.class);
-			Object newPart = contributionFactory.create(element.getContributionURI(), element.getContext());
-			element.setObject(newPart);
-		}
 	}
 
 	@SuppressWarnings("null")
