@@ -23,7 +23,9 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.fx.core.Callback;
+import org.eclipse.fx.core.ObjectSerializer;
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.ValueSerializer;
 import org.eclipse.fx.core.adapter.AdapterService;
 import org.eclipse.fx.core.adapter.AdapterService.ValueAccess;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
@@ -68,6 +70,12 @@ public class PreferenceValue<T> implements Value<T> {
 	private AdapterService adapterService;
 
 	@NonNull
+	private ValueSerializer valueSerializer;
+
+	@NonNull
+	private ObjectSerializer objectSerializer;
+
+	@NonNull
 	private IEclipseContext context;
 
 	/**
@@ -78,11 +86,18 @@ public class PreferenceValue<T> implements Value<T> {
 	 *
 	 * @param adapterService
 	 *            the service
+	 * @param valueSerializer
+	 *            the value serializer service
+	 * @param objectSerializer
+	 *            the object serializer service
 	 */
 	@Inject
-	public PreferenceValue(@NonNull IEclipseContext context, @NonNull AdapterService adapterService) {
+	public PreferenceValue(@NonNull IEclipseContext context, @NonNull AdapterService adapterService,
+			@NonNull ValueSerializer valueSerializer, @NonNull ObjectSerializer objectSerializer) {
 		this.context = context;
 		this.adapterService = adapterService;
+		this.valueSerializer = valueSerializer;
+		this.objectSerializer = objectSerializer;
 	}
 
 	/**
@@ -105,12 +120,14 @@ public class PreferenceValue<T> implements Value<T> {
 
 		IPreferenceChangeListener listener = event -> {
 			if (contextKey.equals(event.getKey())) {
-				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>) cl, defaultValue));
+				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>) cl,
+						defaultValue));
 			}
 		};
 		preference.addPreferenceChangeListener(listener);
 		this.listener = listener;
-		setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>) cl, defaultValue));
+		setCurrentValue(
+				(@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>) cl, defaultValue));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -143,7 +160,18 @@ public class PreferenceValue<T> implements Value<T> {
 		if (value == null) {
 			preference.remove(this.contextKey);
 		} else {
-			preference.put(this.contextKey, value.toString());
+			String v;
+			if( value.getClass() == String.class || value.getClass() == CharSequence.class ) {
+				v = value.toString();
+			} else {
+				if( this.valueSerializer.test(value.getClass()) ) {
+					v = this.valueSerializer.toString(value);
+				} else {
+					v = this.objectSerializer.serialize(value);
+				}
+			}
+
+			preference.put(this.contextKey, v);
 			try {
 				preference.flush();
 			} catch (BackingStoreException e) {
@@ -153,7 +181,8 @@ public class PreferenceValue<T> implements Value<T> {
 		}
 
 		if (this.eventBroker != null) {
-			this.eventBroker.send(ScopedObjectFactory.KEYMODIFED_TOPIC, Collections.singletonMap(this.contextKey, value));
+			this.eventBroker.send(ScopedObjectFactory.KEYMODIFED_TOPIC,
+					Collections.singletonMap(this.contextKey, value));
 		}
 	}
 
@@ -234,7 +263,7 @@ public class PreferenceValue<T> implements Value<T> {
 			// it could be that the node has been removed already
 			try {
 				preference.removePreferenceChangeListener(listener);
-			} catch(Throwable t) {
+			} catch (Throwable t) {
 				// do nothing
 			}
 

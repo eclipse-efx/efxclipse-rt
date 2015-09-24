@@ -26,6 +26,7 @@ import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.di.Requestor;
+import org.eclipse.fx.core.ObjectSerializer;
 import org.eclipse.fx.core.ValueSerializer;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
@@ -107,6 +108,19 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		return serializer;
 	}
 
+	private static ObjectSerializer objectSerializer;
+
+	private static ObjectSerializer getObjectSerializer() {
+		if( objectSerializer == null ) {
+			BundleContext bundleContext = FrameworkUtil.getBundle(PreferenceValueSupplier.class).getBundleContext();
+			ServiceReference<ObjectSerializer> reference = bundleContext.getServiceReference(ObjectSerializer.class);
+			if( reference != null ) {
+				objectSerializer = bundleContext.getService(reference);
+			}
+		}
+		return objectSerializer;
+	}
+
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
 		if (descriptor == null)
@@ -153,6 +167,19 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 			return getValue(preferences, key, (Class<Object>) descriptorsClass, v);
 		}
 
+		Requestor<?> r = (Requestor<?>) requestor;
+		PreferenceValue<Object> v = r.getInjector().make(PreferenceValue.class, r.getPrimarySupplier());
+		if( descriptorsClass != Value.class && ! v.canAdaptTo(descriptorsClass) ) {
+			ObjectSerializer objectSerializer = getObjectSerializer();
+			if( objectSerializer != null ) {
+				if (track) {
+					addListener(nodePath, key, requestor);
+				}
+
+				return getValue(preferences, key, (Class<Object>) descriptorsClass, getDefault(defaultValue, descriptorsClass));
+			}
+		}
+
 		Class<?> type = p.type();
 		if (type == Object.class && descriptor.getDesiredType() instanceof ParameterizedType) {
 			Type t = ((ParameterizedType) descriptor.getDesiredType()).getActualTypeArguments()[0];
@@ -163,9 +190,8 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 			return IInjector.NOT_A_VALUE;
 		}
 
-		Requestor<?> r = (Requestor<?>) requestor;
-		PreferenceValue<Object> v = r.getInjector().make(PreferenceValue.class, r.getPrimarySupplier());
 		v.init(key, preferences, type, getDefault(defaultValue, type));
+
 
 		if (descriptorsClass != Value.class) {
 			return v.adaptTo(descriptorsClass);
@@ -231,6 +257,11 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 						return valueSerializer.fromString(type, value);
 					}
 				}
+
+				ObjectSerializer objectSerializer = getObjectSerializer();
+				if( objectSerializer != null ) {
+					return objectSerializer.deserialize(type, value);
+				}
 			}
 		}
 
@@ -286,6 +317,11 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 					if( valueSerializer.test(type) ) {
 						return valueSerializer.fromString(type, value);
 					}
+				}
+
+				ObjectSerializer objectSerializer = getObjectSerializer();
+				if( objectSerializer != null ) {
+					return objectSerializer.deserialize(type, value);
 				}
 			}
 		}

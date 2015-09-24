@@ -1,10 +1,10 @@
 package org.eclipse.fx.core.di.context.tests;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -179,6 +179,61 @@ public class PreferenceValueTestCase {
 		Property<String> simpleString;
 	}
 
+	@XmlRootElement
+	public static class Complex {
+		private String v1;
+		private int v2;
+
+		public Complex() {
+
+		}
+
+		public Complex(String v1, int v2) {
+			this.v1 = v1;
+			this.v2 = v2;
+		}
+
+		public String getV1() {
+			return v1;
+		}
+		public void setV1(String v1) {
+			this.v1 = v1;
+		}
+		public int getV2() {
+			return v2;
+		}
+		public void setV2(int v2) {
+			this.v2 = v2;
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((this.v1 == null) ? 0 : this.v1.hashCode());
+			result = prime * result + this.v2;
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Complex other = (Complex) obj;
+			if (this.v1 == null) {
+				if (other.v1 != null)
+					return false;
+			} else if (!this.v1.equals(other.v1))
+				return false;
+			if (this.v2 != other.v2)
+				return false;
+			return true;
+		}
+
+	}
+
 	static class NonStandardTypeInject {
 		@Inject
 		@Preference(key="instant")
@@ -203,6 +258,35 @@ public class PreferenceValueTestCase {
 		@Inject
 		@Preference(key="instantPropertyDefault",defaultValue="1970-01-01T00:00:00Z")
 		Property<Instant> instantPropertyDefault;
+	}
+
+	static class ComplexTypeInject {
+		private static final String DEFAULT = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<complex><v1>Sample</v1><v2>1</v2></complex>"; //$NON-NLS-1$
+		private static final String MODIFIED = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<complex><v1>Modified</v1><v2>0</v2></complex>"; //$NON-NLS-1$
+
+		@Inject
+		@Preference(key="complex")
+		Complex complex;
+
+		@Inject
+		@Preference(key="complexDefault",defaultValue=DEFAULT)
+		Complex complexDefault;
+
+		@Inject
+		@Preference(key="complexValue")
+		Value<Complex> complexValue;
+
+		@Inject
+		@Preference(key="complexValueDefault",defaultValue=DEFAULT)
+		Value<Complex> complexValueDefault;
+
+		@Inject
+		@Preference(key="complexProperty")
+		Property<Complex> complexProperty;
+
+		@Inject
+		@Preference(key="complexPropertyDefault",defaultValue=DEFAULT)
+		Property<Complex> complexPropertyDefault;
 	}
 
 	/**
@@ -527,5 +611,66 @@ public class PreferenceValueTestCase {
 		Assert.assertEquals(instant,Instant.parse(node.get("instantProperty", null))); //$NON-NLS-1$
 		Assert.assertEquals(instant,Instant.parse(node.get("instantPropertyDefault", null))); //$NON-NLS-1$
 
+	}
+
+	/**
+	 *
+	 */
+	@Test
+	public void testComplexType() {
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		ComplexTypeInject simpleInject = ContextInjectionFactory.make(ComplexTypeInject.class, serviceContext);
+
+		Assert.assertNull(simpleInject.complex);
+		Assert.assertNotNull(simpleInject.complexDefault);
+		Assert.assertEquals(simpleInject.complexDefault, new Complex("Sample", 1)); //$NON-NLS-1$
+
+		Assert.assertNull(simpleInject.complexValue.getValue());
+		Assert.assertNotNull(simpleInject.complexValueDefault.getValue());
+		Assert.assertEquals(simpleInject.complexValueDefault.getValue(), new Complex("Sample", 1)); //$NON-NLS-1$
+
+		Assert.assertNull(simpleInject.complexProperty.getValue());
+		Assert.assertNotNull(simpleInject.complexPropertyDefault.getValue());
+		Assert.assertEquals(simpleInject.complexPropertyDefault.getValue(), new Complex("Sample", 1)); //$NON-NLS-1$
+
+		IEclipsePreferences node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		node.put("complex", ComplexTypeInject.MODIFIED); //$NON-NLS-1$
+		node.put("complexDefault", ComplexTypeInject.MODIFIED); //$NON-NLS-1$
+		node.put("complexValue", ComplexTypeInject.MODIFIED); //$NON-NLS-1$
+		node.put("complexValueDefault", ComplexTypeInject.MODIFIED); //$NON-NLS-1$
+		node.put("complexProperty", ComplexTypeInject.MODIFIED); //$NON-NLS-1$
+		node.put("complexPropertyDefault", ComplexTypeInject.MODIFIED); //$NON-NLS-1$
+
+		Complex modified = new Complex("Modified", 0); //$NON-NLS-1$
+
+		Assert.assertNotNull(simpleInject.complex);
+		Assert.assertEquals(simpleInject.complex, modified);
+		Assert.assertNotNull(simpleInject.complexDefault);
+		Assert.assertEquals(simpleInject.complexDefault, modified);
+
+		Assert.assertNotNull(simpleInject.complexValue.getValue());
+		Assert.assertEquals(simpleInject.complexValue.getValue(), modified);
+		Assert.assertNotNull(simpleInject.complexValueDefault.getValue());
+		Assert.assertEquals(simpleInject.complexValueDefault.getValue(), modified);
+
+		Assert.assertNotNull(simpleInject.complexProperty.getValue());
+		Assert.assertEquals(simpleInject.complexProperty.getValue(), modified);
+		Assert.assertNotNull(simpleInject.complexPropertyDefault.getValue());
+		Assert.assertEquals(simpleInject.complexPropertyDefault.getValue(), modified);
+
+		String id = UUID.randomUUID().toString();
+		modified = new Complex(id,-1);
+
+		simpleInject.complexValue.publish(modified);
+		simpleInject.complexValueDefault.publish(modified);
+		simpleInject.complexProperty.setValue(modified);
+		simpleInject.complexPropertyDefault.setValue(modified);
+
+		String serialized = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<complex><v1>"+id+"</v1><v2>-1</v2></complex>"; //$NON-NLS-1$ //$NON-NLS-2$
+
+		Assert.assertEquals(serialized.replaceAll("\\s", ""), node.get("complexValue", null).replaceAll("\\s", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		Assert.assertEquals(serialized.replaceAll("\\s", ""), node.get("complexValueDefault", null).replaceAll("\\s", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		Assert.assertEquals(serialized.replaceAll("\\s", ""), node.get("complexProperty", null).replaceAll("\\s", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		Assert.assertEquals(serialized.replaceAll("\\s", ""), node.get("complexPropertyDefault", null).replaceAll("\\s", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 	}
 }
