@@ -62,6 +62,7 @@ public @interface Preference {
 	Class<?> type() default Object.class;
 	/**
 	 * @return a default value
+	 * @since 2.2.0
 	 */
 	String defaultValue() default "EFX__NO_VALUE__";
 }
