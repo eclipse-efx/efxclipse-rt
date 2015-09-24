@@ -26,11 +26,14 @@ import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.di.Requestor;
+import org.eclipse.fx.core.ValueSerializer;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.core.preferences.Preference;
 import org.eclipse.fx.core.preferences.Value;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 
 import com.google.common.base.Strings;
@@ -91,6 +94,19 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		return LOGGER;
 	}
 
+	private static ValueSerializer serializer;
+
+	private static ValueSerializer getValueSerializer() {
+		if( serializer == null ) {
+			BundleContext bundleContext = FrameworkUtil.getBundle(PreferenceValueSupplier.class).getBundleContext();
+			ServiceReference<ValueSerializer> reference = bundleContext.getServiceReference(ValueSerializer.class);
+			if( reference != null ) {
+				serializer = bundleContext.getService(reference);
+			}
+		}
+		return serializer;
+	}
+
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
 		if (descriptor == null)
@@ -121,6 +137,15 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 
 		if (descriptorsClass.equals(boolean.class) || descriptorsClass.equals(Boolean.class) || descriptorsClass.equals(int.class) || descriptorsClass.equals(Integer.class) || descriptorsClass.equals(double.class) || descriptorsClass.equals(Double.class) || descriptorsClass.equals(float.class)
 				|| descriptorsClass.equals(Float.class) || descriptorsClass.equals(long.class) || descriptorsClass.equals(Long.class) || descriptorsClass.equals(String.class)) {
+			if (track)
+				addListener(nodePath, key, requestor);
+
+			Object v = getDefault(defaultValue, descriptorsClass);
+			return getValue(preferences, key, (Class<Object>) descriptorsClass, v);
+		}
+
+		ValueSerializer valueSerializer = getValueSerializer();
+		if( valueSerializer != null && valueSerializer.test(descriptorsClass) ) {
 			if (track)
 				addListener(nodePath, key, requestor);
 
@@ -198,8 +223,18 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 			}
 		} else if (type == String.class) {
 			return (T) value;
+		} else {
+			if( value != null ) {
+				ValueSerializer valueSerializer = getValueSerializer();
+				if( valueSerializer != null ) {
+					if( valueSerializer.test(type) ) {
+						return valueSerializer.fromString(type, value);
+					}
+				}
+			}
 		}
-		throw new IllegalArgumentException("Unsupported value type '" + type + "'");
+
+		return (T)null;
 	}
 
 	/**
@@ -209,41 +244,53 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 	 *            the preference
 	 * @param key
 	 *            the key
-	 * @param descriptorsClass
+	 * @param type
 	 *            the descriptor
 	 * @param defaultValue
 	 *            the default value
 	 * @return the value
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T getValue(IEclipsePreferences preference, String key, Class<T> descriptorsClass, T defaultValue) {
-		if (descriptorsClass.isPrimitive()) {
-			if (descriptorsClass.equals(boolean.class))
+	public static <T> T getValue(IEclipsePreferences preference, String key, Class<T> type, T defaultValue) {
+		if (type.isPrimitive()) {
+			if (type.equals(boolean.class)) {
 				return (T) Boolean.valueOf(preference.getBoolean(key, ((Boolean) defaultValue).booleanValue()));
-			else if (descriptorsClass.equals(int.class))
+			} else if (type.equals(int.class)) {
 				return (T) Integer.valueOf(preference.getInt(key, ((Integer) defaultValue).intValue()));
-			else if (descriptorsClass.equals(double.class))
+			} else if (type.equals(double.class)) {
 				return (T) Double.valueOf(preference.getDouble(key, ((Double) defaultValue).doubleValue()));
-			else if (descriptorsClass.equals(float.class))
+			} else if (type.equals(float.class)) {
 				return (T) Float.valueOf(preference.getFloat(key, ((Float) defaultValue).floatValue()));
-			else if (descriptorsClass.equals(long.class))
+			} else if (type.equals(long.class)) {
 				return (T) Long.valueOf(preference.getLong(key, ((Long) defaultValue).longValue()));
+			}
 		}
 
-		if (String.class.equals(descriptorsClass))
+		if (String.class.equals(type) || CharSequence.class.equals(type)) {
 			return (T) preference.get(key, (String) defaultValue);
-		else if (Boolean.class.equals(descriptorsClass))
+		} else if (Boolean.class.equals(type)) {
 			return (T) Boolean.valueOf(preference.getBoolean(key, ((Boolean) defaultValue).booleanValue()));
-		else if (Integer.class.equals(descriptorsClass))
+		} else if (Integer.class.equals(type)) {
 			return (T) Integer.valueOf(preference.getInt(key, ((Integer) defaultValue).intValue()));
-		else if (Double.class.equals(descriptorsClass))
+		} else if (Double.class.equals(type)) {
 			return (T) Double.valueOf(preference.getDouble(key, ((Double) defaultValue).doubleValue()));
-		else if (Float.class.equals(descriptorsClass))
+		} else if (Float.class.equals(type)) {
 			return (T) Float.valueOf(preference.getFloat(key, ((Float) defaultValue).floatValue()));
-		else if (Long.class.equals(descriptorsClass))
+		} else if (Long.class.equals(type)) {
 			return (T) Long.valueOf(preference.getLong(key, ((Long) defaultValue).longValue()));
+		} else {
+			String value = preference.get(key, null);
+			if( value != null ) {
+				ValueSerializer valueSerializer = getValueSerializer();
+				if( valueSerializer != null ) {
+					if( valueSerializer.test(type) ) {
+						return valueSerializer.fromString(type, value);
+					}
+				}
+			}
+		}
 
-		return (T) preference.get(key, null);
+		return defaultValue;
 	}
 
 	private static Class<?> getDesiredClass(Type desiredType) {

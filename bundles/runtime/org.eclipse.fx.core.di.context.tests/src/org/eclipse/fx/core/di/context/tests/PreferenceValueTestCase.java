@@ -1,5 +1,7 @@
 package org.eclipse.fx.core.di.context.tests;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -175,6 +177,32 @@ public class PreferenceValueTestCase {
 		@Inject
 		@Preference(key="simpleString",defaultValue="")
 		Property<String> simpleString;
+	}
+
+	static class NonStandardTypeInject {
+		@Inject
+		@Preference(key="instant")
+		Instant instant = Instant.now();
+
+		@Inject
+		@Preference(key="instantDefault",defaultValue="1970-01-01T00:00:00Z")
+		Instant instantDefault = Instant.now();
+
+		@Inject
+		@Preference(key="instantValue")
+		Value<Instant> instantValue;
+
+		@Inject
+		@Preference(key="instantValueDefault",defaultValue="1970-01-01T00:00:00Z")
+		Value<Instant> instantValueDefault;
+
+		@Inject
+		@Preference(key="instantProperty")
+		Property<Instant> instantProperty;
+
+		@Inject
+		@Preference(key="instantPropertyDefault",defaultValue="1970-01-01T00:00:00Z")
+		Property<Instant> instantPropertyDefault;
 	}
 
 	/**
@@ -375,6 +403,21 @@ public class PreferenceValueTestCase {
 		Assert.assertEquals(1.0d,simpleInject.simpleDouble.getValue().doubleValue(),0.0);
 		Assert.assertEquals(1l,simpleInject.simpleLong.getValue().longValue());
 		Assert.assertEquals(sValue, simpleInject.simpleString.getValue());
+
+		simpleInject.simpleBoolean.publish(Boolean.TRUE);
+		simpleInject.simpleInt.publish(Integer.valueOf(-1));
+		simpleInject.simpleFloat.publish(Float.valueOf(-1f));
+		simpleInject.simpleDouble.publish(Double.valueOf(-1d));
+		simpleInject.simpleLong.publish(Long.valueOf(-1l));
+		sValue = UUID.randomUUID().toString();
+		simpleInject.simpleString.publish(sValue);
+
+		Assert.assertTrue(node.getBoolean("simpleBoolean", false)); //$NON-NLS-1$
+		Assert.assertEquals(node.getInt("simpleInt", 0),-1); //$NON-NLS-1$
+		Assert.assertEquals(node.getFloat("simpleFloat", 0f),-1f,0.0); //$NON-NLS-1$
+		Assert.assertEquals(node.getDouble("simpleDouble", 0d),-1d,0.0); //$NON-NLS-1$
+		Assert.assertEquals(node.getLong("simpleLong", 0l),-1l); //$NON-NLS-1$
+		Assert.assertEquals(node.get("simpleString", null),sValue); //$NON-NLS-1$
 	}
 
 	/**
@@ -412,5 +455,77 @@ public class PreferenceValueTestCase {
 		Assert.assertEquals(1.0d,simpleInject.simpleDouble.getValue().doubleValue(),0.0);
 		Assert.assertEquals(1l,simpleInject.simpleLong.getValue().longValue());
 		Assert.assertEquals(sValue, simpleInject.simpleString.getValue());
+
+		simpleInject.simpleBoolean.setValue(Boolean.TRUE);
+		simpleInject.simpleInt.setValue(Integer.valueOf(-1));
+		simpleInject.simpleFloat.setValue(Float.valueOf(-1f));
+		simpleInject.simpleDouble.setValue(Double.valueOf(-1d));
+		simpleInject.simpleLong.setValue(Long.valueOf(-1l));
+		sValue = UUID.randomUUID().toString();
+		simpleInject.simpleString.setValue(sValue);
+
+		Assert.assertTrue(node.getBoolean("simpleBoolean", false)); //$NON-NLS-1$
+		Assert.assertEquals(node.getInt("simpleInt", 0),-1); //$NON-NLS-1$
+		Assert.assertEquals(node.getFloat("simpleFloat", 0f),-1f,0.0); //$NON-NLS-1$
+		Assert.assertEquals(node.getDouble("simpleDouble", 0d),-1d,0.0); //$NON-NLS-1$
+		Assert.assertEquals(node.getLong("simpleLong", 0l),-1l); //$NON-NLS-1$
+		Assert.assertEquals(node.get("simpleString", null),sValue); //$NON-NLS-1$
+	}
+
+	/**
+	 *
+	 */
+	@Test
+	public void testNonStandardType() {
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		NonStandardTypeInject simpleInject = ContextInjectionFactory.make(NonStandardTypeInject.class, serviceContext);
+
+		Assert.assertNull(simpleInject.instant);
+		Assert.assertNotNull(simpleInject.instantDefault);
+		Assert.assertEquals(Instant.ofEpochMilli(0), simpleInject.instantDefault);
+
+		Assert.assertNull(simpleInject.instantValue.getValue());
+		Assert.assertNotNull(simpleInject.instantValueDefault.getValue());
+		Assert.assertEquals(Instant.ofEpochMilli(0), simpleInject.instantValueDefault.getValue());
+
+		Assert.assertNull(simpleInject.instantProperty.getValue());
+		Assert.assertNotNull(simpleInject.instantPropertyDefault.getValue());
+		Assert.assertEquals(Instant.ofEpochMilli(0), simpleInject.instantPropertyDefault.getValue());
+
+		IEclipsePreferences node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		Instant now = Instant.now();
+		node.put("instant", now.toString()); //$NON-NLS-1$
+		node.put("instantDefault", now.toString()); //$NON-NLS-1$
+		node.put("instantValue", now.toString()); //$NON-NLS-1$
+		node.put("instantValueDefault", now.toString()); //$NON-NLS-1$
+		node.put("instantProperty", now.toString()); //$NON-NLS-1$
+		node.put("instantPropertyDefault", now.toString()); //$NON-NLS-1$
+		try {
+			node.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Assert.assertEquals(now,simpleInject.instant);
+		Assert.assertEquals(now,simpleInject.instantDefault);
+
+		Assert.assertEquals(now,simpleInject.instantValue.getValue());
+		Assert.assertEquals(now,simpleInject.instantValueDefault.getValue());
+
+		Assert.assertEquals(now,simpleInject.instantProperty.getValue());
+		Assert.assertEquals(now,simpleInject.instantPropertyDefault.getValue());
+
+		Instant instant = Instant.ofEpochMilli(100);
+		simpleInject.instantValue.publish(instant);
+		simpleInject.instantValueDefault.publish(instant);
+
+		simpleInject.instantProperty.setValue(instant);
+		simpleInject.instantPropertyDefault.setValue(instant);
+
+		Assert.assertEquals(instant,Instant.parse(node.get("instantValue", null))); //$NON-NLS-1$
+		Assert.assertEquals(instant,Instant.parse(node.get("instantValueDefault", null))); //$NON-NLS-1$
+		Assert.assertEquals(instant,Instant.parse(node.get("instantProperty", null))); //$NON-NLS-1$
+		Assert.assertEquals(instant,Instant.parse(node.get("instantPropertyDefault", null))); //$NON-NLS-1$
+
 	}
 }
