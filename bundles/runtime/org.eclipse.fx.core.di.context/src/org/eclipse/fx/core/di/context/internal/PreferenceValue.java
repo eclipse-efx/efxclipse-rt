@@ -51,8 +51,6 @@ public class PreferenceValue<T> implements Value<T> {
 	List<Callback<Void>> disposalCallbacks;
 	@Nullable
 	private T value;
-	@Nullable
-	private T defaultValue;
 
 	@Inject
 	@Optional
@@ -74,7 +72,9 @@ public class PreferenceValue<T> implements Value<T> {
 
 	/**
 	 * Create a new preference value
-	 * @param context the context
+	 *
+	 * @param context
+	 *            the context
 	 *
 	 * @param adapterService
 	 *            the service
@@ -94,22 +94,23 @@ public class PreferenceValue<T> implements Value<T> {
 	 *            the preference node
 	 * @param cl
 	 *            the type
+	 * @param defaultValue
+	 *            the default value
 	 */
 	@SuppressWarnings("unchecked")
 	public void init(@NonNull String contextKey, @NonNull IEclipsePreferences preference, Class<?> cl, T defaultValue) {
 		this.contextKey = contextKey;
 		this.preference = preference;
 		this.contextKey = contextKey;
-		this.defaultValue = defaultValue;
 
 		IPreferenceChangeListener listener = event -> {
 			if (contextKey.equals(event.getKey())) {
-				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>)cl, defaultValue));
+				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>) cl, defaultValue));
 			}
 		};
 		preference.addPreferenceChangeListener(listener);
 		this.listener = listener;
-		setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>)cl, defaultValue));
+		setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>) cl, defaultValue));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -152,8 +153,7 @@ public class PreferenceValue<T> implements Value<T> {
 		}
 
 		if (this.eventBroker != null) {
-			this.eventBroker.send(ScopedObjectFactory.KEYMODIFED_TOPIC,
-					Collections.singletonMap(this.contextKey, value));
+			this.eventBroker.send(ScopedObjectFactory.KEYMODIFED_TOPIC, Collections.singletonMap(this.contextKey, value));
 		}
 	}
 
