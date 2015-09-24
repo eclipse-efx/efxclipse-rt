@@ -20,9 +20,13 @@ import java.util.function.Supplier;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javafx.beans.property.Property;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
 /**
  * Class to synchronize with a predefined thread e.g. the UI-Thread
- * 
+ *
  * @since 2.0
  */
 public interface ThreadSynchronize {
@@ -33,7 +37,7 @@ public interface ThreadSynchronize {
 	 * <b>WARNING: Using synchronized execute can easily lead to deadlocks. You
 	 * are better of using {@link #asyncExec(Callable)}</b>
 	 * </p>
-	 * 
+	 *
 	 * @param callable
 	 *            the callable to execute
 	 * @param defaultValue
@@ -49,7 +53,7 @@ public interface ThreadSynchronize {
 	 * <b>WARNING: Using synchronized execute can easily lead to deadlocks. You
 	 * are better of using {@link #asyncExec(Runnable)}</b>
 	 * </p>
-	 * 
+	 *
 	 * @param runnable
 	 *            the runnable to execute
 	 */
@@ -95,6 +99,48 @@ public interface ThreadSynchronize {
 	 * @return future to get informed about the value
 	 */
 	<T> CompletableFuture<T> scheduleExecution(long delay, Callable<T> runnable);
+
+	/**
+	 * Schedule a delayed execution on the provided property.
+	 * <p>
+	 * The consumer is called whenever the value of the property changes with
+	 * the provided delay. In case the value changes within the given delay the
+	 * scheduled consumer execution is discarded.
+	 * </p>
+	 *
+	 * @param delay
+	 *            the delay
+	 * @param property
+	 *            the property
+	 * @param consumer
+	 *            the consumer (always called on the synchronize thread)
+	 * @return the subscription
+	 * @since 2.2.0
+	 */
+	default <T> Subscription delayedChangeExecution(long delay, Property<T> property, Consumer<T> consumer) {
+		ChangeListener<T> l = new ChangeListener<T>() {
+			private Subscription currentSubscription;
+
+			@Override
+			public void changed(ObservableValue<? extends T> observable, T oldValue, T newValue) {
+				if (this.currentSubscription != null) {
+					this.currentSubscription.dispose();
+				}
+				this.currentSubscription = scheduleExecution(delay, () -> {
+					consumer.accept(newValue);
+					this.currentSubscription = null;
+				});
+			}
+		};
+		property.addListener(l);
+		return new Subscription() {
+
+			@Override
+			public void dispose() {
+				property.removeListener(l);
+			}
+		};
+	}
 
 	/**
 	 * Wraps a runnable so that it is called on the UI thread.
