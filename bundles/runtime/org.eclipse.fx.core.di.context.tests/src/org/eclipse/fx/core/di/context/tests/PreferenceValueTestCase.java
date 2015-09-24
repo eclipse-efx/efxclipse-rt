@@ -10,6 +10,7 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.core.preferences.Preference;
+import org.eclipse.fx.core.preferences.Value;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,6 +71,58 @@ public class PreferenceValueTestCase {
 		String simpleString;
 	}
 
+	static class ValueInject {
+		@Inject
+		@Preference(key="simpleBoolean")
+		Value<Boolean> simpleBoolean;
+
+		@Inject
+		@Preference(key="simpleInt")
+		Value<Integer> simpleInt;
+
+		@Inject
+		@Preference(key="simpleFloat")
+		Value<Float> simpleFloat;
+
+		@Inject
+		@Preference(key="simpleDouble")
+		Value<Double> simpleDouble;
+
+		@Inject
+		@Preference(key="simpleLong")
+		Value<Long> simpleLong;
+
+		@Inject
+		@Preference(key="simpleString")
+		Value<String> simpleString;
+	}
+
+	static class ValueInjectDefaults {
+		@Inject
+		@Preference(key="simpleBoolean",defaultValue="true")
+		Value<Boolean> simpleBoolean;
+
+		@Inject
+		@Preference(key="simpleInt",defaultValue="-1")
+		Value<Integer> simpleInt;
+
+		@Inject
+		@Preference(key="simpleFloat",defaultValue="-1")
+		Value<Float> simpleFloat;
+
+		@Inject
+		@Preference(key="simpleDouble",defaultValue="-1")
+		Value<Double> simpleDouble;
+
+		@Inject
+		@Preference(key="simpleLong",defaultValue="-1")
+		Value<Long> simpleLong;
+
+		@Inject
+		@Preference(key="simpleString",defaultValue="")
+		Value<String> simpleString;
+	}
+
 	/**
 	 *
 	 */
@@ -126,6 +179,43 @@ public class PreferenceValueTestCase {
 	 *
 	 */
 	@Test
+	public void testValuePreferences() {
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		ValueInject simpleInject = ContextInjectionFactory.make(ValueInject.class, serviceContext);
+		Assert.assertFalse(simpleInject.simpleBoolean.getValue().booleanValue());
+		Assert.assertEquals(0,simpleInject.simpleInt.getValue().intValue());
+		Assert.assertEquals(0.0f,simpleInject.simpleFloat.getValue().floatValue(),0.0);
+		Assert.assertEquals(0.0d,simpleInject.simpleDouble.getValue().doubleValue(),0.0);
+		Assert.assertEquals(0l,simpleInject.simpleLong.getValue().longValue());
+		Assert.assertNull(simpleInject.simpleString.getValue());
+
+		IEclipsePreferences node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		node.putBoolean("simpleBoolean", true); //$NON-NLS-1$
+		node.putDouble("simpleDouble", 1.0d); //$NON-NLS-1$
+		node.putFloat("simpleFloat", 1.f); //$NON-NLS-1$
+		node.putInt("simpleInt", 1); //$NON-NLS-1$
+		node.putLong("simpleLong", 1l); //$NON-NLS-1$
+		String sValue = UUID.randomUUID().toString();
+		node.put("simpleString", sValue); //$NON-NLS-1$
+		try {
+			node.flush();
+		} catch (BackingStoreException e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+
+		Assert.assertTrue(simpleInject.simpleBoolean.getValue().booleanValue());
+		Assert.assertEquals(1,simpleInject.simpleInt.getValue().intValue());
+		Assert.assertEquals(1.0f,simpleInject.simpleFloat.getValue().floatValue(),0.0);
+		Assert.assertEquals(1.0d,simpleInject.simpleDouble.getValue().doubleValue(),0.0);
+		Assert.assertEquals(1l,simpleInject.simpleLong.getValue().longValue());
+		Assert.assertEquals(sValue, simpleInject.simpleString.getValue());
+	}
+
+	/**
+	 *
+	 */
+	@Test
 	public void testSimplePreferencesDefaultValues() {
 		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
 		SimpleInjectDefaults simpleInject = ContextInjectionFactory.make(SimpleInjectDefaults.class, serviceContext);
@@ -157,5 +247,42 @@ public class PreferenceValueTestCase {
 		Assert.assertEquals(1.0d,simpleInject.simpleDouble,0.0);
 		Assert.assertEquals(1l,simpleInject.simpleLong);
 		Assert.assertEquals(sValue, simpleInject.simpleString);
+	}
+
+	/**
+	 *
+	 */
+	@Test
+	public void testValuePreferencesDefaultValues() {
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		ValueInjectDefaults simpleInject = ContextInjectionFactory.make(ValueInjectDefaults.class, serviceContext);
+		Assert.assertTrue(simpleInject.simpleBoolean.getValue().booleanValue());
+		Assert.assertEquals(-1,simpleInject.simpleInt.getValue().intValue());
+		Assert.assertEquals(-1.0f,simpleInject.simpleFloat.getValue().floatValue(),0.0);
+		Assert.assertEquals(-1.0d,simpleInject.simpleDouble.getValue().doubleValue(),0.0);
+		Assert.assertEquals(-1l,simpleInject.simpleLong.getValue().longValue());
+		Assert.assertEquals("", simpleInject.simpleString.getValue()); //$NON-NLS-1$
+
+		IEclipsePreferences node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		node.putBoolean("simpleBoolean", false); //$NON-NLS-1$
+		node.putDouble("simpleDouble", 1.0d); //$NON-NLS-1$
+		node.putFloat("simpleFloat", 1.f); //$NON-NLS-1$
+		node.putInt("simpleInt", 1); //$NON-NLS-1$
+		node.putLong("simpleLong", 1l); //$NON-NLS-1$
+		String sValue = UUID.randomUUID().toString();
+		node.put("simpleString", sValue); //$NON-NLS-1$
+		try {
+			node.flush();
+		} catch (BackingStoreException e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+
+		Assert.assertFalse(simpleInject.simpleBoolean.getValue().booleanValue());
+		Assert.assertEquals(1,simpleInject.simpleInt.getValue().intValue());
+		Assert.assertEquals(1.0f,simpleInject.simpleFloat.getValue().floatValue(),0.0);
+		Assert.assertEquals(1.0d,simpleInject.simpleDouble.getValue().doubleValue(),0.0);
+		Assert.assertEquals(1l,simpleInject.simpleLong.getValue().longValue());
+		Assert.assertEquals(sValue, simpleInject.simpleString.getValue());
 	}
 }
