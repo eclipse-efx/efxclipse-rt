@@ -34,11 +34,15 @@ import javax.inject.Qualifier;
  * <pre>
  * class Test {
  *   &#64;Inject
- *   &#64;Preference("value")
+ *   &#64;Preference(key="value")
  *   int value;
  *
  *   &#64;Inject
- *   &#64;Preference("value")
+ *   &#64;Preference(key="value",defaultValue="100")
+ *   int value;
+ *
+ *   &#64;Inject
+ *   &#64;Preference(key="value")
  *   Value&lt;Integer&gt; value;
  * }
  * </pre>
