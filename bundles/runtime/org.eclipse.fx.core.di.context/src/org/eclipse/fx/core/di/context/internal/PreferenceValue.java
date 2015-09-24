@@ -51,6 +51,8 @@ public class PreferenceValue<T> implements Value<T> {
 	List<Callback<Void>> disposalCallbacks;
 	@Nullable
 	private T value;
+	@Nullable
+	private T defaultValue;
 
 	@Inject
 	@Optional
@@ -94,19 +96,20 @@ public class PreferenceValue<T> implements Value<T> {
 	 *            the type
 	 */
 	@SuppressWarnings("unchecked")
-	public void init(@NonNull String contextKey, @NonNull IEclipsePreferences preference, Class<?> cl) {
+	public void init(@NonNull String contextKey, @NonNull IEclipsePreferences preference, Class<?> cl, T defaultValue) {
 		this.contextKey = contextKey;
 		this.preference = preference;
 		this.contextKey = contextKey;
+		this.defaultValue = defaultValue;
 
 		IPreferenceChangeListener listener = event -> {
 			if (contextKey.equals(event.getKey())) {
-				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, cl));
+				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>)cl, defaultValue));
 			}
 		};
 		preference.addPreferenceChangeListener(listener);
 		this.listener = listener;
-		setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, cl));
+		setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>)cl, defaultValue));
 	}
 
 	@SuppressWarnings("unchecked")

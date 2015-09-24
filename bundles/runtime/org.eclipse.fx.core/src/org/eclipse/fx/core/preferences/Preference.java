@@ -60,4 +60,8 @@ public @interface Preference {
 	 * @return the desired type if no generics are used
 	 */
 	Class<?> type() default Object.class;
+	/**
+	 * @return a default value
+	 */
+	String defaultValue() default "";
 }
