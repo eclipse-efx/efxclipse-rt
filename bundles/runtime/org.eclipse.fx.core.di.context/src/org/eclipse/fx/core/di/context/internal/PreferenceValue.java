@@ -231,7 +231,13 @@ public class PreferenceValue<T> implements Value<T> {
 		IEclipsePreferences preference = this.preference;
 		IPreferenceChangeListener listener = this.listener;
 		if (preference != null && listener != null) {
-			preference.removePreferenceChangeListener(listener);
+			// it could be that the node has been removed already
+			try {
+				preference.removePreferenceChangeListener(listener);
+			} catch(Throwable t) {
+				// do nothing
+			}
+
 		}
 		this.preference = null;
 		this.listener = null;
