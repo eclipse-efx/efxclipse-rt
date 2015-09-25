@@ -1,6 +1,6 @@
 package org.eclipse.fx.core;
 
-public interface TypeTypeProviderService<T> extends TypeProviderService<Class<?>, T> {
+public interface TypeTypeProviderService<T> extends TypeProviderService<java.lang.reflect.Type, T> {
 	/**
 	 * If used with dependency injection and @LocalInstance
 	 */

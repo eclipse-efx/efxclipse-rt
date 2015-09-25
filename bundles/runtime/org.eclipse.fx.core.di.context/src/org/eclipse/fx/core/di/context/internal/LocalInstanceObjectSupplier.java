@@ -27,7 +27,7 @@ public class LocalInstanceObjectSupplier extends ExtendedObjectSupplier {
 		Requestor<?> r = (Requestor<?>) requestor;
 		InstanceCreator instanceCreator = r.getInjector().make(InstanceCreator.class, r.getPrimarySupplier());
 
-		Class<?> descriptorsClass = getDesiredClass(descriptor.getDesiredType());
+		Type descriptorsClass = descriptor.getDesiredType();
 
 		return instanceCreator.createInstance(descriptorsClass, r.getRequestingObjectClass());
 	}
@@ -53,12 +53,12 @@ public class LocalInstanceObjectSupplier extends ExtendedObjectSupplier {
 			this.providerList = providerList;
 		}
 
-		public O createInstance(Class<O> clazz, Class<?> owner) {
-			Optional<TypeTypeProviderService<O>> providerOp = this.providerList.stream().filter( p -> p.test(clazz)).findFirst();
+		public O createInstance(Type iType, Class<?> owner) {
+			Optional<TypeTypeProviderService<O>> providerOp = this.providerList.stream().filter( p -> p.test(iType)).findFirst();
 			if( ! providerOp.isPresent() ) {
 				return (O)null;
 			}
-			Class<O> type = (Class<O>) providerOp.get().getType(clazz);
+			Class<O> type = (Class<O>) providerOp.get().getType(iType);
 
 
 			IEclipseContext staticContext = EclipseContextFactory.create("static"); //$NON-NLS-1$
