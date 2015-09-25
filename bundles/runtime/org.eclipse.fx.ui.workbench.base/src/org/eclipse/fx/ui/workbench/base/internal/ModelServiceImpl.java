@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.base.internal;
 
+import java.lang.reflect.Type;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -22,7 +23,6 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIResource;
-import org.eclipse.fx.core.TypeProviderService;
 import org.eclipse.fx.core.TypeTypeProviderService;
 import org.eclipse.fx.ui.workbench.services.ModelService;
 import org.eclipse.jdt.annotation.NonNull;
@@ -59,12 +59,12 @@ public class ModelServiceImpl implements ModelService, TypeTypeProviderService<M
 	}
 
 	@Override
-	public Class<? extends ModelElementFactory> getType(Class<?> s) {
+	public Class<? extends ModelElementFactory> getType(Type s) {
 		return ModelElementFactoryImpl.class;
 	}
 
 	@Override
-	public boolean test(Class<?> t) {
+	public boolean test(Type t) {
 		return t == ModelElementFactory.class;
 	}
 
