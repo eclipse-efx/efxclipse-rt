@@ -3,5 +3,6 @@
    <implementation class="org.eclipse.fx.ui.workbench.base.internal.ModelServiceImpl"/>
    <service>
       <provide interface="org.eclipse.fx.ui.workbench.services.ModelService"/>
+      <provide interface="org.eclipse.fx.core.TypeTypeProviderService"/>
    </service>
 </scr:component>
