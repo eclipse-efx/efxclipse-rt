@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2015 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.core;
 
 import java.util.Optional;
@@ -29,7 +39,7 @@ class StatusImpl implements Status {
 	 * The return code
 	 */
 	public final int code;
-	
+
 	/**
 	 * Ok status
 	 */
@@ -74,7 +84,7 @@ class StatusImpl implements Status {
 	public int getCode() {
 		return this.code;
 	}
-	
+
 	@Override
 	public Optional<State> state() {
 		return Optional.of(this.state);
@@ -85,6 +95,6 @@ class StatusImpl implements Status {
 		return "StatusImpl [state=" + this.state + ", message=" + this.message + ", throwable=" + this.throwable + ", code=" + this.code  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ "]"; //$NON-NLS-1$
 	}
-	
-	
+
+
 }
