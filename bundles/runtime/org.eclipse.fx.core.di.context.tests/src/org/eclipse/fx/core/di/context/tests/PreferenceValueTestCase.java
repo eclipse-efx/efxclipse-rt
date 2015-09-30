@@ -308,34 +308,6 @@ public class PreferenceValueTestCase {
 		}
 	}
 
-	@Test
-	public void bla() {
-		try {
-			IEclipsePreferences node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests");
-			IEclipsePreferences confNode = ConfigurationScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests");
-
-			node.addPreferenceChangeListener( e -> {
-				System.err.println("INSTANCE MODIFICATION: " + e);
-				System.err.println(node.get("simpleVal", null));
-			});
-
-			confNode.addPreferenceChangeListener( e -> {
-				System.err.println("CONFIGURATION MODIFICATION: " + e);
-				System.err.println(confNode.get("simpleVal", null));
-			});
-
-			confNode.put("simpleVal", "1");
-			confNode.flush();
-			confNode.put("simpleVal", "2");
-			confNode.flush();
-			confNode.remove("simpleVal");
-			confNode.flush();
-		} catch(Exception e) {
-
-		}
-
-	}
-
 	/**
 	 *
 	 */
