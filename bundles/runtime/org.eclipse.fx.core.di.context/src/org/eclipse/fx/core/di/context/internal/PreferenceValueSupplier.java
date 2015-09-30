@@ -17,9 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
+import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.e4.core.di.IInjector;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
@@ -27,14 +30,15 @@ import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
 import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.ObjectSerializer;
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.ValueSerializer;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.core.preferences.Preference;
 import org.eclipse.fx.core.preferences.Value;
-import org.osgi.framework.BundleContext;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 
 import com.google.common.base.Strings;
@@ -99,11 +103,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 
 	private static ValueSerializer getValueSerializer() {
 		if( serializer == null ) {
-			BundleContext bundleContext = FrameworkUtil.getBundle(PreferenceValueSupplier.class).getBundleContext();
-			ServiceReference<ValueSerializer> reference = bundleContext.getServiceReference(ValueSerializer.class);
-			if( reference != null ) {
-				serializer = bundleContext.getService(reference);
-			}
+			serializer = Util.lookupService(ValueSerializer.class);
 		}
 		return serializer;
 	}
@@ -112,20 +112,29 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 
 	private static ObjectSerializer getObjectSerializer() {
 		if( objectSerializer == null ) {
-			BundleContext bundleContext = FrameworkUtil.getBundle(PreferenceValueSupplier.class).getBundleContext();
-			ServiceReference<ObjectSerializer> reference = bundleContext.getServiceReference(ObjectSerializer.class);
-			if( reference != null ) {
-				objectSerializer = bundleContext.getService(reference);
-			}
+			objectSerializer = Util.lookupService(ObjectSerializer.class);
 		}
 		return objectSerializer;
 	}
 
+	private static IPreferencesService preferenceService;
+
+	private static IPreferencesService getPreferenceService() {
+		if( preferenceService == null ) {
+			preferenceService = Util.lookupService(IPreferencesService.class);
+		}
+		return preferenceService;
+	}
+
+	@SuppressWarnings({ "unchecked", "null" })
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
 		if (descriptor == null)
 			return null;
 		Class<?> descriptorsClass = getDesiredClass(descriptor.getDesiredType());
+		if( descriptorsClass == null ) {
+			return null;
+		}
 		String nodePath = getNodePath(descriptor, requestor.getRequestingObjectClass());
 
 		if (nodePath == null || nodePath.length() == 0)
@@ -155,7 +164,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 				addListener(nodePath, key, requestor);
 
 			Object v = getDefault(defaultValue, descriptorsClass);
-			return getValue(preferences, key, (Class<Object>) descriptorsClass, v);
+			return getValue(nodePath, key, (Class<Object>) descriptorsClass, v);
 		}
 
 		ValueSerializer valueSerializer = getValueSerializer();
@@ -164,7 +173,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 				addListener(nodePath, key, requestor);
 
 			Object v = getDefault(defaultValue, descriptorsClass);
-			return getValue(preferences, key, (Class<Object>) descriptorsClass, v);
+			return getValue(nodePath, key, (Class<Object>) descriptorsClass, v);
 		}
 
 		Requestor<?> r = (Requestor<?>) requestor;
@@ -176,7 +185,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 					addListener(nodePath, key, requestor);
 				}
 
-				return getValue(preferences, key, (Class<Object>) descriptorsClass, getDefault(defaultValue, descriptorsClass));
+				return getValue(nodePath, key, (Class<Object>) descriptorsClass, getDefault(defaultValue, descriptorsClass));
 			}
 		}
 
@@ -190,7 +199,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 			return IInjector.NOT_A_VALUE;
 		}
 
-		v.init(key, preferences, type, getDefault(defaultValue, type));
+		v.init(nodePath, key, type, getDefault(defaultValue, type));
 
 
 		if (descriptorsClass != Value.class) {
@@ -200,7 +209,8 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		return v;
 	}
 
-	private static <T> T getDefault(String value, Class<T> type) {
+	@SuppressWarnings({ "unchecked", "null" })
+	private static <@Nullable T> @Nullable T getDefault(@Nullable String value, @NonNull Class<@NonNull T> type) {
 		if (type == Boolean.class || type == boolean.class) {
 			return (T) Boolean.valueOf(value);
 		} else if (type == int.class || type == Integer.class) {
@@ -265,14 +275,14 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 			}
 		}
 
-		return (T)null;
+		return (@Nullable T)null;
 	}
 
 	/**
 	 * Get the preference value for the desired type
 	 *
-	 * @param preference
-	 *            the preference
+	 * @param path
+	 *            the path
 	 * @param key
 	 *            the key
 	 * @param type
@@ -282,35 +292,39 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 	 * @return the value
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T getValue(IEclipsePreferences preference, String key, Class<T> type, T defaultValue) {
+	public static <T> T getValue(String path, String key, Class<T> type, T defaultValue) {
 		if (type.isPrimitive()) {
 			if (type.equals(boolean.class)) {
-				return (T) Boolean.valueOf(preference.getBoolean(key, ((Boolean) defaultValue).booleanValue()));
+				return (T) Boolean.valueOf(getPreferenceService().getBoolean(path, key, ((Boolean) defaultValue).booleanValue(),null));
 			} else if (type.equals(int.class)) {
-				return (T) Integer.valueOf(preference.getInt(key, ((Integer) defaultValue).intValue()));
+				return (T) Integer.valueOf(getPreferenceService().getInt(path, key, ((Integer) defaultValue).intValue(), null));
 			} else if (type.equals(double.class)) {
-				return (T) Double.valueOf(preference.getDouble(key, ((Double) defaultValue).doubleValue()));
+				return (T) Double.valueOf(getPreferenceService().getDouble(path, key, ((Double) defaultValue).doubleValue(), null));
 			} else if (type.equals(float.class)) {
-				return (T) Float.valueOf(preference.getFloat(key, ((Float) defaultValue).floatValue()));
+				return (T) Float.valueOf(getPreferenceService().getFloat(path, key, ((Float) defaultValue).floatValue(), null));
 			} else if (type.equals(long.class)) {
-				return (T) Long.valueOf(preference.getLong(key, ((Long) defaultValue).longValue()));
+				return (T) Long.valueOf(getPreferenceService().getLong(path, key, ((Long) defaultValue).longValue(), null));
 			}
 		}
 
 		if (String.class.equals(type) || CharSequence.class.equals(type)) {
-			return (T) preference.get(key, (String) defaultValue);
+			String v = null;
+			if( defaultValue != null ) {
+				v = defaultValue.toString();
+			}
+			return (T) getPreferenceService().getString(path, key, v, null);
 		} else if (Boolean.class.equals(type)) {
-			return (T) Boolean.valueOf(preference.getBoolean(key, ((Boolean) defaultValue).booleanValue()));
+			return (T) Boolean.valueOf(getPreferenceService().getBoolean(path, key, ((Boolean) defaultValue).booleanValue(), null));
 		} else if (Integer.class.equals(type)) {
-			return (T) Integer.valueOf(preference.getInt(key, ((Integer) defaultValue).intValue()));
+			return (T) Integer.valueOf(getPreferenceService().getInt(path, key, ((Integer) defaultValue).intValue(), null));
 		} else if (Double.class.equals(type)) {
-			return (T) Double.valueOf(preference.getDouble(key, ((Double) defaultValue).doubleValue()));
+			return (T) Double.valueOf(getPreferenceService().getDouble(path, key, ((Double) defaultValue).doubleValue(), null));
 		} else if (Float.class.equals(type)) {
-			return (T) Float.valueOf(preference.getFloat(key, ((Float) defaultValue).floatValue()));
+			return (T) Float.valueOf(getPreferenceService().getFloat(path, key, ((Float) defaultValue).floatValue(), null));
 		} else if (Long.class.equals(type)) {
-			return (T) Long.valueOf(preference.getLong(key, ((Long) defaultValue).longValue()));
+			return (T) Long.valueOf(getPreferenceService().getLong(path, key, ((Long) defaultValue).longValue(), null));
 		} else {
-			String value = preference.get(key, null);
+			String value = getPreferenceService().getString(path, key, null, null);
 			if( value != null ) {
 				ValueSerializer valueSerializer = getValueSerializer();
 				if( valueSerializer != null ) {
@@ -329,7 +343,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		return defaultValue;
 	}
 
-	private static Class<?> getDesiredClass(Type desiredType) {
+	private static @Nullable Class<?> getDesiredClass(Type desiredType) {
 		if (desiredType instanceof Class<?>)
 			return (Class<?>) desiredType;
 		if (desiredType instanceof ParameterizedType) {
@@ -376,9 +390,15 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 				}
 			}
 		}
-		final IEclipsePreferences node = InstanceScope.INSTANCE.getNode(nodePath);
-		PrefInjectionListener listener = new PrefInjectionListener(node, key, requestor);
-		node.addPreferenceChangeListener(listener);
+		final IEclipsePreferences instanceNode = InstanceScope.INSTANCE.getNode(nodePath);
+		PrefInjectionListener listener = new PrefInjectionListener(instanceNode, key, requestor);
+		instanceNode.addPreferenceChangeListener(listener);
+
+		final IEclipsePreferences configNode = ConfigurationScope.INSTANCE.getNode(nodePath);
+		configNode.addPreferenceChangeListener(listener);
+
+		final IEclipsePreferences defaultNode = DefaultScope.INSTANCE.getNode(nodePath);
+		defaultNode.addPreferenceChangeListener(listener);
 
 		synchronized (this.listenerCache) {
 			HashMap<String, List<PrefInjectionListener>> map = this.listenerCache.get(nodePath);

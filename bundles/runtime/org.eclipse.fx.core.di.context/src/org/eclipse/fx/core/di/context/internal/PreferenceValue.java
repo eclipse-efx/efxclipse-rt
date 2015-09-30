@@ -17,7 +17,10 @@ import java.util.List;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
@@ -44,7 +47,12 @@ import org.osgi.service.prefs.BackingStoreException;
  */
 public class PreferenceValue<T> implements Value<T> {
 	@Nullable
-	private IEclipsePreferences preference;
+	private IEclipsePreferences instancePreference;
+	@Nullable
+	private IEclipsePreferences configurationPreference;
+	@Nullable
+	private IEclipsePreferences defaultPreference;
+
 	@Nullable
 	private String contextKey;
 	@Nullable
@@ -103,31 +111,42 @@ public class PreferenceValue<T> implements Value<T> {
 	/**
 	 * Initialize the value
 	 *
+	 * @param nodePath
+	 *            the node path
 	 * @param contextKey
 	 *            the context key
-	 * @param preference
-	 *            the preference node
 	 * @param cl
 	 *            the type
 	 * @param defaultValue
 	 *            the default value
 	 */
-	@SuppressWarnings("unchecked")
-	public void init(@NonNull String contextKey, @NonNull IEclipsePreferences preference, Class<?> cl, T defaultValue) {
+	@SuppressWarnings({ "unchecked", "null" })
+	public void init(String nodePath, @NonNull String contextKey, Class<?> cl,
+			T defaultValue) {
 		this.contextKey = contextKey;
-		this.preference = preference;
-		this.contextKey = contextKey;
+		IEclipsePreferences instancePreference = InstanceScope.INSTANCE.getNode(nodePath);
+		IEclipsePreferences configurationPreference = ConfigurationScope.INSTANCE.getNode(nodePath);
+		IEclipsePreferences defaultPreference = DefaultScope.INSTANCE.getNode(nodePath);
 
 		IPreferenceChangeListener listener = event -> {
 			if (contextKey.equals(event.getKey())) {
-				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>) cl,
+				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(nodePath, contextKey, (Class<T>) cl,
 						defaultValue));
 			}
 		};
-		preference.addPreferenceChangeListener(listener);
 		this.listener = listener;
+		instancePreference.addPreferenceChangeListener(listener);
+		configurationPreference.addPreferenceChangeListener(listener);
+		defaultPreference.addPreferenceChangeListener(listener);
+
+		this.instancePreference = instancePreference;
+		this.configurationPreference = configurationPreference;
+		this.defaultPreference = defaultPreference;
+		this.contextKey = contextKey;
+
+
 		setCurrentValue(
-				(@Nullable T) PreferenceValueSupplier.getValue(preference, contextKey, (Class<T>) cl, defaultValue));
+				(@Nullable T) PreferenceValueSupplier.getValue(nodePath, contextKey, (Class<T>) cl, defaultValue));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -152,7 +171,7 @@ public class PreferenceValue<T> implements Value<T> {
 
 	@Override
 	public void publish(@Nullable T value) {
-		IEclipsePreferences preference = this.preference;
+		IEclipsePreferences preference = this.instancePreference;
 		if (preference == null) {
 			throw new IllegalStateException("The backing IEclipsePreference is null"); //$NON-NLS-1$
 		}
@@ -161,10 +180,10 @@ public class PreferenceValue<T> implements Value<T> {
 			preference.remove(this.contextKey);
 		} else {
 			String v;
-			if( value.getClass() == String.class || value.getClass() == CharSequence.class ) {
+			if (value.getClass() == String.class || value.getClass() == CharSequence.class) {
 				v = value.toString();
 			} else {
-				if( this.valueSerializer.test(value.getClass()) ) {
+				if (this.valueSerializer.test(value.getClass())) {
 					v = this.valueSerializer.toString(value);
 				} else {
 					v = this.objectSerializer.serialize(value);
@@ -257,19 +276,27 @@ public class PreferenceValue<T> implements Value<T> {
 			this.callbacks.clear();
 		}
 		this.value = null;
-		IEclipsePreferences preference = this.preference;
+
+		cleanupListener(this.instancePreference);
+		cleanupListener(this.configurationPreference);
+		cleanupListener(this.defaultPreference);
+
+		this.instancePreference = null;
+		this.configurationPreference = null;
+		this.defaultPreference = null;
+		this.listener = null;
+	}
+
+	private void cleanupListener(@Nullable IEclipsePreferences node) {
 		IPreferenceChangeListener listener = this.listener;
-		if (preference != null && listener != null) {
+		if (node != null && listener != null) {
 			// it could be that the node has been removed already
 			try {
-				preference.removePreferenceChangeListener(listener);
+				node.removePreferenceChangeListener(listener);
 			} catch (Throwable t) {
 				// do nothing
 			}
-
 		}
-		this.preference = null;
-		this.listener = null;
 	}
 
 	static class ValueAccessImpl implements ValueAccess {

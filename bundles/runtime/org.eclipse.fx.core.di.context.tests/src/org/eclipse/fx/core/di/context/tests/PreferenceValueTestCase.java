@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
@@ -298,10 +299,41 @@ public class PreferenceValueTestCase {
 		try {
 			IEclipsePreferences node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
 			node.removeNode();
+
+			IEclipsePreferences confNode = ConfigurationScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+			confNode.removeNode();
 		} catch (BackingStoreException e) {
 
 			Assert.fail();
 		}
+	}
+
+	@Test
+	public void bla() {
+		try {
+			IEclipsePreferences node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests");
+			IEclipsePreferences confNode = ConfigurationScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests");
+
+			node.addPreferenceChangeListener( e -> {
+				System.err.println("INSTANCE MODIFICATION: " + e);
+				System.err.println(node.get("simpleVal", null));
+			});
+
+			confNode.addPreferenceChangeListener( e -> {
+				System.err.println("CONFIGURATION MODIFICATION: " + e);
+				System.err.println(confNode.get("simpleVal", null));
+			});
+
+			confNode.put("simpleVal", "1");
+			confNode.flush();
+			confNode.put("simpleVal", "2");
+			confNode.flush();
+			confNode.remove("simpleVal");
+			confNode.flush();
+		} catch(Exception e) {
+
+		}
+
 	}
 
 	/**
@@ -672,5 +704,204 @@ public class PreferenceValueTestCase {
 		Assert.assertEquals(serialized.replaceAll("\\s", ""), node.get("complexValueDefault", null).replaceAll("\\s", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		Assert.assertEquals(serialized.replaceAll("\\s", ""), node.get("complexProperty", null).replaceAll("\\s", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		Assert.assertEquals(serialized.replaceAll("\\s", ""), node.get("complexPropertyDefault", null).replaceAll("\\s", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+	}
+
+	/**
+	 *
+	 */
+	@Test
+	public void testKeyRemoved() {
+		IEclipsePreferences node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		String value = UUID.randomUUID().toString();
+		node.put("simpleString", value); //$NON-NLS-1$
+		try {
+			node.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		ValueInject simpleInject = ContextInjectionFactory.make(ValueInject.class, serviceContext);
+
+		Assert.assertEquals(value, simpleInject.simpleString.getValue());
+
+		try {
+			node.remove("simpleString"); //$NON-NLS-1$
+			node.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Assert.assertNull(value, simpleInject.simpleString.getValue());
+
+		node = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		value = UUID.randomUUID().toString();
+		node.put("simpleString", value); //$NON-NLS-1$
+
+		Assert.assertEquals(value, simpleInject.simpleString.getValue());
+	}
+
+	/**
+	 *
+	 */
+	@Test
+	public void testFallbackScopeConfValueRemoved() {
+		IEclipsePreferences confNode = ConfigurationScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		String value = UUID.randomUUID().toString();
+		confNode.put("simpleString", value); //$NON-NLS-1$
+
+		try {
+			confNode.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		ValueInject simpleInject = ContextInjectionFactory.make(ValueInject.class, serviceContext);
+
+		Assert.assertEquals(value, simpleInject.simpleString.getValue());
+
+		confNode = ConfigurationScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		value = UUID.randomUUID().toString();
+		confNode.put("simpleString", value); //$NON-NLS-1$
+
+		try {
+			confNode.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Assert.assertEquals(value, simpleInject.simpleString.getValue());
+
+		try {
+			confNode.remove("simpleString"); //$NON-NLS-1$
+			confNode.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Assert.assertNull(value, simpleInject.simpleString.getValue());
+
+		confNode = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		value = UUID.randomUUID().toString();
+		confNode.put("simpleString", value); //$NON-NLS-1$
+
+		Assert.assertEquals(value, simpleInject.simpleString.getValue());
+	}
+
+	/**
+	 *
+	 */
+	@Test
+	public void testFallbackScopeInstanceValueRemoved() {
+		IEclipsePreferences confNode = ConfigurationScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		String confValue = UUID.randomUUID().toString();
+		confNode.put("simpleString", confValue); //$NON-NLS-1$
+
+		IEclipsePreferences instanceNode = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		String instanceValue = UUID.randomUUID().toString();
+		instanceNode.put("simpleString", instanceValue); //$NON-NLS-1$
+
+
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		ValueInject simpleInject = ContextInjectionFactory.make(ValueInject.class, serviceContext);
+
+		Assert.assertEquals(instanceValue, simpleInject.simpleString.getValue());
+
+		try {
+			instanceNode.remove("simpleString"); //$NON-NLS-1$
+			instanceNode.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Assert.assertEquals(confValue, simpleInject.simpleString.getValue());
+	}
+
+	/**
+	 *
+	 */
+	@Test
+	public void testFallbackScopeConfPrimRemoved() {
+		IEclipsePreferences confNode = ConfigurationScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		String value = UUID.randomUUID().toString();
+		confNode.put("simpleString", value); //$NON-NLS-1$
+
+		try {
+			confNode.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		SimpleInject simpleInject = ContextInjectionFactory.make(SimpleInject.class, serviceContext);
+
+		Assert.assertEquals(value, simpleInject.simpleString);
+
+		confNode = ConfigurationScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		value = UUID.randomUUID().toString();
+		confNode.put("simpleString", value); //$NON-NLS-1$
+
+		try {
+			confNode.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Assert.assertEquals(value, simpleInject.simpleString);
+
+		try {
+			confNode.remove("simpleString"); //$NON-NLS-1$
+			confNode.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Assert.assertNull(value, simpleInject.simpleString);
+
+		confNode = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		value = UUID.randomUUID().toString();
+		confNode.put("simpleString", value); //$NON-NLS-1$
+
+		Assert.assertEquals(value, simpleInject.simpleString);
+	}
+
+	/**
+	 *
+	 */
+	@Test
+	public void testFallbackScopeInstancePrimRemoved() {
+		IEclipsePreferences confNode = ConfigurationScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		String confValue = UUID.randomUUID().toString();
+		confNode.put("simpleString", confValue); //$NON-NLS-1$
+
+		IEclipsePreferences instanceNode = InstanceScope.INSTANCE.getNode("org.eclipse.fx.core.di.context.tests"); //$NON-NLS-1$
+		String instanceValue = UUID.randomUUID().toString();
+		instanceNode.put("simpleString", instanceValue); //$NON-NLS-1$
+
+
+		IEclipseContext serviceContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(getClass()).getBundleContext());
+		SimpleInject simpleInject = ContextInjectionFactory.make(SimpleInject.class, serviceContext);
+
+		Assert.assertEquals(instanceValue, simpleInject.simpleString);
+
+		try {
+			instanceNode.remove("simpleString"); //$NON-NLS-1$
+			instanceNode.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Assert.assertEquals(confValue, simpleInject.simpleString);
 	}
 }
