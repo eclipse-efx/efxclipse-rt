@@ -16,6 +16,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.fx.core.URI;
+import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.LoggerFactory;
+import org.eclipse.fx.ui.controls.image.FontIcon;
+import org.eclipse.fx.ui.controls.image.FontIconView;
+import org.eclipse.fx.ui.controls.image.spi.IconFontProvider;
+import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;
+
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -25,14 +33,30 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-import org.eclipse.fx.core.URI;
-import org.eclipse.fx.ui.controls.image.FontIcon;
-import org.eclipse.fx.ui.controls.image.FontIconView;
-import org.eclipse.fx.ui.controls.image.spi.IconFontProvider;
-import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;
-
 public class FontIconViewNodeProvider implements GraphicNodeProvider {
 
+	private LoggerFactory factory;
+	private Logger logger;
+
+	/**
+	 * Setting a new factory
+	 * 
+	 * @param factory
+	 *            the new factory
+	 */
+	public void bindLoggerFactory(LoggerFactory factory) {
+		this.factory = factory;
+		this.logger = null;
+	}
+
+	@SuppressWarnings("null")
+	private Logger getLogger() {
+		if (this.logger == null && this.factory != null) {
+			this.logger = this.factory.createLogger(getClass().getName());
+		}
+		return this.logger;
+	}
+	
 	@Override
 	public String getName() {
 		return "fx.iconprovider";
@@ -44,10 +68,13 @@ public class FontIconViewNodeProvider implements GraphicNodeProvider {
 	}
 	
 	public void bindIconFontProvider(IconFontProvider provider) {
-		System.err.println("provider+: " + provider);
+		if (getLogger() != null) {
+			getLogger().debug("provider+: " + provider);
+		} else {
+			System.err.println("provider+: " + provider);
+		}
 	}
 
-	
 //   supported formats:
 //   generic
 //   <font-uri>?iconId=<iconUTF8>
@@ -57,7 +84,7 @@ public class FontIconViewNodeProvider implements GraphicNodeProvider {
 //	 awesome = some.ttf
 //	 fa-flask = 0x....
 //   icon://<type>:<id>
-//	 icon://awesome:fa-flask
+//	 icon://FontAwesome:fa-flask
 	
 	private static Pattern PATTERN_URI_MAPPING = Pattern.compile("^icon://([^:]+):([^?]+).*");
 	private static Pattern PATTERN_GENERIC = Pattern.compile("^(.*)?iconId=(.+)$");
@@ -65,28 +92,31 @@ public class FontIconViewNodeProvider implements GraphicNodeProvider {
 	@Override
 	public Node getGraphicNode(URI uri) throws IOException {
 		final String uriString = uri.toString();
-		System.err.println("FontIconNodeProvider#getGraphicNode " + uriString);
+		getLogger().info("FontIconNodeProvider#getGraphicNode " + uriString);
 		if (uriString.startsWith("icon://")) {
 			Matcher matcher = PATTERN_URI_MAPPING.matcher(uriString);
 			if (matcher.matches()) {
 				String type = matcher.group(1);
 				String iconName = matcher.group(2);
-				System.err.println("  MATCH: " + type + " / " + iconName);
+				getLogger().debug("  MATCH: " + type + " / " + iconName);
 				
 				FontIconView node = new FontIconView();
-				System.err.println("  Icon node: " + System.identityHashCode(node));
+				getLogger().trace("  Icon node: " + System.identityHashCode(node));
 				Font font = Font.font(type);
-				System.err.println("  Setting font to " + font);
+				if (!font.getFamily().equals(type)) {
+					logger.warning("Font could not be found: " + type + " - Found instead: " + font.getFamily());
+				}
+				getLogger().debug("  Setting font to " + font);
 				node.setFont(font);
-				System.err.println("  Setting icon to " + iconName);
+				getLogger().debug("  Setting icon to " + iconName);
 				node.setIcon(FontIcon.create(iconName));
 //				node.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(0), new BorderWidths(1))));
-//				System.err.println("  Readback: " + node.getFont());
+//				getLogger().debug("  Readback: " + node.getFont());
 				return node;
 			}
 			else {
 				// error
-				System.err.println("could not parse " + uriString);
+				getLogger().error("could not parse " + uriString);
 			}
 			
 		}
@@ -104,7 +134,7 @@ public class FontIconViewNodeProvider implements GraphicNodeProvider {
 			}
 			else {
 				// error
-				System.err.println("  could not parse " + uriString);
+				getLogger().error("  could not parse " + uriString);
 			}
 		}
 		
