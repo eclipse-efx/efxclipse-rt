@@ -207,9 +207,11 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 					}
 				}
 
-				getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, event.getText() + prefix);
+				String newLine = System.getProperty("line.separator"); //$NON-NLS-1$
+
+				getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, newLine + prefix);
 				// listView.getSelectionModel().select(listView.getSelectionModel().getSelectedIndex()+1);
-				getControl().setCaretOffset(offset + 1 + prefix.length());
+				getControl().setCaretOffset(offset + newLine.length() + prefix.length());
 			}
 			break;
 		case DELETE:
