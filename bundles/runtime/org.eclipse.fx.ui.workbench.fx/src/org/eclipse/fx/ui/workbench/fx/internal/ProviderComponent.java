@@ -156,8 +156,10 @@ public class ProviderComponent {
 		synchronized (this.graphicProviderBySuffix) {
 			for (Set<RankedEntry<GraphicNodeProvider>> set : this.graphicProviderBySuffix.values()) {
 				Iterator<RankedEntry<GraphicNodeProvider>> it = set.iterator();
-				if (it.next().provider == provider) {
-					it.remove();
+				while( it.hasNext() ) {
+					if (it.next().provider == provider) {
+						it.remove();
+					}
 				}
 			}
 		}
