@@ -1,7 +1,11 @@
-package org.eclipse.fx.ui.controls.image.fontawesome;
+package org.eclipse.fx.ui.controls.image;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.eclipse.fx.ui.controls.image.fontawesome.AwesomeIconFontProvider;
+
+import javafx.scene.text.Font;
 
 public enum AwesomeIcons {
 	/**
@@ -2546,6 +2550,13 @@ public enum AwesomeIcons {
 
 	public static AwesomeIcons get(String name) {
 		return byNameMap.get(name);
+	}
+
+	/**
+	 * @return The font that is used to provide the icons
+	 */
+	public static Font getFont() {
+		return AwesomeIconFontProvider.getFont();
 	}
 
 }

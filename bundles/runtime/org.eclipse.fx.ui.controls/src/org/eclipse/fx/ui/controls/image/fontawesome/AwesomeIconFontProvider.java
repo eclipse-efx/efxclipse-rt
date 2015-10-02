@@ -1,5 +1,6 @@
 package org.eclipse.fx.ui.controls.image.fontawesome;
 
+import org.eclipse.fx.ui.controls.image.AwesomeIcons;
 import org.eclipse.fx.ui.controls.image.spi.IconFontProvider;
 import org.osgi.service.component.annotations.Component;
 
@@ -7,22 +8,23 @@ import javafx.scene.text.Font;
 
 @Component(service=IconFontProvider.class)
 public class AwesomeIconFontProvider extends IconFontProvider {
-	public static String FONT_NAME;
-	public static String FONT_FAMILY;
 
-	static {
-		Font font = Font.loadFont(AwesomeIconFontProvider.class.getResourceAsStream("FontAwesome.otf"), 24);
-		FONT_NAME = font.getName();
-		FONT_FAMILY = font.getFamily();
-	}
+	private static Font font = Font.loadFont(AwesomeIconFontProvider.class.getResourceAsStream("FontAwesome.otf"), 24); //$NON-NLS-1$
 
 	public AwesomeIconFontProvider() {
 
 	}
+	
+	/**
+	 * @return The font used by this font icon set
+	 */
+	public static Font getFont() {
+		return font;
+	}
 
 	@Override
 	public String getName() {
-		return FONT_NAME;
+		return font.getName();
 	}
 
 	@Override
