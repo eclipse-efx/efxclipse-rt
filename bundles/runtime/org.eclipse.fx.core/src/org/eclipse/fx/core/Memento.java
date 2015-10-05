@@ -10,18 +10,21 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+import java.util.Optional;
+
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A simple storage API for states that need to be stored
- * 
+ *
  * @since 2.0
  */
 public interface Memento {
 	/**
 	 * Store a string value
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param value
@@ -31,7 +34,7 @@ public interface Memento {
 
 	/**
 	 * Store a boolean value
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param value
@@ -41,7 +44,7 @@ public interface Memento {
 
 	/**
 	 * Store an integer value
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param value
@@ -51,7 +54,7 @@ public interface Memento {
 
 	/**
 	 * Store a double value
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param value
@@ -61,7 +64,7 @@ public interface Memento {
 
 	/**
 	 * Restore an object serialized with the given serializer
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param value
@@ -73,7 +76,7 @@ public interface Memento {
 
 	/**
 	 * Remove the given key
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 */
@@ -81,7 +84,7 @@ public interface Memento {
 
 	/**
 	 * Check if the given key exists
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @return <code>true</code> if exists else <code>false</code>
@@ -90,7 +93,7 @@ public interface Memento {
 
 	/**
 	 * Retrieve the value for the given key
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param defaultValue
@@ -102,7 +105,7 @@ public interface Memento {
 
 	/**
 	 * Retrieve the value for the given key
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param defaultValue
@@ -114,7 +117,7 @@ public interface Memento {
 
 	/**
 	 * Retrieve the value for the given key
-	 * 
+	 *
 	 * @param key
 	 *            the value
 	 * @param defaultValue
@@ -126,7 +129,7 @@ public interface Memento {
 
 	/**
 	 * Retrieve the value for the given key
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param defaultValue
@@ -138,7 +141,7 @@ public interface Memento {
 
 	/**
 	 * Retrieve the deserialized object
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param clazz
@@ -149,4 +152,19 @@ public interface Memento {
 	 * @return the value or default value provided
 	 */
 	public <O> @Nullable O get(String key, Class<O> clazz, @Nullable O defaultValue);
+
+	/**
+	 * Retrieve the deserialized object as an optional
+	 *
+	 * @param key
+	 *            the key
+	 * @param clazz
+	 *            the type
+	 * @return the value or default value provided
+	 * @since 2.2
+	 */
+	public default <@Nullable O> Optional<O> get(String key, Class<O> clazz) {
+		O o = get(key, clazz, null);
+		return Optional.ofNullable(o);
+	}
 }
