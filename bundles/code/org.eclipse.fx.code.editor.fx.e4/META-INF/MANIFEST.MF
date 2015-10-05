@@ -25,6 +25,5 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.S
  OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.PresentationReconcilerContextFunction.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.AnnotationPresenterContextFunction.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.ActiveOutlineContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.EditorOpenerContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.TextHoverMaproviderContextFunction.xml
+ OSGI-INF/services/org.eclipse.fx.code.editor.fx.e4.internal.EditorOpenerContextFunction.xml
 Bundle-Vendor: Eclipse.org
