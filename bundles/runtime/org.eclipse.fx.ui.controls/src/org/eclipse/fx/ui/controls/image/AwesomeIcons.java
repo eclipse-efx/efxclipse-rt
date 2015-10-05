@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2015 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Christoph Caks <ccaks@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.ui.controls.image;
 
 import java.util.HashMap;
@@ -7,6 +17,11 @@ import org.eclipse.fx.ui.controls.image.fontawesome.AwesomeIconFontProvider;
 
 import javafx.scene.text.Font;
 
+/**
+ * All font awesome icons
+ *
+ * @since 2.2.0
+ */
 public enum AwesomeIcons {
 	/**
 	 * <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
