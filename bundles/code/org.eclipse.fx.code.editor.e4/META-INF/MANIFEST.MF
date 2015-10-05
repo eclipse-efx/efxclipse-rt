@@ -2,8 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Basic service APIs for an Editor into Eclipse 4
 Bundle-SymbolicName: org.eclipse.fx.code.editor.e4
-Bundle-Version: 2.1.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Version: 2.2.0.qualifier
+Bundle-Vendor: Eclipse.org
+Export-Package: org.eclipse.fx.code.editor.e4;x-internal:=true,
+ org.eclipse.fx.code.editor.e4.addons;x-internal:=true,
+ org.eclipse.fx.code.editor.e4.handlers;x-internal:=true
 Require-Bundle: org.eclipse.e4.core.contexts,
  org.eclipse.fx.code.editor,
  org.eclipse.e4.core.di;bundle-version="1.5.0",
@@ -15,15 +18,11 @@ Require-Bundle: org.eclipse.e4.core.contexts,
  org.eclipse.e4.ui.workbench,
  org.eclipse.e4.core.services,
  org.eclipse.osgi.services,
- org.eclipse.e4.ui.di
+ org.eclipse.e4.ui.di,
+ org.eclipse.fx.ui.workbench.services,
+ org.eclipse.fx.core.di
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.inject;version="1.0.0",
  org.osgi.service.component.annotations
-Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.DocumentPartitionerContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.AnnotationModelContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.DocumentContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.InputContextFunction.xml
+Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.DocumentPartitionerContextFunction.xml,OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.AnnotationModelContextFunction.xml,OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.DocumentContextFunction.xml,OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.InputContextFunction.xml
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.fx.code.editor.e4;x-internal:=true,
- org.eclipse.fx.code.editor.e4.addons;x-internal:=true,
- org.eclipse.fx.code.editor.e4.handlers;x-internal:=true
-Bundle-Vendor: Eclipse.org
