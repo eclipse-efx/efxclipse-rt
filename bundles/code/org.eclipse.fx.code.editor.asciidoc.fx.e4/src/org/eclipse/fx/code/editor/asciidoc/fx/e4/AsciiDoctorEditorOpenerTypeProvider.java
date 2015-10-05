@@ -87,6 +87,7 @@ public class AsciiDoctorEditorOpenerTypeProvider implements EditorOpenerTypeProv
 							.map( f -> f.getFileIconUri(uri))
 							.orElse("platform:/plugin/org.eclipse.fx.code.editor.fx.e4/icons/file_16.png");
 					part.setIconURI(iconUri);
+					part.setContributionURI("bundleclass://org.eclipse.fx.code.editor.asciidoc.fx.e4/org.eclipse.fx.code.editor.asciidoc.fx.e4.EditorDelegate");
 					part.setLabel(URI.create(uri).lastSegment());
 
 
