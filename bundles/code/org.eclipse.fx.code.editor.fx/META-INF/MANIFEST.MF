@@ -5,16 +5,18 @@ Bundle-SymbolicName: org.eclipse.fx.code.editor.fx
 Bundle-Version: 2.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.inject,
- org.osgi.service.component.annotations;version="1.2.0"
+ org.eclipse.fx.code.editor;version="2.2.0",
+ org.eclipse.fx.code.editor.services;version="2.2.0",
+ org.eclipse.fx.core;version="2.2.0",
+ org.eclipse.fx.core.di;version="2.2.0",
+ org.eclipse.fx.ui.controls.styledtext;version="2.2.0",
+ org.eclipse.fx.ui.controls.tree;version="2.2.0",
+ org.osgi.service.component.annotations;version="1.2.0";resolution:=optional
 Require-Bundle: org.eclipse.e4.core.di.annotations;bundle-version="1.4.0",
  org.eclipse.e4.ui.di;bundle-version="1.1.0",
- org.eclipse.fx.code.editor;bundle-version="1.0.0",
- org.eclipse.fx.text;bundle-version="1.0.0",
- org.eclipse.fx.text.ui;bundle-version="1.0.0",
- org.eclipse.fx.ui.controls;bundle-version="2.1.0",
- org.eclipse.fx.core;bundle-version="2.1.0",
- org.eclipse.fx.core.di;bundle-version="2.0.0"
+ org.eclipse.fx.text.ui;bundle-version="2.2.0",
+ org.eclipse.fx.text;bundle-version="2.2.0"
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.fx.services.internal.DefaultSourceViewerConfigurationTypeProvider.xml
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.fx.code.editor.fx.services;x-internal:=true
+Export-Package: org.eclipse.fx.code.editor.fx.services;version="2.2.0";x-internal:=true
 Bundle-Vendor: Eclipse.org

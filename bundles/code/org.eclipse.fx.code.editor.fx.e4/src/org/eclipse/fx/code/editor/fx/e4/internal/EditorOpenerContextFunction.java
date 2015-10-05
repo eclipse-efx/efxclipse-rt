@@ -112,6 +112,7 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 					part.setCloseable(true);
 					part.setLabel(URI.create(uri).lastSegment());
 					part.setContributionURI("bundleclass://org.eclipse.fx.code.editor.fx/org.eclipse.fx.code.editor.fx.TextEditor");
+					part.setContributorURI("platform:/plugin/org.eclipse.fx.code.editor.fx.e4");
 					String iconUri = fileIconProvider
 							.stream()
 							.filter( f -> f.test(uri))
@@ -120,7 +121,7 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 							.orElse("platform:/plugin/org.eclipse.fx.code.editor.fx.e4/icons/file_16.png");
 					part.setIconURI(iconUri);
 					part.getPersistedState().put(Constants.DOCUMENT_URL, uri);
-					part.getTags().add("removeOnHide");
+					part.getTags().add(EPartService.REMOVE_ON_HIDE_TAG);
 					container.getChildren().add(part);
 				}
 			} else {

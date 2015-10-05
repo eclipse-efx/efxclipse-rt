@@ -4,16 +4,19 @@ Bundle-Name: Editor configuration based on the LDef-Files
 Bundle-SymbolicName: org.eclipse.fx.code.editor.ldef.text
 Bundle-Version: 2.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.fx.text,
- org.eclipse.fx.code.editor.ldef,
- org.eclipse.e4.core.contexts,
- org.eclipse.fx.code.editor,
- org.eclipse.fx.core;bundle-version="2.1.0",
- org.eclipse.emf.ecore;bundle-version="2.11.0"
+Require-Bundle: org.eclipse.e4.core.contexts,
+ org.eclipse.emf.ecore;bundle-version="2.11.0",
+ org.eclipse.fx.text.ui;bundle-version="2.2.0"
 Import-Package: javax.inject,
- org.osgi.service.component.annotations
+ org.eclipse.fx.code.editor;version="2.2.0",
+ org.eclipse.fx.code.editor.ldef.lDef;version="2.2.0",
+ org.eclipse.fx.code.editor.services;version="2.2.0",
+ org.eclipse.fx.core;version="2.2.0",
+ org.eclipse.fx.core.function;version="2.2.0",
+ org.eclipse.fx.text,
+ org.osgi.service.component.annotations;resolution:=optional
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.ldef.text.internal.LDefModelCF.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.ldef.text.internal.LDefDocumentPartitionerProvider.xml
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.fx.code.editor.ldef.text;x-internal:=true
+Export-Package: org.eclipse.fx.code.editor.ldef.text;version="2.2.0";x-internal:=true
 Bundle-Vendor: Eclipse.org

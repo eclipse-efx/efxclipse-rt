@@ -6,7 +6,7 @@ Bundle-Version: 2.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.ldef.langs.themes.DefaultEditorStylesheets.xml
-Import-Package: org.osgi.service.component.annotations
-Require-Bundle: org.eclipse.fx.ui.services,
- org.eclipse.jdt.annotation;resolution:=optional
+Import-Package: org.eclipse.fx.ui.services.theme;version="2.2.0",
+ org.osgi.service.component.annotations;resolution:=optional
+Require-Bundle: org.eclipse.jdt.annotation;resolution:=optional
 Bundle-Vendor: Eclipse.org
