@@ -107,15 +107,15 @@
 		<repository>
 			<id>mars</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/mars</url>
+			<url>http://download.eclipse.org/eclipse/updates/4.5</url>
 		</repository>
 		<repository>
 			<id>orbit</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/</url>
 		</repository>
-		<!-- repository> <id>xtext</id> <layout>p2</layout> <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
-			</repository -->
+		<repository> <id>xtext</id> <layout>p2</layout> <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/</url>
+			</repository>
 		<repository>
 			<id>efx-shared-runtime</id>
 			<layout>p2</layout>
