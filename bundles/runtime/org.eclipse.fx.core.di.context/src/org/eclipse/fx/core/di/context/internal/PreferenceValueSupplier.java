@@ -35,6 +35,7 @@ import org.eclipse.fx.core.ValueSerializer;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.core.preferences.Preference;
+import org.eclipse.fx.core.preferences.PreferenceDefaultValueFactory;
 import org.eclipse.fx.core.preferences.Value;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -158,12 +159,17 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 			defaultValue = null;
 		}
 
+		Class<?> factory = p.factory();
+		if( factory == PreferenceDefaultValueFactory.class ) {
+			factory = null;
+		}
+
 		if (descriptorsClass.equals(boolean.class) || descriptorsClass.equals(Boolean.class) || descriptorsClass.equals(int.class) || descriptorsClass.equals(Integer.class) || descriptorsClass.equals(double.class) || descriptorsClass.equals(Double.class) || descriptorsClass.equals(float.class)
 				|| descriptorsClass.equals(Float.class) || descriptorsClass.equals(long.class) || descriptorsClass.equals(Long.class) || descriptorsClass.equals(String.class)) {
 			if (track)
 				addListener(nodePath, key, requestor);
 
-			Object v = getDefault(defaultValue, descriptorsClass);
+			Object v = getDefault(defaultValue, descriptorsClass, p, factory);
 			return getValue(nodePath, key, (Class<Object>) descriptorsClass, v);
 		}
 
@@ -172,7 +178,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 			if (track)
 				addListener(nodePath, key, requestor);
 
-			Object v = getDefault(defaultValue, descriptorsClass);
+			Object v = getDefault(defaultValue, descriptorsClass, p, factory);
 			return getValue(nodePath, key, (Class<Object>) descriptorsClass, v);
 		}
 
@@ -185,7 +191,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 					addListener(nodePath, key, requestor);
 				}
 
-				return getValue(nodePath, key, (Class<Object>) descriptorsClass, getDefault(defaultValue, descriptorsClass));
+				return getValue(nodePath, key, (Class<Object>) descriptorsClass, getDefault(defaultValue, descriptorsClass, p, factory));
 			}
 		}
 
@@ -199,7 +205,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 			return IInjector.NOT_A_VALUE;
 		}
 
-		v.init(nodePath, key, type, getDefault(defaultValue, type));
+		v.init(nodePath, key, type, getDefault(defaultValue, type, p, factory));
 
 
 		if (descriptorsClass != Value.class) {
@@ -210,7 +216,17 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 	}
 
 	@SuppressWarnings({ "unchecked", "null" })
-	private static <@Nullable T> @Nullable T getDefault(@Nullable String value, @NonNull Class<@NonNull T> type) {
+	private static <@Nullable T> @Nullable T getDefault(@Nullable String value, @NonNull Class<@NonNull T> type, Preference p, Class<?> factory) {
+		if( factory != null ) {
+			try {
+				PreferenceDefaultValueFactory<T> instance;
+				instance = (PreferenceDefaultValueFactory<@Nullable T>) factory.newInstance();
+				return instance.create(p);
+			} catch (InstantiationException | IllegalAccessException e) {
+				getLogger().error("Failed to create instance of '"+factory+"'", e);  //$NON-NLS-1$//$NON-NLS-2$
+			}
+		}
+
 		if (type == Boolean.class || type == boolean.class) {
 			return (T) Boolean.valueOf(value);
 		} else if (type == int.class || type == Integer.class) {

@@ -69,4 +69,9 @@ public @interface Preference {
 	 * @since 2.2.0
 	 */
 	String defaultValue() default "EFX__NO_VALUE__";
+	/**
+	 * @return factory to create default value
+	 * @since 2.2.0
+	 */
+	Class<?> factory() default PreferenceDefaultValueFactory.class;
 }
