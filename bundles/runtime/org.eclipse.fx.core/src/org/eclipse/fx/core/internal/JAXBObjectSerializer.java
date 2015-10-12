@@ -12,10 +12,12 @@ package org.eclipse.fx.core.internal;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.fx.core.ObjectSerializer;
 import org.osgi.service.component.annotations.Component;
@@ -33,6 +35,9 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 
 	@Override
 	public String serialize(Object object) {
+		if (object instanceof List) {
+			object = new ListWrapper<>((List<?>) object);
+		}
 		try (StringWriter w = new StringWriter()) {
 			JAXBContext jaxbContext = JAXBContext.newInstance(object.getClass());
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -50,15 +55,66 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <O> O deserialize(Class<O> clazz, String value) {
+		if (clazz == List.class) {
+			clazz = (Class<O>) ListWrapper.class;
+		}
+
 		try (StringReader r = new StringReader(value)) {
 			JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-			return (O) jaxbUnmarshaller.unmarshal(r);
+			Object unmarshal = jaxbUnmarshaller.unmarshal(r);
+			if (unmarshal instanceof ListWrapper<?>) {
+				return (O) ((ListWrapper<?>) unmarshal).list;
+			}
+			return (O) unmarshal;
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}
 	}
 
+	/**
+	 * Wraps simple lists
+	 *
+	 * @param <O>
+	 *            the type
+	 */
+	@XmlRootElement
+	public static class ListWrapper<O> {
+		List<O> list;
+
+		/**
+		 * Create an instance
+		 */
+		public ListWrapper() {
+		}
+
+		/**
+		 * Create an instance
+		 *
+		 * @param list
+		 *            the list to wrap
+		 */
+		public ListWrapper(List<O> list) {
+			this.list = list;
+		}
+
+		/**
+		 * @return the list
+		 */
+		public List<O> getList() {
+			return this.list;
+		}
+
+		/**
+		 * Set the new list
+		 *
+		 * @param list
+		 *            the list
+		 */
+		public void setList(List<O> list) {
+			this.list = list;
+		}
+	}
 }
