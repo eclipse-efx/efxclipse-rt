@@ -43,7 +43,24 @@ public interface EventBus {
 	 *            <code>true</code> returns after the event has been processed
 	 *            by all subscribers
 	 */
+	@Deprecated
 	public void publish(String topic, Object data, boolean synchronous);
+
+	/**
+	 * Publish the event
+	 *
+	 * @param topic
+	 *            the topic on which you want to publish the event
+	 * @param data
+	 *            the data to publish
+	 * @param synchronous
+	 *            <code>true</code> returns after the event has been processed
+	 *            by all subscribers
+	 * @since 2.2.0
+	 */
+	public default <T> void publish(Topic<T> topic, T data, boolean synchronous) {
+		publish(topic.topic, data, synchronous);
+	}
 
 	/**
 	 * Subscribe to an event topic
@@ -54,7 +71,22 @@ public interface EventBus {
 	 *            the consumer
 	 * @return subscription to cancel the subscribtion
 	 */
+	@Deprecated
 	public <@Nullable T> Subscription subscribe(String topic, Consumer<Event<T>> consumer);
+
+	/**
+	 * Subscribe to an event topic
+	 *
+	 * @param topic
+	 *            the topic
+	 * @param consumer
+	 *            the consumer
+	 * @return subscription to cancel the subscribtion
+	 * @since 2.2.0
+	 */
+	public default <@Nullable T> Subscription subscribe(Topic<T> topic, Consumer<Event<T>> consumer) {
+		return subscribe(topic.topic, consumer);
+	}
 
 	/**
 	 * Wrap a main data consumer as an event consumer

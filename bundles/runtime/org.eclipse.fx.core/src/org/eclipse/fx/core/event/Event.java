@@ -40,8 +40,21 @@ public final class Event<@Nullable T> {
 	 * @param data
 	 *            the main data
 	 */
+	@Deprecated
 	public Event(String topic, T data) {
 		this(topic, data, null);
+	}
+
+	/**
+	 * Create an event
+	 *
+	 * @param topic
+	 *            the topic as which the event is published
+	 * @param data
+	 *            the main data
+	 */
+	public Event(Topic<T> topic, T data) {
+		this(topic.topic, data, null);
 	}
 
 	/**
@@ -54,6 +67,21 @@ public final class Event<@Nullable T> {
 	 * @param properties
 	 *            properties
 	 */
+	public Event(Topic<T> topic, T data, KeyValueStore<String, Object> properties) {
+		this(topic.topic,data,properties);
+	}
+
+	/**
+	 * Create an event
+	 *
+	 * @param topic
+	 *            the topic as which the event is published
+	 * @param data
+	 *            the main data
+	 * @param properties
+	 *            properties
+	 */
+	@Deprecated
 	public Event(String topic, T data, KeyValueStore<String, Object> properties) {
 		this.topic = topic;
 		this.data = data;
