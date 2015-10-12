@@ -64,6 +64,6 @@ public interface EventBus {
 	 * @return the event consumer
 	 */
 	public static <@Nullable T> Consumer<Event<T>> data(Consumer<T> consumer) {
-		return e -> e.getData();
+		return e -> consumer.accept(e.getData());
 	}
 }
