@@ -33,7 +33,7 @@ public interface TextRegistry {
 	 * private TextRegistry reg; // Subclass of AbstractMessageRegistry
 	 *
 	 * TitledPane tb = new TitledPane();
-	 * reg.register(tb::setText, () -> "Hello");
+	 * reg.register(tb::setText, () -&gt; "Hello");
 	 * </pre>
 	 *
 	 * @param consumer
