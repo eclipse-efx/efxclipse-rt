@@ -52,6 +52,7 @@ public final class Event<@Nullable T> {
 	 *            the topic as which the event is published
 	 * @param data
 	 *            the main data
+	 * @since 2.2.0
 	 */
 	public Event(Topic<T> topic, T data) {
 		this(topic.topic, data, null);
@@ -66,6 +67,7 @@ public final class Event<@Nullable T> {
 	 *            the main data
 	 * @param properties
 	 *            properties
+	 * @since 2.2.0
 	 */
 	public Event(Topic<T> topic, T data, KeyValueStore<String, Object> properties) {
 		this(topic.topic,data,properties);
