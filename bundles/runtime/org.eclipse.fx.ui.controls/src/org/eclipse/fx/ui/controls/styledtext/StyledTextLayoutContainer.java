@@ -10,12 +10,14 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -31,9 +33,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
-
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A text layout container who is able to show selection
@@ -152,25 +151,16 @@ public class StyledTextLayoutContainer extends Region {
 		this.flashTimeline = new Timeline();
 		this.flashTimeline.setCycleCount(Animation.INDEFINITE);
 
-		EventHandler<ActionEvent> startEvent = new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0) {
-				if( ! ownerFocusedProperty.get() ) {
-					StyledTextLayoutContainer.this.caret.setVisible(false);
-				} else {
-					StyledTextLayoutContainer.this.caret.setVisible(StyledTextLayoutContainer.this.caretIndex != -1);
-				}
-
+		EventHandler<ActionEvent> startEvent = e -> {
+			if( ! ownerFocusedProperty.get() ) {
+				StyledTextLayoutContainer.this.caret.setVisible(false);
+			} else {
+				StyledTextLayoutContainer.this.caret.setVisible(StyledTextLayoutContainer.this.caretIndex != -1);
 			}
 		};
 
-		EventHandler<ActionEvent> endEvent = new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0) {
-				StyledTextLayoutContainer.this.caret.setVisible(false);
-			}
+		EventHandler<ActionEvent> endEvent = e -> {
+			StyledTextLayoutContainer.this.caret.setVisible(false);
 		};
 
 		this.flashTimeline.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, startEvent), new KeyFrame(Duration.millis(500), endEvent), new KeyFrame(Duration.millis(1000)));
@@ -367,5 +357,13 @@ public class StyledTextLayoutContainer extends Region {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Releases resources immediately
+	 */
+	public void dispose() {
+		this.flashTimeline.stop();
+		this.flashTimeline.getKeyFrames().clear();
 	}
 }
