@@ -31,6 +31,7 @@ import javafx.scene.layout.BorderPane;
 /**
  * Component setting up a JavaFX text editor
  */
+@SuppressWarnings("restriction")
 public class TextEditor {
 
 	private IDocument document;
@@ -87,7 +88,7 @@ public class TextEditor {
 
 	@PostConstruct
 	public void initUI(BorderPane pane) {
-		viewer = new SourceViewer();
+		viewer = createSourceViewer();
 		if( document instanceof IDocumentExtension3 ) {
 			((IDocumentExtension3)document).setDocumentPartitioner(configuration.getConfiguredDocumentPartitioning(viewer),partitioner);
 		} else {
@@ -95,20 +96,6 @@ public class TextEditor {
 		}
 		document.setDocumentPartitioner(partitioner);
 		partitioner.connect(document);
-//		document.addDocumentListener(new IDocumentListener() {
-//
-//			@Override
-//			public void documentChanged(DocumentEvent event) {
-//				if( eventBus != null ) {
-//					eventBus.publish(Constants.EDITOR_DOCUMENT_MODIFIED, TextEditor.this, true);
-//				}
-//			}
-//
-//			@Override
-//			public void documentAboutToBeChanged(DocumentEvent event) {
-//
-//			}
-//		});
 
 		viewer.configure(configuration);
 		viewer.setDocument(document, configuration.getAnnotationModel());
@@ -116,6 +103,10 @@ public class TextEditor {
 		if( activeInput != null ) {
 			activeInput.setValue(input);
 		}
+	}
+
+	protected SourceViewer createSourceViewer() {
+		return new SourceViewer();
 	}
 
 	@Persist
