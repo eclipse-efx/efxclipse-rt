@@ -31,11 +31,13 @@ public class LDefRuleBasedPartitionScanner extends RuleBasedPartitionScanner {
 			if( r instanceof Partition_SingleLineRule ) {
 				Partition_SingleLineRule sr = (Partition_SingleLineRule) r;
 				String endSeq = sr.getEndSeq();
-				pr[i] = new SingleLineRule(sr.getStartSeq(), endSeq, new Token(sr.getParition().getName()), sr.getEscapeSeq() != null ? endSeq.charAt(0) : 0, endSeq == null || endSeq.isEmpty());
+				String escapeSeq = sr.getEscapeSeq();
+				pr[i] = new SingleLineRule(sr.getStartSeq(), endSeq, new Token(sr.getParition().getName()), escapeSeq != null ? escapeSeq.charAt(0) : 0, endSeq == null || endSeq.isEmpty());
 			} else if( r instanceof Partition_MultiLineRule ) {
 				Partition_MultiLineRule mr = (Partition_MultiLineRule) r;
 				String endSeq = mr.getEndSeq();
-				pr[i] = new MultiLineRule(mr.getStartSeq(), endSeq, new Token(mr.getParition().getName()), mr.getEscapeSeq() != null ? mr.getEscapeSeq().charAt(0) : 0, endSeq == null || endSeq.isEmpty());
+				String escapeSeq = mr.getEscapeSeq();
+				pr[i] = new MultiLineRule(mr.getStartSeq(), endSeq, new Token(mr.getParition().getName()), escapeSeq != null ? escapeSeq.charAt(0) : 0, endSeq == null || endSeq.isEmpty());
 			}
 
 			pr[i] = (IPredicateRule) Util.wrap(r.getCheck(),pr[i]);
