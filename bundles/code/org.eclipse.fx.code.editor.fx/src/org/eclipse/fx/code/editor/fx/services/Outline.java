@@ -10,15 +10,20 @@
  *******************************************************************************/
 package org.eclipse.fx.code.editor.fx.services;
 
+import javafx.beans.property.ReadOnlyProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
 public interface Outline {
-	public ObservableList<OutlineItem> getRootItems();
+	public ObservableList<? extends OutlineItem> getRootItems();
 
 	public interface OutlineItem {
 		public CharSequence getLabel();
+		public ReadOnlyProperty<CharSequence> labelProperty();
+
 		public Node getGraphic();
+		public ReadOnlyProperty<Node> graphicProperty();
+
 		public OutlineItem getParent();
 		public ObservableList<? extends OutlineItem> getChildren();
 	}
