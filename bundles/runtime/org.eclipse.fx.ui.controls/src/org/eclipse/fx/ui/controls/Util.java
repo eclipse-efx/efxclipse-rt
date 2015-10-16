@@ -206,6 +206,10 @@ public class Util {
 	 *            the source list
 	 * @param converterFunction
 	 *            the function used to convert
+	 * @param <T>
+	 *            the target type
+	 * @param <E>
+	 *            the source type
 	 * @return the subscription to dispose the binding
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
