@@ -104,6 +104,36 @@ public class StyledTextArea extends Control {
 	private final ObjectProperty<@NonNull Callback<@NonNull StyledTextLine, @Nullable Node>> lineRulerGraphicNodeFactory = new SimpleObjectProperty<>(this, "lineRulerGraphicNodeFactory", e -> null); //$NON-NLS-1$
 
 	/**
+	 * Separator for lines
+	 */
+	public enum LineSeparator {
+		/**
+		 * \n eg os-x and linux default
+		 */
+		NEW_LINE("\n"), //$NON-NLS-1$
+		/**
+		 * \r\n default on windows
+		 */
+		CARRIAGE_RETURN_NEW_LINE("\r\n"); //$NON-NLS-1$
+
+		private String value;
+
+		private LineSeparator(String value) {
+			this.value = value;
+		}
+
+		/**
+		 * @return line separator
+		 */
+		public String getValue() {
+			return this.value;
+		}
+	}
+
+	@NonNull
+	private final ObjectProperty<@NonNull LineSeparator> lineSeparator = new SimpleObjectProperty<>(this, "lineSeparator", "\n".equals(System.getProperty("line.separator")) ? LineSeparator.NEW_LINE : LineSeparator.CARRIAGE_RETURN_NEW_LINE); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+	/**
 	 * Represents a line shown in the control
 	 */
 	public interface StyledTextLine {
@@ -138,6 +168,14 @@ public class StyledTextArea extends Control {
 		this.getStyleClass().add("styled-text-area"); //$NON-NLS-1$
 		this.contentProperty = new ContentProperty(this, "content", new DefaultContent()); //$NON-NLS-1$
 		setFocusTraversable(true);
+	}
+
+	/**
+	 * @return the current line separator
+	 * @since 2.2.0
+	 */
+	public @NonNull LineSeparator getLineSeparator() {
+		return this.lineSeparator.get();
 	}
 
 	@Override
