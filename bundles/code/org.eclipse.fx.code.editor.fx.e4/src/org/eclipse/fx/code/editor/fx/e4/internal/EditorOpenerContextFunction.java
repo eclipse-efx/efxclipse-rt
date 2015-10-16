@@ -1,6 +1,5 @@
 package org.eclipse.fx.code.editor.fx.e4.internal;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -11,11 +10,13 @@ import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.code.editor.Constants;
+import org.eclipse.fx.code.editor.fx.e4.EditorClassURLProvider;
+import org.eclipse.fx.code.editor.fx.e4.EditorContainerService;
 import org.eclipse.fx.code.editor.services.EditorOpener;
 import org.eclipse.fx.code.editor.services.EditorOpenerTypeProvider;
 import org.eclipse.fx.code.editor.services.FileIconProvider;
@@ -29,6 +30,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
+@SuppressWarnings("restriction")
 @Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.services.EditorOpener"})
 public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOpenerTypeProvider> {
 
@@ -82,11 +84,12 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 	}
 
 	public static class DefaultEditorOpener implements EditorOpener {
-		@Inject
-		MWindow window;
 
 		@Inject
 		MApplication application;
+
+		@Inject
+		EditorContainerService containerService;
 
 		@Inject
 		EModelService modelService;
@@ -95,7 +98,10 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 		@Service
 		List<FileIconProvider> fileIconProvider;
 
-		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@Inject
+		@Service
+		List<EditorClassURLProvider> editorUrlProvider;
+
 		@Override
 		public boolean openEditor(String uri) {
 			List<MPart> list = modelService.findElements(application, MPart.class, EModelService.ANYWHERE, (p) -> {
@@ -104,14 +110,18 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 
 			MPart part = null;
 			if( list.isEmpty() ) {
-				List<MElementContainer> elements = modelService.findElements(window, null, MElementContainer.class, Collections.singletonList(Constants.EDITOR_CONTAINER_TAG));
-				if( ! elements.isEmpty() ) {
-					MElementContainer<MPart> container = elements.get(0);
+				MElementContainer<MUIElement> container = containerService.getContainer();
 
+				if( container != null ) {
 					part = modelService.createModelElement(MPart.class);
 					part.setCloseable(true);
 					part.setLabel(URI.create(uri).lastSegment());
-					part.setContributionURI("bundleclass://org.eclipse.fx.code.editor.fx/org.eclipse.fx.code.editor.fx.TextEditor");
+					String editorBundleURI = editorUrlProvider
+						.stream()
+						.filter( e -> e.test(uri)).findFirst()
+						.map( e -> e.getBundleClassURI(uri))
+						.orElse("bundleclass://org.eclipse.fx.code.editor.fx/org.eclipse.fx.code.editor.fx.TextEditor");
+					part.setContributionURI(editorBundleURI);
 					part.setContributorURI("platform:/plugin/org.eclipse.fx.code.editor.fx.e4");
 					String iconUri = fileIconProvider
 							.stream()
