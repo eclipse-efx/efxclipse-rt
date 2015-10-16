@@ -17,13 +17,13 @@ public class DartPartitionScanner extends org.eclipse.jface.text.rules.RuleBased
 			, false);
 		pr[2] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "///"
-			, ""
+			, null
 			, new org.eclipse.jface.text.rules.Token("__dart_singlelinedoc_comment")
 			, (char)0
 			, true);
 		pr[3] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "//"
-			, ""
+			, null
 			, new org.eclipse.jface.text.rules.Token("__dart_singleline_comment")
 			, (char)0
 			, true);

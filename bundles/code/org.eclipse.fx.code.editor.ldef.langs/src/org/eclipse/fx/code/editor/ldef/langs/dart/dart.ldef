@@ -11,8 +11,8 @@ dart {
 		rule {
 			single_line __dart_string "'" => "'" escaped by "\\"
 			single_line __dart_string '"' => '"' escaped by "\\"
-			single_line __dart_singlelinedoc_comment '///' => ''
-      		single_line __dart_singleline_comment '//' => ''
+			single_line __dart_singlelinedoc_comment '///'
+      		single_line __dart_singleline_comment '//'
       		multi_line __dart_multilinedoc_comment '/**' => '*/'
       		multi_line  __dart_multiline_comment '/*' => '*/'
 		}
