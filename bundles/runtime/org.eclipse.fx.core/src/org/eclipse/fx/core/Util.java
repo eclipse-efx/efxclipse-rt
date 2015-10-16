@@ -229,4 +229,12 @@ public class Util {
 
 		return b.toString();
 	}
+
+	/**
+	 * @return <code>true</code> if running on OS-X
+	 * @since 2.2.0
+	 */
+	public static boolean isMacOS() {
+		return "Mac OS X".equals(System.getProperty("os.name"));  //$NON-NLS-1$//$NON-NLS-2$
+	}
 }
