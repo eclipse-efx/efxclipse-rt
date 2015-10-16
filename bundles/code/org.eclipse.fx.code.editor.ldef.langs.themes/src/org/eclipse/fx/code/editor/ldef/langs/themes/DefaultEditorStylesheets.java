@@ -33,6 +33,7 @@ public class DefaultEditorStylesheets implements MultiURLStylesheet {
 					, new URL("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/kotlin/highlight.css")
 					, new URL("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/php/highlight.css")
 					, new URL("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/asciidoc/highlight.css")
+					, new URL("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/lua/highlight.css")
 			);
 		} catch (MalformedURLException e) {
 		}

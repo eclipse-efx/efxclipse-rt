@@ -1,0 +1,16 @@
+.styled-text-area .lua.lua_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .lua.lua_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .lua.lua_doc_default {
+	-styled-text-color: -source-editor-doc;
+}
+
+.styled-text-area .lua.lua_string {
+	-styled-text-color: -source-editor-string;
+}

@@ -37,6 +37,7 @@ public class LDefDefaultModelProvider implements LDefModelProvider {
 		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/asciidoc/asciidoc.ldef"),"adoc");
 		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/ceylon/ceylon.ldef"),"ceylon");
 		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/kotlin/kotlin.ldef"),"kotlin");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/lua/lua.ldef"),"lua");
 	}
 
 	private void register(URI uri, String fileSuffix) {
