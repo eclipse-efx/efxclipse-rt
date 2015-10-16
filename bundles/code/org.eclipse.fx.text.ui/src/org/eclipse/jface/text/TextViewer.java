@@ -787,7 +787,7 @@ public class TextViewer extends Viewer implements
 		}
 	}
 
-	protected ITextHover getTextHover(int offset, int stateMask) {
+	public ITextHover getTextHover(int offset, int stateMask) {
 		if (fTextHovers == null)
 			return null;
 
@@ -797,7 +797,6 @@ public class TextViewer extends Viewer implements
 
 		try {
 			String contentType = TextUtilities.getContentType(document, getDocumentPartitioning(), offset, true);
-			System.err.println(offset + " - " + contentType);
 			TextHoverKey key= new TextHoverKey(contentType, stateMask);
 			Object textHover= fTextHovers.get(key);
 			if (textHover == null) {
@@ -821,13 +820,16 @@ public class TextViewer extends Viewer implements
 
 	private void ensureHoverControlManagerInstalled() {
 		if (fTextHovers != null && !fTextHovers.isEmpty() /*&& fHoverControlCreator != null*/ && fTextHoverManager == null) {
-			fTextHoverManager= new TextViewerHoverManager(this/*, fHoverControlCreator*/);
+			fTextHoverManager= createTextHovermanager();
 			fTextHoverManager.install(this.getTextWidget());
 //			fTextHoverManager.setSizeConstraints(TEXT_HOVER_WIDTH_CHARS, TEXT_HOVER_HEIGHT_CHARS, false, true);
 //			fTextHoverManager.setInformationControlReplacer(new StickyHoverManager(this));
 		}
 	}
 
+	protected TextViewerHoverManager createTextHovermanager() {
+		return new TextViewerHoverManager(this/*, fHoverControlCreator*/);
+	}
 
 	/**
 	 * The viewer's rewrite target.
