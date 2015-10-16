@@ -7,6 +7,7 @@
         <tags>editorContainer</tags>
       </children>
     </children>
+    <variables>activeInput</variables>
   </children>
   <rootContext xmi:id="_5jLXkDuxEeW_pv6K11JvGw" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_5jLXkjuxEeW_pv6K11JvGw" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
