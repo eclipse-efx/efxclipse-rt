@@ -47,7 +47,7 @@ import com.sun.javafx.scene.text.HitInfo;
 
 /**
  * A node who allows to decorate the text
- * 
+ *
  * @since 2.0
  */
 @SuppressWarnings("restriction")
@@ -59,7 +59,7 @@ public class StyledTextNode extends Region {
 	public interface DecorationStrategy {
 		/**
 		 * Attach the decoration on the text
-		 * 
+		 *
 		 * @param node
 		 *            the node the decoration is attached to
 		 * @param textNode
@@ -69,7 +69,7 @@ public class StyledTextNode extends Region {
 
 		/**
 		 * Remove the decoration from the text
-		 * 
+		 *
 		 * @param node
 		 *            the node the decoration is attached to
 		 * @param textNode
@@ -79,7 +79,7 @@ public class StyledTextNode extends Region {
 
 		/**
 		 * Layout the decoration
-		 * 
+		 *
 		 * @param node
 		 *            the node the layout pass is done on
 		 * @param textNode
@@ -112,7 +112,7 @@ public class StyledTextNode extends Region {
 
 	/**
 	 * The paint used to fill the text
-	 * 
+	 *
 	 * @return the property to observe
 	 */
 	public final @NonNull ObjectProperty<@NonNull Paint> fillProperty() {
@@ -128,7 +128,7 @@ public class StyledTextNode extends Region {
 
 	/**
 	 * Set a new paint
-	 * 
+	 *
 	 * @param color
 	 *            the paint used to fill the text
 	 */
@@ -223,7 +223,7 @@ public class StyledTextNode extends Region {
 
 	/**
 	 * The current strategy used for decoration
-	 * 
+	 *
 	 * @return the property to observe
 	 */
 	public final @NonNull ObjectProperty<@Nullable DecorationStrategy> decorationStrategyProperty() {
@@ -239,7 +239,7 @@ public class StyledTextNode extends Region {
 
 	/**
 	 * Set a new strategy used for decoration
-	 * 
+	 *
 	 * @param strategy
 	 *            the strategy
 	 */
@@ -252,7 +252,7 @@ public class StyledTextNode extends Region {
 
 	/**
 	 * Number of chars to use for tab advance (default is 4)
-	 * 
+	 *
 	 * @return the property to observe
 	 */
 	public final IntegerProperty tabCharAdvanceProperty() {
@@ -268,7 +268,7 @@ public class StyledTextNode extends Region {
 
 	/**
 	 * Set a new number for chars to advance for a tab
-	 * 
+	 *
 	 * @param tabCharAdvance
 	 *            the number of chars to use for tab advance (default is 4)
 	 */
@@ -282,7 +282,7 @@ public class StyledTextNode extends Region {
 
 	/**
 	 * Create a new styled text node
-	 * 
+	 *
 	 * @param text
 	 *            the text
 	 */
@@ -295,7 +295,7 @@ public class StyledTextNode extends Region {
 		this.textNode.fillProperty().bind(fillProperty());
 		getChildren().add(this.textNode);
 		this.decorationStrategy.addListener(this::handleDecorationChange);
-		
+
 		this.tabCharAdvance.addListener(o -> {
 			this.textNode.setText(processText(text));
 		});
@@ -330,17 +330,23 @@ public class StyledTextNode extends Region {
 		this.startOffset = startOffset;
 	}
 
-	int getStartOffset() {
+	/**
+	 * @return the start offset in the file
+	 */
+	public int getStartOffset() {
 		return this.startOffset;
 	}
 
-	int getEndOffset() {
+	/**
+	 * @return the end offset in the file
+	 */
+	public int getEndOffset() {
 		return this.startOffset + getText().length();
 	}
 
 	/**
 	 * Check if the text node intersects with the start and end locations
-	 * 
+	 *
 	 * @param start
 	 *            the start
 	 * @param end
@@ -386,7 +392,7 @@ public class StyledTextNode extends Region {
 
 	/**
 	 * Get the caret index at the given point
-	 * 
+	 *
 	 * @param point
 	 *            the point relative to this node
 	 * @return the index or <code>-1</code>
@@ -418,7 +424,7 @@ public class StyledTextNode extends Region {
 
 	/**
 	 * Find the x coordinate where we the character for the given index starts
-	 * 
+	 *
 	 * @param index
 	 *            the index
 	 * @return the location or <code>0</code> if not found
