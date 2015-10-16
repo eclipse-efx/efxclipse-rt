@@ -5,6 +5,7 @@ import org.eclipse.fx.code.editor.fx.services.SourceViewerConfigurationTypeProvi
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.osgi.service.component.annotations.Component;
 
+@SuppressWarnings("restriction")
 @Component
 public class DefaultSourceViewerConfigurationTypeProvider implements SourceViewerConfigurationTypeProvider {
 

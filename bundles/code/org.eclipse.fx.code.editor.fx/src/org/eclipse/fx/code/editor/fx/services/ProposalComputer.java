@@ -16,6 +16,7 @@ import java.util.concurrent.Future;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
+@SuppressWarnings("restriction")
 public interface ProposalComputer {
 
 	public class ProposalContext {

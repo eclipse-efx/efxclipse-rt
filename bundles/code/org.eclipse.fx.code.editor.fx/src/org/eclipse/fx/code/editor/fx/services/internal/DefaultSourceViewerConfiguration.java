@@ -22,6 +22,7 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
+@SuppressWarnings("restriction")
 public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration {
 	private final Input<?> input;
 	private final PresentationReconciler reconciler;
