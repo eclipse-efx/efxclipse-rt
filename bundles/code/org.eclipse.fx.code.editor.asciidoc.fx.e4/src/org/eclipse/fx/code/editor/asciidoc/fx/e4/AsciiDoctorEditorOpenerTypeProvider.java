@@ -1,6 +1,5 @@
 package org.eclipse.fx.code.editor.asciidoc.fx.e4;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,13 +8,15 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MCompositePart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.asciidoc.HTMLConverter;
+import org.eclipse.fx.code.editor.fx.e4.EditorClassURLProvider;
+import org.eclipse.fx.code.editor.fx.e4.EditorContainerService;
 import org.eclipse.fx.code.editor.services.EditorOpener;
 import org.eclipse.fx.code.editor.services.EditorOpenerTypeProvider;
 import org.eclipse.fx.code.editor.services.FileIconProvider;
@@ -23,6 +24,7 @@ import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.di.Service;
 import org.osgi.service.component.annotations.Component;
 
+@SuppressWarnings("restriction")
 @Component(property="service.ranking:Integer=1")
 public class AsciiDoctorEditorOpenerTypeProvider implements EditorOpenerTypeProvider {
 
@@ -38,7 +40,7 @@ public class AsciiDoctorEditorOpenerTypeProvider implements EditorOpenerTypeProv
 
 	static class AsciiDocEditorOpener implements EditorOpener {
 		@Inject
-		MWindow window;
+		EditorContainerService containerService;
 
 		@Inject
 		MApplication application;
@@ -53,6 +55,10 @@ public class AsciiDoctorEditorOpenerTypeProvider implements EditorOpenerTypeProv
 		@Inject
 		@Optional
 		HTMLConverter converter;
+
+		@Inject
+		@Service
+		List<EditorClassURLProvider> editorUrlProvider;
 
 		@Override
 		public boolean test(String uri) {
@@ -71,10 +77,8 @@ public class AsciiDoctorEditorOpenerTypeProvider implements EditorOpenerTypeProv
 
 			MCompositePart part = null;
 			if( list.isEmpty() ) {
-				List<MElementContainer> elements = modelService.findElements(window, null, MElementContainer.class, Collections.singletonList(Constants.EDITOR_CONTAINER_TAG));
-				if( ! elements.isEmpty() ) {
-					MElementContainer<MPart> container = elements.get(0);
-
+				MElementContainer<MUIElement> container = containerService.getContainer();
+				if( container != null ) {
 					part = modelService.createModelElement(MCompositePart.class);
 					part.setHorizontal(true);
 					part.getPersistedState().put(Constants.DOCUMENT_URL, uri);
@@ -92,7 +96,12 @@ public class AsciiDoctorEditorOpenerTypeProvider implements EditorOpenerTypeProv
 
 
 					MPart textEditor = modelService.createModelElement(MPart.class);
-					textEditor.setContributionURI("bundleclass://org.eclipse.fx.code.editor.fx/org.eclipse.fx.code.editor.fx.TextEditor");
+					String editorBundleURI = editorUrlProvider
+							.stream()
+							.filter( e -> e.test(uri)).findFirst()
+							.map( e -> e.getBundleClassURI(uri))
+							.orElse("bundleclass://org.eclipse.fx.code.editor.fx/org.eclipse.fx.code.editor.fx.TextEditor");
+					textEditor.setContributionURI(editorBundleURI);
 					part.getChildren().add(textEditor);
 
 					MPart preview = modelService.createModelElement(MPart.class);
