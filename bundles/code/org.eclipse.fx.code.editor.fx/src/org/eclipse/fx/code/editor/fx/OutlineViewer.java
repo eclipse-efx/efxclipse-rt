@@ -1,6 +1,8 @@
 package org.eclipse.fx.code.editor.fx;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.stream.Collectors;
@@ -49,7 +51,12 @@ public class OutlineViewer {
 				view = createView();
 				TreeItem<OutlineItem> root = new TreeItem<>();
 				for( OutlineItem l : outline.getRootItems() ) {
-					root.getChildren().add(createRec(l));
+					TreeItem<OutlineItem> item = createRec(l);
+					root.getChildren().add(item);
+				}
+
+				if( root.getChildren().size() == 1 ) {
+					root.getChildren().get(0).setExpanded(true);
 				}
 
 				outline.getRootItems().addListener( (Change<? extends OutlineItem> c) -> {
@@ -78,6 +85,15 @@ public class OutlineViewer {
 
 	TreeItem<OutlineItem> createRec(OutlineItem i) {
 		TreeItem<OutlineItem> l = new TreeItem<Outline.OutlineItem>(i);
+
+		i.getChildren().addListener( ( Change<? extends OutlineItem> c) -> {
+			List<TreeItem<OutlineItem>> list = new ArrayList<TreeItem<OutlineItem>>(i.getChildren().size());
+			for( OutlineItem ii : i.getChildren() ) {
+				list.add(l.getChildren().stream().filter( t -> t.getValue() == ii).findFirst().orElse(new TreeItem<>(ii)));
+			}
+			l.getChildren().setAll(list);
+		});
+
 		for( OutlineItem c : i.getChildren() ) {
 			l.getChildren().add(createRec(c));
 		}
