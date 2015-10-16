@@ -12,6 +12,7 @@ package org.eclipse.fx.core.internal;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.ClosedWatchServiceException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -124,7 +125,12 @@ public class FileSystemServiceImpl implements FilesystemService {
 				try {
 					key = this.watcher.take();
 				} catch (Exception x) {
-					LoggerCreator.createLogger(getClass()).warning("File watcher failed. Watching ended", x); //$NON-NLS-1$
+					if( x instanceof ClosedWatchServiceException ) {
+						// nothing to be done
+					} else {
+						LoggerCreator.createLogger(getClass()).warning("File watcher failed. Watching ended", x); //$NON-NLS-1$
+					}
+
 					return;
 				}
 
