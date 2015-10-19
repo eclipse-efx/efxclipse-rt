@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Abstract of a part widget
- * 
+ *
  * @param <N>
  *            the native widget
  * @param <T>
@@ -25,8 +25,15 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public interface WPart<N, T, M> extends WLayoutedWidget<MPart>, WDialogHost {
 	/**
+	 * Show a trim area at the top with the icon and title of the view
+	 *
+	 * @since 2.2.0
+	 */
+	public static final String SHOW_TOP_TRIM_AREA_TAG = "showTopTrimArea"; //$NON-NLS-1$
+
+	/**
 	 * Set a toolbar
-	 * 
+	 *
 	 * @param widget
 	 *            the widget
 	 */
@@ -34,7 +41,7 @@ public interface WPart<N, T, M> extends WLayoutedWidget<MPart>, WDialogHost {
 
 	/**
 	 * Set a menu
-	 * 
+	 *
 	 * @param widget
 	 *            the widget
 	 */
@@ -45,7 +52,7 @@ public interface WPart<N, T, M> extends WLayoutedWidget<MPart>, WDialogHost {
 	 */
 	@Nullable
 	public WMenu<M> getMenu();
-	
+
 	/**
 	 * @return the current toolbar
 	 */

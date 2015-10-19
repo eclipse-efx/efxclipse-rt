@@ -13,9 +13,12 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -23,12 +26,18 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.UIEvents.UIElement;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.fx.core.URI;
+import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.renderers.base.BasePartRenderer;
+import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPart;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBar;
@@ -36,6 +45,7 @@ import org.eclipse.fx.ui.workbench.renderers.fx.internal.CustomContainerSupport;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.w3c.dom.events.UIEvent;
 
 /**
  * default renderer for {@link MPart}
@@ -104,6 +114,9 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		@NonNull
 		IEclipseContext context;
 
+		@Inject
+		private GraphicsLoader graphicsLoader;
+
 		AnchorPane contentArea;
 		private BorderPane dataArea;
 
@@ -112,9 +125,17 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		Group menuGroup;
 		private WMenu<Node> viewMenuWidget;
 		private WToolBar<Node> viewToolbarWidget;
-		
+
 		private StackPane overlayContainer;
-		
+		private Label titleLabel;
+
+		private MPart domElement;
+
+		@Inject
+		public PartImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPart domElement) {
+			this.domElement = domElement;
+		}
+
 		@Override
 		protected Pane createWidget() {
 			Pane tmp = CustomContainerSupport.createContainerPane(this.logger, this.context);
@@ -178,6 +199,14 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 					}
 				};
 				this.dataArea = new BorderPane();
+
+				if( this.domElement != null && this.domElement.getTags().contains(WPart.SHOW_TOP_TRIM_AREA_TAG) ) {
+					HBox box = new HBox();
+					box.getStyleClass().add("tool-bar"); //$NON-NLS-1$
+					this.titleLabel = new Label();
+					box.getChildren().add(this.titleLabel);
+					this.dataArea.setTop(box);
+				}
 
 				AnchorPane.setTopAnchor(this.dataArea, Double.valueOf(0.0));
 				AnchorPane.setLeftAnchor(this.dataArea, Double.valueOf(0.0));
@@ -296,7 +325,31 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		public @Nullable WToolBar<Node> getToolbar() {
 			return this.viewToolbarWidget;
 		}
-		
+
+		@Inject
+		public void setLabel(@Named(UIEvents.UILabel.LABEL) String label) {
+			// ensure init
+			getWidget();
+			if( this.titleLabel != null ) {
+				this.titleLabel.setText(label);
+			}
+		}
+
+		@SuppressWarnings("null")
+		@Inject
+		public void setGraphic(@Named(UIEvents.UILabel.ICONURI) String iconURI) {
+			// ensure init
+			getWidget();
+			if( this.titleLabel != null ) {
+				if( iconURI != null ) {
+					this.titleLabel.setGraphic(this.graphicsLoader.getGraphicsNode(URI.create(iconURI)));
+				} else {
+					this.titleLabel.setGraphic(null);
+				}
+
+			}
+		}
+
 		@Override
 		public void setDialog(Object dialogNode) {
 			@NonNull
@@ -317,7 +370,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 						this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 					});
 				}
-				
+
 				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 				this.overlayContainer.getChildren().setAll((Node)dialogNode);
 				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
