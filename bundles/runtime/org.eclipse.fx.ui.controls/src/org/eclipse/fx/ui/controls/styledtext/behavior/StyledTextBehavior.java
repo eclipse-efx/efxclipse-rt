@@ -18,9 +18,11 @@ import java.util.List;
 
 import javafx.event.Event;
 import javafx.geometry.Bounds;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent.ActionType;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
@@ -85,18 +87,23 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	 *
 	 * @param action
 	 *            the action
-	 * @return true is consumed
 	 */
-	public boolean invokeAction(ActionType action) {
+	protected void invokeAction(ActionType action) {
 		ActionEvent evt = new ActionEvent(getControl(), getControl(), action);
 		Event.fireEvent(getControl(), evt);
-		return evt.isConsumed();
 	}
 
 	@SuppressWarnings("deprecation")
 	private void _keyPressed(KeyEvent event) {
 		VerifyEvent evt = new VerifyEvent(getControl(), getControl(), event);
 		Event.fireEvent(getControl(), evt);
+
+		// Bug in JavaFX who enables the menu when ALT is pressed
+		if (Util.isMacOS()) {
+			if (event.getCode() == KeyCode.ALT || event.isAltDown()) {
+				event.consume();
+			}
+		}
 
 		if (evt.isConsumed()) {
 			event.consume();
@@ -260,14 +267,13 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 					break;
 				}
 			}
-		case C:
-			{
-				if (event.isShortcutDown()) {
-					getControl().copy();
-					event.consume();
-					break;
-				}
+		case C: {
+			if (event.isShortcutDown()) {
+				getControl().copy();
+				event.consume();
+				break;
 			}
+		}
 		default:
 			break;
 		}

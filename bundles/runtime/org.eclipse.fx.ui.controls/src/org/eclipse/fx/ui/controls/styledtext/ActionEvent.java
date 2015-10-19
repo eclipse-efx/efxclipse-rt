@@ -45,6 +45,8 @@ public class ActionEvent extends Event {
 		 * Action to delete next word
 		 */
 		DELETE_WORD_NEXT,
+
+		// NAVIGATION
 		/**
 		 * Action to go to the next word
 		 */
@@ -60,7 +62,51 @@ public class ActionEvent extends Event {
 		/**
 		 * Action to go to the line end
 		 */
-		LINE_END
+		LINE_END,
+		/**
+		 * Action to go the start of the text
+		 */
+		TEXT_START,
+		/**
+		 * Action to go the end of the text
+		 */
+		TEXT_END,
+
+		// SELECT
+		/**
+		 * Action to select the next word
+		 */
+		SELECT_WORD_NEXT,
+		/**
+		 * Action to select the previous word
+		 */
+		SELECT_WORD_PREVIOUS,
+		/**
+		 * Action to select until the start of the line
+		 */
+		SELECT_LINE_START,
+		/**
+		 * Action to select until the end of the line
+		 */
+		SELECT_LINE_END,
+		/**
+		 * Action to select to the start of the text
+		 */
+		SELECT_TEXT_START,
+		/**
+		 * Action to select to the end of the text
+		 */
+		SELECT_TEXT_END,
+
+		// Editing
+		/**
+		 * Action to create a new line
+		 */
+		NEW_LINE
+//		,
+//		CUT,
+//		COPY,
+//		PASTE
 	}
 
 	/**

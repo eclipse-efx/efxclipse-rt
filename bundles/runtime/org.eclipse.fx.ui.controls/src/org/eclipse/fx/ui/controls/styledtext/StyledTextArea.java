@@ -180,7 +180,7 @@ public class StyledTextArea extends Control {
 
 	@Override
 	public String getUserAgentStylesheet() {
-		return getClass().getResource("styledtextarea.css").toExternalForm(); //$NON-NLS-1$
+		return StyledTextArea.class.getResource("styledtextarea.css").toExternalForm(); //$NON-NLS-1$
 	}
 
 	void handleTextChanging(TextChangingEvent event) {

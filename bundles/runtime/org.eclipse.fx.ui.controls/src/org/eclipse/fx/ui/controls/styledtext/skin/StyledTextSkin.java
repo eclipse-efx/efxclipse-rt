@@ -19,6 +19,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.fx.ui.controls.styledtext.StyleRange;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.StyledTextLine;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextLayoutContainer;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextNode;
+import org.eclipse.fx.ui.controls.styledtext.TextSelection;
+import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
+import org.eclipse.jdt.annotation.NonNull;
+
+import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
+import com.sun.javafx.scene.control.skin.ListViewSkin;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -38,19 +51,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
-
-import org.eclipse.fx.ui.controls.styledtext.StyleRange;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.StyledTextLine;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextLayoutContainer;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextNode;
-import org.eclipse.fx.ui.controls.styledtext.TextSelection;
-import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
-import org.eclipse.jdt.annotation.NonNull;
-
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
-import com.sun.javafx.scene.control.skin.ListViewSkin;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 
 /**
  * Styled text skin
@@ -74,7 +74,19 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	 *            the control
 	 */
 	public StyledTextSkin(StyledTextArea styledText) {
-		super(styledText, new StyledTextBehavior(styledText));
+		this(styledText, new StyledTextBehavior(styledText));
+	}
+
+	/**
+	 * Create a new skin
+	 *
+	 * @param styledText
+	 *            the styled text
+	 * @param behavior
+	 *            the behavior
+	 */
+	public StyledTextSkin(StyledTextArea styledText, StyledTextBehavior behavior) {
+		super(styledText, behavior);
 
 		this.rootContainer = new HBox();
 		this.rootContainer.setSpacing(0);
@@ -90,50 +102,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				return new MyListViewSkin(this);
 			}
 		};
-//		this.contentView.getStyleClass().add("styled-text-area"); //$NON-NLS-1$
-		// listView.setFocusTraversable(false);
-		this.contentView.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (newValue.booleanValue()) {
-					getSkinnable().requestFocus();
-				}
-			}
-		});
-		// listView.addEventHandler(KeyEvent.KEY_PRESSED, new
-		// EventHandler<KeyEvent>() {
-		// });
-		this.contentView.setCellFactory(new Callback<ListView<Line>, ListCell<Line>>() {
-
-			@Override
-			public ListCell<Line> call(ListView<Line> arg0) {
-				return new LineCell();
-			}
-		});
-		this.contentView.setMinHeight(0);
-		this.contentView.setMinWidth(0);
-//		this.contentView.setFixedCellSize(value);
-//		this.contentView.setFixedCellSize(15);
-		this.contentView.setOnMousePressed(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				getBehavior().updateCursor(event, getCurrentVisibleCells(), event.isShiftDown());
-				// The consuming does not help because it looks like the
-				// selection change happens earlier => should be push a new
-				// ListViewBehavior?
-				event.consume();
-			}
-		});
-		this.contentView.setOnMouseDragged(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				getBehavior().updateCursor(event, getCurrentVisibleCells(), true);
-				event.consume();
-			}
-		});
+		initializeContentViewer(this.contentView);
 
 		recalculateItems();
 
@@ -174,27 +144,25 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		styledText.selectionProperty().addListener(new ChangeListener<TextSelection>() {
 
 			@Override
-			public void changed(
-					ObservableValue<? extends TextSelection> observable,
-					TextSelection oldValue, TextSelection newValue) {
-				if( newValue == null || newValue.length == 0 ) {
-					for( LineCell c : getCurrentVisibleCells() ) {
-						if( c.getGraphic() != null ) {
+			public void changed(ObservableValue<? extends TextSelection> observable, TextSelection oldValue, TextSelection newValue) {
+				if (newValue == null || newValue.length == 0) {
+					for (LineCell c : getCurrentVisibleCells()) {
+						if (c.getGraphic() != null) {
 							StyledTextLayoutContainer block = (StyledTextLayoutContainer) c.getGraphic();
 							block.setSelection(new TextSelection(0, 0));
 						}
 					}
 				} else {
 					TextSelection selection = newValue;
-					for( LineCell c : getCurrentVisibleCells() ) {
-						if( c.getGraphic() != null ) {
+					for (LineCell c : getCurrentVisibleCells()) {
+						if (c.getGraphic() != null) {
 							Line arg0 = c.domainElement;
 							StyledTextLayoutContainer block = (StyledTextLayoutContainer) c.getGraphic();
-							if( selection.length > 0 && block.intersectOffset(selection.offset, selection.offset+selection.length) ) {
-								int start = Math.max(0,selection.offset - arg0.getLineOffset());
+							if (selection.length > 0 && block.intersectOffset(selection.offset, selection.offset + selection.length)) {
+								int start = Math.max(0, selection.offset - arg0.getLineOffset());
 
-								if( arg0.getLineOffset() + arg0.getLineLength() > selection.offset+selection.length ) {
-									block.setSelection(new TextSelection(start, selection.offset+selection.length - arg0.getLineOffset() - start));
+								if (arg0.getLineOffset() + arg0.getLineLength() > selection.offset + selection.length) {
+									block.setSelection(new TextSelection(start, selection.offset + selection.length - arg0.getLineOffset() - start));
 								} else {
 									block.setSelection(new TextSelection(start, arg0.getLineLength() - start));
 								}
@@ -208,18 +176,71 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		});
 	}
 
+	/**
+	 * Set up the content viewer
+	 *
+	 * @param contentView
+	 *            the content viewer
+	 */
+	protected void initializeContentViewer(ListView<Line> contentView) {
+		// this.contentView.getStyleClass().add("styled-text-area");
+		// //$NON-NLS-1$
+		// listView.setFocusTraversable(false);
+		contentView.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (newValue.booleanValue()) {
+					getSkinnable().requestFocus();
+				}
+			}
+		});
+		// listView.addEventHandler(KeyEvent.KEY_PRESSED, new
+		// EventHandler<KeyEvent>() {
+		// });
+		contentView.setCellFactory(new Callback<ListView<Line>, ListCell<Line>>() {
+
+			@Override
+			public ListCell<Line> call(ListView<Line> arg0) {
+				return new LineCell();
+			}
+		});
+		contentView.setMinHeight(0);
+		contentView.setMinWidth(0);
+		// this.contentView.setFixedCellSize(value);
+		// this.contentView.setFixedCellSize(15);
+		contentView.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				getBehavior().updateCursor(event, getCurrentVisibleCells(), event.isShiftDown());
+				// The consuming does not help because it looks like the
+				// selection change happens earlier => should be push a new
+				// ListViewBehavior?
+				event.consume();
+			}
+		});
+		contentView.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				getBehavior().updateCursor(event, getCurrentVisibleCells(), true);
+				event.consume();
+			}
+		});
+	}
+
 	private StyledTextLayoutContainer currentActiveNode;
 
 	void updateCurrentCursorNode(StyledTextLayoutContainer node) {
-		if( this.currentActiveNode != node ) {
-			if( this.currentActiveNode != null ) {
+		if (this.currentActiveNode != node) {
+			if (this.currentActiveNode != null) {
 				this.currentActiveNode.setCaretIndex(-1);
 			}
 
 			this.currentActiveNode = node;
 		}
 	}
-
 
 	/**
 	 * Refresh the line ruler
@@ -314,9 +335,9 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				for (int i = this.lineList.size(); i < getSkinnable().getContent().getLineCount(); i++) {
 					tmp.add(new Line());
 				}
-//				System.err.println("DOING AN ADD!!!!!");
+				// System.err.println("DOING AN ADD!!!!!");
 				this.lineList.addAll(tmp);
-//				System.err.println("ADD IS DONE!");
+				// System.err.println("ADD IS DONE!");
 			}
 		}
 
@@ -328,7 +349,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	 */
 	public void redraw() {
 		for (LineCell l : getCurrentVisibleCells()) {
-			if( l != null )
+			if (l != null)
 				l.update();
 		}
 	}
@@ -383,7 +404,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 		@Override
 		protected void updateItem(Line arg0, boolean arg1) {
-			if( arg0 != null && ! arg1 ) {
+			if (arg0 != null && !arg1) {
 				this.domainElement = arg0;
 				LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(this);
 				if (lineInfo == null) {
@@ -400,21 +421,24 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 				StyledTextLayoutContainer block = (StyledTextLayoutContainer) getGraphic();
 
-				if( block == null ) {
-//					System.err.println("CREATING NEW GRAPHIC BLOCK: " + this + " => " + this.domainElement);
+				if (block == null) {
+					// System.err.println("CREATING NEW GRAPHIC BLOCK: " + this
+					// + " => " + this.domainElement);
 					block = new StyledTextLayoutContainer(getSkinnable().focusedProperty());
 					block.getStyleClass().add("source-segment-container"); //$NON-NLS-1$
 					setGraphic(block);
-//					getSkinnable().requestLayout();
+					// getSkinnable().requestLayout();
 				}
 				block.setStartOffset(arg0.getLineOffset());
 
 				List<Segment> segments = arg0.getSegments();
-				if( segments.equals(this.currentSegments) ) {
-//					System.err.println("EQUAL: " + this.currentSegments + " vs " + segments); //$NON-NLS-1$
+				if (segments.equals(this.currentSegments)) {
+					// System.err.println("EQUAL: " + this.currentSegments + "
+					// vs " + segments); //$NON-NLS-1$
 					return;
 				} else {
-//					System.err.println("MODIFIED: " + this.currentSegments + " vs " + segments);
+					// System.err.println("MODIFIED: " + this.currentSegments +
+					// " vs " + segments);
 				}
 
 				this.currentSegments = segments;
@@ -423,13 +447,13 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 				for (final Segment seg : this.currentSegments) {
 					StyledTextNode t = new StyledTextNode(seg.text);
-					if( seg.style.stylename != null ) {
-						if( seg.style.stylename.contains(".") ) { //$NON-NLS-1$
+					if (seg.style.stylename != null) {
+						if (seg.style.stylename.contains(".")) { //$NON-NLS-1$
 							List<String> styles = new ArrayList<String>(Arrays.asList(seg.style.stylename.split("\\."))); //$NON-NLS-1$
-							styles.add(0,"source-segment"); //$NON-NLS-1$
+							styles.add(0, "source-segment"); //$NON-NLS-1$
 							t.getStyleClass().setAll(styles);
 						} else {
-							t.getStyleClass().setAll("source-segment",seg.style.stylename); //$NON-NLS-1$
+							t.getStyleClass().setAll("source-segment", seg.style.stylename); //$NON-NLS-1$
 						}
 
 					} else {
@@ -442,7 +466,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					texts.add(t);
 				}
 
-				if( segments.isEmpty() ) {
+				if (segments.isEmpty()) {
 					StyledTextNode t = new StyledTextNode(""); //$NON-NLS-1$
 					t.getStyleClass().setAll("source-segment"); //$NON-NLS-1$
 					block.getTextNodes().setAll(t);
@@ -450,30 +474,30 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					block.getTextNodes().setAll(texts);
 				}
 
-
 				TextSelection selection = getSkinnable().getSelection();
 
-				if( selection.length > 0 && block.intersectOffset(selection.offset, selection.offset+selection.length) ) {
-					int start = Math.max(0,selection.offset - arg0.getLineOffset());
+				if (selection.length > 0 && block.intersectOffset(selection.offset, selection.offset + selection.length)) {
+					int start = Math.max(0, selection.offset - arg0.getLineOffset());
 
-					if( arg0.getLineOffset() + arg0.getLineLength() > selection.offset+selection.length ) {
-						block.setSelection(new TextSelection(start, selection.offset+selection.length - arg0.getLineOffset() - start));
+					if (arg0.getLineOffset() + arg0.getLineLength() > selection.offset + selection.length) {
+						block.setSelection(new TextSelection(start, selection.offset + selection.length - arg0.getLineOffset() - start));
 					} else {
 						block.setSelection(new TextSelection(start, arg0.getLineLength() - start));
 					}
 				} else {
-					block.setSelection(new TextSelection(0,0));
+					block.setSelection(new TextSelection(0, 0));
 				}
 
-				if( arg0.getLineOffset() <= getSkinnable().getCaretOffset() && arg0.getLineOffset() + arg0.getText().length() >= getSkinnable().getCaretOffset() ) {
+				if (arg0.getLineOffset() <= getSkinnable().getCaretOffset() && arg0.getLineOffset() + arg0.getText().length() >= getSkinnable().getCaretOffset()) {
 					block.setCaretIndex(getSkinnable().getCaretOffset() - arg0.getLineOffset());
 					updateCurrentCursorNode(block);
 				} else {
 					block.setCaretIndex(-1);
 				}
 			} else {
-//FIND OUT WHY WE CLEAR SO OFTEN
-//				System.err.println("CLEARING GRAPHICS: " + this + " => " + this.domainElement);
+				// FIND OUT WHY WE CLEAR SO OFTEN
+				// System.err.println("CLEARING GRAPHICS: " + this + " => " +
+				// this.domainElement);
 
 				setGraphic(null);
 				this.domainElement = null;
@@ -551,8 +575,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 					return Collections.emptyList();
 				}
 
-				if( ranges.length == 0 && line.length() > 0 ) {
-					StyleRange styleRange = new StyleRange((String)null);
+				if (ranges.length == 0 && line.length() > 0) {
+					StyleRange styleRange = new StyleRange((String) null);
 					styleRange.start = start;
 					styleRange.length = line.length();
 
@@ -564,9 +588,9 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				} else {
 					int lastIndex = -1;
 
-					if( ranges.length > 0 ) {
-						if( ranges[0].start - start > 0 ) {
-							StyleRange styleRange = new StyleRange((String)null);
+					if (ranges.length > 0) {
+						if (ranges[0].start - start > 0) {
+							StyleRange styleRange = new StyleRange((String) null);
 							styleRange.start = start;
 							styleRange.length = ranges[0].start - start;
 
@@ -583,7 +607,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						int end = r.start - start + r.length;
 
 						if (lastIndex != -1 && lastIndex != begin) {
-							StyleRange styleRange = new StyleRange((String)null);
+							StyleRange styleRange = new StyleRange((String) null);
 							styleRange.start = start + lastIndex;
 							styleRange.length = begin - lastIndex;
 
@@ -602,8 +626,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 						lastIndex = end;
 					}
 
-					if( lastIndex > 0 && lastIndex < line.length() ) {
-						StyleRange styleRange = new StyleRange((String)null);
+					if (lastIndex > 0 && lastIndex < line.length()) {
+						StyleRange styleRange = new StyleRange((String) null);
 						styleRange.start = start + lastIndex;
 						styleRange.length = line.length() - lastIndex;
 
@@ -669,7 +693,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	}
 
 	static String removeLineending(String s) {
-		return s.replace("\n", "").replace("\r", "");  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return s.replace("\n", "").replace("\r", ""); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	class LineInfo extends HBox {
@@ -704,16 +728,16 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 		public void calculateContent() {
 			Line line = this.line;
-			if( line != null ) {
+			if (line != null) {
 				setManaged(true);
 				String newText = this.line.getLineIndex() + 1 + ""; //$NON-NLS-1$
 				String oldText = this.lineText.getText();
-				if( oldText == null ) {
+				if (oldText == null) {
 					oldText = ""; //$NON-NLS-1$
 				}
 				this.lineText.setText(newText);
 				this.markerLabel.setGraphic(getSkinnable().getLineRulerGraphicNodeFactory().call(line));
-				if( newText.length() != oldText.length() ) {
+				if (newText.length() != oldText.length()) {
 					StyledTextSkin.this.rootContainer.requestLayout();
 				}
 				StyledTextSkin.this.lineRuler.layout();
@@ -726,7 +750,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 		@Override
 		protected void layoutChildren() {
-			if( this.skipRelayout ) {
+			if (this.skipRelayout) {
 				return;
 			}
 			super.layoutChildren();
@@ -734,7 +758,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 			List<LineInfo> layouted = new ArrayList<>();
 			double maxWidth = 0;
 			for (LineCell c : ((MyListViewSkin) StyledTextSkin.this.contentView.getSkin()).getFlow().getCells()) {
-				if( c.isVisible() ) {
+				if (c.isVisible()) {
 					LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(c);
 					if (lineInfo != null) {
 						layouted.add(lineInfo);
@@ -754,9 +778,9 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 
 			List<Node> toRemove = new ArrayList<>();
 			for (Node n : children) {
-				if( n instanceof LineInfo ) {
+				if (n instanceof LineInfo) {
 					LineInfo l = (LineInfo) n;
-					if( l.line == null ) {
+					if (l.line == null) {
 						toRemove.add(l);
 					}
 				}
@@ -767,7 +791,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 		}
 
 		public void refresh() {
-			new ArrayList<>(getChildren()).stream().filter(n -> n instanceof LineInfo).forEach( n -> ((LineInfo)n).calculateContent());
+			new ArrayList<>(getChildren()).stream().filter(n -> n instanceof LineInfo).forEach(n -> ((LineInfo) n).calculateContent());
 		}
 	}
 
