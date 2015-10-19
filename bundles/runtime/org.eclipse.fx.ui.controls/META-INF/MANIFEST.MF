@@ -20,6 +20,8 @@ Export-Package: org.eclipse.fx.ui.controls;version="2.2.0",
  org.eclipse.fx.ui.controls.sceneviewer;version="2.2.0",
  org.eclipse.fx.ui.controls.stage;version="2.2.0";x-friends:="org.eclipse.fx.ui.workbench.renderers.fx",
  org.eclipse.fx.ui.controls.styledtext;version="2.2.0",
+ org.eclipse.fx.ui.controls.styledtext.behavior;version="2.2.0";x-internal:=true,
+ org.eclipse.fx.ui.controls.styledtext.skin;version="2.2.0";x-internal:=true,
  org.eclipse.fx.ui.controls.tabpane;version="2.2.0",
  org.eclipse.fx.ui.controls.tree;version="2.2.0",
  org.eclipse.fx.ui.controls.vectorgraphics;version="2.2.0"
