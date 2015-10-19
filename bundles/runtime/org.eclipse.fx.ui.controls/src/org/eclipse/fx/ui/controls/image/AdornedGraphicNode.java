@@ -1,8 +1,9 @@
 package org.eclipse.fx.ui.controls.image;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -75,6 +76,8 @@ public class AdornedGraphicNode extends AnchorPane {
 		}
 	}
 
+	private final List<Adornment> adornments;
+
 	/**
 	 * Create an adorned graphic node
 	 *
@@ -83,32 +86,51 @@ public class AdornedGraphicNode extends AnchorPane {
 	 * @param adornments
 	 *            the adornments
 	 */
-	public AdornedGraphicNode(Node adornedGraphic, Adornment... adornments) {
-		Double zero = Double.valueOf(0.0);
-		{
-			AnchorPane.setBottomAnchor(adornedGraphic, zero);
-			AnchorPane.setLeftAnchor(adornedGraphic, zero);
-			AnchorPane.setRightAnchor(adornedGraphic, zero);
-			AnchorPane.setTopAnchor(adornedGraphic, zero);
-			getChildren().add(adornedGraphic);
-		}
+	public AdornedGraphicNode(@NonNull Node adornedGraphic, @NonNull Adornment... adornments) {
+		this(adornedGraphic, Arrays.asList(adornments));
+	}
+
+	/**
+	 * Create an adorned graphic node
+	 *
+	 * @param adornedGraphic
+	 *            the base node
+	 * @param adornments
+	 *            the adornments
+	 */
+	public AdornedGraphicNode(@NonNull Node adornedGraphic, List<@NonNull Adornment> adornments) {
+		this.adornments = new ArrayList<Adornment>(adornments);
+		getStyleClass().setAll( "adorned-gaphic-node" ); //$NON-NLS-1$
+		getChildren().add(adornedGraphic);
+		getChildren().addAll(adornments.stream()
+				.map( a -> a.getGraphic())
+				.filter( g -> g != null)
+				.map( g -> {
+					if( g != null ) {
+						g.setManaged(false);
+					}
+					return g;
+				})
+				.collect(Collectors.toList()));
+	}
+
+	@Override
+	protected void layoutChildren() {
+		super.layoutChildren();
 
 		{
-			List<Node> collect = Stream.of(adornments).filter((ad) -> ad.getLocation() == Location.LEFT_TOP).map((ad) -> ad.getGraphic()).filter(n -> n != null).collect(Collectors.toList());
+			List<Node> collect = this.adornments.stream().filter((ad) -> ad.getLocation() == Location.LEFT_TOP).map((ad) -> ad.getGraphic()).filter(n -> n != null).collect(Collectors.toList());
 
 			if (collect != null && !collect.isEmpty()) {
 				if (collect.size() == 1) {
 					Node graphicsNode = collect.get(0);
-					AnchorPane.setLeftAnchor(graphicsNode, zero);
-					AnchorPane.setTopAnchor(graphicsNode, zero);
-					getChildren().add(graphicsNode);
+					graphicsNode.autosize();
+					graphicsNode.relocate(0, 0);
 				} else {
 					double start = 0;
 					for (Node n : collect) {
-						Node graphicsNode = collect.get(0);
-						AnchorPane.setLeftAnchor(graphicsNode, Double.valueOf(start));
-						AnchorPane.setTopAnchor(graphicsNode, zero);
-						getChildren().add(graphicsNode);
+						n.autosize();
+						n.relocate(start, 0);
 						start += n.prefWidth(-1);
 					}
 				}
@@ -116,21 +138,19 @@ public class AdornedGraphicNode extends AnchorPane {
 		}
 
 		{
-			List<Node> collect = Stream.of(adornments).filter((ad) -> ad.getLocation() == Location.RIGHT_TOP).map((ad) -> ad.getGraphic()).filter(n -> n != null).collect(Collectors.toList());
+			List<Node> collect = this.adornments.stream().filter((ad) -> ad.getLocation() == Location.RIGHT_TOP).map((ad) -> ad.getGraphic()).filter(n -> n != null).collect(Collectors.toList());
 
 			if (collect != null && !collect.isEmpty()) {
 				if (collect.size() == 1) {
 					Node graphicsNode = collect.get(0);
-					AnchorPane.setRightAnchor(graphicsNode, zero);
-					AnchorPane.setTopAnchor(graphicsNode, zero);
-					getChildren().add(graphicsNode);
+					graphicsNode.autosize();
+					graphicsNode.relocate(getWidth()-graphicsNode.prefWidth(-1), 0);
+
 				} else {
 					double start = 0;
 					for (Node n : collect) {
-						Node graphicsNode = collect.get(0);
-						AnchorPane.setRightAnchor(graphicsNode, Double.valueOf(start));
-						AnchorPane.setTopAnchor(graphicsNode, zero);
-						getChildren().add(graphicsNode);
+						n.autosize();
+						n.relocate(getWidth()-n.prefWidth(-1) - start, 0);
 						start += n.prefWidth(-1);
 					}
 				}
@@ -138,21 +158,18 @@ public class AdornedGraphicNode extends AnchorPane {
 		}
 
 		{
-			List<Node> collect = Stream.of(adornments).filter((ad) -> ad.getLocation() == Location.LEFT_BOTTOM).map((ad) -> ad.getGraphic()).filter(n -> n != null).collect(Collectors.toList());
+			List<Node> collect = this.adornments.stream().filter((ad) -> ad.getLocation() == Location.LEFT_BOTTOM).map((ad) -> ad.getGraphic()).filter(n -> n != null).collect(Collectors.toList());
 
 			if (collect != null && !collect.isEmpty()) {
 				if (collect.size() == 1) {
 					Node graphicsNode = collect.get(0);
-					AnchorPane.setLeftAnchor(graphicsNode, zero);
-					AnchorPane.setBottomAnchor(graphicsNode, zero);
-					getChildren().add(graphicsNode);
+					graphicsNode.autosize();
+					graphicsNode.relocate(0, getHeight() - graphicsNode.prefHeight(-1));
 				} else {
 					double start = 0;
 					for (Node n : collect) {
-						Node graphicsNode = collect.get(0);
-						AnchorPane.setLeftAnchor(graphicsNode, Double.valueOf(start));
-						AnchorPane.setBottomAnchor(graphicsNode, zero);
-						getChildren().add(graphicsNode);
+						n.autosize();
+						n.relocate(start, getHeight() - n.prefHeight(-1));
 						start += n.prefWidth(-1);
 					}
 				}
@@ -160,21 +177,18 @@ public class AdornedGraphicNode extends AnchorPane {
 		}
 
 		{
-			List<Node> collect = Stream.of(adornments).filter((ad) -> ad.getLocation() == Location.RIGHT_BOTTOM).map((ad) -> ad.getGraphic()).filter(n -> n != null).collect(Collectors.toList());
+			List<Node> collect = this.adornments.stream().filter((ad) -> ad.getLocation() == Location.RIGHT_BOTTOM).map((ad) -> ad.getGraphic()).filter(n -> n != null).collect(Collectors.toList());
 
 			if (collect != null && !collect.isEmpty()) {
 				if (collect.size() == 1) {
 					Node graphicsNode = collect.get(0);
-					AnchorPane.setRightAnchor(graphicsNode, zero);
-					AnchorPane.setBottomAnchor(graphicsNode, zero);
-					getChildren().add(graphicsNode);
+					graphicsNode.autosize();
+					graphicsNode.relocate( getWidth() - graphicsNode.prefWidth(-1), getHeight() - graphicsNode.prefHeight(-1));
 				} else {
 					double start = 0;
 					for (Node n : collect) {
-						Node graphicsNode = collect.get(0);
-						AnchorPane.setRightAnchor(graphicsNode, Double.valueOf(start));
-						AnchorPane.setBottomAnchor(graphicsNode, zero);
-						getChildren().add(graphicsNode);
+						n.autosize();
+						n.relocate( getWidth() - n.prefWidth(-1) - start, getHeight() - n.prefHeight(-1));
 						start += n.prefWidth(-1);
 					}
 				}
