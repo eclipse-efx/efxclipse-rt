@@ -132,8 +132,8 @@ public class DnDSupport extends BaseDnDSupport {
 	/**
 	 * Handle the drop
 	 *
-	 * @param event
-	 *            the event
+	 * @param data
+	 *            the data
 	 */
 	@SuppressWarnings("all")
 	public void handleDropped(DroppedData data) {
