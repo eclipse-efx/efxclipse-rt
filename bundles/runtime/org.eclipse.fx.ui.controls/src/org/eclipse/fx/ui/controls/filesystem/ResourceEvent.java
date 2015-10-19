@@ -27,10 +27,11 @@ import javafx.scene.Node;
  *            the resource type
  */
 public class ResourceEvent<T extends ResourceItem> extends Event {
-	private static final EventType<?> OPEN_RESOURCE = new EventType<>(
-			"EFX_CONTROL_OPEN_RESOURCE"); //$NON-NLS-1$
+	private static final EventType<?> OPEN_RESOURCE = new EventType<>("EFX_CONTROL_OPEN_RESOURCE"); //$NON-NLS-1$
 
 	/**
+	 * @param <T>
+	 *            the resource type
 	 * @return the open resource type
 	 */
 	@SuppressWarnings("unchecked")
@@ -40,8 +41,7 @@ public class ResourceEvent<T extends ResourceItem> extends Event {
 
 	private final List<ResourceItem> resourceItems;
 
-	ResourceEvent(Object source, EventTarget target,
-			EventType<ResourceEvent<T>> type, List<T> resourceItems) {
+	ResourceEvent(Object source, EventTarget target, EventType<ResourceEvent<T>> type, List<T> resourceItems) {
 		super(source, target, type);
 		this.resourceItems = Collections.unmodifiableList(resourceItems);
 	}
@@ -53,12 +53,12 @@ public class ResourceEvent<T extends ResourceItem> extends Event {
 	 *            the view
 	 * @param resourceItems
 	 *            the items
+	 * @param <T>
+	 *            the resource type
 	 * @return a new event
 	 */
-	public static <@NonNull T extends ResourceItem> ResourceEvent<T> createOpenResource(
-			Node view, List<T> resourceItems) {
-		return new ResourceEvent<>(view, view, openResourceEvent(),
-				resourceItems);
+	public static <@NonNull T extends ResourceItem> ResourceEvent<T> createOpenResource(Node view, List<T> resourceItems) {
+		return new ResourceEvent<>(view, view, openResourceEvent(), resourceItems);
 	}
 
 	/**
@@ -68,12 +68,12 @@ public class ResourceEvent<T extends ResourceItem> extends Event {
 	 *            the view
 	 * @param resourceItems
 	 *            the items
+	 * @param <T>
+	 *            the resource type
 	 * @return a new event
 	 */
-	public static <@NonNull T extends ResourceItem> ResourceEvent<T> createOpenResource(
-			DirectoryTreeView view, List<T> resourceItems) {
-		return new ResourceEvent<>(view, view, openResourceEvent(),
-				resourceItems);
+	public static <@NonNull T extends ResourceItem> ResourceEvent<T> createOpenResource(DirectoryTreeView view, List<T> resourceItems) {
+		return new ResourceEvent<>(view, view, openResourceEvent(), resourceItems);
 	}
 
 	/**
