@@ -35,7 +35,7 @@ import javafx.scene.layout.Pane;
 
 /**
  * Base class for dialogs
- * 
+ *
  * <p>
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
@@ -47,7 +47,7 @@ public class Dialog extends DefaultFramePane {
 
 	/**
 	 * Create a new dialog
-	 * 
+	 *
 	 * @param clientArea
 	 *            the node displayed in the client area
 	 * @param frameTitle
@@ -59,13 +59,14 @@ public class Dialog extends DefaultFramePane {
 
 	/**
 	 * Create a new dialog
-	 * 
+	 *
 	 * @param pane
 	 *            the pane wrapping the content displaying buttons
 	 * @param clientArea
 	 *            the client are who presents the business controls
 	 * @param frameTitle
 	 *            the title displayed on the frame
+	 * @param <D> the content pane type
 	 */
 	public <D extends Pane & DialogContentPane> Dialog(D pane, Node clientArea, String frameTitle) {
 		this(pane, clientArea, DialogMessagesProvider.createDefaultRegistry(frameTitle));
@@ -73,13 +74,14 @@ public class Dialog extends DefaultFramePane {
 
 	/**
 	 * Create a new dialog
-	 * 
+	 *
 	 * @param pane
 	 *            the pane wrapping the content displaying buttons
 	 * @param clientArea
 	 *            the client are who presents the business controls
 	 * @param messagesProvider
 	 *            the provide for messages
+	 * @param <D> the content pane type
 	 */
 	public <D extends Pane & DialogContentPane> Dialog(D pane, Node clientArea, DialogMessagesProvider messagesProvider) {
 		super(pane, true);
@@ -98,7 +100,7 @@ public class Dialog extends DefaultFramePane {
 
 	/**
 	 * Handle the press of a button
-	 * 
+	 *
 	 * @param button
 	 *            the button
 	 */
@@ -160,7 +162,7 @@ public class Dialog extends DefaultFramePane {
 
 		/**
 		 * Create a dialog button
-		 * 
+		 *
 		 * @param label
 		 *            the label
 		 */
@@ -177,7 +179,7 @@ public class Dialog extends DefaultFramePane {
 
 		/**
 		 * Set a new label
-		 * 
+		 *
 		 * @param label
 		 *            the new label
 		 */
@@ -261,7 +263,7 @@ public class Dialog extends DefaultFramePane {
 
 		/**
 		 * Set an action consumer
-		 * 
+		 *
 		 * @param actionConsumer
 		 *            the consumer of actions
 		 */
@@ -349,7 +351,7 @@ public class Dialog extends DefaultFramePane {
 
 	/**
 	 * Create a simple dialog
-	 * 
+	 *
 	 * @param clientArea
 	 *            the client area
 	 * @param frameTitle
