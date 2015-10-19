@@ -205,7 +205,7 @@ public class MessageDialog extends Dialog {
 	public static class ErrorDialog extends OkDialog {
 		/**
 		 * Create a new error dialog
-		 * 
+		 *
 		 * @param title
 		 *            the title
 		 * @param message
@@ -218,7 +218,7 @@ public class MessageDialog extends Dialog {
 
 	/**
 	 * Open an error dialog who blocks until closed
-	 * 
+	 *
 	 * @param title
 	 *            the title
 	 * @param message
@@ -244,7 +244,7 @@ public class MessageDialog extends Dialog {
 	public static class WarningDialog extends OkDialog {
 		/**
 		 * Create a new warning dialog
-		 * 
+		 *
 		 * @param title
 		 *            the title
 		 * @param message
@@ -277,7 +277,7 @@ public class MessageDialog extends Dialog {
 	public static class InformationDialog extends OkDialog {
 		/**
 		 * Create a new info dialog
-		 * 
+		 *
 		 * @param title
 		 *            the title
 		 * @param message
@@ -351,7 +351,7 @@ public class MessageDialog extends Dialog {
 
 		/**
 		 * Create a new question dialog
-		 * 
+		 *
 		 * @param windowTitle
 		 *            the window title
 		 * @param message
@@ -381,7 +381,7 @@ public class MessageDialog extends Dialog {
 	/**
 	 * Open an question cancel dialog who blocks until closed with default
 	 * option {@link QuestionCancelResult#YES}
-	 * 
+	 *
 	 * @param title
 	 *            the title
 	 * @param message
@@ -396,7 +396,7 @@ public class MessageDialog extends Dialog {
 
 	/**
 	 * Open a question cancel dialog who blocks until closed
-	 * 
+	 *
 	 * @param title
 	 *            the title
 	 * @param message
@@ -440,9 +440,11 @@ public class MessageDialog extends Dialog {
 
 		/**
 		 * Create a new dialog
-		 * 
+		 *
 		 * @param windowTitle
+		 *            the window title
 		 * @param message
+		 *            the message
 		 */
 		@SuppressWarnings("null")
 		public QuestionCancelDialog(@NonNull String windowTitle, @NonNull String message) {
