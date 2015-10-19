@@ -12,6 +12,8 @@ package org.eclipse.fx.ui.controls.dnd;
 
 import java.util.function.Consumer;
 
+import org.eclipse.fx.core.Util;
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.Event;
@@ -81,44 +83,93 @@ public class EFXDragEvent extends Event {
 		boolean complete = false;
 	}
 
-	static class DragFeedback {
-		PopupWindow stage;
+	abstract static class DragFeedback {
+
+		public abstract void dispose();
+
+		public abstract void updateCoordinates(double screenX, double screenY);
+
+		public abstract void updateFeedback(Consumer<StackPane> consumer);
+	}
+
+	static class DragFeedbackStage extends DragFeedback {
+		Stage popupWindow;
 		double screenX;
 		double screenY;
 		Node n;
 
-		public DragFeedback(Node n) {
+		public DragFeedbackStage(Node n) {
 			this.n = n;
-			this.stage = new PopupWindow() {
+			this.popupWindow = new Stage();
+			this.popupWindow.initStyle(StageStyle.TRANSPARENT);
+//			this.popupWindow.initOwner(n.getScene().getWindow());
+			this.popupWindow.setUserData("findNodeExclude"); //$NON-NLS-1$
+			this.popupWindow.setAlwaysOnTop(true);
+			StackPane root = new StackPane();
+			root.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+			Scene value = new Scene(root);
+			value.setFill(Color.TRANSPARENT);
+			this.popupWindow.setScene(value);
+			this.popupWindow.getScene().getStylesheets().setAll(n.getScene().getStylesheets());
+			this.popupWindow.getScene().setRoot(root);
+		}
+
+		public void updateCoordinates(double screenX, double screenY) {
+			this.popupWindow.setX(screenX - this.popupWindow.getWidth() / 2);
+			this.popupWindow.setY(screenY + 20);
+		}
+
+		public void updateFeedback(Consumer<StackPane> consumer) {
+			consumer.accept((StackPane) this.popupWindow.getScene().getRoot());
+			this.popupWindow.sizeToScene();
+			this.popupWindow.setX(this.screenX - this.popupWindow.getWidth() / 2);
+			this.popupWindow.setY(this.screenY + 20);
+			this.popupWindow.show();
+		}
+
+		public void dispose() {
+			this.popupWindow.hide();
+		}
+	}
+
+	static class DragFeedbackPopup extends DragFeedback {
+		PopupWindow popupWindow;
+		double screenX;
+		double screenY;
+		Node n;
+
+		public DragFeedbackPopup(Node n) {
+			this.n = n;
+			this.popupWindow = new PopupWindow() {
 				// Empty
 			};
-			this.stage.setAutoFix(false);
-			this.stage.setUserData("findNodeExclude"); //$NON-NLS-1$
+			this.popupWindow.setAutoFix(false);
+			this.popupWindow.setUserData("findNodeExclude"); //$NON-NLS-1$
 //			this.stage.setAlwaysOnTop(true);
 			StackPane root = new StackPane();
 			root.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
 //			Scene value = new Scene(root);
 //			value.setFill(Color.TRANSPARENT);
 //			this.stage.setScene(value);
-			this.stage.getScene().getStylesheets().setAll(n.getScene().getStylesheets());
-			this.stage.getScene().setRoot(root);
+			this.popupWindow.getScene().getStylesheets().setAll(n.getScene().getStylesheets());
+			this.popupWindow.getScene().setRoot(root);
 		}
 
 		public void updateCoordinates(double screenX, double screenY) {
-			this.stage.setX(screenX - this.stage.getWidth() / 2);
-			this.stage.setY(screenY + 20);
+			this.popupWindow.setX(screenX - this.popupWindow.getWidth() / 2);
+			this.popupWindow.setY(screenY + 20);
 		}
 
 		public void updateFeedback(Consumer<StackPane> consumer) {
-			consumer.accept((StackPane) this.stage.getScene().getRoot());
-			this.stage.sizeToScene();
-			this.stage.setX(this.screenX - this.stage.getWidth() / 2);
-			this.stage.setY(this.screenY + 20);
-			this.stage.show(n.getScene().getWindow());
+			consumer.accept((StackPane) this.popupWindow.getScene().getRoot());
+			this.popupWindow.sizeToScene();
+			this.popupWindow.setX(this.screenX - this.popupWindow.getWidth() / 2);
+			this.popupWindow.setY(this.screenY + 20);
+			this.popupWindow.show(n.getScene().getWindow());
 		}
 
 		public void dispose() {
-			this.stage.hide();
+			this.popupWindow.hide();
 		}
 	}
 
@@ -146,7 +197,11 @@ public class EFXDragEvent extends Event {
 		if (eventType == DRAG_START) {
 			DRAGGED_CONTENT = null;
 			if( canShowFeedbackDragFeedback() ) {
-				DRAG_FEEDBACK = new DragFeedback((Node) source);
+				if( Util.isMacOS()) {
+					DRAG_FEEDBACK = new DragFeedbackStage((Node) source);
+				} else {
+					DRAG_FEEDBACK = new DragFeedbackPopup((Node) source);
+				}
 			}
 		} else if (eventType == DRAG_DONE) {
 			if (DRAG_FEEDBACK != null) {
