@@ -94,8 +94,7 @@ public class Util {
 	}
 
 	@SuppressWarnings("null")
-	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor,
-			@NonNull Class<S> serviceClass) {
+	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
 		if (isOsgiEnv()) {
 			return OSGiUtil.lookupServiceList(requestor, serviceClass);
 		} else {
@@ -154,8 +153,7 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor,
-			@NonNull Class<S> serviceClass) {
+	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor, @NonNull Class<S> serviceClass) {
 		return _lookupServiceList(requestor, serviceClass);
 	}
 
@@ -235,6 +233,30 @@ public class Util {
 	 * @since 2.2.0
 	 */
 	public static boolean isMacOS() {
-		return "Mac OS X".equals(System.getProperty("os.name"));  //$NON-NLS-1$//$NON-NLS-2$
+		return "Mac OS X".equals(System.getProperty("os.name")); //$NON-NLS-1$//$NON-NLS-2$
+	}
+
+	/**
+	 * Constraint the given value to the upper and lower bound
+	 *
+	 * @param v
+	 *            the value to constraint
+	 * @param min
+	 *            the lower bound (only values >= 0 are applied)
+	 * @param max
+	 *            the upper bound (only values >= 0 are applied)
+	 * @return the value
+	 * @since 2.2.0
+	 */
+	public static double unsignedConstraintValue(double v, double min, double max) {
+		double rv = v;
+		if (min >= 0) {
+			rv = Math.max(rv, min);
+		}
+
+		if (max >= 0) {
+			rv = Math.min(rv, max);
+		}
+		return rv;
 	}
 }

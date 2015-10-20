@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.stage;
 
+import org.eclipse.fx.core.Util;
+
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -39,7 +41,7 @@ import javafx.stage.WindowEvent;
 
 /**
  * A window pane who has handles at the borders to resize it
- * 
+ *
  * @since 2.0
  */
 public abstract class ResizeableFramePane extends StackPane implements Frame {
@@ -119,19 +121,56 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 					for (Location l : this.locations) {
 						switch (l) {
 						case TOP:
+						{
+							double value = this.height + -1 * (int) deltaY;
+							double constraintedValue = Util.unsignedConstraintValue(
+									value,
+									getMinHeight(),
+									getMaxHeight());
+							if( constraintedValue != value ) {
+								deltaY -= constraintedValue - value;
+							}
+
 							getStage().setY(this.y + (int) deltaY);
-							getStage().setHeight(this.height + -1 * (int) deltaY);
+							getStage().setHeight(constraintedValue);
 							break;
+						}
 						case BOTTOM:
-							getStage().setHeight(this.height + deltaY);
+						{
+							double value = this.height + deltaY;
+							value = Util.unsignedConstraintValue(
+									value,
+									getMinHeight(),
+									getMaxHeight());
+							getStage().setHeight(value);
 							break;
+						}
 						case LEFT:
+						{
+							double value = this.width + -1 * (int) deltaX;
+							double constraintedValue = Util.unsignedConstraintValue(
+									value,
+									getMinWidth(),
+									getMaxWidth());
+
+							if( constraintedValue != value ) {
+								deltaX -= constraintedValue - value;
+							}
+
 							getStage().setX(this.x + (int) deltaX);
-							getStage().setWidth(this.width + -1 * (int) deltaX);
+							getStage().setWidth(constraintedValue);
 							break;
+						}
 						case RIGHT:
-							getStage().setWidth(this.width + deltaX);
+						{
+							double value = this.width + deltaX;
+							value = Util.unsignedConstraintValue(
+									value,
+									getMinWidth(),
+									getMaxWidth());
+							getStage().setWidth(value);
 							break;
+						}
 						default:
 							break;
 						}
@@ -152,7 +191,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 
 	/**
 	 * A resizeable frame pane
-	 * 
+	 *
 	 * @param lighweight
 	 *            <code>true</code> if used in a light-weight scenario
 	 */
@@ -288,7 +327,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 
 	/**
 	 * Register the title bar which is the area used to drag the window around
-	 * 
+	 *
 	 * @param node
 	 *            the node
 	 */
@@ -375,7 +414,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 
 	/**
 	 * Set the main content to be displayed by this window
-	 * 
+	 *
 	 * @param content
 	 *            the content node
 	 */
@@ -385,7 +424,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 
 	/**
 	 * The main content to be displayed by this window
-	 * 
+	 *
 	 * @return the current content
 	 */
 	public final Node getContent() {
@@ -394,7 +433,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 
 	/**
 	 * The main content to be displayed by this window
-	 * 
+	 *
 	 * @return the property to observe
 	 */
 	public final ObjectProperty<Node> contentProperty() {
@@ -517,7 +556,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	 * <li>{@link WindowEvent#WINDOW_CLOSE_REQUEST} if the frame is heavyweight
 	 * </li>
 	 * </ul>
-	 * 
+	 *
 	 * @param uiInteraction
 	 *            if closed by user interaction and events need to be fired
 	 */
@@ -565,7 +604,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 
 	/**
 	 * Observable property defining of the dialog is maximizable
-	 * 
+	 *
 	 * @return the property
 	 */
 	public final BooleanProperty maximizableProperty() {
@@ -586,7 +625,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 
 	/**
 	 * Observable property defining of the dialog is minimizable
-	 * 
+	 *
 	 * @return the property
 	 */
 	public final BooleanProperty minimizableProperty() {
@@ -614,7 +653,7 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 
 	/**
 	 * Set a handle size
-	 * 
+	 *
 	 * @param size
 	 *            the size
 	 */
