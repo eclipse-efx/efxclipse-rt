@@ -267,6 +267,14 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 					break;
 				}
 			}
+		case X:
+			if( getControl().getEditable() ) {
+				if(event.isShortcutDown()) {
+					getControl().cut();
+					event.consume();
+					break;
+				}
+			}
 		case C: {
 			if (event.isShortcutDown()) {
 				getControl().copy();
