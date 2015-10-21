@@ -1429,7 +1429,6 @@ public class StyledTextArea extends Control {
 			if (text != null) {
 				// TODO Once we have a real selection we need
 				getContent().replaceTextRange(getCaretOffset(), 0, text);
-				setCaretOffset(getCaretOffset() + text.length());
 			}
 		}
 	}
