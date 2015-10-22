@@ -15,6 +15,7 @@ import java.util.Optional;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.core.TypeProviderService;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * A context function who creates a type through the provided type
@@ -27,8 +28,7 @@ import org.eclipse.fx.core.TypeProviderService;
  * 			<P>
  *            the provider service
  */
-public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderService<S, T>>
-		extends ServiceContextFunction<P> {
+public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderService<S, T>> extends ServiceContextFunction<P> {
 
 	private final String selectorTypeKey;
 
@@ -60,7 +60,11 @@ public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderSe
 	}
 
 	@Override
-	public final Object compute(IEclipseContext context) {
+	public final Object compute(IEclipseContext _context) {
+		if( _context == null ) {
+			return null;
+		}
+		IEclipseContext context = getTargetContext(_context);
 		String cacheKey = getCacheKey();
 		Object o = context.get(cacheKey);
 
@@ -74,8 +78,7 @@ public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderSe
 
 		Optional<? extends T> value;
 		synchronized (this.registry) {
-			value = this.registry.unsynchronizedStream().filter(p -> p.test(s)).findFirst()
-					.map(p -> ContextInjectionFactory.make(p.getType(s), context));
+			value = this.registry.unsynchronizedStream().filter(p -> p.test(s)).findFirst().map(p -> ContextInjectionFactory.make(p.getType(s), context));
 		}
 
 		if (value.isPresent()) {
@@ -85,6 +88,18 @@ public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderSe
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Extract the target context
+	 *
+	 * @param context
+	 *            the context
+	 * @return the context
+	 */
+	@SuppressWarnings("static-method")
+	protected @NonNull IEclipseContext getTargetContext(@NonNull IEclipseContext context) {
+		return context;
 	}
 
 	/**
