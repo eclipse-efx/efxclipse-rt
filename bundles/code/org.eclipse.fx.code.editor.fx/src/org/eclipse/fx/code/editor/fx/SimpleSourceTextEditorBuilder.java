@@ -10,13 +10,16 @@
 *******************************************************************************/
 package org.eclipse.fx.code.editor.fx;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.fx.code.editor.Input;
+import org.eclipse.fx.code.editor.LocalSourceFileInput;
 import org.eclipse.fx.code.editor.fx.services.ProposalComputer;
 import org.eclipse.fx.code.editor.fx.services.TextHoverMap;
 import org.eclipse.fx.code.editor.fx.services.internal.DefaultSourceViewerConfiguration;
+import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.CombinedWordRule;
@@ -276,5 +279,21 @@ public class SimpleSourceTextEditorBuilder {
 			setRules(rules);
 			setDefaultReturnToken(defaultToken);
 		}
+	}
+
+	public static void main(String[] args) {
+		BorderPane p = new BorderPane();
+		LocalSourceFileInput in = new LocalSourceFileInput(Paths.get("/tmp/Sample.java"),null);
+
+		SimpleSourceTextEditorBuilder.create("java")
+			.addMultiLineComment("/*", "*/")
+			.addMultiLineDocComment("/**", "*/")
+			.addSingleLineCommentStart("//")
+			.addStringStartEnd('"')
+			.addStringStartEnd('\'')
+			.setStringEscapeChar('\\')
+			.addKeyWord("abstract")
+			.addKeyWord("assert")
+			.build(p, new Document(in.getData()), in);
 	}
 }
