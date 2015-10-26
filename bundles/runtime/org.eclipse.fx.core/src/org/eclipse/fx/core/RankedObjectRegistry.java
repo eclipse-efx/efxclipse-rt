@@ -41,7 +41,12 @@ public class RankedObjectRegistry<T> {
 			if (v == 0) {
 				v = this.object.getClass().toString().compareTo(o.object.getClass().getName());
 			}
-			return v;
+			return v * -1;
+		}
+
+		@Override
+		public String toString() {
+			return "RankedObjectRegistry@"+Integer.toHexString(hashCode()) + "( ranking: " + this.rank + "," + this.object  + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
 	}
 
@@ -124,7 +129,7 @@ public class RankedObjectRegistry<T> {
 				}
 
 			}
-			return 1;
+			return 0;
 		}
 
 		return ((Number) object).intValue();
