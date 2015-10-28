@@ -30,7 +30,7 @@ package org.eclipse.fx.code.editor.ldef.langs
 							"goto",		"if", 			"implements", 	"import", 		"instanceof", 	"interface",	"native",
 							"new",		"package", 		"private", 		"protected", 	"public",		"static", 		"super",
 							"switch", 	"synchronized",	"this", 		"throw", 		"throws", 		"transient", 	"try",
-							"volatile", "while",	 	"interface", 	"enum"
+							"volatile", "while",	 	"interface", 	"enum", 		"return"
 						]
 			}
 			java_buitin_type {

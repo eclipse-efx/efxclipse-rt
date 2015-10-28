@@ -58,6 +58,7 @@ public class Java__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			java_keywordWordRule.addWord("while", java_keywordToken);
 			java_keywordWordRule.addWord("interface", java_keywordToken);
 			java_keywordWordRule.addWord("enum", java_keywordToken);
+			java_keywordWordRule.addWord("return", java_keywordToken);
 			combinedWordRule.addWordMatcher(java_keywordWordRule);
 		}
 		{
