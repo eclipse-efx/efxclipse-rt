@@ -47,8 +47,9 @@ public class LDefDefaultModelProvider implements LDefModelProvider {
 	@Override
 	public boolean applies(Input<?> input) {
 		if( input instanceof URIProvider ) {
-			org.eclipse.fx.core.URI uri = ((URIProvider)input).getURI();
-			String lastSegment = uri.lastSegment();
+			String uri = ((URIProvider) input).getURI();
+			String[] parts = uri.split("/");
+			String lastSegment = parts[parts.length-1];
 			int idx = lastSegment.lastIndexOf('.');
 			if( idx != -1 ) {
 				return definitionURI.containsKey(lastSegment.substring(idx+1));
@@ -60,8 +61,9 @@ public class LDefDefaultModelProvider implements LDefModelProvider {
 	@Override
 	public LanguageDef getModel(Input<?> input) {
 		if( input instanceof URIProvider ) {
-			org.eclipse.fx.core.URI uri = ((URIProvider)input).getURI();
-			String lastSegment = uri.lastSegment();
+			String uri = ((URIProvider) input).getURI();
+			String[] parts = uri.split("/");
+			String lastSegment = parts[parts.length-1];
 			int idx = lastSegment.lastIndexOf('.');
 			if( idx != -1 ) {
 				return getModelByExtension(lastSegment.substring(idx+1));
