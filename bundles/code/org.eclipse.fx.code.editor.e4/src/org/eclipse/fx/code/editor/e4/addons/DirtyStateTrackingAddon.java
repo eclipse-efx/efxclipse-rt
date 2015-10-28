@@ -1,8 +1,5 @@
 package org.eclipse.fx.code.editor.e4.addons;
 
-import java.net.MalformedURLException;
-import java.nio.file.Paths;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -17,9 +14,9 @@ import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.SourceFileChange;
 import org.eclipse.fx.code.editor.services.URIProvider;
-import org.eclipse.fx.core.URI;
 import org.osgi.service.event.Event;
 
+@SuppressWarnings("restriction")
 public class DirtyStateTrackingAddon {
 	private EModelService modelService;
 
@@ -49,15 +46,17 @@ public class DirtyStateTrackingAddon {
 		}
 	}
 
+//	private static String toURI(String uri) throws MalformedURLException {
+//		if( uri.startsWith("module-file") ) {
+//			return uri;
+//		} else {
+//			return java.net.URI.create(uri.toString()).toURL().toExternalForm();
+//		}
+//	}
+
 	void handleDocumentSaved(Event event) {
 		Input<?> input = (Input<?>) event.getProperty(IEventBroker.DATA);
-		String tmpUri = "";
-		try {
-			tmpUri = java.net.URI.create(((URIProvider)input).getURI().toString()).toURL().toExternalForm();
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		};
+		String tmpUri = ((URIProvider)input).getURI();
 
 		String uri = tmpUri;
 		modelService.findElements(application, MPart.class, EModelService.ANYWHERE, (e) -> {
@@ -72,14 +71,7 @@ public class DirtyStateTrackingAddon {
 
 	void handleDocumentModified(Event event) {
 		SourceFileChange change = (SourceFileChange) event.getProperty(IEventBroker.DATA);
-		String tmpUri = "";
-		try {
-			tmpUri = java.net.URI.create(((URIProvider)change.input).getURI().toString()).toURL().toExternalForm();
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		};
-
+		String tmpUri = ((URIProvider)change.input).getURI();
 		String uri = tmpUri;
 		modelService.findElements(application, MPart.class, EModelService.ANYWHERE, (e) -> {
 			if( e instanceof MPart) {

@@ -11,7 +11,6 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.fx.code.editor.Constants;
 
-//FIXME Should we remove the need for ui.di????
 public class SaveFile {
 	@CanExecute
 	public boolean canSave(@Named(Constants.EDITOR_DIRTY_FLAG_KEY) @Optional Boolean dirtyFlag) {

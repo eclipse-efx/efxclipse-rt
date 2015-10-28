@@ -12,9 +12,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.adapter.Adapt;
 import org.eclipse.fx.core.event.EventBus;
+import org.eclipse.fx.core.function.ExExecutor;
 
 public class LocalSourceFileInput implements SourceFileInput {
 	private final Path path;
@@ -94,8 +94,8 @@ public class LocalSourceFileInput implements SourceFileInput {
 	}
 
 	@Override
-	public URI getURI() {
-		return URI.create(path.toUri().toString());
+	public String getURI() {
+		return ExExecutor.executeSupplier(() -> path.toUri().toURL().toExternalForm(), "Could not retrieve URI from '"+path+"'").orElse(null);
 	}
 
 	@Override

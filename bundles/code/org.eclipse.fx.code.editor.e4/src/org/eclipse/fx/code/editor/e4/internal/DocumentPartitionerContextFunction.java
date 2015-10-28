@@ -12,6 +12,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
+@SuppressWarnings("restriction")
 @Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.jface.text.IDocumentPartitioner"})
 public class DocumentPartitionerContextFunction extends InputBasedContextFunction<IDocumentPartitioner,DocumentPartitionerTypeProvider> {
 
