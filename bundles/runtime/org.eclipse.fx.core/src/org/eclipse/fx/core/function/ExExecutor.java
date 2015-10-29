@@ -14,6 +14,8 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -28,8 +30,7 @@ public final class ExExecutor {
 	}
 
 	@NonNull
-	private static RuntimeException wrap(@NonNull Throwable e,
-			@NonNull String message) {
+	private static RuntimeException wrap(@NonNull Throwable e, @NonNull String message) {
 		return new RuntimeException(message, e);
 	}
 
@@ -46,8 +47,7 @@ public final class ExExecutor {
 	 * @param message
 	 *            the message to use
 	 */
-	public static void executeRunnable(@NonNull ExRunnable r,
-			@NonNull String message) {
+	public static void executeRunnable(@NonNull ExRunnable r, @NonNull String message) {
 		executeRunnable(r, (e) -> wrap(e, message));
 	}
 
@@ -63,9 +63,7 @@ public final class ExExecutor {
 	 * @param exceptionConverter
 	 *            function to convert checked exceptions into runtime exceptions
 	 */
-	public static void executeRunnable(
-			@NonNull ExRunnable r,
-			@NonNull Function<@NonNull Throwable, @NonNull RuntimeException> exceptionConverter) {
+	public static void executeRunnable(@NonNull ExRunnable r, @NonNull Function<@NonNull Throwable, @NonNull RuntimeException> exceptionConverter) {
 		try {
 			r.wrappedRun();
 		} catch (Throwable e) {
@@ -75,6 +73,39 @@ public final class ExExecutor {
 				throw exceptionConverter.apply(e);
 			}
 		}
+	}
+
+	/**
+	 * Execute the runnable and log the exception with the given logger but
+	 * <b>don't rethrow it</b>
+	 *
+	 * @param r
+	 *            the runnable
+	 * @param logger
+	 *            the logger
+	 * @since 2.2.0
+	 */
+	public static void executeRunnable(@NonNull ExRunnable r, Logger logger) {
+		try {
+			r.wrappedRun();
+		} catch (Throwable t) {
+			Logger l = logger;
+			if (l == null) {
+				l = LoggerCreator.createLogger(ExExecutor.class);
+			}
+			l.error("Unable to execute" + r, t); //$NON-NLS-1$
+		}
+	}
+
+	/**
+	 * Execute the runnable and log the exception but <b>don't rethrow it</b>
+	 *
+	 * @param r
+	 *            the runnable
+	 * @since 2.2.0
+	 */
+	public static void executeRunnable(@NonNull ExRunnable r) {
+		executeRunnable(r, (Logger) null);
 	}
 
 	/**
@@ -91,8 +122,7 @@ public final class ExExecutor {
 	 *            the message to use
 	 * @return the value provided by the supplier
 	 */
-	public static <@Nullable V> Optional<V> executeSupplier(
-			@NonNull ExSupplier<V> r, @NonNull String message) {
+	public static <@Nullable V> Optional<V> executeSupplier(@NonNull ExSupplier<V> r, @NonNull String message) {
 		return executeSupplier(r, (e) -> wrap(e, message));
 	}
 
@@ -109,9 +139,7 @@ public final class ExExecutor {
 	 *            function to convert checked exceptions into runtime exceptions
 	 * @return the value provided by the supplier
 	 */
-	public static <@Nullable V> Optional<V> executeSupplier(
-			@NonNull ExSupplier<V> r,
-			@NonNull Function<@NonNull Throwable, @NonNull RuntimeException> exceptionConverter) {
+	public static <@Nullable V> Optional<V> executeSupplier(@NonNull ExSupplier<V> r, @NonNull Function<@NonNull Throwable, @NonNull RuntimeException> exceptionConverter) {
 		try {
 			return Optional.ofNullable(r.wrappedGet());
 		} catch (Throwable e) {
@@ -133,8 +161,7 @@ public final class ExExecutor {
 	 *            the exception handler
 	 * @return the value
 	 */
-	public static <@Nullable V> Optional<V> executeSupplierOrDefault(
-			@NonNull ExSupplier<V> r, Function<Throwable, V> exceptionHandler) {
+	public static <@Nullable V> Optional<V> executeSupplierOrDefault(@NonNull ExSupplier<V> r, Function<Throwable, V> exceptionHandler) {
 		try {
 			return Optional.of(r.wrappedGet());
 		} catch (Throwable t) {
@@ -157,8 +184,7 @@ public final class ExExecutor {
 	 * @param message
 	 *            the message to use
 	 */
-	public static <@Nullable T> void executeConsumer(T value,
-			@NonNull ExConsumer<T> r, @NonNull String message) {
+	public static <@Nullable T> void executeConsumer(T value, @NonNull ExConsumer<T> r, @NonNull String message) {
 		executeConsumer(value, r, (e) -> wrap(e, message));
 	}
 
@@ -176,10 +202,7 @@ public final class ExExecutor {
 	 * @param exceptionConverter
 	 *            function to convert checked exceptions into runtime exceptions
 	 */
-	public static <@Nullable T> void executeConsumer(
-			T value,
-			@NonNull ExConsumer<T> r,
-			@NonNull Function<@NonNull Throwable, @NonNull RuntimeException> exceptionConverter) {
+	public static <@Nullable T> void executeConsumer(T value, @NonNull ExConsumer<T> r, @NonNull Function<@NonNull Throwable, @NonNull RuntimeException> exceptionConverter) {
 		try {
 			r.wrappedAccept(value);
 		} catch (Throwable e) {
@@ -207,8 +230,7 @@ public final class ExExecutor {
 	 *            the message to use
 	 * @return the return value of the function
 	 */
-	public static <@Nullable V, @Nullable R> Optional<R> executeFunction(
-			V value, @NonNull ExFunction<V, R> r, @NonNull String message) {
+	public static <@Nullable V, @Nullable R> Optional<R> executeFunction(V value, @NonNull ExFunction<V, R> r, @NonNull String message) {
 		return executeFunction(value, r, (e) -> wrap(e, message));
 	}
 
@@ -223,9 +245,7 @@ public final class ExExecutor {
 	 *            handle an exception and return a value
 	 * @return the value returned by the function or the exception handler
 	 */
-	public static <@Nullable V, @Nullable R> Optional<R> executeFunctionOrDefault(
-			V value, @NonNull ExFunction<V, R> r,
-			BiFunction<Throwable, V, R> exceptionHandler) {
+	public static <@Nullable V, @Nullable R> Optional<R> executeFunctionOrDefault(V value, @NonNull ExFunction<V, R> r, BiFunction<Throwable, V, R> exceptionHandler) {
 		try {
 			return Optional.of(r.wrappedApply(value));
 		} catch (Throwable t) {
@@ -248,10 +268,7 @@ public final class ExExecutor {
 	 *            function to convert checked exceptions into runtime exceptions
 	 * @return the return value of the function
 	 */
-	public static <@Nullable V, @Nullable R> Optional<R> executeFunction(
-			V value,
-			@NonNull ExFunction<V, R> r,
-			@NonNull Function<@NonNull Throwable, @NonNull RuntimeException> exceptionConverter) {
+	public static <@Nullable V, @Nullable R> Optional<R> executeFunction(V value, @NonNull ExFunction<V, R> r, @NonNull Function<@NonNull Throwable, @NonNull RuntimeException> exceptionConverter) {
 		try {
 			return Optional.ofNullable(r.wrappedApply(value));
 		} catch (Throwable e) {
