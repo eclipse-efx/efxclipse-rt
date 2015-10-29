@@ -15,5 +15,5 @@ public interface Input<O> {
 	public O getData();
 	public void setData(O data);
 	public void persist();
-	public void reset();
+//	public void reset();
 }

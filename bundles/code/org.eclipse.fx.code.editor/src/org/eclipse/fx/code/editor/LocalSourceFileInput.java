@@ -20,7 +20,6 @@ public class LocalSourceFileInput implements SourceFileInput {
 	private final Path path;
 	private final Charset charSet;
 	private String data;
-	private String savedData;
 	private EventBus eventBus;
 
 	@Inject
@@ -62,7 +61,7 @@ public class LocalSourceFileInput implements SourceFileInput {
 		if( data == null ) {
 			try {
 				byte[] bytes = Files.readAllBytes(path);
-				data = savedData = new String(bytes, charSet);
+				data = new String(bytes, charSet);
 			} catch (IOException e) {
 				throw new RuntimeException("Unable to read file content of '"+path+"'", e);
 			}
@@ -79,18 +78,12 @@ public class LocalSourceFileInput implements SourceFileInput {
 	public void persist() {
 		try {
 			Files.write(path, data.getBytes(charSet));
-			savedData = data;
 			if( eventBus != null ) {
 				eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_SAVED, this, true);
 			}
 		} catch (IOException e) {
 			throw new RuntimeException("Unable to write content to file '"+path+"'", e);
 		}
-	}
-
-	@Override
-	public void reset() {
-		data = savedData;
 	}
 
 	@Override

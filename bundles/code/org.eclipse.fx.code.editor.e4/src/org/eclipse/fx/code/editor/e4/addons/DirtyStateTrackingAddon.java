@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.UIEvents;
@@ -13,8 +14,11 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.SourceFileChange;
+import org.eclipse.fx.code.editor.SourceFileInput;
 import org.eclipse.fx.code.editor.services.URIProvider;
-import org.osgi.service.event.Event;
+import org.eclipse.fx.core.event.Event;
+import org.eclipse.fx.core.event.EventBus;
+import org.eclipse.fx.core.event.Topic;
 
 @SuppressWarnings("restriction")
 public class DirtyStateTrackingAddon {
@@ -22,10 +26,13 @@ public class DirtyStateTrackingAddon {
 
 	private MApplication application;
 
-	private final IEventBroker broker;
+	private final EventBus broker;
+
+	private final Topic<MApplicationElement> TOPIC_DIRTY = new Topic<>(UIEvents.Dirtyable.TOPIC_DIRTY);
+	private final Topic<String> TOPIC_REQUEST_ENABLEMENT_UPDATE_STRING = new Topic<>(UIEvents.REQUEST_ENABLEMENT_UPDATE_TOPIC);
 
 	@Inject
-	public DirtyStateTrackingAddon(IEventBroker broker, EModelService modelService, MApplication application) {
+	public DirtyStateTrackingAddon(EventBus broker, EModelService modelService, MApplication application) {
 		this.broker = broker;
 		this.modelService = modelService;
 		this.application = application;
@@ -35,27 +42,25 @@ public class DirtyStateTrackingAddon {
 	void init() {
 		broker.subscribe(Constants.TOPIC_SOURCE_FILE_INPUT_MODIFIED, this::handleDocumentModified);
 		broker.subscribe(Constants.TOPIC_SOURCE_FILE_INPUT_SAVED, this::handleDocumentSaved);
-		broker.subscribe(UIEvents.Dirtyable.TOPIC_DIRTY, this::handlePartDirty);
+		broker.subscribe(TOPIC_DIRTY, this::handlePartDirty);
 	}
 
-	void handlePartDirty(Event event) {
-		Object element = event.getProperty(EventTags.ELEMENT);
+	void handlePartDirty(Event<MApplicationElement> event) {
+		Object element = event.getData();
+
+		// TODO remove once we run on Neon See https://bugs.eclipse.org/bugs/show_bug.cgi?id=480934
+		if( element == null ) {
+			element = event.getProperties().get(EventTags.ELEMENT);
+		}
+
 		if( element instanceof MContext ) {
-			((MContext) element).getContext().set(Constants.EDITOR_DIRTY_FLAG_KEY, event.getProperty(EventTags.NEW_VALUE));
-			broker.send(UIEvents.REQUEST_ENABLEMENT_UPDATE_TOPIC, UIEvents.ALL_ELEMENT_ID);
+			((MContext) element).getContext().set(Constants.EDITOR_DIRTY_FLAG_KEY, event.getProperties().get(EventTags.NEW_VALUE));
+			broker.publish(TOPIC_REQUEST_ENABLEMENT_UPDATE_STRING, UIEvents.ALL_ELEMENT_ID,true);
 		}
 	}
 
-//	private static String toURI(String uri) throws MalformedURLException {
-//		if( uri.startsWith("module-file") ) {
-//			return uri;
-//		} else {
-//			return java.net.URI.create(uri.toString()).toURL().toExternalForm();
-//		}
-//	}
-
-	void handleDocumentSaved(Event event) {
-		Input<?> input = (Input<?>) event.getProperty(IEventBroker.DATA);
+	void handleDocumentSaved(Event<SourceFileInput> event) {
+		Input<?> input = event.getData();
 		String tmpUri = ((URIProvider)input).getURI();
 
 		String uri = tmpUri;
@@ -69,10 +74,8 @@ public class DirtyStateTrackingAddon {
 		});
 	}
 
-	void handleDocumentModified(Event event) {
-		SourceFileChange change = (SourceFileChange) event.getProperty(IEventBroker.DATA);
-		String tmpUri = ((URIProvider)change.input).getURI();
-		String uri = tmpUri;
+	void handleDocumentModified(Event<SourceFileChange> event) {
+		String uri = event.getData().input.getURI();
 		modelService.findElements(application, MPart.class, EModelService.ANYWHERE, (e) -> {
 			if( e instanceof MPart) {
 				return ((MPart) e).getContext() != null && uri.equals(((MPart) e).getContext().getLocal(Constants.DOCUMENT_URL));

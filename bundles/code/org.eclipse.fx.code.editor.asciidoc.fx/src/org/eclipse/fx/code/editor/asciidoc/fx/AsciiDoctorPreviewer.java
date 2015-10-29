@@ -11,6 +11,7 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.SourceFileChange;
+import org.eclipse.fx.code.editor.SourceFileInput;
 import org.eclipse.fx.code.editor.asciidoc.HTMLConverter;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize;
@@ -66,7 +67,7 @@ public class AsciiDoctorPreviewer {
 		}
 	}
 
-	private void handleFileSaved(Event<Input<String>> event) {
+	private void handleFileSaved(Event<SourceFileInput> event) {
 		if( event.getData() == input ) {
 			this.content.set(event.getData().getData());
 		}
