@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ServiceLoader;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -140,6 +141,47 @@ public class Util {
 	 */
 	public static <S> @Nullable S lookupService(@NonNull Class<S> serviceClass) {
 		return _lookupService(null, serviceClass);
+	}
+
+	/**
+	 * Lookup the service with the given type
+	 *
+	 * @param serviceClass
+	 *            the service class type
+	 * @return the service with the highest rank as an optional
+	 * @since 2.2.0
+	 */
+	@SuppressWarnings("null")
+	public static <S> @NonNull Optional<S> getService(@NonNull Class<S> serviceClass) {
+		@Nullable
+		S v = _lookupService(null, serviceClass);
+		if (v == null) {
+			return Optional.empty();
+		} else {
+			return Optional.of(v);
+		}
+	}
+
+	/**
+	 * Look up the service with the given type
+	 *
+	 * @param requestor
+	 *            the class requesting the service
+	 *
+	 * @param serviceClass
+	 *            the service class type
+	 * @return the service with the highest rank or <code>null</code>
+	 * @since 2.2.0
+	 */
+	@SuppressWarnings("null")
+	public static <S> @NonNull Optional<S> getService(@NonNull Class<?> requestor, @NonNull Class<S> serviceClass) {
+		@Nullable
+		S v = _lookupService(requestor, serviceClass);
+		if (v == null) {
+			return Optional.empty();
+		} else {
+			return Optional.of(v);
+		}
 	}
 
 	/**
