@@ -9,10 +9,10 @@ public class Groovy__dftl_partition_content_type extends org.eclipse.jface.text.
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[2];
 		rules[0] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 
-		org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-		org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, groovy_defaultToken);
+		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, groovy_defaultToken);
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher groovy_keywordWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher groovy_keywordWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			groovy_keywordWordRule.addWord("abstract", groovy_keywordToken);
 			groovy_keywordWordRule.addWord("as", groovy_keywordToken);
 			groovy_keywordWordRule.addWord("assert", groovy_keywordToken);
@@ -65,7 +65,7 @@ public class Groovy__dftl_partition_content_type extends org.eclipse.jface.text.
 			combinedWordRule.addWordMatcher(groovy_keywordWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher groovy_builtin_typeWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher groovy_builtin_typeWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			groovy_builtin_typeWordRule.addWord("boolean", groovy_builtin_typeToken);
 			groovy_builtin_typeWordRule.addWord("byte", groovy_builtin_typeToken);
 			groovy_builtin_typeWordRule.addWord("char", groovy_builtin_typeToken);

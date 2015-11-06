@@ -11,14 +11,14 @@ public class Dart__dftl_partition_content_type extends org.eclipse.jface.text.ru
 		org.eclipse.jface.text.rules.Token dart_keyword_2Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("dart.dart_keyword_2"));
 		org.eclipse.jface.text.rules.Token dart_builtin_typesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("dart.dart_builtin_types"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
-		rules[0] = new org.eclipse.jface.text.source.CharacterRule(dart_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
-		rules[1] = new org.eclipse.jface.text.source.CharacterRule(dart_bracketToken, new char[] {'(',')','{','}','[',']'});
+		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(dart_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
+		rules[1] = new org.eclipse.fx.text.rules.CharacterRule(dart_bracketToken, new char[] {'(',')','{','}','[',']'});
 		rules[2] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 
-		org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-		org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, dart_defaultToken);
+		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, dart_defaultToken);
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher dart_keywordWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher dart_keywordWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			dart_keywordWordRule.addWord("break", dart_keywordToken);
 			dart_keywordWordRule.addWord("case", dart_keywordToken);
 			dart_keywordWordRule.addWord("catch", dart_keywordToken);
@@ -54,7 +54,7 @@ public class Dart__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			combinedWordRule.addWordMatcher(dart_keywordWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher dart_keyword_1WordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher dart_keyword_1WordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			dart_keyword_1WordRule.addWord("abstract", dart_keyword_1Token);
 			dart_keyword_1WordRule.addWord("as", dart_keyword_1Token);
 			dart_keyword_1WordRule.addWord("assert", dart_keyword_1Token);
@@ -75,7 +75,7 @@ public class Dart__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			combinedWordRule.addWordMatcher(dart_keyword_1WordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher dart_keyword_2WordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher dart_keyword_2WordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			dart_keyword_2WordRule.addWord("async", dart_keyword_2Token);
 			dart_keyword_2WordRule.addWord("async*", dart_keyword_2Token);
 			dart_keyword_2WordRule.addWord("await", dart_keyword_2Token);
@@ -85,7 +85,7 @@ public class Dart__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			combinedWordRule.addWordMatcher(dart_keyword_2WordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher dart_builtin_typesWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher dart_builtin_typesWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			dart_builtin_typesWordRule.addWord("num", dart_builtin_typesToken);
 			dart_builtin_typesWordRule.addWord("String", dart_builtin_typesToken);
 			dart_builtin_typesWordRule.addWord("bool", dart_builtin_typesToken);

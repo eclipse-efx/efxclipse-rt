@@ -26,9 +26,11 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.text.Util;
-import org.eclipse.fx.text.RegexRule;
+import org.eclipse.fx.text.rules.CharacterRule;
+import org.eclipse.fx.text.rules.CombinedWordRule;
+import org.eclipse.fx.text.rules.JavaLikeWordDetector;
+import org.eclipse.fx.text.rules.RegexRule;
 import org.eclipse.jface.text.TextAttribute;
-import org.eclipse.jface.text.rules.CombinedWordRule;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IWhitespaceDetector;
 import org.eclipse.jface.text.rules.MultiLineRule;
@@ -36,9 +38,8 @@ import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
-import org.eclipse.jface.text.source.CharacterRule;
-import org.eclipse.jface.text.source.JavaLikeWordDetector;
 
+@SuppressWarnings("restriction")
 public class LDefRuleScanner extends RuleBasedScanner {
 	public LDefRuleScanner(LexicalPartitionHighlighting_Rule scanner) {
 		Token defaultToken = null;

@@ -13,20 +13,20 @@ public class Rust__dftl_partition_content_type extends org.eclipse.jface.text.ru
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[2];
 		rules[0] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 
-		org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-		org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, rust_defaultToken);
+		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, rust_defaultToken);
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher rust_functionWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher rust_functionWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			rust_functionWordRule.addWord("fn", rust_functionToken);
 			combinedWordRule.addWordMatcher(rust_functionWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher rust_typeWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher rust_typeWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			rust_typeWordRule.addWord("type", rust_typeToken);
 			combinedWordRule.addWordMatcher(rust_typeWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher rust_keywordWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher rust_keywordWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			rust_keywordWordRule.addWord("abstract", rust_keywordToken);
 			rust_keywordWordRule.addWord("alignof", rust_keywordToken);
 			rust_keywordWordRule.addWord("as", rust_keywordToken);
@@ -76,7 +76,7 @@ public class Rust__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			combinedWordRule.addWordMatcher(rust_keywordWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher rust_typesWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher rust_typesWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			rust_typesWordRule.addWord("bool", rust_typesToken);
 			rust_typesWordRule.addWord("isize", rust_typesToken);
 			rust_typesWordRule.addWord("usize", rust_typesToken);
@@ -95,13 +95,13 @@ public class Rust__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			combinedWordRule.addWordMatcher(rust_typesWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher rust_selfWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher rust_selfWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			rust_selfWordRule.addWord("self", rust_selfToken);
 			rust_selfWordRule.addWord("Self", rust_selfToken);
 			combinedWordRule.addWordMatcher(rust_selfWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher rust_constantsWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher rust_constantsWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			rust_constantsWordRule.addWord("true", rust_constantsToken);
 			rust_constantsWordRule.addWord("false", rust_constantsToken);
 			combinedWordRule.addWordMatcher(rust_constantsWordRule);

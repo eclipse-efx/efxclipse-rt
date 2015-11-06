@@ -24,84 +24,84 @@ public class Adoc__dftl_partition_content_type extends org.eclipse.jface.text.ru
 		org.eclipse.jface.text.rules.Token adoc_subToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_sub"));
 		org.eclipse.jface.text.rules.Token adoc_admonitionToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_admonition"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[34];
-		rules[0] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[0] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "****"
 			, null
 			, adoc_blockToken
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[1] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[1] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "++++"
 			, null
 			, adoc_blockToken
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[2] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[2] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "____"
 			, null
 			, adoc_blockToken
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[3] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[3] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "----"
 			, null
 			, adoc_blockToken
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[4] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[4] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "."
 			, null
 			, adoc_headerToken
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[5] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[5] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  ":"
 			, null
 			, adoc_header_attributeToken
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[6] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[6] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "= "
 			, null
 			, adoc_section_0Token
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[7] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[7] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "== "
 			, null
 			, adoc_section_1Token
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[8] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[8] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "=== "
 			, null
 			, adoc_section_2Token
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[9] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[9] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "==== "
 			, null
 			, adoc_section_3Token
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[10] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[10] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "===== "
 			, null
 			, adoc_section_4Token
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[11] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[11] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "====== "
 			, null
 			, adoc_section_5Token
@@ -204,35 +204,35 @@ public class Adoc__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			, adoc_subToken
 			, (char)0
 			, false);
-		rules[28] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[28] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "NOTE:"
 			, null
 			, adoc_admonitionToken
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[29] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[29] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "TIP:"
 			, null
 			, adoc_admonitionToken
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[30] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[30] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "IMPORTANT:"
 			, null
 			, adoc_admonitionToken
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[31] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[31] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "WARNING:"
 			, null
 			, adoc_admonitionToken
 			, (char)0
 			, true),v -> v == 0
 			);
-		rules[32] = new org.eclipse.fx.text.PredicateColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
+		rules[32] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "CAUTION:"
 			, null
 			, adoc_admonitionToken

@@ -12,7 +12,7 @@ public class Groovy__groovy_string extends org.eclipse.jface.text.rules.RuleBase
 			, groovy_string_interToken
 			, (char)0
 			, false);
-		rules[1] = new org.eclipse.fx.text.RegexRule(groovy_string_interToken, java.util.regex.Pattern.compile("\\$"),1,java.util.regex.Pattern.compile("\\w"));
+		rules[1] = new org.eclipse.fx.text.rules.RegexRule(groovy_string_interToken, java.util.regex.Pattern.compile("\\$"),1,java.util.regex.Pattern.compile("\\w"));
 
 		setRules(rules);
 	}

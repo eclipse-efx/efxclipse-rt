@@ -12,7 +12,7 @@ public class Dart__dart_string extends org.eclipse.jface.text.rules.RuleBasedSca
 			, dart_string_interToken
 			, (char)0
 			, false);
-		rules[1] = new org.eclipse.fx.text.RegexRule(dart_string_interToken, java.util.regex.Pattern.compile("\\$"),1,java.util.regex.Pattern.compile("\\w"));
+		rules[1] = new org.eclipse.fx.text.rules.RegexRule(dart_string_interToken, java.util.regex.Pattern.compile("\\$"),1,java.util.regex.Pattern.compile("\\w"));
 
 		setRules(rules);
 	}

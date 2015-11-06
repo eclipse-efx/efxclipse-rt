@@ -11,10 +11,10 @@ public class Go__dftl_partition_content_type extends org.eclipse.jface.text.rule
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[2];
 		rules[0] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 
-		org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-		org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, go_defaultToken);
+		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, go_defaultToken);
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher go_keywordWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher go_keywordWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			go_keywordWordRule.addWord("break", go_keywordToken);
 			go_keywordWordRule.addWord("case", go_keywordToken);
 			go_keywordWordRule.addWord("const", go_keywordToken);
@@ -41,7 +41,7 @@ public class Go__dftl_partition_content_type extends org.eclipse.jface.text.rule
 			combinedWordRule.addWordMatcher(go_keywordWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher go_typesWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher go_typesWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			go_typesWordRule.addWord("bool", go_typesToken);
 			go_typesWordRule.addWord("byte", go_typesToken);
 			go_typesWordRule.addWord("chan", go_typesToken);
@@ -68,7 +68,7 @@ public class Go__dftl_partition_content_type extends org.eclipse.jface.text.rule
 			combinedWordRule.addWordMatcher(go_typesWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher go_builtin_constantsWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher go_builtin_constantsWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			go_builtin_constantsWordRule.addWord("iota", go_builtin_constantsToken);
 			go_builtin_constantsWordRule.addWord("nil", go_builtin_constantsToken);
 			go_builtin_constantsWordRule.addWord("true", go_builtin_constantsToken);
@@ -76,7 +76,7 @@ public class Go__dftl_partition_content_type extends org.eclipse.jface.text.rule
 			combinedWordRule.addWordMatcher(go_builtin_constantsWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher go_builtin_functionsWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher go_builtin_functionsWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			go_builtin_functionsWordRule.addWord("append", go_builtin_functionsToken);
 			go_builtin_functionsWordRule.addWord("cap", go_builtin_functionsToken);
 			go_builtin_functionsWordRule.addWord("close", go_builtin_functionsToken);

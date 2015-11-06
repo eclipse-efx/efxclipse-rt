@@ -1,4 +1,4 @@
-package org.eclipse.jface.text.source;
+package org.eclipse.fx.text.rules;
 
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IRule;

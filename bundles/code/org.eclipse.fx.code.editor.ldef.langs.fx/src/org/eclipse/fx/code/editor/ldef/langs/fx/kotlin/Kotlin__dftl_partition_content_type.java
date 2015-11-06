@@ -8,10 +8,10 @@ public class Kotlin__dftl_partition_content_type extends org.eclipse.jface.text.
 		org.eclipse.jface.text.rules.Token kotlin_literalsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("kotlin.kotlin_literals"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[1];
 
-		org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-		org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, kotlin_defaultToken);
+		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, kotlin_defaultToken);
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher kotlin_keywordWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher kotlin_keywordWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			kotlin_keywordWordRule.addWord("break", kotlin_keywordToken);
 			kotlin_keywordWordRule.addWord("continue", kotlin_keywordToken);
 			kotlin_keywordWordRule.addWord("return", kotlin_keywordToken);
@@ -73,7 +73,7 @@ public class Kotlin__dftl_partition_content_type extends org.eclipse.jface.text.
 			combinedWordRule.addWordMatcher(kotlin_keywordWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher kotlin_literalsWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher kotlin_literalsWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			kotlin_literalsWordRule.addWord("true", kotlin_literalsToken);
 			kotlin_literalsWordRule.addWord("false", kotlin_literalsToken);
 			kotlin_literalsWordRule.addWord("null", kotlin_literalsToken);

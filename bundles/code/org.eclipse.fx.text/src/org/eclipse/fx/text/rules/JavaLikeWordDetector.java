@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
-package org.eclipse.jface.text.source;
+package org.eclipse.fx.text.rules;
 
 
 import org.eclipse.jface.text.rules.IWordDetector;

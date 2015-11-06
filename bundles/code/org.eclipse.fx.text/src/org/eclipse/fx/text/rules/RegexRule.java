@@ -1,4 +1,4 @@
-package org.eclipse.fx.text;
+package org.eclipse.fx.text.rules;
 
 import java.util.regex.Pattern;
 

@@ -6,8 +6,8 @@ import org.eclipse.fx.code.editor.ldef.lDef.Check;
 import org.eclipse.fx.code.editor.ldef.lDef.Equals;
 import org.eclipse.fx.code.editor.ldef.lDef.Range;
 import org.eclipse.fx.core.function.IntRelationOperation;
-import org.eclipse.fx.text.ColumnStartRule;
-import org.eclipse.fx.text.PredicateColumnStartRule;
+import org.eclipse.fx.text.rules.ColumnStartRule;
+import org.eclipse.fx.text.rules.PredicateColumnStartRule;
 import org.eclipse.jface.text.rules.IPredicateRule;
 import org.eclipse.jface.text.rules.IRule;
 

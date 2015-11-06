@@ -10,14 +10,14 @@ public class Swift__dftl_partition_content_type extends org.eclipse.jface.text.r
 		org.eclipse.jface.text.rules.Token swift_numberToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("swift.swift_number"));
 		org.eclipse.jface.text.rules.Token swift_attributeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("swift.swift_attribute"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
-		rules[0] = new org.eclipse.jface.text.source.CharacterRule(swift_operatorToken, new char[] {'~','!','%','^','&','*','-','+','=','|','/','.','<','>','?'});
-		rules[1] = new org.eclipse.fx.text.RegexRule(swift_numberToken, java.util.regex.Pattern.compile("[0-9]"),1,java.util.regex.Pattern.compile("[0-9|\\.|e|E|-]"));
-		rules[2] = new org.eclipse.fx.text.RegexRule(swift_attributeToken, java.util.regex.Pattern.compile("@"),1,java.util.regex.Pattern.compile("[\\w]"));
+		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(swift_operatorToken, new char[] {'~','!','%','^','&','*','-','+','=','|','/','.','<','>','?'});
+		rules[1] = new org.eclipse.fx.text.rules.RegexRule(swift_numberToken, java.util.regex.Pattern.compile("[0-9]"),1,java.util.regex.Pattern.compile("[0-9|\\.|e|E|-]"));
+		rules[2] = new org.eclipse.fx.text.rules.RegexRule(swift_attributeToken, java.util.regex.Pattern.compile("@"),1,java.util.regex.Pattern.compile("[\\w]"));
 
-		org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-		org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, swift_defaultToken);
+		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, swift_defaultToken);
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher swift_keywordWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher swift_keywordWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			swift_keywordWordRule.addWord("as", swift_keywordToken);
 			swift_keywordWordRule.addWord("break", swift_keywordToken);
 			swift_keywordWordRule.addWord("case", swift_keywordToken);
@@ -82,7 +82,7 @@ public class Swift__dftl_partition_content_type extends org.eclipse.jface.text.r
 			combinedWordRule.addWordMatcher(swift_keywordWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher swift_builtin_typeWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher swift_builtin_typeWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			swift_builtin_typeWordRule.addWord("Int", swift_builtin_typeToken);
 			swift_builtin_typeWordRule.addWord("Bool", swift_builtin_typeToken);
 			combinedWordRule.addWordMatcher(swift_builtin_typeWordRule);

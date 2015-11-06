@@ -20,10 +20,11 @@ import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
 import org.eclipse.fx.code.editor.fx.services.internal.DefaultSourceViewerConfiguration;
 import org.eclipse.fx.code.editor.services.HoverInformationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
+import org.eclipse.fx.text.rules.CombinedWordRule;
+import org.eclipse.fx.text.rules.JavaLikeWordDetector;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
-import org.eclipse.jface.text.rules.CombinedWordRule;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.rules.IPredicateRule;
@@ -37,7 +38,6 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.source.AnnotationPresenter;
 import org.eclipse.jface.text.source.IAnnotationModel;
-import org.eclipse.jface.text.source.JavaLikeWordDetector;
 
 import javafx.scene.layout.BorderPane;
 

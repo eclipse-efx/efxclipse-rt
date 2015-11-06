@@ -11,14 +11,14 @@ public class Php__dftl_partition_content_type extends org.eclipse.jface.text.rul
 		org.eclipse.jface.text.rules.Token php_builtin_classesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("php.php_builtin_classes"));
 		org.eclipse.jface.text.rules.Token php_compile_constantsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("php.php_compile_constants"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
-		rules[0] = new org.eclipse.jface.text.source.CharacterRule(php_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
-		rules[1] = new org.eclipse.jface.text.source.CharacterRule(php_bracketToken, new char[] {'(',')','{','}','[',']'});
+		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(php_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
+		rules[1] = new org.eclipse.fx.text.rules.CharacterRule(php_bracketToken, new char[] {'(',')','{','}','[',']'});
 		rules[2] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 
-		org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-		org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, php_defaultToken);
+		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, php_defaultToken);
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher php_keywordWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher php_keywordWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			php_keywordWordRule.addWord("abstract", php_keywordToken);
 			php_keywordWordRule.addWord("and", php_keywordToken);
 			php_keywordWordRule.addWord("as", php_keywordToken);
@@ -69,7 +69,7 @@ public class Php__dftl_partition_content_type extends org.eclipse.jface.text.rul
 			combinedWordRule.addWordMatcher(php_keywordWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher php_builtin_functionsWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher php_builtin_functionsWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			php_builtin_functionsWordRule.addWord("__halt_compiler", php_builtin_functionsToken);
 			php_builtin_functionsWordRule.addWord("array", php_builtin_functionsToken);
 			php_builtin_functionsWordRule.addWord("die", php_builtin_functionsToken);
@@ -93,7 +93,7 @@ public class Php__dftl_partition_content_type extends org.eclipse.jface.text.rul
 			combinedWordRule.addWordMatcher(php_builtin_functionsWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher php_builtin_classesWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher php_builtin_classesWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			php_builtin_classesWordRule.addWord("ArrayAccess", php_builtin_classesToken);
 			php_builtin_classesWordRule.addWord("Closure", php_builtin_classesToken);
 			php_builtin_classesWordRule.addWord("ErrorException", php_builtin_classesToken);
@@ -107,7 +107,7 @@ public class Php__dftl_partition_content_type extends org.eclipse.jface.text.rul
 			combinedWordRule.addWordMatcher(php_builtin_classesWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher php_compile_constantsWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher php_compile_constantsWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			php_compile_constantsWordRule.addWord("__CLASS__", php_compile_constantsToken);
 			php_compile_constantsWordRule.addWord("__DIR__", php_compile_constantsToken);
 			php_compile_constantsWordRule.addWord("__FILE__", php_compile_constantsToken);

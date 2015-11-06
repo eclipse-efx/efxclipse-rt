@@ -1,7 +1,10 @@
-package org.eclipse.jface.text.rules;
+package org.eclipse.fx.text.rules;
 
 import java.util.List;
 
+import org.eclipse.jface.text.rules.IWhitespaceDetector;
+
+@SuppressWarnings("restriction")
 public class FixedCharacterWSDetector implements IWhitespaceDetector {
 	private final char[] chars;
 

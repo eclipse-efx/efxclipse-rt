@@ -8,10 +8,10 @@ public class Lua__dftl_partition_content_type extends org.eclipse.jface.text.rul
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[2];
 		rules[0] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 
-		org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-		org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, lua_defaultToken);
+		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, lua_defaultToken);
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher lua_keywordWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher lua_keywordWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			lua_keywordWordRule.addWord("function", lua_keywordToken);
 			lua_keywordWordRule.addWord("end", lua_keywordToken);
 			lua_keywordWordRule.addWord("for", lua_keywordToken);

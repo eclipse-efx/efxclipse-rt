@@ -11,14 +11,14 @@ public class Java__dftl_partition_content_type extends org.eclipse.jface.text.ru
 		org.eclipse.jface.text.rules.Token java_constantToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("java.java_constant"));
 		org.eclipse.jface.text.rules.Token java_annotationToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("java.java_annotation"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
-		rules[0] = new org.eclipse.jface.text.source.CharacterRule(java_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
-		rules[1] = new org.eclipse.jface.text.source.CharacterRule(java_bracketToken, new char[] {'(',')','{','}','[',']'});
-		rules[2] = new org.eclipse.fx.text.RegexRule(java_annotationToken, java.util.regex.Pattern.compile("@"),1,java.util.regex.Pattern.compile("\\w"));
+		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(java_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
+		rules[1] = new org.eclipse.fx.text.rules.CharacterRule(java_bracketToken, new char[] {'(',')','{','}','[',']'});
+		rules[2] = new org.eclipse.fx.text.rules.RegexRule(java_annotationToken, java.util.regex.Pattern.compile("@"),1,java.util.regex.Pattern.compile("\\w"));
 
-		org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-		org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, java_defaultToken);
+		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, java_defaultToken);
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher java_keywordWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher java_keywordWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			java_keywordWordRule.addWord("abstract", java_keywordToken);
 			java_keywordWordRule.addWord("break", java_keywordToken);
 			java_keywordWordRule.addWord("case", java_keywordToken);
@@ -62,7 +62,7 @@ public class Java__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			combinedWordRule.addWordMatcher(java_keywordWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher java_buitin_typeWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher java_buitin_typeWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			java_buitin_typeWordRule.addWord("void", java_buitin_typeToken);
 			java_buitin_typeWordRule.addWord("boolean", java_buitin_typeToken);
 			java_buitin_typeWordRule.addWord("char", java_buitin_typeToken);
@@ -76,7 +76,7 @@ public class Java__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			combinedWordRule.addWordMatcher(java_buitin_typeWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher java_constantWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher java_constantWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			java_constantWordRule.addWord("true", java_constantToken);
 			java_constantWordRule.addWord("false", java_constantToken);
 			java_constantWordRule.addWord("null", java_constantToken);

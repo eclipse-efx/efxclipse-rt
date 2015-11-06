@@ -4,8 +4,6 @@ Bundle-Name: Language definitions for JavaFX editors
 Bundle-SymbolicName: org.eclipse.fx.code.editor.ldef.langs.fx
 Bundle-Version: 2.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.fx.text;bundle-version="2.2.0",
- org.eclipse.fx.text.ui;bundle-version="2.2.0"
 Export-Package: org.eclipse.fx.code.editor.ldef.langs.fx.asciidoc;version="2.2.0",
  org.eclipse.fx.code.editor.ldef.langs.fx.ceylon;version="2.2.0";x-internal:=true,
  org.eclipse.fx.code.editor.ldef.langs.fx.dart;version="2.2.0";x-internal:=true,
@@ -21,3 +19,7 @@ Export-Package: org.eclipse.fx.code.editor.ldef.langs.fx.asciidoc;version="2.2.0
  org.eclipse.fx.code.editor.ldef.langs.fx.swift;version="2.2.0";x-internal:=true,
  org.eclipse.fx.code.editor.ldef.langs.fx.xml;version="2.2.0";x-internal:=true
 Bundle-Vendor: Eclipse.org
+Import-Package: org.eclipse.fx.text.rules,
+ org.eclipse.jface.text,
+ org.eclipse.jface.text.presentation,
+ org.eclipse.jface.text.rules

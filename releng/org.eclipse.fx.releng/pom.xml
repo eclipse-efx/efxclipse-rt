@@ -74,6 +74,7 @@
 
 		<!-- Code -->
 		<module>../../bundles/code/org.eclipse.fx.text</module>
+		<module>../../bundles/code/org.eclipse.fx.text.compat</module>
 		<module>../../bundles/code/org.eclipse.fx.text.ui</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.e4</module>

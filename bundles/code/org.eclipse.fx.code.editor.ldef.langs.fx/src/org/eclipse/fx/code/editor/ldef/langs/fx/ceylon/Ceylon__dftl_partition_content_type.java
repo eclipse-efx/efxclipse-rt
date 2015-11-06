@@ -9,10 +9,10 @@ public class Ceylon__dftl_partition_content_type extends org.eclipse.jface.text.
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[2];
 		rules[0] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 
-		org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-		org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, ceylon_defaultToken);
+		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, ceylon_defaultToken);
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher ceylon_keywordWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher ceylon_keywordWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			ceylon_keywordWordRule.addWord("abstracts", ceylon_keywordToken);
 			ceylon_keywordWordRule.addWord("alias", ceylon_keywordToken);
 			ceylon_keywordWordRule.addWord("assembly", ceylon_keywordToken);
@@ -59,7 +59,7 @@ public class Ceylon__dftl_partition_content_type extends org.eclipse.jface.text.
 			combinedWordRule.addWordMatcher(ceylon_keywordWordRule);
 		}
 		{
-			org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher ceylon_annotationWordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher ceylon_annotationWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 			ceylon_annotationWordRule.addWord("abstract", ceylon_annotationToken);
 			ceylon_annotationWordRule.addWord("actual", ceylon_annotationToken);
 			ceylon_annotationWordRule.addWord("annotation", ceylon_annotationToken);
