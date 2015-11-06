@@ -125,11 +125,11 @@ class JavaFXCodeGenerator {
 	def generatePresentationReconciler(LanguageDef model, String basePackage) '''
 	package «basePackage»;
 
-	public class «model.name.toFirstUpper»PresentationReconciler extends org.eclipse.jface.text.presentation.PresentationReconciler {
+	public class «model.name.toFirstUpper»PresentationReconciler extends org.eclipse.fx.text.ui.presentation.PresentationReconciler {
 		public «model.name.toFirstUpper»PresentationReconciler() {
 			«FOR h : model.lexicalHighlighting.list»
 				«IF h instanceof LexicalPartitionHighlighting_Rule»
-					org.eclipse.jface.text.rules.DefaultDamagerRepairer «h.partition.name»DamageRepairer = new org.eclipse.jface.text.rules.DefaultDamagerRepairer(new «model.name.toFirstUpper»«h.partition.name»());
+					org.eclipse.fx.text.ui.rules.DefaultDamagerRepairer «h.partition.name»DamageRepairer = new org.eclipse.fx.text.ui.rules.DefaultDamagerRepairer(new «model.name.toFirstUpper»«h.partition.name»());
 				«ELSE»
 					//FIXME Need to generate JS-Damager
 				«ENDIF»
@@ -146,7 +146,7 @@ class JavaFXCodeGenerator {
 	public class «model.name.toFirstUpper»«highlighter.partition.name» extends org.eclipse.jface.text.rules.RuleBasedScanner {
 		public «model.name.toFirstUpper»«highlighter.partition.name»() {
 			«FOR t : highlighter.tokenList»
-				org.eclipse.jface.text.rules.Token «t.name»Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("«model.name».«t.name»"));
+				org.eclipse.jface.text.rules.Token «t.name»Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("«model.name».«t.name»"));
 				«IF t.isDefault»
 					setDefaultReturnToken(«t.name»Token);
 				«ENDIF»
