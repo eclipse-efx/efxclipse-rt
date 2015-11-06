@@ -10,13 +10,15 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
-import org.eclipse.fx.code.editor.fx.services.TextHoverMap;
 import org.eclipse.fx.code.editor.services.CompletionProposal;
+import org.eclipse.fx.code.editor.services.HoverInformationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.fx.code.editor.services.ProposalComputer.ProposalContext;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
@@ -36,7 +38,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	private final ProposalComputer proposalComputer;
 	private final IAnnotationModel annotationModel;
 	private final List<AnnotationPresenter> annotationPresenters;
-	private final TextHoverMap hoverMap;
+	private final HoverInformationProvider hoverInformationProvider;
 	private final CompletionProposalPresenter proposalPresenter;
 
 	@Inject
@@ -46,11 +48,11 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			@Optional ProposalComputer proposalComputer,
 			@Optional IAnnotationModel annotationModel,
 			@Optional AnnotationPresenter presenter,
-			@Optional TextHoverMap hoverMap,
+			@Optional HoverInformationProvider hoverInformationProvider,
 			@Optional CompletionProposalPresenter proposalPresenter
 			) {
 		this.input = input;
-		this.hoverMap = hoverMap;
+		this.hoverInformationProvider = hoverInformationProvider;
 		this.reconciler = reconciler;
 		this.proposalComputer = proposalComputer;
 		this.annotationModel = annotationModel;
@@ -107,8 +109,20 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 
 	@Override
 	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
-		if( hoverMap != null ) {
-			return hoverMap.getHoverMap().get(contentType);
+		if( hoverInformationProvider != null ) {
+			return new ITextHover() {
+
+				@Override
+				public IRegion getHoverRegion(ITextViewer textViewer, int offset) {
+					return hoverInformationProvider.getHoverRegion(contentType, offset);
+				}
+
+				@Override
+				public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
+					CharSequence information = hoverInformationProvider.getHoverInformation(contentType, hoverRegion);
+					return information == null ? null : information.toString();
+				}
+			};
 		}
 		return super.getTextHover(sourceViewer, contentType);
 	}

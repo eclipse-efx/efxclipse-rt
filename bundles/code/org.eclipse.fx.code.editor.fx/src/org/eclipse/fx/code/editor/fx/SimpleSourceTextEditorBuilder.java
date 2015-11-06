@@ -17,8 +17,8 @@ import java.util.List;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.LocalSourceFileInput;
 import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
-import org.eclipse.fx.code.editor.fx.services.TextHoverMap;
 import org.eclipse.fx.code.editor.fx.services.internal.DefaultSourceViewerConfiguration;
+import org.eclipse.fx.code.editor.services.HoverInformationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
@@ -59,9 +59,9 @@ public class SimpleSourceTextEditorBuilder {
 
 	private ProposalComputer proposalComputer;
 	private AnnotationPresenter annotationPresenter;
-	private TextHoverMap textHoverMap;
 	private final String languageName;
 	private CompletionProposalPresenter completionProposalPresenter;
+	private HoverInformationProvider hoverInformationProvider;
 
 	static class MultiLine {
 		private final String start;
@@ -122,8 +122,8 @@ public class SimpleSourceTextEditorBuilder {
 		return this;
 	}
 
-	public SimpleSourceTextEditorBuilder setTextHoverMap(TextHoverMap textHoverMap) {
-		this.textHoverMap = textHoverMap;
+	public SimpleSourceTextEditorBuilder setHoverInformationProvider(HoverInformationProvider hoverInformationProvider) {
+		this.hoverInformationProvider = hoverInformationProvider;
 		return this;
 	}
 
@@ -164,7 +164,7 @@ public class SimpleSourceTextEditorBuilder {
 		}
 
 		editor.setPartitioner(new FastPartitioner(new PartitionerImpl(this), contentTypes.toArray(new String[0])));
-		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(input, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, textHoverMap, completionProposalPresenter));
+		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(input, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter));
 
 		return editor;
 	}

@@ -28,5 +28,6 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.Docu
  OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.AnnotationModelContextFunction.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.DocumentContextFunction.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.InputContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.ProposalComputerTypeProviderContextFunction.xml
+ OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.ProposalComputerTypeProviderContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.HoverInformationProviderTypeProviderCF.xml
 Bundle-ActivationPolicy: lazy
