@@ -163,12 +163,12 @@ class JavaFXCodeGenerator {
 			«ENDIF»
 
 			«IF hasKeywordGroup(highlighter)»
-			org.eclipse.jface.text.source.JavaLikeWordDetector wordDetector= new org.eclipse.jface.text.source.JavaLikeWordDetector();
-			org.eclipse.jface.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.jface.text.rules.CombinedWordRule(wordDetector, «highlighter.tokenList.findFirst[t|t.^default].name»Token);
+			org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
+			org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, «highlighter.tokenList.findFirst[t|t.^default].name»Token);
 			«FOR t : highlighter.tokenList»
 				«FOR kw : t.scannerList.filter[s | s instanceof Scanner_Keyword]»
 				{
-					org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher «t.name»WordRule = new org.eclipse.jface.text.rules.CombinedWordRule.WordMatcher();
+					org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher «t.name»WordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
 					«FOR w : (kw as Scanner_Keyword).keywords»
 					«t.name»WordRule.addWord("«w.name»", «t.name»Token);
 					«ENDFOR»
@@ -217,7 +217,7 @@ class JavaFXCodeGenerator {
 	}
 
 	def dispatch generateScannerRule(Token t, Scanner_SingleLineRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
+	«IF r.check != null»new org.eclipse.fx.text.rules.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, «t.name»Token
@@ -226,7 +226,7 @@ class JavaFXCodeGenerator {
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_MultiLineRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.MultiLineRule(
+	«IF r.check != null»new org.eclipse.fx.text.rules.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.MultiLineRule(
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, «t.name»Token
@@ -238,20 +238,20 @@ class JavaFXCodeGenerator {
 	«IF r.isJavawhitespace»
 	new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 	«ELSE»
-	new org.eclipse.jface.text.rules.WhitespaceRule(new org.eclipse.jface.text.rules.FixedCharacterWSDetector(new char[] {«r.characters.map["'"+it.escapeChar+"'"].join(",")»}));
+	new org.eclipse.jface.text.rules.WhitespaceRule(new org.eclipse.fx.text.rules.FixedCharacterWSDetector(new char[] {«r.characters.map["'"+it.escapeChar+"'"].join(",")»}));
 	«ENDIF»
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_CharacterRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.source.CharacterRule(«t.name»Token, new char[] {«r.characters.map["'"+it.escapeChar+"'"].join(",")»})«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
+	«IF r.check != null»new org.eclipse.fx.text.rules.ColumnStartRule(«ENDIF»new org.eclipse.fx.text.rules.CharacterRule(«t.name»Token, new char[] {«r.characters.map["'"+it.escapeChar+"'"].join(",")»})«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch generateScannerRule(Token t, Scanner_PatternRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.fx.text.RegexRule(«t.name»Token, java.util.regex.Pattern.compile("«r.startPattern.replace('\\','\\\\')»"),«Math.max(1,r.length)»,java.util.regex.Pattern.compile("«r.contentPattern.replace('\\','\\\\')»"))«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
+	«IF r.check != null»new org.eclipse.fx.text.rules.ColumnStartRule(«ENDIF»new org.eclipse.fx.text.rules.RegexRule(«t.name»Token, java.util.regex.Pattern.compile("«r.startPattern.replace('\\','\\\\')»"),«Math.max(1,r.length)»,java.util.regex.Pattern.compile("«r.contentPattern.replace('\\','\\\\')»"))«IF r.check != null»,«r.check.toPredicate»)«ENDIF»;
 	'''
 
 	def dispatch generatePartitionRule(Partition_SingleLineRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
+	«IF r.check != null»new org.eclipse.fx.text.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
@@ -260,7 +260,7 @@ class JavaFXCodeGenerator {
 	'''
 
 	def dispatch generatePartitionRule(Partition_MultiLineRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.MultiLineRule(
+	«IF r.check != null»new org.eclipse.fx.text.rules.ColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.MultiLineRule(
 		  "«r.startSeq.escapeString»"
 		, "«r.endSeq.escapeString»"
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
