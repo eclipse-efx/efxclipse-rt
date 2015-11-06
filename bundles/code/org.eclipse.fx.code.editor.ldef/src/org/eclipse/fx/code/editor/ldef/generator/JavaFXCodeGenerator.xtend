@@ -251,7 +251,7 @@ class JavaFXCodeGenerator {
 	'''
 
 	def dispatch generatePartitionRule(Partition_SingleLineRule r) '''
-	«IF r.check != null»new org.eclipse.fx.text.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
+	«IF r.check != null»new org.eclipse.fx.text.rules.PredicateColumnStartRule(«ENDIF»new org.eclipse.jface.text.rules.SingleLineRule(
 		  "«r.startSeq.escapeString»"
 		, «IF r.endSeq != null»"«r.endSeq.escapeString»"«ELSE»null«ENDIF»
 		, new org.eclipse.jface.text.rules.Token("«r.parition.name»")
