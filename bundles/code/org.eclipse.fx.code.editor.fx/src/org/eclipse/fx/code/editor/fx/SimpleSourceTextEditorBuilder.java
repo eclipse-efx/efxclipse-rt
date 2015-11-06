@@ -16,9 +16,10 @@ import java.util.List;
 
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.LocalSourceFileInput;
-import org.eclipse.fx.code.editor.fx.services.ProposalComputer;
+import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
 import org.eclipse.fx.code.editor.fx.services.TextHoverMap;
 import org.eclipse.fx.code.editor.fx.services.internal.DefaultSourceViewerConfiguration;
+import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
@@ -60,6 +61,7 @@ public class SimpleSourceTextEditorBuilder {
 	private AnnotationPresenter annotationPresenter;
 	private TextHoverMap textHoverMap;
 	private final String languageName;
+	private CompletionProposalPresenter completionProposalPresenter;
 
 	static class MultiLine {
 		private final String start;
@@ -115,6 +117,11 @@ public class SimpleSourceTextEditorBuilder {
 		return this;
 	}
 
+	public SimpleSourceTextEditorBuilder setCompletionProposalPresenter(CompletionProposalPresenter completionProposalPresenter) {
+		this.completionProposalPresenter = completionProposalPresenter;
+		return this;
+	}
+
 	public SimpleSourceTextEditorBuilder setTextHoverMap(TextHoverMap textHoverMap) {
 		this.textHoverMap = textHoverMap;
 		return this;
@@ -157,7 +164,7 @@ public class SimpleSourceTextEditorBuilder {
 		}
 
 		editor.setPartitioner(new FastPartitioner(new PartitionerImpl(this), contentTypes.toArray(new String[0])));
-		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(input, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, textHoverMap));
+		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(input, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, textHoverMap, completionProposalPresenter));
 
 		return editor;
 	}

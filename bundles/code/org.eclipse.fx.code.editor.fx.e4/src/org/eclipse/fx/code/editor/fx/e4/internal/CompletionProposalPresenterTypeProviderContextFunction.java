@@ -14,23 +14,24 @@ import java.util.Map;
 
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.fx.code.editor.e4.InputBasedContextFunction;
-import org.eclipse.fx.code.editor.fx.services.ProposalComputer;
-import org.eclipse.fx.code.editor.fx.services.ProposalComputerTypeProvider;
+import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
+import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenterTypeProvider;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
-@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.fx.services.ProposalComputer"})
-public class ProposalComputerTypeProviderContextFunction extends InputBasedContextFunction<ProposalComputer, ProposalComputerTypeProvider> {
+@SuppressWarnings("restriction")
+@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter"})
+public class CompletionProposalPresenterTypeProviderContextFunction extends InputBasedContextFunction<CompletionProposalPresenter, CompletionProposalPresenterTypeProvider> {
 
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
-	public void registerService(ProposalComputerTypeProvider service, Map<String, Object> properties) {
+	public void registerService(CompletionProposalPresenterTypeProvider service, Map<String, Object> properties) {
 		super.registerService(service, properties);
 	}
 
-	public void unregisterService(ProposalComputerTypeProvider service) {
+	public void unregisterService(CompletionProposalPresenterTypeProvider service) {
 		super.unregisterService(service);
 	}
 }
