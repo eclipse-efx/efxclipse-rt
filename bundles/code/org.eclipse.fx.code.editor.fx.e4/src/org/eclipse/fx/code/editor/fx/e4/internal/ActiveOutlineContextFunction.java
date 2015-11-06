@@ -33,10 +33,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class ActiveOutlineContextFunction extends ServiceContextFunction<OutlineTypeProviderService> {
 	private Map<Input<?>, Outline> outlineCache = new WeakHashMap<>();
 
-	public ActiveOutlineContextFunction() {
-		System.err.println("ACTIVE OUTLINE");
-	}
-
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policy=ReferencePolicy.DYNAMIC,policyOption=ReferencePolicyOption.GREEDY)
 	@Override
 	protected void registerService(OutlineTypeProviderService service, Map<String, Object> properties) {
