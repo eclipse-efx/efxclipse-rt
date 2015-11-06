@@ -2,10 +2,10 @@ package org.eclipse.fx.code.editor.ldef.langs.fx.groovy;
 
 public class Groovy__dftl_partition_content_type extends org.eclipse.jface.text.rules.RuleBasedScanner {
 	public Groovy__dftl_partition_content_type() {
-		org.eclipse.jface.text.rules.Token groovy_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("groovy.groovy_default"));
+		org.eclipse.jface.text.rules.Token groovy_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("groovy.groovy_default"));
 		setDefaultReturnToken(groovy_defaultToken);
-		org.eclipse.jface.text.rules.Token groovy_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("groovy.groovy_keyword"));
-		org.eclipse.jface.text.rules.Token groovy_builtin_typeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("groovy.groovy_builtin_type"));
+		org.eclipse.jface.text.rules.Token groovy_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("groovy.groovy_keyword"));
+		org.eclipse.jface.text.rules.Token groovy_builtin_typeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("groovy.groovy_builtin_type"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[2];
 		rules[0] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 

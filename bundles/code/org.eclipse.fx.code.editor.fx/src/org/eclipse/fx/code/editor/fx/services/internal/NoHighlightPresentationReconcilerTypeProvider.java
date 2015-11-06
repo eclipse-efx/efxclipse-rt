@@ -2,7 +2,8 @@ package org.eclipse.fx.code.editor.fx.services.internal;
 
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.fx.services.PresentationReconcilerTypeProvider;
-import org.eclipse.jface.text.presentation.PresentationReconciler;
+import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
+import org.eclipse.fx.text.ui.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.Token;
 import org.osgi.service.component.annotations.Component;
@@ -23,7 +24,7 @@ public class NoHighlightPresentationReconcilerTypeProvider implements Presentati
 
 	static class NoHighlightPresentationReconciler extends PresentationReconciler {
 		public NoHighlightPresentationReconciler() {
-			org.eclipse.jface.text.rules.DefaultDamagerRepairer r = new org.eclipse.jface.text.rules.DefaultDamagerRepairer(new NoHighlightScanner());
+			DefaultDamagerRepairer r = new DefaultDamagerRepairer(new NoHighlightScanner());
 			setDamager(r, "__dftl_partition_content_type");
 			setRepairer(r, "__dftl_partition_content_type");
 		}

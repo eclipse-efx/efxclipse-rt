@@ -15,5 +15,7 @@ Import-Package: javax.inject,
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.ldef.text.fx.LDefPresentationReconcilerTypeProvider.xml
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.11.0",
  org.eclipse.fx.text.ui;bundle-version="2.2.0",
- org.eclipse.fx.text;bundle-version="2.2.0"
+ org.eclipse.fx.text;bundle-version="2.2.0",
+ org.eclipse.fx.text.compat;bundle-version="2.2.0",
+ org.eclipse.text;bundle-version="3.5.400"
 Bundle-Vendor: Eclipse.org

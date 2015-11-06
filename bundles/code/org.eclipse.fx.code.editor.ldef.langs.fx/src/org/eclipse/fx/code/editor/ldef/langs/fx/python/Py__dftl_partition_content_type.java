@@ -2,11 +2,11 @@ package org.eclipse.fx.code.editor.ldef.langs.fx.python;
 
 public class Py__dftl_partition_content_type extends org.eclipse.jface.text.rules.RuleBasedScanner {
 	public Py__dftl_partition_content_type() {
-		org.eclipse.jface.text.rules.Token python_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("py.python_default"));
+		org.eclipse.jface.text.rules.Token python_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("py.python_default"));
 		setDefaultReturnToken(python_defaultToken);
-		org.eclipse.jface.text.rules.Token python_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("py.python_operator"));
-		org.eclipse.jface.text.rules.Token python_bracketToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("py.python_bracket"));
-		org.eclipse.jface.text.rules.Token python_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("py.python_keyword"));
+		org.eclipse.jface.text.rules.Token python_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("py.python_operator"));
+		org.eclipse.jface.text.rules.Token python_bracketToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("py.python_bracket"));
+		org.eclipse.jface.text.rules.Token python_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("py.python_keyword"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
 		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(python_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
 		rules[1] = new org.eclipse.fx.text.rules.CharacterRule(python_bracketToken, new char[] {'(',')','{','}','[',']'});

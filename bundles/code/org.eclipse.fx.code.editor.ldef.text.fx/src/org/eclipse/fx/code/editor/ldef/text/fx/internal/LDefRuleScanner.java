@@ -30,7 +30,7 @@ import org.eclipse.fx.text.rules.CharacterRule;
 import org.eclipse.fx.text.rules.CombinedWordRule;
 import org.eclipse.fx.text.rules.JavaLikeWordDetector;
 import org.eclipse.fx.text.rules.RegexRule;
-import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.fx.text.ui.TextAttribute;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IWhitespaceDetector;
 import org.eclipse.jface.text.rules.MultiLineRule;

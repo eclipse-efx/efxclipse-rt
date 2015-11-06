@@ -3,9 +3,9 @@ package org.eclipse.fx.code.editor.fx.services;
 import java.util.function.Supplier;
 
 import org.eclipse.fx.code.editor.services.CompletionProposal;
+import org.eclipse.fx.text.ui.contentassist.ICompletionProposal;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import javafx.scene.Node;
 

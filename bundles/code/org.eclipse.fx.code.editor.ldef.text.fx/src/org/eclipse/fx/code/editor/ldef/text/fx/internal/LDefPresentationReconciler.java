@@ -5,8 +5,8 @@ import javax.inject.Inject;
 import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_Rule;
-import org.eclipse.jface.text.presentation.PresentationReconciler;
-import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
+import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
+import org.eclipse.fx.text.ui.rules.DefaultDamagerRepairer;
 
 public class LDefPresentationReconciler extends PresentationReconciler {
 

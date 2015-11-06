@@ -2,27 +2,27 @@ package org.eclipse.fx.code.editor.ldef.langs.fx.asciidoc;
 
 public class Adoc__dftl_partition_content_type extends org.eclipse.jface.text.rules.RuleBasedScanner {
 	public Adoc__dftl_partition_content_type() {
-		org.eclipse.jface.text.rules.Token adoc_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_default"));
+		org.eclipse.jface.text.rules.Token adoc_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_default"));
 		setDefaultReturnToken(adoc_defaultToken);
-		org.eclipse.jface.text.rules.Token adoc_blockToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_block"));
-		org.eclipse.jface.text.rules.Token adoc_headerToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_header"));
-		org.eclipse.jface.text.rules.Token adoc_header_attributeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_header_attribute"));
-		org.eclipse.jface.text.rules.Token adoc_section_0Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_section_0"));
-		org.eclipse.jface.text.rules.Token adoc_section_1Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_section_1"));
-		org.eclipse.jface.text.rules.Token adoc_section_2Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_section_2"));
-		org.eclipse.jface.text.rules.Token adoc_section_3Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_section_3"));
-		org.eclipse.jface.text.rules.Token adoc_section_4Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_section_4"));
-		org.eclipse.jface.text.rules.Token adoc_section_5Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_section_5"));
-		org.eclipse.jface.text.rules.Token adoc_mono_bold_italicToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_mono_bold_italic"));
-		org.eclipse.jface.text.rules.Token adoc_bold_italicToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_bold_italic"));
-		org.eclipse.jface.text.rules.Token adoc_mono_boldToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_mono_bold"));
-		org.eclipse.jface.text.rules.Token adoc_mono_italicToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_mono_italic"));
-		org.eclipse.jface.text.rules.Token adoc_italicToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_italic"));
-		org.eclipse.jface.text.rules.Token adoc_boldToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_bold"));
-		org.eclipse.jface.text.rules.Token adoc_literalToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_literal"));
-		org.eclipse.jface.text.rules.Token adoc_superToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_super"));
-		org.eclipse.jface.text.rules.Token adoc_subToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_sub"));
-		org.eclipse.jface.text.rules.Token adoc_admonitionToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("adoc.adoc_admonition"));
+		org.eclipse.jface.text.rules.Token adoc_blockToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_block"));
+		org.eclipse.jface.text.rules.Token adoc_headerToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_header"));
+		org.eclipse.jface.text.rules.Token adoc_header_attributeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_header_attribute"));
+		org.eclipse.jface.text.rules.Token adoc_section_0Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_section_0"));
+		org.eclipse.jface.text.rules.Token adoc_section_1Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_section_1"));
+		org.eclipse.jface.text.rules.Token adoc_section_2Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_section_2"));
+		org.eclipse.jface.text.rules.Token adoc_section_3Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_section_3"));
+		org.eclipse.jface.text.rules.Token adoc_section_4Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_section_4"));
+		org.eclipse.jface.text.rules.Token adoc_section_5Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_section_5"));
+		org.eclipse.jface.text.rules.Token adoc_mono_bold_italicToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_mono_bold_italic"));
+		org.eclipse.jface.text.rules.Token adoc_bold_italicToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_bold_italic"));
+		org.eclipse.jface.text.rules.Token adoc_mono_boldToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_mono_bold"));
+		org.eclipse.jface.text.rules.Token adoc_mono_italicToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_mono_italic"));
+		org.eclipse.jface.text.rules.Token adoc_italicToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_italic"));
+		org.eclipse.jface.text.rules.Token adoc_boldToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_bold"));
+		org.eclipse.jface.text.rules.Token adoc_literalToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_literal"));
+		org.eclipse.jface.text.rules.Token adoc_superToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_super"));
+		org.eclipse.jface.text.rules.Token adoc_subToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_sub"));
+		org.eclipse.jface.text.rules.Token adoc_admonitionToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("adoc.adoc_admonition"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[34];
 		rules[0] = new org.eclipse.fx.text.rules.ColumnStartRule(new org.eclipse.jface.text.rules.SingleLineRule(
 			  "****"

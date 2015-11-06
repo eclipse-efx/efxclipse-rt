@@ -2,14 +2,14 @@ package org.eclipse.fx.code.editor.ldef.langs.fx.dart;
 
 public class Dart__dftl_partition_content_type extends org.eclipse.jface.text.rules.RuleBasedScanner {
 	public Dart__dftl_partition_content_type() {
-		org.eclipse.jface.text.rules.Token dart_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("dart.dart_default"));
+		org.eclipse.jface.text.rules.Token dart_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_default"));
 		setDefaultReturnToken(dart_defaultToken);
-		org.eclipse.jface.text.rules.Token dart_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("dart.dart_operator"));
-		org.eclipse.jface.text.rules.Token dart_bracketToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("dart.dart_bracket"));
-		org.eclipse.jface.text.rules.Token dart_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("dart.dart_keyword"));
-		org.eclipse.jface.text.rules.Token dart_keyword_1Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("dart.dart_keyword_1"));
-		org.eclipse.jface.text.rules.Token dart_keyword_2Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("dart.dart_keyword_2"));
-		org.eclipse.jface.text.rules.Token dart_builtin_typesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("dart.dart_builtin_types"));
+		org.eclipse.jface.text.rules.Token dart_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_operator"));
+		org.eclipse.jface.text.rules.Token dart_bracketToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_bracket"));
+		org.eclipse.jface.text.rules.Token dart_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_keyword"));
+		org.eclipse.jface.text.rules.Token dart_keyword_1Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_keyword_1"));
+		org.eclipse.jface.text.rules.Token dart_keyword_2Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_keyword_2"));
+		org.eclipse.jface.text.rules.Token dart_builtin_typesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_builtin_types"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
 		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(dart_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
 		rules[1] = new org.eclipse.fx.text.rules.CharacterRule(dart_bracketToken, new char[] {'(',')','{','}','[',']'});

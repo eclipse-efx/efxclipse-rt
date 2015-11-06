@@ -2,14 +2,14 @@ package org.eclipse.fx.code.editor.ldef.langs.fx.php;
 
 public class Php__dftl_partition_content_type extends org.eclipse.jface.text.rules.RuleBasedScanner {
 	public Php__dftl_partition_content_type() {
-		org.eclipse.jface.text.rules.Token php_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("php.php_default"));
+		org.eclipse.jface.text.rules.Token php_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("php.php_default"));
 		setDefaultReturnToken(php_defaultToken);
-		org.eclipse.jface.text.rules.Token php_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("php.php_keyword"));
-		org.eclipse.jface.text.rules.Token php_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("php.php_operator"));
-		org.eclipse.jface.text.rules.Token php_bracketToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("php.php_bracket"));
-		org.eclipse.jface.text.rules.Token php_builtin_functionsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("php.php_builtin_functions"));
-		org.eclipse.jface.text.rules.Token php_builtin_classesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("php.php_builtin_classes"));
-		org.eclipse.jface.text.rules.Token php_compile_constantsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("php.php_compile_constants"));
+		org.eclipse.jface.text.rules.Token php_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("php.php_keyword"));
+		org.eclipse.jface.text.rules.Token php_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("php.php_operator"));
+		org.eclipse.jface.text.rules.Token php_bracketToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("php.php_bracket"));
+		org.eclipse.jface.text.rules.Token php_builtin_functionsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("php.php_builtin_functions"));
+		org.eclipse.jface.text.rules.Token php_builtin_classesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("php.php_builtin_classes"));
+		org.eclipse.jface.text.rules.Token php_compile_constantsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("php.php_compile_constants"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
 		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(php_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
 		rules[1] = new org.eclipse.fx.text.rules.CharacterRule(php_bracketToken, new char[] {'(',')','{','}','[',']'});

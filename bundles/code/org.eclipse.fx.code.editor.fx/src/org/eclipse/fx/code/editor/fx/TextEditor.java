@@ -19,11 +19,11 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.core.di.ContextValue;
+import org.eclipse.fx.text.ui.source.SourceViewer;
+import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IDocumentPartitioner;
-import org.eclipse.jface.text.source.SourceViewer;
-import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
 import javafx.beans.property.Property;
 import javafx.scene.layout.BorderPane;

@@ -4,6 +4,6 @@
    <service>
       <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
    </service>
-   <property name="service.context.key" value="org.eclipse.jface.text.source.SourceViewerConfiguration"/>
+   <property name="service.context.key" value="org.eclipse.fx.text.ui.source.SourceViewerConfiguration"/>
    <reference bind="registerService" cardinality="0..n" interface="org.eclipse.fx.code.editor.fx.services.SourceViewerConfigurationTypeProvider" name="registerService" policy="dynamic" policy-option="greedy" unbind="unregisterService"/>
 </scr:component>

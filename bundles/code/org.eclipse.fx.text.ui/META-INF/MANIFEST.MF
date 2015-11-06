@@ -10,10 +10,10 @@ Require-Bundle: org.eclipse.fx.ui.controls;bundle-version="1.0.0",
  org.eclipse.fx.core;bundle-version="2.1.0",
  org.eclipse.equinox.common;bundle-version="3.7.0",
  org.eclipse.fx.text.compat;bundle-version="1.0.0"
-Export-Package: org.eclipse.jface.text;x-internal:=true,
- org.eclipse.jface.text.contentassist;x-internal:=true,
- org.eclipse.jface.text.presentation;x-internal:=true,
- org.eclipse.jface.text.reconciler;x-internal:=true,
- org.eclipse.jface.text.rules;x-internal:=true,
- org.eclipse.jface.text.source;x-internal:=true
+Export-Package: org.eclipse.fx.text.ui,
+ org.eclipse.fx.text.ui.contentassist,
+ org.eclipse.fx.text.ui.presentation,
+ org.eclipse.fx.text.ui.reconciler,
+ org.eclipse.fx.text.ui.rules;x-internal:=true,
+ org.eclipse.fx.text.ui.source
 Bundle-Vendor: Eclipse.org

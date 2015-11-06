@@ -2,12 +2,12 @@ package org.eclipse.fx.code.editor.ldef.langs.fx.go;
 
 public class Go__dftl_partition_content_type extends org.eclipse.jface.text.rules.RuleBasedScanner {
 	public Go__dftl_partition_content_type() {
-		org.eclipse.jface.text.rules.Token go_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("go.go_default"));
+		org.eclipse.jface.text.rules.Token go_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("go.go_default"));
 		setDefaultReturnToken(go_defaultToken);
-		org.eclipse.jface.text.rules.Token go_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("go.go_keyword"));
-		org.eclipse.jface.text.rules.Token go_typesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("go.go_types"));
-		org.eclipse.jface.text.rules.Token go_builtin_constantsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("go.go_builtin_constants"));
-		org.eclipse.jface.text.rules.Token go_builtin_functionsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("go.go_builtin_functions"));
+		org.eclipse.jface.text.rules.Token go_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("go.go_keyword"));
+		org.eclipse.jface.text.rules.Token go_typesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("go.go_types"));
+		org.eclipse.jface.text.rules.Token go_builtin_constantsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("go.go_builtin_constants"));
+		org.eclipse.jface.text.rules.Token go_builtin_functionsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("go.go_builtin_functions"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[2];
 		rules[0] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 

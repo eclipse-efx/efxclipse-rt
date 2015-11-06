@@ -2,14 +2,14 @@ package org.eclipse.fx.code.editor.ldef.langs.fx.rust;
 
 public class Rust__dftl_partition_content_type extends org.eclipse.jface.text.rules.RuleBasedScanner {
 	public Rust__dftl_partition_content_type() {
-		org.eclipse.jface.text.rules.Token rust_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("rust.rust_default"));
+		org.eclipse.jface.text.rules.Token rust_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("rust.rust_default"));
 		setDefaultReturnToken(rust_defaultToken);
-		org.eclipse.jface.text.rules.Token rust_functionToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("rust.rust_function"));
-		org.eclipse.jface.text.rules.Token rust_typeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("rust.rust_type"));
-		org.eclipse.jface.text.rules.Token rust_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("rust.rust_keyword"));
-		org.eclipse.jface.text.rules.Token rust_typesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("rust.rust_types"));
-		org.eclipse.jface.text.rules.Token rust_selfToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("rust.rust_self"));
-		org.eclipse.jface.text.rules.Token rust_constantsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("rust.rust_constants"));
+		org.eclipse.jface.text.rules.Token rust_functionToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("rust.rust_function"));
+		org.eclipse.jface.text.rules.Token rust_typeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("rust.rust_type"));
+		org.eclipse.jface.text.rules.Token rust_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("rust.rust_keyword"));
+		org.eclipse.jface.text.rules.Token rust_typesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("rust.rust_types"));
+		org.eclipse.jface.text.rules.Token rust_selfToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("rust.rust_self"));
+		org.eclipse.jface.text.rules.Token rust_constantsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("rust.rust_constants"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[2];
 		rules[0] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 

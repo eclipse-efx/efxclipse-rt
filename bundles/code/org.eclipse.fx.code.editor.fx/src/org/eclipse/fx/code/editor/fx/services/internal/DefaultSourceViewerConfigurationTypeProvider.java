@@ -2,7 +2,7 @@ package org.eclipse.fx.code.editor.fx.services.internal;
 
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.fx.services.SourceViewerConfigurationTypeProvider;
-import org.eclipse.jface.text.source.SourceViewerConfiguration;
+import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
 import org.osgi.service.component.annotations.Component;
 
 @SuppressWarnings("restriction")

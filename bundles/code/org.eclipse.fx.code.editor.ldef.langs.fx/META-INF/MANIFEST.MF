@@ -22,4 +22,5 @@ Bundle-Vendor: Eclipse.org
 Import-Package: org.eclipse.fx.text.rules
 Require-Bundle: org.eclipse.text;bundle-version="3.5.400",
  org.eclipse.fx.text;bundle-version="2.2.0",
- org.eclipse.fx.text.ui;bundle-version="2.2.0"
+ org.eclipse.fx.text.ui;bundle-version="2.2.0",
+ org.eclipse.fx.text.compat;bundle-version="2.2.0"

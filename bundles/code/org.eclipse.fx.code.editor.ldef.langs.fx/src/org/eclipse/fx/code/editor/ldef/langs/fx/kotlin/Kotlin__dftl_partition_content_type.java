@@ -2,10 +2,10 @@ package org.eclipse.fx.code.editor.ldef.langs.fx.kotlin;
 
 public class Kotlin__dftl_partition_content_type extends org.eclipse.jface.text.rules.RuleBasedScanner {
 	public Kotlin__dftl_partition_content_type() {
-		org.eclipse.jface.text.rules.Token kotlin_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("kotlin.kotlin_default"));
+		org.eclipse.jface.text.rules.Token kotlin_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("kotlin.kotlin_default"));
 		setDefaultReturnToken(kotlin_defaultToken);
-		org.eclipse.jface.text.rules.Token kotlin_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("kotlin.kotlin_keyword"));
-		org.eclipse.jface.text.rules.Token kotlin_literalsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("kotlin.kotlin_literals"));
+		org.eclipse.jface.text.rules.Token kotlin_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("kotlin.kotlin_keyword"));
+		org.eclipse.jface.text.rules.Token kotlin_literalsToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("kotlin.kotlin_literals"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[1];
 
 		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();

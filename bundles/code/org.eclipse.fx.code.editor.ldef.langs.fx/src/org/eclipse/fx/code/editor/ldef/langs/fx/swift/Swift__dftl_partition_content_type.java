@@ -2,13 +2,13 @@ package org.eclipse.fx.code.editor.ldef.langs.fx.swift;
 
 public class Swift__dftl_partition_content_type extends org.eclipse.jface.text.rules.RuleBasedScanner {
 	public Swift__dftl_partition_content_type() {
-		org.eclipse.jface.text.rules.Token swift_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("swift.swift_default"));
+		org.eclipse.jface.text.rules.Token swift_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("swift.swift_default"));
 		setDefaultReturnToken(swift_defaultToken);
-		org.eclipse.jface.text.rules.Token swift_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("swift.swift_keyword"));
-		org.eclipse.jface.text.rules.Token swift_builtin_typeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("swift.swift_builtin_type"));
-		org.eclipse.jface.text.rules.Token swift_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("swift.swift_operator"));
-		org.eclipse.jface.text.rules.Token swift_numberToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("swift.swift_number"));
-		org.eclipse.jface.text.rules.Token swift_attributeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("swift.swift_attribute"));
+		org.eclipse.jface.text.rules.Token swift_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("swift.swift_keyword"));
+		org.eclipse.jface.text.rules.Token swift_builtin_typeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("swift.swift_builtin_type"));
+		org.eclipse.jface.text.rules.Token swift_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("swift.swift_operator"));
+		org.eclipse.jface.text.rules.Token swift_numberToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("swift.swift_number"));
+		org.eclipse.jface.text.rules.Token swift_attributeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("swift.swift_attribute"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
 		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(swift_operatorToken, new char[] {'~','!','%','^','&','*','-','+','=','|','/','.','<','>','?'});
 		rules[1] = new org.eclipse.fx.text.rules.RegexRule(swift_numberToken, java.util.regex.Pattern.compile("[0-9]"),1,java.util.regex.Pattern.compile("[0-9|\\.|e|E|-]"));

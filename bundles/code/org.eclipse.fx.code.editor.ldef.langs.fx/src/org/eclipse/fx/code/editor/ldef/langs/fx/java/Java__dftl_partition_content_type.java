@@ -2,14 +2,14 @@ package org.eclipse.fx.code.editor.ldef.langs.fx.java;
 
 public class Java__dftl_partition_content_type extends org.eclipse.jface.text.rules.RuleBasedScanner {
 	public Java__dftl_partition_content_type() {
-		org.eclipse.jface.text.rules.Token java_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("java.java_default"));
+		org.eclipse.jface.text.rules.Token java_defaultToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_default"));
 		setDefaultReturnToken(java_defaultToken);
-		org.eclipse.jface.text.rules.Token java_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("java.java_operator"));
-		org.eclipse.jface.text.rules.Token java_bracketToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("java.java_bracket"));
-		org.eclipse.jface.text.rules.Token java_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("java.java_keyword"));
-		org.eclipse.jface.text.rules.Token java_buitin_typeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("java.java_buitin_type"));
-		org.eclipse.jface.text.rules.Token java_constantToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("java.java_constant"));
-		org.eclipse.jface.text.rules.Token java_annotationToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.jface.text.TextAttribute("java.java_annotation"));
+		org.eclipse.jface.text.rules.Token java_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_operator"));
+		org.eclipse.jface.text.rules.Token java_bracketToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_bracket"));
+		org.eclipse.jface.text.rules.Token java_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_keyword"));
+		org.eclipse.jface.text.rules.Token java_buitin_typeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_buitin_type"));
+		org.eclipse.jface.text.rules.Token java_constantToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_constant"));
+		org.eclipse.jface.text.rules.Token java_annotationToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_annotation"));
 		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
 		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(java_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
 		rules[1] = new org.eclipse.fx.text.rules.CharacterRule(java_bracketToken, new char[] {'(',')','{','}','[',']'});

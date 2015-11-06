@@ -7,7 +7,7 @@ import org.eclipse.fx.code.editor.fx.services.PresentationReconcilerTypeProvider
 import org.eclipse.fx.code.editor.ldef.text.LDefModelProvider;
 import org.eclipse.fx.code.editor.ldef.text.ModelDependentTypeProvider;
 import org.eclipse.fx.code.editor.ldef.text.fx.internal.LDefPresentationReconciler;
-import org.eclipse.jface.text.presentation.PresentationReconciler;
+import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
