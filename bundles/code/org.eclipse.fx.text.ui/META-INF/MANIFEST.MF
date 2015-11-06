@@ -15,6 +15,5 @@ Export-Package: org.eclipse.jface.text;x-internal:=true,
  org.eclipse.jface.text.presentation;x-internal:=true,
  org.eclipse.jface.text.reconciler;x-internal:=true,
  org.eclipse.jface.text.rules;x-internal:=true,
- org.eclipse.jface.text.source;x-internal:=true,
- org.eclipse.jface.viewers;x-internal:=true
+ org.eclipse.jface.text.source;x-internal:=true
 Bundle-Vendor: Eclipse.org

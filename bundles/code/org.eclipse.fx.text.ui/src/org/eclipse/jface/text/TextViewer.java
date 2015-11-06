@@ -25,9 +25,8 @@ import org.eclipse.fx.ui.controls.styledtext.StyleRange;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.jface.text.projection.ChildDocument;
 import org.eclipse.jface.text.projection.ChildDocumentManager;
-import org.eclipse.jface.viewers.Viewer;
 
-public class TextViewer extends Viewer implements
+public class TextViewer extends AnchorPane implements
 	ITextViewer, ITextViewerExtension, ITextViewerExtension2, ITextViewerExtension4, ITextViewerExtension6, ITextViewerExtension7, ITextViewerExtension8
 	/*,
 	IEditingSupportRegistry, ITextOperationTarget, ITextOperationTargetExtension,
