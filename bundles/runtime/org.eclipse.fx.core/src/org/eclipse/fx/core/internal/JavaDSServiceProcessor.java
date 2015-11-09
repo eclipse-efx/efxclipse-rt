@@ -130,7 +130,10 @@ public class JavaDSServiceProcessor {
 						String value = m.getMainAttributes().getValue("Service-Component"); //$NON-NLS-1$
 						if (value != null) {
 							Map<String, Component> collect = Stream.of(value.split(",")) //$NON-NLS-1$
-									.map(String::trim).map(e -> cl.getResource(e)).map(this::handle).filter(c -> c != null).collect(Collectors.toMap(c -> c.getImplementation().getClazz(), c -> c));
+									.map(String::trim)
+									.map(e -> cl.getResource(e))
+									.map(this::handle).filter(c -> c != null)
+									.collect(Collectors.toMap(c -> c.getImplementation().getClazz(), c -> c));
 							synchronized (collect) {
 								this.componentCache.putAll(collect);
 							}
