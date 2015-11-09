@@ -77,19 +77,23 @@ public class JavaDSServiceProcessor {
 
 		List<Component> componentList = this.serviceList.get(clazz.getName());
 		if (componentList != null) {
-			List<?> collect = componentList.stream().map(c -> c.getImplementation().getClazz()).map(c -> ExExecutor.executeFunction(c, Class::forName, "Could not load class '" + c + "'").orElse(null)).filter(c -> c != null).map(c -> { //$NON-NLS-1$ //$NON-NLS-2$
-				if (c != null) {
-					return ExExecutor.executeSupplier(c::newInstance, "Could not create instance").get(); //$NON-NLS-1$
-				} else {
-					return null;
-				}
-			}).filter(c -> c != null).sorted((o1, o2) -> {
-				if (o1 instanceof RankedService && o2 instanceof RankedService) {
-					return -1 * Integer.compare(((RankedService) o1).getRanking(), ((RankedService) o2).getRanking());
-				} else {
-					return 0;
-				}
-			}).collect(Collectors.toList());
+			List<?> collect = componentList.stream()
+					.map(c -> c.getImplementation().getClazz())
+					.map(c -> ExExecutor.executeFunction(c, Class::forName, "Could not load class '" + c + "'").orElse(null)) //$NON-NLS-1$ //$NON-NLS-2$
+					.filter(c -> c != null)
+					.map(c -> {
+						if (c != null) {
+							return ExExecutor.executeSupplier(c::newInstance, "Could not create instance").get(); //$NON-NLS-1$
+						} else {
+							return null;
+						}
+					}).filter(c -> c != null).sorted((o1, o2) -> {
+						if (o1 instanceof RankedService && o2 instanceof RankedService) {
+							return -1 * Integer.compare(((RankedService) o1).getRanking(), ((RankedService) o2).getRanking());
+						} else {
+							return 0;
+						}
+					}).collect(Collectors.toList());
 			this.serviceCache.put(clazz, collect);
 			collect.stream().forEach(this::process);
 			return (List<S>) collect;
