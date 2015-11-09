@@ -16,15 +16,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.ServiceLoader;
 
+import org.eclipse.fx.core.internal.JavaDSServiceProcessor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -82,37 +77,11 @@ public class Util {
 		return null;
 	}
 
-	private static Map<Class<?>, ServiceLoader<?>> LOADER_CACHE = new HashMap<Class<?>, ServiceLoader<?>>();
-
-	@SuppressWarnings("unchecked")
-	private static <S> ServiceLoader<S> getLoader(Class<S> clazz) {
-		ServiceLoader<S> l = (ServiceLoader<S>) LOADER_CACHE.get(clazz);
-		if (l == null) {
-			l = ServiceLoader.load(clazz);
-			LOADER_CACHE.put(clazz, l);
-		}
-		return l;
-	}
-
-	@SuppressWarnings("null")
 	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
 		if (isOsgiEnv()) {
 			return OSGiUtil.lookupServiceList(requestor, serviceClass);
 		} else {
-			ServiceLoader<S> serviceLoader = getLoader(serviceClass);
-			Iterator<S> iterator = serviceLoader.iterator();
-			List<S> rv = new ArrayList<>();
-			while (iterator.hasNext()) {
-				rv.add(iterator.next());
-			}
-			Collections.sort(rv, (o1, o2) -> {
-				if (o1 instanceof RankedService && o2 instanceof RankedService) {
-					return -1 * Integer.compare(((RankedService) o1).getRanking(), ((RankedService) o2).getRanking());
-				} else {
-					return 0;
-				}
-			});
-			return rv;
+			return JavaDSServiceProcessor.lookupServiceList(requestor, serviceClass);
 		}
 	}
 

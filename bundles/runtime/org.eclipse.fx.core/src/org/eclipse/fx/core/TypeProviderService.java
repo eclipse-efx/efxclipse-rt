@@ -13,10 +13,10 @@ package org.eclipse.fx.core;
 import java.util.function.Predicate;
 
 /**
- * A service who provides a type based upon selector type
+ * A service who provides a type based upon a selector value
  *
  * @param <S>
- *            the selector type
+ *            the selector value type
  * @param <T>
  *            the type
  * @since 2.1
