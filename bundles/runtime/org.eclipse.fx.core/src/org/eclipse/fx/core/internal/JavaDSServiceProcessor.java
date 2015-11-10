@@ -159,21 +159,25 @@ public class JavaDSServiceProcessor {
 		}
 	}
 
-	private static Method getMethod(Object o, String name, Class<?> serviceType) {
+	private static Method getMethod(Class<?> cl, String name, Class<?> serviceType) {
 		if (name == null) {
 			return null;
 		}
 		Method register = null;
 		try {
-			register = o.getClass().getDeclaredMethod(name, serviceType, Map.class);
+			register = cl.getDeclaredMethod(name, serviceType, Map.class);
 		} catch (NoSuchMethodException | SecurityException e) {
 			// Skip it
 		}
 
 		try {
-			register = o.getClass().getDeclaredMethod(name, serviceType);
+			register = cl.getDeclaredMethod(name, serviceType);
 		} catch (NoSuchMethodException | SecurityException e) {
 			// Skip it
+		}
+
+		if( register == null &&  cl.getSuperclass() != Object.class ) {
+			register = getMethod(cl.getSuperclass(), name, serviceType);
 		}
 
 		return register;
@@ -183,7 +187,7 @@ public class JavaDSServiceProcessor {
 	private void handleReference(Object o, Reference r) {
 		try {
 			Class<?> serviceInterface = Class.forName(r.getIface());
-			Method bind = getMethod(o, r.getBind(), serviceInterface);
+			Method bind = getMethod(o.getClass(), r.getBind(), serviceInterface);
 
 			if (bind != null) {
 				boolean changeAccessible = false;
