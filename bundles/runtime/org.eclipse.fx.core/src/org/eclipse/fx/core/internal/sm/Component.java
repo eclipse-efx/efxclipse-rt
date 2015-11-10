@@ -24,6 +24,7 @@ public abstract class Component {
 	private Service service;
 	private List<Reference> reference = new ArrayList<>();
 	private List<Property> property = new ArrayList<>();
+	private List<Properties> properties = new ArrayList<>();
 
 	/**
 	 * @return the implementation model
@@ -111,4 +112,20 @@ public abstract class Component {
 		this.property = property;
 	}
 
+	/**
+	 * @return the properties list
+	 */
+	public List<Properties> getProperties() {
+		return this.properties;
+	}
+
+	/**
+	 * Set the properties list
+	 *
+	 * @param properties
+	 *            the properties
+	 */
+	public void setProperties(List<Properties> properties) {
+		this.properties = properties;
+	}
 }
