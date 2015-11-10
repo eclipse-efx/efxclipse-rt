@@ -23,6 +23,7 @@ public abstract class Component {
 	private Implementation implementation;
 	private Service service;
 	private List<Reference> reference = new ArrayList<>();
+	private List<Property> property = new ArrayList<>();
 
 	/**
 	 * @return the implementation model
@@ -92,4 +93,22 @@ public abstract class Component {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	/**
+	 * @return the property list
+	 */
+	public List<Property> getProperty() {
+		return this.property;
+	}
+
+	/**
+	 * Set the property list
+	 *
+	 * @param property
+	 *            the list of properties
+	 */
+	public void setProperty(List<Property> property) {
+		this.property = property;
+	}
+
 }
