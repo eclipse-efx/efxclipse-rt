@@ -12,7 +12,9 @@ package org.eclipse.fx.core.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -28,7 +30,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.eclipse.fx.core.RankedService;
@@ -37,6 +38,7 @@ import org.eclipse.fx.core.function.ExExecutor;
 import org.eclipse.fx.core.internal.sm.Component;
 import org.eclipse.fx.core.internal.sm.Component11;
 import org.eclipse.fx.core.internal.sm.Component12;
+import org.eclipse.fx.core.internal.sm.Properties;
 import org.eclipse.fx.core.internal.sm.Reference;
 import org.eclipse.fx.core.internal.sm.Reference.ReferenceCardinality;
 import org.eclipse.jdt.annotation.NonNull;
@@ -107,6 +109,19 @@ public class JavaDSServiceProcessor {
 		if (component != null) {
 			component.getReference().stream().forEach(r -> handleReference(o, r));
 		}
+	}
+
+	private static void logError(String message, Throwable t) {
+		System.err.println(JavaDSServiceProcessor.class.getSimpleName() + " - " + message); //$NON-NLS-1$
+		if( t != null ) {
+			try(StringWriter s = new StringWriter();
+					PrintWriter w = new PrintWriter(s);) {
+				t.printStackTrace(w);
+				System.err.println(JavaDSServiceProcessor.class.getSimpleName() + " - " + s); //$NON-NLS-1$
+			} catch (IOException e) {
+				// nothing
+			}
+		}
 
 	}
 
@@ -122,8 +137,7 @@ public class JavaDSServiceProcessor {
 					try (InputStream in = url.openStream();) {
 						m = new Manifest(in);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						logError("Unable to read manifest of " + url, e); //$NON-NLS-1$
 					}
 
 					if (m != null) {
@@ -142,19 +156,16 @@ public class JavaDSServiceProcessor {
 				}
 				this.serviceList = new HashMap<>();
 				this.componentCache.values().forEach(c -> {
-					c.getService().getProvide().forEach(s -> {
-						List<Component> list = this.serviceList.get(s.getIface());
-						if (list == null) {
-							list = new ArrayList<>();
-							this.serviceList.put(s.getIface(), list);
-						}
-						list.add(c);
-					});
+					this.serviceList.computeIfAbsent(c.getImplementation().getClazz(), i -> new ArrayList<>()).add(c);
+					if( c.getService() != null ) {
+						c.getService().getProvide().forEach(s -> {
+							this.serviceList.computeIfAbsent(s.getIface(), i -> new ArrayList<>()).add(c);
+						});
+					}
 				});
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logError("Failed loading data into component cache", e); //$NON-NLS-1$
 			}
 		}
 	}
@@ -202,7 +213,7 @@ public class JavaDSServiceProcessor {
 					case MULTIPLE: {
 						List<?> list = Util.lookupServiceList(serviceInterface);
 						if (cardinality == ReferenceCardinality.AT_LEAST_ONE && list.isEmpty()) {
-							// TODO Log error
+							logError("Unsatisfied dependency '"+r.getIface()+"'. There must be at least one component providing this service", null);  //$NON-NLS-1$//$NON-NLS-2$
 						} else {
 							list.stream().forEach(s -> invoke(bind, o, s, getProperties(s)));
 						}
@@ -212,7 +223,7 @@ public class JavaDSServiceProcessor {
 					case OPTIONAL: {
 						Optional<?> service = Util.getService(serviceInterface);
 						if (ReferenceCardinality.MANDATORY == cardinality && !service.isPresent()) {
-							// TODO Log error
+							logError("Unsatisfied dependency '"+r.getIface()+"'. There must be at least one component providing this service", null);  //$NON-NLS-1$//$NON-NLS-2$
 						} else {
 							Object s = service.get();
 							invoke(bind, o, s, getProperties(s));
@@ -231,14 +242,36 @@ public class JavaDSServiceProcessor {
 				System.err.println("Could not find bind method '" + r.getBind() + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		} catch (Throwable t) {
-			// TODO Auto-generated catch block
-			t.printStackTrace();
+			logError("Failed to resolve references", t); //$NON-NLS-1$
 		}
 	}
 
 	private Map<String, Object> getProperties(Object serviceObject) {
-		// TODO implement
-		return null;
+		Component component = this.componentCache.get(serviceObject.getClass().getName());
+		Map<String, Object> data = new HashMap<>();
+		if( component != null ) {
+			data.putAll(component.getProperty()
+				.stream()
+				.collect(Collectors.toMap( p -> p.getName(), p -> p.getValue())));
+			data.putAll(component.getProperties()
+				.stream()
+				.map( Properties::getEntry )
+				.map( e -> serviceObject.getClass().getClassLoader().getResource(e))
+				.map( eu -> {
+					try ( InputStream in =  eu.openStream() ) {
+						java.util.Properties p = new java.util.Properties();
+						p.load(in);
+						return p.entrySet();
+					} catch( Throwable t ) {
+						logError("Unable to load properties file", t); //$NON-NLS-1$
+					}
+					return null;
+				})
+				.filter( m -> m != null)
+				.flatMap( m -> m.stream())
+				.collect(Collectors.toMap( e -> e.getKey().toString(), e -> e.getValue())));
+		}
+		return data;
 	}
 
 	private static void invoke(Method m, Object o, Object s, Map<String, Object> properties) {
@@ -249,8 +282,7 @@ public class JavaDSServiceProcessor {
 				m.invoke(o, s);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
-			// TODO Auto-generated catch block
+			logError("Failed to invoke bind method", t); //$NON-NLS-1$
 		}
 	}
 
@@ -266,12 +298,9 @@ public class JavaDSServiceProcessor {
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			return (Component) jaxbUnmarshaller.unmarshal(new StringReader(data));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Throwable e) {
+			logError("Unable to load component '"+resource+"'", e);  //$NON-NLS-1$//$NON-NLS-2$
+
 		}
 		return null;
 	}

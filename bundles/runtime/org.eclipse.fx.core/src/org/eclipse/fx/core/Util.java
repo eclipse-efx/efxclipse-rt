@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.eclipse.fx.core.internal.JavaDSServiceProcessor;
 import org.eclipse.jdt.annotation.NonNull;
@@ -269,5 +270,19 @@ public class Util {
 			rv = Math.min(rv, max);
 		}
 		return rv;
+	}
+
+	/**
+	 * Helper method allowing to insert temporary debug information in an
+	 * {@link Stream} mapping
+	 *
+	 * @param data
+	 *            the data
+	 * @return the data
+	 * @since 2.2.0
+	 */
+	public static <T> T debugStderr(T data) {
+		System.err.println(data);
+		return data;
 	}
 }
