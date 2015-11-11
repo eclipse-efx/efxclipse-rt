@@ -49,7 +49,7 @@ public class DnDSupport extends BaseDnDSupport {
 
 	@Nullable
 	private final DnDService dndService;
-	
+
 	@NonNull
 	private final ModelService modelService;
 
@@ -118,7 +118,7 @@ public class DnDSupport extends BaseDnDSupport {
 			MPartStack itemContainer = (MPartStack) (MUIElement) itemElement.getParent();
 			if (itemContainer != null) {
 				DragData dragData = new DragData(itemContainer, itemElement);
-				if (!dragStartCallback.call(dragData).booleanValue()) {
+				if (dragStartCallback.call(dragData).booleanValue()) {
 					return Boolean.TRUE;
 				}
 			} else {
@@ -126,7 +126,7 @@ public class DnDSupport extends BaseDnDSupport {
 			}
 
 		}
-		return Boolean.TRUE;
+		return Boolean.FALSE;
 	}
 
 	/**
