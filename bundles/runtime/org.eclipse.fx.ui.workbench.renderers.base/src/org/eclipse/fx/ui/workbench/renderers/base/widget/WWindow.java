@@ -19,14 +19,14 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Window abstraction
- * 
+ *
  * @param <N>
  *            the native type
  */
 public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 	/**
 	 * Set a main menu
-	 * 
+	 *
 	 * @param menuWidget
 	 *            the main menu widget
 	 */
@@ -34,7 +34,7 @@ public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 
 	/**
 	 * Set the top trim
-	 * 
+	 *
 	 * @param trimBar
 	 *            the widget shown in the top trim area
 	 */
@@ -42,7 +42,7 @@ public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 
 	/**
 	 * Set the left trim
-	 * 
+	 *
 	 * @param trimBar
 	 *            the widget shown in the left trim area
 	 */
@@ -50,7 +50,7 @@ public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 
 	/**
 	 * Set the right trim
-	 * 
+	 *
 	 * @param trimBar
 	 *            the widget shown in the right trim area
 	 */
@@ -58,7 +58,7 @@ public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 
 	/**
 	 * Set the bottom trim
-	 * 
+	 *
 	 * @param trimBar
 	 *            the widget shown in the bottom trim area
 	 */
@@ -66,7 +66,7 @@ public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 
 	/**
 	 * Append a child widget shown in the center
-	 * 
+	 *
 	 * @param widget
 	 *            the widget
 	 */
@@ -74,7 +74,7 @@ public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 
 	/**
 	 * Insert a child widget at the given index
-	 * 
+	 *
 	 * @param idx
 	 *            the index
 	 * @param widget
@@ -84,7 +84,7 @@ public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 
 	/**
 	 * Remove a child widget
-	 * 
+	 *
 	 * @param widget
 	 *            the widget
 	 */
@@ -92,7 +92,7 @@ public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 
 	/**
 	 * Add a child window
-	 * 
+	 *
 	 * @param widget
 	 *            the window
 	 */
@@ -100,7 +100,7 @@ public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 
 	/**
 	 * Remove the given child window
-	 * 
+	 *
 	 * @param widget
 	 *            the window
 	 */
@@ -108,7 +108,7 @@ public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
 
 	/**
 	 * Add a callback to veto the closing of the window
-	 * 
+	 *
 	 * @param closeCallback
 	 *            the callback
 	 */
