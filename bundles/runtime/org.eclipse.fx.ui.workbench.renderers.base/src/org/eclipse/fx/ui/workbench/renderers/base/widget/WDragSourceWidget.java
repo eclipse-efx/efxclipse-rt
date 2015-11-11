@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base.widget;
 
-import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.jdt.annotation.NonNull;
 
@@ -20,7 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 public interface WDragSourceWidget {
 	/**
 	 * Set a callback invoked on drag start
-	 * 
+	 *
 	 * @param dragStackCallback
 	 *            the callback
 	 */
@@ -33,24 +33,24 @@ public interface WDragSourceWidget {
 		/**
 		 * The stack
 		 */
-		@NonNull 
-		public final MPartStack stack;
+		@NonNull
+		public final MUIElement container;
 		/**
 		 * The item
 		 */
-		@NonNull 
-		public final MStackElement item;
+		@NonNull
+		public final MUIElement item;
 
 		/**
 		 * Create a new drag data instance
-		 * 
-		 * @param stack
-		 *            the stack
+		 *
+		 * @param container
+		 *            the container
 		 * @param item
 		 *            the item
 		 */
-		public DragData(@NonNull MPartStack stack, @NonNull MStackElement item) {
-			this.stack = stack;
+		public DragData(@NonNull MUIElement container, @NonNull MStackElement item) {
+			this.container = container;
 			this.item = item;
 		}
 	}

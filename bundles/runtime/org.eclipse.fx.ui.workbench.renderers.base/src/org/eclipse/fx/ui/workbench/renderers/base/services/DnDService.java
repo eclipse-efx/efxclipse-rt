@@ -21,7 +21,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public interface DnDService {
 	/**
 	 * Check if a split is allowed
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @param dropType
@@ -32,7 +32,7 @@ public interface DnDService {
 
 	/**
 	 * Check if a detach is allowed
-	 * 
+	 *
 	 * @param element
 	 *            the element to detach
 	 * @return <code>true</code> if a detach is allowed
@@ -41,7 +41,7 @@ public interface DnDService {
 
 	/**
 	 * Check if reordering is allowed
-	 * 
+	 *
 	 * @param reference
 	 *            the reference element (=sibling)
 	 * @param sourceElement
@@ -54,7 +54,7 @@ public interface DnDService {
 
 	/**
 	 * Check if a insert is allowed
-	 * 
+	 *
 	 * @param reference
 	 *            the reference (=container)
 	 * @param sourceElement
@@ -65,7 +65,7 @@ public interface DnDService {
 
 	/**
 	 * Check if we can reparent the element
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @return <code>true</code> if a reparent is allowed
@@ -74,14 +74,14 @@ public interface DnDService {
 
 	/**
 	 * Handle the detaching of an element
-	 * 
+	 *
 	 * @param x
 	 *            the x coordinate the new window should show up relative to the
 	 *            screen
 	 * @param y
 	 *            the y coordinate the new window should show up relative to the
 	 *            screen
-	 * 
+	 *
 	 * @param sourceElement
 	 *            the source element
 	 * @return <code>true</code> if detaching is handled or <code>false</code>
@@ -91,7 +91,7 @@ public interface DnDService {
 
 	/**
 	 * Handle the reordering
-	 * 
+	 *
 	 * @param reference
 	 *            the reference (=sibling)
 	 * @param sourceElement
@@ -105,7 +105,7 @@ public interface DnDService {
 
 	/**
 	 * Handle the insert
-	 * 
+	 *
 	 * @param reference
 	 *            the reference (=container)
 	 * @param sourceElement
@@ -117,7 +117,7 @@ public interface DnDService {
 
 	/**
 	 * Handle the split
-	 * 
+	 *
 	 * @param reference
 	 *            the reference
 	 * @param sourceElement
@@ -128,5 +128,19 @@ public interface DnDService {
 	 *         should be used
 	 */
 	public boolean handleSplit(@Nullable MUIElement reference, @NonNull MUIElement sourceElement, @NonNull DropLocation dropLocation);
+
+	/**
+	 * Check if the element can be dragged at all
+	 *
+	 * @param container
+	 *            the container
+	 * @param element
+	 *            the element
+	 * @return <code>true</code> if a drag can start
+	 * @since 2.2.0
+	 */
+	public default boolean dragAllowed(MUIElement container, MUIElement element) {
+		return true;
+	}
 
 }

@@ -55,10 +55,10 @@ public class DnDAddon {
 
 	@Inject
 	UISynchronize synchronize;
-	
+
 	@Inject
 	EModelService modelService;
-	
+
 	@Inject
 	@Optional
 	DnDService dndService;
@@ -118,23 +118,23 @@ public class DnDAddon {
 		MUIElement reference = d.reference;
 		@NonNull
 		MUIElement sourceElement = d.sourceElement;
-		
+
 		if( d.dropType.isReorder() ) {
 			if (reference != null ) {
 				if( this.dndService == null || (this.dndService.reorderAllowed(reference, sourceElement, d.dropType)) && ! this.dndService.handleReorder(reference, sourceElement, d.dropType)) {
 					if( d.dropType instanceof BasicDropLocation ) {
-						handleReorder(reference, sourceElement, (@NonNull BasicDropLocation) d.dropType);	
+						handleReorder(reference, sourceElement, (@NonNull BasicDropLocation) d.dropType);
 					}
 				}
 			}
 		} else if( d.dropType.isDetach() ) {
 			if( this.dndService == null || (this.dndService.detachAllowed(sourceElement) && ! this.dndService.handleDetach(d.x, d.y, sourceElement)) ) {
-				handleDetach(sourceElement);	
+				handleDetach(sourceElement);
 			}
 		} else if( d.dropType.isInsert() ) {
 			if (reference != null) {
 				if( this.dndService == null || (this.dndService.insertAllowed(reference, sourceElement)) && ! this.dndService.handleInsert(reference, sourceElement)) {
-					handleInsert(reference, sourceElement);	
+					handleInsert(reference, sourceElement);
 				}
 			}
 		} else if( d.dropType.isSplit() ) {
@@ -144,10 +144,10 @@ public class DnDAddon {
 				}
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	private void handleDetach(@NonNull MUIElement sourceElement) {
 		this.modelService.detach((MPartSashContainerElement) sourceElement, 0, 0, 800, 600);
 	}
@@ -166,33 +166,33 @@ public class DnDAddon {
 			split(parent, sourceElement, dropType );
 		}
 	}
-	
+
 	private void split(MUIElement toSplit, MUIElement child, @NonNull DropLocation dropType) {
 		// remove the moved element from its parent
 		child.setParent(null);
-		
+
 		// remember the index to insert
 		MElementContainer<MUIElement> owner = toSplit.getParent();
 		int index = owner.getChildren().indexOf(toSplit);
-		
+
 		// remove the split from the parent
 		owner.getChildren().remove(toSplit);
-		
+
 		MPartSashContainer container = this.modelService.createModelElement(MPartSashContainer.class);
 		container.setContainerData(toSplit.getContainerData());
-		
+
 		MPartStack childContainer = this.modelService.createModelElement(MPartStack.class);
 		childContainer.getChildren().add((MStackElement) child);
-		
+
 		toSplit.setContainerData(null);
 		childContainer.setContainerData(null);
-		
+
 		container.setToBeRendered(true);
 		container.setVisible(true);
 		container.setHorizontal(dropType == BasicDropLocation.SPLIT_LEFT || dropType == BasicDropLocation.SPLIT_RIGHT);
 		if( dropType == BasicDropLocation.SPLIT_TOP || dropType == BasicDropLocation.SPLIT_LEFT ) {
 			container.getChildren().add((MPartSashContainerElement) childContainer);
-			container.getChildren().add((MPartSashContainerElement) toSplit);	
+			container.getChildren().add((MPartSashContainerElement) toSplit);
 		} else {
 			container.getChildren().add((MPartSashContainerElement) toSplit);
 			container.getChildren().add((MPartSashContainerElement) childContainer);
@@ -259,7 +259,7 @@ public class DnDAddon {
 	@SuppressWarnings("null")
 	@NonNull
 	private Boolean dragStartHandler(@NonNull DragData d) {
-		return Boolean.TRUE;
+		return Boolean.valueOf(this.dndService.dragAllowed(d.container, d.item));
 	}
 
 	@PostConstruct
