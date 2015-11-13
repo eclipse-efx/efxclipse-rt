@@ -13,15 +13,20 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
 import org.eclipse.fx.ui.panes.FillLayoutPane;
 import org.eclipse.fx.ui.workbench.renderers.base.BasePerspectiveRenderer;
+import org.eclipse.fx.ui.workbench.renderers.base.services.MaximizationTransitionService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspective;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
@@ -39,9 +44,25 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 
 	static class PerspectiveWidgetImpl extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPerspective> implements WPerspective<FillLayoutPane> {
 		private StackPane overlayContainer;
+		/**
+		 * Pane used to mask background while maximized content is displayed
+		 */
+		private FillLayoutPane greyPane;
+		/**
+		 * Pane hosting the maximized component
+		 */
+		private FillLayoutPane maximizationContainer;
+		/**
+		 * Reference to the currently maximized widget
+		 */
+		private WLayoutedWidget<? extends MUIElement> maximizedWidget;
 		
+		@Inject
+		@Optional
+		private MaximizationTransitionService<Pane, Region> maximizationTransition;
+
 		@Override
-		protected FillLayoutPane getWidgetNode() {
+		public FillLayoutPane getWidgetNode() {
 			return getWidget();
 		}
 
@@ -96,5 +117,72 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 			}
 		}
 
+		@Override
+		public void setMaximizedContent(WLayoutedWidget<? extends MUIElement> widget) {
+			if (this.maximizedWidget != null) {
+				return;
+			}
+
+			final WLayoutedWidget<? extends MUIElement> childWidget = widget;
+			
+			Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
+			this.maximizedWidget = widget;
+			
+			final FillLayoutPane maximizationContainer = new FillLayoutPane();
+			final FillLayoutPane greyPane = new FillLayoutPane();
+			greyPane.getStyleClass().add("maximization-container"); //$NON-NLS-1$
+			greyPane.setOpacity(0.0);
+			
+			int size = staticLayoutNode.getChildren().size();
+			if (this.overlayContainer == staticLayoutNode.getChildren().get(size - 1)) {
+				// do not cover overlay container
+				staticLayoutNode.getChildren().add(size - 1, greyPane);
+				staticLayoutNode.getChildren().add(size, maximizationContainer);
+			} else {
+				staticLayoutNode.getChildren().add(greyPane);
+				staticLayoutNode.getChildren().add(maximizationContainer);
+			}
+			
+			Runnable finisher = () -> {
+				maximizationContainer.getChildren().clear();
+				maximizationContainer.getChildren().add((Region) childWidget.getWidgetNode());
+				greyPane.setOpacity(1.0);
+				this.maximizationContainer = maximizationContainer;
+				this.greyPane = greyPane;
+			};
+			
+			if(this.maximizationTransition != null) {
+				this.maximizationTransition.maximize(getWidget(), greyPane, maximizationContainer, (Region) childWidget.getWidgetNode(), finisher);
+			} else {
+				finisher.run();
+			}
+		}
+		
+		@Override
+		public void removeMaximizedContent() {
+			if (this.maximizationContainer != null) {
+				Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
+				
+				Pane childStaticNode = (Pane) this.maximizedWidget.getStaticLayoutNode();
+				Region childPane = (Region) this.maximizedWidget.getWidgetNode();	
+				
+				FillLayoutPane maximizationContainer = this.maximizationContainer;
+				FillLayoutPane greyPane = this.greyPane;
+				this.maximizationContainer = null;
+				this.maximizedWidget = null;
+				
+				Runnable finisher = () -> {
+					staticLayoutNode.getChildren().remove(greyPane);
+					staticLayoutNode.getChildren().remove(maximizationContainer);
+					childStaticNode.getChildren().add(childPane);
+				};
+				
+				if(this.maximizationTransition != null) {
+					this.maximizationTransition.unMaximize(staticLayoutNode, greyPane, maximizationContainer, childStaticNode, childPane, finisher);
+				} else {
+					finisher.run();
+				}
+			}
+		}
 	}
 }

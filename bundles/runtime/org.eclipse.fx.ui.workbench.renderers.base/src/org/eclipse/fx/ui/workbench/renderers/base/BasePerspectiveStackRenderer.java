@@ -33,6 +33,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
+import org.eclipse.fx.ui.workbench.renderers.base.services.MaximizationService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WPerspectiveStack;
@@ -440,6 +441,20 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 			} else if (element instanceof MPerspective) {
 				for (MWindow w : ((MPerspective) element).getWindows()) {
 					showElementRecursive(w);
+				}
+			}
+		}
+		
+		// restore perspective's maximized content
+		if(element instanceof MPerspective) {
+			String maxElementId = element.getPersistedState().get("MAXIMIZED"); //$NON-NLS-1$
+			if(maxElementId != null) {
+				MUIElement maxElement = this.modelService.find(maxElementId, element);
+				if(maxElement != null) {
+					MaximizationService maxService = ((MPerspective) element).getContext().get(MaximizationService.class);
+					if(maxService != null) {
+						maxService.maximize(maxElement);
+					}
 				}
 			}
 		}

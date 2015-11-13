@@ -76,7 +76,7 @@ public class DefToolBarRenderer extends BaseToolBarRenderer<ToolBar> {
 		}
 
 		@Override
-		protected ToolBar getWidgetNode() {
+		public ToolBar getWidgetNode() {
 			return getWidget();
 		}
 

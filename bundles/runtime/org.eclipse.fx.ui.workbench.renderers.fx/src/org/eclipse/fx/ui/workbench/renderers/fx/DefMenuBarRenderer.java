@@ -52,7 +52,7 @@ public class DefMenuBarRenderer extends BaseMenuBarRenderer<MenuBar> {
 		}
 
 		@Override
-		protected MenuBar getWidgetNode() {
+		public MenuBar getWidgetNode() {
 			return getWidget();
 		}
 

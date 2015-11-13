@@ -117,7 +117,7 @@ public class DefCompositePartRenderer extends BaseCompositePartRenderer<Node> {
 		}
 
 		@Override
-		protected AnchorPane getWidgetNode() {
+		public AnchorPane getWidgetNode() {
 			if (this.contentArea == null) {
 				this.menuGroup = new Group();
 				this.menuGroup.setVisible(false);

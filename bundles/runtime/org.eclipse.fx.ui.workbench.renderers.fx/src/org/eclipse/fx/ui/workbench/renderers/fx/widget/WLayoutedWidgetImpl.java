@@ -72,7 +72,8 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	/**
 	 * @return the widget node
 	 */
-	protected abstract NN getWidgetNode();
+	@Override
+	public abstract NN getWidgetNode();
 
 	/**
 	 * the logger to use

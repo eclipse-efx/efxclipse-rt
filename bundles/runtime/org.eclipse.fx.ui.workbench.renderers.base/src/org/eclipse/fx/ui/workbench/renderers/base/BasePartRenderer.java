@@ -145,7 +145,7 @@ public abstract class BasePartRenderer<N, T, M> extends BaseRenderer<MPart, WPar
 			public Void call(Boolean param) {
 				if (param.booleanValue()) {
 					MElementContainer<MUIElement> parent = element.getParent();
-					if( parent.getSelectedElement() != element ) {
+					if(parent != null && parent.getSelectedElement() != element ) {
 						element.getParent().setSelectedElement(element);
 					}
 					boolean requiresFocus = requiresFocus(widget);
