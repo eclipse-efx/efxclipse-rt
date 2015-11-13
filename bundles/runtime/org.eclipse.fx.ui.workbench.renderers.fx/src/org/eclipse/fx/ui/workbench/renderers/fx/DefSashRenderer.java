@@ -183,7 +183,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 
 		@Override
-		protected GridLayoutPane getWidgetNode() {
+		public GridLayoutPane getWidgetNode() {
 			return getWidget();
 		}
 
@@ -305,7 +305,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 
 		@Override
-		protected SplitPane getWidgetNode() {
+		public SplitPane getWidgetNode() {
 			return getWidget();
 		}
 

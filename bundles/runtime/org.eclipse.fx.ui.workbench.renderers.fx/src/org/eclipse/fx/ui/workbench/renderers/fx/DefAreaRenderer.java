@@ -112,7 +112,7 @@ public class DefAreaRenderer extends BaseAreaRenderer<SplitPane> {
 		}
 
 		@Override
-		protected SplitPane getWidgetNode() {
+		public SplitPane getWidgetNode() {
 			return getWidget();
 		}
 

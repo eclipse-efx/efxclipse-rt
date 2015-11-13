@@ -55,7 +55,7 @@ public class DefToolControlRenderer extends BaseToolControlRenderer<Parent> {
 		}
 
 		@Override
-		protected Parent getWidgetNode() {
+		public Parent getWidgetNode() {
 			return getWidget();
 		}
 	}

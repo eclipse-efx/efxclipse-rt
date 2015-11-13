@@ -33,16 +33,16 @@ public class DefPlaceholderRenderer extends BasePlaceholderRenderer<FillLayoutPa
 	static class PlaceholderWidget extends WLayoutedWidgetImpl<FillLayoutPane, FillLayoutPane, MPlaceholder> implements WPlaceholderWidget {
 
 		@Override
-		public void setContent(WLayoutedWidget<MUIElement> contentWidget) {
+		public void setContent(WLayoutedWidget<? extends MUIElement> contentWidget) {
 			if (contentWidget == null) {
 				getWidget().getChildren().clear();
 			} else {
-				getWidget().getChildren().setAll((Node) contentWidget.getStaticLayoutNode());
+				getWidget().getChildren().setAll((Node) contentWidget.getWidgetNode());
 			}
 		}
 
 		@Override
-		protected FillLayoutPane getWidgetNode() {
+		public FillLayoutPane getWidgetNode() {
 			return getWidget();
 		}
 

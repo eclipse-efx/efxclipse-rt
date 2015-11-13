@@ -202,7 +202,7 @@ public class DefPerspectiveStackRenderer extends BasePerspectiveStackRenderer<Bo
 		}
 
 		@Override
-		protected BorderPane getWidgetNode() {
+		public BorderPane getWidgetNode() {
 			return getWidget();
 		}
 

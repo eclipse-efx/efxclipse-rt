@@ -821,7 +821,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		}
 
 		@Override
-		protected Pane getWidgetNode() {
+		public Pane getWidgetNode() {
 			return this.rootPane;
 		}
 

@@ -72,7 +72,7 @@ public class DefTrimBarRenderer extends BaseTrimBarRenderer<Pane> {
 		}
 
 		@Override
-		protected Pane getWidgetNode() {
+		public Pane getWidgetNode() {
 			return getWidget();
 		}
 

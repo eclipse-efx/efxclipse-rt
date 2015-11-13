@@ -30,4 +30,10 @@ public interface WLayoutedWidget<M extends MUIElement> extends WWidget<M>, WDrag
 	 * @return the weight when layouted
 	 */
 	public double getWeight();
+	
+	/**
+	 * @return the widget container
+	 */
+	@NonNull
+	public Object getWidgetNode();
 }

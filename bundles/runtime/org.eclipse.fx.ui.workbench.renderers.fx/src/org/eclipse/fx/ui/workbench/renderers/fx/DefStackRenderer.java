@@ -277,7 +277,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		protected TabPane getWidgetNode() {
+		public TabPane getWidgetNode() {
 			return getWidget();
 		}
 
@@ -552,7 +552,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		}
 
 		@Override
-		protected Pagination getWidgetNode() {
+		public Pagination getWidgetNode() {
 			return getWidget();
 		}
 

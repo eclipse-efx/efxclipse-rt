@@ -18,3 +18,7 @@
 .overlay-container {
 	-fx-background-color: rgba(100,100,100,0.75);
 }
+
+.maximization-container {
+	-fx-background-color: -fx-background;
+}
