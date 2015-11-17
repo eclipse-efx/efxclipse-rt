@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.behavior;
 
-import static com.sun.javafx.PlatformUtil.isMac;
-
 import java.util.List;
 
 import org.eclipse.fx.core.Util;
@@ -32,7 +30,6 @@ import javafx.scene.input.MouseEvent;
 /**
  * Behavior for styled text
  */
-@SuppressWarnings("restriction")
 public class StyledTextBehavior {
 	private final StyledTextArea styledText;
 
@@ -294,8 +291,8 @@ public class StyledTextBehavior {
 			// check the modifiers
 			// - OS-X: ALT+L ==> @
 			// - win32/linux: ALTGR+Q ==> @
-			if (event.isControlDown() || event.isAltDown() || (isMac() && event.isMetaDown())) {
-				if (!((event.isControlDown() || isMac()) && event.isAltDown()))
+			if (event.isControlDown() || event.isAltDown() || (Util.isMacOS() && event.isMetaDown())) {
+				if (!((event.isControlDown() || Util.isMacOS()) && event.isAltDown()))
 					return;
 			}
 
