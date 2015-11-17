@@ -28,7 +28,6 @@ import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
 import org.eclipse.jdt.annotation.NonNull;
 
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 import com.sun.javafx.scene.control.skin.ListViewSkin;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 
@@ -45,6 +44,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Skin;
+import javafx.scene.control.SkinBase;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -56,7 +56,7 @@ import javafx.util.Callback;
  * Styled text skin
  */
 @SuppressWarnings("restriction")
-public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextBehavior> {
+public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	ListView<Line> contentView;
 	LineRuler lineRuler;
 
@@ -66,6 +66,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	Map<LineCell, LineInfo> lineInfoMap = new HashMap<>();
 
 	HBox rootContainer;
+
+	private final StyledTextBehavior behavior;
 
 	/**
 	 * Create a new skin
@@ -86,8 +88,8 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 	 *            the behavior
 	 */
 	public StyledTextSkin(StyledTextArea styledText, StyledTextBehavior behavior) {
-		super(styledText, behavior);
-
+		super(styledText);
+		this.behavior = behavior;
 		this.rootContainer = new HBox();
 		this.rootContainer.setSpacing(0);
 
@@ -102,6 +104,7 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				return new MyListViewSkin(this);
 			}
 		};
+		styledText.addEventHandler(MouseEvent.MOUSE_PRESSED, behavior::mousePressed);
 
 		initializeContentViewer(this.contentView);
 
@@ -174,6 +177,10 @@ public class StyledTextSkin extends BehaviorSkinBase<StyledTextArea, StyledTextB
 				}
 			}
 		});
+	}
+
+	StyledTextBehavior getBehavior() {
+		return this.behavior;
 	}
 
 	/**

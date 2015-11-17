@@ -11,16 +11,8 @@
 package org.eclipse.fx.ui.controls.styledtext.behavior;
 
 import static com.sun.javafx.PlatformUtil.isMac;
-import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javafx.event.Event;
-import javafx.geometry.Bounds;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 
 import org.eclipse.fx.core.Util;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
@@ -31,19 +23,18 @@ import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin.LineCell;
 
-import com.sun.javafx.scene.control.behavior.BehaviorBase;
-import com.sun.javafx.scene.control.behavior.KeyBinding;
+import javafx.event.Event;
+import javafx.geometry.Bounds;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Behavior for styled text
  */
 @SuppressWarnings("restriction")
-public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
-	private static final List<KeyBinding> KEY_BINDINGS = new ArrayList<KeyBinding>();
-
-	static {
-		KEY_BINDINGS.add(new KeyBinding(null, KEY_PRESSED, "Consume")); //$NON-NLS-1$
-	}
+public class StyledTextBehavior {
+	private final StyledTextArea styledText;
 
 	/**
 	 * Create a new behavior
@@ -52,34 +43,39 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 	 *            the styled text control
 	 */
 	public StyledTextBehavior(StyledTextArea styledText) {
-		super(styledText, KEY_BINDINGS);
+		this.styledText = styledText;
+		styledText.addEventHandler(KeyEvent.ANY, this::callActionForEvent);
 	}
 
-	@Override
+	/**
+	 * @return the control
+	 */
+	protected StyledTextArea getControl() {
+		return this.styledText;
+	}
+
+	/**
+	 * Handle key event
+	 *
+	 * @param arg0
+	 *            the event
+	 */
 	protected void callActionForEvent(KeyEvent arg0) {
 		if (arg0.getEventType() == KeyEvent.KEY_PRESSED) {
 			_keyPressed(arg0);
 		} else if (arg0.getEventType() == KeyEvent.KEY_TYPED) {
 			_keyTyped(arg0);
 		}
-		super.callActionForEvent(arg0);
 	}
 
-	@Override
-	protected void callAction(String arg0) {
-		super.callAction(arg0);
-	}
-
-	@Override
+	/**
+	 * handle the mouse pressed
+	 *
+	 * @param arg0
+	 *            the mouse event
+	 */
 	public void mousePressed(MouseEvent arg0) {
-		super.mousePressed(arg0);
 		getControl().requestFocus();
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		super.mouseDragged(e);
-
 	}
 
 	/**
@@ -268,8 +264,8 @@ public class StyledTextBehavior extends BehaviorBase<StyledTextArea> {
 				}
 			}
 		case X:
-			if( getControl().getEditable() ) {
-				if(event.isShortcutDown()) {
+			if (getControl().getEditable()) {
+				if (event.isShortcutDown()) {
 					getControl().cut();
 					event.consume();
 					break;
