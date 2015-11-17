@@ -19,21 +19,21 @@ import java.util.stream.Collectors;
 import org.eclipse.fx.ui.controls.filesystem.DirItem;
 import org.eclipse.fx.ui.controls.filesystem.DirectoryTreeView;
 import org.eclipse.fx.ui.controls.filesystem.FileItem;
+import org.eclipse.fx.ui.controls.filesystem.ResourceEvent;
 import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
 import org.eclipse.fx.ui.controls.filesystem.ResourceTreeView;
-import org.eclipse.fx.ui.controls.filesystem.behavior.ResourceTreeViewBehavior;
 import org.eclipse.fx.ui.controls.tree.LazyTreeItem;
 import org.eclipse.fx.ui.controls.tree.SimpleTreeCell;
 import org.eclipse.jdt.annotation.NonNull;
-
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SkinBase;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
@@ -42,9 +42,8 @@ import javafx.scene.control.TreeView;
  *
  * @since 1.2
  */
-@SuppressWarnings("restriction")
 public class ResourceTreeViewSkin extends
-		BehaviorSkinBase<ResourceTreeView, ResourceTreeViewBehavior> {
+		SkinBase<ResourceTreeView> {
 
 	private final TreeView<@NonNull ResourceItem> tree;
 
@@ -60,7 +59,7 @@ public class ResourceTreeViewSkin extends
 	 */
 	public ResourceTreeViewSkin(ResourceTreeView control,
 			ObservableList<ResourceItem> selectedItems) {
-		super(control, new ResourceTreeViewBehavior(control));
+		super(control);
 		this.selectedItems = selectedItems;
 		this.tree = new TreeView<>();
 		this.tree.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -71,7 +70,7 @@ public class ResourceTreeViewSkin extends
 				.addListener(this::handleSelectionChange);
 		this.tree.setOnMouseClicked( e -> {
 			if( e.getClickCount() > 1 ) {
-				getBehavior().openSelectedResources();
+				openSelectedResources();
 			}
 		});
 
@@ -80,6 +79,11 @@ public class ResourceTreeViewSkin extends
 		control.rootDirectoriesProperty().addListener(this::rebuildTable);
 		control.iconSizeProperty().addListener(this::rebuildTable);
 		rebuildTable(control.rootDirectoriesProperty());
+	}
+
+	private void openSelectedResources() {
+		Event.fireEvent(getSkinnable(), ResourceEvent.createOpenResource(
+				getSkinnable(), getSkinnable().getSelectedItems()));
 	}
 
 	private static String handleDirLabel(ResourceItem e) {

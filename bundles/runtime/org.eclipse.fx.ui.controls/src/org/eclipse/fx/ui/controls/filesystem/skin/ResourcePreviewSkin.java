@@ -14,31 +14,28 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
+import org.eclipse.fx.ui.controls.filesystem.DirItem;
+import org.eclipse.fx.ui.controls.filesystem.FileItem;
+import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
+import org.eclipse.fx.ui.controls.filesystem.ResourcePreview;
+import org.eclipse.fx.ui.panes.GridLayoutPane;
+
 import javafx.beans.Observable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.SkinBase;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-import org.eclipse.fx.ui.controls.filesystem.DirItem;
-import org.eclipse.fx.ui.controls.filesystem.FileItem;
-import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
-import org.eclipse.fx.ui.controls.filesystem.ResourcePreview;
-import org.eclipse.fx.ui.controls.filesystem.behavior.ResourcePreviewBehavior;
-import org.eclipse.fx.ui.panes.GridLayoutPane;
-
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
-
 /**
  * Skin for the resource preview
  */
-@SuppressWarnings("restriction")
 public class ResourcePreviewSkin extends
-		BehaviorSkinBase<ResourcePreview, ResourcePreviewBehavior> {
+		SkinBase<ResourcePreview> {
 
 	private Label nameProperty;
 	private StackPane preview;
@@ -56,7 +53,7 @@ public class ResourcePreviewSkin extends
 	 *            the control
 	 */
 	public ResourcePreviewSkin(ResourcePreview control) {
-		super(control, new ResourcePreviewBehavior(control));
+		super(control);
 		this.box = new VBox();
 		this.box.setVisible(false);
 		this.box.setPadding(new Insets(10));

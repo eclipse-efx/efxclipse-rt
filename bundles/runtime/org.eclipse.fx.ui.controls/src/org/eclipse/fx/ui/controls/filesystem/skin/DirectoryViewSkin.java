@@ -17,39 +17,38 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 
+import org.eclipse.fx.ui.controls.filesystem.DirItem;
+import org.eclipse.fx.ui.controls.filesystem.DirectoryView;
+import org.eclipse.fx.ui.controls.filesystem.FileItem;
+import org.eclipse.fx.ui.controls.filesystem.IconSize;
+import org.eclipse.fx.ui.controls.filesystem.ResourceEvent;
+import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
+import org.eclipse.jdt.annotation.NonNull;
+
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SkinBase;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import org.eclipse.fx.ui.controls.filesystem.DirItem;
-import org.eclipse.fx.ui.controls.filesystem.DirectoryView;
-import org.eclipse.fx.ui.controls.filesystem.FileItem;
-import org.eclipse.fx.ui.controls.filesystem.IconSize;
-import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
-import org.eclipse.fx.ui.controls.filesystem.behavior.DirectoryViewBehavior;
-import org.eclipse.jdt.annotation.NonNull;
-
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
-
 /**
  * Skin for {@link DirectoryView}
  *
  * @since 1.2
  */
-@SuppressWarnings("restriction")
 public class DirectoryViewSkin extends
-		BehaviorSkinBase<DirectoryView, DirectoryViewBehavior> {
+		SkinBase<DirectoryView> {
 
 	private ObservableList<@NonNull ResourceItem> elements = FXCollections
 			.observableArrayList();
@@ -66,11 +65,15 @@ public class DirectoryViewSkin extends
 	 */
 	public DirectoryViewSkin(DirectoryView control,
 			ObservableList<ResourceItem> selectedItems) {
-		super(control, new DirectoryViewBehavior(control));
+		super(control);
 		this.selectedItems = selectedItems;
 		control.dirProperty().addListener(this::pathChangedHandler);
 		setupView();
 		pathChangedHandler(getSkinnable().dirProperty());
+	}
+
+	private void openSelectedResources() {
+		Event.fireEvent(getSkinnable(), ResourceEvent.createOpenResource(getSkinnable(), getSkinnable().getSelectedItems()));
 	}
 
 	private void setupView() {
@@ -130,7 +133,7 @@ public class DirectoryViewSkin extends
 		t.setItems(this.elements);
 		t.setOnMouseReleased((e) -> {
 			if (e.getClickCount() == 2) {
-				getBehavior().openSelectedResources();
+				openSelectedResources();
 			}
 		});
 		Bindings.bindContent(this.selectedItems, t.getSelectionModel()

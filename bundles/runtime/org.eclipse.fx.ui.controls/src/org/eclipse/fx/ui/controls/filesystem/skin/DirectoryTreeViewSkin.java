@@ -16,33 +16,32 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.eclipse.fx.ui.controls.filesystem.DirItem;
+import org.eclipse.fx.ui.controls.filesystem.DirectoryTreeView;
+import org.eclipse.fx.ui.controls.filesystem.ResourceEvent;
+import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
+import org.eclipse.fx.ui.controls.tree.LazyTreeItem;
+import org.eclipse.fx.ui.controls.tree.SimpleTreeCell;
+import org.eclipse.jdt.annotation.NonNull;
+
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.SkinBase;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-
-import org.eclipse.fx.ui.controls.filesystem.DirItem;
-import org.eclipse.fx.ui.controls.filesystem.DirectoryTreeView;
-import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
-import org.eclipse.fx.ui.controls.filesystem.behavior.DirectoryTreeViewBehavior;
-import org.eclipse.fx.ui.controls.tree.LazyTreeItem;
-import org.eclipse.fx.ui.controls.tree.SimpleTreeCell;
-import org.eclipse.jdt.annotation.NonNull;
-
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 
 /**
  * Skin for {@link DirectoryTreeView}
  *
  * @since 1.2
  */
-@SuppressWarnings("restriction")
 public class DirectoryTreeViewSkin extends
-		BehaviorSkinBase<DirectoryTreeView, DirectoryTreeViewBehavior> {
+		SkinBase<DirectoryTreeView> {
 
 	private final TreeView<@NonNull DirItem> tree;
 
@@ -58,7 +57,7 @@ public class DirectoryTreeViewSkin extends
 	 */
 	public DirectoryTreeViewSkin(DirectoryTreeView control,
 			ObservableList<DirItem> selectedItems) {
-		super(control, new DirectoryTreeViewBehavior(control));
+		super(control);
 		this.selectedItems = selectedItems;
 		this.tree = new TreeView<>();
 		this.tree.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -69,7 +68,7 @@ public class DirectoryTreeViewSkin extends
 				.addListener(this::handleSelectionChange);
 		this.tree.setOnMouseClicked( e -> {
 			if( e.getClickCount() > 1 ) {
-				getBehavior().openSelectedResources();
+				openSelectedResources();
 			}
 		});
 		getChildren().add(this.tree);
@@ -77,6 +76,11 @@ public class DirectoryTreeViewSkin extends
 		control.rootDirectoriesProperty().addListener(this::rebuildTable);
 		control.iconSizeProperty().addListener(this::rebuildTable);
 		rebuildTable(control.rootDirectoriesProperty());
+	}
+
+	private void openSelectedResources() {
+		Event.fireEvent(getSkinnable(), ResourceEvent.createOpenResource(
+				getSkinnable(), getSkinnable().getSelectedItems()));
 	}
 
 	private static String handleDirLabel(DirItem e) {
