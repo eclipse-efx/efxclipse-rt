@@ -36,6 +36,22 @@ public class Util {
 	}
 
 	/**
+	 * @return <code>true</code> if we are on JavaFX 9
+	 * @since 2.2.0
+	 */
+	public static boolean isFX9() {
+		return System.getProperty("javafx.version") != null && System.getProperty("javafx.version").startsWith("9");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+	}
+
+	/**
+	 * @return <code>true</code> if we are on JavaFX 8
+	 * @since 2.2.0
+	 */
+	public static boolean isFX8() {
+		return System.getProperty("javafx.version") != null && System.getProperty("javafx.version").startsWith("8");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+	}
+
+	/**
 	 * Make use the value is not null
 	 *
 	 * @param value
