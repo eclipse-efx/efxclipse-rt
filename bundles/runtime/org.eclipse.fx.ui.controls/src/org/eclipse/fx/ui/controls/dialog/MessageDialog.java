@@ -10,18 +10,20 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.dialog;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.ui.controls.stage.FrameEvent;
 import org.eclipse.fx.ui.panes.GridLayoutPane;
 import org.eclipse.jdt.annotation.NonNull;
 
-import com.sun.javafx.tk.Toolkit;
-
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -29,7 +31,6 @@ import javafx.scene.image.ImageView;
 /**
  * Create a message dialog
  */
-@SuppressWarnings("restriction")
 public class MessageDialog extends Dialog {
 	/**
 	 * The message type
@@ -234,8 +235,64 @@ public class MessageDialog extends Dialog {
 
 	private static void openBlocking(MessageDialog d) {
 		String id = UUID.randomUUID().toString();
-		d.addEventHandler(FrameEvent.CLOSED, (e) -> Toolkit.getToolkit().exitNestedEventLoop(id, null));
-		Toolkit.getToolkit().enterNestedEventLoop(id);
+		d.addEventHandler(FrameEvent.CLOSED, (e) -> exitNestedEventLoop(id));
+		enterNestedEventLoop(id);
+	}
+
+	private static void enterNestedEventLoop(String id) {
+		if( Util.isFX9() ) {
+			enterNestedEventLoop9(id);
+		} else {
+			enterNestedEventLoop8(id);
+		}
+	}
+
+	private static void enterNestedEventLoop8(String id) {
+		try {
+			Class<?> toolkit = Class.forName("com.sun.javafx.tk.Toolkit"); //$NON-NLS-1$
+			Object tk = toolkit.getMethod("getToolkit").invoke(null); //$NON-NLS-1$
+			toolkit.getMethod("enterNestedEventLoop", Object.class).invoke(tk, id); //$NON-NLS-1$
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void enterNestedEventLoop9(String id) {
+		try {
+			Method m = Platform.class.getMethod("enterNestedEventLoop", Object.class); //$NON-NLS-1$
+			m.invoke(null, id);
+		} catch(Throwable t) {
+			enterNestedEventLoop8(id);
+		}
+	}
+
+	private static void exitNestedEventLoop(String id) {
+		if( Util.isFX9() ) {
+			exitNestedEventLoop9(id);
+		} else {
+			exitNestedEventLoop8(id);
+		}
+	}
+
+	private static void exitNestedEventLoop8(String id) {
+		try {
+			Class<?> toolkit = Class.forName("com.sun.javafx.tk.Toolkit"); //$NON-NLS-1$
+			Object tk = toolkit.getMethod("getToolkit").invoke(null); //$NON-NLS-1$
+			toolkit.getMethod("exitNestedEventLoop", Object.class, Object.class).invoke(tk, id, null); //$NON-NLS-1$
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void exitNestedEventLoop9(String id) {
+		try {
+			Method m = Platform.class.getMethod("exitNestedEventLoop", Object.class, Object.class); //$NON-NLS-1$
+			m.invoke(null, id, null);
+		} catch(Throwable t) {
+			exitNestedEventLoop8(id);
+		}
 	}
 
 	/**
