@@ -10,33 +10,28 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.image.skin;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Point2D;
-import javafx.scene.control.SkinBase;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
 import org.eclipse.fx.ui.controls.image.FontIcon;
 import org.eclipse.fx.ui.controls.image.FontIconView;
 import org.eclipse.fx.ui.controls.image.spi.IconFontLookup;
 import org.eclipse.fx.ui.controls.image.spi.IconFontProvider;
 import org.eclipse.jdt.annotation.NonNull;
 
-import com.sun.javafx.tk.FontMetrics;
-import com.sun.javafx.tk.Toolkit;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.SkinBase;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  * Skin for the {@link FontIconView}
  */
-@SuppressWarnings("restriction")
 public class FontIconViewSkin extends SkinBase<FontIconView> {
 
 	private Text text;
 
 	/**
 	 * Create a new skin
-	 * 
+	 *
 	 * @param control
 	 *            the control
 	 */
@@ -81,7 +76,6 @@ public class FontIconViewSkin extends SkinBase<FontIconView> {
 	void updateIcon(FontIcon icon, Font font) {
 		// System.err.println("UPDATE ICON " + icon.getIconName() + " / " +
 		// font);
-		computeIconSize(icon, font);
 		this.text.setText(convert(icon, font));
 	}
 
@@ -121,16 +115,16 @@ public class FontIconViewSkin extends SkinBase<FontIconView> {
 		// return null;
 	}
 
-	private static Point2D computeIconSize(FontIcon icon, Font font) {
-		String iconString = convert(icon, font);
-
-		FontMetrics metrics = Toolkit.getToolkit().getFontLoader().getFontMetrics(font);
-
-		float width = metrics.computeStringWidth(iconString);
-		float height = metrics.getLineHeight();
-		// System.err.println("icon size is : " + width + " x " + height);
-		return new Point2D(width, height);
-	}
+//	private static Point2D computeIconSize(FontIcon icon, Font font) {
+//		String iconString = convert(icon, font);
+//
+//		FontMetrics metrics = Toolkit.getToolkit().getFontLoader().getFontMetrics(font);
+//
+//		float width = metrics.computeStringWidth(iconString);
+//		float height = metrics.getLineHeight();
+//		// System.err.println("icon size is : " + width + " x " + height);
+//		return new Point2D(width, height);
+//	}
 
 	// @Override
 	// protected void layoutChildren(double contentX, double contentY, double
