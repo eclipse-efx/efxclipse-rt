@@ -10,27 +10,24 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.skin;
 
+import org.eclipse.fx.ui.controls.Util;
+import org.eclipse.fx.ui.controls.styledtext.StyledLabel;
+import org.eclipse.fx.ui.controls.styledtext.StyledString;
+
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.SkinBase;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-
-import org.eclipse.fx.ui.controls.Util;
-import org.eclipse.fx.ui.controls.styledtext.StyledLabel;
-import org.eclipse.fx.ui.controls.styledtext.StyledString;
-import org.eclipse.fx.ui.controls.styledtext.behavior.StyledLabelBehavior;
-
-import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
 
 /**
  * Skin for {@link StyledLabel}
  */
-@SuppressWarnings("restriction")
 public class StyledLabelSkin extends
-		BehaviorSkinBase<StyledLabel, StyledLabelBehavior> {
+		SkinBase<StyledLabel> {
 	private final Pane b;
 	private final Label l;
 
@@ -41,7 +38,7 @@ public class StyledLabelSkin extends
 	 *            the control
 	 */
 	public StyledLabelSkin(StyledLabel control) {
-		super(control, new StyledLabelBehavior(control));
+		super(control);
 		this.b = new HBox(10);
 		this.l = new Label();
 		this.l.getStyleClass().clear();
