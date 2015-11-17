@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.tree;
 
+import java.util.Comparator;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,7 +19,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TreeItem;
 
 /**
- * An extension of {@link TreeItem} with the possibility to sort its children. To enable sorting 
+ * An extension of {@link TreeItem} with the possibility to sort its children. To enable sorting
  * it is necessary to set the {@link TreeItemComparator}. If no comparator is set, then
  * the tree item will attempt so bind itself to the comparator of its parent.
  *
@@ -25,14 +27,14 @@ import javafx.scene.control.TreeItem;
  */
 public class SortableTreeItem<T> extends FilterableTreeItem<T> {
 	final private SortedList<TreeItem<T>> sortedList;
-	
+
 	private ObjectProperty<TreeItemComparator<T>> comparator = new SimpleObjectProperty<TreeItemComparator<T>>();
-	
+
 	/**
-	 * Creates a new {@link TreeItem} with sorted children. To enable sorting it is 
+	 * Creates a new {@link TreeItem} with sorted children. To enable sorting it is
 	 * necessary to set the {@link TreeItemComparator}. If no comparator is set, then
 	 * the tree item will attempt so bind itself to the comparator of its parent.
-	 * 
+	 *
 	 * @param value the value of the {@link TreeItem}
 	 */
 	public SortableTreeItem(T value) {
@@ -41,7 +43,9 @@ public class SortableTreeItem<T> extends FilterableTreeItem<T> {
 		this.sortedList.comparatorProperty().bind(Bindings.createObjectBinding(() -> {
 			if (this.comparator.get() == null)
 				return null;
-			return (o1, o2) -> this.comparator.get().compare(this, o1.getValue(), o2.getValue());
+			// Regression in Mars.1 JDT-Core see https://bugs.eclipse.org/bugs/show_bug.cgi?id=482416
+			Comparator<TreeItem<T>> cp = (o1, o2) -> this.comparator.get().compare(this, o1.getValue(), o2.getValue());
+			return cp;
 		}, this.comparator));
 		parentProperty().addListener((o, oV, nV) -> {
 			if (nV != null && nV instanceof SortableTreeItem && this.comparator.get() == null) {

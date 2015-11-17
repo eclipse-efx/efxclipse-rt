@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.tree;
 
+import java.util.function.Predicate;
+
 import org.eclipse.fx.core.ReflectionUtil;
 
 import javafx.beans.binding.Bindings;
@@ -22,10 +24,10 @@ import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.TreeItem;
 
 /**
- * An extension of {@link TreeItem} with the possibility to filter its children. To enable filtering 
+ * An extension of {@link TreeItem} with the possibility to filter its children. To enable filtering
  * it is necessary to set the {@link TreeItemPredicate}. If a predicate is set, then the tree item
  * will also use this predicate to filter its children (if they are of the type FilterableTreeItem).
- * 
+ *
  * A tree item that has children will not be filtered. The predicate will only be evaluated, if the
  * tree item is a leaf. Since the predicate is also set for the child tree items, the tree item in question
  * can turn into a leaf if all its children are filtered.
@@ -35,14 +37,14 @@ import javafx.scene.control.TreeItem;
 public class FilterableTreeItem<T> extends TreeItem<T> {
 	final private ObservableList<TreeItem<T>> sourceList;
 	final private FilteredList<TreeItem<T>> filteredList;
-	
+
 	private ObjectProperty<TreeItemPredicate<T>> predicate = new SimpleObjectProperty<TreeItemPredicate<T>>();
-	
+
 	/**
-	 * Creates a new {@link TreeItem} with sorted children. To enable sorting it is 
+	 * Creates a new {@link TreeItem} with sorted children. To enable sorting it is
 	 * necessary to set the {@link TreeItemComparator}. If no comparator is set, then
 	 * the tree item will attempt so bind itself to the comparator of its parent.
-	 * 
+	 *
 	 * @param value the value of the {@link TreeItem}
 	 */
 	public FilterableTreeItem(T value) {
@@ -50,7 +52,7 @@ public class FilterableTreeItem<T> extends TreeItem<T> {
 		this.sourceList = FXCollections.observableArrayList();
 		this.filteredList = new FilteredList<>(this.sourceList);
 		this.filteredList.predicateProperty().bind(Bindings.createObjectBinding(() -> {
-			return child -> {
+			Predicate<TreeItem<T>> p =  child -> {
 				// Set the predicate of child items to force filtering
 				if (child instanceof FilterableTreeItem) {
 					FilterableTreeItem<T> filterableChild = (FilterableTreeItem<T>) child;
@@ -65,9 +67,10 @@ public class FilterableTreeItem<T> extends TreeItem<T> {
 				// Otherwise ask the TreeItemPredicate
 				return this.predicate.get().test(this, child.getValue());
 			};
+			return p;
 		}, this.predicate));
 
-		setHiddenFieldChildren(this.filteredList); 
+		setHiddenFieldChildren(this.filteredList);
 	}
 
 	/**
@@ -81,7 +84,7 @@ public class FilterableTreeItem<T> extends TreeItem<T> {
 		Object childrenListener = ReflectionUtil.getFieldValue(this, "childrenListener"); //$NON-NLS-1$
 		list.addListener((ListChangeListener<? super TreeItem<T>>) childrenListener);
 	}
-	
+
 	/**
 	 * Returns the list of children that is backing the filtered list.
 	 * @return underlying list of children
@@ -89,7 +92,7 @@ public class FilterableTreeItem<T> extends TreeItem<T> {
 	public ObservableList<TreeItem<T>> getInternalChildren() {
 		return this.sourceList;
 	}
-	
+
 	/**
 	 * @return the predicate property
 	 */
