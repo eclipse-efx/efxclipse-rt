@@ -20,6 +20,7 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.css.CssMetaData;
 import javafx.css.SimpleStyleableDoubleProperty;
@@ -197,6 +198,34 @@ public abstract class ResizeableFramePane extends StackPane implements Frame {
 	 */
 	public ResizeableFramePane(boolean lighweight) {
 		this.lightweight.set(lighweight);
+		if( ! lighweight ) {
+			{
+				ChangeListener<? super Number> l = (o,ol,ne) -> {
+					if( ne.doubleValue() != -1 ) {
+						if( getScene() != null && getScene().getWindow() != null ) {
+							Window w = getScene().getWindow();
+							getScene().getWindow().setWidth(Util.unsignedConstraintValue(w.getWidth(), getMinWidth(), getMaxWidth()));
+						}
+					}
+				};
+
+				minWidthProperty().addListener(l);
+				maxWidthProperty().addListener(l);
+			}
+			{
+				ChangeListener<? super Number> l = (o,ol,ne) -> {
+					if( ne.doubleValue() != -1 ) {
+						if( getScene() != null && getScene().getWindow() != null ) {
+							Window w = getScene().getWindow();
+							getScene().getWindow().setHeight(Util.unsignedConstraintValue(w.getHeight(), getMinHeight(), getMaxHeight()));
+						}
+					}
+				};
+
+				minHeightProperty().addListener(l);
+				maxHeightProperty().addListener(l);
+			}
+		}
 		Node windowNode = createWindowArea();
 		getChildren().add(windowNode);
 		initResize();

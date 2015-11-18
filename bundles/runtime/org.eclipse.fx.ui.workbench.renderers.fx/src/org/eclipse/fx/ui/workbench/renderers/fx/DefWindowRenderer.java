@@ -43,6 +43,7 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.ISaveHandler.Save;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.controls.stage.Frame;
@@ -876,7 +877,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Inject
 		public void setWidth(@Named(UIEvents.Window.WIDTH) int w) {
 			if (!isPropertyChangeInProgress(UIEvents.Window.WIDTH)) {
-				getWidget().setWidth(w);
+				Stage widget = getWidget();
+				double cw = Util.unsignedConstraintValue(w, this.rootPane.getMinWidth(), this.rootPane.getMaxWidth());
+				widget.setWidth(cw);
 			}
 		}
 
@@ -890,7 +893,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Inject
 		public void setHeight(@Named(UIEvents.Window.HEIGHT) int h) {
 			if (!isPropertyChangeInProgress(UIEvents.Window.HEIGHT)) {
-				getWidget().setHeight(h);
+				Stage widget = getWidget();
+				double ch = Util.unsignedConstraintValue(h, this.rootPane.getMinHeight(), this.rootPane.getMaxHeight());
+				widget.setHeight(ch);
 			}
 		}
 
