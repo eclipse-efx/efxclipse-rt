@@ -16,10 +16,6 @@
                value="org.eclipse.fx.demo.contacts.app/Application.e4xmi">
          </property>
          <property
-               name="preferenceCustomization"
-               value="plugin_customization.ini">
-         </property>
-         <property
                name="cssTheme"
                value="dark">
          </property>
@@ -34,6 +30,10 @@
          <property
                name="startupProgressRect"
                value="5,275,445,15">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
          </property>
       </product>
    </extension>
