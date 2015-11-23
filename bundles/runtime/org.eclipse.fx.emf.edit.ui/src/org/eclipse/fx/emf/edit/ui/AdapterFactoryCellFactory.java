@@ -32,7 +32,10 @@ import javafx.css.StyleableProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Cell;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.CheckBoxTreeCell;
+import javafx.scene.control.cell.CheckBoxTreeTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -299,7 +302,10 @@ public abstract class AdapterFactoryCellFactory {
 			Node graphic = graphicFromObject(labelProvider.getImage(item));
 			if (graphic == null) {
 				resetPropertyState(cell, cell.graphicProperty(), null);
-			} else if (cell instanceof CheckBoxTreeCell<?>) {
+			} else if (cell instanceof CheckBoxTreeCell<?> 
+					|| cell instanceof CheckBoxTreeTableCell<?, ?> 
+					|| cell instanceof CheckBoxListCell<?> 
+					|| cell instanceof CheckBoxTableCell<?, ?>) {
 				Object value = ReflectionUtil.getFieldValue(cell, "checkBox"); //$NON-NLS-1$
 				((CheckBox)value).setGraphic(graphic);
 			} else {
