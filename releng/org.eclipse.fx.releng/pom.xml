@@ -78,6 +78,8 @@
 		<module>../../bundles/code/org.eclipse.fx.text.ui</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration</module>
+		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration.text</module>
+		<module>../../bundles/code/org.eclipse.fx.code.editor.configuration.text.fx</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.e4</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.fx</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.fx.e4</module>
