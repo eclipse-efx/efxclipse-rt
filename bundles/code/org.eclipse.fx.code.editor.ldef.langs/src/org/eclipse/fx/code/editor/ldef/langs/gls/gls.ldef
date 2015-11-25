@@ -1,0 +1,31 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+gls {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __gls_comment
+		rule {
+			single_line __gls_comment "//"
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type whitespace javawhitespace {
+			default __gls_default
+			gls_shdType {
+				keywords [
+					"float", "int", "void", "bool"
+					, "mat2", "mat3", "mat4"
+					, "vec2", "vec3", "vec4", "ivec2", "ivec3", "ivec4", "bvec2", "bvec3", "bvec4"
+					, "sampler1D", "sampler2D", "sampler3D"
+					,  "samplerCube", "sampler1DShadow", "sampler2DShadow"
+				]
+			}
+			gls_shdSemantic {
+				keywords [
+					"attribute"
+					, "in", "out", "inout"
+				]
+			}
+		}
+	}
+}
