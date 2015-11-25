@@ -520,4 +520,46 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.eclipse.fx.code.editor.configuration"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.code.editor.configuration.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.code.editor.configuration.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.code.editor.configuration.text.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.code.editor.configuration.text.fx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.fx.code.editor.configuration.text.fx.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
