@@ -7,7 +7,7 @@ public class PyPartitionScanner extends org.eclipse.jface.text.rules.RuleBasedPa
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__python_string")
-			, '\\'
+			, (char)0
 			, false);
 		pr[1] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "#"
@@ -25,7 +25,7 @@ public class PyPartitionScanner extends org.eclipse.jface.text.rules.RuleBasedPa
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__python_string")
-			, '\\'
+			, (char)0
 			, false);
 		setPredicateRules(pr);
 	}

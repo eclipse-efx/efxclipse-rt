@@ -9,12 +9,19 @@ import org.eclipse.jface.text.IDocument;
 
 import javafx.scene.Node;
 
+@SuppressWarnings("restriction")
 public class FXCompletionProposal implements ICompletionProposal {
 	private final CompletionProposal proposal;
 	private final Supplier<Node> graphicSupplier;
+	private final CharSequence label;
 
 	public FXCompletionProposal(CompletionProposal proposal, Supplier<Node> graphicSupplier) {
+		this(proposal,proposal.getLabel(),graphicSupplier);
+	}
+
+	public FXCompletionProposal(CompletionProposal proposal, CharSequence label, Supplier<Node> graphicSupplier) {
 		this.proposal = proposal;
+		this.label = label;
 		this.graphicSupplier = graphicSupplier;
 	}
 
@@ -25,7 +32,7 @@ public class FXCompletionProposal implements ICompletionProposal {
 
 	@Override
 	public CharSequence getLabel() {
-		return proposal.getLabel();
+		return label;
 	}
 
 	@Override

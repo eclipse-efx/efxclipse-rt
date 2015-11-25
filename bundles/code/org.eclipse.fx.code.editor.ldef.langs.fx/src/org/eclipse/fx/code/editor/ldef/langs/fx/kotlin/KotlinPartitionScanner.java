@@ -25,7 +25,7 @@ public class KotlinPartitionScanner extends org.eclipse.jface.text.rules.RuleBas
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__kotlin_string")
-			, '\\'
+			, (char)0
 			, false);
 		setPredicateRules(pr);
 	}

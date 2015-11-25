@@ -19,13 +19,13 @@ public class GroovyPartitionScanner extends org.eclipse.jface.text.rules.RuleBas
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__groovy_string")
-			, '\\'
+			, (char)0
 			, false);
 		pr[3] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__groovy_character")
-			, '\\'
+			, (char)0
 			, false);
 		setPredicateRules(pr);
 	}

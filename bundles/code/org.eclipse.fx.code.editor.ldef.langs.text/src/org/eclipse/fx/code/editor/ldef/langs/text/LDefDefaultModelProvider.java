@@ -24,20 +24,20 @@ public class LDefDefaultModelProvider implements LDefModelProvider {
 		LDefStandaloneSetup.doSetup();
 		rs = new ResourceSetImpl();
 
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/dart/dart.ldef"),"dart");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/js/js.ldef"),"js");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/java/java.ldef"),"java");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/xml/xml.ldef"),"xml");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/go/go.ldef"),"go");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/rust/rust.ldef"),"rust");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/swift/swift.ldef"),"swift");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/groovy/groovy.ldef"),"groovy");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/python/python.ldef"),"python");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/php/php.ldef"),"php");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/asciidoc/asciidoc.ldef"),"adoc");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/ceylon/ceylon.ldef"),"ceylon");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/kotlin/kotlin.ldef"),"kotlin");
-		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.ldef.langs/org/eclipse/fx/code/editor/ldef/langs/lua/lua.ldef"),"lua");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/dart/dart.ldef"),"dart");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/js/js.ldef"),"js");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/java/java.ldef"),"java");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/xml/xml.ldef"),"xml");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/go/go.ldef"),"go");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/rust/rust.ldef"),"rust");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/swift/swift.ldef"),"swift");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/groovy/groovy.ldef"),"groovy");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/python/python.ldef"),"python");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/php/php.ldef"),"php");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/asciidoc/asciidoc.ldef"),"adoc");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/ceylon/ceylon.ldef"),"ceylon");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/kotlin/kotlin.ldef"),"kotlin");
+		register(URI.createURI("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/lua/lua.ldef"),"lua");
 	}
 
 	private void register(URI uri, String fileSuffix) {

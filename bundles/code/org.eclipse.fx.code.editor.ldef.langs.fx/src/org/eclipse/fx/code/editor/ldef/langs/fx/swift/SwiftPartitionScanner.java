@@ -19,7 +19,7 @@ public class SwiftPartitionScanner extends org.eclipse.jface.text.rules.RuleBase
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__swift_string")
-			, '\\'
+			, (char)0
 			, false);
 		setPredicateRules(pr);
 	}

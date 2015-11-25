@@ -7,13 +7,13 @@ public class PhpPartitionScanner extends org.eclipse.jface.text.rules.RuleBasedP
 			  "\""
 			, "\""
 			, new org.eclipse.jface.text.rules.Token("__php_string")
-			, '\\'
+			, (char)0
 			, false);
 		pr[1] = new org.eclipse.jface.text.rules.SingleLineRule(
 			  "'"
 			, "'"
 			, new org.eclipse.jface.text.rules.Token("__php_string")
-			, '\\'
+			, (char)0
 			, false);
 		pr[2] = new org.eclipse.jface.text.rules.MultiLineRule(
 			  "/*"
