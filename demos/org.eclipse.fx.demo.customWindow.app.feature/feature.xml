@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+	id="org.eclipse.fx.demo.customWindow.app.feature"
+	label="Custom Window Demo Application Feature"
+	version="1.0.0.qualifier"
+	provider-name="${BundleProject_bundleVendor}"
+	>
+		<description url="http://www.efxclipse.org">
+			TODO FILL WITH CONTENT
+		</description>
+
+		<copyright url="http://www.efxclipse.org">
+			TODO FILL WITH CONTENT
+		</copyright>
+
+		<license url="http://www.efxclipse.org">
+			TODO FILL WITH CONTENT
+		</license>
+
+   		<plugin id="org.eclipse.fx.demo.customWindow.app" install-size="0" version="0.0.0" unpack="false" />
+
+
+</feature>

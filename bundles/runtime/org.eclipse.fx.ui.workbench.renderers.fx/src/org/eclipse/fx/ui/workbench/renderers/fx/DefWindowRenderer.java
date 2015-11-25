@@ -120,6 +120,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 	private static final String ID_CLIENT_AREA = "client-area"; //$NON-NLS-1$
 	private static final String ID_MENU_BAR_AREA = "menu-bar-area"; //$NON-NLS-1$
+	private static final String ID_TOP_TRIM_AREA = "top-trim-area"; //$NON-NLS-1$
+	private static final String ID_BOTTOM_TRIM_AREA = "bottom-trim-area"; //$NON-NLS-1$
+	private static final String ID_LEFT_TRIM_AREA = "left-trim-area"; //$NON-NLS-1$
+	private static final String ID_RIGHT_TRIM_AREA = "right-trim-area"; //$NON-NLS-1$
 
 	@Inject
 	@Translation
@@ -485,7 +489,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					} else if (this.rootPane instanceof BorderPane) {
 						Node clientArea = this.rootPane.lookup("#" + ID_CLIENT_AREA); //$NON-NLS-1$
 						if (clientArea != null) {
-							addNodeToCustomParent(ID_CLIENT_AREA, this.trimPane, clientArea);
+							addNodeToCustomParent(java.util.Optional.ofNullable(this.trimPane), clientArea, ID_CLIENT_AREA);
 						} else {
 							((BorderPane) this.rootPane).setCenter(this.trimPane);
 						}
@@ -770,51 +774,52 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Override
 		public void setMainMenu(WLayoutedWidget<MMenu> menuWidget) {
+			Node node = getStaticLayoutNodeOrNull(menuWidget);
 			if (this.decoratorPane == null) {
-				Node n = null;
-				if (menuWidget != null) {
-					n = (Node) menuWidget.getStaticLayoutNode();
-				}
-
 				if (this.rootPane instanceof org.eclipse.fx.ui.controls.stage.Window) {
-					((org.eclipse.fx.ui.controls.stage.Window) this.rootPane).setMenuBar(n);
+					((org.eclipse.fx.ui.controls.stage.Window) this.rootPane).setMenuBar(node);
 				} else {
 					// Check if a custom location for the MenuBar has been provided
 					Node menuBarArea = this.rootPane.lookup("#" + ID_MENU_BAR_AREA); //$NON-NLS-1$
 					if (menuBarArea != null) {
-						addNodeToCustomParent(ID_MENU_BAR_AREA, n, menuBarArea);
+						addNodeToCustomParent(java.util.Optional.ofNullable(node), menuBarArea, ID_MENU_BAR_AREA);
 					} else {
-						((BorderPane) this.rootPane).setTop(n);
+						((BorderPane) this.rootPane).setTop(node);
 					}
 				}
-
 			} else {
-				if (menuWidget == null) {
-					this.decoratorPane.setBottom(null);
-				} else {
-					this.decoratorPane.setBottom((Node) menuWidget.getStaticLayoutNode());
-				}
-
+				this.decoratorPane.setBottom(node);
 			}
 		}
 
-		private void addNodeToCustomParent(String id, Node node, Node customParent) {
+		/*
+		 * Adds or removes a node from a custom parent. The parameter optionalNode signals, whether this
+		 * is a removal, or an addition.
+		 */
+		private void addNodeToCustomParent(java.util.Optional<Node> optionalNode, Node customParent, String id) {
 			if (customParent instanceof BorderPane) {
-				if (id.equals(ID_MENU_BAR_AREA))
-					((BorderPane)customParent).setTop(node);
-				else
-					((BorderPane)customParent).setCenter(node);
+				if (id.equals(ID_MENU_BAR_AREA)) {
+					((BorderPane)customParent).setTop(optionalNode.orElse(null));
+				} else {
+					((BorderPane)customParent).setCenter(optionalNode.orElse(null));
+				}
 			} else if (customParent instanceof Pane) {
-				((Pane)customParent).getChildren().add(0, node);
-				if (customParent instanceof HBox) {
-					HBox.setHgrow(node, Priority.ALWAYS);
-				} else if (customParent instanceof HBox) {
-					VBox.setVgrow(node, Priority.ALWAYS);
-				} else if (customParent instanceof AnchorPane) {
-					AnchorPane.setTopAnchor(node, new Double(0));
-					AnchorPane.setRightAnchor(node, new Double(0));
-					AnchorPane.setBottomAnchor(node, new Double(0));
-					AnchorPane.setLeftAnchor(node, new Double(0));
+				if (optionalNode.isPresent()) {
+					Node node = optionalNode.get();
+					((Pane)customParent).getChildren().add(0, node);
+					
+					if (customParent instanceof HBox) {
+						HBox.setHgrow(node, Priority.ALWAYS);
+					} else if (customParent instanceof HBox) {
+						VBox.setVgrow(node, Priority.ALWAYS);
+					} else if (customParent instanceof AnchorPane) {
+						AnchorPane.setTopAnchor(node, new Double(0));
+						AnchorPane.setRightAnchor(node, new Double(0));
+						AnchorPane.setBottomAnchor(node, new Double(0));
+						AnchorPane.setLeftAnchor(node, new Double(0));
+					}
+				} else {
+					((Pane)customParent).getChildren().remove(0);
 				}
 			} else {
 				this.logger.error("Could not add child to customParent: Expecting BorderPane or Pane"); //$NON-NLS-1$
@@ -1114,74 +1119,73 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 		@Override
 		public void setBottomTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			if (trimBar == null) {
-				if (this.rootPane instanceof TrimmedWindow) {
-					((TrimmedWindow) this.rootPane).setBottomTrim(null);
-				} else {
-					this.trimPane.setBottom(null);
-				}
-
+			Node node = getStaticLayoutNodeOrNull(trimBar);
+			if (this.rootPane instanceof TrimmedWindow) {
+				((TrimmedWindow) this.rootPane).setBottomTrim(node);
 			} else {
-				if (this.rootPane instanceof TrimmedWindow) {
-					((TrimmedWindow) this.rootPane).setBottomTrim((Node) trimBar.getStaticLayoutNode());
+				// Check if a custom location has been provided
+				Node area = this.rootPane.lookup("#" + ID_BOTTOM_TRIM_AREA); //$NON-NLS-1$
+				if (area != null) {
+					addNodeToCustomParent(java.util.Optional.ofNullable(node), area, ID_BOTTOM_TRIM_AREA);
 				} else {
-					this.trimPane.setBottom((Node) trimBar.getStaticLayoutNode());
+					this.trimPane.setBottom(node);
 				}
 			}
-
 		}
 
 		@Override
 		public void setLeftTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			if (trimBar == null) {
-				if (this.rootPane instanceof TrimmedWindow) {
-					((TrimmedWindow) this.rootPane).setLeftTrim(null);
-				} else {
-					this.trimPane.setLeft(null);
-				}
+			Node node = getStaticLayoutNodeOrNull(trimBar);
+			if (this.rootPane instanceof TrimmedWindow) {
+				((TrimmedWindow) this.rootPane).setLeftTrim(node);
 			} else {
-				if (this.rootPane instanceof TrimmedWindow) {
-					((TrimmedWindow) this.rootPane).setLeftTrim((Node) trimBar.getStaticLayoutNode());
+				// Check if a custom location has been provided
+				Node area = this.rootPane.lookup("#" + ID_LEFT_TRIM_AREA); //$NON-NLS-1$
+				if (area != null) {
+					addNodeToCustomParent(java.util.Optional.ofNullable(node), area, ID_LEFT_TRIM_AREA);
 				} else {
-					this.trimPane.setLeft((Node) trimBar.getStaticLayoutNode());
+					this.trimPane.setLeft(node);
 				}
 			}
 		}
 
 		@Override
 		public void setRightTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			if (trimBar == null) {
-				if (this.rootPane instanceof TrimmedWindow) {
-					((TrimmedWindow) this.rootPane).setRightTrim(null);
-				} else {
-					this.trimPane.setRight(null);
-				}
+			Node node = getStaticLayoutNodeOrNull(trimBar);
+			if (this.rootPane instanceof TrimmedWindow) {
+				((TrimmedWindow) this.rootPane).setRightTrim(node);
 			} else {
-				if (this.rootPane instanceof TrimmedWindow) {
-					((TrimmedWindow) this.rootPane).setRightTrim((Node) trimBar.getStaticLayoutNode());
+				// Check if a custom location has been provided
+				Node area = this.rootPane.lookup("#" + ID_RIGHT_TRIM_AREA); //$NON-NLS-1$
+				if (area != null) {
+					addNodeToCustomParent(java.util.Optional.ofNullable(node), area, ID_RIGHT_TRIM_AREA);
 				} else {
-					this.trimPane.setRight((Node) trimBar.getStaticLayoutNode());
+					this.trimPane.setRight(node);
 				}
-
 			}
-
 		}
 
 		@Override
 		public void setTopTrim(WLayoutedWidget<MTrimBar> trimBar) {
-			if (trimBar == null) {
-				if (this.rootPane instanceof TrimmedWindow) {
-					((TrimmedWindow) this.rootPane).setTopTrim(null);
-				} else {
-					this.trimPane.setTop(null);
-				}
+			Node node = getStaticLayoutNodeOrNull(trimBar);
+			if (this.rootPane instanceof TrimmedWindow) {
+				((TrimmedWindow) this.rootPane).setTopTrim(node);
 			} else {
-				if (this.rootPane instanceof TrimmedWindow) {
-					((TrimmedWindow) this.rootPane).setTopTrim((Node) trimBar.getStaticLayoutNode());
+				// Check if a custom location has been provided
+				Node area = this.rootPane.lookup("#" + ID_TOP_TRIM_AREA); //$NON-NLS-1$
+				if (area != null) {
+					addNodeToCustomParent(java.util.Optional.ofNullable(node), area, ID_TOP_TRIM_AREA);
 				} else {
-					this.trimPane.setTop((Node) trimBar.getStaticLayoutNode());
+					this.trimPane.setTop(node);
 				}
 			}
+		}
+
+		private static Node getStaticLayoutNodeOrNull(WLayoutedWidget<?> trimBar) {
+			if (trimBar != null) {
+				return (Node) trimBar.getStaticLayoutNode();
+			}
+			return null;
 		}
 
 		@Override

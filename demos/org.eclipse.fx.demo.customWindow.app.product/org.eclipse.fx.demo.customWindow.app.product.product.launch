@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
+<setAttribute key="additional_plugins"/>
+<booleanAttribute key="append.args" value="true"/>
+<stringAttribute key="application" value="org.eclipse.fx.ui.workbench.fx.application"/>
+<booleanAttribute key="askclear" value="true"/>
+<booleanAttribute key="automaticAdd" value="false"/>
+<booleanAttribute key="automaticValidate" value="true"/>
+<stringAttribute key="bootstrap" value=""/>
+<stringAttribute key="checked" value="[NONE]"/>
+<booleanAttribute key="clearConfig" value="true"/>
+<booleanAttribute key="clearws" value="true"/>
+<booleanAttribute key="clearwslog" value="false"/>
+<stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/org.eclipse.fx.demo.customWindow.app.product.product"/>
+<booleanAttribute key="default" value="false"/>
+<stringAttribute key="featureDefaultLocation" value="workspace"/>
+<stringAttribute key="featurePluginResolution" value="workspace"/>
+<booleanAttribute key="includeOptional" value="true"/>
+<stringAttribute key="location" value="${workspace_loc}/../runtime-org.eclipse.fx.demo.customWindow.app.product"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -nosplash"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value=" -Dorg.osgi.framework.bundle.parent=ext"/>
+<stringAttribute key="pde.version" value="3.3"/>
+<stringAttribute key="product" value="org.eclipse.fx.demo.customWindow.app.product"/>
+<stringAttribute key="productFile" value="/org.eclipse.fx.demo.customWindow.app.product/org.eclipse.fx.demo.customWindow.app.product.product"/>
+<setAttribute key="selected_features">
+<setEntry value="org.eclipse.fx.demo.customWindow.app.feature:default"/>
+<setEntry value="org.eclipse.fx.runtime.e4fx.feature:default"/>
+</setAttribute>
+<stringAttribute key="selected_target_plugins" value="org.eclipse.equinox.common@2:true,org.eclipse.osgi.compatibility.state@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.e4.core.di.annotations@default:default,org.eclipse.core.jobs@default:default,org.eclipse.e4.core.di.extensions@default:default,org.eclipse.e4.core.services@default:default,org.eclipse.equinox.console@default:default,org.eclipse.osgi@-1:true,org.eclipse.e4.core.commands@default:default,org.apache.commons.jxpath@default:default,org.eclipse.core.commands@default:default,javax.annotation.jre@default:default,org.eclipse.e4.ui.di@default:default,org.eclipse.equinox.registry@default:default,com.ibm.icu.base@default:default,org.apache.felix.gogo.command@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.equinox.simpleconfigurator@1:true,org.eclipse.e4.ui.workbench@default:default,org.eclipse.core.resources@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.core.databinding.observable@default:default,org.eclipse.e4.ui.model.workbench@default:default,org.eclipse.osgi.services@default:default,org.apache.felix.gogo.runtime@default:default,org.eclipse.core.runtime@default:true,org.apache.commons.lang@default:default,org.eclipse.core.filesystem@default:default,javax.xml.jre@default:default,org.eclipse.emf.databinding@default:default,org.eclipse.equinox.launcher@default:default,org.apache.felix.gogo.shell@default:default,org.eclipse.equinox.app@default:default,org.eclipse.e4.emf.xpath@default:default,org.apache.commons.logging@default:default,org.eclipse.e4.core.di@default:default,org.eclipse.core.databinding@default:default,org.eclipse.e4.ui.services@default:default,org.eclipse.equinox.util@default:default,org.eclipse.core.databinding.property@default:default,org.eclipse.equinox.ds@2:true,org.eclipse.core.expressions@default:default,com.google.guava@default:default,org.eclipse.equinox.concurrent@default:default,org.eclipse.emf.ecore.change@default:default,javax.inject@default:default,org.eclipse.e4.core.contexts@default:default,org.eclipse.emf.common@default:default,org.eclipse.equinox.event@2:true,"/>
+<stringAttribute key="selected_workspace_plugins" value="org.eclipse.fx.ui.keybindings@default:default,org.eclipse.fx.ui.workbench.services@default:default,org.eclipse.fx.ui.keybindings.e4@default:default,org.eclipse.fx.core.di.context@default:default,org.eclipse.fx.core.di@default:default,org.eclipse.fx.core@default:default,org.eclipse.fx.ui.controls@default:default,org.eclipse.fx.ui.animation@default:default,org.eclipse.fx.ui.panes@default:default,org.eclipse.fx.ui.keybindings.generic@default:default,org.eclipse.fx.osgi.util@default:default,org.eclipse.fx.ui.databinding@default:default,org.eclipse.fx.ui.dialogs@default:default,org.eclipse.fx.ui.workbench.base@default:default,org.eclipse.fx.ui.di@default:default,org.eclipse.fx.ui.services@default:default,org.eclipse.fx.ui.workbench.renderers.fx@default:default,org.eclipse.fx.demo.customWindow.app@default:default,org.eclipse.fx.ui.workbench.fx@default:default,org.eclipse.fx.ui.theme@default:default,org.eclipse.fx.ui.workbench.renderers.base@default:default,org.eclipse.fx.core.fxml@default:default,org.eclipse.fx.core.databinding@default:default,"/>
+<booleanAttribute key="show_selected_only" value="false"/>
+<booleanAttribute key="tracing" value="false"/>
+<booleanAttribute key="useCustomFeatures" value="true"/>
+<booleanAttribute key="useDefaultConfig" value="true"/>
+<booleanAttribute key="useDefaultConfigArea" value="true"/>
+<booleanAttribute key="useProduct" value="true"/>
+<booleanAttribute key="usefeatures" value="false"/>
+</launchConfiguration>
