@@ -9,4 +9,5 @@ Require-Bundle: org.eclipse.emf.edit;bundle-version="2.7.0",
 Export-Package: org.eclipse.fx.emf.edit.ui;version="2.2.0",
  org.eclipse.fx.emf.edit.ui.dnd;version="2.2.0"
 Bundle-Vendor: Eclipse.org
-Import-Package: org.eclipse.fx.ui.controls.tree;version="2.2.0"
+Import-Package: org.eclipse.fx.core;version="2.2.0",
+ org.eclipse.fx.ui.controls.tree;version="2.2.0"

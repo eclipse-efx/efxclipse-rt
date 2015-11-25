@@ -14,17 +14,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.css.StyleableProperty;
-import javafx.scene.Node;
-import javafx.scene.control.Cell;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedImage;
@@ -34,8 +23,25 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITableItemColorProvider;
 import org.eclipse.emf.edit.provider.ITableItemFontProvider;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
+import org.eclipse.fx.core.ReflectionUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.css.StyleableProperty;
+import javafx.scene.Node;
+import javafx.scene.control.Cell;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.CheckBoxTreeCell;
+import javafx.scene.control.cell.CheckBoxTreeTableCell;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 
 /**
  * Base class for the AdapterFactoryCellFactories
@@ -296,6 +302,12 @@ public abstract class AdapterFactoryCellFactory {
 			Node graphic = graphicFromObject(labelProvider.getImage(item));
 			if (graphic == null) {
 				resetPropertyState(cell, cell.graphicProperty(), null);
+			} else if (cell instanceof CheckBoxTreeCell<?> 
+					|| cell instanceof CheckBoxTreeTableCell<?, ?> 
+					|| cell instanceof CheckBoxListCell<?> 
+					|| cell instanceof CheckBoxTableCell<?, ?>) {
+				Object value = ReflectionUtil.getFieldValue(cell, "checkBox"); //$NON-NLS-1$
+				((CheckBox)value).setGraphic(graphic);
 			} else {
 				cell.setGraphic(graphic);
 			}

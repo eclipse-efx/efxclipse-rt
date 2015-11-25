@@ -21,7 +21,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.cell.CheckBoxTreeCell;
 
 /**
  * An extension of {@link TreeItem} with the possibility to filter its children. To enable filtering
@@ -31,10 +33,13 @@ import javafx.scene.control.TreeItem;
  * A tree item that has children will not be filtered. The predicate will only be evaluated, if the
  * tree item is a leaf. Since the predicate is also set for the child tree items, the tree item in question
  * can turn into a leaf if all its children are filtered.
+ * 
+ * This class extends {@link CheckBoxTreeItem} so it can, but does not need to be, used in conjunction
+ * with {@link CheckBoxTreeCell} cells. 
  *
  * @param <T> The type of the {@link #getValue() value} property within {@link TreeItem}.
  */
-public class FilterableTreeItem<T> extends TreeItem<T> {
+public class FilterableTreeItem<T> extends CheckBoxTreeItem<T> {
 	final private ObservableList<TreeItem<T>> sourceList;
 	final private FilteredList<TreeItem<T>> filteredList;
 
