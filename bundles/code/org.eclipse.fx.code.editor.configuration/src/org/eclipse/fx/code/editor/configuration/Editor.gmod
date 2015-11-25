@@ -7,9 +7,10 @@ package org.eclipse.fx.code.editor.configuration {
 		String name;
 		PartitionRule[] ruleList;
 		Token[] tokenList;
+		PartitionWhiteSpace whitespace;
 	}
 	type PartitionRule {
-
+		Check check;
 	}
 	type PartitionRule_MultiLine extends PartitionRule {
 		String startSeq;
@@ -21,13 +22,17 @@ package org.eclipse.fx.code.editor.configuration {
 		String endSeq;
 		String escapedBy;
 	}
+	type PartitionWhiteSpace {
+		Boolean javawhiteSpace;
+		String[] characterList;
+	}
 	type Token {
 		Boolean defaultToken;
 		String name;
 		TokenScanner[] tokenScannerList;
 	}
 	type TokenScanner {
-
+		Check check;
 	}
 	type TokenScanner_CharacterRule extends TokenScanner {
 		String[] characterList;
@@ -44,5 +49,22 @@ package org.eclipse.fx.code.editor.configuration {
 		String startSeq;
 		String endSeq;
 		String escapedBy;
+	}
+	type TokenScanner_MultiLineRule extends TokenScanner {
+		String startSeq;
+		String endSeq;
+		String escapedBy;
+	}
+	type Check {
+
+	}
+	type Equals extends Check {
+		Int value;
+	}
+	type Range extends Check {
+		Int min = 1;
+		Boolean minIncl;
+		Int max = 1;
+		Boolean maxIncl;
 	}
 }
