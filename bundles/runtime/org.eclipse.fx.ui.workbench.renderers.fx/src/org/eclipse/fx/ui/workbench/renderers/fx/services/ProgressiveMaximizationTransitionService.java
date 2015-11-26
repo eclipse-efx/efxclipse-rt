@@ -52,23 +52,23 @@ public class ProgressiveMaximizationTransitionService implements MaximizationTra
 		double duration = 300;
 		Interpolator interpolator = Interpolator.EASE_BOTH;
 
-		KeyValue kvOpacity = new KeyValue(greyPane.opacityProperty(), 1.0, interpolator);
+		KeyValue kvOpacity = new KeyValue(greyPane.opacityProperty(), Double.valueOf(1.0), interpolator);
 		KeyFrame kfOpacity = new KeyFrame(Duration.millis(duration), kvOpacity);
 		timeline.getKeyFrames().add(kfOpacity);
 
-		KeyValue kv = new KeyValue(node.translateXProperty(), 0, interpolator);
+		KeyValue kv = new KeyValue(node.translateXProperty(), Double.valueOf(0.0), interpolator);
 		KeyFrame kf = new KeyFrame(Duration.millis(duration), kv);
 		timeline.getKeyFrames().add(kf);
 
-		KeyValue kvY = new KeyValue(node.translateYProperty(), 0, interpolator);
+		KeyValue kvY = new KeyValue(node.translateYProperty(), Double.valueOf(0.0), interpolator);
 		KeyFrame kfY = new KeyFrame(Duration.millis(duration), kvY);
 		timeline.getKeyFrames().add(kfY);
 
-		KeyValue kvYWidth = new KeyValue(node.prefWidthProperty(), commonRoot.getWidth(), interpolator);
+		KeyValue kvYWidth = new KeyValue(node.prefWidthProperty(), Double.valueOf(commonRoot.getWidth()), interpolator);
 		KeyFrame kfYWidth = new KeyFrame(Duration.millis(duration), kvYWidth);
 		timeline.getKeyFrames().add(kfYWidth);
 
-		KeyValue kvYHeight = new KeyValue(node.prefHeightProperty(), commonRoot.getHeight(), interpolator);
+		KeyValue kvYHeight = new KeyValue(node.prefHeightProperty(), Double.valueOf(commonRoot.getHeight()), interpolator);
 		KeyFrame kfYHeight = new KeyFrame(Duration.millis(duration), kvYHeight);
 		timeline.getKeyFrames().add(kfYHeight);
 
@@ -101,22 +101,22 @@ public class ProgressiveMaximizationTransitionService implements MaximizationTra
 		double duration = 300;
 		Interpolator interpolator = Interpolator.EASE_BOTH;
 
-		KeyValue kvOpacity = new KeyValue(greyPane.opacityProperty(), 0.0, interpolator);
+		KeyValue kvOpacity = new KeyValue(greyPane.opacityProperty(), Double.valueOf(0.0), interpolator);
 		final KeyFrame kfOpacity = new KeyFrame(Duration.millis(duration), kvOpacity);
 		timeline.getKeyFrames().add(kfOpacity);
 
-		KeyValue kv = new KeyValue(node.translateXProperty(), bounds.getMinX(), interpolator);
+		KeyValue kv = new KeyValue(node.translateXProperty(), Double.valueOf(bounds.getMinX()), interpolator);
 		KeyFrame kf = new KeyFrame(Duration.millis(duration), kv);
 		timeline.getKeyFrames().add(kf);
-		KeyValue kvY = new KeyValue(node.translateYProperty(), bounds.getMinY(), interpolator);
+		KeyValue kvY = new KeyValue(node.translateYProperty(), Double.valueOf(bounds.getMinY()), interpolator);
 		KeyFrame kfY = new KeyFrame(Duration.millis(duration), kvY);
 		timeline.getKeyFrames().add(kfY);
 
-		KeyValue kvYWidth = new KeyValue(node.prefWidthProperty(), bounds.getWidth(), interpolator);
+		KeyValue kvYWidth = new KeyValue(node.prefWidthProperty(), Double.valueOf(bounds.getWidth()), interpolator);
 		KeyFrame kfYWidth = new KeyFrame(Duration.millis(duration), kvYWidth);
 		timeline.getKeyFrames().add(kfYWidth);
 
-		KeyValue kvYHeight = new KeyValue(node.prefHeightProperty(), bounds.getHeight(), interpolator);
+		KeyValue kvYHeight = new KeyValue(node.prefHeightProperty(), Double.valueOf(bounds.getHeight()), interpolator);
 		KeyFrame kfYHeight = new KeyFrame(Duration.millis(duration), kvYHeight);
 		timeline.getKeyFrames().add(kfYHeight);
 
