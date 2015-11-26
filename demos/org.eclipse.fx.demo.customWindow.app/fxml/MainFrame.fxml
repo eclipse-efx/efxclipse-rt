@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="420.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.eclipse.fx.demo.customWindow.app.controller.MainFrameController">
+	<top>
+		<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+			<children>
+				<HBox id="top-trim-area" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+				<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+					<children>
+						<HBox id="menu-bar-area" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+						<TextField fx:id="searchField" promptText="Search..." />
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+	</top>
+	<right>
+		<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+			<children>
+				<VBox minWidth="10.0" prefWidth="20.0" maxWidth="20.0" maxHeight="1.7976931348623157E308"
+				style="-fx-background-color: #1f0899;">
+					<children>
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<VBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+					</children>
+				</VBox>
+				<HBox id="right-trim-area" minWidth="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+			</children>
+		</HBox>
+	</right>
+	<left>
+		<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+			<children>
+				<HBox id="left-trim-area" minWidth="16.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+				<VBox minWidth="10.0" prefWidth="20.0" maxWidth="20.0" maxHeight="1.7976931348623157E308" 
+				style="-fx-background-color: #1f0899;">
+					<children>
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<VBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+					</children>
+				</VBox>
+			</children>
+		</HBox>
+	</left>
+	<bottom>
+		<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+			<children>
+				<HBox minHeight="10.0" prefHeight="20.0" maxHeight="20.0" maxWidth="1.7976931348623157E308"
+				style="-fx-background-color: #1f0899;">
+					<children>
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+						<Circle fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+					</children>
+				</HBox>
+				<HBox id="bottom-trim-area" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="16.0" />
+			</children>
+		</VBox>
+	</bottom>
+	<center>
+		<BorderPane id="client-area" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+	</center>
+</BorderPane>

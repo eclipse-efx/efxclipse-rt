@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Custom Window Demo" uid="org.eclipse.fx.demo.customWindow.app.product" id="org.eclipse.fx.demo.customWindow.app.product" application="org.eclipse.fx.ui.workbench.fx.application" version="1.0.0" useFeatures="true" includeLaunchers="false">
+
+	<configIni use="default">
+	</configIni>
+	<launcherArgs>
+		<programArgs>-nosplash</programArgs>
+		<vmArgs>-Dorg.osgi.framework.bundle.parent=ext</vmArgs>
+	</launcherArgs>
+	
+	<windowImages/>
+	
+	<features>
+		<feature id="org.eclipse.fx.demo.customWindow.app.feature" />
+		<feature id="org.eclipse.fx.runtime.e4fx.feature" />
+	</features>
+	<configurations>
+		<plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+		<plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+		<plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="2" />
+		<plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+		<plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+		<plugin id="org.eclipse.osgi" autoStart="true" startLevel="-1" />
+	</configurations>
+</product>
+   

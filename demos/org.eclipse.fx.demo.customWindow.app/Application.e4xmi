@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_zBNCsZNxEeWDyN02lshAkQ" elementId="org.eclipse.e4.application" bindingContexts="_zBNCsJNxEeWDyN02lshAkQ">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="__PF74JNxEeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.trimmedwindow.customwindowdemo" label="Custom Window Demo" width="600" height="420">
+    <persistedState key="efx.window.root.fxml" value="platform:/plugin/org.eclipse.fx.demo.customWindow.app/fxml/MainFrame.fxml"/>
+    <persistedState key="efx.window.stagestyle" value="DECORATED"/>
+    <children xsi:type="basic:PartStack" xmi:id="_YoMVUJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.partstack.0">
+      <children xsi:type="basic:Part" xmi:id="_XOU_YJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.part.loremipsum" contributionURI="bundleclass://org.eclipse.fx.demo.customWindow.app/org.eclipse.fx.demo.customWindow.app.part.Part1" label="Lorem Ipsum"/>
+    </children>
+    <mainMenu xmi:id="_GUXb0JN6EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.menu.0">
+      <children xsi:type="menu:Menu" xmi:id="_GwPfgJN6EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.menu.file" label="File">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_Hnq2wJN6EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledmenuitem.hello" label="Hello" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_k2wT8JQmEeWYybeGVFjzJQ" elementId="org.eclipse.fx.demo.customwindow.app.menu.edit" label="Edit">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_mEc2IJQmEeWYybeGVFjzJQ" elementId="org.eclipse.fx.demo.customwindow.app.handledmenuitem.hello" label="Hello" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_mhewYJQmEeWYybeGVFjzJQ" elementId="org.eclipse.fx.demo.customwindow.app.menu.navigate" label="Navigate">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_n2CvkJQmEeWYybeGVFjzJQ" elementId="org.eclipse.fx.demo.customwindow.app.handledmenuitem.hello" label="Hello" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+      </children>
+    </mainMenu>
+    <trimBars xmi:id="_A3_PgJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.trimbar.top">
+      <children xsi:type="menu:ToolBar" xmi:id="_D7YIAJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.toolbar.top">
+        <tags>fillspace</tags>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_EQ9WcJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.top1" label="Remove right trim" command="_-jT5EJQjEeWYybeGVFjzJQ">
+          <persistedState key="trim.side" value="right"/>
+        </children>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_GedIwJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.top2" label="Remove bottom trim" command="_whmKcJQmEeWYybeGVFjzJQ">
+          <persistedState key="trim.side" value="bottom"/>
+        </children>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_GkPnsJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.top3" label="Remove left rim" command="_uuspcJQmEeWYybeGVFjzJQ">
+          <persistedState key="trim.side" value="left"/>
+        </children>
+      </children>
+    </trimBars>
+    <trimBars xmi:id="_BT028JN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.trimbar.right" side="Right">
+      <children xsi:type="menu:ToolBar" xmi:id="_I-mKQJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.toolbar.right">
+        <tags>fillspace</tags>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_KEeNMJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.right1" label="" iconURI="platform:/plugin/org.eclipse.fx.ui.controls/bin/org/eclipse/fx/ui/controls/dialog/icons/dialog-information.png" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_L5aVkJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.right2" label="" iconURI="platform:/plugin/org.eclipse.fx.ui.controls/bin/org/eclipse/fx/ui/controls/dialog/icons/dialog-warning.png" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_L9JmEJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.right3" label="" iconURI="platform:/plugin/org.eclipse.fx.ui.controls/bin/org/eclipse/fx/ui/controls/dialog/icons/dialog-error.png" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+      </children>
+    </trimBars>
+    <trimBars xmi:id="_Bff7cJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.trimbar.left" side="Left">
+      <children xsi:type="menu:ToolBar" xmi:id="_JtScQJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.toolbar.left">
+        <tags>fillspace</tags>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_No8ZgJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.left1" label="" iconURI="platform:/plugin/org.eclipse.fx.ui.controls/org/eclipse/fx/ui/controls/filesystem/skin/file_16.png" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_P9LF8JN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.left2" label="" iconURI="platform:/plugin/org.eclipse.fx.ui.controls/org/eclipse/fx/ui/controls/filesystem/skin/fldr_16.png" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+      </children>
+    </trimBars>
+    <trimBars xmi:id="_BrZpcJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.trimbar.bottom" side="Bottom">
+      <children xsi:type="menu:ToolBar" xmi:id="_JWP1QJN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.toolbar.bottom">
+        <tags>fillspace</tags>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_SJ2Y4JN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.buttom1" label="Hello 1" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_UW--0JN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.buttom2" label="Hello 2" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_UY0K0JN2EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handledtoolitem.buttom3" label="Hello 3" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+      </children>
+    </trimBars>
+  </children>
+  <handlers xmi:id="_yebI8JN1EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.handler.0" contributionURI="bundleclass://org.eclipse.fx.demo.customWindow.app/org.eclipse.fx.demo.customWindow.app.handler.HelloHandler" command="_xTMr8JN1EeWDyN02lshAkQ"/>
+  <handlers xmi:id="_CcjbgJQkEeWYybeGVFjzJQ" elementId="org.eclipse.fx.demo.customwindow.app.handler.removerighttrim" contributionURI="bundleclass://org.eclipse.fx.demo.customWindow.app/org.eclipse.fx.demo.customWindow.app.handler.ToggleTrimHandler" command="_-jT5EJQjEeWYybeGVFjzJQ"/>
+  <handlers xmi:id="_koMeEJQnEeWYybeGVFjzJQ" elementId="org.eclipse.fx.demo.customwindow.app.handler.removebottomtrim" contributionURI="bundleclass://org.eclipse.fx.demo.customWindow.app/org.eclipse.fx.demo.customWindow.app.handler.ToggleTrimHandler" command="_whmKcJQmEeWYybeGVFjzJQ"/>
+  <handlers xmi:id="_sfQ9cJQmEeWYybeGVFjzJQ" elementId="org.eclipse.fx.demo.customwindow.app.handler.removelefttrim" contributionURI="bundleclass://org.eclipse.fx.demo.customWindow.app/org.eclipse.fx.demo.customWindow.app.handler.ToggleTrimHandler" command="_uuspcJQmEeWYybeGVFjzJQ"/>
+  <rootContext xmi:id="_zBNCsJNxEeWDyN02lshAkQ" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_zBNCspNxEeWDyN02lshAkQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_zBNCs5NxEeWDyN02lshAkQ" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <commands xmi:id="_xTMr8JN1EeWDyN02lshAkQ" elementId="org.eclipse.fx.demo.customwindow.app.command.hello" commandName="Hello"/>
+  <commands xmi:id="_-jT5EJQjEeWYybeGVFjzJQ" elementId="org.eclipse.fx.demo.customwindow.app.command.removerighttrim" commandName="Remove Right Trim"/>
+  <commands xmi:id="_whmKcJQmEeWYybeGVFjzJQ" elementId="org.eclipse.fx.demo.customwindow.app.command.removebottomtrim" commandName="Remove Bottom Trim"/>
+  <commands xmi:id="_uuspcJQmEeWYybeGVFjzJQ" elementId="org.eclipse.fx.demo.customwindow.app.command.removelefttrim" commandName="Remove Left Trim"/>
+  <addons xmi:id="_zBNCtJNxEeWDyN02lshAkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_zBNCtZNxEeWDyN02lshAkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_zBNCtpNxEeWDyN02lshAkQ" elementId="org.eclipse.fx.ui.keybindings.e4.service" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingServiceAddon"/>
+  <addons xmi:id="_zBNCt5NxEeWDyN02lshAkQ" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_zBNCuJNxEeWDyN02lshAkQ" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_zBNpwJNxEeWDyN02lshAkQ" elementId="org.eclipse.fx.ui.keybindings.e4.model" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingProcessingAddon"/>
+  <addons xmi:id="_zBNpwZNxEeWDyN02lshAkQ" elementId="org.eclipse.e4.ui.workbench.addons.HandlerProcessingAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+</application:Application>
