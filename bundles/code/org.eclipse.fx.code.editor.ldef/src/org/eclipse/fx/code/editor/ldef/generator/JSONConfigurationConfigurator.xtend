@@ -28,6 +28,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule
 import org.eclipse.fx.code.editor.ldef.lDef.Check
 import org.eclipse.fx.code.editor.ldef.lDef.Equals
 import org.eclipse.fx.code.editor.ldef.lDef.Range
+import java.util.Collections
 
 @SuppressWarnings("restriction")
 class JSONConfigurationConfigurator {
@@ -73,12 +74,14 @@ class JSONConfigurationConfigurator {
 					.endSeq(prl.endSeq)
 					.escapedBy(prl.escapeSeq)
 					.build
+			} else {
+				throw new IllegalStateException("Unknown rule '"+prl+"'")
 			}
 		].toList
 	}
 
 	def tokenList(EditorGModel m, LanguageDef model, org.eclipse.fx.code.editor.ldef.lDef.Partition pr) {
-		return model.lexicalHighlighting.list.filter(typeof(LexicalPartitionHighlighting_Rule)).filter[ lp | lp.partition == pr].map[ lp |
+		val rv = model.lexicalHighlighting.list.filter(typeof(LexicalPartitionHighlighting_Rule)).filter[ lp | lp.partition == pr].map[ lp |
 			lp.tokenList.map[ t |
 				m.TokenBuilder
 					.name(t.name)
@@ -87,6 +90,12 @@ class JSONConfigurationConfigurator {
 					.build
 			]
 		].head
+
+		if( rv == null ) {
+			return Collections.emptyList
+		} else {
+			return rv;
+		}
 	}
 
 	def tokenScannerList(EditorGModel m, org.eclipse.fx.code.editor.ldef.lDef.Token t) {
@@ -154,7 +163,7 @@ class JSONConfigurationConfigurator {
 		LDefStandaloneSetup.doSetup();
 
 		val rs = new ResourceSetImpl;
-		val r = rs.getResource(URI.createURI("file:/Users/tomschindl/git/efxclipse/bundles/code/org.eclipse.fx.code.editor.ldef.langs/src/org/eclipse/fx/code/editor/ldef/langs/dart/dart.ldef"),true);
+		val r = rs.getResource(URI.createURI("file:/Users/tomschindl/git/efxclipse/bundles/code/org.eclipse.fx.code.editor.langs/src/org/eclipse/fx/code/editor/ldef/langs/asciidoc/asciidoc.ldef"),true);
 		System.err.println(new JSONConfigurationConfigurator().toJSONString((r.contents.head as Root).languageDefinition));
 	}
 
