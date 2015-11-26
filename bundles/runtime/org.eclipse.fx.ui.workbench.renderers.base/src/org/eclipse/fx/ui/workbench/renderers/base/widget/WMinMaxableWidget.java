@@ -20,34 +20,27 @@ public interface WMinMaxableWidget {
 	 * The current state
 	 */
 	public enum WMinMaxState {
-		/**
-		 * no min/max
-		 */
-		NONE,
-		/**
-		 * Minimized
-		 */
-		MINIMIZED,
+		TOGGLE,
 		/**
 		 * Maximized
 		 */
-		MAXIMIZED,
+		MAXIMIZE,
 		/**
 		 * Restored
 		 */
-		RESTORED
+		RESTORE
 	}
 
 	/**
 	 * Set callback to be invoked when the state changes
-	 * 
+	 *
 	 * @param minMaxCallback
 	 *            the callback
 	 */
 	public void setMinMaxCallback(@NonNull WCallback<WMinMaxState, Void> minMaxCallback);
 
 	/**
-	 * 
+	 *
 	 * @param state
 	 */
 	public void setMinMaxState(@NonNull WMinMaxState state);

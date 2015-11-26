@@ -10,142 +10,114 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base.addons;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.model.application.ui.MContext;
+import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
-import org.eclipse.e4.ui.model.application.ui.advanced.MArea;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPlaceholder;
-import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.fx.ui.workbench.renderers.base.services.MaximizationService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMinMaxableWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMinMaxableWidget.WMinMaxState;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
+import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
-import org.osgi.service.event.EventHandler;
 
 /**
  * Addon for a MinMax support
  */
 public class MinMaxAddon {
-	@Inject
-	IEventBroker eventBroker;
-
 	static String MINIMIZED = IPresentationEngine.MINIMIZED;
 	static String MAXIMIZED = IPresentationEngine.MAXIMIZED;
 
-	private EventHandler widgetListener = new EventHandler() {
+	private final EModelService modelService;
 
-		@Override
-		public void handleEvent(Event event) {
-			final MUIElement changedElement = (MUIElement) event.getProperty(EventTags.ELEMENT);
+	@Inject
+	MinMaxAddon(IEventBroker eventBroker, EModelService modelService) {
+		this.modelService = modelService;
+		eventBroker.subscribe(UIEvents.UIElement.TOPIC_WIDGET, this::handleWidget);
+		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, this::handleChildrenChanged);
+		eventBroker.subscribe(UIEvents.UIElement.TOPIC_TOBERENDERED, this::handleVisibleChildrenChanged);
+		eventBroker.subscribe(UIEvents.UIElement.TOPIC_VISIBLE, this::handleVisibleChildrenChanged);
+	}
 
-			if (!(changedElement instanceof MPartStack) && !(changedElement instanceof MArea))
-				return;
-
-			WMinMaxableWidget widget = getWidget(changedElement);
-
-			if (widget == null) {
-				return;
+	void handleChildrenChanged(Event event) {
+		final MUIElement changedElement = (MUIElement) event.getProperty(EventTags.ELEMENT);
+		if( changedElement instanceof MElementContainer<?> ) {
+			// TODO we also need to check for visiblity!!!!
+			if( this.modelService.toBeRenderedCount((MElementContainer<?>) changedElement) == 0 ) {
+				handleMinMaxCallback(WMinMaxState.RESTORE, changedElement);
 			}
+		}
+	}
 
-			adjustState(changedElement, widget);
-			widget.setMinMaxCallback(new WCallback<WMinMaxableWidget.WMinMaxState, Void>() {
-
-				@Override
-				public Void call(WMinMaxState param) {
-					return null;
-				}
-			});
+	void handleVisibleChildrenChanged(Event event) {
+		final MUIElement changedElement = (MUIElement) event.getProperty(EventTags.ELEMENT);
+		if( ! changedElement.isToBeRendered() || ! changedElement.isVisible() ) {
+			handleMinMaxCallback(WMinMaxState.RESTORE, changedElement);
 		}
 
-		private void adjustState(MUIElement changedElement, WMinMaxableWidget widget) {
-			if (changedElement.getTags().contains(MAXIMIZED)) {
-				widget.setMinMaxState(WMinMaxState.MAXIMIZED);
-			} else if (changedElement.getTags().contains(MINIMIZED)) {
-				widget.setMinMaxState(WMinMaxState.MINIMIZED);
+		if( changedElement.getParent() != null ) {
+			// TODO we also need to check for visiblity!!!!
+			if( this.modelService.toBeRenderedCount((MElementContainer<?>) changedElement.getParent()) == 0 ) {
+				handleMinMaxCallback(WMinMaxState.RESTORE, changedElement.getParent());
+			}
+		}
+	}
+
+	void handleWidget(Event event) {
+		final MUIElement changedElement = (MUIElement) event.getProperty(EventTags.ELEMENT);
+		if( changedElement != null ) {
+			WMinMaxableWidget widget = getTargetWidget(changedElement);
+
+			if( widget != null ) {
+				widget.setMinMaxCallback( s -> handleMinMaxCallback(s, changedElement) );
+			}
+		}
+	}
+
+	Void handleMinMaxCallback( WMinMaxState state, @NonNull MUIElement changedElement ) {
+		IEclipseContext context;
+		if( changedElement instanceof MContext ) {
+			context = ((MContext)changedElement).getContext();
+		} else {
+			context = this.modelService.getContainingContext(changedElement);
+		}
+
+		MaximizationService maximizationService = context.get(MaximizationService.class);
+		if( state == WMinMaxState.TOGGLE ) {
+			if( maximizationService.isMaximized(changedElement) ) {
+				maximizationService.restore();
 			} else {
-				widget.setMinMaxState(WMinMaxState.RESTORED);
+				maximizationService.maximize(changedElement);
+			}
+		} else if( state == WMinMaxState.MAXIMIZE ) {
+			if( ! maximizationService.isMaximized(changedElement) ) {
+				maximizationService.maximize(changedElement);
+			}
+		} else {
+			if( maximizationService.isMaximized(changedElement) ) {
+				maximizationService.restore();
 			}
 		}
 
-		// private void
-		// adjustState(MUIElement
-		// element) {
-		// if (!(element instanceof
-		// MPartStack) && !(element
-		// instanceof MPlaceholder))
-		// return;
-		//
-		// WMinMaxableWidget ctf =
-		// getWidget(element);
-		// if (ctf == null)
-		// return;
-		//
-		// if (element instanceof
-		// MPlaceholder) {
-		// setCTFButtons(ctf, element,
-		// false);
-		// } else {
-		// MArea area =
-		// getAreaFor((MPartStack)
-		// element);
-		// if (area == null) {
-		// setCTFButtons(ctf, element,
-		// false);
-		// }
-		// }
-		// }
-		//
-		// private void
-		// setCTFButtons(WMinMaxableWidget
-		// ctf, MUIElement stateElement,
-		// boolean hideButtons) {
-		// if (hideButtons) {
-		// ctf.setMinMaxState();
-		// ctf.setMinimizeVisible(false);
-		// ctf.setMaximizeVisible(false);
-		// } else {
-		// if
-		// (stateElement.getTags().contains(MINIMIZED))
-		// {
-		// ctf.setMinimizeVisible(false);
-		// ctf.setMaximizeVisible(true);
-		// ctf.setMaximized(true);
-		// } else if
-		// (stateElement.getTags().contains(MAXIMIZED))
-		// {
-		// ctf.setMinimizeVisible(true);
-		// ctf.setMaximizeVisible(true);
-		// ctf.setMaximized(true);
-		// } else {
-		// ctf.setMinimizeVisible(true);
-		// ctf.setMaximizeVisible(true);
-		// ctf.setMinimized(false);
-		// ctf.setMaximized(false);
-		// ctf.layout();
-		// }
-		// }
-		// }
+		return null;
+	}
 
-		private WMinMaxableWidget getWidget(MUIElement changedElement) {
-			if (changedElement instanceof MPlaceholder) {
-				return getWidget(((MPlaceholder) changedElement).getRef());
-			}
-
-			if (changedElement.getWidget() instanceof WMinMaxableWidget) {
-				return (WMinMaxableWidget) changedElement.getWidget();
-			}
-			return null;
+	private WMinMaxableWidget getTargetWidget(MUIElement changedElement) {
+		if (changedElement instanceof MPlaceholder) {
+			return getTargetWidget(((MPlaceholder) changedElement).getRef());
 		}
 
-	};
-
-	@PostConstruct
-	void hookListeners() {
-		this.eventBroker.subscribe(UIEvents.UIElement.TOPIC_WIDGET, this.widgetListener);
+		if (changedElement.getWidget() instanceof WMinMaxableWidget) {
+			return (WMinMaxableWidget) changedElement.getWidget();
+		}
+		return null;
 	}
 }

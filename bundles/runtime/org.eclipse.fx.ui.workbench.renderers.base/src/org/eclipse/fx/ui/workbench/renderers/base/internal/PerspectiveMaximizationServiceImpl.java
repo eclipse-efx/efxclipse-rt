@@ -8,7 +8,7 @@
  * Contributors:
  *     Sun Volland<sun.volland@free.fr>
  *******************************************************************************/
-package org.eclipse.fx.ui.workbench.renderers.fx.internal;
+package org.eclipse.fx.ui.workbench.renderers.base.internal;
 
 import javax.inject.Inject;
 

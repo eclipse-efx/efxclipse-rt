@@ -45,6 +45,8 @@ import com.google.common.base.Strings;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -78,7 +80,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		WCallback<WStackItem<Object, Node>, Void> keySelectedItemCallback;
 		WCallback<@NonNull DragData, @NonNull Boolean> dragStartCallback;
 
-		// private WCallback<WMinMaxState, Void> minMaxCallback;
+		private WCallback<WMinMaxState, Void> minMaxCallback;
 		// private MinMaxGroup minMaxGroup;
 		boolean inKeyTraversal;
 
@@ -88,7 +90,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@Inject
 		@NonNull
 		DnDFeedbackService dndFeedback;
-		
+
 		@Inject
 		@Optional
 		@Nullable
@@ -97,7 +99,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@NonNull
 		@Inject
 		ModelService modelService;
-		
+
 		@NonNull
 		private final MPartStack domainElement;
 
@@ -146,7 +148,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		@Override
 		public void setMinMaxCallback(WCallback<WMinMaxState, Void> minMaxCallback) {
-			// this.minMaxCallback = minMaxCallback;
+			this.minMaxCallback = minMaxCallback;
 		}
 
 		@Override
@@ -169,7 +171,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			// }
 		}
 
-		@Override 
+		@Override
 		protected TabPane createWidget() {
 			DnDSupport dnd = new DnDSupport(
 					(param) -> this.dragStartCallback,
@@ -183,6 +185,14 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				s.setFeedbackConsumer(dnd::handleFeedback);
 				s.setDragFinishedConsumer(dnd::handleFinished);
 				s.setClipboardDataFunction(dnd::clipboardDataFunction);
+			});
+
+			p.setOnMouseClicked( e -> {
+				if( e.getClickCount() > 1 ) {
+					if( this.minMaxCallback != null ) {
+						this.minMaxCallback.call(WMinMaxState.TOGGLE);
+					}
+				}
 			});
 
 			if (this.domainElement.getTags().contains(WStack.TAG_TAB_CLOSING_POLICY_ALL_TABS)) {
