@@ -34,6 +34,7 @@ import org.eclipse.e4.core.services.nls.Translation;
 import org.eclipse.e4.core.services.translation.TranslationService;
 import org.eclipse.e4.ui.internal.workbench.E4Workbench;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
@@ -63,6 +64,7 @@ import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.eclipse.fx.ui.workbench.fx.key.KeyBindingDispatcher;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseWindowRenderer;
+import org.eclipse.fx.ui.workbench.renderers.base.services.MaximizationTransitionService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.WindowTransitionService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.WindowTransitionService.AnimationDelegate;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
@@ -310,6 +312,23 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private StackPane overlayContainer;
 
 		/**
+		 * Pane used to mask background while maximized content is displayed
+		 */
+		private FillLayoutPane greyPane;
+		/**
+		 * Pane hosting the maximized component
+		 */
+		private FillLayoutPane maximizationContainer;
+		/**
+		 * Reference to the currently maximized widget
+		 */
+		private WLayoutedWidget<? extends MUIElement> maximizedWidget;
+
+		@Inject
+		@Optional
+		private MaximizationTransitionService<Pane, Region> maximizationTransition;
+
+		/**
 		 * Create a new window
 		 *
 		 * @param mWindow
@@ -479,7 +498,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			this.trimPane.getStyleClass().add(CSS_TRIM_CONTAINER);
 			this.contentPane = new FillLayoutPane();
 			this.contentPane.getStyleClass().add(CSS_CONTENT_CONTAINER);
-			this.trimPane.setCenter(this.contentPane);
+			this.trimPane.setCenter(new StackPane(this.contentPane));
 
 			if (this.rootFXML != null) {
 				this.rootPane = createRootContainer(stage);
@@ -807,7 +826,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				if (optionalNode.isPresent()) {
 					Node node = optionalNode.get();
 					((Pane)customParent).getChildren().add(0, node);
-					
+
 					if (customParent instanceof HBox) {
 						HBox.setHgrow(node, Priority.ALWAYS);
 					} else if (customParent instanceof HBox) {
@@ -1201,6 +1220,74 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		@Override
 		public void addChild(int idx, WLayoutedWidget<MWindowElement> widget) {
 			this.contentPane.getChildren().add(idx, (Node) widget.getStaticLayoutNode());
+		}
+
+		@Override
+		public void setMaximizedContent(WLayoutedWidget<? extends MUIElement> widget) {
+			if (this.maximizedWidget != null) {
+				return;
+			}
+
+			final WLayoutedWidget<? extends MUIElement> childWidget = widget;
+
+			Pane staticLayoutNode = (Pane) this.trimPane.getCenter();
+			this.maximizedWidget = widget;
+
+			final FillLayoutPane maximizationContainer = new FillLayoutPane();
+			final FillLayoutPane greyPane = new FillLayoutPane();
+			greyPane.getStyleClass().add("maximization-container"); //$NON-NLS-1$
+			greyPane.setOpacity(0.0);
+
+			int size = staticLayoutNode.getChildren().size();
+			if (this.overlayContainer == staticLayoutNode.getChildren().get(size - 1)) {
+				// do not cover overlay container
+				staticLayoutNode.getChildren().add(size - 1, greyPane);
+				staticLayoutNode.getChildren().add(size, maximizationContainer);
+			} else {
+				staticLayoutNode.getChildren().add(greyPane);
+				staticLayoutNode.getChildren().add(maximizationContainer);
+			}
+
+			Runnable finisher = () -> {
+				maximizationContainer.getChildren().clear();
+				maximizationContainer.getChildren().add((Region) childWidget.getWidgetNode());
+				greyPane.setOpacity(1.0);
+				this.maximizationContainer = maximizationContainer;
+				this.greyPane = greyPane;
+			};
+
+			if(this.maximizationTransition != null) {
+				this.maximizationTransition.maximize(staticLayoutNode, greyPane, maximizationContainer, (Region) childWidget.getWidgetNode(), finisher);
+			} else {
+				finisher.run();
+			}
+		}
+
+		@Override
+		public void removeMaximizedContent() {
+			if (this.maximizationContainer != null) {
+				Pane staticLayoutNode = (Pane) this.trimPane.getCenter();
+
+				Pane childStaticNode = (Pane) this.maximizedWidget.getStaticLayoutNode();
+				Region childPane = (Region) this.maximizedWidget.getWidgetNode();
+
+				FillLayoutPane maximizationContainer = this.maximizationContainer;
+				FillLayoutPane greyPane = this.greyPane;
+				this.maximizationContainer = null;
+				this.maximizedWidget = null;
+
+				Runnable finisher = () -> {
+					staticLayoutNode.getChildren().remove(greyPane);
+					staticLayoutNode.getChildren().remove(maximizationContainer);
+					childStaticNode.getChildren().add(childPane);
+				};
+
+				if(this.maximizationTransition != null) {
+					this.maximizationTransition.restore(staticLayoutNode, greyPane, maximizationContainer, childStaticNode, childPane, finisher);
+				} else {
+					finisher.run();
+				}
+			}
 		}
 	}
 

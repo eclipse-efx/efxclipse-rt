@@ -17,6 +17,9 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.fx.ui.workbench.renderers.base.services.MaximizationService;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -37,15 +40,34 @@ public class MaximizationServiceContextFunction extends ContextFunction {
 			}
 		}
 
-		PerspectiveMaximizationServiceImpl service = null;
+		MaximizationService service = null;
 		if (perspective != null) {
 			IEclipseContext perspectiveContext = perspective.getContext();
 			service = perspectiveContext.getLocal(PerspectiveMaximizationServiceImpl.class);
 			if (service == null) {
 				service = ContextInjectionFactory.make(PerspectiveMaximizationServiceImpl.class, perspectiveContext);
-				perspectiveContext.set(PerspectiveMaximizationServiceImpl.class, service);
+				perspectiveContext.set(PerspectiveMaximizationServiceImpl.class, (PerspectiveMaximizationServiceImpl)service);
+			}
+		} else {
+			// find MWindow
+			MWindow window = findWindow(context);
+			if(window == null) {
+				MApplication mApp = context.get(MApplication.class);
+				if(mApp != null) {
+					window = findWindow(mApp.getContext().getActiveLeaf());
+				}
+			}
+
+			if( window != null ) {
+				IEclipseContext windowContext = window.getContext();
+				service = windowContext.getLocal(WindowMaximizationServiceImpl.class);
+				if (service == null) {
+					service = ContextInjectionFactory.make(WindowMaximizationServiceImpl.class, windowContext);
+					windowContext.set(WindowMaximizationServiceImpl.class, (WindowMaximizationServiceImpl)service);
+				}
 			}
 		}
+
 		return service;
 	}
 
@@ -61,6 +83,24 @@ public class MaximizationServiceContextFunction extends ContextFunction {
 			MContext model = current.get(MContext.class);
 			if (model instanceof MPerspective) {
 				perspective = (MPerspective) model;
+			}
+			current = current.getParent();
+		}
+		return perspective;
+	}
+
+	/**
+	 * Returns the context's perspective, if any.
+	 * @param context Context
+	 * @return perspective or {@code null}
+	 */
+	private static MWindow findWindow(IEclipseContext context) {
+		MWindow perspective = null;
+		IEclipseContext current = context;
+		while(current != null && perspective == null) {
+			MContext model = current.get(MContext.class);
+			if (model instanceof MWindow) {
+				perspective = (MWindow) model;
 			}
 			current = current.getParent();
 		}

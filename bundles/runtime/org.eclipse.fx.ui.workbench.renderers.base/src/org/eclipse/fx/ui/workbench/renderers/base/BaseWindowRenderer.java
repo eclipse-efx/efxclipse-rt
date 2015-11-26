@@ -27,6 +27,7 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
@@ -43,6 +44,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
+import org.eclipse.fx.ui.workbench.renderers.base.services.MaximizationService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WTrimBar;
@@ -440,6 +442,17 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 			WWindow<MWindow> widget = engineCreateWidget(w);
 			if (widget != null && isChildRenderedAndVisible(w)) {
 				windowWidget.addChildWindow(widget);
+			}
+		}
+
+		String maxElementId = element.getPersistedState().get("MAXIMIZED"); //$NON-NLS-1$
+		if(maxElementId != null) {
+			MUIElement maxElement = this.modelService.find(maxElementId, element);
+			if(maxElement != null) {
+				MaximizationService maxService = ((MWindow) element).getContext().get(MaximizationService.class);
+				if(maxService != null) {
+					maxService.maximize(maxElement);
+				}
 			}
 		}
 	}

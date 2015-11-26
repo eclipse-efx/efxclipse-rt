@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @param <N>
  *            the native type
  */
-public interface WWindow<N> extends WWidget<MWindow>, WDialogHost {
+public interface WWindow<N> extends WWidget<MWindow>, WDialogHost, WMaximizationHost {
 	/**
 	 * Set a main menu
 	 *
