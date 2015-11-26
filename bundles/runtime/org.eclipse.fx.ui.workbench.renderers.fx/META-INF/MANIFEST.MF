@@ -45,8 +45,7 @@ Import-Package: com.google.common.base;version="15.0.0",
 Service-Component: OSGI-INF/services/org.eclipse.fx.ui.workbench.renderers.fx.internal.FXDialogServiceFunction.xml,
  OSGI-INF/services/org.eclipse.fx.ui.workbench.renderers.fx.internal.DefaultDnDFeedback.xml,
  OSGI-INF/services/org.eclipse.fx.ui.workbench.renderers.fx.internal.PartPopupMenuServiceFunction.xml,
- OSGI-INF/perspectivemaximizationfunction.xml,
- OSGI-INF/maximizationtransition.xml
+ OSGI-INF/perspectivemaximizationfunction.xml
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.fx.ui.workbench.renderers.fx,
  org.eclipse.fx.ui.workbench.renderers.fx.internal;x-internal:=true,
