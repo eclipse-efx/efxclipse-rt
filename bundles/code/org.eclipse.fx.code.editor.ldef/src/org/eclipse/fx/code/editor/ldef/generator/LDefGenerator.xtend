@@ -18,9 +18,12 @@ import org.eclipse.fx.code.editor.ldef.lDef.JavaFXIntegration
 class LDefGenerator implements IGenerator {
 	@Inject
 	JavaFXCodeGenerator generator;
+	@Inject
+	JSONConfigurationConfigurator jsonGenerator;
 
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
 		val root = resource.contents.head as Root
+		jsonGenerator.generate(root.languageDefinition,fsa)
 		if( root.languageDefinition.integration != null ) {
 			if( ! root.languageDefinition.integration.codeIntegrationList.filter(typeof(JavaFXIntegration)).empty ) {
 				generator.generate(root.languageDefinition, fsa);
