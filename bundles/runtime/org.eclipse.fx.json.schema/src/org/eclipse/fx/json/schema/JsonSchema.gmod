@@ -1,0 +1,41 @@
+package org.eclipse.fx.json.schema {
+	type JsonSchema {
+		String id;
+		String schema;
+		String title;
+		String description;
+		// default???
+		// multipleOf
+		Double maximum;
+		// exclusiveMaximum
+		Double minimum;
+		// exclusiveMinimum
+		// maxLength
+		// minLength
+		// pattern
+		// additionalItems
+		// items
+		// maxItems
+		// minItems
+		// uniqueItems
+		// maxProperties
+		// minProperties
+		// additionalProperties
+		// definitions
+		// patternProperties
+		// dependencies
+		// enum
+		// allOf
+		// anyOf
+		// oneOf
+		// not
+		String ^type;
+		String[] required;
+
+		JsonSchemaMap properties;
+		JsonSchemaMap definitions;
+	}
+	type JsonSchemaMap {
+		map JsonSchema
+	}
+}
