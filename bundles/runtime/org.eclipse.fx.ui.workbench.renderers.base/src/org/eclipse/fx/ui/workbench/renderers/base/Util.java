@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2015 BestSolution.at and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base;
 
 import java.lang.reflect.Constructor;
@@ -28,7 +38,7 @@ public class Util {
 
 	/**
 	 * Extract a collection from an event property
-	 * 
+	 *
 	 * @param event
 	 *            the event
 	 * @param propertyName
@@ -44,7 +54,7 @@ public class Util {
 
 	/**
 	 * Create a CSS-ID from an id making sure it is a valid CSS ID
-	 * 
+	 *
 	 * @param id
 	 *            the id
 	 * @return the valid css id
@@ -57,7 +67,7 @@ public class Util {
 
 	/**
 	 * Create a local handler
-	 * 
+	 *
 	 * @param parent
 	 *            the parent context
 	 * @param activeLeaf
@@ -74,7 +84,7 @@ public class Util {
 
 	/**
 	 * Extract the active leaf from the current context
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 * @return the active leaf or <code>null</code>
@@ -85,7 +95,7 @@ public class Util {
 
 	/**
 	 * Check if the context is handler context
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 * @return <code>true</code> if the context is local handler context (or a
@@ -97,7 +107,7 @@ public class Util {
 
 	/**
 	 * Reparent a context
-	 * 
+	 *
 	 * @param target
 	 *            the target
 	 * @param newParent
