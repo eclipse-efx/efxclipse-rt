@@ -178,7 +178,7 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 				};
 				
 				if(this.maximizationTransition != null) {
-					this.maximizationTransition.unMaximize(staticLayoutNode, greyPane, maximizationContainer, childStaticNode, childPane, finisher);
+					this.maximizationTransition.restore(staticLayoutNode, greyPane, maximizationContainer, childStaticNode, childPane, finisher);
 				} else {
 					finisher.run();
 				}

@@ -10,36 +10,49 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.base.services;
 
-
 /**
  * Interface for implementing a maximization transition.
- * @param <C> Container type
- * @param <N> Maximizable node type
  *
+ * @param <C>
+ *            Container type
+ * @param <N>
+ *            Maximizable node type
+ * @since 2.2.0
  */
 public interface MaximizationTransitionService<C, N> {
 
 	/**
 	 * Perform a maximize transition
-	 * 
-	 * @param commonRoot Common ancestor component of maxContainer and node
-	 * @param greyPane Pane used to mask maximized container background
-	 * @param maxContainer Target container that will finally host maximized node
-	 * @param node Node to maximize
-	 * @param finished Must be run when animation is finished
+	 *
+	 * @param commonRoot
+	 *            Common ancestor component of maxContainer and node
+	 * @param greyPane
+	 *            Pane used to mask maximized container background
+	 * @param maxContainer
+	 *            Target container that will finally host maximized node
+	 * @param node
+	 *            Node to maximize
+	 * @param finished
+	 *            Must be run when animation is finished
 	 */
 	void maximize(C commonRoot, C greyPane, C maxContainer, N node, Runnable finished);
-	
+
 	/**
-	 * Perform an unmaximize transition
-	 * 
-	 * 
-	 * @param commonRoot Common ancestor component of maxContainer and targetContainer
-	 * @param greyPane Pane used to mask maximized container background
-	 * @param maxContainer Container hosting maximized node
-	 * @param targetContainer Container that will finally host node
-	 * @param node Node to unmaximize
-	 * @param finished Must be run when animation is finished
+	 * Perform a transition to the default state
+	 *
+	 *
+	 * @param commonRoot
+	 *            Common ancestor component of maxContainer and targetContainer
+	 * @param greyPane
+	 *            Pane used to mask maximized container background
+	 * @param maxContainer
+	 *            Container hosting maximized node
+	 * @param targetContainer
+	 *            Container that will finally host node
+	 * @param node
+	 *            Node to unmaximize
+	 * @param finished
+	 *            Must be run when animation is finished
 	 */
-	void unMaximize(C commonRoot, C greyPane, C maxContainer, C targetContainer, N node, Runnable finished);
+	void restore(C commonRoot, C greyPane, C maxContainer, C targetContainer, N node, Runnable finished);
 }

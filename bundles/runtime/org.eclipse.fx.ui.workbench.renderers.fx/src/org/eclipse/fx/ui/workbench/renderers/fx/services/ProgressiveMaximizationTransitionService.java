@@ -85,7 +85,7 @@ public class ProgressiveMaximizationTransitionService implements MaximizationTra
 	}
 
 	@Override
-	public void unMaximize(Pane commonRoot, Pane greyPane, Pane containerPane, Pane nodeContainer, Region node, Runnable finished) {
+	public void restore(Pane commonRoot, Pane greyPane, Pane containerPane, Pane nodeContainer, Region node, Runnable finished) {
 		
 		Bounds bounds = getBoundsInParent(commonRoot, nodeContainer);
 		

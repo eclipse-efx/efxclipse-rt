@@ -16,26 +16,29 @@ import org.eclipse.jdt.annotation.NonNull;
 /**
  * Maximization service interface
  *
+ * @since 2.2.0
  */
 public interface MaximizationService {
 	/**
 	 * Maximize an UI element
-	 * 
-	 * @param element element to maximize
+	 *
+	 * @param element
+	 *            element to maximize
 	 */
 	void maximize(@NonNull MUIElement element);
-	
+
 	/**
-	 * Unmaximize current maximized element.
+	 * Restore to the default state
 	 */
-	void unMaximize();
-	
+	void restore();
+
 	/**
 	 * Checks whether the given element is currently maximized
-	 * 
-	 * @param element element to check
+	 *
+	 * @param element
+	 *            element to check
 	 * @return {@code true} if the element is maximized, {@code false} if not
 	 */
 	boolean isMaximized(@NonNull MUIElement element);
-	
+
 }

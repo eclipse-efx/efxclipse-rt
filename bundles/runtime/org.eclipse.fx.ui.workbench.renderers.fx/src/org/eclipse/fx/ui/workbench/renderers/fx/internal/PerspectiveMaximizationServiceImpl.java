@@ -63,7 +63,7 @@ public class PerspectiveMaximizationServiceImpl implements MaximizationService {
 			if(this.maximizedElement == maxElement) {
 				return;
 			}
-			unMaximize();
+			restore();
 		}
 		
 		WMaximizationHost widget = (WMaximizationHost) this.perspective.getWidget();
@@ -77,7 +77,7 @@ public class PerspectiveMaximizationServiceImpl implements MaximizationService {
 	}
 
 	@Override
-	public void unMaximize() {
+	public void restore() {
 		WMaximizationHost widget = (WMaximizationHost) this.perspective.getWidget();
 
 		WLayoutedWidget<? extends MUIElement> childWidget = null;
