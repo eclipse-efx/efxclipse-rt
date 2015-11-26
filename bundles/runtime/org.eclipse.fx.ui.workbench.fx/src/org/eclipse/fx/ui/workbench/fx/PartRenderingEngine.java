@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.fx;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -43,6 +41,7 @@ import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
+import org.eclipse.fx.ui.workbench.base.Util;
 import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.rendering.RendererFactory;
 import org.eclipse.fx.ui.workbench.fx.key.KeyBindingDispatcher;
@@ -261,27 +260,8 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 	private static IEclipseContext createContext(MContext model, IEclipseContext parentContext) {
 		IEclipseContext lclContext = parentContext.createChild(getContextName((MApplicationElement) model));
-		populateModelInterfaces(model, lclContext, model.getClass().getInterfaces());
-		model.setContext(lclContext);
-
-		for (String variable : model.getVariables()) {
-			lclContext.declareModifiable(variable);
-		}
-
-		Map<String, String> props = model.getProperties();
-		for (String key : props.keySet()) {
-			lclContext.set(key, props.get(key));
-		}
-
+		Util.setup(model, lclContext);
 		return lclContext;
-	}
-
-	private static void populateModelInterfaces(MContext contextModel, IEclipseContext context, Class<?>[] interfaces) {
-		for (Class<?> intf : interfaces) {
-			context.set(intf.getName(), contextModel);
-
-			populateModelInterfaces(contextModel, context, intf.getInterfaces());
-		}
 	}
 
 	private static String getContextName(MApplicationElement element) {
