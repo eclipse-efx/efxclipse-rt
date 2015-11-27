@@ -14,7 +14,7 @@ package org.eclipse.fx.json.schema {
 		// minLength
 		// pattern
 		// additionalItems
-		// items
+		JsonSchema items;
 		// maxItems
 		// minItems
 		// uniqueItems

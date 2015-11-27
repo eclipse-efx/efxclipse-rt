@@ -5,3 +5,4 @@ Bundle-SymbolicName: org.eclipse.fx.json.schema
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: com.google.gson;bundle-version="2.2.4"
+Export-Package: org.eclipse.fx.json.schema
