@@ -13,13 +13,16 @@ package org.eclipse.fx.core;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import org.eclipse.fx.core.function.ExExecutor;
 import org.eclipse.fx.core.internal.JavaDSServiceProcessor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -40,7 +43,7 @@ public class Util {
 	 * @since 2.2.0
 	 */
 	public static boolean isFX9() {
-		return System.getProperty("javafx.version") != null && System.getProperty("javafx.version").startsWith("9");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		return System.getProperty("javafx.version") != null && System.getProperty("javafx.version").startsWith("9"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 	}
 
 	/**
@@ -48,7 +51,7 @@ public class Util {
 	 * @since 2.2.0
 	 */
 	public static boolean isFX8() {
-		return System.getProperty("javafx.version") != null && System.getProperty("javafx.version").startsWith("8");   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		return System.getProperty("javafx.version") != null && System.getProperty("javafx.version").startsWith("8"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 	}
 
 	/**
@@ -300,5 +303,37 @@ public class Util {
 	public static <T> T debugStderr(T data) {
 		System.err.println(data);
 		return data;
+	}
+
+	/**
+	 * Convert an URL to a path on the local filesystem
+	 *
+	 * @param url
+	 *            the url
+	 * @param copyIfNeeded
+	 *            <code>true</code> if the url can not be converted to a local
+	 *            the content is copied to the local filesystem
+	 * @return the path
+	 */
+	public static Optional<Resource> getLocalPath(@NonNull URL url, boolean copyIfNeeded) {
+		return lookupServiceList(URLResolver.class)
+				.stream()
+				.filter(r -> r.test(url)).findFirst()
+				.map(r -> Optional.of(Resource.createResource(r.resolveToLocalPath(url))))
+				.orElseGet(() -> copyIfNeeded ? ExExecutor.executeSupplier( () -> Util.copyToTempFile(url), "Unable to copy resource") : Optional.empty()); //$NON-NLS-1$
+	}
+
+	private static Resource copyToTempFile(@NonNull URL url) throws IOException {
+		Path path = Files.createTempFile("tmp", Paths.get(url.getPath()).getFileName().toString()); //$NON-NLS-1$
+
+		try (InputStream stream = url.openStream()) {
+			Files.copy(stream, path);
+		}
+
+		if( path == null ) {
+			return null;
+		}
+
+		return Resource.createTempResource(path);
 	}
 }
