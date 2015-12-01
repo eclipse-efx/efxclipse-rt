@@ -20,13 +20,16 @@ import org.eclipse.jdt.annotation.NonNull;
 /**
  * Interface wrapping a path allowing to resource temporary resources
  *
+ * @param <O>
+ *            the resource type
+ *
  * @since 2.2.0
  */
-public interface Resource {
+public interface Resource<@NonNull O> {
 	/**
 	 * @return the path
 	 */
-	public @NonNull Path getPath();
+	public O getNativeResource();
 
 	/**
 	 * Release the resource. The semantics what releaseing a resource means
@@ -44,8 +47,8 @@ public interface Resource {
 	 *            the path
 	 * @return the resource
 	 */
-	public static Resource createTempResource(@NonNull Path path) {
-		return new Resource() {
+	public static Resource<@NonNull Path> createTempResource(@NonNull Path path) {
+		return new Resource<@NonNull Path>() {
 
 			@Override
 			public boolean release() {
@@ -58,7 +61,7 @@ public interface Resource {
 			}
 
 			@Override
-			public Path getPath() {
+			public Path getNativeResource() {
 				return path;
 			}
 		};
@@ -71,8 +74,8 @@ public interface Resource {
 	 *            the path
 	 * @return the resource
 	 */
-	public static Resource createResource(@NonNull Path path) {
-		return new Resource() {
+	public static Resource<@NonNull Path> createResource(@NonNull Path path) {
+		return new Resource<@NonNull Path>() {
 
 			@Override
 			public boolean release() {
@@ -80,7 +83,7 @@ public interface Resource {
 			}
 
 			@Override
-			public Path getPath() {
+			public Path getNativeResource() {
 				return path;
 			}
 		};

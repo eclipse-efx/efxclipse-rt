@@ -316,7 +316,7 @@ public class Util {
 	 * @return the path
 	 * @since 2.2.0
 	 */
-	public static Optional<Resource> getLocalPath(@NonNull URL url, boolean copyIfNeeded) {
+	public static Optional<Resource<@NonNull Path>> getLocalPath(@NonNull URL url, boolean copyIfNeeded) {
 		return lookupServiceList(URLResolver.class)
 				.stream()
 				.filter(r -> r.test(url)).findFirst()
@@ -339,7 +339,7 @@ public class Util {
 				.map(r -> r.resolveToLocalURL(url));
 	}
 
-	private static Resource copyToTempFile(@NonNull URL url) throws IOException {
+	private static Resource<@NonNull Path> copyToTempFile(@NonNull URL url) throws IOException {
 		Path path = Files.createTempFile("tmp", Paths.get(url.getPath()).getFileName().toString()); //$NON-NLS-1$
 
 		try (InputStream stream = url.openStream()) {
