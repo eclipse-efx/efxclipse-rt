@@ -35,4 +35,14 @@ public interface URLResolver extends Predicate<@NonNull URL> {
 	 * @return the local path
 	 */
 	public @NonNull Path resolveToLocalPath(URL url);
+
+	/**
+	 * Convert the url to a local url which eg can be fed into a JavaFX media
+	 * player
+	 *
+	 * @param url
+	 *            the url
+	 * @return the path
+	 */
+	public @NonNull URL resolveToLocalURL(URL url);
 }

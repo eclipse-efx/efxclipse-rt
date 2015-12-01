@@ -314,6 +314,7 @@ public class Util {
 	 *            <code>true</code> if the url can not be converted to a local
 	 *            the content is copied to the local filesystem
 	 * @return the path
+	 * @since 2.2.0
 	 */
 	public static Optional<Resource> getLocalPath(@NonNull URL url, boolean copyIfNeeded) {
 		return lookupServiceList(URLResolver.class)
@@ -321,6 +322,21 @@ public class Util {
 				.filter(r -> r.test(url)).findFirst()
 				.map(r -> Optional.of(Resource.createResource(r.resolveToLocalPath(url))))
 				.orElseGet(() -> copyIfNeeded ? ExExecutor.executeSupplier( () -> Util.copyToTempFile(url), "Unable to copy resource") : Optional.empty()); //$NON-NLS-1$
+	}
+
+	/**
+	 * Convert an URL to a path on the local filesystem
+	 *
+	 * @param url
+	 *            the url
+	 * @return the path
+	 * @since 2.2.0
+	 */
+	public static Optional<URL> getLocalURL(@NonNull URL url) {
+		return lookupServiceList(URLResolver.class)
+				.stream()
+				.filter(r -> r.test(url)).findFirst()
+				.map(r -> r.resolveToLocalURL(url));
 	}
 
 	private static Resource copyToTempFile(@NonNull URL url) throws IOException {

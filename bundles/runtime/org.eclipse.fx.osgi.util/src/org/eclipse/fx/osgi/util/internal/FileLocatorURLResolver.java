@@ -29,7 +29,7 @@ public class FileLocatorURLResolver implements URLResolver {
 	@Override
 	public boolean test(@NonNull URL t) {
 		try {
-			return FileLocator.toFileURL(t) != null;
+			return FileLocator.resolve(t) != null;
 		} catch (IOException e) {
 			return false;
 		}
@@ -45,4 +45,13 @@ public class FileLocatorURLResolver implements URLResolver {
 		}
 	}
 
+	@SuppressWarnings("null")
+	@Override
+	public @NonNull URL resolveToLocalURL(URL url) {
+		try {
+			return FileLocator.resolve(url);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
