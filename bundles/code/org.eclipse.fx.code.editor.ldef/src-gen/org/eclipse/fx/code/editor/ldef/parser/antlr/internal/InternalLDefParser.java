@@ -22,7 +22,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalLDefParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'package'", "'.'", "'*'", "'import'", "'{'", "'}'", "'integration'", "'javafx'", "'java'", "'e4'", "':'", "'partitioning'", "'partition'", "'script'", "'rule'", "'single_line'", "'col'", "'=>'", "'escaped'", "'by'", "'multi_line'", "'lexical_highlighting'", "'colors'", "';'", "'bold'", "'italic'", "'default'", "'keywords'", "'['", "','", "']'", "'since'", "'pattern'", "'containing'", "'character'", "'eq'", "'in'", "'('", "')'", "'whitespace'", "'javawhitespace'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'package'", "'.'", "'*'", "'import'", "'{'", "'}'", "'integration'", "'javafx'", "'java'", "'e4'", "':'", "'partitioning'", "'partition'", "'script'", "'rule'", "'single_line'", "'col'", "'=>'", "'escaped'", "'by'", "'multi_line'", "'lexical_highlighting'", "'token_def'", "';'", "'bold'", "'italic'", "'default'", "'keywords'", "'['", "','", "']'", "'since'", "'pattern'", "'containing'", "'character'", "'eq'", "'in'", "'('", "')'", "'whitespace'", "'javawhitespace'"
     };
     public static final int T__50=50;
     public static final int T__19=19;
@@ -4035,7 +4035,7 @@ public class InternalLDefParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTokenVisuals"
-    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1427:1: ruleTokenVisuals returns [EObject current=null] : (otherlv_0= 'colors' otherlv_1= '{' ( ( (lv_tokenVisuals_2_0= ruleTokenVisual ) ) otherlv_3= ';' )+ otherlv_4= '}' ) ;
+    // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1427:1: ruleTokenVisuals returns [EObject current=null] : (otherlv_0= 'token_def' otherlv_1= '{' ( ( (lv_tokenVisuals_2_0= ruleTokenVisual ) ) otherlv_3= ';' )+ otherlv_4= '}' ) ;
     public final EObject ruleTokenVisuals() throws RecognitionException {
         EObject current = null;
 
@@ -4049,16 +4049,16 @@ public class InternalLDefParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1430:28: ( (otherlv_0= 'colors' otherlv_1= '{' ( ( (lv_tokenVisuals_2_0= ruleTokenVisual ) ) otherlv_3= ';' )+ otherlv_4= '}' ) )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1431:1: (otherlv_0= 'colors' otherlv_1= '{' ( ( (lv_tokenVisuals_2_0= ruleTokenVisual ) ) otherlv_3= ';' )+ otherlv_4= '}' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1430:28: ( (otherlv_0= 'token_def' otherlv_1= '{' ( ( (lv_tokenVisuals_2_0= ruleTokenVisual ) ) otherlv_3= ';' )+ otherlv_4= '}' ) )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1431:1: (otherlv_0= 'token_def' otherlv_1= '{' ( ( (lv_tokenVisuals_2_0= ruleTokenVisual ) ) otherlv_3= ';' )+ otherlv_4= '}' )
             {
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1431:1: (otherlv_0= 'colors' otherlv_1= '{' ( ( (lv_tokenVisuals_2_0= ruleTokenVisual ) ) otherlv_3= ';' )+ otherlv_4= '}' )
-            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1431:3: otherlv_0= 'colors' otherlv_1= '{' ( ( (lv_tokenVisuals_2_0= ruleTokenVisual ) ) otherlv_3= ';' )+ otherlv_4= '}'
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1431:1: (otherlv_0= 'token_def' otherlv_1= '{' ( ( (lv_tokenVisuals_2_0= ruleTokenVisual ) ) otherlv_3= ';' )+ otherlv_4= '}' )
+            // ../org.eclipse.fx.code.editor.ldef/src-gen/org/eclipse/fx/code/editor/ldef/parser/antlr/internal/InternalLDef.g:1431:3: otherlv_0= 'token_def' otherlv_1= '{' ( ( (lv_tokenVisuals_2_0= ruleTokenVisual ) ) otherlv_3= ';' )+ otherlv_4= '}'
             {
             otherlv_0=(Token)match(input,33,FOLLOW_33_in_ruleTokenVisuals3267); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_0, grammarAccess.getTokenVisualsAccess().getColorsKeyword_0());
+                  	newLeafNode(otherlv_0, grammarAccess.getTokenVisualsAccess().getToken_defKeyword_0());
                   
             }
             otherlv_1=(Token)match(input,15,FOLLOW_15_in_ruleTokenVisuals3279); if (state.failed) return current;

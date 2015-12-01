@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalLDefParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'('", "'['", "')'", "']'", "'package'", "'.'", "'*'", "'import'", "'{'", "'}'", "'integration'", "'javafx'", "'java'", "'e4'", "':'", "'partitioning'", "'partition'", "'script'", "'rule'", "'single_line'", "'col'", "'=>'", "'escaped'", "'by'", "'multi_line'", "'lexical_highlighting'", "'colors'", "';'", "'keywords'", "','", "'since'", "'pattern'", "'containing'", "'character'", "'eq'", "'in'", "'whitespace'", "'bold'", "'italic'", "'default'", "'javawhitespace'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'('", "'['", "')'", "']'", "'package'", "'.'", "'*'", "'import'", "'{'", "'}'", "'integration'", "'javafx'", "'java'", "'e4'", "':'", "'partitioning'", "'partition'", "'script'", "'rule'", "'single_line'", "'col'", "'=>'", "'escaped'", "'by'", "'multi_line'", "'lexical_highlighting'", "'token_def'", "';'", "'keywords'", "','", "'since'", "'pattern'", "'containing'", "'character'", "'eq'", "'in'", "'whitespace'", "'bold'", "'italic'", "'default'", "'javawhitespace'"
     };
     public static final int T__50=50;
     public static final int T__19=19;
@@ -12605,24 +12605,24 @@ public class InternalLDefParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TokenVisuals__Group__0__Impl"
-    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4371:1: rule__TokenVisuals__Group__0__Impl : ( 'colors' ) ;
+    // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4371:1: rule__TokenVisuals__Group__0__Impl : ( 'token_def' ) ;
     public final void rule__TokenVisuals__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4375:1: ( ( 'colors' ) )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4376:1: ( 'colors' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4375:1: ( ( 'token_def' ) )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4376:1: ( 'token_def' )
             {
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4376:1: ( 'colors' )
-            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4377:1: 'colors'
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4376:1: ( 'token_def' )
+            // ../org.eclipse.fx.code.editor.ldef.ui/src-gen/org/eclipse/fx/code/editor/ldef/ui/contentassist/antlr/internal/InternalLDef.g:4377:1: 'token_def'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTokenVisualsAccess().getColorsKeyword_0()); 
+               before(grammarAccess.getTokenVisualsAccess().getToken_defKeyword_0()); 
             }
             match(input,37,FOLLOW_37_in_rule__TokenVisuals__Group__0__Impl8858); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTokenVisualsAccess().getColorsKeyword_0()); 
+               after(grammarAccess.getTokenVisualsAccess().getToken_defKeyword_0()); 
             }
 
             }

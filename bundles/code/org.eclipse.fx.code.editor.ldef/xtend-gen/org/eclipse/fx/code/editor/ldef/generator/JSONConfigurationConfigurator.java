@@ -2,6 +2,7 @@ package org.eclipse.fx.code.editor.ldef.generator;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import org.eclipse.emf.common.util.EList;
@@ -125,9 +126,10 @@ public class JSONConfigurationConfigurator {
           String _escapeSeq_1 = ((Partition_MultiLineRule)prl).getEscapeSeq();
           PartitionRule_MultiLine.Builder _escapedBy_1 = _endSeq_3.escapedBy(_escapeSeq_1);
           return _escapedBy_1.build();
+        } else {
+          throw new IllegalStateException((("Unknown rule \'" + prl) + "\'"));
         }
       }
-      return null;
     };
     Iterable<PartitionRule> _map = IterableExtensions.<Partition_Rule, PartitionRule>map(_filter, _function_1);
     return IterableExtensions.<PartitionRule>toList(_map);
@@ -159,7 +161,13 @@ public class JSONConfigurationConfigurator {
       return ListExtensions.<org.eclipse.fx.code.editor.ldef.lDef.Token, Token>map(_tokenList, _function_2);
     };
     Iterable<List<Token>> _map = IterableExtensions.<LexicalPartitionHighlighting_Rule, List<Token>>map(_filter_1, _function_1);
-    return IterableExtensions.<List<Token>>head(_map);
+    final List<Token> rv = IterableExtensions.<List<Token>>head(_map);
+    boolean _equals = Objects.equal(rv, null);
+    if (_equals) {
+      return Collections.<Token>emptyList();
+    } else {
+      return rv;
+    }
   }
   
   public List<TokenScanner> tokenScannerList(final EditorGModel m, final org.eclipse.fx.code.editor.ldef.lDef.Token t) {
@@ -271,7 +279,7 @@ public class JSONConfigurationConfigurator {
   public static void main(final String[] args) {
     LDefStandaloneSetup.doSetup();
     final ResourceSetImpl rs = new ResourceSetImpl();
-    URI _createURI = URI.createURI("file:/Users/tomschindl/git/efxclipse/bundles/code/org.eclipse.fx.code.editor.ldef.langs/src/org/eclipse/fx/code/editor/ldef/langs/dart/dart.ldef");
+    URI _createURI = URI.createURI("file:/Users/tomschindl/git/efxclipse/bundles/code/org.eclipse.fx.code.editor.langs/src/org/eclipse/fx/code/editor/ldef/langs/asciidoc/asciidoc.ldef");
     final Resource r = rs.getResource(_createURI, true);
     JSONConfigurationConfigurator _jSONConfigurationConfigurator = new JSONConfigurationConfigurator();
     EList<EObject> _contents = r.getContents();

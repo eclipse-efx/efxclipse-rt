@@ -4374,11 +4374,11 @@ rule__TokenVisuals__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getTokenVisualsAccess().getColorsKeyword_0()); }
+{ before(grammarAccess.getTokenVisualsAccess().getToken_defKeyword_0()); }
 
-	'colors' 
+	'token_def' 
 
-{ after(grammarAccess.getTokenVisualsAccess().getColorsKeyword_0()); }
+{ after(grammarAccess.getTokenVisualsAccess().getToken_defKeyword_0()); }
 )
 
 ;

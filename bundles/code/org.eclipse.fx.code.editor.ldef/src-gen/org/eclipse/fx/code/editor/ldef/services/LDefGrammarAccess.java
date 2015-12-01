@@ -830,7 +830,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	public class TokenVisualsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TokenVisuals");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cColorsKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cToken_defKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Assignment cTokenVisualsAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
@@ -839,14 +839,14 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//TokenVisuals:
-		//	"colors" "{" (tokenVisuals+=TokenVisual ";")+ "}";
+		//	"token_def" "{" (tokenVisuals+=TokenVisual ";")+ "}";
 		@Override public ParserRule getRule() { return rule; }
 
-		//"colors" "{" (tokenVisuals+=TokenVisual ";")+ "}"
+		//"token_def" "{" (tokenVisuals+=TokenVisual ";")+ "}"
 		public Group getGroup() { return cGroup; }
 
-		//"colors"
-		public Keyword getColorsKeyword_0() { return cColorsKeyword_0; }
+		//"token_def"
+		public Keyword getToken_defKeyword_0() { return cToken_defKeyword_0; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
@@ -1228,10 +1228,11 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_4_2_0 = (RuleCall)cEscapeSeqAssignment_4_2.eContents().get(0);
 		
 		//Scanner_SingleLineRule:
-		//	"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
+		//	"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?
+		//"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
 		public Group getGroup() { return cGroup; }
 
 		//"single_line"
@@ -1303,10 +1304,11 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
 		
 		//Scanner_MultiLineRule:
-		//	"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+		//	"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?
+		//"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
 		public Group getGroup() { return cGroup; }
 
 		//"multi_line"
@@ -1372,10 +1374,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cContentPatternSTRINGTerminalRuleCall_5_0 = (RuleCall)cContentPatternAssignment_5.eContents().get(0);
 		
 		//Scanner_PatternRule:
-		//	"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern=STRING;
+		//	"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern= //( 'enabledif' enabledIf=ScannerCondition)?
+		//	STRING;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern=STRING
+		//"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern= //( 'enabledif' enabledIf=ScannerCondition)?
+		//STRING
 		public Group getGroup() { return cGroup; }
 
 		//"pattern"
@@ -1408,9 +1412,11 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//"containing"
 		public Keyword getContainingKeyword_4() { return cContainingKeyword_4; }
 
-		//contentPattern=STRING
+		//contentPattern= //( 'enabledif' enabledIf=ScannerCondition)?
+		//STRING
 		public Assignment getContentPatternAssignment_5() { return cContentPatternAssignment_5; }
 
+		////( 'enabledif' enabledIf=ScannerCondition)?
 		//STRING
 		public RuleCall getContentPatternSTRINGTerminalRuleCall_5_0() { return cContentPatternSTRINGTerminalRuleCall_5_0; }
 	}
@@ -1433,10 +1439,11 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCheckCheckParserRuleCall_5_1_0 = (RuleCall)cCheckAssignment_5_1.eContents().get(0);
 		
 		//Scanner_CharacterRule:
-		//	"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)?;
+		//	"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)? //( 'enabledif' enabledIf=ScannerCondition)?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)?
+		//"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)? //( 'enabledif' enabledIf=ScannerCondition)?
 		public Group getGroup() { return cGroup; }
 
 		//"character"
@@ -1491,10 +1498,11 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCheckCheckParserRuleCall_2_1_0 = (RuleCall)cCheckAssignment_2_1.eContents().get(0);
 		
 		//Scanner_JSRule:
-		//	"script" fileURI=STRING ("col" check=Check)?;
+		//	"script" fileURI=STRING ("col" check=Check)? //( 'enabledif' condition=ScannerCondition)?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"script" fileURI=STRING ("col" check=Check)?
+		//"script" fileURI=STRING ("col" check=Check)? //( 'enabledif' condition=ScannerCondition)?
 		public Group getGroup() { return cGroup; }
 
 		//"script"
@@ -1525,6 +1533,21 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRangeParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cEqualsParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
+		////ScannerCondition:
+		////	ScannerConditionExits | ScannerConditionEquals | ScannerConditionJs
+		////;
+		////
+		////ScannerConditionExits:
+		////	key=STRING 'exists'
+		////;
+		////
+		////ScannerConditionEquals:
+		////	key=STRING 'eq' value=STRING
+		////;
+		////
+		////ScannerConditionJs:
+		////	'script' value=STRING
+		////;
 		//Check:
 		//	Range | Equals;
 		@Override public ParserRule getRule() { return rule; }
@@ -2057,7 +2080,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TokenVisuals:
-	//	"colors" "{" (tokenVisuals+=TokenVisual ";")+ "}";
+	//	"token_def" "{" (tokenVisuals+=TokenVisual ";")+ "}";
 	public TokenVisualsElements getTokenVisualsAccess() {
 		return pTokenVisuals;
 	}
@@ -2157,7 +2180,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_SingleLineRule:
-	//	"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)?;
+	//	"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+	//;
 	public Scanner_SingleLineRuleElements getScanner_SingleLineRuleAccess() {
 		return pScanner_SingleLineRule;
 	}
@@ -2167,7 +2191,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_MultiLineRule:
-	//	"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)?;
+	//	"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+	//;
 	public Scanner_MultiLineRuleElements getScanner_MultiLineRuleAccess() {
 		return pScanner_MultiLineRule;
 	}
@@ -2177,7 +2202,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_PatternRule:
-	//	"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern=STRING;
+	//	"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern= //( 'enabledif' enabledIf=ScannerCondition)?
+	//	STRING;
 	public Scanner_PatternRuleElements getScanner_PatternRuleAccess() {
 		return pScanner_PatternRule;
 	}
@@ -2187,7 +2213,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_CharacterRule:
-	//	"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)?;
+	//	"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)? //( 'enabledif' enabledIf=ScannerCondition)?
+	//;
 	public Scanner_CharacterRuleElements getScanner_CharacterRuleAccess() {
 		return pScanner_CharacterRule;
 	}
@@ -2197,7 +2224,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_JSRule:
-	//	"script" fileURI=STRING ("col" check=Check)?;
+	//	"script" fileURI=STRING ("col" check=Check)? //( 'enabledif' condition=ScannerCondition)?
+	//;
 	public Scanner_JSRuleElements getScanner_JSRuleAccess() {
 		return pScanner_JSRule;
 	}
@@ -2206,6 +2234,21 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		return getScanner_JSRuleAccess().getRule();
 	}
 
+	////ScannerCondition:
+	////	ScannerConditionExits | ScannerConditionEquals | ScannerConditionJs
+	////;
+	////
+	////ScannerConditionExits:
+	////	key=STRING 'exists'
+	////;
+	////
+	////ScannerConditionEquals:
+	////	key=STRING 'eq' value=STRING
+	////;
+	////
+	////ScannerConditionJs:
+	////	'script' value=STRING
+	////;
 	//Check:
 	//	Range | Equals;
 	public CheckElements getCheckAccess() {

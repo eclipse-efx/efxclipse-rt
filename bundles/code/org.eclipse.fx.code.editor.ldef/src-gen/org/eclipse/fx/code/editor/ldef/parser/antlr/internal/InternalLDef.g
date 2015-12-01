@@ -1428,9 +1428,9 @@ ruleTokenVisuals returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='colors' 
+(	otherlv_0='token_def' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getTokenVisualsAccess().getColorsKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getTokenVisualsAccess().getToken_defKeyword_0());
     }
 	otherlv_1='{' 
     {
