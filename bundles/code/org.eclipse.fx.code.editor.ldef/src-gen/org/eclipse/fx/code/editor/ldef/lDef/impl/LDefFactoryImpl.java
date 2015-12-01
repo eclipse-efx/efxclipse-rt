@@ -83,8 +83,6 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
       case LDefPackage.PARTITION_SINGLE_LINE_RULE: return createPartition_SingleLineRule();
       case LDefPackage.PARTITION_MULTI_LINE_RULE: return createPartition_MultiLineRule();
       case LDefPackage.LEXICAL_HIGHLIGHTING: return createLexicalHighlighting();
-      case LDefPackage.TOKEN_VISUALS: return createTokenVisuals();
-      case LDefPackage.TOKEN_VISUAL: return createTokenVisual();
       case LDefPackage.LEXICAL_PARTITION_HIGHLIGHTING: return createLexicalPartitionHighlighting();
       case LDefPackage.LEXICAL_PARTITION_HIGHLIGHTING_JS: return createLexicalPartitionHighlighting_JS();
       case LDefPackage.LEXICAL_PARTITION_HIGHLIGHTING_RULE: return createLexicalPartitionHighlighting_Rule();
@@ -314,28 +312,6 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
   {
     LexicalHighlightingImpl lexicalHighlighting = new LexicalHighlightingImpl();
     return lexicalHighlighting;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public TokenVisuals createTokenVisuals()
-  {
-    TokenVisualsImpl tokenVisuals = new TokenVisualsImpl();
-    return tokenVisuals;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public TokenVisual createTokenVisual()
-  {
-    TokenVisualImpl tokenVisual = new TokenVisualImpl();
-    return tokenVisual;
   }
 
   /**

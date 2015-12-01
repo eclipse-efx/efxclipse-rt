@@ -793,16 +793,16 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cListAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cListLexicalPartitionHighlightingParserRuleCall_2_0 = (RuleCall)cListAssignment_2.eContents().get(0);
-		private final Assignment cVistualAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cVistualTokenVisualsParserRuleCall_3_0 = (RuleCall)cVistualAssignment_3.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//// -----------------------------------------------------
 		//LexicalHighlighting:
-		//	"lexical_highlighting" "{" list+=LexicalPartitionHighlighting+ vistual=TokenVisuals? "}";
+		//	"lexical_highlighting" "{" list+=LexicalPartitionHighlighting+ //		(vistual = TokenVisuals)?
+		//	"}";
 		@Override public ParserRule getRule() { return rule; }
 
-		//"lexical_highlighting" "{" list+=LexicalPartitionHighlighting+ vistual=TokenVisuals? "}"
+		//"lexical_highlighting" "{" list+=LexicalPartitionHighlighting+ //		(vistual = TokenVisuals)?
+		//"}"
 		public Group getGroup() { return cGroup; }
 
 		//"lexical_highlighting"
@@ -817,102 +817,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//LexicalPartitionHighlighting
 		public RuleCall getListLexicalPartitionHighlightingParserRuleCall_2_0() { return cListLexicalPartitionHighlightingParserRuleCall_2_0; }
 
-		//vistual=TokenVisuals?
-		public Assignment getVistualAssignment_3() { return cVistualAssignment_3; }
-
-		//TokenVisuals
-		public RuleCall getVistualTokenVisualsParserRuleCall_3_0() { return cVistualTokenVisualsParserRuleCall_3_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
-	}
-
-	public class TokenVisualsElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TokenVisuals");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cToken_defKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Assignment cTokenVisualsAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
-		private final RuleCall cTokenVisualsTokenVisualParserRuleCall_2_0_0 = (RuleCall)cTokenVisualsAssignment_2_0.eContents().get(0);
-		private final Keyword cSemicolonKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//TokenVisuals:
-		//	"token_def" "{" (tokenVisuals+=TokenVisual ";")+ "}";
-		@Override public ParserRule getRule() { return rule; }
-
-		//"token_def" "{" (tokenVisuals+=TokenVisual ";")+ "}"
-		public Group getGroup() { return cGroup; }
-
-		//"token_def"
-		public Keyword getToken_defKeyword_0() { return cToken_defKeyword_0; }
-
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
-
-		//(tokenVisuals+=TokenVisual ";")+
-		public Group getGroup_2() { return cGroup_2; }
-
-		//tokenVisuals+=TokenVisual
-		public Assignment getTokenVisualsAssignment_2_0() { return cTokenVisualsAssignment_2_0; }
-
-		//TokenVisual
-		public RuleCall getTokenVisualsTokenVisualParserRuleCall_2_0_0() { return cTokenVisualsTokenVisualParserRuleCall_2_0_0; }
-
-		//";"
-		public Keyword getSemicolonKeyword_2_1() { return cSemicolonKeyword_2_1; }
-
+		////		(vistual = TokenVisuals)?
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
-	}
-
-	public class TokenVisualElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TokenVisual");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cTokenAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cTokenTokenCrossReference_0_0 = (CrossReference)cTokenAssignment_0.eContents().get(0);
-		private final RuleCall cTokenTokenIDTerminalRuleCall_0_0_1 = (RuleCall)cTokenTokenCrossReference_0_0.eContents().get(1);
-		private final Assignment cColorSpecAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cColorSpecSTRINGTerminalRuleCall_1_0 = (RuleCall)cColorSpecAssignment_1.eContents().get(0);
-		private final Assignment cBoldAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cBoldBoldKeyword_2_0 = (Keyword)cBoldAssignment_2.eContents().get(0);
-		private final Assignment cItalicAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cItalicItalicKeyword_3_0 = (Keyword)cItalicAssignment_3.eContents().get(0);
-		
-		//TokenVisual:
-		//	token=[Token] colorSpec=STRING bold?="bold"? italic?="italic"?;
-		@Override public ParserRule getRule() { return rule; }
-
-		//token=[Token] colorSpec=STRING bold?="bold"? italic?="italic"?
-		public Group getGroup() { return cGroup; }
-
-		//token=[Token]
-		public Assignment getTokenAssignment_0() { return cTokenAssignment_0; }
-
-		//[Token]
-		public CrossReference getTokenTokenCrossReference_0_0() { return cTokenTokenCrossReference_0_0; }
-
-		//ID
-		public RuleCall getTokenTokenIDTerminalRuleCall_0_0_1() { return cTokenTokenIDTerminalRuleCall_0_0_1; }
-
-		//colorSpec=STRING
-		public Assignment getColorSpecAssignment_1() { return cColorSpecAssignment_1; }
-
-		//STRING
-		public RuleCall getColorSpecSTRINGTerminalRuleCall_1_0() { return cColorSpecSTRINGTerminalRuleCall_1_0; }
-
-		//bold?="bold"?
-		public Assignment getBoldAssignment_2() { return cBoldAssignment_2; }
-
-		//"bold"
-		public Keyword getBoldBoldKeyword_2_0() { return cBoldBoldKeyword_2_0; }
-
-		//italic?="italic"?
-		public Assignment getItalicAssignment_3() { return cItalicAssignment_3; }
-
-		//"italic"
-		public Keyword getItalicItalicKeyword_3_0() { return cItalicItalicKeyword_3_0; }
 	}
 
 	public class LexicalPartitionHighlightingElements extends AbstractParserRuleElementFinder {
@@ -921,6 +828,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLexicalPartitionHighlighting_RuleParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cLexicalPartitionHighlighting_JSParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
+		////TokenVisuals:
+		////	'token_def' '{'
+		////		(tokenVisuals += TokenVisual ';')+
+		////	'}'
+		////;
+		////
+		////TokenVisual:
+		////	token=[Token|ID] colorSpec=STRING (bold?='bold')? (italic?='italic')?
+		////;
 		//LexicalPartitionHighlighting:
 		//	LexicalPartitionHighlighting_Rule | LexicalPartitionHighlighting_JS;
 		@Override public ParserRule getRule() { return rule; }
@@ -1750,8 +1666,6 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	private final Partition_SingleLineRuleElements pPartition_SingleLineRule;
 	private final Partition_MultiLineRuleElements pPartition_MultiLineRule;
 	private final LexicalHighlightingElements pLexicalHighlighting;
-	private final TokenVisualsElements pTokenVisuals;
-	private final TokenVisualElements pTokenVisual;
 	private final LexicalPartitionHighlightingElements pLexicalPartitionHighlighting;
 	private final LexicalPartitionHighlighting_JSElements pLexicalPartitionHighlighting_JS;
 	private final LexicalPartitionHighlighting_RuleElements pLexicalPartitionHighlighting_Rule;
@@ -1801,8 +1715,6 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		this.pPartition_SingleLineRule = new Partition_SingleLineRuleElements();
 		this.pPartition_MultiLineRule = new Partition_MultiLineRuleElements();
 		this.pLexicalHighlighting = new LexicalHighlightingElements();
-		this.pTokenVisuals = new TokenVisualsElements();
-		this.pTokenVisual = new TokenVisualElements();
 		this.pLexicalPartitionHighlighting = new LexicalPartitionHighlightingElements();
 		this.pLexicalPartitionHighlighting_JS = new LexicalPartitionHighlighting_JSElements();
 		this.pLexicalPartitionHighlighting_Rule = new LexicalPartitionHighlighting_RuleElements();
@@ -2070,7 +1982,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// -----------------------------------------------------
 	//LexicalHighlighting:
-	//	"lexical_highlighting" "{" list+=LexicalPartitionHighlighting+ vistual=TokenVisuals? "}";
+	//	"lexical_highlighting" "{" list+=LexicalPartitionHighlighting+ //		(vistual = TokenVisuals)?
+	//	"}";
 	public LexicalHighlightingElements getLexicalHighlightingAccess() {
 		return pLexicalHighlighting;
 	}
@@ -2079,26 +1992,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		return getLexicalHighlightingAccess().getRule();
 	}
 
-	//TokenVisuals:
-	//	"token_def" "{" (tokenVisuals+=TokenVisual ";")+ "}";
-	public TokenVisualsElements getTokenVisualsAccess() {
-		return pTokenVisuals;
-	}
-	
-	public ParserRule getTokenVisualsRule() {
-		return getTokenVisualsAccess().getRule();
-	}
-
-	//TokenVisual:
-	//	token=[Token] colorSpec=STRING bold?="bold"? italic?="italic"?;
-	public TokenVisualElements getTokenVisualAccess() {
-		return pTokenVisual;
-	}
-	
-	public ParserRule getTokenVisualRule() {
-		return getTokenVisualAccess().getRule();
-	}
-
+	////TokenVisuals:
+	////	'token_def' '{'
+	////		(tokenVisuals += TokenVisual ';')+
+	////	'}'
+	////;
+	////
+	////TokenVisual:
+	////	token=[Token|ID] colorSpec=STRING (bold?='bold')? (italic?='italic')?
+	////;
 	//LexicalPartitionHighlighting:
 	//	LexicalPartitionHighlighting_Rule | LexicalPartitionHighlighting_JS;
 	public LexicalPartitionHighlightingElements getLexicalPartitionHighlightingAccess() {

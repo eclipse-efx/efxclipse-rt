@@ -64,16 +64,6 @@
     <genClasses ecoreClass="LDef.ecore#//Partition_MultiLineRule"/>
     <genClasses ecoreClass="LDef.ecore#//LexicalHighlighting">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LexicalHighlighting/list"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LexicalHighlighting/vistual"/>
-    </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//TokenVisuals">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//TokenVisuals/tokenVisuals"/>
-    </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//TokenVisual">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LDef.ecore#//TokenVisual/token"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//TokenVisual/colorSpec"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//TokenVisual/bold"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//TokenVisual/italic"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//LexicalPartitionHighlighting">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LDef.ecore#//LexicalPartitionHighlighting/partition"/>

@@ -194,24 +194,6 @@ public interface LDefFactory extends EFactory
   LexicalHighlighting createLexicalHighlighting();
 
   /**
-   * Returns a new object of class '<em>Token Visuals</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Token Visuals</em>'.
-   * @generated
-   */
-  TokenVisuals createTokenVisuals();
-
-  /**
-   * Returns a new object of class '<em>Token Visual</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Token Visual</em>'.
-   * @generated
-   */
-  TokenVisual createTokenVisual();
-
-  /**
    * Returns a new object of class '<em>Lexical Partition Highlighting</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

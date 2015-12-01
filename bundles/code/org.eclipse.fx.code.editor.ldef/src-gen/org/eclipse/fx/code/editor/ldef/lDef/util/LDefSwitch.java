@@ -212,20 +212,6 @@ public class LDefSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LDefPackage.TOKEN_VISUALS:
-      {
-        TokenVisuals tokenVisuals = (TokenVisuals)theEObject;
-        T result = caseTokenVisuals(tokenVisuals);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LDefPackage.TOKEN_VISUAL:
-      {
-        TokenVisual tokenVisual = (TokenVisual)theEObject;
-        T result = caseTokenVisual(tokenVisual);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case LDefPackage.LEXICAL_PARTITION_HIGHLIGHTING:
       {
         LexicalPartitionHighlighting lexicalPartitionHighlighting = (LexicalPartitionHighlighting)theEObject;
@@ -665,38 +651,6 @@ public class LDefSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLexicalHighlighting(LexicalHighlighting object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Token Visuals</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Token Visuals</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTokenVisuals(TokenVisuals object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Token Visual</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Token Visual</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTokenVisual(TokenVisual object)
   {
     return null;
   }

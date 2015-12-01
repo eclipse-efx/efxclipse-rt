@@ -170,16 +170,6 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createLexicalHighlightingAdapter();
       }
       @Override
-      public Adapter caseTokenVisuals(TokenVisuals object)
-      {
-        return createTokenVisualsAdapter();
-      }
-      @Override
-      public Adapter caseTokenVisual(TokenVisual object)
-      {
-        return createTokenVisualAdapter();
-      }
-      @Override
       public Adapter caseLexicalPartitionHighlighting(LexicalPartitionHighlighting object)
       {
         return createLexicalPartitionHighlightingAdapter();
@@ -567,36 +557,6 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLexicalHighlightingAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.TokenVisuals <em>Token Visuals</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.TokenVisuals
-   * @generated
-   */
-  public Adapter createTokenVisualsAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.TokenVisual <em>Token Visual</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.TokenVisual
-   * @generated
-   */
-  public Adapter createTokenVisualAdapter()
   {
     return null;
   }

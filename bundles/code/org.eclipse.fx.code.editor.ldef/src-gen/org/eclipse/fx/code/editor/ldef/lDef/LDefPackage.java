@@ -769,105 +769,13 @@ public interface LDefPackage extends EPackage
   int LEXICAL_HIGHLIGHTING__LIST = 0;
 
   /**
-   * The feature id for the '<em><b>Vistual</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LEXICAL_HIGHLIGHTING__VISTUAL = 1;
-
-  /**
    * The number of structural features of the '<em>Lexical Highlighting</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LEXICAL_HIGHLIGHTING_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.TokenVisualsImpl <em>Token Visuals</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.TokenVisualsImpl
-   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getTokenVisuals()
-   * @generated
-   */
-  int TOKEN_VISUALS = 19;
-
-  /**
-   * The feature id for the '<em><b>Token Visuals</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOKEN_VISUALS__TOKEN_VISUALS = 0;
-
-  /**
-   * The number of structural features of the '<em>Token Visuals</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOKEN_VISUALS_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.TokenVisualImpl <em>Token Visual</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.TokenVisualImpl
-   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getTokenVisual()
-   * @generated
-   */
-  int TOKEN_VISUAL = 20;
-
-  /**
-   * The feature id for the '<em><b>Token</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOKEN_VISUAL__TOKEN = 0;
-
-  /**
-   * The feature id for the '<em><b>Color Spec</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOKEN_VISUAL__COLOR_SPEC = 1;
-
-  /**
-   * The feature id for the '<em><b>Bold</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOKEN_VISUAL__BOLD = 2;
-
-  /**
-   * The feature id for the '<em><b>Italic</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOKEN_VISUAL__ITALIC = 3;
-
-  /**
-   * The number of structural features of the '<em>Token Visual</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TOKEN_VISUAL_FEATURE_COUNT = 4;
+  int LEXICAL_HIGHLIGHTING_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LexicalPartitionHighlightingImpl <em>Lexical Partition Highlighting</em>}' class.
@@ -877,7 +785,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING = 21;
+  int LEXICAL_PARTITION_HIGHLIGHTING = 19;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -905,7 +813,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_JS()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 22;
+  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 20;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -942,7 +850,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_Rule()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 23;
+  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 21;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -988,7 +896,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getToken()
    * @generated
    */
-  int TOKEN = 24;
+  int TOKEN = 22;
 
   /**
    * The feature id for the '<em><b>Default</b></em>' attribute.
@@ -1034,7 +942,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner()
    * @generated
    */
-  int SCANNER = 25;
+  int SCANNER = 23;
 
   /**
    * The number of structural features of the '<em>Scanner</em>' class.
@@ -1053,7 +961,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Keyword()
    * @generated
    */
-  int SCANNER_KEYWORD = 26;
+  int SCANNER_KEYWORD = 24;
 
   /**
    * The feature id for the '<em><b>Keywords</b></em>' containment reference list.
@@ -1081,7 +989,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getKeyword()
    * @generated
    */
-  int KEYWORD = 27;
+  int KEYWORD = 25;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1118,7 +1026,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Rule()
    * @generated
    */
-  int SCANNER_RULE = 28;
+  int SCANNER_RULE = 26;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1146,7 +1054,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_SingleLineRule()
    * @generated
    */
-  int SCANNER_SINGLE_LINE_RULE = 29;
+  int SCANNER_SINGLE_LINE_RULE = 27;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1201,7 +1109,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_MultiLineRule()
    * @generated
    */
-  int SCANNER_MULTI_LINE_RULE = 30;
+  int SCANNER_MULTI_LINE_RULE = 28;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1256,7 +1164,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_PatternRule()
    * @generated
    */
-  int SCANNER_PATTERN_RULE = 31;
+  int SCANNER_PATTERN_RULE = 29;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1311,7 +1219,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_CharacterRule()
    * @generated
    */
-  int SCANNER_CHARACTER_RULE = 32;
+  int SCANNER_CHARACTER_RULE = 30;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1348,7 +1256,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_JSRule()
    * @generated
    */
-  int SCANNER_JS_RULE = 33;
+  int SCANNER_JS_RULE = 31;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1385,7 +1293,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getCheck()
    * @generated
    */
-  int CHECK = 34;
+  int CHECK = 32;
 
   /**
    * The number of structural features of the '<em>Check</em>' class.
@@ -1404,7 +1312,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getEquals()
    * @generated
    */
-  int EQUALS = 35;
+  int EQUALS = 33;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1432,7 +1340,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getRange()
    * @generated
    */
-  int RANGE = 36;
+  int RANGE = 34;
 
   /**
    * The feature id for the '<em><b>Lt Incl</b></em>' attribute.
@@ -1487,7 +1395,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getWhitespaceRule()
    * @generated
    */
-  int WHITESPACE_RULE = 37;
+  int WHITESPACE_RULE = 35;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -2001,92 +1909,6 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EReference getLexicalHighlighting_List();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting#getVistual <em>Vistual</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Vistual</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting#getVistual()
-   * @see #getLexicalHighlighting()
-   * @generated
-   */
-  EReference getLexicalHighlighting_Vistual();
-
-  /**
-   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.TokenVisuals <em>Token Visuals</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Token Visuals</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.TokenVisuals
-   * @generated
-   */
-  EClass getTokenVisuals();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.fx.code.editor.ldef.lDef.TokenVisuals#getTokenVisuals <em>Token Visuals</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Token Visuals</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.TokenVisuals#getTokenVisuals()
-   * @see #getTokenVisuals()
-   * @generated
-   */
-  EReference getTokenVisuals_TokenVisuals();
-
-  /**
-   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.TokenVisual <em>Token Visual</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Token Visual</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.TokenVisual
-   * @generated
-   */
-  EClass getTokenVisual();
-
-  /**
-   * Returns the meta object for the reference '{@link org.eclipse.fx.code.editor.ldef.lDef.TokenVisual#getToken <em>Token</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Token</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.TokenVisual#getToken()
-   * @see #getTokenVisual()
-   * @generated
-   */
-  EReference getTokenVisual_Token();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.TokenVisual#getColorSpec <em>Color Spec</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Color Spec</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.TokenVisual#getColorSpec()
-   * @see #getTokenVisual()
-   * @generated
-   */
-  EAttribute getTokenVisual_ColorSpec();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.TokenVisual#isBold <em>Bold</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Bold</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.TokenVisual#isBold()
-   * @see #getTokenVisual()
-   * @generated
-   */
-  EAttribute getTokenVisual_Bold();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.TokenVisual#isItalic <em>Italic</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Italic</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.TokenVisual#isItalic()
-   * @see #getTokenVisual()
-   * @generated
-   */
-  EAttribute getTokenVisual_Italic();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting <em>Lexical Partition Highlighting</em>}'.
@@ -3008,74 +2830,6 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EReference LEXICAL_HIGHLIGHTING__LIST = eINSTANCE.getLexicalHighlighting_List();
-
-    /**
-     * The meta object literal for the '<em><b>Vistual</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference LEXICAL_HIGHLIGHTING__VISTUAL = eINSTANCE.getLexicalHighlighting_Vistual();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.TokenVisualsImpl <em>Token Visuals</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.TokenVisualsImpl
-     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getTokenVisuals()
-     * @generated
-     */
-    EClass TOKEN_VISUALS = eINSTANCE.getTokenVisuals();
-
-    /**
-     * The meta object literal for the '<em><b>Token Visuals</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference TOKEN_VISUALS__TOKEN_VISUALS = eINSTANCE.getTokenVisuals_TokenVisuals();
-
-    /**
-     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.TokenVisualImpl <em>Token Visual</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.TokenVisualImpl
-     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getTokenVisual()
-     * @generated
-     */
-    EClass TOKEN_VISUAL = eINSTANCE.getTokenVisual();
-
-    /**
-     * The meta object literal for the '<em><b>Token</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference TOKEN_VISUAL__TOKEN = eINSTANCE.getTokenVisual_Token();
-
-    /**
-     * The meta object literal for the '<em><b>Color Spec</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TOKEN_VISUAL__COLOR_SPEC = eINSTANCE.getTokenVisual_ColorSpec();
-
-    /**
-     * The meta object literal for the '<em><b>Bold</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TOKEN_VISUAL__BOLD = eINSTANCE.getTokenVisual_Bold();
-
-    /**
-     * The meta object literal for the '<em><b>Italic</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TOKEN_VISUAL__ITALIC = eINSTANCE.getTokenVisual_Italic();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LexicalPartitionHighlightingImpl <em>Lexical Partition Highlighting</em>}' class.
