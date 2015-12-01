@@ -7,14 +7,13 @@ public final class GsonEqualsImpl implements GsonBase, Equals, Check {
 	public GsonEqualsImpl(JsonObject jsonObject) {
 		this.value = jsonObject.has("value") ? jsonObject.get("value").getAsInt() : 0;
 	}
-
 	public GsonEqualsImpl(int value) {
 		this.value = value;
 	}
 
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
-		o.addProperty( "__type", "Equals" );
+		o.addProperty( "$gtype", "Equals" );
 		o.addProperty( "value", getValue() );
 		return o;
 	}
@@ -31,13 +30,13 @@ public final class GsonEqualsImpl implements GsonBase, Equals, Check {
 	}
 	
 
+
 	public static class Builder implements Equals.Builder {
 		private final EditorGModel instance;
 
 		public Builder(EditorGModel instance) {
 			this.instance = instance;
 		}
-
 		private int value;
 		public Builder value(int value) {
 			this.value = value;

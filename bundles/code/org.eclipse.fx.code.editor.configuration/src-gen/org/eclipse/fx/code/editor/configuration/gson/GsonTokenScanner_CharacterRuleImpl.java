@@ -5,11 +5,10 @@ import com.google.gson.JsonObject;
 
 public final class GsonTokenScanner_CharacterRuleImpl implements GsonBase, TokenScanner_CharacterRule, TokenScanner {
 	public GsonTokenScanner_CharacterRuleImpl(JsonObject jsonObject) {
-		this.characterList = java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("characterList").spliterator(), false )
-								.map( e -> e.getAsString()).collect(java.util.stream.Collectors.toList()));
+		this.characterList = jsonObject.has("characterList") ? java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("characterList").spliterator(), false )
+								.map( e -> e.getAsString()).collect(java.util.stream.Collectors.toList())) : java.util.Collections.emptyList();
 		this.check = jsonObject.has("check") ? GsonElementFactory.createCheck(jsonObject.getAsJsonObject("check")) : null;
 	}
-
 	public GsonTokenScanner_CharacterRuleImpl(java.util.List<String> characterList, Check check) {
 		this.characterList = characterList;
 		this.check = check;
@@ -17,7 +16,7 @@ public final class GsonTokenScanner_CharacterRuleImpl implements GsonBase, Token
 
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
-		o.addProperty( "__type", "TokenScanner_CharacterRule" );
+		o.addProperty( "$gtype", "TokenScanner_CharacterRule" );
 		o.add( "characterList", GsonBase.toJsonArray(getCharacterList().stream().map(com.google.gson.JsonPrimitive::new).collect(java.util.stream.Collectors.toList())) );
 		o.add( "check", getCheck() == null ? null : ((GsonBase)getCheck()).toJSONObject() );
 		return o;
@@ -26,7 +25,7 @@ public final class GsonTokenScanner_CharacterRuleImpl implements GsonBase, Token
 	public String toString() {
 		return getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " { "
 					 + "characterList : " + characterList + ", "
-					 + "check : " + check == null ? null : check.getClass().getSimpleName() + "@" + Integer.toHexString(check.hashCode())
+					 + "check : " + (check == null ? null : check.getClass().getSimpleName() + "@" + Integer.toHexString(check.hashCode()))
 					+" }";
 	}
 
@@ -42,13 +41,13 @@ public final class GsonTokenScanner_CharacterRuleImpl implements GsonBase, Token
 	}
 	
 
+
 	public static class Builder implements TokenScanner_CharacterRule.Builder {
 		private final EditorGModel instance;
 
 		public Builder(EditorGModel instance) {
 			this.instance = instance;
 		}
-
 		private final java.util.List<String> characterList = new java.util.ArrayList<>();
 		public Builder characterList(java.util.List<String> characterList) {
 			this.characterList.addAll(characterList);

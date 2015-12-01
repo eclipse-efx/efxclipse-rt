@@ -10,7 +10,6 @@ public final class GsonRangeImpl implements GsonBase, Range, Check {
 		this.min = jsonObject.has("min") ? jsonObject.get("min").getAsInt() : 1;
 		this.minIncl = jsonObject.has("minIncl") ? jsonObject.get("minIncl").getAsBoolean() : false;
 	}
-
 	public GsonRangeImpl(int max, boolean maxIncl, int min, boolean minIncl) {
 		this.max = max;
 		this.maxIncl = maxIncl;
@@ -20,7 +19,7 @@ public final class GsonRangeImpl implements GsonBase, Range, Check {
 
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
-		o.addProperty( "__type", "Range" );
+		o.addProperty( "$gtype", "Range" );
 		o.addProperty( "max", getMax() );
 		o.addProperty( "maxIncl", isMaxIncl() );
 		o.addProperty( "min", getMin() );
@@ -61,13 +60,13 @@ public final class GsonRangeImpl implements GsonBase, Range, Check {
 	}
 	
 
+
 	public static class Builder implements Range.Builder {
 		private final EditorGModel instance;
 
 		public Builder(EditorGModel instance) {
 			this.instance = instance;
 		}
-
 		private int max;
 		public Builder max(int max) {
 			this.max = max;

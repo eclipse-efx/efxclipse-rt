@@ -6,13 +6,12 @@ import com.google.gson.JsonObject;
 public final class GsonCheckImpl implements GsonBase, Check {
 	public GsonCheckImpl(JsonObject jsonObject) {
 	}
-
 	public GsonCheckImpl() {
 	}
 
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
-		o.addProperty( "__type", "Check" );
+		o.addProperty( "$gtype", "Check" );
 		return o;
 	}
 
@@ -21,13 +20,13 @@ public final class GsonCheckImpl implements GsonBase, Check {
 					+" }";
 	}
 
+
 	public static class Builder implements Check.Builder {
 		private final EditorGModel instance;
 
 		public Builder(EditorGModel instance) {
 			this.instance = instance;
 		}
-
 
 		public Check build() {
 			return new GsonCheckImpl();

@@ -6,8 +6,8 @@ import com.google.gson.JsonArray;
 
 public final class GsonElementFactory implements EditorGModel {
 	public static LanguageDef createLanguageDef(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "LanguageDef":
 					return new GsonLanguageDefImpl(o);
 				default:
@@ -22,8 +22,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static Partition createPartition(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "Partition":
 					return new GsonPartitionImpl(o);
 				default:
@@ -38,8 +38,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static PartitionRule createPartitionRule(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "PartitionRule":
 					return new GsonPartitionRuleImpl(o);
 				case "PartitionRule_MultiLine":
@@ -58,8 +58,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static PartitionRule_MultiLine createPartitionRule_MultiLine(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "PartitionRule_MultiLine":
 					return new GsonPartitionRule_MultiLineImpl(o);
 				default:
@@ -74,8 +74,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static PartitionRule_SingleLine createPartitionRule_SingleLine(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "PartitionRule_SingleLine":
 					return new GsonPartitionRule_SingleLineImpl(o);
 				default:
@@ -90,8 +90,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static PartitionWhiteSpace createPartitionWhiteSpace(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "PartitionWhiteSpace":
 					return new GsonPartitionWhiteSpaceImpl(o);
 				default:
@@ -106,8 +106,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static Token createToken(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "Token":
 					return new GsonTokenImpl(o);
 				default:
@@ -122,8 +122,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static TokenScanner createTokenScanner(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "TokenScanner":
 					return new GsonTokenScannerImpl(o);
 				case "TokenScanner_CharacterRule":
@@ -148,8 +148,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static TokenScanner_CharacterRule createTokenScanner_CharacterRule(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "TokenScanner_CharacterRule":
 					return new GsonTokenScanner_CharacterRuleImpl(o);
 				default:
@@ -164,8 +164,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static TokenScanner_Keyword createTokenScanner_Keyword(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "TokenScanner_Keyword":
 					return new GsonTokenScanner_KeywordImpl(o);
 				default:
@@ -180,8 +180,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static TokenScanner_PatternRule createTokenScanner_PatternRule(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "TokenScanner_PatternRule":
 					return new GsonTokenScanner_PatternRuleImpl(o);
 				default:
@@ -196,8 +196,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static TokenScanner_SingleLineRule createTokenScanner_SingleLineRule(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "TokenScanner_SingleLineRule":
 					return new GsonTokenScanner_SingleLineRuleImpl(o);
 				default:
@@ -212,8 +212,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static TokenScanner_MultiLineRule createTokenScanner_MultiLineRule(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "TokenScanner_MultiLineRule":
 					return new GsonTokenScanner_MultiLineRuleImpl(o);
 				default:
@@ -228,8 +228,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static Check createCheck(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "Check":
 					return new GsonCheckImpl(o);
 				case "Equals":
@@ -248,8 +248,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static Equals createEquals(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "Equals":
 					return new GsonEqualsImpl(o);
 				default:
@@ -264,8 +264,8 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 
 	public static Range createRange(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "Range":
 					return new GsonRangeImpl(o);
 				default:
@@ -288,8 +288,8 @@ public final class GsonElementFactory implements EditorGModel {
 
 	@SuppressWarnings("unchecked")
 	private static <T extends EditorBase> T _createObject(JsonObject o) {
-		if( o.has("__type") ) {
-			switch( o.get("__type").getAsString() ) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
 				case "LanguageDef":
 					return (T) createLanguageDef(o);
 				case "Partition":
@@ -324,7 +324,7 @@ public final class GsonElementFactory implements EditorGModel {
 					return (T) createRange(o);
 			}
 		}
-		throw new IllegalArgumentException();
+		return (T) createLanguageDef(o);
 	}
 
 	public <T extends EditorBase> java.util.List<T> createList(java.io.Reader json) {

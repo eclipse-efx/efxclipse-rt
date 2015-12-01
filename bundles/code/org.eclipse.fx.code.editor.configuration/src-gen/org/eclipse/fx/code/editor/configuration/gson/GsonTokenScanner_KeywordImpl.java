@@ -6,10 +6,9 @@ import com.google.gson.JsonObject;
 public final class GsonTokenScanner_KeywordImpl implements GsonBase, TokenScanner_Keyword, TokenScanner {
 	public GsonTokenScanner_KeywordImpl(JsonObject jsonObject) {
 		this.check = jsonObject.has("check") ? GsonElementFactory.createCheck(jsonObject.getAsJsonObject("check")) : null;
-		this.keywordList = java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("keywordList").spliterator(), false )
-								.map( e -> e.getAsString()).collect(java.util.stream.Collectors.toList()));
+		this.keywordList = jsonObject.has("keywordList") ? java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("keywordList").spliterator(), false )
+								.map( e -> e.getAsString()).collect(java.util.stream.Collectors.toList())) : java.util.Collections.emptyList();
 	}
-
 	public GsonTokenScanner_KeywordImpl(Check check, java.util.List<String> keywordList) {
 		this.check = check;
 		this.keywordList = keywordList;
@@ -17,7 +16,7 @@ public final class GsonTokenScanner_KeywordImpl implements GsonBase, TokenScanne
 
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
-		o.addProperty( "__type", "TokenScanner_Keyword" );
+		o.addProperty( "$gtype", "TokenScanner_Keyword" );
 		o.add( "check", getCheck() == null ? null : ((GsonBase)getCheck()).toJSONObject() );
 		o.add( "keywordList", GsonBase.toJsonArray(getKeywordList().stream().map(com.google.gson.JsonPrimitive::new).collect(java.util.stream.Collectors.toList())) );
 		return o;
@@ -25,7 +24,7 @@ public final class GsonTokenScanner_KeywordImpl implements GsonBase, TokenScanne
 
 	public String toString() {
 		return getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " { "
-					 + "check : " + check == null ? null : check.getClass().getSimpleName() + "@" + Integer.toHexString(check.hashCode()) + ", "
+					 + "check : " + (check == null ? null : check.getClass().getSimpleName() + "@" + Integer.toHexString(check.hashCode())) + ", "
 					 + "keywordList : " + keywordList
 					+" }";
 	}
@@ -42,13 +41,13 @@ public final class GsonTokenScanner_KeywordImpl implements GsonBase, TokenScanne
 	}
 	
 
+
 	public static class Builder implements TokenScanner_Keyword.Builder {
 		private final EditorGModel instance;
 
 		public Builder(EditorGModel instance) {
 			this.instance = instance;
 		}
-
 		private Check check;
 		public Builder check(Check check) {
 			this.check = check;

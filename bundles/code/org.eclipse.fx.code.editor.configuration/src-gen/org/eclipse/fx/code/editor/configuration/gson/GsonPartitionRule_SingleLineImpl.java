@@ -10,7 +10,6 @@ public final class GsonPartitionRule_SingleLineImpl implements GsonBase, Partiti
 		this.escapedBy = jsonObject.has("escapedBy") ? jsonObject.get("escapedBy").getAsString() : null;
 		this.startSeq = jsonObject.has("startSeq") ? jsonObject.get("startSeq").getAsString() : null;
 	}
-
 	public GsonPartitionRule_SingleLineImpl(Check check, String endSeq, String escapedBy, String startSeq) {
 		this.check = check;
 		this.endSeq = endSeq;
@@ -20,7 +19,7 @@ public final class GsonPartitionRule_SingleLineImpl implements GsonBase, Partiti
 
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
-		o.addProperty( "__type", "PartitionRule_SingleLine" );
+		o.addProperty( "$gtype", "PartitionRule_SingleLine" );
 		o.add( "check", getCheck() == null ? null : ((GsonBase)getCheck()).toJSONObject() );
 		o.addProperty( "endSeq", getEndSeq() );
 		o.addProperty( "escapedBy", getEscapedBy() );
@@ -30,7 +29,7 @@ public final class GsonPartitionRule_SingleLineImpl implements GsonBase, Partiti
 
 	public String toString() {
 		return getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " { "
-					 + "check : " + check == null ? null : check.getClass().getSimpleName() + "@" + Integer.toHexString(check.hashCode()) + ", "
+					 + "check : " + (check == null ? null : check.getClass().getSimpleName() + "@" + Integer.toHexString(check.hashCode())) + ", "
 					 + "endSeq : " + endSeq + ", "
 					 + "escapedBy : " + escapedBy + ", "
 					 + "startSeq : " + startSeq
@@ -61,13 +60,13 @@ public final class GsonPartitionRule_SingleLineImpl implements GsonBase, Partiti
 	}
 	
 
+
 	public static class Builder implements PartitionRule_SingleLine.Builder {
 		private final EditorGModel instance;
 
 		public Builder(EditorGModel instance) {
 			this.instance = instance;
 		}
-
 		private Check check;
 		public Builder check(Check check) {
 			this.check = check;

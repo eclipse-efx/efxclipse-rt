@@ -7,10 +7,9 @@ public final class GsonTokenImpl implements GsonBase, Token {
 	public GsonTokenImpl(JsonObject jsonObject) {
 		this.defaultToken = jsonObject.has("defaultToken") ? jsonObject.get("defaultToken").getAsBoolean() : false;
 		this.name = jsonObject.has("name") ? jsonObject.get("name").getAsString() : null;
-		this.tokenScannerList = java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("tokenScannerList").spliterator(), false )
-								.map( e -> GsonElementFactory.createTokenScanner(e.getAsJsonObject())).collect(java.util.stream.Collectors.toList()));
+		this.tokenScannerList = jsonObject.has("tokenScannerList") ? java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("tokenScannerList").spliterator(), false )
+								.map( e -> GsonElementFactory.createTokenScanner(e.getAsJsonObject())).collect(java.util.stream.Collectors.toList())) : java.util.Collections.emptyList();
 	}
-
 	public GsonTokenImpl(boolean defaultToken, String name, java.util.List<TokenScanner> tokenScannerList) {
 		this.defaultToken = defaultToken;
 		this.name = name;
@@ -19,7 +18,7 @@ public final class GsonTokenImpl implements GsonBase, Token {
 
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
-		o.addProperty( "__type", "Token" );
+		o.addProperty( "$gtype", "Token" );
 		o.addProperty( "defaultToken", isDefaultToken() );
 		o.addProperty( "name", getName() );
 		o.add( "tokenScannerList", GsonBase.toDomainJsonArray(getTokenScannerList()) );
@@ -52,13 +51,13 @@ public final class GsonTokenImpl implements GsonBase, Token {
 	}
 	
 
+
 	public static class Builder implements Token.Builder {
 		private final EditorGModel instance;
 
 		public Builder(EditorGModel instance) {
 			this.instance = instance;
 		}
-
 		private boolean defaultToken;
 		public Builder defaultToken(boolean defaultToken) {
 			this.defaultToken = defaultToken;

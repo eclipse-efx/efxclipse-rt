@@ -6,10 +6,9 @@ import com.google.gson.JsonObject;
 public final class GsonLanguageDefImpl implements GsonBase, LanguageDef {
 	public GsonLanguageDefImpl(JsonObject jsonObject) {
 		this.fileSuffix = jsonObject.has("fileSuffix") ? jsonObject.get("fileSuffix").getAsString() : null;
-		this.partitionList = java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("partitionList").spliterator(), false )
-								.map( e -> GsonElementFactory.createPartition(e.getAsJsonObject())).collect(java.util.stream.Collectors.toList()));
+		this.partitionList = jsonObject.has("partitionList") ? java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("partitionList").spliterator(), false )
+								.map( e -> GsonElementFactory.createPartition(e.getAsJsonObject())).collect(java.util.stream.Collectors.toList())) : java.util.Collections.emptyList();
 	}
-
 	public GsonLanguageDefImpl(String fileSuffix, java.util.List<Partition> partitionList) {
 		this.fileSuffix = fileSuffix;
 		this.partitionList = partitionList;
@@ -17,7 +16,7 @@ public final class GsonLanguageDefImpl implements GsonBase, LanguageDef {
 
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
-		o.addProperty( "__type", "LanguageDef" );
+		o.addProperty( "$gtype", "LanguageDef" );
 		o.addProperty( "fileSuffix", getFileSuffix() );
 		o.add( "partitionList", GsonBase.toDomainJsonArray(getPartitionList()) );
 		return o;
@@ -42,13 +41,13 @@ public final class GsonLanguageDefImpl implements GsonBase, LanguageDef {
 	}
 	
 
+
 	public static class Builder implements LanguageDef.Builder {
 		private final EditorGModel instance;
 
 		public Builder(EditorGModel instance) {
 			this.instance = instance;
 		}
-
 		private String fileSuffix;
 		public Builder fileSuffix(String fileSuffix) {
 			this.fileSuffix = fileSuffix;

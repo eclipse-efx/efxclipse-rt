@@ -6,13 +6,12 @@ import com.google.gson.JsonObject;
 public final class GsonPartitionImpl implements GsonBase, Partition {
 	public GsonPartitionImpl(JsonObject jsonObject) {
 		this.name = jsonObject.has("name") ? jsonObject.get("name").getAsString() : null;
-		this.ruleList = java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("ruleList").spliterator(), false )
-								.map( e -> GsonElementFactory.createPartitionRule(e.getAsJsonObject())).collect(java.util.stream.Collectors.toList()));
-		this.tokenList = java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("tokenList").spliterator(), false )
-								.map( e -> GsonElementFactory.createToken(e.getAsJsonObject())).collect(java.util.stream.Collectors.toList()));
+		this.ruleList = jsonObject.has("ruleList") ? java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("ruleList").spliterator(), false )
+								.map( e -> GsonElementFactory.createPartitionRule(e.getAsJsonObject())).collect(java.util.stream.Collectors.toList())) : java.util.Collections.emptyList();
+		this.tokenList = jsonObject.has("tokenList") ? java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("tokenList").spliterator(), false )
+								.map( e -> GsonElementFactory.createToken(e.getAsJsonObject())).collect(java.util.stream.Collectors.toList())) : java.util.Collections.emptyList();
 		this.whitespace = jsonObject.has("whitespace") ? GsonElementFactory.createPartitionWhiteSpace(jsonObject.getAsJsonObject("whitespace")) : null;
 	}
-
 	public GsonPartitionImpl(String name, java.util.List<PartitionRule> ruleList, java.util.List<Token> tokenList, PartitionWhiteSpace whitespace) {
 		this.name = name;
 		this.ruleList = ruleList;
@@ -22,7 +21,7 @@ public final class GsonPartitionImpl implements GsonBase, Partition {
 
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
-		o.addProperty( "__type", "Partition" );
+		o.addProperty( "$gtype", "Partition" );
 		o.addProperty( "name", getName() );
 		o.add( "ruleList", GsonBase.toDomainJsonArray(getRuleList()) );
 		o.add( "tokenList", GsonBase.toDomainJsonArray(getTokenList()) );
@@ -35,7 +34,7 @@ public final class GsonPartitionImpl implements GsonBase, Partition {
 					 + "name : " + name + ", "
 					 + "ruleList : " + ruleList.stream().map( e -> e.getClass().getSimpleName() + "@" + Integer.toHexString(e.hashCode()) ).collect(java.util.stream.Collectors.toList()) + ", "
 					 + "tokenList : " + tokenList.stream().map( e -> e.getClass().getSimpleName() + "@" + Integer.toHexString(e.hashCode()) ).collect(java.util.stream.Collectors.toList()) + ", "
-					 + "whitespace : " + whitespace == null ? null : whitespace.getClass().getSimpleName() + "@" + Integer.toHexString(whitespace.hashCode())
+					 + "whitespace : " + (whitespace == null ? null : whitespace.getClass().getSimpleName() + "@" + Integer.toHexString(whitespace.hashCode()))
 					+" }";
 	}
 
@@ -63,13 +62,13 @@ public final class GsonPartitionImpl implements GsonBase, Partition {
 	}
 	
 
+
 	public static class Builder implements Partition.Builder {
 		private final EditorGModel instance;
 
 		public Builder(EditorGModel instance) {
 			this.instance = instance;
 		}
-
 		private String name;
 		public Builder name(String name) {
 			this.name = name;
