@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.code.editor.configuration.text.internal.ConfigurationModelCF">
-   <property name="service.context.key" value="org.eclipse.fx.code.editor.configuration.LanguageDe"/>
+   <property name="service.context.key" value="org.eclipse.fx.code.editor.configuration.LanguageDef"/>
    <service>
       <provide interface="org.eclipse.e4.core.contexts.IContextFunction"/>
    </service>

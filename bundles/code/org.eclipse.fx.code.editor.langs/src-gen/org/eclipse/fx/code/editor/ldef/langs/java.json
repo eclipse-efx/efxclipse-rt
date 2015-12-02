@@ -1,0 +1,253 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "java",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "java_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "java_operator",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                ";",
+                ".",
+                "\u003d",
+                "/",
+                "\\",
+                "+",
+                "-",
+                "*",
+                "\u003c",
+                "\u003e",
+                ":",
+                "?",
+                "!",
+                ",",
+                "|",
+                "\u0026",
+                "^",
+                "%",
+                "~"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "java_bracket",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                "(",
+                ")",
+                "{",
+                "}",
+                "[",
+                "]"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "java_keyword",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "abstract",
+                "break",
+                "case",
+                "catch",
+                "class",
+                "const",
+                "continue",
+                "default",
+                "do",
+                "else",
+                "extends",
+                "final",
+                "finally",
+                "for",
+                "goto",
+                "if",
+                "implements",
+                "import",
+                "instanceof",
+                "interface",
+                "native",
+                "new",
+                "package",
+                "private",
+                "protected",
+                "public",
+                "static",
+                "super",
+                "switch",
+                "synchronized",
+                "this",
+                "throw",
+                "throws",
+                "transient",
+                "try",
+                "volatile",
+                "while",
+                "interface",
+                "enum",
+                "return"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "java_buitin_type",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "void",
+                "boolean",
+                "char",
+                "byte",
+                "short",
+                "strictfp",
+                "int",
+                "long",
+                "float",
+                "double"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "java_constant",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "true",
+                "false",
+                "null"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "java_annotation",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "\\w",
+              "startLength": 0,
+              "startPattern": "@"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__java_multi_line_api_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/**"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "java_apidoc",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__java_single_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "",
+          "startSeq": "//"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "java_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__java_multi_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/*"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "java_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__java_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\u0027",
+          "escapedBy": "\\",
+          "startSeq": "\u0027"
+        },
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "java_string",
+          "tokenScannerList": []
+        }
+      ]
+    }
+  ]
+}

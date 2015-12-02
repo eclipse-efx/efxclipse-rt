@@ -1,0 +1,320 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "dart",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "dart_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "dart_operator",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                ";",
+                ".",
+                "\u003d",
+                "/",
+                "\\",
+                "+",
+                "-",
+                "*",
+                "\u003c",
+                "\u003e",
+                ":",
+                "?",
+                "!",
+                ",",
+                "|",
+                "\u0026",
+                "^",
+                "%",
+                "~"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "dart_bracket",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                "(",
+                ")",
+                "{",
+                "}",
+                "[",
+                "]"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "dart_keyword",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "break",
+                "case",
+                "catch",
+                "class",
+                "const",
+                "continue",
+                "default",
+                "do",
+                "else",
+                "enum",
+                "extends",
+                "false",
+                "final",
+                "finally",
+                "for",
+                "if",
+                "in",
+                "is",
+                "new",
+                "null",
+                "rethrow",
+                "return",
+                "super",
+                "switch",
+                "this",
+                "throw",
+                "true",
+                "try",
+                "var",
+                "void",
+                "while",
+                "with"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "dart_keyword_1",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "abstract",
+                "as",
+                "assert",
+                "deferred",
+                "dynamic",
+                "export",
+                "external",
+                "factory",
+                "get",
+                "implements",
+                "import",
+                "library",
+                "operator",
+                "part",
+                "set",
+                "static",
+                "typedef"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "dart_keyword_2",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "async",
+                "async*",
+                "await",
+                "sync*",
+                "yield",
+                "yield*"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "dart_builtin_types",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "num",
+                "String",
+                "bool",
+                "int",
+                "double",
+                "List",
+                "Map"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__dart_singlelinedoc_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "startSeq": "///"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "dart_doc",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "dart_doc_reference",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "]",
+              "startSeq": "["
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__dart_multilinedoc_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/**"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "dart_doc",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "dart_doc_reference",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "]",
+              "startSeq": "["
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__dart_singleline_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "startSeq": "//"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "dart_single_line_comment",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__dart_multiline_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/*"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "dart_multi_line_comment",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__dart_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\u0027",
+          "escapedBy": "\\",
+          "startSeq": "\u0027"
+        },
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "dart_string",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "dart_string_inter",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "}",
+              "startSeq": "${"
+            },
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "\\w",
+              "startLength": 0,
+              "startPattern": "\\$"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

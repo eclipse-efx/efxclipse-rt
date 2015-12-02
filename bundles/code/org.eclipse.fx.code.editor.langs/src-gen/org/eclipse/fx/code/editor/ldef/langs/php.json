@@ -1,0 +1,264 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "php",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "php_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "php_keyword",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "abstract",
+                "and",
+                "as",
+                "break",
+                "callable",
+                "case",
+                "catch",
+                "class",
+                "clone",
+                "const",
+                "continue",
+                "declare",
+                "default",
+                "do",
+                "else",
+                "elseif",
+                "enddeclare",
+                "endfor",
+                "endforeach",
+                "endif",
+                "endswitch",
+                "endwhile",
+                "extends",
+                "final",
+                "finally",
+                "for",
+                "foreach",
+                "function",
+                "global",
+                "goto",
+                "if",
+                "implements",
+                "instanceof",
+                "insteadof",
+                "interface",
+                "namespace",
+                "new",
+                "or",
+                "private",
+                "protected",
+                "public",
+                "return",
+                "static",
+                "switch",
+                "throw",
+                "trait",
+                "try"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "php_operator",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                ";",
+                ".",
+                "\u003d",
+                "/",
+                "\\",
+                "+",
+                "-",
+                "*",
+                "\u003c",
+                "\u003e",
+                ":",
+                "?",
+                "!",
+                ",",
+                "|",
+                "\u0026",
+                "^",
+                "%",
+                "~"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "php_bracket",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                "(",
+                ")",
+                "{",
+                "}",
+                "[",
+                "]"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "php_builtin_functions",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "__halt_compiler",
+                "array",
+                "die",
+                "echo",
+                "empty",
+                "eval",
+                "exit",
+                "include",
+                "include_once",
+                "isset",
+                "list",
+                "print",
+                "unset",
+                "use",
+                "var",
+                "while",
+                "xor",
+                "require",
+                "require_once",
+                "yield"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "php_builtin_classes",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "ArrayAccess",
+                "Closure",
+                "ErrorException",
+                "Exception",
+                "Generator",
+                "Iterator",
+                "IteratorAggregate",
+                "Serializable",
+                "Traversable",
+                "stdClass"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "php_compile_constants",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "__CLASS__",
+                "__DIR__",
+                "__FILE__",
+                "__FUNCTION__",
+                "__LINE__",
+                "__METHOD__",
+                "__NAMESPACE__ ",
+                "__TRAIT__"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__php_multiline_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/*"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "php_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__php_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        },
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\u0027",
+          "escapedBy": "\\",
+          "startSeq": "\u0027"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "php_string",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "php_string_inter",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "}",
+              "startSeq": "${"
+            },
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "\\w",
+              "startLength": 0,
+              "startPattern": "\\$"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

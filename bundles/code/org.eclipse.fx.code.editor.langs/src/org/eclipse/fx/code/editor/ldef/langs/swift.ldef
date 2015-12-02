@@ -1,0 +1,69 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+swift {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __swift_single_line_comment
+		partition __swift_multi_line_comment
+		partition __swift_string
+		rule {
+			single_line __swift_single_line_comment 	"//" 	=> ''
+			multi_line __swift_multi_line_comment 		"/*" 	=> "*/"
+			single_line __swift_string 				'"' 	=> '"' escaped by "\\"
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type {
+			default swift_default
+			swift_keyword {
+				keywords [
+						"as", 			"break", 		"case", 		"catch",	"class"
+      				, 	"continue", 	"convenience",	"default", 		"defer", 	"deinit"
+      				,	"didSet",		"do",			"dynamic",		"else",		"extension"
+      				,	"fallthrough",	"final",		"for",			"func",		"get"
+      				,	"guard",		"if",			"import",		"in",		"infix"
+      				,	"init",			"inout",		"internal",		"is",		"lazy"
+      				,	"let",			"mutating",		"nil",			"operator",	"optional"
+      				,	"override",		"postfix",		"prefix",		"private",	"protocol"
+      				,	"public",		"repeat",		"required",		"return",	"self"
+      				,	"set",			"static",		"subscript",	"super",	"switch"
+      				,	"throws",		"try",			"typealias",	"unowned",	"var"
+      				,	"weak",			"where",		"while",		"willSet"
+      				, 	"struct",		"enum"
+				]
+			}
+			swift_builtin_type {
+				keywords [
+					"Int", "Bool"
+				]
+			}
+			swift_operator {
+				character [
+					"~", "!", "%", "^", "&", "*", "-", "+", "=", "|", "/", ".", "<", ">", "?"
+				]
+			}
+			swift_number {
+				pattern "[0-9]" containing "[0-9|\\.|e|E|-]"
+			}
+			swift_attribute {
+				pattern "@" containing "[\\w]"
+			}
+		}
+		rule __swift_single_line_comment {
+			default swift_doc_default
+		}
+		rule __swift_multi_line_comment {
+			default swift_doc_default
+		}
+		rule __swift_string {
+			default swift_string
+		}
+	}
+	integration {
+		javafx {
+			java "org.eclipse.fx.code.editor.langs.codegen.fx.swift" {
+				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+			}
+		}
+	}
+}

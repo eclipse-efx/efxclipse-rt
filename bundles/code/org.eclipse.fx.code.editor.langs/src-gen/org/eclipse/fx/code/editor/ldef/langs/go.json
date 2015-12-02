@@ -1,0 +1,199 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "go",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "go_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "go_keyword",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "break",
+                "case",
+                "const",
+                "continue",
+                "default",
+                "defer",
+                "else",
+                "fallthrough",
+                "for",
+                "func",
+                "go",
+                "goto",
+                "if",
+                "import",
+                "interface",
+                "package",
+                "range",
+                "return",
+                "select",
+                "struct",
+                "switch",
+                "type",
+                "var"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "go_types",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "bool",
+                "byte",
+                "chan",
+                "complex64",
+                "complex128",
+                "error",
+                "float32",
+                "float64",
+                "func",
+                "int",
+                "int8",
+                "int16",
+                "int32",
+                "int64",
+                "map",
+                "rune",
+                "string",
+                "uint",
+                "uint8",
+                "uint16",
+                "uint32",
+                "uint64",
+                "uintptr"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "go_builtin_constants",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "iota",
+                "nil",
+                "true",
+                "false"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "go_builtin_functions",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "append",
+                "cap",
+                "close",
+                "complex",
+                "copy",
+                "delete",
+                "imag",
+                "len",
+                "make",
+                "new",
+                "panic",
+                "real",
+                "recover"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__go_single_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "",
+          "startSeq": "//"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "go_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__go_multi_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/*"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "go_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__go_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        },
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\u0027",
+          "escapedBy": "\\",
+          "startSeq": "\u0027"
+        },
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "`",
+          "startSeq": "`"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "go_string",
+          "tokenScannerList": []
+        }
+      ]
+    }
+  ]
+}

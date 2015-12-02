@@ -1,0 +1,114 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+adoc {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __adoc_multiline_comment
+		partition __adoc_singleline_comment
+		partition __adoc_literal_block
+		partition __adoc_multiline_code
+		partition __adoc_list_entry
+		rule {
+			multi_line __adoc_multiline_comment "////" col eq 0 => "////"
+			single_line __adoc_singleline_comment "//" col eq 0
+			single_line __adoc_list_entry "* " col eq 0
+			multi_line __adoc_multiline_code "----" col eq 0 => "----"
+			multi_line __adoc_literal_block "...." col eq 0 => "...."
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type whitespace javawhitespace {
+			default adoc_default
+			adoc_block {
+				single_line "****" col eq 0
+				single_line "++++" col eq 0
+				single_line "____" col eq 0
+				single_line "----" col eq 0
+			}
+			adoc_header {
+				single_line "." col eq 0
+			}
+			adoc_header_attribute {
+				single_line ":" col eq 0
+			}
+			adoc_section_0 {
+				single_line "= " col eq 0
+			}
+			adoc_section_1 {
+				single_line "== " col eq 0
+			}
+			adoc_section_2 {
+				single_line "=== " col eq 0
+			}
+			adoc_section_3 {
+				single_line "==== " col eq 0
+			}
+			adoc_section_4 {
+				single_line "===== " col eq 0
+			}
+			adoc_section_5 {
+				single_line "====== " col eq 0
+			}
+			adoc_mono_bold_italic {
+				single_line "``**__" => "__**``"
+				single_line "`*_" => "_*`"
+			}
+			adoc_bold_italic {
+				single_line "**_" => "_**"
+				single_line "*_" => "_*"
+			}
+			adoc_mono_bold {
+				single_line "`*" => "*`"
+				single_line "``**" => "**``"
+			}
+			adoc_mono_italic {
+				single_line "`_" => "_`"
+				single_line "``__" => "__``"
+			}
+			adoc_italic {
+				single_line "__" => "__"
+				single_line "_" => "_"
+			}
+			adoc_bold {
+				single_line "**" => "**"
+				single_line "*" => "*"
+			}
+			adoc_literal {
+				single_line "``" => "``"
+				single_line "`" => "`"
+			}
+			adoc_super {
+				single_line "^" => "^"
+			}
+			adoc_sub {
+				single_line "~" => "~"
+			}
+			adoc_admonition {
+				single_line "NOTE:" col eq 0
+				single_line "TIP:" col eq 0
+				single_line "IMPORTANT:" col eq 0
+				single_line "WARNING:" col eq 0
+				single_line "CAUTION:" col eq 0
+			}
+		}
+		rule __adoc_multiline_comment {
+			default adoc_comment
+		}
+		rule __adoc_singleline_comment {
+			default adoc_comment
+		}
+		rule __adoc_literal_block {
+			default adoc_literal
+		}
+		rule __adoc_multiline_code {
+			default adoc_code
+		}
+	}
+	integration {
+		javafx {
+			java "org.eclipse.fx.code.editor.langs.codegen.fx.asciidoc" {
+				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+			}
+		}
+	}
+}

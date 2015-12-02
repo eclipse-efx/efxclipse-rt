@@ -1,0 +1,176 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "py",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "python_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "python_operator",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                ";",
+                ".",
+                "\u003d",
+                "/",
+                "\\",
+                "+",
+                "-",
+                "*",
+                "\u003c",
+                "\u003e",
+                ":",
+                "?",
+                "!",
+                ",",
+                "|",
+                "\u0026",
+                "^",
+                "%",
+                "~"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "python_bracket",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                "(",
+                ")",
+                "{",
+                "}",
+                "[",
+                "]"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "python_keyword",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "and",
+                "as",
+                "assert",
+                "break",
+                "class",
+                "continue",
+                "def",
+                "del",
+                "elif",
+                "else",
+                "except",
+                "exec",
+                "finally",
+                "for",
+                "from",
+                "global",
+                "if",
+                "import",
+                "in",
+                "is",
+                "lambda",
+                "not",
+                "or",
+                "pass",
+                "print",
+                "raise",
+                "return",
+                "try",
+                "while",
+                "with",
+                "yield",
+                "return"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__python_multiline_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "\u0027\u0027\u0027",
+          "startSeq": "\u0027\u0027\u0027"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "python_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__python_singleline_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "",
+          "startSeq": "#"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "python_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__python_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        },
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\u0027",
+          "escapedBy": "\\",
+          "startSeq": "\u0027"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "phyton_string",
+          "tokenScannerList": []
+        }
+      ]
+    }
+  ]
+}

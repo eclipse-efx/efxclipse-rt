@@ -1,0 +1,222 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "rust",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "rust_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "rust_function",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "fn"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "rust_type",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "type"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "rust_keyword",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "abstract",
+                "alignof",
+                "as",
+                "become",
+                "box",
+                "break",
+                "const",
+                "continue",
+                "crate",
+                "do",
+                "else",
+                "enum",
+                "extern",
+                "final",
+                "for",
+                "if",
+                "impl",
+                "in",
+                "let",
+                "loop",
+                "macro",
+                "match",
+                "mod",
+                "move",
+                "mut",
+                "offsetof",
+                "override",
+                "priv",
+                "proc",
+                "pub",
+                "pure",
+                "ref",
+                "return",
+                "sizeof",
+                "static",
+                "struct",
+                "super",
+                "trait",
+                "typeof",
+                "unsafe",
+                "unsized",
+                "use",
+                "virtual",
+                "where",
+                "while",
+                "yield"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "rust_types",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "bool",
+                "isize",
+                "usize",
+                "i8",
+                "i16",
+                "i32",
+                "i64",
+                "u8",
+                "u16",
+                "u32",
+                "u64",
+                "f32",
+                "f64",
+                "char",
+                "str"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "rust_self",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "self",
+                "Self"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "rust_constants",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "true",
+                "false"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__rust_single_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "",
+          "startSeq": "//"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "rust_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__rust_multi_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/*"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "rust_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__rust_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        },
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\u0027",
+          "escapedBy": "\\",
+          "startSeq": "\u0027"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "rust_string",
+          "tokenScannerList": []
+        }
+      ]
+    }
+  ]
+}

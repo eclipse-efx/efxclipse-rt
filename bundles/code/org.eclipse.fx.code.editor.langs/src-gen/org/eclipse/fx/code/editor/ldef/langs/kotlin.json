@@ -1,0 +1,181 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "kotlin",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "kotlin_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "kotlin_keyword",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "break",
+                "continue",
+                "return",
+                "if",
+                "else",
+                "when",
+                "do",
+                "for",
+                "while",
+                "as",
+                "in",
+                "is",
+                "by",
+                "get",
+                "set",
+                "out",
+                "super",
+                "this",
+                "This",
+                "where",
+                "try",
+                "catch",
+                "finally",
+                "throw",
+                "import",
+                "package",
+                "annotation",
+                "companion",
+                "enum",
+                "inner",
+                "internal",
+                "private",
+                "protected",
+                "public",
+                "abstract",
+                "final",
+                "open",
+                "override",
+                "sealed",
+                "vararg",
+                "dynamic",
+                "class",
+                "object",
+                "interface",
+                "trait",
+                "fun",
+                "val",
+                "var",
+                "constructor",
+                "init",
+                "typealias",
+                "data",
+                "inline",
+                "reified",
+                "native",
+                "synchronized",
+                "transient",
+                "volatile"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "kotlin_literals",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "true",
+                "false",
+                "null"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__kotlin_multi_line_api_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/**"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "kotlin_api_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__kotlin_single_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "",
+          "startSeq": "//"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "kotlin_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__kotlin_multi_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/*"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "kotlin_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__kotlin_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "kotlin_string",
+          "tokenScannerList": []
+        }
+      ]
+    }
+  ]
+}

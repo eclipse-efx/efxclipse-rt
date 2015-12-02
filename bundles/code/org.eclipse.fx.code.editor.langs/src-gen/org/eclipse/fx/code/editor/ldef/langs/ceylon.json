@@ -1,0 +1,182 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "ceylon",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "ceylon_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "ceylon_keyword",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "abstracts",
+                "alias",
+                "assembly",
+                "assert",
+                "assign",
+                "break",
+                "case",
+                "catch",
+                "class",
+                "continue",
+                "dynamic",
+                "else",
+                "exists",
+                "extends",
+                "finally",
+                "for",
+                "function",
+                "given",
+                "if",
+                "import",
+                "in",
+                "interface",
+                "is",
+                "let",
+                "module",
+                "new",
+                "nonempty",
+                "object",
+                "of",
+                "out",
+                "outer",
+                "package",
+                "return",
+                "satisfies",
+                "super",
+                "switch",
+                "then",
+                "this",
+                "throw",
+                "try",
+                "value",
+                "void",
+                "while"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "ceylon_annotation",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "abstract",
+                "actual",
+                "annotation",
+                "default",
+                "deprecated",
+                "doc",
+                "by",
+                "formal",
+                "final",
+                "late",
+                "license",
+                "native",
+                "optional",
+                "sealed",
+                "see",
+                "shared",
+                "throws",
+                "tagged",
+                "variable"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__ceylon_multi_line_api_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/**"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "ceylon_api_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__ceylon_single_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "",
+          "startSeq": "//"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "ceylon_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__ceylon_multi_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/*"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "ceylon_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__ceylon_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "ceylon_string",
+          "tokenScannerList": []
+        }
+      ]
+    }
+  ]
+}

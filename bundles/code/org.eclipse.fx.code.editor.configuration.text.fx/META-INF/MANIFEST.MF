@@ -18,3 +18,4 @@ Import-Package: javax.inject;version="1.0.0",
  org.osgi.service.component.annotations
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.configuration.text.fx.ConfigurationPresentationReconcilerTypeProvider.xml
 Require-Bundle: org.eclipse.text;bundle-version="3.5.400"
+Bundle-ActivationPolicy: lazy

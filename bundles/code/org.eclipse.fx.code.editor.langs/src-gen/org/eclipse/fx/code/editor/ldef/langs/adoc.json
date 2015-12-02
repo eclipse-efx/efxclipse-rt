@@ -1,0 +1,454 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "adoc",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "adoc_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_block",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "****"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "++++"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "____"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "----"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_header",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "."
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_header_attribute",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": ":"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_section_0",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "\u003d "
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_section_1",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "\u003d\u003d "
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_section_2",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "\u003d\u003d\u003d "
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_section_3",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "\u003d\u003d\u003d\u003d "
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_section_4",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "\u003d\u003d\u003d\u003d\u003d "
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_section_5",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "\u003d\u003d\u003d\u003d\u003d\u003d "
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_mono_bold_italic",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "__**``",
+              "startSeq": "``**__"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "_*`",
+              "startSeq": "`*_"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_bold_italic",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "_**",
+              "startSeq": "**_"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "_*",
+              "startSeq": "*_"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_mono_bold",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "*`",
+              "startSeq": "`*"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "**``",
+              "startSeq": "``**"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_mono_italic",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "_`",
+              "startSeq": "`_"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "__``",
+              "startSeq": "``__"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_italic",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "__",
+              "startSeq": "__"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "_",
+              "startSeq": "_"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_bold",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "**",
+              "startSeq": "**"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "*",
+              "startSeq": "*"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_literal",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "``",
+              "startSeq": "``"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "`",
+              "startSeq": "`"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_super",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "^",
+              "startSeq": "^"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_sub",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "~",
+              "startSeq": "~"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "adoc_admonition",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "NOTE:"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "TIP:"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "IMPORTANT:"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "WARNING:"
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "check": {
+                "$gtype": "Equals",
+                "value": 0
+              },
+              "startSeq": "CAUTION:"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__adoc_multiline_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "////",
+          "startSeq": "////"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "adoc_comment",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__adoc_singleline_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "startSeq": "//"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "adoc_comment",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__adoc_literal_block",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "....",
+          "startSeq": "...."
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "adoc_literal",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__adoc_multiline_code",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "----",
+          "startSeq": "----"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "adoc_code",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__adoc_list_entry",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "startSeq": "* "
+        }
+      ],
+      "tokenList": []
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Contrib
+Bundle-SymbolicName: org.eclipse.fx.code.editor.langs.contrib
+Bundle-Version: 2.2.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.fx.code.editor.configuration.text,
+ org.eclipse.fx.code.editor,
+ org.eclipse.fx.code.editor.configuration,
+ org.eclipse.fx.core
+Import-Package: org.osgi.service.component.annotations;resolution:=optional
+Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.langs.contrib.LangsConfigurationModelProvider.xml
+Bundle-ActivationPolicy: lazy

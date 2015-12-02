@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.fx.code.editor.ldef.langs.text.LDefDefaultModelProvider">
-   <implementation class="org.eclipse.fx.code.editor.ldef.langs.text.LDefDefaultModelProvider"/>
-   <service>
-      <provide interface="org.eclipse.fx.code.editor.ldef.text.LDefModelProvider"/>
-      <provide interface="org.eclipse.fx.code.editor.ldef.langs.text.LDefDefaultModelProvider"/>
-   </service>
-</scr:component>

@@ -1,0 +1,170 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "js",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "js_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "js_operator",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                ";",
+                ".",
+                "\u003d",
+                "/",
+                "\\",
+                "+",
+                "-",
+                "*",
+                "\u003c",
+                "\u003e",
+                ":",
+                "?",
+                "!",
+                ",",
+                "|",
+                "\u0026",
+                "^",
+                "%",
+                "~"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "js_bracket",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                "(",
+                ")",
+                "{",
+                "}",
+                "[",
+                "]"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "js_keyword",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "break",
+                "case",
+                "catch",
+                "continue",
+                "debugger",
+                "default",
+                "delete",
+                "do",
+                "else",
+                "finally",
+                "for",
+                "function",
+                "if",
+                "in",
+                "instanceof",
+                "new",
+                "return",
+                "switch",
+                "this",
+                "throw",
+                "try",
+                "typeof",
+                "var",
+                "void",
+                "while",
+                "with"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__js_single_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "",
+          "startSeq": "//"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "js_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__js_multi_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/*"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "js_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__js_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\u0027",
+          "escapedBy": "\\",
+          "startSeq": "\u0027"
+        },
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "js_string",
+          "tokenScannerList": []
+        }
+      ]
+    }
+  ]
+}

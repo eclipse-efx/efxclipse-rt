@@ -15,7 +15,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 @SuppressWarnings("restriction")
-@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.configuration.LanguageDe"})
+@Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.configuration.LanguageDef"})
 public class ConfigurationModelCF extends ContextFunction {
 	private List<ConfigurationModelProvider> providerList = new ArrayList<>();
 

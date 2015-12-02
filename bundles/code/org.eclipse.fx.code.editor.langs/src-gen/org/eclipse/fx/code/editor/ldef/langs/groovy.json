@@ -1,0 +1,209 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "groovy",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "groovy_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "groovy_keyword",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "abstract",
+                "as",
+                "assert",
+                "break",
+                "case",
+                "catch",
+                "class",
+                "const",
+                "continue",
+                "def",
+                "default",
+                "do",
+                "else",
+                "enum",
+                "extends",
+                "false",
+                "final",
+                "finally",
+                "for",
+                "goto",
+                "if",
+                "implements",
+                "import",
+                "in",
+                "instanceof",
+                "interface",
+                "native",
+                "new",
+                "null",
+                "package",
+                "private",
+                "protected",
+                "public",
+                "static",
+                "strictfp",
+                "super",
+                "switch",
+                "synchronized",
+                "this",
+                "threadsafe",
+                "throw",
+                "throws",
+                "transient",
+                "true",
+                "try",
+                "void",
+                "volatile",
+                "while",
+                "return"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "groovy_builtin_type",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "boolean",
+                "byte",
+                "char",
+                "short",
+                "int",
+                "long",
+                "double",
+                "float"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__groovy_apidoc",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/**"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "groovy_api_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__groovy_multiline_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "*/",
+          "startSeq": "/*"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "groovy_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__groovy_singleline_comment",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "groovy_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__groovy_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "groovy_string",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "groovy_string_inter",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "}",
+              "startSeq": "${"
+            },
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "\\w",
+              "startLength": 0,
+              "startPattern": "\\$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__groovy_character",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\u0027",
+          "escapedBy": "\\",
+          "startSeq": "\u0027"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "groovy_string",
+          "tokenScannerList": []
+        }
+      ]
+    }
+  ]
+}

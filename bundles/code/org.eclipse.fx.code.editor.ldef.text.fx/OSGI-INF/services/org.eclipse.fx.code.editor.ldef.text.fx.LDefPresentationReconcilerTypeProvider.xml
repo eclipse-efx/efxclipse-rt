@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.code.editor.ldef.text.fx.LDefPresentationReconcilerTypeProvider">
-   <implementation class="org.eclipse.fx.code.editor.ldef.text.fx.LDefPresentationReconcilerTypeProvider"/>
-   <service>
-      <provide interface="org.eclipse.fx.code.editor.fx.services.PresentationReconcilerTypeProvider"/>
-   </service>
-   <reference bind="registerModelProvider" cardinality="0..n" interface="org.eclipse.fx.code.editor.ldef.text.LDefModelProvider" name="registerModelProvider" policy="dynamic" policy-option="greedy" unbind="unregisterModelProvider"/>
-</scr:component>

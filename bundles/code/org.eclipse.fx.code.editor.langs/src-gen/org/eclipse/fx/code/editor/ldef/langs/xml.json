@@ -1,0 +1,170 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "xml",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "xml_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__xml_decl",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "?\u003e",
+          "startSeq": "\u003c?xml"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "xml_declaration",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__xml_cdata",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "]]\u003e",
+          "startSeq": "\u003c![CDATA["
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "xml_cdata",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__xml_pi",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "?\u003e",
+          "startSeq": "\u003c?"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "xml_pi",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__xml_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "--\u003e",
+          "startSeq": "\u003c!--"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "xml_comment",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__xml_tag",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "\u003e",
+          "startSeq": "\u003c"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "xml_tag",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "[\\w|-]",
+              "startLength": 2,
+              "startPattern": "\u003c/"
+            },
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "[\\w|-]",
+              "startLength": 0,
+              "startPattern": "\u003c"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "xml_property_value",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "\"",
+              "startSeq": "\""
+            },
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "\u0027",
+              "startSeq": "\u0027"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "xml_equals",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                "\u003d"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "xml_property_name",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "\\w",
+              "startLength": 0,
+              "startPattern": "\\w"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+lua {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __lua_single_line_comment
+		partition __lua_multi_line_comment
+		partition __lua_string
+		rule {
+			multi_line __lua_multi_line_comment 	"--[[" 	=> "]]--"
+			single_line __lua_single_line_comment 	"--" 	=> ''
+			multi_line __lua_string 				'"' 	=> '"'
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type whitespace javawhitespace {
+			default lua_default
+			lua_keyword {
+				keywords [ "function", "end", "for", "if" ]
+			}
+		}
+		rule __lua_single_line_comment {
+			default lua_doc_default
+		}
+		rule __lua_multi_line_comment {
+			default lua_doc_default
+		}
+		rule __lua_string {
+			default lua_string
+		}
+	}
+	integration {
+		javafx {
+			java "org.eclipse.fx.code.editor.langs.codegen.fx.lua" {
+				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+			}
+		}
+	}
+}

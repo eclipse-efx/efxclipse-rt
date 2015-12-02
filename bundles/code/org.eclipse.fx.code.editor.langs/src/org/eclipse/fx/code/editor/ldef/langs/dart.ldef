@@ -1,0 +1,82 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+dart {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __dart_singlelinedoc_comment
+		partition __dart_multilinedoc_comment
+		partition __dart_singleline_comment
+		partition __dart_multiline_comment
+		partition __dart_string
+		rule {
+			single_line __dart_string "'" => "'" escaped by "\\"
+			single_line __dart_string '"' => '"' escaped by "\\"
+			single_line __dart_singlelinedoc_comment '///'
+      		single_line __dart_singleline_comment '//'
+      		multi_line __dart_multilinedoc_comment '/**' => '*/'
+      		multi_line  __dart_multiline_comment '/*' => '*/'
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type whitespace javawhitespace {
+			default dart_default
+			dart_operator {
+				character [ ';', '.', '=', '/', '\\', '+', '-', '*', '<', '>', ':', '?', '!', ',', '|', '&', '^', '%', '~' ]
+			}
+			dart_bracket {
+				character [ '(', ')', '{', '}', '[', ']' ]
+			}
+			dart_keyword {
+				keywords [ 	  "break", "case", "catch", "class", "const", "continue", "default"
+							, "do", "else", "enum", "extends", "false", "final", "finally", "for"
+							,  "if", "in", "is", "new", "null", "rethrow", "return", "super"
+							, "switch", "this", "throw", "true", "try", "var", "void", "while"
+							, "with"  ]
+			}
+			dart_keyword_1 {
+				keywords [ 	  "abstract", "as", "assert", "deferred"
+							, "dynamic", "export", "external", "factory", "get"
+							, "implements", "import", "library", "operator", "part", "set", "static"
+							, "typedef" ]
+			}
+			dart_keyword_2 {
+				keywords [ "async", "async*", "await", "sync*", "yield", "yield*" ]
+			}
+			dart_builtin_types {
+				keywords [ "num", "String", "bool", "int", "double", "List", "Map" ]
+			}
+		}
+		rule __dart_singlelinedoc_comment {
+			default dart_doc
+			dart_doc_reference {
+				single_line "[" => "]"
+			}
+		}
+		rule __dart_multilinedoc_comment {
+			default dart_doc
+			dart_doc_reference {
+				single_line "[" => "]"
+			}
+		}
+		rule __dart_singleline_comment {
+			default dart_single_line_comment
+		}
+		rule __dart_multiline_comment {
+			default dart_multi_line_comment
+		}
+		rule __dart_string {
+			default dart_string
+			dart_string_inter {
+				single_line "${" => "}"
+				pattern "\\$" containing "\\w"
+			}
+		}
+	}
+	integration {
+		javafx {
+			java "org.eclipse.fx.code.editor.langs.codegen.fx.dart" {
+				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+			}
+		}
+	}
+}
