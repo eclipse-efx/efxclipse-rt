@@ -1,0 +1,65 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+ts {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __ts_single_line_comment
+		partition __ts_multi_line_comment
+		partition __ts_string
+		rule {
+			single_line __ts_single_line_comment 	"//" 	=> ''
+			multi_line __ts_multi_line_comment 		"/*" 	=> "*/"
+			single_line __ts_string 				"'"	 	=> "'" escaped by "\\"
+			single_line __ts_string 				'"' 	=> '"' escaped by "\\"
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type whitespace javawhitespace {
+			default ts_default
+			ts_operator {
+				character [ ';', '.', '=', '/', '\\', '+', '-', '*', '<', '>', ':', '?', '!', ',', '|', '&', '^', '%', '~' ]
+			}
+			ts_bracket {
+				character [ '(', ')', '{', '}', '[', ']' ]
+			}
+			ts_keyword {
+				keywords [  "break", 	"case", 	"catch", 		"continue",
+	    					"debugger",	"default",	"delete",		"do",
+	    					"else",		"finally",	"for",			"function",
+	    					"if",		"in",		"instanceof",	"new",
+	    					"return",	"switch",	"this",			"throw",
+	    					"try",		"typeof",	"var",
+	    					"while",	"with"
+	    					// typescript specific
+	    					, "interface", "class", "constructor", "declare", "module", "export", "extends", "super"
+	    					, "public"
+	    					 ]
+			}
+			ts_builtin_types {
+				keywords [ "any", "void", "string", "number", "boolean" ]
+			}
+			ts_constant {
+				keywords [ "true", "false", "undefined" ]
+			}
+			ts_number {
+				pattern "\\d" containing "[\\d|\\.]"
+			}
+		}
+		rule __ts_single_line_comment {
+			default ts_doc_default
+		}
+		rule __ts_multi_line_comment {
+			default ts_doc_default
+		}
+		rule __ts_string {
+			default ts_string
+		}
+	}
+	integration {
+		javafx {
+			java "org.eclipse.fx.code.editor.langs.codegen.fx.ts" {
+				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+			}
+		}
+	}
+}

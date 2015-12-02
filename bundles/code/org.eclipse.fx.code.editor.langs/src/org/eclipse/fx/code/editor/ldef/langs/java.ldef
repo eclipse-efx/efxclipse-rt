@@ -42,6 +42,9 @@ package org.eclipse.fx.code.editor.ldef.langs
 			java_annotation {
 				pattern "@" containing "\\w"
 			}
+			java_number {
+				pattern "\\d" containing "[\\d|_|\\.]"
+			}
 		}
 		rule __java_multi_line_api_comment {
 			default java_apidoc

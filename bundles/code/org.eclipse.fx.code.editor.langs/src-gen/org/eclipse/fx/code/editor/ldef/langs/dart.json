@@ -171,6 +171,19 @@
               ]
             }
           ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "dart_number",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "[\\d|\\.]",
+              "startLength": 0,
+              "startPattern": "\\d"
+            }
+          ]
         }
       ]
     },

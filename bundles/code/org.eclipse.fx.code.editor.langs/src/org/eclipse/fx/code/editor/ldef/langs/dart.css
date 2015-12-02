@@ -63,3 +63,7 @@
 .dart-type-info {
 	-fx-fill: -type-info-color;
 }
+
+.styled-text-area .dart.dart_number {
+	-styled-text-color: -source-editor-number;
+}

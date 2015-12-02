@@ -31,6 +31,12 @@ js {
 	    					"try",		"typeof",	"var",			"void",
 	    					"while",	"with" ]
 			}
+			js_constant {
+				keywords [ "true", "false", "undefined" ]
+			}
+			js_number {
+				pattern "\\d" containing "[\\d|\\.]"
+			}
 		}
 		rule __js_single_line_comment {
 			default js_doc_default

@@ -45,6 +45,9 @@ dart {
 			dart_builtin_types {
 				keywords [ "num", "String", "bool", "int", "double", "List", "Map" ]
 			}
+			dart_number {
+				pattern "\\d" containing "[\\d|\\.]"
+			}
 		}
 		rule __dart_singlelinedoc_comment {
 			default dart_doc

@@ -99,6 +99,34 @@
               ]
             }
           ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "js_constant",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "true",
+                "false",
+                "undefined"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "js_number",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "[\\d|\\.]",
+              "startLength": 0,
+              "startPattern": "\\d"
+            }
+          ]
         }
       ]
     },

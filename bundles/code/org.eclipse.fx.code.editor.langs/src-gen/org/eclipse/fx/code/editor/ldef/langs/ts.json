@@ -1,6 +1,6 @@
 {
   "$gtype": "LanguageDef",
-  "fileSuffix": "java",
+  "fileSuffix": "ts",
   "partitionList": [
     {
       "$gtype": "Partition",
@@ -10,13 +10,13 @@
         {
           "$gtype": "Token",
           "defaultToken": true,
-          "name": "java_default",
+          "name": "ts_default",
           "tokenScannerList": []
         },
         {
           "$gtype": "Token",
           "defaultToken": false,
-          "name": "java_operator",
+          "name": "ts_operator",
           "tokenScannerList": [
             {
               "$gtype": "TokenScanner_CharacterRule",
@@ -47,7 +47,7 @@
         {
           "$gtype": "Token",
           "defaultToken": false,
-          "name": "java_bracket",
+          "name": "ts_bracket",
           "tokenScannerList": [
             {
               "$gtype": "TokenScanner_CharacterRule",
@@ -65,51 +65,45 @@
         {
           "$gtype": "Token",
           "defaultToken": false,
-          "name": "java_keyword",
+          "name": "ts_keyword",
           "tokenScannerList": [
             {
               "$gtype": "TokenScanner_Keyword",
               "keywordList": [
-                "abstract",
                 "break",
                 "case",
                 "catch",
-                "class",
-                "const",
                 "continue",
+                "debugger",
                 "default",
+                "delete",
                 "do",
                 "else",
-                "extends",
-                "final",
                 "finally",
                 "for",
-                "goto",
+                "function",
                 "if",
-                "implements",
-                "import",
+                "in",
                 "instanceof",
-                "interface",
-                "native",
                 "new",
-                "package",
-                "private",
-                "protected",
-                "public",
-                "static",
-                "super",
+                "return",
                 "switch",
-                "synchronized",
                 "this",
                 "throw",
-                "throws",
-                "transient",
                 "try",
-                "volatile",
+                "typeof",
+                "var",
                 "while",
+                "with",
                 "interface",
-                "enum",
-                "return"
+                "class",
+                "constructor",
+                "declare",
+                "module",
+                "export",
+                "extends",
+                "super",
+                "public"
               ]
             }
           ]
@@ -117,21 +111,16 @@
         {
           "$gtype": "Token",
           "defaultToken": false,
-          "name": "java_buitin_type",
+          "name": "ts_builtin_types",
           "tokenScannerList": [
             {
               "$gtype": "TokenScanner_Keyword",
               "keywordList": [
+                "any",
                 "void",
-                "boolean",
-                "char",
-                "byte",
-                "short",
-                "strictfp",
-                "int",
-                "long",
-                "float",
-                "double"
+                "string",
+                "number",
+                "boolean"
               ]
             }
           ]
@@ -139,14 +128,14 @@
         {
           "$gtype": "Token",
           "defaultToken": false,
-          "name": "java_constant",
+          "name": "ts_constant",
           "tokenScannerList": [
             {
               "$gtype": "TokenScanner_Keyword",
               "keywordList": [
                 "true",
                 "false",
-                "null"
+                "undefined"
               ]
             }
           ]
@@ -154,24 +143,11 @@
         {
           "$gtype": "Token",
           "defaultToken": false,
-          "name": "java_annotation",
+          "name": "ts_number",
           "tokenScannerList": [
             {
               "$gtype": "TokenScanner_PatternRule",
-              "containmentPattern": "\\w",
-              "startLength": 0,
-              "startPattern": "@"
-            }
-          ]
-        },
-        {
-          "$gtype": "Token",
-          "defaultToken": false,
-          "name": "java_number",
-          "tokenScannerList": [
-            {
-              "$gtype": "TokenScanner_PatternRule",
-              "containmentPattern": "[\\d|_|\\.]",
+              "containmentPattern": "[\\d|\\.]",
               "startLength": 0,
               "startPattern": "\\d"
             }
@@ -181,26 +157,7 @@
     },
     {
       "$gtype": "Partition",
-      "name": "__java_multi_line_api_comment",
-      "ruleList": [
-        {
-          "$gtype": "PartitionRule_MultiLine",
-          "endSeq": "*/",
-          "startSeq": "/**"
-        }
-      ],
-      "tokenList": [
-        {
-          "$gtype": "Token",
-          "defaultToken": true,
-          "name": "java_apidoc",
-          "tokenScannerList": []
-        }
-      ]
-    },
-    {
-      "$gtype": "Partition",
-      "name": "__java_single_line_comment",
+      "name": "__ts_single_line_comment",
       "ruleList": [
         {
           "$gtype": "PartitionRule_SingleLine",
@@ -212,14 +169,14 @@
         {
           "$gtype": "Token",
           "defaultToken": true,
-          "name": "java_doc_default",
+          "name": "ts_doc_default",
           "tokenScannerList": []
         }
       ]
     },
     {
       "$gtype": "Partition",
-      "name": "__java_multi_line_comment",
+      "name": "__ts_multi_line_comment",
       "ruleList": [
         {
           "$gtype": "PartitionRule_MultiLine",
@@ -231,14 +188,14 @@
         {
           "$gtype": "Token",
           "defaultToken": true,
-          "name": "java_doc_default",
+          "name": "ts_doc_default",
           "tokenScannerList": []
         }
       ]
     },
     {
       "$gtype": "Partition",
-      "name": "__java_string",
+      "name": "__ts_string",
       "ruleList": [
         {
           "$gtype": "PartitionRule_SingleLine",
@@ -257,7 +214,7 @@
         {
           "$gtype": "Token",
           "defaultToken": true,
-          "name": "java_string",
+          "name": "ts_string",
           "tokenScannerList": []
         }
       ]
