@@ -7,9 +7,9 @@
 	<packaging>eclipse-plugin</packaging>
 
 	<parent>
-		<groupId>org.eclipse.fx</groupId>
+		<groupId>org.eclipse.fx.ide</groupId>
 		<artifactId>releng</artifactId>
-		<relativePath>../../../releng/org.eclipse.fx.releng/pom.xml</relativePath>
+		<relativePath>../../../releng/org.eclipse.fx.ide.releng/pom.xml</relativePath>
 		<version>2.2.0-SNAPSHOT</version>
 	</parent>
 
