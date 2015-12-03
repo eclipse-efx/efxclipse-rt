@@ -7,10 +7,13 @@ public class Js__dftl_partition_content_type extends org.eclipse.jface.text.rule
 		org.eclipse.jface.text.rules.Token js_operatorToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("js.js_operator"));
 		org.eclipse.jface.text.rules.Token js_bracketToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("js.js_bracket"));
 		org.eclipse.jface.text.rules.Token js_keywordToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("js.js_keyword"));
-		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
+		org.eclipse.jface.text.rules.Token js_constantToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("js.js_constant"));
+		org.eclipse.jface.text.rules.Token js_numberToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("js.js_number"));
+		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[5];
 		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(js_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
 		rules[1] = new org.eclipse.fx.text.rules.CharacterRule(js_bracketToken, new char[] {'(',')','{','}','[',']'});
-		rules[2] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
+		rules[2] = new org.eclipse.fx.text.rules.RegexRule(js_numberToken, java.util.regex.Pattern.compile("\\d"),1,java.util.regex.Pattern.compile("[\\d|\\.]"));
+		rules[3] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 
 		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
 		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, js_defaultToken);
@@ -44,7 +47,14 @@ public class Js__dftl_partition_content_type extends org.eclipse.jface.text.rule
 			js_keywordWordRule.addWord("with", js_keywordToken);
 			combinedWordRule.addWordMatcher(js_keywordWordRule);
 		}
-		rules[3] = combinedWordRule;
+		{
+			org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher js_constantWordRule = new org.eclipse.fx.text.rules.CombinedWordRule.WordMatcher();
+			js_constantWordRule.addWord("true", js_constantToken);
+			js_constantWordRule.addWord("false", js_constantToken);
+			js_constantWordRule.addWord("undefined", js_constantToken);
+			combinedWordRule.addWordMatcher(js_constantWordRule);
+		}
+		rules[4] = combinedWordRule;
 		setRules(rules);
 	}
 }

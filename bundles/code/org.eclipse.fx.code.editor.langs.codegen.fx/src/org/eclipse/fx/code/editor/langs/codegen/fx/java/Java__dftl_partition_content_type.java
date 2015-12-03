@@ -10,10 +10,12 @@ public class Java__dftl_partition_content_type extends org.eclipse.jface.text.ru
 		org.eclipse.jface.text.rules.Token java_buitin_typeToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_buitin_type"));
 		org.eclipse.jface.text.rules.Token java_constantToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_constant"));
 		org.eclipse.jface.text.rules.Token java_annotationToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_annotation"));
-		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
+		org.eclipse.jface.text.rules.Token java_numberToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("java.java_number"));
+		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[5];
 		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(java_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
 		rules[1] = new org.eclipse.fx.text.rules.CharacterRule(java_bracketToken, new char[] {'(',')','{','}','[',']'});
 		rules[2] = new org.eclipse.fx.text.rules.RegexRule(java_annotationToken, java.util.regex.Pattern.compile("@"),1,java.util.regex.Pattern.compile("\\w"));
+		rules[3] = new org.eclipse.fx.text.rules.RegexRule(java_numberToken, java.util.regex.Pattern.compile("\\d"),1,java.util.regex.Pattern.compile("[\\d|_|\\.]"));
 
 		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
 		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, java_defaultToken);
@@ -82,7 +84,7 @@ public class Java__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			java_constantWordRule.addWord("null", java_constantToken);
 			combinedWordRule.addWordMatcher(java_constantWordRule);
 		}
-		rules[3] = combinedWordRule;
+		rules[4] = combinedWordRule;
 		setRules(rules);
 	}
 }

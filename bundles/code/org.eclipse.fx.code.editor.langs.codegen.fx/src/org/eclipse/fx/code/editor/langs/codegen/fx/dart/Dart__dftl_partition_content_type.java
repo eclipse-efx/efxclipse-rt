@@ -10,10 +10,12 @@ public class Dart__dftl_partition_content_type extends org.eclipse.jface.text.ru
 		org.eclipse.jface.text.rules.Token dart_keyword_1Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_keyword_1"));
 		org.eclipse.jface.text.rules.Token dart_keyword_2Token = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_keyword_2"));
 		org.eclipse.jface.text.rules.Token dart_builtin_typesToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_builtin_types"));
-		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[4];
+		org.eclipse.jface.text.rules.Token dart_numberToken = new org.eclipse.jface.text.rules.Token(new org.eclipse.fx.text.ui.TextAttribute("dart.dart_number"));
+		org.eclipse.jface.text.rules.IRule[] rules = new org.eclipse.jface.text.rules.IRule[5];
 		rules[0] = new org.eclipse.fx.text.rules.CharacterRule(dart_operatorToken, new char[] {';','.','=','/','\\','+','-','*','<','>',':','?','!',',','|','&','^','%','~'});
 		rules[1] = new org.eclipse.fx.text.rules.CharacterRule(dart_bracketToken, new char[] {'(',')','{','}','[',']'});
-		rules[2] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
+		rules[2] = new org.eclipse.fx.text.rules.RegexRule(dart_numberToken, java.util.regex.Pattern.compile("\\d"),1,java.util.regex.Pattern.compile("[\\d|\\.]"));
+		rules[3] = new org.eclipse.jface.text.rules.WhitespaceRule(Character::isWhitespace);
 
 		org.eclipse.fx.text.rules.JavaLikeWordDetector wordDetector= new org.eclipse.fx.text.rules.JavaLikeWordDetector();
 		org.eclipse.fx.text.rules.CombinedWordRule combinedWordRule= new org.eclipse.fx.text.rules.CombinedWordRule(wordDetector, dart_defaultToken);
@@ -95,7 +97,7 @@ public class Dart__dftl_partition_content_type extends org.eclipse.jface.text.ru
 			dart_builtin_typesWordRule.addWord("Map", dart_builtin_typesToken);
 			combinedWordRule.addWordMatcher(dart_builtin_typesWordRule);
 		}
-		rules[3] = combinedWordRule;
+		rules[4] = combinedWordRule;
 		setRules(rules);
 	}
 }
