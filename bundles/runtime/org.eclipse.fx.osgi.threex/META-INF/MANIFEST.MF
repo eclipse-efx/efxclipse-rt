@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Threex
+Bundle-SymbolicName: org.eclipse.fx.osgi.threex
+Bundle-Version: 2.2.0.qualifier
+Fragment-Host: org.eclipse.osgi;bundle-version="3.7.2"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
