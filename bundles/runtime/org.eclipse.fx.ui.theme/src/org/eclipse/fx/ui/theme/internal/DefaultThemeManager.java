@@ -14,7 +14,13 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
+import org.eclipse.fx.core.URLStreamHandler;
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.eclipse.fx.ui.services.Constants;
@@ -23,12 +29,15 @@ import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
+import org.osgi.service.url.URLConstants;
+import org.osgi.service.url.URLStreamHandlerService;
 
 import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
@@ -43,11 +52,6 @@ import javafx.scene.Scene;
  */
 @Component
 public class DefaultThemeManager implements ThemeManager {
-	static final String ATT_ID = "id"; //$NON-NLS-1$
-	static final String ATT_NAME = "name"; //$NON-NLS-1$
-	static final String ATT_THEME_ID = "themeId"; //$NON-NLS-1$
-	static final String ATT_BASETYLESHEET = "basestylesheet"; //$NON-NLS-1$
-	static final String ATT_RESOURCE = "resource"; //$NON-NLS-1$
 
 	@SuppressWarnings("null")
 	private final @NonNull ObservableMap<@NonNull String, @NonNull Theme> themes = FXCollections.observableMap(new HashMap<>());
@@ -60,13 +64,19 @@ public class DefaultThemeManager implements ThemeManager {
 	 * Create a new theme manager instance
 	 */
 	public DefaultThemeManager() {
+		for( URLStreamHandler handler : Util.lookupServiceList(URLStreamHandler.class) ) {
+			Hashtable<String, Object> t = new Hashtable<>();
+			t.put(URLConstants.URL_HANDLER_PROTOCOL, new String[] { handler.getProtocol() });
+			Activator.getContext().registerService(URLStreamHandlerService.class, new DelegatingURLStreamHandlerService(handler), t);
+		}
+
 		this.managedScenes.addListener((ListChangeListener<Scene>) change -> {
 			@Nullable
 			Theme currentTheme = getCurrentTheme();
 			if (currentTheme == null)
 				return;
 			while (change.next()) {
-				for (Scene scene :change.getAddedSubList()) {
+				for (Scene scene : change.getAddedSubList()) {
 					applyThemeToScene(currentTheme, scene);
 				}
 			}
@@ -82,7 +92,7 @@ public class DefaultThemeManager implements ThemeManager {
 		} else {
 			String id = getCurrentThemeId();
 			if (id != null) {
-				if( this.themes.containsKey(id) ) {
+				if (this.themes.containsKey(id)) {
 					return this.themes.get(id);
 				}
 			}
@@ -102,13 +112,13 @@ public class DefaultThemeManager implements ThemeManager {
 	}
 
 	private void handleStylesheetUrlChange(Change<? extends URL> change) {
-		while(change.next()) {
+		while (change.next()) {
 			for (Scene scene : this.managedScenes) {
-				for( URL url : change.getRemoved() ) {
+				for (URL url : change.getRemoved()) {
 					scene.getStylesheets().remove(url.toExternalForm());
 				}
 
-				for( URL url : change.getAddedSubList() ) {
+				for (URL url : change.getAddedSubList()) {
 					scene.getStylesheets().add(url.toExternalForm());
 				}
 			}
@@ -150,8 +160,8 @@ public class DefaultThemeManager implements ThemeManager {
 
 	@Override
 	public void setCurrentThemeId(String id) {
-		if( this.themes.containsKey(id) ) {
-			if( this.currentThemeId != null && this.themes.containsKey(this.currentThemeId) ) {
+		if (this.themes.containsKey(id)) {
+			if (this.currentThemeId != null && this.themes.containsKey(this.currentThemeId)) {
 				unsetTheme(this.themes.get(this.currentThemeId));
 			}
 
@@ -238,10 +248,10 @@ public class DefaultThemeManager implements ThemeManager {
 	 * @param theme
 	 *            the theme
 	 */
-	@Reference(cardinality=ReferenceCardinality.MULTIPLE,policyOption=ReferencePolicyOption.GREEDY)
+	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policyOption = ReferencePolicyOption.GREEDY)
 	public void registerTheme(@NonNull Theme theme) {
 		synchronized (this.themes) {
-			this.themes.put(theme.getId(),theme);
+			this.themes.put(theme.getId(), theme);
 		}
 	}
 
