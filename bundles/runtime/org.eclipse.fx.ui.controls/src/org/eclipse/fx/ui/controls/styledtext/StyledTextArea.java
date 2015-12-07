@@ -161,6 +161,8 @@ public class StyledTextArea extends Control {
 
 	private int lastTextChangeReplaceCharCount;
 
+	private static final String USER_AGENT_STYLESHEET = StyledTextArea.class.getResource("styledtextarea.css").toExternalForm(); //$NON-NLS-1$
+
 	/**
 	 * Create a new control
 	 */
@@ -180,7 +182,7 @@ public class StyledTextArea extends Control {
 
 	@Override
 	public String getUserAgentStylesheet() {
-		return StyledTextArea.class.getResource("styledtextarea.css").toExternalForm(); //$NON-NLS-1$
+		return USER_AGENT_STYLESHEET;
 	}
 
 	void handleTextChanging(TextChangingEvent event) {
