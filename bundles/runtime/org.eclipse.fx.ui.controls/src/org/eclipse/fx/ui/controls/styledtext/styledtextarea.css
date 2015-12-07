@@ -1,6 +1,6 @@
 .styled-text-area .source-segment {
 	-fx-font-family: Courier;
-	-fx-font-size: 15;
+	-fx-font-size: 13;
 	/* @SuppressWarning */
 	-styled-text-color: black;
 	-fx-fill: -styled-text-color;
@@ -8,17 +8,17 @@
 
 .styled-text-area .plain-source-segment {
 	-fx-font-family: Courier;
-	-fx-font-size: 15;
+	-fx-font-size: 13;
 }
 
 .styled-text-area .line-ruler-text {
 	-fx-font-family: Courier;
-	-fx-font-size: 15;
+	-fx-font-size: 13;
 }
 
 /* FIXME: Fixes layouting issues with ListView */
 .styled-text-area .list-view {
-	-fx-fixed-cell-size: 18;
+	-fx-fixed-cell-size: 16;
 }
 
 .styled-text-area .list-cell:filled:focused:selected {
