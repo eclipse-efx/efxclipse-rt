@@ -764,7 +764,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			Set<Node> children = new HashSet<Node>(getChildren());
 			List<LineInfo> layouted = new ArrayList<>();
 			double maxWidth = 0;
-			for (LineCell c : ((MyListViewSkin) StyledTextSkin.this.contentView.getSkin()).getFlow().getCells()) {
+			for (LineCell c : getCurrentVisibleCells()) {
 				if (c.isVisible()) {
 					LineInfo lineInfo = StyledTextSkin.this.lineInfoMap.get(c);
 					if (lineInfo != null) {
