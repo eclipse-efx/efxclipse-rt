@@ -73,7 +73,7 @@ public class SimpleListCell<T> extends ListCell<T> {
 	@Override
 	protected void updateItem(T item, boolean empty) {
 		super.updateItem(item, empty);
-		if (!empty) {
+		if (!empty && item != null) {
 			CharSequence t = this.labelExtractor.apply(item);
 			if (t == null) {
 				setGraphic(null);
