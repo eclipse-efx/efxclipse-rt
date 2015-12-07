@@ -19,6 +19,7 @@ import org.eclipse.fx.core.Resource;
 import org.eclipse.fx.core.Util;
 import org.eclipse.jdt.annotation.NonNull;
 
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 
 /**
@@ -75,4 +76,34 @@ public class MediaLoader {
 		return Optional.empty();
 	}
 
+	/**
+	 * Create a audio clip instance from the given source
+	 *
+	 * @param url
+	 *            the url the media is located at
+	 * @return media object created
+	 */
+	public static Optional<AudioClip> createAudioClip(@NonNull URL url) {
+		if (isSupported(url)) {
+			return Optional.of(new AudioClip(url.toExternalForm()));
+		}
+		Optional<URL> localURL = Util.getLocalURL(url);
+
+		if (localURL.isPresent()) {
+			if (isSupported(localURL.get())) {
+				return Optional.of(new AudioClip(localURL.get().toExternalForm()));
+			}
+		}
+
+		Optional<Resource<@NonNull Path>> localPath = Util.getLocalPath(url, false);
+		if( localPath.isPresent() ) {
+			try {
+				return Optional.of(new AudioClip(localPath.get().getNativeResource().toUri().toURL().toExternalForm()));
+			} catch (MalformedURLException e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+		return Optional.empty();
+	}
 }
