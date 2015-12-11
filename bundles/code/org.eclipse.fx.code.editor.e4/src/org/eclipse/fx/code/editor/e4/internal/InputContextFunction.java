@@ -15,6 +15,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
+@SuppressWarnings("restriction")
 @Component(service=IContextFunction.class,property={"service.context.key=org.eclipse.fx.code.editor.Input"})
 public class InputContextFunction extends TypeProviderContextFunction<String,Input<?>,InputTypeProvider> {
 
@@ -52,5 +53,11 @@ public class InputContextFunction extends TypeProviderContextFunction<String,Inp
 		} else {
 			throw new IllegalStateException("Unable to detect element with " + Constants.DOCUMENT_URL);
 		}
+	}
+
+	@Override
+	protected void postInstanceCreation(Input<?> type, IEclipseContext context) {
+		super.postInstanceCreation(type, context);
+		type.getTransientData().put(Constants.CONTEXT, context);
 	}
 }
