@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -263,11 +262,20 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		}
 	}
 
+	/**
+	 * Set the renderer context
+	 *
+	 * @param _context
+	 *            the context
+	 * @deprecated do not call this method will vanish one day
+	 */
+	@Deprecated
 	@Inject
 	public void _setRendererContext(IEclipseContext _context) {
 		IEventBroker broker = this._context.get(IEventBroker.class);
 		if (broker != null) {
-			//FIXME We need to redesign the translation of events into IEclipseContext values
+			// FIXME We need to redesign the translation of events into
+			// IEclipseContext values
 			initDefaultEventListeners(broker);
 		} else {
 			this.logger.error("No event broker was found. Most things will not operate appropiately!"); //$NON-NLS-1$
@@ -395,7 +403,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 * @param topic
 	 *            the topic
 	 */
-	//FIXME We need to redesign the translation of events into IEclipseContext values
+	// FIXME We need to redesign the translation of events into IEclipseContext
+	// values
 	protected void registerEventListener(@NonNull IEventBroker broker, @NonNull String topic) {
 		broker.subscribe(topic, this::handleEvent);
 	}
@@ -908,7 +917,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			IEclipseContext context = ((MContext) tmp).getContext();
 			if (context != null) {
 				IEclipseContext newParentContext = this.modelService.getContainingContext(tmp);
-				if (context.getParent() != newParentContext) {
+				if (newParentContext != null && context.getParent() != newParentContext) {
 					Util.setParentContext(context, newParentContext);
 				}
 			}
@@ -918,9 +927,11 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 		// future
 		if (tmp instanceof MElementContainer<?>) {
 			MElementContainer<?> container = (MElementContainer<?>) tmp;
-			List<MUIElement> kids = new ArrayList<MUIElement>(container.getChildren());
+			List<MUIElement> kids = new ArrayList<>(container.getChildren());
 			for (MUIElement childElement : kids) {
-				fixContextHierarchy(childElement);
+				if( childElement != null ) {
+					fixContextHierarchy(childElement);
+				}
 			}
 		}
 	}
