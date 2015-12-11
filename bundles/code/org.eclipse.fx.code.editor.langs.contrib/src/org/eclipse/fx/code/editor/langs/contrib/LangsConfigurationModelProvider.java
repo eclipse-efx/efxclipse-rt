@@ -37,6 +37,7 @@ public class LangsConfigurationModelProvider implements ConfigurationModelProvid
 			register(new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/swift.json"),"swift");
 			register(new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/ts.json"),"ts");
 			register(new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/xml.json"),"xml");
+			register(new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/xml.json"),"html");
 		} catch(Throwable t) {
 			LoggerCreator.createLogger(LangsConfigurationModelProvider.class).error("Invalid URL", t);
 		}
