@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.fx;
 
+import java.util.Collection;
+import java.util.Hashtable;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -39,6 +42,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.keybindings.e4.EBindingService;
+import org.eclipse.fx.ui.services.theme.MultiURLStylesheet;
+import org.eclipse.fx.ui.services.theme.MultiURLStylesheetTypeProvider;
+import org.eclipse.fx.ui.services.theme.Stylesheet;
+import org.eclipse.fx.ui.services.theme.StylesheetTypeProvider;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.workbench.base.AbstractE4Application;
 import org.eclipse.fx.ui.workbench.base.Util;
@@ -48,6 +55,9 @@ import org.eclipse.fx.ui.workbench.fx.key.KeyBindingDispatcher;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -85,6 +95,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 			@NonNull ThemeManager themeManager,
 			@Preference(nodePath = "org.eclipse.fx.ui.workbench.fx", value = AbstractE4Application.THEME_ID) String themeId,
 			@NonNull @Log Logger logger) {
+		registerDIStylesheets(context);
 		final String factoryUrl;
 		this.logger = logger;
 		if (_factoryUrl == null) {
@@ -123,6 +134,28 @@ public class PartRenderingEngine implements IPresentationEngine {
 			} else {
 				this.logger.info("No current theme is set"); //$NON-NLS-1$
 			}
+		}
+	}
+
+	private static void registerDIStylesheets(IEclipseContext context) {
+		try {
+			BundleContext bundleContext = FrameworkUtil.getBundle(PartRenderingEngine.class).getBundleContext();
+			{
+				Collection<ServiceReference<StylesheetTypeProvider>> list = bundleContext.getServiceReferences(StylesheetTypeProvider.class, null);
+				for( ServiceReference<StylesheetTypeProvider> r : list ) {
+					bundleContext.registerService(Stylesheet.class,ContextInjectionFactory.make(bundleContext.getService(r).getType(), context),new Hashtable<>());
+				}
+			}
+
+			{
+				Collection<ServiceReference<MultiURLStylesheetTypeProvider>> list = bundleContext.getServiceReferences(MultiURLStylesheetTypeProvider.class, null);
+				for( ServiceReference<MultiURLStylesheetTypeProvider> r : list ) {
+					bundleContext.registerService(MultiURLStylesheet.class,ContextInjectionFactory.make(bundleContext.getService(r).getType(), context),new Hashtable<>());
+				}
+			}
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
