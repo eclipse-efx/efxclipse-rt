@@ -25,7 +25,6 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.MaximizationService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMinMaxableWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WMinMaxableWidget.WMinMaxState;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget.WidgetState;
 import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.event.Event;
 
@@ -88,6 +87,12 @@ public class MinMaxAddon {
 			context = ((MContext)changedElement).getContext();
 		} else {
 			context = this.modelService.getContainingContext(changedElement);
+		}
+
+		// Looks like the part has already been unrendered
+		// what should we do when that happens?
+		if( context == null ) {
+			return null;
 		}
 
 		MaximizationService maximizationService = context.get(MaximizationService.class);
