@@ -5,6 +5,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -21,6 +23,7 @@ public class LocalSourceFileInput implements SourceFileInput {
 	private final Charset charSet;
 	private String data;
 	private EventBus eventBus;
+	private Map<String, Object> transientData = new HashMap<>();
 
 	@Inject
 	public LocalSourceFileInput(@Adapt @Named(Constants.DOCUMENT_URL) Path path, @Optional EventBus eventBus) {
@@ -31,6 +34,11 @@ public class LocalSourceFileInput implements SourceFileInput {
 		this.path = path;
 		this.charSet = charSet;
 		this.eventBus = eventBus;
+	}
+
+	@Override
+	public Map<String, Object> getTransientData() {
+		return transientData;
 	}
 
 	@PostConstruct

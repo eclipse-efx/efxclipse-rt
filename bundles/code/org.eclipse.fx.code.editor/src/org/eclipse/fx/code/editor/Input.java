@@ -10,10 +10,13 @@
 *******************************************************************************/
 package org.eclipse.fx.code.editor;
 
+import java.util.Map;
+
 public interface Input<O> {
 	public void dispose();
 	public O getData();
 	public void setData(O data);
 	public void persist();
+	public Map<String, Object> getTransientData();
 //	public void reset();
 }
