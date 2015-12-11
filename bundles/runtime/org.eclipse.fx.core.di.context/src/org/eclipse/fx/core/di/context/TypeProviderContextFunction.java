@@ -61,7 +61,7 @@ public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderSe
 
 	@Override
 	public final Object compute(IEclipseContext _context) {
-		if( _context == null ) {
+		if (_context == null) {
 			return null;
 		}
 		IEclipseContext context = getTargetContext(_context);
@@ -83,11 +83,27 @@ public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderSe
 
 		if (value.isPresent()) {
 			T v = value.get();
+			if (v != null) {
+				postInstanceCreation(v, context);
+			}
 			context.set(cacheKey, v);
 			return v;
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Post process the created instance
+	 *
+	 * @param type
+	 *            the type
+	 * @param context
+	 *            the context the instance is created on
+	 * @since 2.2.0
+	 */
+	protected void postInstanceCreation(@NonNull T type, IEclipseContext context) {
+		// nothing by default
 	}
 
 	/**
