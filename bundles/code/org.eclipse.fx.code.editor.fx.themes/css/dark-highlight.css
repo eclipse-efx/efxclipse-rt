@@ -13,6 +13,12 @@
 	-source-editor-api-doc: #74a567;
 	-source-editor-buitin-type: rgb(255,235,121);
 	-source-editor-annotation: rgb(200, 200, 200);
+
+	-source-editor-markup-doc: #929292;
+	-source-editor-markup-property-name: #b8c4d1;
+	-source-editor-markup-property-value: #7c986c;
+	-source-editor-markup-tag: #e9c063;
+	-source-editor-markup-extra: rgb(190, 190, 190);
 }
 
 .source-viewer.styled-text-area .selection-marker {

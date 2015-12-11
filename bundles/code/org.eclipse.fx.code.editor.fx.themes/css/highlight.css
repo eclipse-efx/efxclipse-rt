@@ -1,5 +1,5 @@
 .root {
-	-type-info-color: lightgray;
+	-type-info-color: darkgray;
 }
 
 .styled-text-area .list-view {
@@ -15,6 +15,12 @@
 	-source-editor-api-doc:  rgb(63, 95, 191);
 	-source-editor-buitin-type: #74a567;
 	-source-editor-annotation: rgb(200, 200, 200);
+
+	-source-editor-markup-doc: rgb(63, 95, 191);
+	-source-editor-markup-property-name: rgb(0, 0, 128);
+	-source-editor-markup-property-value: #7f007f;
+	-source-editor-markup-tag: #3f7f80;
+	-source-editor-markup-extra: rgb(128, 128, 128);
 }
 
 .styled-text-hover {
