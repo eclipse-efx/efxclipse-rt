@@ -10,30 +10,25 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui.contentassist;
 
-import static com.sun.javafx.PlatformUtil.isMac;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+
+import org.eclipse.fx.core.Util;
+import org.eclipse.fx.text.ui.ITextViewer;
+import org.eclipse.fx.ui.controls.list.SimpleListCell;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.PopupControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.PopupWindow;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import org.eclipse.fx.text.ui.ITextViewer;
-import org.eclipse.fx.ui.controls.list.SimpleListCell;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 
 public class ContentProposalPopup {
 	private ITextViewer viewer;
@@ -41,16 +36,16 @@ public class ContentProposalPopup {
 	private ListView<ICompletionProposal> proposalList;
 	private String prefix;
 	private int offset;
-	private Function<Integer, List<ICompletionProposal>> proposalComputer;
+	private Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer;
 
-	public ContentProposalPopup(ITextViewer viewer, Function<Integer, List<ICompletionProposal>> proposalComputer) {
+	public ContentProposalPopup(ITextViewer viewer, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.viewer = viewer;
 		this.proposalComputer = proposalComputer;
 	}
 
 	public void displayProposals(List<ICompletionProposal> proposalList, int offset, Point2D position) {
 		setup();
-		this.prefix = "";
+		this.prefix = ""; //$NON-NLS-1$
 		this.offset = offset;
 		this.proposalList.setItems(FXCollections.observableArrayList(proposalList));
 		this.proposalList.getSelectionModel().select(0);
@@ -58,7 +53,7 @@ public class ContentProposalPopup {
 		this.stage.setY(position.getY());
 		this.stage.setWidth(300);
 		this.stage.setHeight(200);
-		this.stage.show(viewer.getTextWidget().getScene().getWindow());
+		this.stage.show(this.viewer.getTextWidget().getScene().getWindow());
 		this.stage.requestFocus();
 	}
 
@@ -72,8 +67,8 @@ public class ContentProposalPopup {
 			return;
 		}
 
-		if (event.isControlDown() || event.isAltDown() || (isMac() && event.isMetaDown())) {
-			if (!((event.isControlDown() || isMac()) && event.isAltDown())) {
+		if (event.isControlDown() || event.isAltDown() || (Util.isMacOS() && event.isMetaDown())) {
+			if (!((event.isControlDown() || Util.isMacOS()) && event.isAltDown())) {
 				return;
 			}
 		}
@@ -94,26 +89,26 @@ public class ContentProposalPopup {
 	}
 
 	private void updateProposals() {
-		List<ICompletionProposal> list = proposalComputer.apply(offset);
+		List<ICompletionProposal> list = this.proposalComputer.apply(new ContentAssistContextData(this.offset,this.viewer.getDocument()/*,prefix*/));
 		if( ! list.isEmpty() ) {
-			proposalList.setItems(FXCollections.observableArrayList(list));
-			proposalList.scrollTo(0);
-			proposalList.getSelectionModel().select(0);
+			this.proposalList.setItems(FXCollections.observableArrayList(list));
+			this.proposalList.scrollTo(0);
+			this.proposalList.getSelectionModel().select(0);
 		} else {
-			stage.hide();
+			this.stage.hide();
 		}
 	}
 
 	private void handleKeyPressed(KeyEvent event) {
 		if( event.getCode() == KeyCode.ESCAPE ) {
 			event.consume();
-			stage.hide();
+			this.stage.hide();
 		} else if( event.getCode() == KeyCode.BACK_SPACE ) {
 			event.consume();
 			this.offset -= 1;
 			try {
-				this.viewer.getDocument().replace(offset, 1, "");
-				viewer.getTextWidget().setCaretOffset(offset);
+				this.viewer.getDocument().replace(this.offset, 1, ""); //$NON-NLS-1$
+				this.viewer.getTextWidget().setCaretOffset(this.offset);
 				updateProposals();
 			} catch (BadLocationException e) {
 				// TODO Auto-generated catch block
@@ -126,43 +121,44 @@ public class ContentProposalPopup {
 			event.consume();
 			this.offset -= 1;
 			this.offset = Math.max(0, this.offset);
-			viewer.getTextWidget().setCaretOffset(offset);
+			this.viewer.getTextWidget().setCaretOffset(this.offset);
 			updateProposals();
 		} else if( event.getCode() == KeyCode.RIGHT ) {
 			event.consume();
 			this.offset += 1;
-			this.offset = Math.min(viewer.getDocument().getLength()-1, this.offset);
-			viewer.getTextWidget().setCaretOffset(offset);
+			this.offset = Math.min(this.viewer.getDocument().getLength()-1, this.offset);
+			this.viewer.getTextWidget().setCaretOffset(this.offset);
 			updateProposals();
 		}
 	}
 
 	private void applySelection() {
-		ICompletionProposal selectedItem = proposalList.getSelectionModel().getSelectedItem();
+		ICompletionProposal selectedItem = this.proposalList.getSelectionModel().getSelectedItem();
 		if( selectedItem != null ) {
-			IDocument document = viewer.getDocument();
+			IDocument document = this.viewer.getDocument();
 			selectedItem.apply(document);
-			viewer.getTextWidget().setSelection(selectedItem.getSelection(document));
-			stage.hide();
+			this.viewer.getTextWidget().setSelection(selectedItem.getSelection(document));
+			this.stage.hide();
 		}
 	}
 
 	private void setup() {
-		if( stage == null ) {
-			stage = new PopupWindow() {
-
+		if( this.stage == null ) {
+			this.stage = new PopupWindow() {
+				// empty by design
 			};
-			stage.setAutoFix(false);
-			stage.setWidth(300);
-			stage.setHeight(200);
+			this.stage.setAutoFix(false);
+			this.stage.setWidth(300);
+			this.stage.setHeight(200);
 			BorderPane p = new BorderPane();
 			p.setPrefHeight(200);
 			p.setPrefWidth(400);
-			stage.getScene().addEventFilter(KeyEvent.KEY_TYPED, this::handleKeyTyped);
-			stage.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
-			stage.getScene().getStylesheets().addAll(viewer.getTextWidget().getScene().getStylesheets());
-			proposalList = new ListView<>();
-			proposalList.setOnMouseClicked((e) -> {
+			this.stage.getScene().addEventFilter(KeyEvent.KEY_TYPED, this::handleKeyTyped);
+			this.stage.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
+			this.stage.getScene().getStylesheets().addAll(this.viewer.getTextWidget().getScene().getStylesheets());
+			this.proposalList = new ListView<>();
+			this.proposalList.getStyleClass().add("content-proposal-list"); //$NON-NLS-1$
+			this.proposalList.setOnMouseClicked((e) -> {
 				if(e.getClickCount() == 1) {
 					applySelection();
 				}
@@ -173,17 +169,17 @@ public class ContentProposalPopup {
 			Function<ICompletionProposal, List<String>> css = (c) -> Collections.emptyList();
 
 
-			proposalList.setCellFactory((v) -> new SimpleListCell<ICompletionProposal>(label,graphic,css));
-			p.setCenter(proposalList);
-			stage.getScene().setRoot(p);
-			stage.focusedProperty().addListener((o) -> {
-				if( stage != null && ! stage.isFocused() ) {
-					Platform.runLater(stage::hide);
+			this.proposalList.setCellFactory((v) -> new SimpleListCell<ICompletionProposal>(label,graphic,css));
+			p.setCenter(this.proposalList);
+			this.stage.getScene().setRoot(p);
+			this.stage.focusedProperty().addListener((o) -> {
+				if( this.stage != null && ! this.stage.isFocused() ) {
+					Platform.runLater(this.stage::hide);
 				}
 			});
 			// Fix CSS warnings
-			stage.setOnHidden((o) -> {
-				stage = null;
+			this.stage.setOnHidden((o) -> {
+				this.stage = null;
 			});
 		}
 	}

@@ -20,11 +20,11 @@ import org.eclipse.fx.text.ui.ITextViewer;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 
 public class ContentAssistant implements IContentAssistant {
-	private final Function<Integer, List<ICompletionProposal>> proposalComputer;
+	private final Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer;
 	private ITextViewer viewer;
 	private ContentProposalPopup popuop;
 
-	public ContentAssistant(Function<Integer, List<ICompletionProposal>> proposalComputer) {
+	public ContentAssistant(Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.proposalComputer = proposalComputer;
 	}
 
@@ -43,7 +43,7 @@ public class ContentAssistant implements IContentAssistant {
 		}
 		event.consume();
 
-		List<ICompletionProposal> proposals = proposalComputer.apply(this.viewer.getTextWidget().getCaretOffset());
+		List<ICompletionProposal> proposals = proposalComputer.apply(new ContentAssistContextData(this.viewer.getTextWidget().getCaretOffset(),this.viewer.getDocument()/*,""*/));
 
 		if( proposals.size() == 1) {
 			proposals.get(0).apply(this.viewer.getDocument());
