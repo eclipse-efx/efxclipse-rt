@@ -73,7 +73,7 @@ class JavaFXCodeGenerator {
 		}
 
 		public boolean test(org.eclipse.fx.code.editor.Input<?> t) {
-			return (t instanceof org.eclipse.fx.code.editor.services.URIProvider) && ((org.eclipse.fx.code.editor.services.URIProvider)t).getURI().lastSegment().endsWith(".«model.name»");
+			return (t instanceof org.eclipse.fx.code.editor.services.URIProvider) && ((org.eclipse.fx.code.editor.services.URIProvider)t).getURI().toString().endsWith(".«model.name»");
 		}
 	}
 	'''
@@ -85,13 +85,13 @@ class JavaFXCodeGenerator {
 	public class «model.name.toFirstUpper»PresentationReconcilerTypeProvider implements org.eclipse.fx.code.editor.fx.services.PresentationReconcilerTypeProvider {
 
 		@Override
-		public Class<? extends org.eclipse.jface.text.presentation.PresentationReconciler> getType(org.eclipse.fx.code.editor.Input<?> s) {
+		public Class<? extends org.eclipse.fx.text.ui.presentation.PresentationReconciler> getType(org.eclipse.fx.code.editor.Input<?> s) {
 			return «javaBasePackage».«model.name.toFirstUpper»PresentationReconciler.class;
 		}
 
 		@Override
 		public boolean test(org.eclipse.fx.code.editor.Input<?> t) {
-			return (t instanceof org.eclipse.fx.code.editor.services.URIProvider) && ((org.eclipse.fx.code.editor.services.URIProvider)t).getURI().lastSegment().endsWith(".dart");
+			return (t instanceof org.eclipse.fx.code.editor.services.URIProvider) && ((org.eclipse.fx.code.editor.services.URIProvider)t).getURI().toString().endsWith(".dart");
 		}
 	}
 	'''
