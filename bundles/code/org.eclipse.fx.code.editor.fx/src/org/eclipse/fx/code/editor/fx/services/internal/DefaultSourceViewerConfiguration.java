@@ -16,6 +16,7 @@ import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.fx.code.editor.services.ProposalComputer.ProposalContext;
 import org.eclipse.fx.text.ui.ITextHover;
 import org.eclipse.fx.text.ui.ITextViewer;
+import org.eclipse.fx.text.ui.contentassist.ContentAssistContextData;
 import org.eclipse.fx.text.ui.contentassist.ContentAssistant;
 import org.eclipse.fx.text.ui.contentassist.ICompletionProposal;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
@@ -40,6 +41,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	private final List<AnnotationPresenter> annotationPresenters;
 	private final HoverInformationProvider hoverInformationProvider;
 	private final CompletionProposalPresenter proposalPresenter;
+	private ContentAssistant contentAssistant;
 
 	@Inject
 	public DefaultSourceViewerConfiguration(
@@ -76,14 +78,18 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	@Override
 	public IContentAssistant getContentAssist() {
 		if( proposalComputer != null ) {
-			return new ContentAssistant(this::computeProposals);
+			if( contentAssistant == null ) {
+				contentAssistant = new ContentAssistant(this::computeProposals);
+			}
+
+			return contentAssistant;
 		}
 		return super.getContentAssist();
 	}
 
-	List<ICompletionProposal> computeProposals(Integer offset) {
+	List<ICompletionProposal> computeProposals(ContentAssistContextData data) {
 		try {
-			return proposalComputer.compute(new ProposalContext(input, offset)).get()
+			return proposalComputer.compute(new ProposalContext(input, data.document, data.offset)).get()
 						.stream()
 						.map(proposalPresenter::createProposal)
 						.collect(Collectors.toList());

@@ -19,7 +19,7 @@ public interface Outline {
 
 	public interface OutlineItem {
 		public CharSequence getLabel();
-		public ReadOnlyProperty<CharSequence> labelProperty();
+		public ReadOnlyProperty<? extends CharSequence> labelProperty();
 
 		public Node getGraphic();
 		public ReadOnlyProperty<Node> graphicProperty();
