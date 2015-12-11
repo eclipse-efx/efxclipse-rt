@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='2'>
+  <artifact classifier='osgi.bundle' id='org.eclipse.fx.code.editor.configuration' version='2.2.0.201512020119'>
+    <properties size='5'>
+      <property name='artifact.size' value='71005'/>
+      <property name='download.size' value='71005'/>
+      <property name='maven-groupId' value='org.eclipse.fx.runtime'/>
+      <property name='maven-artifactId' value='org.eclipse.fx.code.editor.configuration'/>
+      <property name='maven-version' value='2.2.0-SNAPSHOT'/>
+    </properties>
+  </artifact>
+  <artifact classifier='osgi.bundle' id='org.eclipse.fx.code.editor.configuration.source' version='2.2.0.201512020119'>
+    <properties size='6'>
+      <property name='artifact.size' value='27062'/>
+      <property name='download.size' value='27062'/>
+      <property name='maven-groupId' value='org.eclipse.fx.runtime'/>
+      <property name='maven-artifactId' value='org.eclipse.fx.code.editor.configuration'/>
+      <property name='maven-version' value='2.2.0-SNAPSHOT'/>
+      <property name='maven-classifier' value='sources'/>
+    </properties>
+  </artifact>
+</artifacts>

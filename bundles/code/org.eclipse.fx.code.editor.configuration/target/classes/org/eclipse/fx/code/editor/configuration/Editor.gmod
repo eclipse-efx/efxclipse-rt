@@ -1,0 +1,70 @@
+package org.eclipse.fx.code.editor.configuration {
+	type LanguageDef {
+		String fileSuffix;
+		Partition[] partitionList;
+	}
+	type Partition {
+		String name;
+		PartitionRule[] ruleList;
+		Token[] tokenList;
+		PartitionWhiteSpace whitespace;
+	}
+	type PartitionRule {
+		Check check;
+	}
+	type PartitionRule_MultiLine extends PartitionRule {
+		String startSeq;
+		String endSeq;
+		String escapedBy;
+	}
+	type PartitionRule_SingleLine extends PartitionRule {
+		String startSeq;
+		String endSeq;
+		String escapedBy;
+	}
+	type PartitionWhiteSpace {
+		Boolean javawhiteSpace;
+		String[] characterList;
+	}
+	type Token {
+		Boolean defaultToken;
+		String name;
+		TokenScanner[] tokenScannerList;
+	}
+	type TokenScanner {
+		Check check;
+	}
+	type TokenScanner_CharacterRule extends TokenScanner {
+		String[] characterList;
+	}
+	type TokenScanner_Keyword extends TokenScanner {
+		String[] keywordList;
+	}
+	type TokenScanner_PatternRule extends TokenScanner {
+		Int startLength = 1;
+		String startPattern;
+		String containmentPattern;
+	}
+	type TokenScanner_SingleLineRule extends TokenScanner {
+		String startSeq;
+		String endSeq;
+		String escapedBy;
+	}
+	type TokenScanner_MultiLineRule extends TokenScanner {
+		String startSeq;
+		String endSeq;
+		String escapedBy;
+	}
+	type Check {
+
+	}
+	type Equals extends Check {
+		Int value;
+	}
+	type Range extends Check {
+		Int min = 1;
+		Boolean minIncl;
+		Int max = 1;
+		Boolean maxIncl;
+	}
+}
