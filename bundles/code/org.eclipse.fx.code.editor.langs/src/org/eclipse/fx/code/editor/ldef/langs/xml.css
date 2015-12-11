@@ -3,23 +3,23 @@
 }
 
 .styled-text-area .xml.xml_tag {
-	-styled-text-color: #3f7f80;
+	-styled-text-color: -source-editor-markup-tag;
 }
 
 .styled-text-area .xml.xml_property_value {
-	-styled-text-color: #7f007f;
+	-styled-text-color: -source-editor-markup-property-value;
 }
 
 .styled-text-area .xml.xml_equals {
-	-styled-text-color: rgb(0, 0, 128);
+	-styled-text-color: -source-editor-markup-property-name;
 }
 
 .styled-text-area .xml.xml_property_name {
-	-styled-text-color: rgb(0, 0, 128);
+	-styled-text-color: -source-editor-markup-property-name;
 }
 
 .styled-text-area .xml.xml_declaration {
-	-styled-text-color: rgb(128, 128, 128);
+	-styled-text-color: -source-editor-markup-extra;
 }
 
 .styled-text-area .xml.xml_cdata {
@@ -27,9 +27,9 @@
 }
 
 .styled-text-area .xml.xml_pi {
-	-styled-text-color: rgb(128, 128, 128);
+	-styled-text-color: -source-editor-markup-extra;
 }
 
 .styled-text-area .xml.xml_comment {
-	-styled-text-color: -source-editor-api-doc;
+	-styled-text-color: -source-editor-markup-doc;
 }
