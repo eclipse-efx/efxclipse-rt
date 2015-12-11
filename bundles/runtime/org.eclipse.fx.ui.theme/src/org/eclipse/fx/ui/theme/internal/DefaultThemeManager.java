@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.theme.internal;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -131,16 +132,23 @@ public class DefaultThemeManager implements ThemeManager {
 	private void unsetTheme(Theme theme) {
 		theme.getStylesheetURL().removeListener(this::handleStylesheetUrlChange);
 
+		Collection<Theme> availableThemes = getAvailableThemes().values();
+
+		List<String> stylesheetList = new ArrayList<>();
+		List<String> classList = new ArrayList<>();
+		for (Theme t : availableThemes) {
+			stylesheetList.addAll(t.getStylesheetURL()
+					.stream()
+					.map(URL::toExternalForm)
+					.collect(Collectors.toList()));
+			classList.add(getCSSClassname(t.getId()));
+		}
+
 		for (Scene scene : this.managedScenes) {
-			Collection<Theme> availableThemes = getAvailableThemes().values();
-			for (Theme t : availableThemes) {
-				for (URL url : t.getStylesheetURL()) {
-					if (scene.getRoot() != null) {
-						scene.getRoot().getStyleClass().remove(getCSSClassname(t.getId()));
-					}
-					scene.getStylesheets().remove(url.toExternalForm());
-				}
+			if (scene.getRoot() != null) {
+				scene.getRoot().getStyleClass().removeAll(classList);
 			}
+			scene.getStylesheets().removeAll(stylesheetList);
 		}
 	}
 
