@@ -16,8 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.URLStreamHandler;
 import org.eclipse.fx.core.Util;
@@ -29,7 +28,6 @@ import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -60,6 +58,8 @@ public class DefaultThemeManager implements ThemeManager {
 	private String currentThemeId;
 	ObservableList<Scene> managedScenes = FXCollections.observableArrayList();
 
+	private static final String THEMED_KEY = "themed"; //$NON-NLS-1$
+
 	/**
 	 * Create a new theme manager instance
 	 */
@@ -77,7 +77,10 @@ public class DefaultThemeManager implements ThemeManager {
 				return;
 			while (change.next()) {
 				for (Scene scene : change.getAddedSubList()) {
-					applyThemeToScene(currentTheme, scene);
+					// Avoid apply css file twice
+					if( ! Boolean.TRUE.equals(scene.getProperties().getOrDefault(THEMED_KEY, Boolean.TRUE))) {
+						applyThemeToScene(currentTheme, scene);
+					}
 				}
 			}
 		});
@@ -149,12 +152,16 @@ public class DefaultThemeManager implements ThemeManager {
 	}
 
 	private static void applyThemeToScene(Theme theme, Scene scene) {
-		for (URL url : theme.getStylesheetURL()) {
-			if (scene.getRoot() != null) {
-				scene.getRoot().getStyleClass().remove(getCSSClassname(theme.getId()));
-				scene.getRoot().getStyleClass().add(getCSSClassname(theme.getId()));
-			}
-			scene.getStylesheets().add(url.toExternalForm());
+		scene.getProperties().put(THEMED_KEY, Boolean.TRUE);
+		List<String> urlList = theme.getStylesheetURL()
+			.stream()
+			.map( URL::toExternalForm )
+			.collect(Collectors.toList());
+		scene.getStylesheets().addAll(urlList);
+
+		if (scene.getRoot() != null) {
+			scene.getRoot().getStyleClass().remove(getCSSClassname(theme.getId()));
+			scene.getRoot().getStyleClass().add(getCSSClassname(theme.getId()));
 		}
 	}
 
