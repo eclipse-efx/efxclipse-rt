@@ -13,6 +13,7 @@ package org.eclipse.fx.core;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -20,7 +21,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.eclipse.fx.core.function.ExExecutor;
 import org.eclipse.fx.core.internal.JavaDSServiceProcessor;
@@ -260,6 +264,73 @@ public class Util {
 	}
 
 	/**
+	 * Copy the complete input stream to an output stream
+	 *
+	 * @param sourceStream
+	 *            the source stream
+	 * @param targetStream
+	 *            the output stream
+	 * @throws IOException
+	 *             if something is going wrong
+	 * @since 2.3.0
+	 */
+	public static void copyToStream(InputStream sourceStream, OutputStream targetStream) throws IOException {
+		byte[] buf = new byte[1024];
+		int l;
+		while ((l = sourceStream.read(buf)) != -1) {
+			targetStream.write(buf, 0, l);
+		}
+	}
+
+	/**
+	 * Zip up a complete directory with all the sub directories
+	 *
+	 * @param dir
+	 *            the directory to zip
+	 * @param zipFile
+	 *            the zip file or <code>null</code> if you want a temporary zip
+	 *            file to be created
+	 * @return the directory
+	 * @throws IOException
+	 *             if somethings going wrong
+	 * @since 2.3.0
+	 */
+	@SuppressWarnings("null")
+	public static @NonNull Path zipDirectory(@NonNull Path dir, @Nullable Path zipFile) throws IOException {
+		Path target = zipFile;
+		if (target == null) {
+			target = Files.createTempFile("generated-zip", ".zip"); //$NON-NLS-1$//$NON-NLS-2$
+		}
+
+		try (ZipOutputStream out = new ZipOutputStream(Files.newOutputStream(target))) {
+			for (Path c : Files.list(dir).collect(Collectors.toList())) {
+				if (!c.equals(target)) {
+					addEntry(out, dir, c);
+				}
+			}
+
+			out.close();
+		}
+
+		return target;
+	}
+
+	private static void addEntry(ZipOutputStream out, Path rootPath, Path p) throws IOException {
+		if (Files.isDirectory(p)) {
+			for (Path c : Files.list(p).collect(Collectors.toList())) {
+				addEntry(out, rootPath, c);
+			}
+		} else {
+			ZipEntry e = new ZipEntry(rootPath.relativize(p).toString());
+			out.putNextEntry(e);
+			try (InputStream s = Files.newInputStream(p)) {
+				copyToStream(s, out);
+			}
+			out.closeEntry();
+		}
+	}
+
+	/**
 	 * @return <code>true</code> if running on OS-X
 	 * @since 2.2.0
 	 */
@@ -317,11 +388,8 @@ public class Util {
 	 * @since 2.2.0
 	 */
 	public static Optional<Resource<@NonNull Path>> getLocalPath(@NonNull URL url, boolean copyIfNeeded) {
-		return lookupServiceList(URLResolver.class)
-				.stream()
-				.filter(r -> r.test(url)).findFirst()
-				.map(r -> Optional.of(Resource.createResource(r.resolveToLocalPath(url))))
-				.orElseGet(() -> copyIfNeeded ? ExExecutor.executeSupplier( () -> Util.copyToTempFile(url), "Unable to copy resource") : Optional.empty()); //$NON-NLS-1$
+		return lookupServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst().map(r -> Optional.of(Resource.createResource(r.resolveToLocalPath(url))))
+				.orElseGet(() -> copyIfNeeded ? ExExecutor.executeSupplier(() -> Util.copyToTempFile(url), "Unable to copy resource") : Optional.empty()); //$NON-NLS-1$
 	}
 
 	/**
@@ -333,10 +401,7 @@ public class Util {
 	 * @since 2.2.0
 	 */
 	public static Optional<URL> getLocalURL(@NonNull URL url) {
-		return lookupServiceList(URLResolver.class)
-				.stream()
-				.filter(r -> r.test(url)).findFirst()
-				.map(r -> r.resolveToLocalURL(url));
+		return lookupServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst().map(r -> r.resolveToLocalURL(url));
 	}
 
 	private static Resource<@NonNull Path> copyToTempFile(@NonNull URL url) throws IOException {
@@ -346,7 +411,7 @@ public class Util {
 			Files.copy(stream, path);
 		}
 
-		if( path == null ) {
+		if (path == null) {
 			return null;
 		}
 
