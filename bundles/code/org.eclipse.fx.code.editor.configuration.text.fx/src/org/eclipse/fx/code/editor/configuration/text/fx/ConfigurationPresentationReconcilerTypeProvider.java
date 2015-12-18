@@ -5,7 +5,6 @@ import java.util.Map;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.configuration.text.ConfigurationModelDependentTypeProvider;
 import org.eclipse.fx.code.editor.configuration.text.ConfigurationModelProvider;
-import org.eclipse.fx.code.editor.configuration.text.fx.internal.ConfigurationPresentationReconciler;
 import org.eclipse.fx.code.editor.fx.services.PresentationReconcilerTypeProvider;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.osgi.service.component.annotations.Component;

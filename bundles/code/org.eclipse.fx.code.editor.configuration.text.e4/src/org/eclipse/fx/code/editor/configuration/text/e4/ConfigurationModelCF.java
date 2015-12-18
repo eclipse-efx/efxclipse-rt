@@ -1,4 +1,4 @@
-package org.eclipse.fx.code.editor.configuration.text.internal;
+package org.eclipse.fx.code.editor.configuration.text.e4;
 
 import java.util.ArrayList;
 import java.util.List;

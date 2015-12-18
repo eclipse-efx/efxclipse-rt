@@ -1,9 +1,10 @@
-package org.eclipse.fx.code.editor.configuration.text.fx.internal;
+package org.eclipse.fx.code.editor.configuration.text.fx;
 
 import javax.inject.Inject;
 
 import org.eclipse.fx.code.editor.configuration.LanguageDef;
 import org.eclipse.fx.code.editor.configuration.Partition;
+import org.eclipse.fx.code.editor.configuration.text.fx.internal.ConfigurationRuleScanner;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.rules.DefaultDamagerRepairer;
 
