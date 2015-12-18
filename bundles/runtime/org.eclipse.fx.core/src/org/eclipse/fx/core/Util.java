@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -101,7 +102,8 @@ public class Util {
 		return null;
 	}
 
-	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
+	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor,
+			@NonNull Class<S> serviceClass) {
 		if (isOsgiEnv()) {
 			return OSGiUtil.lookupServiceList(requestor, serviceClass);
 		} else {
@@ -188,7 +190,8 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor, @NonNull Class<S> serviceClass) {
+	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor,
+			@NonNull Class<S> serviceClass) {
 		return _lookupServiceList(requestor, serviceClass);
 	}
 
@@ -388,8 +391,11 @@ public class Util {
 	 * @since 2.2.0
 	 */
 	public static Optional<Resource<@NonNull Path>> getLocalPath(@NonNull URL url, boolean copyIfNeeded) {
-		return lookupServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst().map(r -> Optional.of(Resource.createResource(r.resolveToLocalPath(url))))
-				.orElseGet(() -> copyIfNeeded ? ExExecutor.executeSupplier(() -> Util.copyToTempFile(url), "Unable to copy resource") : Optional.empty()); //$NON-NLS-1$
+		return lookupServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst()
+				.map(r -> Optional.of(Resource.createResource(r.resolveToLocalPath(url))))
+				.orElseGet(() -> copyIfNeeded
+						? ExExecutor.executeSupplier(() -> Util.copyToTempFile(url), "Unable to copy resource") //$NON-NLS-1$
+						: Optional.empty());
 	}
 
 	/**
@@ -401,7 +407,8 @@ public class Util {
 	 * @since 2.2.0
 	 */
 	public static Optional<URL> getLocalURL(@NonNull URL url) {
-		return lookupServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst().map(r -> r.resolveToLocalURL(url));
+		return lookupServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst()
+				.map(r -> r.resolveToLocalURL(url));
 	}
 
 	private static Resource<@NonNull Path> copyToTempFile(@NonNull URL url) throws IOException {
@@ -416,5 +423,23 @@ public class Util {
 		}
 
 		return Resource.createTempResource(path);
+	}
+
+	/**
+	 * Create a new URL instance from the provide value
+	 *
+	 * @param url
+	 *            the url
+	 * @return the url instance
+	 * @throws IllegalArgumentException
+	 *             if something wrong with the URL provided
+	 * @since 2.3.0
+	 */
+	public static URL createUrl(String url) {
+		try {
+			return new URL(url);
+		} catch (MalformedURLException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 }
