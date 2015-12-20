@@ -62,7 +62,7 @@
 			<plugin>
 				<groupId>at.bestsolution</groupId>
 				<artifactId>bindex-maven-plugin</artifactId>
-				<version>1.0.0</version>
+				<version>3.0.0</version>
 				<executions>
 					<execution>
 						<id>build-p2-obr-index</id>
