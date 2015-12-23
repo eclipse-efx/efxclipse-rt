@@ -22,11 +22,14 @@ import org.eclipse.fx.core.fxml.ExtendedFXMLLoader;
 
 /**
  * Annotation to mark an injection of an {@link FXMLLoaderFactory}
+ *
+ * @Deprecated Use @LocalInstance {@link javafx.fxml.FXMLLoader} instead
  */
 @Qualifier
 @Documented
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
+@Deprecated
 public @interface FXMLLoader {
 	/**
 	 * If set to true the {@link ExtendedFXMLLoader} will be used and

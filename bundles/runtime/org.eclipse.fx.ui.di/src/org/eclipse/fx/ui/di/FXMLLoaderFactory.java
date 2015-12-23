@@ -18,6 +18,8 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Factory to build an {@link FXMLLoader}
+ *
+ * @deprecated use @LocalInstance {@link FXMLLoader}
  */
 public interface FXMLLoaderFactory {
 	/**
