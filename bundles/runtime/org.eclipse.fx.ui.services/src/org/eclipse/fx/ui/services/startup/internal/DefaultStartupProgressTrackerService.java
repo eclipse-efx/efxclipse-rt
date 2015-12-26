@@ -12,19 +12,21 @@ package org.eclipse.fx.ui.services.startup.internal;
 
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * Default implementation of the progress
  */
+@Component
 public class DefaultStartupProgressTrackerService implements StartupProgressTrackerService {
-	
+
 	@Override
 	public OSGiRV osgiApplicationLaunched(IApplicationContext applicationContext) {
 		applicationContext.applicationRunning();
 		return StartupProgressTrackerService.OSGiRV.CONTINUE;
 	}
 
-	
+
 	@Override
 	public void stateReached(ProgressState state) {
 		// do nothing

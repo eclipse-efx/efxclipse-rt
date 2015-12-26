@@ -20,10 +20,12 @@ import javafx.scene.image.Image;
 
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.ui.services.resources.ImageProvider;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * A default image provider
  */
+@Component
 public class DefaultImageProvider implements ImageProvider {
 
 	@Override

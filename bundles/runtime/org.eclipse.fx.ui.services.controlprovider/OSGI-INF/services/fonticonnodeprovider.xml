@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" name="org.eclipse.fx.ui.services.controlprovider.FontIconViewNodeProvider">
-   <implementation class="org.eclipse.fx.ui.services.controlprovider.FontIconViewNodeProvider"/>
-   <service>
-      <provide interface="org.eclipse.fx.ui.services.resources.GraphicNodeProvider"/>
-   </service>
-   <reference bind="bindIconFontProvider" cardinality="0..n" interface="org.eclipse.fx.ui.controls.image.spi.IconFontProvider" name="IconFontProvider" policy="dynamic"/>
-   <reference bind="bindLoggerFactory" cardinality="1..1" interface="org.eclipse.fx.core.log.LoggerFactory" name="LoggerFactory" policy="dynamic" policy-option="greedy"/>
-</scr:component>

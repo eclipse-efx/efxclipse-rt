@@ -14,14 +14,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jdt.annotation.NonNull;
+import com.sun.javafx.css.converters.InsetsConverter;
+import com.sun.javafx.css.converters.PaintConverter;
+import com.sun.javafx.css.converters.SizeConverter;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.css.CssMetaData;
-import javafx.css.FontCssMetaData;
+import javafx.css.SimpleStyleableDoubleProperty;
 import javafx.css.SimpleStyleableObjectProperty;
-import javafx.css.StyleOrigin;
 import javafx.css.Styleable;
 import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleableProperty;
@@ -30,9 +32,6 @@ import javafx.scene.control.Control;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-
-import com.sun.javafx.css.converters.InsetsConverter;
-import com.sun.javafx.css.converters.PaintConverter;
 
 /**
  * Font icon view
@@ -68,7 +67,7 @@ public class FontIconView extends Control {
 	 */
 	public ObjectProperty<FontIcon> iconProperty() {
 		if (this.icon == null) {
-			this.icon = new SimpleStyleableObjectProperty<FontIcon>(StyleableProperties.ICON, FontIcon.create('?'));
+			this.icon = new SimpleStyleableObjectProperty<FontIcon>(StyleableProperties.ICON, FontIcon.UNKNOWN);
 		}
 		return this.icon;
 	}
@@ -90,80 +89,34 @@ public class FontIconView extends Control {
 		return this.icon == null ? null : this.icon.get();
 	}
 
+	DoubleProperty iconFontSize;
+
 	/**
-	 * @return the font property
+	 * @return the font size to use
 	 */
-	public final @NonNull ObjectProperty<Font> fontProperty() {
-		ObjectProperty<Font> font = this.font;
-		if (font == null) {
-			this.font = font = new StyleableObjectProperty<Font>(Font.getDefault()) {
-
-				private boolean cssFont = false;
-
-				@Override
-				public void applyStyle(StyleOrigin newOrigin, Font value) {
-					try {
-						this.cssFont = true;
-						super.applyStyle(newOrigin, value);
-					} catch (Exception e) {
-						throw e;
-					} finally {
-						this.cssFont = false;
-					}
-				}
-
-				@Override
-				public void set(Font value) {
-					final Font oldValue = get();
-					if (value != null ? !value.equals(oldValue) : oldValue != null) {
-						super.set(value);
-					}
-
-				}
-
-				@Override
-				protected void invalidated() {
-					if (!this.cssFont) {
-						FontIconView.this.impl_reapplyCSS();
-					}
-				}
-
-				@Override
-				public CssMetaData<FontIconView, Font> getCssMetaData() {
-					return StyleableProperties.FONT;
-				}
-
-				@Override
-				public Object getBean() {
-					return FontIconView.this;
-				}
-
-				@Override
-				public String getName() {
-					return "font"; //$NON-NLS-1$
-				}
-			};
+	public DoubleProperty iconFontSizeProperty() {
+		if (this.iconFontSize == null) {
+			return this.iconFontSize = new SimpleStyleableDoubleProperty(StyleableProperties.ICON_FONT_SIZE, Double.valueOf(Font.getDefault().getSize()));
 		}
-		return font;
+		return this.iconFontSize;
 	}
 
-	ObjectProperty<Font> font;
-
 	/**
-	 * Set a new font
+	 * Set the font size
 	 *
-	 * @param font
-	 *            the new font
+	 * @param iconFontSize
+	 *            the font size
 	 */
-	public final void setFont(Font font) {
-		fontProperty().setValue(font);
+	public void setIconFontSize(double iconFontSize) {
+		this.iconFontSizeProperty().set(iconFontSize);
 	}
 
 	/**
-	 * @return get the current font
+	 * Set the font size
+	 * @return the font size
 	 */
-	public final Font getFont() {
-		return this.font == null ? Font.getDefault() : this.font.getValue();
+	public double getIconFontSize() {
+		return this.iconFontSizeProperty().get();
 	}
 
 	/**
@@ -262,20 +215,6 @@ public class FontIconView extends Control {
 	}
 
 	private static class StyleableProperties {
-		static final FontCssMetaData<FontIconView> FONT = new FontCssMetaData<FontIconView>("-fx-font", Font.getDefault()) { //$NON-NLS-1$
-
-			@Override
-			public boolean isSettable(FontIconView n) {
-				return n.font == null || !n.font.isBound();
-			}
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public StyleableProperty<Font> getStyleableProperty(FontIconView n) {
-				return (StyleableProperty<Font>) n.fontProperty();
-			}
-
-		};
 
 		static final CssMetaData<FontIconView, FontIcon> ICON = new CssMetaData<FontIconView, FontIcon>("-fx-icon", new FontIconStyleConverter()) { //$NON-NLS-1$
 			@Override
@@ -317,10 +256,26 @@ public class FontIconView extends Control {
 			}
 		};
 
+		@SuppressWarnings("boxing")
+		static final CssMetaData<FontIconView, Number> ICON_FONT_SIZE = new CssMetaData<FontIconView, Number>("-fx-icon-font-size", SizeConverter.getInstance(), Font.getDefault().getSize()) { //$NON-NLS-1$
+
+			@Override
+			public boolean isSettable(FontIconView n) {
+				return n.iconFontSize == null || !n.iconFontSize.isBound();
+			}
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public StyleableProperty<Number> getStyleableProperty(FontIconView n) {
+				return (StyleableProperty<Number>) n.iconFontSize;
+			}
+		};
+
 		static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
+
 		static {
 			final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(Control.getClassCssMetaData());
-			Collections.addAll(styleables, FONT, ICON, ICON_FILL, ICON_PADDING);
+			Collections.addAll(styleables, ICON, ICON_FONT_SIZE, ICON_FILL, ICON_PADDING);
 			STYLEABLES = Collections.unmodifiableList(styleables);
 		}
 

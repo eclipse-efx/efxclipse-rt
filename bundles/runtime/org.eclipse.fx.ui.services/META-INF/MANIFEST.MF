@@ -16,9 +16,13 @@ Bundle-Vendor: %Bundle-Vendor
 Import-Package: javax.inject;version="1.0.0",
  org.eclipse.fx.core;version="2.2.0",
  org.eclipse.fx.osgi.util;version="2.2.0",
- org.eclipse.fx.ui.controls.stage;version="2.2.0"
+ org.eclipse.fx.ui.controls.image;version="2.2.0",
+ org.eclipse.fx.ui.controls.stage;version="2.2.0",
+ org.osgi.service.component.annotations;version="1.2.0"
 Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
  org.eclipse.core.runtime;bundle-version="3.10.0";resolution:=optional
-Service-Component: OSGI-INF/imageprovider.xml,OSGI-INF/fxmlprovider.xml,
- OSGI-INF/def_progress_tracker.xml
+Service-Component: OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.FontIconNodeProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.DefaultImageProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.services.resources.impl.FXMLGraphicsNodeProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.services.startup.internal.DefaultStartupProgressTrackerService.xml
 Bundle-ActivationPolicy: lazy

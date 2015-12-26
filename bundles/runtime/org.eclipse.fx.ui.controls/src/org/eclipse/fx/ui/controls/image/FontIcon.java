@@ -10,61 +10,97 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.image;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.eclipse.fx.core.Util;
 import org.eclipse.jdt.annotation.NonNull;
+
+import javafx.scene.text.Font;
 
 /**
  * Representation of a font icon
  */
-public interface FontIcon {
+public abstract class FontIcon {
 	/**
 	 * @return the icon code
 	 */
-	public char getIconCode();
+	public abstract char getIconCode();
 
 	/**
 	 * @return the icon name
 	 */
-	public @NonNull String getIconName();
+	public abstract @NonNull String getIconName();
 
 	/**
-	 * Create an icon with the given code
-	 * 
-	 * @param iconCode
-	 *            the icon code
-	 * @return the icon instance
+	 * @return the font
 	 */
-	public static FontIcon create(final char iconCode) {
-		return new FontIcon() {
-			@Override
-			public char getIconCode() {
-				return iconCode;
-			}
+	public abstract @NonNull Font getFont();
 
-			@Override
-			public String getIconName() {
-				return ""; //$NON-NLS-1$
-			}
-		};
+	private static Map<String, FontIconProvider> PROVIDER_MAP = new HashMap<>();
+
+	static
+	{
+		PROVIDER_MAP.putAll(Util.lookupServiceList(FontIconProvider.class).stream().collect(Collectors.toMap(FontIconProvider::getNamespace, p -> p)));
+	}
+
+	/**
+	 * FontIcon used if no matching icon can be found
+	 */
+	public static final FontIcon UNKNOWN = new FontIcon() {
+
+		@Override
+		public @NonNull String getIconName() {
+			return "unknown"; //$NON-NLS-1$
+		}
+
+		@Override
+		public char getIconCode() {
+			return '?';
+		}
+
+		@SuppressWarnings("null")
+		@Override
+		public @NonNull Font getFont() {
+			return Font.getDefault();
+		}
+	};
+
+	FontIcon() {
 	}
 
 	/**
 	 * Create an icon with the given name
-	 * 
+	 *
 	 * @param iconName
 	 *            the icon name
 	 * @return the icon instance
 	 */
-	public static FontIcon create(@NonNull final String iconName) {
-		return new FontIcon() {
-			@Override
-			public char getIconCode() {
-				return '0';
-			}
+	public static Optional<FontIcon> create(@NonNull final String iconName) {
+		int idx = iconName.indexOf('-');
+		if( idx > 0 ) {
+			FontIconProvider iconProvider = PROVIDER_MAP.get(iconName.substring(0,idx));
+			if( iconProvider != null ) {
+				return Optional.of(new FontIcon() {
+					@Override
+					public @NonNull Font getFont() {
+						return iconProvider.getFont();
+					}
 
-			@Override
-			public String getIconName() {
-				return iconName;
+					@Override
+					public char getIconCode() {
+						return iconProvider.map(iconName);
+					}
+
+					@Override
+					public String getIconName() {
+						return iconName;
+					}
+				});
 			}
-		};
+		}
+		return Optional.empty();
 	}
 }

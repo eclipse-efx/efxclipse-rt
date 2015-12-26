@@ -14,27 +14,19 @@ import javafx.css.ParsedValue;
 import javafx.css.StyleConverter;
 import javafx.scene.text.Font;
 
-//import com.sun.javafx.Utils;
-
 /**
  * Convert the string into an icon
  */
-@SuppressWarnings("restriction")
 public class FontIconStyleConverter extends StyleConverter<String, FontIcon> {
 
 	@Override
 	public FontIcon convert(ParsedValue<String, FontIcon> value, Font font) {
 		String v = value.getValue();
-//		v = Utils.convertUnicode(v);
-		
-		if (v.length() == 1) {
-			char c = v.charAt(0);
-			return FontIcon.create(c);
+		if( v == null ) {
+			return FontIcon.UNKNOWN;
 		}
-		else {
-			return FontIcon.create(v);
-		}
+		return FontIcon.create(v).orElse(FontIcon.UNKNOWN);
 	}
-	
-	
+
+
 }
