@@ -13,5 +13,17 @@
          </run>
       </application>
    </extension>
+   <extension
+         id="main-thread-application"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="org.eclipse.fx.ui.workbench.fx.E4Application">
+         </run>
+      </application>
+   </extension>
 
 </plugin>
