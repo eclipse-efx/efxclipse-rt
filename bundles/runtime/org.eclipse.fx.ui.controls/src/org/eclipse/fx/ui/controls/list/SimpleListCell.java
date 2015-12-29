@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.list;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
@@ -41,13 +42,23 @@ public class SimpleListCell<T> extends ListCell<T> {
 	 * Create a new instance
 	 *
 	 * @param labelExtractor
+	 *            the label extractor
+	 * @since 2.3.0
+	 */
+	@SuppressWarnings("null")
+	public SimpleListCell(@NonNull Function<@Nullable T, @Nullable CharSequence> labelExtractor) {
+		this(labelExtractor, (i) -> Collections.emptyList());
+	}
+
+	/**
+	 * Create a new instance
+	 *
+	 * @param labelExtractor
 	 *            extract the text from the domain object
 	 * @param cssClassProvider
 	 *            get the CSS classes for the given domain object
 	 */
-	public SimpleListCell(
-			@NonNull Function<@Nullable T, @Nullable CharSequence> labelExtractor,
-			@NonNull Function<@Nullable T, @NonNull List<@NonNull String>> cssClassProvider) {
+	public SimpleListCell(@NonNull Function<@Nullable T, @Nullable CharSequence> labelExtractor, @NonNull Function<@Nullable T, @NonNull List<@NonNull String>> cssClassProvider) {
 		this(labelExtractor, i -> null, cssClassProvider);
 	}
 
@@ -61,10 +72,7 @@ public class SimpleListCell<T> extends ListCell<T> {
 	 * @param cssClassProvider
 	 *            get the CSS classes for the given domain object
 	 */
-	public SimpleListCell(
-			@NonNull Function<@Nullable T, @Nullable CharSequence> labelExtractor,
-			@NonNull Function<@Nullable T, @Nullable Node> graphicExtractor,
-			@NonNull Function<@Nullable T, @NonNull List<@NonNull String>> cssClassProvider) {
+	public SimpleListCell(@NonNull Function<@Nullable T, @Nullable CharSequence> labelExtractor, @NonNull Function<@Nullable T, @Nullable Node> graphicExtractor, @NonNull Function<@Nullable T, @NonNull List<@NonNull String>> cssClassProvider) {
 		this.labelExtractor = labelExtractor;
 		this.graphicExtractor = graphicExtractor;
 		this.cssClassProvider = cssClassProvider;
@@ -81,7 +89,7 @@ public class SimpleListCell<T> extends ListCell<T> {
 				StyledLabel l = new StyledLabel((StyledString) t);
 				l.getStyleClass().addAll(this.cssClassProvider.apply(item));
 				Node g = this.graphicExtractor.apply(item);
-				if( g != null ) {
+				if (g != null) {
 					l.setGraphic(g);
 				}
 				setGraphic(l);
@@ -89,7 +97,7 @@ public class SimpleListCell<T> extends ListCell<T> {
 				Label l = new Label(t.toString());
 				l.getStyleClass().addAll(this.cssClassProvider.apply(item));
 				Node g = this.graphicExtractor.apply(item);
-				if( g != null ) {
+				if (g != null) {
 					l.setGraphic(g);
 				}
 				setGraphic(l);
