@@ -42,7 +42,7 @@ import com.sun.javafx.css.converters.SizeConverter;
 public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 	@NonNull
 	private static final String LAYOUT_KEY = "gridData"; //$NON-NLS-1$
-	
+
 	private static final CssMetaData<GridLayoutPane, Number> NUM_COLUMNS = new CssMetaData<GridLayoutPane, Number>("-fx-columns", SizeConverter.getInstance(), Integer.valueOf(1)) { //$NON-NLS-1$
 
 		@Override
@@ -182,9 +182,9 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 			return (StyleableProperty<Number>) node.verticalSpacingProperty();
 		}
 	};
-	
+
 	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
-	
+
 	static {
 
 		@SuppressWarnings("static-access")
@@ -204,7 +204,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 	public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
 		return STYLEABLES;
 	}
-	
+
 	@Override
 	public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
 		return getClassCssMetaData();
@@ -237,7 +237,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * Associate a layout constraint with the node
-	 * 
+	 *
 	 * @param n
 	 *            the node
 	 * @param griddata
@@ -249,7 +249,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * Get the layout constraint for the node
-	 * 
+	 *
 	 * @param n
 	 *            the node
 	 * @return the layout constraint or <code>null</code>
@@ -260,7 +260,18 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	@Override
 	protected org.eclipse.fx.ui.panes.AbstractLayoutPane.Size computeSize(double width, double height, boolean flushCache) {
-		return calculateLayout(false, 0, 0, width, height, flushCache);
+		org.eclipse.fx.ui.panes.AbstractLayoutPane.@NonNull Size size = calculateLayout(false, 0, 0, width, height, flushCache);
+		return size;
+	}
+
+	@Override
+	protected double computeMinHeight(double width) {
+		return computeSize(FX_DEFAULT, FX_DEFAULT, true).height;
+	}
+
+	@Override
+	protected double computeMinWidth(double height) {
+		return computeSize(FX_DEFAULT, FX_DEFAULT, true).width;
 	}
 
 	@Override
@@ -876,7 +887,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * The number of columns
-	 * 
+	 *
 	 * @param numColumns
 	 *            the columns
 	 */
@@ -900,7 +911,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * If <code>true</code> all columns have the same width
-	 * 
+	 *
 	 * @param makeColumnsEqualWidth
 	 *            make all columns equal
 	 */
@@ -924,7 +935,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * Horizontal spacing between columns
-	 * 
+	 *
 	 * @param value
 	 *            the spacing
 	 */
@@ -948,7 +959,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * Margin on the left and right
-	 * 
+	 *
 	 * @param value
 	 *            the margin
 	 */
@@ -972,7 +983,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * Margin on the top and bottom
-	 * 
+	 *
 	 * @param value
 	 *            the margin
 	 */
@@ -996,7 +1007,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * The margin on the left
-	 * 
+	 *
 	 * @param value
 	 *            the left margin
 	 */
@@ -1020,7 +1031,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * The margin on the top
-	 * 
+	 *
 	 * @param value
 	 *            the new margin
 	 */
@@ -1044,7 +1055,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * The margin on the right
-	 * 
+	 *
 	 * @param value
 	 *            the new margin
 	 */
@@ -1068,7 +1079,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * The margin on the bottom
-	 * 
+	 *
 	 * @param value
 	 *            the new margin
 	 */
@@ -1092,7 +1103,7 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	/**
 	 * The vertical spacing between rows
-	 * 
+	 *
 	 * @param value
 	 *            the spacing
 	 */
