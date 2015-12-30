@@ -83,9 +83,8 @@ public class SimpleListCell<T> extends ListCell<T> {
 		super.updateItem(item, empty);
 		if (!empty && item != null) {
 			CharSequence t = this.labelExtractor.apply(item);
-			if (t == null) {
-				setGraphic(null);
-			} else if (t instanceof StyledString) {
+			if (t instanceof StyledString) {
+				setText(""); //$NON-NLS-1$
 				StyledLabel l = new StyledLabel((StyledString) t);
 				l.getStyleClass().addAll(this.cssClassProvider.apply(item));
 				Node g = this.graphicExtractor.apply(item);
@@ -94,15 +93,21 @@ public class SimpleListCell<T> extends ListCell<T> {
 				}
 				setGraphic(l);
 			} else {
-				Label l = new Label(t.toString());
-				l.getStyleClass().addAll(this.cssClassProvider.apply(item));
 				Node g = this.graphicExtractor.apply(item);
-				if (g != null) {
+				List<String> apply = this.cssClassProvider.apply(item);
+				if (! apply.isEmpty()) {
+					Label l = new Label(t == null ? "" : t.toString()); //$NON-NLS-1$
+					l.getStyleClass().addAll(apply);
 					l.setGraphic(g);
+					setGraphic(l);
+					setText(""); //$NON-NLS-1$
+				} else {
+					setText(t == null ? "" : t.toString()); //$NON-NLS-1$
+					setGraphic(g);
 				}
-				setGraphic(l);
 			}
 		} else {
+			setText(""); //$NON-NLS-1$
 			setGraphic(null);
 		}
 	}
