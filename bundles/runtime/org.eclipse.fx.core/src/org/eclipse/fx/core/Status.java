@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Represents eg. of an operation
- * 
+ *
  * @since 2.0
  */
 public interface Status {
@@ -49,7 +49,7 @@ public interface Status {
 	 *         {@link #UNKNOWN_RETURN_CODE}
 	 */
 	public int getCode();
-	
+
 	/**
 	 * @return the state
 	 */
@@ -65,7 +65,7 @@ public interface Status {
 
 	/**
 	 * Create a new status object
-	 * 
+	 *
 	 * @param state
 	 *            the state
 	 * @param code
@@ -79,6 +79,42 @@ public interface Status {
 	@NonNull
 	public static Status status(@NonNull State state, int code, @NonNull String message, @Nullable Throwable t) {
 		return new StatusImpl(state, code, message, t);
+	}
+
+	/**
+	 * Create a new status object
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param state
+	 *            the state
+	 * @param code
+	 *            the code
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the throwable
+	 * @return the new status instance
+	 */
+	@NonNull
+	public static <@Nullable O> ValueStatus<O> status(@Nullable O value, @NonNull State state, int code,
+			@NonNull String message, @Nullable Throwable t) {
+		return new ValueStatusImpl<O>(value, state, code, message, t);
+	}
+
+	/**
+	 * A status with an attached value
+	 *
+	 * @param <O>
+	 *            the value to be passed with the status
+	 * @since 2.3.0
+	 */
+	public interface ValueStatus<O> extends Status {
+		/**
+		 * @return the value, might be <code>null</code> in case of an error
+		 */
+		public O getValue();
 	}
 
 	/**
