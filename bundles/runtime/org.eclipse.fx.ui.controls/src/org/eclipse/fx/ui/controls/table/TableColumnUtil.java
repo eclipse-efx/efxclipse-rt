@@ -39,4 +39,18 @@ public class TableColumnUtil {
 		c.setCellValueFactory(f -> new SimpleObjectProperty<>(valueExtractor.apply(f.getValue())));
 		return c;
 	}
+
+	/**
+	 * Setup a table column with the provided value extractor
+	 *
+	 * @param c
+	 *            the column to configure
+	 * @param valueExtractor
+	 *            function to extract the value
+	 * @return the column instance itself
+	 */
+	public static <S, T> TableColumn<S, T> setupColumn(TableColumn<S, T> c, Function<S, T> valueExtractor) {
+		c.setCellValueFactory(f -> new SimpleObjectProperty<>(valueExtractor.apply(f.getValue())));
+		return c;
+	}
 }
