@@ -39,7 +39,7 @@ public class StyledLabelSkin extends
 	 */
 	public StyledLabelSkin(StyledLabel control) {
 		super(control);
-		this.b = new HBox(10);
+		this.b = new HBox();
 		this.l = new Label();
 		this.l.getStyleClass().clear();
 		Bindings.bindContent(this.l.getStyleClass(), control.getStyleClass());

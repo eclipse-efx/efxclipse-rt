@@ -1,0 +1,4 @@
+.styled-label > HBox {
+	-fx-alignment: baseline-left;
+	-fx-spacing: 5;
+}

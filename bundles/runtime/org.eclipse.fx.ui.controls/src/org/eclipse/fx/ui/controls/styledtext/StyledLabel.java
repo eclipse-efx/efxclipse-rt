@@ -36,6 +36,8 @@ public class StyledLabel extends Control {
 	private final ObjectProperty<@Nullable Node> graphic = new SimpleObjectProperty<>(
 			this, "graphic", null); //$NON-NLS-1$
 
+	private static final String USER_AGENT_STYLESHEET = StyledTextArea.class.getResource("styledlabel.css").toExternalForm(); //$NON-NLS-1$
+
 	/**
 	 * Create a new control
 	 *
@@ -46,6 +48,11 @@ public class StyledLabel extends Control {
 		this.styledString.set(s);
 		getStyleClass().add("styled-label"); //$NON-NLS-1$
 		setMouseTransparent(true);
+	}
+
+	@Override
+	public String getUserAgentStylesheet() {
+		return USER_AGENT_STYLESHEET;
 	}
 
 	/**
