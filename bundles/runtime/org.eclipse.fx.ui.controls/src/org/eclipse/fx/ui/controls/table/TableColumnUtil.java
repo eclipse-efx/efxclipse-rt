@@ -14,7 +14,11 @@ import java.util.function.Function;
 
 import org.eclipse.jdt.annotation.NonNull;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -79,6 +83,47 @@ public class TableColumnUtil {
 					setGraphic(null);
 				} else {
 					setText(labelConverter.apply(item).toString());
+				}
+			}
+		});
+		return c;
+	}
+
+	/**
+	 * Setup a column with a checkbox directly editable
+	 *
+	 * @param c
+	 *            the column
+	 * @param booleanPropertyCreator
+	 *            the property extractor
+	 * @return the column
+	 */
+	public static <S> TableColumn<S, S> setupCheckboxColumn(TableColumn<S, S> c, Function<S, BooleanProperty> booleanPropertyCreator) {
+		c.setCellValueFactory(f -> new SimpleObjectProperty<>(f.getValue()));
+		c.setCellFactory(cc -> new TableCell<S, S>() {
+			private BooleanProperty modelProperty;
+
+			@Override
+			protected void updateItem(S item, boolean empty) {
+				super.updateItem(item, empty);
+
+				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+				setAlignment(Pos.CENTER);
+
+				CheckBox box = (CheckBox) getGraphic();
+				if (box != null && this.modelProperty != null) {
+					box.selectedProperty().unbindBidirectional(this.modelProperty);
+				}
+
+				if (item == null || empty) {
+					setGraphic(null);
+				} else {
+					if (box == null) {
+						box = new CheckBox();
+						setGraphic(box);
+					}
+
+					box.selectedProperty().bindBidirectional(booleanPropertyCreator.apply(item));
 				}
 			}
 		});
