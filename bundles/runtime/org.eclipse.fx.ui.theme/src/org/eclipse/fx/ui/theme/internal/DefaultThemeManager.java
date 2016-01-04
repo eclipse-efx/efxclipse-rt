@@ -79,7 +79,7 @@ public class DefaultThemeManager implements ThemeManager {
 			while (change.next()) {
 				for (Scene scene : change.getAddedSubList()) {
 					// Avoid apply css file twice
-					if( ! Boolean.TRUE.equals(scene.getProperties().getOrDefault(THEMED_KEY, Boolean.TRUE))) {
+					if( ! Boolean.TRUE.equals(scene.getProperties().getOrDefault(THEMED_KEY, Boolean.FALSE))) {
 						applyThemeToScene(currentTheme, scene);
 					}
 				}
