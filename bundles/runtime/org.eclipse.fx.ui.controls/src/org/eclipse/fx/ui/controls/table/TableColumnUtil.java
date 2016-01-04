@@ -12,7 +12,10 @@ package org.eclipse.fx.ui.controls.table;
 
 import java.util.function.Function;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
 /**
@@ -51,6 +54,34 @@ public class TableColumnUtil {
 	 */
 	public static <S, T> TableColumn<S, T> setupColumn(TableColumn<S, T> c, Function<S, T> valueExtractor) {
 		c.setCellValueFactory(f -> new SimpleObjectProperty<>(valueExtractor.apply(f.getValue())));
+		return c;
+	}
+
+	/**
+	 * Setup a table column with the provided value extractor
+	 *
+	 * @param c
+	 *            the column to configure
+	 * @param valueExtractor
+	 *            function to extract the value
+	 * @param labelConverter
+	 *            the label converter
+	 * @return the column instance itself
+	 */
+	public static <S, T> TableColumn<S, T> setupColumn(TableColumn<S, T> c, Function<S, T> valueExtractor, Function<T, @NonNull CharSequence> labelConverter) {
+		c.setCellValueFactory(f -> new SimpleObjectProperty<>(valueExtractor.apply(f.getValue())));
+		c.setCellFactory(cc -> new TableCell<S, T>() {
+			@Override
+			protected void updateItem(T item, boolean empty) {
+				super.updateItem(item, empty);
+				if (item == null || empty) {
+					setText(""); //$NON-NLS-1$
+					setGraphic(null);
+				} else {
+					setText(labelConverter.apply(item).toString());
+				}
+			}
+		});
 		return c;
 	}
 }
