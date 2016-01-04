@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.core.log4j;
 
-import java.text.MessageFormat;
-
 import javax.inject.Provider;
 
 import org.apache.log4j.Appender;
@@ -43,7 +41,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 
 	/**
 	 * Add an appender
-	 * 
+	 *
 	 * @param appender
 	 *            the appender to add
 	 */
@@ -55,7 +53,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 
 	/**
 	 * Remove the appender
-	 * 
+	 *
 	 * @param appender
 	 *            the appender to remove
 	 */
@@ -128,7 +126,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		public void logf(Level level, String pattern, Object... args) {
 			org.apache.log4j.Level log4jLevel = toLog4JLevel(level);
 			if (getLogger().isEnabledFor(log4jLevel)) {
-				getLogger().log(log4jLevel, MessageFormat.format(pattern, args));
+				getLogger().log(log4jLevel, String.format(pattern, args));
 			}
 		}
 
@@ -136,7 +134,7 @@ public class Log4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		public void logf(Level level, String pattern, Throwable t, Object... args) {
 			org.apache.log4j.Level log4jLevel = toLog4JLevel(level);
 			if (getLogger().isEnabledFor(log4jLevel)) {
-				getLogger().log(log4jLevel, MessageFormat.format(pattern, args), t);
+				getLogger().log(log4jLevel, String.format(pattern, args), t);
 			}
 		}
 

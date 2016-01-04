@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.core.slf4j;
 
-import java.text.MessageFormat;
-
 import javax.inject.Provider;
 
 import org.eclipse.fx.core.RankedService;
@@ -103,7 +101,7 @@ public class Slf4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		@Override
 		public void logf(@NonNull Level level, @NonNull String pattern, Object... args) {
 			if(isEnabled(level)) {
-				log(level, MessageFormat.format(pattern, args));
+				log(level, String.format(pattern, args));
 			}
 		}
 
@@ -111,7 +109,7 @@ public class Slf4JLoggerFactory implements LoggerFactory, Provider<LoggerFactory
 		@Override
 		public void logf(@NonNull Level level, @NonNull String pattern, @NonNull Throwable t, Object... args) {
 			if(isEnabled(level)) {
-				log(level, MessageFormat.format(pattern, args), t);
+				log(level, String.format(pattern, args), t);
 			}
 		}
 
