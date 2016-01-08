@@ -1,5 +1,6 @@
 package org.eclipse.fx.code.editor.langs.contrib;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
@@ -78,8 +79,9 @@ public class LangsConfigurationModelProvider implements ConfigurationModelProvid
 
 	public LanguageDef getModelByExtension(String extension) {
 		return definitionCache.computeIfAbsent(extension, (e) -> {
-			try {
-				return EditorGModel.create().createObject(new InputStreamReader(definitionURI.get(e).openStream()));
+			try( InputStream in = definitionURI.get(e).openStream();
+					InputStreamReader r = new InputStreamReader(in) ) {
+				return EditorGModel.create().createObject(r);
 			} catch (Exception e1) {
 				LoggerCreator.createLogger(LangsConfigurationModelProvider.class).error("Unable to load json file '"+definitionURI.get(e)+"'", e1);
 			}
