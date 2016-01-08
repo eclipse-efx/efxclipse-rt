@@ -54,14 +54,33 @@ public class StyledTextBehavior {
 	/**
 	 * Handle key event
 	 *
-	 * @param arg0
+	 * @param event
 	 *            the event
 	 */
-	protected void callActionForEvent(KeyEvent arg0) {
-		if (arg0.getEventType() == KeyEvent.KEY_PRESSED) {
-			_keyPressed(arg0);
-		} else if (arg0.getEventType() == KeyEvent.KEY_TYPED) {
-			_keyTyped(arg0);
+	protected void callActionForEvent(KeyEvent event) {
+		if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+			_keyPressed(event);
+		} else if (event.getEventType() == KeyEvent.KEY_TYPED) {
+			_keyTyped(event);
+		}
+	}
+
+	/**
+	 * Handle the mouse event that happens on the content
+	 *
+	 * @param event
+	 *            the event
+	 * @param visibleCells
+	 *            the visible cell
+	 */
+	public void handleContentMouseEvent(MouseEvent event, List<LineCell> visibleCells) {
+		if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			updateCursor(event, visibleCells, event.isShiftDown());
+
+			// The consuming does not help because it looks like the
+			// selection change happens earlier => should be push a new
+			// ListViewBehavior?
+			event.consume();
 		}
 	}
 
@@ -81,7 +100,7 @@ public class StyledTextBehavior {
 	 * @param action
 	 *            the action
 	 */
-	protected void invokeAction(ActionType action) {
+	public void invokeAction(ActionType action) {
 		ActionEvent evt = new ActionEvent(getControl(), getControl(), action);
 		Event.fireEvent(getControl(), evt);
 	}
@@ -315,9 +334,10 @@ public class StyledTextBehavior {
 	 *            the visible cells
 	 * @param selection
 	 *            are we in selection mode
+	 * @return if the cursor update succeeded
 	 */
 	@SuppressWarnings("deprecation")
-	public void updateCursor(MouseEvent event, List<LineCell> visibleCells, boolean selection) {
+	public boolean updateCursor(MouseEvent event, List<LineCell> visibleCells, boolean selection) {
 		LineCell lastCell = null;
 
 		for (LineCell tmp : visibleCells) {
@@ -333,7 +353,7 @@ public class StyledTextBehavior {
 						int index = n.getCaretIndexAtPoint(n.sceneToLocal(event.getSceneX(), event.getSceneY()));
 						if (index >= 0) {
 							getControl().impl_setCaretOffset(n.getStartOffset() + index, selection);
-							return;
+							return true;
 						}
 					}
 
@@ -347,6 +367,7 @@ public class StyledTextBehavior {
 		}
 		getControl().requestFocus();
 		Event.fireEvent(getControl(), event.copyFor(getControl(), getControl()));
+		return false;
 	}
 
 	// public void mouseDragged(MouseEvent event, List<LineCell> visibleCells) {

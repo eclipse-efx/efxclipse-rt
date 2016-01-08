@@ -82,6 +82,10 @@ public class ActionEvent extends Event {
 		 */
 		SELECT_WORD_PREVIOUS,
 		/**
+		 * Action to select the word at the current cursor
+		 */
+		SELECT_WORD,
+		/**
 		 * Action to select until the start of the line
 		 */
 		SELECT_LINE_START,

@@ -216,17 +216,8 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		contentView.setMinWidth(0);
 		// this.contentView.setFixedCellSize(value);
 		// this.contentView.setFixedCellSize(15);
-		contentView.setOnMousePressed(new EventHandler<MouseEvent>() {
 
-			@Override
-			public void handle(MouseEvent event) {
-				getBehavior().updateCursor(event, getCurrentVisibleCells(), event.isShiftDown());
-				// The consuming does not help because it looks like the
-				// selection change happens earlier => should be push a new
-				// ListViewBehavior?
-				event.consume();
-			}
-		});
+		contentView.setOnMousePressed( e -> getBehavior().handleContentMouseEvent(e, getCurrentVisibleCells()));
 		contentView.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
 			@Override
