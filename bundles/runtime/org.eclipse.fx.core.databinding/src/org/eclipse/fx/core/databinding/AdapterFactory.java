@@ -519,6 +519,7 @@ public class AdapterFactory {
 	 * @param property
 	 *            the property
 	 * @return the observable value
+	 * @since 2.3.0
 	 */
 	public static <T, P extends WritableValue<T> & ObservableValue<T>> IObservableValue adapt(Class<T> type, P property) {
 		return new AbstractObservableValue() {
