@@ -18,17 +18,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.beans.value.WritableValue;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
-import javafx.collections.ObservableList;
-import javafx.util.Callback;
-
 import org.eclipse.core.databinding.observable.ChangeEvent;
+import org.eclipse.core.databinding.observable.Diffs;
 import org.eclipse.core.databinding.observable.DisposeEvent;
 import org.eclipse.core.databinding.observable.IChangeListener;
 import org.eclipse.core.databinding.observable.IDisposeListener;
@@ -39,9 +30,20 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiffEntry;
 import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.core.databinding.observable.value.AbstractObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+
+import javafx.beans.InvalidationListener;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.WritableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
+import javafx.util.Callback;
 
 /**
  * Allows to adapt between Eclipse Databinding and JavaFX observables
@@ -207,7 +209,8 @@ public class AdapterFactory {
 
 					@Override
 					public void handleChange(ChangeEvent event) {
-						for (InvalidationListener l : WrappedList.this.fxInvalidationListeners.toArray(new InvalidationListener[0])) {
+						for (InvalidationListener l : WrappedList.this.fxInvalidationListeners
+								.toArray(new InvalidationListener[0])) {
 							l.invalidated(WrappedList.this);
 						}
 					}
@@ -252,7 +255,8 @@ public class AdapterFactory {
 
 						// TODO We need to make this perform a lot better by
 						// calculating range changes
-						for (ListChangeListener<? super E> l : WrappedList.this.fxChangeListeners.toArray(new ListChangeListener[0])) {
+						for (ListChangeListener<? super E> l : WrappedList.this.fxChangeListeners
+								.toArray(new ListChangeListener[0])) {
 							Change<E> change = new Change<E>(WrappedList.this) {
 								private int index = -1;
 								private ListDiffEntry current;
@@ -412,7 +416,8 @@ public class AdapterFactory {
 
 					@Override
 					public void handleChange(ChangeEvent event) {
-						for (InvalidationListener l : WrappedValue.this.fxInvalidationListeners.toArray(new InvalidationListener[0])) {
+						for (InvalidationListener l : WrappedValue.this.fxInvalidationListeners
+								.toArray(new InvalidationListener[0])) {
 							l.invalidated(WrappedValue.this);
 						}
 					}
@@ -444,7 +449,8 @@ public class AdapterFactory {
 					@SuppressWarnings("unchecked")
 					@Override
 					public void handleValueChange(ValueChangeEvent event) {
-						for (ChangeListener<? super E> l : WrappedValue.this.fxChangeListeners.toArray(new ChangeListener[0])) {
+						for (ChangeListener<? super E> l : WrappedValue.this.fxChangeListeners
+								.toArray(new ChangeListener[0])) {
 							l.changed(WrappedValue.this, (E) event.diff.getOldValue(), (E) event.diff.getNewValue());
 						}
 					}
@@ -481,7 +487,7 @@ public class AdapterFactory {
 
 	/**
 	 * Adapt an {@link IObservableValue} to an {@link ObservableWritableValue}
-	 * 
+	 *
 	 * @param value
 	 *            the eclipse db value
 	 * @param <E>
@@ -494,7 +500,7 @@ public class AdapterFactory {
 
 	/**
 	 * Adapt an {@link IObservableList} to an {@link ObservableList}
-	 * 
+	 *
 	 * @param list
 	 *            the eclipse db list
 	 * @param <E>
@@ -505,13 +511,47 @@ public class AdapterFactory {
 		return new WrappedList<E>(list);
 	}
 
+	/**
+	 * Adapt a property to an {@link IObservableValue}
+	 *
+	 * @param type
+	 *            the type
+	 * @param property
+	 *            the property
+	 * @return the observable value
+	 */
+	public static <T, P extends WritableValue<T> & ObservableValue<T>> IObservableValue adapt(Class<T> type, P property) {
+		return new AbstractObservableValue() {
+
+			{
+				property.addListener(( o, ov, nv) -> fireValueChange(Diffs.createValueDiff(ov, nv)));
+			}
+
+			@Override
+			public Object getValueType() {
+				return type;
+			}
+
+			@Override
+			protected Object doGetValue() {
+				return property.getValue();
+			}
+
+			@SuppressWarnings("unchecked")
+			@Override
+			protected void doSetValue(Object value) {
+				property.setValue((T) value);
+			}
+		};
+	}
+
 	enum InitialSync {
 		FX_TO_DB, DB_TO_FX
 	}
 
 	/**
 	 * Bind a JavaFX observable list to an Eclipse DB observable list
-	 * 
+	 *
 	 * @param fxObs
 	 *            the fx observable
 	 * @param dbObs
@@ -533,7 +573,7 @@ public class AdapterFactory {
 
 	/**
 	 * Bind an javafx observable value to a eclipse db observable
-	 * 
+	 *
 	 * @param fxObs
 	 *            the javafx observable
 	 * @param dbObs
@@ -546,7 +586,8 @@ public class AdapterFactory {
 	 *            the observable value type
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E, F extends ObservableValue<E> & WritableValue<E>> void bind(F fxObs, IObservableValue dbObs, InitialSync initialSync) {
+	public static <E, F extends ObservableValue<E> & WritableValue<E>> void bind(F fxObs, IObservableValue dbObs,
+			InitialSync initialSync) {
 		if (initialSync == InitialSync.FX_TO_DB) {
 			dbObs.setValue(fxObs.getValue());
 		} else {
@@ -559,7 +600,7 @@ public class AdapterFactory {
 	/**
 	 * Creates an <b>readonly</b> observable list which is backed by the source
 	 * list but the values are converted using the converter
-	 * 
+	 *
 	 * @param source
 	 *            the source list
 	 * @param converter
