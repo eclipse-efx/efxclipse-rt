@@ -49,6 +49,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.Tab;
@@ -71,7 +72,6 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		} else {
 			return StackWidgetImpl.class;
 		}
-
 	}
 
 	static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
@@ -186,6 +186,14 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				s.setDragFinishedConsumer(dnd::handleFinished);
 				s.setClipboardDataFunction(dnd::clipboardDataFunction);
 			});
+
+			String location = this.domainElement.getPersistedState().get(WStack.STATE_KEY_TABS_LOCATION);
+			if( location != null ) {
+				Side v = Side.valueOf(location);
+				if( v != null ) {
+					p.setSide(v);
+				}
+			}
 
 			p.setOnMouseClicked( e -> {
 				if( e.getClickCount() > 1 ) {
