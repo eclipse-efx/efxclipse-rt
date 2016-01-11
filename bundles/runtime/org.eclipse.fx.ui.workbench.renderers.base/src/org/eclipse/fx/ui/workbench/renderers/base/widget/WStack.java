@@ -50,6 +50,7 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 
 	/**
 	 * Location of the tabs. Supported values depend on the control
+	 * @since 2.3.0
 	 */
 	public static final String STATE_KEY_TABS_LOCATION = "fx.stack.tabslocation"; //$NON-NLS-1$
 
