@@ -20,6 +20,8 @@ import javafx.scene.layout.BorderPane;
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.fx.ui.services.theme.ThemeManager;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.osgi.service.component.annotations.Component;
@@ -38,7 +40,9 @@ public class InteroptContextFunction extends ContextFunction {
 		if (comp != null) {
 			BorderPane pane = new BorderPane();
 			FXCanvas canvas = new FXCanvas((Composite) comp, SWT.NONE);
-			canvas.setScene(new Scene(pane));
+			Scene scene = new Scene(pane);
+			integrateInToTheme(context, scene);
+			canvas.setScene(scene);
 
 			return pane;
 		} else {
@@ -47,7 +51,9 @@ public class InteroptContextFunction extends ContextFunction {
 			if (jpanel != null) {
 				BorderPane pane = new BorderPane();
 				JFXPanel fxPanel = new JFXPanel();
-				fxPanel.setScene(new Scene(pane));
+				Scene scene = new Scene(pane);
+				integrateInToTheme(context, scene);
+				fxPanel.setScene(scene);
 				jpanel.add(fxPanel);
 
 				return pane;
@@ -57,4 +63,11 @@ public class InteroptContextFunction extends ContextFunction {
 		return null;
 	}
 
+	private static void integrateInToTheme(@NonNull IEclipseContext context, @NonNull Scene scene) {
+		Object object = context.get("org.eclipse.fx.ui.services.theme.ThemeManager"); //$NON-NLS-1$
+		if( object != null ) {
+			ThemeManager mgr = (ThemeManager) object;
+			mgr.registerScene(scene);
+		}
+	}
 }
