@@ -42,8 +42,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 
-import com.google.common.base.Strings;
-
 /**
  * Supplier for {@link Preference}
  *
@@ -383,7 +381,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 		Preference qualifier = descriptor.getQualifier(Preference.class);
 		String nodePath = qualifier.nodePath();
 
-		if (Strings.isNullOrEmpty(nodePath)) {
+		if( nodePath == null || nodePath.trim().isEmpty() ) {
 			if (requestingObject == null)
 				return null;
 			nodePath = FrameworkUtil.getBundle(requestingObject).getSymbolicName();

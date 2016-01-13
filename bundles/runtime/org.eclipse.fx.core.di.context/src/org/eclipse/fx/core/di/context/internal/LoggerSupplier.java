@@ -20,8 +20,6 @@ import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.LoggerFactory;
 import org.osgi.service.component.annotations.Component;
 
-import com.google.common.base.Strings;
-
 /**
  * DI Extension to inject {@link Log} into your DI-Bean
  */
@@ -38,7 +36,7 @@ public class LoggerSupplier extends ExtendedObjectSupplier {
 
 		String loggerName = descriptor.getQualifier(Log.class).value();
 
-		if( Strings.isNullOrEmpty(loggerName) ) {
+		if( loggerName == null || loggerName.trim().isEmpty() ) {
 			loggerName = requestor.getRequestingObjectClass().getName();
 		}
 
