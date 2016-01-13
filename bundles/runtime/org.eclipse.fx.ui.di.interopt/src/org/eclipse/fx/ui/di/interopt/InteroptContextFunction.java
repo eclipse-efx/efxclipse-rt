@@ -21,7 +21,6 @@ import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.osgi.service.component.annotations.Component;
@@ -63,11 +62,16 @@ public class InteroptContextFunction extends ContextFunction {
 		return null;
 	}
 
-	private static void integrateInToTheme(@NonNull IEclipseContext context, @NonNull Scene scene) {
+	private static void integrateInToTheme(IEclipseContext context, Scene scene) {
 		Object object = context.get("org.eclipse.fx.ui.services.theme.ThemeManager"); //$NON-NLS-1$
 		if( object != null ) {
 			ThemeManager mgr = (ThemeManager) object;
 			mgr.registerScene(scene);
+			if( mgr.getCurrentTheme() == null ) {
+				if( System.getProperty("javafx.theme") != null ) {
+					mgr.setCurrentThemeId(mgr.getAvailableThemes().get(System.getProperty("javafx.theme")).getId());
+				}
+			}
 		}
 	}
 }
