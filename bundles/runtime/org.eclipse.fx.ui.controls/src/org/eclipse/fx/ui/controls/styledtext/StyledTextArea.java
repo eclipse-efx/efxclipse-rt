@@ -6,6 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
+ *  Christoph Caks <ccaks@bestsolution.at> - improved editor behavior
  * 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  * 	IBM Corporation - initial API and implementation
  *******************************************************************************/
@@ -70,6 +71,12 @@ public class StyledTextArea extends Control {
 
 	@NonNull
 	final ObjectProperty<@NonNull StyledTextContent> contentProperty;
+
+//	@NonNull
+//	final SetProperty<@NonNull StyledTextAnnotation> annotationsProperty = new SimpleSetProperty<>(this, "annotations", FXCollections.observableSet()); //$NON-NLS-1$
+//	public SetProperty<@NonNull StyledTextAnnotation> getAnnotations() {
+//		return this.annotationsProperty;
+//	}
 
 	TextChangeListener textChangeListener = new TextChangeListener() {
 		@Override
@@ -229,7 +236,11 @@ public class StyledTextArea extends Control {
 			((StyledTextSkin) getSkin()).recalculateItems();
 		}
 
-		updateSelection(this.lastTextChangeStart, this.lastTextChangeReplaceCharCount, this.lastTextChangeNewCharCount);
+		// TODO We need to re enable this in the future.
+		// For each change coming from outside (for example refactoring)
+		// we need to update the caret
+
+//		updateSelection(this.lastTextChangeStart, this.lastTextChangeReplaceCharCount, this.lastTextChangeNewCharCount);
 
 		// lastCharCount += lastTextChangeNewCharCount;
 		// lastCharCount -= lastTextChangeReplaceCharCount;
@@ -241,7 +252,12 @@ public class StyledTextArea extends Control {
 			setSelection(new TextSelection(startOffset + newLength, 0)/*, true, false*/);
 		} else {
 			// move selection to keep same text selected
-			setSelection(new TextSelection(getSelection().offset + newLength - replacedLength, getSelection().length)/*, true, false*/);
+
+			int computedOffset = getSelection().offset + newLength - replacedLength;
+			if (computedOffset >= 0 && computedOffset < getCharCount()) {
+				// we only set this if the offset is valid!!
+				setSelection(new TextSelection(computedOffset, getSelection().length)/*, true, false*/);
+			}
 			if( getSelection().length > 0 ) {
 				int delta = this.lastTextChangeNewCharCount - this.lastTextChangeReplaceCharCount;
 				this.caretOffsetProperty.set(Math.max(0,Math.min(getCharCount()-1,getCaretOffset() + delta)));
@@ -1421,6 +1437,34 @@ public class StyledTextArea extends Control {
 		return getContent().getTextRange(start, end - start + 1);
 	}
 
+	public boolean isSelectionEmpty() {
+		return getSelection().length == 0;
+	}
+
+	/**
+	 * inserts text at the caret location or replaces a given selection
+	 * @param text
+	 */
+	public void insert(CharSequence text) {
+		System.err.println("insert('"+text+"')");
+		if (text == null) throw new NullPointerException();
+
+		int start, replaceLength;
+		if (!isSelectionEmpty()) {
+			// replace selection
+			start = this.getSelection().offset;
+			replaceLength = this.getSelection().length;
+		}
+		else {
+			// insert at caret
+			start = this.getCaretOffset();
+			replaceLength = 0;
+		}
+		this.getContent().replaceTextRange(start, replaceLength, text.toString());
+		this.setCaretOffset(start + text.length());
+	}
+
+
 	/**
 	 * Paste the clipboard content
 	 */
@@ -1429,8 +1473,7 @@ public class StyledTextArea extends Control {
 		if (clipboard.hasString()) {
 			final String text = clipboard.getString();
 			if (text != null) {
-				// TODO Once we have a real selection we need
-				getContent().replaceTextRange(getCaretOffset(), 0, text);
+				insert(text);
 			}
 		}
 	}
