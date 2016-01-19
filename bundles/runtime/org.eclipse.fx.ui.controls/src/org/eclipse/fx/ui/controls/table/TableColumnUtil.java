@@ -21,6 +21,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * A set of helpers to set up {@link TableColumn} instances
@@ -92,13 +95,24 @@ public class TableColumnUtil {
 	/**
 	 * Setup a column with a checkbox directly editable
 	 *
+	 * @param view
+	 *            the view
+	 *
 	 * @param c
 	 *            the column
 	 * @param booleanPropertyCreator
 	 *            the property extractor
 	 * @return the column
 	 */
-	public static <S> TableColumn<S, S> setupCheckboxColumn(TableColumn<S, S> c, Function<S, BooleanProperty> booleanPropertyCreator) {
+	public static <S> TableColumn<S, S> setupCheckboxColumn(TableView<S> view, TableColumn<S, S> c, Function<S, BooleanProperty> booleanPropertyCreator) {
+		view.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+			if (e.getCode() == KeyCode.SPACE) {
+				if (view.getSelectionModel().getSelectedItem() != null) {
+					BooleanProperty property = booleanPropertyCreator.apply(view.getSelectionModel().getSelectedItem());
+					property.set(!property.get());
+				}
+			}
+		});
 		c.setCellValueFactory(f -> new SimpleObjectProperty<>(f.getValue()));
 		c.setCellFactory(cc -> new TableCell<S, S>() {
 			private BooleanProperty modelProperty;
@@ -120,6 +134,8 @@ public class TableColumnUtil {
 				} else {
 					if (box == null) {
 						box = new CheckBox();
+						box.setFocusTraversable(false);
+						box.setAccessibleText("Select item by hitting space"); //$NON-NLS-1$
 						setGraphic(box);
 					}
 
@@ -127,6 +143,7 @@ public class TableColumnUtil {
 				}
 			}
 		});
+		c.setEditable(true);
 		return c;
 	}
 }
