@@ -43,8 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.eclipse.fx.core.Util;
@@ -63,7 +61,7 @@ import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.event.Event;
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
+import javafx.scene.control.Control;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -73,6 +71,9 @@ import javafx.scene.input.MouseEvent;
  * Behavior for styled text
  */
 public class StyledTextBehavior {
+
+
+
 	private final StyledTextArea styledText;
 
 	private KeyMapping keyMapping = new KeyMapping();
@@ -94,12 +95,15 @@ public class StyledTextBehavior {
 	}
 
 	// called from skin
-	public void installContentListeners(final Node contentNode) {
+	public void installContentListeners(final Control contentNode) {
 		contentNode.addEventHandler(MouseEvent.MOUSE_PRESSED, this::onContentMousePressed);
 		contentNode.addEventHandler(MouseEvent.DRAG_DETECTED, this::onContentDragDetected);
 		contentNode.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::onContentMouseDragged);
 		contentNode.addEventHandler(MouseEvent.MOUSE_RELEASED, this::onContentMouseReleased);
 		contentNode.addEventHandler(MouseEvent.MOUSE_CLICKED,  this::onContentMouseClicked);
+
+		HoverSupport.install(contentNode);
+
 	}
 
 	// text manipulation utils
@@ -339,6 +343,8 @@ public class StyledTextBehavior {
 			}
 		}
 	}
+
+
 
 	/**
 	 * @return the control
@@ -1347,5 +1353,9 @@ public class StyledTextBehavior {
 		}
 		return result;
 	}
+
+
+
+
 
 }
