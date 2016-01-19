@@ -106,7 +106,17 @@ public class ActionEvent extends Event {
 		/**
 		 * Action to create a new line
 		 */
-		NEW_LINE
+		NEW_LINE,
+
+		/**
+		 * Action to indent current line
+		 */
+		INDENT,
+
+		/**
+		 * opposite operation of {@link #INDENT}
+		 */
+		OUTDENT
 //		,
 //		CUT,
 //		COPY,
