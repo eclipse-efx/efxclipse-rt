@@ -7,6 +7,7 @@
  *
  * Contributors:
  * 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
+ *  Christoph Caks <ccaks@bestsolution.at> - improved editor behavior
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext;
 
@@ -14,8 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.FadeTransition;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -26,9 +26,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextFlow;
@@ -45,7 +44,19 @@ public class StyledTextLayoutContainer extends Region {
 	private final ObservableList<@NonNull StyledTextNode> textNodes = FXCollections.observableArrayList();
 
 	@NonNull
+	private final IntegerProperty caretIndex = new SimpleIntegerProperty(this, "caretIndex"); //$NON-NLS-1$
+
+	@NonNull
 	private final IntegerProperty startOffset = new SimpleIntegerProperty(this, "startOffset"); //$NON-NLS-1$
+
+
+//	@NonNull
+//	final SetProperty<@NonNull StyledTextAnnotation> annotationsProperty = new SimpleSetProperty<>(this, "annotations", FXCollections.observableSet()); //$NON-NLS-1$
+//	public SetProperty<@NonNull StyledTextAnnotation> getAnnotations() {
+//		return this.annotationsProperty;
+//	}
+//
+//	private Map<StyledTextAnnotation, Rectangle> annotationMarkers = new HashMap<>();
 
 	/**
 	 * The start offset if used in a bigger context like {@link StyledTextArea}
@@ -55,6 +66,37 @@ public class StyledTextLayoutContainer extends Region {
 	public final IntegerProperty startOffsetProperty() {
 		return this.startOffset;
 	}
+
+	/**
+	 * the the caret index property.
+	 *
+	 * <p>the index or <code>-1</code> if caret is to be hidden</p>
+	 *
+	 * @return the caret index property
+	 */
+	public final IntegerProperty caretIndexProperty() {
+		return this.caretIndex;
+	}
+
+	/**
+	 * Set the caret index
+	 *
+	 * @param index
+	 *            the index or <code>-1</code> if caret is to be hidden
+	 */
+	public void setCaretIndex(int index) {
+		this.caretIndex.set(index);
+	}
+
+	/**
+	 * Returns the caret index
+	 *
+	 * @return the index or <code>-1</code> if caret is to be hidden
+	 */
+	public int getCaretIndex() {
+		return this.caretIndex.get();
+	}
+
 
 	/**
 	 * The start offset if used in a bigger context like {@link StyledTextArea}
@@ -114,8 +156,7 @@ public class StyledTextLayoutContainer extends Region {
 	private double selectionStartX;
 	private double selectionEndX;
 
-	private Timeline flashTimeline;
-	int caretIndex = -1;
+	private Animation caretAnimation;
 
 	private final ReadOnlyBooleanProperty ownerFocusedProperty;
 
@@ -125,6 +166,15 @@ public class StyledTextLayoutContainer extends Region {
 	 */
 	public StyledTextLayoutContainer() {
 		this(new SimpleBooleanProperty(true));
+	}
+
+	private static Animation createCaretAnimation(Node caret) {
+		FadeTransition t = new FadeTransition(Duration.millis(400), caret);
+		t.setAutoReverse(true);
+		t.setFromValue(1);
+		t.setToValue(0);
+		t.setCycleCount(Animation.INDEFINITE);
+		return t;
 	}
 
 	/**
@@ -148,31 +198,72 @@ public class StyledTextLayoutContainer extends Region {
 		this.caret.setManaged(false);
 		this.caret.getStyleClass().add("text-caret"); //$NON-NLS-1$
 
-		this.flashTimeline = new Timeline();
-		this.flashTimeline.setCycleCount(Animation.INDEFINITE);
-
-		EventHandler<ActionEvent> startEvent = e -> {
-			if( ! ownerFocusedProperty.get() ) {
-				StyledTextLayoutContainer.this.caret.setVisible(false);
-			} else {
-				StyledTextLayoutContainer.this.caret.setVisible(StyledTextLayoutContainer.this.caretIndex != -1);
-			}
-		};
-
-		EventHandler<ActionEvent> endEvent = e -> {
-			StyledTextLayoutContainer.this.caret.setVisible(false);
-		};
-
-		this.flashTimeline.getKeyFrames().addAll(new KeyFrame(Duration.ZERO, startEvent), new KeyFrame(Duration.millis(500), endEvent), new KeyFrame(Duration.millis(1000)));
+		this.caretAnimation = createCaretAnimation(this.caret);
 
 		Bindings.bindContent(this.textLayoutNode.getChildren(), this.textNodes);
 		getChildren().setAll(this.selectionMarker, this.textLayoutNode, this.caret);
 		selectionProperty().addListener(this::handleSelectionChange);
-		ownerFocusedProperty.addListener( o -> {
-			if( ! ownerFocusedProperty.get() ) {
-				this.caret.setVisible(false);
-			}
-		});
+
+		this.ownerFocusedProperty.addListener(this::updateCaretVisibility);
+		this.caretIndex.addListener(this::updateCaretVisibility);
+
+//		this.annotationsProperty.addListener(new SetChangeListener<StyledTextAnnotation>() {
+//			@Override
+//			public void onChanged(javafx.collections.SetChangeListener.Change<? extends StyledTextAnnotation> change) {
+//				System.err.println("ON ANNOTATION MARKER CHANGE");
+//				if (change.getElementAdded() != null) {
+//					StyledTextAnnotation a = change.getElementAdded();
+//
+//					Rectangle child = new Rectangle();
+//
+//					if (a.getType().contains("ERROR")) {
+//						child.setFill(Color.RED);
+//					}
+//					else if (a.getType().contains("WARN")) {
+//						child.setFill(Color.YELLOW);
+//					}
+//					child.setOpacity(0.3);
+//
+//					Tooltip tt = new Tooltip();
+//					tt.setText(a.getText());
+//					getChildren().add(child);
+//					Tooltip.install(child, tt);
+//
+//					annotationMarkers.put(a, child);
+//				}
+//				if (change.getElementRemoved() != null) {
+//					StyledTextAnnotation a = change.getElementRemoved();
+//
+//					Rectangle child = annotationMarkers.remove(a);
+//					if (child != null) {
+//						getChildren().remove(child);
+//					}
+//				}
+//
+//				requestLayout();
+//			}
+//		});
+	}
+
+	private void updateCaretVisibility(Observable o) {
+		if (this.ownerFocusedProperty.get() && this.caretIndex.get() != -1) {
+			showCaret();
+		}
+		else {
+			hideCaret();
+		}
+	}
+
+	private void showCaret() {
+		this.caret.setVisible(true);
+		this.caretAnimation.play();
+		requestLayout();
+	}
+
+	private void hideCaret() {
+		this.caret.setVisible(false);
+		this.caretAnimation.stop();
+		requestLayout();
 	}
 
 	private int getEndOffset() {
@@ -241,11 +332,49 @@ public class StyledTextLayoutContainer extends Region {
 		return d;
 	}
 
+	private double findX(int localOffset) {
+
+		double len = 0;
+		for (StyledTextNode t : this.textNodes) {
+			if (t.getStartOffset() <= localOffset && t.getEndOffset() > localOffset || this.textNodes.get(this.textNodes.size() - 1) == t) {
+				return len + t.getCharLocation(localOffset - t.getStartOffset());
+			}
+			len += t.getWidth();
+		}
+		return -1;
+	}
+
 	@Override
 	protected void layoutChildren() {
 		super.layoutChildren();
 
 		this.textLayoutNode.relocate(getInsets().getLeft(), getInsets().getTop());
+
+//		for (Entry<StyledTextAnnotation, Rectangle> e : annotationMarkers.entrySet()) {
+//			System.err.println("LAYOUTING MARKER: " + e.getKey().getText());
+//			final int globalBeginIndex = e.getKey().getStartOffset();
+//			final int globalEndIndex = e.getKey().getStartOffset() + e.getKey().getLength();
+//
+//			System.err.println("global: " + globalBeginIndex + " - " + globalEndIndex);
+//
+//			final int localBeginIndex = Math.max(0, globalBeginIndex - getStartOffset());
+//			final int localEndIndex = Math.min(getText().length(), globalEndIndex - getStartOffset());
+//
+//			System.err.println("local: " + localBeginIndex + " - " + localEndIndex);
+//
+//			double xBegin = findX(localBeginIndex);
+//			double xEnd = findX(localEndIndex);
+//
+////			System.err.println(xBegin + ", " + getInsets().getTop() + ", " + (xEnd - xBegin)+ ", " + textLayoutNode.prefHeight(-1));
+////			e.getValue().resizeRelocate(xBegin, getInsets().getTop(), xEnd - xBegin, textLayoutNode.prefHeight(-1));
+//			e.getValue().setX(xBegin);
+//			e.getValue().setY(getInsets().getTop());
+//			e.getValue().setWidth(xEnd - xBegin);
+//			e.getValue().setHeight(textLayoutNode.prefHeight(-1));
+//			e.getValue().toFront();
+//			System.err.println(" -> " + e.getValue());
+//		}
+
 
 		if (this.selectionStartNode != null && this.selectionEndNode != null) {
 			double x1 = this.textLayoutNode.localToParent(this.selectionStartNode.getBoundsInParent().getMinX(), 0).getX() + this.selectionStartX;
@@ -253,13 +382,13 @@ public class StyledTextLayoutContainer extends Region {
 			this.selectionMarker.resizeRelocate(x1, 0, x2 - x1, getHeight());
 		}
 
-		if (this.caretIndex >= 0) {
+		if (this.getCaretIndex() >= 0) {
 			this.textLayoutNode.layout();
 			this.textLayoutNode.applyCss();
 			for (StyledTextNode t : this.textNodes) {
 				t.applyCss();
-				if (t.getStartOffset() <= this.caretIndex && (t.getEndOffset() > this.caretIndex || this.textNodes.get(this.textNodes.size() - 1) == t)) {
-					double caretX = t.getCharLocation(this.caretIndex - t.getStartOffset());
+				if (t.getStartOffset() <= this.getCaretIndex() && (t.getEndOffset() > this.getCaretIndex() || this.textNodes.get(this.textNodes.size() - 1) == t)) {
+					double caretX = t.getCharLocation(this.getCaretIndex() - t.getStartOffset());
 					double x = this.textLayoutNode.localToParent(t.getBoundsInParent().getMinX(), 0).getX() + caretX;
 					double h = t.prefHeight(-1);
 
@@ -319,30 +448,6 @@ public class StyledTextLayoutContainer extends Region {
 	}
 
 	/**
-	 * Set the caret to show at the given index
-	 *
-	 * @param index
-	 *            the index or <code>-1</code> if caret is to be hidden
-	 */
-	public void setCaretIndex(int index) {
-		if (index >= 0) {
-			this.caretIndex = index;
-			if( this.ownerFocusedProperty.get() ) {
-				this.caret.setVisible(true);
-			} else {
-				this.caret.setVisible(false);
-			}
-			this.flashTimeline.play();
-			requestLayout();
-		} else {
-			this.caretIndex = -1;
-			this.flashTimeline.stop();
-			this.caret.setVisible(false);
-			requestLayout();
-		}
-	}
-
-	/**
 	 * Find the position of a the caret at a given index
 	 *
 	 * @param index
@@ -363,7 +468,6 @@ public class StyledTextLayoutContainer extends Region {
 	 * Releases resources immediately
 	 */
 	public void dispose() {
-		this.flashTimeline.stop();
-		this.flashTimeline.getKeyFrames().clear();
+		this.caretAnimation.stop();
 	}
 }

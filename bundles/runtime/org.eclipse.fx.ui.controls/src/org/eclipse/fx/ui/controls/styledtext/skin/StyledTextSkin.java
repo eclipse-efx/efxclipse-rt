@@ -6,6 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
+ *  Christoph Caks <ccaks@bestsolution.at> - improved editor behavior
  * 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.skin;
@@ -36,7 +37,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -45,7 +45,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Skin;
 import javafx.scene.control.SkinBase;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -104,7 +103,6 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 				return new MyListViewSkin(this);
 			}
 		};
-		styledText.addEventHandler(MouseEvent.MOUSE_PRESSED, behavior::mousePressed);
 
 		initializeContentViewer(this.contentView);
 
@@ -116,6 +114,22 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		this.rootContainer.getChildren().addAll(this.contentView);
 		getChildren().addAll(this.rootContainer);
+
+//		styledText.getAnnotations().addListener(new SetChangeListener<StyledTextAnnotation>() {
+//			@Override
+//			public void onChanged(javafx.collections.SetChangeListener.Change<? extends StyledTextAnnotation> change) {
+//				if (change.getElementAdded() != null) {
+//					StyledTextAnnotation a = change.getElementAdded();
+//					addAnnotation(a);
+//					System.err.println("removed " + a.getId() + " " + a.getType() + ": " + a.getText() + " @ " + a.getStartOffset() + ", " + a.getLength());
+//				}
+//				if (change.getElementRemoved() != null) {
+//					StyledTextAnnotation a = change.getElementRemoved();
+//					removeAnnotation(a);
+//					System.err.println("added " + a.getId() + " " + a.getType() + ": " + a.getText() + " @ " + a.getStartOffset() + ", " + a.getLength());
+//				}
+//			}
+//		});
 
 		styledText.caretOffsetProperty().addListener(new ChangeListener<Number>() {
 
@@ -179,6 +193,41 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		});
 	}
 
+//	private void addAnnotation(StyledTextAnnotation annotation) {
+//		int startOffset = annotation.getStartOffset();
+//		int endOffset = annotation.getStartOffset() + annotation.getLength();
+//
+//		int startLineIndex = getSkinnable().getContent().getLineAtOffset(startOffset);
+//		int endLineIndex = getSkinnable().getContent().getLineAtOffset(endOffset);
+//
+//		Set<Line> affectedLines = IntStream.range(startLineIndex, endLineIndex + 1).mapToObj(StyledTextSkin.this.lineList::get).collect(Collectors.toSet());
+//
+//		for (LineCell c : getCurrentVisibleCells()) {
+//			if (affectedLines.contains(c.domainElement)) {
+//				StyledTextLayoutContainer p = (StyledTextLayoutContainer) c.getGraphic();
+//				p.getAnnotations().add(annotation);
+//			}
+//		}
+//	}
+//
+//	private void removeAnnotation(StyledTextAnnotation annotation) {
+//		int startOffset = annotation.getStartOffset();
+//		int endOffset = annotation.getStartOffset() + annotation.getLength();
+//
+//		int startLineIndex = getSkinnable().getContent().getLineAtOffset(startOffset);
+//		int endLineIndex = getSkinnable().getContent().getLineAtOffset(endOffset);
+//
+//		Set<Line> affectedLines = IntStream.range(startLineIndex, endLineIndex + 1).mapToObj(StyledTextSkin.this.lineList::get).collect(Collectors.toSet());
+//
+//		for (LineCell c : getCurrentVisibleCells()) {
+//			if (affectedLines.contains(c.domainElement)) {
+//				StyledTextLayoutContainer p = (StyledTextLayoutContainer) c.getGraphic();
+//				p.getAnnotations().remove(annotation);
+//			}
+//		}
+//	}
+
+
 	StyledTextBehavior getBehavior() {
 		return this.behavior;
 	}
@@ -217,15 +266,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		// this.contentView.setFixedCellSize(value);
 		// this.contentView.setFixedCellSize(15);
 
-		contentView.setOnMousePressed( e -> getBehavior().handleContentMouseEvent(e, getCurrentVisibleCells()));
-		contentView.setOnMouseDragged(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				getBehavior().updateCursor(event, getCurrentVisibleCells(), true);
-				event.consume();
-			}
-		});
+		getBehavior().installContentListeners(contentView);
 	}
 
 	private StyledTextLayoutContainer currentActiveNode;
@@ -352,11 +393,27 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		}
 	}
 
-	List<LineCell> getCurrentVisibleCells() {
+	public List<LineCell> getCurrentVisibleCells() {
 		if (this.contentView == null || this.contentView.getSkin() == null) {
 			return Collections.emptyList();
 		}
 		return ((MyListViewSkin) this.contentView.getSkin()).getFlow().getCells();
+	}
+
+	public void scrollLineUp() {
+		MyListViewSkin s = ((MyListViewSkin) this.contentView.getSkin());
+
+		LineCell top = s.getFlow().getFirstVisibleCellWithinViewPort();
+
+		this.contentView.scrollTo(top.getIndex() - 1);
+	}
+
+	public void scrollLineDown() {
+		MyListViewSkin s = ((MyListViewSkin) this.contentView.getSkin());
+
+		LineCell top = s.getFlow().getFirstVisibleCellWithinViewPort();
+
+		this.contentView.scrollTo(top.getIndex() + 1);
 	}
 
 	/**
