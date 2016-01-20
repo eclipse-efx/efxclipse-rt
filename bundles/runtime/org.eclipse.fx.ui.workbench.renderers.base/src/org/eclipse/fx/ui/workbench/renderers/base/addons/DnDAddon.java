@@ -259,7 +259,7 @@ public class DnDAddon {
 	@SuppressWarnings("null")
 	@NonNull
 	private Boolean dragStartHandler(@NonNull DragData d) {
-		return Boolean.valueOf(this.dndService.dragAllowed(d.container, d.item));
+		return Boolean.valueOf(dndService == null || this.dndService.dragAllowed(d.container, d.item));
 	}
 
 	@PostConstruct
