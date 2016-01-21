@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *  Christoph Caks <ccaks@bestsolution.at> - improved editor behavior
+ *	Christoph Caks <ccaks@bestsolution.at> - improved editor behavior
  * 	Tom Schindl<tom.schindl@bestsolution.at> - initial API and implementation
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.behavior;
@@ -55,6 +55,7 @@ import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.InputAction;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.KeyCombo;
+import org.eclipse.fx.ui.controls.styledtext.events.TextPositionEvent;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin.LineCell;
 import org.eclipse.jdt.annotation.NonNull;
@@ -72,7 +73,8 @@ import javafx.scene.input.MouseEvent;
  */
 public class StyledTextBehavior {
 
-
+	private TextPositionSupport textPositionSupport;
+	private HoverSupport hoverSupport;
 
 	private final StyledTextArea styledText;
 
@@ -92,18 +94,18 @@ public class StyledTextBehavior {
 		styledText.addEventHandler(MouseEvent.MOUSE_PRESSED, this::onMousePressed);
 
 		initKeymapping(keyMapping);
+
+		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_PRESSED, this::onTextPositionPressed);
+		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_CLICKED, this::onTextPositionClicked);
+		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_RELEASED, this::onTextPositionReleased);
+		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_DRAGGED, this::onTextPositionDragged);
+		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_DRAG_DETECTED, this::onTextPositionDragDetected);
 	}
 
 	// called from skin
 	public void installContentListeners(final Control contentNode) {
-		contentNode.addEventHandler(MouseEvent.MOUSE_PRESSED, this::onContentMousePressed);
-		contentNode.addEventHandler(MouseEvent.DRAG_DETECTED, this::onContentDragDetected);
-		contentNode.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::onContentMouseDragged);
-		contentNode.addEventHandler(MouseEvent.MOUSE_RELEASED, this::onContentMouseReleased);
-		contentNode.addEventHandler(MouseEvent.MOUSE_CLICKED,  this::onContentMouseClicked);
-
-		HoverSupport.install(contentNode);
-
+		this.textPositionSupport = TextPositionSupport.install(contentNode, getControl());
+		this.hoverSupport = HoverSupport.install(contentNode);
 	}
 
 	// text manipulation utils
@@ -261,33 +263,17 @@ public class StyledTextBehavior {
 		}
 	}
 
-
-	private void onContentMousePressed(MouseEvent event) {
-		this.mousePressedOffset = computeCursorOffset(event);
-		System.err.println("MOUSE_PRESSED @ " + mousePressedOffset);
-
-		if (isInSelection(mousePressedOffset)) {
-			System.err.println(" -> starting dragMoveTextMode");
-			event.setDragDetect(true);
-			this.dragMoveTextMode = true;
-			this.dragMoveTextOffset = getControl().getSelection().offset;
-			this.dragMoveTextLength = getControl().getSelection().length;
-		}
-		else {
-			System.err.println(" -> setting Caret");
-			moveCaretAbsolute(this.mousePressedOffset, event.isShiftDown());
-		}
-	}
-	private void onContentDragDetected(MouseEvent event) {
+	private void onTextPositionDragDetected(TextPositionEvent event) {
+		System.err.println("TEXT_POSITION_DRAG_DETECTED");
 		if (!this.dragMoveTextMode && ! this.dragSelectionMode) {
 			this.dragSelectionMode = true;
 		}
 	}
-	private void onContentMouseDragged(MouseEvent event) {
+
+	private void onTextPositionDragged(TextPositionEvent event) {
 		if (this.dragSelectionMode) {
 //			System.err.println("MOUSE_DRAGGED [dragSelectionMode]");
-			int offset = computeCursorOffset(event);
-			moveCaretAbsolute(offset, true);
+			moveCaretAbsolute(event.getOffset(), true);
 			event.consume();
 		}
 		else if (this.dragMoveTextMode) {
@@ -296,14 +282,15 @@ public class StyledTextBehavior {
 			event.consume();
 		}
 	}
-	private void onContentMouseReleased(MouseEvent event) {
-		System.err.println("MOUSE_RELEASED");
+
+	private void onTextPositionReleased(TextPositionEvent event) {
+		System.err.println("TEXT_POSITION_RELEASED");
 		if (this.dragSelectionMode) {
 			this.dragSelectionMode = false;
 			event.consume();
 		}
 		else if (this.dragMoveTextMode) {
-			int targetOffset = computeCursorOffset(event);
+			int targetOffset = event.getOffset();
 
 			// replace
 			if (isInRange(targetOffset, dragMoveTextOffset, dragMoveTextLength)) {
@@ -332,18 +319,32 @@ public class StyledTextBehavior {
 		}
 	}
 
-	private void onContentMouseClicked(MouseEvent event) {
+	private void onTextPositionPressed(TextPositionEvent event) {
+		this.mousePressedOffset = event.getOffset();
+		System.err.println("TEXT_POSITION_PRESSED @ " + mousePressedOffset);
+
+		if (isInSelection(mousePressedOffset)) {
+			System.err.println(" -> starting dragMoveTextMode");
+			event.setDragDetect(true);
+			this.dragMoveTextMode = true;
+			this.dragMoveTextOffset = getControl().getSelection().offset;
+			this.dragMoveTextLength = getControl().getSelection().length;
+		}
+		else {
+			System.err.println(" -> setting Caret");
+			moveCaretAbsolute(this.mousePressedOffset, event.isShiftDown());
+		}
+	}
+
+	private void onTextPositionClicked(TextPositionEvent event) {
 		if (event.isStillSincePress()) {
-			System.err.println("MOUSE_CLICKED @ " + mousePressedOffset);
+			System.err.println("TEXT_POSITION_CLICKED @ " + mousePressedOffset);
 			if (event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY) {
-				System.err.println(" -> executing double click");
-				// double click
 				this.ACTION_SELECT_WORD.run();
 				event.consume();
 			}
 		}
 	}
-
 
 
 	/**
@@ -553,22 +554,6 @@ public class StyledTextBehavior {
 		LineRegion lineRegion = getLineRegion(getControl().getSelection());
 		lineRegion.replace(""); //$NON-NLS-1$
 		moveCaretAbsolute(lineRegion.start);
-
-//		@NonNull
-//		LineSelection lineSelection = getLineSelection();
-//
-//		System.err.println("delete " + lineSelection.firstLine + " to " + lineSelection.lastLine);
-//		int beginIndex = getControl().getOffsetAtLine(lineSelection.firstLine);
-//		int endIndex;
-//		if (getControl().getContent().getLineCount() > lineSelection.lastLine + 1) {
-//			endIndex = getControl().getOffsetAtLine(lineSelection.lastLine + 1);
-//		}
-//		else {
-//			endIndex = getControl().getOffsetAtLine(lineSelection.lastLine) + getControl().getContent().getLine(lineSelection.lastLine).length();
-//		}
-//
-//		getControl().getContent().replaceTextRange(beginIndex, endIndex - beginIndex, ""); //$NON-NLS-1$
-//		moveCaretAbsolute(beginIndex);
 	}
 
 	/**
@@ -1318,7 +1303,7 @@ public class StyledTextBehavior {
 	 * @param event
 	 * @return the offset
 	 */
-	protected int computeCursorOffset(MouseEvent event) {
+	private int computeCursorOffset(MouseEvent event) {
 		List<LineCell> visibleCells = ((StyledTextSkin) getControl().getSkin()).getCurrentVisibleCells();
 
 		LineCell lastCell = null;
