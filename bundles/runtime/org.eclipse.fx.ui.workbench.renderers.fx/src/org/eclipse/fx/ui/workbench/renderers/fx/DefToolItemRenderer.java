@@ -112,6 +112,17 @@ public class DefToolItemRenderer extends BaseToolItemRenderer<Node> {
 		}
 
 		/**
+		 * Set the accessibility text
+		 *
+		 * @param helpText
+		 *            the help text
+		 */
+		@Inject
+		public void setAccessibilityText(@Named(UIEvents.UIElement.ACCESSIBILITYPHRASE) String helpText) {
+			getWidget().setAccessibleHelp(helpText);
+		}
+
+		/**
 		 * Update the tooltip
 		 *
 		 * @param tooltip

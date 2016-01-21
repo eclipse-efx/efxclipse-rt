@@ -19,9 +19,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 
 import org.eclipse.fx.core.URI;
-import org.eclipse.fx.osgi.util.OSGiFXMLLoader;
 import org.eclipse.fx.ui.services.resources.GraphicNodeProvider;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -53,7 +53,11 @@ public class FXMLGraphicsNodeProvider implements GraphicNodeProvider {
 					}
 					sb.append(uri.segment(i));
 				}
-				return OSGiFXMLLoader.load(b, sb.toString(), null, null);
+				FXMLLoader loader = new FXMLLoader();
+				loader.setClassLoader(b.adapt(BundleWiring.class).getClassLoader());
+				URL url = b.getResource(sb.toString());
+				loader.setLocation(url);
+				return loader.load();
 			} else {
 				throw new IOException("Unknown bundle '"+uri.segment(1)+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 			}

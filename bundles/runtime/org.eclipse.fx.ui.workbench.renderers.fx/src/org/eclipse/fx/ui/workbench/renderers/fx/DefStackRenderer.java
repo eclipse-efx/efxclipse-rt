@@ -45,10 +45,9 @@ import com.google.common.base.Strings;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.Tab;
@@ -71,7 +70,6 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		} else {
 			return StackWidgetImpl.class;
 		}
-
 	}
 
 	static class StackWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
@@ -187,10 +185,21 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				s.setClipboardDataFunction(dnd::clipboardDataFunction);
 			});
 
+			String location = this.domainElement.getPersistedState().get(WStack.STATE_KEY_TABS_LOCATION);
+			if( location != null ) {
+				Side v = Side.valueOf(location);
+				if( v != null ) {
+					p.setSide(v);
+				}
+			}
+
 			p.setOnMouseClicked( e -> {
 				if( e.getClickCount() > 1 ) {
 					if( this.minMaxCallback != null ) {
-						this.minMaxCallback.call(WMinMaxState.TOGGLE);
+						Node node = p.lookup(".tab-header-background"); //$NON-NLS-1$
+						if( node != null && node.localToScene(node.getBoundsInLocal()).contains(e.getSceneX(), e.getSceneY()) ) {
+							this.minMaxCallback.call(WMinMaxState.TOGGLE);
+						}
 					}
 				}
 			});

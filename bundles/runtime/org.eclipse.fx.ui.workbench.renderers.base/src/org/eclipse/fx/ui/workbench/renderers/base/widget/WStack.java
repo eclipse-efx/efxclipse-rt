@@ -48,6 +48,11 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 */
 	public static final String TAG_TAB_CLOSING_POLICY_ALL_TABS = "fx_tab_closing_policy_allTabs"; //$NON-NLS-1$
 
+	/**
+	 * Location of the tabs. Supported values depend on the control
+	 * @since 2.3.0
+	 */
+	public static final String STATE_KEY_TABS_LOCATION = "fx.stack.tabslocation"; //$NON-NLS-1$
 
 	/**
 	 * Abstraction representing an item in the stack

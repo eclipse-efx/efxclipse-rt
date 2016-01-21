@@ -574,15 +574,15 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			s.focusOwnerProperty().addListener(this::handleFocusOwner);
 
 			if (this.themeManager != null) {
-				Theme theme = this.themeManager.getCurrentTheme();
-				if (theme != null) {
-					List<String> sUrls = new ArrayList<String>();
-					for (URL url : theme.getStylesheetURL()) {
-						sUrls.add(url.toExternalForm());
-					}
-
-					s.getStylesheets().addAll(sUrls);
-				}
+//				Theme theme = this.themeManager.getCurrentTheme();
+//				if (theme != null) {
+//					List<String> sUrls = new ArrayList<String>();
+//					for (URL url : theme.getStylesheetURL()) {
+//						sUrls.add(url.toExternalForm());
+//					}
+//
+//					s.getStylesheets().addAll(sUrls);
+//				}
 				this.sceneRegistration = this.themeManager.registerScene(s);
 			}
 
