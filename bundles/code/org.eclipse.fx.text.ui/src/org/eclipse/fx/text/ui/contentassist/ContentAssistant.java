@@ -21,9 +21,8 @@ import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 
 public class ContentAssistant implements IContentAssistant {
 	private final Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer;
-	private ITextViewer fViewer;
-	private ContentProposalPopup fProposalPopup;
-	private ContextInformationPopup fContextInfoPopup;
+	private ITextViewer viewer;
+	private ContentProposalPopup popuop;
 
 	public ContentAssistant(Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.proposalComputer = proposalComputer;
@@ -31,12 +30,10 @@ public class ContentAssistant implements IContentAssistant {
 
 	@Override
 	public void install(ITextViewer textViewer) {
-		if( this.fViewer == null ) {
-			this.fViewer = textViewer;
-			this.fProposalPopup = new ContentProposalPopup(this, textViewer,proposalComputer);
+		if( this.viewer == null ) {
+			this.viewer = textViewer;
+			this.popuop = new ContentProposalPopup(textViewer,proposalComputer);
 			textViewer.getTextWidget().addEventHandler(VerifyEvent.VERIFY, this::handleVerify);
-
-			fContextInfoPopup = new ContextInformationPopup(this, textViewer);
 		}
 	}
 
@@ -46,32 +43,18 @@ public class ContentAssistant implements IContentAssistant {
 		}
 		event.consume();
 
-		final int offset = this.fViewer.getTextWidget().getCaretOffset();
-
-		List<ICompletionProposal> proposals = proposalComputer.apply(new ContentAssistContextData(offset, this.fViewer.getDocument()/*,""*/));
+		List<ICompletionProposal> proposals = proposalComputer.apply(new ContentAssistContextData(this.viewer.getTextWidget().getCaretOffset(),this.viewer.getDocument()/*,""*/));
 
 		if( proposals.size() == 1) {
-			ICompletionProposal completionProposal = proposals.get(0);
-
-			completionProposal.apply(this.fViewer.getDocument());
-
-			showContextInformation(completionProposal.getContextInformation(), offset);
-
-			//this.fViewer.getTextWidget().setSelection(proposals.get(0).getSelection(this.fViewer.getDocument()));
+			proposals.get(0).apply(this.viewer.getDocument());
+			this.viewer.getTextWidget().setSelection(proposals.get(0).getSelection(this.viewer.getDocument()));
 		} else if( ! proposals.isEmpty() ) {
 //			System.err.println(this.viewer.getTextWidget().getCaretLocation());
 			System.err.println();
 
-			Point2D p = this.fViewer.getTextWidget().getLocationAtOffset(this.fViewer.getTextWidget().getCaretOffset());
+			Point2D p = this.viewer.getTextWidget().getLocationAtOffset(this.viewer.getTextWidget().getCaretOffset());
 			System.err.println(p);
-			this.fProposalPopup.displayProposals(proposals, this.fViewer.getTextWidget().getCaretOffset(), this.fViewer.getTextWidget().localToScreen(p));
-		}
-
-	}
-
-	void showContextInformation(IContextInformation contextInformation, int offset) {
-		if (this.fContextInfoPopup != null) {
-			this.fContextInfoPopup.showContextInformation(contextInformation, offset);
+			this.popuop.displayProposals(proposals, this.viewer.getTextWidget().getCaretOffset(), this.viewer.getTextWidget().localToScreen(p));
 		}
 	}
 }
