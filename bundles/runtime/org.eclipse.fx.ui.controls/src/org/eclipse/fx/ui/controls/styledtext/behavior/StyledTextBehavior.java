@@ -179,24 +179,27 @@ public class StyledTextBehavior {
 			getControl().getContent().replaceTextRange(start, length, replacement);
 		}
 
-		public void select() {
+		public void selectWithCaretAtStart() {
 			System.err.println("selecting " + start + " l " + length);
 			moveCaretAbsolute(start);
 			getControl().setSelection(new TextSelection(start, length));
 		}
 
 
+		public void selectWithCaretAtEnd() {
+			System.err.println("selecting " + start + " l " + length);
+			moveCaretAbsolute(end);
+			getControl().setSelection(new TextSelection(start, length));
+		}
+
 	}
 
+	// state for dnd stuff
+	private volatile boolean pressedInSelection = false;
 	private volatile boolean dragMoveTextMode = false;
 	private volatile boolean dragSelectionMode = false;
-
-
-	// state for dnd stuff
-
 	private volatile int dragMoveTextOffset = -1;
 	private volatile int dragMoveTextLength = -1;
-
 	private int mousePressedOffset = -1;
 
 
@@ -264,27 +267,27 @@ public class StyledTextBehavior {
 	}
 
 	private void onTextPositionDragDetected(TextPositionEvent event) {
-		System.err.println("TEXT_POSITION_DRAG_DETECTED");
-		if (!this.dragMoveTextMode && ! this.dragSelectionMode) {
+		if (this.pressedInSelection) {
+			this.dragMoveTextMode = true;
+			this.dragMoveTextOffset = getControl().getSelection().offset;
+			this.dragMoveTextLength = getControl().getSelection().length;
+		}
+		else {
 			this.dragSelectionMode = true;
 		}
 	}
 
 	private void onTextPositionDragged(TextPositionEvent event) {
 		if (this.dragSelectionMode) {
-//			System.err.println("MOUSE_DRAGGED [dragSelectionMode]");
 			moveCaretAbsolute(event.getOffset(), true);
 			event.consume();
 		}
 		else if (this.dragMoveTextMode) {
-			//System.err.println("MOUSE_DRAGGED [dragMoveTextMode]");
-			// nothing to do
 			event.consume();
 		}
 	}
 
 	private void onTextPositionReleased(TextPositionEvent event) {
-		System.err.println("TEXT_POSITION_RELEASED");
 		if (this.dragSelectionMode) {
 			this.dragSelectionMode = false;
 			event.consume();
@@ -317,30 +320,38 @@ public class StyledTextBehavior {
 			this.dragMoveTextMode = false;
 			event.consume();
 		}
+		else if (this.pressedInSelection) {
+			moveCaretAbsolute(this.mousePressedOffset, event.isShiftDown());
+			event.consume();
+		}
+
+		// in any case reset pressedInSelection
+		this.pressedInSelection = false;
 	}
+
+
 
 	private void onTextPositionPressed(TextPositionEvent event) {
 		this.mousePressedOffset = event.getOffset();
-		System.err.println("TEXT_POSITION_PRESSED @ " + mousePressedOffset);
 
-		if (isInSelection(mousePressedOffset)) {
-			System.err.println(" -> starting dragMoveTextMode");
-			event.setDragDetect(true);
-			this.dragMoveTextMode = true;
-			this.dragMoveTextOffset = getControl().getSelection().offset;
-			this.dragMoveTextLength = getControl().getSelection().length;
+		if (isInSelection(this.mousePressedOffset)) {
+			this.pressedInSelection = true;
+			event.consume();
 		}
 		else {
-			System.err.println(" -> setting Caret");
 			moveCaretAbsolute(this.mousePressedOffset, event.isShiftDown());
+			event.consume();
 		}
 	}
 
 	private void onTextPositionClicked(TextPositionEvent event) {
 		if (event.isStillSincePress()) {
-			System.err.println("TEXT_POSITION_CLICKED @ " + mousePressedOffset);
 			if (event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY) {
 				this.ACTION_SELECT_WORD.run();
+				event.consume();
+			}
+			if (event.getClickCount() == 3 && event.getButton() == MouseButton.PRIMARY) {
+				this.ACTION_SELECT_LINE.run();
 				event.consume();
 			}
 		}
@@ -544,6 +555,19 @@ public class StyledTextBehavior {
 	}
 
 	/**
+	 * Action to select the line at the current cursor
+	 */
+	protected final InputAction ACTION_SELECT_LINE = new StyledTextInputAction(this::defaultSelectLine);
+	/**
+	 * default implementation for {@link #ACTION_SELECT_LINE}
+	 */
+	protected void defaultSelectLine() {
+		@NonNull
+		LineRegion lineRegion = getLineRegion(getControl().getSelection());
+		lineRegion.selectWithCaretAtEnd();
+	}
+
+	/**
 	 * Action to delete current line
 	 */
 	protected final InputAction ACTION_DELETE_LINE = new StyledTextInputAction(this::defaultDeleteLine);
@@ -613,7 +637,7 @@ public class StyledTextBehavior {
 			}
 
 			all.replace( moveTargetText + aboveText);
-			new LineRegion(moveTarget.firstLine -1, moveTarget.lastLine -1).select();
+			new LineRegion(moveTarget.firstLine -1, moveTarget.lastLine -1).selectWithCaretAtStart();
 		}
 	}
 
@@ -640,7 +664,7 @@ public class StyledTextBehavior {
 			}
 
 			all.replace(belowText + moveTargetText);
-			new LineRegion(moveTarget.firstLine +1, moveTarget.lastLine +1).select();
+			new LineRegion(moveTarget.firstLine +1, moveTarget.lastLine +1).selectWithCaretAtStart();
 		}
 	}
 
