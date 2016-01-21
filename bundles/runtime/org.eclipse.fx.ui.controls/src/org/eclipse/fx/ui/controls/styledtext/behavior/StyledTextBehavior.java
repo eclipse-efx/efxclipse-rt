@@ -1227,21 +1227,21 @@ public class StyledTextBehavior {
 
 		if (Util.isMacOS()) {
 
-			keyMapping.mapKey(new KeyCombo(LEFT, ControlKey), 	this.ACTION_NAVIGATE_LINE_START);
-			keyMapping.mapKey(new KeyCombo(A, ControlKey), 		this.ACTION_NAVIGATE_LINE_START);
-			keyMapping.mapKey(new KeyCombo(RIGHT, ControlKey), 	this.ACTION_NAVIGATE_LINE_END);
-			keyMapping.mapKey(new KeyCombo(E, ControlKey), 		this.ACTION_NAVIGATE_LINE_END);
-			keyMapping.mapKey(new KeyCombo(UP, ControlKey), 		this.ACTION_NAVIGATE_TEXT_START);
-			keyMapping.mapKey(new KeyCombo(DOWN, ControlKey), 	this.ACTION_NAVIGATE_TEXT_END);
+			keyMapping.mapKey(new KeyCombo(LEFT, MetaKey), 	this.ACTION_NAVIGATE_LINE_START);
+//			keyMapping.mapKey(new KeyCombo(A, ControlKey), 		this.ACTION_NAVIGATE_LINE_START);
+			keyMapping.mapKey(new KeyCombo(RIGHT, MetaKey), 	this.ACTION_NAVIGATE_LINE_END);
+//			keyMapping.mapKey(new KeyCombo(E, ControlKey), 		this.ACTION_NAVIGATE_LINE_END);
+			keyMapping.mapKey(new KeyCombo(UP, MetaKey), 		this.ACTION_NAVIGATE_TEXT_START);
+			keyMapping.mapKey(new KeyCombo(DOWN, MetaKey), 	this.ACTION_NAVIGATE_TEXT_END);
 			keyMapping.mapKey(new KeyCombo(RIGHT, AltKey), 		this.ACTION_NAVIGATE_WORD_NEXT);
 			keyMapping.mapKey(new KeyCombo(LEFT, AltKey), 			this.ACTION_NAVIGATE_WORD_PREVIOUS);
 
-			keyMapping.mapKey(new KeyCombo(LEFT, ControlKey, ShiftKey), 	this.ACTION_SELECT_LINE_START);
-			keyMapping.mapKey(new KeyCombo(A, ControlKey, ShiftKey), 		this.ACTION_SELECT_LINE_START);
-			keyMapping.mapKey(new KeyCombo(RIGHT, ControlKey, ShiftKey),	this.ACTION_SELECT_LINE_END);
-			keyMapping.mapKey(new KeyCombo(E, ControlKey, ShiftKey), 		this.ACTION_SELECT_LINE_END);
-			keyMapping.mapKey(new KeyCombo(UP, ControlKey, ShiftKey), 	this.ACTION_SELECT_TEXT_START);
-			keyMapping.mapKey(new KeyCombo(DOWN, ControlKey, ShiftKey), 	this.ACTION_SELECT_TEXT_END);
+			keyMapping.mapKey(new KeyCombo(LEFT, MetaKey, ShiftKey), 	this.ACTION_SELECT_LINE_START);
+//			keyMapping.mapKey(new KeyCombo(A, ControlKey, ShiftKey), 		this.ACTION_SELECT_LINE_START);
+			keyMapping.mapKey(new KeyCombo(RIGHT, MetaKey, ShiftKey),	this.ACTION_SELECT_LINE_END);
+//			keyMapping.mapKey(new KeyCombo(E, ControlKey, ShiftKey), 		this.ACTION_SELECT_LINE_END);
+			keyMapping.mapKey(new KeyCombo(UP, MetaKey, ShiftKey), 	this.ACTION_SELECT_TEXT_START);
+			keyMapping.mapKey(new KeyCombo(DOWN, MetaKey, ShiftKey), 	this.ACTION_SELECT_TEXT_END);
 			keyMapping.mapKey(new KeyCombo(RIGHT, AltKey, ShiftKey), 		this.ACTION_SELECT_WORD_NEXT);
 			keyMapping.mapKey(new KeyCombo(LEFT, AltKey, ShiftKey), 		this.ACTION_SELECT_WORD_PREVIOUS);
 
@@ -1253,6 +1253,10 @@ public class StyledTextBehavior {
 			keyMapping.mapKey(new KeyCombo(V, MetaKey), 	this.ACTION_PASTE);
 			keyMapping.mapKey(new KeyCombo(X, MetaKey), 	this.ACTION_CUT);
 
+			keyMapping.mapKey(new KeyCombo(A, MetaKey), this.ACTION_SELECT_ALL);
+			keyMapping.mapKey(new KeyCombo(D, MetaKey), 	this.ACTION_DELETE_LINE);
+			keyMapping.mapKey(new KeyCombo(UP, AltKey), 		this.ACTION_MOVE_LINES_UP);
+			keyMapping.mapKey(new KeyCombo(DOWN, AltKey), 		this.ACTION_MOVE_LINES_DOWN);
 		}
 		else {
 			keyMapping.mapKey(new KeyCombo(RIGHT, ControlKey), 				this.ACTION_NAVIGATE_WORD_NEXT);
