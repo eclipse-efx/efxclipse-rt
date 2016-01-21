@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext;
 
+import javafx.scene.Node;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
@@ -40,7 +41,7 @@ public class UnderlineStrategyFactory implements DecorationStrategyFactory {
 
 	static class UnderlineStrategy implements DecorationStrategy {
 		@Override
-		public void attach(StyledTextNode node, Text textNode) {
+		public void attach(StyledTextNode node, Node textNode) {
 			Line l = (Line) textNode.getUserData();
 			if( l == null ) {
 				l = new Line();
@@ -53,7 +54,7 @@ public class UnderlineStrategyFactory implements DecorationStrategyFactory {
 		}
 
 		@Override
-		public void unattach(StyledTextNode node, Text textNode) {
+		public void unattach(StyledTextNode node, Node textNode) {
 			Line l = (Line) textNode.getUserData();
 			if( l != null ) {
 				textNode.setUserData(null);
@@ -62,7 +63,7 @@ public class UnderlineStrategyFactory implements DecorationStrategyFactory {
 		}
 
 		@Override
-		public void layout(StyledTextNode node, Text textNode) {
+		public void layout(StyledTextNode node, Node textNode) {
 			Line l = (Line) textNode.getUserData();
 			if( l != null ) {
 				l.setEndX(node.getWidth());

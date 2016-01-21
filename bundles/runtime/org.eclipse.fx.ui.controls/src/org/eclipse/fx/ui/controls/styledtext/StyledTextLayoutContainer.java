@@ -153,9 +153,6 @@ public class StyledTextLayoutContainer extends Region {
 	private StyledTextNode selectionStartNode;
 	private StyledTextNode selectionEndNode;
 
-	private double selectionStartX;
-	private double selectionEndX;
-
 	private Animation caretAnimation;
 
 	private final ReadOnlyBooleanProperty ownerFocusedProperty;
@@ -203,9 +200,12 @@ public class StyledTextLayoutContainer extends Region {
 		Bindings.bindContent(this.textLayoutNode.getChildren(), this.textNodes);
 		getChildren().setAll(this.selectionMarker, this.textLayoutNode, this.caret);
 		selectionProperty().addListener(this::handleSelectionChange);
+		this.textNodes.addListener(this::handleSelectionChange);
 
 		this.ownerFocusedProperty.addListener(this::updateCaretVisibility);
 		this.caretIndex.addListener(this::updateCaretVisibility);
+
+		updateCaretVisibility(null);
 
 //		this.annotationsProperty.addListener(new SetChangeListener<StyledTextAnnotation>() {
 //			@Override
@@ -296,33 +296,27 @@ public class StyledTextLayoutContainer extends Region {
 		}
 	}
 
-	private void handleSelectionChange(Observable o, TextSelection oldSelection, TextSelection newSelection) {
-		if (newSelection.length == 0) {
+	private void handleSelectionChange(Observable o) {
+		TextSelection selection = getSelection();
+		if (selection.length == 0) {
 			this.selectionMarker.setVisible(false);
-			this.selectionMarker.resize(0, 0);
-		} else {
+		}
+		else {
 			this.selectionMarker.setVisible(true);
-			int start = newSelection.offset;
-			int end = newSelection.offset + newSelection.length;
+			int startOffset = selection.offset;
+			int endOffset = selection.offset + selection.length;
 
 			this.selectionStartNode = null;
 			this.selectionEndNode = null;
 			for (StyledTextNode t : this.textNodes) {
-				if (t.intersectOffset(start, end)) {
+				if (t.intersectOffset(startOffset, endOffset)) {
 					if (this.selectionStartNode == null) {
 						this.selectionStartNode = t;
 					}
 					this.selectionEndNode = t;
 				}
 			}
-
-			if (this.selectionStartNode != null && this.selectionEndNode != null) {
-				int charIndex = start - this.selectionStartNode.getStartOffset();
-				this.selectionStartX = this.selectionStartNode.getCharLocation(charIndex);
-				charIndex = end - this.selectionEndNode.getStartOffset();
-				this.selectionEndX = this.selectionEndNode.getCharLocation(charIndex);
-				requestLayout();
-			}
+			requestLayout();
 		}
 	}
 
@@ -332,65 +326,64 @@ public class StyledTextLayoutContainer extends Region {
 		return d;
 	}
 
-	private double findX(int localOffset) {
+//	private double findX(int localOffset) {
+//
+//		double len = 0;
+//		for (StyledTextNode t : this.textNodes) {
+//			if (t.getStartOffset() <= localOffset && t.getEndOffset() > localOffset || this.textNodes.get(this.textNodes.size() - 1) == t) {
+//				return len + t.getCharLocation(localOffset - t.getStartOffset());
+//			}
+//			len += t.getWidth();
+//		}
+//		return -1;
+//	}
 
-		double len = 0;
-		for (StyledTextNode t : this.textNodes) {
-			if (t.getStartOffset() <= localOffset && t.getEndOffset() > localOffset || this.textNodes.get(this.textNodes.size() - 1) == t) {
-				return len + t.getCharLocation(localOffset - t.getStartOffset());
-			}
-			len += t.getWidth();
-		}
-		return -1;
+	private void layoutAnnotations() {
+//		for (Entry<StyledTextAnnotation, Rectangle> e : annotationMarkers.entrySet()) {
+//		System.err.println("LAYOUTING MARKER: " + e.getKey().getText());
+//		final int globalBeginIndex = e.getKey().getStartOffset();
+//		final int globalEndIndex = e.getKey().getStartOffset() + e.getKey().getLength();
+//
+//		System.err.println("global: " + globalBeginIndex + " - " + globalEndIndex);
+//
+//		final int localBeginIndex = Math.max(0, globalBeginIndex - getStartOffset());
+//		final int localEndIndex = Math.min(getText().length(), globalEndIndex - getStartOffset());
+//
+//		System.err.println("local: " + localBeginIndex + " - " + localEndIndex);
+//
+//		double xBegin = findX(localBeginIndex);
+//		double xEnd = findX(localEndIndex);
+//
+////		System.err.println(xBegin + ", " + getInsets().getTop() + ", " + (xEnd - xBegin)+ ", " + textLayoutNode.prefHeight(-1));
+////		e.getValue().resizeRelocate(xBegin, getInsets().getTop(), xEnd - xBegin, textLayoutNode.prefHeight(-1));
+//		e.getValue().setX(xBegin);
+//		e.getValue().setY(getInsets().getTop());
+//		e.getValue().setWidth(xEnd - xBegin);
+//		e.getValue().setHeight(textLayoutNode.prefHeight(-1));
+//		e.getValue().toFront();
+//		System.err.println(" -> " + e.getValue());
+//	}
 	}
 
-	@Override
-	protected void layoutChildren() {
-		super.layoutChildren();
-
-		this.textLayoutNode.relocate(getInsets().getLeft(), getInsets().getTop());
-
-//		for (Entry<StyledTextAnnotation, Rectangle> e : annotationMarkers.entrySet()) {
-//			System.err.println("LAYOUTING MARKER: " + e.getKey().getText());
-//			final int globalBeginIndex = e.getKey().getStartOffset();
-//			final int globalEndIndex = e.getKey().getStartOffset() + e.getKey().getLength();
-//
-//			System.err.println("global: " + globalBeginIndex + " - " + globalEndIndex);
-//
-//			final int localBeginIndex = Math.max(0, globalBeginIndex - getStartOffset());
-//			final int localEndIndex = Math.min(getText().length(), globalEndIndex - getStartOffset());
-//
-//			System.err.println("local: " + localBeginIndex + " - " + localEndIndex);
-//
-//			double xBegin = findX(localBeginIndex);
-//			double xEnd = findX(localEndIndex);
-//
-////			System.err.println(xBegin + ", " + getInsets().getTop() + ", " + (xEnd - xBegin)+ ", " + textLayoutNode.prefHeight(-1));
-////			e.getValue().resizeRelocate(xBegin, getInsets().getTop(), xEnd - xBegin, textLayoutNode.prefHeight(-1));
-//			e.getValue().setX(xBegin);
-//			e.getValue().setY(getInsets().getTop());
-//			e.getValue().setWidth(xEnd - xBegin);
-//			e.getValue().setHeight(textLayoutNode.prefHeight(-1));
-//			e.getValue().toFront();
-//			System.err.println(" -> " + e.getValue());
-//		}
-
-
+	private void layoutSelection() {
 		if (this.selectionStartNode != null && this.selectionEndNode != null) {
-			double x1 = this.textLayoutNode.localToParent(this.selectionStartNode.getBoundsInParent().getMinX(), 0).getX() + this.selectionStartX;
-			double x2 = this.textLayoutNode.localToParent(this.selectionEndNode.getBoundsInParent().getMinX(), 0).getX() + this.selectionEndX;
-			this.selectionMarker.resizeRelocate(x1, 0, x2 - x1, getHeight());
+			final TextSelection selection = getSelection();
+			final double selectionStart = this.selectionStartNode.getLayoutX() + this.selectionStartNode.getCharLocation(selection.offset - this.selectionStartNode.getStartOffset());
+			final double selectionEnd = this.selectionEndNode.getLayoutX() + this.selectionEndNode.getCharLocation(selection.offset + selection.length - this.selectionEndNode.getStartOffset());
+			this.selectionMarker.resizeRelocate(selectionStart, 0, selectionEnd - selectionStart, getHeight());
 		}
+	}
 
+	private void layoutCaret() {
 		if (this.getCaretIndex() >= 0) {
-			this.textLayoutNode.layout();
-			this.textLayoutNode.applyCss();
 			for (StyledTextNode t : this.textNodes) {
-				t.applyCss();
+				// XXX do we really need to apply the css on the StyledTextNode here??
+//				t.applyCss();
 				if (t.getStartOffset() <= this.getCaretIndex() && (t.getEndOffset() > this.getCaretIndex() || this.textNodes.get(this.textNodes.size() - 1) == t)) {
 					double caretX = t.getCharLocation(this.getCaretIndex() - t.getStartOffset());
 					double x = this.textLayoutNode.localToParent(t.getBoundsInParent().getMinX(), 0).getX() + caretX;
-					double h = t.prefHeight(-1);
+
+					double h = getHeight();
 
 					this.caret.setStartX(x);
 					this.caret.setEndX(x);
@@ -414,6 +407,24 @@ public class StyledTextLayoutContainer extends Region {
 		}
 	}
 
+	@Override
+	protected void layoutChildren() {
+		super.layoutChildren();
+
+		this.textLayoutNode.relocate(getInsets().getLeft(), getInsets().getTop());
+
+		// we need to ensure that the text is layouted correctly before processing any kind of markers
+		// since we need the correct letter positions to place them
+		this.textLayoutNode.layout();
+		this.textLayoutNode.applyCss();
+
+		layoutSelection();
+		layoutCaret();
+
+		layoutAnnotations();
+
+	}
+
 	/**
 	 * @return list of text nodes rendered
 	 */
@@ -432,7 +443,10 @@ public class StyledTextLayoutContainer extends Region {
 		Point2D scenePoint = localToScene(point);
 		for (StyledTextNode t : this.textNodes) {
 			if (t.localToScene(t.getBoundsInLocal()).contains(scenePoint)) {
-				return t.getCaretIndexAtPoint(t.sceneToLocal(scenePoint)) + t.getStartOffset();
+				int idx = t.getCaretIndexAtPoint(t.sceneToLocal(scenePoint));
+				if( idx != -1 ) {
+					return idx + t.getStartOffset();
+				}
 			}
 		}
 

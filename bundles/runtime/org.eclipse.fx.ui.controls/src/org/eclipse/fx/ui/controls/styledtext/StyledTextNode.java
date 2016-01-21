@@ -14,7 +14,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.eclipse.fx.core.Util;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+import com.sun.javafx.css.converters.PaintConverter;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -27,23 +34,16 @@ import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.StyleConverter;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.PathElement;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
-
-import org.eclipse.fx.core.Util;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-
-import com.sun.javafx.css.converters.PaintConverter;
-import com.sun.javafx.scene.text.HitInfo;
 
 /**
  * A node who allows to decorate the text
@@ -65,7 +65,7 @@ public class StyledTextNode extends Region {
 		 * @param textNode
 		 *            the text node decorated
 		 */
-		public void attach(StyledTextNode node, Text textNode);
+		public void attach(StyledTextNode node, Node textNode);
 
 		/**
 		 * Remove the decoration from the text
@@ -75,7 +75,7 @@ public class StyledTextNode extends Region {
 		 * @param textNode
 		 *            the text node decorated
 		 */
-		public void unattach(StyledTextNode node, Text textNode);
+		public void unattach(StyledTextNode node, Node textNode);
 
 		/**
 		 * Layout the decoration
@@ -85,10 +85,8 @@ public class StyledTextNode extends Region {
 		 * @param textNode
 		 *            the text node decorated
 		 */
-		public void layout(StyledTextNode node, Text textNode);
+		public void layout(StyledTextNode node, Node textNode);
 	}
-
-	private final Text textNode;
 
 	@SuppressWarnings("null")
 	@NonNull
@@ -279,6 +277,8 @@ public class StyledTextNode extends Region {
 	private int startOffset;
 	private List<Integer> tabPositions = new ArrayList<>();
 	private String originalText;
+	private final HBox textNode;
+//	private final Text textNode;
 
 	/**
 	 * Create a new styled text node
@@ -290,15 +290,27 @@ public class StyledTextNode extends Region {
 		getStyleClass().add("styled-text-node"); //$NON-NLS-1$
 		this.originalText = text;
 
-		this.textNode = new Text(processText(text));
-		this.textNode.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
-		this.textNode.fillProperty().bind(fillProperty());
+		this.textNode = new HBox();
+
+		this.textNode.getChildren().setAll(rebuildText(text));
+
 		getChildren().add(this.textNode);
 		this.decorationStrategy.addListener(this::handleDecorationChange);
 
 		this.tabCharAdvance.addListener(o -> {
-			this.textNode.setText(processText(text));
+			this.textNode.getChildren().setAll(rebuildText(text));
 		});
+	}
+
+	private List<Text> rebuildText(String text) {
+		List<Text> l = new ArrayList<>();
+		for( char c : processText(text).toCharArray() ) {
+			Text textNode = new Text(c+""); //$NON-NLS-1$
+			textNode.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
+			textNode.fillProperty().bind(fillProperty());
+			l.add(textNode);
+		}
+		return l;
 	}
 
 	private String processText(String text) {
@@ -364,7 +376,7 @@ public class StyledTextNode extends Region {
 
 	@Override
 	public String toString() {
-		return this.originalText;
+		return "'" + this.originalText + "'";  //$NON-NLS-1$//$NON-NLS-2$
 	}
 
 	@Override
@@ -387,7 +399,6 @@ public class StyledTextNode extends Region {
 		if (decorationStrategy2 != null) {
 			decorationStrategy2.layout(this, this.textNode);
 		}
-
 	}
 
 	/**
@@ -398,10 +409,20 @@ public class StyledTextNode extends Region {
 	 * @return the index or <code>-1</code>
 	 */
 	public int getCaretIndexAtPoint(Point2D point) {
-		@SuppressWarnings("deprecation")
-		HitInfo info = this.textNode.impl_hitTestChar(this.textNode.sceneToLocal(localToScene(point)));
-		if (info != null) {
-			int idx = info.getInsertionIndex();
+		Point2D local = this.textNode.sceneToLocal(localToScene(point));
+//		System.err.println(local);
+
+		Optional<Node> charNode = this.textNode.getChildren().stream().filter( n -> n.getBoundsInParent().contains(local)).findFirst();
+		if( charNode.isPresent() ) {
+			Node node = charNode.get();
+			int idx = this.textNode.getChildren().indexOf(node);
+			Bounds bounds = node.getBoundsInParent();
+
+			// if it is the 2nd half of the character
+			if( bounds.getMinX() + bounds.getWidth() / 2 < local.getX() ) {
+				idx += 1;
+			}
+
 			int toRemove = 0;
 			for (Integer i : this.tabPositions) {
 				if (i.intValue() <= idx && idx < i.intValue() + this.tabCharAdvance.get()) {
@@ -418,7 +439,32 @@ public class StyledTextNode extends Region {
 			}
 			idx -= toRemove;
 			return idx;
+		} else {
+//			System.err.println("COULD NOT FIND NODE AT: " + local);
+//			this.textNode.getChildren().stream().map( n -> n.getBoundsInParent()).forEach(System.err::println);
 		}
+
+//		@SuppressWarnings("deprecation")
+//		HitInfo info = this.textNode.impl_hitTestChar(this.textNode.sceneToLocal(localToScene(point)));
+//		if (info != null) {
+//			int idx = info.getInsertionIndex();
+//			int toRemove = 0;
+//			for (Integer i : this.tabPositions) {
+//				if (i.intValue() <= idx && idx < i.intValue() + this.tabCharAdvance.get()) {
+//					toRemove += idx - i.intValue();
+//					// If we are in the 2nd half of the tab we
+//					// simply move one past the value
+//					if ((idx - i.intValue()) % this.tabCharAdvance.get() >= this.tabCharAdvance.get() / 2) {
+//						idx += 1;
+//					}
+//					break;
+//				} else if (i.intValue() < idx) {
+//					toRemove += this.tabCharAdvance.get() - 1;
+//				}
+//			}
+//			idx -= toRemove;
+//			return idx;
+//		}
 		return -1;
 	}
 
@@ -429,7 +475,6 @@ public class StyledTextNode extends Region {
 	 *            the index
 	 * @return the location or <code>0</code> if not found
 	 */
-	@SuppressWarnings("deprecation")
 	public double getCharLocation(int index) {
 		int realIndex = index;
 		for (Integer i : this.tabPositions) {
@@ -437,14 +482,22 @@ public class StyledTextNode extends Region {
 				realIndex += this.tabCharAdvance.get() - 1;
 			}
 		}
-		this.textNode.setImpl_caretPosition(realIndex);
-		PathElement[] pathElements = this.textNode.getImpl_caretShape();
-		for (PathElement e : pathElements) {
-			if (e instanceof MoveTo) {
-				return this.textNode.localToParent(((MoveTo) e).getX(), 0).getX();
-			}
+
+		if( realIndex >= 0 && realIndex < this.textNode.getChildren().size() ) {
+			return this.textNode.localToParent(this.textNode.getChildren().get(realIndex).getBoundsInParent()).getMinX();
+		} else if( ! this.textNode.getChildren().isEmpty() ) {
+			return this.textNode.localToParent(this.textNode.getChildren().get(this.textNode.getChildren().size()-1).getBoundsInParent()).getMaxX();
 		}
 
 		return 0.0;
+
+//		this.textNode.setImpl_caretPosition(realIndex);
+//		PathElement[] pathElements = this.textNode.getImpl_caretShape();
+//		for (PathElement e : pathElements) {
+//			if (e instanceof MoveTo) {
+//				return this.textNode.localToParent(((MoveTo) e).getX(), 0).getX();
+//			}
+//		}
+
 	}
 }
