@@ -15,10 +15,6 @@ package org.eclipse.fx.text.ui.source;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import javafx.application.Platform;
-import javafx.scene.Node;
 
 import org.eclipse.fx.text.ui.ITextViewerExtension2;
 import org.eclipse.fx.text.ui.TextViewer;
@@ -37,6 +33,9 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelExtension;
 import org.eclipse.jface.text.source.IAnnotationModelListener;
 
+import javafx.application.Platform;
+import javafx.scene.Node;
+
 public class SourceViewer extends TextViewer implements ISourceViewer, ISourceViewerExtension, ISourceViewerExtension2, ISourceViewerExtension3, ISourceViewerExtension4 {
 
 	private IPresentationReconciler fPresentationReconciler;
@@ -50,6 +49,8 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 	public void configure(SourceViewerConfiguration configuration) {
 		if (getTextWidget() == null)
 			return;
+
+		setUndoManager(configuration.getUndoManager(this));
 
 		getTextWidget().getStyleClass().add(configuration.getStyleclassName());
 
@@ -121,6 +122,74 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 			String t = types[i];
 			setTextHover(configuration.getTextHover(this, t), t, ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
 		}
+
+
+		// register annotation model with text widget
+		if (annotationModel != null) {
+//			annotationModel.addAnnotationModelListener(new IAnnotationModelListener() {
+//				@Override
+//				public void modelChanged(IAnnotationModel model) {
+//					System.err.println("Annotation model change!");
+//
+//					Map<String, StyledTextAnnotation> toAdd = new HashMap<>();
+//					Map<String, StyledTextAnnotation> toRemove = new HashMap<>();
+//
+//
+//					Map<String, StyledTextAnnotation> current = new HashMap<>();
+//					for (StyledTextAnnotation n : getTextWidget().getAnnotations()) {
+//						current.put(n.getId(), n);
+//						toRemove.put(n.getId(), n);
+//					}
+//
+//					Iterator it = model.getAnnotationIterator();
+//					while (it.hasNext()) {
+//						Annotation next = (Annotation) it.next();
+//						Position pos = model.getPosition(next);
+//						String id = Integer.toHexString(next.hashCode());
+//						if (pos != null) {
+//
+//							if (current.containsKey(id)) {
+//								toRemove.remove(id);
+//							}
+//							else {
+//								StyledTextAnnotation s = new StyledTextAnnotation() {
+//									@Override
+//									public String getId() {
+//										return id;
+//									}
+//
+//									@Override
+//									public String getType() {
+//										return next.getType();
+//									}
+//
+//									@Override
+//									public String getText() {
+//										return next.getText();
+//									}
+//
+//									@Override
+//									public int getStartOffset() {
+//										return pos.offset;
+//									}
+//
+//									@Override
+//									public int getLength() {
+//										return pos.length;
+//									}
+//								};
+//								toAdd.put(id,  s);
+//							}
+//
+//						}
+//					}
+//					getTextWidget().getAnnotations().removeAll(toRemove.values());
+//					getTextWidget().getAnnotations().addAll(toAdd.values());
+//				}
+//
+//			});
+		}
+
 	}
 
 	private Node annotationFactory(StyledTextLine l) {

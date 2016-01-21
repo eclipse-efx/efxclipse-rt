@@ -13,7 +13,9 @@ package org.eclipse.fx.text.ui.source;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.fx.text.ui.DefaultUndoManager;
 import org.eclipse.fx.text.ui.ITextHover;
+import org.eclipse.fx.text.ui.IUndoManager;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
 import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
@@ -53,6 +55,10 @@ public abstract class SourceViewerConfiguration {
 
 	public AnnotationPainter getAnnotationPainter(ISourceViewer sourceViewer) {
 		return null;
+	}
+
+	public IUndoManager getUndoManager(ISourceViewer sourceViewer) {
+		return new DefaultUndoManager(25);
 	}
 
 	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {

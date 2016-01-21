@@ -29,4 +29,8 @@ public interface ITextViewer {
 	public void invalidateTextPresentation();
 	void setVisibleRegion(int offset, int length);
 	void resetVisibleRegion();
+
+
+	void setUndoManager(IUndoManager undoManager);
+	IUndoManager getUndoManager();
 }

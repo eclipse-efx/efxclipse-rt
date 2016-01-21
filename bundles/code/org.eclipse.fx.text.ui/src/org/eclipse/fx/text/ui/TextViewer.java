@@ -19,11 +19,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.DefaultPositionUpdater;
@@ -74,8 +77,26 @@ public class TextViewer extends AnchorPane implements
 	protected Map<TextHoverKey,ITextHover> fTextHovers;
 	private TextViewerHoverManager fTextHoverManager;
 
+	private IUndoManager fUndoManager;
+
 	public TextViewer() {
 		createControl();
+	}
+
+	@Override
+	public void setUndoManager(IUndoManager undoManager) {
+		if (this.fUndoManager != null) {
+			this.fUndoManager.disconnect();
+		}
+
+		this.fUndoManager = undoManager;
+
+		this.fUndoManager.connect(this);
+	}
+
+	@Override
+	public IUndoManager getUndoManager() {
+		return fUndoManager;
 	}
 
 	protected void createControl() {
@@ -85,6 +106,43 @@ public class TextViewer extends AnchorPane implements
 		AnchorPane.setTopAnchor(fTextWidget, 0.0);
 		AnchorPane.setBottomAnchor(fTextWidget, 0.0);
 		getChildren().add(fTextWidget);
+
+		fTextWidget.addEventHandler(VerifyEvent.VERIFY, this::onVerify);
+	}
+
+	private void onVerify(VerifyEvent event) {
+		if (getUndoManager() != null) {
+
+			if (Util.isMacOS()) {
+				if (event.isMetaDown() && !event.isShiftDown() && event.getCode() == KeyCode.Z) {
+					if (getUndoManager().undoable()) {
+						getUndoManager().undo();
+						event.consume();
+					}
+				}
+				else if (event.isMetaDown() && !event.isShiftDown() && event.getCode() == KeyCode.Y) {
+					if (getUndoManager().redoable()) {
+						getUndoManager().redo();
+						event.consume();
+					}
+				}
+			}
+			else {
+				if (event.isControlDown() && !event.isShiftDown() && event.getCode() == KeyCode.Z) {
+					if (getUndoManager().undoable()) {
+						getUndoManager().undo();
+						event.consume();
+					}
+				}
+				else if (event.isControlDown() && event.isShiftDown() && event.getCode() == KeyCode.Z) {
+					if (getUndoManager().redoable()) {
+						getUndoManager().redo();
+						event.consume();
+					}
+				}
+			}
+
+		}
 	}
 
 	public StyledTextArea getTextWidget() {
@@ -844,6 +902,7 @@ public class TextViewer extends AnchorPane implements
 //			fTextHoverManager.setInformationControlReplacer(new StickyHoverManager(this));
 		}
 	}
+
 
 	protected TextViewerHoverManager createTextHovermanager() {
 		return new TextViewerHoverManager(this/*, fHoverControlCreator*/);
