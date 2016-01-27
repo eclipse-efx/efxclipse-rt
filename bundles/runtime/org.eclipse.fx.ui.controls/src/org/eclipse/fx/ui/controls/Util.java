@@ -10,20 +10,27 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -297,5 +304,95 @@ public class Util {
 			node.removeEventHandler(MouseEvent.MOUSE_MOVED, moveHandler);
 			node.removeEventHandler(MouseEvent.MOUSE_EXITED, exitHandler);
 		};
+	}
+
+	/**
+	 * Enter a nested event loop
+	 *
+	 * @param id
+	 *            the id of the nested event loop
+	 */
+	public static void enterNestedEventLoop(String id) {
+		if (org.eclipse.fx.core.Util.isFX9()) {
+			enterNestedEventLoop9(id);
+		} else {
+			enterNestedEventLoop8(id);
+		}
+	}
+
+	private static void enterNestedEventLoop8(String id) {
+		try {
+			Class<?> toolkit = Class.forName("com.sun.javafx.tk.Toolkit"); //$NON-NLS-1$
+			Object tk = toolkit.getMethod("getToolkit").invoke(null); //$NON-NLS-1$
+			toolkit.getMethod("enterNestedEventLoop", Object.class).invoke(tk, id); //$NON-NLS-1$
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void enterNestedEventLoop9(String id) {
+		try {
+			Method m = Platform.class.getMethod("enterNestedEventLoop", Object.class); //$NON-NLS-1$
+			m.invoke(null, id);
+		} catch (Throwable t) {
+			enterNestedEventLoop8(id);
+		}
+	}
+
+	/**
+	 * Exit the nested event loop
+	 *
+	 * @param id
+	 *            the nested event loop
+	 */
+	public static void exitNestedEventLoop(String id) {
+		if (org.eclipse.fx.core.Util.isFX9()) {
+			exitNestedEventLoop9(id);
+		} else {
+			exitNestedEventLoop8(id);
+		}
+	}
+
+	private static void exitNestedEventLoop8(String id) {
+		try {
+			Class<?> toolkit = Class.forName("com.sun.javafx.tk.Toolkit"); //$NON-NLS-1$
+			Object tk = toolkit.getMethod("getToolkit").invoke(null); //$NON-NLS-1$
+			toolkit.getMethod("exitNestedEventLoop", Object.class, Object.class).invoke(tk, id, null); //$NON-NLS-1$
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void exitNestedEventLoop9(String id) {
+		try {
+			Method m = Platform.class.getMethod("exitNestedEventLoop", Object.class, Object.class); //$NON-NLS-1$
+			m.invoke(null, id, null);
+		} catch (Throwable t) {
+			exitNestedEventLoop8(id);
+		}
+	}
+
+	/**
+	 * Wait until the condition is satisfied without blocking the UI-Thread
+	 *
+	 * @param blockCondition
+	 *            the condition
+	 * @return the return value of the condition
+	 */
+	public static <T> @Nullable T waitUntil(@NonNull BlockCondition<T> blockCondition) {
+		AtomicReference<@Nullable T> rv = new AtomicReference<>();
+		String uuid = UUID.randomUUID().toString();
+		blockCondition.subscribeUnblockedCallback(new Consumer<T>() {
+
+			@Override
+			public void accept(@Nullable T value) {
+				rv.set(value);
+				Util.exitNestedEventLoop(uuid);
+			}
+		});
+		Util.enterNestedEventLoop(uuid);
+		return rv.get();
 	}
 }
