@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.eclipse.fx.core.Subscription;
@@ -47,6 +48,23 @@ public interface ThreadSynchronize {
 	<V> V syncExec(final Callable<V> callable, V defaultValue);
 
 	/**
+	 * Execute the function in the UI-Thread
+	 *
+	 * @param value
+	 *            the value
+	 * @param function
+	 *            the function
+	 * @param defaultValue
+	 *            the default value
+	 * @return the return value of the function
+	 * @since 2.3.0
+	 */
+	default <T, R> R syncExec(final T value, final Function<T, R> function, R defaultValue) {
+		Callable<R> c = () -> function.apply(value);
+		return syncExec(c, defaultValue);
+	}
+
+	/**
 	 * Executes the runnable on the sync thread and blocks until the runnable is
 	 * finished
 	 * <p>
@@ -77,6 +95,19 @@ public interface ThreadSynchronize {
 	 *            the runnable to execute
 	 */
 	void asyncExec(Runnable runnable);
+
+	/**
+	 * Executes the consumer in the ui thread
+	 *
+	 * @param value
+	 *            the value
+	 * @param consumer
+	 *            the consumer
+	 * @since 2.3.0
+	 */
+	default <@Nullable T> void asyncExec(T value, Consumer<T> consumer) {
+		asyncExec(() -> consumer.accept(value));
+	}
 
 	/**
 	 * Schedule the execution of the runnable
