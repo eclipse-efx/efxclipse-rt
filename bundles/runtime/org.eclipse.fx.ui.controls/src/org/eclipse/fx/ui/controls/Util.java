@@ -311,6 +311,7 @@ public class Util {
 	 *
 	 * @param id
 	 *            the id of the nested event loop
+	 * @since 2.3.0
 	 */
 	public static void enterNestedEventLoop(String id) {
 		if (org.eclipse.fx.core.Util.isFX9()) {
@@ -345,6 +346,7 @@ public class Util {
 	 *
 	 * @param id
 	 *            the nested event loop
+	 * @since 2.3.0
 	 */
 	public static void exitNestedEventLoop(String id) {
 		if (org.eclipse.fx.core.Util.isFX9()) {
@@ -380,6 +382,7 @@ public class Util {
 	 * @param blockCondition
 	 *            the condition
 	 * @return the return value of the condition
+	 * @since 2.3.0
 	 */
 	public static <T> @Nullable T waitUntil(@NonNull BlockCondition<T> blockCondition) {
 		AtomicReference<@Nullable T> rv = new AtomicReference<>();

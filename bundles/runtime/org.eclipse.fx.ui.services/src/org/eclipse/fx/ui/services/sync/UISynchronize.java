@@ -25,6 +25,7 @@ public interface UISynchronize extends ThreadSynchronize {
 	 * @param blockCondition
 	 *            the condition
 	 * @return the return value of the condition
+	 * @since 2.3.0
 	 */
 	public default <T> @Nullable T waitUntil(@NonNull BlockCondition<T> blockCondition) {
 		return Util.waitUntil(blockCondition);
