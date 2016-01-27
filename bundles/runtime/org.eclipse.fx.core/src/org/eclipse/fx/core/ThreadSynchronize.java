@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
@@ -18,7 +20,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.eclipse.fx.core.Subscription;
 import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.beans.property.Property;
@@ -249,4 +250,69 @@ public interface ThreadSynchronize {
 	// public <O> void schedule(int priority, O value, Consumer<O> consumer);
 	// }
 
+//TODO Make API in 3.0
+// 	/**
+//	 * Block the UI-Thread in a way that events are still processed until the
+//	 * given condition is released
+//	 *
+//	 * @param blockCondition
+//	 *            the condition
+//	 * @return the value
+//	 */
+//	<T> @Nullable T block(@NonNull BlockCondition<T> blockCondition);
+
+
+	/**
+	 * A block condition
+	 *
+	 * @param <T>
+	 *            the type
+	 * @since 2.3.0
+	 */
+	public static class BlockCondition<T> {
+		List<Consumer<T>> callbacks = new ArrayList<>();
+		private boolean isBlocked = true;
+
+		/**
+		 * Subscribe to unblocking
+		 *
+		 * @param r
+		 *            the callback
+		 * @return the subscription
+		 */
+		public Subscription subscribeUnblockedCallback(Consumer<T> r) {
+			if (!this.isBlocked) {
+				throw new IllegalStateException();
+			}
+			this.callbacks.add(r);
+			return new Subscription() {
+
+				@Override
+				public void dispose() {
+					BlockCondition.this.callbacks.remove(r);
+				}
+			};
+		}
+
+		/**
+		 * @return check if still blocked
+		 */
+		public boolean isBlocked() {
+			return this.isBlocked;
+		}
+
+		/**
+		 * Release the lock and pass value
+		 *
+		 * @param value
+		 *            the value to pass
+		 */
+		public void release(T value) {
+			for (Consumer<T> r : this.callbacks) {
+				r.accept(value);
+			}
+			this.callbacks.clear();
+			this.isBlocked = false;
+		}
+	}
 }
