@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -48,16 +47,11 @@ import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.log.Log;
 import org.eclipse.fx.core.log.Logger;
 import org.eclipse.fx.ui.controls.stage.Frame;
-import org.eclipse.fx.ui.controls.stage.FrameEvent;
 import org.eclipse.fx.ui.controls.stage.TrimmedWindow;
 import org.eclipse.fx.ui.di.InjectingFXMLLoader;
-import org.eclipse.fx.ui.dialogs.Dialog;
-import org.eclipse.fx.ui.dialogs.MessageDialog;
-import org.eclipse.fx.ui.dialogs.MessageDialog.QuestionCancelResult;
 import org.eclipse.fx.ui.panes.FillLayoutPane;
 import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
-import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
 import org.eclipse.fx.ui.services.theme.ThemeManager.Registration;
 import org.eclipse.fx.ui.workbench.fx.EMFUri;
@@ -71,18 +65,18 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWidget;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WWindow;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DefaultSaveDialogPresenter;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.Messages;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.MultiMessageDialog;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.MultiMessageDialogContent;
-import org.eclipse.fx.ui.workbench.renderers.fx.internal.Row;
 import org.eclipse.fx.ui.workbench.renderers.fx.services.LightweightDialogTransitionService;
+import org.eclipse.fx.ui.workbench.renderers.fx.services.SaveDialogPresenter;
+import org.eclipse.fx.ui.workbench.renderers.fx.services.SaveDialogPresenter.SaveData;
+import org.eclipse.fx.ui.workbench.renderers.fx.services.SaveDialogPresenterTypeProvider;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.Bundle;
 
 import com.google.common.base.Strings;
-import com.sun.javafx.tk.Toolkit;
 
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
@@ -127,10 +121,16 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	private static final String ID_LEFT_TRIM_AREA = "left-trim-area"; //$NON-NLS-1$
 	private static final String ID_RIGHT_TRIM_AREA = "right-trim-area"; //$NON-NLS-1$
 
+	private static final String TAG_LIGHTWEIGHT_DIALOGS = "efx-lightweight-dialogs"; //$NON-NLS-1$
+
 	@Inject
 	@Translation
 	@NonNull
 	Messages messages;
+
+	@Inject
+	@Optional
+	SaveDialogPresenterTypeProvider presenterTypeProvider;
 
 	@SuppressWarnings("null")
 	@Override
@@ -143,84 +143,32 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			Arrays.fill(response, Save.CANCEL);
 			return Arrays.asList(response);
 		}
-		GraphicsLoader graphicsLoader = modelContext.get(GraphicsLoader.class);
-
-		if( element.getTags().contains("efx-lightweight-dialogs") ) { //$NON-NLS-1$
-			Arrays.fill(response, Save.CANCEL);
-			MultiMessageDialogContent multiMessageDialogContent = new MultiMessageDialogContent(this.messages.DefWindowRenderer_MultiMessageDialog_Message, dirtyParts, graphicsLoader);
-			org.eclipse.fx.ui.controls.dialog.Dialog d = new org.eclipse.fx.ui.controls.dialog.Dialog(multiMessageDialogContent, this.messages.DefWindowRenderer_MultiMessageDialog_Title) {
-				@Override
-				protected void handleOk() {
-					List<MPart> parts = new ArrayList<MPart>();
-					for (Row r : multiMessageDialogContent.tabView.getItems()) {
-						if (r.isSelected()) {
-							parts.add(r.element.get());
-						}
-					}
-
-					Arrays.fill(response, Save.NO);
-					for (MPart p : parts) {
-						response[parts.indexOf(p)] = Save.YES;
-					}
-					super.handleOk();
-				}
-			};
-			d.getButtonList().addAll(d.createOKButton(), d.createCancelButton());
-			((WWindowImpl)element.getWidget()).setDialog(d);
-			String id = UUID.randomUUID().toString();
-			d.addEventHandler(FrameEvent.CLOSED, (e) -> Toolkit.getToolkit().exitNestedEventLoop(id, null));
-			Toolkit.getToolkit().enterNestedEventLoop(id);
-			((WWindowImpl)element.getWidget()).setDialog(null);
+		SaveDialogPresenter presenter;
+		if( this.presenterTypeProvider == null ) {
+			presenter = ContextInjectionFactory.make(DefaultSaveDialogPresenter.class, modelContext);
 		} else {
-			MultiMessageDialog d = new MultiMessageDialog((Stage) widget.getWidget(), dirtyParts, graphicsLoader, this.messages.DefWindowRenderer_MultiMessageDialog_Title, this.messages.DefWindowRenderer_MultiMessageDialog_Message);
-			if (d.open() == Dialog.OK_BUTTON) {
-				List<MPart> parts = d.getSelectedParts();
-				Arrays.fill(response, Save.NO);
-				for (MPart p : parts) {
-					response[parts.indexOf(p)] = Save.YES;
-				}
-			} else {
-				Arrays.fill(response, Save.CANCEL);
-			}
+			presenter = ContextInjectionFactory.make(this.presenterTypeProvider.getType(), modelContext);
 		}
-
-		return Arrays.asList(response);
+		return presenter.promptToSave(new SaveData(element.getTags().contains(TAG_LIGHTWEIGHT_DIALOGS), dirtyParts, widget, (Stage)widget.getWidget()));
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	protected Save promptToSave(MWindow element, MPart dirtyPart, WWindow<Stage> widget) {
-		if( element.getTags().contains("efx-lightweight-dialogs") ) { //$NON-NLS-1$
-			org.eclipse.fx.ui.controls.dialog.MessageDialog.QuestionCancelResult r = org.eclipse.fx.ui.controls.dialog.MessageDialog.openQuestionCancelDialog(
-					this.messages.DefWindowRenderer_promptToSave_Title,
-					this.messages.DefWindowRenderer_promptToSave_Message(dirtyPart.getLocalizedLabel()),
-					(d) -> {
-						((WWindowImpl)element.getWidget()).setDialog(d);
-					});
-			((WWindowImpl)element.getWidget()).setDialog(null);
-			switch (r) {
-			case CANCEL:
-				return Save.CANCEL;
-			case NO:
-				return Save.NO;
-			case YES:
-				return Save.YES;
-			}
-
-			return Save.CANCEL;
-		} else {
-			QuestionCancelResult r = MessageDialog.openQuestionCancelDialog((Stage) widget.getWidget(), this.messages.DefWindowRenderer_promptToSave_Title, this.messages.DefWindowRenderer_promptToSave_Message(dirtyPart.getLocalizedLabel()));
-
-			switch (r) {
-			case CANCEL:
-				return Save.CANCEL;
-			case NO:
-				return Save.NO;
-			case YES:
-				return Save.YES;
-			}
-
+		SaveDialogPresenter presenter;
+		IEclipseContext modelContext = getModelContext(element);
+		if (modelContext == null) {
+			getLogger().error("Model context should not be null at this point"); //$NON-NLS-1$
 			return Save.CANCEL;
 		}
+
+		if( this.presenterTypeProvider == null ) {
+			presenter = ContextInjectionFactory.make(DefaultSaveDialogPresenter.class, modelContext);
+		} else {
+			presenter = ContextInjectionFactory.make(this.presenterTypeProvider.getType(), modelContext);
+		}
+		List<@NonNull Save> promptToSave = presenter.promptToSave(new SaveData(element.getTags().contains(TAG_LIGHTWEIGHT_DIALOGS), Collections.singletonList(dirtyPart), widget, (Stage)widget.getWidget()));
+		return promptToSave.isEmpty() ? Save.CANCEL : promptToSave.get(0);
 	}
 
 	@Override
@@ -845,6 +793,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			}
 		}
 
+		@SuppressWarnings("null")
 		@Override
 		public Pane getWidgetNode() {
 			return this.rootPane;
