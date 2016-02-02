@@ -104,11 +104,11 @@ adoc {
 			default adoc_code
 		}
 	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.asciidoc" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
-		}
-	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.asciidoc" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }

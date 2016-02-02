@@ -52,11 +52,11 @@ ceylon {
 			default ceylon_string
 		}
 	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.ceylon" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
-		}
-	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.ceylon" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }

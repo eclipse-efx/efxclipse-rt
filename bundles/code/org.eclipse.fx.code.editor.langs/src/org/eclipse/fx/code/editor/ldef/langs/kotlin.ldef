@@ -51,11 +51,11 @@ kotlin {
 			default kotlin_string
 		}
 	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.kotlin" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
-		}
-	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.kotlin" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }

@@ -59,11 +59,11 @@ package org.eclipse.fx.code.editor.ldef.langs
 			default java_string
 		}
 	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.java" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
-		}
-	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.java" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }

@@ -49,11 +49,11 @@ xml {
 			default xml_comment
 		}
 	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.xml" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
-		}
-	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.xml" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }
