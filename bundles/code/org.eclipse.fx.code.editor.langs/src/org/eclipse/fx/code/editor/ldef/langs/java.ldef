@@ -58,6 +58,19 @@ package org.eclipse.fx.code.editor.ldef.langs
 		rule __java_string {
 			default java_string
 		}
+		token_def {
+			java_default "-source-editor-code";
+			java_operator "-source-editor-operator";
+			java_bracket "-source-editor-bracket";
+			java_keyword "-source-editor-keyword" bold;
+			java_doc_default "-source-editor-doc";
+			java_string "-source-editor-string";
+			java_buitin_type "-source-editor-keyword" bold;
+			java_constant "-source-editor-keyword" bold;
+			java_annotation "-source-editor-annotation" bold;
+			java_apidoc "-source-editor-api-doc";
+			java_number "-source-editor-number";
+		}
 	}
 //	integration {
 //		javafx {

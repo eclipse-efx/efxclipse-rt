@@ -50,6 +50,15 @@ kotlin {
 		rule __kotlin_string {
 			default kotlin_string
 		}
+		token_def {
+			kotlin_default "-source-editor-code";
+			kotlin_keyword "-source-editor-keyword" bold;
+			kotlin_literals "-source-editor-keyword" bold;
+			kotlin_doc_default "-source-editor-doc";
+			kotlin_string "-source-editor-string";
+//			kotlin_annotation "-source-editor-annotation" bold;
+			kotlin_api_doc_default "-source-editor-api-doc";
+		}
 	}
 //	integration {
 //		javafx {

@@ -37,5 +37,7 @@
 }
 
 .styled-text-area .php.php_compile_constants {
+	-styled-text-color: -source-editor-code;
 	-fx-font-weight: bold;
 }
+

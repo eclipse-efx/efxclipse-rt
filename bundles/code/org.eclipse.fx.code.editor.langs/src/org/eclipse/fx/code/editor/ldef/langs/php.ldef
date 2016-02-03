@@ -411,6 +411,18 @@ php {
 				pattern "\\$" containing "\\w"
 			}
 		}
+		token_def {
+			php_default "-source-editor-code";
+			php_operator "-source-editor-operator";
+			php_bracket "-source-editor-bracket";
+			php_keyword "-source-editor-keyword" bold;
+			php_doc_default "-source-editor-doc";
+			php_string "-source-editor-string";
+			php_string_inter "-source-editor-string" bold;
+			php_builtin_functions "-source-editor-buitin-type";
+			php_builtin_classes "-source-editor-buitin-type";
+			php_compile_constants "-source-editor-code" bold;
+		}
 	}
 //	integration {
 //		javafx {

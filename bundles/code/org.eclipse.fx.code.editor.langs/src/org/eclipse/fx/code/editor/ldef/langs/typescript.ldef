@@ -54,6 +54,17 @@ ts {
 		rule __ts_string {
 			default ts_string
 		}
+		token_def {
+			ts_default "-source-editor-code";
+			ts_operator "-source-editor-operator";
+			ts_bracket "-source-editor-bracket";
+			ts_keyword "-source-editor-keyword" bold;
+			ts_builtin_types "-source-editor-buitin-type" bold;
+			ts_doc_default "-source-editor-doc";
+			ts_string "-source-editor-string";
+			ts_constant "-source-editor-keyword" bold;
+			ts_number "-source-editor-number";
+		}
 	}
 //	integration {
 //		javafx {

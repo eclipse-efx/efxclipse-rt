@@ -55,6 +55,15 @@ go {
 		rule __go_string {
 			default go_string
 		}
+		token_def {
+			go_default "-source-editor-code";
+			go_keyword "-source-editor-keyword" bold;
+			go_types "-source-editor-keyword" bold;
+			go_builtin_constants "-source-editor-keyword" bold;
+			go_builtin_functions "-source-editor-keyword" bold;
+			go_doc_default "-source-editor-doc";
+			go_string "-source-editor-string";
+		}
 	}
 //	integration {
 //		javafx {

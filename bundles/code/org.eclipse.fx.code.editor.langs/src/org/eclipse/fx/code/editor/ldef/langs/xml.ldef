@@ -48,6 +48,17 @@ xml {
 		rule __xml_comment {
 			default xml_comment
 		}
+		token_def {
+			xml_default "-source-editor-code";
+			xml_tag "-source-editor-markup-tag";
+			xml_property_value "-source-editor-markup-property-value";
+			xml_equals "-source-editor-markup-property-name";
+			xml_property_name "-source-editor-markup-property-name";
+			xml_declaration "-source-editor-markup-extra";
+			xml_cdata "-source-editor-code";
+			xml_pi "-source-editor-markup-extra";
+			xml_comment "-source-editor-markup-doc";
+		}
 	}
 //	integration {
 //		javafx {

@@ -34,14 +34,14 @@
 
 .styled-text-area .adoc.adoc_mono_bold_italic {
 	-styled-text-color: -source-editor-code;
-	-fx-font-style: italic;
 	-fx-font-weight: bold;
+	-fx-font-style: italic;
 }
 
 .styled-text-area .adoc.adoc_bold_italic {
 	-styled-text-color: -source-editor-code;
-	-fx-font-style: italic;
 	-fx-font-weight: bold;
+	-fx-font-style: italic;
 }
 
 .styled-text-area .adoc.adoc_mono_bold {
@@ -86,22 +86,19 @@
 
 .styled-text-area .adoc.adoc_admonition {
 	-styled-text-color: -source-editor-code;
-	-fx-background-color: -source-editor-buitin-type;
 	-fx-font-weight: bold;
 }
 
 .styled-text-area .adoc.adoc_block {
 	-styled-text-color: -source-editor-code;
-	-fx-background-color:  -source-editor-annotation;
 }
 
 .styled-text-area .adoc.adoc_code {
 	-styled-text-color: -source-editor-code;
-	-fx-background-color:  rgb(230,230,230);
 }
 
 .styled-text-area .adoc.adoc_header {
 	-styled-text-color: -source-editor-code;
 	-fx-font-weight: bold;
-	-fx-background-color: rgb(255,115,0);
 }
+

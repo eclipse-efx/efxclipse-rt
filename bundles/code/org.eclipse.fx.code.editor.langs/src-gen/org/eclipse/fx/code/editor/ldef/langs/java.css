@@ -2,7 +2,6 @@
 	-styled-text-color: -source-editor-code;
 }
 
-
 .styled-text-area .java.java_operator {
 	-styled-text-color: -source-editor-operator;
 }
@@ -46,3 +45,4 @@
 .styled-text-area .java.java_number {
 	-styled-text-color: -source-editor-number;
 }
+

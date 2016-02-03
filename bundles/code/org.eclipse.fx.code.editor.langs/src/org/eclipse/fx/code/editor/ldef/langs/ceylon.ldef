@@ -51,6 +51,14 @@ ceylon {
 		rule __ceylon_string {
 			default ceylon_string
 		}
+		token_def {
+			ceylon_default "-source-editor-code";
+			ceylon_keyword "-source-editor-keyword" bold;
+			ceylon_doc_default "-source-editor-doc";
+			ceylon_string "-source-editor-string";
+			ceylon_annotation "-source-editor-annotation" bold;
+			ceylon_api_doc_default "-source-editor-api-doc";
+		}
 	}
 //	integration {
 //		javafx {

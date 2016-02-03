@@ -26,5 +26,6 @@
 }
 
 .styled-text-area .groovy.groovy_doc_default {
-	-styled-text-color: -source-editor-doc
+	-styled-text-color: -source-editor-doc;
 }
+

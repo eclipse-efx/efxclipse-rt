@@ -60,6 +60,15 @@ groovy {
 		rule __groovy_singleline_comment {
 			default groovy_doc_default
 		}
+		token_def {
+			groovy_default "-source-editor-code";
+			groovy_keyword "-source-editor-keyword" bold;
+			groovy_builtin_type "-source-editor-buitin-type" bold;
+			groovy_string "-source-editor-string";
+			groovy_string_inter "-source-editor-string" bold;
+			groovy_api_doc_default "-source-editor-api-doc";
+			groovy_doc_default "-source-editor-doc";
+		}
 	}
 //	integration {
 //		javafx {

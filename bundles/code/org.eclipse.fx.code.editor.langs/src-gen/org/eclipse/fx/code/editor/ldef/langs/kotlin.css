@@ -20,11 +20,7 @@
 	-styled-text-color: -source-editor-string;
 }
 
-.styled-text-area .kotlin.kotlin_annotation {
-	-styled-text-color: -source-editor-annotation;
-	-fx-font-weight: bold;
-}
-
 .styled-text-area .kotlin.kotlin_api_doc_default {
 	-styled-text-color: -source-editor-api-doc;
 }
+

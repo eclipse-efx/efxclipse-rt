@@ -36,7 +36,15 @@ py {
 			default python_doc_default
 		}
 		rule __python_string {
-			default phyton_string
+			default python_string
+		}
+		token_def {
+			python_default "-source-editor-code";
+			python_keyword "-source-editor-keyword" bold;
+//			python_builtin_type "-source-editor-buitin-type" bold;
+			python_string "-source-editor-string";
+//			python_api_doc_default "-source-editor-api-doc";
+			python_doc_default "-source-editor-doc";
 		}
 	}
 //	integration {
