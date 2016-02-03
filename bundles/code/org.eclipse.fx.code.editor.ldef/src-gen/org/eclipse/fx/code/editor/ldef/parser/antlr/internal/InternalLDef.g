@@ -94,7 +94,7 @@ ruleRoot returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"QualifiedName");
+        		"org.eclipse.fx.code.editor.ldef.LDef.QualifiedName");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -112,7 +112,7 @@ ruleRoot returns [EObject current=null]
        			$current, 
        			"imports",
         		lv_imports_2_0, 
-        		"Import");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Import");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -130,7 +130,7 @@ ruleRoot returns [EObject current=null]
        			$current, 
        			"languageDefinition",
         		lv_languageDefinition_3_0, 
-        		"LanguageDef");
+        		"org.eclipse.fx.code.editor.ldef.LDef.LanguageDef");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -296,7 +296,7 @@ ruleImport returns [EObject current=null]
        			$current, 
        			"importedNamespace",
         		lv_importedNamespace_1_0, 
-        		"QualifiedNameWithWildCard");
+        		"org.eclipse.fx.code.editor.ldef.LDef.QualifiedNameWithWildCard");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -336,7 +336,7 @@ ruleLanguageDef returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -357,7 +357,7 @@ ruleLanguageDef returns [EObject current=null]
        			$current, 
        			"paritioning",
         		lv_paritioning_2_0, 
-        		"Paritioning");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Paritioning");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -375,7 +375,7 @@ ruleLanguageDef returns [EObject current=null]
        			$current, 
        			"lexicalHighlighting",
         		lv_lexicalHighlighting_3_0, 
-        		"LexicalHighlighting");
+        		"org.eclipse.fx.code.editor.ldef.LDef.LexicalHighlighting");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -393,7 +393,7 @@ ruleLanguageDef returns [EObject current=null]
        			$current, 
        			"integration",
         		lv_integration_4_0, 
-        		"Integration");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Integration");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -444,7 +444,7 @@ ruleIntegration returns [EObject current=null]
        			$current, 
        			"codeIntegrationList",
         		lv_codeIntegrationList_2_0, 
-        		"CodeIntegration");
+        		"org.eclipse.fx.code.editor.ldef.LDef.CodeIntegration");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -525,7 +525,7 @@ ruleJavaFXIntegration returns [EObject current=null]
        			$current, 
        			"codegenerationList",
         		lv_codegenerationList_2_0, 
-        		"Codegeneration");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Codegeneration");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -613,7 +613,7 @@ ruleJavaCodeGeneration returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -634,7 +634,7 @@ ruleJavaCodeGeneration returns [EObject current=null]
        			$current, 
        			"configValue",
         		lv_configValue_3_0, 
-        		"ConfigValue");
+        		"org.eclipse.fx.code.editor.ldef.LDef.ConfigValue");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -682,7 +682,7 @@ ruleE4CodeGeneration returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -703,7 +703,7 @@ ruleE4CodeGeneration returns [EObject current=null]
        			$current, 
        			"configValue",
         		lv_configValue_3_0, 
-        		"ConfigValue");
+        		"org.eclipse.fx.code.editor.ldef.LDef.ConfigValue");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -747,7 +747,7 @@ ruleConfigValue returns [EObject current=null]
        			$current, 
        			"key",
         		lv_key_0_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -769,7 +769,7 @@ ruleConfigValue returns [EObject current=null]
        			$current, 
        			"simpleValue",
         		lv_simpleValue_2_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -791,7 +791,7 @@ ruleConfigValue returns [EObject current=null]
        			$current, 
        			"children",
         		lv_children_4_0, 
-        		"ConfigValue");
+        		"org.eclipse.fx.code.editor.ldef.LDef.ConfigValue");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -842,7 +842,7 @@ ruleParitioning returns [EObject current=null]
        			$current, 
        			"partitions",
         		lv_partitions_2_0, 
-        		"Partition");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Partition");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -860,7 +860,7 @@ ruleParitioning returns [EObject current=null]
        			$current, 
        			"partitioner",
         		lv_partitioner_3_0, 
-        		"Partitioner");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Partitioner");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -908,7 +908,7 @@ rulePartition returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -991,7 +991,7 @@ ruleParitioner_JS returns [EObject current=null]
        			$current, 
        			"scriptURI",
         		lv_scriptURI_1_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1037,7 +1037,7 @@ rulePartitioner_Rule returns [EObject current=null]
        			$current, 
        			"ruleList",
         		lv_ruleList_2_0, 
-        		"Partition_Rule");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Partition_Rule");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1138,7 +1138,7 @@ rulePartition_SingleLineRule returns [EObject current=null]
        			$current, 
        			"startSeq",
         		lv_startSeq_2_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1159,7 +1159,7 @@ rulePartition_SingleLineRule returns [EObject current=null]
        			$current, 
        			"check",
         		lv_check_4_0, 
-        		"Check");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1182,7 +1182,7 @@ rulePartition_SingleLineRule returns [EObject current=null]
        			$current, 
        			"endSeq",
         		lv_endSeq_6_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1208,7 +1208,7 @@ rulePartition_SingleLineRule returns [EObject current=null]
        			$current, 
        			"escapeSeq",
         		lv_escapeSeq_9_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1264,7 +1264,7 @@ rulePartition_MultiLineRule returns [EObject current=null]
        			$current, 
        			"startSeq",
         		lv_startSeq_2_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1285,7 +1285,7 @@ rulePartition_MultiLineRule returns [EObject current=null]
        			$current, 
        			"check",
         		lv_check_4_0, 
-        		"Check");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1308,7 +1308,7 @@ rulePartition_MultiLineRule returns [EObject current=null]
        			$current, 
        			"endSeq",
         		lv_endSeq_6_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1334,7 +1334,7 @@ rulePartition_MultiLineRule returns [EObject current=null]
        			$current, 
        			"escapeSeq",
         		lv_escapeSeq_9_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1380,16 +1380,171 @@ ruleLexicalHighlighting returns [EObject current=null]
        			$current, 
        			"list",
         		lv_list_2_0, 
-        		"LexicalPartitionHighlighting");
+        		"org.eclipse.fx.code.editor.ldef.LDef.LexicalPartitionHighlighting");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)+	otherlv_3='}' 
+)+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLexicalHighlightingAccess().getVistualTokenVisualsParserRuleCall_3_0()); 
+	    }
+		lv_vistual_3_0=ruleTokenVisuals		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLexicalHighlightingRule());
+	        }
+       		set(
+       			$current, 
+       			"vistual",
+        		lv_vistual_3_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.TokenVisuals");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?	otherlv_4='}' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getLexicalHighlightingAccess().getRightCurlyBracketKeyword_3());
+    	newLeafNode(otherlv_4, grammarAccess.getLexicalHighlightingAccess().getRightCurlyBracketKeyword_4());
     }
 )
+;
+
+
+
+
+
+// Entry rule entryRuleTokenVisuals
+entryRuleTokenVisuals returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTokenVisualsRule()); }
+	 iv_ruleTokenVisuals=ruleTokenVisuals 
+	 { $current=$iv_ruleTokenVisuals.current; } 
+	 EOF 
+;
+
+// Rule TokenVisuals
+ruleTokenVisuals returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='token_def' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getTokenVisualsAccess().getToken_defKeyword_0());
+    }
+	otherlv_1='{' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTokenVisualsAccess().getLeftCurlyBracketKeyword_1());
+    }
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTokenVisualsAccess().getTokenVisualsTokenVisualParserRuleCall_2_0_0()); 
+	    }
+		lv_tokenVisuals_2_0=ruleTokenVisual		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTokenVisualsRule());
+	        }
+       		add(
+       			$current, 
+       			"tokenVisuals",
+        		lv_tokenVisuals_2_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.TokenVisual");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_3=';' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getTokenVisualsAccess().getSemicolonKeyword_2_1());
+    }
+)+	otherlv_4='}' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getTokenVisualsAccess().getRightCurlyBracketKeyword_3());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleTokenVisual
+entryRuleTokenVisual returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getTokenVisualRule()); }
+	 iv_ruleTokenVisual=ruleTokenVisual 
+	 { $current=$iv_ruleTokenVisual.current; } 
+	 EOF 
+;
+
+// Rule TokenVisual
+ruleTokenVisual returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTokenVisualRule());
+	        }
+        }
+	otherlv_0=RULE_ID
+	{
+		newLeafNode(otherlv_0, grammarAccess.getTokenVisualAccess().getTokenTokenCrossReference_0_0()); 
+	}
+
+)
+)(
+(
+		lv_colorSpec_1_0=RULE_STRING
+		{
+			newLeafNode(lv_colorSpec_1_0, grammarAccess.getTokenVisualAccess().getColorSpecSTRINGTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTokenVisualRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"colorSpec",
+        		lv_colorSpec_1_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+)(
+(
+		lv_bold_2_0=	'bold' 
+    {
+        newLeafNode(lv_bold_2_0, grammarAccess.getTokenVisualAccess().getBoldBoldKeyword_2_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTokenVisualRule());
+	        }
+       		setWithLastConsumed($current, "bold", true, "bold");
+	    }
+
+)
+)?(
+(
+		lv_italic_3_0=	'italic' 
+    {
+        newLeafNode(lv_italic_3_0, grammarAccess.getTokenVisualAccess().getItalicItalicKeyword_3_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getTokenVisualRule());
+	        }
+       		setWithLastConsumed($current, "italic", true, "italic");
+	    }
+
+)
+)?)
 ;
 
 
@@ -1481,7 +1636,7 @@ ruleLexicalPartitionHighlighting_JS returns [EObject current=null]
        			$current, 
        			"scriptURI",
         		lv_scriptURI_2_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1536,7 +1691,7 @@ ruleLexicalPartitionHighlighting_Rule returns [EObject current=null]
        			$current, 
        			"whitespace",
         		lv_whitespace_2_0, 
-        		"WhitespaceRule");
+        		"org.eclipse.fx.code.editor.ldef.LDef.WhitespaceRule");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1558,7 +1713,7 @@ ruleLexicalPartitionHighlighting_Rule returns [EObject current=null]
        			$current, 
        			"tokenList",
         		lv_tokenList_4_0, 
-        		"Token");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Token");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1617,7 +1772,7 @@ ruleToken returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -1638,7 +1793,7 @@ ruleToken returns [EObject current=null]
        			$current, 
        			"scannerList",
         		lv_scannerList_3_0, 
-        		"Scanner");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Scanner");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1729,7 +1884,7 @@ ruleScanner_Keyword returns [EObject current=null]
        			$current, 
        			"keywords",
         		lv_keywords_2_0, 
-        		"Keyword");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Keyword");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1751,7 +1906,7 @@ ruleScanner_Keyword returns [EObject current=null]
        			$current, 
        			"keywords",
         		lv_keywords_4_0, 
-        		"Keyword");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Keyword");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1795,7 +1950,7 @@ ruleKeyword returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1817,7 +1972,7 @@ ruleKeyword returns [EObject current=null]
        			$current, 
        			"version",
         		lv_version_2_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1930,7 +2085,7 @@ ruleScanner_SingleLineRule returns [EObject current=null]
        			$current, 
        			"startSeq",
         		lv_startSeq_1_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -1951,7 +2106,7 @@ ruleScanner_SingleLineRule returns [EObject current=null]
        			$current, 
        			"check",
         		lv_check_3_0, 
-        		"Check");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1974,7 +2129,7 @@ ruleScanner_SingleLineRule returns [EObject current=null]
        			$current, 
        			"endSeq",
         		lv_endSeq_5_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2000,7 +2155,7 @@ ruleScanner_SingleLineRule returns [EObject current=null]
        			$current, 
        			"escapeSeq",
         		lv_escapeSeq_8_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2043,7 +2198,7 @@ ruleScanner_MultiLineRule returns [EObject current=null]
        			$current, 
        			"startSeq",
         		lv_startSeq_1_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2064,7 +2219,7 @@ ruleScanner_MultiLineRule returns [EObject current=null]
        			$current, 
        			"check",
         		lv_check_3_0, 
-        		"Check");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2087,7 +2242,7 @@ ruleScanner_MultiLineRule returns [EObject current=null]
        			$current, 
        			"endSeq",
         		lv_endSeq_5_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2113,7 +2268,7 @@ ruleScanner_MultiLineRule returns [EObject current=null]
        			$current, 
        			"escapeSeq",
         		lv_escapeSeq_8_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2156,7 +2311,7 @@ ruleScanner_PatternRule returns [EObject current=null]
        			$current, 
        			"startPattern",
         		lv_startPattern_1_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2174,7 +2329,7 @@ ruleScanner_PatternRule returns [EObject current=null]
        			$current, 
        			"length",
         		lv_length_2_0, 
-        		"INT");
+        		"org.eclipse.xtext.common.Terminals.INT");
 	    }
 
 )
@@ -2195,7 +2350,7 @@ ruleScanner_PatternRule returns [EObject current=null]
        			$current, 
        			"check",
         		lv_check_4_0, 
-        		"Check");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2218,7 +2373,7 @@ ruleScanner_PatternRule returns [EObject current=null]
        			$current, 
        			"contentPattern",
         		lv_contentPattern_6_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2265,7 +2420,7 @@ ruleScanner_CharacterRule returns [EObject current=null]
        			$current, 
        			"characters",
         		lv_characters_2_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2287,7 +2442,7 @@ ruleScanner_CharacterRule returns [EObject current=null]
        			$current, 
        			"characters",
         		lv_characters_4_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2312,7 +2467,7 @@ ruleScanner_CharacterRule returns [EObject current=null]
        			$current, 
        			"check",
         		lv_check_7_0, 
-        		"Check");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2356,7 +2511,7 @@ ruleScanner_JSRule returns [EObject current=null]
        			$current, 
        			"fileURI",
         		lv_fileURI_1_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2377,7 +2532,7 @@ ruleScanner_JSRule returns [EObject current=null]
        			$current, 
        			"check",
         		lv_check_3_0, 
-        		"Check");
+        		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2461,7 +2616,7 @@ ruleEquals returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_1_0, 
-        		"INT");
+        		"org.eclipse.xtext.common.Terminals.INT");
 	    }
 
 )
@@ -2534,7 +2689,7 @@ ruleRange returns [EObject current=null]
        			$current, 
        			"minValue",
         		lv_minValue_2_0, 
-        		"INT");
+        		"org.eclipse.xtext.common.Terminals.INT");
 	    }
 
 )
@@ -2556,7 +2711,7 @@ ruleRange returns [EObject current=null]
        			$current, 
        			"maxValue",
         		lv_maxValue_4_0, 
-        		"INT");
+        		"org.eclipse.xtext.common.Terminals.INT");
 	    }
 
 )
@@ -2633,7 +2788,7 @@ ruleWhitespaceRule returns [EObject current=null]
        			$current, 
        			"characters",
         		lv_characters_2_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2655,7 +2810,7 @@ ruleWhitespaceRule returns [EObject current=null]
        			$current, 
        			"characters",
         		lv_characters_4_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
@@ -2694,7 +2849,7 @@ ruleWhitespaceRule returns [EObject current=null]
        			$current, 
        			"fileURI",
         		lv_fileURI_7_0, 
-        		"STRING");
+        		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )

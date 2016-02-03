@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting#getList <em>List</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting#getVistual <em>Vistual</em>}</li>
  * </ul>
  *
  * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLexicalHighlighting()
@@ -39,5 +40,31 @@ public interface LexicalHighlighting extends EObject
    * @generated
    */
   EList<LexicalPartitionHighlighting> getList();
+
+  /**
+   * Returns the value of the '<em><b>Vistual</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Vistual</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Vistual</em>' containment reference.
+   * @see #setVistual(TokenVisuals)
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getLexicalHighlighting_Vistual()
+   * @model containment="true"
+   * @generated
+   */
+  TokenVisuals getVistual();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting#getVistual <em>Vistual</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Vistual</em>' containment reference.
+   * @see #getVistual()
+   * @generated
+   */
+  void setVistual(TokenVisuals value);
 
 } // LexicalHighlighting

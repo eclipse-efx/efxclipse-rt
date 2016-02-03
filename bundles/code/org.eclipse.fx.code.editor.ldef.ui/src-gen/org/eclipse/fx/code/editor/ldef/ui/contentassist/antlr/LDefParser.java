@@ -75,6 +75,9 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPartition_MultiLineRuleAccess().getGroup_3(), "rule__Partition_MultiLineRule__Group_3__0");
 					put(grammarAccess.getPartition_MultiLineRuleAccess().getGroup_6(), "rule__Partition_MultiLineRule__Group_6__0");
 					put(grammarAccess.getLexicalHighlightingAccess().getGroup(), "rule__LexicalHighlighting__Group__0");
+					put(grammarAccess.getTokenVisualsAccess().getGroup(), "rule__TokenVisuals__Group__0");
+					put(grammarAccess.getTokenVisualsAccess().getGroup_2(), "rule__TokenVisuals__Group_2__0");
+					put(grammarAccess.getTokenVisualAccess().getGroup(), "rule__TokenVisual__Group__0");
 					put(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getGroup(), "rule__LexicalPartitionHighlighting_JS__Group__0");
 					put(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getGroup(), "rule__LexicalPartitionHighlighting_Rule__Group__0");
 					put(grammarAccess.getTokenAccess().getGroup(), "rule__Token__Group__0");
@@ -135,6 +138,12 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPartition_MultiLineRuleAccess().getEndSeqAssignment_5(), "rule__Partition_MultiLineRule__EndSeqAssignment_5");
 					put(grammarAccess.getPartition_MultiLineRuleAccess().getEscapeSeqAssignment_6_2(), "rule__Partition_MultiLineRule__EscapeSeqAssignment_6_2");
 					put(grammarAccess.getLexicalHighlightingAccess().getListAssignment_2(), "rule__LexicalHighlighting__ListAssignment_2");
+					put(grammarAccess.getLexicalHighlightingAccess().getVistualAssignment_3(), "rule__LexicalHighlighting__VistualAssignment_3");
+					put(grammarAccess.getTokenVisualsAccess().getTokenVisualsAssignment_2_0(), "rule__TokenVisuals__TokenVisualsAssignment_2_0");
+					put(grammarAccess.getTokenVisualAccess().getTokenAssignment_0(), "rule__TokenVisual__TokenAssignment_0");
+					put(grammarAccess.getTokenVisualAccess().getColorSpecAssignment_1(), "rule__TokenVisual__ColorSpecAssignment_1");
+					put(grammarAccess.getTokenVisualAccess().getBoldAssignment_2(), "rule__TokenVisual__BoldAssignment_2");
+					put(grammarAccess.getTokenVisualAccess().getItalicAssignment_3(), "rule__TokenVisual__ItalicAssignment_3");
 					put(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getPartitionAssignment_1(), "rule__LexicalPartitionHighlighting_JS__PartitionAssignment_1");
 					put(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getScriptURIAssignment_2(), "rule__LexicalPartitionHighlighting_JS__ScriptURIAssignment_2");
 					put(grammarAccess.getLexicalPartitionHighlighting_RuleAccess().getPartitionAssignment_1(), "rule__LexicalPartitionHighlighting_Rule__PartitionAssignment_1");

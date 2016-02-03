@@ -42,9 +42,9 @@ public class LDefSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_4_0_q.equals(syntax))
+			if (match_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_4_0_q.equals(syntax))
 				emit_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_4_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q.equals(syntax))
+			else if (match_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q.equals(syntax))
 				emit_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_3_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
