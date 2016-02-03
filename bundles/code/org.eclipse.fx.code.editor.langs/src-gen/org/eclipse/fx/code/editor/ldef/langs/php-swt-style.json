@@ -71,6 +71,6 @@
 	  "italic": false,
 	  "name": "php.php_compile_constants",
 	  "textRefColor": "-source-editor-code"
-	},
+	}
 	]
 }

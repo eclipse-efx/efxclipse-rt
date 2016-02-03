@@ -64,6 +64,6 @@
 	  "italic": false,
 	  "name": "rust.rust_string",
 	  "textRefColor": "-source-editor-string"
-	},
+	}
 	]
 }
