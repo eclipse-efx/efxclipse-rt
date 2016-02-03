@@ -11,6 +11,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.TokenVisual;
 import org.eclipse.fx.code.editor.ldef.lDef.TokenVisuals;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.IFileSystemAccess;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class DeclarativeStyleingGenerator {
@@ -150,8 +151,18 @@ public class DeclarativeStyleingGenerator {
         _builder.append("\"");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        _builder.append("},");
-        _builder.newLine();
+        _builder.append("}");
+        {
+          LexicalHighlighting _lexicalHighlighting_1 = model.getLexicalHighlighting();
+          TokenVisuals _vistual_1 = _lexicalHighlighting_1.getVistual();
+          EList<TokenVisual> _tokenVisuals_1 = _vistual_1.getTokenVisuals();
+          TokenVisual _last = IterableExtensions.<TokenVisual>last(_tokenVisuals_1);
+          boolean _notEquals = (!Objects.equal(_last, tv));
+          if (_notEquals) {
+            _builder.append(",");
+          }
+        }
+        _builder.newLineIfNotEmpty();
       }
     }
     _builder.append("\t");

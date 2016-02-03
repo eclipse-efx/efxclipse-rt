@@ -39,7 +39,7 @@ class DeclarativeStyleingGenerator {
 		      "italic": «tv.italic»,
 		      "name": "«model.name».«tv.token.name»",
 		      "textRefColor": "«tv.colorSpec»"
-		    },
+		    }«IF model.lexicalHighlighting.vistual.tokenVisuals.last != tv»,«ENDIF»
 		«ENDFOR»
 		]
 	}
