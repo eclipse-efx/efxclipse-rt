@@ -411,18 +411,14 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		protected Tab createWidget() {
 			final Tab t = new Tab();
-			t.setOnCloseRequest(new EventHandler<Event>() {
-
-				@Override
-				public void handle(Event event) {
-					if (StackItemImpl.this.closeCallback != null) {
-						if (StackItemImpl.this.closeCallback.call(StackItemImpl.this).booleanValue()) {
-							event.consume();
-						}
-					}
-				}
-			});
+			t.setOnCloseRequest( this::handleOnCloseRequest );
 			return t;
+		}
+
+		private void handleOnCloseRequest(Event event) {
+			if (this.closeCallback.call(this).booleanValue()) {
+				event.consume();
+			}
 		}
 
 		void handleSelection() {
