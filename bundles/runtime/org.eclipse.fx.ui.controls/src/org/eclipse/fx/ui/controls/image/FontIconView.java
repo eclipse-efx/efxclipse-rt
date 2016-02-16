@@ -44,7 +44,7 @@ public class FontIconView extends Control {
 	 */
 	public FontIconView() {
 		getStyleClass().setAll("fonticonview"); //$NON-NLS-1$
-
+		setFocusTraversable(false);
 		setMouseTransparent(true);
 	}
 
