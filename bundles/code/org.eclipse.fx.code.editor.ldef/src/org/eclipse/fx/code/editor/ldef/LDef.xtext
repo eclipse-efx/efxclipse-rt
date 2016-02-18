@@ -118,19 +118,19 @@ Partition_MultiLineRule:
 LexicalHighlighting:
 	'lexical_highlighting' '{'
 		list += LexicalPartitionHighlighting+
-//		(vistual = TokenVisuals)?
+		(vistual = TokenVisuals)?
 	'}'
 ;
 
-//TokenVisuals:
-//	'token_def' '{'
-//		(tokenVisuals += TokenVisual ';')+
-//	'}'
-//;
-//
-//TokenVisual:
-//	token=[Token|ID] colorSpec=STRING (bold?='bold')? (italic?='italic')?
-//;
+TokenVisuals:
+	'token_def' '{'
+		(tokenVisuals += TokenVisual ';')+
+	'}'
+;
+
+TokenVisual:
+	token=[Token|ID] colorSpec=STRING (bold?='bold')? (italic?='italic')?
+;
 
 LexicalPartitionHighlighting:
 	LexicalPartitionHighlighting_Rule | LexicalPartitionHighlighting_JS

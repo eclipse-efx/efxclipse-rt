@@ -74,12 +74,28 @@ dart {
 				pattern "\\$" containing "\\w"
 			}
 		}
-	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.dart" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
+		token_def {
+			dart_default "-source-editor-code";
+			dart_operator "-source-editor-operator";
+			dart_bracket "-source-editor-bracket";
+			dart_keyword "-source-editor-keyword" bold;
+			dart_keyword_1 "-source-editor-keyword" bold;
+			dart_keyword_2 "-source-editor-keyword" bold;
+			dart_single_line_comment "-source-editor-doc";
+			dart_multi_line_comment "-source-editor-doc";
+			dart_string "-source-editor-string";
+			dart_string_inter "-source-editor-string" bold;
+			dart_builtin_types "-source-editor-buitin-type" bold;
+			dart_doc "-source-editor-api-doc";
+			dart_doc_reference "-source-editor-api-doc" bold;
+			dart_number "-source-editor-number";
 		}
 	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.dart" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }

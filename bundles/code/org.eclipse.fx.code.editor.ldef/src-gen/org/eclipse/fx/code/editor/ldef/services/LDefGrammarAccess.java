@@ -19,7 +19,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	public class RootElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Root");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Root");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPackageKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -30,13 +30,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLanguageDefinitionLanguageDefParserRuleCall_3_0 = (RuleCall)cLanguageDefinitionAssignment_3.eContents().get(0);
 		
 		//Root:
-		//	"package" name=QualifiedName imports+=Import* languageDefinition=LanguageDef;
+		//	'package' name=QualifiedName
+		//	imports+=Import*
+		//	languageDefinition=LanguageDef;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"package" name=QualifiedName imports+=Import* languageDefinition=LanguageDef
+		//'package' name=QualifiedName imports+=Import* languageDefinition=LanguageDef
 		public Group getGroup() { return cGroup; }
 
-		//"package"
+		//'package'
 		public Keyword getPackageKeyword_0() { return cPackageKeyword_0; }
 
 		//name=QualifiedName
@@ -59,7 +61,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class ValidIDElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValidID");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.ValidID");
 		private final RuleCall cIDTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//ValidID:
@@ -71,7 +73,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedName");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.QualifiedName");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cValidIDParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
@@ -79,19 +81,19 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValidIDParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
 		
 		//QualifiedName:
-		//	ValidID ("." ValidID)*;
+		//	ValidID (=> '.' ValidID)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ValidID ("." ValidID)*
+		//ValidID (=> '.' ValidID)*
 		public Group getGroup() { return cGroup; }
 
 		//ValidID
 		public RuleCall getValidIDParserRuleCall_0() { return cValidIDParserRuleCall_0; }
 
-		//(=> "." ValidID)*
+		//(=> '.' ValidID)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//=> "."
+		//=> '.'
 		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
 
 		//ValidID
@@ -99,7 +101,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class QualifiedNameWithWildCardElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedNameWithWildCard");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.QualifiedNameWithWildCard");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cQualifiedNameParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
@@ -107,40 +109,40 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAsteriskKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
 		
 		//QualifiedNameWithWildCard:
-		//	QualifiedName ("." "*")?;
+		//	QualifiedName ('.' '*')?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//QualifiedName ("." "*")?
+		//QualifiedName ('.' '*')?
 		public Group getGroup() { return cGroup; }
 
 		//QualifiedName
 		public RuleCall getQualifiedNameParserRuleCall_0() { return cQualifiedNameParserRuleCall_0; }
 
-		//("." "*")?
+		//('.' '*')?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//"."
+		//'.'
 		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
 
-		//"*"
+		//'*'
 		public Keyword getAsteriskKeyword_1_1() { return cAsteriskKeyword_1_1; }
 	}
 
 	public class ImportElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Import");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Import");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cImportKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cImportedNamespaceAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cImportedNamespaceQualifiedNameWithWildCardParserRuleCall_1_0 = (RuleCall)cImportedNamespaceAssignment_1.eContents().get(0);
 		
 		//Import:
-		//	"import" importedNamespace=QualifiedNameWithWildCard;
+		//	'import' importedNamespace=QualifiedNameWithWildCard;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"import" importedNamespace=QualifiedNameWithWildCard
+		//'import' importedNamespace=QualifiedNameWithWildCard
 		public Group getGroup() { return cGroup; }
 
-		//"import"
+		//'import'
 		public Keyword getImportKeyword_0() { return cImportKeyword_0; }
 
 		//importedNamespace=QualifiedNameWithWildCard
@@ -151,7 +153,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class LanguageDefElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LanguageDef");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.LanguageDef");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
@@ -165,10 +167,14 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//LanguageDef:
-		//	name=ID "{" paritioning=Paritioning lexicalHighlighting=LexicalHighlighting integration=Integration? "}";
+		//	name=ID '{'
+		//	paritioning=Paritioning
+		//	lexicalHighlighting=LexicalHighlighting
+		//	integration=Integration?
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//name=ID "{" paritioning=Paritioning lexicalHighlighting=LexicalHighlighting integration=Integration? "}"
+		//name=ID '{' paritioning=Paritioning lexicalHighlighting=LexicalHighlighting integration=Integration? '}'
 		public Group getGroup() { return cGroup; }
 
 		//name=ID
@@ -177,7 +183,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
 
 		//paritioning=Paritioning
@@ -198,12 +204,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Integration
 		public RuleCall getIntegrationIntegrationParserRuleCall_4_0() { return cIntegrationIntegrationParserRuleCall_4_0; }
 
-		//"}"
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
 
 	public class IntegrationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Integration");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Integration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cIntegrationKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -212,16 +218,18 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//Integration:
-		//	"integration" "{" codeIntegrationList+=CodeIntegration+ "}";
+		//	'integration' '{'
+		//	codeIntegrationList+=CodeIntegration+
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//"integration" "{" codeIntegrationList+=CodeIntegration+ "}"
+		//'integration' '{' codeIntegrationList+=CodeIntegration+ '}'
 		public Group getGroup() { return cGroup; }
 
-		//"integration"
+		//'integration'
 		public Keyword getIntegrationKeyword_0() { return cIntegrationKeyword_0; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
 
 		//codeIntegrationList+=CodeIntegration+
@@ -230,25 +238,25 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//CodeIntegration
 		public RuleCall getCodeIntegrationListCodeIntegrationParserRuleCall_2_0() { return cCodeIntegrationListCodeIntegrationParserRuleCall_2_0; }
 
-		//"}"
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
 	public class CodeIntegrationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CodeIntegration");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.CodeIntegration");
 		private final RuleCall cJavaFXIntegrationParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//CodeIntegration: // | SWTIntegration
-		//	JavaFXIntegration;
+		//CodeIntegration:
+		//	JavaFXIntegration // | SWTIntegration
+		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//// | SWTIntegration
 		//JavaFXIntegration
 		public RuleCall getJavaFXIntegrationParserRuleCall() { return cJavaFXIntegrationParserRuleCall; }
 	}
 
 	public class JavaFXIntegrationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "JavaFXIntegration");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.JavaFXIntegration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cJavafxKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -257,16 +265,18 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//JavaFXIntegration:
-		//	"javafx" "{" codegenerationList+=Codegeneration+ "}";
+		//	'javafx' '{'
+		//	codegenerationList+=Codegeneration+
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//"javafx" "{" codegenerationList+=Codegeneration+ "}"
+		//'javafx' '{' codegenerationList+=Codegeneration+ '}'
 		public Group getGroup() { return cGroup; }
 
-		//"javafx"
+		//'javafx'
 		public Keyword getJavafxKeyword_0() { return cJavafxKeyword_0; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
 
 		//codegenerationList+=Codegeneration+
@@ -275,12 +285,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Codegeneration
 		public RuleCall getCodegenerationListCodegenerationParserRuleCall_2_0() { return cCodegenerationListCodegenerationParserRuleCall_2_0; }
 
-		//"}"
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
 	public class CodegenerationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Codegeneration");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Codegeneration");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cJavaCodeGenerationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cE4CodeGenerationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
@@ -300,7 +310,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class JavaCodeGenerationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "JavaCodeGeneration");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.JavaCodeGeneration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cJavaKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -312,13 +322,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//JavaCodeGeneration:
-		//	"java" name=STRING ("{" configValue+=ConfigValue+ "}")?;
+		//	'java' name=STRING ('{'
+		//	configValue+=ConfigValue+
+		//	'}')?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"java" name=STRING ("{" configValue+=ConfigValue+ "}")?
+		//'java' name=STRING ('{' configValue+=ConfigValue+ '}')?
 		public Group getGroup() { return cGroup; }
 
-		//"java"
+		//'java'
 		public Keyword getJavaKeyword_0() { return cJavaKeyword_0; }
 
 		//name=STRING
@@ -327,10 +339,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_1_0() { return cNameSTRINGTerminalRuleCall_1_0; }
 
-		//("{" configValue+=ConfigValue+ "}")?
+		//('{' configValue+=ConfigValue+ '}')?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
 
 		//configValue+=ConfigValue+
@@ -339,12 +351,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//ConfigValue
 		public RuleCall getConfigValueConfigValueParserRuleCall_2_1_0() { return cConfigValueConfigValueParserRuleCall_2_1_0; }
 
-		//"}"
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
 	}
 
 	public class E4CodeGenerationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "E4CodeGeneration");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.E4CodeGeneration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cE4Keyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -356,13 +368,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//E4CodeGeneration:
-		//	"e4" name=STRING ("{" configValue+=ConfigValue+ "}")?;
+		//	'e4' name=STRING ('{'
+		//	configValue+=ConfigValue+
+		//	'}')?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"e4" name=STRING ("{" configValue+=ConfigValue+ "}")?
+		//'e4' name=STRING ('{' configValue+=ConfigValue+ '}')?
 		public Group getGroup() { return cGroup; }
 
-		//"e4"
+		//'e4'
 		public Keyword getE4Keyword_0() { return cE4Keyword_0; }
 
 		//name=STRING
@@ -371,10 +385,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_1_0() { return cNameSTRINGTerminalRuleCall_1_0; }
 
-		//("{" configValue+=ConfigValue+ "}")?
+		//('{' configValue+=ConfigValue+ '}')?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
 
 		//configValue+=ConfigValue+
@@ -383,12 +397,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//ConfigValue
 		public RuleCall getConfigValueConfigValueParserRuleCall_2_1_0() { return cConfigValueConfigValueParserRuleCall_2_1_0; }
 
-		//"}"
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
 	}
 
 	public class ConfigValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConfigValue");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.ConfigValue");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cKeyIDTerminalRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
@@ -403,10 +417,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_2_1_2 = (Keyword)cGroup_2_1.eContents().get(2);
 		
 		//ConfigValue:
-		//	key=ID ":" (simpleValue=STRING | "{" children+=ConfigValue+ "}");
+		//	key=ID ':' (simpleValue=STRING | '{'
+		//	children+=ConfigValue+
+		//	'}');
 		@Override public ParserRule getRule() { return rule; }
 
-		//key=ID ":" (simpleValue=STRING | "{" children+=ConfigValue+ "}")
+		//key=ID ':' (simpleValue=STRING | '{' children+=ConfigValue+ '}')
 		public Group getGroup() { return cGroup; }
 
 		//key=ID
@@ -415,10 +431,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getKeyIDTerminalRuleCall_0_0() { return cKeyIDTerminalRuleCall_0_0; }
 
-		//":"
+		//':'
 		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
 
-		//simpleValue=STRING | "{" children+=ConfigValue+ "}"
+		//(simpleValue=STRING | '{' children+=ConfigValue+ '}')
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//simpleValue=STRING
@@ -427,10 +443,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getSimpleValueSTRINGTerminalRuleCall_2_0_0() { return cSimpleValueSTRINGTerminalRuleCall_2_0_0; }
 
-		//"{" children+=ConfigValue+ "}"
+		//'{' children+=ConfigValue+ '}'
 		public Group getGroup_2_1() { return cGroup_2_1; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2_1_0() { return cLeftCurlyBracketKeyword_2_1_0; }
 
 		//children+=ConfigValue+
@@ -439,12 +455,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//ConfigValue
 		public RuleCall getChildrenConfigValueParserRuleCall_2_1_1_0() { return cChildrenConfigValueParserRuleCall_2_1_1_0; }
 
-		//"}"
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_2_1_2() { return cRightCurlyBracketKeyword_2_1_2; }
 	}
 
 	public class ParitioningElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Paritioning");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Paritioning");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPartitioningKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -462,16 +478,19 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		////	'}'
 		////;
 		//Paritioning:
-		//	"partitioning" "{" partitions+=Partition+ partitioner=Partitioner "}";
+		//	'partitioning' '{'
+		//	partitions+=Partition+
+		//	partitioner=Partitioner
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//"partitioning" "{" partitions+=Partition+ partitioner=Partitioner "}"
+		//'partitioning' '{' partitions+=Partition+ partitioner=Partitioner '}'
 		public Group getGroup() { return cGroup; }
 
-		//"partitioning"
+		//'partitioning'
 		public Keyword getPartitioningKeyword_0() { return cPartitioningKeyword_0; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
 
 		//partitions+=Partition+
@@ -486,25 +505,25 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Partitioner
 		public RuleCall getPartitionerPartitionerParserRuleCall_3_0() { return cPartitionerPartitionerParserRuleCall_3_0; }
 
-		//"}"
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
 	}
 
 	public class PartitionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Partition");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Partition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPartitionKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
 		//Partition:
-		//	"partition" name=ID;
+		//	'partition' name=ID;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"partition" name=ID
+		//'partition' name=ID
 		public Group getGroup() { return cGroup; }
 
-		//"partition"
+		//'partition'
 		public Keyword getPartitionKeyword_0() { return cPartitionKeyword_0; }
 
 		//name=ID
@@ -515,7 +534,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class PartitionerElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Partitioner");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Partitioner");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cPartitioner_RuleParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cParitioner_JSParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
@@ -535,20 +554,20 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class Paritioner_JSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Paritioner_JS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Paritioner_JS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cScriptKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cScriptURIAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cScriptURISTRINGTerminalRuleCall_1_0 = (RuleCall)cScriptURIAssignment_1.eContents().get(0);
 		
 		//Paritioner_JS:
-		//	"script" scriptURI=STRING;
+		//	'script' scriptURI=STRING;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"script" scriptURI=STRING
+		//'script' scriptURI=STRING
 		public Group getGroup() { return cGroup; }
 
-		//"script"
+		//'script'
 		public Keyword getScriptKeyword_0() { return cScriptKeyword_0; }
 
 		//scriptURI=STRING
@@ -559,7 +578,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class Partitioner_RuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Partitioner_Rule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Partitioner_Rule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cRuleKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -568,16 +587,18 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//Partitioner_Rule:
-		//	"rule" "{" ruleList+=Partition_Rule+ "}";
+		//	'rule' '{'
+		//	ruleList+=Partition_Rule+
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//"rule" "{" ruleList+=Partition_Rule+ "}"
+		//'rule' '{' ruleList+=Partition_Rule+ '}'
 		public Group getGroup() { return cGroup; }
 
-		//"rule"
+		//'rule'
 		public Keyword getRuleKeyword_0() { return cRuleKeyword_0; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
 
 		//ruleList+=Partition_Rule+
@@ -586,12 +607,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Partition_Rule
 		public RuleCall getRuleListPartition_RuleParserRuleCall_2_0() { return cRuleListPartition_RuleParserRuleCall_2_0; }
 
-		//"}"
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
 	public class Partition_RuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Partition_Rule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Partition_Rule");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cPartition_SingleLineRuleParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cPartition_MultiLineRuleParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
@@ -611,7 +632,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class Partition_SingleLineRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Partition_SingleLineRule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Partition_SingleLineRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSingle_lineKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cParitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -634,15 +655,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
 		
 		//Partition_SingleLineRule:
-		//	"single_line" parition=[Partition] startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by"
+		//	'single_line' parition=[Partition] startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by'
 		//	escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"single_line" parition=[Partition] startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by"
+		//'single_line' parition=[Partition] startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by'
 		//escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
-		//"single_line"
+		//'single_line'
 		public Keyword getSingle_lineKeyword_0() { return cSingle_lineKeyword_0; }
 
 		//parition=[Partition]
@@ -660,10 +681,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_2_0() { return cStartSeqSTRINGTerminalRuleCall_2_0; }
 
-		//("col" check=Check)?
+		//('col' check=Check)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//"col"
+		//'col'
 		public Keyword getColKeyword_3_0() { return cColKeyword_3_0; }
 
 		//check=Check
@@ -672,10 +693,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Check
 		public RuleCall getCheckCheckParserRuleCall_3_1_0() { return cCheckCheckParserRuleCall_3_1_0; }
 
-		//("=>" endSeq=STRING?)?
+		//('=>' endSeq=STRING?)?
 		public Group getGroup_4() { return cGroup_4; }
 
-		//"=>"
+		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_4_0() { return cEqualsSignGreaterThanSignKeyword_4_0; }
 
 		//endSeq=STRING?
@@ -684,13 +705,13 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getEndSeqSTRINGTerminalRuleCall_4_1_0() { return cEndSeqSTRINGTerminalRuleCall_4_1_0; }
 
-		//("escaped" "by" escapeSeq=STRING)?
+		//('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup_5() { return cGroup_5; }
 
-		//"escaped"
+		//'escaped'
 		public Keyword getEscapedKeyword_5_0() { return cEscapedKeyword_5_0; }
 
-		//"by"
+		//'by'
 		public Keyword getByKeyword_5_1() { return cByKeyword_5_1; }
 
 		//escapeSeq=STRING
@@ -701,7 +722,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class Partition_MultiLineRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Partition_MultiLineRule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Partition_MultiLineRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cMulti_lineKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cParitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -723,15 +744,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_6_2_0 = (RuleCall)cEscapeSeqAssignment_6_2.eContents().get(0);
 		
 		//Partition_MultiLineRule:
-		//	"multi_line" parition=[Partition] startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by"
+		//	'multi_line' parition=[Partition] startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
 		//	escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"multi_line" parition=[Partition] startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by"
+		//'multi_line' parition=[Partition] startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
 		//escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
-		//"multi_line"
+		//'multi_line'
 		public Keyword getMulti_lineKeyword_0() { return cMulti_lineKeyword_0; }
 
 		//parition=[Partition]
@@ -749,10 +770,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_2_0() { return cStartSeqSTRINGTerminalRuleCall_2_0; }
 
-		//("col" check=Check)?
+		//('col' check=Check)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//"col"
+		//'col'
 		public Keyword getColKeyword_3_0() { return cColKeyword_3_0; }
 
 		//check=Check
@@ -761,7 +782,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Check
 		public RuleCall getCheckCheckParserRuleCall_3_1_0() { return cCheckCheckParserRuleCall_3_1_0; }
 
-		//"=>"
+		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_4() { return cEqualsSignGreaterThanSignKeyword_4; }
 
 		//endSeq=STRING
@@ -770,13 +791,13 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getEndSeqSTRINGTerminalRuleCall_5_0() { return cEndSeqSTRINGTerminalRuleCall_5_0; }
 
-		//("escaped" "by" escapeSeq=STRING)?
+		//('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup_6() { return cGroup_6; }
 
-		//"escaped"
+		//'escaped'
 		public Keyword getEscapedKeyword_6_0() { return cEscapedKeyword_6_0; }
 
-		//"by"
+		//'by'
 		public Keyword getByKeyword_6_1() { return cByKeyword_6_1; }
 
 		//escapeSeq=STRING
@@ -787,28 +808,31 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class LexicalHighlightingElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LexicalHighlighting");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.LexicalHighlighting");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLexical_highlightingKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cListAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cListLexicalPartitionHighlightingParserRuleCall_2_0 = (RuleCall)cListAssignment_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cVistualAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cVistualTokenVisualsParserRuleCall_3_0 = (RuleCall)cVistualAssignment_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//// -----------------------------------------------------
 		//LexicalHighlighting:
-		//	"lexical_highlighting" "{" list+=LexicalPartitionHighlighting+ //		(vistual = TokenVisuals)?
-		//	"}";
+		//	'lexical_highlighting' '{'
+		//	list+=LexicalPartitionHighlighting+
+		//	vistual=TokenVisuals?
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//"lexical_highlighting" "{" list+=LexicalPartitionHighlighting+ //		(vistual = TokenVisuals)?
-		//"}"
+		//'lexical_highlighting' '{' list+=LexicalPartitionHighlighting+ vistual=TokenVisuals? '}'
 		public Group getGroup() { return cGroup; }
 
-		//"lexical_highlighting"
+		//'lexical_highlighting'
 		public Keyword getLexical_highlightingKeyword_0() { return cLexical_highlightingKeyword_0; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
 
 		//list+=LexicalPartitionHighlighting+
@@ -817,26 +841,111 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//LexicalPartitionHighlighting
 		public RuleCall getListLexicalPartitionHighlightingParserRuleCall_2_0() { return cListLexicalPartitionHighlightingParserRuleCall_2_0; }
 
-		////		(vistual = TokenVisuals)?
-		//"}"
+		//vistual=TokenVisuals?
+		public Assignment getVistualAssignment_3() { return cVistualAssignment_3; }
+
+		//TokenVisuals
+		public RuleCall getVistualTokenVisualsParserRuleCall_3_0() { return cVistualTokenVisualsParserRuleCall_3_0; }
+
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+	}
+
+	public class TokenVisualsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.TokenVisuals");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cToken_defKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Assignment cTokenVisualsAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final RuleCall cTokenVisualsTokenVisualParserRuleCall_2_0_0 = (RuleCall)cTokenVisualsAssignment_2_0.eContents().get(0);
+		private final Keyword cSemicolonKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//TokenVisuals:
+		//	'token_def' '{' (tokenVisuals+=TokenVisual ';')+
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+
+		//'token_def' '{' (tokenVisuals+=TokenVisual ';')+ '}'
+		public Group getGroup() { return cGroup; }
+
+		//'token_def'
+		public Keyword getToken_defKeyword_0() { return cToken_defKeyword_0; }
+
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+
+		//(tokenVisuals+=TokenVisual ';')+
+		public Group getGroup_2() { return cGroup_2; }
+
+		//tokenVisuals+=TokenVisual
+		public Assignment getTokenVisualsAssignment_2_0() { return cTokenVisualsAssignment_2_0; }
+
+		//TokenVisual
+		public RuleCall getTokenVisualsTokenVisualParserRuleCall_2_0_0() { return cTokenVisualsTokenVisualParserRuleCall_2_0_0; }
+
+		//';'
+		public Keyword getSemicolonKeyword_2_1() { return cSemicolonKeyword_2_1; }
+
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
+	public class TokenVisualElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.TokenVisual");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cTokenAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cTokenTokenCrossReference_0_0 = (CrossReference)cTokenAssignment_0.eContents().get(0);
+		private final RuleCall cTokenTokenIDTerminalRuleCall_0_0_1 = (RuleCall)cTokenTokenCrossReference_0_0.eContents().get(1);
+		private final Assignment cColorSpecAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cColorSpecSTRINGTerminalRuleCall_1_0 = (RuleCall)cColorSpecAssignment_1.eContents().get(0);
+		private final Assignment cBoldAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cBoldBoldKeyword_2_0 = (Keyword)cBoldAssignment_2.eContents().get(0);
+		private final Assignment cItalicAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cItalicItalicKeyword_3_0 = (Keyword)cItalicAssignment_3.eContents().get(0);
+		
+		//TokenVisual:
+		//	token=[Token] colorSpec=STRING bold?='bold'? italic?='italic'?;
+		@Override public ParserRule getRule() { return rule; }
+
+		//token=[Token] colorSpec=STRING bold?='bold'? italic?='italic'?
+		public Group getGroup() { return cGroup; }
+
+		//token=[Token]
+		public Assignment getTokenAssignment_0() { return cTokenAssignment_0; }
+
+		//[Token]
+		public CrossReference getTokenTokenCrossReference_0_0() { return cTokenTokenCrossReference_0_0; }
+
+		//ID
+		public RuleCall getTokenTokenIDTerminalRuleCall_0_0_1() { return cTokenTokenIDTerminalRuleCall_0_0_1; }
+
+		//colorSpec=STRING
+		public Assignment getColorSpecAssignment_1() { return cColorSpecAssignment_1; }
+
+		//STRING
+		public RuleCall getColorSpecSTRINGTerminalRuleCall_1_0() { return cColorSpecSTRINGTerminalRuleCall_1_0; }
+
+		//bold?='bold'?
+		public Assignment getBoldAssignment_2() { return cBoldAssignment_2; }
+
+		//'bold'
+		public Keyword getBoldBoldKeyword_2_0() { return cBoldBoldKeyword_2_0; }
+
+		//italic?='italic'?
+		public Assignment getItalicAssignment_3() { return cItalicAssignment_3; }
+
+		//'italic'
+		public Keyword getItalicItalicKeyword_3_0() { return cItalicItalicKeyword_3_0; }
+	}
+
 	public class LexicalPartitionHighlightingElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LexicalPartitionHighlighting");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.LexicalPartitionHighlighting");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cLexicalPartitionHighlighting_RuleParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cLexicalPartitionHighlighting_JSParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		////TokenVisuals:
-		////	'token_def' '{'
-		////		(tokenVisuals += TokenVisual ';')+
-		////	'}'
-		////;
-		////
-		////TokenVisual:
-		////	token=[Token|ID] colorSpec=STRING (bold?='bold')? (italic?='italic')?
-		////;
 		//LexicalPartitionHighlighting:
 		//	LexicalPartitionHighlighting_Rule | LexicalPartitionHighlighting_JS;
 		@Override public ParserRule getRule() { return rule; }
@@ -852,7 +961,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class LexicalPartitionHighlighting_JSElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LexicalPartitionHighlighting_JS");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.LexicalPartitionHighlighting_JS");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cScriptKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cPartitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -862,13 +971,13 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cScriptURISTRINGTerminalRuleCall_2_0 = (RuleCall)cScriptURIAssignment_2.eContents().get(0);
 		
 		//LexicalPartitionHighlighting_JS:
-		//	"script" partition=[Partition] scriptURI=STRING;
+		//	'script' partition=[Partition] scriptURI=STRING;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"script" partition=[Partition] scriptURI=STRING
+		//'script' partition=[Partition] scriptURI=STRING
 		public Group getGroup() { return cGroup; }
 
-		//"script"
+		//'script'
 		public Keyword getScriptKeyword_0() { return cScriptKeyword_0; }
 
 		//partition=[Partition]
@@ -888,7 +997,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class LexicalPartitionHighlighting_RuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LexicalPartitionHighlighting_Rule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.LexicalPartitionHighlighting_Rule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cRuleKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cPartitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -902,13 +1011,15 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//LexicalPartitionHighlighting_Rule:
-		//	"rule" partition=[Partition] whitespace=WhitespaceRule? "{" tokenList+=Token+ "}";
+		//	'rule' partition=[Partition] whitespace=WhitespaceRule? '{'
+		//	tokenList+=Token+
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 
-		//"rule" partition=[Partition] whitespace=WhitespaceRule? "{" tokenList+=Token+ "}"
+		//'rule' partition=[Partition] whitespace=WhitespaceRule? '{' tokenList+=Token+ '}'
 		public Group getGroup() { return cGroup; }
 
-		//"rule"
+		//'rule'
 		public Keyword getRuleKeyword_0() { return cRuleKeyword_0; }
 
 		//partition=[Partition]
@@ -926,7 +1037,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//WhitespaceRule
 		public RuleCall getWhitespaceWhitespaceRuleParserRuleCall_2_0() { return cWhitespaceWhitespaceRuleParserRuleCall_2_0; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 
 		//tokenList+=Token+
@@ -935,12 +1046,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Token
 		public RuleCall getTokenListTokenParserRuleCall_4_0() { return cTokenListTokenParserRuleCall_4_0; }
 
-		//"}"
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
 
 	public class TokenElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Token");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Token");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cDefaultAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final Keyword cDefaultDefaultKeyword_0_0 = (Keyword)cDefaultAssignment_0.eContents().get(0);
@@ -953,16 +1064,16 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//Token:
-		//	default?="default"? name=ID ("{" scannerList+=Scanner+ "}")?;
+		//	default?='default'? name=ID ('{' scannerList+=Scanner+ '}')?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//default?="default"? name=ID ("{" scannerList+=Scanner+ "}")?
+		//default?='default'? name=ID ('{' scannerList+=Scanner+ '}')?
 		public Group getGroup() { return cGroup; }
 
-		//default?="default"?
+		//default?='default'?
 		public Assignment getDefaultAssignment_0() { return cDefaultAssignment_0; }
 
-		//"default"
+		//'default'
 		public Keyword getDefaultDefaultKeyword_0_0() { return cDefaultDefaultKeyword_0_0; }
 
 		//name=ID
@@ -971,10 +1082,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//("{" scannerList+=Scanner+ "}")?
+		//('{' scannerList+=Scanner+ '}')?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"{"
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
 
 		//scannerList+=Scanner+
@@ -983,12 +1094,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Scanner
 		public RuleCall getScannerListScannerParserRuleCall_2_1_0() { return cScannerListScannerParserRuleCall_2_1_0; }
 
-		//"}"
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
 	}
 
 	public class ScannerElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Scanner");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cScanner_KeywordParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cScanner_RuleParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
@@ -1008,7 +1119,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class Scanner_KeywordElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_Keyword");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Scanner_Keyword");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cKeywordsKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -1021,16 +1132,16 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Scanner_Keyword:
-		//	"keywords" "[" keywords+=Keyword ("," keywords+=Keyword)* "]";
+		//	'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']';
 		@Override public ParserRule getRule() { return rule; }
 
-		//"keywords" "[" keywords+=Keyword ("," keywords+=Keyword)* "]"
+		//'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']'
 		public Group getGroup() { return cGroup; }
 
-		//"keywords"
+		//'keywords'
 		public Keyword getKeywordsKeyword_0() { return cKeywordsKeyword_0; }
 
-		//"["
+		//'['
 		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
 
 		//keywords+=Keyword
@@ -1039,10 +1150,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Keyword
 		public RuleCall getKeywordsKeywordParserRuleCall_2_0() { return cKeywordsKeywordParserRuleCall_2_0; }
 
-		//("," keywords+=Keyword)*
+		//(',' keywords+=Keyword)*
 		public Group getGroup_3() { return cGroup_3; }
 
-		//","
+		//','
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 
 		//keywords+=Keyword
@@ -1051,12 +1162,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Keyword
 		public RuleCall getKeywordsKeywordParserRuleCall_3_1_0() { return cKeywordsKeywordParserRuleCall_3_1_0; }
 
-		//"]"
+		//']'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 	}
 
 	public class KeywordElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Keyword");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Keyword");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameSTRINGTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
@@ -1066,10 +1177,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVersionSTRINGTerminalRuleCall_1_1_0 = (RuleCall)cVersionAssignment_1_1.eContents().get(0);
 		
 		//Keyword:
-		//	name=STRING ("since" version=STRING)?;
+		//	name=STRING ('since' version=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//name=STRING ("since" version=STRING)?
+		//name=STRING ('since' version=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//name=STRING
@@ -1078,10 +1189,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getNameSTRINGTerminalRuleCall_0_0() { return cNameSTRINGTerminalRuleCall_0_0; }
 
-		//("since" version=STRING)?
+		//('since' version=STRING)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//"since"
+		//'since'
 		public Keyword getSinceKeyword_1_0() { return cSinceKeyword_1_0; }
 
 		//version=STRING
@@ -1092,7 +1203,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class Scanner_RuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_Rule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Scanner_Rule");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cScanner_SingleLineRuleParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cScanner_MultiLineRuleParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
@@ -1124,7 +1235,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class Scanner_SingleLineRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_SingleLineRule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Scanner_SingleLineRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSingle_lineKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cStartSeqAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -1144,14 +1255,14 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_4_2_0 = (RuleCall)cEscapeSeqAssignment_4_2.eContents().get(0);
 		
 		//Scanner_SingleLineRule:
-		//	"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+		//	'single_line' startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+		//'single_line' startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
-		//"single_line"
+		//'single_line'
 		public Keyword getSingle_lineKeyword_0() { return cSingle_lineKeyword_0; }
 
 		//startSeq=STRING
@@ -1160,10 +1271,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
 
-		//("col" check=Check)?
+		//('col' check=Check)?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"col"
+		//'col'
 		public Keyword getColKeyword_2_0() { return cColKeyword_2_0; }
 
 		//check=Check
@@ -1172,10 +1283,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Check
 		public RuleCall getCheckCheckParserRuleCall_2_1_0() { return cCheckCheckParserRuleCall_2_1_0; }
 
-		//("=>" endSeq=STRING?)?
+		//('=>' endSeq=STRING?)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//"=>"
+		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_3_0() { return cEqualsSignGreaterThanSignKeyword_3_0; }
 
 		//endSeq=STRING?
@@ -1184,13 +1295,13 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getEndSeqSTRINGTerminalRuleCall_3_1_0() { return cEndSeqSTRINGTerminalRuleCall_3_1_0; }
 
-		//("escaped" "by" escapeSeq=STRING)?
+		//('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup_4() { return cGroup_4; }
 
-		//"escaped"
+		//'escaped'
 		public Keyword getEscapedKeyword_4_0() { return cEscapedKeyword_4_0; }
 
-		//"by"
+		//'by'
 		public Keyword getByKeyword_4_1() { return cByKeyword_4_1; }
 
 		//escapeSeq=STRING
@@ -1201,7 +1312,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class Scanner_MultiLineRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_MultiLineRule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Scanner_MultiLineRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cMulti_lineKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cStartSeqAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -1220,14 +1331,14 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
 		
 		//Scanner_MultiLineRule:
-		//	"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+		//	'multi_line' startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+		//'multi_line' startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
-		//"multi_line"
+		//'multi_line'
 		public Keyword getMulti_lineKeyword_0() { return cMulti_lineKeyword_0; }
 
 		//startSeq=STRING
@@ -1236,10 +1347,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
 
-		//("col" check=Check)?
+		//('col' check=Check)?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"col"
+		//'col'
 		public Keyword getColKeyword_2_0() { return cColKeyword_2_0; }
 
 		//check=Check
@@ -1248,7 +1359,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Check
 		public RuleCall getCheckCheckParserRuleCall_2_1_0() { return cCheckCheckParserRuleCall_2_1_0; }
 
-		//"=>"
+		//'=>'
 		public Keyword getEqualsSignGreaterThanSignKeyword_3() { return cEqualsSignGreaterThanSignKeyword_3; }
 
 		//endSeq=STRING
@@ -1257,13 +1368,13 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getEndSeqSTRINGTerminalRuleCall_4_0() { return cEndSeqSTRINGTerminalRuleCall_4_0; }
 
-		//("escaped" "by" escapeSeq=STRING)?
+		//('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup_5() { return cGroup_5; }
 
-		//"escaped"
+		//'escaped'
 		public Keyword getEscapedKeyword_5_0() { return cEscapedKeyword_5_0; }
 
-		//"by"
+		//'by'
 		public Keyword getByKeyword_5_1() { return cByKeyword_5_1; }
 
 		//escapeSeq=STRING
@@ -1274,7 +1385,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class Scanner_PatternRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_PatternRule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Scanner_PatternRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPatternKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cStartPatternAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -1290,15 +1401,14 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cContentPatternSTRINGTerminalRuleCall_5_0 = (RuleCall)cContentPatternAssignment_5.eContents().get(0);
 		
 		//Scanner_PatternRule:
-		//	"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern= //( 'enabledif' enabledIf=ScannerCondition)?
-		//	STRING;
+		//	'pattern' startPattern=STRING length=INT? ('col' check=Check)? 'containing' contentPattern=STRING //( 'enabledif' enabledIf=ScannerCondition)?
+		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern= //( 'enabledif' enabledIf=ScannerCondition)?
-		//STRING
+		//'pattern' startPattern=STRING length=INT? ('col' check=Check)? 'containing' contentPattern=STRING
 		public Group getGroup() { return cGroup; }
 
-		//"pattern"
+		//'pattern'
 		public Keyword getPatternKeyword_0() { return cPatternKeyword_0; }
 
 		//startPattern=STRING
@@ -1313,10 +1423,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getLengthINTTerminalRuleCall_2_0() { return cLengthINTTerminalRuleCall_2_0; }
 
-		//("col" check=Check)?
+		//('col' check=Check)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//"col"
+		//'col'
 		public Keyword getColKeyword_3_0() { return cColKeyword_3_0; }
 
 		//check=Check
@@ -1325,20 +1435,18 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//Check
 		public RuleCall getCheckCheckParserRuleCall_3_1_0() { return cCheckCheckParserRuleCall_3_1_0; }
 
-		//"containing"
+		//'containing'
 		public Keyword getContainingKeyword_4() { return cContainingKeyword_4; }
 
-		//contentPattern= //( 'enabledif' enabledIf=ScannerCondition)?
-		//STRING
+		//contentPattern=STRING
 		public Assignment getContentPatternAssignment_5() { return cContentPatternAssignment_5; }
 
-		////( 'enabledif' enabledIf=ScannerCondition)?
 		//STRING
 		public RuleCall getContentPatternSTRINGTerminalRuleCall_5_0() { return cContentPatternSTRINGTerminalRuleCall_5_0; }
 	}
 
 	public class Scanner_CharacterRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_CharacterRule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Scanner_CharacterRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cCharacterKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -1355,17 +1463,17 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCheckCheckParserRuleCall_5_1_0 = (RuleCall)cCheckAssignment_5_1.eContents().get(0);
 		
 		//Scanner_CharacterRule:
-		//	"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)? //( 'enabledif' enabledIf=ScannerCondition)?
+		//	'character' '[' characters+=STRING (',' characters+=STRING)* ']' ('col' check=Check)? //( 'enabledif' enabledIf=ScannerCondition)?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)? //( 'enabledif' enabledIf=ScannerCondition)?
+		//'character' '[' characters+=STRING (',' characters+=STRING)* ']' ('col' check=Check)?
 		public Group getGroup() { return cGroup; }
 
-		//"character"
+		//'character'
 		public Keyword getCharacterKeyword_0() { return cCharacterKeyword_0; }
 
-		//"["
+		//'['
 		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
 
 		//characters+=STRING
@@ -1374,10 +1482,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getCharactersSTRINGTerminalRuleCall_2_0() { return cCharactersSTRINGTerminalRuleCall_2_0; }
 
-		//("," characters+=STRING)*
+		//(',' characters+=STRING)*
 		public Group getGroup_3() { return cGroup_3; }
 
-		//","
+		//','
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 
 		//characters+=STRING
@@ -1386,13 +1494,13 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getCharactersSTRINGTerminalRuleCall_3_1_0() { return cCharactersSTRINGTerminalRuleCall_3_1_0; }
 
-		//"]"
+		//']'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 
-		//("col" check=Check)?
+		//('col' check=Check)?
 		public Group getGroup_5() { return cGroup_5; }
 
-		//"col"
+		//'col'
 		public Keyword getColKeyword_5_0() { return cColKeyword_5_0; }
 
 		//check=Check
@@ -1403,7 +1511,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class Scanner_JSRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Scanner_JSRule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Scanner_JSRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cScriptKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cFileURIAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -1414,14 +1522,14 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCheckCheckParserRuleCall_2_1_0 = (RuleCall)cCheckAssignment_2_1.eContents().get(0);
 		
 		//Scanner_JSRule:
-		//	"script" fileURI=STRING ("col" check=Check)? //( 'enabledif' condition=ScannerCondition)?
+		//	'script' fileURI=STRING ('col' check=Check)? //( 'enabledif' condition=ScannerCondition)?
 		//;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"script" fileURI=STRING ("col" check=Check)? //( 'enabledif' condition=ScannerCondition)?
+		//'script' fileURI=STRING ('col' check=Check)?
 		public Group getGroup() { return cGroup; }
 
-		//"script"
+		//'script'
 		public Keyword getScriptKeyword_0() { return cScriptKeyword_0; }
 
 		//fileURI=STRING
@@ -1430,10 +1538,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getFileURISTRINGTerminalRuleCall_1_0() { return cFileURISTRINGTerminalRuleCall_1_0; }
 
-		//("col" check=Check)?
+		//('col' check=Check)?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"col"
+		//'col'
 		public Keyword getColKeyword_2_0() { return cColKeyword_2_0; }
 
 		//check=Check
@@ -1444,7 +1552,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class CheckElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Check");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Check");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cRangeParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cEqualsParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
@@ -1479,20 +1587,20 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class EqualsElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Equals");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Equals");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cEqKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cValueINTTerminalRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
 		
 		//Equals:
-		//	"eq" value=INT;
+		//	'eq' value=INT;
 		@Override public ParserRule getRule() { return rule; }
 
-		//"eq" value=INT
+		//'eq' value=INT
 		public Group getGroup() { return cGroup; }
 
-		//"eq"
+		//'eq'
 		public Keyword getEqKeyword_0() { return cEqKeyword_0; }
 
 		//value=INT
@@ -1503,7 +1611,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	public class RangeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Range");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Range");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cInKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cLtInclAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -1521,25 +1629,25 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cGtInclRightSquareBracketKeyword_5_0_1 = (Keyword)cGtInclAlternatives_5_0.eContents().get(1);
 		
 		//Range:
-		//	"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=(")" | "]");
+		//	'in' ltIncl=('(' | '[') minValue+=INT? ',' maxValue+=INT? gtIncl=(')' | ']');
 		@Override public ParserRule getRule() { return rule; }
 
-		//"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=(")" | "]")
+		//'in' ltIncl=('(' | '[') minValue+=INT? ',' maxValue+=INT? gtIncl=(')' | ']')
 		public Group getGroup() { return cGroup; }
 
-		//"in"
+		//'in'
 		public Keyword getInKeyword_0() { return cInKeyword_0; }
 
-		//ltIncl=("(" | "[")
+		//ltIncl=('(' | '[')
 		public Assignment getLtInclAssignment_1() { return cLtInclAssignment_1; }
 
-		//"(" | "["
+		//('(' | '[')
 		public Alternatives getLtInclAlternatives_1_0() { return cLtInclAlternatives_1_0; }
 
-		//"("
+		//'('
 		public Keyword getLtInclLeftParenthesisKeyword_1_0_0() { return cLtInclLeftParenthesisKeyword_1_0_0; }
 
-		//"["
+		//'['
 		public Keyword getLtInclLeftSquareBracketKeyword_1_0_1() { return cLtInclLeftSquareBracketKeyword_1_0_1; }
 
 		//minValue+=INT?
@@ -1548,7 +1656,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getMinValueINTTerminalRuleCall_2_0() { return cMinValueINTTerminalRuleCall_2_0; }
 
-		//","
+		//','
 		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
 
 		//maxValue+=INT?
@@ -1557,21 +1665,21 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getMaxValueINTTerminalRuleCall_4_0() { return cMaxValueINTTerminalRuleCall_4_0; }
 
-		//gtIncl=(")" | "]")
+		//gtIncl=(')' | ']')
 		public Assignment getGtInclAssignment_5() { return cGtInclAssignment_5; }
 
-		//")" | "]"
+		//(')' | ']')
 		public Alternatives getGtInclAlternatives_5_0() { return cGtInclAlternatives_5_0; }
 
-		//")"
+		//')'
 		public Keyword getGtInclRightParenthesisKeyword_5_0_0() { return cGtInclRightParenthesisKeyword_5_0_0; }
 
-		//"]"
+		//']'
 		public Keyword getGtInclRightSquareBracketKeyword_5_0_1() { return cGtInclRightSquareBracketKeyword_5_0_1; }
 	}
 
 	public class WhitespaceRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WhitespaceRule");
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.WhitespaceRule");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cWhitespaceKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
@@ -1590,23 +1698,23 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFileURISTRINGTerminalRuleCall_1_2_0 = (RuleCall)cFileURIAssignment_1_2.eContents().get(0);
 		
 		//WhitespaceRule:
-		//	"whitespace" ("[" characters+=STRING ("," characters+=STRING)* "]" | javawhitespace?="javawhitespace" |
+		//	'whitespace' ('[' characters+=STRING (',' characters+=STRING)* ']' | javawhitespace?='javawhitespace' |
 		//	fileURI=STRING);
 		@Override public ParserRule getRule() { return rule; }
 
-		//"whitespace" ("[" characters+=STRING ("," characters+=STRING)* "]" | javawhitespace?="javawhitespace" | fileURI=STRING)
+		//'whitespace' ('[' characters+=STRING (',' characters+=STRING)* ']' | javawhitespace?='javawhitespace' | fileURI=STRING)
 		public Group getGroup() { return cGroup; }
 
-		//"whitespace"
+		//'whitespace'
 		public Keyword getWhitespaceKeyword_0() { return cWhitespaceKeyword_0; }
 
-		//"[" characters+=STRING ("," characters+=STRING)* "]" | javawhitespace?="javawhitespace" | fileURI=STRING
+		//('[' characters+=STRING (',' characters+=STRING)* ']' | javawhitespace?='javawhitespace' | fileURI=STRING)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//"[" characters+=STRING ("," characters+=STRING)* "]"
+		//'[' characters+=STRING (',' characters+=STRING)* ']'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
-		//"["
+		//'['
 		public Keyword getLeftSquareBracketKeyword_1_0_0() { return cLeftSquareBracketKeyword_1_0_0; }
 
 		//characters+=STRING
@@ -1615,10 +1723,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getCharactersSTRINGTerminalRuleCall_1_0_1_0() { return cCharactersSTRINGTerminalRuleCall_1_0_1_0; }
 
-		//("," characters+=STRING)*
+		//(',' characters+=STRING)*
 		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
 
-		//","
+		//','
 		public Keyword getCommaKeyword_1_0_2_0() { return cCommaKeyword_1_0_2_0; }
 
 		//characters+=STRING
@@ -1627,13 +1735,13 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getCharactersSTRINGTerminalRuleCall_1_0_2_1_0() { return cCharactersSTRINGTerminalRuleCall_1_0_2_1_0; }
 
-		//"]"
+		//']'
 		public Keyword getRightSquareBracketKeyword_1_0_3() { return cRightSquareBracketKeyword_1_0_3; }
 
-		//javawhitespace?="javawhitespace"
+		//javawhitespace?='javawhitespace'
 		public Assignment getJavawhitespaceAssignment_1_1() { return cJavawhitespaceAssignment_1_1; }
 
-		//"javawhitespace"
+		//'javawhitespace'
 		public Keyword getJavawhitespaceJavawhitespaceKeyword_1_1_0() { return cJavawhitespaceJavawhitespaceKeyword_1_1_0; }
 
 		//fileURI=STRING
@@ -1666,6 +1774,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	private final Partition_SingleLineRuleElements pPartition_SingleLineRule;
 	private final Partition_MultiLineRuleElements pPartition_MultiLineRule;
 	private final LexicalHighlightingElements pLexicalHighlighting;
+	private final TokenVisualsElements pTokenVisuals;
+	private final TokenVisualElements pTokenVisual;
 	private final LexicalPartitionHighlightingElements pLexicalPartitionHighlighting;
 	private final LexicalPartitionHighlighting_JSElements pLexicalPartitionHighlighting_JS;
 	private final LexicalPartitionHighlighting_RuleElements pLexicalPartitionHighlighting_Rule;
@@ -1715,6 +1825,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		this.pPartition_SingleLineRule = new Partition_SingleLineRuleElements();
 		this.pPartition_MultiLineRule = new Partition_MultiLineRuleElements();
 		this.pLexicalHighlighting = new LexicalHighlightingElements();
+		this.pTokenVisuals = new TokenVisualsElements();
+		this.pTokenVisual = new TokenVisualElements();
 		this.pLexicalPartitionHighlighting = new LexicalPartitionHighlightingElements();
 		this.pLexicalPartitionHighlighting_JS = new LexicalPartitionHighlighting_JSElements();
 		this.pLexicalPartitionHighlighting_Rule = new LexicalPartitionHighlighting_RuleElements();
@@ -1762,7 +1874,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Root:
-	//	"package" name=QualifiedName imports+=Import* languageDefinition=LanguageDef;
+	//	'package' name=QualifiedName
+	//	imports+=Import*
+	//	languageDefinition=LanguageDef;
 	public RootElements getRootAccess() {
 		return pRoot;
 	}
@@ -1782,7 +1896,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QualifiedName:
-	//	ValidID ("." ValidID)*;
+	//	ValidID (=> '.' ValidID)*;
 	public QualifiedNameElements getQualifiedNameAccess() {
 		return pQualifiedName;
 	}
@@ -1792,7 +1906,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QualifiedNameWithWildCard:
-	//	QualifiedName ("." "*")?;
+	//	QualifiedName ('.' '*')?;
 	public QualifiedNameWithWildCardElements getQualifiedNameWithWildCardAccess() {
 		return pQualifiedNameWithWildCard;
 	}
@@ -1802,7 +1916,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Import:
-	//	"import" importedNamespace=QualifiedNameWithWildCard;
+	//	'import' importedNamespace=QualifiedNameWithWildCard;
 	public ImportElements getImportAccess() {
 		return pImport;
 	}
@@ -1812,7 +1926,11 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//LanguageDef:
-	//	name=ID "{" paritioning=Paritioning lexicalHighlighting=LexicalHighlighting integration=Integration? "}";
+	//	name=ID '{'
+	//	paritioning=Paritioning
+	//	lexicalHighlighting=LexicalHighlighting
+	//	integration=Integration?
+	//	'}';
 	public LanguageDefElements getLanguageDefAccess() {
 		return pLanguageDef;
 	}
@@ -1822,7 +1940,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Integration:
-	//	"integration" "{" codeIntegrationList+=CodeIntegration+ "}";
+	//	'integration' '{'
+	//	codeIntegrationList+=CodeIntegration+
+	//	'}';
 	public IntegrationElements getIntegrationAccess() {
 		return pIntegration;
 	}
@@ -1831,8 +1951,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntegrationAccess().getRule();
 	}
 
-	//CodeIntegration: // | SWTIntegration
-	//	JavaFXIntegration;
+	//CodeIntegration:
+	//	JavaFXIntegration // | SWTIntegration
+	//;
 	public CodeIntegrationElements getCodeIntegrationAccess() {
 		return pCodeIntegration;
 	}
@@ -1842,7 +1963,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JavaFXIntegration:
-	//	"javafx" "{" codegenerationList+=Codegeneration+ "}";
+	//	'javafx' '{'
+	//	codegenerationList+=Codegeneration+
+	//	'}';
 	public JavaFXIntegrationElements getJavaFXIntegrationAccess() {
 		return pJavaFXIntegration;
 	}
@@ -1862,7 +1985,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//JavaCodeGeneration:
-	//	"java" name=STRING ("{" configValue+=ConfigValue+ "}")?;
+	//	'java' name=STRING ('{'
+	//	configValue+=ConfigValue+
+	//	'}')?;
 	public JavaCodeGenerationElements getJavaCodeGenerationAccess() {
 		return pJavaCodeGeneration;
 	}
@@ -1872,7 +1997,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//E4CodeGeneration:
-	//	"e4" name=STRING ("{" configValue+=ConfigValue+ "}")?;
+	//	'e4' name=STRING ('{'
+	//	configValue+=ConfigValue+
+	//	'}')?;
 	public E4CodeGenerationElements getE4CodeGenerationAccess() {
 		return pE4CodeGeneration;
 	}
@@ -1882,7 +2009,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ConfigValue:
-	//	key=ID ":" (simpleValue=STRING | "{" children+=ConfigValue+ "}");
+	//	key=ID ':' (simpleValue=STRING | '{'
+	//	children+=ConfigValue+
+	//	'}');
 	public ConfigValueElements getConfigValueAccess() {
 		return pConfigValue;
 	}
@@ -1899,7 +2028,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	////	'}'
 	////;
 	//Paritioning:
-	//	"partitioning" "{" partitions+=Partition+ partitioner=Partitioner "}";
+	//	'partitioning' '{'
+	//	partitions+=Partition+
+	//	partitioner=Partitioner
+	//	'}';
 	public ParitioningElements getParitioningAccess() {
 		return pParitioning;
 	}
@@ -1909,7 +2041,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition:
-	//	"partition" name=ID;
+	//	'partition' name=ID;
 	public PartitionElements getPartitionAccess() {
 		return pPartition;
 	}
@@ -1929,7 +2061,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Paritioner_JS:
-	//	"script" scriptURI=STRING;
+	//	'script' scriptURI=STRING;
 	public Paritioner_JSElements getParitioner_JSAccess() {
 		return pParitioner_JS;
 	}
@@ -1939,7 +2071,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partitioner_Rule:
-	//	"rule" "{" ruleList+=Partition_Rule+ "}";
+	//	'rule' '{'
+	//	ruleList+=Partition_Rule+
+	//	'}';
 	public Partitioner_RuleElements getPartitioner_RuleAccess() {
 		return pPartitioner_Rule;
 	}
@@ -1959,7 +2093,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition_SingleLineRule:
-	//	"single_line" parition=[Partition] startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by"
+	//	'single_line' parition=[Partition] startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by'
 	//	escapeSeq=STRING)?;
 	public Partition_SingleLineRuleElements getPartition_SingleLineRuleAccess() {
 		return pPartition_SingleLineRule;
@@ -1970,7 +2104,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition_MultiLineRule:
-	//	"multi_line" parition=[Partition] startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by"
+	//	'multi_line' parition=[Partition] startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
 	//	escapeSeq=STRING)?;
 	public Partition_MultiLineRuleElements getPartition_MultiLineRuleAccess() {
 		return pPartition_MultiLineRule;
@@ -1982,8 +2116,10 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// -----------------------------------------------------
 	//LexicalHighlighting:
-	//	"lexical_highlighting" "{" list+=LexicalPartitionHighlighting+ //		(vistual = TokenVisuals)?
-	//	"}";
+	//	'lexical_highlighting' '{'
+	//	list+=LexicalPartitionHighlighting+
+	//	vistual=TokenVisuals?
+	//	'}';
 	public LexicalHighlightingElements getLexicalHighlightingAccess() {
 		return pLexicalHighlighting;
 	}
@@ -1992,15 +2128,27 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		return getLexicalHighlightingAccess().getRule();
 	}
 
-	////TokenVisuals:
-	////	'token_def' '{'
-	////		(tokenVisuals += TokenVisual ';')+
-	////	'}'
-	////;
-	////
-	////TokenVisual:
-	////	token=[Token|ID] colorSpec=STRING (bold?='bold')? (italic?='italic')?
-	////;
+	//TokenVisuals:
+	//	'token_def' '{' (tokenVisuals+=TokenVisual ';')+
+	//	'}';
+	public TokenVisualsElements getTokenVisualsAccess() {
+		return pTokenVisuals;
+	}
+	
+	public ParserRule getTokenVisualsRule() {
+		return getTokenVisualsAccess().getRule();
+	}
+
+	//TokenVisual:
+	//	token=[Token] colorSpec=STRING bold?='bold'? italic?='italic'?;
+	public TokenVisualElements getTokenVisualAccess() {
+		return pTokenVisual;
+	}
+	
+	public ParserRule getTokenVisualRule() {
+		return getTokenVisualAccess().getRule();
+	}
+
 	//LexicalPartitionHighlighting:
 	//	LexicalPartitionHighlighting_Rule | LexicalPartitionHighlighting_JS;
 	public LexicalPartitionHighlightingElements getLexicalPartitionHighlightingAccess() {
@@ -2012,7 +2160,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//LexicalPartitionHighlighting_JS:
-	//	"script" partition=[Partition] scriptURI=STRING;
+	//	'script' partition=[Partition] scriptURI=STRING;
 	public LexicalPartitionHighlighting_JSElements getLexicalPartitionHighlighting_JSAccess() {
 		return pLexicalPartitionHighlighting_JS;
 	}
@@ -2022,7 +2170,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//LexicalPartitionHighlighting_Rule:
-	//	"rule" partition=[Partition] whitespace=WhitespaceRule? "{" tokenList+=Token+ "}";
+	//	'rule' partition=[Partition] whitespace=WhitespaceRule? '{'
+	//	tokenList+=Token+
+	//	'}';
 	public LexicalPartitionHighlighting_RuleElements getLexicalPartitionHighlighting_RuleAccess() {
 		return pLexicalPartitionHighlighting_Rule;
 	}
@@ -2032,7 +2182,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Token:
-	//	default?="default"? name=ID ("{" scannerList+=Scanner+ "}")?;
+	//	default?='default'? name=ID ('{' scannerList+=Scanner+ '}')?;
 	public TokenElements getTokenAccess() {
 		return pToken;
 	}
@@ -2052,7 +2202,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_Keyword:
-	//	"keywords" "[" keywords+=Keyword ("," keywords+=Keyword)* "]";
+	//	'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']';
 	public Scanner_KeywordElements getScanner_KeywordAccess() {
 		return pScanner_Keyword;
 	}
@@ -2062,7 +2212,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Keyword:
-	//	name=STRING ("since" version=STRING)?;
+	//	name=STRING ('since' version=STRING)?;
 	public KeywordElements getKeywordAccess() {
 		return pKeyword;
 	}
@@ -2082,7 +2232,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_SingleLineRule:
-	//	"single_line" startSeq=STRING ("col" check=Check)? ("=>" endSeq=STRING?)? ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+	//	'single_line' startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
 	//;
 	public Scanner_SingleLineRuleElements getScanner_SingleLineRuleAccess() {
 		return pScanner_SingleLineRule;
@@ -2093,7 +2243,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_MultiLineRule:
-	//	"multi_line" startSeq=STRING ("col" check=Check)? "=>" endSeq=STRING ("escaped" "by" escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+	//	'multi_line' startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
 	//;
 	public Scanner_MultiLineRuleElements getScanner_MultiLineRuleAccess() {
 		return pScanner_MultiLineRule;
@@ -2104,8 +2254,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_PatternRule:
-	//	"pattern" startPattern=STRING length=INT? ("col" check=Check)? "containing" contentPattern= //( 'enabledif' enabledIf=ScannerCondition)?
-	//	STRING;
+	//	'pattern' startPattern=STRING length=INT? ('col' check=Check)? 'containing' contentPattern=STRING //( 'enabledif' enabledIf=ScannerCondition)?
+	//;
 	public Scanner_PatternRuleElements getScanner_PatternRuleAccess() {
 		return pScanner_PatternRule;
 	}
@@ -2115,7 +2265,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_CharacterRule:
-	//	"character" "[" characters+=STRING ("," characters+=STRING)* "]" ("col" check=Check)? //( 'enabledif' enabledIf=ScannerCondition)?
+	//	'character' '[' characters+=STRING (',' characters+=STRING)* ']' ('col' check=Check)? //( 'enabledif' enabledIf=ScannerCondition)?
 	//;
 	public Scanner_CharacterRuleElements getScanner_CharacterRuleAccess() {
 		return pScanner_CharacterRule;
@@ -2126,7 +2276,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_JSRule:
-	//	"script" fileURI=STRING ("col" check=Check)? //( 'enabledif' condition=ScannerCondition)?
+	//	'script' fileURI=STRING ('col' check=Check)? //( 'enabledif' condition=ScannerCondition)?
 	//;
 	public Scanner_JSRuleElements getScanner_JSRuleAccess() {
 		return pScanner_JSRule;
@@ -2162,7 +2312,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Equals:
-	//	"eq" value=INT;
+	//	'eq' value=INT;
 	public EqualsElements getEqualsAccess() {
 		return pEquals;
 	}
@@ -2172,7 +2322,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Range:
-	//	"in" ltIncl=("(" | "[") minValue+=INT? "," maxValue+=INT? gtIncl=(")" | "]");
+	//	'in' ltIncl=('(' | '[') minValue+=INT? ',' maxValue+=INT? gtIncl=(')' | ']');
 	public RangeElements getRangeAccess() {
 		return pRange;
 	}
@@ -2182,7 +2332,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//WhitespaceRule:
-	//	"whitespace" ("[" characters+=STRING ("," characters+=STRING)* "]" | javawhitespace?="javawhitespace" |
+	//	'whitespace' ('[' characters+=STRING (',' characters+=STRING)* ']' | javawhitespace?='javawhitespace' |
 	//	fileURI=STRING);
 	public WhitespaceRuleElements getWhitespaceRuleAccess() {
 		return pWhitespaceRule;
@@ -2193,38 +2343,38 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal ID:
-	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
+	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
 	} 
 
 	//terminal INT returns ecore::EInt:
-	//	"0".."9"+;
+	//	'0'..'9'+;
 	public TerminalRule getINTRule() {
 		return gaTerminals.getINTRule();
 	} 
 
 	//terminal STRING:
-	//	"\"" ("\\" . / * 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' * / | !("\\" | "\""))* "\"" | "\'" ("\\" .
-	//	/ * 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' * / | !("\\" | "\'"))* "\'";
+	//	'"' ('\\' . | !('\\' | '"'))* '"' |
+	//	"'" ('\\' . | !('\\' | "'"))* "'";
 	public TerminalRule getSTRINGRule() {
 		return gaTerminals.getSTRINGRule();
 	} 
 
 	//terminal ML_COMMENT:
-	//	"/ *"->"* /";
+	//	'/ *'->'* /';
 	public TerminalRule getML_COMMENTRule() {
 		return gaTerminals.getML_COMMENTRule();
 	} 
 
 	//terminal SL_COMMENT:
-	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
+	//	'//' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaTerminals.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
-	//	(" " | "\t" | "\r" | "\n")+;
+	//	' ' | '\t' | '\r' | '\n'+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
 	} 

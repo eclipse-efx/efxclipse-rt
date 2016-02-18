@@ -1,33 +1,39 @@
-.styled-text-area .js.js_default {
+.styled-text-area .ts.ts_default {
 	-styled-text-color: -source-editor-code;
 }
 
-.styled-text-area .js.js_operator {
+.styled-text-area .ts.ts_operator {
 	-styled-text-color: -source-editor-operator;
 }
 
-.styled-text-area .js.js_bracket {
+.styled-text-area .ts.ts_bracket {
 	-styled-text-color: -source-editor-bracket;
 }
 
-.styled-text-area .js.js_keyword {
+.styled-text-area .ts.ts_keyword {
 	-styled-text-color: -source-editor-keyword;
 	-fx-font-weight: bold;
 }
 
-.styled-text-area .js.js_doc_default {
+.styled-text-area .ts.ts_builtin_types {
+	-styled-text-color: -source-editor-buitin-type;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .ts.ts_doc_default {
 	-styled-text-color: -source-editor-doc;
 }
 
-.styled-text-area .js.js_string {
+.styled-text-area .ts.ts_string {
 	-styled-text-color: -source-editor-string;
 }
 
-.styled-text-area .js.js_constant {
+.styled-text-area .ts.ts_constant {
 	-styled-text-color: -source-editor-keyword;
 	-fx-font-weight: bold;
 }
 
-.styled-text-area .js.js_number {
+.styled-text-area .ts.ts_number {
 	-styled-text-color: -source-editor-number;
 }
+

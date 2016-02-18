@@ -103,12 +103,36 @@ adoc {
 		rule __adoc_multiline_code {
 			default adoc_code
 		}
-	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.asciidoc" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
+		token_def {
+			adoc_default "-source-editor-code";
+			adoc_section_0 "-source-editor-keyword" bold;
+			adoc_section_1 "-source-editor-keyword" bold;
+			adoc_section_2 "-source-editor-keyword" bold;
+			adoc_section_3 "-source-editor-keyword" bold;
+			adoc_section_4 "-source-editor-keyword" bold;
+			adoc_section_5 "-source-editor-keyword" bold;
+			adoc_mono_bold_italic "-source-editor-code" bold italic;
+			adoc_bold_italic "-source-editor-code" bold italic;
+			adoc_mono_bold "-source-editor-code" bold;
+			adoc_mono_italic "-source-editor-code" italic;
+			adoc_italic "-source-editor-code" italic;
+			adoc_bold "-source-editor-code" bold;
+			adoc_literal "-source-editor-code";
+			adoc_super "-source-editor-code";
+			adoc_sub "-source-editor-code";
+			adoc_comment "-source-editor-doc";
+			adoc_header_attribute "-source-editor-annotation";
+			adoc_admonition "-source-editor-code" bold; //  -fx-background-color: -source-editor-buitin-type;
+			adoc_block "-source-editor-code"; // -fx-background-color:  -source-editor-annotation;
+			adoc_code "-source-editor-code"; // -fx-background-color:  rgb(230,230,230);
+			adoc_header "-source-editor-code" bold; // -fx-background-color:   rgb(255,115,0);
 		}
 	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.asciidoc" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }

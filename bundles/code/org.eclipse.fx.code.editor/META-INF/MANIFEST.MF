@@ -20,5 +20,6 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.services.interna
  OSGI-INF/services/org.eclipse.fx.code.editor.services.internal.FileInputTypeProvider.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.services.internal.InputDocumentTypeProvider.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.services.internal.DefaultFileIconProvider.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.services.internal.NoHighlightDocumentTypePartitionerProvider.xml
+ OSGI-INF/services/org.eclipse.fx.code.editor.services.internal.NoHighlightDocumentTypePartitionerProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.services.internal.DefaultInputContextLookup.xml
 Bundle-Vendor: Eclipse.org

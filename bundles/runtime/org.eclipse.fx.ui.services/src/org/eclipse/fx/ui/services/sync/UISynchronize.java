@@ -11,10 +11,23 @@
 package org.eclipse.fx.ui.services.sync;
 
 import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.fx.ui.controls.Util;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Extended UISynchronize Class
  */
 public interface UISynchronize extends ThreadSynchronize {
-	// leave empty for now
+	/**
+	 * Wait until the condition is satisfied without blocking the UI-Thread
+	 *
+	 * @param blockCondition
+	 *            the condition
+	 * @return the return value of the condition
+	 * @since 2.3.0
+	 */
+	public default <T> @Nullable T waitUntil(@NonNull BlockCondition<T> blockCondition) {
+		return Util.waitUntil(blockCondition);
+	}
 }

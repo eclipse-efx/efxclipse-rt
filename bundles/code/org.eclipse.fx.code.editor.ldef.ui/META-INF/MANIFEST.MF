@@ -21,5 +21,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.fx.code.editor.ldef.ui.quickfix,
  org.eclipse.fx.code.editor.ldef.ui.contentassist,
  org.eclipse.fx.code.editor.ldef.ui.internal,
- org.eclipse.fx.code.editor.ldef.ui.contentassist.antlr
+ org.eclipse.fx.code.editor.ldef.ui.contentassist.antlr,
+ org.eclipse.fx.code.editor.ldef.ui.contentassist.antlr.internal
 Bundle-Activator: org.eclipse.fx.code.editor.ldef.ui.internal.LDefActivator

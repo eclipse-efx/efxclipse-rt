@@ -27,7 +27,3 @@
 	-styled-text-color: -source-editor-number;
 }
 
-.styled-text-area .swift.swift_annotation {
-	-styled-text-color: -source-editor-annotation;
-	-fx-font-weight: bold;
-}

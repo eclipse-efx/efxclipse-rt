@@ -46,6 +46,8 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Token;
+import org.eclipse.fx.code.editor.ldef.lDef.TokenVisual;
+import org.eclipse.fx.code.editor.ldef.lDef.TokenVisuals;
 import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule;
 
 /**
@@ -188,6 +190,20 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * @generated
    */
   private EClass lexicalHighlightingEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass tokenVisualsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass tokenVisualEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -826,6 +842,86 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getLexicalHighlighting_Vistual()
+  {
+    return (EReference)lexicalHighlightingEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTokenVisuals()
+  {
+    return tokenVisualsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTokenVisuals_TokenVisuals()
+  {
+    return (EReference)tokenVisualsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTokenVisual()
+  {
+    return tokenVisualEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTokenVisual_Token()
+  {
+    return (EReference)tokenVisualEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTokenVisual_ColorSpec()
+  {
+    return (EAttribute)tokenVisualEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTokenVisual_Bold()
+  {
+    return (EAttribute)tokenVisualEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTokenVisual_Italic()
+  {
+    return (EAttribute)tokenVisualEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getLexicalPartitionHighlighting()
   {
     return lexicalPartitionHighlightingEClass;
@@ -1384,6 +1480,16 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
 
     lexicalHighlightingEClass = createEClass(LEXICAL_HIGHLIGHTING);
     createEReference(lexicalHighlightingEClass, LEXICAL_HIGHLIGHTING__LIST);
+    createEReference(lexicalHighlightingEClass, LEXICAL_HIGHLIGHTING__VISTUAL);
+
+    tokenVisualsEClass = createEClass(TOKEN_VISUALS);
+    createEReference(tokenVisualsEClass, TOKEN_VISUALS__TOKEN_VISUALS);
+
+    tokenVisualEClass = createEClass(TOKEN_VISUAL);
+    createEReference(tokenVisualEClass, TOKEN_VISUAL__TOKEN);
+    createEAttribute(tokenVisualEClass, TOKEN_VISUAL__COLOR_SPEC);
+    createEAttribute(tokenVisualEClass, TOKEN_VISUAL__BOLD);
+    createEAttribute(tokenVisualEClass, TOKEN_VISUAL__ITALIC);
 
     lexicalPartitionHighlightingEClass = createEClass(LEXICAL_PARTITION_HIGHLIGHTING);
     createEReference(lexicalPartitionHighlightingEClass, LEXICAL_PARTITION_HIGHLIGHTING__PARTITION);
@@ -1562,6 +1668,16 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
 
     initEClass(lexicalHighlightingEClass, LexicalHighlighting.class, "LexicalHighlighting", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLexicalHighlighting_List(), this.getLexicalPartitionHighlighting(), null, "list", null, 0, -1, LexicalHighlighting.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLexicalHighlighting_Vistual(), this.getTokenVisuals(), null, "vistual", null, 0, 1, LexicalHighlighting.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(tokenVisualsEClass, TokenVisuals.class, "TokenVisuals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTokenVisuals_TokenVisuals(), this.getTokenVisual(), null, "tokenVisuals", null, 0, -1, TokenVisuals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(tokenVisualEClass, TokenVisual.class, "TokenVisual", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTokenVisual_Token(), this.getToken(), null, "token", null, 0, 1, TokenVisual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTokenVisual_ColorSpec(), ecorePackage.getEString(), "colorSpec", null, 0, 1, TokenVisual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTokenVisual_Bold(), ecorePackage.getEBoolean(), "bold", null, 0, 1, TokenVisual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTokenVisual_Italic(), ecorePackage.getEBoolean(), "italic", null, 0, 1, TokenVisual.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(lexicalPartitionHighlightingEClass, LexicalPartitionHighlighting.class, "LexicalPartitionHighlighting", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLexicalPartitionHighlighting_Partition(), this.getPartition(), null, "partition", null, 0, 1, LexicalPartitionHighlighting.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

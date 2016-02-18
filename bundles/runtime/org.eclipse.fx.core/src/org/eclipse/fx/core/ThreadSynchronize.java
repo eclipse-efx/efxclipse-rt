@@ -10,14 +10,16 @@
  *******************************************************************************/
 package org.eclipse.fx.core;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.eclipse.fx.core.Subscription;
 import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.beans.property.Property;
@@ -45,6 +47,23 @@ public interface ThreadSynchronize {
 	 * @return the result of callable.call()
 	 */
 	<V> V syncExec(final Callable<V> callable, V defaultValue);
+
+	/**
+	 * Execute the function in the UI-Thread
+	 *
+	 * @param value
+	 *            the value
+	 * @param function
+	 *            the function
+	 * @param defaultValue
+	 *            the default value
+	 * @return the return value of the function
+	 * @since 2.3.0
+	 */
+	default <T, R> R syncExec(final T value, final Function<T, R> function, R defaultValue) {
+		Callable<R> c = () -> function.apply(value);
+		return syncExec(c, defaultValue);
+	}
 
 	/**
 	 * Executes the runnable on the sync thread and blocks until the runnable is
@@ -77,6 +96,19 @@ public interface ThreadSynchronize {
 	 *            the runnable to execute
 	 */
 	void asyncExec(Runnable runnable);
+
+	/**
+	 * Executes the consumer in the ui thread
+	 *
+	 * @param value
+	 *            the value
+	 * @param consumer
+	 *            the consumer
+	 * @since 2.3.0
+	 */
+	default <@Nullable T> void asyncExec(T value, Consumer<T> consumer) {
+		asyncExec(() -> consumer.accept(value));
+	}
 
 	/**
 	 * Schedule the execution of the runnable
@@ -218,4 +250,69 @@ public interface ThreadSynchronize {
 	// public <O> void schedule(int priority, O value, Consumer<O> consumer);
 	// }
 
+//TODO Make API in 3.0
+// 	/**
+//	 * Block the UI-Thread in a way that events are still processed until the
+//	 * given condition is released
+//	 *
+//	 * @param blockCondition
+//	 *            the condition
+//	 * @return the value
+//	 */
+//	<T> @Nullable T block(@NonNull BlockCondition<T> blockCondition);
+
+
+	/**
+	 * A block condition
+	 *
+	 * @param <T>
+	 *            the type
+	 * @since 2.3.0
+	 */
+	public static class BlockCondition<T> {
+		List<Consumer<T>> callbacks = new ArrayList<>();
+		private boolean isBlocked = true;
+
+		/**
+		 * Subscribe to unblocking
+		 *
+		 * @param r
+		 *            the callback
+		 * @return the subscription
+		 */
+		public Subscription subscribeUnblockedCallback(Consumer<T> r) {
+			if (!this.isBlocked) {
+				throw new IllegalStateException();
+			}
+			this.callbacks.add(r);
+			return new Subscription() {
+
+				@Override
+				public void dispose() {
+					BlockCondition.this.callbacks.remove(r);
+				}
+			};
+		}
+
+		/**
+		 * @return check if still blocked
+		 */
+		public boolean isBlocked() {
+			return this.isBlocked;
+		}
+
+		/**
+		 * Release the lock and pass value
+		 *
+		 * @param value
+		 *            the value to pass
+		 */
+		public void release(T value) {
+			for (Consumer<T> r : this.callbacks) {
+				r.accept(value);
+			}
+			this.callbacks.clear();
+			this.isBlocked = false;
+		}
+	}
 }

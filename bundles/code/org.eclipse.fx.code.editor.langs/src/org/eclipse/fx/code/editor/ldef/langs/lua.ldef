@@ -28,12 +28,20 @@ lua {
 		rule __lua_string {
 			default lua_string
 		}
-	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.lua" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
+
+		token_def {
+			lua_default "-source-editor-code";
+			lua_keyword "-source-editor-keyword" bold;
+			lua_doc_default "-source-editor-doc";
+			lua_string "-source-editor-string";
 		}
 	}
+
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.lua" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }

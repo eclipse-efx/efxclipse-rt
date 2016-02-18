@@ -4,8 +4,9 @@
 package org.eclipse.fx.code.editor.ldef.serializer;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
+import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.fx.code.editor.ldef.lDef.ConfigValue;
 import org.eclipse.fx.code.editor.ldef.lDef.E4CodeGeneration;
 import org.eclipse.fx.code.editor.ldef.lDef.Equals;
@@ -34,17 +35,16 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Token;
+import org.eclipse.fx.code.editor.ldef.lDef.TokenVisual;
+import org.eclipse.fx.code.editor.ldef.lDef.TokenVisuals;
 import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule;
 import org.eclipse.fx.code.editor.ldef.services.LDefGrammarAccess;
-import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
+import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Parameter;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.serializer.ISerializationContext;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
-import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
-import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
-import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
@@ -54,8 +54,13 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	private LDefGrammarAccess grammarAccess;
 	
 	@Override
-	public void createSequence(EObject context, EObject semanticObject) {
-		if(semanticObject.eClass().getEPackage() == LDefPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+	public void sequence(ISerializationContext context, EObject semanticObject) {
+		EPackage epackage = semanticObject.eClass().getEPackage();
+		ParserRule rule = context.getParserRule();
+		Action action = context.getAssignedAction();
+		Set<Parameter> parameters = context.getEnabledBooleanParameters();
+		if (epackage == LDefPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
 			case LDefPackage.CONFIG_VALUE:
 				sequence_ConfigValue(context, (ConfigValue) semanticObject); 
 				return; 
@@ -137,130 +142,172 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case LDefPackage.TOKEN:
 				sequence_Token(context, (Token) semanticObject); 
 				return; 
+			case LDefPackage.TOKEN_VISUAL:
+				sequence_TokenVisual(context, (TokenVisual) semanticObject); 
+				return; 
+			case LDefPackage.TOKEN_VISUALS:
+				sequence_TokenVisuals(context, (TokenVisuals) semanticObject); 
+				return; 
 			case LDefPackage.WHITESPACE_RULE:
 				sequence_WhitespaceRule(context, (WhitespaceRule) semanticObject); 
 				return; 
 			}
-		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
+		if (errorAcceptor != null)
+			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
 	
 	/**
+	 * Contexts:
+	 *     ConfigValue returns ConfigValue
+	 *
 	 * Constraint:
 	 *     (key=ID (simpleValue=STRING | children+=ConfigValue+))
 	 */
-	protected void sequence_ConfigValue(EObject context, ConfigValue semanticObject) {
+	protected void sequence_ConfigValue(ISerializationContext context, ConfigValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Codegeneration returns E4CodeGeneration
+	 *     E4CodeGeneration returns E4CodeGeneration
+	 *
 	 * Constraint:
 	 *     (name=STRING configValue+=ConfigValue*)
 	 */
-	protected void sequence_E4CodeGeneration(EObject context, E4CodeGeneration semanticObject) {
+	protected void sequence_E4CodeGeneration(ISerializationContext context, E4CodeGeneration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Check returns Equals
+	 *     Equals returns Equals
+	 *
 	 * Constraint:
 	 *     value=INT
 	 */
-	protected void sequence_Equals(EObject context, Equals semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.EQUALS__VALUE) == ValueTransient.YES)
+	protected void sequence_Equals(ISerializationContext context, Equals semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.EQUALS__VALUE) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.EQUALS__VALUE));
 		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getEqualsAccess().getValueINTTerminalRuleCall_1_0(), semanticObject.getValue());
 		feeder.finish();
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Import returns Import
+	 *
 	 * Constraint:
 	 *     importedNamespace=QualifiedNameWithWildCard
 	 */
-	protected void sequence_Import(EObject context, Import semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.IMPORT__IMPORTED_NAMESPACE) == ValueTransient.YES)
+	protected void sequence_Import(ISerializationContext context, Import semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.IMPORT__IMPORTED_NAMESPACE) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.IMPORT__IMPORTED_NAMESPACE));
 		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getImportAccess().getImportedNamespaceQualifiedNameWithWildCardParserRuleCall_1_0(), semanticObject.getImportedNamespace());
 		feeder.finish();
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Integration returns Integration
+	 *
 	 * Constraint:
 	 *     codeIntegrationList+=CodeIntegration+
 	 */
-	protected void sequence_Integration(EObject context, Integration semanticObject) {
+	protected void sequence_Integration(ISerializationContext context, Integration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Codegeneration returns JavaCodeGeneration
+	 *     JavaCodeGeneration returns JavaCodeGeneration
+	 *
 	 * Constraint:
 	 *     (name=STRING configValue+=ConfigValue*)
 	 */
-	protected void sequence_JavaCodeGeneration(EObject context, JavaCodeGeneration semanticObject) {
+	protected void sequence_JavaCodeGeneration(ISerializationContext context, JavaCodeGeneration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     CodeIntegration returns JavaFXIntegration
+	 *     JavaFXIntegration returns JavaFXIntegration
+	 *
 	 * Constraint:
 	 *     codegenerationList+=Codegeneration+
 	 */
-	protected void sequence_JavaFXIntegration(EObject context, JavaFXIntegration semanticObject) {
+	protected void sequence_JavaFXIntegration(ISerializationContext context, JavaFXIntegration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Keyword returns Keyword
+	 *
 	 * Constraint:
 	 *     (name=STRING version=STRING?)
 	 */
-	protected void sequence_Keyword(EObject context, Keyword semanticObject) {
+	protected void sequence_Keyword(ISerializationContext context, Keyword semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     LanguageDef returns LanguageDef
+	 *
 	 * Constraint:
 	 *     (name=ID paritioning=Paritioning lexicalHighlighting=LexicalHighlighting integration=Integration?)
 	 */
-	protected void sequence_LanguageDef(EObject context, LanguageDef semanticObject) {
+	protected void sequence_LanguageDef(ISerializationContext context, LanguageDef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     LexicalHighlighting returns LexicalHighlighting
+	 *
 	 * Constraint:
-	 *     list+=LexicalPartitionHighlighting+
+	 *     (list+=LexicalPartitionHighlighting+ vistual=TokenVisuals?)
 	 */
-	protected void sequence_LexicalHighlighting(EObject context, LexicalHighlighting semanticObject) {
+	protected void sequence_LexicalHighlighting(ISerializationContext context, LexicalHighlighting semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     LexicalPartitionHighlighting returns LexicalPartitionHighlighting_JS
+	 *     LexicalPartitionHighlighting_JS returns LexicalPartitionHighlighting_JS
+	 *
 	 * Constraint:
 	 *     (partition=[Partition|ID] scriptURI=STRING)
 	 */
-	protected void sequence_LexicalPartitionHighlighting_JS(EObject context, LexicalPartitionHighlighting_JS semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.LEXICAL_PARTITION_HIGHLIGHTING__PARTITION) == ValueTransient.YES)
+	protected void sequence_LexicalPartitionHighlighting_JS(ISerializationContext context, LexicalPartitionHighlighting_JS semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.LEXICAL_PARTITION_HIGHLIGHTING__PARTITION) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.LEXICAL_PARTITION_HIGHLIGHTING__PARTITION));
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.LEXICAL_PARTITION_HIGHLIGHTING_JS__SCRIPT_URI) == ValueTransient.YES)
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.LEXICAL_PARTITION_HIGHLIGHTING_JS__SCRIPT_URI) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.LEXICAL_PARTITION_HIGHLIGHTING_JS__SCRIPT_URI));
 		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getPartitionPartitionIDTerminalRuleCall_1_0_1(), semanticObject.getPartition());
 		feeder.accept(grammarAccess.getLexicalPartitionHighlighting_JSAccess().getScriptURISTRINGTerminalRuleCall_2_0(), semanticObject.getScriptURI());
 		feeder.finish();
@@ -268,168 +315,260 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	
 	/**
+	 * Contexts:
+	 *     LexicalPartitionHighlighting returns LexicalPartitionHighlighting_Rule
+	 *     LexicalPartitionHighlighting_Rule returns LexicalPartitionHighlighting_Rule
+	 *
 	 * Constraint:
 	 *     (partition=[Partition|ID] whitespace=WhitespaceRule? tokenList+=Token+)
 	 */
-	protected void sequence_LexicalPartitionHighlighting_Rule(EObject context, LexicalPartitionHighlighting_Rule semanticObject) {
+	protected void sequence_LexicalPartitionHighlighting_Rule(ISerializationContext context, LexicalPartitionHighlighting_Rule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Partitioner returns Paritioner_JS
+	 *     Paritioner_JS returns Paritioner_JS
+	 *
 	 * Constraint:
 	 *     scriptURI=STRING
 	 */
-	protected void sequence_Paritioner_JS(EObject context, Paritioner_JS semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.PARITIONER_JS__SCRIPT_URI) == ValueTransient.YES)
+	protected void sequence_Paritioner_JS(ISerializationContext context, Paritioner_JS semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.PARITIONER_JS__SCRIPT_URI) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.PARITIONER_JS__SCRIPT_URI));
 		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getParitioner_JSAccess().getScriptURISTRINGTerminalRuleCall_1_0(), semanticObject.getScriptURI());
 		feeder.finish();
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Paritioning returns Paritioning
+	 *
 	 * Constraint:
 	 *     (partitions+=Partition+ partitioner=Partitioner)
 	 */
-	protected void sequence_Paritioning(EObject context, Paritioning semanticObject) {
+	protected void sequence_Paritioning(ISerializationContext context, Paritioning semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Partition_Rule returns Partition_MultiLineRule
+	 *     Partition_MultiLineRule returns Partition_MultiLineRule
+	 *
 	 * Constraint:
 	 *     (parition=[Partition|ID] startSeq=STRING check=Check? endSeq=STRING escapeSeq=STRING?)
 	 */
-	protected void sequence_Partition_MultiLineRule(EObject context, Partition_MultiLineRule semanticObject) {
+	protected void sequence_Partition_MultiLineRule(ISerializationContext context, Partition_MultiLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Partition returns Partition
+	 *
 	 * Constraint:
 	 *     name=ID
 	 */
-	protected void sequence_Partition(EObject context, Partition semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, LDefPackage.Literals.PARTITION__NAME) == ValueTransient.YES)
+	protected void sequence_Partition(ISerializationContext context, Partition semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.PARTITION__NAME) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.PARTITION__NAME));
 		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getPartitionAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
 		feeder.finish();
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Partition_Rule returns Partition_SingleLineRule
+	 *     Partition_SingleLineRule returns Partition_SingleLineRule
+	 *
 	 * Constraint:
 	 *     (parition=[Partition|ID] startSeq=STRING check=Check? endSeq=STRING? escapeSeq=STRING?)
 	 */
-	protected void sequence_Partition_SingleLineRule(EObject context, Partition_SingleLineRule semanticObject) {
+	protected void sequence_Partition_SingleLineRule(ISerializationContext context, Partition_SingleLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Partitioner returns Partitioner_Rule
+	 *     Partitioner_Rule returns Partitioner_Rule
+	 *
 	 * Constraint:
 	 *     ruleList+=Partition_Rule+
 	 */
-	protected void sequence_Partitioner_Rule(EObject context, Partitioner_Rule semanticObject) {
+	protected void sequence_Partitioner_Rule(ISerializationContext context, Partitioner_Rule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Check returns Range
+	 *     Range returns Range
+	 *
 	 * Constraint:
 	 *     ((ltIncl='(' | ltIncl='[') minValue+=INT? maxValue+=INT? (gtIncl=')' | gtIncl=']'))
 	 */
-	protected void sequence_Range(EObject context, Range semanticObject) {
+	protected void sequence_Range(ISerializationContext context, Range semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Root returns Root
+	 *
 	 * Constraint:
 	 *     (name=QualifiedName imports+=Import* languageDefinition=LanguageDef)
 	 */
-	protected void sequence_Root(EObject context, Root semanticObject) {
+	protected void sequence_Root(ISerializationContext context, Root semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Scanner returns Scanner_CharacterRule
+	 *     Scanner_Rule returns Scanner_CharacterRule
+	 *     Scanner_CharacterRule returns Scanner_CharacterRule
+	 *
 	 * Constraint:
 	 *     (characters+=STRING characters+=STRING* check=Check?)
 	 */
-	protected void sequence_Scanner_CharacterRule(EObject context, Scanner_CharacterRule semanticObject) {
+	protected void sequence_Scanner_CharacterRule(ISerializationContext context, Scanner_CharacterRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Scanner returns Scanner_JSRule
+	 *     Scanner_Rule returns Scanner_JSRule
+	 *     Scanner_JSRule returns Scanner_JSRule
+	 *
 	 * Constraint:
 	 *     (fileURI=STRING check=Check?)
 	 */
-	protected void sequence_Scanner_JSRule(EObject context, Scanner_JSRule semanticObject) {
+	protected void sequence_Scanner_JSRule(ISerializationContext context, Scanner_JSRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Scanner returns Scanner_Keyword
+	 *     Scanner_Keyword returns Scanner_Keyword
+	 *
 	 * Constraint:
 	 *     (keywords+=Keyword keywords+=Keyword*)
 	 */
-	protected void sequence_Scanner_Keyword(EObject context, Scanner_Keyword semanticObject) {
+	protected void sequence_Scanner_Keyword(ISerializationContext context, Scanner_Keyword semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Scanner returns Scanner_MultiLineRule
+	 *     Scanner_Rule returns Scanner_MultiLineRule
+	 *     Scanner_MultiLineRule returns Scanner_MultiLineRule
+	 *
 	 * Constraint:
 	 *     (startSeq=STRING check=Check? endSeq=STRING escapeSeq=STRING?)
 	 */
-	protected void sequence_Scanner_MultiLineRule(EObject context, Scanner_MultiLineRule semanticObject) {
+	protected void sequence_Scanner_MultiLineRule(ISerializationContext context, Scanner_MultiLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Scanner returns Scanner_PatternRule
+	 *     Scanner_Rule returns Scanner_PatternRule
+	 *     Scanner_PatternRule returns Scanner_PatternRule
+	 *
 	 * Constraint:
 	 *     (startPattern=STRING length=INT? check=Check? contentPattern=STRING)
 	 */
-	protected void sequence_Scanner_PatternRule(EObject context, Scanner_PatternRule semanticObject) {
+	protected void sequence_Scanner_PatternRule(ISerializationContext context, Scanner_PatternRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Scanner returns Scanner_SingleLineRule
+	 *     Scanner_Rule returns Scanner_SingleLineRule
+	 *     Scanner_SingleLineRule returns Scanner_SingleLineRule
+	 *
 	 * Constraint:
 	 *     (startSeq=STRING check=Check? endSeq=STRING? escapeSeq=STRING?)
 	 */
-	protected void sequence_Scanner_SingleLineRule(EObject context, Scanner_SingleLineRule semanticObject) {
+	protected void sequence_Scanner_SingleLineRule(ISerializationContext context, Scanner_SingleLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     TokenVisual returns TokenVisual
+	 *
+	 * Constraint:
+	 *     (token=[Token|ID] colorSpec=STRING bold?='bold'? italic?='italic'?)
+	 */
+	protected void sequence_TokenVisual(ISerializationContext context, TokenVisual semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TokenVisuals returns TokenVisuals
+	 *
+	 * Constraint:
+	 *     tokenVisuals+=TokenVisual+
+	 */
+	protected void sequence_TokenVisuals(ISerializationContext context, TokenVisuals semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Token returns Token
+	 *
 	 * Constraint:
 	 *     (default?='default'? name=ID scannerList+=Scanner*)
 	 */
-	protected void sequence_Token(EObject context, Token semanticObject) {
+	protected void sequence_Token(ISerializationContext context, Token semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     WhitespaceRule returns WhitespaceRule
+	 *
 	 * Constraint:
 	 *     ((characters+=STRING characters+=STRING*) | javawhitespace?='javawhitespace' | fileURI=STRING)
 	 */
-	protected void sequence_WhitespaceRule(EObject context, WhitespaceRule semanticObject) {
+	protected void sequence_WhitespaceRule(ISerializationContext context, WhitespaceRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
+	
+	
 }

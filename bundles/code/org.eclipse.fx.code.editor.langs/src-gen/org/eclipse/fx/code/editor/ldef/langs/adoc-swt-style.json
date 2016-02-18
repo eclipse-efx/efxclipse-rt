@@ -1,0 +1,160 @@
+{
+  "$gtype": "StylesheetDefinition",
+  "colorList": [],
+  "elementList": [
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "adoc.adoc_default",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "adoc.adoc_section_0",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "adoc.adoc_section_1",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "adoc.adoc_section_2",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "adoc.adoc_section_3",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "adoc.adoc_section_4",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "adoc.adoc_section_5",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": true,
+	  "name": "adoc.adoc_mono_bold_italic",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": true,
+	  "name": "adoc.adoc_bold_italic",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "adoc.adoc_mono_bold",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": true,
+	  "name": "adoc.adoc_mono_italic",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": true,
+	  "name": "adoc.adoc_italic",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "adoc.adoc_bold",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "adoc.adoc_literal",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "adoc.adoc_super",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "adoc.adoc_sub",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "adoc.adoc_comment",
+	  "textRefColor": "-source-editor-doc"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "adoc.adoc_header_attribute",
+	  "textRefColor": "-source-editor-annotation"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "adoc.adoc_admonition",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "adoc.adoc_block",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "adoc.adoc_code",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "adoc.adoc_header",
+	  "textRefColor": "-source-editor-code"
+	}
+	]
+}

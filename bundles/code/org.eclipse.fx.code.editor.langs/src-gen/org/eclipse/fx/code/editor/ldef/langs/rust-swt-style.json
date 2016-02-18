@@ -1,0 +1,69 @@
+{
+  "$gtype": "StylesheetDefinition",
+  "colorList": [],
+  "elementList": [
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "rust.rust_default",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "rust.rust_keyword",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "rust.rust_function",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "rust.rust_type",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "rust.rust_types",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "rust.rust_self",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "rust.rust_constants",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "rust.rust_doc_default",
+	  "textRefColor": "-source-editor-doc"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "rust.rust_string",
+	  "textRefColor": "-source-editor-string"
+	}
+	]
+}

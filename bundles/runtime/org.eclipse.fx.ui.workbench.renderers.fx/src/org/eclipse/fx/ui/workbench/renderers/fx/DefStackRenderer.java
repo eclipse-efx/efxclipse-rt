@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -410,18 +411,14 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		protected Tab createWidget() {
 			final Tab t = new Tab();
-			t.setOnCloseRequest(new EventHandler<Event>() {
-
-				@Override
-				public void handle(Event event) {
-					if (StackItemImpl.this.closeCallback != null) {
-						if (StackItemImpl.this.closeCallback.call(StackItemImpl.this).booleanValue()) {
-							event.consume();
-						}
-					}
-				}
-			});
+			t.setOnCloseRequest( this::handleOnCloseRequest );
 			return t;
+		}
+
+		private void handleOnCloseRequest(Event event) {
+			if (this.closeCallback.call(this).booleanValue()) {
+				event.consume();
+			}
 		}
 
 		void handleSelection() {
@@ -485,6 +482,15 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 
 		private static String notNull(String s) {
 			return s == null ? "" : s; //$NON-NLS-1$
+		}
+
+		@PreDestroy
+		public void dispose() {
+			this.initCallback = null;
+			this.closeCallback = null;
+			this.graphicsLoader = null;
+			this.tab.setOnCloseRequest(null);
+			this.tab = null;
 		}
 	}
 
@@ -652,6 +658,11 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@Override
 		public void setOnCloseCallback(WCallback<WStackItem<Object, Node>, Boolean> callback) {
 			// there's no close
+		}
+
+		@PreDestroy
+		public void dispose() {
+			this.initCallback = null;
 		}
 	}
 }

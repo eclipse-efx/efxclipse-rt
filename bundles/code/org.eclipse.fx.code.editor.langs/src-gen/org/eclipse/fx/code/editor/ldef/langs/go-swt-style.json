@@ -1,0 +1,55 @@
+{
+  "$gtype": "StylesheetDefinition",
+  "colorList": [],
+  "elementList": [
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "go.go_default",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "go.go_keyword",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "go.go_types",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "go.go_builtin_constants",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "go.go_builtin_functions",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "go.go_doc_default",
+	  "textRefColor": "-source-editor-doc"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "go.go_string",
+	  "textRefColor": "-source-editor-string"
+	}
+	]
+}

@@ -61,12 +61,24 @@ rust {
 		rule __rust_string {
 			default rust_string
 		}
-	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.rust" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
+		token_def {
+			rust_default "-source-editor-code";
+			rust_keyword "-source-editor-keyword" bold;
+			rust_function "-source-editor-keyword" bold;
+			rust_type "-source-editor-keyword" bold;
+			rust_types "-source-editor-keyword" bold;
+			rust_self "-source-editor-keyword" bold;
+			rust_constants "-source-editor-keyword" bold;
+			rust_doc_default "-source-editor-doc";
+			rust_string "-source-editor-string";
 		}
+
 	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.rust" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }

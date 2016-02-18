@@ -50,12 +50,21 @@ kotlin {
 		rule __kotlin_string {
 			default kotlin_string
 		}
-	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.kotlin" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
+		token_def {
+			kotlin_default "-source-editor-code";
+			kotlin_keyword "-source-editor-keyword" bold;
+			kotlin_literals "-source-editor-keyword" bold;
+			kotlin_doc_default "-source-editor-doc";
+			kotlin_string "-source-editor-string";
+//			kotlin_annotation "-source-editor-annotation" bold;
+			kotlin_api_doc_default "-source-editor-api-doc";
 		}
 	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.kotlin" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }

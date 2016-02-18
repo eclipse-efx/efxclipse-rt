@@ -20,10 +20,13 @@ class LDefGenerator implements IGenerator {
 	JavaFXCodeGenerator generator;
 	@Inject
 	JSONConfigurationConfigurator jsonGenerator;
+	@Inject
+	DeclarativeStyleingGenerator styleGenerator;
 
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
 		val root = resource.contents.head as Root
 		jsonGenerator.generate(root.languageDefinition,fsa)
+		styleGenerator.generate(root.languageDefinition,fsa);
 		if( root.languageDefinition.integration != null ) {
 			if( ! root.languageDefinition.integration.codeIntegrationList.filter(typeof(JavaFXIntegration)).empty ) {
 				generator.generate(root.languageDefinition, fsa);

@@ -1,0 +1,34 @@
+{
+  "$gtype": "StylesheetDefinition",
+  "colorList": [],
+  "elementList": [
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "py.python_default",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "py.python_keyword",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "py.python_string",
+	  "textRefColor": "-source-editor-string"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "py.python_doc_default",
+	  "textRefColor": "-source-editor-doc"
+	}
+	]
+}

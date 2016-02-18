@@ -17,6 +17,11 @@ public interface ProposalComputer {
 			this.document = document;
 			this.location = location;
 		}
+
+		@Override
+		public String toString() {
+			return "ProposalContext [input=" + input + ", document=" + document + ", location=" + location + "]";
+		}
 	}
 
 	public CompletableFuture<List<CompletionProposal>> compute(ProposalContext context);

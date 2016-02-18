@@ -1,0 +1,17 @@
+.styled-text-area .py.python_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .py.python_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .py.python_string {
+	-styled-text-color: -source-editor-string;
+}
+
+.styled-text-area .py.python_doc_default {
+	-styled-text-color: -source-editor-doc;
+}
+

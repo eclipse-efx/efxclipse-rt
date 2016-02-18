@@ -1,0 +1,69 @@
+{
+  "$gtype": "StylesheetDefinition",
+  "colorList": [],
+  "elementList": [
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "xml.xml_default",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "xml.xml_tag",
+	  "textRefColor": "-source-editor-markup-tag"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "xml.xml_property_value",
+	  "textRefColor": "-source-editor-markup-property-value"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "xml.xml_equals",
+	  "textRefColor": "-source-editor-markup-property-name"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "xml.xml_property_name",
+	  "textRefColor": "-source-editor-markup-property-name"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "xml.xml_declaration",
+	  "textRefColor": "-source-editor-markup-extra"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "xml.xml_cdata",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "xml.xml_pi",
+	  "textRefColor": "-source-editor-markup-extra"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "xml.xml_comment",
+	  "textRefColor": "-source-editor-markup-doc"
+	}
+	]
+}

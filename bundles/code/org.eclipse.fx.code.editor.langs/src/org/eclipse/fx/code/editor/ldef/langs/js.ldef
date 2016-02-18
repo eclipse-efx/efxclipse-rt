@@ -47,12 +47,22 @@ js {
 		rule __js_string {
 			default js_string
 		}
-	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.js" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
+		token_def {
+			js_default "-source-editor-code";
+			js_operator "-source-editor-operator";
+			js_bracket "-source-editor-bracket";
+			js_keyword "-source-editor-keyword" bold;
+			js_doc_default "-source-editor-doc";
+			js_string "-source-editor-string";
+			js_constant "-source-editor-keyword" bold;
+			js_number "-source-editor-number";
 		}
 	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.js" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }

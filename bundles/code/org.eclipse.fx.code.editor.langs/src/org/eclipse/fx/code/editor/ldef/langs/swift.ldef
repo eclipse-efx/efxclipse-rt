@@ -58,12 +58,22 @@ swift {
 		rule __swift_string {
 			default swift_string
 		}
-	}
-	integration {
-		javafx {
-			java "org.eclipse.fx.code.editor.langs.codegen.fx.swift" {
-				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-			}
+		token_def {
+			swift_default "-source-editor-code";
+			swift_operator "-source-editor-operator";
+			swift_keyword "-source-editor-keyword" bold;
+			swift_builtin_type "-source-editor-buitin-type";
+			swift_doc_default "-source-editor-doc";
+			swift_string "-source-editor-string";
+			swift_number "-source-editor-number";
+//			swift_annotation "-source-editor-annotation" bold;
 		}
 	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.swift" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
 }
