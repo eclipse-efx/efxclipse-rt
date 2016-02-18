@@ -6,11 +6,15 @@ ts {
 		partition __ts_single_line_comment
 		partition __ts_multi_line_comment
 		partition __ts_string
+		partition __ts_regex
+		partition __ts_template
 		rule {
 			single_line __ts_single_line_comment 	"//" 	=> ''
 			multi_line __ts_multi_line_comment 		"/*" 	=> "*/"
 			single_line __ts_string 				"'"	 	=> "'" escaped by "\\"
 			single_line __ts_string 				'"' 	=> '"' escaped by "\\"
+			single_line __ts_regex					'/'		=> '/' escaped by "\\"
+			multi_line __ts_template				'`'		=> '`' escaped by "\\"
 		}
 	}
 	lexical_highlighting {
@@ -23,23 +27,31 @@ ts {
 				character [ '(', ')', '{', '}', '[', ']' ]
 			}
 			ts_keyword {
-				keywords [  "break", 	"case", 	"catch", 		"continue",
-	    					"debugger",	"default",	"delete",		"do",
-	    					"else",		"finally",	"for",			"function",
-	    					"if",		"in",		"instanceof",	"new",
-	    					"return",	"switch",	"this",			"throw",
-	    					"try",		"typeof",	"var",
-	    					"while",	"with"
-	    					// typescript specific
-	    					, "interface", "class", "constructor", "declare", "module", "export", "extends", "super"
-	    					, "public"
+				keywords [  "break",           "case",            "catch",           "class"
+							, "const",           "continue",        "debugger",        "default"
+							, "delete",          "do",              "else",            "enum"
+							, "export",          "extends",         /*"false"*/           "finally"
+							, "for"             ,"function",        "if",              "import"
+							, "in",              "instanceof",      "new"             /*"null"*/
+							, "return",          "super",           "switch",          "this"
+							, "throw",           /*"true"*/         "try",             "typeof"
+							, "var",             /*"void",*/            "while",           "with"
+
+							, "implements",        "interface",         "let",               "package"
+							, "private",         "protected",         "public",            "static"
+							, "yield"
+
+							, "abstract",          "as",                "async",             "await"
+							, "constructor",      "declare",           "from",              "get"
+							, "is",              "module",            "namespace",         "of"
+							, "require",         "set",               "type"
 	    					 ]
 			}
 			ts_builtin_types {
-				keywords [ "any", "void", "string", "number", "boolean" ]
+				keywords [ "any", "void", "string", "number", "boolean", "symbol" ]
 			}
 			ts_constant {
-				keywords [ "true", "false", "undefined" ]
+				keywords [ "true", "false", "undefined", "null" ]
 			}
 			ts_number {
 				pattern "\\d" containing "[\\d|\\.]"
@@ -54,6 +66,16 @@ ts {
 		rule __ts_string {
 			default ts_string
 		}
+		rule __ts_regex {
+			default ts_string
+		}
+		rule __ts_template {
+			default ts_string
+
+			ts_variable_interpol {
+				single_line "${" => "}"
+			}
+		}
 		token_def {
 			ts_default "-source-editor-code";
 			ts_operator "-source-editor-operator";
@@ -64,6 +86,7 @@ ts {
 			ts_string "-source-editor-string";
 			ts_constant "-source-editor-keyword" bold;
 			ts_number "-source-editor-number";
+			ts_variable_interpol "-source-editor-string" bold;
 		}
 	}
 //	integration {

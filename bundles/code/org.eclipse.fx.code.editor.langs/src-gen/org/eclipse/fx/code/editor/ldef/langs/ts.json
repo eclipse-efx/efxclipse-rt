@@ -73,20 +73,27 @@
                 "break",
                 "case",
                 "catch",
+                "class",
+                "const",
                 "continue",
                 "debugger",
                 "default",
                 "delete",
                 "do",
                 "else",
+                "enum",
+                "export",
+                "extends",
                 "finally",
                 "for",
                 "function",
                 "if",
+                "import",
                 "in",
                 "instanceof",
                 "new",
                 "return",
+                "super",
                 "switch",
                 "this",
                 "throw",
@@ -95,15 +102,30 @@
                 "var",
                 "while",
                 "with",
+                "implements",
                 "interface",
-                "class",
+                "let",
+                "package",
+                "private",
+                "protected",
+                "public",
+                "static",
+                "yield",
+                "abstract",
+                "as",
+                "async",
+                "await",
                 "constructor",
                 "declare",
+                "from",
+                "get",
+                "is",
                 "module",
-                "export",
-                "extends",
-                "super",
-                "public"
+                "namespace",
+                "of",
+                "require",
+                "set",
+                "type"
               ]
             }
           ]
@@ -120,7 +142,8 @@
                 "void",
                 "string",
                 "number",
-                "boolean"
+                "boolean",
+                "symbol"
               ]
             }
           ]
@@ -135,7 +158,8 @@
               "keywordList": [
                 "true",
                 "false",
-                "undefined"
+                "undefined",
+                "null"
               ]
             }
           ]
@@ -216,6 +240,58 @@
           "defaultToken": true,
           "name": "ts_string",
           "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__ts_regex",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "/",
+          "escapedBy": "\\",
+          "startSeq": "/"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "ts_string",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__ts_template",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_MultiLine",
+          "endSeq": "`",
+          "escapedBy": "\\",
+          "startSeq": "`"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "ts_string",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "ts_variable_interpol",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_SingleLineRule",
+              "endSeq": "}",
+              "startSeq": "${"
+            }
+          ]
         }
       ]
     }

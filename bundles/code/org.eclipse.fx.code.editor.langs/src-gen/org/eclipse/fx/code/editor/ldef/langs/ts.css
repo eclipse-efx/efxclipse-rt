@@ -37,3 +37,8 @@
 	-styled-text-color: -source-editor-number;
 }
 
+.styled-text-area .ts.ts_variable_interpol {
+	-styled-text-color: -source-editor-string;
+	-fx-font-weight: bold;
+}
+

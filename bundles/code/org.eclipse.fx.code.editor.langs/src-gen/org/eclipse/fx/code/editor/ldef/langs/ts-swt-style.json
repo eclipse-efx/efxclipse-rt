@@ -64,6 +64,13 @@
 	  "italic": false,
 	  "name": "ts.ts_number",
 	  "textRefColor": "-source-editor-number"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "ts.ts_variable_interpol",
+	  "textRefColor": "-source-editor-string"
 	}
 	]
 }

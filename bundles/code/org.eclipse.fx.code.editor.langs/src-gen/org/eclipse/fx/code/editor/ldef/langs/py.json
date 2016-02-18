@@ -167,7 +167,7 @@
         {
           "$gtype": "Token",
           "defaultToken": true,
-          "name": "phyton_string",
+          "name": "python_string",
           "tokenScannerList": []
         }
       ]
