@@ -17,7 +17,6 @@ import static javafx.scene.input.KeyCode.C;
 import static javafx.scene.input.KeyCode.D;
 import static javafx.scene.input.KeyCode.DELETE;
 import static javafx.scene.input.KeyCode.DOWN;
-import static javafx.scene.input.KeyCode.E;
 import static javafx.scene.input.KeyCode.END;
 import static javafx.scene.input.KeyCode.ENTER;
 import static javafx.scene.input.KeyCode.HOME;
@@ -50,18 +49,15 @@ import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent.ActionType;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextLayoutContainer;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.InputAction;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.KeyCombo;
 import org.eclipse.fx.ui.controls.styledtext.events.TextPositionEvent;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
-import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin.LineCell;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.event.Event;
-import javafx.geometry.Bounds;
 import javafx.scene.control.Control;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -103,7 +99,7 @@ public class StyledTextBehavior {
 	}
 
 	// called from skin
-	public void installContentListeners(final Control contentNode) {
+	public void installContentListeners(final javafx.scene.layout.Region contentNode) {
 		this.textPositionSupport = TextPositionSupport.install(contentNode, getControl());
 		this.hoverSupport = HoverSupport.install(contentNode);
 	}
@@ -1324,48 +1320,49 @@ public class StyledTextBehavior {
 
 		// action for insert tab support
 		keyMapping.mapKey(new KeyCombo(TAB), ()->getControl().insert("\t")); //$NON-NLS-1$
+
 	}
 
-	/**
-	 * computes the text offset under the mouse cursor.
-	 * @param event
-	 * @return the offset
-	 */
-	private int computeCursorOffset(MouseEvent event) {
-		List<LineCell> visibleCells = ((StyledTextSkin) getControl().getSkin()).getCurrentVisibleCells();
-
-		LineCell lastCell = null;
-
-		int result = getControl().getContent().getCharCount();
-
-		for (LineCell tmp : visibleCells) {
-			Bounds boundsInParent = tmp.getBoundsInParent();
-			if (boundsInParent.getMinY() > event.getY()) {
-				if (lastCell == null) {
-					lastCell = tmp;
-				}
-
-				if (lastCell.getDomainElement() != null) {
-					StyledTextLayoutContainer n = (StyledTextLayoutContainer) lastCell.getGraphic();
-					if (n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY())) {
-						int index = n.getCaretIndexAtPoint(n.sceneToLocal(event.getSceneX(), event.getSceneY()));
-						if (index >= 0) {
-							return n.getStartOffset() + index;
-						}
-					}
-
-					final double minX = n.localToScene(n.getBoundsInLocal()).getMinX();
-					final double mouseX = event.getSceneX();
-					final boolean left = minX >= mouseX;
-
-					result = lastCell.getDomainElement().getLineOffset() + (left ? 0 : lastCell.getDomainElement().getLineLength());
-				}
-				break;
-			}
-			lastCell = tmp;
-		}
-		return result;
-	}
+//	/**
+//	 * computes the text offset under the mouse cursor.
+//	 * @param event
+//	 * @return the offset
+//	 */
+//	private int x_computeCursorOffset(MouseEvent event) {
+//		List<LineCell1> visibleCells = ((StyledTextSkin) getControl().getSkin()).getCurrentVisibleCells();
+//
+//		LineCell lastCell = null;
+//
+//		int result = getControl().getContent().getCharCount();
+//
+//		for (LineCell tmp : visibleCells) {
+//			Bounds boundsInParent = tmp.getBoundsInParent();
+//			if (boundsInParent.getMinY() > event.getY()) {
+//				if (lastCell == null) {
+//					lastCell = tmp;
+//				}
+//
+//				if (lastCell.getDomainElement() != null) {
+//					StyledTextLayoutContainer n = (StyledTextLayoutContainer) lastCell.getGraphic();
+//					if (n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY())) {
+//						int index = n.getCaretIndexAtPoint(n.sceneToLocal(event.getSceneX(), event.getSceneY()));
+//						if (index >= 0) {
+//							return n.getStartOffset() + index;
+//						}
+//					}
+//
+//					final double minX = n.localToScene(n.getBoundsInLocal()).getMinX();
+//					final double mouseX = event.getSceneX();
+//					final boolean left = minX >= mouseX;
+//
+//					result = lastCell.getDomainElement().getLineOffset() + (left ? 0 : lastCell.getDomainElement().getLineLength());
+//				}
+//				break;
+//			}
+//			lastCell = tmp;
+//		}
+//		return result;
+//	}
 
 
 

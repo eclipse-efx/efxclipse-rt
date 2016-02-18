@@ -273,7 +273,7 @@ class DefaultDocumentAdapter implements IDocumentAdapter, IDocumentListener, IDo
 		} else {
 			if (event.getOffset() < fRememberedLengthOfFirstLine)
 				fLineDelimiter= null;
-			fireTextChanged();
+			fireTextChanged(event.getOffset(), event.getLength(), event.getText());
 		}
 	}
 
@@ -319,12 +319,12 @@ class DefaultDocumentAdapter implements IDocumentAdapter, IDocumentListener, IDo
 	/**
 	 * Sends a text changed event to all registered listeners.
 	 */
-	private void fireTextChanged() {
+	private void fireTextChanged(int offset, int replaceLength, String newText) {
 
 		if (!fIsForwarding)
 			return;
 
-		TextChangedEvent event = TextChangedEvent.textChanged(this);
+		TextChangedEvent event = TextChangedEvent.textChanged(this, offset, replaceLength, newText);
 
 		if (fTextChangeListeners != null && fTextChangeListeners.size() > 0) {
 			Iterator e= new ArrayList(fTextChangeListeners).iterator();

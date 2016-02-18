@@ -16,6 +16,8 @@ import java.lang.ref.WeakReference;
 import java.util.Collections;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
+import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
+import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -23,17 +25,19 @@ import org.eclipse.jdt.annotation.Nullable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.SetProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleSetProperty;
+import javafx.collections.FXCollections;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.DataFormat;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 
 /**
  * Control which allows to implemented a code-editor
@@ -72,11 +76,6 @@ public class StyledTextArea extends Control {
 	@NonNull
 	final ObjectProperty<@NonNull StyledTextContent> contentProperty;
 
-//	@NonNull
-//	final SetProperty<@NonNull StyledTextAnnotation> annotationsProperty = new SimpleSetProperty<>(this, "annotations", FXCollections.observableSet()); //$NON-NLS-1$
-//	public SetProperty<@NonNull StyledTextAnnotation> getAnnotations() {
-//		return this.annotationsProperty;
-//	}
 
 	TextChangeListener textChangeListener = new TextChangeListener() {
 		@Override
@@ -106,9 +105,6 @@ public class StyledTextArea extends Control {
 
 	@NonNull
 	private final ObjectProperty<TextSelection> currentSelection = new SimpleObjectProperty<>(this, "currentSelection"); //$NON-NLS-1$
-
-	@NonNull
-	private final ObjectProperty<@NonNull Callback<@NonNull StyledTextLine, @Nullable Node>> lineRulerGraphicNodeFactory = new SimpleObjectProperty<>(this, "lineRulerGraphicNodeFactory", e -> null); //$NON-NLS-1$
 
 	/**
 	 * Separator for lines
@@ -140,20 +136,16 @@ public class StyledTextArea extends Control {
 	@NonNull
 	private final ObjectProperty<@NonNull LineSeparator> lineSeparator = new SimpleObjectProperty<>(this, "lineSeparator", "\n".equals(System.getProperty("line.separator")) ? LineSeparator.NEW_LINE : LineSeparator.CARRIAGE_RETURN_NEW_LINE); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-	/**
-	 * Represents a line shown in the control
-	 */
-	public interface StyledTextLine {
-		/**
-		 * @return the plain text value
-		 */
-		public String getText();
 
-		/**
-		 * @return the index of the line
-		 */
-		public int getLineIndex();
 
+	private SetProperty<AnnotationPresenter> annotationPresenter = new SimpleSetProperty<>(this, "annotationPresenter", FXCollections.observableSet());
+	public SetProperty<AnnotationPresenter> getAnnotationPresenter() {
+		return annotationPresenter;
+	}
+
+	private SetProperty<AnnotationProvider> annotationProvider = new SimpleSetProperty<>(this, "annotationProvider", FXCollections.observableSet());
+	public SetProperty<AnnotationProvider> getAnnotationProvider() {
+		return annotationProvider;
 	}
 
 	private int anchor;
@@ -192,7 +184,15 @@ public class StyledTextArea extends Control {
 		return USER_AGENT_STYLESHEET;
 	}
 
+	private TextChangingEvent changingEvent;
+
+
 	void handleTextChanging(TextChangingEvent event) {
+		System.err.println("handleTextChanging");
+		changingEvent = event;
+
+		this.renderer.textChanging(event);
+
 		if (event.replaceCharCount < 0) {
 			event.offset += event.replaceCharCount;
 			event.replaceCharCount *= -1;
@@ -204,7 +204,7 @@ public class StyledTextArea extends Control {
 //		this.lastTextChangeReplaceLineCount = event.replaceLineCount;
 		this.lastTextChangeReplaceCharCount = event.replaceCharCount;
 
-		this.renderer.textChanging(event);
+
 
 		// Update the caret offset if it is greater than the length of the
 		// content.
@@ -216,35 +216,40 @@ public class StyledTextArea extends Control {
 			setCaretOffset(newEndOfText/* , SWT.DEFAULT */);
 	}
 
+	void handleTextChanged(TextChangedEvent xxx) {
+		System.err.println("handleTextChanged");
+
+		if (changingEvent == null) {
+			// full text change
+			int newCharCount = getCharCount();
+			if( this.caretOffsetProperty.get() > newCharCount ) {
+				this.caretOffsetProperty.set(newCharCount);
+			}
+
+			// in SWT this is done in reset()
+			clearSelection();
+
+//			if( getSkin() instanceof StyledTextSkin ) {
+//				((StyledTextSkin)getSkin()).computeModel();
+//			}
+		}
+		else {
+			// partial text change
+			TextChangingEvent event = changingEvent;
+			changingEvent = null;
+
+//			if (getSkin() instanceof StyledTextSkin) {
+//				((StyledTextSkin) getSkin()).computeModelDelta(event);
+//			}
+		}
+	}
+
 	void handleTextSet(TextChangedEvent event) {
-		int newCharCount = getCharCount();
-		if( this.caretOffsetProperty.get() > newCharCount ) {
-			this.caretOffsetProperty.set(newCharCount);
-		}
-
-		// in SWT this is done in reset()
-		clearSelection();
-
-		if( getSkin() instanceof StyledTextSkin ) {
-			((StyledTextSkin)getSkin()).recalculateItems();
-		}
+		System.err.println("handleTextSet");
+		changingEvent = null;
 	}
 
-	void handleTextChanged(TextChangedEvent event) {
-		// int firstLine = getContent().getLineAtOffset(lastTextChangeStart);
-		if (getSkin() instanceof StyledTextSkin) {
-			((StyledTextSkin) getSkin()).recalculateItems();
-		}
 
-		// TODO We need to re enable this in the future.
-		// For each change coming from outside (for example refactoring)
-		// we need to update the caret
-
-//		updateSelection(this.lastTextChangeStart, this.lastTextChangeReplaceCharCount, this.lastTextChangeNewCharCount);
-
-		// lastCharCount += lastTextChangeNewCharCount;
-		// lastCharCount -= lastTextChangeReplaceCharCount;
-	}
 
 	void updateSelection(int startOffset, int replacedLength, int newLength) {
 		if (getSelection().offset + getSelection().length > startOffset && getSelection().offset < startOffset + replacedLength) {
@@ -534,9 +539,10 @@ public class StyledTextArea extends Control {
 			this.renderer.setStyleRanges(ranges, styles);
 		}
 
-		if (getSkin() instanceof StyledTextSkin) {
-			((StyledTextSkin) getSkin()).recalculateItems();
-		}
+//		if (getSkin() instanceof StyledTextSkin) {
+//			((StyledTextSkin) getSkin()).requestRedraw();
+//		}
+
 	}
 
 	/**
@@ -1465,6 +1471,12 @@ public class StyledTextArea extends Control {
 	}
 
 
+	private IntegerProperty lineCount = new SimpleIntegerProperty(this, "lineCount", 0);
+	public ReadOnlyIntegerProperty lineCountProperty() {
+		return lineCount;
+	}
+
+
 	/**
 	 * Paste the clipboard content
 	 */
@@ -1501,38 +1513,8 @@ public class StyledTextArea extends Control {
 		}
 	}
 
-	/**
-	 * @return property holding the factory to create graphics in the ruler
-	 */
-	@NonNull
-	public final ObjectProperty<@NonNull Callback<@NonNull StyledTextLine, @Nullable Node>> lineRulerGraphicNodeFactoryProperty() {
-		return this.lineRulerGraphicNodeFactory;
-	}
-
-	/**
-	 * @return the current factory to create graphics in the ruler
-	 */
-	public final @NonNull Callback<@NonNull StyledTextLine, @Nullable Node> getLineRulerGraphicNodeFactory() {
-		return this.lineRulerGraphicNodeFactoryProperty().get();
-	}
-
-	/**
-	 * Set a new factory to create graphics in the ruler
-	 *
-	 * @param lineRulerGraphicNodeFactory
-	 *            the factory
-	 */
-	public final void setLineRulerGraphicNodeFactory(final @NonNull Callback<@NonNull StyledTextLine, @Nullable Node> lineRulerGraphicNodeFactory) {
-		this.lineRulerGraphicNodeFactoryProperty().set(lineRulerGraphicNodeFactory);
-	}
-
-	/**
-	 * Refresh the line ruler
-	 */
-	public void refreshLineRuler() {
-		if (getSkin() != null) {
-			// TODO We need to send an event!
-			((StyledTextSkin) getSkin()).refreshLineRuler();
-		}
+	public int getOffsetAtPosition(double x, double y) {
+		int result = ((StyledTextSkin) getSkin()).getOffsetAtPosition(x, y);
+		return result;
 	}
 }

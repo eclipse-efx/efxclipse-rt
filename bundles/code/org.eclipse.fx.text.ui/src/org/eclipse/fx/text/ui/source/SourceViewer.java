@@ -12,16 +12,14 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui.source;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.eclipse.fx.text.ui.ITextViewerExtension2;
 import org.eclipse.fx.text.ui.TextViewer;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
+import org.eclipse.fx.text.ui.internal.AnnotationModelSupport;
+import org.eclipse.fx.text.ui.internal.WrappedLineRulerAnnotationPresenter;
+import org.eclipse.fx.text.ui.internal.WrappedTextAnnotationPresenter;
 import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
 import org.eclipse.fx.text.ui.reconciler.IReconciler;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.StyledTextLine;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ISynchronizable;
@@ -31,10 +29,6 @@ import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.AnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelExtension;
-import org.eclipse.jface.text.source.IAnnotationModelListener;
-
-import javafx.application.Platform;
-import javafx.scene.Node;
 
 public class SourceViewer extends TextViewer implements ISourceViewer, ISourceViewerExtension, ISourceViewerExtension2, ISourceViewerExtension3, ISourceViewerExtension4 {
 
@@ -42,13 +36,17 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 	private IReconciler fReconciler;
 	private IAnnotationModel fVisualAnnotationModel;
 	protected final static Object MODEL_ANNOTATION_MODEL= new Object();
-	private Map<String, AnnotationPresenter> presenterMap = new HashMap<>();
+
 	private Annotation fRangeIndicator;
 
 	@Override
 	public void configure(SourceViewerConfiguration configuration) {
 		if (getTextWidget() == null)
 			return;
+
+//		installPlugin(new InvisibleCharacterPlugin());
+
+
 
 		setUndoManager(configuration.getUndoManager(this));
 
@@ -86,27 +84,37 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		//TODO This is complete different to JFace-Text
 		IAnnotationModel annotationModel = configuration.getAnnotationModel();
 		if( annotationModel != null ) {
-			getTextWidget().setLineRulerGraphicNodeFactory(this::annotationFactory);
-			annotationModel.addAnnotationModelListener(new IAnnotationModelListener() {
+//			getTextWidget().setLineRulerGraphicNodeFactory(this::annotationFactory);
 
-				private boolean scheduled = false;
+			// NFO: the line ruler is updated by changes to the annotation model
 
-				@Override
-				public void modelChanged(IAnnotationModel model) {
-					if( ! this.scheduled ) {
-						this.scheduled = true;
-						Platform.runLater(() -> {
-							this.scheduled = false;
-							getTextWidget().refreshLineRuler();
-						});
-					}
-				}
-
-			});
+//			annotationModel.addAnnotationModelListener(new IAnnotationModelListener() {
+//
+//				private boolean scheduled = false;
+//
+//				@Override
+//				public void modelChanged(IAnnotationModel model) {
+//					if( ! this.scheduled ) {
+//						this.scheduled = true;
+//						Platform.runLater(() -> {
+//							this.scheduled = false;
+//							getTextWidget().refreshLineRuler();
+//						});
+//					}
+//				}
+//
+//			});
 		}
 
-		if( configuration.getAnnotationPresenters() != null ) {
-			configuration.getAnnotationPresenters().stream().forEach(p -> p.getTypes().forEach( s -> this.presenterMap.put(s,p)));
+		if( configuration.getAnnotationPresenter() != null ) {
+			// install presenters
+			configuration.getAnnotationPresenter().getLineRulerAnnotationPresenter().forEach(p -> {
+				System.err.println("adding line ruler presenter " + p);
+				getTextWidget().getAnnotationPresenter().add(new WrappedLineRulerAnnotationPresenter(p));
+			});
+			configuration.getAnnotationPresenter().getTextAnnotationPresenter().forEach(p -> {
+				getTextWidget().getAnnotationPresenter().add(new WrappedTextAnnotationPresenter(p));
+			});
 		}
 
 //		presenterMap.putAll(configuration.getAnnotationPresenters().stream().collect(Collectors.toMap(p -> p.getType(), p -> p)));
@@ -123,9 +131,21 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 			setTextHover(configuration.getTextHover(this, t), t, ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
 		}
 
-
 		// register annotation model with text widget
 		if (annotationModel != null) {
+
+			AnnotationModelSupport support = new AnnotationModelSupport(annotationModel, getTextWidget());
+			support.install();
+
+//			MarkerAnnotationPlugin markerAnnotationPlugin = new MarkerAnnotationPlugin(annotationModel, getTextWidget(), presenterMap);
+//			markerAnnotationPlugin.install();
+
+//			new AnnotationIconLineAnnotationPlugin(annotationModel, getTextWidget(),
+//
+//
+//					(a)->presenterMap.get(a.getType()).getPresentation(a));
+
+//			installPlugin(new AnnotationPlugin(annotationModel));
 //			annotationModel.addAnnotationModelListener(new IAnnotationModelListener() {
 //				@Override
 //				public void modelChanged(IAnnotationModel model) {
@@ -192,24 +212,24 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 	}
 
-	private Node annotationFactory(StyledTextLine l) {
-		//TODO Should use IAnnotationExtension2
-		@SuppressWarnings("unchecked")
-		Iterator<Annotation> annotationIterator = this.fVisualAnnotationModel.getAnnotationIterator();
-		while( annotationIterator.hasNext() ) {
-			Annotation a = annotationIterator.next();
-			Position position = this.fVisualAnnotationModel.getPosition(a);
-
-			if( l.getLineIndex() == getTextWidget().getContent().getLineAtOffset(position.offset) ) {
-				AnnotationPresenter annotationPresenter = this.presenterMap.get(a.getType());
-				if( annotationPresenter != null ) {
-					return annotationPresenter.getPresentation(a);
-				}
-				return null;
-			}
-		}
-		return null;
-	}
+//	private Node annotationFactory(StyledTextLine l) {
+//		//TODO Should use IAnnotationExtension2
+//		@SuppressWarnings("unchecked")
+//		Iterator<Annotation> annotationIterator = this.fVisualAnnotationModel.getAnnotationIterator();
+//		while( annotationIterator.hasNext() ) {
+//			Annotation a = annotationIterator.next();
+//			Position position = this.fVisualAnnotationModel.getPosition(a);
+//
+//			if( l.getLineIndex() == getTextWidget().getContent().getLineAtOffset(position.offset) ) {
+//				AnnotationPresenter annotationPresenter = this.presenterMap.get(a.getType());
+//				if( annotationPresenter != null ) {
+//					return annotationPresenter.getPresentation(a);
+//				}
+//				return null;
+//			}
+//		}
+//		return null;
+//	}
 
 	/**
 	 * Disposes the visual annotation model.

@@ -49,8 +49,8 @@ public abstract class SourceViewerConfiguration {
 		return null;
 	}
 
-	public List<AnnotationPresenter> getAnnotationPresenters() {
-		return Collections.emptyList();
+	public AnnotationPresenter getAnnotationPresenter() {
+		return null;
 	}
 
 	public AnnotationPainter getAnnotationPainter(ISourceViewer sourceViewer) {

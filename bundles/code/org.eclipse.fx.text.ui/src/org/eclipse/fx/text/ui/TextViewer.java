@@ -19,11 +19,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
-
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.fx.core.Util;
+import org.eclipse.fx.text.ui.internal.InvisibleCharSupport;
+import org.eclipse.fx.text.ui.internal.LineNumberSupport;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
@@ -47,6 +46,9 @@ import org.eclipse.jface.text.SlaveDocumentEvent;
 import org.eclipse.jface.text.TextUtilities;
 import org.eclipse.jface.text.projection.ChildDocument;
 import org.eclipse.jface.text.projection.ChildDocumentManager;
+
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 
 public class TextViewer extends AnchorPane implements
 	ITextViewer, ITextViewerExtension, ITextViewerExtension2, ITextViewerExtension4, ITextViewerExtension6, ITextViewerExtension7, ITextViewerExtension8
@@ -108,6 +110,9 @@ public class TextViewer extends AnchorPane implements
 		getChildren().add(fTextWidget);
 
 		fTextWidget.addEventHandler(VerifyEvent.VERIFY, this::onVerify);
+
+		new LineNumberSupport(fTextWidget).install();
+		new InvisibleCharSupport(fTextWidget).install();
 	}
 
 	private void onVerify(VerifyEvent event) {
@@ -1006,4 +1011,5 @@ public class TextViewer extends AnchorPane implements
 			fStateMask= stateMask;
 		}
 	}
+
 }

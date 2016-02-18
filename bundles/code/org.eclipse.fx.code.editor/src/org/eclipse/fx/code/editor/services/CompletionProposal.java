@@ -18,6 +18,8 @@ public interface CompletionProposal {
 	public void apply(IDocument document);
 	public TextSelection getSelection(IDocument document);
 
+	public ContextInformation getContextInformation();
+
 	public static class BaseCompletetionProposal implements CompletionProposal {
 
 		private final CharSequence label;
@@ -26,13 +28,15 @@ public interface CompletionProposal {
 		private final int replacementOffset;
 		private final int replacementLength;
 		private final int cursorPosition;
+		private final ContextInformation contextInformation;
 
-		public BaseCompletetionProposal(String replacementString, int replacementOffset, int replacementLength, CharSequence label) {
+		public BaseCompletetionProposal(String replacementString, int replacementOffset, int replacementLength, CharSequence label, ContextInformation contextInformation) {
 			this.replacementString = replacementString;
 			this.replacementOffset = replacementOffset;
 			this.replacementLength = replacementLength;
 			this.cursorPosition = replacementString.length();
 			this.label = label;
+			this.contextInformation = contextInformation;
 		}
 
 		@Override
@@ -69,6 +73,11 @@ public interface CompletionProposal {
 		@Override
 		public TextSelection getSelection(IDocument document) {
 			return new TextSelection(replacementOffset+cursorPosition, 0);
+		}
+
+		@Override
+		public ContextInformation getContextInformation() {
+			return contextInformation;
 		}
 	}
 

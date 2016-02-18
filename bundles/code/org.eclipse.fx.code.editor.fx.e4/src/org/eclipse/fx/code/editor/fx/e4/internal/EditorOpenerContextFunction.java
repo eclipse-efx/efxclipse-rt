@@ -131,6 +131,7 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 						.filter( e -> e.test(uri)).findFirst()
 						.map( e -> e.getBundleClassURI(uri))
 						.orElse("bundleclass://org.eclipse.fx.code.editor.fx/org.eclipse.fx.code.editor.fx.TextEditor");
+//						.orElse("bundleclass://at.bestsolution.set.fx/at.bestsolution.set.fx.editor.SetTextEditor");
 					part.setContributionURI(editorBundleURI);
 					part.setContributorURI("platform:/plugin/org.eclipse.fx.code.editor.fx.e4");
 					String iconUri = fileIconProvider

@@ -82,4 +82,9 @@ public class TextChangingEvent {
 	public static TextChangingEvent textChanging(StyledTextContent source, int offset, int replaceCharCount, int replaceLineCount, String newText, int newCharCount, int newLineCount) {
 		return new TextChangingEvent(source, offset, replaceCharCount, replaceLineCount, newText, newCharCount, newLineCount);
 	}
+
+	@Override
+	public String toString() {
+		return "TextChangingEvent(offset="+this.offset+", replaceCharCount="+this.replaceCharCount+", replaceText=" + (this.newText == null ? "null" : "\""+this.newText+"\"") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+	}
 }

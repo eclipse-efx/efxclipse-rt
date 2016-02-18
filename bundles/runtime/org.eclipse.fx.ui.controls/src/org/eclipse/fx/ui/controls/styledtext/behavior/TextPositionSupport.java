@@ -11,19 +11,12 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.behavior;
 
-import java.util.List;
-
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextLayoutContainer;
-import org.eclipse.fx.ui.controls.styledtext.events.TextHoverEvent;
 import org.eclipse.fx.ui.controls.styledtext.events.TextPositionEvent;
-import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
-import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin.LineCell;
 
 import javafx.event.Event;
-import javafx.geometry.Bounds;
-import javafx.scene.control.Control;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 
 /**
  * manages text position support
@@ -33,9 +26,9 @@ import javafx.scene.input.MouseEvent;
 public class TextPositionSupport {
 
 	private StyledTextArea textArea;
-	private Control control;
+	private Region control;
 
-	public TextPositionSupport(Control control, StyledTextArea textArea) {
+	public TextPositionSupport(Region control, StyledTextArea textArea) {
 		this.control = control;
 		this.textArea = textArea;
 	}
@@ -49,7 +42,7 @@ public class TextPositionSupport {
 		this.control.addEventFilter(MouseEvent.MOUSE_MOVED, this::onMouseEvent);
 	}
 
-	public static TextPositionSupport install(Control control, StyledTextArea textArea) {
+	public static TextPositionSupport install(Region control, StyledTextArea textArea) {
 		TextPositionSupport support = new TextPositionSupport(control, textArea);
 		support.install();
 		return support;
@@ -65,39 +58,43 @@ public class TextPositionSupport {
 	 * @return the offset
 	 */
 	protected int computeCursorOffset(MouseEvent event) {
-		List<LineCell> visibleCells = ((StyledTextSkin) this.textArea.getSkin()).getCurrentVisibleCells();
+		return textArea.getOffsetAtPosition(event.getX(), event.getY());
 
-		LineCell lastCell = null;
 
-		int result = this.textArea.getContent().getCharCount();
-
-		for (LineCell tmp : visibleCells) {
-			Bounds boundsInParent = tmp.getBoundsInParent();
-			if (boundsInParent.getMinY() > event.getY()) {
-				if (lastCell == null) {
-					lastCell = tmp;
-				}
-
-				if (lastCell.getDomainElement() != null) {
-					StyledTextLayoutContainer n = (StyledTextLayoutContainer) lastCell.getGraphic();
-					if (n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY())) {
-						int index = n.getCaretIndexAtPoint(n.sceneToLocal(event.getSceneX(), event.getSceneY()));
-						if (index >= 0) {
-							return n.getStartOffset() + index;
-						}
-					}
-
-					final double minX = n.localToScene(n.getBoundsInLocal()).getMinX();
-					final double mouseX = event.getSceneX();
-					final boolean left = minX >= mouseX;
-
-					result = lastCell.getDomainElement().getLineOffset() + (left ? 0 : lastCell.getDomainElement().getLineLength());
-				}
-				break;
-			}
-			lastCell = tmp;
-		}
-		return result;
+//		List<LineCell> visibleCells = ((StyledTextSkin) this.textArea.getSkin()).getCurrentVisibleCells();
+//
+//		LineCell lastCell = null;
+//
+//		int result = this.textArea.getContent().getCharCount();
+//
+//		for (LineCell tmp : visibleCells) {
+//			Bounds boundsInParent = tmp.getBoundsInParent();
+//			if (boundsInParent.getMinY() > event.getY()) {
+//				if (lastCell == null) {
+//					lastCell = tmp;
+//				}
+//
+//				if (lastCell.getDomainElement() != null) {
+//					LineNode n = (LineNode) lastCell.getGraphic();
+////					StyledTextLayoutContainer n = (StyledTextLayoutContainer) lastCell.getGraphic();
+//					if (n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(), event.getSceneY())) {
+//						int index = n.getCaretIndexAtPoint(n.sceneToLocal(event.getSceneX(), event.getSceneY()));
+//						if (index >= 0) {
+//							return n.getStartOffset() + index;
+//						}
+//					}
+//
+//					final double minX = n.localToScene(n.getBoundsInLocal()).getMinX();
+//					final double mouseX = event.getSceneX();
+//					final boolean left = minX >= mouseX;
+//
+//					result = lastCell.getDomainElement().getLineOffset() + (left ? 0 : lastCell.getDomainElement().getLineLength());
+//				}
+//				break;
+//			}
+//			lastCell = tmp;
+//		}
+//		return result;
 	}
 
 
