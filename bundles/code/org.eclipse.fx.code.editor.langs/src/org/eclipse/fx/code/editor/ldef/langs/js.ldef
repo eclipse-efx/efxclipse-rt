@@ -6,11 +6,13 @@ js {
 		partition __js_single_line_comment
 		partition __js_multi_line_comment
 		partition __js_string
+		partition __js_regex
 		rule {
 			single_line __js_single_line_comment 	"//" 	=> ''
 			multi_line __js_multi_line_comment 		"/*" 	=> "*/"
 			single_line __js_string 				"'"	 	=> "'" escaped by "\\"
 			single_line __js_string 				'"' 	=> '"' escaped by "\\"
+			single_line __js_regex					'/'		=> '/' escaped by "\\"
 		}
 	}
 	lexical_highlighting {
@@ -45,6 +47,9 @@ js {
 			default js_doc_default
 		}
 		rule __js_string {
+			default js_string
+		}
+		rule __js_regex {
 			default js_string
 		}
 		token_def {
