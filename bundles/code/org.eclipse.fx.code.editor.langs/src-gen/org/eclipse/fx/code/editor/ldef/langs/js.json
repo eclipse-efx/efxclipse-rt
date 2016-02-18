@@ -193,6 +193,26 @@
           "tokenScannerList": []
         }
       ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__js_regex",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "/",
+          "escapedBy": "\\",
+          "startSeq": "/"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "js_string",
+          "tokenScannerList": []
+        }
+      ]
     }
   ]
 }
