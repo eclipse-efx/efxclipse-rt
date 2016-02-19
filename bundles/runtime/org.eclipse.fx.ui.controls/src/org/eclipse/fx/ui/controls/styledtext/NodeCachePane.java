@@ -22,8 +22,8 @@ public class NodeCachePane extends Pane {
 			}
 			node.setVisible(true);
 		});
-		cache.addOnRelease(node->node.setVisible(false));
-		cache.addOnClear(node->getChildren().remove(node));
+		cache.addOnRelease( node -> getChildren().remove(node)); // FIXME modified by Tom leads to more and more text instances in AnnotationOverlay
+		cache.addOnClear( node -> getChildren().remove(node));
 	}
 
 	protected Node getNode() {
