@@ -11,6 +11,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -138,7 +140,7 @@ public class VerticalLineFlow<M, N>  extends NodeCachePane {
 	protected void layoutChildren() {
 		this.activeNodes.entrySet().forEach(e -> {
 			if (!yOffsetData.containsKey(e.getKey())) {
-				System.err.println("NO DATA FOR " + e);
+				if(ContentView.debugOut) System.err.println("NO DATA FOR " + e);
 				return;
 			}
 			double x = 0;

@@ -132,14 +132,14 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		Map<AnnotationProvider, Subscription> subscriptions = new HashMap<>();
 		Consumer<RangeSet<Integer>> onAnnotationChange = r-> {
-			System.err.println("onAnnotationChange " + r);
+			if(ContentView.debugOut) System.err.println("onAnnotationChange " + r);
 			content.updateAnnotations(r);
 			sortedLineRulerFlows.forEach(f->f.update(r));
 		};
 
 		getSkinnable().getAnnotationProvider().addListener((SetChangeListener<? super AnnotationProvider>)(c) -> {
 			if (c.wasAdded()) {
-				System.err.println("register for2 " + c.getElementAdded());
+				if(ContentView.debugOut) System.err.println("register for2 " + c.getElementAdded());
 				Subscription s = c.getElementAdded().registerChangeListener(onAnnotationChange);
 				subscriptions.put(c.getElementAdded(), s);
 			}
@@ -149,7 +149,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			}
 		});
 		for (AnnotationProvider p : getSkinnable().getAnnotationProvider()) {
-			System.err.println("register for " + p);
+			if(ContentView.debugOut) System.err.println("register for " + p);
 			if (!subscriptions.containsKey(p)) {
 				Subscription s = p.registerChangeListener(onAnnotationChange);
 				subscriptions.put(p, s);

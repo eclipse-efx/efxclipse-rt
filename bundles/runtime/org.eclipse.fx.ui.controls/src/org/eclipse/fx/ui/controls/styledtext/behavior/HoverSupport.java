@@ -57,7 +57,6 @@ public class HoverSupport {
 	}
 
 	private void onMouseMoved(MouseEvent event) {
-		System.err.println("moved " + event.getTarget());
 		if( this.lastHover != null ) {
 			TextHoverEvent hoverEvent = createHoverEvent(event);
 			if( this.lastHover.getOffsetTokenStart() != hoverEvent.getOffsetTokenStart() ) {
@@ -77,7 +76,6 @@ public class HoverSupport {
 
 	protected static TextHoverEvent createHoverEvent(MouseEvent e) {
 
-		System.err.println("createHover for " + e.getTarget());
 
 		// TODO fix hover event
 //		if (e.getTarget() instanceof Annotation)
@@ -103,7 +101,6 @@ public class HoverSupport {
 
 	protected void handleHover(MouseEvent e) {
 		TextHoverEvent event = createHoverEvent(e);
-		System.err.println("hoverEvent " + event);
 		if( this.lastHover == null || this.lastHover.getOffsetTokenStart() != event.getOffsetTokenStart() ) {
 			Event.fireEvent(control, event);
 			if( event.getOffset() == -1 ) {

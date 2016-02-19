@@ -1,5 +1,5 @@
 .styled-text-area .source-segment {
-	-fx-font-family: Monospace;
+	-fx-font-family: Courier;
 	-fx-font-size: 12;
 	/* @SuppressWarning */
 	-styled-text-color: black;
@@ -17,12 +17,12 @@
 }
 
 .styled-text-area .plain-source-segment {
-	-fx-font-family: Monospace;
+	-fx-font-family: Courier;
 	-fx-font-size: 12;
 }
 
 .styled-text-area .line-ruler-text {
-	-fx-font-family: Monospace;
+	-fx-font-family: Courier;
 	-fx-font-size: 12;
 	-fx-fill: gray;
 }

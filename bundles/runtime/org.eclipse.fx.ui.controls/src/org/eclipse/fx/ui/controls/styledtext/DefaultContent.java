@@ -12,6 +12,8 @@ package org.eclipse.fx.ui.controls.styledtext;
 
 import java.util.Vector;
 
+import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
+
 class DefaultContent implements StyledTextContent {
 	static class Compatibility {
 		public static int pow2(int n) {
@@ -885,7 +887,7 @@ class DefaultContent implements StyledTextContent {
 		for (TextChangeListener l : this.textListeners) {
 			l.textChanged(textChanged);
 		}
-		System.err.println(getTextRange(0, getCharCount()));
+		if(ContentView.debugOut) System.err.println(getTextRange(0, getCharCount()));
 	}
 
 	/**

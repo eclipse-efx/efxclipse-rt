@@ -44,7 +44,7 @@ import javafx.scene.layout.StackPane;
 
 public class ContentView  extends Pane {
 
-	private static boolean debugOut = Boolean.getBoolean("styledtext.debugout");
+	public static boolean debugOut = Boolean.getBoolean("styledtext.debugout");
 
 	private SetProperty<TextAnnotationPresenter> textAnnotationPresenter = new SimpleSetProperty<>(FXCollections.observableSet());
 	public SetProperty<TextAnnotationPresenter> textAnnotationPresenterProperty() {
@@ -379,7 +379,7 @@ public class ContentView  extends Pane {
 	private Range<Integer> getAffectedLines(TextSelection selection) {
 		int firstLine = getContent().getLineAtOffset(selection.offset);
 		int lastLine = getContent().getLineAtOffset(selection.offset + selection.length);
-		System.err.println("getAffectedLines " + selection + " -> " + firstLine + " - " + lastLine);
+		if(debugOut) System.err.println("getAffectedLines " + selection + " -> " + firstLine + " - " + lastLine);
 		if (lastLine == -1) {
 			lastLine = numberOfLines.get();
 		}
@@ -401,7 +401,7 @@ public class ContentView  extends Pane {
 			RangeSet<Integer> toUpdate = TreeRangeSet.create();
 			if (o != null) toUpdate.add(getAffectedLines(o));
 			if (n != null) toUpdate.add(getAffectedLines(n));
-			System.err.println("ContentView: onSelectionChange " + o + " -> " + n + " triggered " + toUpdate);
+			if(debugOut) System.err.println("ContentView: onSelectionChange " + o + " -> " + n + " triggered " + toUpdate);
 			updateNodesNow(toUpdate);
 		});
 	}
@@ -413,7 +413,7 @@ public class ContentView  extends Pane {
 			}
 			if (n != null) {
 				n.addTextChangeListener(this.textChangeListener);
-				System.err.println("init #ofLines with " + n.getLineCount());
+				if(debugOut) System.err.println("init #ofLines with " + n.getLineCount());
 				this.numberOfLines.set(n.getLineCount());
 			}
 		});
@@ -422,7 +422,7 @@ public class ContentView  extends Pane {
 			current.addTextChangeListener(this.textChangeListener);
 
 			// set inital values
-			System.err.println("init #ofLines with " + current.getLineCount());
+			if(debugOut) System.err.println("init #ofLines with " + current.getLineCount());
 			numberOfLines.set(current.getLineCount());
 
 		}
@@ -436,7 +436,7 @@ public class ContentView  extends Pane {
 
 		@Override
 		public void textSet(TextChangedEvent event) {
-			System.err.println("ContentView textSet");
+			if(debugOut) System.err.println("ContentView textSet");
 
 			// update number of lines
 			ContentView.this.numberOfLines.set(getContent().getLineCount());
@@ -467,16 +467,16 @@ public class ContentView  extends Pane {
 
 		@Override
 		public void textChanging(TextChangingEvent event) {
-			System.err.println("ContentView textChanging");
-			System.err.println(" current doc len = " + getContent().getLineCount());
-			System.err.println("Event: "+ event);
+			if(debugOut) System.err.println("ContentView textChanging");
+			if(debugOut) System.err.println(" current doc len = " + getContent().getLineCount());
+			if(debugOut) System.err.println("Event: "+ event);
 
 			final int changeBeginLine = getContent().getLineAtOffset(event.offset);
 
 			// determine first unchanged line
 			int firstUnchangedLine = computeFirstUnchangedLine(event);
 
-			System.err.println("FIRST UNCHANGEDLINE: " + firstUnchangedLine);
+			if(debugOut) System.err.println("FIRST UNCHANGEDLINE: " + firstUnchangedLine);
 
 			int deltaLines = event.newLineCount - event.replaceLineCount;
 
@@ -564,7 +564,7 @@ public class ContentView  extends Pane {
 
 		@Override
 		public void textChanged(TextChangedEvent event) {
-			System.err.println("ContentView textChanged");
+			if(debugOut) System.err.println("ContentView textChanged");
 
 
 			if (!toRelease.isEmpty()) {
@@ -662,8 +662,8 @@ public class ContentView  extends Pane {
 	}
 
 	private double computeLongestLine() {
-		System.err.println("compute longest line til " + getNumberOfLines());
-		System.err.println(" while content has " + content.get().getLineCount());
+		if(debugOut) System.err.println("compute longest line til " + getNumberOfLines());
+		if(debugOut) System.err.println(" while content has " + content.get().getLineCount());
 		Optional<Integer> longestLine = IntStream.range(0, getNumberOfLines()).mapToObj(index->lineHelper.getLengthCountTabsAsChars(index)).collect(Collectors.maxBy(Integer::compare));
 //		Optional<Integer> longestLine = model.stream().map(m->m.getLineLength() + countTabs(m.getText()) * 3).collect(Collectors.maxBy(Integer::compare));
 		longestLine = longestLine.map(s->s+2); // extra space
@@ -701,9 +701,9 @@ public class ContentView  extends Pane {
 
 
 	private void updateNodesNow(com.google.common.collect.RangeSet<Integer> rs) {
-		System.err.println("updateNodesNow nr of lines = " + getNumberOfLines());
+		if(debugOut) System.err.println("updateNodesNow nr of lines = " + getNumberOfLines());
 		RangeSet<Integer> subRangeSet = rs.subRangeSet(getVisibleLines()).subRangeSet(Range.closedOpen(0, getNumberOfLines()));
-		System.err.println("updateNodesNow: " + subRangeSet);
+		if(debugOut) System.err.println("updateNodesNow: " + subRangeSet);
 		subRangeSet.asRanges().forEach(r-> {
 			ContiguousSet.create(r, DiscreteDomain.integers()).forEach(index-> {
 				getLineLayer().updateNode(index);

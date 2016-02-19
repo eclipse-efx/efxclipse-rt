@@ -100,9 +100,9 @@ public class LineHelper {
 		}
 
 		if (localSelection != null) {
-			System.err.println(index + " linerange - " + range);
-			System.err.println(index + " globalSelection - " + selection);
-			System.err.println(index + " localSelection - " + localSelection);
+			if(ContentView.debugOut) System.err.println(index + " linerange - " + range);
+			if(ContentView.debugOut) System.err.println(index + " globalSelection - " + selection);
+			if(ContentView.debugOut) System.err.println(index + " localSelection - " + localSelection);
 		}
 
 		return localSelection;

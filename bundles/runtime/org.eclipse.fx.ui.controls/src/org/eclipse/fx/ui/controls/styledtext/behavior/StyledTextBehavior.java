@@ -176,14 +176,12 @@ public class StyledTextBehavior {
 		}
 
 		public void selectWithCaretAtStart() {
-			System.err.println("selecting " + start + " l " + length);
 			moveCaretAbsolute(start);
 			getControl().setSelection(new TextSelection(start, length));
 		}
 
 
 		public void selectWithCaretAtEnd() {
-			System.err.println("selecting " + start + " l " + length);
 			moveCaretAbsolute(end);
 			getControl().setSelection(new TextSelection(start, length));
 		}
@@ -207,7 +205,6 @@ public class StyledTextBehavior {
 		int selOffset = getControl().getSelection().offset;
 		int selLength = getControl().getSelection().length;
 		boolean r =  selLength > 0 && isInRange(offset, selOffset, selLength);
-		System.err.println("isInSelection(" + offset + ")" + "[" + selOffset + ", " + (selOffset + selLength) + ") -> " + r);
 		return r;
 	}
 

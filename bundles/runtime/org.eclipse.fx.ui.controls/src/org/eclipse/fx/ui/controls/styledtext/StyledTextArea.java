@@ -16,6 +16,7 @@ import java.lang.ref.WeakReference;
 import java.util.Collections;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
+import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
@@ -188,7 +189,7 @@ public class StyledTextArea extends Control {
 
 
 	void handleTextChanging(TextChangingEvent event) {
-		System.err.println("handleTextChanging");
+		if(ContentView.debugOut) System.err.println("handleTextChanging");
 		changingEvent = event;
 
 		this.renderer.textChanging(event);
@@ -217,7 +218,7 @@ public class StyledTextArea extends Control {
 	}
 
 	void handleTextChanged(TextChangedEvent xxx) {
-		System.err.println("handleTextChanged");
+		if(ContentView.debugOut) System.err.println("handleTextChanged");
 
 		if (changingEvent == null) {
 			// full text change
