@@ -39,6 +39,10 @@ public class LineHelper {
 		return Range.closedOpen(selection.offset, selection.offset + selection.length);
 	}
 
+	public boolean isValidLineIndex(int index) {
+		return getContent().getLineCount() > index;
+	}
+
 	private int getCaretOffset() {
 		return this.control.getCaretOffset();
 	}

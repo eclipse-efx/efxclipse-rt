@@ -196,6 +196,7 @@ public class LineNode extends StackPane {
 		private Region selectionMarker = new Region();
 
 		private com.google.common.collect.Range<Integer> selection;
+		private boolean continues;
 
 		public SelectionLayer() {
 			this.selectionMarker.getStyleClass().add("selection-marker");
@@ -212,7 +213,8 @@ public class LineNode extends StackPane {
 			return this.selection == null || !this.selection.equals(localSelection);
 		}
 
-		public void updateSelection(com.google.common.collect.Range<Integer> localSelection) {
+		public void updateSelection(com.google.common.collect.Range<Integer> localSelection, boolean continues) {
+			this.continues = continues;
 			if (isSelectionChange(localSelection)) {
 				System.err.println("updating selection for " + index);
 				if (localSelection == null) {
@@ -239,7 +241,8 @@ public class LineNode extends StackPane {
 
 				double begin = textLayer.getCharLocation(selection.lowerEndpoint());
 				double end = textLayer.getCharLocation(selection.upperEndpoint());
-				if (selection.upperEndpoint() == lineHelper.getLength(index)) {
+				System.err.println(selection);
+				if (selection.upperEndpoint() == lineHelper.getLength(index) && continues) {
 					end = getWidth();
 				}
 
@@ -574,7 +577,7 @@ public class LineNode extends StackPane {
 	public void update(Set<TextAnnotationPresenter> presenters) {
 		requestLayout();
 		updateContent(lineHelper.getSegments(index));
-		updateSelection(lineHelper.getSelection(index));
+		updateSelection(lineHelper.getSelection(index), lineHelper.isValidLineIndex(index+1) ? lineHelper.getSelection(index+1) : null  );
 		updateCaret(lineHelper.getCaret(index));
 		updateAnnotations(lineHelper.getTextAnnotations(index), presenters);
 	}
@@ -593,14 +596,14 @@ public class LineNode extends StackPane {
 //		this.annotationLayer.updateAnnoations(textAnnotations, annotationPresenter);
 //	}
 
-	public void updateSelection(com.google.common.collect.Range<Integer> lineSelection) {
+	public void updateSelection(com.google.common.collect.Range<Integer> lineSelection, com.google.common.collect.Range<Integer> nextLine) {
 //		System.err.println("LineNode: updateSelection " + lineSelection);
 
 		if (lineSelection != null && lineSelection.isEmpty()) {
-			this.selectionLayer.updateSelection(null);
+			this.selectionLayer.updateSelection(null, false);
 		}
 		else {
-			this.selectionLayer.updateSelection(lineSelection);
+			this.selectionLayer.updateSelection(lineSelection, nextLine != null);
 		}
 	}
 
