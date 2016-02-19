@@ -10,13 +10,11 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui.source;
 
-import java.util.List;
-
-import org.eclipse.jface.text.source.Annotation;
-
-import javafx.scene.Node;
+import java.util.Set;
 
 public interface AnnotationPresenter {
-	public List<String> getTypes();
-	public Node getPresentation(Annotation annotation);
+
+	Set<ITextAnnotationPresenter> getTextAnnotationPresenter();
+	Set<ILineRulerAnnotationPresenter> getLineRulerAnnotationPresenter();
+
 }

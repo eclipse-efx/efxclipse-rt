@@ -71,6 +71,11 @@ public class TextChangedEvent {
 		return new TextChangedEvent(source, 0, 0, 0, null, 0, 0);
 	}
 
+	public static TextChangedEvent textChanged(StyledTextContent source, int offset, int replaceLength, String newText) {
+		return new TextChangedEvent(source, offset, replaceLength, -1, newText, newText.length(), -1);
+	}
+
+
 	/**
 	 * Create the text set event
 	 *
@@ -81,5 +86,12 @@ public class TextChangedEvent {
 	public static TextChangedEvent textSet(StyledTextContent source) {
 		return new TextChangedEvent(source, 0, 0, 0, null, 0, 0);
 	}
+
+
+	@Override
+	public String toString() {
+		return "TextChangedEvent(offset="+this.offset+", replaceCharCount="+this.replaceCharCount+", replaceText=" + (this.newText == null ? "null" : "\""+this.newText+"\"") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+	}
+
 
 }

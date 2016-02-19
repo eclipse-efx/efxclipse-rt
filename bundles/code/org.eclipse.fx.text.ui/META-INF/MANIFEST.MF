@@ -18,3 +18,4 @@ Export-Package: org.eclipse.fx.text.ui,
  org.eclipse.fx.text.ui.rules;x-internal:=true,
  org.eclipse.fx.text.ui.source
 Bundle-Vendor: Eclipse.org
+Import-Package: com.google.common.collect

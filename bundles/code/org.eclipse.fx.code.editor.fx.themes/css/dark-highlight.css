@@ -33,6 +33,10 @@
 	-fx-background-color: #414141;
 }
 
+.styled-text-area .current-line {
+	-fx-background-color: #414141;
+}
+
 .styled-text-area .line-ruler-text {
 	-fx-text-fill: #c7c7c7;
 }

@@ -1,19 +1,30 @@
 .styled-text-area .source-segment {
-	-fx-font-family: Courier;
-	-fx-font-size: 13;
+	-fx-font-family: Monospace;
+	-fx-font-size: 12;
 	/* @SuppressWarning */
 	-styled-text-color: black;
 	-fx-fill: -styled-text-color;
 }
 
+.styled-text-area .line-ruler {
+	-fx-background: white;
+}
+
+.styled-text-area .line-ruler.spacer {
+	-fx-border-width: 0 0.1 0 0;
+	-fx-border-color: gray;
+	-fx-border-style: solid;
+}
+
 .styled-text-area .plain-source-segment {
-	-fx-font-family: Courier;
-	-fx-font-size: 13;
+	-fx-font-family: Monospace;
+	-fx-font-size: 12;
 }
 
 .styled-text-area .line-ruler-text {
-	-fx-font-family: Courier;
-	-fx-font-size: 13;
+	-fx-font-family: Monospace;
+	-fx-font-size: 12;
+	-fx-fill: gray;
 }
 
 /* FIXME: Fixes layouting issues with ListView */
@@ -35,6 +46,10 @@
 
 .styled-text-area .list-cell:filled:hover {
 	-fx-background-color: transparent;
+}
+
+.styled-text-area .current-line {
+	-fx-background-color: #e8f2fe
 }
 
 .styled-text-area .list-cell {

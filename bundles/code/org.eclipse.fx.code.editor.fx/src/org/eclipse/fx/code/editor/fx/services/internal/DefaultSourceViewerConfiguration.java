@@ -20,9 +20,11 @@ import org.eclipse.fx.text.ui.contentassist.ContentAssistContextData;
 import org.eclipse.fx.text.ui.contentassist.ContentAssistant;
 import org.eclipse.fx.text.ui.contentassist.ICompletionProposal;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
+import org.eclipse.fx.text.ui.contentassist.IContextInformation;
 import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.source.AnnotationPresenter;
+import org.eclipse.fx.text.ui.source.ILineRulerAnnotationPresenter;
 import org.eclipse.fx.text.ui.source.ISourceViewer;
 import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
@@ -38,7 +40,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	private final PresentationReconciler reconciler;
 	private final ProposalComputer proposalComputer;
 	private final IAnnotationModel annotationModel;
-	private final List<AnnotationPresenter> annotationPresenters;
+	private final AnnotationPresenter annotationPresenter;
 	private final HoverInformationProvider hoverInformationProvider;
 	private final CompletionProposalPresenter proposalPresenter;
 	private ContentAssistant contentAssistant;
@@ -49,7 +51,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			PresentationReconciler reconciler,
 			@Optional ProposalComputer proposalComputer,
 			@Optional IAnnotationModel annotationModel,
-			@Optional AnnotationPresenter presenter,
+			@Optional AnnotationPresenter annotationPresenter,
 			@Optional HoverInformationProvider hoverInformationProvider,
 			@Optional CompletionProposalPresenter proposalPresenter
 			) {
@@ -59,11 +61,8 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		this.proposalComputer = proposalComputer;
 		this.annotationModel = annotationModel;
 		this.proposalPresenter = proposalPresenter == null ? DefaultProposal::new : proposalPresenter;
-		if( presenter != null ) {
-			this.annotationPresenters = Collections.singletonList(presenter);
-		} else {
-			this.annotationPresenters = Collections.emptyList();
-		}
+
+		this.annotationPresenter = annotationPresenter;
 	}
 
 	@Override
@@ -109,8 +108,8 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	}
 
 	@Override
-	public List<AnnotationPresenter> getAnnotationPresenters() {
-		return annotationPresenters;
+	public AnnotationPresenter getAnnotationPresenter() {
+		return annotationPresenter;
 	}
 
 	@Override
@@ -159,6 +158,37 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		public TextSelection getSelection(IDocument document) {
 			org.eclipse.fx.code.editor.services.CompletionProposal.TextSelection selection = proposal.getSelection(document);
 			return selection == null ? TextSelection.EMPTY : new TextSelection(selection.offset, selection.length);
+		}
+
+		@Override
+		public IContextInformation getContextInformation() {
+			return new IContextInformation() {
+				// TODO fix this here
+				@Override
+				public String getInformationDisplayString() {
+					return "InformationDisplayString";
+				}
+
+				@Override
+				public Node getGraphic() {
+					return null;
+				}
+
+				@Override
+				public int getContextInformationPosition() {
+					return 0;
+				}
+
+				@Override
+				public String getContextDisplayString() {
+					return "ContextDisplayString";
+				}
+			};
+		}
+
+		@Override
+		public String getHoverInfo() {
+			return null;
 		}
 	}
 }
