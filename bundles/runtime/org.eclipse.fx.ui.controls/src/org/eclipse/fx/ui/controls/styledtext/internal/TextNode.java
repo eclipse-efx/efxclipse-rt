@@ -5,17 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.fx.ui.controls.styledtext.NodeCachePane;
 import org.eclipse.fx.ui.controls.styledtext.ReuseCache;
-import org.eclipse.fx.ui.controls.styledtext.internal.LineNode.TextLayer;
 import org.eclipse.jdt.annotation.NonNull;
 
 import com.sun.javafx.css.converters.PaintConverter;
-import com.sun.javafx.geom.AreaOp.AddOp;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
 import javafx.css.SimpleStyleableIntegerProperty;
@@ -89,6 +85,22 @@ public class TextNode extends HBox {
 	@SuppressWarnings("null")
 	@NonNull
 	final ObjectProperty<@NonNull Paint> fill = new SimpleStyleableObjectProperty<>(FILL, this, "fill", Color.BLACK); //$NON-NLS-1$
+
+	private static String[] BASIC_STRING_CACHE = new String[256];
+
+	private static String toString(char c) {
+		String rv = null;
+		if( c < BASIC_STRING_CACHE.length ) {
+			rv = BASIC_STRING_CACHE[c];
+			if( rv == null ) {
+				BASIC_STRING_CACHE[c] = String.valueOf(c);
+			}
+		}
+		if( rv == null ) {
+			rv = String.valueOf(c);
+		}
+		return rv;
+	}
 
 	/**
 	 * The paint used to fill the text
@@ -321,7 +333,7 @@ public class TextNode extends HBox {
 		this.activeLetters.clear();
 		for( char c : processText(text).toCharArray() ) {
 			Text textNode = cache.getElement();
-			textNode.setText(c+"");
+			textNode.setText(toString(c));
 			this.activeLetters.add(textNode);
 		}
 	}
