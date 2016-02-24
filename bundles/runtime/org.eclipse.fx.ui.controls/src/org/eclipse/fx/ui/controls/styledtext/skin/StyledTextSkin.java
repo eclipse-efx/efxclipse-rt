@@ -113,6 +113,9 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		this.lineRulerArea = new HBox();
 		this.rootContainer.getChildren().add(this.lineRulerArea);
+		styledText.caretOffsetProperty().addListener( (obs,ol,ne) -> {
+			scrollLineIntoView(styledText.getContent().getLineAtOffset(ne.intValue()));
+		} );
 
 
 		Region spacer = new Region();
