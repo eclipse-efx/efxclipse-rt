@@ -1,4 +1,4 @@
-package org.eclipse.fx.ui.controls.styledtext;
+package org.eclipse.fx.ui.controls.styledtext.internal;
 
 import java.util.ArrayList;
 import java.util.Arrays;

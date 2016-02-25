@@ -10,8 +10,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.eclipse.fx.ui.controls.styledtext.NodeCachePane;
-import org.eclipse.fx.ui.controls.styledtext.ReuseCache;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotation;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
 

@@ -1,4 +1,4 @@
-package org.eclipse.fx.ui.controls.styledtext;
+package org.eclipse.fx.ui.controls.styledtext.internal;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,8 +10,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-
-import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.DoubleProperty;

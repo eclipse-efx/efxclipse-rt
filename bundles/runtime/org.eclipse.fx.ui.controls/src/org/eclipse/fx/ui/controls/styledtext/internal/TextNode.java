@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.fx.ui.controls.styledtext.ReuseCache;
 import org.eclipse.jdt.annotation.NonNull;
 
 import com.sun.javafx.css.converters.PaintConverter;
