@@ -1,6 +1,4 @@
 .styled-text-area .source-segment {
-	-fx-font-family: Courier;
-	-fx-font-size: 12;
 	/* @SuppressWarning */
 	-styled-text-color: black;
 	-fx-fill: -styled-text-color;
@@ -16,19 +14,15 @@
 	-fx-border-style: solid;
 }
 
-.styled-text-area .plain-source-segment {
-	-fx-font-family: Courier;
-	-fx-font-size: 12;
-}
-
 .styled-text-area .line-ruler-text {
-	-fx-font-family: Courier;
-	-fx-font-size: 12;
 	-fx-fill: gray;
 }
 
 .styled-text-area {
 	-fx-fixed-line-height: 16;
+    -fx-font-family: Courier;
+	-fx-font-size: 12;
+
 }
 
 .styled-text-area .list-cell:filled:focused:selected {

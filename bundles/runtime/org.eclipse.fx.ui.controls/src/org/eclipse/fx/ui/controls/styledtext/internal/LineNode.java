@@ -261,7 +261,7 @@ public class LineNode extends StackPane {
 //		t.setCycleCount(Animation.INDEFINITE);
 //		return t;
 
-		FadeTransition t = new FadeTransition(Duration.millis(200), caret);
+		FadeTransition t = new FadeTransition(Duration.millis(500), caret);
 		t.setInterpolator(new Interpolator() {
 			@Override
 			protected double curve(double t) {

@@ -39,6 +39,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleSetProperty;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.Pane;
@@ -311,7 +312,7 @@ public class ContentView  extends Pane {
 		this.area = area;
 		this.lineHelper = lineHelper;
 //		setStyle("-fx-border-color: green; -fx-border-width:2px; -fx-border-style: dashed;");
-
+		this.contentBody.setPadding(new Insets(2));
 		this.contentBody.getChildren().setAll(this.lineLayer);
 
 //		this.lineLayer.setStyle("-fx-border-color: orange; -fx-border-width:2px; -fx-border-style: solid;");

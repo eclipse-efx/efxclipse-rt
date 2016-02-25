@@ -52,6 +52,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.SetChangeListener;
 import javafx.collections.transformation.SortedList;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.SkinBase;
@@ -112,6 +113,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.rootContainer.setSpacing(0);
 
 		this.lineRulerArea = new HBox();
+		this.lineRulerArea.setPadding(new Insets(1,0,0,0));
 		this.rootContainer.getChildren().add(this.lineRulerArea);
 		styledText.caretOffsetProperty().addListener((obs, ol, ne) -> {
 			int lineIdx = styledText.getContent().getLineAtOffset(ne.intValue());
@@ -266,10 +268,11 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 			flow.visibleLinesProperty().bind(this.scroller.visibleLinesProperty());
 			flow.numberOfLinesProperty().bind(this.content.numberOfLinesProperty());
+			flow.lineHeightProperty().bind(this.content.lineHeightProperty());
 			// flow.getModel().bindContent(this.getModel());
 
-			flow.minWidthProperty().bind(ap.getWidth());
-			flow.prefWidthProperty().bind(ap.getWidth());
+			flow.absoluteMinWidthProperty().bind(ap.getWidth());
+//			flow.prefWidthProperty().bind(ap.getWidth());
 
 			flow.prefWidthProperty().addListener((x, o, n) -> {
 				this.rootContainer.requestLayout();

@@ -10,15 +10,27 @@ import org.eclipse.fx.ui.controls.styledtext.model.Annotation;
 import org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter.LayoutHint;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 
 public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 
 	private LineRulerAnnotationPresenter.LayoutHint h;
+	private DoubleProperty absoluteMinWidth = new SimpleDoubleProperty(this, "absoluteMinWidth");
 
 	public LineRuler(LineRulerAnnotationPresenter.LayoutHint h, Function<Integer, Set<Annotation>> converter, Predicate<Set<Annotation>> needsPresentation, Supplier<Node> nodeFactory, BiConsumer<Node, Set<Annotation>> nodePopulator) {
 		super(converter, needsPresentation, nodeFactory, nodePopulator);
 		this.h = h;
+	}
+
+	@Override
+	protected double computeMinWidth(double height) {
+		return Math.max(this.absoluteMinWidth.get(), super.computePrefWidth(height));
+	}
+
+	public DoubleProperty absoluteMinWidthProperty() {
+		return this.absoluteMinWidth;
 	}
 
 	@Override
@@ -48,7 +60,9 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 				width = w;
 			}
 
-			e.getValue().resizeRelocate(x, y, width, height);
+			double dy = height - e.getValue().getBoundsInLocal().getHeight();
+
+			e.getValue().resizeRelocate(x, y + dy, width, height);
 		});
 	}
 
