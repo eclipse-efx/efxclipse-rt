@@ -46,17 +46,12 @@ import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.RangeSet;
 
 import javafx.beans.InvalidationListener;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.SetChangeListener;
 import javafx.collections.transformation.SortedList;
-import javafx.css.CssMetaData;
-import javafx.css.StyleConverter;
-import javafx.css.StyleableDoubleProperty;
-import javafx.css.StyleableProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.SkinBase;
@@ -379,19 +374,11 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	 * @return the line height
 	 */
 	public double getLineHeight(int caretPosition) {
-		//FIXME: We need to calculate that size or provide it via CSS
-		return 16;
-
-		// int lineIndex =
-		// getSkinnable().getContent().getLineAtOffset(caretPosition);
-		// Line lineObject = (Line) this.lineList.get(lineIndex);
-		//
-		// for (LineCell c : getCurrentVisibleCells()) {
-		// if (c.getDomainElement() == lineObject) {
-		// return c.getHeight();
-		// }
-		// }
-		// return 0;
+		if( getSkinnable().getFixedLineHeight() >= 0.0 ) {
+			return getSkinnable().getFixedLineHeight();
+		}
+		//FIXME: We need to calculate that size
+		return -1;
 	}
 
 	/**
