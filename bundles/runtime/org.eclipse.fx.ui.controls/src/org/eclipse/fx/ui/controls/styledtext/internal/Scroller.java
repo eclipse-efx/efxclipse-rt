@@ -144,8 +144,6 @@ public class Scroller {
 	}
 
 	public void scrollIntoView(int line) {
-		if(ContentView.debugOut) System.err.println("scrollIntoView " + line);
-
 		double lineOffset = line * this.lineHeight.get();
 
 		if (lineOffset < this.offset.get()) {

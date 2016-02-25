@@ -113,12 +113,6 @@ public class LineHelper {
 			localSelection = mapToLocal(index, intersection);
 		}
 
-		if (localSelection != null) {
-			if(ContentView.debugOut) System.err.println(index + " linerange - " + range);
-			if(ContentView.debugOut) System.err.println(index + " globalSelection - " + selection);
-			if(ContentView.debugOut) System.err.println(index + " localSelection - " + localSelection);
-		}
-
 		return localSelection;
 	}
 

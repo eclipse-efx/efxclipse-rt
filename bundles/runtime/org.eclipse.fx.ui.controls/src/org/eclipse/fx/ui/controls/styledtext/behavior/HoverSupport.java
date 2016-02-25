@@ -15,26 +15,31 @@ import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.fx.ui.controls.styledtext.events.TextHoverEvent;
 
 import javafx.event.Event;
-import javafx.event.EventTarget;
-import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 
 /**
- * manages hover support
- * @author ccaks
- *
+ * Manage hovers on a region
  */
 public class HoverSupport {
 
 	private Region control;
 	private TextHoverEvent lastHover;
 
+	/**
+	 * Create a hover support instance
+	 *
+	 * @param control
+	 *            the control
+	 */
 	public HoverSupport(Region control) {
 		this.control = control;
 	}
 
+	/**
+	 * Installation of the hover support
+	 */
 	protected void install() {
 		this.control.addEventHandler(MouseEvent.MOUSE_PRESSED, this::onMousePressed);
 		this.control.addEventHandler(MouseEvent.MOUSE_MOVED, this::onMouseMoved);
@@ -42,7 +47,13 @@ public class HoverSupport {
 		Util.installHoverCallback(this.control, Duration.millis(1000), this::handleHover);
 	}
 
-
+	/**
+	 * Install the hover support on the provided control
+	 *
+	 * @param control
+	 *            the control
+	 * @return the hoversupport
+	 */
 	public static HoverSupport install(Region control) {
 		HoverSupport support = new HoverSupport(control);
 		support.install();
@@ -50,16 +61,16 @@ public class HoverSupport {
 	}
 
 	private void onMouseExited(MouseEvent event) {
-		if( this.lastHover != null ) {
+		if (this.lastHover != null) {
 			Event.fireEvent(this.control, new TextHoverEvent(event, -1, -1, -1, "")); //$NON-NLS-1$
 			this.lastHover = null;
 		}
 	}
 
 	private void onMouseMoved(MouseEvent event) {
-		if( this.lastHover != null ) {
+		if (this.lastHover != null) {
 			TextHoverEvent hoverEvent = createHoverEvent(event);
-			if( this.lastHover.getOffsetTokenStart() != hoverEvent.getOffsetTokenStart() ) {
+			if (this.lastHover.getOffsetTokenStart() != hoverEvent.getOffsetTokenStart()) {
 				Event.fireEvent(this.control, new TextHoverEvent(event, -1, -1, -1, "")); //$NON-NLS-1$
 				this.lastHover = null;
 			}
@@ -67,43 +78,54 @@ public class HoverSupport {
 	}
 
 	private void onMousePressed(MouseEvent event) {
-		if( this.lastHover != null ) {
+		if (this.lastHover != null) {
 			Event.fireEvent(this.control, new TextHoverEvent(event, -1, -1, -1, "")); //$NON-NLS-1$
 			this.lastHover = null;
 		}
 	}
 
-
+	/**
+	 * Create a hover event from the mouse event
+	 *
+	 * @param e
+	 *            the mouse event
+	 * @return the hover event
+	 */
 	protected static TextHoverEvent createHoverEvent(MouseEvent e) {
 
-
 		// TODO fix hover event
-//		if (e.getTarget() instanceof Annotation)
+		// if (e.getTarget() instanceof Annotation)
 
-		return new TextHoverEvent(e, -1, -1, -1, "");
-//		Parent parent = ((Node)e.getTarget()).getParent();
-//		if( parent instanceof StyledTextNode ) {
-//			StyledTextNode n = (StyledTextNode) parent;
-//			if( n.getParent() == null || n.getParent().getParent() == null ) {
-//				return new TextHoverEvent(e, -1, -1, -1, ""); //$NON-NLS-1$
-//			}
-//			StyledTextLayoutContainer lc = (StyledTextLayoutContainer) n.getParent().getParent();
-//			int start = lc.getStartOffset() +  n.getStartOffset();
-//			int end = lc.getStartOffset() + n.getEndOffset();
-//			String text = n.getText();
-//
-//			int offset = n.getCaretIndexAtPoint(n.sceneToLocal(e.getSceneX(), e.getSceneY()));
-//			return new TextHoverEvent(e, start, end, start + offset, text);
-//		} else {
-//			return new TextHoverEvent(e, -1, -1, -1, ""); //$NON-NLS-1$
-//		}
+		return new TextHoverEvent(e, -1, -1, -1, ""); //$NON-NLS-1$
+		// Parent parent = ((Node)e.getTarget()).getParent();
+		// if( parent instanceof StyledTextNode ) {
+		// StyledTextNode n = (StyledTextNode) parent;
+		// if( n.getParent() == null || n.getParent().getParent() == null ) {
+		// return new TextHoverEvent(e, -1, -1, -1, ""); //$NON-NLS-1$
+		// }
+		// StyledTextLayoutContainer lc = (StyledTextLayoutContainer)
+		// n.getParent().getParent();
+		// int start = lc.getStartOffset() + n.getStartOffset();
+		// int end = lc.getStartOffset() + n.getEndOffset();
+		// String text = n.getText();
+		//
+		// int offset = n.getCaretIndexAtPoint(n.sceneToLocal(e.getSceneX(),
+		// e.getSceneY()));
+		// return new TextHoverEvent(e, start, end, start + offset, text);
+		// } else {
+		// return new TextHoverEvent(e, -1, -1, -1, ""); //$NON-NLS-1$
+		// }
 	}
 
+	/**
+	 * Create a hover even from the hover mouse event
+	 * @param e the event
+	 */
 	protected void handleHover(MouseEvent e) {
 		TextHoverEvent event = createHoverEvent(e);
-		if( this.lastHover == null || this.lastHover.getOffsetTokenStart() != event.getOffsetTokenStart() ) {
-			Event.fireEvent(control, event);
-			if( event.getOffset() == -1 ) {
+		if (this.lastHover == null || this.lastHover.getOffsetTokenStart() != event.getOffsetTokenStart()) {
+			Event.fireEvent(this.control, event);
+			if (event.getOffset() == -1) {
 				this.lastHover = null;
 			} else {
 				this.lastHover = event;

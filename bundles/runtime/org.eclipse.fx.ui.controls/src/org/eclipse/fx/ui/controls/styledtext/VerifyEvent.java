@@ -25,7 +25,7 @@ public class VerifyEvent extends InputEvent {
 	 */
 	public static final EventType<VerifyEvent> VERIFY = new EventType<VerifyEvent>(InputEvent.ANY, "VERIFY"); //$NON-NLS-1$
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -4592943665566096149L;
 	private String character;
@@ -38,7 +38,7 @@ public class VerifyEvent extends InputEvent {
 
 	/**
 	 * The event
-	 * 
+	 *
 	 * @param source
 	 *            the source
 	 * @param target
@@ -86,14 +86,14 @@ public class VerifyEvent extends InputEvent {
 	public boolean isShiftDown() {
 		return this.shiftDown;
 	}
-	
+
 	/**
 	 * @return <code>true</code> when control key is down
 	 */
 	public boolean isControlDown() {
 		return this.controlDown;
 	}
-	
+
 	/**
 	 * @return <code>true</code> when alt key is down
 	 */

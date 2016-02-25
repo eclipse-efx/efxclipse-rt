@@ -402,9 +402,6 @@ public class LineNode extends StackPane {
 
 			public void prepareNodes(Set<TextAnnotation> annotations) {
 				boolean same = current.equals(annotations);
-				if(ContentView.debugOut) System.err.println("annotation check: " + current +"\n"
-								+  "          versus: " + annotations + "\n"
-								+  "               -> " + same);
 
 				if (same) {
 					return;

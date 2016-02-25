@@ -47,7 +47,6 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 	protected void layoutChildren() {
 		this.activeNodes.entrySet().forEach(e -> {
 			if (!yOffsetData.containsKey(e.getKey())) {
-				if(ContentView.debugOut) System.err.println("NO DATA FOR " + e);
 				return;
 			}
 			double x = 0;
