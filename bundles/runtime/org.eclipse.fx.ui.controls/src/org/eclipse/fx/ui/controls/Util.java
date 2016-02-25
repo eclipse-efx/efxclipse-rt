@@ -43,6 +43,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Window;
@@ -397,5 +398,21 @@ public class Util {
 		});
 		Util.enterNestedEventLoop(uuid);
 		return rv.get();
+	}
+
+	/**
+	 * Calculate the size of the text with the given font
+	 *
+	 * @param text
+	 *            the text
+	 * @param font
+	 *            the font
+	 * @return the width
+	 * @since 2.3.0
+	 */
+	public static double getTextWidth(String text, Font font) {
+		Text t = new Text(text);
+		t.setFont(font);
+		return t.getLayoutBounds().getWidth();
 	}
 }
