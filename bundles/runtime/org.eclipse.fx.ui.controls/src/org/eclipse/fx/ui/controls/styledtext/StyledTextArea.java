@@ -35,19 +35,25 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleSetProperty;
+import javafx.beans.value.WritableValue;
 import javafx.collections.FXCollections;
 import javafx.css.CssMetaData;
+import javafx.css.FontCssMetaData;
 import javafx.css.StyleConverter;
+import javafx.css.StyleOrigin;
 import javafx.css.Styleable;
 import javafx.css.StyleableDoubleProperty;
+import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleableProperty;
+import javafx.css.StyleablePropertyFactory;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.DataFormat;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  * Control which allows to implemented a code-editor
@@ -171,6 +177,8 @@ public class StyledTextArea extends Control {
 
 	private static final String USER_AGENT_STYLESHEET = StyledTextArea.class.getResource("styledtextarea.css").toExternalForm(); //$NON-NLS-1$
 
+	private static final StyleablePropertyFactory<StyledTextArea> FACTORY = new StyleablePropertyFactory<>(Control.getClassCssMetaData());
+
 	/**
 	 * Create a new control
 	 */
@@ -194,6 +202,7 @@ public class StyledTextArea extends Control {
 			return (StyleableProperty<Number>) n.fixedLineHeight;
 		}
 	};
+
 
 	final DoubleProperty fixedLineHeight = new StyleableDoubleProperty(16) {
 		@Override
@@ -235,6 +244,74 @@ public class StyledTextArea extends Control {
 		return this.fixedLineHeight;
 	}
 
+
+	static final FontCssMetaData<StyledTextArea> FONT = new FontCssMetaData<StyledTextArea>("-fx-font",Font.getDefault()) { //$NON-NLS-1$
+
+		@Override
+		public boolean isSettable(StyledTextArea n) {
+			return n.font == null |!n.font.isBound();
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public StyleableProperty<Font> getStyleableProperty(StyledTextArea n) {
+			return (StyleableProperty<Font>)n.fontProperty();
+		}
+
+	};
+
+    final ObjectProperty<Font> font = new StyleableObjectProperty<Font>(Font.getDefault()) {
+		 private boolean settingFontViaCSS = false;
+
+		@Override
+		public CssMetaData<? extends Styleable, Font> getCssMetaData() {
+			return FONT;
+		}
+
+		@Override
+		public Object getBean() {
+			return StyledTextArea.this;
+		}
+
+		@Override
+		public String getName() {
+			return "font"; //$NON-NLS-1$
+		}
+
+		@Override
+		public void applyStyle(StyleOrigin newOrigin, Font value) {
+			try {
+				this.settingFontViaCSS = true;
+				super.applyStyle(newOrigin, value);
+			} finally {
+				this.settingFontViaCSS = false;
+			}
+
+		}
+
+		@Override
+		protected void invalidated() {
+			super.invalidated();
+			if(this.settingFontViaCSS == false) {
+               StyledTextArea.this.impl_reapplyCSS();
+           }
+		}
+
+	};
+
+	public final ObjectProperty<Font> fontProperty() {
+		return this.font;
+	}
+
+    public final void setFont(Font value) {
+    	fontProperty().setValue(value);
+    }
+
+    public final Font getFont() {
+    	return this.font == null ? Font.getDefault() : this.font.getValue();
+    }
+
+
 	/**
 	 * @return the current line separator
 	 * @since 2.2.0
@@ -251,9 +328,7 @@ public class StyledTextArea extends Control {
 	private TextChangingEvent changingEvent;
 
 	void handleTextChanging(TextChangingEvent event) {
-		if (ContentView.debugOut)
-			System.err.println("handleTextChanging");
-		changingEvent = event;
+		this.changingEvent = event;
 
 		this.renderer.textChanging(event);
 
@@ -279,10 +354,7 @@ public class StyledTextArea extends Control {
 	}
 
 	void handleTextChanged(TextChangedEvent xxx) {
-		if (ContentView.debugOut)
-			System.err.println("handleTextChanged");
-
-		if (changingEvent == null) {
+		if (this.changingEvent == null) {
 			// full text change
 			int newCharCount = getCharCount();
 			if (this.caretOffsetProperty.get() > newCharCount) {
@@ -307,8 +379,7 @@ public class StyledTextArea extends Control {
 	}
 
 	void handleTextSet(TextChangedEvent event) {
-		System.err.println("handleTextSet");
-		changingEvent = null;
+		this.changingEvent = null;
 	}
 
 	void updateSelection(int startOffset, int replacedLength, int newLength) {
@@ -1505,6 +1576,9 @@ public class StyledTextArea extends Control {
 		return getContent().getTextRange(start, end - start + 1);
 	}
 
+	/**
+	 * @return <code>true</code> if the selection has a length of 0
+	 */
 	public boolean isSelectionEmpty() {
 		return getSelection().length == 0;
 	}
@@ -1515,7 +1589,6 @@ public class StyledTextArea extends Control {
 	 * @param text
 	 */
 	public void insert(CharSequence text) {
-		System.err.println("insert('" + text + "')");
 		if (text == null)
 			throw new NullPointerException();
 
@@ -1585,6 +1658,7 @@ public class StyledTextArea extends Control {
 	static {
 		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(Control.getClassCssMetaData());
 		styleables.add(FIXED_LINE_HEIGHT);
+		styleables.add(FONT);
 		STYLEABLES = Collections.unmodifiableList(styleables);
 	}
 

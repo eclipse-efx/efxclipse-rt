@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import org.eclipse.fx.ui.controls.Util;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
@@ -41,6 +43,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class ContentView  extends Pane {
 
@@ -301,8 +305,10 @@ public class ContentView  extends Pane {
 	}
 
 	private Range<Integer> curVisibleLines;
+	private StyledTextArea area;
 
-	public ContentView(LineHelper lineHelper) {
+	public ContentView(LineHelper lineHelper, StyledTextArea area) {
+		this.area = area;
 		this.lineHelper = lineHelper;
 //		setStyle("-fx-border-color: green; -fx-border-width:2px; -fx-border-style: dashed;");
 
@@ -667,9 +673,20 @@ public class ContentView  extends Pane {
 		Optional<Integer> longestLine = IntStream.range(0, getNumberOfLines()).mapToObj(index->lineHelper.getLengthCountTabsAsChars(index)).collect(Collectors.maxBy(Integer::compare));
 //		Optional<Integer> longestLine = model.stream().map(m->m.getLineLength() + countTabs(m.getText()) * 3).collect(Collectors.maxBy(Integer::compare));
 		longestLine = longestLine.map(s->s+2); // extra space
-		Optional<Double> longestLineWidth = longestLine.map(i->i*8d);
+		Optional<Double> longestLineWidth = longestLine.map(i->i*getCharWidth());
 		longestLineWidth = longestLineWidth.map(l->Math.max(l, getWidth()));
 		return longestLineWidth.orElse(getWidth());
+	}
+
+	private Font lastFont;
+	private double lastWidth = 8d;
+
+	private double getCharWidth() {
+		if( lastFont != area.getFont() ) {
+			lastFont = area.getFont();
+			lastWidth = Math.ceil(Util.getTextWidth("M", lastFont));
+		}
+		return lastWidth;
 	}
 
 	@Override

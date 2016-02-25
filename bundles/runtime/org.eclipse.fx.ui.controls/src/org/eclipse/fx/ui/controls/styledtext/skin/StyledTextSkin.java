@@ -127,7 +127,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.rootContainer.getChildren().add(spacer);
 
 		this.lineHelper = new LineHelper(getSkinnable());
-		this.content = new ContentView(this.lineHelper);
+		this.content = new ContentView(this.lineHelper, styledText);
 		this.content.lineHeightProperty().bind(styledText.fixedLineHeight());
 
 		this.contentArea = new ScrollbarPane<>();
