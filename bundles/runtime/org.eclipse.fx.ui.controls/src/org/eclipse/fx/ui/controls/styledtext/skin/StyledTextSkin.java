@@ -12,7 +12,6 @@
 package org.eclipse.fx.ui.controls.styledtext.skin;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -47,14 +46,17 @@ import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.RangeSet;
 
 import javafx.beans.InvalidationListener;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.SetChangeListener;
 import javafx.collections.transformation.SortedList;
+import javafx.css.CssMetaData;
+import javafx.css.StyleConverter;
+import javafx.css.StyleableDoubleProperty;
+import javafx.css.StyleableProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.SkinBase;
@@ -65,26 +67,29 @@ import javafx.scene.layout.Region;
 /**
  * Styled text skin
  */
-@SuppressWarnings("restriction")
 public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 	private ScrollbarPane<ContentView> contentArea;
 	private ContentView content;
 
-	private Scroller scroller;
+	Scroller scroller;
 
 	private HBox lineRulerArea;
 
-//	private ObservableList<VerticalLineFlow<Integer, Annotation>> sortedLineRulerFlows;
+	// private ObservableList<VerticalLineFlow<Integer, Annotation>>
+	// sortedLineRulerFlows;
 
 	private ObservableList<LineRuler> sortedLineRulerFlows;
-
 
 	private HBox rootContainer;
 
 	private final StyledTextBehavior behavior;
 
 	private LineHelper lineHelper;
+
+	private static final String CSS_CLASS_LINE_RULER = "line-ruler"; //$NON-NLS-1$
+	private static final String CSS_CLASS_SPACER = "spacer"; //$NON-NLS-1$
+	private static final String CSS_LIST_VIEW = "list-view"; //$NON-NLS-1$
 
 	/**
 	 * Create a new skin
@@ -113,57 +118,56 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		this.lineRulerArea = new HBox();
 		this.rootContainer.getChildren().add(this.lineRulerArea);
-		styledText.caretOffsetProperty().addListener( (obs,ol,ne) -> {
-			scrollLineIntoView(styledText.getContent().getLineAtOffset(ne.intValue()));
-		} );
-
+		styledText.caretOffsetProperty().addListener((obs, ol, ne) -> {
+			int lineIdx = styledText.getContent().getLineAtOffset(ne.intValue());
+			int colIdx = ne.intValue() - styledText.getContent().getOffsetAtLine(lineIdx);
+			scrollColumnIntoView(colIdx);
+			scrollLineIntoView(lineIdx);
+		});
 
 		Region spacer = new Region();
-		spacer.getStyleClass().addAll("line-ruler", "spacer");
+		spacer.getStyleClass().addAll(CSS_CLASS_LINE_RULER, CSS_CLASS_SPACER);
 		spacer.setMinWidth(2);
 		spacer.setMaxWidth(2);
 		this.rootContainer.getChildren().add(spacer);
 
-
-		lineHelper = new LineHelper(getSkinnable());
-		this.content = new ContentView(lineHelper);
+		this.lineHelper = new LineHelper(getSkinnable());
+		this.content = new ContentView(this.lineHelper);
+		this.content.lineHeightProperty().bind(styledText.fixedLineHeight());
 
 		this.contentArea = new ScrollbarPane<>();
 
 		this.contentArea.setCenter(this.content);
 
-
 		Map<AnnotationProvider, Subscription> subscriptions = new HashMap<>();
-		Consumer<RangeSet<Integer>> onAnnotationChange = r-> {
-			if(ContentView.debugOut) System.err.println("onAnnotationChange " + r);
-			content.updateAnnotations(r);
-			sortedLineRulerFlows.forEach(f->f.update(r));
+		Consumer<RangeSet<Integer>> onAnnotationChange = r -> {
+			this.content.updateAnnotations(r);
+			this.sortedLineRulerFlows.forEach(f -> f.update(r));
 		};
 
-		getSkinnable().getAnnotationProvider().addListener((SetChangeListener<? super AnnotationProvider>)(c) -> {
+		getSkinnable().getAnnotationProvider().addListener((SetChangeListener<? super AnnotationProvider>) (c) -> {
 			if (c.wasAdded()) {
-				if(ContentView.debugOut) System.err.println("register for2 " + c.getElementAdded());
 				Subscription s = c.getElementAdded().registerChangeListener(onAnnotationChange);
 				subscriptions.put(c.getElementAdded(), s);
 			}
 			if (c.wasRemoved()) {
 				Subscription s = subscriptions.remove(c.getElementRemoved());
-				if (s != null) s.dispose();
+				if (s != null)
+					s.dispose();
 			}
 		});
 		for (AnnotationProvider p : getSkinnable().getAnnotationProvider()) {
-			if(ContentView.debugOut) System.err.println("register for " + p);
 			if (!subscriptions.containsKey(p)) {
 				Subscription s = p.registerChangeListener(onAnnotationChange);
 				subscriptions.put(p, s);
 			}
 		}
 
-		this.content.getStyleClass().addAll("list-view");
+		this.content.getStyleClass().addAll(CSS_LIST_VIEW);
 
 		// focus delegation
-		this.content.focusedProperty().addListener((x, o, n)->{
-			if (n) {
+		this.content.focusedProperty().addListener((x, o, n) -> {
+			if (n != null && n.booleanValue()) {
 				getSkinnable().requestFocus();
 			}
 		});
@@ -173,40 +177,35 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.content.contentProperty().bind(getSkinnable().contentProperty());
 
 		// scroll support
-		this.content.setOnScroll((e)-> {
+		this.content.setOnScroll((e) -> {
 			this.scroller.scrollBy(Math.round(-e.getDeltaY()));
 		});
 
-//		HBox.setHgrow(this.contentView, Priority.ALWAYS);
+		// HBox.setHgrow(this.contentView, Priority.ALWAYS);
 
 		HBox.setHgrow(this.contentArea, Priority.ALWAYS);
 		this.rootContainer.getChildren().addAll(this.contentArea);
 		getChildren().addAll(this.rootContainer);
 
-
 		// scroll stuff
 		this.scroller = new Scroller();
-		this.scroller.contentAreaHeightProperty().bind(content.heightProperty());
+		this.scroller.contentAreaHeightProperty().bind(this.content.heightProperty());
+		this.scroller.lineHeightProperty().bind(this.content.lineHeightProperty());
 
-		this.scroller.lineHeightProperty().bind(content.lineHeightProperty());
-
-		this.content.lineHeightProperty().set(16);
-
+//		this.content.lineHeightProperty().set(16);
 		this.content.bindHorizontalScrollbar(this.contentArea.horizontal);
 
-//		getSkinnable().lineCountProperty().addListener((x, o, n)-> {/* for the quantum! */});
-		((IntegerProperty)getSkinnable().lineCountProperty()).bind(content.numberOfLinesProperty());
+		// getSkinnable().lineCountProperty().addListener((x, o, n)-> {/* for
+		// the quantum! */});
+		((IntegerProperty) getSkinnable().lineCountProperty()).bind(this.content.numberOfLinesProperty());
 
+		// content.numberOfLinesProperty().addListener((x, o, n)->
+		// System.err.println("FUCKING LINE COUNT CHANGE: " + n));
+		// getSkinnable().lineCountProperty().addListener((x, o, n)->
+		// System.err.println("FUCKING LINE COUNT CHANGE2: " + n));
 
-//		content.numberOfLinesProperty().addListener((x, o, n)-> System.err.println("FUCKING LINE COUNT CHANGE: " + n));
-//		getSkinnable().lineCountProperty().addListener((x, o, n)-> System.err.println("FUCKING LINE COUNT CHANGE2: " + n));
-
-
-
-		scroller.lineCountProperty().bind(content.numberOfLinesProperty());
-
+		this.scroller.lineCountProperty().bind(this.content.numberOfLinesProperty());
 		this.scroller.bind(this.contentArea.vertical);
-
 
 		this.content.textSelectionProperty().bind(getSkinnable().selectionProperty());
 		this.content.caretOffsetProperty().bind(getSkinnable().caretOffsetProperty());
@@ -214,105 +213,102 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.content.visibleLinesProperty().bind(this.scroller.visibleLinesProperty());
 
 		Consumer<Double> updateOffset = (offset) -> {
-			com.google.common.collect.Range<Integer> visibleLines = scroller.visibleLinesProperty().get();
+			com.google.common.collect.Range<Integer> visibleLines = this.scroller.visibleLinesProperty().get();
 			ContiguousSet<Integer> set = ContiguousSet.create(visibleLines, DiscreteDomain.integers());
-			double lineHeight = scroller.lineHeightProperty().get();
+			double lineHeight = this.scroller.lineHeightProperty().get();
 			for (int index : set) {
 
 				double y = index * lineHeight - offset.doubleValue();
 
-				for (VerticalLineFlow<Integer, Annotation> flow : sortedLineRulerFlows) {
+				for (VerticalLineFlow<Integer, Annotation> flow : this.sortedLineRulerFlows) {
 					flow.setLineOffset(index, y);
 				}
 			}
 		};
 
-		content.offsetYProperty().bind(scroller.offsetProperty());
+		this.content.offsetYProperty().bind(this.scroller.offsetProperty());
 
-		scroller.offsetProperty().addListener((x, o, offset)-> {
-			updateOffset.accept(offset.doubleValue());
+		this.scroller.offsetProperty().addListener((x, o, offset) -> {
+			updateOffset.accept(Double.valueOf(offset.doubleValue()));
 		});
 
-		scroller.visibleLinesProperty().addListener(x->{
-			updateOffset.accept(scroller.offsetProperty().get());
+		this.scroller.visibleLinesProperty().addListener(x -> {
+			updateOffset.accept(Double.valueOf(this.scroller.offsetProperty().get()));
 		});
 
 		getSkinnable().getContent().addTextChangeListener(new TextChangeListener() {
 
 			@Override
 			public void textSet(TextChangedEvent event) {
-				scroller.refresh();
+				StyledTextSkin.this.scroller.refresh();
 			}
 
 			@Override
 			public void textChanging(TextChangingEvent event) {
-
+				// nothing todo
 			}
 
 			@Override
 			public void textChanged(TextChangedEvent event) {
-
+				// nothing todo
 			}
 		});
 
 		ObservableList<LineRulerAnnotationPresenter> lineRulerPresenters = FXCollections.observableArrayList();
-		SortedList<LineRulerAnnotationPresenter> sortedLineRulerPresenters = new SortedList<>(lineRulerPresenters, (a, b)->a.getOrder() - b.getOrder());
+		SortedList<LineRulerAnnotationPresenter> sortedLineRulerPresenters = new SortedList<>(lineRulerPresenters, (a, b) -> a.getOrder() - b.getOrder());
 
 		Function<LineRulerAnnotationPresenter, LineRuler> map = (ap) -> {
-			Function<Integer, Set<Annotation>> converter = (index)->
-			lineHelper.getAnnotations(index).stream().filter(ap::isApplicable).collect(Collectors.toSet());
+			Function<Integer, Set<Annotation>> converter = (index) -> this.lineHelper.getAnnotations(index.intValue()).stream().filter(ap::isApplicable).collect(Collectors.toSet());
 
 			Predicate<Set<Annotation>> needsPresentation = ap::isVisible;
 			Supplier<Node> nodeFactory = ap::createNode;
 			BiConsumer<Node, Set<Annotation>> populator = ap::updateNode;
 
 			LineRuler flow = new LineRuler(ap.getLayoutHint(), converter, needsPresentation, nodeFactory, populator);
-//			VerticalLineFlow<Integer, Annotation> flow = new VerticalLineFlow<Integer, Annotation>(converter, needsPresentation, nodeFactory, populator);
+			// VerticalLineFlow<Integer, Annotation> flow = new
+			// VerticalLineFlow<Integer, Annotation>(converter,
+			// needsPresentation, nodeFactory, populator);
 
 			flow.visibleLinesProperty().bind(this.scroller.visibleLinesProperty());
 			flow.numberOfLinesProperty().bind(this.content.numberOfLinesProperty());
-//			flow.getModel().bindContent(this.getModel());
+			// flow.getModel().bindContent(this.getModel());
 
 			flow.minWidthProperty().bind(ap.getWidth());
 			flow.prefWidthProperty().bind(ap.getWidth());
 
-			flow.prefWidthProperty().addListener((x, o, n)->{
-				System.err.println("width change! " + o + " -> " + n);
+			flow.prefWidthProperty().addListener((x, o, n) -> {
 				this.rootContainer.requestLayout();
 			});
 			return flow;
 		};
 
-		sortedLineRulerFlows = FXCollections.observableArrayList();
-		sortedLineRulerFlows.addListener((InvalidationListener)x-> {
-			for (VerticalLineFlow<Integer, Annotation> flow : sortedLineRulerFlows) {
-				flow.getStyleClass().setAll("line-ruler");
+		this.sortedLineRulerFlows = FXCollections.observableArrayList();
+		this.sortedLineRulerFlows.addListener((InvalidationListener) x -> {
+			for (VerticalLineFlow<Integer, Annotation> flow : this.sortedLineRulerFlows) {
+				flow.getStyleClass().setAll(CSS_CLASS_LINE_RULER);
 			}
 		});
-		FXBindUtil.uniMapBindList(sortedLineRulerPresenters, sortedLineRulerFlows, map);
-		FXBindUtil.uniMapBindList(sortedLineRulerFlows, lineRulerArea.getChildren(), (flow)->(Node)flow);
-		sortedLineRulerFlows.addListener((ListChangeListener<? super VerticalLineFlow<Integer, Annotation>>)(c)-> {
+		FXBindUtil.uniMapBindList(sortedLineRulerPresenters, this.sortedLineRulerFlows, map);
+		FXBindUtil.uniMapBindList(this.sortedLineRulerFlows, this.lineRulerArea.getChildren(), (flow) -> (Node) flow);
+		this.sortedLineRulerFlows.addListener((ListChangeListener<? super VerticalLineFlow<Integer, Annotation>>) (c) -> {
 			while (c.next()) {
 				if (c.wasRemoved()) {
-					c.getRemoved().forEach((f)-> {
+					c.getRemoved().forEach((f) -> {
 						f.visibleLinesProperty().unbind();
 						f.numberOfLinesProperty().unbind();
-//						f.getModel().unbind();
+						// f.getModel().unbind();
 						f.prefWidthProperty().unbind();
 					});
 				}
 			}
 		});
 
-
-
 		Consumer<AnnotationPresenter> installPresenter = (p) -> {
 			if (p instanceof LineRulerAnnotationPresenter) {
 				LineRulerAnnotationPresenter lrp = (LineRulerAnnotationPresenter) p;
 				lineRulerPresenters.add(lrp);
-//				installLineRulerAnnotationPresenter.accept(lrp);
-			}
-			else if (p instanceof TextAnnotationPresenter) {
+				// installLineRulerAnnotationPresenter.accept(lrp);
+			} else if (p instanceof TextAnnotationPresenter) {
 				TextAnnotationPresenter tp = (TextAnnotationPresenter) p;
 				this.content.textAnnotationPresenterProperty().add(tp);
 			}
@@ -321,14 +317,13 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			if (p instanceof LineRulerAnnotationPresenter) {
 				LineRulerAnnotationPresenter lrp = (LineRulerAnnotationPresenter) p;
 				lineRulerPresenters.remove(lrp);
-			}
-			else if (p instanceof TextAnnotationPresenter) {
+			} else if (p instanceof TextAnnotationPresenter) {
 				TextAnnotationPresenter tp = (TextAnnotationPresenter) p;
 				this.content.textAnnotationPresenterProperty().remove(tp);
 			}
 		};
 
-		getSkinnable().getAnnotationPresenter().addListener((SetChangeListener<? super AnnotationPresenter>)(c)-> {
+		getSkinnable().getAnnotationPresenter().addListener((SetChangeListener<? super AnnotationPresenter>) (c) -> {
 			if (c.wasAdded()) {
 				installPresenter.accept(c.getElementAdded());
 			}
@@ -340,30 +335,30 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 	}
 
-	private <O> void pluginBinding(ObservableValue<O> property, Consumer<O> consumer, List<Subscription> subscriptions) {
-		// init
-		consumer.accept(property.getValue());
-		ChangeListener<? super O> l = (x, o, n)->consumer.accept(n);
-		// bind
-		property.addListener(l);
-		subscriptions.add(()->property.removeListener(l));
-	}
-
+	// private <O> void pluginBinding(ObservableValue<O> property, Consumer<O>
+	// consumer, List<Subscription> subscriptions) {
+	// // init
+	// consumer.accept(property.getValue());
+	// ChangeListener<? super O> l = (x, o, n)->consumer.accept(n);
+	// // bind
+	// property.addListener(l);
+	// subscriptions.add(()->property.removeListener(l));
+	// }
 
 	private void scrollColumnIntoView(int colIndex) {
 
 		double w = 8;
 
-		double curOffset = contentArea.horizontal.getValue();
+		double curOffset = this.contentArea.horizontal.getValue();
 		double colOffset = w * colIndex;
 
 		if (curOffset > colOffset) {
-			contentArea.horizontal.setValue(colOffset);
+			this.contentArea.horizontal.setValue(colOffset);
 		}
 
-		double lastColDiff = content.getWidth() - w;
+		double lastColDiff = this.content.getWidth() - w;
 		if (curOffset + lastColDiff < colOffset) {
-			contentArea.horizontal.setValue(colOffset - lastColDiff);
+			this.contentArea.horizontal.setValue(colOffset - lastColDiff);
 		}
 
 	}
@@ -384,17 +379,19 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	 * @return the line height
 	 */
 	public double getLineHeight(int caretPosition) {
+		//FIXME: We need to calculate that size or provide it via CSS
 		return 16;
 
-//		int lineIndex = getSkinnable().getContent().getLineAtOffset(caretPosition);
-//		Line lineObject = (Line) this.lineList.get(lineIndex);
-//
-//		for (LineCell c : getCurrentVisibleCells()) {
-//			if (c.getDomainElement() == lineObject) {
-//				return c.getHeight();
-//			}
-//		}
-//		return 0;
+		// int lineIndex =
+		// getSkinnable().getContent().getLineAtOffset(caretPosition);
+		// Line lineObject = (Line) this.lineList.get(lineIndex);
+		//
+		// for (LineCell c : getCurrentVisibleCells()) {
+		// if (c.getDomainElement() == lineObject) {
+		// return c.getHeight();
+		// }
+		// }
+		// return 0;
 	}
 
 	/**
@@ -411,65 +408,81 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		Optional<Point2D> location = this.content.getLocationInScene(caretPosition);
 
-		return location.map(l -> this.rootContainer.sceneToLocal(l))
-				.map(l -> new Point2D(l.getX(), l.getY() + this.content.getLineHeight()))
-				.orElse(null);
+		return location.map(l -> this.rootContainer.sceneToLocal(l)).map(l -> new Point2D(l.getX(), l.getY() + this.content.getLineHeight())).orElse(null);
 
-
-//		int lineIndex = getSkinnable().getContent().getLineAtOffset(caretPosition);
-//
-////		Line lineObject = (Line) this.getModel().get(lineIndex);
-//
-//		// TODO =?
-////		for (LineCell c : getCurrentVisibleCells()) {
-////			if (c.getDomainElement() == lineObject) {
-////				StyledTextLayoutContainer b = (StyledTextLayoutContainer) c.getGraphic();
-////				Point2D careLocation = b.getCareLocation(caretPosition - b.getStartOffset());
-////				Point2D tmp = getSkinnable().sceneToLocal(b.localToScene(careLocation));
-////				return new Point2D(tmp.getX(), getSkinnable().sceneToLocal(b.localToScene(0, b.getHeight())).getY());
-////			}
-////		}
-//
-//		return null;
+		// int lineIndex =
+		// getSkinnable().getContent().getLineAtOffset(caretPosition);
+		//
+		//// Line lineObject = (Line) this.getModel().get(lineIndex);
+		//
+		// // TODO =?
+		//// for (LineCell c : getCurrentVisibleCells()) {
+		//// if (c.getDomainElement() == lineObject) {
+		//// StyledTextLayoutContainer b = (StyledTextLayoutContainer)
+		// c.getGraphic();
+		//// Point2D careLocation = b.getCareLocation(caretPosition -
+		// b.getStartOffset());
+		//// Point2D tmp =
+		// getSkinnable().sceneToLocal(b.localToScene(careLocation));
+		//// return new Point2D(tmp.getX(),
+		// getSkinnable().sceneToLocal(b.localToScene(0,
+		// b.getHeight())).getY());
+		//// }
+		//// }
+		//
+		// return null;
 	}
+
+//	/**
+//	 * Compute the min height
+//	 *
+//	 * @param width
+//	 *            the width that should be used if minimum height depends on it
+//	 * @return the min height
+//	 */
+//	protected double computeMinHeight(double width) {
+//		return 100; // this.contentView.minHeight(width);
+//	}
+//
+//	/**
+//	 * Compute the min width
+//	 *
+//	 * @param height
+//	 *            the height that should be used if minimum width depends on it
+//	 * @return the min width
+//	 */
+//	protected double computeMinWidth(double height) {
+//		return 100; // this.contentView.minWidth(height);
+//	}
 
 	/**
-	 * Compute the min height
-	 *
-	 * @param width
-	 *            the width that should be used if minimum height depends on it
-	 * @return the min height
+	 * Scroll up a line
 	 */
-	protected double computeMinHeight(double width) {
-		return 100; //this.contentView.minHeight(width);
-	}
-
-	/**
-	 * Compute the min width
-	 *
-	 * @param height
-	 *            the height that should be used if minimum width depends on it
-	 * @return the min width
-	 */
-	protected double computeMinWidth(double height) {
-		return 100; //this.contentView.minWidth(height);
-	}
-
 	public void scrollLineUp() {
 		this.scroller.scrollBy(-1);
 	}
 
+	/**
+	 * Scroll down a line
+	 */
 	public void scrollLineDown() {
 		this.scroller.scrollBy(1);
 	}
-
 
 	static String removeLineending(String s) {
 		return s.replace("\n", "").replace("\r", ""); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
-
+	/**
+	 * Find the offset at a specific position
+	 *
+	 * @param x
+	 *            the x coordinate
+	 * @param y
+	 *            the y coordinate
+	 * @return the offset
+	 */
 	public int getOffsetAtPosition(double x, double y) {
-		return content.getLineIndex(new Point2D(x, y)).orElse(-1);
+		return this.content.getLineIndex(new Point2D(x, y)).orElse(Integer.valueOf(-1)).intValue();
 	}
 }

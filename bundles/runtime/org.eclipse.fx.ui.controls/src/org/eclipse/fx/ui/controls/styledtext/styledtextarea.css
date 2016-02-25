@@ -27,9 +27,8 @@
 	-fx-fill: gray;
 }
 
-/* FIXME: Fixes layouting issues with ListView */
-.styled-text-area .list-view {
-	-fx-fixed-cell-size: 16;
+.styled-text-area {
+	-fx-fixed-line-height: 16;
 }
 
 .styled-text-area .list-cell:filled:focused:selected {

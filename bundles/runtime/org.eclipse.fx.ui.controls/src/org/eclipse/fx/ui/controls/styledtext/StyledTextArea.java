@@ -13,7 +13,9 @@
 package org.eclipse.fx.ui.controls.styledtext;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
@@ -24,6 +26,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;
@@ -33,7 +36,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleSetProperty;
 import javafx.collections.FXCollections;
+import javafx.css.CssMetaData;
+import javafx.css.StyleConverter;
+import javafx.css.Styleable;
+import javafx.css.StyleableDoubleProperty;
+import javafx.css.StyleableProperty;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.input.Clipboard;
@@ -76,7 +85,6 @@ public class StyledTextArea extends Control {
 
 	@NonNull
 	final ObjectProperty<@NonNull StyledTextContent> contentProperty;
-
 
 	TextChangeListener textChangeListener = new TextChangeListener() {
 		@Override
@@ -137,14 +145,14 @@ public class StyledTextArea extends Control {
 	@NonNull
 	private final ObjectProperty<@NonNull LineSeparator> lineSeparator = new SimpleObjectProperty<>(this, "lineSeparator", "\n".equals(System.getProperty("line.separator")) ? LineSeparator.NEW_LINE : LineSeparator.CARRIAGE_RETURN_NEW_LINE); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-
-
 	private SetProperty<AnnotationPresenter> annotationPresenter = new SimpleSetProperty<>(this, "annotationPresenter", FXCollections.observableSet());
+
 	public SetProperty<AnnotationPresenter> getAnnotationPresenter() {
 		return annotationPresenter;
 	}
 
 	private SetProperty<AnnotationProvider> annotationProvider = new SimpleSetProperty<>(this, "annotationProvider", FXCollections.observableSet());
+
 	public SetProperty<AnnotationProvider> getAnnotationProvider() {
 		return annotationProvider;
 	}
@@ -153,11 +161,11 @@ public class StyledTextArea extends Control {
 
 	private int lastTextChangeStart;
 
-//	private int lastTextChangeNewLineCount;
+	// private int lastTextChangeNewLineCount;
 
 	private int lastTextChangeNewCharCount;
 
-//	private int lastTextChangeReplaceLineCount;
+	// private int lastTextChangeReplaceLineCount;
 
 	private int lastTextChangeReplaceCharCount;
 
@@ -170,6 +178,61 @@ public class StyledTextArea extends Control {
 		this.getStyleClass().add("styled-text-area"); //$NON-NLS-1$
 		this.contentProperty = new ContentProperty(this, "content", new DefaultContent()); //$NON-NLS-1$
 		setFocusTraversable(true);
+	}
+
+	static final CssMetaData<StyledTextArea, Number> FIXED_LINE_HEIGHT = new CssMetaData<StyledTextArea, Number>("-fx-fixed-line-height", //$NON-NLS-1$
+			StyleConverter.getSizeConverter(), Integer.valueOf(16)) {
+
+		@Override
+		public boolean isSettable(StyledTextArea n) {
+			return n.fixedLineHeight == null || !n.fixedLineHeight.isBound();
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public StyleableProperty<Number> getStyleableProperty(StyledTextArea n) {
+			return (StyleableProperty<Number>) n.fixedLineHeight;
+		}
+	};
+
+	final DoubleProperty fixedLineHeight = new StyleableDoubleProperty(16) {
+		@Override
+		public Object getBean() {
+			return StyledTextArea.this;
+		}
+
+		@Override
+		public String getName() {
+			return "fixedLineHeight"; //$NON-NLS-1$
+		}
+
+		@Override
+		public CssMetaData<StyledTextArea, Number> getCssMetaData() {
+			return FIXED_LINE_HEIGHT;
+		}
+	};
+
+	/**
+	 * @return the current fixed line height
+	 */
+	public double getFixedLineHeight() {
+		return this.fixedLineHeight.get();
+	}
+
+	/**
+	 * Set the fixed line height
+	 *
+	 * @param fixedLineHeight the fixed line height
+	 */
+	public void setFixedLineHeight(double fixedLineHeight) {
+		this.fixedLineHeight.set(fixedLineHeight);
+	}
+
+	/**
+	 * @return the fixed line height
+	 */
+	public DoubleProperty fixedLineHeight() {
+		return this.fixedLineHeight;
 	}
 
 	/**
@@ -187,9 +250,9 @@ public class StyledTextArea extends Control {
 
 	private TextChangingEvent changingEvent;
 
-
 	void handleTextChanging(TextChangingEvent event) {
-		if(ContentView.debugOut) System.err.println("handleTextChanging");
+		if (ContentView.debugOut)
+			System.err.println("handleTextChanging");
 		changingEvent = event;
 
 		this.renderer.textChanging(event);
@@ -200,12 +263,10 @@ public class StyledTextArea extends Control {
 		}
 
 		this.lastTextChangeStart = event.offset;
-//		this.lastTextChangeNewLineCount = event.newLineCount;
+		// this.lastTextChangeNewLineCount = event.newLineCount;
 		this.lastTextChangeNewCharCount = event.newCharCount;
-//		this.lastTextChangeReplaceLineCount = event.replaceLineCount;
+		// this.lastTextChangeReplaceLineCount = event.replaceLineCount;
 		this.lastTextChangeReplaceCharCount = event.replaceCharCount;
-
-
 
 		// Update the caret offset if it is greater than the length of the
 		// content.
@@ -218,30 +279,30 @@ public class StyledTextArea extends Control {
 	}
 
 	void handleTextChanged(TextChangedEvent xxx) {
-		if(ContentView.debugOut) System.err.println("handleTextChanged");
+		if (ContentView.debugOut)
+			System.err.println("handleTextChanged");
 
 		if (changingEvent == null) {
 			// full text change
 			int newCharCount = getCharCount();
-			if( this.caretOffsetProperty.get() > newCharCount ) {
+			if (this.caretOffsetProperty.get() > newCharCount) {
 				this.caretOffsetProperty.set(newCharCount);
 			}
 
 			// in SWT this is done in reset()
 			clearSelection();
 
-//			if( getSkin() instanceof StyledTextSkin ) {
-//				((StyledTextSkin)getSkin()).computeModel();
-//			}
-		}
-		else {
+			// if( getSkin() instanceof StyledTextSkin ) {
+			// ((StyledTextSkin)getSkin()).computeModel();
+			// }
+		} else {
 			// partial text change
 			TextChangingEvent event = changingEvent;
 			changingEvent = null;
 
-//			if (getSkin() instanceof StyledTextSkin) {
-//				((StyledTextSkin) getSkin()).computeModelDelta(event);
-//			}
+			// if (getSkin() instanceof StyledTextSkin) {
+			// ((StyledTextSkin) getSkin()).computeModelDelta(event);
+			// }
 		}
 	}
 
@@ -250,23 +311,23 @@ public class StyledTextArea extends Control {
 		changingEvent = null;
 	}
 
-
-
 	void updateSelection(int startOffset, int replacedLength, int newLength) {
 		if (getSelection().offset + getSelection().length > startOffset && getSelection().offset < startOffset + replacedLength) {
 			// selection intersects replaced text. set caret behind text change
-			setSelection(new TextSelection(startOffset + newLength, 0)/*, true, false*/);
+			setSelection(new TextSelection(startOffset + newLength,
+					0)/* , true, false */);
 		} else {
 			// move selection to keep same text selected
 
 			int computedOffset = getSelection().offset + newLength - replacedLength;
 			if (computedOffset >= 0 && computedOffset < getCharCount()) {
 				// we only set this if the offset is valid!!
-				setSelection(new TextSelection(computedOffset, getSelection().length)/*, true, false*/);
+				setSelection(new TextSelection(computedOffset,
+						getSelection().length)/* , true, false */);
 			}
-			if( getSelection().length > 0 ) {
+			if (getSelection().length > 0) {
 				int delta = this.lastTextChangeNewCharCount - this.lastTextChangeReplaceCharCount;
-				this.caretOffsetProperty.set(Math.max(0,Math.min(getCharCount()-1,getCaretOffset() + delta)));
+				this.caretOffsetProperty.set(Math.max(0, Math.min(getCharCount() - 1, getCaretOffset() + delta)));
 			}
 		}
 	}
@@ -540,9 +601,9 @@ public class StyledTextArea extends Control {
 			this.renderer.setStyleRanges(ranges, styles);
 		}
 
-//		if (getSkin() instanceof StyledTextSkin) {
-//			((StyledTextSkin) getSkin()).requestRedraw();
-//		}
+		// if (getSkin() instanceof StyledTextSkin) {
+		// ((StyledTextSkin) getSkin()).requestRedraw();
+		// }
 
 	}
 
@@ -1450,19 +1511,20 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * inserts text at the caret location or replaces a given selection
+	 *
 	 * @param text
 	 */
 	public void insert(CharSequence text) {
-		System.err.println("insert('"+text+"')");
-		if (text == null) throw new NullPointerException();
+		System.err.println("insert('" + text + "')");
+		if (text == null)
+			throw new NullPointerException();
 
 		int start, replaceLength;
 		if (!isSelectionEmpty()) {
 			// replace selection
 			start = this.getSelection().offset;
 			replaceLength = this.getSelection().length;
-		}
-		else {
+		} else {
 			// insert at caret
 			start = this.getCaretOffset();
 			replaceLength = 0;
@@ -1471,12 +1533,11 @@ public class StyledTextArea extends Control {
 		this.setCaretOffset(start + text.length());
 	}
 
-
 	private IntegerProperty lineCount = new SimpleIntegerProperty(this, "lineCount", 0);
+
 	public ReadOnlyIntegerProperty lineCountProperty() {
 		return lineCount;
 	}
-
 
 	/**
 	 * Paste the clipboard content
@@ -1506,7 +1567,7 @@ public class StyledTextArea extends Control {
 	 * Cut the current selection into the clipboard
 	 */
 	public void cut() {
-		if( getSelection().length > 0 ) {
+		if (getSelection().length > 0) {
 			final Clipboard clipboard = Clipboard.getSystemClipboard();
 			String content = getContent().getTextRange(getSelection().offset, getSelection().length);
 			getContent().replaceTextRange(getSelection().offset, content.length(), ""); //$NON-NLS-1$
@@ -1517,5 +1578,22 @@ public class StyledTextArea extends Control {
 	public int getOffsetAtPosition(double x, double y) {
 		int result = ((StyledTextSkin) getSkin()).getOffsetAtPosition(x, y);
 		return result;
+	}
+
+	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
+
+	static {
+		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(Control.getClassCssMetaData());
+		styleables.add(FIXED_LINE_HEIGHT);
+		STYLEABLES = Collections.unmodifiableList(styleables);
+	}
+
+	public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+		return STYLEABLES;
+	}
+
+	@Override
+	public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
+		return getClassCssMetaData();
 	}
 }
