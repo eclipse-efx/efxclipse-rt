@@ -105,10 +105,12 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 		try {
 			{
 				ServiceReference<?>[] serviceReferences = context.getServiceReferences(cl.getName(), null);
-				Arrays.sort(serviceReferences);
+				if( serviceReferences != null ) {
+					Arrays.sort(serviceReferences);
 
-				if( serviceReferences.length > 0 ) {
-					return context.getService(serviceReferences[0]);
+					if( serviceReferences.length > 0 ) {
+						return context.getService(serviceReferences[0]);
+					}
 				}
 			}
 
