@@ -11,17 +11,15 @@
 package org.eclipse.fx.ui.controls.styledtext.internal;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Queue;
-import java.util.Set;
 import java.util.function.Supplier;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
+@SuppressWarnings("javadoc")
 public class DynCachePane<K, N extends Node> extends Pane {
 
 	int maxCache = 100;
@@ -42,31 +40,31 @@ public class DynCachePane<K, N extends Node> extends Pane {
 
 
 	protected N get(K key) {
-		N node = usedNodes.get(key);
+		N node = this.usedNodes.get(key);
 		if (node == null) {
-			node = existingNodes.get(key);
+			node = this.existingNodes.get(key);
 		}
 		if (node == null) {
-			if (!cachedNodes.isEmpty()) {
-				node = cachedNodes.poll();
+			if (!this.cachedNodes.isEmpty()) {
+				node = this.cachedNodes.poll();
 			}
 		}
 		if (node == null) {
 
 			node = this.nodeFactory.get();
-			existingNodes.put(key, node);
+			this.existingNodes.put(key, node);
 		}
-		usedNodes.put(key, node);
+		this.usedNodes.put(key, node);
 		node.setVisible(true);
 		return node;
 	}
 
 	protected void release(K key) {
-		N node = existingNodes.get(key);
+		N node = this.existingNodes.get(key);
 		if (node != null) {
 			node.setVisible(false);
-			usedNodes.remove(node);
-			cachedNodes.add(node);
+			this.usedNodes.remove(node);
+			this.cachedNodes.add(node);
 		}
 	}
 

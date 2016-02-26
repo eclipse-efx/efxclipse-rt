@@ -13,7 +13,6 @@ package org.eclipse.fx.ui.controls.styledtext.internal;
 
 import com.google.common.collect.Range;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -25,6 +24,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.ScrollBar;
 
+@SuppressWarnings("javadoc")
 public class Scroller {
 
 	private DoubleProperty lineHeight = new SimpleDoubleProperty(this, "lineHeight", 16); //$NON-NLS-1$
@@ -34,7 +34,7 @@ public class Scroller {
 
 	private DoubleProperty lineCount = new SimpleDoubleProperty(this, "lineCount", 0); //$NON-NLS-1$
 	public DoubleProperty lineCountProperty() {
-		return lineCount;
+		return this.lineCount;
 	}
 
 	private IntegerProperty visibleLineCount = new SimpleIntegerProperty(this, "visibleLineCount", 0); //$NON-NLS-1$
@@ -89,7 +89,7 @@ public class Scroller {
 	private void recomputeVisibleLines(Observable x) {
 		int lower = (int) Math.floor(this.offset.get() / this.lineHeight.get());
 		int upper = lower + this.visibleLineCount.get();
-		Range<Integer> visibleLines = Range.closed(lower, upper);
+		Range<Integer> visibleLines = Range.closed(Integer.valueOf(lower), Integer.valueOf(upper));
 		this.visibleLines.set(visibleLines);
 //		System.err.println("Scroller: visibleLines = " + visibleLines);
 	}
@@ -122,7 +122,7 @@ public class Scroller {
 
 		bar.maxProperty().bind(this.max);
 
-		bar.visibleAmountProperty().bind(this.contentAreaHeight.divide(contentHeight.divide(max)));
+		bar.visibleAmountProperty().bind(this.contentAreaHeight.divide(this.contentHeight.divide(this.max)));
 
 		bar.valueProperty().bindBidirectional(this.offset);
 
@@ -137,8 +137,8 @@ public class Scroller {
 	public void scrollBy(double units) {
 
 		double newVal = this.offset.get() + units;
-		newVal = Math.min(max.get(), newVal);
-		newVal = Math.max(min.get(), newVal);
+		newVal = Math.min(this.max.get(), newVal);
+		newVal = Math.max(this.min.get(), newVal);
 
 		this.offset.set(newVal);
 	}

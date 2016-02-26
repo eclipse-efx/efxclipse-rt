@@ -40,11 +40,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
+@SuppressWarnings("javadoc")
 public class VFlow<N extends Node>  extends Pane {
 
 	private Object sync = new Object();
 
-	private int overload = 100;
+//	private int overload = 100;
 
 	private Supplier<N> nodeFactory;
 	private BiConsumer<N, Integer> nodePopulator;
@@ -52,7 +53,7 @@ public class VFlow<N extends Node>  extends Pane {
 	private Map<Integer, N> activeNodes = new HashMap<>();
 	private Queue<N> freeNodes = new LinkedList<>();
 
-	private DoubleProperty lineHeigth = new SimpleDoubleProperty(this, "lineHeight", 16.0);
+	private DoubleProperty lineHeigth = new SimpleDoubleProperty(this, "lineHeight", 16.0); //$NON-NLS-1$
 	public DoubleProperty lineHeightProperty() {
 		return this.lineHeigth;
 	}
@@ -63,7 +64,7 @@ public class VFlow<N extends Node>  extends Pane {
 		this.lineHeigth.set(lineHeight);
 	}
 
-	private IntegerProperty numberOfLines = new SimpleIntegerProperty(this, "numberOfLines", 0);
+	private IntegerProperty numberOfLines = new SimpleIntegerProperty(this, "numberOfLines", 0); //$NON-NLS-1$
 	public IntegerProperty numberOfLinesProperty() {
 		return this.numberOfLines;
 	}
@@ -74,7 +75,7 @@ public class VFlow<N extends Node>  extends Pane {
 		this.numberOfLines.set(lines);
 	}
 
-	private DoubleProperty yOffset = new SimpleDoubleProperty(this, "yOffset", 0);
+	private DoubleProperty yOffset = new SimpleDoubleProperty(this, "yOffset", 0); //$NON-NLS-1$
 	public DoubleProperty yOffsetProperty() {
 		return this.yOffset;
 	}
@@ -153,15 +154,15 @@ public class VFlow<N extends Node>  extends Pane {
 //	}
 
 	public void permutateNodes(Function<Integer, Integer> mapping) {
-		String permutate = "permutateNodes(): ";
+//		String permutate = "permutateNodes(): ";
 		synchronized (this.sync) {
 			Map<Integer, N> newActiveNodes = new HashMap<>();
 			Set<Integer> changedIndexes = new HashSet<>();
 			for (Entry<Integer, N> entry : this.activeNodes.entrySet()) {
-				final int curIndex = entry.getKey();
-				final int newIndex = mapping.apply(entry.getKey());
-				permutate += "\n * " + curIndex + " -> " + newIndex;
-				if (curIndex != newIndex) changedIndexes.add(newIndex);
+				final Integer curIndex = entry.getKey();
+				final Integer newIndex = mapping.apply(entry.getKey());
+//				permutate += "\n * " + curIndex + " -> " + newIndex;
+				if (curIndex.intValue() != newIndex.intValue()) changedIndexes.add(newIndex);
 				newActiveNodes.put(newIndex, entry.getValue());
 			}
 			this.activeNodes = newActiveNodes;
@@ -178,12 +179,12 @@ public class VFlow<N extends Node>  extends Pane {
 	private void onNumberOfLinesChange(Observable x, Number o, Number n) {
 		if (n.intValue() > o.intValue()) {
 			RangeSet<Integer> toUpdate = TreeRangeSet.create();
-			toUpdate.add(Range.closedOpen(o.intValue(), n.intValue()));
+			toUpdate.add(Range.closedOpen(Integer.valueOf(o.intValue()), Integer.valueOf(n.intValue())));
 			triggerUpdate(toUpdate);
 		}
 		else if (n.intValue() < o.intValue()) {
 			RangeSet<Integer> toRelease = TreeRangeSet.create();
-			toRelease.add(Range.closed(n.intValue(), o.intValue()));
+			toRelease.add(Range.closed(Integer.valueOf(n.intValue()), Integer.valueOf(o.intValue())));
 			triggerRelease(toRelease);
 		}
 	}
@@ -210,31 +211,30 @@ public class VFlow<N extends Node>  extends Pane {
 	}
 
 	private Range<Integer> getVisible() {
-		return visibleLines.get();
+		return this.visibleLines.get();
 //		Range<Integer> r = visibleLines.get();
 //		return Range.closedOpen(r.lowerEndpoint() - overload, r.upperEndpoint() + overload);
 	}
 
 	private void triggerUpdate(RangeSet<Integer> range) {
-		Range<Integer> all = Range.closedOpen(0, getNumberOfLines());
+		Range<Integer> all = Range.closedOpen(Integer.valueOf(0), Integer.valueOf(getNumberOfLines()));
 //		System.err.println("all = " + all);
 		RangeSet<Integer> onlyExisting = range.subRangeSet(all);
 		RangeSet<Integer> onlyVisible = onlyExisting.subRangeSet(getVisible());
 //		System.err.println("triggerUpdate: " + range + " -> " + onlyExisting + " -> " + onlyVisible);
 
 		onlyVisible.asRanges().stream()
-		.flatMapToInt(this::toIntStream)
+		.flatMapToInt(VFlow::toIntStream)
 		.forEach(index -> updateNode(index));
 	}
 
 	private void triggerRelease(RangeSet<Integer> range) {
 //		System.err.println("triggerRelease: " + range );
-		if (range.contains(Integer.MAX_VALUE) || range.contains(Integer.MIN_VALUE)) {
-			System.err.println(" -> infinite -.-");
+		if (range.contains(Integer.valueOf(Integer.MAX_VALUE)) || range.contains(Integer.valueOf(Integer.MIN_VALUE))) {
 			return;
 		}
 		range.asRanges().stream()
-		.flatMapToInt(this::toIntStream)
+		.flatMapToInt(VFlow::toIntStream)
 		.forEach(index -> releaseNode(index));
 	}
 
@@ -243,7 +243,7 @@ public class VFlow<N extends Node>  extends Pane {
 		synchronized (this.sync) {
 			this.activeNodes.entrySet().forEach(e -> {
 				double x = 0;
-				double y = e.getKey() * getLineHeight() - getYOffset();
+				double y = e.getKey().intValue() * getLineHeight() - getYOffset();
 				double width = getWidth();
 				double height = getLineHeight();
 //				System.err.println("VFlow#layout " + e.getValue());
@@ -259,7 +259,7 @@ public class VFlow<N extends Node>  extends Pane {
 
 	protected void releaseNode(int lineIndex) {
 		synchronized (this.sync) {
-			N node = this.activeNodes.remove(lineIndex);
+			N node = this.activeNodes.remove(Integer.valueOf(lineIndex));
 			if (node != null) {
 //				System.err.println("releasing " + lineIndex + "("+node+")");
 				node.setVisible(false);
@@ -277,12 +277,12 @@ public class VFlow<N extends Node>  extends Pane {
 		N node = getNode(lineIndex);
 //		System.err.println("VFlow#updateNode " + node);
 		node.setVisible(true);
-		this.nodePopulator.accept(node, lineIndex);
+		this.nodePopulator.accept(node, Integer.valueOf(lineIndex));
 	}
 
 	public Optional<N> getVisibleNode(int lineIndex) {
 		synchronized (this.sync) {
-			N node = this.activeNodes.get(lineIndex);
+			N node = this.activeNodes.get(Integer.valueOf(lineIndex));
 			return Optional.ofNullable(node);
 		}
 	}
@@ -290,7 +290,7 @@ public class VFlow<N extends Node>  extends Pane {
 	protected N getNode(int lineIndex) {
 		synchronized (this.sync) {
 //			System.err.println("VFlow#getNode " + lineIndex);
-			N node = this.activeNodes.remove(lineIndex);
+			N node = this.activeNodes.remove(Integer.valueOf(lineIndex));
 //			if (node != null) System.err.println(" from active");
 
 			if (node == null) {
@@ -306,14 +306,14 @@ public class VFlow<N extends Node>  extends Pane {
 				getChildren().add(node);
 			}
 
-			if (node != null) if (this.onActivate != null) this.onActivate.accept(lineIndex, node);
-			this.activeNodes.put(lineIndex, node);
+			if (node != null) if (this.onActivate != null) this.onActivate.accept(Integer.valueOf(lineIndex), node);
+			this.activeNodes.put(Integer.valueOf(lineIndex), node);
 
 			return node;
 		}
 	}
 
-	IntStream toIntStream(Range<Integer> range) {
+	static IntStream toIntStream(Range<Integer> range) {
 		return ContiguousSet.create(range, DiscreteDomain.integers()).stream().mapToInt(i->i.intValue());
 	}
 

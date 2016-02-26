@@ -24,10 +24,11 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 
+@SuppressWarnings("javadoc")
 public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 
 	private LineRulerAnnotationPresenter.LayoutHint h;
-	private DoubleProperty absoluteMinWidth = new SimpleDoubleProperty(this, "absoluteMinWidth");
+	private DoubleProperty absoluteMinWidth = new SimpleDoubleProperty(this, "absoluteMinWidth"); //$NON-NLS-1$
 
 	public LineRuler(LineRulerAnnotationPresenter.LayoutHint h, Function<Integer, Set<Annotation>> converter, Predicate<Set<Annotation>> needsPresentation, Supplier<Node> nodeFactory, BiConsumer<Node, Set<Annotation>> nodePopulator) {
 		super(converter, needsPresentation, nodeFactory, nodePopulator);
@@ -46,22 +47,22 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 	@Override
 	protected void layoutChildren() {
 		this.activeNodes.entrySet().forEach(e -> {
-			if (!yOffsetData.containsKey(e.getKey())) {
+			if (!this.yOffsetData.containsKey(e.getKey())) {
 				return;
 			}
 			double x = 0;
-			double y = yOffsetData.get(e.getKey());
+			double y = this.yOffsetData.getOrDefault(e.getKey(),Double.valueOf(0.0)).doubleValue();
 			double width = getWidth();
 			double height = getLineHeight();
 
-			if (h == LayoutHint.ALIGN_RIGHT) {
+			if (this.h == LayoutHint.ALIGN_RIGHT) {
 				e.getValue().autosize();
 				double w = e.getValue().getBoundsInLocal().getWidth();
 
 				x = width - w;
 				width = w;
 			}
-			else if (h == LayoutHint.ALIGN_CENTER) {
+			else if (this.h == LayoutHint.ALIGN_CENTER) {
 				e.getValue().autosize();
 				double w = e.getValue().getBoundsInLocal().getWidth();
 

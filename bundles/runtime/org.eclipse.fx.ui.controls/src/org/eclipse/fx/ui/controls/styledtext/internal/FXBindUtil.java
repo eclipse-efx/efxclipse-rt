@@ -10,21 +10,16 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.internal;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Subscription;
 
-import javafx.beans.InvalidationListener;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
+@SuppressWarnings("javadoc")
 public class FXBindUtil {
 
 	public static <A, B> Subscription uniMapBindList(ObservableList<A> a, ObservableList<B> b, Function<A, B> map) {
@@ -73,40 +68,40 @@ public class FXBindUtil {
 		};
 	}
 
-	public static void main(String[] args) {
-		ObservableList<String> a = FXCollections.observableArrayList();
-		ObservableList<Integer> b = FXCollections.observableArrayList();
-
-		uniMapBindList(a, b, Integer::valueOf);
-
-		b.addListener((InvalidationListener)(x)->System.err.println(b));
-
-
-		a.add("1");
-		assert(b.get(0) == 1);
-
-		a.add("2");
-		assert b.get(1) == 2;
-
-		a.add("3");
-		assert b.get(2) == 3;
-
-		a.remove("2");
-		assert b.get(1) == 3;
-
-		a.addAll(1, Arrays.asList("5", "6"));
-		assert b.get(1) == 5;
-		assert b.get(2) == 6;
-		assert b.get(3) == 3;
-
-		ArrayList<String> copy = new ArrayList<>(a);
-		String string = copy.get(2);
-		copy.remove(2);
-		copy.add(1, string);
-
-		a.setAll(copy);
-		assert b.get(1) == 6;
-		assert b.get(2) == 5;
-	}
+//	public static void main(String[] args) {
+//		ObservableList<String> a = FXCollections.observableArrayList();
+//		ObservableList<Integer> b = FXCollections.observableArrayList();
+//
+//		uniMapBindList(a, b, Integer::valueOf);
+//
+//		b.addListener((InvalidationListener)(x)->System.err.println(b));
+//
+//
+//		a.add("1");
+//		assert(b.get(0) == 1);
+//
+//		a.add("2");
+//		assert b.get(1) == 2;
+//
+//		a.add("3");
+//		assert b.get(2) == 3;
+//
+//		a.remove("2");
+//		assert b.get(1) == 3;
+//
+//		a.addAll(1, Arrays.asList("5", "6"));
+//		assert b.get(1) == 5;
+//		assert b.get(2) == 6;
+//		assert b.get(3) == 3;
+//
+//		ArrayList<String> copy = new ArrayList<>(a);
+//		String string = copy.get(2);
+//		copy.remove(2);
+//		copy.add(1, string);
+//
+//		a.setAll(copy);
+//		assert b.get(1) == 6;
+//		assert b.get(2) == 5;
+//	}
 
 }

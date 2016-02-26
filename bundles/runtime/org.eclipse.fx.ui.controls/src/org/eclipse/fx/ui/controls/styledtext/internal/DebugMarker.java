@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+@SuppressWarnings("javadoc")
 public class DebugMarker extends Rectangle {
 
 	private FillTransition transition;

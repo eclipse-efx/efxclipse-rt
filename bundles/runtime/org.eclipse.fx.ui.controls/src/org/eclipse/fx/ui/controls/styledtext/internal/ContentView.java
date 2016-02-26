@@ -13,12 +13,10 @@ package org.eclipse.fx.ui.controls.styledtext.internal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
+import java.util.OptionalInt;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -55,13 +53,13 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
+@SuppressWarnings("javadoc")
 public class ContentView  extends Pane {
 
 	private SetProperty<TextAnnotationPresenter> textAnnotationPresenter = new SimpleSetProperty<>(FXCollections.observableSet());
 	public SetProperty<TextAnnotationPresenter> textAnnotationPresenterProperty() {
-		return textAnnotationPresenter;
+		return this.textAnnotationPresenter;
 	}
 
 	private class LineLayer extends VFlow<LineNode> {
@@ -70,7 +68,7 @@ public class ContentView  extends Pane {
 			super(nodeFactory, nodePopulator);
 
 			setOnRelease(n->n.release());
-			setOnActivate((idx, n)->n.setIndex(idx));
+			setOnActivate((idx, n)->n.setIndex(idx.intValue()));
 		}
 
 
@@ -149,20 +147,23 @@ public class ContentView  extends Pane {
 		}
 
 		private Stream<LineNode> createVisibleLineNodesStream() {
-			ContiguousSet<Integer> visibleIndexes = ContiguousSet.create(visibleLines.get(), DiscreteDomain.integers());
+			ContiguousSet<Integer> visibleIndexes = ContiguousSet.create(ContentView.this.visibleLines.get(), DiscreteDomain.integers());
 //			return visibleIndexes.stream().filter(i->i<model.size()).map(idx->get(model.get(idx))).filter(n->n.isPresent()).map(n->n.get()).filter(n->n.isVisible());
-			return visibleIndexes.stream().filter(i->i<getNumberOfLines()).map(idx->getVisibleNode(idx)).filter(n->n.isPresent()).map(n->n.get());
+			return visibleIndexes.stream()
+					.filter(i -> i.intValue() < getNumberOfLines())
+					.map(idx -> getVisibleNode(idx.intValue()))
+					.filter(n -> n.isPresent()).map(n->n.get());
 		}
 
-		private Optional<Integer> getLineIndex(javafx.geometry.Point2D point) {
+		Optional<Integer> getLineIndex(javafx.geometry.Point2D point) {
 			final Optional<LineNode> hitLine = createVisibleLineNodesStream().filter(n->n.getBoundsInParent().contains(point)).findFirst();
 			final Optional<Integer> index = hitLine.map(n->{
 				int i = n.getCaretIndexAtPoint(new javafx.geometry.Point2D(point.getX(), n.getHeight()/2));
 				if (i >= 0 ) {
-					return n.getStartOffset() + i;
+					return Integer.valueOf(n.getStartOffset() + i);
 				}
 				else {
-					return n.getEndOffset();
+					return Integer.valueOf(n.getEndOffset());
 				}
 			});
 			return index;
@@ -184,16 +185,16 @@ public class ContentView  extends Pane {
 
 	private LineLayer lineLayer = new LineLayer(()->new LineNode(), (n, m)->{
 		n.setLineHelper(getLineHelper());
-		n.update(textAnnotationPresenter.get());
+		n.update(this.textAnnotationPresenter.get());
 	});
 
-	private Predicate<Set<LineNode>> needsPresentation;
+//	private Predicate<Set<LineNode>> needsPresentation;
 
 	private Map<Integer, Double> yOffsetData = new HashMap<>();
 
-	private boolean forceLayout = true;
+//	private boolean forceLayout = true;
 
-	private DoubleProperty lineHeigth = new SimpleDoubleProperty(this, "lineHeight", 16.0);
+	private DoubleProperty lineHeigth = new SimpleDoubleProperty(this, "lineHeight", 16.0); //$NON-NLS-1$
 	public DoubleProperty lineHeightProperty() {
 		return this.lineHeigth;
 	}
@@ -204,7 +205,7 @@ public class ContentView  extends Pane {
 		this.lineHeigth.set(lineHeight);
 	}
 
-	private IntegerProperty numberOfLines = new SimpleIntegerProperty(this, "numberOfLines", 0);
+	IntegerProperty numberOfLines = new SimpleIntegerProperty(this, "numberOfLines", 0); //$NON-NLS-1$
 	public ReadOnlyIntegerProperty numberOfLinesProperty() {
 		return this.numberOfLines;
 	}
@@ -212,17 +213,17 @@ public class ContentView  extends Pane {
 		return this.numberOfLines.get();
 	}
 
-	private IntegerProperty caretOffset = new SimpleIntegerProperty(this, "caretOffset", 0);
+	private IntegerProperty caretOffset = new SimpleIntegerProperty(this, "caretOffset", 0); //$NON-NLS-1$
 	public IntegerProperty caretOffsetProperty() {
 		return this.caretOffset;
 	}
 
-	private ObjectProperty<TextSelection> textSelection = new SimpleObjectProperty<>(this, "textSelection", new TextSelection(0, 0));
+	private ObjectProperty<TextSelection> textSelection = new SimpleObjectProperty<>(this, "textSelection", new TextSelection(0, 0)); //$NON-NLS-1$
 	public ObjectProperty<TextSelection> textSelectionProperty() {
 		return this.textSelection;
 	}
 
-	private ObjectProperty<StyledTextContent> content = new SimpleObjectProperty<>(this, "content");
+	private ObjectProperty<StyledTextContent> content = new SimpleObjectProperty<>(this, "content"); //$NON-NLS-1$
 	public ObjectProperty<StyledTextContent> contentProperty() {
 		return this.content;
 	}
@@ -302,7 +303,7 @@ public class ContentView  extends Pane {
 //		return this.model;
 //	}
 
-	private ObjectProperty<Range<Integer>> visibleLines = new SimpleObjectProperty<>(this, "visibleLines", Range.closed(0, 0));
+	ObjectProperty<Range<Integer>> visibleLines = new SimpleObjectProperty<>(this, "visibleLines", Range.closed(Integer.valueOf(0), Integer.valueOf(0))); //$NON-NLS-1$
 	public ObjectProperty<Range<Integer>> visibleLinesProperty() {
 		return this.visibleLines;
 	}
@@ -363,8 +364,8 @@ public class ContentView  extends Pane {
 		setMinWidth(200);
 		setMinHeight(200);
 
-		visibleLines.addListener(this::onLineChange);
-		offsetX.addListener(this::onLineChange);
+		this.visibleLines.addListener(this::onLineChange);
+		this.offsetX.addListener(this::onLineChange);
 
 
 
@@ -379,13 +380,13 @@ public class ContentView  extends Pane {
 	}
 
 	private void bindCaretListener() {
-		caretOffset.addListener((x, o, n)-> {
+		this.caretOffset.addListener((x, o, n)-> {
 			int oldCaretLine = getContent().getLineAtOffset(o.intValue());
 			int newCaretLine = getContent().getLineAtOffset(n.intValue());
 
 			RangeSet<Integer> toUpdate = TreeRangeSet.create();
-			toUpdate.add(Range.closed(oldCaretLine, oldCaretLine));
-			toUpdate.add(Range.closed(newCaretLine, newCaretLine));
+			toUpdate.add(Range.closed(Integer.valueOf(oldCaretLine), Integer.valueOf(oldCaretLine)));
+			toUpdate.add(Range.closed(Integer.valueOf(newCaretLine), Integer.valueOf(newCaretLine)));
 
 			updateNodesNow(toUpdate);
 		});
@@ -395,23 +396,23 @@ public class ContentView  extends Pane {
 		int firstLine = getContent().getLineAtOffset(selection.offset);
 		int lastLine = getContent().getLineAtOffset(selection.offset + selection.length);
 		if (lastLine == -1) {
-			lastLine = numberOfLines.get();
+			lastLine = this.numberOfLines.get();
 		}
-		return Range.closed(firstLine, Math.min(lastLine, numberOfLines.get()));
+		return Range.closed(Integer.valueOf(firstLine), Integer.valueOf(Math.min(lastLine, this.numberOfLines.get())));
 	}
 
-	private Range<Integer> toRange(TextSelection s) {
-		return Range.closedOpen(s.offset, s.offset + s.length);
-	}
-
-	private Range<Integer> toLineRange(Range<Integer> globalOffsetRange) {
-		int lower = getContent().getLineAtOffset(globalOffsetRange.lowerEndpoint());
-		int upper = getContent().getLineAtOffset(globalOffsetRange.upperEndpoint());
-		return Range.closed(lower, upper);
-	}
+//	private static Range<Integer> toRange(TextSelection s) {
+//		return Range.closedOpen(Integer.valueOf(s.offset), Integer.valueOf(s.offset + s.length));
+//	}
+//
+//	private Range<Integer> toLineRange(Range<Integer> globalOffsetRange) {
+//		int lower = getContent().getLineAtOffset(globalOffsetRange.lowerEndpoint().intValue());
+//		int upper = getContent().getLineAtOffset(globalOffsetRange.upperEndpoint().intValue());
+//		return Range.closed(Integer.valueOf(lower), Integer.valueOf(upper));
+//	}
 
 	private void bindSelectionListener() {
-		textSelection.addListener((x, o, n) -> {
+		this.textSelection.addListener((x, o, n) -> {
 			RangeSet<Integer> toUpdate = TreeRangeSet.create();
 			if (o != null) toUpdate.add(getAffectedLines(o));
 			if (n != null) toUpdate.add(getAffectedLines(n));
@@ -434,7 +435,7 @@ public class ContentView  extends Pane {
 			current.addTextChangeListener(this.textChangeListener);
 
 			// set inital values
-			numberOfLines.set(current.getLineCount());
+			this.numberOfLines.set(current.getLineCount());
 
 		}
 	}
@@ -458,7 +459,7 @@ public class ContentView  extends Pane {
 			int endOffset = event.offset + event.replaceCharCount;
 			int endLineIndex = getContent().getLineAtOffset(endOffset);
 			int endLineBegin = getContent().getOffsetAtLine(endLineIndex);
-			int endLineLength = lineHelper.getLength(endLineIndex);
+//			int endLineLength = ContentView.this.lineHelper.getLength(endLineIndex);
 
 			int firstSafeLine;
 
@@ -484,18 +485,18 @@ public class ContentView  extends Pane {
 			int deltaLines = event.newLineCount - event.replaceLineCount;
 
 			if (deltaLines < 0) {
-				this.toRelease.add(Range.closedOpen(firstUnchangedLine + deltaLines, firstUnchangedLine));
+				this.toRelease.add(Range.closedOpen(Integer.valueOf(firstUnchangedLine + deltaLines), Integer.valueOf(firstUnchangedLine)));
 			}
 
 			// prepare permutation
 			this.mapping = (idx) -> {
-				if (idx >= firstUnchangedLine) {
-					return idx + deltaLines;
+				if (idx.intValue() >= firstUnchangedLine) {
+					return Integer.valueOf(idx.intValue() + deltaLines);
 				}
 				return idx;
 			};
 
-			this.toUpdate.add(Range.closedOpen(changeBeginLine, firstUnchangedLine + deltaLines));
+			this.toUpdate.add(Range.closedOpen(Integer.valueOf(changeBeginLine), Integer.valueOf(firstUnchangedLine + deltaLines)));
 
 
 //
@@ -567,23 +568,23 @@ public class ContentView  extends Pane {
 
 		@Override
 		public void textChanged(TextChangedEvent event) {
-			if (!toRelease.isEmpty()) {
-				releaseNodesNow(toRelease);
-				toRelease.clear();
+			if (!this.toRelease.isEmpty()) {
+				releaseNodesNow(this.toRelease);
+				this.toRelease.clear();
 			}
 
 			// execute permutation
 			if (this.mapping != null) {
-				getLineLayer().permutateNodes(mapping);
+				getLineLayer().permutateNodes(this.mapping);
 				this.mapping = null;
 			}
 
 
 			// execute updates
-			if (!toUpdate.isEmpty()) {
+			if (!this.toUpdate.isEmpty()) {
 
-				updateNodesNow(toUpdate);
-				toUpdate.clear();
+				updateNodesNow(this.toUpdate);
+				this.toUpdate.clear();
 			}
 
 			// update number of lines
@@ -630,17 +631,17 @@ public class ContentView  extends Pane {
 
 
 		// schedule visible line updates
-		if (curVisibleLines == null) {
+		if (this.curVisibleLines == null) {
 			toUpdate.add(visibleLines);
 		}
 		else {
 			RangeSet<Integer> hiddenLines = TreeRangeSet.create();
-			hiddenLines.add(curVisibleLines);
+			hiddenLines.add(this.curVisibleLines);
 			hiddenLines.remove(visibleLines);
 
 			RangeSet<Integer> shownLines = TreeRangeSet.create();
 			shownLines.add(visibleLines);
-			shownLines.remove(curVisibleLines);
+			shownLines.remove(this.curVisibleLines);
 
 			toUpdate.addAll(shownLines);
 			toRelease.addAll(hiddenLines);
@@ -650,40 +651,54 @@ public class ContentView  extends Pane {
 		// store precomputed y data
 		for (int index : set) {
 			double y = index * lineHeight - offsetY;
-			yOffsetData.put(index, y);
-			forceLayout = true;
+			this.yOffsetData.put(Integer.valueOf(index), Double.valueOf(y));
+//			this.forceLayout = true;
 		}
 
 		releaseNodesNow(toRelease);
 		updateNodesNow(toUpdate);
 
-		lineLayer.requestLayout();
+		this.lineLayer.requestLayout();
 //		scheduleUpdate();
 	}
 
 	private double computeLongestLine() {
-		Optional<Integer> longestLine = IntStream.range(0, getNumberOfLines()).mapToObj(index->lineHelper.getLengthCountTabsAsChars(index)).collect(Collectors.maxBy(Integer::compare));
-//		Optional<Integer> longestLine = model.stream().map(m->m.getLineLength() + countTabs(m.getText()) * 3).collect(Collectors.maxBy(Integer::compare));
-		longestLine = longestLine.map(s->s+2); // extra space
-		Optional<Double> longestLineWidth = longestLine.map(i->i*getCharWidth());
-		longestLineWidth = longestLineWidth.map(l->Math.max(l, getWidth()));
-		return longestLineWidth.orElse(getWidth());
+		OptionalInt longestLine = IntStream.range(0, getNumberOfLines())
+			.map( index -> this.lineHelper.getLengthCountTabsAsChars(index))
+			.max();
+		if( longestLine.isPresent() ) {
+			int lineLength = longestLine.getAsInt() + 2;
+			return Math.max(getWidth(), lineLength * getCharWidth());
+		}
+
+		return getWidth();
 	}
+
+//	private double computeLongestLine_old() {
+//		Optional<Integer> longestLine = IntStream.range(0, getNumberOfLines())
+//				.mapToObj(index->Integer.valueOf(this.lineHelper.getLengthCountTabsAsChars(index)))
+//				.collect(Collectors.maxBy(Integer::compare));
+////		Optional<Integer> longestLine = model.stream().map(m->m.getLineLength() + countTabs(m.getText()) * 3).collect(Collectors.maxBy(Integer::compare));
+//		longestLine = longestLine.map(s-> Integer.valueOf(s.intValue()+2)); // extra space
+//		Optional<Double> longestLineWidth = longestLine.map(i->i*getCharWidth());
+//		longestLineWidth = longestLineWidth.map(l->Math.max(l, getWidth()));
+//		return longestLineWidth.orElse(getWidth());
+//	}
 
 	private Font lastFont;
 	private double lastWidth = 8d;
 
 	private double getCharWidth() {
-		if( lastFont != area.getFont() ) {
-			lastFont = area.getFont();
-			lastWidth = Math.ceil(Util.getTextWidth("M", lastFont));
+		if( this.lastFont != this.area.getFont() ) {
+			this.lastFont = this.area.getFont();
+			this.lastWidth = Math.ceil(Util.getTextWidth("M", this.lastFont)); //$NON-NLS-1$
 		}
-		return lastWidth;
+		return this.lastWidth;
 	}
 
 	@Override
 	protected void layoutChildren() {
-		double scrollX = -offsetX.get();
+		double scrollX = -this.offsetX.get();
 		this.contentBody.resizeRelocate(scrollX, 0, computeLongestLine(), getHeight());
 	}
 
@@ -695,7 +710,7 @@ public class ContentView  extends Pane {
 		bar.setMin(0);
 		DoubleBinding max = this.contentBody.widthProperty().subtract(widthProperty());
 		DoubleBinding factor = this.contentBody.widthProperty().divide(max);
-		bar.maxProperty().bind(contentBody.widthProperty().divide(factor));
+		bar.maxProperty().bind(this.contentBody.widthProperty().divide(factor));
 		bar.visibleAmountProperty().bind(widthProperty().divide(factor));
 		this.offsetX.bind(bar.valueProperty());
 	}
@@ -709,23 +724,23 @@ public class ContentView  extends Pane {
 //	private RangeSet<Integer> toUpdate = TreeRangeSet.create();
 
 
-	private void updateNodesNow(com.google.common.collect.RangeSet<Integer> rs) {
-		RangeSet<Integer> subRangeSet = rs.subRangeSet(getVisibleLines()).subRangeSet(Range.closedOpen(0, getNumberOfLines()));
+	void updateNodesNow(com.google.common.collect.RangeSet<Integer> rs) {
+		RangeSet<Integer> subRangeSet = rs.subRangeSet(getVisibleLines()).subRangeSet(Range.closedOpen(Integer.valueOf(0), Integer.valueOf(getNumberOfLines())));
 		subRangeSet.asRanges().forEach(r-> {
 			ContiguousSet.create(r, DiscreteDomain.integers()).forEach(index-> {
-				getLineLayer().updateNode(index);
+				getLineLayer().updateNode(index.intValue());
 //				StyledTextLine m = this.model.get(index);
 //				lineLayer.updateNode(m);
 			});
 		});
 	}
 
-	private void releaseNodesNow(com.google.common.collect.RangeSet<Integer> rs) {
-		RangeSet<Integer> subRangeSet = rs.subRangeSet(Range.closedOpen(0, getNumberOfLines()));
+	void releaseNodesNow(com.google.common.collect.RangeSet<Integer> rs) {
+		RangeSet<Integer> subRangeSet = rs.subRangeSet(Range.closedOpen(Integer.valueOf(0), Integer.valueOf(getNumberOfLines())));
 //		System.err.println("releaseNodesNow " + subRangeSet);
 		subRangeSet.asRanges().forEach(r-> {
 			ContiguousSet.create(r, DiscreteDomain.integers()).forEach(index-> {
-				getLineLayer().releaseNode(index);
+				getLineLayer().releaseNode(index.intValue());
 //				StyledTextLine m = this.model.get(index);
 //				System.err.println("RELEASE " + m);
 //				lineLayer.releaseNode(m);
@@ -799,7 +814,7 @@ public class ContentView  extends Pane {
 
 	public Optional<Point2D> getLocationInScene(int globalOffset) {
 		int lineIndex = getContent().getLineAtOffset(globalOffset);
-		Optional<LineNode> node = lineLayer.getVisibleNode(lineIndex);
+		Optional<LineNode> node = this.lineLayer.getVisibleNode(lineIndex);
 
 		return node.map(n->{
 			double x = n.getCharLocation(globalOffset - n.getStartOffset());
@@ -810,8 +825,8 @@ public class ContentView  extends Pane {
 
 	public Optional<Integer> getLineIndex(Point2D point) {
 		// transform point to respect horizontal scrolling
-		point = this.lineLayer.sceneToLocal(this.localToScene(point));
-		Optional<Integer> result =  this.lineLayer.getLineIndex(point);
+		Point2D p = this.lineLayer.sceneToLocal(this.localToScene(point));
+		Optional<Integer> result =  this.lineLayer.getLineIndex(p);
 		return result;
 
 	}

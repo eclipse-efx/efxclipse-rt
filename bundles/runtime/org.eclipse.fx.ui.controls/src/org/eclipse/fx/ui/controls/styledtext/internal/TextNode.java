@@ -17,8 +17,6 @@ import java.util.Optional;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-import com.sun.javafx.css.converters.PaintConverter;
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
@@ -38,6 +36,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 
+@SuppressWarnings("javadoc")
 public class TextNode extends HBox {
 
 	/**
@@ -77,7 +76,7 @@ public class TextNode extends HBox {
 
 	@SuppressWarnings("null")
 	@NonNull
-	private static final CssMetaData<TextNode, @NonNull Paint> FILL = new CssMetaData<TextNode, @NonNull Paint>("-fx-fill", PaintConverter.getInstance(), Color.BLACK) { //$NON-NLS-1$
+	private static final CssMetaData<TextNode, @NonNull Paint> FILL = new CssMetaData<TextNode, @NonNull Paint>("-fx-fill", StyleConverter.getPaintConverter(), Color.BLACK) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(TextNode styleable) {
@@ -297,16 +296,16 @@ public class TextNode extends HBox {
 	 *            the text
 	 */
 	public TextNode(String text) {
-		setMinWidth(HBox.USE_COMPUTED_SIZE);
-		cache = new ReuseCache<>(()->{
+		setMinWidth(Region.USE_COMPUTED_SIZE);
+		this.cache = new ReuseCache<>(()->{
 			Text letter = new Text();
 			letter.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
 			return letter;
 		});
-		cache.addOnActivate(node->{
+		this.cache.addOnActivate(node->{
 			getChildren().add(node);
 		});
-		cache.addOnRelease(node-> {
+		this.cache.addOnRelease(node-> {
 			getChildren().remove(node);
 		});
 //		cache.addOnClear(node->getChildren().remove(node));
@@ -319,11 +318,11 @@ public class TextNode extends HBox {
 		this.tabCharAdvance.addListener(o -> {
 			rebuildText(text);
 		});
-		cache.addOnActivate((n)->{
+		this.cache.addOnActivate((n)->{
 			((Text)n).fillProperty().bind(fillProperty());
 
 		});
-		cache.addOnRelease(n->{
+		this.cache.addOnRelease(n->{
 			((Text)n).fillProperty().unbind();
 		});
 
@@ -337,11 +336,11 @@ public class TextNode extends HBox {
 
 	private void rebuildText(String text) {
 		for (Text t : this.activeLetters) {
-			cache.releaseElement(t);
+			this.cache.releaseElement(t);
 		}
 		this.activeLetters.clear();
 		for( char c : processText(text).toCharArray() ) {
-			Text textNode = cache.getElement();
+			Text textNode = this.cache.getElement();
 			textNode.setText(toString(c));
 			this.activeLetters.add(textNode);
 		}
@@ -427,9 +426,9 @@ public class TextNode extends HBox {
 		return this.originalText;
 	}
 
-	protected double getFixedLetterWidth() {
-		return 8;
-	}
+//	protected double getFixedLetterWidth() {
+//		return 8;
+//	}
 
 	@Override
 	protected void layoutChildren() {

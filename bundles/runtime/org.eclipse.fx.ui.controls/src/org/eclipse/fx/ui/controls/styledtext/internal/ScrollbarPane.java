@@ -13,10 +13,10 @@ package org.eclipse.fx.ui.controls.styledtext.internal;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollBar;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 
+@SuppressWarnings("javadoc")
 public class ScrollbarPane<N extends Node> extends Region {
 
 	public final ScrollBar horizontal;
@@ -31,9 +31,9 @@ public class ScrollbarPane<N extends Node> extends Region {
 		this.vertical = new ScrollBar();
 		this.vertical.setOrientation(Orientation.VERTICAL);
 
-		clip = new Rectangle();
+		this.clip = new Rectangle();
 
-		getChildren().setAll(horizontal, vertical);
+		getChildren().setAll(this.horizontal, this.vertical);
 	}
 
 	public void setCenter(N center) {
@@ -44,7 +44,7 @@ public class ScrollbarPane<N extends Node> extends Region {
 
 		this.center = center;
 		if (this.center != null) {
-			this.center.setClip(clip);
+			this.center.setClip(this.clip);
 			getChildren().add(0, this.center);
 		}
 	}

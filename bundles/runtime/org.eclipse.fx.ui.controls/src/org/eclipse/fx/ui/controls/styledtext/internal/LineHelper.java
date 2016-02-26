@@ -31,6 +31,7 @@ import org.eclipse.jdt.annotation.NonNull;
 
 import com.google.common.collect.Range;
 
+@SuppressWarnings("javadoc")
 public class LineHelper {
 
 	private StyledTextArea control;
@@ -46,7 +47,7 @@ public class LineHelper {
 	private Range<Integer> getSelection() {
 		@NonNull
 		TextSelection selection = this.control.getSelection();
-		return Range.closedOpen(selection.offset, selection.offset + selection.length);
+		return Range.closedOpen(Integer.valueOf(selection.offset), Integer.valueOf(selection.offset + selection.length));
 	}
 
 	public boolean isValidLineIndex(int index) {
@@ -87,7 +88,7 @@ public class LineHelper {
 	public Range<Integer> getRange(int index) {
 		int lower = getOffset(index);
 		int upper = lower + getLength(index);
-		return Range.closed(lower, upper);
+		return Range.closed(Integer.valueOf(lower), Integer.valueOf(upper));
 	}
 
 	private int mapToLocal(int index, int globalOffset) {
@@ -95,7 +96,7 @@ public class LineHelper {
 	}
 
 	private com.google.common.collect.Range<Integer> mapToLocal(int index, com.google.common.collect.Range<Integer> global) {
-		return com.google.common.collect.Range.range(global.lowerEndpoint() - getOffset(index), global.lowerBoundType(), global.upperEndpoint() - getOffset(index), global.upperBoundType());
+		return com.google.common.collect.Range.range(Integer.valueOf(global.lowerEndpoint().intValue() - getOffset(index)), global.lowerBoundType(), Integer.valueOf(global.upperEndpoint().intValue() - getOffset(index)), global.upperBoundType());
 	}
 
 	public Range<Integer> getSelection(int index) {
@@ -119,7 +120,7 @@ public class LineHelper {
 	public int getCaret(int index) {
 		int globalCaret = getCaretOffset();
 		Range<Integer> range = getRange(index);
-		if (range.contains(globalCaret)) {
+		if (range.contains(Integer.valueOf(globalCaret))) {
 			return mapToLocal(index, globalCaret);
 		}
 		else {
@@ -127,7 +128,7 @@ public class LineHelper {
 		}
 	}
 
-	private Segment createSegement(String text, StyleRange style) {
+	private static Segment createSegement(String text, StyleRange style) {
 		List<String> styleClasses = new ArrayList<>();
 		if (style.stylename != null) {
 			if (style.stylename.contains(".")) { //$NON-NLS-1$
@@ -157,7 +158,7 @@ public class LineHelper {
 		List<Segment> segments = new ArrayList<>();
 
 		String line = getContent().getLine(index);
-		if (line != null) {
+//		if (line != null) {
 			int start = getContent().getOffsetAtLine(index);
 			int length = line.length();
 
@@ -219,7 +220,7 @@ public class LineHelper {
 					segments.add(createSegement(text, styleRange));
 				}
 			}
-		}
+//		}
 
 		return segments;
 	}
@@ -237,8 +238,10 @@ public class LineHelper {
 		return result;
 	}
 
-	private int countTabs(String s) {
-		Matcher matcher = Pattern.compile("\t").matcher(s);
+	private static final Pattern TAB_PATTERN = Pattern.compile("\t"); //$NON-NLS-1$
+
+	private static int countTabs(String s) {
+		Matcher matcher = TAB_PATTERN.matcher(s);
 		int count = 0;
 		while (matcher.find()) {
 			count++;

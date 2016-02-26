@@ -12,16 +12,17 @@ package org.eclipse.fx.ui.controls.styledtext.internal;
 
 import java.util.List;
 
+@SuppressWarnings("javadoc")
 public class Segment {
 	String text;
 	List<String> styleClasses;
 
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
 	public List<String> getStyleClasses() {
-		return styleClasses;
+		return this.styleClasses;
 	}
 
 	public Segment(String text, List<String> styleClasses) {
@@ -38,8 +39,8 @@ public class Segment {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((styleClasses == null) ? 0 : styleClasses.hashCode());
-		result = prime * result + ((text == null) ? 0 : text.hashCode());
+		result = prime * result + ((this.styleClasses == null) ? 0 : this.styleClasses.hashCode());
+		result = prime * result + ((this.text == null) ? 0 : this.text.hashCode());
 		return result;
 	}
 
@@ -52,15 +53,15 @@ public class Segment {
 		if (getClass() != obj.getClass())
 			return false;
 		Segment other = (Segment) obj;
-		if (styleClasses == null) {
+		if (this.styleClasses == null) {
 			if (other.styleClasses != null)
 				return false;
-		} else if (!styleClasses.equals(other.styleClasses))
+		} else if (!this.styleClasses.equals(other.styleClasses))
 			return false;
-		if (text == null) {
+		if (this.text == null) {
 			if (other.text != null)
 				return false;
-		} else if (!text.equals(other.text))
+		} else if (!this.text.equals(other.text))
 			return false;
 		return true;
 	}

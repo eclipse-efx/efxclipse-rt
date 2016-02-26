@@ -18,6 +18,7 @@ import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+@SuppressWarnings("javadoc")
 public class ReuseCache<T> {
 
 	private Supplier<T> factory;
@@ -47,30 +48,30 @@ public class ReuseCache<T> {
 
 	public T getElement() {
 		T element;
-		if (free.isEmpty()) {
-			element = factory.get();
+		if (this.free.isEmpty()) {
+			element = this.factory.get();
 		}
 		else {
-			element = free.pop();
+			element = this.free.pop();
 		}
-		active.add(element);
-		onActivate.forEach(a->a.accept(element));
+		this.active.add(element);
+		this.onActivate.forEach(a->a.accept(element));
 		return element;
 	}
 
 	public void releaseElement(T element) {
-		active.remove(element);
-		onRelease.forEach(a->a.accept(element));
+		this.active.remove(element);
+		this.onRelease.forEach(a->a.accept(element));
 //		free.push(element); //FIXME Tom no caching as of NOW
 	}
 
 	public void clearFreeElements() {
-		free.clear();
+		this.free.clear();
 	}
 
 	public boolean isActive(T element) {
-		onClear.forEach(onClear->onClear.accept(element));
-		return active.contains(element);
+		this.onClear.forEach(onClear->onClear.accept(element));
+		return this.active.contains(element);
 	}
 
 }

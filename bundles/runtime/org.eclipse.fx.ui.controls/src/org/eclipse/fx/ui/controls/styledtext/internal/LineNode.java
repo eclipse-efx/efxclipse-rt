@@ -37,29 +37,34 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
+@SuppressWarnings("javadoc")
 public class LineNode extends StackPane {
 
 	int leftPadding = 0;
 
-	private static boolean debugAnimation = Boolean.getBoolean("styledtext.debuganimation");
-	private static boolean debugOut = Boolean.getBoolean("styledtext.debugout");
+	static final boolean debugAnimation = Boolean.getBoolean("styledtext.debuganimation"); //$NON-NLS-1$
 
 	private DebugMarker debugUpdateText;
-	private DebugMarker debugUpdateAnnotations;
-	private DebugMarker debugUpdateSelection;
-	private DebugMarker debugUpdateCaret;
+	DebugMarker debugUpdateAnnotations;
+	DebugMarker debugUpdateSelection;
+	DebugMarker debugUpdateCaret;
 	private HBox debugBox;
 
-	private int index;
-	private LineHelper lineHelper;
+	int index;
+	LineHelper lineHelper;
+
+	private static final String CSS_CLASS_SOURCE_SEGMENT_CONTAINER = "source-segment-container"; //$NON-NLS-1$
+	private static final String CSS_CLASS_SELECTION_MARKER = "selection-marker"; //$NON-NLS-1$
+	private static final String CSS_CLASS_STYLED_TEXT_LINE = "styled-text-line"; //$NON-NLS-1$
+	private static final String CSS_CLASS_CURRENT_LINE = "current-line"; //$NON-NLS-1$
 
 
 	private int getLineIndex() {
-		return index;
+		return this.index;
 	}
 
-	private static TextNode createNode() {
-		TextNode textNode = new TextNode("");
+	static TextNode createNode() {
+		TextNode textNode = new TextNode(""); //$NON-NLS-1$
 		return textNode;
 	}
 
@@ -68,13 +73,13 @@ public class LineNode extends StackPane {
 		protected final ReuseCache<TextNode> cache;
 
 		public TextLayer() {
-			getStyleClass().add("source-segment-container");
+			getStyleClass().add(CSS_CLASS_SOURCE_SEGMENT_CONTAINER);
 //			setCache(true);
 //			setCacheHint(CacheHint.QUALITY);
-			setMinWidth(HBox.USE_COMPUTED_SIZE);
+			setMinWidth(Region.USE_COMPUTED_SIZE);
 
-			cache = new ReuseCache<>(LineNode::createNode);
-			cache.addOnActivate(node->{
+			this.cache = new ReuseCache<>(LineNode::createNode);
+			this.cache.addOnActivate(node->{
 				getChildren().add(node);
 //				if (!getChildren().contains(node)) {
 //					getChildren().add(node);
@@ -82,7 +87,7 @@ public class LineNode extends StackPane {
 //				node.setVisible(true);
 //				node.setManaged(true);
 			});
-			cache.addOnRelease(node->{
+			this.cache.addOnRelease(node->{
 				getChildren().remove(node);
 //				node.setVisible(false);
 //				node.setManaged(false);
@@ -94,30 +99,29 @@ public class LineNode extends StackPane {
 		private List<TextNode> currentTextNodes = new ArrayList<>();
 
 		public boolean updateContent(List<Segment> content) {
-			if (currentContent.equals(content)) {
+			if (this.currentContent.equals(content)) {
 				return false;
 			}
-			if (debugOut) System.err.println("update " + getLineIndex() + ": TextLayer");
 
-			for (TextNode c : currentTextNodes) {
-				cache.releaseElement(c);
+			for (TextNode c : this.currentTextNodes) {
+				this.cache.releaseElement(c);
 			}
-			currentTextNodes.clear();
+			this.currentTextNodes.clear();
 
 			for (Segment segment : content) {
-				TextNode node = cache.getElement();
+				TextNode node = this.cache.getElement();
 				node.updateText(segment.text);
 				node.getStyleClass().setAll(segment.styleClasses);
-				currentTextNodes.add(node);
+				this.currentTextNodes.add(node);
 			}
 
 			if (content.isEmpty()) {
-				TextNode node = cache.getElement();
-				node.updateText("");
-				currentTextNodes.add(node);
+				TextNode node = this.cache.getElement();
+				node.updateText(""); //$NON-NLS-1$
+				this.currentTextNodes.add(node);
 			}
 
-			currentContent = content;
+			this.currentContent = content;
 
 //			applyCss();
 //			layout();
@@ -187,7 +191,6 @@ public class LineNode extends StackPane {
 		@Override
 		protected void layoutChildren() {
 			super.layoutChildren();
-			if (debugOut) System.err.println("layout Line "+getLineIndex()+": TextLayer");
 		}
 
 		protected String getText() {
@@ -201,13 +204,13 @@ public class LineNode extends StackPane {
 	}
 
 	public class SelectionLayer extends Region {
-		private Region selectionMarker = new Region();
+		Region selectionMarker = new Region();
 
-		private com.google.common.collect.Range<Integer> selection;
+		com.google.common.collect.Range<Integer> selection;
 		private boolean continues;
 
 		public SelectionLayer() {
-			this.selectionMarker.getStyleClass().add("selection-marker");
+			this.selectionMarker.getStyleClass().add(CSS_CLASS_SELECTION_MARKER);
 			this.selectionMarker.setManaged(false);
 
 			this.getChildren().setAll(this.selectionMarker);
@@ -224,7 +227,6 @@ public class LineNode extends StackPane {
 		public void updateSelection(com.google.common.collect.Range<Integer> localSelection, boolean continues) {
 			this.continues = continues;
 			if (isSelectionChange(localSelection)) {
-				System.err.println("updating selection for " + index);
 				if (localSelection == null) {
 					this.selectionMarker.setVisible(false);
 				}
@@ -235,7 +237,7 @@ public class LineNode extends StackPane {
 				this.selection = localSelection;
 				requestLayout();
 				if (debugAnimation) {
-					debugUpdateSelection.play();
+					LineNode.this.debugUpdateSelection.play();
 				}
 			}
 		}
@@ -244,18 +246,16 @@ public class LineNode extends StackPane {
 		protected void layoutChildren() {
 			//if (model == null) return;
 
-			if (selection != null) {
-				textLayer.layout();
+			if (this.selection != null) {
+				LineNode.this.textLayer.layout();
 
-				double begin = textLayer.getCharLocation(selection.lowerEndpoint());
-				double end = textLayer.getCharLocation(selection.upperEndpoint());
-				System.err.println(selection);
-				if (selection.upperEndpoint() == lineHelper.getLength(index) && continues) {
+				double begin = LineNode.this.textLayer.getCharLocation(this.selection.lowerEndpoint().intValue());
+				double end = LineNode.this.textLayer.getCharLocation(this.selection.upperEndpoint().intValue());
+				if (this.selection.upperEndpoint().intValue() == LineNode.this.lineHelper.getLength(LineNode.this.index) && this.continues) {
 					end = getWidth();
 				}
 
 
-				if (debugOut) System.err.println("layout Line "+getLineIndex()+": SelectionLayer");
 	//			System.err.println("SelectionLayer: layoutChildren()");
 	//			System.err.println(" setting selection to " + begin + " - " + end);
 				this.selectionMarker.resizeRelocate(begin, 0, end - begin, getHeight());
@@ -263,7 +263,7 @@ public class LineNode extends StackPane {
 		}
 	}
 
-	private static Animation createCaretAnimation(Node caret) {
+	static Animation createCaretAnimation(Node caret) {
 //		Timeline t = new Timeline(
 //				new KeyFrame(Duration.millis(200), new KeyValue(caret.opacityProperty(), 1, Interpolator.DISCRETE)),
 //				new KeyFrame(Duration.millis(200), new KeyValue(caret.opacityProperty(), 0))
@@ -308,7 +308,7 @@ public class LineNode extends StackPane {
 			this.caretAnimation = createCaretAnimation(this.caret);
 
 			this.caret.visibleProperty().addListener((x, o, n)->{
-				if (n) {
+				if (n.booleanValue()) {
 					if (this.caretAnimation.getStatus() != Status.RUNNING) {
 						this.caretAnimation.playFromStart();
 					}
@@ -319,7 +319,7 @@ public class LineNode extends StackPane {
 			});
 		}
 
-		private void hideCaret() {
+		void hideCaret() {
 			this.caret.setVisible(false);
 		}
 
@@ -339,14 +339,14 @@ public class LineNode extends StackPane {
 				this.caretIndex = index;
 				requestLayout();
 				if (debugAnimation) {
-					debugUpdateCaret.play();
+					LineNode.this.debugUpdateCaret.play();
 				}
 			}
 		}
 
+		@Override
 		public void layoutChildren() {
-			double caretOffset = getCharLocation(caretIndex);
-			if (debugOut) System.err.println("layout Line "+getLineIndex()+": CaretLayer caretIndex=" + caretIndex + " = " + caretOffset);
+			double caretOffset = getCharLocation(this.caretIndex);
 			this.caret.setStartX(caretOffset);
 			this.caret.setEndX(caretOffset);
 			this.caret.setStartY(0);
@@ -401,13 +401,13 @@ public class LineNode extends StackPane {
 			private Set<TextAnnotation> current = new HashSet<>();
 
 			public void prepareNodes(Set<TextAnnotation> annotations) {
-				boolean same = current.equals(annotations);
+				boolean same = this.current.equals(annotations);
 
 				if (same) {
 					return;
 				}
 
-				current = annotations;
+				this.current = annotations;
 
 				// release invisible nodes
 				int released = 0;
@@ -419,7 +419,7 @@ public class LineNode extends StackPane {
 						iterator.remove();
 						released ++;
 					}
-					else if (!presenter.isVisible(entry.getKey())) {
+					else if (!this.presenter.isVisible(entry.getKey())) {
 						releaseNode(entry.getValue());
 						iterator.remove();
 						released++;
@@ -446,20 +446,16 @@ public class LineNode extends StackPane {
 //					presented ++;
 //				}
 
-				if (debugOut) System.err.println("update "+getLineIndex()+": AnnotationOverlay: released " + released + " and presented " + presented + " annotation nodes");
-				if (debugOut) System.err.println("update "+getLineIndex()+": AnnotationOverlay: active " + annotations);
 			}
 
 			@Override
 			protected void layoutChildren() {
-				if (debugOut) System.err.println("layout Line "+getLineIndex()+": AnnotationLayer -> AnnotationOverlay");
 				Iterator<Entry<TextAnnotation, Node>> iterator = this.usedNodes.entrySet().iterator();
 				while (iterator.hasNext()) {
 					Entry<TextAnnotation, Node> entry = iterator.next();
 					com.google.common.collect.Range<Integer> range = entry.getKey().getRange();
-					double x = getCharLocation(range.lowerEndpoint());
-					double width = getCharLocation(range.upperEndpoint()) -x;
-					if (debugOut) System.err.println("layout " + entry.getKey() + "-> " + x + " " + width);
+					double x = getCharLocation(range.lowerEndpoint().intValue());
+					double width = getCharLocation(range.upperEndpoint().intValue()) -x;
 					entry.getValue().resizeRelocate(x, 0, width, getHeight());
 				}
 			}
@@ -469,16 +465,14 @@ public class LineNode extends StackPane {
 		Map<TextAnnotationPresenter, AnnotationOverlay> overlays = new HashMap<>();
 
 		public void updateAnnoations(Set<TextAnnotation> annotations, Set<TextAnnotationPresenter> presenters) {
-			if (currentAnnotations != null && currentAnnotations.equals(annotations) &&
-					currentPresenters != null && currentPresenters.equals(presenters)) {
+			if (this.currentAnnotations != null && this.currentAnnotations.equals(annotations) &&
+					this.currentPresenters != null && this.currentPresenters.equals(presenters)) {
 				// nothing to updated
 
 				return;
 			}
 
-			if (debugOut) System.err.println("ANNOTATIONS: " + annotations);
-			if (debugOut) System.err.println("update " + getLineIndex() + ": AnnotationLayer " + annotations.size() + " / " + presenters.size());
-			Iterator<Entry<TextAnnotationPresenter, AnnotationOverlay>> iterator = overlays.entrySet().iterator();
+			Iterator<Entry<TextAnnotationPresenter, AnnotationOverlay>> iterator = this.overlays.entrySet().iterator();
 			// cleanup presenters
 			while (iterator.hasNext()) {
 				Entry<TextAnnotationPresenter, AnnotationOverlay> entry = iterator.next();
@@ -500,27 +494,25 @@ public class LineNode extends StackPane {
 				overlay.requestLayout();
 			}
 
-			if (debugOut) System.err.println("update Line " + getLineIndex() + getChildren());
 			requestLayout();
 
 			if (debugAnimation) {
-				debugUpdateAnnotations.play();
+				LineNode.this.debugUpdateAnnotations.play();
 			}
 
-			currentAnnotations = annotations;
-			currentPresenters = presenters;
+			this.currentAnnotations = annotations;
+			this.currentPresenters = presenters;
 		}
 
 
 		@Override
 		protected void layoutChildren() {
 			super.layoutChildren();
-			if (debugOut) System.err.println("layout Line " + getLineIndex() + ": AnnotationLayer ");
 		}
 
 	}
 
-	private TextLayer textLayer = new TextLayer();
+	TextLayer textLayer = new TextLayer();
 	private SelectionLayer selectionLayer = new SelectionLayer();
 	private CaretLayer caretLayer = new CaretLayer();
 	private AnnotationLayer annotationLayer = new AnnotationLayer();
@@ -528,9 +520,9 @@ public class LineNode extends StackPane {
 
 	public LineNode() {
 //		this.model = model;
-		getStyleClass().add("styled-text-line");
+		getStyleClass().add(CSS_CLASS_STYLED_TEXT_LINE);
 
-		setPadding(new Insets(0, 0, 0, leftPadding));
+		setPadding(new Insets(0, 0, 0, this.leftPadding));
 
 
 //		setStyle("-fx-border-width: 0.1px; -fx-border-color: red");
@@ -552,21 +544,20 @@ public class LineNode extends StackPane {
 			this.debugBox.setManaged(false);
 			this.debugBox.getChildren().addAll(this.debugUpdateAnnotations, this.debugUpdateSelection, this.debugUpdateCaret, this.debugUpdateText);
 
-			this.getChildren().add(debugBox);
+			this.getChildren().add(this.debugBox);
 		}
 
 	}
 
 	@Override
 	protected void layoutChildren() {
-		if (debugOut) System.err.println("layout Line " + index);
 		super.layoutChildren();
 		if (debugAnimation) {
-			debugBox.resizeRelocate(0, 0, 40, getHeight());
-			debugUpdateAnnotations.resize(getHeight(), getHeight());
-			debugUpdateText.resize(getHeight(), getHeight());
-			debugUpdateSelection.resize(getHeight(), getHeight());
-			debugUpdateCaret.resize(getHeight(), getHeight());
+			this.debugBox.resizeRelocate(0, 0, 40, getHeight());
+			this.debugUpdateAnnotations.resize(getHeight(), getHeight());
+			this.debugUpdateText.resize(getHeight(), getHeight());
+			this.debugUpdateSelection.resize(getHeight(), getHeight());
+			this.debugUpdateCaret.resize(getHeight(), getHeight());
 //			debugUpdateAnnotations.resizeRelocate(0, 0, getWidth(), getHeight());
 //			debugUpdateText.resizeRelocate(0, 0, getWidth(), getHeight());
 //			debugUpdateSelection.resizeRelocate(0, 0, getWidth(), getHeight());
@@ -581,10 +572,10 @@ public class LineNode extends StackPane {
 
 	public void update(Set<TextAnnotationPresenter> presenters) {
 		requestLayout();
-		updateContent(lineHelper.getSegments(index));
-		updateSelection(lineHelper.getSelection(index), lineHelper.isValidLineIndex(index+1) ? lineHelper.getSelection(index+1) : null  );
-		updateCaret(lineHelper.getCaret(index));
-		updateAnnotations(lineHelper.getTextAnnotations(index), presenters);
+		updateContent(this.lineHelper.getSegments(this.index));
+		updateSelection(this.lineHelper.getSelection(this.index), this.lineHelper.isValidLineIndex(this.index+1) ? this.lineHelper.getSelection(this.index+1) : null  );
+		updateCaret(this.lineHelper.getCaret(this.index));
+		updateAnnotations(this.lineHelper.getTextAnnotations(this.index), presenters);
 	}
 
 
@@ -624,10 +615,10 @@ public class LineNode extends StackPane {
 		if (this.currentLine != current) {
 
 			if (current) {
-				getStyleClass().add("current-line");
+				getStyleClass().add(CSS_CLASS_CURRENT_LINE);
 			}
 			else {
-				getStyleClass().remove("current-line");
+				getStyleClass().remove(CSS_CLASS_CURRENT_LINE);
 			}
 
 			this.currentLine = current;
@@ -639,7 +630,7 @@ public class LineNode extends StackPane {
 		boolean updated = this.textLayer.updateContent(content);
 		if (updated) {
 			if (debugAnimation) {
-				debugUpdateText.play();
+				this.debugUpdateText.play();
 			}
 		}
 	}
@@ -650,15 +641,15 @@ public class LineNode extends StackPane {
 
 
 	public int getCaretIndexAtPoint(Point2D p) {
-		return textLayer.getCaretIndexAtPoint(p);
+		return this.textLayer.getCaretIndexAtPoint(p);
 	}
 
 	public int getStartOffset() {
-		return lineHelper.getOffset(index);
+		return this.lineHelper.getOffset(this.index);
 	}
 
 	public int getEndOffset() {
-		return lineHelper.getOffset(index) + lineHelper.getLength(index);
+		return this.lineHelper.getOffset(this.index) + this.lineHelper.getLength(this.index);
 	}
 
 	public double getCharLocation(int charOffset) {
@@ -703,12 +694,12 @@ public class LineNode extends StackPane {
 
 	@Override
 	public String toString() {
-		return "LineNode(idx: "+getLineIndex() + ")@" + hashCode();
+		return "LineNode(idx: "+getLineIndex() + ")@" + hashCode(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 
 	public int getLineLength() {
-		return lineHelper.getLength(index);
+		return this.lineHelper.getLength(this.index);
 	}
 
 	public void release() {
