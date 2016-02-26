@@ -15,8 +15,10 @@ import java.util.function.Function;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javafx.beans.binding.StringExpression;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
 /**
@@ -41,5 +43,35 @@ public class ListComboUtil {
 		comboBox.setButtonCell(new SimpleListCell<>(labelExtractor));
 		comboBox.setItems(items);
 		return comboBox;
+	}
+
+	/**
+	 * Setup a list
+	 *
+	 * @param listView
+	 *            the list view
+	 * @param items
+	 *            the items
+	 * @param labelPropertyExtractor
+	 *            the extractor
+	 * @return the list view
+	 * @since 2.3.0
+	 */
+	public static <T> ListView<T> setupList(ListView<T> listView, ObservableList<T> items, Function<T, StringExpression> labelPropertyExtractor) {
+		listView.setCellFactory(v -> new ListCell<T>() {
+			@Override
+			protected void updateItem(T item, boolean empty) {
+				super.updateItem(item, empty);
+				textProperty().unbind();
+
+				if (item != null && !empty) {
+					textProperty().bind(labelPropertyExtractor.apply(item));
+				} else {
+					setText(null);
+				}
+			}
+		});
+		listView.setItems(items);
+		return listView;
 	}
 }
