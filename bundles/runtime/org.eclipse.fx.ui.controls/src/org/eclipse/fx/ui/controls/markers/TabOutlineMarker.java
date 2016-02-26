@@ -17,6 +17,7 @@ import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.css.CssMetaData;
 import javafx.css.SimpleStyleableObjectProperty;
+import javafx.css.StyleConverter;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.geometry.BoundingBox;
@@ -29,12 +30,9 @@ import javafx.scene.shape.StrokeType;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-import com.sun.javafx.css.converters.PaintConverter;
-
 /**
  * Marks a Tab-Position
  */
-@SuppressWarnings("restriction")
 public final class TabOutlineMarker extends Group {
 	@NonNull
 	private Bounds containerBounds;
@@ -178,7 +176,7 @@ public final class TabOutlineMarker extends Group {
 	}
 
 	@SuppressWarnings("null")
-	private static final CssMetaData<TabOutlineMarker, @NonNull Paint> FILL = new CssMetaData<TabOutlineMarker, @NonNull Paint>("-fx-fill", PaintConverter.getInstance(), Color.ORANGE) { //$NON-NLS-1$
+	private static final CssMetaData<TabOutlineMarker, @NonNull Paint> FILL = new CssMetaData<TabOutlineMarker, @NonNull Paint>("-fx-fill", StyleConverter.getPaintConverter(), Color.ORANGE) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(TabOutlineMarker node) {

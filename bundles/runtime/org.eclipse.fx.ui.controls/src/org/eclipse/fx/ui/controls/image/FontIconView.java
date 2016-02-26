@@ -14,16 +14,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.sun.javafx.css.converters.InsetsConverter;
-import com.sun.javafx.css.converters.PaintConverter;
-import com.sun.javafx.css.converters.SizeConverter;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.css.CssMetaData;
 import javafx.css.SimpleStyleableDoubleProperty;
 import javafx.css.SimpleStyleableObjectProperty;
+import javafx.css.StyleConverter;
 import javafx.css.Styleable;
 import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleableProperty;
@@ -36,7 +33,6 @@ import javafx.scene.text.Font;
 /**
  * Font icon view
  */
-@SuppressWarnings("restriction")
 public class FontIconView extends Control {
 
 	/**
@@ -228,7 +224,7 @@ public class FontIconView extends Control {
 				return (StyleableProperty<FontIcon>) styleable.iconProperty();
 			}
 		};
-		static final CssMetaData<FontIconView, Insets> ICON_PADDING = new CssMetaData<FontIconView, Insets>("-fx-icon-padding", InsetsConverter.getInstance(), Insets.EMPTY) { //$NON-NLS-1$
+		static final CssMetaData<FontIconView, Insets> ICON_PADDING = new CssMetaData<FontIconView, Insets>("-fx-icon-padding", StyleConverter.getInsetsConverter(), Insets.EMPTY) { //$NON-NLS-1$
 
 			@Override
 			public boolean isSettable(FontIconView n) {
@@ -242,7 +238,7 @@ public class FontIconView extends Control {
 			}
 		};
 
-		static final CssMetaData<FontIconView, Paint> ICON_FILL = new CssMetaData<FontIconView, Paint>("-fx-icon-fill", PaintConverter.getInstance(), Color.BLACK) { //$NON-NLS-1$
+		static final CssMetaData<FontIconView, Paint> ICON_FILL = new CssMetaData<FontIconView, Paint>("-fx-icon-fill", StyleConverter.getPaintConverter(), Color.BLACK) { //$NON-NLS-1$
 
 			@Override
 			public boolean isSettable(FontIconView n) {
@@ -257,7 +253,7 @@ public class FontIconView extends Control {
 		};
 
 		@SuppressWarnings("boxing")
-		static final CssMetaData<FontIconView, Number> ICON_FONT_SIZE = new CssMetaData<FontIconView, Number>("-fx-icon-font-size", SizeConverter.getInstance(), Font.getDefault().getSize()) { //$NON-NLS-1$
+		static final CssMetaData<FontIconView, Number> ICON_FONT_SIZE = new CssMetaData<FontIconView, Number>("-fx-icon-font-size", StyleConverter.getSizeConverter(), Font.getDefault().getSize()) { //$NON-NLS-1$
 
 			@Override
 			public boolean isSettable(FontIconView n) {
