@@ -115,17 +115,46 @@ public class TextViewer extends AnchorPane implements
 		new InvisibleCharSupport(fTextWidget).install();
 	}
 
+	private static KeyCode getKeyCode(VerifyEvent event) {
+		// JDK-8150709
+		KeyCode kc = event.getCode();
+		if( Util.isMacOS() ) {
+			if( kc == KeyCode.Z || kc == KeyCode.Y ) {
+				if( event.getText().toUpperCase().equals("Z") ) { //$NON-NLS-1$
+					return KeyCode.Z;
+				} else if( event.getText().toUpperCase().equals("Y") ) { //$NON-NLS-1$
+					return KeyCode.Y;
+				}
+			}
+		}
+		return kc;
+	}
+
+
 	private void onVerify(VerifyEvent event) {
 		if (getUndoManager() != null) {
-
-			if (Util.isMacOS()) {
-				if (event.isMetaDown() && !event.isShiftDown() && event.getCode() == KeyCode.Z) {
+			if (Util.isWindows()) {
+				if (event.isControlDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
 					if (getUndoManager().undoable()) {
 						getUndoManager().undo();
 						event.consume();
 					}
 				}
-				else if (event.isMetaDown() && !event.isShiftDown() && event.getCode() == KeyCode.Y) {
+				else if (event.isControlDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Y ) {
+					if (getUndoManager().redoable()) {
+						getUndoManager().redo();
+						event.consume();
+					}
+				}
+			}
+			else if( Util.isMacOS() ) {
+				if (event.isMetaDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
+					if (getUndoManager().undoable()) {
+						getUndoManager().undo();
+						event.consume();
+					}
+				}
+				else if (event.isMetaDown() && event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
 					if (getUndoManager().redoable()) {
 						getUndoManager().redo();
 						event.consume();
@@ -133,13 +162,13 @@ public class TextViewer extends AnchorPane implements
 				}
 			}
 			else {
-				if (event.isControlDown() && !event.isShiftDown() && event.getCode() == KeyCode.Z) {
+				if (event.isControlDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
 					if (getUndoManager().undoable()) {
 						getUndoManager().undo();
 						event.consume();
 					}
 				}
-				else if (event.isControlDown() && event.isShiftDown() && event.getCode() == KeyCode.Z) {
+				else if (event.isControlDown() && event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
 					if (getUndoManager().redoable()) {
 						getUndoManager().redo();
 						event.consume();
