@@ -12,35 +12,24 @@ package org.eclipse.fx.text.ui.contentassist;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.BrokenBarrierException;
 import java.util.function.Function;
 
-import org.eclipse.fx.core.Util;
 import org.eclipse.fx.text.ui.ITextViewer;
 import org.eclipse.fx.ui.controls.list.SimpleListCell;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentListener;
-
-import com.sun.javafx.collections.ImmutableObservableList;
 
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
-import javafx.event.EventDispatchChain;
-import javafx.event.EventDispatcher;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -48,20 +37,22 @@ import javafx.scene.web.WebView;
 import javafx.stage.PopupWindow;
 
 public class ContentProposalPopup implements IContentAssistListener {
-	private ITextViewer viewer;
+	ITextViewer viewer;
 	private PopupWindow stage;
 	private ListView<ICompletionProposal> proposalList;
 	private WebView documentationView;
 	private String prefix;
-	private int offset;
+	int offset;
 	private Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer;
 
 	private ContentAssistant fContentAssistant;
+	private ChangeListener<Number> selectionChange;
 
 	public ContentProposalPopup(ContentAssistant assistant, ITextViewer viewer, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.viewer = viewer;
 		this.proposalComputer = proposalComputer;
 		this.fContentAssistant = assistant;
+		this.selectionChange = this::onSelectionChange;
 	}
 
 	public void displayProposals(List<ICompletionProposal> proposalList, int offset, Point2D position) {
@@ -74,83 +65,48 @@ public class ContentProposalPopup implements IContentAssistListener {
 		this.stage.setY(position.getY());
 		this.stage.setWidth(300);
 		this.stage.setHeight(200);
-		this.stage.show(this.viewer.getTextWidget().getScene().getWindow());
 		this.stage.requestFocus();
 
 		this.stage.setOnShowing(this::subscribe);
 		this.stage.setOnHidden(this::unsubscribe);
+
+		this.stage.show(this.viewer.getTextWidget().getScene().getWindow());
 	}
 
 	private void subscribe(Event e) {
 		this.viewer.getTextWidget().getContent().addTextChangeListener(this.textChangeListener);
-		this.viewer.getTextWidget().selectionProperty().addListener(this::onSelectionChange);
+		this.viewer.getTextWidget().caretOffsetProperty().addListener(this.selectionChange);
 	}
 	private void unsubscribe(Event e) {
 		this.viewer.getTextWidget().getContent().removeTextChangeListener(this.textChangeListener);
-		this.viewer.getTextWidget().selectionProperty().removeListener(this::onSelectionChange);
+		this.viewer.getTextWidget().caretOffsetProperty().removeListener(this.selectionChange);
 	}
 
 	// TODO calling updateProposals is way too slow
 
-	private void onSelectionChange(Observable x) {
-		System.err.println("update trigger selection change");
+	private void onSelectionChange(Observable x, Number oldSelection, Number newSelection) {
+		this.offset = this.viewer.getTextWidget().getCaretOffset();
 		updateProposals();
 	}
 
 	private TextChangeListener textChangeListener = new TextChangeListener() {
 		@Override
 		public void textSet(TextChangedEvent event) {
-			System.err.println("update trigger textSet");
+			ContentProposalPopup.this.offset = ContentProposalPopup.this.viewer.getTextWidget().getCaretOffset();
 			updateProposals();
 		}
 
 		@Override
 		public void textChanging(TextChangingEvent event) {
+			//nothing to do
 		}
 
 		@Override
 		public void textChanged(TextChangedEvent event) {
-			System.err.println("update trigger textChanged");
+			ContentProposalPopup.this.offset = ContentProposalPopup.this.viewer.getTextWidget().getCaretOffset();
 			updateProposals();
 		}
 	};
-
-
-	private void handleKeyTyped(KeyEvent event) {
-//		Event.fireEvent(this.viewer.getTextWidget(), event);
-		return;
-//
-//
-//
-//		if( event.getCharacter().length() == 0 ) {
-//			return;
-//		}
-//
-//		String character = event.getCharacter();
-//		if( character.length() == 0 ) {
-//			return;
-//		}
-//
-//		if (event.isControlDown() || event.isAltDown() || (Util.isMacOS() && event.isMetaDown())) {
-//			if (!((event.isControlDown() || Util.isMacOS()) && event.isAltDown())) {
-//				return;
-//			}
-//		}
-//
-//		if (character.charAt(0) > 0x1F
-//	            && character.charAt(0) != 0x7F ) {
-////			try {
-//				this.prefix = this.prefix+character;
-////				viewer.getDocument().replace(offset, 0, character);
-//				this.offset += event.getCharacter().length();
-////				viewer.getTextWidget().setCaretOffset(offset);
-//				updateProposals();
-////			} catch (BadLocationException e) {
-////				// TODO Auto-generated catch block
-////				e.printStackTrace();
-////			}
-//		}
-	}
 
 	private void updateProposals() {
 		List<ICompletionProposal> list = this.proposalComputer.apply(new ContentAssistContextData(this.offset,this.viewer.getDocument()/*,prefix*/));
@@ -158,6 +114,7 @@ public class ContentProposalPopup implements IContentAssistListener {
 			this.proposalList.setItems(FXCollections.observableArrayList(list));
 			this.proposalList.scrollTo(0);
 			this.proposalList.getSelectionModel().select(0);
+			this.proposalList.requestFocus();
 		} else {
 			this.stage.hide();
 		}
@@ -195,46 +152,25 @@ public class ContentProposalPopup implements IContentAssistListener {
 		case ENTER:
 			event.consume();
 			applySelectedProposal();
+			break;
+		case LEFT:
+			event.consume();
+			updateProposals();
+			break;
+		case RIGHT:
+			event.consume();
+			updateProposals();
+			break;
+		default:
+			break;
 		}
-
-
-//		if( event.getCode() == KeyCode.ESCAPE ) {
-//			event.consume();
-//			this.stage.hide();
-//		} else if( event.getCode() == KeyCode.BACK_SPACE ) {
-//			event.consume();
-//			this.offset -= 1;
-//			try {
-//				this.viewer.getDocument().replace(this.offset, 1, ""); //$NON-NLS-1$
-//				this.viewer.getTextWidget().setCaretOffset(this.offset);
-//				updateProposals();
-//			} catch (BadLocationException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		} else if( event.getCode() == KeyCode.ENTER ) {
-//			event.consume();
-//			applySelection();
-//		} else if( event.getCode() == KeyCode.LEFT ) {
-//			event.consume();
-//			this.offset -= 1;
-//			this.offset = Math.max(0, this.offset);
-//			this.viewer.getTextWidget().setCaretOffset(this.offset);
-//			updateProposals();
-//		} else if( event.getCode() == KeyCode.RIGHT ) {
-//			event.consume();
-//			this.offset += 1;
-//			this.offset = Math.min(this.viewer.getDocument().getLength()-1, this.offset);
-//			this.viewer.getTextWidget().setCaretOffset(this.offset);
-//			updateProposals();
-//		}
 	}
 
-	private String getDocumentation(ICompletionProposal proposal) {
+	private static String getDocumentation(ICompletionProposal proposal) {
 		if (proposal != null) {
-			return "<html><body><pre>"+proposal.getHoverInfo()+"</pre></body></html>";
+			return "<html><body><pre>"+proposal.getHoverInfo()+"</pre></body></html>"; //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		return "<html></html>";
+		return "<html></html>"; //$NON-NLS-1$
 	}
 
 	private void setup() {
@@ -248,7 +184,6 @@ public class ContentProposalPopup implements IContentAssistListener {
 			BorderPane p = new BorderPane();
 			p.setPrefHeight(200);
 			p.setPrefWidth(600);
-			this.stage.getScene().addEventFilter(KeyEvent.KEY_TYPED, this::handleKeyTyped);
 			this.stage.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
 
 			this.stage.getScene().getStylesheets().addAll(this.viewer.getTextWidget().getScene().getStylesheets());
