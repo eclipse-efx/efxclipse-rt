@@ -26,6 +26,7 @@ import org.eclipse.fx.text.ui.internal.LineNumberSupport;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.DefaultPositionUpdater;
@@ -50,37 +51,44 @@ import org.eclipse.jface.text.projection.ChildDocumentManager;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
-public class TextViewer extends AnchorPane implements
-	ITextViewer, ITextViewerExtension, ITextViewerExtension2, ITextViewerExtension4, ITextViewerExtension6, ITextViewerExtension7, ITextViewerExtension8
-	/*,
-	IEditingSupportRegistry, ITextOperationTarget, ITextOperationTargetExtension,
-	IWidgetTokenOwner, IWidgetTokenOwnerExtension, IPostSelectionProvider*/ {
+/**
+ * Text viewer with support for auto-complete, annotations, ...
+ */
+public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerExtension, ITextViewerExtension2, ITextViewerExtension4, ITextViewerExtension6, ITextViewerExtension7, ITextViewerExtension8
+/*
+ * , IEditingSupportRegistry, ITextOperationTarget,
+ * ITextOperationTargetExtension, IWidgetTokenOwner, IWidgetTokenOwnerExtension,
+ * IPostSelectionProvider
+ */ {
 	private StyledTextArea fTextWidget;
 	private IDocument fVisibleDocument;
-	private VisibleDocumentListener fVisibleDocumentListener= new VisibleDocumentListener();
+	private VisibleDocumentListener fVisibleDocumentListener = new VisibleDocumentListener();
 	private ISlaveDocumentManager fSlaveDocumentManager;
 	private IDocumentInformationMapping fInformationMapping;
 	private IDocumentAdapter fDocumentAdapter;
-	private WidgetCommand fWidgetCommand= new WidgetCommand();
-	protected List fTextListeners;
-	private int fRedrawCounter= 0;
-	private IRegion fLastSentSelectionChange;
+	private WidgetCommand fWidgetCommand = new WidgetCommand();
+	private List<ITextListener> fTextListeners;
+	private int fRedrawCounter = 0;
+	IRegion fLastSentSelectionChange;
 	private String fPartitioning;
 	private IDocument fDocument;
 	private boolean fReplaceTextPresentation;
-	private DocumentRewriteSessionListener fDocumentRewriteSessionListener= new DocumentRewriteSessionListener();
+	private DocumentRewriteSessionListener fDocumentRewriteSessionListener = new DocumentRewriteSessionListener();
 	private IRewriteTarget fRewriteTarget;
 	private ViewerState fViewerState;
-	private List fTextInputListeners;
-	protected Position fMarkPosition;
-	private final String MARK_POSITION_CATEGORY="__mark_category_" + hashCode(); //$NON-NLS-1$
-	private final IPositionUpdater fMarkPositionUpdater= new DefaultPositionUpdater(MARK_POSITION_CATEGORY);
-	private List fTextPresentationListeners;
-	protected Map<TextHoverKey,ITextHover> fTextHovers;
+	private List<ITextInputListener> fTextInputListeners;
+	private Position fMarkPosition;
+	private final String MARK_POSITION_CATEGORY = "__mark_category_" + hashCode(); //$NON-NLS-1$
+	private final IPositionUpdater fMarkPositionUpdater = new DefaultPositionUpdater(this.MARK_POSITION_CATEGORY);
+	private List<ITextPresentationListener> fTextPresentationListeners;
+	private Map<TextHoverKey, ITextHover> fTextHovers;
 	private TextViewerHoverManager fTextHoverManager;
 
 	private IUndoManager fUndoManager;
 
+	/**
+	 * Create a new text viewer
+	 */
 	public TextViewer() {
 		createControl();
 	}
@@ -98,38 +106,40 @@ public class TextViewer extends AnchorPane implements
 
 	@Override
 	public IUndoManager getUndoManager() {
-		return fUndoManager;
+		return this.fUndoManager;
 	}
 
+	/**
+	 * Create the text control
+	 */
 	protected void createControl() {
-		fTextWidget = createTextWidget();
-		AnchorPane.setLeftAnchor(fTextWidget, 0.0);
-		AnchorPane.setRightAnchor(fTextWidget, 0.0);
-		AnchorPane.setTopAnchor(fTextWidget, 0.0);
-		AnchorPane.setBottomAnchor(fTextWidget, 0.0);
-		getChildren().add(fTextWidget);
+		this.fTextWidget = createTextWidget();
+		AnchorPane.setLeftAnchor(this.fTextWidget, Double.valueOf(0.0));
+		AnchorPane.setRightAnchor(this.fTextWidget, Double.valueOf(0.0));
+		AnchorPane.setTopAnchor(this.fTextWidget, Double.valueOf(0.0));
+		AnchorPane.setBottomAnchor(this.fTextWidget, Double.valueOf(0.0));
+		getChildren().add(this.fTextWidget);
 
-		fTextWidget.addEventHandler(VerifyEvent.VERIFY, this::onVerify);
+		this.fTextWidget.addEventHandler(VerifyEvent.VERIFY, this::onVerify);
 
-		new LineNumberSupport(fTextWidget).install();
-		new InvisibleCharSupport(fTextWidget).install();
+		new LineNumberSupport(this.fTextWidget).install();
+		new InvisibleCharSupport(this.fTextWidget).install();
 	}
 
 	private static KeyCode getKeyCode(VerifyEvent event) {
 		// JDK-8150709
 		KeyCode kc = event.getCode();
-		if( Util.isMacOS() ) {
-			if( kc == KeyCode.Z || kc == KeyCode.Y ) {
-				if( event.getText().toUpperCase().equals("Z") ) { //$NON-NLS-1$
+		if (Util.isMacOS()) {
+			if (kc == KeyCode.Z || kc == KeyCode.Y) {
+				if (event.getText().toUpperCase().equals("Z")) { //$NON-NLS-1$
 					return KeyCode.Z;
-				} else if( event.getText().toUpperCase().equals("Y") ) { //$NON-NLS-1$
+				} else if (event.getText().toUpperCase().equals("Y")) { //$NON-NLS-1$
 					return KeyCode.Y;
 				}
 			}
 		}
 		return kc;
 	}
-
 
 	private void onVerify(VerifyEvent event) {
 		if (getUndoManager() != null) {
@@ -139,36 +149,31 @@ public class TextViewer extends AnchorPane implements
 						getUndoManager().undo();
 						event.consume();
 					}
-				}
-				else if (event.isControlDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Y ) {
+				} else if (event.isControlDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Y) {
 					if (getUndoManager().redoable()) {
 						getUndoManager().redo();
 						event.consume();
 					}
 				}
-			}
-			else if( Util.isMacOS() ) {
+			} else if (Util.isMacOS()) {
 				if (event.isMetaDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
 					if (getUndoManager().undoable()) {
 						getUndoManager().undo();
 						event.consume();
 					}
-				}
-				else if (event.isMetaDown() && event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
+				} else if (event.isMetaDown() && event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
 					if (getUndoManager().redoable()) {
 						getUndoManager().redo();
 						event.consume();
 					}
 				}
-			}
-			else {
+			} else {
 				if (event.isControlDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
 					if (getUndoManager().undoable()) {
 						getUndoManager().undo();
 						event.consume();
 					}
-				}
-				else if (event.isControlDown() && event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
+				} else if (event.isControlDown() && event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
 					if (getUndoManager().redoable()) {
 						getUndoManager().redo();
 						event.consume();
@@ -179,127 +184,135 @@ public class TextViewer extends AnchorPane implements
 		}
 	}
 
+	@Override
 	public StyledTextArea getTextWidget() {
-		return fTextWidget;
+		return this.fTextWidget;
 	}
 
+	/**
+	 * @return create the text widget
+	 */
+	@SuppressWarnings("static-method")
 	protected StyledTextArea createTextWidget() {
-		StyledTextArea styledText= new StyledTextArea();
+		StyledTextArea styledText = new StyledTextArea();
 		styledText.setLineRulerVisible(true);
-//		styledText.setLeftMargin(Math.max(styledText.getLeftMargin(), 2));
+		// styledText.setLeftMargin(Math.max(styledText.getLeftMargin(), 2));
 		return styledText;
 	}
 
-	public void setInput(Object input) {
-
-		IDocument document= null;
-		if (input instanceof IDocument)
-			document= (IDocument) input;
-
-		setDocument(document);
-	}
-
-	public Object getInput() {
-		return getDocument();
-	}
-
+	/**
+	 * Set the partitioning
+	 *
+	 * @param partitioning
+	 *            the partitioning
+	 */
 	public void setDocumentPartitioning(String partitioning) {
-		fPartitioning= partitioning;
+		this.fPartitioning = partitioning;
 	}
 
+	/**
+	 * @return the partitioning
+	 */
 	protected String getDocumentPartitioning() {
-		return fPartitioning;
+		return this.fPartitioning;
 	}
 
 	/**
 	 * Sets this viewer's visible document. The visible document represents the
 	 * visible region of the viewer's input document.
 	 *
-	 * @param document the visible document
+	 * @param document
+	 *            the visible document
 	 */
 	protected void setVisibleDocument(IDocument document) {
-		if (fVisibleDocument == document && fVisibleDocument instanceof ChildDocument) {
+		if (this.fVisibleDocument == document && this.fVisibleDocument instanceof ChildDocument) {
 			// optimization for new child documents
 			return;
 		}
 
-		if (fVisibleDocument != null) {
-			if (fVisibleDocumentListener != null)
-				fVisibleDocument.removeDocumentListener(fVisibleDocumentListener);
-			if (fVisibleDocument != document)
-				freeSlaveDocument(fVisibleDocument);
+		if (this.fVisibleDocument != null) {
+			if (this.fVisibleDocumentListener != null)
+				this.fVisibleDocument.removeDocumentListener(this.fVisibleDocumentListener);
+			if (this.fVisibleDocument != document)
+				freeSlaveDocument(this.fVisibleDocument);
 		}
 
-		fVisibleDocument= document;
-		initializeDocumentInformationMapping(fVisibleDocument);
+		this.fVisibleDocument = document;
+		initializeDocumentInformationMapping(this.fVisibleDocument);
 
 		initializeWidgetContents();
 
-//TODO needs porting
-//		fFindReplaceDocumentAdapter= null;
-		if (fVisibleDocument != null && fVisibleDocumentListener != null)
-			fVisibleDocument.addDocumentListener(fVisibleDocumentListener);
+		// TODO needs porting
+		// fFindReplaceDocumentAdapter= null;
+		if (this.fVisibleDocument != null && this.fVisibleDocumentListener != null)
+			this.fVisibleDocument.addDocumentListener(this.fVisibleDocumentListener);
 	}
 
+	@Override
 	public IDocument getDocument() {
-		return fDocument;
+		return this.fDocument;
 	}
 
+	@Override
 	public void setDocument(IDocument document) {
-		fReplaceTextPresentation= true;
-		fireInputDocumentAboutToBeChanged(fDocument, document);
+		this.fReplaceTextPresentation = true;
+		fireInputDocumentAboutToBeChanged(this.fDocument, document);
 
-		IDocument oldDocument= fDocument;
-		fDocument= document;
+		IDocument oldDocument = this.fDocument;
+		this.fDocument = document;
 
-		setVisibleDocument(fDocument);
-//TODO needs porting
-//		resetPlugins();
-		inputChanged(fDocument, oldDocument);
+		setVisibleDocument(this.fDocument);
+		// TODO needs porting
+		// resetPlugins();
+		inputChanged(this.fDocument, oldDocument);
 
-		fireInputDocumentChanged(oldDocument, fDocument);
-		fLastSentSelectionChange= null;
-		fReplaceTextPresentation= false;
+		fireInputDocumentChanged(oldDocument, this.fDocument);
+		this.fLastSentSelectionChange = null;
+		this.fReplaceTextPresentation = false;
 	}
 
+	@Override
 	public void setDocument(IDocument document, int modelRangeOffset, int modelRangeLength) {
 
-		fReplaceTextPresentation= true;
-		fireInputDocumentAboutToBeChanged(fDocument, document);
+		this.fReplaceTextPresentation = true;
+		fireInputDocumentAboutToBeChanged(this.fDocument, document);
 
-		IDocument oldDocument= fDocument;
-		fDocument= document;
+		IDocument oldDocument = this.fDocument;
+		this.fDocument = document;
 
 		try {
 
-			IDocument slaveDocument= createSlaveDocument(document);
+			IDocument slaveDocument = createSlaveDocument(document);
 			updateSlaveDocument(slaveDocument, modelRangeOffset, modelRangeLength);
 			setVisibleDocument(slaveDocument);
 
 		} catch (BadLocationException x) {
-//			throw new IllegalArgumentException(JFaceTextMessages.getString("TextViewer.error.invalid_visible_region_1")); //$NON-NLS-1$
+			// throw new
+			// IllegalArgumentException(JFaceTextMessages.getString("TextViewer.error.invalid_visible_region_1"));
+			// //$NON-NLS-1$
 			throw new IllegalArgumentException();
 		}
 
-		//TODO needs porting
-//		resetPlugins();
-		inputChanged(fDocument, oldDocument);
+		// TODO needs porting
+		// resetPlugins();
+		inputChanged(this.fDocument, oldDocument);
 
-		fireInputDocumentChanged(oldDocument, fDocument);
-		fLastSentSelectionChange= null;
-		fReplaceTextPresentation= false;
+		fireInputDocumentChanged(oldDocument, this.fDocument);
+		this.fLastSentSelectionChange = null;
+		this.fReplaceTextPresentation = false;
 	}
 
 	/**
-	 * Creates a slave document for the given document if there is a slave document manager
-	 * associated with this viewer.
+	 * Creates a slave document for the given document if there is a slave
+	 * document manager associated with this viewer.
 	 *
-	 * @param document the master document
+	 * @param document
+	 *            the master document
 	 * @return the newly created slave document
 	 * @since 2.1
 	 */
 	protected IDocument createSlaveDocument(IDocument document) {
-		ISlaveDocumentManager manager= getSlaveDocumentManager();
+		ISlaveDocumentManager manager = getSlaveDocumentManager();
 		if (manager != null) {
 			if (manager.isSlaveDocument(document))
 				return document;
@@ -309,13 +322,19 @@ public class TextViewer extends AnchorPane implements
 	}
 
 	/**
-	 * Updates the given slave document to show the specified range of its master document.
+	 * Updates the given slave document to show the specified range of its
+	 * master document.
 	 *
-	 * @param slaveDocument the slave document
-	 * @param modelRangeOffset the offset of the master document range
-	 * @param modelRangeLength the length of the master document range
+	 * @param slaveDocument
+	 *            the slave document
+	 * @param modelRangeOffset
+	 *            the offset of the master document range
+	 * @param modelRangeLength
+	 *            the length of the master document range
 	 * @return <code>true</code> if the slave has been adapted successfully
-	 * @throws BadLocationException in case the specified range is not valid in the master document
+	 * @throws BadLocationException
+	 *             in case the specified range is not valid in the master
+	 *             document
 	 * @since 3.0
 	 */
 	protected boolean updateSlaveDocument(IDocument slaveDocument, int modelRangeOffset, int modelRangeLength) throws BadLocationException {
@@ -323,26 +342,32 @@ public class TextViewer extends AnchorPane implements
 	}
 
 	/**
-	 * Sets the given slave document to the specified range of its master document.
+	 * Sets the given slave document to the specified range of its master
+	 * document.
 	 *
-	 * @param visibleDocument the slave document
-	 * @param visibleRegionOffset the offset of the master document range
-	 * @param visibleRegionLength the length of the master document range
+	 * @param visibleDocument
+	 *            the slave document
+	 * @param visibleRegionOffset
+	 *            the offset of the master document range
+	 * @param visibleRegionLength
+	 *            the length of the master document range
 	 * @return <code>true</code> if the slave has been adapted successfully
-	 * @throws BadLocationException in case the specified range is not valid in the master document
+	 * @throws BadLocationException
+	 *             in case the specified range is not valid in the master
+	 *             document
 	 * @since 2.1
- 	 * @deprecated use <code>updateSlaveDocument</code> instead
+	 * @deprecated use <code>updateSlaveDocument</code> instead
 	 */
 	protected boolean updateVisibleDocument(IDocument visibleDocument, int visibleRegionOffset, int visibleRegionLength) throws BadLocationException {
 		if (visibleDocument instanceof ChildDocument) {
-			ChildDocument childDocument= (ChildDocument) visibleDocument;
+			ChildDocument childDocument = (ChildDocument) visibleDocument;
 
-			IDocument document= childDocument.getParentDocument();
-			int line= document.getLineOfOffset(visibleRegionOffset);
-			int offset= document.getLineOffset(line);
-			int length= (visibleRegionOffset - offset) + visibleRegionLength;
+			IDocument document = childDocument.getParentDocument();
+			int line = document.getLineOfOffset(visibleRegionOffset);
+			int offset = document.getLineOffset(line);
+			int length = (visibleRegionOffset - offset) + visibleRegionLength;
 
-			Position parentRange= childDocument.getParentDocumentRange();
+			Position parentRange = childDocument.getParentDocumentRange();
 			if (offset != parentRange.getOffset() || length != parentRange.getLength()) {
 				childDocument.setParentDocumentRange(offset, length);
 				return true;
@@ -351,174 +376,247 @@ public class TextViewer extends AnchorPane implements
 		return false;
 	}
 
+	@Override
 	public IRegion getVisibleRegion() {
 
-		IDocument document= getVisibleDocument();
+		IDocument document = getVisibleDocument();
 		if (document instanceof ChildDocument) {
-			Position p= ((ChildDocument) document).getParentDocumentRange();
+			Position p = ((ChildDocument) document).getParentDocumentRange();
 			return new Region(p.getOffset(), p.getLength());
 		}
 
 		return new Region(0, document == null ? 0 : document.getLength());
 	}
 
+	/**
+	 * Fire about to be changed event
+	 *
+	 * @param oldInput
+	 *            the old document
+	 * @param newInput
+	 *            the new document
+	 */
 	protected void fireInputDocumentAboutToBeChanged(IDocument oldInput, IDocument newInput) {
-		List listener= fTextInputListeners;
+		List<ITextInputListener> listener = this.fTextInputListeners;
 		if (listener != null) {
-			for (int i= 0; i < listener.size(); i++) {
-				ITextInputListener l= (ITextInputListener) listener.get(i);
+			for (int i = 0; i < listener.size(); i++) {
+				ITextInputListener l = (ITextInputListener) listener.get(i);
 				l.inputDocumentAboutToBeChanged(oldInput, newInput);
 			}
 		}
 	}
 
+	/**
+	 * Fire changed event
+	 *
+	 * @param oldInput
+	 *            the old input
+	 * @param newInput
+	 *            the new input
+	 */
 	protected void fireInputDocumentChanged(IDocument oldInput, IDocument newInput) {
-		List listener= fTextInputListeners;
+		List<ITextInputListener> listener = this.fTextInputListeners;
 		if (listener != null) {
-			for (int i= 0; i < listener.size(); i++) {
-				ITextInputListener l= (ITextInputListener) listener.get(i);
+			for (int i = 0; i < listener.size(); i++) {
+				ITextInputListener l = (ITextInputListener) listener.get(i);
 				l.inputDocumentChanged(oldInput, newInput);
 			}
 		}
 	}
 
+	/**
+	 * @return the visible document
+	 */
 	protected IDocument getVisibleDocument() {
-		return fVisibleDocument;
+		return this.fVisibleDocument;
 	}
 
+	/**
+	 * Free the slave document
+	 *
+	 * @param slave
+	 *            the slave
+	 */
 	protected void freeSlaveDocument(IDocument slave) {
-		ISlaveDocumentManager manager= getSlaveDocumentManager();
+		ISlaveDocumentManager manager = getSlaveDocumentManager();
 		if (manager != null && manager.isSlaveDocument(slave))
 			manager.freeSlaveDocument(slave);
 	}
 
+	/**
+	 * @return the slave document manager
+	 */
 	protected ISlaveDocumentManager getSlaveDocumentManager() {
-		if (fSlaveDocumentManager == null)
-			fSlaveDocumentManager= createSlaveDocumentManager();
-		return fSlaveDocumentManager;
+		if (this.fSlaveDocumentManager == null)
+			this.fSlaveDocumentManager = createSlaveDocumentManager();
+		return this.fSlaveDocumentManager;
 	}
 
+	/**
+	 * @return create the slave document manager
+	 */
+	@SuppressWarnings("static-method")
 	protected ISlaveDocumentManager createSlaveDocumentManager() {
 		return new ChildDocumentManager();
 	}
 
+	/**
+	 * Initialize the information mapping
+	 *
+	 * @param visibleDocument
+	 *            the visible document
+	 */
 	protected void initializeDocumentInformationMapping(IDocument visibleDocument) {
-		ISlaveDocumentManager manager= getSlaveDocumentManager();
-		fInformationMapping= manager == null ? null : manager.createMasterSlaveMapping(visibleDocument);
+		ISlaveDocumentManager manager = getSlaveDocumentManager();
+		this.fInformationMapping = manager == null ? null : manager.createMasterSlaveMapping(visibleDocument);
 	}
 
+	/**
+	 * Report about the input change
+	 *
+	 * @param newInput
+	 *            the new input
+	 * @param oldInput
+	 *            the old input
+	 */
 	protected void inputChanged(Object newInput, Object oldInput) {
 
-		IDocument oldDocument= (IDocument) oldInput;
+		IDocument oldDocument = (IDocument) oldInput;
 		if (oldDocument != null) {
 
-			if (fMarkPosition != null && !fMarkPosition.isDeleted())
-				oldDocument.removePosition(fMarkPosition);
+			if (this.fMarkPosition != null && !this.fMarkPosition.isDeleted())
+				oldDocument.removePosition(this.fMarkPosition);
 
 			try {
-				oldDocument.removePositionUpdater(fMarkPositionUpdater);
-				oldDocument.removePositionCategory(MARK_POSITION_CATEGORY);
+				oldDocument.removePositionUpdater(this.fMarkPositionUpdater);
+				oldDocument.removePositionCategory(this.MARK_POSITION_CATEGORY);
 
 			} catch (BadPositionCategoryException e) {
+				// TODO Should we log that??
 			}
 		}
 
-		fMarkPosition= null;
+		this.fMarkPosition = null;
 
 		if (oldDocument instanceof IDocumentExtension4) {
-			IDocumentExtension4 document= (IDocumentExtension4) oldDocument;
-			document.removeDocumentRewriteSessionListener(fDocumentRewriteSessionListener);
+			IDocumentExtension4 document = (IDocumentExtension4) oldDocument;
+			document.removeDocumentRewriteSessionListener(this.fDocumentRewriteSessionListener);
 		}
 
-//		super.inputChanged(newInput, oldInput);
+		// super.inputChanged(newInput, oldInput);
 
 		if (newInput instanceof IDocumentExtension4) {
-			IDocumentExtension4 document= (IDocumentExtension4) newInput;
-			document.addDocumentRewriteSessionListener(fDocumentRewriteSessionListener);
+			IDocumentExtension4 document = (IDocumentExtension4) newInput;
+			document.addDocumentRewriteSessionListener(this.fDocumentRewriteSessionListener);
 		}
 
-		IDocument newDocument= (IDocument) newInput;
+		IDocument newDocument = (IDocument) newInput;
 		if (newDocument != null) {
-			newDocument.addPositionCategory(MARK_POSITION_CATEGORY);
-			newDocument.addPositionUpdater(fMarkPositionUpdater);
+			newDocument.addPositionCategory(this.MARK_POSITION_CATEGORY);
+			newDocument.addPositionUpdater(this.fMarkPositionUpdater);
 		}
 	}
 
 	private void initializeWidgetContents() {
 
-		if (fTextWidget != null && fVisibleDocument != null) {
+		if (this.fTextWidget != null && this.fVisibleDocument != null) {
+			IDocumentAdapter adapter = this.fDocumentAdapter;
 
 			// set widget content
-			if (fDocumentAdapter == null)
-				fDocumentAdapter= createDocumentAdapter();
+			if (adapter == null) {
+				this.fDocumentAdapter = adapter = createDocumentAdapter();
+			}
 
-			fDocumentAdapter.setDocument(fVisibleDocument);
-			fTextWidget.setContent(fDocumentAdapter);
-			System.err.println(fDocumentAdapter);
+			this.fDocumentAdapter.setDocument(this.fVisibleDocument);
+			this.fTextWidget.setContent(adapter);
 
 			// invalidate presentation
 			invalidateTextPresentation();
 		}
 	}
 
-	protected IDocumentAdapter createDocumentAdapter() {
+	/**
+	 * @return the document adapter
+	 */
+	@SuppressWarnings("static-method")
+	protected @NonNull IDocumentAdapter createDocumentAdapter() {
 		return new DefaultDocumentAdapter();
 	}
 
+	@Override
 	public final void invalidateTextPresentation() {
-		if (fVisibleDocument != null) {
-			fWidgetCommand.event= null;
-			fWidgetCommand.start= 0;
-			fWidgetCommand.length= fVisibleDocument.getLength();
-			fWidgetCommand.text= fVisibleDocument.get();
-			updateTextListeners(fWidgetCommand);
+		if (this.fVisibleDocument != null) {
+			this.fWidgetCommand.event = null;
+			this.fWidgetCommand.start = 0;
+			this.fWidgetCommand.length = this.fVisibleDocument.getLength();
+			this.fWidgetCommand.text = this.fVisibleDocument.get();
+			updateTextListeners(this.fWidgetCommand);
 		}
 	}
 
+	/**
+	 * Update all text listeners
+	 *
+	 * @param cmd
+	 *            the command
+	 */
 	protected void updateTextListeners(WidgetCommand cmd) {
-		List textListeners= fTextListeners;
+		List<ITextListener> textListeners = this.fTextListeners;
 		if (textListeners != null) {
-			textListeners= new ArrayList(textListeners);
-			DocumentEvent event= cmd.event;
+			textListeners = new ArrayList<>(textListeners);
+			DocumentEvent event = cmd.event;
 			if (event instanceof SlaveDocumentEvent)
-				event= ((SlaveDocumentEvent) event).getMasterEvent();
+				event = ((SlaveDocumentEvent) event).getMasterEvent();
 
-			TextEvent e= new TextEvent(cmd.start, cmd.length, cmd.text, cmd.preservedText, event, redraws());
-			for (int i= 0; i < textListeners.size(); i++) {
-				ITextListener l= (ITextListener) textListeners.get(i);
+			TextEvent e = new TextEvent(cmd.start, cmd.length, cmd.text, cmd.preservedText, event, redraws());
+			for (int i = 0; i < textListeners.size(); i++) {
+				ITextListener l = (ITextListener) textListeners.get(i);
 				l.textChanged(e);
 			}
 		}
 	}
 
+	/**
+	 * @return check if redraws are active
+	 */
 	protected final boolean redraws() {
-		return fRedrawCounter <= 0;
+		return this.fRedrawCounter <= 0;
 	}
 
+	/**
+	 * Handle the event
+	 * @param event the event
+	 */
 	protected void handleVisibleDocumentAboutToBeChanged(DocumentEvent event) {
+		//nothing to be done
 	}
 
+	/**
+	 * Handle the event
+	 * @param event the event
+	 */
 	protected void handleVisibleDocumentChanged(DocumentEvent event) {
+		// nothing to be done
 	}
 
 	public void addTextListener(ITextListener listener) {
 
 		Assert.isNotNull(listener);
 
-		if (fTextListeners == null)
-			fTextListeners= new ArrayList();
+		if (this.fTextListeners == null)
+			this.fTextListeners = new ArrayList();
 
-		if (!fTextListeners.contains(listener))
-			fTextListeners.add(listener);
+		if (!this.fTextListeners.contains(listener))
+			this.fTextListeners.add(listener);
 	}
 
 	public void removeTextListener(ITextListener listener) {
 		Assert.isNotNull(listener);
 
-		if (fTextListeners != null) {
-			fTextListeners.remove(listener);
-			if (fTextListeners.size() == 0)
-				fTextListeners= null;
+		if (this.fTextListeners != null) {
+			this.fTextListeners.remove(listener);
+			if (this.fTextListeners.size() == 0)
+				this.fTextListeners = null;
 		}
 	}
 
@@ -526,21 +624,21 @@ public class TextViewer extends AnchorPane implements
 
 		Assert.isNotNull(listener);
 
-		if (fTextInputListeners == null)
-			fTextInputListeners= new ArrayList();
+		if (this.fTextInputListeners == null)
+			this.fTextInputListeners = new ArrayList();
 
-		if (!fTextInputListeners.contains(listener))
-			fTextInputListeners.add(listener);
+		if (!this.fTextInputListeners.contains(listener))
+			this.fTextInputListeners.add(listener);
 	}
 
 	public void removeTextInputListener(ITextInputListener listener) {
 
 		Assert.isNotNull(listener);
 
-		if (fTextInputListeners != null) {
-			fTextInputListeners.remove(listener);
-			if (fTextInputListeners.size() == 0)
-				fTextInputListeners= null;
+		if (this.fTextInputListeners != null) {
+			this.fTextInputListeners.remove(listener);
+			if (this.fTextInputListeners.size() == 0)
+				this.fTextInputListeners = null;
 		}
 	}
 
@@ -549,18 +647,17 @@ public class TextViewer extends AnchorPane implements
 		if (presentation == null || !redraws())
 			return;
 
-		if (fTextWidget == null)
+		if (this.fTextWidget == null)
 			return;
 
-
 		/*
-		 * Call registered text presentation listeners
-		 * and let them apply their presentation.
+		 * Call registered text presentation listeners and let them apply their
+		 * presentation.
 		 */
-		if (fTextPresentationListeners != null) {
-			ArrayList listeners= new ArrayList(fTextPresentationListeners);
-			for (int i= 0, size= listeners.size(); i < size; i++) {
-				ITextPresentationListener listener= (ITextPresentationListener)listeners.get(i);
+		if (this.fTextPresentationListeners != null) {
+			ArrayList listeners = new ArrayList(this.fTextPresentationListeners);
+			for (int i = 0, size = listeners.size(); i < size; i++) {
+				ITextPresentationListener listener = (ITextPresentationListener) listeners.get(i);
 				listener.applyTextPresentation(presentation);
 			}
 		}
@@ -568,102 +665,102 @@ public class TextViewer extends AnchorPane implements
 		if (presentation.isEmpty())
 			return;
 
-//		if (controlRedraw)
-//			fTextWidget.setRedraw(false);
+		// if (controlRedraw)
+		// fTextWidget.setRedraw(false);
 
-		if (fReplaceTextPresentation)
+		if (this.fReplaceTextPresentation)
 			applyTextPresentation(presentation);
 		else
 			addPresentation(presentation);
 
-//		if (controlRedraw)
-//			fTextWidget.setRedraw(true);
+		// if (controlRedraw)
+		// fTextWidget.setRedraw(true);
 	}
 
 	private void addPresentation(TextPresentation presentation) {
 
-		StyleRange range= presentation.getDefaultStyleRange();
+		StyleRange range = presentation.getDefaultStyleRange();
 		if (range != null) {
 
-			range= modelStyleRange2WidgetStyleRange(range);
+			range = modelStyleRange2WidgetStyleRange(range);
 			if (range != null)
-				fTextWidget.setStyleRange(range);
+				this.fTextWidget.setStyleRange(range);
 
-			ArrayList ranges= new ArrayList(presentation.getDenumerableRanges());
-			Iterator e= presentation.getNonDefaultStyleRangeIterator();
+			ArrayList ranges = new ArrayList(presentation.getDenumerableRanges());
+			Iterator e = presentation.getNonDefaultStyleRangeIterator();
 			while (e.hasNext()) {
-				range= (StyleRange) e.next();
-				range= modelStyleRange2WidgetStyleRange(range);
+				range = (StyleRange) e.next();
+				range = modelStyleRange2WidgetStyleRange(range);
 				if (range != null)
 					ranges.add(range);
 			}
 
 			if (!ranges.isEmpty())
-				fTextWidget.replaceStyleRanges(0, 0, (StyleRange[])ranges.toArray(new StyleRange[ranges.size()]));
+				this.fTextWidget.replaceStyleRanges(0, 0, (StyleRange[]) ranges.toArray(new StyleRange[ranges.size()]));
 
 		} else {
-			IRegion region= modelRange2WidgetRange(presentation.getCoverage());
+			IRegion region = modelRange2WidgetRange(presentation.getCoverage());
 			if (region == null)
 				return;
 
-			List list= new ArrayList(presentation.getDenumerableRanges());
-			Iterator e= presentation.getAllStyleRangeIterator();
+			List list = new ArrayList(presentation.getDenumerableRanges());
+			Iterator e = presentation.getAllStyleRangeIterator();
 			while (e.hasNext()) {
-				range= (StyleRange) e.next();
-				range= modelStyleRange2WidgetStyleRange(range);
+				range = (StyleRange) e.next();
+				range = modelStyleRange2WidgetStyleRange(range);
 				if (range != null)
 					list.add(range);
 			}
 
 			if (!list.isEmpty()) {
-				StyleRange[] ranges= new StyleRange[list.size()];
+				StyleRange[] ranges = new StyleRange[list.size()];
 				list.toArray(ranges);
-				fTextWidget.replaceStyleRanges(region.getOffset(), region.getLength(), ranges);
+				this.fTextWidget.replaceStyleRanges(region.getOffset(), region.getLength(), ranges);
 			}
 		}
 	}
 
 	private void applyTextPresentation(TextPresentation presentation) {
-		List list= new ArrayList(presentation.getDenumerableRanges());
-		Iterator e= presentation.getAllStyleRangeIterator();
+		List list = new ArrayList(presentation.getDenumerableRanges());
+		Iterator e = presentation.getAllStyleRangeIterator();
 		while (e.hasNext()) {
-			StyleRange range= (StyleRange) e.next();
-			range= modelStyleRange2WidgetStyleRange(range);
+			StyleRange range = (StyleRange) e.next();
+			range = modelStyleRange2WidgetStyleRange(range);
 			if (range != null)
 				list.add(range);
 		}
 
 		if (!list.isEmpty()) {
-			StyleRange[] ranges= new StyleRange[list.size()];
+			StyleRange[] ranges = new StyleRange[list.size()];
 			list.toArray(ranges);
-			fTextWidget.setStyleRanges(ranges);
+			this.fTextWidget.setStyleRanges(ranges);
 		}
 	}
 
 	protected StyleRange modelStyleRange2WidgetStyleRange(StyleRange range) {
-		IRegion region= modelRange2WidgetRange(new Region(range.start, range.length));
+		IRegion region = modelRange2WidgetRange(new Region(range.start, range.length));
 		if (region != null) {
-			StyleRange result= (StyleRange) range.clone();
-			result.start= region.getOffset();
-			result.length= region.getLength();
+			StyleRange result = (StyleRange) range.clone();
+			result.start = region.getOffset();
+			result.length = region.getLength();
 			return result;
 		}
 		return null;
 	}
 
 	public IRegion modelRange2WidgetRange(IRegion modelRange) {
-		if (fInformationMapping == null)
+		if (this.fInformationMapping == null)
 			return modelRange;
 
 		try {
 
 			if (modelRange.getLength() < 0) {
-				Region reversed= new Region(modelRange.getOffset() + modelRange.getLength(), -modelRange.getLength());
-				IRegion result= fInformationMapping.toImageRegion(reversed);
+				Region reversed = new Region(modelRange.getOffset() + modelRange.getLength(), -modelRange.getLength());
+				IRegion result = this.fInformationMapping.toImageRegion(reversed);
 				if (result != null)
 					return new Region(result.getOffset() + result.getLength(), -result.getLength());
 			}
-			return fInformationMapping.toImageRegion(modelRange);
+			return this.fInformationMapping.toImageRegion(modelRange);
 
 		} catch (BadLocationException x) {
 		}
@@ -672,19 +769,19 @@ public class TextViewer extends AnchorPane implements
 	}
 
 	public IRewriteTarget getRewriteTarget() {
-		if (fRewriteTarget == null)
-			fRewriteTarget= new RewriteTarget();
-		return fRewriteTarget;
+		if (this.fRewriteTarget == null)
+			this.fRewriteTarget = new RewriteTarget();
+		return this.fRewriteTarget;
 	}
 
 	public final void setRedraw(boolean redraw) {
-//TODO needs porting
-//		setRedraw(redraw, -1);
+		// TODO needs porting
+		// setRedraw(redraw, -1);
 	}
 
 	public void setVisibleRegion(int start, int length) {
 
-		IRegion region= getVisibleRegion();
+		IRegion region = getVisibleRegion();
 		if (start == region.getOffset() && length == region.getLength()) {
 			// nothing to change
 			return;
@@ -693,7 +790,7 @@ public class TextViewer extends AnchorPane implements
 		setRedraw(false);
 		try {
 
-			IDocument slaveDocument= createSlaveDocument(getVisibleDocument());
+			IDocument slaveDocument = createSlaveDocument(getVisibleDocument());
 			if (updateSlaveDocument(slaveDocument, start, length))
 				setVisibleDocument(slaveDocument);
 
@@ -705,10 +802,10 @@ public class TextViewer extends AnchorPane implements
 	}
 
 	public void resetVisibleRegion() {
-		ISlaveDocumentManager manager= getSlaveDocumentManager();
+		ISlaveDocumentManager manager = getSlaveDocumentManager();
 		if (manager != null) {
-			IDocument slave= getVisibleDocument();
-			IDocument master= manager.getMasterDocument(slave);
+			IDocument slave = getVisibleDocument();
+			IDocument master = manager.getMasterDocument(slave);
 			if (master != null) {
 				setVisibleDocument(master);
 				manager.freeSlaveDocument(slave);
@@ -720,14 +817,14 @@ public class TextViewer extends AnchorPane implements
 
 		public void documentAboutToBeChanged(DocumentEvent e) {
 			if (e.getDocument() == getVisibleDocument())
-				fWidgetCommand.setEvent(e);
+				TextViewer.this.fWidgetCommand.setEvent(e);
 			handleVisibleDocumentAboutToBeChanged(e);
 		}
 
 		public void documentChanged(DocumentEvent e) {
-			if (fWidgetCommand.event == e)
-				updateTextListeners(fWidgetCommand);
-			fLastSentSelectionChange= null;
+			if (TextViewer.this.fWidgetCommand.event == e)
+				updateTextListeners(TextViewer.this.fWidgetCommand);
+			fLastSentSelectionChange = null;
 			handleVisibleDocumentChanged(e);
 		}
 	}
@@ -751,63 +848,68 @@ public class TextViewer extends AnchorPane implements
 		public String preservedText;
 
 		/**
-		 * Translates a document event into the presentation coordinates of this text viewer.
+		 * Translates a document event into the presentation coordinates of this
+		 * text viewer.
 		 *
-		 * @param e the event to be translated
+		 * @param e
+		 *            the event to be translated
 		 */
 		public void setEvent(DocumentEvent e) {
 
-			event= e;
+			this.event = e;
 
-			start= e.getOffset();
-			length= e.getLength();
-			text= e.getText();
+			this.start = e.getOffset();
+			this.length = e.getLength();
+			this.text = e.getText();
 
-			if (length != 0) {
+			if (this.length != 0) {
 				try {
 
 					if (e instanceof SlaveDocumentEvent) {
-						SlaveDocumentEvent slave= (SlaveDocumentEvent) e;
-						DocumentEvent master= slave.getMasterEvent();
+						SlaveDocumentEvent slave = (SlaveDocumentEvent) e;
+						DocumentEvent master = slave.getMasterEvent();
 						if (master != null)
-							preservedText= master.getDocument().get(master.getOffset(), master.getLength());
+							this.preservedText = master.getDocument().get(master.getOffset(), master.getLength());
 					} else {
-						preservedText= e.getDocument().get(e.getOffset(), e.getLength());
+						this.preservedText = e.getDocument().get(e.getOffset(), e.getLength());
 					}
 
 				} catch (BadLocationException x) {
-					preservedText= null;
-//					if (TRACE_ERRORS)
-//						System.out.println(JFaceTextMessages.getString("TextViewer.error.bad_location.WidgetCommand.setEvent")); //$NON-NLS-1$
+					this.preservedText = null;
+					// if (TRACE_ERRORS)
+					// System.out.println(JFaceTextMessages.getString("TextViewer.error.bad_location.WidgetCommand.setEvent"));
+					// //$NON-NLS-1$
 				}
 			} else
-				preservedText= null;
+				this.preservedText = null;
 		}
 	}
 
-	private class DocumentRewriteSessionListener implements IDocumentRewriteSessionListener {
+	class DocumentRewriteSessionListener implements IDocumentRewriteSessionListener {
 
 		/*
-		 * @see org.eclipse.jface.text.IDocumentRewriteSessionListener#documentRewriteSessionChanged(org.eclipse.jface.text.DocumentRewriteSessionEvent)
+		 * @see org.eclipse.jface.text.IDocumentRewriteSessionListener#
+		 * documentRewriteSessionChanged(org.eclipse.jface.text.
+		 * DocumentRewriteSessionEvent)
 		 */
 		public void documentRewriteSessionChanged(DocumentRewriteSessionEvent event) {
-			IRewriteTarget target= TextViewer.this.getRewriteTarget();
+			IRewriteTarget target = TextViewer.this.getRewriteTarget();
 			final boolean toggleRedraw;
-//			if (REDRAW_BUG_158746)
-//				toggleRedraw= true;
-//			else
-				toggleRedraw= event.getSession().getSessionType() != DocumentRewriteSessionType.UNRESTRICTED_SMALL;
-			final boolean viewportStabilize= !toggleRedraw;
+			// if (REDRAW_BUG_158746)
+			// toggleRedraw= true;
+			// else
+			toggleRedraw = event.getSession().getSessionType() != DocumentRewriteSessionType.UNRESTRICTED_SMALL;
+			final boolean viewportStabilize = !toggleRedraw;
 			if (DocumentRewriteSessionEvent.SESSION_START == event.getChangeType()) {
 				if (toggleRedraw)
 					target.setRedraw(false);
 				target.beginCompoundChange();
 				if (viewportStabilize && fViewerState == null)
-					fViewerState= new ViewerState();
+					fViewerState = new ViewerState();
 			} else if (DocumentRewriteSessionEvent.SESSION_STOP == event.getChangeType()) {
 				if (viewportStabilize && fViewerState != null) {
 					fViewerState.restore(true);
-					fViewerState= null;
+					fViewerState = null;
 				}
 				target.endCompoundChange();
 				if (toggleRedraw)
@@ -817,12 +919,12 @@ public class TextViewer extends AnchorPane implements
 	}
 
 	public boolean overlapsWithVisibleRegion(int start, int length) {
-		IDocument document= getVisibleDocument();
+		IDocument document = getVisibleDocument();
 		if (document instanceof ChildDocument) {
-			ChildDocument cdoc= (ChildDocument) document;
+			ChildDocument cdoc = (ChildDocument) document;
 			return cdoc.getParentDocumentRange().overlapsWith(start, length);
 		} else if (document != null) {
-			int size= document.getLength();
+			int size = document.getLength();
 			return (start >= 0 && length >= 0 && start + length <= size);
 		}
 		return false;
@@ -831,15 +933,15 @@ public class TextViewer extends AnchorPane implements
 	public final void invalidateTextPresentation(int offset, int length) {
 		if (fVisibleDocument != null) {
 
-			IRegion widgetRange= modelRange2WidgetRange(new Region(offset, length));
+			IRegion widgetRange = modelRange2WidgetRange(new Region(offset, length));
 			if (widgetRange != null) {
 
-				fWidgetCommand.event= null;
-				fWidgetCommand.start= widgetRange.getOffset();
-				fWidgetCommand.length= widgetRange.getLength();
+				fWidgetCommand.event = null;
+				fWidgetCommand.start = widgetRange.getOffset();
+				fWidgetCommand.length = widgetRange.getLength();
 
 				try {
-					fWidgetCommand.text= fVisibleDocument.get(widgetRange.getOffset(), widgetRange.getLength());
+					fWidgetCommand.text = fVisibleDocument.get(widgetRange.getOffset(), widgetRange.getLength());
 					updateTextListeners(fWidgetCommand);
 				} catch (BadLocationException x) {
 					// can not happen because of previous checking
@@ -853,7 +955,7 @@ public class TextViewer extends AnchorPane implements
 		Assert.isNotNull(listener);
 
 		if (fTextPresentationListeners == null)
-			fTextPresentationListeners= new ArrayList();
+			fTextPresentationListeners = new ArrayList();
 
 		if (!fTextPresentationListeners.contains(listener))
 			fTextPresentationListeners.add(listener);
@@ -866,16 +968,16 @@ public class TextViewer extends AnchorPane implements
 		if (fTextPresentationListeners != null) {
 			fTextPresentationListeners.remove(listener);
 			if (fTextPresentationListeners.size() == 0)
-				fTextPresentationListeners= null;
+				fTextPresentationListeners = null;
 		}
 	}
 
 	@Override
 	public void setTextHover(ITextHover textViewerHover, String contentType, int stateMask) {
-		TextHoverKey key= new TextHoverKey(contentType, stateMask);
+		TextHoverKey key = new TextHoverKey(contentType, stateMask);
 		if (textViewerHover != null) {
 			if (fTextHovers == null) {
-				fTextHovers= new HashMap<>();
+				fTextHovers = new HashMap<>();
 			}
 			fTextHovers.put(key, textViewerHover);
 		} else if (fTextHovers != null)
@@ -889,9 +991,9 @@ public class TextViewer extends AnchorPane implements
 		if (fTextHovers == null)
 			return;
 
-		Iterator iter= new HashSet<>(fTextHovers.keySet()).iterator();
+		Iterator iter = new HashSet<>(fTextHovers.keySet()).iterator();
 		while (iter.hasNext()) {
-			TextHoverKey key= (TextHoverKey)iter.next();
+			TextHoverKey key = (TextHoverKey) iter.next();
 			if (key.fContentType.equals(contentType))
 				fTextHovers.remove(key);
 		}
@@ -901,49 +1003,53 @@ public class TextViewer extends AnchorPane implements
 		if (fTextHovers == null)
 			return null;
 
-		IDocument document= getDocument();
+		IDocument document = getDocument();
 		if (document == null)
 			return null;
 
 		try {
 			String contentType = TextUtilities.getContentType(document, getDocumentPartitioning(), offset, true);
-			TextHoverKey key= new TextHoverKey(contentType, stateMask);
-			Object textHover= fTextHovers.get(key);
+			TextHoverKey key = new TextHoverKey(contentType, stateMask);
+			Object textHover = fTextHovers.get(key);
 			if (textHover == null) {
 				// Use default text hover
 				key.setStateMask(ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
-				textHover= fTextHovers.get(key);
+				textHover = fTextHovers.get(key);
 			}
 			return (ITextHover) textHover;
 		} catch (BadLocationException x) {
-//			if (TRACE_ERRORS)
-//				System.out.println(JFaceTextMessages.getString("TextViewer.error.bad_location.selectContentTypePlugin")); //$NON-NLS-1$
+			// if (TRACE_ERRORS)
+			// System.out.println(JFaceTextMessages.getString("TextViewer.error.bad_location.selectContentTypePlugin"));
+			// //$NON-NLS-1$
 		}
 		return null;
 	}
 
-//	@Override
-//	public ITextHover getCurrentTextHover() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	// @Override
+	// public ITextHover getCurrentTextHover() {
+	// // TODO Auto-generated method stub
+	// return null;
+	// }
 
 	private void ensureHoverControlManagerInstalled() {
-		if (fTextHovers != null && !fTextHovers.isEmpty() /*&& fHoverControlCreator != null*/ && fTextHoverManager == null) {
-			fTextHoverManager= createTextHovermanager();
+		if (fTextHovers != null
+				&& !fTextHovers.isEmpty() /* && fHoverControlCreator != null */ && fTextHoverManager == null) {
+			fTextHoverManager = createTextHovermanager();
 			fTextHoverManager.install(this.getTextWidget());
-//			fTextHoverManager.setSizeConstraints(TEXT_HOVER_WIDTH_CHARS, TEXT_HOVER_HEIGHT_CHARS, false, true);
-//			fTextHoverManager.setInformationControlReplacer(new StickyHoverManager(this));
+			// fTextHoverManager.setSizeConstraints(TEXT_HOVER_WIDTH_CHARS,
+			// TEXT_HOVER_HEIGHT_CHARS, false, true);
+			// fTextHoverManager.setInformationControlReplacer(new
+			// StickyHoverManager(this));
 		}
 	}
 
-
 	protected TextViewerHoverManager createTextHovermanager() {
-		return new TextViewerHoverManager(this/*, fHoverControlCreator*/);
+		return new TextViewerHoverManager(this/* , fHoverControlCreator */);
 	}
 
 	/**
 	 * The viewer's rewrite target.
+	 *
 	 * @since 2.0
 	 */
 	class RewriteTarget implements IRewriteTarget {
@@ -952,18 +1058,18 @@ public class TextViewer extends AnchorPane implements
 		 * @see org.eclipse.jface.text.IRewriteTarget#beginCompoundChange()
 		 */
 		public void beginCompoundChange() {
-//TODO needs porting
-//			if (fUndoManager != null)
-//				fUndoManager.beginCompoundChange();
+			// TODO needs porting
+			// if (fUndoManager != null)
+			// fUndoManager.beginCompoundChange();
 		}
 
 		/*
 		 * @see org.eclipse.jface.text.IRewriteTarget#endCompoundChange()
 		 */
 		public void endCompoundChange() {
-//TODO needs porting
-//			if (fUndoManager != null)
-//				fUndoManager.endCompoundChange();
+			// TODO needs porting
+			// if (fUndoManager != null)
+			// fUndoManager.endCompoundChange();
 		}
 
 		/*
@@ -982,7 +1088,7 @@ public class TextViewer extends AnchorPane implements
 	}
 
 	private final class ViewerState {
-//TODO needs porting
+		// TODO needs porting
 		public void restore(boolean restoreViewport) {
 
 		}
@@ -990,8 +1096,8 @@ public class TextViewer extends AnchorPane implements
 
 	/**
 	 * Value object used as key in the text hover configuration table. It is
-	 * modifiable only inside this compilation unit to allow the reuse of created
-	 * objects for efficiency reasons
+	 * modifiable only inside this compilation unit to allow the reuse of
+	 * created objects for efficiency reasons
 	 *
 	 * @since 2.1
 	 */
@@ -1003,15 +1109,18 @@ public class TextViewer extends AnchorPane implements
 		private int fStateMask;
 
 		/**
-		 * Creates a new text hover key for the given content type and state mask.
+		 * Creates a new text hover key for the given content type and state
+		 * mask.
 		 *
-		 * @param contentType the content type
-		 * @param stateMask the state mask
+		 * @param contentType
+		 *            the content type
+		 * @param stateMask
+		 *            the state mask
 		 */
 		protected TextHoverKey(String contentType, int stateMask) {
 			Assert.isNotNull(contentType);
-			fContentType= contentType;
-			fStateMask= stateMask;
+			fContentType = contentType;
+			fStateMask = stateMask;
 		}
 
 		/*
@@ -1020,7 +1129,7 @@ public class TextViewer extends AnchorPane implements
 		public boolean equals(Object obj) {
 			if (obj == null || obj.getClass() != getClass())
 				return false;
-			TextHoverKey textHoverKey= (TextHoverKey)obj;
+			TextHoverKey textHoverKey = (TextHoverKey) obj;
 			return textHoverKey.fContentType.equals(fContentType) && textHoverKey.fStateMask == fStateMask;
 		}
 
@@ -1028,16 +1137,17 @@ public class TextViewer extends AnchorPane implements
 		 * @see java.lang.Object#hashCode()
 		 */
 		public int hashCode() {
-	 		return fStateMask << 16 | fContentType.hashCode();
+			return fStateMask << 16 | fContentType.hashCode();
 		}
 
 		/**
 		 * Sets the state mask of this text hover key.
 		 *
-		 * @param stateMask the state mask
+		 * @param stateMask
+		 *            the state mask
 		 */
 		private void setStateMask(int stateMask) {
-			fStateMask= stateMask;
+			fStateMask = stateMask;
 		}
 	}
 
