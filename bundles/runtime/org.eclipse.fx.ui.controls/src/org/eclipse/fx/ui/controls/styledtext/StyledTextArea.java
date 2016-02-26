@@ -43,7 +43,6 @@ import javafx.css.Styleable;
 import javafx.css.StyleableDoubleProperty;
 import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleableProperty;
-import javafx.css.StyleablePropertyFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
@@ -148,21 +147,27 @@ public class StyledTextArea extends Control {
 	@NonNull
 	private final ObjectProperty<@NonNull LineSeparator> lineSeparator = new SimpleObjectProperty<>(this, "lineSeparator", "\n".equals(System.getProperty("line.separator")) ? LineSeparator.NEW_LINE : LineSeparator.CARRIAGE_RETURN_NEW_LINE); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-	private SetProperty<AnnotationPresenter> annotationPresenter = new SimpleSetProperty<>(this, "annotationPresenter", FXCollections.observableSet());
+	private SetProperty<AnnotationPresenter> annotationPresenter = new SimpleSetProperty<>(this, "annotationPresenter", FXCollections.observableSet()); //$NON-NLS-1$
 
+	/**
+	 * @return set of all registered annotation presenters
+	 */
 	public SetProperty<AnnotationPresenter> getAnnotationPresenter() {
-		return annotationPresenter;
+		return this.annotationPresenter;
 	}
 
-	private SetProperty<AnnotationProvider> annotationProvider = new SimpleSetProperty<>(this, "annotationProvider", FXCollections.observableSet());
+	private SetProperty<AnnotationProvider> annotationProvider = new SimpleSetProperty<>(this, "annotationProvider", FXCollections.observableSet()); //$NON-NLS-1$
 
+	/**
+	 * @return set of all registered annotation providers
+	 */
 	public SetProperty<AnnotationProvider> getAnnotationProvider() {
-		return annotationProvider;
+		return this.annotationProvider;
 	}
 
 	private int anchor;
 
-	private int lastTextChangeStart;
+//	private int lastTextChangeStart;
 
 	// private int lastTextChangeNewLineCount;
 
@@ -173,8 +178,6 @@ public class StyledTextArea extends Control {
 	private int lastTextChangeReplaceCharCount;
 
 	private static final String USER_AGENT_STYLESHEET = StyledTextArea.class.getResource("styledtextarea.css").toExternalForm(); //$NON-NLS-1$
-
-	private static final StyleablePropertyFactory<StyledTextArea> FACTORY = new StyleablePropertyFactory<>(Control.getClassCssMetaData());
 
 	/**
 	 * Create a new control
@@ -199,7 +202,6 @@ public class StyledTextArea extends Control {
 			return (StyleableProperty<Number>) n.fixedLineHeight;
 		}
 	};
-
 
 	final DoubleProperty fixedLineHeight = new StyleableDoubleProperty(16) {
 		@Override
@@ -228,7 +230,8 @@ public class StyledTextArea extends Control {
 	/**
 	 * Set the fixed line height
 	 *
-	 * @param fixedLineHeight the fixed line height
+	 * @param fixedLineHeight
+	 *            the fixed line height
 	 */
 	public void setFixedLineHeight(double fixedLineHeight) {
 		this.fixedLineHeight.set(fixedLineHeight);
@@ -237,28 +240,27 @@ public class StyledTextArea extends Control {
 	/**
 	 * @return the fixed line height
 	 */
-	public DoubleProperty fixedLineHeight() {
+	public DoubleProperty fixedLineHeightProperty() {
 		return this.fixedLineHeight;
 	}
 
-
-	static final FontCssMetaData<StyledTextArea> FONT = new FontCssMetaData<StyledTextArea>("-fx-font",Font.getDefault()) { //$NON-NLS-1$
+	static final FontCssMetaData<StyledTextArea> FONT = new FontCssMetaData<StyledTextArea>("-fx-font", Font.getDefault()) { //$NON-NLS-1$
 
 		@Override
 		public boolean isSettable(StyledTextArea n) {
-			return n.font == null |!n.font.isBound();
+			return n.font == null | !n.font.isBound();
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
 		public StyleableProperty<Font> getStyleableProperty(StyledTextArea n) {
-			return (StyleableProperty<Font>)n.fontProperty();
+			return (StyleableProperty<Font>) n.fontProperty();
 		}
 
 	};
 
-    final ObjectProperty<Font> font = new StyleableObjectProperty<Font>(Font.getDefault()) {
-		 private boolean settingFontViaCSS = false;
+	final ObjectProperty<Font> font = new StyleableObjectProperty<Font>(Font.getDefault()) {
+		private boolean settingFontViaCSS = false;
 
 		@Override
 		public CssMetaData<? extends Styleable, Font> getCssMetaData() {
@@ -289,25 +291,36 @@ public class StyledTextArea extends Control {
 		@Override
 		protected void invalidated() {
 			super.invalidated();
-			if(this.settingFontViaCSS == false) {
-               StyledTextArea.this.impl_reapplyCSS();
-           }
+			if (this.settingFontViaCSS == false) {
+				StyledTextArea.this.impl_reapplyCSS();
+			}
 		}
 
 	};
 
+	/**
+	 * @return the default font used by the widget
+	 */
 	public final ObjectProperty<Font> fontProperty() {
 		return this.font;
 	}
 
-    public final void setFont(Font value) {
-    	fontProperty().setValue(value);
-    }
+	/**
+	 * Set the default font used by the widget
+	 *
+	 * @param value
+	 *            the value
+	 */
+	public final void setFont(Font value) {
+		this.font.setValue(value);
+	}
 
-    public final Font getFont() {
-    	return this.font == null ? Font.getDefault() : this.font.getValue();
-    }
-
+	/**
+	 * @return the default font used by the widget
+	 */
+	public final Font getFont() {
+		return this.font.getValue();
+	}
 
 	/**
 	 * @return the current line separator
@@ -334,7 +347,7 @@ public class StyledTextArea extends Control {
 			event.replaceCharCount *= -1;
 		}
 
-		this.lastTextChangeStart = event.offset;
+//		this.lastTextChangeStart = event.offset;
 		// this.lastTextChangeNewLineCount = event.newLineCount;
 		this.lastTextChangeNewCharCount = event.newCharCount;
 		// this.lastTextChangeReplaceLineCount = event.replaceLineCount;
@@ -366,8 +379,8 @@ public class StyledTextArea extends Control {
 			// }
 		} else {
 			// partial text change
-			TextChangingEvent event = changingEvent;
-			changingEvent = null;
+//			TextChangingEvent event = this.changingEvent;
+			this.changingEvent = null;
 
 			// if (getSkin() instanceof StyledTextSkin) {
 			// ((StyledTextSkin) getSkin()).computeModelDelta(event);
@@ -1585,6 +1598,7 @@ public class StyledTextArea extends Control {
 	 *
 	 * @param text
 	 */
+	@SuppressWarnings("null")
 	public void insert(CharSequence text) {
 		if (text == null)
 			throw new NullPointerException();
@@ -1603,10 +1617,20 @@ public class StyledTextArea extends Control {
 		this.setCaretOffset(start + text.length());
 	}
 
-	private IntegerProperty lineCount = new SimpleIntegerProperty(this, "lineCount", 0);
+	private IntegerProperty lineCount = new SimpleIntegerProperty(this, "lineCount", 0); //$NON-NLS-1$
 
+	/**
+	 * @return current number of line
+	 */
 	public ReadOnlyIntegerProperty lineCountProperty() {
-		return lineCount;
+		return this.lineCount;
+	}
+
+	/**
+	 * @return current number of line
+	 */
+	public int getLineCount() {
+		return this.lineCount.get();
 	}
 
 	/**
@@ -1645,6 +1669,12 @@ public class StyledTextArea extends Control {
 		}
 	}
 
+	/**
+	 * Get the char offset at the give coordinates
+	 * @param x the x
+	 * @param y the y
+	 * @return the offset
+	 */
 	public int getOffsetAtPosition(double x, double y) {
 		int result = ((StyledTextSkin) getSkin()).getOffsetAtPosition(x, y);
 		return result;

@@ -16,6 +16,7 @@ package org.eclipse.fx.ui.controls.styledtext;
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
  * </p>
+ *
  * @noreference
  */
 public class TextChangedEvent {
@@ -71,10 +72,23 @@ public class TextChangedEvent {
 		return new TextChangedEvent(source, 0, 0, 0, null, 0, 0);
 	}
 
+	/**
+	 * Create a text changed event
+	 *
+	 * @param source
+	 *            the source
+	 * @param offset
+	 *            the offset
+	 * @param replaceLength
+	 *            the replacement length
+	 * @param newText
+	 *            the new text
+	 * @return the event
+	 * @since 2.3.0
+	 */
 	public static TextChangedEvent textChanged(StyledTextContent source, int offset, int replaceLength, String newText) {
 		return new TextChangedEvent(source, offset, replaceLength, -1, newText, newText.length(), -1);
 	}
-
 
 	/**
 	 * Create the text set event
@@ -87,11 +101,9 @@ public class TextChangedEvent {
 		return new TextChangedEvent(source, 0, 0, 0, null, 0, 0);
 	}
 
-
 	@Override
 	public String toString() {
-		return "TextChangedEvent(offset="+this.offset+", replaceCharCount="+this.replaceCharCount+", replaceText=" + (this.newText == null ? "null" : "\""+this.newText+"\"") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+		return "TextChangedEvent(offset=" + this.offset + ", replaceCharCount=" + this.replaceCharCount + ", replaceText=" + (this.newText == null ? "null" : "\"" + this.newText + "\"") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
 	}
-
 
 }
