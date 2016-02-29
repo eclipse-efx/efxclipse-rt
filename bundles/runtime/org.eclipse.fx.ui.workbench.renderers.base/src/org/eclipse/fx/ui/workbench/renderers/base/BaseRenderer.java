@@ -929,7 +929,7 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 			MElementContainer<?> container = (MElementContainer<?>) tmp;
 			List<MUIElement> kids = new ArrayList<>(container.getChildren());
 			for (MUIElement childElement : kids) {
-				if( childElement != null ) {
+				if (childElement != null) {
 					fixContextHierarchy(childElement);
 				}
 			}
@@ -1013,6 +1013,8 @@ public abstract class BaseRenderer<M extends MUIElement, W extends WWidget<M>> i
 	 *            the context
 	 * @param clazz
 	 *            the root interface type
+	 * @param <M>
+	 *            the application element type
 	 */
 	public static <M extends MApplicationElement> void populateModelInterfaces(M element, IEclipseContext context, Class<M> clazz) {
 		populateModelInterfaces(element, context, clazz.getInterfaces());
