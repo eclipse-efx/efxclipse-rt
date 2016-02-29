@@ -19,7 +19,7 @@ public interface KeyLookup {
 	/**
 	 * The formal name of the 'Alt' key.
 	 */
-	@NonNull 
+	@NonNull
 	public static final String ALT_NAME = "ALT"; //$NON-NLS-1$
 
 	/**
@@ -45,7 +45,7 @@ public interface KeyLookup {
 	 */
 	@NonNull
 	public static final String ARROW_UP_NAME = "ARROW_UP"; //$NON-NLS-1$
-	
+
 	/**
 	 * An alternate name for the backspace key.
 	 */
@@ -93,7 +93,7 @@ public interface KeyLookup {
 	 */
 	@NonNull
 	public static final String DEL_NAME = "DEL"; //$NON-NLS-1$
-	
+
 	/**
 	 * An alternative name for the delete key.
 	 */
@@ -105,7 +105,7 @@ public interface KeyLookup {
 	 */
 	@NonNull
 	public static final String END_NAME = "END"; //$NON-NLS-1$
-	
+
 	/**
 	 * An alternative name for the enter key.
 	 */
@@ -117,7 +117,7 @@ public interface KeyLookup {
 	 */
 	@NonNull
 	public static final String ESC_NAME = "ESC"; //$NON-NLS-1$
-	
+
 	/**
 	 * An alternative name for the escape key.
 	 */
@@ -168,7 +168,7 @@ public interface KeyLookup {
 
 	/**
 	 * The formal name of the 'F16' key.
-	 * 
+	 *
 	 * @since 3.6
 	 */
 	@NonNull
@@ -176,7 +176,7 @@ public interface KeyLookup {
 
 	/**
 	 * The formal name of the 'F17' key.
-	 * 
+	 *
 	 * @since 3.6
 	 */
 	@NonNull
@@ -184,7 +184,7 @@ public interface KeyLookup {
 
 	/**
 	 * The formal name of the 'F18' key.
-	 * 
+	 *
 	 * @since 3.6
 	 */
 	@NonNull
@@ -192,7 +192,7 @@ public interface KeyLookup {
 
 	/**
 	 * The formal name of the 'F19' key.
-	 * 
+	 *
 	 * @since 3.6
 	 */
 	@NonNull
@@ -200,7 +200,7 @@ public interface KeyLookup {
 
 	/**
 	 * The formal name of the 'F20' key.
-	 * 
+	 *
 	 * @since 3.6
 	 */
 	@NonNull
@@ -282,7 +282,7 @@ public interface KeyLookup {
 	 * The formal name of the 'M1' key.
 	 */
 	@NonNull
-	public static final String M1_NAME = "M1"; //$NON-NLS-1$	
+	public static final String M1_NAME = "M1"; //$NON-NLS-1$
 
 	/**
 	 * The formal name of the 'M2' key.
@@ -439,7 +439,7 @@ public interface KeyLookup {
 	 */
 	@NonNull
 	public static final String PRINT_SCREEN_NAME = "PRINT_SCREEN"; //$NON-NLS-1$
-	
+
 	/**
 	 * An alternative name for the enter key.
 	 */
@@ -450,7 +450,7 @@ public interface KeyLookup {
 	 * The formal name for the 'Scroll Lock' key.
 	 */
 	@NonNull
-	public static final String SCROLL_LOCK_NAME = "SCROLL_LOCK"; //$NON-NLS-1$		
+	public static final String SCROLL_LOCK_NAME = "SCROLL_LOCK"; //$NON-NLS-1$
 
 	/**
 	 * The formal name of the 'Shift' key.
@@ -474,33 +474,35 @@ public interface KeyLookup {
 	 * The formal name of the vertical tab (U+000B) key.
 	 */
 	@NonNull
-	public static final String VT_NAME = "VT"; //$NON-NLS-1$	
+	public static final String VT_NAME = "VT"; //$NON-NLS-1$
 
 	/**
 	 * Looks up a single natural key by its formal name, and returns the integer
 	 * representation for this natural key
-	 * 
+	 *
 	 * @param name
 	 *            The formal name of the natural key to look-up; must not be
 	 *            <code>null</code>.
 	 * @return The integer representation of this key. If the natural key cannot
 	 *         be found, then this method returns <code>0</code>.
 	 */
-	public int formalKeyLookup(@NonNull String name);	
-	
+	public int formalKeyLookup(@NonNull String name);
+
 	/**
-	 * Looks up a single key name by its keycode and return the String representation.
-	 * 
-	 * @param keyCode 
-	 * 
+	 * Looks up a single key name by its keycode and return the String
+	 * representation.
+	 *
+	 * @param keyCode
+	 *            the key code
+	 *
 	 * @return The String representation of the keyCode.
 	 */
 	public String formalNameLookup(int keyCode);
 
 	/**
-	 * Looks up a single modifier key by its formal name, and returns the integer
-	 * representation for this modifier key
-	 * 
+	 * Looks up a single modifier key by its formal name, and returns the
+	 * integer representation for this modifier key
+	 *
 	 * @param name
 	 *            The formal name of the modifier key to look-up; must not be
 	 *            <code>null</code>.
@@ -511,39 +513,39 @@ public interface KeyLookup {
 
 	/**
 	 * Returns the integer representation of the ALT key.
-	 * 
+	 *
 	 * @return The ALT key
 	 */
 	public int getAlt();
 
 	/**
 	 * Returns the integer representation of the COMMAND key.
-	 * 
+	 *
 	 * @return The COMMAND key
 	 */
 	public int getCommand();
 
 	/**
 	 * Returns the integer representation of the CTRL key.
-	 * 
+	 *
 	 * @return The CTRL key
 	 */
 	public int getCtrl();
 
 	/**
 	 * Returns the integer representation of the SHIFT key.
-	 * 
+	 *
 	 * @return The SHIFT key
 	 */
 	public int getShift();
 
-//	/**
-//	 * Returns whether the given key is a modifier key.
-//	 * 
-//	 * @param key
-//	 *            The integer value of the key to check.
-//	 * @return <code>true</code> if the key is one of the modifier keys;
-//	 *         <code>false</code> otherwise.
-//	 */
-//	public boolean isModifierKey(int key);
+	// /**
+	// * Returns whether the given key is a modifier key.
+	// *
+	// * @param key
+	// * The integer value of the key to check.
+	// * @return <code>true</code> if the key is one of the modifier keys;
+	// * <code>false</code> otherwise.
+	// */
+	// public boolean isModifierKey(int key);
 }
