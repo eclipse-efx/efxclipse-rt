@@ -42,6 +42,8 @@ public interface ModelService {
 	 *            the application element
 	 * @param uniqueId
 	 *            the unique id
+	 * @param <M>
+	 *            the element type
 	 * @return the instance or <code>null</code> if not found
 	 */
 	public @Nullable <M extends MApplicationElement> M getElementInstance(@NonNull MApplication m, @NonNull String uniqueId);
@@ -71,8 +73,8 @@ public interface ModelService {
 
 		/**
 		 * Create a model element instance, initialize the
-		 * {@link MApplicationElement#setContributorURI(String)} and run the element
-		 * through the provided processor
+		 * {@link MApplicationElement#setContributorURI(String)} and run the
+		 * element through the provided processor
 		 *
 		 * @param clazz
 		 *            the model instance type
@@ -112,8 +114,8 @@ public interface ModelService {
 		public <T extends MApplicationElement> @NonNull T createModelElement(@NonNull Class<@NonNull T> clazz, @NonNull Supplier<@NonNull String> contributor, Function<@NonNull T, @NonNull T> processor);
 
 		/**
-		 * Create a supplier who creates a model element instance and initializes
-		 * the {@link MApplicationElement#setContributorURI(String)}
+		 * Create a supplier who creates a model element instance and
+		 * initializes the {@link MApplicationElement#setContributorURI(String)}
 		 *
 		 * @param clazz
 		 *            the model instance type
@@ -122,9 +124,9 @@ public interface ModelService {
 		public <T extends MApplicationElement> @NonNull Supplier<T> createModelElementCreator(@NonNull Class<@NonNull T> clazz);
 
 		/**
-		 * Create a supplier who creates a model element instance, initializes the
-		 * {@link MApplicationElement#setContributorURI(String)} and run the element
-		 * through the provided processor
+		 * Create a supplier who creates a model element instance, initializes
+		 * the {@link MApplicationElement#setContributorURI(String)} and run the
+		 * element through the provided processor
 		 *
 		 * @param clazz
 		 *            the model instance type
@@ -135,9 +137,9 @@ public interface ModelService {
 		public <T extends MApplicationElement> @NonNull Supplier<T> createModelElementCreator(@NonNull Class<@NonNull T> clazz, @NonNull Function<@NonNull T, @NonNull T> processor);
 
 		/**
-		 * Create a supplier who creates a model element instance and initializes
-		 * the {@link MApplicationElement#setContributorURI(String)} with the value
-		 * provided by the contributor supplier
+		 * Create a supplier who creates a model element instance and
+		 * initializes the {@link MApplicationElement#setContributorURI(String)}
+		 * with the value provided by the contributor supplier
 		 *
 		 * @param clazz
 		 *            the model instance type
@@ -148,10 +150,10 @@ public interface ModelService {
 		public <T extends MApplicationElement> @NonNull Supplier<T> createModelElementCreator(@NonNull Class<@NonNull T> clazz, @NonNull Supplier<@NonNull String> contributor);
 
 		/**
-		 * Create a supplier who creates a model element instance, initializes the
-		 * {@link MApplicationElement#setContributorURI(String)} with the value
-		 * provided by the contributor supplier and run the element through the
-		 * provided processor
+		 * Create a supplier who creates a model element instance, initializes
+		 * the {@link MApplicationElement#setContributorURI(String)} with the
+		 * value provided by the contributor supplier and run the element
+		 * through the provided processor
 		 *
 		 * @param clazz
 		 *            the model instance type
@@ -166,8 +168,11 @@ public interface ModelService {
 
 	/**
 	 * Create a factory to create model elements
-	 * @param owner the owner of the model element
-	 * @param modelService the model service used to create the elements
+	 *
+	 * @param owner
+	 *            the owner of the model element
+	 * @param modelService
+	 *            the model service used to create the elements
 	 * @return the factory
 	 */
 	public @NonNull ModelElementFactory createModelElementFactory(@NonNull Class<?> owner, @NonNull EModelService modelService);
