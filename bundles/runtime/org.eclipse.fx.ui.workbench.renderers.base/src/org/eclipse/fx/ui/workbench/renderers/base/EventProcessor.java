@@ -29,7 +29,7 @@ public class EventProcessor {
 	/**
 	 * Interface to implement by renderers who want their children to be
 	 * processed
-	 * 
+	 *
 	 * @param <M>
 	 *            the model element type
 	 * @param <C>
@@ -38,7 +38,7 @@ public class EventProcessor {
 	public interface ChildrenHandler<M extends MUIElement, C extends MUIElement> {
 		/**
 		 * Called when children are added
-		 * 
+		 *
 		 * @param parent
 		 *            the parent
 		 * @param elements
@@ -48,7 +48,7 @@ public class EventProcessor {
 
 		/**
 		 * Called when children are removed
-		 * 
+		 *
 		 * @param parent
 		 *            the parent
 		 * @param elements
@@ -59,11 +59,17 @@ public class EventProcessor {
 
 	/**
 	 * Attach child processing
-	 * 
+	 *
 	 * @param eventBroker
 	 *            the event broker
 	 * @param renderer
 	 *            the renderer
+	 * @param <C>
+	 *            the child element type
+	 * @param <M>
+	 *            the container element type
+	 * @param <R>
+	 *            the renderer type
 	 */
 	public static <C extends MUIElement, M extends MElementContainer<C>, R extends BaseRenderer<M, ?> & ChildrenHandler<M, C>> void attachChildProcessor(IEventBroker eventBroker, final R renderer) {
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, new EventHandler() {
@@ -86,11 +92,15 @@ public class EventProcessor {
 
 	/**
 	 * Attach visibility processing
-	 * 
+	 *
 	 * @param eventBroker
 	 *            the even broker
 	 * @param renderer
 	 *            the renderer
+	 * @param <M>
+	 *            the container element type
+	 * @param <R>
+	 *            the renderer type
 	 */
 	public static <M extends MUIElement, R extends BaseRenderer<M, ?>> void attachVisibleProcessor(IEventBroker eventBroker, final R renderer) {
 		eventBroker.subscribe(UIEvents.UIElement.TOPIC_VISIBLE, new EventHandler() {
@@ -107,18 +117,20 @@ public class EventProcessor {
 							if (UIEvents.EventTypes.SET.equals(eventType)) {
 								Boolean current = (Boolean) changedObj.getTransientData().get(BaseRenderer.CALCULATED_VISIBILITY);
 								boolean visibleWhen = BaseRenderer.checkVisibleWhen(changedObj, renderer.getModelContext(changedObj));
-								if( current == null ) {
-									//FIXME Need to inform that the initial visibility is not yet calculated
-									current = Boolean.valueOf(! changedObj.isVisible() && visibleWhen);
+								if (current == null) {
+									// FIXME Need to inform that the initial
+									// visibility is not yet calculated
+									current = Boolean.valueOf(!changedObj.isVisible() && visibleWhen);
 								}
-								
+
 								boolean newVisibility = changedObj.isVisible() && visibleWhen;
-								
-								if( current.booleanValue() != newVisibility ) {
+
+								if (current.booleanValue() != newVisibility) {
 									changedObj.getTransientData().put(BaseRenderer.CALCULATED_VISIBILITY, Boolean.valueOf(newVisibility));
-									
+
 									if (newVisibility) {
-										// TODO Is childRendered not dangerous to
+										// TODO Is childRendered not dangerous
+										// to
 										// call
 										// here??
 										renderer.childRendered((M) parent, changedObj);
@@ -133,7 +145,7 @@ public class EventProcessor {
 			}
 		});
 		eventBroker.subscribe(Constants.UPDATE_VISIBLE_WHEN_RESULT, new EventHandler() {
-			
+
 			@SuppressWarnings("unchecked")
 			@Override
 			public void handleEvent(Event event) {
@@ -144,15 +156,15 @@ public class EventProcessor {
 						if (((MUIElement) parent).getRenderer() == renderer) {
 							Boolean current = (Boolean) element.getTransientData().get(BaseRenderer.CALCULATED_VISIBILITY);
 							boolean visibleWhen = BaseRenderer.checkVisibleWhen(element, renderer.getModelContext(element));
-							
-							if( current == null ) {
+
+							if (current == null) {
 								current = Boolean.valueOf(element.isVisible());
 							}
-							
+
 							boolean newVisibility = element.isVisible() && visibleWhen;
-							if( current.booleanValue() != newVisibility ) {
+							if (current.booleanValue() != newVisibility) {
 								element.getTransientData().put(BaseRenderer.CALCULATED_VISIBILITY, Boolean.valueOf(newVisibility));
-								
+
 								if (newVisibility) {
 									// TODO Is childRendered not dangerous to
 									// call

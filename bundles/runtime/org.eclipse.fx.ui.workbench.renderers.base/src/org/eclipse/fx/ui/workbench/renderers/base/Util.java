@@ -43,6 +43,8 @@ public class Util {
 	 *            the event
 	 * @param propertyName
 	 *            the property
+	 * @param <E>
+	 *            the element type
 	 * @return collection of elements
 	 */
 	@SuppressWarnings({ "unchecked", "null" })
