@@ -15,8 +15,8 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolBarSeparator;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WToolBarSeparator;
 
 /**
- * Base renderer for {@lin MToolBarSeparator}
- * 
+ * Base renderer for {@link MToolBarSeparator}
+ *
  * @param <N>
  *            the native widget type
  */
