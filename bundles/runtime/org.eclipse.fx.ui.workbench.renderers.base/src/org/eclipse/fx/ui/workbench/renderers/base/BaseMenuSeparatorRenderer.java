@@ -16,8 +16,9 @@ import org.eclipse.fx.ui.workbench.renderers.base.widget.WMenuSeparator;
 
 /**
  * Base renderer for {@link MMenuSeparator}
- * 
+ *
  * @param <N>
+ *            the node type
  */
 public abstract class BaseMenuSeparatorRenderer<N> extends BaseRenderer<MMenuSeparator, WMenuSeparator<N>> {
 
