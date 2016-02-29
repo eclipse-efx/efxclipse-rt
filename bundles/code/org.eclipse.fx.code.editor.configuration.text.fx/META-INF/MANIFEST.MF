@@ -2,18 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Fx
 Bundle-SymbolicName: org.eclipse.fx.code.editor.configuration.text.fx
-Bundle-Version: 2.2.0.qualifier
+Bundle-Version: 2.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.inject;version="1.0.0",
- org.eclipse.fx.code.editor;version="2.2.0",
- org.eclipse.fx.code.editor.configuration,
- org.eclipse.fx.code.editor.configuration.text,
- org.eclipse.fx.code.editor.fx.services;version="2.2.0",
- org.eclipse.fx.core;version="2.2.0",
- org.eclipse.fx.text.rules,
- org.eclipse.fx.text.ui,
- org.eclipse.fx.text.ui.presentation,
- org.eclipse.fx.text.ui.rules,
+ org.eclipse.fx.code.editor;version="2.3.0",
+ org.eclipse.fx.code.editor.configuration;version="2.3.0",
+ org.eclipse.fx.code.editor.configuration.text;version="2.3.0",
+ org.eclipse.fx.code.editor.fx.services;version="2.3.0",
+ org.eclipse.fx.core;version="2.3.0",
+ org.eclipse.fx.text.rules;version="2.3.0",
+ org.eclipse.fx.text.ui;version="2.3.0",
+ org.eclipse.fx.text.ui.presentation;version="2.3.0",
+ org.eclipse.fx.text.ui.rules;version="2.3.0",
  org.eclipse.jface.text.rules,
  org.osgi.service.component.annotations
 Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.configuration.text.fx.ConfigurationPresentationReconcilerTypeProvider.xml

@@ -86,7 +86,6 @@
 		<module>../../bundles/code/org.eclipse.fx.code.editor.fx.e4</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.fx.themes</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.langs</module>
-		<module>../../bundles/code/org.eclipse.fx.code.editor.langs.codegen.fx</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.langs.contrib</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.langs.themes</module>
 		<module>../../bundles/code/org.eclipse.fx.code.editor.asciidoc</module>
