@@ -342,6 +342,14 @@ public class Util {
 	}
 
 	/**
+	 * @return <code>true</code> if running on windows
+	 * @since 2.2.0
+	 */
+	public static boolean isWindows() {
+		return System.getProperty("os.name").toLowerCase().contains("windows");  //$NON-NLS-1$//$NON-NLS-2$
+	}
+
+	/**
 	 * Constraint the given value to the upper and lower bound
 	 *
 	 * @param v

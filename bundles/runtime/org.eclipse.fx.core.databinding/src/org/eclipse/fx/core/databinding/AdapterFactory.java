@@ -37,6 +37,7 @@ import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectPropertyBase;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableValue;
@@ -482,6 +483,45 @@ public class AdapterFactory {
 		@Override
 		public void setValue(E value) {
 			this.value.setValue(value);
+		}
+	}
+
+	class WrappedValueProperty<T> extends ObjectPropertyBase<T> {
+		
+		@Override
+		public Object getBean() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void set(T newValue) {
+			// TODO Auto-generated method stub
+			super.set(newValue);
+		}
+
+		@Override
+		public T getValue() {
+			// TODO Auto-generated method stub
+			return super.getValue();
+		}
+
+		@Override
+		public void setValue(T v) {
+			// TODO Auto-generated method stub
+			super.setValue(v);
+		}
+
+		@Override
+		public T get() {
+			// TODO Auto-generated method stub
+			return super.get();
 		}
 	}
 

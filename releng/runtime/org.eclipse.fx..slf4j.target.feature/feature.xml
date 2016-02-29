@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.slf4j.target.feature"
       label="Feature"
-      version="2.2.0.qualifier">
+      version="2.3.0.qualifier">
 
    <description url="http://www.example.com/description">
       Feature used to define a target which holds all slf4j providers (Do not install into IDE)

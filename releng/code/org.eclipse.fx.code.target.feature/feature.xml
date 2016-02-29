@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.code.target.feature"
       label="Code editing target platform"
-      version="2.2.0.qualifier"
+      version="2.3.0.qualifier"
       provider-name="Eclipse.org">
 
    <description>
