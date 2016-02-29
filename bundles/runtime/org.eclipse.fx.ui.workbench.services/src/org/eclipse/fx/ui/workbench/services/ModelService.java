@@ -67,6 +67,8 @@ public interface ModelService {
 		 *
 		 * @param clazz
 		 *            the model instance type
+		 * @param <T>
+		 *            the element type
 		 * @return the instance
 		 */
 		public <T extends MApplicationElement> @NonNull T createModelElement(@NonNull Class<@NonNull T> clazz);
@@ -80,6 +82,8 @@ public interface ModelService {
 		 *            the model instance type
 		 * @param processor
 		 *            the processor to eg initialize the element
+		 * @param <T>
+		 *            the element type
 		 * @return the model instance
 		 */
 		public <T extends MApplicationElement> @NonNull T createModelElement(@NonNull Class<@NonNull T> clazz, @NonNull Function<@NonNull T, @NonNull T> processor);
@@ -93,6 +97,8 @@ public interface ModelService {
 		 *            the model instance type
 		 * @param contributor
 		 *            the contributor supplier
+		 * @param <T>
+		 *            the element type
 		 * @return the instance
 		 */
 		public <T extends MApplicationElement> @NonNull T createModelElement(@NonNull Class<@NonNull T> clazz, @NonNull Supplier<@NonNull String> contributor);
@@ -109,6 +115,8 @@ public interface ModelService {
 		 *            the contributor supplier
 		 * @param processor
 		 *            the processor to eg initialize the element
+		 * @param <T>
+		 *            the element type
 		 * @return the instance
 		 */
 		public <T extends MApplicationElement> @NonNull T createModelElement(@NonNull Class<@NonNull T> clazz, @NonNull Supplier<@NonNull String> contributor, Function<@NonNull T, @NonNull T> processor);
@@ -132,6 +140,8 @@ public interface ModelService {
 		 *            the model instance type
 		 * @param processor
 		 *            the processor to eg initialize the element
+		 * @param <T>
+		 *            the element type
 		 * @return the model instance
 		 */
 		public <T extends MApplicationElement> @NonNull Supplier<T> createModelElementCreator(@NonNull Class<@NonNull T> clazz, @NonNull Function<@NonNull T, @NonNull T> processor);
@@ -145,6 +155,8 @@ public interface ModelService {
 		 *            the model instance type
 		 * @param contributor
 		 *            the contributor supplier
+		 * @param <T>
+		 *            the element type
 		 * @return the instance
 		 */
 		public <T extends MApplicationElement> @NonNull Supplier<T> createModelElementCreator(@NonNull Class<@NonNull T> clazz, @NonNull Supplier<@NonNull String> contributor);
@@ -161,6 +173,8 @@ public interface ModelService {
 		 *            the contributor supplier
 		 * @param processor
 		 *            the processor to eg initialize the element
+		 * @param <T>
+		 *            the element type
 		 * @return the instance
 		 */
 		public <T extends MApplicationElement> @NonNull Supplier<T> createModelElementCreator(@NonNull Class<@NonNull T> clazz, @NonNull Supplier<@NonNull String> contributor, Function<@NonNull T, @NonNull T> processor);
