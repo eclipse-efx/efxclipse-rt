@@ -20,6 +20,9 @@ public interface WMinMaxableWidget {
 	 * The current state
 	 */
 	public enum WMinMaxState {
+		/**
+		 * Toggle the state
+		 */
 		TOGGLE,
 		/**
 		 * Maximized
@@ -40,7 +43,7 @@ public interface WMinMaxableWidget {
 	public void setMinMaxCallback(@NonNull WCallback<WMinMaxState, Void> minMaxCallback);
 
 	/**
-	 *
+	 * Set the actual state
 	 * @param state
 	 */
 	public void setMinMaxState(@NonNull WMinMaxState state);
