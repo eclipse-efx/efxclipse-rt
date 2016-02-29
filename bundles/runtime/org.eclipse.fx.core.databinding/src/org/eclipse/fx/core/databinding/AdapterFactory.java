@@ -487,7 +487,7 @@ public class AdapterFactory {
 	}
 
 	class WrappedValueProperty<T> extends ObjectPropertyBase<T> {
-		
+
 		@Override
 		public Object getBean() {
 			// TODO Auto-generated method stub
@@ -558,14 +558,20 @@ public class AdapterFactory {
 	 *            the type
 	 * @param property
 	 *            the property
+	 * @param <T>
+	 *            the value type to adapt to
+	 * @param
+	 * 			<P>
+	 *            the property type
 	 * @return the observable value
 	 * @since 2.3.0
 	 */
-	public static <T, P extends WritableValue<T> & ObservableValue<T>> IObservableValue adapt(Class<T> type, P property) {
+	public static <T, P extends WritableValue<T> & ObservableValue<T>> IObservableValue adapt(Class<T> type,
+			P property) {
 		return new AbstractObservableValue() {
 
 			{
-				property.addListener(( o, ov, nv) -> fireValueChange(Diffs.createValueDiff(ov, nv)));
+				property.addListener((o, ov, nv) -> fireValueChange(Diffs.createValueDiff(ov, nv)));
 			}
 
 			@Override
