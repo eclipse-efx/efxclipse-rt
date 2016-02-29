@@ -123,7 +123,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 		this.fTextWidget.addEventHandler(VerifyEvent.VERIFY, this::onVerify);
 
 		new LineNumberSupport(this.fTextWidget).install();
-		new InvisibleCharSupport(this.fTextWidget).install();
+//		new InvisibleCharSupport(this.fTextWidget).install();
 	}
 
 	private static KeyCode getKeyCode(VerifyEvent event) {
