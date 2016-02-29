@@ -36,8 +36,9 @@ import org.osgi.service.event.EventHandler;
 
 /**
  * Base renderer for {@link MPerspective}
- * 
+ *
  * @param <N>
+ *            the node type
  */
 public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspective, WPerspective<N>> {
 	@Inject
@@ -109,12 +110,12 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 		}
 		@Nullable
 		WPerspective<N> widget = getWidget(element);
-		if( widget == null ) {
-			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		if (widget == null) {
+			getLogger().error("No widget found for '" + element + "'"); //$NON-NLS-1$//$NON-NLS-2$
 		} else {
 			widget.addItems(list);
 		}
-		
+
 		if (!element.getWindows().isEmpty()) {
 			MWindow window = findParent((EObject) element);
 			@SuppressWarnings("unchecked")
@@ -122,10 +123,10 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 			for (MWindow w : element.getWindows()) {
 				@SuppressWarnings("null")
 				WWindow<N> ww = engineCreateWidget(w);
-				if( ww != null ) {
-					topLevel.addChildWindow(ww);	
+				if (ww != null) {
+					topLevel.addChildWindow(ww);
 				} else {
-					getLogger().error("No widget was created for element '"+w+"'");  //$NON-NLS-1$//$NON-NLS-2$
+					getLogger().error("No widget was created for element '" + w + "'"); //$NON-NLS-1$//$NON-NLS-2$
 				}
 			}
 		}
@@ -151,21 +152,21 @@ public abstract class BasePerspectiveRenderer<N> extends BaseRenderer<MPerspecti
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void childRendered(MPerspective parentElement, MUIElement element) {
-		if (inContentProcessing(parentElement)|| ! isChildRenderedAndVisible(element)) {
+		if (inContentProcessing(parentElement) || !isChildRenderedAndVisible(element)) {
 			return;
 		}
 
 		if (element instanceof MPartSashContainerElement) {
 			WLayoutedWidget<MPartSashContainerElement> widget = (WLayoutedWidget<MPartSashContainerElement>) element.getWidget();
-			if( widget != null ) {
+			if (widget != null) {
 				WPerspective<N> wPerspective = getWidget(parentElement);
-				if( wPerspective != null ) {
-					wPerspective.addItem(getRenderedIndex(parentElement, element), widget);	
+				if (wPerspective != null) {
+					wPerspective.addItem(getRenderedIndex(parentElement, element), widget);
 				} else {
-					getLogger().error("No widget found for '"+parentElement+"'");  //$NON-NLS-1$//$NON-NLS-2$
+					getLogger().error("No widget found for '" + parentElement + "'"); //$NON-NLS-1$//$NON-NLS-2$
 				}
 			} else {
-				getLogger().error("Expected widget from '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+				getLogger().error("Expected widget from '" + element + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			}
 		} else if (element instanceof MWindow) {
 			MWindow parent = findParent((EObject) parentElement);
