@@ -40,16 +40,16 @@ import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Base renderer for part menus
- * 
+ *
  * @param <N>
+ *            the node type
  */
 @SuppressWarnings("restriction")
-public abstract class BasePartMenuRenderer<N> extends BaseItemContainerRenderer<MMenu,MMenuElement, WMenu<N>> {
+public abstract class BasePartMenuRenderer<N> extends BaseItemContainerRenderer<MMenu, MMenuElement, WMenu<N>> {
 
 	@Inject
 	ELifecycleService lifecycleService;
 
-	
 	@Inject
 	private IContributionFactory contributionFactory;
 
@@ -65,19 +65,19 @@ public abstract class BasePartMenuRenderer<N> extends BaseItemContainerRenderer<
 	protected void do_init(@NonNull IEventBroker broker) {
 		// nothing to be done
 	}
-	
+
 	@Override
 	protected void initWidget(final MMenu element, WMenu<N> widget) {
 		super.initWidget(element, widget);
-		widget.setShowingCallback( () -> handleShowing(element));
-		widget.setHidingCallback( () -> handleHiding(element));
+		widget.setShowingCallback(() -> handleShowing(element));
+		widget.setHidingCallback(() -> handleHiding(element));
 	}
-	
+
 	@SuppressWarnings("null")
 	void handleHiding(@NonNull MMenu element) {
 		this.currentVisibleMenus.remove(element);
 		IEclipseContext modelContext = getModelContext(element);
-		if( modelContext == null ) {
+		if (modelContext == null) {
 			getLogger().error("Model context is null"); //$NON-NLS-1$
 			return;
 		}
@@ -115,7 +115,7 @@ public abstract class BasePartMenuRenderer<N> extends BaseItemContainerRenderer<
 	void handleShowing(@NonNull MMenu element) {
 		this.currentVisibleMenus.add(element);
 		IEclipseContext modelContext = getModelContext(element);
-		if( modelContext == null ) {
+		if (modelContext == null) {
 			getLogger().error("The model context is null"); //$NON-NLS-1$
 			return;
 		}
@@ -170,7 +170,7 @@ public abstract class BasePartMenuRenderer<N> extends BaseItemContainerRenderer<
 	protected boolean skipEnablementCheck() {
 		return this.currentVisibleMenus.isEmpty();
 	}
-	
+
 	@Override
 	protected boolean isShowing(MMenuElement item) {
 		return this.currentVisibleMenus.contains(item.getParent());
@@ -180,11 +180,11 @@ public abstract class BasePartMenuRenderer<N> extends BaseItemContainerRenderer<
 	public void doProcessContent(MMenu element) {
 		// TODO Should we do this creation lazy????
 		WMenu<N> menu = getWidget(element);
-		if( menu == null ) {
-			getLogger().error("No widget found for '"+element+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		if (menu == null) {
+			getLogger().error("No widget found for '" + element + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
-		
+
 		for (MMenuElement e : element.getChildren()) {
 			if (e.isToBeRendered()) {
 				WMenuElement<MMenuElement> widget = engineCreateWidget(e);
@@ -230,27 +230,27 @@ public abstract class BasePartMenuRenderer<N> extends BaseItemContainerRenderer<
 
 	@Override
 	public void do_childRendered(@NonNull MMenu parentElement, @NonNull MUIElement element) {
-		if (inContentProcessing(parentElement) || ! isChildRenderedAndVisible(element)) {
+		if (inContentProcessing(parentElement) || !isChildRenderedAndVisible(element)) {
 			return;
 		}
 
 		int idx = getRenderedIndex(parentElement, element);
 		WMenu<N> menu = getWidget(parentElement);
-		if( menu == null ) {
-			getLogger().error("No widget found for '"+parentElement+"'");  //$NON-NLS-1$//$NON-NLS-2$
+		if (menu == null) {
+			getLogger().error("No widget found for '" + parentElement + "'"); //$NON-NLS-1$//$NON-NLS-2$
 			return;
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		WMenuElement<MMenuElement> menuElement = (WMenuElement<MMenuElement>) element.getWidget();
-		if( menuElement != null ) {
-			menu.addElement(idx, menuElement);	
+		if (menuElement != null) {
+			menu.addElement(idx, menuElement);
 		} else {
-			getLogger().error("The widget of the element '"+element+"' is null");  //$NON-NLS-1$//$NON-NLS-2$
+			getLogger().error("The widget of the element '" + element + "' is null"); //$NON-NLS-1$//$NON-NLS-2$
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean isChildRenderedAndVisible(MUIElement u) {
 		return super.isChildRenderedAndVisible(u) && !(u instanceof MDynamicMenuContribution);
