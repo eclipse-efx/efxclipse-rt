@@ -25,7 +25,9 @@ public interface DnDService {
 	 * @param element
 	 *            the element
 	 * @param dropType
+	 *            the drop type
 	 * @param sourceElement
+	 *            the source element
 	 * @return <code>true</code> if a split is allowed
 	 */
 	public boolean splitAllowed(@NonNull MUIElement element, @NonNull MUIElement sourceElement, @NonNull DropLocation dropType);
