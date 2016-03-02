@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.DefaultScope;
@@ -168,7 +169,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 				addListener(nodePath, key, requestor);
 
 			Object v = getDefault(defaultValue, descriptorsClass, p, factory);
-			return getValue(nodePath, key, (Class<Object>) descriptorsClass, v);
+			return getValue(nodePath, key, (Class<Object>) descriptorsClass, null, v);
 		}
 
 		ValueSerializer valueSerializer = getValueSerializer();
@@ -177,7 +178,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 				addListener(nodePath, key, requestor);
 
 			Object v = getDefault(defaultValue, descriptorsClass, p, factory);
-			return getValue(nodePath, key, (Class<Object>) descriptorsClass, v);
+			return getValue(nodePath, key, (Class<Object>) descriptorsClass, null, v);
 		}
 
 		Requestor<?> r = (Requestor<?>) requestor;
@@ -188,22 +189,33 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 				if (track) {
 					addListener(nodePath, key, requestor);
 				}
+				Class<?> valueType = null;
+				if( (descriptorsClass == List.class || descriptorsClass == Set.class) && descriptor.getDesiredType() instanceof ParameterizedType ) {
+					Type t = ((ParameterizedType) descriptor.getDesiredType()).getActualTypeArguments()[0];
+					valueType = t instanceof ParameterizedType ? (Class<?>) ((ParameterizedType) t).getRawType() : (Class<?>) t;
 
-				return getValue(nodePath, key, (Class<Object>) descriptorsClass, getDefault(defaultValue, descriptorsClass, p, factory));
+				}
+
+				return getValue(nodePath, key, (Class<Object>) descriptorsClass, valueType, getDefault(defaultValue, descriptorsClass, p, factory));
 			}
 		}
 
 		Class<?> type = p.type();
+		Class<?> valueType = null;
 		if (type == Object.class && descriptor.getDesiredType() instanceof ParameterizedType) {
 			Type t = ((ParameterizedType) descriptor.getDesiredType()).getActualTypeArguments()[0];
 			type = t instanceof ParameterizedType ? (Class<?>) ((ParameterizedType) t).getRawType() : (Class<?>) t;
+			if( t instanceof ParameterizedType && (type == List.class || type == Set.class) ) {
+				Type tmp = ((ParameterizedType)t).getActualTypeArguments()[0];
+				valueType = tmp instanceof ParameterizedType ? (Class<?>) ((ParameterizedType) tmp).getRawType() : (Class<?>) tmp;
+			}
 		}
 
 		if (type == Object.class) {
 			return IInjector.NOT_A_VALUE;
 		}
 
-		v.init(nodePath, key, type, getDefault(defaultValue, type, p, factory));
+		v.init(nodePath, key, type, valueType, getDefault(defaultValue, type, p, factory));
 
 
 		if (descriptorsClass != Value.class) {
@@ -306,7 +318,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 	 * @return the value
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T getValue(String path, String key, Class<T> type, T defaultValue) {
+	public static <T> T getValue(String path, String key, Class<T> type, Class<?> valueType, T defaultValue) {
 		if (type.isPrimitive()) {
 			if (type.equals(boolean.class)) {
 				return (T) Boolean.valueOf(getPreferenceService().getBoolean(path, key, ((Boolean) defaultValue).booleanValue(),null));
@@ -349,6 +361,14 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 
 				ObjectSerializer objectSerializer = getObjectSerializer();
 				if( objectSerializer != null ) {
+					if( valueType != null && (type == List.class || type == Set.class) ) {
+						if( type == List.class ) {
+							return (T) objectSerializer.deserializeCollection((Class<List>)type, valueType, value);
+						} else {
+							return (T) objectSerializer.deserializeCollection((Class<Set>)type, valueType, value);
+						}
+
+					}
 					return objectSerializer.deserialize(type, value);
 				}
 			}
