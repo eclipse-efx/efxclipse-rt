@@ -13,6 +13,7 @@ package org.eclipse.fx.core.internal;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -37,9 +38,11 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 	public String serialize(Object object) {
 		if (object instanceof List) {
 			object = new ListWrapper<>((List<?>) object);
+		} else if( object instanceof Set ) {
+			object = new SetWrapper<>((Set<?>)object);
 		}
 		try (StringWriter w = new StringWriter()) {
-			JAXBContext jaxbContext = JAXBContext.newInstance(object.getClass());
+			JAXBContext jaxbContext = JAXBContext.newInstance( object.getClass() );
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
 			// output pretty printed
@@ -57,20 +60,68 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 	public <O> O deserialize(Class<O> clazz, String value) {
 		if (clazz == List.class) {
 			clazz = (Class<O>) ListWrapper.class;
+		} else if (clazz == Set.class) {
+			clazz = (Class<O>) SetWrapper.class;
 		}
 
 		try (StringReader r = new StringReader(value)) {
-			JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
+			JAXBContext jaxbContext = JAXBContext.newInstance(clazz );
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
 			Object unmarshal = jaxbUnmarshaller.unmarshal(r);
 			if (unmarshal instanceof ListWrapper<?>) {
 				return (O) ((ListWrapper<?>) unmarshal).list;
+			} else if (unmarshal instanceof SetWrapper<?>) {
+				return (O) ((SetWrapper<?>) unmarshal).list;
 			}
 			return (O) unmarshal;
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * Wraps simple set
+	 *
+	 * @param <O>
+	 *            the type
+	 */
+	@XmlRootElement
+	public static class SetWrapper<O> {
+		Set<O> list;
+
+		/**
+		 * Create an instance
+		 */
+		public SetWrapper() {
+		}
+
+		/**
+		 * Create an instance
+		 *
+		 * @param list
+		 *            the list to wrap
+		 */
+		public SetWrapper(Set<O> list) {
+			this.list = list;
+		}
+
+		/**
+		 * @return the list
+		 */
+		public Set<O> getSet() {
+			return this.list;
+		}
+
+		/**
+		 * Set the new list
+		 *
+		 * @param list
+		 *            the list
+		 */
+		public void setSet(Set<O> list) {
+			this.list = list;
 		}
 	}
 
