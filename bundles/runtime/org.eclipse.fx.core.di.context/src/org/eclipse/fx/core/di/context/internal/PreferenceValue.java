@@ -11,8 +11,10 @@
 package org.eclipse.fx.core.di.context.internal;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
@@ -86,6 +88,10 @@ public class PreferenceValue<T> implements Value<T> {
 	@NonNull
 	private IEclipseContext context;
 
+	private Class<?> rootType;
+
+	private Class<?> valueType;
+
 	/**
 	 * Create a new preference value
 	 *
@@ -100,8 +106,7 @@ public class PreferenceValue<T> implements Value<T> {
 	 *            the object serializer service
 	 */
 	@Inject
-	public PreferenceValue(@NonNull IEclipseContext context, @NonNull AdapterService adapterService,
-			@NonNull ValueSerializer valueSerializer, @NonNull ObjectSerializer objectSerializer) {
+	public PreferenceValue(@NonNull IEclipseContext context, @NonNull AdapterService adapterService, @NonNull ValueSerializer valueSerializer, @NonNull ObjectSerializer objectSerializer) {
 		this.context = context;
 		this.adapterService = adapterService;
 		this.valueSerializer = valueSerializer;
@@ -117,21 +122,23 @@ public class PreferenceValue<T> implements Value<T> {
 	 *            the context key
 	 * @param cl
 	 *            the type
+	 * @param valueType
+	 *            the value type
 	 * @param defaultValue
 	 *            the default value
 	 */
 	@SuppressWarnings({ "unchecked", "null" })
-	public void init(String nodePath, @NonNull String contextKey, Class<?> cl,
-			T defaultValue) {
+	public void init(String nodePath, @NonNull String contextKey, Class<?> cl, Class<?> valueType, T defaultValue) {
 		this.contextKey = contextKey;
+		this.rootType = cl;
+		this.valueType = valueType;
 		IEclipsePreferences instancePreference = InstanceScope.INSTANCE.getNode(nodePath);
 		IEclipsePreferences configurationPreference = ConfigurationScope.INSTANCE.getNode(nodePath);
 		IEclipsePreferences defaultPreference = DefaultScope.INSTANCE.getNode(nodePath);
 
 		IPreferenceChangeListener listener = event -> {
 			if (contextKey.equals(event.getKey())) {
-				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(nodePath, contextKey, (Class<T>) cl,
-						defaultValue));
+				setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(nodePath, contextKey, (Class<T>) cl, valueType, defaultValue));
 			}
 		};
 		this.listener = listener;
@@ -144,9 +151,7 @@ public class PreferenceValue<T> implements Value<T> {
 		this.defaultPreference = defaultPreference;
 		this.contextKey = contextKey;
 
-
-		setCurrentValue(
-				(@Nullable T) PreferenceValueSupplier.getValue(nodePath, contextKey, (Class<T>) cl, defaultValue));
+		setCurrentValue((@Nullable T) PreferenceValueSupplier.getValue(nodePath, contextKey, (Class<T>) cl, valueType, defaultValue));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -186,7 +191,12 @@ public class PreferenceValue<T> implements Value<T> {
 				if (this.valueSerializer.test(value.getClass())) {
 					v = this.valueSerializer.toString(value);
 				} else {
-					v = this.objectSerializer.serialize(value);
+					if( this.rootType == List.class || this.rootType == Set.class ) {
+						v = this.objectSerializer.serializeCollection((Collection<Object>)value, (Class<Object>)valueType);
+					} else {
+						v = this.objectSerializer.serialize(value);
+					}
+
 				}
 			}
 
