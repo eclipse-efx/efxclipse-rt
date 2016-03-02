@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui.source;
 
+import org.eclipse.fx.text.ui.Feature;
 import org.eclipse.fx.text.ui.ITextViewerExtension2;
 import org.eclipse.fx.text.ui.TextViewer;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
@@ -46,7 +47,9 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 //		installPlugin(new InvisibleCharacterPlugin());
 
-
+		if (configuration.getFeatures() != null) {
+			getFeatures().bind(configuration.getFeatures());
+		}
 
 		setUndoManager(configuration.getUndoManager(this));
 

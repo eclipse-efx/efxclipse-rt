@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.text.ui.IFeature;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent;
 import org.eclipse.fx.ui.controls.styledtext.model.Annotation;
@@ -24,14 +25,7 @@ import com.google.common.collect.RangeSet;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 
-public class InvisibleCharSupport {
-
-	private StyledTextArea control;
-
-	public InvisibleCharSupport(StyledTextArea control) {
-		this.control = control;
-	}
-
+public class InvisibleCharSupport implements IFeature {
 
 	public class InvisibleCharAnnotation implements TextAnnotation {
 
@@ -123,6 +117,12 @@ public class InvisibleCharSupport {
 
 	public class InvisibleCharAnnotationProvider implements AnnotationProvider {
 
+		private StyledTextArea control;
+
+		public InvisibleCharAnnotationProvider(StyledTextArea control) {
+			this.control = control;
+		}
+
 		@Override
 		public Set<? extends Annotation> computeAnnotations(int index) {
 			@NonNull
@@ -165,10 +165,19 @@ public class InvisibleCharSupport {
 
 	}
 
-
-
-	public void install() {
-		this.control.getAnnotationProvider().add(new InvisibleCharAnnotationProvider());
-		this.control.getAnnotationPresenter().add(new InvisibleCharAnnotationPresenter());
+	@Override
+	public Subscription install(final StyledTextArea control) {
+		final InvisibleCharAnnotationProvider provider = new InvisibleCharAnnotationProvider(control);
+		final InvisibleCharAnnotationPresenter presenter = new InvisibleCharAnnotationPresenter();
+		control.getAnnotationProvider().add(provider);
+		control.getAnnotationPresenter().add(presenter);
+		return new Subscription() {
+			@Override
+			public void dispose() {
+				control.getAnnotationProvider().remove(provider);
+				control.getAnnotationPresenter().remove(presenter);
+			}
+		};
 	}
+
 }

@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.text.ui.IFeature;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.model.Annotation;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
@@ -19,14 +20,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 
-public class LineNumberSupport {
-
-	private StyledTextArea control;
-
-	public LineNumberSupport(StyledTextArea control) {
-		this.control = control;
-	}
-
+public class LineNumberSupport implements IFeature {
 
 	public class LineNrAnnotation implements Annotation {
 
@@ -136,12 +130,26 @@ public class LineNumberSupport {
 
 	}
 
-	public void install() {
+	@Override
+	public Subscription install(final StyledTextArea control) {
+		double charWidth = 8d;
 		LineNrAnnotationPresenter presenter = new LineNrAnnotationPresenter();
-		this.control.getAnnotationProvider().add(new LineNrAnnotationProvider());
-		this.control.getAnnotationPresenter().add(presenter);
+		LineNrAnnotationProvider provider = new LineNrAnnotationProvider();
 
-		DoubleBinding width = Bindings.createDoubleBinding(()->Integer.toString(this.control.lineCountProperty().get()).length() * 8d, this.control.lineCountProperty());
+		DoubleBinding width = Bindings.createDoubleBinding(()->Integer.toString(control.lineCountProperty().get()).length() * charWidth, control.lineCountProperty());
 		presenter.w.bind(width);
+		control.getAnnotationProvider().add(provider);
+		control.getAnnotationPresenter().add(presenter);
+
+		return new Subscription() {
+			@Override
+			public void dispose() {
+				presenter.w.unbind();
+				width.dispose();
+				control.getAnnotationProvider().remove(provider);
+				control.getAnnotationPresenter().remove(presenter);
+			}
+		};
 	}
+
 }

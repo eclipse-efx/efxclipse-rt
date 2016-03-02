@@ -13,6 +13,7 @@
 package org.eclipse.fx.text.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.Util;
 import org.eclipse.fx.text.ui.internal.InvisibleCharSupport;
 import org.eclipse.fx.text.ui.internal.LineNumberSupport;
@@ -48,6 +50,10 @@ import org.eclipse.jface.text.TextUtilities;
 import org.eclipse.jface.text.projection.ChildDocument;
 import org.eclipse.jface.text.projection.ChildDocumentManager;
 
+import javafx.beans.property.SetProperty;
+import javafx.beans.property.SimpleSetProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.SetChangeListener;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
@@ -86,11 +92,43 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 
 	private IUndoManager fUndoManager;
 
+	private SetProperty<Feature> features = new SimpleSetProperty<>(this, "features", FXCollections.observableSet()); //$NON-NLS-1$
+	public SetProperty<Feature> getFeatures() {
+		return this.features;
+	}
+
 	/**
 	 * Create a new text viewer
 	 */
 	public TextViewer() {
+		// default features
+		this(Feature.SHOW_LINE_NUMBERS);
+	}
+
+	public TextViewer(Feature... features) {
 		createControl();
+		bindFeatures();
+		this.features.addAll(Arrays.asList(features));
+
+	}
+
+	private Map<Feature, Subscription> activeFeatures = new HashMap<>();
+
+	private void bindFeatures() {
+		this.features.addListener((SetChangeListener<Feature>)change->{
+			if (change.wasAdded()) {
+				Feature feature = change.getElementAdded();
+				IFeature iFeature = feature.getFeatureFactory().get();
+				this.activeFeatures.put(feature, iFeature.install(getTextWidget()));
+			}
+			if (change.wasRemoved()) {
+				Feature feature = change.getElementRemoved();
+				Subscription remove = this.activeFeatures.remove(feature);
+				if (remove != null) {
+					remove.dispose();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -122,7 +160,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 
 		this.fTextWidget.addEventHandler(VerifyEvent.VERIFY, this::onVerify);
 
-		new LineNumberSupport(this.fTextWidget).install();
+//		new LineNumberSupport(this.fTextWidget).install();
 //		new InvisibleCharSupport(this.fTextWidget).install();
 	}
 

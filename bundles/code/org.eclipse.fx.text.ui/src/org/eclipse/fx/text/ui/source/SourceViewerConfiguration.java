@@ -12,8 +12,10 @@ package org.eclipse.fx.text.ui.source;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.fx.text.ui.DefaultUndoManager;
+import org.eclipse.fx.text.ui.Feature;
 import org.eclipse.fx.text.ui.ITextHover;
 import org.eclipse.fx.text.ui.IUndoManager;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
@@ -23,6 +25,8 @@ import org.eclipse.fx.text.ui.reconciler.IReconciler;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.source.IAnnotationModel;
+
+import javafx.beans.property.SetProperty;
 
 public abstract class SourceViewerConfiguration {
 	public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
@@ -46,6 +50,10 @@ public abstract class SourceViewerConfiguration {
 	}
 
 	public IAnnotationModel getAnnotationModel() {
+		return null;
+	}
+
+	public SetProperty<Feature> getFeatures() {
 		return null;
 	}
 
