@@ -44,6 +44,7 @@ import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
 import com.google.common.collect.ContiguousSet;
 import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.RangeSet;
+import com.google.common.collect.TreeRangeSet;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
@@ -269,6 +270,8 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			flow.visibleLinesProperty().bind(this.scroller.visibleLinesProperty());
 			flow.numberOfLinesProperty().bind(this.content.numberOfLinesProperty());
 			flow.lineHeightProperty().bind(this.content.lineHeightProperty());
+			flow.yOffsetProperty().bind(this.scroller.offsetProperty());
+
 			// flow.getModel().bindContent(this.getModel());
 
 			flow.absoluteMinWidthProperty().bind(ap.getWidth());
@@ -328,6 +331,12 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			if (c.wasRemoved()) {
 				uninstallPresenter.accept(c.getElementRemoved());
 			}
+
+			// update all
+			RangeSet<Integer> r = TreeRangeSet.<Integer>create().complement();
+			this.content.updateAnnotations(r);
+			this.sortedLineRulerFlows.forEach(f -> f.update(r));
+			this.rootContainer.requestLayout();
 		});
 		getSkinnable().getAnnotationPresenter().forEach(installPresenter);
 

@@ -119,7 +119,11 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 			if (change.wasAdded()) {
 				Feature feature = change.getElementAdded();
 				IFeature iFeature = feature.getFeatureFactory().get();
-				this.activeFeatures.put(feature, iFeature.install(getTextWidget()));
+				Subscription put = this.activeFeatures.put(feature, iFeature.install(getTextWidget()));
+				if (put != null) {
+					// we need to dispose overwritten installations
+					put.dispose();
+				}
 			}
 			if (change.wasRemoved()) {
 				Feature feature = change.getElementRemoved();
@@ -180,6 +184,28 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 	}
 
 	private void onVerify(VerifyEvent event) {
+
+//		if (event.isControlDown() && getKeyCode(event) == KeyCode.L) {
+//			if (getFeatures().contains(Feature.SHOW_LINE_NUMBERS)) {
+//				getFeatures().remove(Feature.SHOW_LINE_NUMBERS);
+//			}
+//			else {
+//				getFeatures().add(Feature.SHOW_LINE_NUMBERS);
+//			}
+//			System.err.println(getFeatures().get());
+//		}
+//
+//		if (event.isControlDown() && getKeyCode(event) == KeyCode.K) {
+//			if (getFeatures().contains(Feature.SHOW_HIDDEN_SYMBOLS)) {
+//				getFeatures().remove(Feature.SHOW_HIDDEN_SYMBOLS);
+//			}
+//			else {
+//				getFeatures().add(Feature.SHOW_HIDDEN_SYMBOLS);
+//			}
+//			System.err.println(getFeatures().get());
+//		}
+
+
 		if (getUndoManager() != null) {
 			if (Util.isWindows()) {
 				if (event.isControlDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {

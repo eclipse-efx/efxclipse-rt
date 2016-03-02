@@ -30,6 +30,13 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 	private LineRulerAnnotationPresenter.LayoutHint h;
 	private DoubleProperty absoluteMinWidth = new SimpleDoubleProperty(this, "absoluteMinWidth"); //$NON-NLS-1$
 
+	private DoubleProperty yOffset = new SimpleDoubleProperty(this, "yOffset"); //$NON-NLS-1$
+
+	public DoubleProperty yOffsetProperty() {
+		return this.yOffset;
+	}
+
+
 	public LineRuler(LineRulerAnnotationPresenter.LayoutHint h, Function<Integer, Set<Annotation>> converter, Predicate<Set<Annotation>> needsPresentation, Supplier<Node> nodeFactory, BiConsumer<Node, Set<Annotation>> nodePopulator) {
 		super(converter, needsPresentation, nodeFactory, nodePopulator);
 		this.h = h;
@@ -47,11 +54,14 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 	@Override
 	protected void layoutChildren() {
 		this.activeNodes.entrySet().forEach(e -> {
-			if (!this.yOffsetData.containsKey(e.getKey())) {
-				return;
-			}
+//			if (!this.yOffsetData.containsKey(e.getKey())) {
+//				return;
+//			}
 			double x = 0;
-			double y = this.yOffsetData.getOrDefault(e.getKey(),Double.valueOf(0.0)).doubleValue();
+			//double y = this.yOffsetData.getOrDefault(e.getKey(),Double.valueOf(0.0)).doubleValue();
+
+			double y = - this.yOffset.get() + e.getKey() * this.lineHeightProperty().get();
+
 			double width = getWidth();
 			double height = getLineHeight();
 
