@@ -19,4 +19,7 @@ public class Constants {
 
 	public static final String EDITOR_CONTAINER_TAG = "editorContainer";
 
+	public static final String PREFERENCE_NODE_PATH = "org.eclipse.fx.code.editor";
+	public static final String PREFERENCE_KEY_EDITOR_FEATURE = "editorFeatures";
+
 }

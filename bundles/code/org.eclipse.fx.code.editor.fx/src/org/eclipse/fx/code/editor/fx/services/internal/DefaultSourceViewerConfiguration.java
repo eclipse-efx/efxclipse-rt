@@ -2,18 +2,22 @@ package org.eclipse.fx.code.editor.fx.services.internal;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
 import org.eclipse.fx.code.editor.services.CompletionProposal;
 import org.eclipse.fx.code.editor.services.HoverInformationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.fx.code.editor.services.ProposalComputer.ProposalContext;
+import org.eclipse.fx.core.preferences.Preference;
+import org.eclipse.fx.text.ui.Feature;
 import org.eclipse.fx.text.ui.ITextHover;
 import org.eclipse.fx.text.ui.ITextViewer;
 import org.eclipse.fx.text.ui.contentassist.ContentAssistContextData;
@@ -24,7 +28,6 @@ import org.eclipse.fx.text.ui.contentassist.IContextInformation;
 import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.source.AnnotationPresenter;
-import org.eclipse.fx.text.ui.source.ILineRulerAnnotationPresenter;
 import org.eclipse.fx.text.ui.source.ISourceViewer;
 import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
@@ -32,6 +35,10 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.source.IAnnotationModel;
 
+import javafx.beans.property.Property;
+import javafx.beans.property.SetProperty;
+import javafx.beans.property.SimpleSetProperty;
+import javafx.collections.FXCollections;
 import javafx.scene.Node;
 
 @SuppressWarnings("restriction")
@@ -44,6 +51,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	private final HoverInformationProvider hoverInformationProvider;
 	private final CompletionProposalPresenter proposalPresenter;
 	private ContentAssistant contentAssistant;
+	private SetProperty<Feature> featureSet = new SimpleSetProperty<Feature>(this, "featureSet", FXCollections.observableSet());
 
 	@Inject
 	public DefaultSourceViewerConfiguration(
@@ -63,6 +71,19 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		this.proposalPresenter = proposalPresenter == null ? DefaultProposal::new : proposalPresenter;
 
 		this.annotationPresenter = annotationPresenter;
+	}
+
+	@Inject
+	public void setFeatureSet(@Preference(key=Constants.PREFERENCE_KEY_EDITOR_FEATURE,nodePath=Constants.PREFERENCE_NODE_PATH) Set<Feature> featureSet) {
+		this.featureSet.clear();
+		if( featureSet != null ) {
+			this.featureSet.addAll(featureSet);
+		}
+	}
+
+	@Override
+	public SetProperty<Feature> getFeatures() {
+		return this.featureSet;
 	}
 
 	@Override
