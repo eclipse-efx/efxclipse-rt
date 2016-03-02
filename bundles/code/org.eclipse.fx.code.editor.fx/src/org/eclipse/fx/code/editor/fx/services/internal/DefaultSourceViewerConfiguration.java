@@ -35,7 +35,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.source.IAnnotationModel;
 
-import javafx.beans.property.Property;
 import javafx.beans.property.SetProperty;
 import javafx.beans.property.SimpleSetProperty;
 import javafx.collections.FXCollections;
@@ -78,6 +77,8 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		this.featureSet.clear();
 		if( featureSet != null ) {
 			this.featureSet.addAll(featureSet);
+		} else {
+			this.featureSet.add(Feature.SHOW_LINE_NUMBERS);
 		}
 	}
 
