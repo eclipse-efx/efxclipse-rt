@@ -12,6 +12,8 @@ package org.eclipse.fx.core.internal;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -55,6 +57,30 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 		}
 	}
 
+	@Override
+	public <O> String serializeCollection(Collection<O> data, Class<O> contentType) {
+		Object object;
+		if (data instanceof List) {
+			object = new ListWrapper<>((List<?>) data);
+		} else if( data instanceof Set ) {
+			object = new SetWrapper<>((Set<?>)data);
+		} else {
+			throw new IllegalArgumentException("Unsupported collection type"); //$NON-NLS-1$
+		}
+		try (StringWriter w = new StringWriter()) {
+			JAXBContext jaxbContext = JAXBContext.newInstance( object.getClass(), contentType );
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+			// output pretty printed
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+			jaxbMarshaller.marshal(object, w);
+			return w.toString();
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <O> O deserialize(Class<O> clazz, String value) {
@@ -76,6 +102,34 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 				return (O) ((SetWrapper<?>) unmarshal).list;
 			}
 			return (O) unmarshal;
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public <O, T extends Collection<O>> T deserializeCollection(Class<T> type, Class<O> contentType, String value) {
+		Class<O> clazz;
+		if ( ((Class<?>)type) == List.class ) {
+			clazz = (Class<O>) ListWrapper.class;
+		} else if (  (Class<?>)type == Set.class) {
+			clazz = (Class<O>) SetWrapper.class;
+		} else {
+			throw new IllegalArgumentException("Unsupported collection type"); //$NON-NLS-1$
+		}
+
+		try (StringReader r = new StringReader(value)) {
+			JAXBContext jaxbContext = JAXBContext.newInstance(clazz, contentType );
+
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+
+			Object unmarshal = jaxbUnmarshaller.unmarshal(r);
+			if (unmarshal instanceof ListWrapper<?>) {
+				return (T) ((ListWrapper<?>) unmarshal).list;
+			} else if (unmarshal instanceof SetWrapper<?>) {
+				return (T) ((SetWrapper<?>) unmarshal).list;
+			}
+			throw new IllegalStateException("Unsupported type");
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}
