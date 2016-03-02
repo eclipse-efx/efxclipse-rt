@@ -45,6 +45,7 @@ public interface ObjectSerializer {
 	 * @param contentType
 	 *            the content type
 	 * @return the serialized object data
+	 * @since 2.3.0
 	 */
 	public default <O> String serializeCollection(Collection<O> data, Class<O> contentType) {
 		return serialize(data);
@@ -72,6 +73,7 @@ public interface ObjectSerializer {
 	 * @param value
 	 *            the serialized data
 	 * @return the collection
+	 * @since 2.3.0
 	 */
 	public default <O, T extends Collection<O>> T deserializeCollection(Class<T> type, Class<O> contentType, String value) {
 		return (T) deserialize(type, value);
