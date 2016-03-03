@@ -188,7 +188,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 				// TODO fix this here
 				@Override
 				public String getInformationDisplayString() {
-					return "InformationDisplayString";
+					return null;
 				}
 
 				@Override
@@ -203,7 +203,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 
 				@Override
 				public String getContextDisplayString() {
-					return "ContextDisplayString";
+					return null;
 				}
 			};
 		}
