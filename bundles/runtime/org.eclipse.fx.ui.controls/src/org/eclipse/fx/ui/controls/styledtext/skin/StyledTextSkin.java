@@ -34,19 +34,15 @@ import org.eclipse.fx.ui.controls.styledtext.internal.LineHelper;
 import org.eclipse.fx.ui.controls.styledtext.internal.LineRuler;
 import org.eclipse.fx.ui.controls.styledtext.internal.ScrollbarPane;
 import org.eclipse.fx.ui.controls.styledtext.internal.Scroller;
-import org.eclipse.fx.ui.controls.styledtext.internal.VerticalLineFlow;
 import org.eclipse.fx.ui.controls.styledtext.model.Annotation;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
 
-import com.google.common.collect.ContiguousSet;
-import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -87,6 +83,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	private static final String CSS_CLASS_LINE_RULER = "line-ruler"; //$NON-NLS-1$
 	private static final String CSS_CLASS_SPACER = "spacer"; //$NON-NLS-1$
 	private static final String CSS_LIST_VIEW = "list-view"; //$NON-NLS-1$
+	private SortedList<LineRulerAnnotationPresenter> sortedLineRulerPresenters;
 
 	/**
 	 * Create a new skin
@@ -210,29 +207,29 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		this.content.visibleLinesProperty().bind(this.scroller.visibleLinesProperty());
 
-		Consumer<Double> updateOffset = (offset) -> {
-			com.google.common.collect.Range<Integer> visibleLines = this.scroller.visibleLinesProperty().get();
-			ContiguousSet<Integer> set = ContiguousSet.create(visibleLines, DiscreteDomain.integers());
-			double lineHeight = this.scroller.lineHeightProperty().get();
-			for (int index : set) {
-
-				double y = index * lineHeight - offset.doubleValue();
-
-				for (VerticalLineFlow<Integer, Annotation> flow : this.sortedLineRulerFlows) {
-					flow.setLineOffset(index, y);
-				}
-			}
-		};
+//		Consumer<Double> updateOffset = (offset) -> {
+//			com.google.common.collect.Range<Integer> visibleLines = this.scroller.visibleLinesProperty().get();
+//			ContiguousSet<Integer> set = ContiguousSet.create(visibleLines, DiscreteDomain.integers());
+//			double lineHeight = this.scroller.lineHeightProperty().get();
+//			for (int index : set) {
+//
+//				double y = index * lineHeight - offset.doubleValue();
+//
+//				for (VerticalLineFlow<Integer, Annotation> flow : this.sortedLineRulerFlows) {
+//					flow.setLineOffset(index, y);
+//				}
+//			}
+//		};
 
 		this.content.offsetYProperty().bind(this.scroller.offsetProperty());
 
-		this.scroller.offsetProperty().addListener((x, o, offset) -> {
-			updateOffset.accept(Double.valueOf(offset.doubleValue()));
-		});
+//		this.scroller.offsetProperty().addListener((x, o, offset) -> {
+//			updateOffset.accept(Double.valueOf(offset.doubleValue()));
+//		});
 
-		this.scroller.visibleLinesProperty().addListener(x -> {
-			updateOffset.accept(Double.valueOf(this.scroller.offsetProperty().get()));
-		});
+//		this.scroller.visibleLinesProperty().addListener(x -> {
+//			updateOffset.accept(Double.valueOf(this.scroller.offsetProperty().get()));
+//		});
 
 		getSkinnable().getContent().addTextChangeListener(new TextChangeListener() {
 
@@ -253,7 +250,8 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		});
 
 		ObservableList<LineRulerAnnotationPresenter> lineRulerPresenters = FXCollections.observableArrayList();
-		SortedList<LineRulerAnnotationPresenter> sortedLineRulerPresenters = new SortedList<>(lineRulerPresenters, (a, b) -> a.getOrder() - b.getOrder());
+
+		this.sortedLineRulerPresenters = new SortedList<>(lineRulerPresenters, (a, b) -> a.getOrder() - b.getOrder());
 
 		Function<LineRulerAnnotationPresenter, LineRuler> map = (ap) -> {
 			Function<Integer, Set<Annotation>> converter = (index) -> this.lineHelper.getAnnotations(index.intValue()).stream().filter(ap::isApplicable).collect(Collectors.toSet());
@@ -284,20 +282,20 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		};
 
 		this.sortedLineRulerFlows = FXCollections.observableArrayList();
-		this.sortedLineRulerFlows.addListener((InvalidationListener) x -> {
-			for (VerticalLineFlow<Integer, Annotation> flow : this.sortedLineRulerFlows) {
+		this.sortedLineRulerFlows.addListener((ListChangeListener<LineRuler>) (c) -> {
+			for (LineRuler flow : this.sortedLineRulerFlows) {
 				flow.getStyleClass().setAll(CSS_CLASS_LINE_RULER);
 			}
 		});
-		FXBindUtil.uniMapBindList(sortedLineRulerPresenters, this.sortedLineRulerFlows, map);
+		FXBindUtil.uniMapBindList(this.sortedLineRulerPresenters, this.sortedLineRulerFlows, map);
 		FXBindUtil.uniMapBindList(this.sortedLineRulerFlows, this.lineRulerArea.getChildren(), (flow) -> (Node) flow);
-		this.sortedLineRulerFlows.addListener((ListChangeListener<? super VerticalLineFlow<Integer, Annotation>>) (c) -> {
+		this.sortedLineRulerFlows.addListener((ListChangeListener<? super LineRuler>) (c) -> {
 			while (c.next()) {
 				if (c.wasRemoved()) {
 					c.getRemoved().forEach((f) -> {
 						f.visibleLinesProperty().unbind();
 						f.numberOfLinesProperty().unbind();
-						// f.getModel().unbind();
+						f.yOffsetProperty().unbind();
 						f.prefWidthProperty().unbind();
 					});
 				}
@@ -341,16 +339,6 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		getSkinnable().getAnnotationPresenter().forEach(installPresenter);
 
 	}
-
-	// private <O> void pluginBinding(ObservableValue<O> property, Consumer<O>
-	// consumer, List<Subscription> subscriptions) {
-	// // init
-	// consumer.accept(property.getValue());
-	// ChangeListener<? super O> l = (x, o, n)->consumer.accept(n);
-	// // bind
-	// property.addListener(l);
-	// subscriptions.add(()->property.removeListener(l));
-	// }
 
 	private void scrollColumnIntoView(int colIndex) {
 
