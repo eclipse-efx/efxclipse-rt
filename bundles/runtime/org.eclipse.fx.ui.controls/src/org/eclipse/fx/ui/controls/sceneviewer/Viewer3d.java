@@ -230,6 +230,15 @@ public final class Viewer3d extends Pane {
 		}
 	}
 
+	/**
+	 * Reevaluate the 3d model
+	 *
+	 * @since 2.4.0
+	 */
+	public void reevaluate() {
+		attachListener();
+	}
+
 	private void attachListener() {
 		Node n = getContent();
 		if (n != null) {
