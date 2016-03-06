@@ -12,6 +12,7 @@ package org.eclipse.fx.core.internal;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -143,7 +144,7 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 	 */
 	@XmlRootElement
 	public static class SetWrapper<O> {
-		Set<O> list;
+		Set<O> list = new HashSet<>();
 
 		/**
 		 * Create an instance
@@ -187,7 +188,7 @@ public class JAXBObjectSerializer implements ObjectSerializer {
 	 */
 	@XmlRootElement
 	public static class ListWrapper<O> {
-		List<O> list;
+		List<O> list = new ArrayList<>();
 
 		/**
 		 * Create an instance
