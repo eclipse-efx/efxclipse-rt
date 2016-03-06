@@ -47,6 +47,7 @@ public class ContentProposalPopup implements IContentAssistListener {
 
 	private ContentAssistant fContentAssistant;
 	private ChangeListener<Number> selectionChange;
+	private boolean proposalApplyInProgress;
 
 	public ContentProposalPopup(ContentAssistant assistant, ITextViewer viewer, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.viewer = viewer;
@@ -109,6 +110,9 @@ public class ContentProposalPopup implements IContentAssistListener {
 	};
 
 	private void updateProposals() {
+		if( this.proposalApplyInProgress ) {
+			return;
+		}
 		List<ICompletionProposal> list = this.proposalComputer.apply(new ContentAssistContextData(this.offset,this.viewer.getDocument()/*,prefix*/));
 		if( ! list.isEmpty() ) {
 			this.proposalList.setItems(FXCollections.observableArrayList(list));
@@ -125,15 +129,20 @@ public class ContentProposalPopup implements IContentAssistListener {
 	}
 
 	private void applySelectedProposal() {
-		ICompletionProposal selectedItem = this.proposalList.getSelectionModel().getSelectedItem();
-		if( selectedItem != null ) {
-			IDocument document = this.viewer.getDocument();
-			selectedItem.apply(document);
+		try {
+			this.proposalApplyInProgress = true;
+			ICompletionProposal selectedItem = this.proposalList.getSelectionModel().getSelectedItem();
+			if( selectedItem != null ) {
+				IDocument document = this.viewer.getDocument();
+				selectedItem.apply(document);
 
-			this.viewer.getTextWidget().setSelection(selectedItem.getSelection(document));
-			this.stage.hide();
+				this.viewer.getTextWidget().setSelection(selectedItem.getSelection(document));
+				this.stage.hide();
 
-			this.fContentAssistant.showContextInformation(selectedItem.getContextInformation(), offset);
+				this.fContentAssistant.showContextInformation(selectedItem.getContextInformation(), offset);
+			}
+		} finally {
+			this.proposalApplyInProgress = false;
 		}
 	}
 
