@@ -124,13 +124,15 @@ class ContextInformationPopup implements IContentAssistListener {
 			if( viewer.getTextWidget().getScene() != null ) {
 				fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
 			}
-
 		});
+		if( viewer.getTextWidget().getScene() != null ) {
+			fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
+		}
 		fRoot = new BorderPane();
 		fRoot.getStyleClass().add("styled-text-hover");
 		fContent = new Label();
 		fRoot.setCenter(fContent);
-		fContent.getStyleClass().add("styled-text-hover-text");
+		fContent.getStyleClass().add("context-info");
 		fContextInfoPopup.getScene().setRoot(fRoot);
 	}
 
@@ -153,9 +155,10 @@ class ContextInformationPopup implements IContentAssistListener {
 	 * @since 2.0
 	 */
 	public void showContextInformation(final IContextInformation info, final int offset) {
+		final int caret = fViewer.getTextWidget().getCaretOffset();
 			if (info != null && info.getInformationDisplayString() != null && !info.getInformationDisplayString().isEmpty()) {
 				fContent.setText(info.getInformationDisplayString());
-				Point2D locationAtOffset = fViewer.getTextWidget().getLocationAtOffset(offset);
+				Point2D locationAtOffset = fViewer.getTextWidget().getLocationAtOffset(caret);
 				locationAtOffset = fViewer.getTextWidget().localToScreen(locationAtOffset);
 				if (locationAtOffset != null) {
 					fContextInfoPopup.show(fViewer.getTextWidget().getScene().getWindow(), locationAtOffset.getX(), locationAtOffset.getY());

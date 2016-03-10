@@ -72,6 +72,12 @@
 	-fx-background-radius: 5;
 }
 
+.styled-text-hover .context-info {
+	-fx-background-color: #393939;
+	-fx-border-color: black;
+	-fx-border-width: thin;
+}
+
 .styled-text-hover-text {
 	-fx-text-fill: #b8c4d1;
 }

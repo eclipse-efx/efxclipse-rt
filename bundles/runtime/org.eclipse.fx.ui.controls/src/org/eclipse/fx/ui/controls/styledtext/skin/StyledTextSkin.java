@@ -273,7 +273,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 			// flow.getModel().bindContent(this.getModel());
 
-			flow.absoluteMinWidthProperty().bind(ap.getWidth());
+			flow.fixedWidthProperty().bind(ap.getWidth());
 //			flow.prefWidthProperty().bind(ap.getWidth());
 
 			flow.prefWidthProperty().addListener((x, o, n) -> {

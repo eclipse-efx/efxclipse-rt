@@ -49,6 +49,12 @@
 	-fx-background-radius: 5;
 }
 
+.styled-text-hover .context-info {
+	-fx-background-color: antiquewhite;
+	-fx-border-color: black;
+	-fx-border-width: thin;
+}
+
 .styled-text-hover {
 /*  -fx-background-color: #ecebec;
 	-fx-background-radius: 5;
