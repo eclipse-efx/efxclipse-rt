@@ -27,6 +27,7 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
 import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
 import org.eclipse.fx.ui.controls.styledtext.internal.FXBindUtil;
@@ -53,6 +54,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.SkinBase;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -272,7 +274,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 			// flow.getModel().bindContent(this.getModel());
 
-			flow.absoluteMinWidthProperty().bind(ap.getWidth());
+			flow.fixedWidthProperty().bind(ap.getWidth());
 //			flow.prefWidthProperty().bind(ap.getWidth());
 
 			flow.prefWidthProperty().addListener((x, o, n) -> {
@@ -358,6 +360,14 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 	}
 
+	public <T> Optional<T> fastQuery(String label, String fieldText, Function<String, T> converter) {
+		TextInputDialog diag = new TextInputDialog();
+		diag.setTitle(label);
+		diag.setHeaderText(label);
+		diag.setContentText(fieldText);
+		return diag.showAndWait().map(converter);
+	}
+
 	private void scrollLineIntoView(int lineIndex) {
 		this.scroller.scrollIntoView(lineIndex);
 	}
@@ -388,12 +398,12 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	 *            the position
 	 * @return the point
 	 */
-	public Point2D getCaretLocation(int caretPosition) {
+	public Point2D getCaretLocation(int caretPosition, LineLocation locationHint) {
 		if (caretPosition < 0) {
 			return null;
 		}
 
-		Optional<Point2D> location = this.content.getLocationInScene(caretPosition);
+		Optional<Point2D> location = this.content.getLocationInScene(caretPosition, locationHint);
 
 		return location.map(l -> this.rootContainer.sceneToLocal(l)).map(l -> new Point2D(l.getX(), l.getY() + this.content.getLineHeight())).orElse(null);
 

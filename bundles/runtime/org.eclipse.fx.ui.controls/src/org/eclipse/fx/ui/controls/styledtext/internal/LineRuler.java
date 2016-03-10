@@ -28,7 +28,8 @@ import javafx.scene.Node;
 public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 
 	private LineRulerAnnotationPresenter.LayoutHint h;
-	private DoubleProperty absoluteMinWidth = new SimpleDoubleProperty(this, "absoluteMinWidth"); //$NON-NLS-1$
+
+	private DoubleProperty fixedWidth = new SimpleDoubleProperty(this, "fixedWidth"); //$NON-NLS-1$
 
 	private DoubleProperty yOffset = new SimpleDoubleProperty(this, "yOffset"); //$NON-NLS-1$
 
@@ -44,11 +45,16 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 
 	@Override
 	protected double computeMinWidth(double height) {
-		return Math.max(this.absoluteMinWidth.get(), super.computePrefWidth(height));
+		return this.fixedWidth.get();
 	}
 
-	public DoubleProperty absoluteMinWidthProperty() {
-		return this.absoluteMinWidth;
+	@Override
+	protected double computeMaxWidth(double height) {
+		return this.fixedWidth.get();
+	}
+
+	public DoubleProperty fixedWidthProperty() {
+		return this.fixedWidth;
 	}
 
 	@Override

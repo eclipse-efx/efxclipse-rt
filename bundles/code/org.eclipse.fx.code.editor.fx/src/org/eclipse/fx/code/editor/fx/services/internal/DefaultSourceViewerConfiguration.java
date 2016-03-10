@@ -17,6 +17,7 @@ import org.eclipse.fx.code.editor.services.HoverInformationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.fx.code.editor.services.ProposalComputer.ProposalContext;
 import org.eclipse.fx.core.preferences.Preference;
+import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.ui.Feature;
 import org.eclipse.fx.text.ui.ITextHover;
 import org.eclipse.fx.text.ui.ITextViewer;
@@ -33,6 +34,7 @@ import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 
 import javafx.beans.property.SetProperty;
@@ -135,6 +137,25 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	}
 
 	@Override
+	public Set<HoverInfo> getDocumentHoverInfo(IDocument document, int offset) {
+		if (hoverInformationProvider != null) {
+			return hoverInformationProvider.getDocumentHoverProvider().getHoverInfo(document, offset);
+		}
+		return super.getDocumentHoverInfo(document, offset);
+	}
+
+	@Override
+	public Set<HoverInfo> getAnnotationHoverInfo(Annotation annotation) {
+		if (hoverInformationProvider != null) {
+			return hoverInformationProvider.getAnnotationHoverProviders().stream()
+					.filter(p->p.isApplicable(annotation.getClass()))
+					.map(p->p.getHoverInfo(annotation))
+					.collect(Collectors.toSet());
+		}
+		return super.getAnnotationHoverInfo(annotation);
+	}
+
+	@Override
 	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
 		if( hoverInformationProvider != null ) {
 			return new ITextHover() {
@@ -212,5 +233,10 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		public String getHoverInfo() {
 			return null;
 		}
+	}
+
+	@Override
+	public String getContentAssistAutoTriggers() {
+		return proposalPresenter.getAutoTriggers();
 	}
 }

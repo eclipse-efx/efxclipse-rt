@@ -50,11 +50,9 @@ public class WrappedLineRulerAnnotationPresenter implements LineRulerAnnotationP
 		return wrapped.createNode();
 	}
 
-	DoubleProperty TODO = new SimpleDoubleProperty(16);
 	@Override
 	public DoubleProperty getWidth() {
-		// TODO
-		return TODO;
+		return this.wrapped.getWidth();
 	}
 
 	@Override
@@ -65,6 +63,11 @@ public class WrappedLineRulerAnnotationPresenter implements LineRulerAnnotationP
 	@Override
 	public void updateNode(Node node, Set<Annotation> annotation) {
 		wrapped.updateNode(node, unwrap(annotation));
+	}
+
+	@Override
+	public String toString() {
+		return "WAP("+wrapped+")@" + hashCode(); //$NON-NLS-2$
 	}
 
 }

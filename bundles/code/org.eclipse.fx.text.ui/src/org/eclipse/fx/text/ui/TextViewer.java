@@ -14,15 +14,18 @@ package org.eclipse.fx.text.ui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.Util;
+import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.ui.internal.InvisibleCharSupport;
 import org.eclipse.fx.text.ui.internal.LineNumberSupport;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
@@ -49,6 +52,7 @@ import org.eclipse.jface.text.SlaveDocumentEvent;
 import org.eclipse.jface.text.TextUtilities;
 import org.eclipse.jface.text.projection.ChildDocument;
 import org.eclipse.jface.text.projection.ChildDocumentManager;
+import org.eclipse.jface.text.source.Annotation;
 
 import javafx.beans.property.SetProperty;
 import javafx.beans.property.SimpleSetProperty;
@@ -151,6 +155,14 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 		return this.fUndoManager;
 	}
 
+	public Set<HoverInfo> getHoverInfo(int offset) {
+		return Collections.emptySet();
+	}
+
+	public Set<HoverInfo> getHoverInfo(Annotation annotation) {
+		return Collections.emptySet();
+	}
+
 	/**
 	 * Create the text control
 	 */
@@ -183,7 +195,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 		return kc;
 	}
 
-	private void onVerify(VerifyEvent event) {
+	protected void onVerify(VerifyEvent event) {
 
 //		if (event.isControlDown() && getKeyCode(event) == KeyCode.L) {
 //			if (getFeatures().contains(Feature.SHOW_LINE_NUMBERS)) {
@@ -192,7 +204,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 //			else {
 //				getFeatures().add(Feature.SHOW_LINE_NUMBERS);
 //			}
-//			System.err.println(getFeatures().get());
+//			System.err.println("SETTING FEATURES: " + getFeatures().get());
 //		}
 //
 //		if (event.isControlDown() && getKeyCode(event) == KeyCode.K) {
@@ -202,7 +214,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 //			else {
 //				getFeatures().add(Feature.SHOW_HIDDEN_SYMBOLS);
 //			}
-//			System.err.println(getFeatures().get());
+//			System.err.println("SETTING FEATURES: " + getFeatures().get());
 //		}
 
 

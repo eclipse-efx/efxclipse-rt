@@ -56,6 +56,11 @@ public class AnnotationModelSupport {
 		}
 
 		@Override
+		public Object getModel() {
+			return annotation;
+		}
+
+		@Override
 		public Range<Integer> getRange() {
 			return range;
 		}

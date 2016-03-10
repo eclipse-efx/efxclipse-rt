@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.ui.DefaultUndoManager;
 import org.eclipse.fx.text.ui.Feature;
 import org.eclipse.fx.text.ui.ITextHover;
@@ -24,6 +25,7 @@ import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.reconciler.IReconciler;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
+import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 
 import javafx.beans.property.SetProperty;
@@ -73,8 +75,20 @@ public abstract class SourceViewerConfiguration {
 		return null;
 	}
 
+	public Set<HoverInfo> getDocumentHoverInfo(IDocument document, int offset) {
+		return Collections.emptySet();
+	}
+
+	public Set<HoverInfo> getAnnotationHoverInfo(Annotation annotation) {
+		return Collections.emptySet();
+	}
+
 	public String[] getConfiguredContentTypes(SourceViewer sourceViewer) {
 		return new String[] { IDocument.DEFAULT_CONTENT_TYPE };
+	}
+
+	public String getContentAssistAutoTriggers() {
+		return ".";
 	}
 
 }

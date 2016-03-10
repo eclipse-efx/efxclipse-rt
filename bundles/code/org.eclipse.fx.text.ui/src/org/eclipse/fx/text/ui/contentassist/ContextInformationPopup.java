@@ -16,6 +16,7 @@ import java.util.Stack;
 import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
 
 import org.eclipse.fx.text.ui.ITextViewer;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 
 import javafx.geometry.Point2D;
@@ -124,13 +125,15 @@ class ContextInformationPopup implements IContentAssistListener {
 			if( viewer.getTextWidget().getScene() != null ) {
 				fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
 			}
-
 		});
+		if( viewer.getTextWidget().getScene() != null ) {
+			fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
+		}
 		fRoot = new BorderPane();
 		fRoot.getStyleClass().add("styled-text-hover");
 		fContent = new Label();
 		fRoot.setCenter(fContent);
-		fContent.getStyleClass().add("styled-text-hover-text");
+		fContent.getStyleClass().add("context-info");
 		fContextInfoPopup.getScene().setRoot(fRoot);
 	}
 
@@ -155,10 +158,12 @@ class ContextInformationPopup implements IContentAssistListener {
 	public void showContextInformation(final IContextInformation info, final int offset) {
 			if (info != null && info.getInformationDisplayString() != null && !info.getInformationDisplayString().isEmpty()) {
 				fContent.setText(info.getInformationDisplayString());
-				Point2D locationAtOffset = fViewer.getTextWidget().getLocationAtOffset(offset);
+				Point2D locationAtOffset = fViewer.getTextWidget().getLocationAtOffset(offset, LineLocation.ABOVE);
 				locationAtOffset = fViewer.getTextWidget().localToScreen(locationAtOffset);
+				System.err.println("CoNTEXT INFO @ " + locationAtOffset);
 				if (locationAtOffset != null) {
-					fContextInfoPopup.show(fViewer.getTextWidget().getScene().getWindow(), locationAtOffset.getX(), locationAtOffset.getY());
+					double y = locationAtOffset.getY() - fContextInfoPopup.getHeight();
+					fContextInfoPopup.show(fViewer.getTextWidget().getScene().getWindow(), locationAtOffset.getX(), y);
 				}
 			}
 			else {

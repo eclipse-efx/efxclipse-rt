@@ -1518,18 +1518,26 @@ public class StyledTextArea extends Control {
 		return this.editableProperty;
 	}
 
+	public static enum LineLocation {
+		BELOW,
+		ABOVE,
+		CENTER
+	}
+
 	/**
 	 * Check the location at the given offset
 	 *
 	 * @param offset
 	 *            the offset
+	 * @param locationHint
+	 * 			  hint for y coordinate relative to line
 	 * @return the point
 	 */
-	public @Nullable Point2D getLocationAtOffset(int offset) {
+	public @Nullable Point2D getLocationAtOffset(int offset, LineLocation locationHint) {
 		if (offset < 0 || offset > getCharCount()) {
 			throw new IllegalArgumentException();
 		}
-		return ((StyledTextSkin) getSkin()).getCaretLocation(offset);
+		return ((StyledTextSkin) getSkin()).getCaretLocation(offset, locationHint);
 	}
 
 	/**

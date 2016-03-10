@@ -12,15 +12,23 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui.source;
 
+import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
+import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.ui.Feature;
 import org.eclipse.fx.text.ui.ITextViewerExtension2;
 import org.eclipse.fx.text.ui.TextViewer;
+import org.eclipse.fx.text.ui.contentassist.ContentAssistant;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
 import org.eclipse.fx.text.ui.internal.AnnotationModelSupport;
+import org.eclipse.fx.text.ui.internal.SimpleSmartIndent;
 import org.eclipse.fx.text.ui.internal.WrappedLineRulerAnnotationPresenter;
 import org.eclipse.fx.text.ui.internal.WrappedTextAnnotationPresenter;
 import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
 import org.eclipse.fx.text.ui.reconciler.IReconciler;
+import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ISynchronizable;
@@ -40,6 +48,10 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 	private Annotation fRangeIndicator;
 
+
+	private BiFunction<IDocument, Integer, Set<HoverInfo>> documentHoverInfoLookup = null;
+	private Function<Annotation, Set<HoverInfo>> annotationHoverInfoLookup = null;
+
 	@Override
 	public void configure(SourceViewerConfiguration configuration) {
 		if (getTextWidget() == null)
@@ -55,6 +67,9 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 		getTextWidget().getStyleClass().add(configuration.getStyleclassName());
 
+		this.documentHoverInfoLookup = configuration::getDocumentHoverInfo;
+		this.annotationHoverInfoLookup = configuration::getAnnotationHoverInfo;
+
 //		if( configuration.getDefaultStylesheet().getValue() != null ) {
 //			getTextWidget().getStylesheets().add(configuration.getDefaultStylesheet().getValue().toExternalForm());
 //		}
@@ -67,6 +82,10 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 //				getTextWidget().getStylesheets().add(newVal.toExternalForm());
 //			}
 //		});
+
+		if (configuration.getContentAssist() instanceof ContentAssistant) {
+			((ContentAssistant)configuration.getContentAssist()).setAutoTriggers(configuration.getContentAssistAutoTriggers());
+		}
 
 		setDocumentPartitioning(configuration.getConfiguredDocumentPartitioning(this));
 
@@ -213,6 +232,9 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 //			});
 		}
 
+
+		new SimpleSmartIndent(this);
+
 	}
 
 //	private Node annotationFactory(StyledTextLine l) {
@@ -233,6 +255,22 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 //		}
 //		return null;
 //	}
+
+	@Override
+	public Set<HoverInfo> getHoverInfo(int offset) {
+		if (this.documentHoverInfoLookup != null) {
+			return this.documentHoverInfoLookup.apply(getDocument(), offset);
+		}
+		return super.getHoverInfo(offset);
+	}
+
+	@Override
+	public Set<HoverInfo> getHoverInfo(Annotation annotation) {
+		if (this.annotationHoverInfoLookup != null) {
+			return this.annotationHoverInfoLookup.apply(annotation);
+		}
+		return super.getHoverInfo(annotation);
+	}
 
 	/**
 	 * Disposes the visual annotation model.

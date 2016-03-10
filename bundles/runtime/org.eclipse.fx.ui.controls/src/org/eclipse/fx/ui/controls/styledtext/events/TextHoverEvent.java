@@ -10,6 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.events;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import com.google.common.collect.Range;
+
 import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
@@ -40,6 +46,29 @@ public class TextHoverEvent extends MouseEvent {
 	private final String tokenText;
 	private final int offset;
 
+	private final List<HoverTarget> hoverTargets;
+
+
+
+	public TextHoverEvent(MouseEvent source, List<HoverTarget> hoverTargets) {
+		super(HOVER, source.getSceneX(), source.getSceneY(), source.getScreenX(), source.getScreenY(), source.getButton(), source.getClickCount(), source.isShiftDown(), source.isControlDown(), source.isAltDown(), source.isMetaDown(), source.isPrimaryButtonDown(), source.isMiddleButtonDown(),
+				source.isSecondaryButtonDown(), source.isSynthesized(), source.isPopupTrigger(), source.isStillSincePress(), source.getPickResult());
+
+		this.hoverTargets = Collections.unmodifiableList(hoverTargets);
+
+		Optional<Range<Integer>> range = this.hoverTargets.stream().map(t->t.textRange).findFirst();
+
+		// TODO remove me
+		this.tokenText = null;
+		this.offsetTokenStart = range.isPresent() ? range.get().lowerEndpoint() : 0;;
+		this.offsetTokenEnd = range.isPresent() ? range.get().upperEndpoint() : 0;;
+		this.offset = range.isPresent() ? range.get().lowerEndpoint() : 0;
+	}
+
+	public List<HoverTarget> getHoverTargets() {
+		return this.hoverTargets;
+	}
+
 	/**
 	 * Create a new hover event from the original mouse event
 	 *
@@ -64,6 +93,8 @@ public class TextHoverEvent extends MouseEvent {
 		this.offsetTokenEnd = offsetTokenEnd;
 		this.tokenText = tokenText;
 		this.offset = offset;
+
+		this.hoverTargets = null;
 	}
 
 	/**
@@ -96,4 +127,48 @@ public class TextHoverEvent extends MouseEvent {
 	public int getOffset() {
 		return this.offset;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((hoverTargets == null) ? 0 : hoverTargets.hashCode());
+		result = prime * result + offset;
+		result = prime * result + offsetTokenEnd;
+		result = prime * result + offsetTokenStart;
+		result = prime * result + ((tokenText == null) ? 0 : tokenText.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TextHoverEvent other = (TextHoverEvent) obj;
+		if (hoverTargets == null) {
+			if (other.hoverTargets != null)
+				return false;
+		} else if (!hoverTargets.equals(other.hoverTargets))
+			return false;
+		if (offset != other.offset)
+			return false;
+		if (offsetTokenEnd != other.offsetTokenEnd)
+			return false;
+		if (offsetTokenStart != other.offsetTokenStart)
+			return false;
+		if (tokenText == null) {
+			if (other.tokenText != null)
+				return false;
+		} else if (!tokenText.equals(other.tokenText))
+			return false;
+		return true;
+	}
+
+
+
+
 }

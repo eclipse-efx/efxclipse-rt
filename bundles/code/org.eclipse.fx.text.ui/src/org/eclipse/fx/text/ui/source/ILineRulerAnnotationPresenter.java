@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.eclipse.jface.text.source.Annotation;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.Node;
 
 public interface ILineRulerAnnotationPresenter extends IAnnotationPresenter {
@@ -19,4 +20,6 @@ public interface ILineRulerAnnotationPresenter extends IAnnotationPresenter {
 	void updateNode(Node node, Set<Annotation> annotation);
 
 	LayoutHint getLayoutHint();
+
+	DoubleProperty getWidth();
 }

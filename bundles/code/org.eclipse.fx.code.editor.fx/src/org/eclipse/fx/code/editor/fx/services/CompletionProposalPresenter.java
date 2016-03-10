@@ -6,4 +6,8 @@ import org.eclipse.fx.text.ui.contentassist.ICompletionProposal;
 @SuppressWarnings("restriction")
 public interface CompletionProposalPresenter {
 	public ICompletionProposal createProposal(CompletionProposal proposal);
+
+	public default String getAutoTriggers() {
+		return "";
+	}
 }

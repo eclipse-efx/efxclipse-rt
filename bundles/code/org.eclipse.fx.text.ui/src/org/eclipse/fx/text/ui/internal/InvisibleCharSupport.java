@@ -41,6 +41,11 @@ public class InvisibleCharSupport implements IFeature {
 			return symbol;
 		}
 
+		@Override
+		public Object getModel() {
+			return symbol;
+		}
+
 		public InvisibleCharAnnotation(String symbol, Range range) {
 			this.symbol = symbol;
 			this.range = range;
@@ -111,6 +116,11 @@ public class InvisibleCharSupport implements IFeature {
 			Text t = (Text) node;
 			InvisibleCharAnnotation a = (InvisibleCharAnnotation) annotation;
 			t.setText(a.getSymbol());
+		}
+
+		@Override
+		public String toString() {
+			return "InvisibleCharAP@" + hashCode(); //$NON-NLS-1$
 		}
 
 	}
