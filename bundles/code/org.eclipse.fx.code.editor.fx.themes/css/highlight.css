@@ -23,9 +23,36 @@
 	-source-editor-markup-extra: rgb(128, 128, 128);
 }
 
+.styled-text-hover .errors {
+	-fx-background-color: red;
+	-fx-padding: 10;
+	-fx-background-radius: 5;
+}
+.styled-text-hover .warnings {
+	-fx-background-color: darkorange;
+	-fx-padding: 10;
+	-fx-background-radius: 5;
+}
+.styled-text-hover .infos {
+	-fx-background-color: blanchediamond;
+	-fx-padding: 10;
+	-fx-background-radius: 5;
+}
+.styled-text-hover .docs {
+	-fx-background-color: aliceblue;
+	-fx-padding: 10;
+	-fx-background-radius: 5;
+}
+.styled-text-hover .others {
+	-fx-background-color: gray;
+	-fx-padding: 10;
+	-fx-background-radius: 5;
+}
+
 .styled-text-hover {
-	-fx-background-color: #ecebec;
+/*  -fx-background-color: #ecebec;
 	-fx-background-radius: 5;
 	-fx-padding: 10;
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 10, 0.0 , 0 , 3 );
+*/
 }

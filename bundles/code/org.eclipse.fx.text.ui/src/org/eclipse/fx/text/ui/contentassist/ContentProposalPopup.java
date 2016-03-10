@@ -12,6 +12,8 @@ package org.eclipse.fx.text.ui.contentassist;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 import org.eclipse.fx.text.ui.ITextViewer;
@@ -21,6 +23,8 @@ import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.jface.text.IDocument;
+
+import com.sun.javafx.tk.Toolkit;
 
 import javafx.application.Platform;
 import javafx.beans.Observable;
@@ -35,6 +39,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.PopupWindow;
+import javafx.stage.Stage;
 
 public class ContentProposalPopup implements IContentAssistListener {
 	ITextViewer viewer;
@@ -47,7 +52,9 @@ public class ContentProposalPopup implements IContentAssistListener {
 
 	private ContentAssistant fContentAssistant;
 	private ChangeListener<Number> selectionChange;
-	private boolean proposalApplyInProgress;
+
+
+	private ICompletionProposal chosenProposal = null;
 
 	public ContentProposalPopup(ContentAssistant assistant, ITextViewer viewer, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.viewer = viewer;
@@ -56,7 +63,8 @@ public class ContentProposalPopup implements IContentAssistListener {
 		this.selectionChange = this::onSelectionChange;
 	}
 
-	public void displayProposals(List<ICompletionProposal> proposalList, int offset, Point2D position) {
+	public Optional<ICompletionProposal> displayProposals(List<ICompletionProposal> proposalList, int offset, Point2D position) {
+
 		setup();
 		this.prefix = ""; //$NON-NLS-1$
 		this.offset = offset;
@@ -72,6 +80,17 @@ public class ContentProposalPopup implements IContentAssistListener {
 		this.stage.setOnHidden(this::unsubscribe);
 
 		this.stage.show(this.viewer.getTextWidget().getScene().getWindow());
+
+
+		chosenProposal = null;
+		Toolkit.getToolkit().checkFxUserThread();
+		Toolkit.getToolkit().enterNestedEventLoop(this);
+
+		return Optional.ofNullable(chosenProposal);
+	}
+
+	public void close() {
+		this.stage.hide();
 	}
 
 	private void subscribe(Event e) {
@@ -110,9 +129,6 @@ public class ContentProposalPopup implements IContentAssistListener {
 	};
 
 	private void updateProposals() {
-		if( this.proposalApplyInProgress ) {
-			return;
-		}
 		List<ICompletionProposal> list = this.proposalComputer.apply(new ContentAssistContextData(this.offset,this.viewer.getDocument()/*,prefix*/));
 		if( ! list.isEmpty() ) {
 			this.proposalList.setItems(FXCollections.observableArrayList(list));
@@ -125,25 +141,15 @@ public class ContentProposalPopup implements IContentAssistListener {
 	}
 
 	private void cancelProposal() {
-		this.stage.hide();
+		this.chosenProposal = null;
+		close();
 	}
 
 	private void applySelectedProposal() {
-		try {
-			this.proposalApplyInProgress = true;
-			ICompletionProposal selectedItem = this.proposalList.getSelectionModel().getSelectedItem();
-			if( selectedItem != null ) {
-				IDocument document = this.viewer.getDocument();
-				selectedItem.apply(document);
+		ICompletionProposal selectedItem = this.proposalList.getSelectionModel().getSelectedItem();
 
-				this.viewer.getTextWidget().setSelection(selectedItem.getSelection(document));
-				this.stage.hide();
-
-				this.fContentAssistant.showContextInformation(selectedItem.getContextInformation(), offset);
-			}
-		} finally {
-			this.proposalApplyInProgress = false;
-		}
+		this.chosenProposal = selectedItem;
+		close();
 	}
 
 	private void handleMouseClicked(MouseEvent event) {
@@ -226,6 +232,12 @@ public class ContentProposalPopup implements IContentAssistListener {
 			// Fix CSS warnings
 			this.stage.setOnHidden((o) -> {
 				this.stage = null;
+			});
+
+			this.stage.showingProperty().addListener((x, o, n) -> {
+				if (!n) {
+					Toolkit.getToolkit().exitNestedEventLoop(this, null);
+				}
 			});
 		}
 	}

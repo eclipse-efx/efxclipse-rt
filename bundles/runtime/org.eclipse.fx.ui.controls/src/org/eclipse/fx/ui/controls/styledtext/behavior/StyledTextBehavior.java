@@ -997,6 +997,41 @@ public class StyledTextBehavior {
 		moveCaretRelative(-1, select);
 	}
 
+	protected final StyledTextInputAction ACTION_NAVIGATE_TO_LINE = new StyledTextInputAction(this::defaultNavigateToLine);
+	protected void defaultNavigateToLine() {
+		try {
+
+//			s-> {
+//				try {
+//					int num = Integer.parseInt(s);
+//					int lineCount = getControl().getContent().getLineCount();
+//					if (num < 0 || num >= lineCount) {
+//						return Optional.of("Must be between 0 and " + lineCount);
+//					}
+//				}
+//				catch (NumberFormatException e) {
+//					return Optional.of(e.getMessage());
+//				}
+//				return Optional.empty();
+//			}
+
+			Optional<Integer> num = ((StyledTextSkin)getControl().getSkin()).fastQuery("Goto Line", "Line Number", Integer::parseInt);
+			num.ifPresent((n)->defaultNavigateToLine(n-1));
+
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void defaultNavigateToLine(int lineIndex) {
+		if (lineIndex >= 0  && lineIndex <= getControl().getContent().getLineCount()) {
+			int offset = getControl().getContent().getOffsetAtLine(lineIndex);
+			getControl().setCaretOffset(offset);
+		}
+	}
+
+
 	/**
 	 * Action to move caret right
 	 */
@@ -1425,6 +1460,8 @@ public class StyledTextBehavior {
 		// action for insert tab support
 		keyMapping.mapKey(new KeyCombo(TAB), () -> getControl().insert("\t")); //$NON-NLS-1$
 
+
+		keyMapping.mapKey(new KeyCombo(KeyCode.L, ControlKey), this.ACTION_NAVIGATE_TO_LINE);
 	}
 
 	// /**

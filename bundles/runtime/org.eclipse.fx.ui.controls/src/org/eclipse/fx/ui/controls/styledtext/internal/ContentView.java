@@ -10,13 +10,16 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.internal;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -24,6 +27,7 @@ import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
+import org.eclipse.fx.ui.controls.styledtext.events.HoverTarget;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
@@ -170,6 +174,18 @@ public class ContentView  extends Pane {
 		}
 
 
+
+		public List<HoverTarget> findHoverTargets(Point2D localLocation) {
+			ContiguousSet<Integer> visibleIndexes = ContiguousSet.create(ContentView.this.visibleLines.get(), DiscreteDomain.integers());
+			return visibleIndexes.stream()
+				.map(lineIndex->getVisibleNode(lineIndex))
+				.filter(x->x.isPresent())
+				.filter(x->x.get().getBoundsInParent().contains(localLocation))
+				.flatMap(x->x.get().findHoverTargets(x.get().parentToLocal(localLocation)).stream())
+				.collect(Collectors.toList());
+		}
+
+
 //		protected void permutate(int a, int b) {
 //			LineNode nodeA = existingNodes.get(a);
 //			LineNode nodeB = existingNodes.get(b);
@@ -179,6 +195,10 @@ public class ContentView  extends Pane {
 //
 //			System.err.println("  . permutate " + a + " -> " + b);
 //		}
+	}
+
+	public List<HoverTarget> findHoverTargets(Point2D localLocation) {
+		return this.lineLayer.findHoverTargets(localLocation);
 	}
 
 	private StackPane contentBody = new StackPane();

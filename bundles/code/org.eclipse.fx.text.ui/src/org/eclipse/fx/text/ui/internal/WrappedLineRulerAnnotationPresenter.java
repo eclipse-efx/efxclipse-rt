@@ -67,4 +67,9 @@ public class WrappedLineRulerAnnotationPresenter implements LineRulerAnnotationP
 		wrapped.updateNode(node, unwrap(annotation));
 	}
 
+	@Override
+	public String toString() {
+		return "WAP("+wrapped+")@" + hashCode(); //$NON-NLS-2$
+	}
+
 }

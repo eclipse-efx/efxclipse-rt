@@ -48,4 +48,9 @@ public class WrappedTextAnnotationPresenter implements TextAnnotationPresenter {
 		wrapped.updateNode(node, unwrap(annotation));
 	}
 
+	@Override
+	public String toString() {
+		return "WAP("+wrapped+")@" + hashCode();
+	}
+
 }

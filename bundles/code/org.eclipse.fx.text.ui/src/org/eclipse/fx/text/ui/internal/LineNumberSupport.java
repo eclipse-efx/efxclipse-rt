@@ -32,6 +32,12 @@ public class LineNumberSupport implements IFeature {
 		public int getNr() {
 			return nr;
 		}
+
+		@Override
+		public Object getModel() {
+			return nr;
+		}
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -107,7 +113,10 @@ public class LineNumberSupport implements IFeature {
 			});
 		}
 
-
+		@Override
+		public String toString() {
+			return "LineNrAP@" + hashCode(); //$NON-NLS-1$
+		}
 
 	}
 
@@ -151,5 +160,6 @@ public class LineNumberSupport implements IFeature {
 			}
 		};
 	}
+
 
 }

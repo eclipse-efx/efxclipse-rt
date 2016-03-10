@@ -53,6 +53,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.SkinBase;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -356,6 +357,14 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			this.contentArea.horizontal.setValue(colOffset - lastColDiff);
 		}
 
+	}
+
+	public <T> Optional<T> fastQuery(String label, String fieldText, Function<String, T> converter) {
+		TextInputDialog diag = new TextInputDialog();
+		diag.setTitle(label);
+		diag.setHeaderText(label);
+		diag.setContentText(fieldText);
+		return diag.showAndWait().map(converter);
 	}
 
 	private void scrollLineIntoView(int lineIndex) {

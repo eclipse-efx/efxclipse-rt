@@ -11,6 +11,8 @@
 package org.eclipse.fx.ui.controls.styledtext.internal;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,13 +22,17 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.eclipse.fx.ui.controls.styledtext.events.HoverTarget;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotation;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
+
+import com.google.common.collect.Range;
 
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -199,6 +205,40 @@ public class LineNode extends StackPane {
 				b.append(t.getText());
 			}
 			return b.toString();
+		}
+
+		private int getStartOffset(Segment segment) {
+			int result = 0;
+			for (Segment s : this.currentContent) {
+				if (s == segment) {
+					break;
+				}
+				result += s.text.length();
+			}
+			return result;
+		}
+
+		private int getLength(Segment segment) {
+			return segment.text.length();
+		}
+
+		public Collection<? extends HoverTarget> findHoverTargets(Point2D localLocation) {
+			for (TextNode t : this.currentTextNodes) {
+				Bounds segmentBounds = t.getBoundsInParent();
+				if (segmentBounds.contains(localLocation)) {
+					Segment segment = this.currentContent.get(currentTextNodes.indexOf(t));
+					Point2D anchor = new Point2D(segmentBounds.getMinX(), segmentBounds.getMaxY());
+
+					int segmentBegin = getStartOffset(segment);
+					int segmentEnd = segmentBegin + getLength(segment);
+					Range<Integer> range = Range.closed(segmentBegin, segmentEnd);
+
+					HoverTarget segmentTarget = new HoverTarget(segment, toGlobal(range), localToScreen(anchor), localToScreen(segmentBounds));
+					return Collections.singletonList(segmentTarget);
+				}
+			}
+
+			return Collections.emptyList();
 		}
 
 	}
@@ -460,6 +500,22 @@ public class LineNode extends StackPane {
 				}
 			}
 
+			public Collection<? extends HoverTarget> findHoverTargets(Point2D localLocation) {
+				return this.usedNodes.entrySet().stream()
+					.filter(e->e.getValue().getBoundsInParent().contains(localLocation))
+					.map(e->{
+						TextAnnotation annotation = e.getKey();
+
+						Bounds bounds = e.getValue().getBoundsInLocal();
+						Point2D anchor = new Point2D(bounds.getMinX(), bounds.getMaxY());
+
+						HoverTarget annotationTarget = new HoverTarget(annotation, toGlobal(annotation.getRange()), e.getValue().localToScreen(anchor), e.getValue().localToScreen(bounds));
+
+						return annotationTarget;
+					})
+					.collect(Collectors.toList());
+			}
+
 		}
 
 		Map<TextAnnotationPresenter, AnnotationOverlay> overlays = new HashMap<>();
@@ -510,6 +566,25 @@ public class LineNode extends StackPane {
 			super.layoutChildren();
 		}
 
+
+		public Collection<? extends HoverTarget> findHoverTargets(Point2D localLocation) {
+			List<HoverTarget> hoverTargets = new ArrayList<>();
+			for (AnnotationOverlay overlay : this.overlays.values()) {
+				hoverTargets.addAll(overlay.findHoverTargets(localLocation));
+			}
+			return hoverTargets;
+		}
+
+	}
+
+	protected Range<Integer> toGlobal(Range<Integer> range) {
+		int lineOffset = this.lineHelper.getOffset(index);
+		return Range.range(lineOffset + range.lowerEndpoint(), range.lowerBoundType(), lineOffset + range.upperEndpoint(), range.upperBoundType());
+	}
+
+	protected Range<Integer> toLocal(Range<Integer> range) {
+		int lineOffset = - this.lineHelper.getOffset(index);
+		return Range.range(lineOffset + range.lowerEndpoint(), range.lowerBoundType(), lineOffset + range.upperEndpoint(), range.upperBoundType());
 	}
 
 	TextLayer textLayer = new TextLayer();
@@ -654,6 +729,13 @@ public class LineNode extends StackPane {
 
 	public double getCharLocation(int charOffset) {
 		return this.textLayer.getCharLocation(charOffset);
+	}
+
+	public List<HoverTarget> findHoverTargets(Point2D localLocation) {
+		List<HoverTarget> results = new ArrayList<>();
+		results.addAll(this.textLayer.findHoverTargets(localLocation));
+		results.addAll(this.annotationLayer.findHoverTargets(localLocation));
+		return results;
 	}
 
 	/**
