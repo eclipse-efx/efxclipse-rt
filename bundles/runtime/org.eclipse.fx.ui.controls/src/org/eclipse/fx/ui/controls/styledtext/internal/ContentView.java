@@ -25,6 +25,7 @@ import java.util.stream.Stream;
 
 import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.events.HoverTarget;
@@ -832,13 +833,22 @@ public class ContentView  extends Pane {
 //	}
 
 
-	public Optional<Point2D> getLocationInScene(int globalOffset) {
+	public Optional<Point2D> getLocationInScene(int globalOffset, LineLocation locationHint) {
+		applyCss();
+		layout();
+
 		int lineIndex = getContent().getLineAtOffset(globalOffset);
 		Optional<LineNode> node = this.lineLayer.getVisibleNode(lineIndex);
 
 		return node.map(n->{
 			double x = n.getCharLocation(globalOffset - n.getStartOffset());
-			Point2D p = new Point2D(x, 0);
+			double y = 0;
+			switch (locationHint) {
+			case BELOW: y = 0; break;
+			case ABOVE: y = -getLineHeight(); break;
+			case CENTER: y = -getLineHeight() / 2.0; break;
+			}
+			Point2D p = new Point2D(x, y);
 			return n.localToScene(p);
 		});
 	}

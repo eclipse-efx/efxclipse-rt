@@ -27,6 +27,7 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
 import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
 import org.eclipse.fx.ui.controls.styledtext.internal.FXBindUtil;
@@ -397,12 +398,12 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	 *            the position
 	 * @return the point
 	 */
-	public Point2D getCaretLocation(int caretPosition) {
+	public Point2D getCaretLocation(int caretPosition, LineLocation locationHint) {
 		if (caretPosition < 0) {
 			return null;
 		}
 
-		Optional<Point2D> location = this.content.getLocationInScene(caretPosition);
+		Optional<Point2D> location = this.content.getLocationInScene(caretPosition, locationHint);
 
 		return location.map(l -> this.rootContainer.sceneToLocal(l)).map(l -> new Point2D(l.getX(), l.getY() + this.content.getLineHeight())).orElse(null);
 

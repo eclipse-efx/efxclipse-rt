@@ -15,12 +15,15 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import org.eclipse.fx.text.ui.ITextViewer;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.jface.text.IDocument;
 
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
+import javafx.util.Duration;
 
 public class ContentAssistant implements IContentAssistant {
 	private final Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer;
@@ -68,11 +71,11 @@ public class ContentAssistant implements IContentAssistant {
 
 			final int offset = this.fViewer.getTextWidget().getCaretOffset();
 
+			System.err.println("caret offset = " + offset);
+
 			List<ICompletionProposal> proposals = proposalComputer.apply(new ContentAssistContextData(offset, this.fViewer.getDocument()/*,""*/));
 
-			for (ICompletionProposal p : proposals) {
-				System.err.println(" * " + p.getLabel());
-			}
+
 
 			if( proposals.size() == 1) {
 				ICompletionProposal completionProposal = proposals.get(0);
@@ -86,25 +89,30 @@ public class ContentAssistant implements IContentAssistant {
 	//			System.err.println(this.viewer.getTextWidget().getCaretLocation());
 				System.err.println();
 
-				Point2D p = this.fViewer.getTextWidget().getLocationAtOffset(this.fViewer.getTextWidget().getCaretOffset());
+				Point2D p = this.fViewer.getTextWidget().getLocationAtOffset(this.fViewer.getTextWidget().getCaretOffset(), LineLocation.BELOW);
 				System.err.println(p);
 
-				Optional<ICompletionProposal> chosenProposal = this.fProposalPopup.displayProposals(proposals, this.fViewer.getTextWidget().getCaretOffset(), this.fViewer.getTextWidget().localToScreen(p));
+				Point2D coords = this.fViewer.getTextWidget().localToScreen(p);
+				System.err.println(coords);
+
+				Optional<ICompletionProposal> chosenProposal = this.fProposalPopup.displayProposals(proposals, this.fViewer.getTextWidget().getCaretOffset(), coords);
 				System.err.println("Chosen: " + chosenProposal.map(c->c.getLabel()));
 
 				chosenProposal.ifPresent(proposal->{
 					IDocument document = this.fViewer.getDocument();
 					// apply the proposal
 					proposal.apply(document);
+					this.setAutoTriggers(autoTriggers);
 					this.fViewer.getTextWidget().setSelection(proposal.getSelection(document));
 
 					if (proposal.getContextInformation() != null) {
-						showContextInformation(proposal.getContextInformation(), offset);
+						showContextInformation(proposal.getContextInformation(), fViewer.getTextWidget().getCaretOffset());
 					}
 
 				});
 			}
 
+			fViewer.getTextWidget().layout();
 		});
 
 	}
