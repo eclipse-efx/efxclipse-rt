@@ -9,46 +9,47 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Scanner JS Rule</b></em>'.
+ * An implementation of the model object '<em><b>Scanner Condition Composite Element</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_JSRuleImpl#getFileURI <em>File URI</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_JSRuleImpl#getCondition <em>Condition</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeElementImpl#getOp <em>Op</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeElementImpl#getCondition <em>Condition</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRule
+public class ScannerConditionCompositeElementImpl extends MinimalEObjectImpl.Container implements ScannerConditionCompositeElement
 {
   /**
-   * The default value of the '{@link #getFileURI() <em>File URI</em>}' attribute.
+   * The default value of the '{@link #getOp() <em>Op</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFileURI()
+   * @see #getOp()
    * @generated
    * @ordered
    */
-  protected static final String FILE_URI_EDEFAULT = null;
+  protected static final String OP_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getFileURI() <em>File URI</em>}' attribute.
+   * The cached value of the '{@link #getOp() <em>Op</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFileURI()
+   * @see #getOp()
    * @generated
    * @ordered
    */
-  protected String fileURI = FILE_URI_EDEFAULT;
+  protected String op = OP_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
@@ -65,7 +66,7 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
    * <!-- end-user-doc -->
    * @generated
    */
-  protected Scanner_JSRuleImpl()
+  protected ScannerConditionCompositeElementImpl()
   {
     super();
   }
@@ -78,7 +79,7 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
   @Override
   protected EClass eStaticClass()
   {
-    return LDefPackage.Literals.SCANNER_JS_RULE;
+    return LDefPackage.Literals.SCANNER_CONDITION_COMPOSITE_ELEMENT;
   }
 
   /**
@@ -86,9 +87,9 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getFileURI()
+  public String getOp()
   {
-    return fileURI;
+    return op;
   }
 
   /**
@@ -96,12 +97,12 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFileURI(String newFileURI)
+  public void setOp(String newOp)
   {
-    String oldFileURI = fileURI;
-    fileURI = newFileURI;
+    String oldOp = op;
+    op = newOp;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_JS_RULE__FILE_URI, oldFileURI, fileURI));
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__OP, oldOp, op));
   }
 
   /**
@@ -125,7 +126,7 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
     condition = newCondition;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_JS_RULE__CONDITION, oldCondition, newCondition);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION, oldCondition, newCondition);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -142,14 +143,14 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
     {
       NotificationChain msgs = null;
       if (condition != null)
-        msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LDefPackage.SCANNER_JS_RULE__CONDITION, null, msgs);
+        msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION, null, msgs);
       if (newCondition != null)
-        msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LDefPackage.SCANNER_JS_RULE__CONDITION, null, msgs);
+        msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION, null, msgs);
       msgs = basicSetCondition(newCondition, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_JS_RULE__CONDITION, newCondition, newCondition));
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION, newCondition, newCondition));
   }
 
   /**
@@ -162,7 +163,7 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_JS_RULE__CONDITION:
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION:
         return basicSetCondition(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -178,9 +179,9 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_JS_RULE__FILE_URI:
-        return getFileURI();
-      case LDefPackage.SCANNER_JS_RULE__CONDITION:
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__OP:
+        return getOp();
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION:
         return getCondition();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -196,10 +197,10 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_JS_RULE__FILE_URI:
-        setFileURI((String)newValue);
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__OP:
+        setOp((String)newValue);
         return;
-      case LDefPackage.SCANNER_JS_RULE__CONDITION:
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION:
         setCondition((ScannerCondition)newValue);
         return;
     }
@@ -216,10 +217,10 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_JS_RULE__FILE_URI:
-        setFileURI(FILE_URI_EDEFAULT);
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__OP:
+        setOp(OP_EDEFAULT);
         return;
-      case LDefPackage.SCANNER_JS_RULE__CONDITION:
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION:
         setCondition((ScannerCondition)null);
         return;
     }
@@ -236,9 +237,9 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_JS_RULE__FILE_URI:
-        return FILE_URI_EDEFAULT == null ? fileURI != null : !FILE_URI_EDEFAULT.equals(fileURI);
-      case LDefPackage.SCANNER_JS_RULE__CONDITION:
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__OP:
+        return OP_EDEFAULT == null ? op != null : !OP_EDEFAULT.equals(op);
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION:
         return condition != null;
     }
     return super.eIsSet(featureID);
@@ -255,10 +256,10 @@ public class Scanner_JSRuleImpl extends Scanner_RuleImpl implements Scanner_JSRu
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (fileURI: ");
-    result.append(fileURI);
+    result.append(" (op: ");
+    result.append(op);
     result.append(')');
     return result.toString();
   }
 
-} //Scanner_JSRuleImpl
+} //ScannerConditionCompositeElementImpl

@@ -98,6 +98,12 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
       case LDefPackage.SCANNER_PATTERN_RULE: return createScanner_PatternRule();
       case LDefPackage.SCANNER_CHARACTER_RULE: return createScanner_CharacterRule();
       case LDefPackage.SCANNER_JS_RULE: return createScanner_JSRule();
+      case LDefPackage.SCANNER_CONDITION: return createScannerCondition();
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE: return createScannerConditionComposite();
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT: return createScannerConditionCompositeElement();
+      case LDefPackage.SCANNER_CONDITION_EXITS: return createScannerConditionExits();
+      case LDefPackage.SCANNER_CONDITION_EQUALS: return createScannerConditionEquals();
+      case LDefPackage.SCANNER_CONDITION_JS: return createScannerConditionJs();
       case LDefPackage.CHECK: return createCheck();
       case LDefPackage.EQUALS: return createEquals();
       case LDefPackage.RANGE: return createRange();
@@ -479,6 +485,72 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
   {
     Scanner_JSRuleImpl scanner_JSRule = new Scanner_JSRuleImpl();
     return scanner_JSRule;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ScannerCondition createScannerCondition()
+  {
+    ScannerConditionImpl scannerCondition = new ScannerConditionImpl();
+    return scannerCondition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ScannerConditionComposite createScannerConditionComposite()
+  {
+    ScannerConditionCompositeImpl scannerConditionComposite = new ScannerConditionCompositeImpl();
+    return scannerConditionComposite;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ScannerConditionCompositeElement createScannerConditionCompositeElement()
+  {
+    ScannerConditionCompositeElementImpl scannerConditionCompositeElement = new ScannerConditionCompositeElementImpl();
+    return scannerConditionCompositeElement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ScannerConditionExits createScannerConditionExits()
+  {
+    ScannerConditionExitsImpl scannerConditionExits = new ScannerConditionExitsImpl();
+    return scannerConditionExits;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ScannerConditionEquals createScannerConditionEquals()
+  {
+    ScannerConditionEqualsImpl scannerConditionEquals = new ScannerConditionEqualsImpl();
+    return scannerConditionEquals;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ScannerConditionJs createScannerConditionJs()
+  {
+    ScannerConditionJsImpl scannerConditionJs = new ScannerConditionJsImpl();
+    return scannerConditionJs;
   }
 
   /**

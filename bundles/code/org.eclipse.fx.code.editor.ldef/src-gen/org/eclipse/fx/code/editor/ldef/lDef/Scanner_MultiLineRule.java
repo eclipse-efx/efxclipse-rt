@@ -15,6 +15,7 @@ package org.eclipse.fx.code.editor.ldef.lDef;
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartSeq <em>Start Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEndSeq <em>End Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEscapeSeq <em>Escape Seq</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEnabledIf <em>Enabled If</em>}</li>
  * </ul>
  *
  * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScanner_MultiLineRule()
@@ -100,5 +101,31 @@ public interface Scanner_MultiLineRule extends Scanner_Rule
    * @generated
    */
   void setEscapeSeq(String value);
+
+  /**
+   * Returns the value of the '<em><b>Enabled If</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Enabled If</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Enabled If</em>' containment reference.
+   * @see #setEnabledIf(ScannerCondition)
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScanner_MultiLineRule_EnabledIf()
+   * @model containment="true"
+   * @generated
+   */
+  ScannerCondition getEnabledIf();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEnabledIf <em>Enabled If</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Enabled If</em>' containment reference.
+   * @see #getEnabledIf()
+   * @generated
+   */
+  void setEnabledIf(ScannerCondition value);
 
 } // Scanner_MultiLineRule

@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule#getCharacters <em>Characters</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule#getEnabledIf <em>Enabled If</em>}</li>
  * </ul>
  *
  * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScanner_CharacterRule()
@@ -37,5 +38,31 @@ public interface Scanner_CharacterRule extends Scanner_Rule
    * @generated
    */
   EList<String> getCharacters();
+
+  /**
+   * Returns the value of the '<em><b>Enabled If</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Enabled If</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Enabled If</em>' containment reference.
+   * @see #setEnabledIf(ScannerCondition)
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScanner_CharacterRule_EnabledIf()
+   * @model containment="true"
+   * @generated
+   */
+  ScannerCondition getEnabledIf();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule#getEnabledIf <em>Enabled If</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Enabled If</em>' containment reference.
+   * @see #getEnabledIf()
+   * @generated
+   */
+  void setEnabledIf(ScannerCondition value);
 
 } // Scanner_CharacterRule

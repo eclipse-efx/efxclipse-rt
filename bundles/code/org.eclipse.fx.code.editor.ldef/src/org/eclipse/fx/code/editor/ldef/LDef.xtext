@@ -168,40 +168,48 @@ Scanner_Rule:
 ;
 
 Scanner_SingleLineRule:
-	'single_line' startSeq=STRING ( 'col' check=Check )? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+	'single_line' startSeq=STRING ( 'col' check=Check )? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)? ( 'enabledif' enabledIf=ScannerCondition)?
 ;
 
 Scanner_MultiLineRule:
-	'multi_line' startSeq=STRING ( 'col' check=Check )? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? //( 'enabledif' enabledIf=ScannerCondition)?
+	'multi_line' startSeq=STRING ( 'col' check=Check )? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?  ( 'enabledif' enabledIf=ScannerCondition)?
 ;
 
 Scanner_PatternRule:
-	'pattern' startPattern=STRING (length=INT)?  ( 'col' check=Check )? 'containing' contentPattern=STRING //( 'enabledif' enabledIf=ScannerCondition)?
+	'pattern' startPattern=STRING (length=INT)?  ( 'col' check=Check )? 'containing' contentPattern=STRING  ( 'enabledif' enabledIf=ScannerCondition)?
 ;
 
 Scanner_CharacterRule:
-	'character' '[' characters+=STRING (',' characters+=STRING)* ']'  ( 'col' check=Check )? //( 'enabledif' enabledIf=ScannerCondition)?
+	'character' '[' characters+=STRING (',' characters+=STRING)* ']'  ( 'col' check=Check )?  ( 'enabledif' enabledIf=ScannerCondition)?
 ;
 
 Scanner_JSRule:
-	'script' fileURI=STRING ( 'col' check=Check )? //( 'enabledif' condition=ScannerCondition)?
+	'script' fileURI=STRING ( 'col' check=Check )? ( 'enabledif' condition=ScannerCondition)?
 ;
 
-//ScannerCondition:
-//	ScannerConditionExits | ScannerConditionEquals | ScannerConditionJs
-//;
-//
-//ScannerConditionExits:
-//	key=STRING 'exists'
-//;
-//
-//ScannerConditionEquals:
-//	key=STRING 'eq' value=STRING
-//;
-//
-//ScannerConditionJs:
-//	'script' value=STRING
-//;
+ScannerCondition:
+	ScannerConditionExits | ScannerConditionEquals | ScannerConditionJs | ScannerConditionComposite
+;
+
+ScannerConditionComposite:
+	prim=ScannerConditionExits secondary+=ScannerConditionCompositeElement
+;
+
+ScannerConditionCompositeElement:
+	op=('||' | '&&') condition=ScannerCondition
+;
+
+ScannerConditionExits:
+	key=STRING 'exists'
+;
+
+ScannerConditionEquals:
+	key=STRING 'eq' value=STRING
+;
+
+ScannerConditionJs:
+	'script' value=STRING
+;
 
 Check:
 	Range | Equals

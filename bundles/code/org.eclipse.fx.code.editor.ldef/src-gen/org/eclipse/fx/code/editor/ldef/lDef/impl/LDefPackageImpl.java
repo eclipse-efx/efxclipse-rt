@@ -38,6 +38,12 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Range;
 import org.eclipse.fx.code.editor.ldef.lDef.Root;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
@@ -295,6 +301,48 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * @generated
    */
   private EClass scanner_JSRuleEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass scannerConditionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass scannerConditionCompositeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass scannerConditionCompositeElementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass scannerConditionExitsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass scannerConditionEqualsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass scannerConditionJsEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1152,6 +1200,16 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getScanner_SingleLineRule_EnabledIf()
+  {
+    return (EReference)scanner_SingleLineRuleEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getScanner_MultiLineRule()
   {
     return scanner_MultiLineRuleEClass;
@@ -1185,6 +1243,16 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
   public EAttribute getScanner_MultiLineRule_EscapeSeq()
   {
     return (EAttribute)scanner_MultiLineRuleEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getScanner_MultiLineRule_EnabledIf()
+  {
+    return (EReference)scanner_MultiLineRuleEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1232,6 +1300,16 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getScanner_PatternRule_EnabledIf()
+  {
+    return (EReference)scanner_PatternRuleEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getScanner_CharacterRule()
   {
     return scanner_CharacterRuleEClass;
@@ -1252,6 +1330,16 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getScanner_CharacterRule_EnabledIf()
+  {
+    return (EReference)scanner_CharacterRuleEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getScanner_JSRule()
   {
     return scanner_JSRuleEClass;
@@ -1265,6 +1353,156 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
   public EAttribute getScanner_JSRule_FileURI()
   {
     return (EAttribute)scanner_JSRuleEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getScanner_JSRule_Condition()
+  {
+    return (EReference)scanner_JSRuleEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getScannerCondition()
+  {
+    return scannerConditionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getScannerConditionComposite()
+  {
+    return scannerConditionCompositeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getScannerConditionComposite_Prim()
+  {
+    return (EReference)scannerConditionCompositeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getScannerConditionComposite_Secondary()
+  {
+    return (EReference)scannerConditionCompositeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getScannerConditionCompositeElement()
+  {
+    return scannerConditionCompositeElementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getScannerConditionCompositeElement_Op()
+  {
+    return (EAttribute)scannerConditionCompositeElementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getScannerConditionCompositeElement_Condition()
+  {
+    return (EReference)scannerConditionCompositeElementEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getScannerConditionExits()
+  {
+    return scannerConditionExitsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getScannerConditionExits_Key()
+  {
+    return (EAttribute)scannerConditionExitsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getScannerConditionEquals()
+  {
+    return scannerConditionEqualsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getScannerConditionEquals_Key()
+  {
+    return (EAttribute)scannerConditionEqualsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getScannerConditionEquals_Value()
+  {
+    return (EAttribute)scannerConditionEqualsEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getScannerConditionJs()
+  {
+    return scannerConditionJsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getScannerConditionJs_Value()
+  {
+    return (EAttribute)scannerConditionJsEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1522,22 +1760,47 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     createEAttribute(scanner_SingleLineRuleEClass, SCANNER_SINGLE_LINE_RULE__START_SEQ);
     createEAttribute(scanner_SingleLineRuleEClass, SCANNER_SINGLE_LINE_RULE__END_SEQ);
     createEAttribute(scanner_SingleLineRuleEClass, SCANNER_SINGLE_LINE_RULE__ESCAPE_SEQ);
+    createEReference(scanner_SingleLineRuleEClass, SCANNER_SINGLE_LINE_RULE__ENABLED_IF);
 
     scanner_MultiLineRuleEClass = createEClass(SCANNER_MULTI_LINE_RULE);
     createEAttribute(scanner_MultiLineRuleEClass, SCANNER_MULTI_LINE_RULE__START_SEQ);
     createEAttribute(scanner_MultiLineRuleEClass, SCANNER_MULTI_LINE_RULE__END_SEQ);
     createEAttribute(scanner_MultiLineRuleEClass, SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ);
+    createEReference(scanner_MultiLineRuleEClass, SCANNER_MULTI_LINE_RULE__ENABLED_IF);
 
     scanner_PatternRuleEClass = createEClass(SCANNER_PATTERN_RULE);
     createEAttribute(scanner_PatternRuleEClass, SCANNER_PATTERN_RULE__START_PATTERN);
     createEAttribute(scanner_PatternRuleEClass, SCANNER_PATTERN_RULE__LENGTH);
     createEAttribute(scanner_PatternRuleEClass, SCANNER_PATTERN_RULE__CONTENT_PATTERN);
+    createEReference(scanner_PatternRuleEClass, SCANNER_PATTERN_RULE__ENABLED_IF);
 
     scanner_CharacterRuleEClass = createEClass(SCANNER_CHARACTER_RULE);
     createEAttribute(scanner_CharacterRuleEClass, SCANNER_CHARACTER_RULE__CHARACTERS);
+    createEReference(scanner_CharacterRuleEClass, SCANNER_CHARACTER_RULE__ENABLED_IF);
 
     scanner_JSRuleEClass = createEClass(SCANNER_JS_RULE);
     createEAttribute(scanner_JSRuleEClass, SCANNER_JS_RULE__FILE_URI);
+    createEReference(scanner_JSRuleEClass, SCANNER_JS_RULE__CONDITION);
+
+    scannerConditionEClass = createEClass(SCANNER_CONDITION);
+
+    scannerConditionCompositeEClass = createEClass(SCANNER_CONDITION_COMPOSITE);
+    createEReference(scannerConditionCompositeEClass, SCANNER_CONDITION_COMPOSITE__PRIM);
+    createEReference(scannerConditionCompositeEClass, SCANNER_CONDITION_COMPOSITE__SECONDARY);
+
+    scannerConditionCompositeElementEClass = createEClass(SCANNER_CONDITION_COMPOSITE_ELEMENT);
+    createEAttribute(scannerConditionCompositeElementEClass, SCANNER_CONDITION_COMPOSITE_ELEMENT__OP);
+    createEReference(scannerConditionCompositeElementEClass, SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION);
+
+    scannerConditionExitsEClass = createEClass(SCANNER_CONDITION_EXITS);
+    createEAttribute(scannerConditionExitsEClass, SCANNER_CONDITION_EXITS__KEY);
+
+    scannerConditionEqualsEClass = createEClass(SCANNER_CONDITION_EQUALS);
+    createEAttribute(scannerConditionEqualsEClass, SCANNER_CONDITION_EQUALS__KEY);
+    createEAttribute(scannerConditionEqualsEClass, SCANNER_CONDITION_EQUALS__VALUE);
+
+    scannerConditionJsEClass = createEClass(SCANNER_CONDITION_JS);
+    createEAttribute(scannerConditionJsEClass, SCANNER_CONDITION_JS__VALUE);
 
     checkEClass = createEClass(CHECK);
 
@@ -1601,6 +1864,10 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     scanner_PatternRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scanner_CharacterRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scanner_JSRuleEClass.getESuperTypes().add(this.getScanner_Rule());
+    scannerConditionCompositeEClass.getESuperTypes().add(this.getScannerCondition());
+    scannerConditionExitsEClass.getESuperTypes().add(this.getScannerCondition());
+    scannerConditionEqualsEClass.getESuperTypes().add(this.getScannerCondition());
+    scannerConditionJsEClass.getESuperTypes().add(this.getScannerCondition());
     equalsEClass.getESuperTypes().add(this.getCheck());
     rangeEClass.getESuperTypes().add(this.getCheck());
 
@@ -1710,22 +1977,47 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     initEAttribute(getScanner_SingleLineRule_StartSeq(), ecorePackage.getEString(), "startSeq", null, 0, 1, Scanner_SingleLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScanner_SingleLineRule_EndSeq(), ecorePackage.getEString(), "endSeq", null, 0, 1, Scanner_SingleLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScanner_SingleLineRule_EscapeSeq(), ecorePackage.getEString(), "escapeSeq", null, 0, 1, Scanner_SingleLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScanner_SingleLineRule_EnabledIf(), this.getScannerCondition(), null, "enabledIf", null, 0, 1, Scanner_SingleLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scanner_MultiLineRuleEClass, Scanner_MultiLineRule.class, "Scanner_MultiLineRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScanner_MultiLineRule_StartSeq(), ecorePackage.getEString(), "startSeq", null, 0, 1, Scanner_MultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScanner_MultiLineRule_EndSeq(), ecorePackage.getEString(), "endSeq", null, 0, 1, Scanner_MultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScanner_MultiLineRule_EscapeSeq(), ecorePackage.getEString(), "escapeSeq", null, 0, 1, Scanner_MultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScanner_MultiLineRule_EnabledIf(), this.getScannerCondition(), null, "enabledIf", null, 0, 1, Scanner_MultiLineRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scanner_PatternRuleEClass, Scanner_PatternRule.class, "Scanner_PatternRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScanner_PatternRule_StartPattern(), ecorePackage.getEString(), "startPattern", null, 0, 1, Scanner_PatternRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScanner_PatternRule_Length(), ecorePackage.getEInt(), "length", null, 0, 1, Scanner_PatternRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScanner_PatternRule_ContentPattern(), ecorePackage.getEString(), "contentPattern", null, 0, 1, Scanner_PatternRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScanner_PatternRule_EnabledIf(), this.getScannerCondition(), null, "enabledIf", null, 0, 1, Scanner_PatternRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scanner_CharacterRuleEClass, Scanner_CharacterRule.class, "Scanner_CharacterRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScanner_CharacterRule_Characters(), ecorePackage.getEString(), "characters", null, 0, -1, Scanner_CharacterRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScanner_CharacterRule_EnabledIf(), this.getScannerCondition(), null, "enabledIf", null, 0, 1, Scanner_CharacterRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scanner_JSRuleEClass, Scanner_JSRule.class, "Scanner_JSRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScanner_JSRule_FileURI(), ecorePackage.getEString(), "fileURI", null, 0, 1, Scanner_JSRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScanner_JSRule_Condition(), this.getScannerCondition(), null, "condition", null, 0, 1, Scanner_JSRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(scannerConditionEClass, ScannerCondition.class, "ScannerCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(scannerConditionCompositeEClass, ScannerConditionComposite.class, "ScannerConditionComposite", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getScannerConditionComposite_Prim(), this.getScannerConditionExits(), null, "prim", null, 0, 1, ScannerConditionComposite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScannerConditionComposite_Secondary(), this.getScannerConditionCompositeElement(), null, "secondary", null, 0, -1, ScannerConditionComposite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(scannerConditionCompositeElementEClass, ScannerConditionCompositeElement.class, "ScannerConditionCompositeElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getScannerConditionCompositeElement_Op(), ecorePackage.getEString(), "op", null, 0, 1, ScannerConditionCompositeElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScannerConditionCompositeElement_Condition(), this.getScannerCondition(), null, "condition", null, 0, 1, ScannerConditionCompositeElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(scannerConditionExitsEClass, ScannerConditionExits.class, "ScannerConditionExits", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getScannerConditionExits_Key(), ecorePackage.getEString(), "key", null, 0, 1, ScannerConditionExits.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(scannerConditionEqualsEClass, ScannerConditionEquals.class, "ScannerConditionEquals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getScannerConditionEquals_Key(), ecorePackage.getEString(), "key", null, 0, 1, ScannerConditionEquals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getScannerConditionEquals_Value(), ecorePackage.getEString(), "value", null, 0, 1, ScannerConditionEquals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(scannerConditionJsEClass, ScannerConditionJs.class, "ScannerConditionJs", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getScannerConditionJs_Value(), ecorePackage.getEString(), "value", null, 0, 1, ScannerConditionJs.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(checkEClass, Check.class, "Check", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

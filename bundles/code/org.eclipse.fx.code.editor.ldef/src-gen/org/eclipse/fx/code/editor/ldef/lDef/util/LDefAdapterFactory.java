@@ -245,6 +245,36 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createScanner_JSRuleAdapter();
       }
       @Override
+      public Adapter caseScannerCondition(ScannerCondition object)
+      {
+        return createScannerConditionAdapter();
+      }
+      @Override
+      public Adapter caseScannerConditionComposite(ScannerConditionComposite object)
+      {
+        return createScannerConditionCompositeAdapter();
+      }
+      @Override
+      public Adapter caseScannerConditionCompositeElement(ScannerConditionCompositeElement object)
+      {
+        return createScannerConditionCompositeElementAdapter();
+      }
+      @Override
+      public Adapter caseScannerConditionExits(ScannerConditionExits object)
+      {
+        return createScannerConditionExitsAdapter();
+      }
+      @Override
+      public Adapter caseScannerConditionEquals(ScannerConditionEquals object)
+      {
+        return createScannerConditionEqualsAdapter();
+      }
+      @Override
+      public Adapter caseScannerConditionJs(ScannerConditionJs object)
+      {
+        return createScannerConditionJsAdapter();
+      }
+      @Override
       public Adapter caseCheck(Check object)
       {
         return createCheckAdapter();
@@ -792,6 +822,96 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScanner_JSRuleAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition <em>Scanner Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition
+   * @generated
+   */
+  public Adapter createScannerConditionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite <em>Scanner Condition Composite</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite
+   * @generated
+   */
+  public Adapter createScannerConditionCompositeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement <em>Scanner Condition Composite Element</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement
+   * @generated
+   */
+  public Adapter createScannerConditionCompositeElementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits <em>Scanner Condition Exits</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits
+   * @generated
+   */
+  public Adapter createScannerConditionExitsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals <em>Scanner Condition Equals</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals
+   * @generated
+   */
+  public Adapter createScannerConditionEqualsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs <em>Scanner Condition Js</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs
+   * @generated
+   */
+  public Adapter createScannerConditionJsAdapter()
   {
     return null;
   }

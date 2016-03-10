@@ -331,6 +331,52 @@ public class LDefSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case LDefPackage.SCANNER_CONDITION:
+      {
+        ScannerCondition scannerCondition = (ScannerCondition)theEObject;
+        T result = caseScannerCondition(scannerCondition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE:
+      {
+        ScannerConditionComposite scannerConditionComposite = (ScannerConditionComposite)theEObject;
+        T result = caseScannerConditionComposite(scannerConditionComposite);
+        if (result == null) result = caseScannerCondition(scannerConditionComposite);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT:
+      {
+        ScannerConditionCompositeElement scannerConditionCompositeElement = (ScannerConditionCompositeElement)theEObject;
+        T result = caseScannerConditionCompositeElement(scannerConditionCompositeElement);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.SCANNER_CONDITION_EXITS:
+      {
+        ScannerConditionExits scannerConditionExits = (ScannerConditionExits)theEObject;
+        T result = caseScannerConditionExits(scannerConditionExits);
+        if (result == null) result = caseScannerCondition(scannerConditionExits);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.SCANNER_CONDITION_EQUALS:
+      {
+        ScannerConditionEquals scannerConditionEquals = (ScannerConditionEquals)theEObject;
+        T result = caseScannerConditionEquals(scannerConditionEquals);
+        if (result == null) result = caseScannerCondition(scannerConditionEquals);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LDefPackage.SCANNER_CONDITION_JS:
+      {
+        ScannerConditionJs scannerConditionJs = (ScannerConditionJs)theEObject;
+        T result = caseScannerConditionJs(scannerConditionJs);
+        if (result == null) result = caseScannerCondition(scannerConditionJs);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case LDefPackage.CHECK:
       {
         Check check = (Check)theEObject;
@@ -905,6 +951,102 @@ public class LDefSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseScanner_JSRule(Scanner_JSRule object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Scanner Condition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Scanner Condition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScannerCondition(ScannerCondition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Scanner Condition Composite</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Scanner Condition Composite</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScannerConditionComposite(ScannerConditionComposite object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Scanner Condition Composite Element</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Scanner Condition Composite Element</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScannerConditionCompositeElement(ScannerConditionCompositeElement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Scanner Condition Exits</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Scanner Condition Exits</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScannerConditionExits(ScannerConditionExits object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Scanner Condition Equals</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Scanner Condition Equals</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScannerConditionEquals(ScannerConditionEquals object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Scanner Condition Js</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Scanner Condition Js</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseScannerConditionJs(ScannerConditionJs object)
   {
     return null;
   }

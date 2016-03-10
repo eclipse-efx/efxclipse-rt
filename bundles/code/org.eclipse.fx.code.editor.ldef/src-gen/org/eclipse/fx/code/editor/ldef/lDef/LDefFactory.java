@@ -329,6 +329,60 @@ public interface LDefFactory extends EFactory
   Scanner_JSRule createScanner_JSRule();
 
   /**
+   * Returns a new object of class '<em>Scanner Condition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scanner Condition</em>'.
+   * @generated
+   */
+  ScannerCondition createScannerCondition();
+
+  /**
+   * Returns a new object of class '<em>Scanner Condition Composite</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scanner Condition Composite</em>'.
+   * @generated
+   */
+  ScannerConditionComposite createScannerConditionComposite();
+
+  /**
+   * Returns a new object of class '<em>Scanner Condition Composite Element</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scanner Condition Composite Element</em>'.
+   * @generated
+   */
+  ScannerConditionCompositeElement createScannerConditionCompositeElement();
+
+  /**
+   * Returns a new object of class '<em>Scanner Condition Exits</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scanner Condition Exits</em>'.
+   * @generated
+   */
+  ScannerConditionExits createScannerConditionExits();
+
+  /**
+   * Returns a new object of class '<em>Scanner Condition Equals</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scanner Condition Equals</em>'.
+   * @generated
+   */
+  ScannerConditionEquals createScannerConditionEquals();
+
+  /**
+   * Returns a new object of class '<em>Scanner Condition Js</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Scanner Condition Js</em>'.
+   * @generated
+   */
+  ScannerConditionJs createScannerConditionJs();
+
+  /**
    * Returns a new object of class '<em>Check</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

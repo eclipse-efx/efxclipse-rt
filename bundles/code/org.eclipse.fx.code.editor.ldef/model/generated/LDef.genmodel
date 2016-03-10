@@ -105,22 +105,46 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/startSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/escapeSeq"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_SingleLineRule/enabledIf"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Scanner_MultiLineRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/startSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/escapeSeq"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_MultiLineRule/enabledIf"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Scanner_PatternRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_PatternRule/startPattern"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_PatternRule/length"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_PatternRule/contentPattern"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_PatternRule/enabledIf"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Scanner_CharacterRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_CharacterRule/characters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_CharacterRule/enabledIf"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Scanner_JSRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_JSRule/fileURI"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_JSRule/condition"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//ScannerCondition"/>
+    <genClasses ecoreClass="LDef.ecore#//ScannerConditionComposite">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//ScannerConditionComposite/prim"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//ScannerConditionComposite/secondary"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//ScannerConditionCompositeElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ScannerConditionCompositeElement/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//ScannerConditionCompositeElement/condition"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//ScannerConditionExits">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ScannerConditionExits/key"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//ScannerConditionEquals">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ScannerConditionEquals/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ScannerConditionEquals/value"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//ScannerConditionJs">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ScannerConditionJs/value"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Check"/>
     <genClasses ecoreClass="LDef.ecore#//Equals">

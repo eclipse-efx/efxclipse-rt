@@ -28,6 +28,11 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Range;
 import org.eclipse.fx.code.editor.ldef.lDef.Root;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
@@ -120,6 +125,21 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case LDefPackage.ROOT:
 				sequence_Root(context, (Root) semanticObject); 
+				return; 
+			case LDefPackage.SCANNER_CONDITION_COMPOSITE:
+				sequence_ScannerConditionComposite(context, (ScannerConditionComposite) semanticObject); 
+				return; 
+			case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT:
+				sequence_ScannerConditionCompositeElement(context, (ScannerConditionCompositeElement) semanticObject); 
+				return; 
+			case LDefPackage.SCANNER_CONDITION_EQUALS:
+				sequence_ScannerConditionEquals(context, (ScannerConditionEquals) semanticObject); 
+				return; 
+			case LDefPackage.SCANNER_CONDITION_EXITS:
+				sequence_ScannerConditionExits(context, (ScannerConditionExits) semanticObject); 
+				return; 
+			case LDefPackage.SCANNER_CONDITION_JS:
+				sequence_ScannerConditionJs(context, (ScannerConditionJs) semanticObject); 
 				return; 
 			case LDefPackage.SCANNER_CHARACTER_RULE:
 				sequence_Scanner_CharacterRule(context, (Scanner_CharacterRule) semanticObject); 
@@ -442,12 +462,97 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     ScannerConditionCompositeElement returns ScannerConditionCompositeElement
+	 *
+	 * Constraint:
+	 *     ((op='||' | op='&&') condition=ScannerCondition)
+	 */
+	protected void sequence_ScannerConditionCompositeElement(ISerializationContext context, ScannerConditionCompositeElement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ScannerCondition returns ScannerConditionComposite
+	 *     ScannerConditionComposite returns ScannerConditionComposite
+	 *
+	 * Constraint:
+	 *     (prim=ScannerConditionExits secondary+=ScannerConditionCompositeElement)
+	 */
+	protected void sequence_ScannerConditionComposite(ISerializationContext context, ScannerConditionComposite semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ScannerCondition returns ScannerConditionEquals
+	 *     ScannerConditionEquals returns ScannerConditionEquals
+	 *
+	 * Constraint:
+	 *     (key=STRING value=STRING)
+	 */
+	protected void sequence_ScannerConditionEquals(ISerializationContext context, ScannerConditionEquals semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_EQUALS__KEY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_EQUALS__KEY));
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_EQUALS__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_EQUALS__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getScannerConditionEqualsAccess().getKeySTRINGTerminalRuleCall_0_0(), semanticObject.getKey());
+		feeder.accept(grammarAccess.getScannerConditionEqualsAccess().getValueSTRINGTerminalRuleCall_2_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ScannerCondition returns ScannerConditionExits
+	 *     ScannerConditionExits returns ScannerConditionExits
+	 *
+	 * Constraint:
+	 *     key=STRING
+	 */
+	protected void sequence_ScannerConditionExits(ISerializationContext context, ScannerConditionExits semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_EXITS__KEY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_EXITS__KEY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getScannerConditionExitsAccess().getKeySTRINGTerminalRuleCall_0_0(), semanticObject.getKey());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ScannerCondition returns ScannerConditionJs
+	 *     ScannerConditionJs returns ScannerConditionJs
+	 *
+	 * Constraint:
+	 *     value=STRING
+	 */
+	protected void sequence_ScannerConditionJs(ISerializationContext context, ScannerConditionJs semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_JS__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_JS__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getScannerConditionJsAccess().getValueSTRINGTerminalRuleCall_1_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Scanner returns Scanner_CharacterRule
 	 *     Scanner_Rule returns Scanner_CharacterRule
 	 *     Scanner_CharacterRule returns Scanner_CharacterRule
 	 *
 	 * Constraint:
-	 *     (characters+=STRING characters+=STRING* check=Check?)
+	 *     (characters+=STRING characters+=STRING* check=Check? enabledIf=ScannerCondition?)
 	 */
 	protected void sequence_Scanner_CharacterRule(ISerializationContext context, Scanner_CharacterRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -461,7 +566,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Scanner_JSRule returns Scanner_JSRule
 	 *
 	 * Constraint:
-	 *     (fileURI=STRING check=Check?)
+	 *     (fileURI=STRING check=Check? condition=ScannerCondition?)
 	 */
 	protected void sequence_Scanner_JSRule(ISerializationContext context, Scanner_JSRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -488,7 +593,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Scanner_MultiLineRule returns Scanner_MultiLineRule
 	 *
 	 * Constraint:
-	 *     (startSeq=STRING check=Check? endSeq=STRING escapeSeq=STRING?)
+	 *     (startSeq=STRING check=Check? endSeq=STRING escapeSeq=STRING? enabledIf=ScannerCondition?)
 	 */
 	protected void sequence_Scanner_MultiLineRule(ISerializationContext context, Scanner_MultiLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -502,7 +607,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Scanner_PatternRule returns Scanner_PatternRule
 	 *
 	 * Constraint:
-	 *     (startPattern=STRING length=INT? check=Check? contentPattern=STRING)
+	 *     (startPattern=STRING length=INT? check=Check? contentPattern=STRING enabledIf=ScannerCondition?)
 	 */
 	protected void sequence_Scanner_PatternRule(ISerializationContext context, Scanner_PatternRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -516,7 +621,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Scanner_SingleLineRule returns Scanner_SingleLineRule
 	 *
 	 * Constraint:
-	 *     (startSeq=STRING check=Check? endSeq=STRING? escapeSeq=STRING?)
+	 *     (startSeq=STRING check=Check? endSeq=STRING? escapeSeq=STRING? enabledIf=ScannerCondition?)
 	 */
 	protected void sequence_Scanner_SingleLineRule(ISerializationContext context, Scanner_SingleLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

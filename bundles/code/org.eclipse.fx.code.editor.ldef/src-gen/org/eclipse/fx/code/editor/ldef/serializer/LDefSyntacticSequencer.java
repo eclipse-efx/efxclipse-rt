@@ -69,8 +69,10 @@ public class LDefSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     '=>'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     check=Check (ambiguity) 'enabledif' enabledIf=ScannerCondition
 	 *     check=Check (ambiguity) 'escaped' 'by' escapeSeq=STRING
 	 *     check=Check (ambiguity) (rule end)
+	 *     startSeq=STRING (ambiguity) 'enabledif' enabledIf=ScannerCondition
 	 *     startSeq=STRING (ambiguity) 'escaped' 'by' escapeSeq=STRING
 	 *     startSeq=STRING (ambiguity) (rule end)
 	 */

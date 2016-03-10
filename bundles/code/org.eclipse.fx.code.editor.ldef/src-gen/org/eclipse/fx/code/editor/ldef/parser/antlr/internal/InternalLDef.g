@@ -2159,6 +2159,28 @@ ruleScanner_SingleLineRule returns [EObject current=null]
 	    }
 
 )
+))?(	otherlv_9='enabledif' 
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getScanner_SingleLineRuleAccess().getEnabledifKeyword_5_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getScanner_SingleLineRuleAccess().getEnabledIfScannerConditionParserRuleCall_5_1_0()); 
+	    }
+		lv_enabledIf_10_0=ruleScannerCondition		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getScanner_SingleLineRuleRule());
+	        }
+       		set(
+       			$current, 
+       			"enabledIf",
+        		lv_enabledIf_10_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 ))?)
 ;
 
@@ -2272,6 +2294,28 @@ ruleScanner_MultiLineRule returns [EObject current=null]
 	    }
 
 )
+))?(	otherlv_9='enabledif' 
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getScanner_MultiLineRuleAccess().getEnabledifKeyword_6_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getScanner_MultiLineRuleAccess().getEnabledIfScannerConditionParserRuleCall_6_1_0()); 
+	    }
+		lv_enabledIf_10_0=ruleScannerCondition		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getScanner_MultiLineRuleRule());
+	        }
+       		set(
+       			$current, 
+       			"enabledIf",
+        		lv_enabledIf_10_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 ))?)
 ;
 
@@ -2377,7 +2421,29 @@ ruleScanner_PatternRule returns [EObject current=null]
 	    }
 
 )
-))
+)(	otherlv_7='enabledif' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getScanner_PatternRuleAccess().getEnabledifKeyword_6_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getScanner_PatternRuleAccess().getEnabledIfScannerConditionParserRuleCall_6_1_0()); 
+	    }
+		lv_enabledIf_8_0=ruleScannerCondition		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getScanner_PatternRuleRule());
+	        }
+       		set(
+       			$current, 
+       			"enabledIf",
+        		lv_enabledIf_8_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
 ;
 
 
@@ -2472,6 +2538,28 @@ ruleScanner_CharacterRule returns [EObject current=null]
 	    }
 
 )
+))?(	otherlv_8='enabledif' 
+    {
+    	newLeafNode(otherlv_8, grammarAccess.getScanner_CharacterRuleAccess().getEnabledifKeyword_6_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getScanner_CharacterRuleAccess().getEnabledIfScannerConditionParserRuleCall_6_1_0()); 
+	    }
+		lv_enabledIf_9_0=ruleScannerCondition		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getScanner_CharacterRuleRule());
+	        }
+       		set(
+       			$current, 
+       			"enabledIf",
+        		lv_enabledIf_9_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 ))?)
 ;
 
@@ -2537,7 +2625,362 @@ ruleScanner_JSRule returns [EObject current=null]
 	    }
 
 )
+))?(	otherlv_4='enabledif' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getScanner_JSRuleAccess().getEnabledifKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getScanner_JSRuleAccess().getConditionScannerConditionParserRuleCall_3_1_0()); 
+	    }
+		lv_condition_5_0=ruleScannerCondition		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getScanner_JSRuleRule());
+	        }
+       		set(
+       			$current, 
+       			"condition",
+        		lv_condition_5_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 ))?)
+;
+
+
+
+
+
+// Entry rule entryRuleScannerCondition
+entryRuleScannerCondition returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getScannerConditionRule()); }
+	 iv_ruleScannerCondition=ruleScannerCondition 
+	 { $current=$iv_ruleScannerCondition.current; } 
+	 EOF 
+;
+
+// Rule ScannerCondition
+ruleScannerCondition returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+    { 
+        newCompositeNode(grammarAccess.getScannerConditionAccess().getScannerConditionExitsParserRuleCall_0()); 
+    }
+    this_ScannerConditionExits_0=ruleScannerConditionExits
+    { 
+        $current = $this_ScannerConditionExits_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getScannerConditionAccess().getScannerConditionEqualsParserRuleCall_1()); 
+    }
+    this_ScannerConditionEquals_1=ruleScannerConditionEquals
+    { 
+        $current = $this_ScannerConditionEquals_1.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getScannerConditionAccess().getScannerConditionJsParserRuleCall_2()); 
+    }
+    this_ScannerConditionJs_2=ruleScannerConditionJs
+    { 
+        $current = $this_ScannerConditionJs_2.current; 
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getScannerConditionAccess().getScannerConditionCompositeParserRuleCall_3()); 
+    }
+    this_ScannerConditionComposite_3=ruleScannerConditionComposite
+    { 
+        $current = $this_ScannerConditionComposite_3.current; 
+        afterParserOrEnumRuleCall();
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleScannerConditionComposite
+entryRuleScannerConditionComposite returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getScannerConditionCompositeRule()); }
+	 iv_ruleScannerConditionComposite=ruleScannerConditionComposite 
+	 { $current=$iv_ruleScannerConditionComposite.current; } 
+	 EOF 
+;
+
+// Rule ScannerConditionComposite
+ruleScannerConditionComposite returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+	        newCompositeNode(grammarAccess.getScannerConditionCompositeAccess().getPrimScannerConditionExitsParserRuleCall_0_0()); 
+	    }
+		lv_prim_0_0=ruleScannerConditionExits		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getScannerConditionCompositeRule());
+	        }
+       		set(
+       			$current, 
+       			"prim",
+        		lv_prim_0_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerConditionExits");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getScannerConditionCompositeAccess().getSecondaryScannerConditionCompositeElementParserRuleCall_1_0()); 
+	    }
+		lv_secondary_1_0=ruleScannerConditionCompositeElement		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getScannerConditionCompositeRule());
+	        }
+       		add(
+       			$current, 
+       			"secondary",
+        		lv_secondary_1_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerConditionCompositeElement");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+;
+
+
+
+
+
+// Entry rule entryRuleScannerConditionCompositeElement
+entryRuleScannerConditionCompositeElement returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getScannerConditionCompositeElementRule()); }
+	 iv_ruleScannerConditionCompositeElement=ruleScannerConditionCompositeElement 
+	 { $current=$iv_ruleScannerConditionCompositeElement.current; } 
+	 EOF 
+;
+
+// Rule ScannerConditionCompositeElement
+ruleScannerConditionCompositeElement returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+(
+		lv_op_0_1=	'||' 
+    {
+        newLeafNode(lv_op_0_1, grammarAccess.getScannerConditionCompositeElementAccess().getOpVerticalLineVerticalLineKeyword_0_0_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScannerConditionCompositeElementRule());
+	        }
+       		setWithLastConsumed($current, "op", lv_op_0_1, null);
+	    }
+
+    |		lv_op_0_2=	'&&' 
+    {
+        newLeafNode(lv_op_0_2, grammarAccess.getScannerConditionCompositeElementAccess().getOpAmpersandAmpersandKeyword_0_0_1());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScannerConditionCompositeElementRule());
+	        }
+       		setWithLastConsumed($current, "op", lv_op_0_2, null);
+	    }
+
+)
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getScannerConditionCompositeElementAccess().getConditionScannerConditionParserRuleCall_1_0()); 
+	    }
+		lv_condition_1_0=ruleScannerCondition		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getScannerConditionCompositeElementRule());
+	        }
+       		set(
+       			$current, 
+       			"condition",
+        		lv_condition_1_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+;
+
+
+
+
+
+// Entry rule entryRuleScannerConditionExits
+entryRuleScannerConditionExits returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getScannerConditionExitsRule()); }
+	 iv_ruleScannerConditionExits=ruleScannerConditionExits 
+	 { $current=$iv_ruleScannerConditionExits.current; } 
+	 EOF 
+;
+
+// Rule ScannerConditionExits
+ruleScannerConditionExits returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		lv_key_0_0=RULE_STRING
+		{
+			newLeafNode(lv_key_0_0, grammarAccess.getScannerConditionExitsAccess().getKeySTRINGTerminalRuleCall_0_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScannerConditionExitsRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"key",
+        		lv_key_0_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+)	otherlv_1='exists' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getScannerConditionExitsAccess().getExistsKeyword_1());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleScannerConditionEquals
+entryRuleScannerConditionEquals returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getScannerConditionEqualsRule()); }
+	 iv_ruleScannerConditionEquals=ruleScannerConditionEquals 
+	 { $current=$iv_ruleScannerConditionEquals.current; } 
+	 EOF 
+;
+
+// Rule ScannerConditionEquals
+ruleScannerConditionEquals returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		lv_key_0_0=RULE_STRING
+		{
+			newLeafNode(lv_key_0_0, grammarAccess.getScannerConditionEqualsAccess().getKeySTRINGTerminalRuleCall_0_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScannerConditionEqualsRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"key",
+        		lv_key_0_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+)	otherlv_1='eq' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getScannerConditionEqualsAccess().getEqKeyword_1());
+    }
+(
+(
+		lv_value_2_0=RULE_STRING
+		{
+			newLeafNode(lv_value_2_0, grammarAccess.getScannerConditionEqualsAccess().getValueSTRINGTerminalRuleCall_2_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScannerConditionEqualsRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"value",
+        		lv_value_2_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+))
+;
+
+
+
+
+
+// Entry rule entryRuleScannerConditionJs
+entryRuleScannerConditionJs returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getScannerConditionJsRule()); }
+	 iv_ruleScannerConditionJs=ruleScannerConditionJs 
+	 { $current=$iv_ruleScannerConditionJs.current; } 
+	 EOF 
+;
+
+// Rule ScannerConditionJs
+ruleScannerConditionJs returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='script' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getScannerConditionJsAccess().getScriptKeyword_0());
+    }
+(
+(
+		lv_value_1_0=RULE_STRING
+		{
+			newLeafNode(lv_value_1_0, grammarAccess.getScannerConditionJsAccess().getValueSTRINGTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScannerConditionJsRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"value",
+        		lv_value_1_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+))
 ;
 
 

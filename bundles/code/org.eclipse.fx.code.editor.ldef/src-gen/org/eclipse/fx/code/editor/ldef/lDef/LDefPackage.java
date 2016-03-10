@@ -1185,13 +1185,22 @@ public interface LDefPackage extends EPackage
   int SCANNER_SINGLE_LINE_RULE__ESCAPE_SEQ = SCANNER_RULE_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Enabled If</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_SINGLE_LINE_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>Scanner Single Line Rule</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_SINGLE_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 3;
+  int SCANNER_SINGLE_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_MultiLineRuleImpl <em>Scanner Multi Line Rule</em>}' class.
@@ -1240,13 +1249,22 @@ public interface LDefPackage extends EPackage
   int SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ = SCANNER_RULE_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Enabled If</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_MULTI_LINE_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>Scanner Multi Line Rule</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_MULTI_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 3;
+  int SCANNER_MULTI_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl <em>Scanner Pattern Rule</em>}' class.
@@ -1295,13 +1313,22 @@ public interface LDefPackage extends EPackage
   int SCANNER_PATTERN_RULE__CONTENT_PATTERN = SCANNER_RULE_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Enabled If</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_PATTERN_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>Scanner Pattern Rule</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_PATTERN_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 3;
+  int SCANNER_PATTERN_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_CharacterRuleImpl <em>Scanner Character Rule</em>}' class.
@@ -1332,13 +1359,22 @@ public interface LDefPackage extends EPackage
   int SCANNER_CHARACTER_RULE__CHARACTERS = SCANNER_RULE_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Enabled If</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CHARACTER_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Scanner Character Rule</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_CHARACTER_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 1;
+  int SCANNER_CHARACTER_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_JSRuleImpl <em>Scanner JS Rule</em>}' class.
@@ -1369,13 +1405,208 @@ public interface LDefPackage extends EPackage
   int SCANNER_JS_RULE__FILE_URI = SCANNER_RULE_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_JS_RULE__CONDITION = SCANNER_RULE_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Scanner JS Rule</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_JS_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 1;
+  int SCANNER_JS_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionImpl <em>Scanner Condition</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerCondition()
+   * @generated
+   */
+  int SCANNER_CONDITION = 34;
+
+  /**
+   * The number of structural features of the '<em>Scanner Condition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeImpl <em>Scanner Condition Composite</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionComposite()
+   * @generated
+   */
+  int SCANNER_CONDITION_COMPOSITE = 35;
+
+  /**
+   * The feature id for the '<em><b>Prim</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_COMPOSITE__PRIM = SCANNER_CONDITION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Secondary</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_COMPOSITE__SECONDARY = SCANNER_CONDITION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Scanner Condition Composite</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_COMPOSITE_FEATURE_COUNT = SCANNER_CONDITION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeElementImpl <em>Scanner Condition Composite Element</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeElementImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionCompositeElement()
+   * @generated
+   */
+  int SCANNER_CONDITION_COMPOSITE_ELEMENT = 36;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_COMPOSITE_ELEMENT__OP = 0;
+
+  /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION = 1;
+
+  /**
+   * The number of structural features of the '<em>Scanner Condition Composite Element</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_COMPOSITE_ELEMENT_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionExitsImpl <em>Scanner Condition Exits</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionExitsImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionExits()
+   * @generated
+   */
+  int SCANNER_CONDITION_EXITS = 37;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_EXITS__KEY = SCANNER_CONDITION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Scanner Condition Exits</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_EXITS_FEATURE_COUNT = SCANNER_CONDITION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionEqualsImpl <em>Scanner Condition Equals</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionEqualsImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionEquals()
+   * @generated
+   */
+  int SCANNER_CONDITION_EQUALS = 38;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_EQUALS__KEY = SCANNER_CONDITION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_EQUALS__VALUE = SCANNER_CONDITION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Scanner Condition Equals</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_EQUALS_FEATURE_COUNT = SCANNER_CONDITION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionJsImpl <em>Scanner Condition Js</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionJsImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionJs()
+   * @generated
+   */
+  int SCANNER_CONDITION_JS = 39;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_JS__VALUE = SCANNER_CONDITION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Scanner Condition Js</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_CONDITION_JS_FEATURE_COUNT = SCANNER_CONDITION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.CheckImpl <em>Check</em>}' class.
@@ -1385,7 +1616,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getCheck()
    * @generated
    */
-  int CHECK = 34;
+  int CHECK = 40;
 
   /**
    * The number of structural features of the '<em>Check</em>' class.
@@ -1404,7 +1635,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getEquals()
    * @generated
    */
-  int EQUALS = 35;
+  int EQUALS = 41;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1432,7 +1663,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getRange()
    * @generated
    */
-  int RANGE = 36;
+  int RANGE = 42;
 
   /**
    * The feature id for the '<em><b>Lt Incl</b></em>' attribute.
@@ -1487,7 +1718,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getWhitespaceRule()
    * @generated
    */
-  int WHITESPACE_RULE = 37;
+  int WHITESPACE_RULE = 43;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -2333,6 +2564,17 @@ public interface LDefPackage extends EPackage
   EAttribute getScanner_SingleLineRule_EscapeSeq();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule#getEnabledIf <em>Enabled If</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Enabled If</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule#getEnabledIf()
+   * @see #getScanner_SingleLineRule()
+   * @generated
+   */
+  EReference getScanner_SingleLineRule_EnabledIf();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule <em>Scanner Multi Line Rule</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2374,6 +2616,17 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EAttribute getScanner_MultiLineRule_EscapeSeq();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEnabledIf <em>Enabled If</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Enabled If</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEnabledIf()
+   * @see #getScanner_MultiLineRule()
+   * @generated
+   */
+  EReference getScanner_MultiLineRule_EnabledIf();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule <em>Scanner Pattern Rule</em>}'.
@@ -2419,6 +2672,17 @@ public interface LDefPackage extends EPackage
   EAttribute getScanner_PatternRule_ContentPattern();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getEnabledIf <em>Enabled If</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Enabled If</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule#getEnabledIf()
+   * @see #getScanner_PatternRule()
+   * @generated
+   */
+  EReference getScanner_PatternRule_EnabledIf();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule <em>Scanner Character Rule</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2440,6 +2704,17 @@ public interface LDefPackage extends EPackage
   EAttribute getScanner_CharacterRule_Characters();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule#getEnabledIf <em>Enabled If</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Enabled If</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule#getEnabledIf()
+   * @see #getScanner_CharacterRule()
+   * @generated
+   */
+  EReference getScanner_CharacterRule_EnabledIf();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule <em>Scanner JS Rule</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2459,6 +2734,165 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EAttribute getScanner_JSRule_FileURI();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule#getCondition <em>Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Condition</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule#getCondition()
+   * @see #getScanner_JSRule()
+   * @generated
+   */
+  EReference getScanner_JSRule_Condition();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition <em>Scanner Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scanner Condition</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition
+   * @generated
+   */
+  EClass getScannerCondition();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite <em>Scanner Condition Composite</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scanner Condition Composite</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite
+   * @generated
+   */
+  EClass getScannerConditionComposite();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite#getPrim <em>Prim</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Prim</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite#getPrim()
+   * @see #getScannerConditionComposite()
+   * @generated
+   */
+  EReference getScannerConditionComposite_Prim();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite#getSecondary <em>Secondary</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Secondary</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite#getSecondary()
+   * @see #getScannerConditionComposite()
+   * @generated
+   */
+  EReference getScannerConditionComposite_Secondary();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement <em>Scanner Condition Composite Element</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scanner Condition Composite Element</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement
+   * @generated
+   */
+  EClass getScannerConditionCompositeElement();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement#getOp()
+   * @see #getScannerConditionCompositeElement()
+   * @generated
+   */
+  EAttribute getScannerConditionCompositeElement_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement#getCondition <em>Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Condition</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement#getCondition()
+   * @see #getScannerConditionCompositeElement()
+   * @generated
+   */
+  EReference getScannerConditionCompositeElement_Condition();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits <em>Scanner Condition Exits</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scanner Condition Exits</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits
+   * @generated
+   */
+  EClass getScannerConditionExits();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits#getKey <em>Key</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits#getKey()
+   * @see #getScannerConditionExits()
+   * @generated
+   */
+  EAttribute getScannerConditionExits_Key();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals <em>Scanner Condition Equals</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scanner Condition Equals</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals
+   * @generated
+   */
+  EClass getScannerConditionEquals();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals#getKey <em>Key</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals#getKey()
+   * @see #getScannerConditionEquals()
+   * @generated
+   */
+  EAttribute getScannerConditionEquals_Key();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals#getValue()
+   * @see #getScannerConditionEquals()
+   * @generated
+   */
+  EAttribute getScannerConditionEquals_Value();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs <em>Scanner Condition Js</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Scanner Condition Js</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs
+   * @generated
+   */
+  EClass getScannerConditionJs();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs#getValue()
+   * @see #getScannerConditionJs()
+   * @generated
+   */
+  EAttribute getScannerConditionJs_Value();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Check <em>Check</em>}'.
@@ -3280,6 +3714,14 @@ public interface LDefPackage extends EPackage
     EAttribute SCANNER_SINGLE_LINE_RULE__ESCAPE_SEQ = eINSTANCE.getScanner_SingleLineRule_EscapeSeq();
 
     /**
+     * The meta object literal for the '<em><b>Enabled If</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCANNER_SINGLE_LINE_RULE__ENABLED_IF = eINSTANCE.getScanner_SingleLineRule_EnabledIf();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_MultiLineRuleImpl <em>Scanner Multi Line Rule</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3312,6 +3754,14 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EAttribute SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ = eINSTANCE.getScanner_MultiLineRule_EscapeSeq();
+
+    /**
+     * The meta object literal for the '<em><b>Enabled If</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCANNER_MULTI_LINE_RULE__ENABLED_IF = eINSTANCE.getScanner_MultiLineRule_EnabledIf();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl <em>Scanner Pattern Rule</em>}' class.
@@ -3348,6 +3798,14 @@ public interface LDefPackage extends EPackage
     EAttribute SCANNER_PATTERN_RULE__CONTENT_PATTERN = eINSTANCE.getScanner_PatternRule_ContentPattern();
 
     /**
+     * The meta object literal for the '<em><b>Enabled If</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCANNER_PATTERN_RULE__ENABLED_IF = eINSTANCE.getScanner_PatternRule_EnabledIf();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_CharacterRuleImpl <em>Scanner Character Rule</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3366,6 +3824,14 @@ public interface LDefPackage extends EPackage
     EAttribute SCANNER_CHARACTER_RULE__CHARACTERS = eINSTANCE.getScanner_CharacterRule_Characters();
 
     /**
+     * The meta object literal for the '<em><b>Enabled If</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCANNER_CHARACTER_RULE__ENABLED_IF = eINSTANCE.getScanner_CharacterRule_EnabledIf();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_JSRuleImpl <em>Scanner JS Rule</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3382,6 +3848,138 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EAttribute SCANNER_JS_RULE__FILE_URI = eINSTANCE.getScanner_JSRule_FileURI();
+
+    /**
+     * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCANNER_JS_RULE__CONDITION = eINSTANCE.getScanner_JSRule_Condition();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionImpl <em>Scanner Condition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerCondition()
+     * @generated
+     */
+    EClass SCANNER_CONDITION = eINSTANCE.getScannerCondition();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeImpl <em>Scanner Condition Composite</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionComposite()
+     * @generated
+     */
+    EClass SCANNER_CONDITION_COMPOSITE = eINSTANCE.getScannerConditionComposite();
+
+    /**
+     * The meta object literal for the '<em><b>Prim</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCANNER_CONDITION_COMPOSITE__PRIM = eINSTANCE.getScannerConditionComposite_Prim();
+
+    /**
+     * The meta object literal for the '<em><b>Secondary</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCANNER_CONDITION_COMPOSITE__SECONDARY = eINSTANCE.getScannerConditionComposite_Secondary();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeElementImpl <em>Scanner Condition Composite Element</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeElementImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionCompositeElement()
+     * @generated
+     */
+    EClass SCANNER_CONDITION_COMPOSITE_ELEMENT = eINSTANCE.getScannerConditionCompositeElement();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_CONDITION_COMPOSITE_ELEMENT__OP = eINSTANCE.getScannerConditionCompositeElement_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION = eINSTANCE.getScannerConditionCompositeElement_Condition();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionExitsImpl <em>Scanner Condition Exits</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionExitsImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionExits()
+     * @generated
+     */
+    EClass SCANNER_CONDITION_EXITS = eINSTANCE.getScannerConditionExits();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_CONDITION_EXITS__KEY = eINSTANCE.getScannerConditionExits_Key();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionEqualsImpl <em>Scanner Condition Equals</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionEqualsImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionEquals()
+     * @generated
+     */
+    EClass SCANNER_CONDITION_EQUALS = eINSTANCE.getScannerConditionEquals();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_CONDITION_EQUALS__KEY = eINSTANCE.getScannerConditionEquals_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_CONDITION_EQUALS__VALUE = eINSTANCE.getScannerConditionEquals_Value();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionJsImpl <em>Scanner Condition Js</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionJsImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionJs()
+     * @generated
+     */
+    EClass SCANNER_CONDITION_JS = eINSTANCE.getScannerConditionJs();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_CONDITION_JS__VALUE = eINSTANCE.getScannerConditionJs_Value();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.CheckImpl <em>Check</em>}' class.
