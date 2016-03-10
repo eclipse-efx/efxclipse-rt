@@ -23,6 +23,7 @@ import org.eclipse.fx.text.ui.TextViewer;
 import org.eclipse.fx.text.ui.contentassist.ContentAssistant;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
 import org.eclipse.fx.text.ui.internal.AnnotationModelSupport;
+import org.eclipse.fx.text.ui.internal.SimpleSmartIndent;
 import org.eclipse.fx.text.ui.internal.WrappedLineRulerAnnotationPresenter;
 import org.eclipse.fx.text.ui.internal.WrappedTextAnnotationPresenter;
 import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
@@ -230,6 +231,9 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 //
 //			});
 		}
+
+
+		new SimpleSmartIndent(this);
 
 	}
 
