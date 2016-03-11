@@ -1400,6 +1400,8 @@ public class StyledTextBehavior {
 			keyMapping.mapKey(new KeyCombo(D, MetaKey), this.ACTION_DELETE_LINE);
 			keyMapping.mapKey(new KeyCombo(UP, AltKey), this.ACTION_MOVE_LINES_UP);
 			keyMapping.mapKey(new KeyCombo(DOWN, AltKey), this.ACTION_MOVE_LINES_DOWN);
+
+			keyMapping.mapKey(new KeyCombo(KeyCode.L, MetaKey), this.ACTION_NAVIGATE_TO_LINE);
 		} else {
 			keyMapping.mapKey(new KeyCombo(RIGHT, ControlKey), this.ACTION_NAVIGATE_WORD_NEXT);
 			keyMapping.mapKey(new KeyCombo(LEFT, ControlKey), this.ACTION_NAVIGATE_WORD_PREVIOUS);
@@ -1434,6 +1436,8 @@ public class StyledTextBehavior {
 			keyMapping.mapKey(new KeyCombo(UP, AltKey), this.ACTION_MOVE_LINES_UP);
 			keyMapping.mapKey(new KeyCombo(DOWN, AltKey), this.ACTION_MOVE_LINES_DOWN);
 
+			keyMapping.mapKey(new KeyCombo(KeyCode.L, ControlKey), this.ACTION_NAVIGATE_TO_LINE);
+
 		}
 
 		keyMapping.mapKey(new KeyCombo(TAB), this.ACTION_INDENT, this::isMultilineSelection);
@@ -1456,9 +1460,6 @@ public class StyledTextBehavior {
 
 		// action for insert tab support
 		keyMapping.mapKey(new KeyCombo(TAB), () -> getControl().insert("\t")); //$NON-NLS-1$
-
-
-		keyMapping.mapKey(new KeyCombo(KeyCode.L, ControlKey), this.ACTION_NAVIGATE_TO_LINE);
 	}
 
 	// /**
