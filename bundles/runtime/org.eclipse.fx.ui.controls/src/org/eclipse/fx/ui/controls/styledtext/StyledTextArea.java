@@ -1705,4 +1705,15 @@ public class StyledTextArea extends Control {
 	public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
 		return getClassCssMetaData();
 	}
+
+	/**
+	 * navigates to specified line
+	 * @param lineIndex
+	 */
+	public void navigateToLine(int lineIndex) {
+		if (lineIndex >= 0  && lineIndex <= getContent().getLineCount()) {
+			int offset = getContent().getOffsetAtLine(lineIndex);
+			setCaretOffset(offset);
+		}
+	}
 }

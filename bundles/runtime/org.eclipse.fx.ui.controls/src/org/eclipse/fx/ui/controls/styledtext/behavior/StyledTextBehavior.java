@@ -1025,10 +1025,7 @@ public class StyledTextBehavior {
 	}
 
 	protected void defaultNavigateToLine(int lineIndex) {
-		if (lineIndex >= 0  && lineIndex <= getControl().getContent().getLineCount()) {
-			int offset = getControl().getContent().getOffsetAtLine(lineIndex);
-			getControl().setCaretOffset(offset);
-		}
+		getControl().navigateToLine(lineIndex);
 	}
 
 
