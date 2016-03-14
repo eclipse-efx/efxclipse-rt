@@ -11,6 +11,7 @@ package org.eclipse.fx.code.editor.configuration {
 	}
 	type PartitionRule {
 		Check check;
+		Condition condition;
 	}
 	type PartitionRule_MultiLine extends PartitionRule {
 		String startSeq;
@@ -33,6 +34,7 @@ package org.eclipse.fx.code.editor.configuration {
 	}
 	type TokenScanner {
 		Check check;
+		Condition condition;
 	}
 	type TokenScanner_CharacterRule extends TokenScanner {
 		String[] characterList;
@@ -66,5 +68,22 @@ package org.eclipse.fx.code.editor.configuration {
 		Boolean minIncl;
 		Int max = 1;
 		Boolean maxIncl;
+	}
+	type Condition {
+		String name;
+	}
+	type ExitsCondition extends Condition {
+
+	}
+	type EqualsCondition extends Condition {
+		String value;
+	}
+	type CompositeCondition extends Condition {
+		Condition primary;
+		CompositeConditionElement[] elementList;
+	}
+	type CompositeConditionElement extends Condition {
+		Boolean and;
+		CompositeConditionElement condition;
 	}
 }

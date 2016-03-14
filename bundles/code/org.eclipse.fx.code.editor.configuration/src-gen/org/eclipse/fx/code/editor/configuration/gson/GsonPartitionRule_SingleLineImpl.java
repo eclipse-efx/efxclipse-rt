@@ -6,12 +6,14 @@ import com.google.gson.JsonObject;
 public final class GsonPartitionRule_SingleLineImpl implements GsonBase, PartitionRule_SingleLine, PartitionRule {
 	public GsonPartitionRule_SingleLineImpl(JsonObject jsonObject) {
 		this.check = jsonObject.has("check") ? GsonElementFactory.createCheck(jsonObject.getAsJsonObject("check")) : null;
+		this.condition = jsonObject.has("condition") ? GsonElementFactory.createCondition(jsonObject.getAsJsonObject("condition")) : null;
 		this.endSeq = jsonObject.has("endSeq") ? jsonObject.get("endSeq").getAsString() : null;
 		this.escapedBy = jsonObject.has("escapedBy") ? jsonObject.get("escapedBy").getAsString() : null;
 		this.startSeq = jsonObject.has("startSeq") ? jsonObject.get("startSeq").getAsString() : null;
 	}
-	public GsonPartitionRule_SingleLineImpl(Check check, String endSeq, String escapedBy, String startSeq) {
+	public GsonPartitionRule_SingleLineImpl(Check check, Condition condition, String endSeq, String escapedBy, String startSeq) {
 		this.check = check;
+		this.condition = condition;
 		this.endSeq = endSeq;
 		this.escapedBy = escapedBy;
 		this.startSeq = startSeq;
@@ -21,6 +23,7 @@ public final class GsonPartitionRule_SingleLineImpl implements GsonBase, Partiti
 		JsonObject o = new JsonObject();
 		o.addProperty( "$gtype", "PartitionRule_SingleLine" );
 		o.add( "check", getCheck() == null ? null : ((GsonBase)getCheck()).toJSONObject() );
+		o.add( "condition", getCondition() == null ? null : ((GsonBase)getCondition()).toJSONObject() );
 		o.addProperty( "endSeq", getEndSeq() );
 		o.addProperty( "escapedBy", getEscapedBy() );
 		o.addProperty( "startSeq", getStartSeq() );
@@ -30,6 +33,7 @@ public final class GsonPartitionRule_SingleLineImpl implements GsonBase, Partiti
 	public String toString() {
 		return getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " { "
 					 + "check : " + (check == null ? null : check.getClass().getSimpleName() + "@" + Integer.toHexString(check.hashCode())) + ", "
+					 + "condition : " + (condition == null ? null : condition.getClass().getSimpleName() + "@" + Integer.toHexString(condition.hashCode())) + ", "
 					 + "endSeq : " + endSeq + ", "
 					 + "escapedBy : " + escapedBy + ", "
 					 + "startSeq : " + startSeq
@@ -39,6 +43,12 @@ public final class GsonPartitionRule_SingleLineImpl implements GsonBase, Partiti
 	private final Check check;
 	public Check getCheck() {
 		return this.check;
+	}
+	
+
+	private final Condition condition;
+	public Condition getCondition() {
+		return this.condition;
 	}
 	
 
@@ -72,6 +82,11 @@ public final class GsonPartitionRule_SingleLineImpl implements GsonBase, Partiti
 			this.check = check;
 			return this;
 		}
+		private Condition condition;
+		public Builder condition(Condition condition) {
+			this.condition = condition;
+			return this;
+		}
 		private String endSeq;
 		public Builder endSeq(String endSeq) {
 			this.endSeq = endSeq;
@@ -89,7 +104,7 @@ public final class GsonPartitionRule_SingleLineImpl implements GsonBase, Partiti
 		}
 
 		public PartitionRule_SingleLine build() {
-			return new GsonPartitionRule_SingleLineImpl(check, endSeq, escapedBy, startSeq);
+			return new GsonPartitionRule_SingleLineImpl(check, condition, endSeq, escapedBy, startSeq);
 		}
 	}
 }
