@@ -29,6 +29,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.eclipse.fx.core.function.ExExecutor;
 import org.eclipse.fx.core.internal.JavaDSServiceProcessor;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -102,8 +103,7 @@ public class Util {
 		return null;
 	}
 
-	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor,
-			@NonNull Class<S> serviceClass) {
+	private static <S> @NonNull List<@NonNull S> _lookupServiceList(@Nullable Class<?> requestor, @NonNull Class<S> serviceClass) {
 		if (isOsgiEnv()) {
 			return OSGiUtil.lookupServiceList(requestor, serviceClass);
 		} else {
@@ -190,8 +190,7 @@ public class Util {
 	 * @return the service with the highest rank or <code>null</code>
 	 * @since 1.2
 	 */
-	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor,
-			@NonNull Class<S> serviceClass) {
+	public static <S> @NonNull List<@NonNull S> lookupServiceList(@NonNull Class<?> requestor, @NonNull Class<S> serviceClass) {
 		return _lookupServiceList(requestor, serviceClass);
 	}
 
@@ -346,7 +345,7 @@ public class Util {
 	 * @since 2.2.0
 	 */
 	public static boolean isWindows() {
-		return System.getProperty("os.name").toLowerCase().contains("windows");  //$NON-NLS-1$//$NON-NLS-2$
+		return System.getProperty("os.name").toLowerCase().contains("windows"); //$NON-NLS-1$//$NON-NLS-2$
 	}
 
 	/**
@@ -399,11 +398,8 @@ public class Util {
 	 * @since 2.2.0
 	 */
 	public static Optional<Resource<@NonNull Path>> getLocalPath(@NonNull URL url, boolean copyIfNeeded) {
-		return lookupServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst()
-				.map(r -> Optional.of(Resource.createResource(r.resolveToLocalPath(url))))
-				.orElseGet(() -> copyIfNeeded
-						? ExExecutor.executeSupplier(() -> Util.copyToTempFile(url), "Unable to copy resource") //$NON-NLS-1$
-						: Optional.empty());
+		return lookupServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst().map(r -> Optional.of(Resource.createResource(r.resolveToLocalPath(url)))).orElseGet(() -> copyIfNeeded ? ExExecutor.executeSupplier(() -> Util.copyToTempFile(url), "Unable to copy resource") //$NON-NLS-1$
+				: Optional.empty());
 	}
 
 	/**
@@ -415,8 +411,7 @@ public class Util {
 	 * @since 2.2.0
 	 */
 	public static Optional<URL> getLocalURL(@NonNull URL url) {
-		return lookupServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst()
-				.map(r -> r.resolveToLocalURL(url));
+		return lookupServiceList(URLResolver.class).stream().filter(r -> r.test(url)).findFirst().map(r -> r.resolveToLocalURL(url));
 	}
 
 	private static Resource<@NonNull Path> copyToTempFile(@NonNull URL url) throws IOException {
@@ -448,6 +443,27 @@ public class Util {
 			return new URL(url);
 		} catch (MalformedURLException e) {
 			throw new IllegalArgumentException(e);
+		}
+	}
+
+	/**
+	 * Create a new URL instance who provides an optional of the creation fails
+	 *
+	 * @param url
+	 *            the url
+	 * @param log
+	 *            <code>true</code> if you want the exception to be logged
+	 * @return the url wrapped in an optional
+	 * @since 2.4.0
+	 */
+	public static Optional<URL> createUrl(String url, boolean log) {
+		try {
+			return Optional.of(new URL(url));
+		} catch (Throwable e) {
+			if (log) {
+				LoggerCreator.createLogger(Util.class).error("Failed to create url from '" + url + "'", e); //$NON-NLS-1$//$NON-NLS-2$
+			}
+			return Optional.empty();
 		}
 	}
 }
