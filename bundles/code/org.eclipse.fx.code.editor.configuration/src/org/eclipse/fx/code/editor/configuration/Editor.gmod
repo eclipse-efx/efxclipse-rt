@@ -72,7 +72,7 @@ package org.eclipse.fx.code.editor.configuration {
 	type Condition {
 		String name;
 	}
-	type ExitsCondition extends Condition {
+	type ExistsCondition extends Condition {
 
 	}
 	type EqualsCondition extends Condition {

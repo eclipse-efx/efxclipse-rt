@@ -284,8 +284,8 @@ public final class GsonElementFactory implements EditorGModel {
 			switch( o.get("$gtype").getAsString() ) {
 				case "Condition":
 					return new GsonConditionImpl(o);
-				case "ExitsCondition":
-					return new GsonExitsConditionImpl(o);
+				case "ExistsCondition":
+					return new GsonExistsConditionImpl(o);
 				case "EqualsCondition":
 					return new GsonEqualsConditionImpl(o);
 				case "CompositeCondition":
@@ -303,20 +303,20 @@ public final class GsonElementFactory implements EditorGModel {
 		return new GsonConditionImpl.Builder(this);
 	}
 
-	public static ExitsCondition createExitsCondition(JsonObject o) {
+	public static ExistsCondition createExistsCondition(JsonObject o) {
 		if( o.has("$gtype") ) {
 			switch( o.get("$gtype").getAsString() ) {
-				case "ExitsCondition":
-					return new GsonExitsConditionImpl(o);
+				case "ExistsCondition":
+					return new GsonExistsConditionImpl(o);
 				default:
 					throw new IllegalStateException();
 			}
 		} else {
-			return new GsonExitsConditionImpl(o);
+			return new GsonExistsConditionImpl(o);
 		}
 	}
-	public ExitsCondition.Builder ExitsConditionBuilder() {
-		return new GsonExitsConditionImpl.Builder(this);
+	public ExistsCondition.Builder ExistsConditionBuilder() {
+		return new GsonExistsConditionImpl.Builder(this);
 	}
 
 	public static EqualsCondition createEqualsCondition(JsonObject o) {
@@ -412,8 +412,8 @@ public final class GsonElementFactory implements EditorGModel {
 					return (T) createRange(o);
 				case "Condition":
 					return (T) createCondition(o);
-				case "ExitsCondition":
-					return (T) createExitsCondition(o);
+				case "ExistsCondition":
+					return (T) createExistsCondition(o);
 				case "EqualsCondition":
 					return (T) createEqualsCondition(o);
 				case "CompositeCondition":

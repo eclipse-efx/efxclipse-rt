@@ -28,7 +28,7 @@ public interface EditorGModel {
 	public Equals.Builder EqualsBuilder();
 	public Range.Builder RangeBuilder();
 	public Condition.Builder ConditionBuilder();
-	public ExitsCondition.Builder ExitsConditionBuilder();
+	public ExistsCondition.Builder ExistsConditionBuilder();
 	public EqualsCondition.Builder EqualsConditionBuilder();
 	public CompositeCondition.Builder CompositeConditionBuilder();
 	public CompositeConditionElement.Builder CompositeConditionElementBuilder();
