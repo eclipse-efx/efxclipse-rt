@@ -1,0 +1,38 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+^jmod {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __java_multi_line_api_comment
+		partition __java_single_line_comment
+		partition __java_multi_line_comment
+		rule {
+			single_line __java_single_line_comment 		"//" 	=> ''
+			multi_line __java_multi_line_api_comment 	"/**" 	=> "*/"
+			multi_line __java_multi_line_comment 		"/*" 	=> "*/"
+		}
+	}
+		lexical_highlighting {
+		rule __dftl_partition_content_type {
+			default java_default
+			java_keyword {
+				keywords [ 	"module", "requires", "exports" , "to", "provides", "uses", "with" ]
+			}
+		}
+		rule __java_multi_line_api_comment {
+			default java_apidoc
+		}
+		rule __java_multi_line_comment {
+			default java_doc_default
+		}
+		rule __java_single_line_comment {
+			default java_doc_default
+		}
+		token_def {
+			java_default "-source-editor-code";
+			java_keyword "-source-editor-keyword" bold;
+			java_doc_default "-source-editor-doc";
+			java_apidoc "-source-editor-api-doc";
+		}
+	}
+}

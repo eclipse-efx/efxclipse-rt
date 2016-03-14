@@ -1,0 +1,17 @@
+.styled-text-area .jmod.java_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .jmod.java_keyword {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .jmod.java_doc_default {
+	-styled-text-color: -source-editor-doc;
+}
+
+.styled-text-area .jmod.java_apidoc {
+	-styled-text-color: -source-editor-api-doc;
+}
+

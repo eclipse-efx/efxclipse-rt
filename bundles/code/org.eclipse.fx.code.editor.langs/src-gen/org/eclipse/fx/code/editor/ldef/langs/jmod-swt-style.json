@@ -1,0 +1,34 @@
+{
+  "$gtype": "StylesheetDefinition",
+  "colorList": [],
+  "elementList": [
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "jmod.java_default",
+	  "textRefColor": "-source-editor-code"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "jmod.java_keyword",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "jmod.java_doc_default",
+	  "textRefColor": "-source-editor-doc"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "jmod.java_apidoc",
+	  "textRefColor": "-source-editor-api-doc"
+	}
+	]
+}

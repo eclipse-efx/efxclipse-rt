@@ -1,8 +1,8 @@
 package org.eclipse.fx.code.editor.langs.themes;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.ui.services.theme.MultiURLStylesheet;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.jdt.annotation.NonNull;
@@ -16,29 +16,24 @@ public class DefaultEditorStylesheets implements MultiURLStylesheet {
 	private ObservableList<@NonNull URL> stylesheets;
 
 	public DefaultEditorStylesheets() {
-		ObservableList<@NonNull URL> stylesheets = FXCollections.emptyObservableList();
+		ObservableList<@NonNull URL> stylesheets = FXCollections.observableArrayList();
 
-		try {
-			stylesheets = FXCollections.observableArrayList(
-					  new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/adoc.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/ceylon.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/dart.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/go.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/groovy.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/java.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/js.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/kotlin.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/lua.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/php.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/py.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/rust.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/swift.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/ts.css")
-					, new URL("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/xml.css")
-			);
-		} catch (MalformedURLException e) {
-		}
-
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/adoc.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/ceylon.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/dart.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/go.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/groovy.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/java.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/jmod.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/js.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/kotlin.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/lua.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/php.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/py.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/rust.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/swift.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/ts.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/xml.css", true).ifPresent(stylesheets::add);
 		this.stylesheets = stylesheets;
 	}
 
