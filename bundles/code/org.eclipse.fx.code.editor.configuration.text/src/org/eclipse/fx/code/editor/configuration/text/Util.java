@@ -1,10 +1,21 @@
 package org.eclipse.fx.code.editor.configuration.text;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.IntPredicate;
+import java.util.stream.Collectors;
 
+import org.eclipse.fx.code.editor.Input;
+import org.eclipse.fx.code.editor.InputContext;
 import org.eclipse.fx.code.editor.configuration.Check;
+import org.eclipse.fx.code.editor.configuration.CompositeCondition;
+import org.eclipse.fx.code.editor.configuration.CompositeConditionElement;
+import org.eclipse.fx.code.editor.configuration.Condition;
 import org.eclipse.fx.code.editor.configuration.Equals;
+import org.eclipse.fx.code.editor.configuration.EqualsCondition;
+import org.eclipse.fx.code.editor.configuration.ExistsCondition;
 import org.eclipse.fx.code.editor.configuration.Range;
+import org.eclipse.fx.core.NamedValue;
 import org.eclipse.fx.core.function.IntRelationOperation;
 import org.eclipse.fx.text.rules.ColumnStartRule;
 import org.eclipse.fx.text.rules.PredicateColumnStartRule;
@@ -46,5 +57,51 @@ public class Util {
 				return rule;
 			}
 		}
+	}
+
+	public static boolean checkCondition(Condition condition, Map<String,NamedValue<Object>> values) {
+		if( condition != null ) {
+			if( condition instanceof EqualsCondition ) {
+				NamedValue<Object> namedValue = values.get(condition.getName());
+				if( namedValue != null ) {
+					String value = ((EqualsCondition)condition).getValue();
+					if( value == null ) {
+						return value == namedValue.getValue();
+					} else {
+						return value.equals(namedValue.getValue());
+					}
+				}
+				return false;
+			} else if( condition instanceof ExistsCondition ) {
+				return values.containsKey( condition.getName() );
+			} else if( condition instanceof CompositeCondition ) {
+				boolean and = ((CompositeCondition)condition).isAnd();
+				for( CompositeConditionElement e : ((CompositeCondition) condition).getElementList() ) {
+					if( and ) {
+						if( ! checkCondition(e, values) ) {
+							return false;
+						}
+					} else {
+						if( checkCondition(e, values) ) {
+							return true;
+						}
+					}
+				}
+				if( and ) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public static Map<String,NamedValue<Object>> createNamedValueList(InputContext context, Input<?> input, List<ConfigurationConditionDataProvider> providers) {
+		return providers.stream()
+				.filter( p -> p.test(context,input))
+				.map( p -> p.get(context,input))
+				.flatMap( l -> l.stream())
+				.collect(Collectors.toMap( NamedValue::getName, v -> v));
 	}
 }

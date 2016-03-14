@@ -79,11 +79,11 @@ package org.eclipse.fx.code.editor.configuration {
 		String value;
 	}
 	type CompositeCondition extends Condition {
+		Boolean and;
 		Condition primary;
 		CompositeConditionElement[] elementList;
 	}
 	type CompositeConditionElement extends Condition {
-		Boolean and;
 		CompositeConditionElement condition;
 	}
 }

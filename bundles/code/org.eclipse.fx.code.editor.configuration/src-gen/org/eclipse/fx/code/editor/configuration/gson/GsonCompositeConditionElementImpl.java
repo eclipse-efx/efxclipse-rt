@@ -5,12 +5,10 @@ import com.google.gson.JsonObject;
 
 public final class GsonCompositeConditionElementImpl implements GsonBase, CompositeConditionElement, Condition {
 	public GsonCompositeConditionElementImpl(JsonObject jsonObject) {
-		this.and = jsonObject.has("and") ? jsonObject.get("and").getAsBoolean() : false;
 		this.condition = jsonObject.has("condition") ? GsonElementFactory.createCompositeConditionElement(jsonObject.getAsJsonObject("condition")) : null;
 		this.name = jsonObject.has("name") ? jsonObject.get("name").getAsString() : null;
 	}
-	public GsonCompositeConditionElementImpl(boolean and, CompositeConditionElement condition, String name) {
-		this.and = and;
+	public GsonCompositeConditionElementImpl(CompositeConditionElement condition, String name) {
 		this.condition = condition;
 		this.name = name;
 	}
@@ -18,7 +16,6 @@ public final class GsonCompositeConditionElementImpl implements GsonBase, Compos
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
 		o.addProperty( "$gtype", "CompositeConditionElement" );
-		o.addProperty( "and", isAnd() );
 		o.add( "condition", getCondition() == null ? null : ((GsonBase)getCondition()).toJSONObject() );
 		o.addProperty( "name", getName() );
 		return o;
@@ -26,17 +23,10 @@ public final class GsonCompositeConditionElementImpl implements GsonBase, Compos
 
 	public String toString() {
 		return getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " { "
-					 + "and : " + and + ", "
 					 + "condition : " + (condition == null ? null : condition.getClass().getSimpleName() + "@" + Integer.toHexString(condition.hashCode())) + ", "
 					 + "name : " + name
 					+" }";
 	}
-
-	private final boolean and;
-	public boolean isAnd() {
-		return this.and;
-	}
-	
 
 	private final CompositeConditionElement condition;
 	public CompositeConditionElement getCondition() {
@@ -57,11 +47,6 @@ public final class GsonCompositeConditionElementImpl implements GsonBase, Compos
 		public Builder(EditorGModel instance) {
 			this.instance = instance;
 		}
-		private boolean and;
-		public Builder and(boolean and) {
-			this.and = and;
-			return this;
-		}
 		private CompositeConditionElement condition;
 		public Builder condition(CompositeConditionElement condition) {
 			this.condition = condition;
@@ -74,7 +59,7 @@ public final class GsonCompositeConditionElementImpl implements GsonBase, Compos
 		}
 
 		public CompositeConditionElement build() {
-			return new GsonCompositeConditionElementImpl(and, condition, name);
+			return new GsonCompositeConditionElementImpl(condition, name);
 		}
 	}
 }

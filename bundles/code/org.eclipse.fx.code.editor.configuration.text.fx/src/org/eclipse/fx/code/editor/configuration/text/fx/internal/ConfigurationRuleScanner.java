@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.code.editor.configuration.text.fx.internal;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import org.eclipse.fx.code.editor.configuration.TokenScanner_MultiLineRule;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_PatternRule;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_SingleLineRule;
 import org.eclipse.fx.code.editor.configuration.text.Util;
+import org.eclipse.fx.core.NamedValue;
 import org.eclipse.fx.text.rules.CharacterRule;
 import org.eclipse.fx.text.rules.CombinedWordRule;
 import org.eclipse.fx.text.rules.JavaLikeWordDetector;
@@ -40,10 +42,9 @@ import org.eclipse.jface.text.rules.WhitespaceRule;
 
 @SuppressWarnings("restriction")
 public class ConfigurationRuleScanner extends RuleBasedScanner {
-	public ConfigurationRuleScanner(LanguageDef languageDef, Partition parition) {
+	public ConfigurationRuleScanner(LanguageDef languageDef, Partition parition, Map<String,NamedValue<Object>> values) {
 		Token defaultToken = null;
-		IRule[] rules = new IRule[getRuleCount(parition)];
-		int i = 0;
+		List<IRule> rules = new ArrayList<>(getRuleCount(parition));
 		Map<Token,TokenScanner_Keyword> keyWordList = new HashMap<>();
 		for( org.eclipse.fx.code.editor.configuration.Token st : parition.getTokenList() ) {
 			Token token = new Token(new TextAttribute(languageDef.getFileSuffix() + "." + st.getName()));
@@ -53,51 +54,53 @@ public class ConfigurationRuleScanner extends RuleBasedScanner {
 			}
 
 			for (TokenScanner ru : st.getTokenScannerList()) {
-				if( ru instanceof TokenScanner_SingleLineRule ) {
-					TokenScanner_SingleLineRule sru = (TokenScanner_SingleLineRule) ru;
-					String endSeq = sru.getEndSeq();
-					rules[i++] = Util.wrap(sru.getCheck(),new SingleLineRule(
-							sru.getStartSeq(),
-							endSeq,
-							token,
-							sru.getEscapedBy() != null ? sru.getEscapedBy().charAt(0) : 0,
-							endSeq == null || endSeq.isEmpty()));
-				} else if( ru instanceof TokenScanner_MultiLineRule ) {
-					TokenScanner_MultiLineRule sml = (TokenScanner_MultiLineRule) ru;
-					String endSeq = sml.getEndSeq();
-					rules[i++] = Util.wrap(sml.getCheck(),new MultiLineRule(
-							sml.getStartSeq(),
-							endSeq,
-							token,
-							sml.getEscapedBy() != null ? sml.getEscapedBy().charAt(0) : 0,
-							endSeq == null || endSeq.isEmpty()));
-				} else if( ru instanceof TokenScanner_CharacterRule ) {
-					TokenScanner_CharacterRule scr = (TokenScanner_CharacterRule) ru;
-					char[] c = new char[scr.getCharacterList().size()];
-					for( int j = 0; j < c.length; j++ ) {
-						c[j] = scr.getCharacterList().get(j).charAt(0);
+				if( Util.checkCondition(ru.getCondition(), values) ) {
+					if( ru instanceof TokenScanner_SingleLineRule ) {
+						TokenScanner_SingleLineRule sru = (TokenScanner_SingleLineRule) ru;
+						String endSeq = sru.getEndSeq();
+						rules.add(Util.wrap(sru.getCheck(),new SingleLineRule(
+								sru.getStartSeq(),
+								endSeq,
+								token,
+								sru.getEscapedBy() != null ? sru.getEscapedBy().charAt(0) : 0,
+								endSeq == null || endSeq.isEmpty())));
+					} else if( ru instanceof TokenScanner_MultiLineRule ) {
+						TokenScanner_MultiLineRule sml = (TokenScanner_MultiLineRule) ru;
+						String endSeq = sml.getEndSeq();
+						rules.add(Util.wrap(sml.getCheck(),new MultiLineRule(
+								sml.getStartSeq(),
+								endSeq,
+								token,
+								sml.getEscapedBy() != null ? sml.getEscapedBy().charAt(0) : 0,
+								endSeq == null || endSeq.isEmpty())));
+					} else if( ru instanceof TokenScanner_CharacterRule ) {
+						TokenScanner_CharacterRule scr = (TokenScanner_CharacterRule) ru;
+						char[] c = new char[scr.getCharacterList().size()];
+						for( int j = 0; j < c.length; j++ ) {
+							c[j] = scr.getCharacterList().get(j).charAt(0);
+						}
+						rules.add(Util.wrap(scr.getCheck(),new CharacterRule(token, c)));
+					} else if( ru instanceof TokenScanner_Keyword ) {
+						keyWordList.put(token,(TokenScanner_Keyword) ru);
+					} else if( ru instanceof TokenScanner_PatternRule ) {
+						TokenScanner_PatternRule rr = (TokenScanner_PatternRule) ru;
+						rules.add(Util.wrap(rr.getCheck(),new RegexRule(token, Pattern.compile(rr.getStartPattern()), Math.max(1,rr.getStartLength()),Pattern.compile(rr.getContainmentPattern()))));
 					}
-					rules[i++] = Util.wrap(scr.getCheck(),new CharacterRule(token, c));
-				} else if( ru instanceof TokenScanner_Keyword ) {
-					keyWordList.put(token,(TokenScanner_Keyword) ru);
-				} else if( ru instanceof TokenScanner_PatternRule ) {
-					TokenScanner_PatternRule rr = (TokenScanner_PatternRule) ru;
-					rules[i++] = Util.wrap(rr.getCheck(),new RegexRule(token, Pattern.compile(rr.getStartPattern()), Math.max(1,rr.getStartLength()),Pattern.compile(rr.getContainmentPattern())));
 				}
 			}
 		}
 
 		if( parition.getWhitespace() != null ) {
 			if( parition.getWhitespace().isJavawhiteSpace() ) {
-				rules[i++] = new WhitespaceRule(new IWhitespaceDetector() {
+				rules.add(new WhitespaceRule(new IWhitespaceDetector() {
 
 					@Override
 					public boolean isWhitespace(char c) {
 						return Character.isWhitespace(c);
 					}
-				});
+				}));
 			} else {
-				rules[i++] = new WhitespaceRule(new FixedCharacterWSDetector(parition.getWhitespace().getCharacterList()));
+				rules.add(new WhitespaceRule(new FixedCharacterWSDetector(parition.getWhitespace().getCharacterList())));
 			}
 		}
 
@@ -112,10 +115,10 @@ public class ConfigurationRuleScanner extends RuleBasedScanner {
 				}
 				combinedWordRule.addWordMatcher(wordRule);
 			}
-			rules[rules.length-1] = combinedWordRule;
+			rules.add(combinedWordRule);
 		}
 
-		setRules(rules);
+		setRules(rules.toArray(new IRule[0]));
 	}
 
 	private static int getRuleCount(Partition partition) {
