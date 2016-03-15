@@ -9,7 +9,6 @@ import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.InputContext;
 import org.eclipse.fx.code.editor.configuration.Check;
 import org.eclipse.fx.code.editor.configuration.CompositeCondition;
-import org.eclipse.fx.code.editor.configuration.CompositeConditionElement;
 import org.eclipse.fx.code.editor.configuration.Condition;
 import org.eclipse.fx.code.editor.configuration.Equals;
 import org.eclipse.fx.code.editor.configuration.EqualsCondition;
@@ -76,7 +75,7 @@ public class Util {
 				return values.containsKey( condition.getName() );
 			} else if( condition instanceof CompositeCondition ) {
 				boolean and = ((CompositeCondition)condition).isAnd();
-				for( CompositeConditionElement e : ((CompositeCondition) condition).getElementList() ) {
+				for( Condition e : ((CompositeCondition) condition).getElementList() ) {
 					if( and ) {
 						if( ! checkCondition(e, values) ) {
 							return false;

@@ -7,15 +7,13 @@ public final class GsonCompositeConditionImpl implements GsonBase, CompositeCond
 	public GsonCompositeConditionImpl(JsonObject jsonObject) {
 		this.and = jsonObject.has("and") ? jsonObject.get("and").getAsBoolean() : false;
 		this.elementList = jsonObject.has("elementList") ? java.util.Collections.unmodifiableList(java.util.stream.StreamSupport.stream( jsonObject.getAsJsonArray("elementList").spliterator(), false )
-								.map( e -> GsonElementFactory.createCompositeConditionElement(e.getAsJsonObject())).collect(java.util.stream.Collectors.toList())) : java.util.Collections.emptyList();
+								.map( e -> GsonElementFactory.createCondition(e.getAsJsonObject())).collect(java.util.stream.Collectors.toList())) : java.util.Collections.emptyList();
 		this.name = jsonObject.has("name") ? jsonObject.get("name").getAsString() : null;
-		this.primary = jsonObject.has("primary") ? GsonElementFactory.createCondition(jsonObject.getAsJsonObject("primary")) : null;
 	}
-	public GsonCompositeConditionImpl(boolean and, java.util.List<CompositeConditionElement> elementList, String name, Condition primary) {
+	public GsonCompositeConditionImpl(boolean and, java.util.List<Condition> elementList, String name) {
 		this.and = and;
 		this.elementList = elementList;
 		this.name = name;
-		this.primary = primary;
 	}
 
 	public JsonObject toJSONObject() {
@@ -24,7 +22,6 @@ public final class GsonCompositeConditionImpl implements GsonBase, CompositeCond
 		o.addProperty( "and", isAnd() );
 		o.add( "elementList", GsonBase.toDomainJsonArray(getElementList()) );
 		o.addProperty( "name", getName() );
-		o.add( "primary", getPrimary() == null ? null : ((GsonBase)getPrimary()).toJSONObject() );
 		return o;
 	}
 
@@ -32,8 +29,7 @@ public final class GsonCompositeConditionImpl implements GsonBase, CompositeCond
 		return getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " { "
 					 + "and : " + and + ", "
 					 + "elementList : " + elementList.stream().map( e -> e.getClass().getSimpleName() + "@" + Integer.toHexString(e.hashCode()) ).collect(java.util.stream.Collectors.toList()) + ", "
-					 + "name : " + name + ", "
-					 + "primary : " + (primary == null ? null : primary.getClass().getSimpleName() + "@" + Integer.toHexString(primary.hashCode()))
+					 + "name : " + name
 					+" }";
 	}
 
@@ -43,8 +39,8 @@ public final class GsonCompositeConditionImpl implements GsonBase, CompositeCond
 	}
 	
 
-	private final java.util.List<CompositeConditionElement> elementList;
-	public java.util.List<CompositeConditionElement> getElementList() {
+	private final java.util.List<Condition> elementList;
+	public java.util.List<Condition> getElementList() {
 		return this.elementList;
 	}
 	
@@ -52,12 +48,6 @@ public final class GsonCompositeConditionImpl implements GsonBase, CompositeCond
 	private final String name;
 	public String getName() {
 		return this.name;
-	}
-	
-
-	private final Condition primary;
-	public Condition getPrimary() {
-		return this.primary;
 	}
 	
 
@@ -73,22 +63,22 @@ public final class GsonCompositeConditionImpl implements GsonBase, CompositeCond
 			this.and = and;
 			return this;
 		}
-		private final java.util.List<CompositeConditionElement> elementList = new java.util.ArrayList<>();
-		public Builder elementList(java.util.List<CompositeConditionElement> elementList) {
+		private final java.util.List<Condition> elementList = new java.util.ArrayList<>();
+		public Builder elementList(java.util.List<Condition> elementList) {
 			this.elementList.addAll(elementList);
 			return this;
 		}
-		public Builder appendElementList(CompositeConditionElement elementList) {
+		public Builder appendElementList(Condition elementList) {
 			this.elementList.add(elementList);
 			return this;
 		}
-		public Builder elementList(java.util.function.Function<EditorGModel,java.util.List<CompositeConditionElement>> provider) {
+		public Builder elementList(java.util.function.Function<EditorGModel,java.util.List<Condition>> provider) {
 			elementList( provider.apply( instance ) );
 			return this;
 		}
 
-		public Builder appendElementList(java.util.function.Function<CompositeConditionElement.Builder,CompositeConditionElement> provider) {
-			appendElementList( provider.apply( new GsonCompositeConditionElementImpl.Builder(instance) ) );
+		public Builder appendElementList(java.util.function.Function<Condition.Builder,Condition> provider) {
+			appendElementList( provider.apply( new GsonConditionImpl.Builder(instance) ) );
 			return this;
 		}
 		private String name;
@@ -96,14 +86,9 @@ public final class GsonCompositeConditionImpl implements GsonBase, CompositeCond
 			this.name = name;
 			return this;
 		}
-		private Condition primary;
-		public Builder primary(Condition primary) {
-			this.primary = primary;
-			return this;
-		}
 
 		public CompositeCondition build() {
-			return new GsonCompositeConditionImpl(and, elementList, name, primary);
+			return new GsonCompositeConditionImpl(and, elementList, name);
 		}
 	}
 }

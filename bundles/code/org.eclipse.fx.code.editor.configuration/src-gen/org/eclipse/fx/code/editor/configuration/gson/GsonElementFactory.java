@@ -290,8 +290,6 @@ public final class GsonElementFactory implements EditorGModel {
 					return new GsonEqualsConditionImpl(o);
 				case "CompositeCondition":
 					return new GsonCompositeConditionImpl(o);
-				case "CompositeConditionElement":
-					return new GsonCompositeConditionElementImpl(o);
 				default:
 					throw new IllegalStateException();
 			}
@@ -351,22 +349,6 @@ public final class GsonElementFactory implements EditorGModel {
 		return new GsonCompositeConditionImpl.Builder(this);
 	}
 
-	public static CompositeConditionElement createCompositeConditionElement(JsonObject o) {
-		if( o.has("$gtype") ) {
-			switch( o.get("$gtype").getAsString() ) {
-				case "CompositeConditionElement":
-					return new GsonCompositeConditionElementImpl(o);
-				default:
-					throw new IllegalStateException();
-			}
-		} else {
-			return new GsonCompositeConditionElementImpl(o);
-		}
-	}
-	public CompositeConditionElement.Builder CompositeConditionElementBuilder() {
-		return new GsonCompositeConditionElementImpl.Builder(this);
-	}
-
 
 
 	public <T extends EditorBase> T createObject(java.io.Reader json) {
@@ -418,8 +400,6 @@ public final class GsonElementFactory implements EditorGModel {
 					return (T) createEqualsCondition(o);
 				case "CompositeCondition":
 					return (T) createCompositeCondition(o);
-				case "CompositeConditionElement":
-					return (T) createCompositeConditionElement(o);
 			}
 		}
 		return (T) createLanguageDef(o);

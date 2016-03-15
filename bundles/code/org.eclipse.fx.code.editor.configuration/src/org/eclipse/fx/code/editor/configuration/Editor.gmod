@@ -80,10 +80,6 @@ package org.eclipse.fx.code.editor.configuration {
 	}
 	type CompositeCondition extends Condition {
 		Boolean and;
-		Condition primary;
-		CompositeConditionElement[] elementList;
-	}
-	type CompositeConditionElement extends Condition {
-		CompositeConditionElement condition;
+		Condition[] elementList;
 	}
 }

@@ -31,5 +31,4 @@ public interface EditorGModel {
 	public ExistsCondition.Builder ExistsConditionBuilder();
 	public EqualsCondition.Builder EqualsConditionBuilder();
 	public CompositeCondition.Builder CompositeConditionBuilder();
-	public CompositeConditionElement.Builder CompositeConditionElementBuilder();
 }
