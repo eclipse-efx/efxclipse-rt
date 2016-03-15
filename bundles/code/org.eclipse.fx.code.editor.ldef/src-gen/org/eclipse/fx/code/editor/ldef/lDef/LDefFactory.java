@@ -347,22 +347,13 @@ public interface LDefFactory extends EFactory
   ScannerConditionComposite createScannerConditionComposite();
 
   /**
-   * Returns a new object of class '<em>Scanner Condition Composite Element</em>'.
+   * Returns a new object of class '<em>Scanner Condition Exists</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Scanner Condition Composite Element</em>'.
+   * @return a new object of class '<em>Scanner Condition Exists</em>'.
    * @generated
    */
-  ScannerConditionCompositeElement createScannerConditionCompositeElement();
-
-  /**
-   * Returns a new object of class '<em>Scanner Condition Exits</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Scanner Condition Exits</em>'.
-   * @generated
-   */
-  ScannerConditionExits createScannerConditionExits();
+  ScannerConditionExists createScannerConditionExists();
 
   /**
    * Returns a new object of class '<em>Scanner Condition Equals</em>'.

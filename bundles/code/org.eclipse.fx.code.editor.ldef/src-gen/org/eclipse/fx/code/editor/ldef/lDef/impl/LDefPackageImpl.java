@@ -40,9 +40,8 @@ import org.eclipse.fx.code.editor.ldef.lDef.Root;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner;
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition;
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement;
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExists;
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
@@ -321,14 +320,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass scannerConditionCompositeElementEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass scannerConditionExitsEClass = null;
+  private EClass scannerConditionExistsEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1110,6 +1102,16 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getScanner_Keyword_EnabledIf()
+  {
+    return (EReference)scanner_KeywordEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getKeyword()
   {
     return keywordEClass;
@@ -1390,9 +1392,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getScannerConditionComposite_Prim()
+  public EAttribute getScannerConditionComposite_Op()
   {
-    return (EReference)scannerConditionCompositeEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)scannerConditionCompositeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1400,7 +1402,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getScannerConditionComposite_Secondary()
+  public EReference getScannerConditionComposite_Elements()
   {
     return (EReference)scannerConditionCompositeEClass.getEStructuralFeatures().get(1);
   }
@@ -1410,9 +1412,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getScannerConditionCompositeElement()
+  public EClass getScannerConditionExists()
   {
-    return scannerConditionCompositeElementEClass;
+    return scannerConditionExistsEClass;
   }
 
   /**
@@ -1420,39 +1422,9 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getScannerConditionCompositeElement_Op()
+  public EAttribute getScannerConditionExists_Key()
   {
-    return (EAttribute)scannerConditionCompositeElementEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getScannerConditionCompositeElement_Condition()
-  {
-    return (EReference)scannerConditionCompositeElementEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getScannerConditionExits()
-  {
-    return scannerConditionExitsEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getScannerConditionExits_Key()
-  {
-    return (EAttribute)scannerConditionExitsEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)scannerConditionExistsEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1748,6 +1720,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
 
     scanner_KeywordEClass = createEClass(SCANNER_KEYWORD);
     createEReference(scanner_KeywordEClass, SCANNER_KEYWORD__KEYWORDS);
+    createEReference(scanner_KeywordEClass, SCANNER_KEYWORD__ENABLED_IF);
 
     keywordEClass = createEClass(KEYWORD);
     createEAttribute(keywordEClass, KEYWORD__NAME);
@@ -1785,15 +1758,11 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     scannerConditionEClass = createEClass(SCANNER_CONDITION);
 
     scannerConditionCompositeEClass = createEClass(SCANNER_CONDITION_COMPOSITE);
-    createEReference(scannerConditionCompositeEClass, SCANNER_CONDITION_COMPOSITE__PRIM);
-    createEReference(scannerConditionCompositeEClass, SCANNER_CONDITION_COMPOSITE__SECONDARY);
+    createEAttribute(scannerConditionCompositeEClass, SCANNER_CONDITION_COMPOSITE__OP);
+    createEReference(scannerConditionCompositeEClass, SCANNER_CONDITION_COMPOSITE__ELEMENTS);
 
-    scannerConditionCompositeElementEClass = createEClass(SCANNER_CONDITION_COMPOSITE_ELEMENT);
-    createEAttribute(scannerConditionCompositeElementEClass, SCANNER_CONDITION_COMPOSITE_ELEMENT__OP);
-    createEReference(scannerConditionCompositeElementEClass, SCANNER_CONDITION_COMPOSITE_ELEMENT__CONDITION);
-
-    scannerConditionExitsEClass = createEClass(SCANNER_CONDITION_EXITS);
-    createEAttribute(scannerConditionExitsEClass, SCANNER_CONDITION_EXITS__KEY);
+    scannerConditionExistsEClass = createEClass(SCANNER_CONDITION_EXISTS);
+    createEAttribute(scannerConditionExistsEClass, SCANNER_CONDITION_EXISTS__KEY);
 
     scannerConditionEqualsEClass = createEClass(SCANNER_CONDITION_EQUALS);
     createEAttribute(scannerConditionEqualsEClass, SCANNER_CONDITION_EQUALS__KEY);
@@ -1865,7 +1834,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     scanner_CharacterRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scanner_JSRuleEClass.getESuperTypes().add(this.getScanner_Rule());
     scannerConditionCompositeEClass.getESuperTypes().add(this.getScannerCondition());
-    scannerConditionExitsEClass.getESuperTypes().add(this.getScannerCondition());
+    scannerConditionExistsEClass.getESuperTypes().add(this.getScannerCondition());
     scannerConditionEqualsEClass.getESuperTypes().add(this.getScannerCondition());
     scannerConditionJsEClass.getESuperTypes().add(this.getScannerCondition());
     equalsEClass.getESuperTypes().add(this.getCheck());
@@ -1965,6 +1934,7 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
 
     initEClass(scanner_KeywordEClass, Scanner_Keyword.class, "Scanner_Keyword", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getScanner_Keyword_Keywords(), this.getKeyword(), null, "keywords", null, 0, -1, Scanner_Keyword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScanner_Keyword_EnabledIf(), this.getScannerCondition(), null, "enabledIf", null, 0, 1, Scanner_Keyword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(keywordEClass, Keyword.class, "Keyword", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getKeyword_Name(), ecorePackage.getEString(), "name", null, 0, 1, Keyword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2002,15 +1972,11 @@ public class LDefPackageImpl extends EPackageImpl implements LDefPackage
     initEClass(scannerConditionEClass, ScannerCondition.class, "ScannerCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(scannerConditionCompositeEClass, ScannerConditionComposite.class, "ScannerConditionComposite", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getScannerConditionComposite_Prim(), this.getScannerConditionExits(), null, "prim", null, 0, 1, ScannerConditionComposite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScannerConditionComposite_Secondary(), this.getScannerConditionCompositeElement(), null, "secondary", null, 0, -1, ScannerConditionComposite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getScannerConditionComposite_Op(), ecorePackage.getEString(), "op", null, 0, 1, ScannerConditionComposite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScannerConditionComposite_Elements(), this.getScannerCondition(), null, "elements", null, 0, -1, ScannerConditionComposite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(scannerConditionCompositeElementEClass, ScannerConditionCompositeElement.class, "ScannerConditionCompositeElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getScannerConditionCompositeElement_Op(), ecorePackage.getEString(), "op", null, 0, 1, ScannerConditionCompositeElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getScannerConditionCompositeElement_Condition(), this.getScannerCondition(), null, "condition", null, 0, 1, ScannerConditionCompositeElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(scannerConditionExitsEClass, ScannerConditionExits.class, "ScannerConditionExits", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getScannerConditionExits_Key(), ecorePackage.getEString(), "key", null, 0, 1, ScannerConditionExits.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(scannerConditionExistsEClass, ScannerConditionExists.class, "ScannerConditionExists", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getScannerConditionExists_Key(), ecorePackage.getEString(), "key", null, 0, 1, ScannerConditionExists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scannerConditionEqualsEClass, ScannerConditionEquals.class, "ScannerConditionEquals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getScannerConditionEquals_Key(), ecorePackage.getEString(), "key", null, 0, 1, ScannerConditionEquals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

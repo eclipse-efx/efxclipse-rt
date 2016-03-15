@@ -346,18 +346,11 @@ public class LDefSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT:
+      case LDefPackage.SCANNER_CONDITION_EXISTS:
       {
-        ScannerConditionCompositeElement scannerConditionCompositeElement = (ScannerConditionCompositeElement)theEObject;
-        T result = caseScannerConditionCompositeElement(scannerConditionCompositeElement);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case LDefPackage.SCANNER_CONDITION_EXITS:
-      {
-        ScannerConditionExits scannerConditionExits = (ScannerConditionExits)theEObject;
-        T result = caseScannerConditionExits(scannerConditionExits);
-        if (result == null) result = caseScannerCondition(scannerConditionExits);
+        ScannerConditionExists scannerConditionExists = (ScannerConditionExists)theEObject;
+        T result = caseScannerConditionExists(scannerConditionExists);
+        if (result == null) result = caseScannerCondition(scannerConditionExists);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -988,33 +981,17 @@ public class LDefSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Scanner Condition Composite Element</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Scanner Condition Exists</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scanner Condition Composite Element</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Scanner Condition Exists</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseScannerConditionCompositeElement(ScannerConditionCompositeElement object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Scanner Condition Exits</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scanner Condition Exits</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseScannerConditionExits(ScannerConditionExits object)
+  public T caseScannerConditionExists(ScannerConditionExists object)
   {
     return null;
   }

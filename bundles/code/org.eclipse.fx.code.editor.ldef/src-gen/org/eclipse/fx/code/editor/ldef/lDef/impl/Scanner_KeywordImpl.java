@@ -4,6 +4,7 @@ package org.eclipse.fx.code.editor.ldef.lDef.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -11,11 +12,14 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.fx.code.editor.ldef.lDef.Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
 
 /**
@@ -27,6 +31,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_KeywordImpl#getKeywords <em>Keywords</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_KeywordImpl#getEnabledIf <em>Enabled If</em>}</li>
  * </ul>
  *
  * @generated
@@ -42,6 +47,16 @@ public class Scanner_KeywordImpl extends ScannerImpl implements Scanner_Keyword
    * @ordered
    */
   protected EList<Keyword> keywords;
+
+  /**
+   * The cached value of the '{@link #getEnabledIf() <em>Enabled If</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEnabledIf()
+   * @generated
+   * @ordered
+   */
+  protected ScannerCondition enabledIf;
 
   /**
    * <!-- begin-user-doc -->
@@ -83,6 +98,54 @@ public class Scanner_KeywordImpl extends ScannerImpl implements Scanner_Keyword
    * <!-- end-user-doc -->
    * @generated
    */
+  public ScannerCondition getEnabledIf()
+  {
+    return enabledIf;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetEnabledIf(ScannerCondition newEnabledIf, NotificationChain msgs)
+  {
+    ScannerCondition oldEnabledIf = enabledIf;
+    enabledIf = newEnabledIf;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_KEYWORD__ENABLED_IF, oldEnabledIf, newEnabledIf);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEnabledIf(ScannerCondition newEnabledIf)
+  {
+    if (newEnabledIf != enabledIf)
+    {
+      NotificationChain msgs = null;
+      if (enabledIf != null)
+        msgs = ((InternalEObject)enabledIf).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LDefPackage.SCANNER_KEYWORD__ENABLED_IF, null, msgs);
+      if (newEnabledIf != null)
+        msgs = ((InternalEObject)newEnabledIf).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LDefPackage.SCANNER_KEYWORD__ENABLED_IF, null, msgs);
+      msgs = basicSetEnabledIf(newEnabledIf, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_KEYWORD__ENABLED_IF, newEnabledIf, newEnabledIf));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -90,6 +153,8 @@ public class Scanner_KeywordImpl extends ScannerImpl implements Scanner_Keyword
     {
       case LDefPackage.SCANNER_KEYWORD__KEYWORDS:
         return ((InternalEList<?>)getKeywords()).basicRemove(otherEnd, msgs);
+      case LDefPackage.SCANNER_KEYWORD__ENABLED_IF:
+        return basicSetEnabledIf(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -106,6 +171,8 @@ public class Scanner_KeywordImpl extends ScannerImpl implements Scanner_Keyword
     {
       case LDefPackage.SCANNER_KEYWORD__KEYWORDS:
         return getKeywords();
+      case LDefPackage.SCANNER_KEYWORD__ENABLED_IF:
+        return getEnabledIf();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -125,6 +192,9 @@ public class Scanner_KeywordImpl extends ScannerImpl implements Scanner_Keyword
         getKeywords().clear();
         getKeywords().addAll((Collection<? extends Keyword>)newValue);
         return;
+      case LDefPackage.SCANNER_KEYWORD__ENABLED_IF:
+        setEnabledIf((ScannerCondition)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -142,6 +212,9 @@ public class Scanner_KeywordImpl extends ScannerImpl implements Scanner_Keyword
       case LDefPackage.SCANNER_KEYWORD__KEYWORDS:
         getKeywords().clear();
         return;
+      case LDefPackage.SCANNER_KEYWORD__ENABLED_IF:
+        setEnabledIf((ScannerCondition)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -158,6 +231,8 @@ public class Scanner_KeywordImpl extends ScannerImpl implements Scanner_Keyword
     {
       case LDefPackage.SCANNER_KEYWORD__KEYWORDS:
         return keywords != null && !keywords.isEmpty();
+      case LDefPackage.SCANNER_KEYWORD__ENABLED_IF:
+        return enabledIf != null;
     }
     return super.eIsSet(featureID);
   }

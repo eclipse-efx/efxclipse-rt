@@ -45,7 +45,7 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScannerAccess().getAlternatives(), "rule__Scanner__Alternatives");
 					put(grammarAccess.getScanner_RuleAccess().getAlternatives(), "rule__Scanner_Rule__Alternatives");
 					put(grammarAccess.getScannerConditionAccess().getAlternatives(), "rule__ScannerCondition__Alternatives");
-					put(grammarAccess.getScannerConditionCompositeElementAccess().getOpAlternatives_0_0(), "rule__ScannerConditionCompositeElement__OpAlternatives_0_0");
+					put(grammarAccess.getScannerConditionCompositeAccess().getOpAlternatives_0_0(), "rule__ScannerConditionComposite__OpAlternatives_0_0");
 					put(grammarAccess.getCheckAccess().getAlternatives(), "rule__Check__Alternatives");
 					put(grammarAccess.getRangeAccess().getLtInclAlternatives_1_0(), "rule__Range__LtInclAlternatives_1_0");
 					put(grammarAccess.getRangeAccess().getGtInclAlternatives_5_0(), "rule__Range__GtInclAlternatives_5_0");
@@ -86,6 +86,7 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTokenAccess().getGroup_2(), "rule__Token__Group_2__0");
 					put(grammarAccess.getScanner_KeywordAccess().getGroup(), "rule__Scanner_Keyword__Group__0");
 					put(grammarAccess.getScanner_KeywordAccess().getGroup_3(), "rule__Scanner_Keyword__Group_3__0");
+					put(grammarAccess.getScanner_KeywordAccess().getGroup_5(), "rule__Scanner_Keyword__Group_5__0");
 					put(grammarAccess.getKeywordAccess().getGroup(), "rule__Keyword__Group__0");
 					put(grammarAccess.getKeywordAccess().getGroup_1(), "rule__Keyword__Group_1__0");
 					put(grammarAccess.getScanner_SingleLineRuleAccess().getGroup(), "rule__Scanner_SingleLineRule__Group__0");
@@ -108,8 +109,7 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScanner_JSRuleAccess().getGroup_2(), "rule__Scanner_JSRule__Group_2__0");
 					put(grammarAccess.getScanner_JSRuleAccess().getGroup_3(), "rule__Scanner_JSRule__Group_3__0");
 					put(grammarAccess.getScannerConditionCompositeAccess().getGroup(), "rule__ScannerConditionComposite__Group__0");
-					put(grammarAccess.getScannerConditionCompositeElementAccess().getGroup(), "rule__ScannerConditionCompositeElement__Group__0");
-					put(grammarAccess.getScannerConditionExitsAccess().getGroup(), "rule__ScannerConditionExits__Group__0");
+					put(grammarAccess.getScannerConditionExistsAccess().getGroup(), "rule__ScannerConditionExists__Group__0");
 					put(grammarAccess.getScannerConditionEqualsAccess().getGroup(), "rule__ScannerConditionEquals__Group__0");
 					put(grammarAccess.getScannerConditionJsAccess().getGroup(), "rule__ScannerConditionJs__Group__0");
 					put(grammarAccess.getEqualsAccess().getGroup(), "rule__Equals__Group__0");
@@ -166,6 +166,7 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTokenAccess().getScannerListAssignment_2_1(), "rule__Token__ScannerListAssignment_2_1");
 					put(grammarAccess.getScanner_KeywordAccess().getKeywordsAssignment_2(), "rule__Scanner_Keyword__KeywordsAssignment_2");
 					put(grammarAccess.getScanner_KeywordAccess().getKeywordsAssignment_3_1(), "rule__Scanner_Keyword__KeywordsAssignment_3_1");
+					put(grammarAccess.getScanner_KeywordAccess().getEnabledIfAssignment_5_1(), "rule__Scanner_Keyword__EnabledIfAssignment_5_1");
 					put(grammarAccess.getKeywordAccess().getNameAssignment_0(), "rule__Keyword__NameAssignment_0");
 					put(grammarAccess.getKeywordAccess().getVersionAssignment_1_1(), "rule__Keyword__VersionAssignment_1_1");
 					put(grammarAccess.getScanner_SingleLineRuleAccess().getStartSeqAssignment_1(), "rule__Scanner_SingleLineRule__StartSeqAssignment_1");
@@ -190,11 +191,9 @@ public class LDefParser extends AbstractContentAssistParser {
 					put(grammarAccess.getScanner_JSRuleAccess().getFileURIAssignment_1(), "rule__Scanner_JSRule__FileURIAssignment_1");
 					put(grammarAccess.getScanner_JSRuleAccess().getCheckAssignment_2_1(), "rule__Scanner_JSRule__CheckAssignment_2_1");
 					put(grammarAccess.getScanner_JSRuleAccess().getConditionAssignment_3_1(), "rule__Scanner_JSRule__ConditionAssignment_3_1");
-					put(grammarAccess.getScannerConditionCompositeAccess().getPrimAssignment_0(), "rule__ScannerConditionComposite__PrimAssignment_0");
-					put(grammarAccess.getScannerConditionCompositeAccess().getSecondaryAssignment_1(), "rule__ScannerConditionComposite__SecondaryAssignment_1");
-					put(grammarAccess.getScannerConditionCompositeElementAccess().getOpAssignment_0(), "rule__ScannerConditionCompositeElement__OpAssignment_0");
-					put(grammarAccess.getScannerConditionCompositeElementAccess().getConditionAssignment_1(), "rule__ScannerConditionCompositeElement__ConditionAssignment_1");
-					put(grammarAccess.getScannerConditionExitsAccess().getKeyAssignment_0(), "rule__ScannerConditionExits__KeyAssignment_0");
+					put(grammarAccess.getScannerConditionCompositeAccess().getOpAssignment_0(), "rule__ScannerConditionComposite__OpAssignment_0");
+					put(grammarAccess.getScannerConditionCompositeAccess().getElementsAssignment_2(), "rule__ScannerConditionComposite__ElementsAssignment_2");
+					put(grammarAccess.getScannerConditionExistsAccess().getKeyAssignment_0(), "rule__ScannerConditionExists__KeyAssignment_0");
 					put(grammarAccess.getScannerConditionEqualsAccess().getKeyAssignment_0(), "rule__ScannerConditionEquals__KeyAssignment_0");
 					put(grammarAccess.getScannerConditionEqualsAccess().getValueAssignment_2(), "rule__ScannerConditionEquals__ValueAssignment_2");
 					put(grammarAccess.getScannerConditionJsAccess().getValueAssignment_1(), "rule__ScannerConditionJs__ValueAssignment_1");

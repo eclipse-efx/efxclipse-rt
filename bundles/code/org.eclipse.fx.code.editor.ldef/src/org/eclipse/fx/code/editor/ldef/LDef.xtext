@@ -156,7 +156,7 @@ Scanner:
 ;
 
 Scanner_Keyword:
-	'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']'
+	'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']' ( 'enabledif' enabledIf=ScannerCondition)?
 ;
 
 Keyword:
@@ -188,18 +188,15 @@ Scanner_JSRule:
 ;
 
 ScannerCondition:
-	ScannerConditionExits | ScannerConditionEquals | ScannerConditionJs | ScannerConditionComposite
+	ScannerConditionExists | ScannerConditionEquals | ScannerConditionJs | ScannerConditionComposite
 ;
 
 ScannerConditionComposite:
-	prim=ScannerConditionExits secondary+=ScannerConditionCompositeElement
+	op=('and' | 'or') '('elements+=ScannerCondition')'
 ;
 
-ScannerConditionCompositeElement:
-	op=('||' | '&&') condition=ScannerCondition
-;
 
-ScannerConditionExits:
+ScannerConditionExists:
 	key=STRING 'exists'
 ;
 

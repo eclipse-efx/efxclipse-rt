@@ -29,9 +29,8 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Range;
 import org.eclipse.fx.code.editor.ldef.lDef.Root;
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement;
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExists;
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_JSRule;
@@ -129,14 +128,11 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case LDefPackage.SCANNER_CONDITION_COMPOSITE:
 				sequence_ScannerConditionComposite(context, (ScannerConditionComposite) semanticObject); 
 				return; 
-			case LDefPackage.SCANNER_CONDITION_COMPOSITE_ELEMENT:
-				sequence_ScannerConditionCompositeElement(context, (ScannerConditionCompositeElement) semanticObject); 
-				return; 
 			case LDefPackage.SCANNER_CONDITION_EQUALS:
 				sequence_ScannerConditionEquals(context, (ScannerConditionEquals) semanticObject); 
 				return; 
-			case LDefPackage.SCANNER_CONDITION_EXITS:
-				sequence_ScannerConditionExits(context, (ScannerConditionExits) semanticObject); 
+			case LDefPackage.SCANNER_CONDITION_EXISTS:
+				sequence_ScannerConditionExists(context, (ScannerConditionExists) semanticObject); 
 				return; 
 			case LDefPackage.SCANNER_CONDITION_JS:
 				sequence_ScannerConditionJs(context, (ScannerConditionJs) semanticObject); 
@@ -462,23 +458,11 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     ScannerConditionCompositeElement returns ScannerConditionCompositeElement
-	 *
-	 * Constraint:
-	 *     ((op='||' | op='&&') condition=ScannerCondition)
-	 */
-	protected void sequence_ScannerConditionCompositeElement(ISerializationContext context, ScannerConditionCompositeElement semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     ScannerCondition returns ScannerConditionComposite
 	 *     ScannerConditionComposite returns ScannerConditionComposite
 	 *
 	 * Constraint:
-	 *     (prim=ScannerConditionExits secondary+=ScannerConditionCompositeElement)
+	 *     ((op='and' | op='or') elements+=ScannerCondition)
 	 */
 	protected void sequence_ScannerConditionComposite(ISerializationContext context, ScannerConditionComposite semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -509,19 +493,19 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     ScannerCondition returns ScannerConditionExits
-	 *     ScannerConditionExits returns ScannerConditionExits
+	 *     ScannerCondition returns ScannerConditionExists
+	 *     ScannerConditionExists returns ScannerConditionExists
 	 *
 	 * Constraint:
 	 *     key=STRING
 	 */
-	protected void sequence_ScannerConditionExits(ISerializationContext context, ScannerConditionExits semanticObject) {
+	protected void sequence_ScannerConditionExists(ISerializationContext context, ScannerConditionExists semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_EXITS__KEY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_EXITS__KEY));
+			if (transientValues.isValueTransient(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_EXISTS__KEY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LDefPackage.Literals.SCANNER_CONDITION_EXISTS__KEY));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getScannerConditionExitsAccess().getKeySTRINGTerminalRuleCall_0_0(), semanticObject.getKey());
+		feeder.accept(grammarAccess.getScannerConditionExistsAccess().getKeySTRINGTerminalRuleCall_0_0(), semanticObject.getKey());
 		feeder.finish();
 	}
 	
@@ -579,7 +563,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Scanner_Keyword returns Scanner_Keyword
 	 *
 	 * Constraint:
-	 *     (keywords+=Keyword keywords+=Keyword*)
+	 *     (keywords+=Keyword keywords+=Keyword* enabledIf=ScannerCondition?)
 	 */
 	protected void sequence_Scanner_Keyword(ISerializationContext context, Scanner_Keyword semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

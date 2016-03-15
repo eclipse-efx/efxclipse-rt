@@ -9,22 +9,22 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExists;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Scanner Condition Exits</b></em>'.
+ * An implementation of the model object '<em><b>Scanner Condition Exists</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionExitsImpl#getKey <em>Key</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionExistsImpl#getKey <em>Key</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ScannerConditionExitsImpl extends ScannerConditionImpl implements ScannerConditionExits
+public class ScannerConditionExistsImpl extends ScannerConditionImpl implements ScannerConditionExists
 {
   /**
    * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
@@ -51,7 +51,7 @@ public class ScannerConditionExitsImpl extends ScannerConditionImpl implements S
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ScannerConditionExitsImpl()
+  protected ScannerConditionExistsImpl()
   {
     super();
   }
@@ -64,7 +64,7 @@ public class ScannerConditionExitsImpl extends ScannerConditionImpl implements S
   @Override
   protected EClass eStaticClass()
   {
-    return LDefPackage.Literals.SCANNER_CONDITION_EXITS;
+    return LDefPackage.Literals.SCANNER_CONDITION_EXISTS;
   }
 
   /**
@@ -87,7 +87,7 @@ public class ScannerConditionExitsImpl extends ScannerConditionImpl implements S
     String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_CONDITION_EXITS__KEY, oldKey, key));
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_CONDITION_EXISTS__KEY, oldKey, key));
   }
 
   /**
@@ -100,7 +100,7 @@ public class ScannerConditionExitsImpl extends ScannerConditionImpl implements S
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_CONDITION_EXITS__KEY:
+      case LDefPackage.SCANNER_CONDITION_EXISTS__KEY:
         return getKey();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -116,7 +116,7 @@ public class ScannerConditionExitsImpl extends ScannerConditionImpl implements S
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_CONDITION_EXITS__KEY:
+      case LDefPackage.SCANNER_CONDITION_EXISTS__KEY:
         setKey((String)newValue);
         return;
     }
@@ -133,7 +133,7 @@ public class ScannerConditionExitsImpl extends ScannerConditionImpl implements S
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_CONDITION_EXITS__KEY:
+      case LDefPackage.SCANNER_CONDITION_EXISTS__KEY:
         setKey(KEY_EDEFAULT);
         return;
     }
@@ -150,7 +150,7 @@ public class ScannerConditionExitsImpl extends ScannerConditionImpl implements S
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_CONDITION_EXITS__KEY:
+      case LDefPackage.SCANNER_CONDITION_EXISTS__KEY:
         return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
     }
     return super.eIsSet(featureID);
@@ -173,4 +173,4 @@ public class ScannerConditionExitsImpl extends ScannerConditionImpl implements S
     return result.toString();
   }
 
-} //ScannerConditionExitsImpl
+} //ScannerConditionExistsImpl

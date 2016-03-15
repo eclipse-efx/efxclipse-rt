@@ -84,19 +84,19 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//	ValidID (=> '.' ValidID)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ValidID (=> '.' ValidID)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.2/@alternatives'
 		public Group getGroup() { return cGroup; }
 
-		//ValidID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.2/@alternatives/@elements.0'
 		public RuleCall getValidIDParserRuleCall_0() { return cValidIDParserRuleCall_0; }
 
-		//(=> '.' ValidID)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.2/@alternatives/@elements.1'
 		public Group getGroup_1() { return cGroup_1; }
 
-		//=> '.'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.2/@alternatives/@elements.1/@elements.0'
 		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
 
-		//ValidID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.2/@alternatives/@elements.1/@elements.1'
 		public RuleCall getValidIDParserRuleCall_1_1() { return cValidIDParserRuleCall_1_1; }
 	}
 
@@ -496,7 +496,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//partitions+=Partition+
 		public Assignment getPartitionsAssignment_2() { return cPartitionsAssignment_2; }
 
-		//Partition
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#XtextFragmentProvider_org.eclipse.fx.code.editor.ldef.LDef/Partition'
 		public RuleCall getPartitionsPartitionParserRuleCall_2_0() { return cPartitionsPartitionParserRuleCall_2_0; }
 
 		//partitioner=Partitioner
@@ -717,7 +717,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//escapeSeq=STRING
 		public Assignment getEscapeSeqAssignment_5_2() { return cEscapeSeqAssignment_5_2; }
 
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.19/@alternatives/@elements.5/@elements.2/@terminal'
 		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_5_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_5_2_0; }
 	}
 
@@ -743,9 +743,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEscapeSeqAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_6_2_0 = (RuleCall)cEscapeSeqAssignment_6_2.eContents().get(0);
 		
-		//Partition_MultiLineRule:
-		//	'multi_line' parition=[Partition] startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
-		//	escapeSeq=STRING)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#XtextFragmentProvider_org.eclipse.fx.code.editor.ldef.LDef/Partition_MultiLineRule'
 		@Override public ParserRule getRule() { return rule; }
 
 		//'multi_line' parition=[Partition] startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
@@ -905,29 +903,28 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cItalicAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cItalicItalicKeyword_3_0 = (Keyword)cItalicAssignment_3.eContents().get(0);
 		
-		//TokenVisual:
-		//	token=[Token] colorSpec=STRING bold?='bold'? italic?='italic'?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#XtextFragmentProvider_org.eclipse.fx.code.editor.ldef.LDef/TokenVisual'
 		@Override public ParserRule getRule() { return rule; }
 
-		//token=[Token] colorSpec=STRING bold?='bold'? italic?='italic'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives'
 		public Group getGroup() { return cGroup; }
 
-		//token=[Token]
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.0'
 		public Assignment getTokenAssignment_0() { return cTokenAssignment_0; }
 
-		//[Token]
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.0/@terminal'
 		public CrossReference getTokenTokenCrossReference_0_0() { return cTokenTokenCrossReference_0_0; }
 
-		//ID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.0/@terminal/@terminal'
 		public RuleCall getTokenTokenIDTerminalRuleCall_0_0_1() { return cTokenTokenIDTerminalRuleCall_0_0_1; }
 
-		//colorSpec=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.1'
 		public Assignment getColorSpecAssignment_1() { return cColorSpecAssignment_1; }
 
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.1/@terminal'
 		public RuleCall getColorSpecSTRINGTerminalRuleCall_1_0() { return cColorSpecSTRINGTerminalRuleCall_1_0; }
 
-		//bold?='bold'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.2'
 		public Assignment getBoldAssignment_2() { return cBoldAssignment_2; }
 
 		//'bold'
@@ -1063,38 +1060,37 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cScannerListScannerParserRuleCall_2_1_0 = (RuleCall)cScannerListAssignment_2_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
-		//Token:
-		//	default?='default'? name=ID ('{' scannerList+=Scanner+ '}')?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#XtextFragmentProvider_org.eclipse.fx.code.editor.ldef.LDef/Scanner'
 		@Override public ParserRule getRule() { return rule; }
 
-		//default?='default'? name=ID ('{' scannerList+=Scanner+ '}')?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives'
 		public Group getGroup() { return cGroup; }
 
-		//default?='default'?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.0'
 		public Assignment getDefaultAssignment_0() { return cDefaultAssignment_0; }
 
-		//'default'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.0/@terminal'
 		public Keyword getDefaultDefaultKeyword_0_0() { return cDefaultDefaultKeyword_0_0; }
 
-		//name=ID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
-		//ID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//('{' scannerList+=Scanner+ '}')?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.2'
 		public Group getGroup_2() { return cGroup_2; }
 
-		//'{'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.2/@elements.0'
 		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
 
-		//scannerList+=Scanner+
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.2/@elements.1'
 		public Assignment getScannerListAssignment_2_1() { return cScannerListAssignment_2_1; }
 
-		//Scanner
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.2/@elements.1/@terminal'
 		public RuleCall getScannerListScannerParserRuleCall_2_1_0() { return cScannerListScannerParserRuleCall_2_1_0; }
 
-		//'}'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.2/@elements.2'
 		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
 	}
 
@@ -1130,12 +1126,16 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cKeywordsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cKeywordsKeywordParserRuleCall_3_1_0 = (RuleCall)cKeywordsAssignment_3_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cEnabledifKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cEnabledIfAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cEnabledIfScannerConditionParserRuleCall_5_1_0 = (RuleCall)cEnabledIfAssignment_5_1.eContents().get(0);
 		
 		//Scanner_Keyword:
-		//	'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']';
+		//	'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']' ('enabledif' enabledIf=ScannerCondition)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']'
+		//'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']' ('enabledif' enabledIf=ScannerCondition)?
 		public Group getGroup() { return cGroup; }
 
 		//'keywords'
@@ -1164,6 +1164,18 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//']'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
+
+		//('enabledif' enabledIf=ScannerCondition)?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//'enabledif'
+		public Keyword getEnabledifKeyword_5_0() { return cEnabledifKeyword_5_0; }
+
+		//enabledIf=ScannerCondition
+		public Assignment getEnabledIfAssignment_5_1() { return cEnabledIfAssignment_5_1; }
+
+		//ScannerCondition
+		public RuleCall getEnabledIfScannerConditionParserRuleCall_5_1_0() { return cEnabledIfScannerConditionParserRuleCall_5_1_0; }
 	}
 
 	public class KeywordElements extends AbstractParserRuleElementFinder {
@@ -1637,20 +1649,20 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	public class ScannerConditionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cScannerConditionExitsParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cScannerConditionExistsParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cScannerConditionEqualsParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cScannerConditionJsParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cScannerConditionCompositeParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//ScannerCondition:
-		//	ScannerConditionExits | ScannerConditionEquals | ScannerConditionJs | ScannerConditionComposite;
+		//	ScannerConditionExists | ScannerConditionEquals | ScannerConditionJs | ScannerConditionComposite;
 		@Override public ParserRule getRule() { return rule; }
 
-		//ScannerConditionExits | ScannerConditionEquals | ScannerConditionJs | ScannerConditionComposite
+		//ScannerConditionExists | ScannerConditionEquals | ScannerConditionJs | ScannerConditionComposite
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//ScannerConditionExits
-		public RuleCall getScannerConditionExitsParserRuleCall_0() { return cScannerConditionExitsParserRuleCall_0; }
+		//ScannerConditionExists
+		public RuleCall getScannerConditionExistsParserRuleCall_0() { return cScannerConditionExistsParserRuleCall_0; }
 
 		//ScannerConditionEquals
 		public RuleCall getScannerConditionEqualsParserRuleCall_1() { return cScannerConditionEqualsParserRuleCall_1; }
@@ -1665,75 +1677,55 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	public class ScannerConditionCompositeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.ScannerConditionComposite");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cPrimAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cPrimScannerConditionExitsParserRuleCall_0_0 = (RuleCall)cPrimAssignment_0.eContents().get(0);
-		private final Assignment cSecondaryAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cSecondaryScannerConditionCompositeElementParserRuleCall_1_0 = (RuleCall)cSecondaryAssignment_1.eContents().get(0);
-		
-		//ScannerConditionComposite:
-		//	prim=ScannerConditionExits secondary+=ScannerConditionCompositeElement;
-		@Override public ParserRule getRule() { return rule; }
-
-		//prim=ScannerConditionExits secondary+=ScannerConditionCompositeElement
-		public Group getGroup() { return cGroup; }
-
-		//prim=ScannerConditionExits
-		public Assignment getPrimAssignment_0() { return cPrimAssignment_0; }
-
-		//ScannerConditionExits
-		public RuleCall getPrimScannerConditionExitsParserRuleCall_0_0() { return cPrimScannerConditionExitsParserRuleCall_0_0; }
-
-		//secondary+=ScannerConditionCompositeElement
-		public Assignment getSecondaryAssignment_1() { return cSecondaryAssignment_1; }
-
-		//ScannerConditionCompositeElement
-		public RuleCall getSecondaryScannerConditionCompositeElementParserRuleCall_1_0() { return cSecondaryScannerConditionCompositeElementParserRuleCall_1_0; }
-	}
-
-	public class ScannerConditionCompositeElementElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.ScannerConditionCompositeElement");
-		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cOpAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final Alternatives cOpAlternatives_0_0 = (Alternatives)cOpAssignment_0.eContents().get(0);
-		private final Keyword cOpVerticalLineVerticalLineKeyword_0_0_0 = (Keyword)cOpAlternatives_0_0.eContents().get(0);
-		private final Keyword cOpAmpersandAmpersandKeyword_0_0_1 = (Keyword)cOpAlternatives_0_0.eContents().get(1);
-		private final Assignment cConditionAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cConditionScannerConditionParserRuleCall_1_0 = (RuleCall)cConditionAssignment_1.eContents().get(0);
+		private final Keyword cOpAndKeyword_0_0_0 = (Keyword)cOpAlternatives_0_0.eContents().get(0);
+		private final Keyword cOpOrKeyword_0_0_1 = (Keyword)cOpAlternatives_0_0.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cElementsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cElementsScannerConditionParserRuleCall_2_0 = (RuleCall)cElementsAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
-		//ScannerConditionCompositeElement:
-		//	op=('||' | '&&') condition=ScannerCondition;
+		//ScannerConditionComposite:
+		//	op=('and' | 'or') '(' elements+=ScannerCondition ')';
 		@Override public ParserRule getRule() { return rule; }
 
-		//op=('||' | '&&') condition=ScannerCondition
+		//op=('and' | 'or') '(' elements+=ScannerCondition ')'
 		public Group getGroup() { return cGroup; }
 
-		//op=('||' | '&&')
+		//op=('and' | 'or')
 		public Assignment getOpAssignment_0() { return cOpAssignment_0; }
 
-		//('||' | '&&')
+		//('and' | 'or')
 		public Alternatives getOpAlternatives_0_0() { return cOpAlternatives_0_0; }
 
-		//'||'
-		public Keyword getOpVerticalLineVerticalLineKeyword_0_0_0() { return cOpVerticalLineVerticalLineKeyword_0_0_0; }
+		//'and'
+		public Keyword getOpAndKeyword_0_0_0() { return cOpAndKeyword_0_0_0; }
 
-		//'&&'
-		public Keyword getOpAmpersandAmpersandKeyword_0_0_1() { return cOpAmpersandAmpersandKeyword_0_0_1; }
+		//'or'
+		public Keyword getOpOrKeyword_0_0_1() { return cOpOrKeyword_0_0_1; }
 
-		//condition=ScannerCondition
-		public Assignment getConditionAssignment_1() { return cConditionAssignment_1; }
+		//'('
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//elements+=ScannerCondition
+		public Assignment getElementsAssignment_2() { return cElementsAssignment_2; }
 
 		//ScannerCondition
-		public RuleCall getConditionScannerConditionParserRuleCall_1_0() { return cConditionScannerConditionParserRuleCall_1_0; }
+		public RuleCall getElementsScannerConditionParserRuleCall_2_0() { return cElementsScannerConditionParserRuleCall_2_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
-	public class ScannerConditionExitsElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.ScannerConditionExits");
+	public class ScannerConditionExistsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.ScannerConditionExists");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cKeySTRINGTerminalRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
 		private final Keyword cExistsKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
-		//ScannerConditionExits:
+		//ScannerConditionExists:
 		//	key=STRING 'exists';
 		@Override public ParserRule getRule() { return rule; }
 
@@ -2031,8 +2023,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	private final Scanner_JSRuleElements pScanner_JSRule;
 	private final ScannerConditionElements pScannerCondition;
 	private final ScannerConditionCompositeElements pScannerConditionComposite;
-	private final ScannerConditionCompositeElementElements pScannerConditionCompositeElement;
-	private final ScannerConditionExitsElements pScannerConditionExits;
+	private final ScannerConditionExistsElements pScannerConditionExists;
 	private final ScannerConditionEqualsElements pScannerConditionEquals;
 	private final ScannerConditionJsElements pScannerConditionJs;
 	private final CheckElements pCheck;
@@ -2088,8 +2079,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		this.pScanner_JSRule = new Scanner_JSRuleElements();
 		this.pScannerCondition = new ScannerConditionElements();
 		this.pScannerConditionComposite = new ScannerConditionCompositeElements();
-		this.pScannerConditionCompositeElement = new ScannerConditionCompositeElementElements();
-		this.pScannerConditionExits = new ScannerConditionExitsElements();
+		this.pScannerConditionExists = new ScannerConditionExistsElements();
 		this.pScannerConditionEquals = new ScannerConditionEqualsElements();
 		this.pScannerConditionJs = new ScannerConditionJsElements();
 		this.pCheck = new CheckElements();
@@ -2454,7 +2444,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_Keyword:
-	//	'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']';
+	//	'keywords' '[' keywords+=Keyword (',' keywords+=Keyword)* ']' ('enabledif' enabledIf=ScannerCondition)?;
 	public Scanner_KeywordElements getScanner_KeywordAccess() {
 		return pScanner_Keyword;
 	}
@@ -2538,7 +2528,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScannerCondition:
-	//	ScannerConditionExits | ScannerConditionEquals | ScannerConditionJs | ScannerConditionComposite;
+	//	ScannerConditionExists | ScannerConditionEquals | ScannerConditionJs | ScannerConditionComposite;
 	public ScannerConditionElements getScannerConditionAccess() {
 		return pScannerCondition;
 	}
@@ -2548,7 +2538,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ScannerConditionComposite:
-	//	prim=ScannerConditionExits secondary+=ScannerConditionCompositeElement;
+	//	op=('and' | 'or') '(' elements+=ScannerCondition ')';
 	public ScannerConditionCompositeElements getScannerConditionCompositeAccess() {
 		return pScannerConditionComposite;
 	}
@@ -2557,24 +2547,14 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		return getScannerConditionCompositeAccess().getRule();
 	}
 
-	//ScannerConditionCompositeElement:
-	//	op=('||' | '&&') condition=ScannerCondition;
-	public ScannerConditionCompositeElementElements getScannerConditionCompositeElementAccess() {
-		return pScannerConditionCompositeElement;
-	}
-	
-	public ParserRule getScannerConditionCompositeElementRule() {
-		return getScannerConditionCompositeElementAccess().getRule();
-	}
-
-	//ScannerConditionExits:
+	//ScannerConditionExists:
 	//	key=STRING 'exists';
-	public ScannerConditionExitsElements getScannerConditionExitsAccess() {
-		return pScannerConditionExits;
+	public ScannerConditionExistsElements getScannerConditionExistsAccess() {
+		return pScannerConditionExists;
 	}
 	
-	public ParserRule getScannerConditionExitsRule() {
-		return getScannerConditionExitsAccess().getRule();
+	public ParserRule getScannerConditionExistsRule() {
+		return getScannerConditionExistsAccess().getRule();
 	}
 
 	//ScannerConditionEquals:

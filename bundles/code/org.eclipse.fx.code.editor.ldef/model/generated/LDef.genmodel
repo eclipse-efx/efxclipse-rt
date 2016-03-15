@@ -93,6 +93,7 @@
     <genClasses ecoreClass="LDef.ecore#//Scanner"/>
     <genClasses ecoreClass="LDef.ecore#//Scanner_Keyword">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_Keyword/keywords"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_Keyword/enabledIf"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Keyword">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Keyword/name"/>
@@ -129,15 +130,11 @@
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//ScannerCondition"/>
     <genClasses ecoreClass="LDef.ecore#//ScannerConditionComposite">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//ScannerConditionComposite/prim"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//ScannerConditionComposite/secondary"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ScannerConditionComposite/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//ScannerConditionComposite/elements"/>
     </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//ScannerConditionCompositeElement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ScannerConditionCompositeElement/op"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//ScannerConditionCompositeElement/condition"/>
-    </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//ScannerConditionExits">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ScannerConditionExits/key"/>
+    <genClasses ecoreClass="LDef.ecore#//ScannerConditionExists">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ScannerConditionExists/key"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//ScannerConditionEquals">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//ScannerConditionEquals/key"/>

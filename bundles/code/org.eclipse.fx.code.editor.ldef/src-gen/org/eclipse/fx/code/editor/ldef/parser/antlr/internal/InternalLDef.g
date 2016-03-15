@@ -1915,7 +1915,29 @@ ruleScanner_Keyword returns [EObject current=null]
     {
     	newLeafNode(otherlv_5, grammarAccess.getScanner_KeywordAccess().getRightSquareBracketKeyword_4());
     }
+(	otherlv_6='enabledif' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getScanner_KeywordAccess().getEnabledifKeyword_5_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getScanner_KeywordAccess().getEnabledIfScannerConditionParserRuleCall_5_1_0()); 
+	    }
+		lv_enabledIf_7_0=ruleScannerCondition		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getScanner_KeywordRule());
+	        }
+       		set(
+       			$current, 
+       			"enabledIf",
+        		lv_enabledIf_7_0, 
+        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
+))?)
 ;
 
 
@@ -2670,11 +2692,11 @@ ruleScannerCondition returns [EObject current=null]
     @after { leaveRule(); }:
 (
     { 
-        newCompositeNode(grammarAccess.getScannerConditionAccess().getScannerConditionExitsParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getScannerConditionAccess().getScannerConditionExistsParserRuleCall_0()); 
     }
-    this_ScannerConditionExits_0=ruleScannerConditionExits
+    this_ScannerConditionExists_0=ruleScannerConditionExists
     { 
-        $current = $this_ScannerConditionExits_0.current; 
+        $current = $this_ScannerConditionExists_0.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -2730,84 +2752,27 @@ ruleScannerConditionComposite returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
-		{ 
-	        newCompositeNode(grammarAccess.getScannerConditionCompositeAccess().getPrimScannerConditionExitsParserRuleCall_0_0()); 
-	    }
-		lv_prim_0_0=ruleScannerConditionExits		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getScannerConditionCompositeRule());
-	        }
-       		set(
-       			$current, 
-       			"prim",
-        		lv_prim_0_0, 
-        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerConditionExits");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(
 (
-		{ 
-	        newCompositeNode(grammarAccess.getScannerConditionCompositeAccess().getSecondaryScannerConditionCompositeElementParserRuleCall_1_0()); 
-	    }
-		lv_secondary_1_0=ruleScannerConditionCompositeElement		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getScannerConditionCompositeRule());
-	        }
-       		add(
-       			$current, 
-       			"secondary",
-        		lv_secondary_1_0, 
-        		"org.eclipse.fx.code.editor.ldef.LDef.ScannerConditionCompositeElement");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))
-;
-
-
-
-
-
-// Entry rule entryRuleScannerConditionCompositeElement
-entryRuleScannerConditionCompositeElement returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getScannerConditionCompositeElementRule()); }
-	 iv_ruleScannerConditionCompositeElement=ruleScannerConditionCompositeElement 
-	 { $current=$iv_ruleScannerConditionCompositeElement.current; } 
-	 EOF 
-;
-
-// Rule ScannerConditionCompositeElement
-ruleScannerConditionCompositeElement returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-(
-		lv_op_0_1=	'||' 
+		lv_op_0_1=	'and' 
     {
-        newLeafNode(lv_op_0_1, grammarAccess.getScannerConditionCompositeElementAccess().getOpVerticalLineVerticalLineKeyword_0_0_0());
+        newLeafNode(lv_op_0_1, grammarAccess.getScannerConditionCompositeAccess().getOpAndKeyword_0_0_0());
     }
  
 	    {
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getScannerConditionCompositeElementRule());
+	            $current = createModelElement(grammarAccess.getScannerConditionCompositeRule());
 	        }
        		setWithLastConsumed($current, "op", lv_op_0_1, null);
 	    }
 
-    |		lv_op_0_2=	'&&' 
+    |		lv_op_0_2=	'or' 
     {
-        newLeafNode(lv_op_0_2, grammarAccess.getScannerConditionCompositeElementAccess().getOpAmpersandAmpersandKeyword_0_0_1());
+        newLeafNode(lv_op_0_2, grammarAccess.getScannerConditionCompositeAccess().getOpOrKeyword_0_0_1());
     }
  
 	    {
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getScannerConditionCompositeElementRule());
+	            $current = createModelElement(grammarAccess.getScannerConditionCompositeRule());
 	        }
        		setWithLastConsumed($current, "op", lv_op_0_2, null);
 	    }
@@ -2815,42 +2780,50 @@ ruleScannerConditionCompositeElement returns [EObject current=null]
 )
 
 )
-)(
+)	otherlv_1='(' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getScannerConditionCompositeAccess().getLeftParenthesisKeyword_1());
+    }
+(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getScannerConditionCompositeElementAccess().getConditionScannerConditionParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getScannerConditionCompositeAccess().getElementsScannerConditionParserRuleCall_2_0()); 
 	    }
-		lv_condition_1_0=ruleScannerCondition		{
+		lv_elements_2_0=ruleScannerCondition		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getScannerConditionCompositeElementRule());
+	            $current = createModelElementForParent(grammarAccess.getScannerConditionCompositeRule());
 	        }
-       		set(
+       		add(
        			$current, 
-       			"condition",
-        		lv_condition_1_0, 
+       			"elements",
+        		lv_elements_2_0, 
         		"org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))
+)	otherlv_3=')' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getScannerConditionCompositeAccess().getRightParenthesisKeyword_3());
+    }
+)
 ;
 
 
 
 
 
-// Entry rule entryRuleScannerConditionExits
-entryRuleScannerConditionExits returns [EObject current=null] 
+// Entry rule entryRuleScannerConditionExists
+entryRuleScannerConditionExists returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getScannerConditionExitsRule()); }
-	 iv_ruleScannerConditionExits=ruleScannerConditionExits 
-	 { $current=$iv_ruleScannerConditionExits.current; } 
+	{ newCompositeNode(grammarAccess.getScannerConditionExistsRule()); }
+	 iv_ruleScannerConditionExists=ruleScannerConditionExists 
+	 { $current=$iv_ruleScannerConditionExists.current; } 
 	 EOF 
 ;
 
-// Rule ScannerConditionExits
-ruleScannerConditionExits returns [EObject current=null] 
+// Rule ScannerConditionExists
+ruleScannerConditionExists returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -2858,11 +2831,11 @@ ruleScannerConditionExits returns [EObject current=null]
 (
 		lv_key_0_0=RULE_STRING
 		{
-			newLeafNode(lv_key_0_0, grammarAccess.getScannerConditionExitsAccess().getKeySTRINGTerminalRuleCall_0_0()); 
+			newLeafNode(lv_key_0_0, grammarAccess.getScannerConditionExistsAccess().getKeySTRINGTerminalRuleCall_0_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getScannerConditionExitsRule());
+	            $current = createModelElement(grammarAccess.getScannerConditionExistsRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -2874,7 +2847,7 @@ ruleScannerConditionExits returns [EObject current=null]
 )
 )	otherlv_1='exists' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getScannerConditionExitsAccess().getExistsKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getScannerConditionExistsAccess().getExistsKeyword_1());
     }
 )
 ;

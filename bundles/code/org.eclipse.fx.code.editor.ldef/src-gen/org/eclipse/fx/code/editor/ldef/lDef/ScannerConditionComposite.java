@@ -13,8 +13,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite#getPrim <em>Prim</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite#getSecondary <em>Secondary</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite#getOp <em>Op</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite#getElements <em>Elements</em>}</li>
  * </ul>
  *
  * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScannerConditionComposite()
@@ -24,45 +24,45 @@ import org.eclipse.emf.common.util.EList;
 public interface ScannerConditionComposite extends ScannerCondition
 {
   /**
-   * Returns the value of the '<em><b>Prim</b></em>' containment reference.
+   * Returns the value of the '<em><b>Op</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Prim</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Op</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Prim</em>' containment reference.
-   * @see #setPrim(ScannerConditionExits)
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScannerConditionComposite_Prim()
-   * @model containment="true"
+   * @return the value of the '<em>Op</em>' attribute.
+   * @see #setOp(String)
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScannerConditionComposite_Op()
+   * @model
    * @generated
    */
-  ScannerConditionExits getPrim();
+  String getOp();
 
   /**
-   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite#getPrim <em>Prim</em>}' containment reference.
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite#getOp <em>Op</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Prim</em>' containment reference.
-   * @see #getPrim()
+   * @param value the new value of the '<em>Op</em>' attribute.
+   * @see #getOp()
    * @generated
    */
-  void setPrim(ScannerConditionExits value);
+  void setOp(String value);
 
   /**
-   * Returns the value of the '<em><b>Secondary</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement}.
+   * Returns the value of the '<em><b>Elements</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Secondary</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Elements</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Secondary</em>' containment reference list.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScannerConditionComposite_Secondary()
+   * @return the value of the '<em>Elements</em>' containment reference list.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScannerConditionComposite_Elements()
    * @model containment="true"
    * @generated
    */
-  EList<ScannerConditionCompositeElement> getSecondary();
+  EList<ScannerCondition> getElements();
 
 } // ScannerConditionComposite

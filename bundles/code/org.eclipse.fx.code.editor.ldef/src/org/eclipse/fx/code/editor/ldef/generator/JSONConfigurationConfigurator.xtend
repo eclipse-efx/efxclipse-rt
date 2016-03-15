@@ -29,6 +29,12 @@ import org.eclipse.fx.code.editor.ldef.lDef.Check
 import org.eclipse.fx.code.editor.ldef.lDef.Equals
 import org.eclipse.fx.code.editor.ldef.lDef.Range
 import java.util.Collections
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExists
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite
+import org.eclipse.fx.code.editor.configuration.Condition
 
 @SuppressWarnings("restriction")
 class JSONConfigurationConfigurator {
@@ -103,12 +109,14 @@ class JSONConfigurationConfigurator {
 			if( ts instanceof Scanner_Keyword ) {
 				val sk = ts as Scanner_Keyword
 				return m.TokenScanner_KeywordBuilder
+					.condition(createCondition(m,ts.enabledIf))
 					.keywordList( sk.keywords.map[ k | k.name ].toList )
 					.build
 			} else if( ts instanceof Scanner_SingleLineRule ) {
 				val sr = ts as Scanner_SingleLineRule
 				return m.TokenScanner_SingleLineRuleBuilder
 					.check(createCheck(m,sr.check))
+					.condition(createCondition(m,ts.enabledIf))
 					.startSeq(sr.startSeq)
 					.endSeq(sr.endSeq)
 					.escapedBy(sr.escapeSeq)
@@ -117,6 +125,7 @@ class JSONConfigurationConfigurator {
 				val mr = ts as Scanner_MultiLineRule
 				return m.TokenScanner_MultiLineRuleBuilder
 					.check(createCheck(m,mr.check))
+					.condition(createCondition(m,ts.enabledIf))
 					.startSeq(mr.startSeq)
 					.endSeq(mr.endSeq)
 					.escapedBy(mr.escapeSeq)
@@ -124,6 +133,7 @@ class JSONConfigurationConfigurator {
 			} else if( ts instanceof Scanner_CharacterRule ) {
 				val sc = ts as Scanner_CharacterRule
 				return m.TokenScanner_CharacterRuleBuilder
+					.condition(createCondition(m,ts.enabledIf))
 					.check(createCheck(m,sc.check))
 					.characterList(sc.characters)
 					.build
@@ -131,12 +141,31 @@ class JSONConfigurationConfigurator {
 				val sp = ts as Scanner_PatternRule
 				return m.TokenScanner_PatternRuleBuilder
 					.check(createCheck(m,sp.check))
+					.condition(createCondition(m,ts.enabledIf))
 					.startLength(sp.length)
 					.startPattern(sp.startPattern)
 					.containmentPattern(sp.contentPattern)
 					.build
 			}
 		]
+	}
+
+	def Condition createCondition(EditorGModel m, ScannerCondition c) {
+		if( c == null ) {
+			return null;
+		}
+
+		if( c instanceof ScannerConditionExists ) {
+			return m.ExistsConditionBuilder.name(c.key).build
+		} else if( c instanceof ScannerConditionEquals ) {
+			m.EqualsConditionBuilder.name(c.key).value(c.value).build
+		} else if( c instanceof ScannerConditionJs ) {
+			return null;
+		} else if( c instanceof ScannerConditionComposite ) {
+			val b = m.CompositeConditionBuilder.and(c.op == "and");
+			c.elements.map[ e | createCondition(m,e)].forEach[ c1 | b.appendElementList(c1)]
+			return b.build
+		}
 	}
 
 	def createCheck(EditorGModel m, Check c) {

@@ -18,9 +18,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.fx.code.editor.ldef.lDef.LDefPackage;
+import org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition;
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,8 +29,8 @@ import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeImpl#getPrim <em>Prim</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeImpl#getSecondary <em>Secondary</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeImpl#getOp <em>Op</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.ScannerConditionCompositeImpl#getElements <em>Elements</em>}</li>
  * </ul>
  *
  * @generated
@@ -39,24 +38,34 @@ import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits;
 public class ScannerConditionCompositeImpl extends ScannerConditionImpl implements ScannerConditionComposite
 {
   /**
-   * The cached value of the '{@link #getPrim() <em>Prim</em>}' containment reference.
+   * The default value of the '{@link #getOp() <em>Op</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPrim()
+   * @see #getOp()
    * @generated
    * @ordered
    */
-  protected ScannerConditionExits prim;
+  protected static final String OP_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getSecondary() <em>Secondary</em>}' containment reference list.
+   * The cached value of the '{@link #getOp() <em>Op</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSecondary()
+   * @see #getOp()
    * @generated
    * @ordered
    */
-  protected EList<ScannerConditionCompositeElement> secondary;
+  protected String op = OP_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getElements()
+   * @generated
+   * @ordered
+   */
+  protected EList<ScannerCondition> elements;
 
   /**
    * <!-- begin-user-doc -->
@@ -84,9 +93,9 @@ public class ScannerConditionCompositeImpl extends ScannerConditionImpl implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public ScannerConditionExits getPrim()
+  public String getOp()
   {
-    return prim;
+    return op;
   }
 
   /**
@@ -94,16 +103,12 @@ public class ScannerConditionCompositeImpl extends ScannerConditionImpl implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetPrim(ScannerConditionExits newPrim, NotificationChain msgs)
+  public void setOp(String newOp)
   {
-    ScannerConditionExits oldPrim = prim;
-    prim = newPrim;
+    String oldOp = op;
+    op = newOp;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_CONDITION_COMPOSITE__PRIM, oldPrim, newPrim);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_CONDITION_COMPOSITE__OP, oldOp, op));
   }
 
   /**
@@ -111,34 +116,13 @@ public class ScannerConditionCompositeImpl extends ScannerConditionImpl implemen
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setPrim(ScannerConditionExits newPrim)
+  public EList<ScannerCondition> getElements()
   {
-    if (newPrim != prim)
+    if (elements == null)
     {
-      NotificationChain msgs = null;
-      if (prim != null)
-        msgs = ((InternalEObject)prim).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - LDefPackage.SCANNER_CONDITION_COMPOSITE__PRIM, null, msgs);
-      if (newPrim != null)
-        msgs = ((InternalEObject)newPrim).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - LDefPackage.SCANNER_CONDITION_COMPOSITE__PRIM, null, msgs);
-      msgs = basicSetPrim(newPrim, msgs);
-      if (msgs != null) msgs.dispatch();
+      elements = new EObjectContainmentEList<ScannerCondition>(ScannerCondition.class, this, LDefPackage.SCANNER_CONDITION_COMPOSITE__ELEMENTS);
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_CONDITION_COMPOSITE__PRIM, newPrim, newPrim));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<ScannerConditionCompositeElement> getSecondary()
-  {
-    if (secondary == null)
-    {
-      secondary = new EObjectContainmentEList<ScannerConditionCompositeElement>(ScannerConditionCompositeElement.class, this, LDefPackage.SCANNER_CONDITION_COMPOSITE__SECONDARY);
-    }
-    return secondary;
+    return elements;
   }
 
   /**
@@ -151,10 +135,8 @@ public class ScannerConditionCompositeImpl extends ScannerConditionImpl implemen
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE__PRIM:
-        return basicSetPrim(null, msgs);
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE__SECONDARY:
-        return ((InternalEList<?>)getSecondary()).basicRemove(otherEnd, msgs);
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE__ELEMENTS:
+        return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -169,10 +151,10 @@ public class ScannerConditionCompositeImpl extends ScannerConditionImpl implemen
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE__PRIM:
-        return getPrim();
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE__SECONDARY:
-        return getSecondary();
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE__OP:
+        return getOp();
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE__ELEMENTS:
+        return getElements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -188,12 +170,12 @@ public class ScannerConditionCompositeImpl extends ScannerConditionImpl implemen
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE__PRIM:
-        setPrim((ScannerConditionExits)newValue);
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE__OP:
+        setOp((String)newValue);
         return;
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE__SECONDARY:
-        getSecondary().clear();
-        getSecondary().addAll((Collection<? extends ScannerConditionCompositeElement>)newValue);
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE__ELEMENTS:
+        getElements().clear();
+        getElements().addAll((Collection<? extends ScannerCondition>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -209,11 +191,11 @@ public class ScannerConditionCompositeImpl extends ScannerConditionImpl implemen
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE__PRIM:
-        setPrim((ScannerConditionExits)null);
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE__OP:
+        setOp(OP_EDEFAULT);
         return;
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE__SECONDARY:
-        getSecondary().clear();
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE__ELEMENTS:
+        getElements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -229,12 +211,29 @@ public class ScannerConditionCompositeImpl extends ScannerConditionImpl implemen
   {
     switch (featureID)
     {
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE__PRIM:
-        return prim != null;
-      case LDefPackage.SCANNER_CONDITION_COMPOSITE__SECONDARY:
-        return secondary != null && !secondary.isEmpty();
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE__OP:
+        return OP_EDEFAULT == null ? op != null : !OP_EDEFAULT.equals(op);
+      case LDefPackage.SCANNER_CONDITION_COMPOSITE__ELEMENTS:
+        return elements != null && !elements.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (op: ");
+    result.append(op);
+    result.append(')');
+    return result.toString();
   }
 
 } //ScannerConditionCompositeImpl

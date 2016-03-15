@@ -255,14 +255,9 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createScannerConditionCompositeAdapter();
       }
       @Override
-      public Adapter caseScannerConditionCompositeElement(ScannerConditionCompositeElement object)
+      public Adapter caseScannerConditionExists(ScannerConditionExists object)
       {
-        return createScannerConditionCompositeElementAdapter();
-      }
-      @Override
-      public Adapter caseScannerConditionExits(ScannerConditionExits object)
-      {
-        return createScannerConditionExitsAdapter();
+        return createScannerConditionExistsAdapter();
       }
       @Override
       public Adapter caseScannerConditionEquals(ScannerConditionEquals object)
@@ -857,31 +852,16 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement <em>Scanner Condition Composite Element</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExists <em>Scanner Condition Exists</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionCompositeElement
+   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExists
    * @generated
    */
-  public Adapter createScannerConditionCompositeElementAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits <em>Scanner Condition Exits</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExits
-   * @generated
-   */
-  public Adapter createScannerConditionExitsAdapter()
+  public Adapter createScannerConditionExistsAdapter()
   {
     return null;
   }
