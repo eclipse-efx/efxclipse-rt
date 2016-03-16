@@ -39,7 +39,6 @@ public class ToggleEditorFeature {
 		} else {
 			copy.add(f);
 		}
-		System.err.println(" ===========> " + copy);
 		featureSet.setValue(copy);
 	}
 }
