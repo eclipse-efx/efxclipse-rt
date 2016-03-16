@@ -4,6 +4,6 @@
    <service>
       <provide interface="org.eclipse.fx.ui.services.theme.Theme"/>
    </service>
-   <reference bind="registerMultiURLStylesheet" cardinality="0..n" interface="org.eclipse.fx.ui.services.theme.MultiURLStylesheet" name="registerMultiURLStylesheet" policy="dynamic" unbind="unregisterMultiURLStylesheet"/>
-   <reference bind="registerStylesheet" cardinality="0..n" interface="org.eclipse.fx.ui.services.theme.Stylesheet" name="registerStylesheet" policy="dynamic" unbind="unregisterStylesheet"/>
+   <reference bind="registerMultiURLStylesheet" cardinality="0..n" interface="org.eclipse.fx.ui.services.theme.MultiURLStylesheet" name="registerMultiURLStylesheet" policy="dynamic"/>
+   <reference bind="registerStylesheet" cardinality="0..n" interface="org.eclipse.fx.ui.services.theme.Stylesheet" name="registerStylesheet" policy="dynamic"/>
 </scr:component>

@@ -4,14 +4,17 @@ Bundle-Name: Basic editor APIs for JavaFX
 Bundle-SymbolicName: org.eclipse.fx.code.editor.fx
 Bundle-Version: 2.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: javax.inject,
+Import-Package: com.google.common.collect;version="15.0.0",
+ javax.inject,
  org.eclipse.e4.ui.di,
  org.eclipse.fx.code.editor;version="2.3.0",
  org.eclipse.fx.code.editor.services;version="2.3.0",
  org.eclipse.fx.core;version="2.3.0",
  org.eclipse.fx.core.di;version="2.3.0",
+ org.eclipse.fx.core.event;version="2.3.0",
  org.eclipse.fx.core.preferences;version="2.3.0",
  org.eclipse.fx.text.hover,
+ org.eclipse.fx.text.navigation,
  org.eclipse.fx.text.rules;version="2.3.0",
  org.eclipse.fx.text.ui;version="2.3.0",
  org.eclipse.fx.text.ui.contentassist;version="2.3.0",

@@ -14,7 +14,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
-		<tycho-version>0.21.0</tycho-version>
+		<tycho-version>0.23.1</tycho-version>
 		<junit-version>4.11</junit-version>
 		<mockito-version>1.8.4</mockito-version>
 		<platform-version>4.2</platform-version>
@@ -26,7 +26,6 @@
 		<module>../org.eclipse.fx.simplycode.app</module>
 		<module>../org.eclipse.fx.simplycode.app.feature</module>
 		<module>../org.eclipse.fx.simplycode.app.product</module>
-		<module>../org.eclipse.fx.simplycode.app.jemmy</module>
 	</modules>
 
 	<repositories>
@@ -36,9 +35,9 @@
 			<url>http://download.eclipse.org/efxclipse/runtime-nightly/site</url>
 		</repository>
 		<repository>
-			<id>efxclipse-addons</id>
+			<id>codeedit-addons</id>
 			<layout>p2</layout>
-			<url>http://downloads.efxclipse.org/efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url>
+			<url>file:/Users/tomschindl/git/codeaddons/releng/at.bestsolution.code.updatesite/target/site</url>
 		</repository>
 
 	</repositories>
@@ -91,8 +90,8 @@
 					<version>${tycho-version}</version>
 					<configuration>
 						<encoding>UTF-8</encoding>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 						<extraClasspathElements>
 							<extraClasspathElement>
 								<groupId>javafx</groupId>

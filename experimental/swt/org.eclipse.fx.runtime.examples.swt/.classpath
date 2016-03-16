@@ -5,5 +5,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="src-mini"/>
 	<classpathentry kind="src" path="src-snippets"/>
+	<classpathentry kind="src" path="src-forms"/>
+	<classpathentry kind="src" path="src-jface"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

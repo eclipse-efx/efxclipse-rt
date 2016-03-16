@@ -2,6 +2,11 @@
 	-type-info-color: lightgray;
 }
 
+.styled-text-area .dart.quick_link {
+	-styled-text-color: lightblue !important;
+	-efx-decoration: "underline";
+}
+
 .styled-text-area .list-view {
 	-source-editor-code: #b8c4d1;
 	-source-editor-operator: #b8c4d1;

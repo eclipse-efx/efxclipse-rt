@@ -78,46 +78,6 @@ public class TextPositionSupport {
 	 */
 	protected int computeCursorOffset(MouseEvent event) {
 		return this.textArea.getOffsetAtPosition(event.getX(), event.getY());
-
-		// List<LineCell> visibleCells = ((StyledTextSkin)
-		// this.textArea.getSkin()).getCurrentVisibleCells();
-		//
-		// LineCell lastCell = null;
-		//
-		// int result = this.textArea.getContent().getCharCount();
-		//
-		// for (LineCell tmp : visibleCells) {
-		// Bounds boundsInParent = tmp.getBoundsInParent();
-		// if (boundsInParent.getMinY() > event.getY()) {
-		// if (lastCell == null) {
-		// lastCell = tmp;
-		// }
-		//
-		// if (lastCell.getDomainElement() != null) {
-		// LineNode n = (LineNode) lastCell.getGraphic();
-		//// StyledTextLayoutContainer n = (StyledTextLayoutContainer)
-		// lastCell.getGraphic();
-		// if (n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(),
-		// event.getSceneY())) {
-		// int index = n.getCaretIndexAtPoint(n.sceneToLocal(event.getSceneX(),
-		// event.getSceneY()));
-		// if (index >= 0) {
-		// return n.getStartOffset() + index;
-		// }
-		// }
-		//
-		// final double minX = n.localToScene(n.getBoundsInLocal()).getMinX();
-		// final double mouseX = event.getSceneX();
-		// final boolean left = minX >= mouseX;
-		//
-		// result = lastCell.getDomainElement().getLineOffset() + (left ? 0 :
-		// lastCell.getDomainElement().getLineLength());
-		// }
-		// break;
-		// }
-		// lastCell = tmp;
-		// }
-		// return result;
 	}
 
 }

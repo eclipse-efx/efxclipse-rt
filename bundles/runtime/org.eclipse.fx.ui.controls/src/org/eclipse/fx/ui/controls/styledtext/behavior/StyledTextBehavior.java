@@ -48,16 +48,23 @@ import org.eclipse.fx.core.Util;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent.ActionType;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.CustomQuickLink;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLink;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLinkable;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.SimpleQuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.InputAction;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.KeyCombo;
 import org.eclipse.fx.ui.controls.styledtext.events.TextPositionEvent;
+import org.eclipse.fx.ui.controls.styledtext.internal.TextNode;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.event.Event;
+import javafx.geometry.Point2D;
+import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -87,6 +94,7 @@ public class StyledTextBehavior {
 		styledText.addEventHandler(KeyEvent.KEY_TYPED, this::onKeyTyped);
 
 		styledText.addEventHandler(MouseEvent.MOUSE_PRESSED, this::onMousePressed);
+		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_MOVED, this::onTextPositionMoved);
 
 		initKeymapping(this.keyMapping);
 
@@ -95,6 +103,7 @@ public class StyledTextBehavior {
 		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_RELEASED, this::onTextPositionReleased);
 		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_DRAGGED, this::onTextPositionDragged);
 		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_DRAG_DETECTED, this::onTextPositionDragDetected);
+
 	}
 
 	/**
@@ -329,6 +338,17 @@ public class StyledTextBehavior {
 		}
 	}
 
+	private void doLink(QuickLink link) {
+		if (link instanceof SimpleQuickLink) {
+			SimpleQuickLink simple = (SimpleQuickLink) link;
+			getControl().setSelection(new TextSelection(simple.getRegion().lowerEndpoint(), simple.getRegion().upperEndpoint() - simple.getRegion().lowerEndpoint()));
+		}
+		else if (link instanceof CustomQuickLink) {
+			CustomQuickLink custom = (CustomQuickLink) link;
+			custom.getAction().run();
+		}
+	}
+
 	private void onTextPositionClicked(TextPositionEvent event) {
 		if (event.isStillSincePress()) {
 			if (event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY) {
@@ -340,6 +360,21 @@ public class StyledTextBehavior {
 				event.consume();
 			}
 		}
+
+		if (event.isControlDown()) {
+			Optional<QuickLinkable> linkable = getControl().getQuickLinkCallback().apply(event.getOffset());
+			linkable.ifPresent((l) -> {
+				if (l.getLinks().size() == 1) {
+					doLink(l.getLinks().get(0));
+				}
+				else {
+					// TODO handle case of multiple links
+					System.err.println("multiple targets: " + l.getLinks());
+				}
+			});
+
+		}
+
 	}
 
 	/**
@@ -351,6 +386,44 @@ public class StyledTextBehavior {
 
 	private void onMousePressed(MouseEvent event) {
 		getControl().requestFocus();
+	}
+
+	private Optional<TextNode> currentQuickLinkNode = Optional.empty();
+
+	private void setCurrentQuickLinkNode(Optional<TextNode> node) {
+		this.currentQuickLinkNode.ifPresent(n->n.getStyleClass().remove("quick_link")); //$NON-NLS-1$
+		this.currentQuickLinkNode.ifPresent(n->n.setCursor(null));
+		this.currentQuickLinkNode.ifPresent(n->n.requestLayout());
+		this.currentQuickLinkNode = node;
+		this.currentQuickLinkNode.ifPresent(n->n.getStyleClass().add("quick_link")); //$NON-NLS-1$
+		this.currentQuickLinkNode.ifPresent(n->n.setCursor(Cursor.HAND));
+		this.currentQuickLinkNode.ifPresent(n->n.requestLayout());
+	}
+
+	private void onTextPositionMoved(TextPositionEvent event) {
+		if (event.isControlDown()) {
+			Optional<QuickLinkable> linkable = getControl().getQuickLinkCallback().apply(event.getOffset());
+			if (linkable.isPresent()) {
+				Point2D screenLocation = new Point2D(event.getScreenX(), event.getScreenY());
+				Optional<TextNode> node = ((StyledTextSkin)getControl().getSkin()).findTextNode(screenLocation);
+
+				System.err.println("NODE: " + node);
+
+				if (!this.currentQuickLinkNode.equals(node)) {
+					// changed
+					setCurrentQuickLinkNode(node);
+				}
+
+				System.err.println("node2: " + node.map(n->n.getStyleClass()));
+			}
+			else {
+				setCurrentQuickLinkNode(Optional.empty());
+			}
+
+		}
+		else {
+			setCurrentQuickLinkNode(Optional.empty());
+		}
 	}
 
 	private int computeCurrentLineNumber() {

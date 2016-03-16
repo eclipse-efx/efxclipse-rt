@@ -222,7 +222,7 @@ public abstract class Control extends Widget implements Drawable {
 				javafx.scene.control.Control.USE_COMPUTED_SIZE);
 		int height = (int) internal_getNativeObject().prefHeight(
 				javafx.scene.control.Control.USE_COMPUTED_SIZE);
-		
+
 		if (width <= 0) {
 			width = DEFAULT_WIDTH;
 		}
@@ -272,11 +272,11 @@ public abstract class Control extends Widget implements Drawable {
 		addListener(SWT.Move, typedListener);
 	}
 
-	
+
 	 public void addDragDetectListener (DragDetectListener listener) {
 		 Util.logNotImplemented();
 	 }
-	
+
 	public void addFocusListener(FocusListener listener) {
 		TypedListener typedListener = new TypedListener(listener);
 		addListener(SWT.FocusIn, typedListener);
@@ -300,11 +300,11 @@ public abstract class Control extends Widget implements Drawable {
 		addListener(SWT.KeyDown, typedListener);
 	}
 
-	
+
 	 public void addMenuDetectListener (MenuDetectListener listener) {
 		 Util.logNotImplemented();
 	 }
-	
+
 	public void addMouseListener(MouseListener listener) {
 		TypedListener typedListener = new TypedListener(listener);
 		addListener(SWT.MouseDown, typedListener);
@@ -317,9 +317,14 @@ public abstract class Control extends Widget implements Drawable {
 		addListener(SWT.MouseMove, typedListener);
 	}
 
-	
+
 	 public void addMouseTrackListener (MouseTrackListener listener) {
-		 Util.logNotImplemented();
+		 checkWidget();
+		 if (listener == null) error (SWT.ERROR_NULL_ARGUMENT);
+		 TypedListener typedListener = new TypedListener (listener);
+		 addListener (SWT.MouseEnter,typedListener);
+		 addListener (SWT.MouseExit,typedListener);
+		 addListener (SWT.MouseHover,typedListener);
 	 }
 	//
 	// public void addMouseWheelListener (MouseWheelListener listener) {
@@ -375,10 +380,10 @@ public abstract class Control extends Widget implements Drawable {
 		 Util.logNotImplemented();
 		 return false;
 	 }
-	
+
 	 public boolean dragDetect (Event event) {
 		 Util.logNotImplemented();
-		 return false;	
+		 return false;
 	 }
 	//
 	// public boolean forceFocus () {
@@ -398,7 +403,7 @@ public abstract class Control extends Widget implements Drawable {
 		Util.logNotImplemented();
 		return null;
 	 }
-	
+
 	public Rectangle getBounds() {
 		Point location = getLocation();
 		Point size = getSize();
@@ -448,7 +453,7 @@ public abstract class Control extends Widget implements Drawable {
 		if (!(this instanceof Shell)) {
 			bounds = getDisplay().map(getParent(), null, bounds);
 		}
-		
+
 		int index = -1, value = -1;
 		for (int i = 0; i < monitors.length; i++) {
 			Rectangle rect = bounds.intersection(monitors[i].getBounds());
@@ -527,7 +532,7 @@ public abstract class Control extends Widget implements Drawable {
 	 public boolean isEnabled () {
 		 return getEnabled () && parent.isEnabled ();
 	 }
-	
+
 	public boolean isFocusControl() {
 		return internal_getEventTarget().isFocused();
 	}
@@ -545,12 +550,12 @@ public abstract class Control extends Widget implements Drawable {
 		parent.internal_controlMoveAbove(this, control);
 	}
 
-	
+
 	 public void moveBelow (Control control) {
 		 System.out.println("MOVE BELOW: " + parent);
 		 parent.internal_controlMoveBelow(this, control);
 	 }
-	
+
 	public void pack() {
 		forceSizeProcessing();
 		// TODO is it min size??
@@ -558,12 +563,12 @@ public abstract class Control extends Widget implements Drawable {
 				(int) internal_getNativeControl().prefHeight(-1));
 	}
 
-	
+
 	 public void pack (boolean changed) {
 		forceSizeProcessing();
 		// TODO is it min size??
 		setSize((int) internal_getNativeControl().prefWidth(-1),
-				(int) internal_getNativeControl().prefHeight(-1));	
+				(int) internal_getNativeControl().prefHeight(-1));
 	 }
 	//
 	// public boolean print (GC gc) {
@@ -580,13 +585,13 @@ public abstract class Control extends Widget implements Drawable {
 
 	 public void removeControlListener (ControlListener listener) {
 		 removeListener(SWT.Resize, listener);
-		 removeListener(SWT.Move, listener);	
+		 removeListener(SWT.Move, listener);
 	 }
-	
+
 	 public void removeDragDetectListener(DragDetectListener listener) {
 		 Util.logNotImplemented();
 	 }
-	
+
 	public void removeFocusListener(FocusListener listener) {
 		removeListener(SWT.FocusIn, listener);
 		removeListener(SWT.FocusOut, listener);
@@ -618,11 +623,11 @@ public abstract class Control extends Widget implements Drawable {
 		removeListener(SWT.MouseDoubleClick, listener);
 	}
 
-	
+
 	 public void removeMouseMoveListener(MouseMoveListener listener) {
 		 removeListener(SWT.MouseMove, listener);
 	 }
-	
+
 	 public void removeMouseTrackListener(MouseTrackListener listener) {
 		 Util.logNotImplemented();
 	 }
@@ -667,7 +672,7 @@ public abstract class Control extends Widget implements Drawable {
 	public void setCapture (boolean capture) {
 		Util.logNotImplemented();
 	}
-	
+
 	public void setCursor(Cursor cursor) {
 		this.cursor = cursor;
 		internal_getNativeObject().setCursor(
@@ -708,20 +713,20 @@ public abstract class Control extends Widget implements Drawable {
 		if (font != null) {
 			b.append(font.internal_getAsCSSString());
 		}
-		
+
 		if (foreground != null) {
 			String rgb = "rgb(" + foreground.getRed() + ","
 					+ foreground.getGreen() + "," + foreground.getBlue() + ")";
 			b.append("-fx-text-inner-color: " + rgb
 					+ "; -fx-text-background-color: " + rgb + ";");
 		}
-		
+
 		if( background != null ) {
 			String rgb = "rgb(" + background.getRed() + ","
 					+ background.getGreen() + "," + background.getBlue() + ")";
 			b.append("-fx-background-color: " + rgb);
 		}
-		
+
 		return b.toString();
 	}
 
@@ -761,14 +766,14 @@ public abstract class Control extends Widget implements Drawable {
 		Util.logNotImplemented();
 	}
 
-	
+
 	 public boolean setParent (Composite parent) {
 		 this.parent.internal_detachControl(this);
 		 parent.internal_attachControl(this);
 		 this.parent = parent;
 		 return true;
 	 }
-	
+
 	public void setRedraw(boolean redraw) {
 		// Not needed in FX
 	}
@@ -829,26 +834,26 @@ public abstract class Control extends Widget implements Drawable {
 		return toDisplay(point.x, point.y);
 	}
 
-	
+
 	 public boolean traverse (int traversal) {
 		 Util.logNotImplemented();
 		 return false;
 	 }
-	
+
 	 public boolean traverse (int traversal, KeyEvent event) {
 		 Util.logNotImplemented();
 		 return false;
 	 }
-	
+
 	 public boolean traverse (int traversal, Event event) {
 		 Util.logNotImplemented();
 		 return false;
 	 }
-	
+
 	public void update() {
 		Util.logNotImplemented();
 	}
-	
+
 	public void setTextDirection(int dir) {
 		Util.logNotImplemented();
 	}
@@ -1095,12 +1100,12 @@ public abstract class Control extends Widget implements Drawable {
 			}
 		}
 	}
-	
+
 	@Override
 	public DrawableGC internal_new_GC() {
 		return new MeasureGC(this);
 	}
-	
+
 	void markLayout (boolean changed, boolean all) {
 		// nothing todo
 	}
@@ -1202,7 +1207,7 @@ public abstract class Control extends Widget implements Drawable {
 					Control c = Widget.getWidget(event.getTarget());
 					if (c != null) {
 						c.sendKeyEvent(event);
-//if we consume the event e.g. navigation in table/tree get broken!						
+//if we consume the event e.g. navigation in table/tree get broken!
 //						event.consume();
 					}
 				}

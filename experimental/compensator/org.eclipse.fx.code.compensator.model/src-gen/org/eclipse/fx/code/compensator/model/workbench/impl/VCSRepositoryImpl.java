@@ -17,7 +17,6 @@ import org.eclipse.fx.code.compensator.model.workbench.WorkbenchPackage;
  * An implementation of the model object '<em><b>VCS Repository</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * <p>
  * The following features are implemented:
  * </p>
  * <ul>

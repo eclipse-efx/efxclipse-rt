@@ -51,3 +51,4 @@ Import-Package: javafx.animation;version="2.0.0",
  javafx.util;version="2.0.0",
  javax.annotation;version="1.0.0",
  javax.inject;version="1.0.0"
+Service-Component: OSGI-INF/org.eclipse.fx.testcases.dnd.app.DefaultTheme.xml

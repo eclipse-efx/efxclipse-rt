@@ -1,9 +1,14 @@
 package org.eclipse.fx.code.editor.fx.services.internal;
 
+import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -11,13 +16,21 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
+import org.eclipse.fx.code.editor.SourceSelection;
 import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
 import org.eclipse.fx.code.editor.services.CompletionProposal;
+import org.eclipse.fx.code.editor.services.EditorOpener;
 import org.eclipse.fx.code.editor.services.HoverInformationProvider;
+import org.eclipse.fx.code.editor.services.NavigationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.fx.code.editor.services.ProposalComputer.ProposalContext;
+import org.eclipse.fx.code.editor.services.SearchProvider;
+import org.eclipse.fx.code.editor.services.URIProvider;
+import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.fx.core.preferences.Preference;
 import org.eclipse.fx.text.hover.HoverInfo;
+import org.eclipse.fx.text.navigation.NavigationRegion;
+import org.eclipse.fx.text.navigation.NavigationTarget;
 import org.eclipse.fx.text.ui.Feature;
 import org.eclipse.fx.text.ui.ITextHover;
 import org.eclipse.fx.text.ui.ITextViewer;
@@ -31,11 +44,17 @@ import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.source.AnnotationPresenter;
 import org.eclipse.fx.text.ui.source.ISourceViewer;
 import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLink;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLinkable;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.SimpleQuickLink;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.CustomQuickLink;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
+
+import com.google.common.collect.Range;
 
 import javafx.beans.property.SetProperty;
 import javafx.beans.property.SimpleSetProperty;
@@ -51,6 +70,12 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	private final AnnotationPresenter annotationPresenter;
 	private final HoverInformationProvider hoverInformationProvider;
 	private final CompletionProposalPresenter proposalPresenter;
+	private final SearchProvider searchProvider;
+	private final NavigationProvider navigationProvider;
+	private final EditorOpener editorOpener;
+
+	@Inject private EventBus eventBus;
+
 	private ContentAssistant contentAssistant;
 	private SetProperty<Feature> featureSet = new SimpleSetProperty<Feature>(this, "featureSet", FXCollections.observableSet());
 
@@ -62,7 +87,10 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			@Optional IAnnotationModel annotationModel,
 			@Optional AnnotationPresenter annotationPresenter,
 			@Optional HoverInformationProvider hoverInformationProvider,
-			@Optional CompletionProposalPresenter proposalPresenter
+			@Optional CompletionProposalPresenter proposalPresenter,
+			@Optional SearchProvider searchProvider,
+			@Optional NavigationProvider navigationProvider,
+			@Optional EditorOpener editorOpener
 			) {
 		this.input = input;
 		this.hoverInformationProvider = hoverInformationProvider;
@@ -72,6 +100,9 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		this.proposalPresenter = proposalPresenter == null ? DefaultProposal::new : proposalPresenter;
 
 		this.annotationPresenter = annotationPresenter;
+		this.searchProvider = searchProvider;
+		this.navigationProvider = navigationProvider;
+		this.editorOpener = editorOpener;
 	}
 
 	@Inject
@@ -81,6 +112,77 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			this.featureSet.addAll(featureSet);
 		} else {
 			this.featureSet.add(Feature.SHOW_LINE_NUMBERS);
+		}
+	}
+
+	private Range<Integer> convertRegion(IRegion region) {
+		return Range.closed(region.getOffset(), region.getOffset() + region.getLength());
+	}
+
+	private QuickLink convertNavigationTarget(NavigationTarget target) {
+		return new CustomQuickLink() {
+
+			@Override
+			public String getLabel() {
+				// TODO
+				return "need some label here!";
+			}
+
+			@Override
+			public Runnable getAction() {
+				return () -> {
+					editorOpener.openEditor(target.getFile().toString());
+					eventBus.publish(Constants.TOPIC_SELECT_SOURCE, new SourceSelection(target.getFile().toString(), target.getRegion()), true);
+				};
+			}
+
+			@Override
+			public String toString() {
+				return "CustombQuickLink in " + target.getFile() + " @ " + target.getRegion();
+			}
+
+		};
+	}
+
+	private QuickLinkable convertNavigationRegion(NavigationRegion region) {
+		return new QuickLinkable() {
+			@Override
+			public Range<Integer> getRegion() {
+				return convertRegion(region.getRegion());
+			}
+
+			@Override
+			public List<QuickLink> getLinks() {
+				return region.getTargets().stream().map(DefaultSourceViewerConfiguration.this::convertNavigationTarget).collect(Collectors.toList());
+			}
+		};
+	}
+
+	@Override
+	public Function<Integer, java.util.Optional<QuickLinkable>> getQuicklinkCallback() {
+
+		if (navigationProvider != null) {
+
+			return (offset) -> {
+				try {
+					Future<List<NavigationRegion>> navigationRegions = navigationProvider.getNavigationRegions();
+					List<NavigationRegion> list = navigationRegions.get(400, TimeUnit.MILLISECONDS);
+
+					for (NavigationRegion region : list) {
+						if (region.getRegion().getOffset() <= offset && region.getRegion().getOffset() + region.getRegion().getLength() > offset) {
+							return java.util.Optional.of(convertNavigationRegion(region));
+						}
+					}
+				}
+				catch (InterruptedException | TimeoutException | ExecutionException e) {
+					e.printStackTrace();
+				}
+
+				return java.util.Optional.empty();
+			};
+		}
+		else {
+			return super.getQuicklinkCallback();
 		}
 	}
 

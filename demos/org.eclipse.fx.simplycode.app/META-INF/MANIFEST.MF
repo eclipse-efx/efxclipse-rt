@@ -27,7 +27,10 @@ Require-Bundle: org.eclipse.fx.ui.workbench.fx,
  org.eclipse.fx.ui.controls;bundle-version="2.1.0",
  org.eclipse.jdt.annotation;bundle-version="2.0.100";resolution:=optional,
  org.eclipse.osgi.services,
- org.eclipse.fx.code.editor.e4;bundle-version="2.1.0"
+ org.eclipse.fx.code.editor.e4;bundle-version="2.1.0",
+ org.eclipse.fx.ui.workbench.renderers.fx,
+ org.eclipse.fx.ui.workbench.renderers.base;bundle-version="2.2.0"
 Import-Package: javax.inject;version="1.0.0"
-Service-Component: OSGI-INF/services/org.eclipse.fx.simplycode.app.themes.DefaultTheme.xml
+Service-Component: OSGI-INF/services/org.eclipse.fx.simplycode.app.themes.DefaultTheme.xml,
+ OSGI-INF/services/org.eclipse.fx.simplycode.app.animation.MinMaxAnimation.xml
 Bundle-Vendor: Eclipse.org

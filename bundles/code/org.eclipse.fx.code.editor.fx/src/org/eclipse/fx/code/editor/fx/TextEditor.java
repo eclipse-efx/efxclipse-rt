@@ -17,10 +17,15 @@ import javax.inject.Inject;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
+import org.eclipse.fx.code.editor.SourceSelection;
+import org.eclipse.fx.code.editor.services.URIProvider;
 import org.eclipse.fx.core.di.ContextValue;
+import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.fx.text.ui.source.SourceViewer;
 import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
+import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IDocumentPartitioner;
@@ -45,6 +50,8 @@ public class TextEditor {
 	private Property<Input<?>> activeInput;
 
 	private SourceViewer viewer;
+
+
 
 	@Inject
 	public void setDocument(IDocument document) {
@@ -87,7 +94,7 @@ public class TextEditor {
 	}
 
 	@PostConstruct
-	public void initUI(BorderPane pane) {
+	public void initUI(BorderPane pane, EventBus eventBus) {
 		viewer = createSourceViewer();
 		if( document instanceof IDocumentExtension3 ) {
 			((IDocumentExtension3)document).setDocumentPartitioner(configuration.getConfiguredDocumentPartitioning(viewer),partitioner);
@@ -102,6 +109,15 @@ public class TextEditor {
 		pane.setCenter(viewer);
 		if( activeInput != null ) {
 			activeInput.setValue(input);
+		}
+
+		eventBus.subscribe(Constants.TOPIC_SELECT_SOURCE, EventBus.data(this::onSourceSelect));
+	}
+
+	private void onSourceSelect(SourceSelection data) {
+		if (((URIProvider)input).getURI().equals(data.uri)) {
+			getSourceViewer().getTextWidget().setSelection(new TextSelection(data.selection.getOffset(), data.selection.getLength()));
+			getSourceViewer().getTextWidget().revealCaret();
 		}
 	}
 

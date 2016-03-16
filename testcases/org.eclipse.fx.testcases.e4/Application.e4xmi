@@ -39,7 +39,12 @@
             <children xsi:type="basic:Part" xmi:id="_cjVs4OL-EeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.1" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C1">
               <tags>Part-ToolBarMenu-Floating</tags>
               <toolbar xmi:id="_QPi6AIHxEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.toolbar.4">
-                <children xsi:type="menu:DirectToolItem" xmi:id="_QxE5wIHxEeKxavJ0U4_mHQ" elementId="org.eclipse.fx.testcases.e4.directtoolitem.8" label="DI" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler2"/>
+                <children xsi:type="menu:DirectToolItem" xmi:id="_zFeR4E1YEeWIZtt-ld8_6A" elementId="org.eclipse.fx.testcases.e4.directtoolitem.testradio" label="Test Radio" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler2">
+                  <menu xmi:id="_1o4p0E1YEeWIZtt-ld8_6A" elementId="org.eclipse.fx.testcases.e4.menu.11">
+                    <children xsi:type="menu:DirectMenuItem" xmi:id="_2u0XIE1YEeWIZtt-ld8_6A" elementId="org.eclipse.fx.testcases.e4.directmenuitem.r1" label="R1" type="Radio" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler2"/>
+                    <children xsi:type="menu:DirectMenuItem" xmi:id="_4VJbwE1YEeWIZtt-ld8_6A" elementId="org.eclipse.fx.testcases.e4.directmenuitem.r2" label="R2" type="Radio" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.handlers.DiHandler2"/>
+                  </menu>
+                </children>
               </toolbar>
             </children>
             <children xsi:type="basic:Part" xmi:id="_f5-RgOL-EeGP-5z69KadAQ" elementId="org.eclipse.fx.testcases.e4.part.2" toBeRendered="false" contributionURI="bundleclass://org.eclipse.fx.testcases.e4/org.eclipse.fx.testcases.e4.parts.ContentPanel" label="C2" closeable="true"/>

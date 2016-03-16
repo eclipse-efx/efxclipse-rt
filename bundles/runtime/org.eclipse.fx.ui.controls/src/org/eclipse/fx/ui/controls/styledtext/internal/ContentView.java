@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.internal;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +27,10 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
-import org.eclipse.fx.ui.controls.styledtext.events.HoverTarget;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
+import org.eclipse.fx.ui.controls.styledtext.events.HoverTarget;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
 
 import com.google.common.collect.ContiguousSet;
@@ -187,19 +186,26 @@ public class ContentView  extends Pane {
 		}
 
 
-//		protected void permutate(int a, int b) {
-//			LineNode nodeA = existingNodes.get(a);
-//			LineNode nodeB = existingNodes.get(b);
-//
-//			existingNodes.put(a, nodeB);
-//			existingNodes.put(b, nodeA);
-//
-//			System.err.println("  . permutate " + a + " -> " + b);
-//		}
+
+		public Optional<TextNode> findTextNode(Point2D localLocation) {
+			ContiguousSet<Integer> visibleLineIndexes = ContiguousSet.create(ContentView.this.visibleLines.get(), DiscreteDomain.integers());
+			return visibleLineIndexes.stream()
+				.map(lineIndex->getVisibleNode(lineIndex))
+				.filter(x->x.isPresent())
+				.filter(x->x.get().getBoundsInParent().contains(localLocation))
+				.findFirst()
+				.flatMap(x->x.get().findTextNode(x.get().parentToLocal(localLocation)));
+		}
+
 	}
 
 	public List<HoverTarget> findHoverTargets(Point2D localLocation) {
 		return this.lineLayer.findHoverTargets(localLocation);
+	}
+
+	public Optional<TextNode> findTextNode(Point2D localLocation) {
+		localLocation = this.lineLayer.sceneToLocal(this.localToScene(localLocation));
+		return this.lineLayer.findTextNode(localLocation);
 	}
 
 	private StackPane contentBody = new StackPane();

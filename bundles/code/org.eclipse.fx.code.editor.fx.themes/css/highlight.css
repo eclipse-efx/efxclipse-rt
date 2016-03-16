@@ -2,6 +2,15 @@
 	-type-info-color: darkgray;
 }
 
+.styled-text-area .dart.quick_link {
+	-styled-text-color: blue !important;
+	-efx-decoration: "underline";
+}
+
+.styled-text-area .dart.quick_link Text {
+	-fx-fill: red !important;
+}
+
 .styled-text-area .list-view {
 	-fx-background-color: white;
 

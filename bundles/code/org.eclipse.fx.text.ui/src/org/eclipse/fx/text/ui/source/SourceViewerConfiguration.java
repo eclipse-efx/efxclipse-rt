@@ -11,10 +11,12 @@
 package org.eclipse.fx.text.ui.source;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.eclipse.fx.text.hover.HoverInfo;
+import org.eclipse.fx.text.navigation.NavigationRegion;
 import org.eclipse.fx.text.ui.DefaultUndoManager;
 import org.eclipse.fx.text.ui.Feature;
 import org.eclipse.fx.text.ui.ITextHover;
@@ -23,6 +25,7 @@ import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
 import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.reconciler.IReconciler;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLinkable;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.source.Annotation;
@@ -89,6 +92,10 @@ public abstract class SourceViewerConfiguration {
 
 	public String getContentAssistAutoTriggers() {
 		return ".";
+	}
+
+	public Function<Integer, Optional<QuickLinkable>> getQuicklinkCallback() {
+		return (offset) -> Optional.empty();
 	}
 
 }
