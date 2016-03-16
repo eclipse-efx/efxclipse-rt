@@ -13,14 +13,23 @@ package org.eclipse.fx.ui.controls.styledtext.internal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.Util;
+import org.eclipse.fx.ui.controls.styledtext.DecorationStrategyFactory;
+import org.eclipse.fx.ui.controls.styledtext.model.DecorationStrategy;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
+import javafx.css.ParsedValue;
 import javafx.css.SimpleStyleableIntegerProperty;
 import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.StyleConverter;
@@ -33,46 +42,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 
 @SuppressWarnings("javadoc")
 public class TextNode extends HBox {
-
-	/**
-	 * A strategy to decorate the text
-	 */
-	public interface DecorationStrategy {
-		/**
-		 * Attach the decoration on the text
-		 *
-		 * @param node
-		 *            the node the decoration is attached to
-		 * @param textNode
-		 *            the text node decorated
-		 */
-		public void attach(TextNode node, Node textNode);
-
-		/**
-		 * Remove the decoration from the text
-		 *
-		 * @param node
-		 *            the node the decoration is attached to
-		 * @param textNode
-		 *            the text node decorated
-		 */
-		public void unattach(TextNode node, Node textNode);
-
-		/**
-		 * Layout the decoration
-		 *
-		 * @param node
-		 *            the node the layout pass is done on
-		 * @param textNode
-		 *            the text node decorated
-		 */
-		public void layout(TextNode node, Node textNode);
-	}
 
 	@SuppressWarnings("null")
 	@NonNull
@@ -136,53 +111,53 @@ public class TextNode extends HBox {
 		this.fillProperty().set(color);
 	}
 
-//	static class DecorationStyleConverter extends StyleConverter<ParsedValue<?, DecorationStrategy>, DecorationStrategy> {
-//		private static Map<String, DecorationStrategyFactory> FACTORIES;
-//
-//		@SuppressWarnings("null")
-//		@Override
-//		public DecorationStrategy convert(ParsedValue<ParsedValue<?, DecorationStrategy>, DecorationStrategy> value, Font font) {
-//			String definition = value.getValue() + ""; //$NON-NLS-1$
-//
-//			if (FACTORIES == null) {
-//				FACTORIES = Util.lookupServiceList(getClass(), DecorationStrategyFactory.class).stream().sorted((f1, f2) -> -1 * Integer.compare(f1.getRanking(), f2.getRanking())).collect(Collectors.toMap(f -> f.getDecorationStrategyName(), f -> f));
-//			}
-//
-//			String type;
-//			if (definition.contains("(")) { //$NON-NLS-1$
-//				type = definition.substring(0, definition.indexOf('('));
-//			} else {
-//				type = definition + ""; //$NON-NLS-1$
-//			}
-//
-//			DecorationStrategyFactory strategy = FACTORIES.get(type);
-//			if (strategy != null) {
-//				return strategy.create(definition.contains("(") ? definition.substring(definition.indexOf('(') + 1, definition.lastIndexOf(')')) : null); //$NON-NLS-1$
-//			}
-//
-//			return null;
-//		}
-//	}
+	static class DecorationStyleConverter extends StyleConverter<ParsedValue<?, DecorationStrategy>, DecorationStrategy> {
+		private static Map<String, DecorationStrategyFactory> FACTORIES;
 
-//	@NonNull
-//	private static final DecorationStyleConverter CONVERTER = new DecorationStyleConverter();
+		@SuppressWarnings("null")
+		@Override
+		public DecorationStrategy convert(ParsedValue<ParsedValue<?, DecorationStrategy>, DecorationStrategy> value, Font font) {
+			String definition = value.getValue() + ""; //$NON-NLS-1$
 
-//	@SuppressWarnings("null")
-//	@NonNull
-//	private static final CssMetaData<TextNode, @Nullable DecorationStrategy> DECORATIONSTRATEGY = new CssMetaData<TextNode, @Nullable DecorationStrategy>("-efx-decoration", CONVERTER, null) { //$NON-NLS-1$
-//
-//		@Override
-//		public boolean isSettable(TextNode node) {
-//			return !node.decorationStrategyProperty().isBound();
-//		}
-//
-//		@SuppressWarnings("unchecked")
-//		@Override
-//		public StyleableProperty<@Nullable DecorationStrategy> getStyleableProperty(TextNode node) {
-//			return (StyleableProperty<@Nullable DecorationStrategy>) node.decorationStrategyProperty();
-//		}
-//
-//	};
+			if (FACTORIES == null) {
+				FACTORIES = Util.lookupServiceList(getClass(), DecorationStrategyFactory.class).stream().sorted((f1, f2) -> -1 * Integer.compare(f1.getRanking(), f2.getRanking())).collect(Collectors.toMap(f -> f.getDecorationStrategyName(), f -> f));
+			}
+
+			String type;
+			if (definition.contains("(")) { //$NON-NLS-1$
+				type = definition.substring(0, definition.indexOf('('));
+			} else {
+				type = definition + ""; //$NON-NLS-1$
+			}
+
+			DecorationStrategyFactory strategy = FACTORIES.get(type);
+			if (strategy != null) {
+				return strategy.create(definition.contains("(") ? definition.substring(definition.indexOf('(') + 1, definition.lastIndexOf(')')) : null); //$NON-NLS-1$
+			}
+
+			return null;
+		}
+	}
+
+	@NonNull
+	private static final DecorationStyleConverter CONVERTER = new DecorationStyleConverter();
+
+	@SuppressWarnings("null")
+	@NonNull
+	private static final CssMetaData<TextNode, @Nullable DecorationStrategy> DECORATIONSTRATEGY = new CssMetaData<TextNode, @Nullable DecorationStrategy>("-efx-decoration", CONVERTER, null) { //$NON-NLS-1$
+
+		@Override
+		public boolean isSettable(TextNode node) {
+			return !node.decorationStrategyProperty().isBound();
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public StyleableProperty<@Nullable DecorationStrategy> getStyleableProperty(TextNode node) {
+			return (StyleableProperty<@Nullable DecorationStrategy>) node.decorationStrategyProperty();
+		}
+
+	};
 
 	@SuppressWarnings("null")
 	@NonNull
@@ -205,7 +180,7 @@ public class TextNode extends HBox {
 
 	static {
 		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(Region.getClassCssMetaData());
-//		styleables.add(DECORATIONSTRATEGY);
+		styleables.add(DECORATIONSTRATEGY);
 		styleables.add(FILL);
 		STYLEABLES = Collections.unmodifiableList(styleables);
 	}
@@ -219,33 +194,33 @@ public class TextNode extends HBox {
 		return getClassCssMetaData();
 	}
 
-//	private @NonNull ObjectProperty<@Nullable DecorationStrategy> decorationStrategy = new SimpleStyleableObjectProperty<@Nullable DecorationStrategy>(DECORATIONSTRATEGY, this, "decorationStrategy"); //$NON-NLS-1$
+	private @NonNull ObjectProperty<@Nullable DecorationStrategy> decorationStrategy = new SimpleStyleableObjectProperty<@Nullable DecorationStrategy>(DECORATIONSTRATEGY, this, "decorationStrategy"); //$NON-NLS-1$
 
-//	/**
-//	 * The current strategy used for decoration
-//	 *
-//	 * @return the property to observe
-//	 */
-//	public final @NonNull ObjectProperty<@Nullable DecorationStrategy> decorationStrategyProperty() {
-//		return this.decorationStrategy;
-//	}
+	/**
+	 * The current strategy used for decoration
+	 *
+	 * @return the property to observe
+	 */
+	public final @NonNull ObjectProperty<@Nullable DecorationStrategy> decorationStrategyProperty() {
+		return this.decorationStrategy;
+	}
 
-//	/**
-//	 * @return strategy used for decoration
-//	 */
-//	public final @Nullable DecorationStrategy getDecorationStrategy() {
-//		return this.decorationStrategyProperty().get();
-//	}
+	/**
+	 * @return strategy used for decoration
+	 */
+	public final @Nullable DecorationStrategy getDecorationStrategy() {
+		return this.decorationStrategyProperty().get();
+	}
 
-//	/**
-//	 * Set a new strategy used for decoration
-//	 *
-//	 * @param strategy
-//	 *            the strategy
-//	 */
-//	public final void setDecorationStrategy(final @Nullable DecorationStrategy strategy) {
-//		this.decorationStrategyProperty().set(strategy);
-//	}
+	/**
+	 * Set a new strategy used for decoration
+	 *
+	 * @param strategy
+	 *            the strategy
+	 */
+	public final void setDecorationStrategy(final @Nullable DecorationStrategy strategy) {
+		this.decorationStrategyProperty().set(strategy);
+	}
 
 	@NonNull
 	IntegerProperty tabCharAdvance = new SimpleStyleableIntegerProperty(TABCHARADANCE, this, "tabCharAdvance", Integer.valueOf(4)); //$NON-NLS-1$
@@ -327,6 +302,17 @@ public class TextNode extends HBox {
 		});
 
 //		setStyle("-fx-border-width: 0.1px; -fx-border-color: blue");
+
+
+		decorationStrategy.addListener((x, o, n)->{
+			System.err.println("deco start changed: " + n);
+		});
+
+		this.decorationStrategy.addListener(this::handleDecorationChange);
+	}
+
+	public Subscription setStyledRange(String clazz, int start, int end) {
+		return null;
 	}
 
 	public void updateText(String text) {
@@ -361,15 +347,15 @@ public class TextNode extends HBox {
 		return tmp;
 	}
 
-//	private void handleDecorationChange(ObservableValue<? extends DecorationStrategy> observable, DecorationStrategy oldValue, DecorationStrategy newValue) {
-//		if (oldValue != null) {
-//			oldValue.unattach(this, this.textNode);
-//		}
-//
-//		if (newValue != null) {
-//			newValue.attach(this, this.textNode);
-//		}
-//	}
+	private void handleDecorationChange(ObservableValue<? extends DecorationStrategy> observable, DecorationStrategy oldValue, DecorationStrategy newValue) {
+		if (oldValue != null) {
+			oldValue.unattach(this, this);
+		}
+
+		if (newValue != null) {
+			newValue.attach(this, this);
+		}
+	}
 
 	void setStartOffset(int startOffset) {
 		this.startOffset = startOffset;
@@ -442,10 +428,10 @@ public class TextNode extends HBox {
 //		}
 
 //		this.textNode.relocate(0, 0);
-//		DecorationStrategy decorationStrategy2 = this.decorationStrategy.get();
-//		if (decorationStrategy2 != null) {
-//			decorationStrategy2.layout(this, this.textNode);
-//		}
+		DecorationStrategy decorationStrategy2 = this.decorationStrategy.get();
+		if (decorationStrategy2 != null) {
+			decorationStrategy2.layout(this, this);
+		}
 	}
 
 	/**

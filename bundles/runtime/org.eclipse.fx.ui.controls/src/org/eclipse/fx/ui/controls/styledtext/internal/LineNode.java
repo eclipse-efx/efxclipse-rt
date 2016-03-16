@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,6 +57,7 @@ public class LineNode extends StackPane {
 	DebugMarker debugUpdateCaret;
 	private HBox debugBox;
 
+	/** line index */
 	int index;
 	LineHelper lineHelper;
 
@@ -239,6 +241,17 @@ public class LineNode extends StackPane {
 			}
 
 			return Collections.emptyList();
+		}
+
+
+		public Optional<TextNode> findTextNode(Point2D localLocation) {
+			for (TextNode t : this.currentTextNodes) {
+				Bounds segmentBounds = t.getBoundsInParent();
+				if (segmentBounds.contains(localLocation)) {
+					return Optional.of(t);
+				}
+			}
+			return Optional.empty();
 		}
 
 	}
@@ -736,6 +749,10 @@ public class LineNode extends StackPane {
 		results.addAll(this.textLayer.findHoverTargets(localLocation));
 		results.addAll(this.annotationLayer.findHoverTargets(localLocation));
 		return results;
+	}
+
+	public Optional<TextNode> findTextNode(Point2D localLocation) {
+		return this.textLayer.findTextNode(localLocation);
 	}
 
 	/**

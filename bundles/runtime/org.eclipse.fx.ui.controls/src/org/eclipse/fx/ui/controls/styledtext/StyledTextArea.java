@@ -13,9 +13,12 @@
 package org.eclipse.fx.ui.controls.styledtext;
 
 import java.lang.ref.WeakReference;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
@@ -23,6 +26,8 @@ import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+
+import com.google.common.collect.Range;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -163,6 +168,42 @@ public class StyledTextArea extends Control {
 	 */
 	public SetProperty<AnnotationProvider> getAnnotationProvider() {
 		return this.annotationProvider;
+	}
+
+	public static interface QuickLinkable {
+		Range<Integer> getRegion();
+		List<QuickLink> getLinks();
+	}
+
+	public static interface QuickLink {
+		String getLabel();
+	}
+
+	public static interface SimpleQuickLink extends QuickLink {
+		Range<Integer> getRegion();
+	}
+
+	public static interface CustomQuickLink extends QuickLink {
+		Runnable getAction();
+	}
+
+	private ObjectProperty<Function<Integer, Optional<QuickLinkable>>> quickLinkCallbackProperty = new SimpleObjectProperty<>(this, "quickLinkCallback", (offset)->Optional.empty());
+
+	/**
+	 * sets the quick link callback.
+	 * <p>If the callback returns one ore more entries, quick linking is available for the cursor position</p>
+	 * @param callback the quick linking callback
+	 */
+	public void setQuickLinkCallback(Function<Integer, Optional<QuickLinkable>> callback) {
+		this.quickLinkCallbackProperty.set(callback);
+	}
+
+	/**
+	 * returns the quick link callback.
+	 * @return the quick linking callback
+	 */
+	public Function<Integer, Optional<QuickLinkable>> getQuickLinkCallback() {
+		return this.quickLinkCallbackProperty.get();
 	}
 
 	private int anchor;

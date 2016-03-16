@@ -11,7 +11,7 @@
 package org.eclipse.fx.ui.controls.styledtext;
 
 import org.eclipse.fx.core.RankedService;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextNode.DecorationStrategy;
+import org.eclipse.fx.ui.controls.styledtext.model.DecorationStrategy;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
@@ -26,7 +26,7 @@ public interface DecorationStrategyFactory extends RankedService {
 
 	/**
 	 * Create a strategy
-	 * 
+	 *
 	 * @param definition
 	 *            the definition as found in the css
 	 * @return (shared) instance of a strategy
