@@ -14,7 +14,6 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.fx.code.editor.Constants;
-import org.eclipse.fx.core.adapter.Adapt;
 import org.eclipse.fx.core.preferences.Preference;
 
 import javafx.beans.property.Property;
@@ -25,8 +24,8 @@ import javafx.beans.property.Property;
 @SuppressWarnings("restriction")
 public class SetTabAdvance {
 	@Execute
-	public void setTabAdvance(@Named("tabAdvance") @Adapt int newTabAdvance, @Preference(key=Constants.PREFERENCE_TAB_ADVANCE,nodePath=Constants.PREFERENCE_NODE_PATH) Property<Integer> tabAdvance) {
-		if( newTabAdvance > 0 ) {
+	public void setTabAdvance(@Named("tabAdvance") String newTabAdvance, @Preference(key=Constants.PREFERENCE_TAB_ADVANCE,nodePath=Constants.PREFERENCE_NODE_PATH) Property<Integer> tabAdvance) {
+		if( Integer.parseInt(newTabAdvance) > 0 ) {
 			tabAdvance.setValue(Integer.valueOf(newTabAdvance));
 		}
 	}

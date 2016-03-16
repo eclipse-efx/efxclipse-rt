@@ -80,7 +80,7 @@ public class TextEditor {
 	}
 
 	@Inject
-	public void setTabAdvance(@Preference(nodePath=Constants.PREFERENCE_TAB_ADVANCE, key=Constants.PREFERENCE_TAB_ADVANCE) Integer tabAdvance ) {
+	public void setTabAdvance(@Preference(nodePath=Constants.PREFERENCE_NODE_PATH, key=Constants.PREFERENCE_TAB_ADVANCE) Integer tabAdvance ) {
 		if( tabAdvance != null && tabAdvance.intValue() > 0 ) {
 			this.tabAdvance = tabAdvance;
 		}
