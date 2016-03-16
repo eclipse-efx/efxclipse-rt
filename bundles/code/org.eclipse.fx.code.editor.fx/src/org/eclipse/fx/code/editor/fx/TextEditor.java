@@ -109,6 +109,10 @@ public class TextEditor {
 		return new SourceViewer();
 	}
 
+	public SourceViewer getSourceViewer() {
+		return viewer;
+	}
+
 	@Persist
 	public void save() {
 		input.persist();
