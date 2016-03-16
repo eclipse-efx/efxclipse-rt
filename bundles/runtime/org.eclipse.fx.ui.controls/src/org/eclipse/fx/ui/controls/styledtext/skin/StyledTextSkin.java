@@ -35,6 +35,7 @@ import org.eclipse.fx.ui.controls.styledtext.internal.LineHelper;
 import org.eclipse.fx.ui.controls.styledtext.internal.LineRuler;
 import org.eclipse.fx.ui.controls.styledtext.internal.ScrollbarPane;
 import org.eclipse.fx.ui.controls.styledtext.internal.Scroller;
+import org.eclipse.fx.ui.controls.styledtext.internal.TextNode;
 import org.eclipse.fx.ui.controls.styledtext.model.Annotation;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
@@ -340,6 +341,11 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		});
 		getSkinnable().getAnnotationPresenter().forEach(installPresenter);
 
+	}
+
+	public Optional<TextNode> findTextNode(Point2D screenLocation) {
+		Point2D contentLocalLocation = this.content.screenToLocal(screenLocation);
+		return this.content.findTextNode(contentLocalLocation);
 	}
 
 	private void scrollColumnIntoView(int colIndex) {
