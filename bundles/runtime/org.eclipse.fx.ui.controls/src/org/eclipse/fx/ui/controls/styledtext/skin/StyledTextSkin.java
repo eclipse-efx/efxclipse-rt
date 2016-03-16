@@ -374,7 +374,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		return diag.showAndWait().map(converter);
 	}
 
-	private void scrollLineIntoView(int lineIndex) {
+	public void scrollLineIntoView(int lineIndex) {
 		this.scroller.scrollIntoView(lineIndex);
 	}
 
