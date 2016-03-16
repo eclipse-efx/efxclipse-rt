@@ -23,6 +23,7 @@ import org.eclipse.fx.code.editor.SourceSelection;
 import org.eclipse.fx.code.editor.services.URIProvider;
 import org.eclipse.fx.core.di.ContextValue;
 import org.eclipse.fx.core.event.EventBus;
+import org.eclipse.fx.core.preferences.Preference;
 import org.eclipse.fx.text.ui.source.SourceViewer;
 import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
@@ -51,7 +52,7 @@ public class TextEditor {
 
 	private SourceViewer viewer;
 
-
+	private Integer tabAdvance;
 
 	@Inject
 	public void setDocument(IDocument document) {
@@ -79,6 +80,17 @@ public class TextEditor {
 	}
 
 	@Inject
+	public void setTabAdvance(@Preference(nodePath=Constants.PREFERENCE_TAB_ADVANCE, key=Constants.PREFERENCE_TAB_ADVANCE) Integer tabAdvance ) {
+		if( tabAdvance != null && tabAdvance.intValue() > 0 ) {
+			this.tabAdvance = tabAdvance;
+		}
+
+		if( viewer != null && tabAdvance != null ) {
+			viewer.getTextWidget().setTabAdvance(tabAdvance.intValue());
+		}
+	}
+
+	@Inject
 	public void setInput(Input<?> input) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The input has to be set before the editor is initialized");
@@ -96,6 +108,10 @@ public class TextEditor {
 	@PostConstruct
 	public void initUI(BorderPane pane, EventBus eventBus) {
 		viewer = createSourceViewer();
+		if( tabAdvance != null ) {
+			viewer.getTextWidget().setTabAdvance(tabAdvance.intValue());
+		}
+
 		if( document instanceof IDocumentExtension3 ) {
 			((IDocumentExtension3)document).setDocumentPartitioner(configuration.getConfiguredDocumentPartitioning(viewer),partitioner);
 		} else {
@@ -103,7 +119,6 @@ public class TextEditor {
 		}
 		document.setDocumentPartitioner(partitioner);
 		partitioner.connect(document);
-
 		viewer.configure(configuration);
 		viewer.setDocument(document, configuration.getAnnotationModel());
 		pane.setCenter(viewer);
