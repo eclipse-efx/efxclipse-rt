@@ -117,6 +117,9 @@ public class StyledTextArea extends Control {
 	@NonNull
 	private final ObjectProperty<TextSelection> currentSelection = new SimpleObjectProperty<>(this, "currentSelection"); //$NON-NLS-1$
 
+	@NonNull
+	private final IntegerProperty tabAdvance = new SimpleIntegerProperty(this, "tabAdvance", 4); //$NON-NLS-1$
+
 	/**
 	 * Separator for lines
 	 */
@@ -167,7 +170,7 @@ public class StyledTextArea extends Control {
 
 	private int anchor;
 
-//	private int lastTextChangeStart;
+	// private int lastTextChangeStart;
 
 	// private int lastTextChangeNewLineCount;
 
@@ -347,7 +350,7 @@ public class StyledTextArea extends Control {
 			event.replaceCharCount *= -1;
 		}
 
-//		this.lastTextChangeStart = event.offset;
+		// this.lastTextChangeStart = event.offset;
 		// this.lastTextChangeNewLineCount = event.newLineCount;
 		this.lastTextChangeNewCharCount = event.newCharCount;
 		// this.lastTextChangeReplaceLineCount = event.replaceLineCount;
@@ -379,7 +382,7 @@ public class StyledTextArea extends Control {
 			// }
 		} else {
 			// partial text change
-//			TextChangingEvent event = this.changingEvent;
+			// TextChangingEvent event = this.changingEvent;
 			this.changingEvent = null;
 
 			// if (getSkin() instanceof StyledTextSkin) {
@@ -1519,9 +1522,7 @@ public class StyledTextArea extends Control {
 	}
 
 	public static enum LineLocation {
-		BELOW,
-		ABOVE,
-		CENTER
+		BELOW, ABOVE, CENTER
 	}
 
 	/**
@@ -1530,7 +1531,7 @@ public class StyledTextArea extends Control {
 	 * @param offset
 	 *            the offset
 	 * @param locationHint
-	 * 			  hint for y coordinate relative to line
+	 *            hint for y coordinate relative to line
 	 * @return the point
 	 */
 	public @Nullable Point2D getLocationAtOffset(int offset, LineLocation locationHint) {
@@ -1679,8 +1680,11 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * Get the char offset at the give coordinates
-	 * @param x the x
-	 * @param y the y
+	 *
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 * @return the offset
 	 */
 	public int getOffsetAtPosition(double x, double y) {
@@ -1708,12 +1712,38 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * navigates to specified line
+	 *
 	 * @param lineIndex
 	 */
 	public void navigateToLine(int lineIndex) {
-		if (lineIndex >= 0  && lineIndex <= getContent().getLineCount()) {
+		if (lineIndex >= 0 && lineIndex <= getContent().getLineCount()) {
 			int offset = getContent().getOffsetAtLine(lineIndex);
 			setCaretOffset(offset);
 		}
+	}
+
+	/**
+	 * Set the number of chars a tab advances in the document. Default is 4.
+	 *
+	 * @param advance
+	 *            the number of chars
+	 * @since 2.4.0
+	 */
+	public void setTabAdvance(int advance) {
+		tabAvanceProperty().set(advance);
+	}
+
+	/**
+	 * @return The number of chars a tab advances in the document. Default is 4.
+	 */
+	public int getTabAdvance() {
+		return tabAvanceProperty().get();
+	}
+
+	/**
+	 * @return The number of chars a tab advances in the document. Default is 4.
+	 */
+	public @NonNull IntegerProperty tabAvanceProperty() {
+		return this.tabAdvance;
 	}
 }
