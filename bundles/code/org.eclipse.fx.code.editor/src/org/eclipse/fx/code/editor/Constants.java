@@ -12,6 +12,8 @@ public class Constants {
 	public static final Topic<SourceFileInput> TOPIC_SOURCE_FILE_INPUT_DISPOSED = new Topic<>("at/bestsolution/dart/editor/file-input/disposed");
 	public static final Topic<SourceFileInput> TOPIC_SOURCE_FILE_INPUT_SAVED = new Topic<>("at/bestsolution/dart/editor/file-input/saved");
 
+	public static final Topic<SourceSelection> TOPIC_SELECT_SOURCE = new Topic<>("at/bestsolution/dart/editor/select-source");
+
 
 	public static final String DOCUMENT_URL = "documentUrl";
 	public static final String VCS_URL = "vcsUrl";

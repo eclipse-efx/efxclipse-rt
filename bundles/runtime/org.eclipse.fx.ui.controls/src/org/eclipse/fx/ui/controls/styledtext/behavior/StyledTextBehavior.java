@@ -341,7 +341,6 @@ public class StyledTextBehavior {
 	private void doLink(QuickLink link) {
 		if (link instanceof SimpleQuickLink) {
 			SimpleQuickLink simple = (SimpleQuickLink) link;
-			getControl().setCaretOffset(simple.getRegion().upperEndpoint());
 			getControl().setSelection(new TextSelection(simple.getRegion().lowerEndpoint(), simple.getRegion().upperEndpoint() - simple.getRegion().lowerEndpoint()));
 		}
 		else if (link instanceof CustomQuickLink) {

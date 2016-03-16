@@ -1494,7 +1494,7 @@ public class StyledTextArea extends Control {
 		if (selection.length == 0) {
 			setCaretOffset(selection.offset);
 		} else {
-			// this.caretOffsetProperty.set(selection.offset+selection.length);
+			this.caretOffsetProperty.set(selection.offset+selection.length);
 			this.currentSelection.set(selection);
 		}
 	}
@@ -1756,5 +1756,9 @@ public class StyledTextArea extends Control {
 			int offset = getContent().getOffsetAtLine(lineIndex);
 			setCaretOffset(offset);
 		}
+	}
+
+	public void revealCaret() {
+		// TODO reveal caret
 	}
 }
