@@ -31,6 +31,7 @@ import com.google.common.collect.Range;
 
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
+import javafx.beans.property.IntegerProperty;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.geometry.Bounds;
@@ -71,8 +72,8 @@ public class LineNode extends StackPane {
 		return this.index;
 	}
 
-	static TextNode createNode() {
-		TextNode textNode = new TextNode(""); //$NON-NLS-1$
+	static TextNode createNode(IntegerProperty tabCharAdvance) {
+		TextNode textNode = new TextNode("",tabCharAdvance); //$NON-NLS-1$
 		return textNode;
 	}
 
@@ -80,13 +81,13 @@ public class LineNode extends StackPane {
 
 		protected final ReuseCache<TextNode> cache;
 
-		public TextLayer() {
+		public TextLayer(IntegerProperty tabCharAdvance) {
 			getStyleClass().add(CSS_CLASS_SOURCE_SEGMENT_CONTAINER);
 //			setCache(true);
 //			setCacheHint(CacheHint.QUALITY);
 			setMinWidth(Region.USE_COMPUTED_SIZE);
 
-			this.cache = new ReuseCache<>(LineNode::createNode);
+			this.cache = new ReuseCache<>( () -> LineNode.createNode(tabCharAdvance));
 			this.cache.addOnActivate(node->{
 				getChildren().add(node);
 //				if (!getChildren().contains(node)) {
@@ -600,13 +601,13 @@ public class LineNode extends StackPane {
 		return Range.range(lineOffset + range.lowerEndpoint(), range.lowerBoundType(), lineOffset + range.upperEndpoint(), range.upperBoundType());
 	}
 
-	TextLayer textLayer = new TextLayer();
+	final TextLayer textLayer;
 	private SelectionLayer selectionLayer = new SelectionLayer();
 	private CaretLayer caretLayer = new CaretLayer();
 	private AnnotationLayer annotationLayer = new AnnotationLayer();
 
-
-	public LineNode() {
+	public LineNode(IntegerProperty tabCharAdvance) {
+		this.textLayer = new TextLayer(tabCharAdvance);
 //		this.model = model;
 		getStyleClass().add(CSS_CLASS_STYLED_TEXT_LINE);
 

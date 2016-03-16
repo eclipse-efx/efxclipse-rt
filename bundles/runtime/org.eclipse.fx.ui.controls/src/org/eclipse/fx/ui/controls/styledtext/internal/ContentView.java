@@ -210,10 +210,7 @@ public class ContentView  extends Pane {
 
 	private StackPane contentBody = new StackPane();
 
-	private LineLayer lineLayer = new LineLayer(()->new LineNode(), (n, m)->{
-		n.setLineHelper(getLineHelper());
-		n.update(this.textAnnotationPresenter.get());
-	});
+	private final LineLayer lineLayer;
 
 //	private Predicate<Set<LineNode>> needsPresentation;
 
@@ -345,6 +342,10 @@ public class ContentView  extends Pane {
 	private StyledTextArea area;
 
 	public ContentView(LineHelper lineHelper, StyledTextArea area) {
+		this.lineLayer = new LineLayer(()->new LineNode(area.tabAvanceProperty()), (n, m)->{
+			n.setLineHelper(getLineHelper());
+			n.update(this.textAnnotationPresenter.get());
+		});
 		this.area = area;
 		this.lineHelper = lineHelper;
 //		setStyle("-fx-border-color: green; -fx-border-width:2px; -fx-border-style: dashed;");

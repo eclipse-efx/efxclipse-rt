@@ -159,23 +159,6 @@ public class TextNode extends HBox {
 
 	};
 
-	@SuppressWarnings("null")
-	@NonNull
-	private static final CssMetaData<TextNode, @NonNull Number> TABCHARADANCE = new CssMetaData<TextNode, @NonNull Number>("-efx-tab-char-advance", StyleConverter.getSizeConverter(), Integer.valueOf(4)) { //$NON-NLS-1$
-
-		@Override
-		public boolean isSettable(TextNode styleable) {
-			return !styleable.tabCharAdvanceProperty().isBound();
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public StyleableProperty<@NonNull Number> getStyleableProperty(TextNode styleable) {
-			return (StyleableProperty<@NonNull Number>) styleable.tabCharAdvance;
-		}
-
-	};
-
 	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
 
 	static {
@@ -222,36 +205,6 @@ public class TextNode extends HBox {
 		this.decorationStrategyProperty().set(strategy);
 	}
 
-	@NonNull
-	IntegerProperty tabCharAdvance = new SimpleStyleableIntegerProperty(TABCHARADANCE, this, "tabCharAdvance", Integer.valueOf(4)); //$NON-NLS-1$
-
-	/**
-	 * Number of chars to use for tab advance (default is 4)
-	 *
-	 * @return the property to observe
-	 */
-	public final IntegerProperty tabCharAdvanceProperty() {
-		return this.tabCharAdvance;
-	}
-
-	/**
-	 * @return the number of chars to use for tab advance (default is 4)
-	 */
-	public final int getTabCharAdvance() {
-		return this.tabCharAdvanceProperty().get();
-	}
-
-	/**
-	 * Set a new number for chars to advance for a tab
-	 *
-	 * @param tabCharAdvance
-	 *            the number of chars to use for tab advance (default is 4)
-	 */
-	public final void setTabCharAdvance(final int tabCharAdvance) {
-		this.tabCharAdvanceProperty().set(tabCharAdvance);
-	}
-
-
 //	private ReuseCache<Text> letterCache = new ReuseCache<Text>(this::createText);
 
 	private int startOffset;
@@ -263,6 +216,7 @@ public class TextNode extends HBox {
 	private List<Text> activeLetters = new ArrayList<>();
 	private ReuseCache<Text> cache;
 
+	private final IntegerProperty tabCharAdvance;
 
 	/**
 	 * Create a new styled text node
@@ -270,7 +224,8 @@ public class TextNode extends HBox {
 	 * @param text
 	 *            the text
 	 */
-	public TextNode(String text) {
+	public TextNode(String text, IntegerProperty tabCharAdvance) {
+		this.tabCharAdvance = tabCharAdvance;
 		setMinWidth(Region.USE_COMPUTED_SIZE);
 		this.cache = new ReuseCache<>(()->{
 			Text letter = new Text();
