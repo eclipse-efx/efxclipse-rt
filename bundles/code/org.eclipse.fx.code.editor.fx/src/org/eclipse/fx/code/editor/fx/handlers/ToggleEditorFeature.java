@@ -33,13 +33,13 @@ public class ToggleEditorFeature {
 	public void execute(@Named("feature") String featureName, @Preference(key=Constants.PREFERENCE_KEY_EDITOR_FEATURE,nodePath=Constants.PREFERENCE_NODE_PATH) Property<Set<Feature>> featureSet) {
 		Feature f = Feature.valueOf(featureName);
 
-		Set<Feature> copy = new HashSet<Feature>(featureSet.getValue() == null ? Collections.emptySet() : featureSet.getValue());
+		Set<Feature> copy = new HashSet<Feature>(featureSet.getValue() == null ? Collections.singleton(Feature.SHOW_LINE_NUMBERS) : featureSet.getValue());
 		if( copy.contains(f) ) {
 			copy.remove(f);
 		} else {
 			copy.add(f);
 		}
-
+		System.err.println(" ===========> " + copy);
 		featureSet.setValue(copy);
 	}
 }
