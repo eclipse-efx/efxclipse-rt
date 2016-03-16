@@ -1789,6 +1789,7 @@ public class StyledTextArea extends Control {
 	}
 
 	public void revealCaret() {
-		// TODO reveal caret
+		int lineIndex = getContent().getLineAtOffset(getCaretOffset());
+		((StyledTextSkin)getSkin()).scrollLineIntoView(lineIndex);
 	}
 }
