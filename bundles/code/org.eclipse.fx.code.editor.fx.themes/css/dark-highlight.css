@@ -7,6 +7,19 @@
 	-efx-decoration: "underline";
 }
 
+.invisible-char {
+	-fx-fill: darkgray;
+}
+.invisible-char.space {
+	-fx-content: "\u00B7";
+}
+.invisible-char.tab {
+	-fx-content: "\u21E5";
+}
+.invisible-char.enter {
+	-fx-content: "\u21B5";
+}
+
 .styled-text-area .list-view {
 	-source-editor-code: #b8c4d1;
 	-source-editor-operator: #b8c4d1;

@@ -32,6 +32,7 @@ public class InvisibleCharSupport implements IFeature {
 
 	public class InvisibleCharAnnotation implements TextAnnotation {
 
+		private final String styleClass;
 		private final Range range;
 		private final String symbol;
 		private int tabWidth;
@@ -50,7 +51,8 @@ public class InvisibleCharSupport implements IFeature {
 			return symbol;
 		}
 
-		public InvisibleCharAnnotation(String symbol, Range range, int tabWidth) {
+		public InvisibleCharAnnotation(String styleClass, String symbol, Range range, int tabWidth) {
+			this.styleClass = styleClass;
 			this.symbol = symbol;
 			this.range = range;
 			this.tabWidth = tabWidth;
@@ -110,9 +112,11 @@ public class InvisibleCharSupport implements IFeature {
 
 		@Override
 		public Node createNode() {
-			Text n = new Text();
-			n.getStyleClass().add("invisible-char");
-			return n;
+			InvisibleCharNode node = new InvisibleCharNode();
+			return node;
+//			Text n = new Text();
+//			n.getStyleClass().add("invisible-char");
+//			return n;
 		}
 
 		@Override
@@ -122,9 +126,9 @@ public class InvisibleCharSupport implements IFeature {
 
 		@Override
 		public void updateNode(Node node, Annotation annotation) {
-			Text t = (Text) node;
+			InvisibleCharNode n = (InvisibleCharNode) node;
 			InvisibleCharAnnotation a = (InvisibleCharAnnotation) annotation;
-			t.setText(a.getSymbol());
+			n.getStyleClass().setAll("invisible-char", a.styleClass);
 		}
 
 		@Override
@@ -161,19 +165,19 @@ public class InvisibleCharSupport implements IFeature {
 			Pattern tab = Pattern.compile("\\t");
 			Matcher matcher = tab.matcher(line);
 			while (matcher.find()) {
-				annotations.add(new InvisibleCharAnnotation("\u21E5", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance()));
+				annotations.add(new InvisibleCharAnnotation("tab", "", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance()));
 			}
 
 			// ADD SPACE
 			Pattern space = Pattern.compile("[ ]");
 			matcher = space.matcher(line);
 			while (matcher.find()) {
-				annotations.add(new InvisibleCharAnnotation("\u00B7", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance()));
+				annotations.add(new InvisibleCharAnnotation("space", "", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance()));
 			}
 
 			// ADD NEWLINE
 			if (index < numOfLines-1) {
-				annotations.add(new InvisibleCharAnnotation("\u21B5", Range.closed(lineLength, lineLength +1), control.getTabAdvance()));
+				annotations.add(new InvisibleCharAnnotation("enter", "", Range.closed(lineLength, lineLength +1), control.getTabAdvance()));
 			}
 
 			return annotations;
