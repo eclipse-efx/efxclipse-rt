@@ -30,7 +30,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
 import javafx.css.ParsedValue;
-import javafx.css.SimpleStyleableIntegerProperty;
 import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.StyleConverter;
 import javafx.css.Styleable;
@@ -246,7 +245,7 @@ public class TextNode extends HBox {
 		rebuildText(text);
 
 		this.tabCharAdvance.addListener(o -> {
-			rebuildText(text);
+			rebuildText(this.originalText);
 		});
 		this.cache.addOnActivate((n)->{
 			((Text)n).fillProperty().bind(fillProperty());
