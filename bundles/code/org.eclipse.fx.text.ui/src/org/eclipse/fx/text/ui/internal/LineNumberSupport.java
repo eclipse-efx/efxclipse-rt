@@ -141,11 +141,19 @@ public class LineNumberSupport implements IFeature {
 
 	@Override
 	public Subscription install(final StyledTextArea control) {
-		double charWidth = 8d;
 		LineNrAnnotationPresenter presenter = new LineNrAnnotationPresenter();
 		LineNrAnnotationProvider provider = new LineNrAnnotationProvider();
 
-		DoubleBinding width = Bindings.createDoubleBinding(()->Integer.toString(control.lineCountProperty().get()).length() * charWidth, control.lineCountProperty());
+		DoubleBinding charWidth = Bindings.createDoubleBinding(()->{
+			Text dummy = new Text();
+			dummy.setFont(control.getFont());
+			dummy.setText("C");
+			dummy.applyCss();
+			dummy.autosize();
+			return dummy.getBoundsInLocal().getWidth();
+		}, control.fontProperty());
+
+		DoubleBinding width = Bindings.createDoubleBinding(()->Integer.toString(control.lineCountProperty().get()).length() * charWidth.get(), control.lineCountProperty(), charWidth);
 		presenter.w.bind(width);
 		control.getAnnotationProvider().add(provider);
 		control.getAnnotationPresenter().add(presenter);
