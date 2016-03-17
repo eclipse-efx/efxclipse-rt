@@ -21,6 +21,7 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
+import com.google.common.collect.TreeRangeSet;
 
 import javafx.scene.Node;
 import javafx.scene.text.Text;
@@ -31,6 +32,7 @@ public class InvisibleCharSupport implements IFeature {
 
 		private final Range range;
 		private final String symbol;
+		private int tabWidth;
 
 		@Override
 		public Range getRange() {
@@ -46,9 +48,13 @@ public class InvisibleCharSupport implements IFeature {
 			return symbol;
 		}
 
-		public InvisibleCharAnnotation(String symbol, Range range) {
+
+
+		public InvisibleCharAnnotation(String symbol, Range range, int tabWidth) {
 			this.symbol = symbol;
 			this.range = range;
+			this.tabWidth = tabWidth;
+			System.err.println("InvisibleCharAnnotation " + range + " @ " + tabWidth);
 		}
 
 		@Override
@@ -58,6 +64,7 @@ public class InvisibleCharSupport implements IFeature {
 			result = prime * result + getOuterType().hashCode();
 			result = prime * result + ((range == null) ? 0 : range.hashCode());
 			result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
+			result = prime * result + tabWidth;
 			return result;
 		}
 
@@ -81,6 +88,8 @@ public class InvisibleCharSupport implements IFeature {
 				if (other.symbol != null)
 					return false;
 			} else if (!symbol.equals(other.symbol))
+				return false;
+			if (tabWidth != other.tabWidth)
 				return false;
 			return true;
 		}
@@ -152,23 +161,30 @@ public class InvisibleCharSupport implements IFeature {
 			Pattern tab = Pattern.compile("\\t");
 			Matcher matcher = tab.matcher(line);
 			while (matcher.find()) {
-				annotations.add(new InvisibleCharAnnotation("\u21E5", Range.closed(matcher.start(), matcher.start() + 1)));
+				annotations.add(new InvisibleCharAnnotation("\u21E5", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance()));
 			}
 
 			// ADD NEWLINE
 			if (index < numOfLines-1) {
-				annotations.add(new InvisibleCharAnnotation("\u21B5", Range.closed(lineLength, lineLength +1)));
+				annotations.add(new InvisibleCharAnnotation("\u21B5", Range.closed(lineLength, lineLength +1), control.getTabAdvance()));
 			}
 
 			return annotations;
 		}
 
+		private List<Consumer<RangeSet<Integer>>> listeners = new ArrayList<>();
+
+		public void notify(RangeSet<Integer> c) {
+			listeners.stream().forEach(x->x.accept(c));
+		}
+
 		@Override
 		public Subscription registerChangeListener(Consumer<RangeSet<Integer>> onChange) {
+			listeners.add(onChange);
 			return new Subscription() {
 				@Override
 				public void dispose() {
-
+					listeners.remove(onChange);
 				}
 			};
 		}
@@ -181,6 +197,13 @@ public class InvisibleCharSupport implements IFeature {
 		final InvisibleCharAnnotationPresenter presenter = new InvisibleCharAnnotationPresenter();
 		control.getAnnotationProvider().add(provider);
 		control.getAnnotationPresenter().add(presenter);
+
+		control.tabAvanceProperty().addListener((x, o, n)->{
+			System.err.println("ON TAB ADVANCE CHANGE!");
+			RangeSet<Integer> rs = TreeRangeSet.<Integer>create().complement();
+			provider.notify(rs);
+		});
+
 		return new Subscription() {
 			@Override
 			public void dispose() {

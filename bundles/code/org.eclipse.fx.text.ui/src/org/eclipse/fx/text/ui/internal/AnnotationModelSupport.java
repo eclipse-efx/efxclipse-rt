@@ -41,12 +41,14 @@ public class AnnotationModelSupport {
 	static class MarkerAnnotation implements TextAnnotation, WrappedAnnotation {
 		public final Range<Integer> range;
 		public final Annotation annotation;
+		public final int tabAdvance;
 
 		private final String nfo;
 
-		public MarkerAnnotation(Annotation annotation, Range<Integer> range) {
+		public MarkerAnnotation(Annotation annotation, Range<Integer> range, int tabAdvance) {
 			this.annotation = annotation;
 			this.range = range;
+			this.tabAdvance = tabAdvance;
 			this.nfo = annotation.getType() + annotation.getText();
 		}
 
@@ -76,6 +78,7 @@ public class AnnotationModelSupport {
 			int result = 1;
 			result = prime * result + ((nfo == null) ? 0 : nfo.hashCode());
 			result = prime * result + ((range == null) ? 0 : range.hashCode());
+			result = prime * result + tabAdvance;
 			return result;
 		}
 
@@ -98,8 +101,12 @@ public class AnnotationModelSupport {
 					return false;
 			} else if (!range.equals(other.range))
 				return false;
+			if (tabAdvance != other.tabAdvance)
+				return false;
 			return true;
 		}
+
+
 
 
 
@@ -149,7 +156,7 @@ public class AnnotationModelSupport {
 				int lower = position.offset - lineBegin;
 				int upper = lower + Math.min(position.length, lineLength);
 				Range<Integer> lineLocalRange = Range.closed(lower, upper);
-				MarkerAnnotation annotation = new MarkerAnnotation(a, lineLocalRange);
+				MarkerAnnotation annotation = new MarkerAnnotation(a, lineLocalRange, control.getTabAdvance());
 				result.add(annotation);
 			}
 		}
@@ -198,6 +205,12 @@ public class AnnotationModelSupport {
 	public void install() {
 		annotationModel.addAnnotationModelListener(new Listener());
 		control.getAnnotationProvider().add(new AnnotationModelAnnotationProvider());
+		control.tabAvanceProperty().addListener((x, o, n)->{
+			onAnnotationModelChange();
+//			System.err.println("ON TAB ADVANCE CHANGE!");
+//			RangeSet<Integer> rs = TreeRangeSet.<Integer>create().complement();
+//			triggerChange(rs);
+		});
 	}
 
 }
