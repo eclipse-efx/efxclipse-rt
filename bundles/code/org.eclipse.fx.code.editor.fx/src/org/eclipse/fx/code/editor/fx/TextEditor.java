@@ -144,6 +144,7 @@ public class TextEditor {
 
 	private void onSourceSelect(SourceSelection data) {
 		if (((URIProvider)input).getURI().equals(data.uri)) {
+			getSourceViewer().getTextWidget().setCaretOffset(data.selection.getOffset() + data.selection.getLength());
 			getSourceViewer().getTextWidget().setSelection(new TextSelection(data.selection.getOffset(), data.selection.getLength()));
 			getSourceViewer().getTextWidget().revealCaret();
 		}
