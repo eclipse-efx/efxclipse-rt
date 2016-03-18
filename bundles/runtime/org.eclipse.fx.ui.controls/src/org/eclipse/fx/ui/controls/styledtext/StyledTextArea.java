@@ -240,6 +240,9 @@ public class StyledTextArea extends Control {
 		this.getStyleClass().add("styled-text-area"); //$NON-NLS-1$
 		this.contentProperty = new ContentProperty(this, "content", new DefaultContent()); //$NON-NLS-1$
 		setFocusTraversable(true);
+
+		DoubleBinding lineHeight = org.eclipse.fx.ui.controls.Util.createTextHeightBinding("Pj", fontProperty());
+		fixedLineHeightProperty().bind(lineHeight);
 	}
 
 	static final CssMetaData<StyledTextArea, Number> FIXED_LINE_HEIGHT = new CssMetaData<StyledTextArea, Number>("-fx-fixed-line-height", //$NON-NLS-1$
@@ -1852,5 +1855,15 @@ public class StyledTextArea extends Control {
 	public void revealCaret() {
 		int lineIndex = getContent().getLineAtOffset(getCaretOffset());
 		((StyledTextSkin) getSkin()).scrollLineIntoView(lineIndex);
+		if (getSkin() != null) {
+			((StyledTextSkin)getSkin()).scrollLineIntoView(lineIndex);
+		}
+		else {
+			Platform.runLater(()-> {
+				if (getSkin() != null) {
+					((StyledTextSkin)getSkin()).scrollLineIntoView(lineIndex);
+				}
+			});
+		}
 	}
 }
