@@ -20,6 +20,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -465,5 +466,21 @@ public class Util {
 			}
 			return Optional.empty();
 		}
+	}
+
+	/**
+	 * Create a string of the same char
+	 *
+	 * @param c
+	 *            the character
+	 * @param length
+	 *            the length
+	 * @return the created string
+	 * @since 2.4.0
+	 */
+	public static String createRepeatedString(char c, int length) {
+		char[] vals = new char[length];
+		Arrays.fill(vals, ' ');
+		return String.valueOf(vals);
 	}
 }
