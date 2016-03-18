@@ -40,6 +40,7 @@ import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
 
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -406,6 +407,15 @@ public class ContentView  extends Pane {
 		bindContentListener();
 		bindCaretListener();
 		bindSelectionListener();
+
+		initBindings();
+	}
+
+	private DoubleBinding charWidth;
+
+	private void initBindings() {
+		DoubleBinding b0 = Util.createTextWidthBinding("M" , this.area.fontProperty()); //$NON-NLS-1$
+		this.charWidth = Bindings.createDoubleBinding(()->Math.ceil(b0.get()), b0);
 	}
 
 	private void bindCaretListener() {
@@ -703,26 +713,8 @@ public class ContentView  extends Pane {
 		return getWidth();
 	}
 
-//	private double computeLongestLine_old() {
-//		Optional<Integer> longestLine = IntStream.range(0, getNumberOfLines())
-//				.mapToObj(index->Integer.valueOf(this.lineHelper.getLengthCountTabsAsChars(index)))
-//				.collect(Collectors.maxBy(Integer::compare));
-////		Optional<Integer> longestLine = model.stream().map(m->m.getLineLength() + countTabs(m.getText()) * 3).collect(Collectors.maxBy(Integer::compare));
-//		longestLine = longestLine.map(s-> Integer.valueOf(s.intValue()+2)); // extra space
-//		Optional<Double> longestLineWidth = longestLine.map(i->i*getCharWidth());
-//		longestLineWidth = longestLineWidth.map(l->Math.max(l, getWidth()));
-//		return longestLineWidth.orElse(getWidth());
-//	}
-
-	private Font lastFont;
-	private double lastWidth = 8d;
-
-	private double getCharWidth() {
-		if( this.lastFont != this.area.getFont() ) {
-			this.lastFont = this.area.getFont();
-			this.lastWidth = Math.ceil(Util.getTextWidth("M", this.lastFont)); //$NON-NLS-1$
-		}
-		return this.lastWidth;
+	public double getCharWidth() {
+		return this.charWidth.get();
 	}
 
 	@Override

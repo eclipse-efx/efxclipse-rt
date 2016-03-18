@@ -31,8 +31,12 @@ import org.eclipse.jdt.annotation.Nullable;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -414,5 +418,35 @@ public class Util {
 		Text t = new Text(text);
 		t.setFont(font);
 		return t.getLayoutBounds().getWidth();
+	}
+
+	/**
+	 * Create a binding for text width calculation.
+	 * @param text
+	 * @param font
+	 * @return
+	 */
+	public static DoubleBinding createTextWidthBinding(ObservableValue<String> text, ObservableValue<Font> font) {
+		return Bindings.createDoubleBinding(()->{
+			return getTextWidth(text.getValue(), font.getValue());
+		}, text, font);
+	}
+
+	public static DoubleBinding createTextWidthBinding(String text, ObservableValue<Font> font) {
+		return Bindings.createDoubleBinding(()->{
+			return getTextWidth(text, font.getValue());
+		}, font);
+	}
+
+	public static double getTextHeight(String text, Font font) {
+		Text t = new Text(text);
+		t.setFont(font);
+		return t.getLayoutBounds().getHeight();
+	}
+
+	public static DoubleBinding createTextHeightBinding(String text, ObservableValue<Font> font) {
+		return Bindings.createDoubleBinding(()->{
+			return getTextHeight(text, font.getValue());
+		}, font);
 	}
 }
