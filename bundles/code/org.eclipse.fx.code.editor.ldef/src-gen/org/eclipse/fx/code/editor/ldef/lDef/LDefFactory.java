@@ -185,6 +185,15 @@ public interface LDefFactory extends EFactory
   Partition_MultiLineRule createPartition_MultiLineRule();
 
   /**
+   * Returns a new object of class '<em>Partition JS Rule</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Partition JS Rule</em>'.
+   * @generated
+   */
+  Partition_JSRule createPartition_JSRule();
+
+  /**
    * Returns a new object of class '<em>Lexical Highlighting</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

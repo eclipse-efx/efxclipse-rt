@@ -18,11 +18,13 @@ import org.eclipse.fx.code.editor.configuration.EqualsCondition;
 import org.eclipse.fx.code.editor.configuration.ExistsCondition;
 import org.eclipse.fx.code.editor.configuration.Partition;
 import org.eclipse.fx.code.editor.configuration.PartitionRule;
+import org.eclipse.fx.code.editor.configuration.PartitionRule_DynamicEnd;
 import org.eclipse.fx.code.editor.configuration.PartitionRule_MultiLine;
 import org.eclipse.fx.code.editor.configuration.PartitionRule_SingleLine;
 import org.eclipse.fx.code.editor.configuration.Token;
 import org.eclipse.fx.code.editor.configuration.TokenScanner;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_CharacterRule;
+import org.eclipse.fx.code.editor.configuration.TokenScanner_DynamicEnd;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_Keyword;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_MultiLineRule;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_PatternRule;
@@ -36,6 +38,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Paritioning;
+import org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
@@ -117,29 +120,67 @@ public class JSONConfigurationConfigurator {
     };
     Iterable<Partition_Rule> _filter = IterableExtensions.<Partition_Rule>filter(_ruleList, _function);
     final Function1<Partition_Rule, PartitionRule> _function_1 = (Partition_Rule prl) -> {
+      Object _xifexpression = null;
       if ((prl instanceof Partition_SingleLineRule)) {
-        PartitionRule_SingleLine.Builder _PartitionRule_SingleLineBuilder = m.PartitionRule_SingleLineBuilder();
-        String _startSeq = ((Partition_SingleLineRule)prl).getStartSeq();
-        PartitionRule_SingleLine.Builder _startSeq_1 = _PartitionRule_SingleLineBuilder.startSeq(_startSeq);
-        String _endSeq = ((Partition_SingleLineRule)prl).getEndSeq();
-        PartitionRule_SingleLine.Builder _endSeq_1 = _startSeq_1.endSeq(_endSeq);
-        String _escapeSeq = ((Partition_SingleLineRule)prl).getEscapeSeq();
-        PartitionRule_SingleLine.Builder _escapedBy = _endSeq_1.escapedBy(_escapeSeq);
-        return _escapedBy.build();
-      } else {
-        if ((prl instanceof Partition_MultiLineRule)) {
-          PartitionRule_MultiLine.Builder _PartitionRule_MultiLineBuilder = m.PartitionRule_MultiLineBuilder();
-          String _startSeq_2 = ((Partition_MultiLineRule)prl).getStartSeq();
-          PartitionRule_MultiLine.Builder _startSeq_3 = _PartitionRule_MultiLineBuilder.startSeq(_startSeq_2);
-          String _endSeq_2 = ((Partition_MultiLineRule)prl).getEndSeq();
-          PartitionRule_MultiLine.Builder _endSeq_3 = _startSeq_3.endSeq(_endSeq_2);
-          String _escapeSeq_1 = ((Partition_MultiLineRule)prl).getEscapeSeq();
-          PartitionRule_MultiLine.Builder _escapedBy_1 = _endSeq_3.escapedBy(_escapeSeq_1);
-          return _escapedBy_1.build();
+        String _startPattern = ((Partition_SingleLineRule)prl).getStartPattern();
+        boolean _notEquals = (!Objects.equal(_startPattern, null));
+        if (_notEquals) {
+          PartitionRule_DynamicEnd.Builder _PartitionRule_DynamicEndBuilder = m.PartitionRule_DynamicEndBuilder();
+          String _startSeq = ((Partition_SingleLineRule)prl).getStartSeq();
+          PartitionRule_DynamicEnd.Builder _beginPrefix = _PartitionRule_DynamicEndBuilder.beginPrefix(_startSeq);
+          String _startPattern_1 = ((Partition_SingleLineRule)prl).getStartPattern();
+          PartitionRule_DynamicEnd.Builder _beginMatch = _beginPrefix.beginMatch(_startPattern_1);
+          String _endSeq = ((Partition_SingleLineRule)prl).getEndSeq();
+          PartitionRule_DynamicEnd.Builder _endTemplate = _beginMatch.endTemplate(_endSeq);
+          PartitionRule_DynamicEnd.Builder _singleLine = _endTemplate.singleLine(true);
+          return _singleLine.build();
         } else {
-          throw new IllegalStateException((("Unknown rule \'" + prl) + "\'"));
+          PartitionRule_SingleLine.Builder _PartitionRule_SingleLineBuilder = m.PartitionRule_SingleLineBuilder();
+          String _startSeq_1 = ((Partition_SingleLineRule)prl).getStartSeq();
+          PartitionRule_SingleLine.Builder _startSeq_2 = _PartitionRule_SingleLineBuilder.startSeq(_startSeq_1);
+          String _endSeq_1 = ((Partition_SingleLineRule)prl).getEndSeq();
+          PartitionRule_SingleLine.Builder _endSeq_2 = _startSeq_2.endSeq(_endSeq_1);
+          String _escapeSeq = ((Partition_SingleLineRule)prl).getEscapeSeq();
+          PartitionRule_SingleLine.Builder _escapedBy = _endSeq_2.escapedBy(_escapeSeq);
+          return _escapedBy.build();
         }
+      } else {
+        Object _xifexpression_1 = null;
+        if ((prl instanceof Partition_MultiLineRule)) {
+          String _startPattern_2 = ((Partition_MultiLineRule)prl).getStartPattern();
+          boolean _notEquals_1 = (!Objects.equal(_startPattern_2, null));
+          if (_notEquals_1) {
+            PartitionRule_DynamicEnd.Builder _PartitionRule_DynamicEndBuilder_1 = m.PartitionRule_DynamicEndBuilder();
+            String _startSeq_3 = ((Partition_MultiLineRule)prl).getStartSeq();
+            PartitionRule_DynamicEnd.Builder _beginPrefix_1 = _PartitionRule_DynamicEndBuilder_1.beginPrefix(_startSeq_3);
+            String _startPattern_3 = ((Partition_MultiLineRule)prl).getStartPattern();
+            PartitionRule_DynamicEnd.Builder _beginMatch_1 = _beginPrefix_1.beginMatch(_startPattern_3);
+            String _endSeq_3 = ((Partition_MultiLineRule)prl).getEndSeq();
+            PartitionRule_DynamicEnd.Builder _endTemplate_1 = _beginMatch_1.endTemplate(_endSeq_3);
+            PartitionRule_DynamicEnd.Builder _singleLine_1 = _endTemplate_1.singleLine(false);
+            return _singleLine_1.build();
+          } else {
+            PartitionRule_MultiLine.Builder _PartitionRule_MultiLineBuilder = m.PartitionRule_MultiLineBuilder();
+            String _startSeq_4 = ((Partition_MultiLineRule)prl).getStartSeq();
+            PartitionRule_MultiLine.Builder _startSeq_5 = _PartitionRule_MultiLineBuilder.startSeq(_startSeq_4);
+            String _endSeq_4 = ((Partition_MultiLineRule)prl).getEndSeq();
+            PartitionRule_MultiLine.Builder _endSeq_5 = _startSeq_5.endSeq(_endSeq_4);
+            String _escapeSeq_1 = ((Partition_MultiLineRule)prl).getEscapeSeq();
+            PartitionRule_MultiLine.Builder _escapedBy_1 = _endSeq_5.escapedBy(_escapeSeq_1);
+            return _escapedBy_1.build();
+          }
+        } else {
+          Object _xifexpression_2 = null;
+          if ((prl instanceof Partition_JSRule)) {
+            _xifexpression_2 = null;
+          } else {
+            throw new IllegalStateException((("Unknown rule \'" + prl) + "\'"));
+          }
+          _xifexpression_1 = _xifexpression_2;
+        }
+        _xifexpression = _xifexpression_1;
       }
+      return ((PartitionRule)_xifexpression);
     };
     Iterable<PartitionRule> _map = IterableExtensions.<Partition_Rule, PartitionRule>map(_filter, _function_1);
     return IterableExtensions.<PartitionRule>toList(_map);
@@ -199,38 +240,65 @@ public class JSONConfigurationConfigurator {
         return _keywordList.build();
       } else {
         if ((ts instanceof Scanner_SingleLineRule)) {
-          final Scanner_SingleLineRule sr = ((Scanner_SingleLineRule) ts);
-          TokenScanner_SingleLineRule.Builder _TokenScanner_SingleLineRuleBuilder = m.TokenScanner_SingleLineRuleBuilder();
-          Check _check = sr.getCheck();
-          org.eclipse.fx.code.editor.configuration.Check _createCheck = this.createCheck(m, _check);
-          TokenScanner_SingleLineRule.Builder _check_1 = _TokenScanner_SingleLineRuleBuilder.check(_createCheck);
-          ScannerCondition _enabledIf_1 = ((Scanner_SingleLineRule)ts).getEnabledIf();
-          Condition _createCondition_1 = this.createCondition(m, _enabledIf_1);
-          TokenScanner_SingleLineRule.Builder _condition_1 = _check_1.condition(_createCondition_1);
-          String _startSeq = sr.getStartSeq();
-          TokenScanner_SingleLineRule.Builder _startSeq_1 = _condition_1.startSeq(_startSeq);
-          String _endSeq = sr.getEndSeq();
-          TokenScanner_SingleLineRule.Builder _endSeq_1 = _startSeq_1.endSeq(_endSeq);
-          String _escapeSeq = sr.getEscapeSeq();
-          TokenScanner_SingleLineRule.Builder _escapedBy = _endSeq_1.escapedBy(_escapeSeq);
-          return _escapedBy.build();
+          String _startPattern = ((Scanner_SingleLineRule)ts).getStartPattern();
+          boolean _notEquals = (!Objects.equal(_startPattern, null));
+          if (_notEquals) {
+            TokenScanner_DynamicEnd.Builder _TokenScanner_DynamicEndBuilder = m.TokenScanner_DynamicEndBuilder();
+            String _startSeq = ((Scanner_SingleLineRule)ts).getStartSeq();
+            TokenScanner_DynamicEnd.Builder _beginPrefix = _TokenScanner_DynamicEndBuilder.beginPrefix(_startSeq);
+            String _startPattern_1 = ((Scanner_SingleLineRule)ts).getStartPattern();
+            TokenScanner_DynamicEnd.Builder _beginMatch = _beginPrefix.beginMatch(_startPattern_1);
+            String _endSeq = ((Scanner_SingleLineRule)ts).getEndSeq();
+            TokenScanner_DynamicEnd.Builder _endTemplate = _beginMatch.endTemplate(_endSeq);
+            TokenScanner_DynamicEnd.Builder _singleLine = _endTemplate.singleLine(true);
+            return _singleLine.build();
+          } else {
+            final Scanner_SingleLineRule sr = ((Scanner_SingleLineRule) ts);
+            TokenScanner_SingleLineRule.Builder _TokenScanner_SingleLineRuleBuilder = m.TokenScanner_SingleLineRuleBuilder();
+            Check _check = sr.getCheck();
+            org.eclipse.fx.code.editor.configuration.Check _createCheck = this.createCheck(m, _check);
+            TokenScanner_SingleLineRule.Builder _check_1 = _TokenScanner_SingleLineRuleBuilder.check(_createCheck);
+            ScannerCondition _enabledIf_1 = ((Scanner_SingleLineRule)ts).getEnabledIf();
+            Condition _createCondition_1 = this.createCondition(m, _enabledIf_1);
+            TokenScanner_SingleLineRule.Builder _condition_1 = _check_1.condition(_createCondition_1);
+            String _startSeq_1 = sr.getStartSeq();
+            TokenScanner_SingleLineRule.Builder _startSeq_2 = _condition_1.startSeq(_startSeq_1);
+            String _endSeq_1 = sr.getEndSeq();
+            TokenScanner_SingleLineRule.Builder _endSeq_2 = _startSeq_2.endSeq(_endSeq_1);
+            String _escapeSeq = sr.getEscapeSeq();
+            TokenScanner_SingleLineRule.Builder _escapedBy = _endSeq_2.escapedBy(_escapeSeq);
+            return _escapedBy.build();
+          }
         } else {
           if ((ts instanceof Scanner_MultiLineRule)) {
-            final Scanner_MultiLineRule mr = ((Scanner_MultiLineRule) ts);
-            TokenScanner_MultiLineRule.Builder _TokenScanner_MultiLineRuleBuilder = m.TokenScanner_MultiLineRuleBuilder();
-            Check _check_2 = mr.getCheck();
-            org.eclipse.fx.code.editor.configuration.Check _createCheck_1 = this.createCheck(m, _check_2);
-            TokenScanner_MultiLineRule.Builder _check_3 = _TokenScanner_MultiLineRuleBuilder.check(_createCheck_1);
-            ScannerCondition _enabledIf_2 = ((Scanner_MultiLineRule)ts).getEnabledIf();
-            Condition _createCondition_2 = this.createCondition(m, _enabledIf_2);
-            TokenScanner_MultiLineRule.Builder _condition_2 = _check_3.condition(_createCondition_2);
-            String _startSeq_2 = mr.getStartSeq();
-            TokenScanner_MultiLineRule.Builder _startSeq_3 = _condition_2.startSeq(_startSeq_2);
-            String _endSeq_2 = mr.getEndSeq();
-            TokenScanner_MultiLineRule.Builder _endSeq_3 = _startSeq_3.endSeq(_endSeq_2);
-            String _escapeSeq_1 = mr.getEscapeSeq();
-            TokenScanner_MultiLineRule.Builder _escapedBy_1 = _endSeq_3.escapedBy(_escapeSeq_1);
-            return _escapedBy_1.build();
+            String _startPattern_2 = ((Scanner_MultiLineRule)ts).getStartPattern();
+            boolean _notEquals_1 = (!Objects.equal(_startPattern_2, null));
+            if (_notEquals_1) {
+              TokenScanner_DynamicEnd.Builder _TokenScanner_DynamicEndBuilder_1 = m.TokenScanner_DynamicEndBuilder();
+              String _startSeq_3 = ((Scanner_MultiLineRule)ts).getStartSeq();
+              TokenScanner_DynamicEnd.Builder _beginPrefix_1 = _TokenScanner_DynamicEndBuilder_1.beginPrefix(_startSeq_3);
+              String _startPattern_3 = ((Scanner_MultiLineRule)ts).getStartPattern();
+              TokenScanner_DynamicEnd.Builder _beginMatch_1 = _beginPrefix_1.beginMatch(_startPattern_3);
+              String _endSeq_3 = ((Scanner_MultiLineRule)ts).getEndSeq();
+              TokenScanner_DynamicEnd.Builder _endTemplate_1 = _beginMatch_1.endTemplate(_endSeq_3);
+              return _endTemplate_1.build();
+            } else {
+              final Scanner_MultiLineRule mr = ((Scanner_MultiLineRule) ts);
+              TokenScanner_MultiLineRule.Builder _TokenScanner_MultiLineRuleBuilder = m.TokenScanner_MultiLineRuleBuilder();
+              Check _check_2 = mr.getCheck();
+              org.eclipse.fx.code.editor.configuration.Check _createCheck_1 = this.createCheck(m, _check_2);
+              TokenScanner_MultiLineRule.Builder _check_3 = _TokenScanner_MultiLineRuleBuilder.check(_createCheck_1);
+              ScannerCondition _enabledIf_2 = ((Scanner_MultiLineRule)ts).getEnabledIf();
+              Condition _createCondition_2 = this.createCondition(m, _enabledIf_2);
+              TokenScanner_MultiLineRule.Builder _condition_2 = _check_3.condition(_createCondition_2);
+              String _startSeq_4 = mr.getStartSeq();
+              TokenScanner_MultiLineRule.Builder _startSeq_5 = _condition_2.startSeq(_startSeq_4);
+              String _endSeq_4 = mr.getEndSeq();
+              TokenScanner_MultiLineRule.Builder _endSeq_5 = _startSeq_5.endSeq(_endSeq_4);
+              String _escapeSeq_1 = mr.getEscapeSeq();
+              TokenScanner_MultiLineRule.Builder _escapedBy_1 = _endSeq_5.escapedBy(_escapeSeq_1);
+              return _escapedBy_1.build();
+            }
           } else {
             if ((ts instanceof Scanner_CharacterRule)) {
               final Scanner_CharacterRule sc = ((Scanner_CharacterRule) ts);
@@ -256,10 +324,10 @@ public class JSONConfigurationConfigurator {
                 TokenScanner_PatternRule.Builder _condition_4 = _check_7.condition(_createCondition_4);
                 int _length = sp.getLength();
                 TokenScanner_PatternRule.Builder _startLength = _condition_4.startLength(_length);
-                String _startPattern = sp.getStartPattern();
-                TokenScanner_PatternRule.Builder _startPattern_1 = _startLength.startPattern(_startPattern);
+                String _startPattern_4 = sp.getStartPattern();
+                TokenScanner_PatternRule.Builder _startPattern_5 = _startLength.startPattern(_startPattern_4);
                 String _contentPattern = sp.getContentPattern();
-                TokenScanner_PatternRule.Builder _containmentPattern = _startPattern_1.containmentPattern(_contentPattern);
+                TokenScanner_PatternRule.Builder _containmentPattern = _startPattern_5.containmentPattern(_contentPattern);
                 return _containmentPattern.build();
               }
             }

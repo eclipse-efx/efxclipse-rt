@@ -577,40 +577,13 @@ public interface LDefPackage extends EPackage
   int PARTITION_RULE__PARITION = 0;
 
   /**
-   * The feature id for the '<em><b>Start Seq</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARTITION_RULE__START_SEQ = 1;
-
-  /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARTITION_RULE__CHECK = 2;
-
-  /**
-   * The feature id for the '<em><b>End Seq</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARTITION_RULE__END_SEQ = 3;
-
-  /**
-   * The feature id for the '<em><b>Escape Seq</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARTITION_RULE__ESCAPE_SEQ = 4;
+  int PARTITION_RULE__CHECK = 1;
 
   /**
    * The number of structural features of the '<em>Partition Rule</em>' class.
@@ -619,7 +592,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_RULE_FEATURE_COUNT = 5;
+  int PARTITION_RULE_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_SingleLineRuleImpl <em>Partition Single Line Rule</em>}' class.
@@ -641,15 +614,6 @@ public interface LDefPackage extends EPackage
   int PARTITION_SINGLE_LINE_RULE__PARITION = PARTITION_RULE__PARITION;
 
   /**
-   * The feature id for the '<em><b>Start Seq</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARTITION_SINGLE_LINE_RULE__START_SEQ = PARTITION_RULE__START_SEQ;
-
-  /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -659,13 +623,31 @@ public interface LDefPackage extends EPackage
   int PARTITION_SINGLE_LINE_RULE__CHECK = PARTITION_RULE__CHECK;
 
   /**
+   * The feature id for the '<em><b>Start Seq</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_SINGLE_LINE_RULE__START_SEQ = PARTITION_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Start Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_SINGLE_LINE_RULE__START_PATTERN = PARTITION_RULE_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARTITION_SINGLE_LINE_RULE__END_SEQ = PARTITION_RULE__END_SEQ;
+  int PARTITION_SINGLE_LINE_RULE__END_SEQ = PARTITION_RULE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Escape Seq</b></em>' attribute.
@@ -674,7 +656,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_SINGLE_LINE_RULE__ESCAPE_SEQ = PARTITION_RULE__ESCAPE_SEQ;
+  int PARTITION_SINGLE_LINE_RULE__ESCAPE_SEQ = PARTITION_RULE_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Partition Single Line Rule</em>' class.
@@ -683,7 +665,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_SINGLE_LINE_RULE_FEATURE_COUNT = PARTITION_RULE_FEATURE_COUNT + 0;
+  int PARTITION_SINGLE_LINE_RULE_FEATURE_COUNT = PARTITION_RULE_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_MultiLineRuleImpl <em>Partition Multi Line Rule</em>}' class.
@@ -705,15 +687,6 @@ public interface LDefPackage extends EPackage
   int PARTITION_MULTI_LINE_RULE__PARITION = PARTITION_RULE__PARITION;
 
   /**
-   * The feature id for the '<em><b>Start Seq</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARTITION_MULTI_LINE_RULE__START_SEQ = PARTITION_RULE__START_SEQ;
-
-  /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -723,13 +696,31 @@ public interface LDefPackage extends EPackage
   int PARTITION_MULTI_LINE_RULE__CHECK = PARTITION_RULE__CHECK;
 
   /**
+   * The feature id for the '<em><b>Start Seq</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_MULTI_LINE_RULE__START_SEQ = PARTITION_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Start Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_MULTI_LINE_RULE__START_PATTERN = PARTITION_RULE_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARTITION_MULTI_LINE_RULE__END_SEQ = PARTITION_RULE__END_SEQ;
+  int PARTITION_MULTI_LINE_RULE__END_SEQ = PARTITION_RULE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Escape Seq</b></em>' attribute.
@@ -738,7 +729,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_MULTI_LINE_RULE__ESCAPE_SEQ = PARTITION_RULE__ESCAPE_SEQ;
+  int PARTITION_MULTI_LINE_RULE__ESCAPE_SEQ = PARTITION_RULE_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Partition Multi Line Rule</em>' class.
@@ -747,7 +738,53 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_MULTI_LINE_RULE_FEATURE_COUNT = PARTITION_RULE_FEATURE_COUNT + 0;
+  int PARTITION_MULTI_LINE_RULE_FEATURE_COUNT = PARTITION_RULE_FEATURE_COUNT + 4;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_JSRuleImpl <em>Partition JS Rule</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_JSRuleImpl
+   * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_JSRule()
+   * @generated
+   */
+  int PARTITION_JS_RULE = 18;
+
+  /**
+   * The feature id for the '<em><b>Parition</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_JS_RULE__PARITION = PARTITION_RULE__PARITION;
+
+  /**
+   * The feature id for the '<em><b>Check</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_JS_RULE__CHECK = PARTITION_RULE__CHECK;
+
+  /**
+   * The feature id for the '<em><b>File URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_JS_RULE__FILE_URI = PARTITION_RULE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Partition JS Rule</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_JS_RULE_FEATURE_COUNT = PARTITION_RULE_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LexicalHighlightingImpl <em>Lexical Highlighting</em>}' class.
@@ -757,7 +794,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalHighlighting()
    * @generated
    */
-  int LEXICAL_HIGHLIGHTING = 18;
+  int LEXICAL_HIGHLIGHTING = 19;
 
   /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
@@ -794,7 +831,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getTokenVisuals()
    * @generated
    */
-  int TOKEN_VISUALS = 19;
+  int TOKEN_VISUALS = 20;
 
   /**
    * The feature id for the '<em><b>Token Visuals</b></em>' containment reference list.
@@ -822,7 +859,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getTokenVisual()
    * @generated
    */
-  int TOKEN_VISUAL = 20;
+  int TOKEN_VISUAL = 21;
 
   /**
    * The feature id for the '<em><b>Token</b></em>' reference.
@@ -877,7 +914,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING = 21;
+  int LEXICAL_PARTITION_HIGHLIGHTING = 22;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -905,7 +942,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_JS()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 22;
+  int LEXICAL_PARTITION_HIGHLIGHTING_JS = 23;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -942,7 +979,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getLexicalPartitionHighlighting_Rule()
    * @generated
    */
-  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 23;
+  int LEXICAL_PARTITION_HIGHLIGHTING_RULE = 24;
 
   /**
    * The feature id for the '<em><b>Partition</b></em>' reference.
@@ -988,7 +1025,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getToken()
    * @generated
    */
-  int TOKEN = 24;
+  int TOKEN = 25;
 
   /**
    * The feature id for the '<em><b>Default</b></em>' attribute.
@@ -1034,7 +1071,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner()
    * @generated
    */
-  int SCANNER = 25;
+  int SCANNER = 26;
 
   /**
    * The number of structural features of the '<em>Scanner</em>' class.
@@ -1053,7 +1090,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Keyword()
    * @generated
    */
-  int SCANNER_KEYWORD = 26;
+  int SCANNER_KEYWORD = 27;
 
   /**
    * The feature id for the '<em><b>Keywords</b></em>' containment reference list.
@@ -1090,7 +1127,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getKeyword()
    * @generated
    */
-  int KEYWORD = 27;
+  int KEYWORD = 28;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1127,7 +1164,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_Rule()
    * @generated
    */
-  int SCANNER_RULE = 28;
+  int SCANNER_RULE = 29;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1155,7 +1192,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_SingleLineRule()
    * @generated
    */
-  int SCANNER_SINGLE_LINE_RULE = 29;
+  int SCANNER_SINGLE_LINE_RULE = 30;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1176,13 +1213,22 @@ public interface LDefPackage extends EPackage
   int SCANNER_SINGLE_LINE_RULE__START_SEQ = SCANNER_RULE_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Start Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_SINGLE_LINE_RULE__START_PATTERN = SCANNER_RULE_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_SINGLE_LINE_RULE__END_SEQ = SCANNER_RULE_FEATURE_COUNT + 1;
+  int SCANNER_SINGLE_LINE_RULE__END_SEQ = SCANNER_RULE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Escape Seq</b></em>' attribute.
@@ -1191,7 +1237,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_SINGLE_LINE_RULE__ESCAPE_SEQ = SCANNER_RULE_FEATURE_COUNT + 2;
+  int SCANNER_SINGLE_LINE_RULE__ESCAPE_SEQ = SCANNER_RULE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Enabled If</b></em>' containment reference.
@@ -1200,7 +1246,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_SINGLE_LINE_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 3;
+  int SCANNER_SINGLE_LINE_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Scanner Single Line Rule</em>' class.
@@ -1209,7 +1255,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_SINGLE_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 4;
+  int SCANNER_SINGLE_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_MultiLineRuleImpl <em>Scanner Multi Line Rule</em>}' class.
@@ -1219,7 +1265,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_MultiLineRule()
    * @generated
    */
-  int SCANNER_MULTI_LINE_RULE = 30;
+  int SCANNER_MULTI_LINE_RULE = 31;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1240,13 +1286,22 @@ public interface LDefPackage extends EPackage
   int SCANNER_MULTI_LINE_RULE__START_SEQ = SCANNER_RULE_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Start Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_MULTI_LINE_RULE__START_PATTERN = SCANNER_RULE_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_MULTI_LINE_RULE__END_SEQ = SCANNER_RULE_FEATURE_COUNT + 1;
+  int SCANNER_MULTI_LINE_RULE__END_SEQ = SCANNER_RULE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Escape Seq</b></em>' attribute.
@@ -1255,7 +1310,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ = SCANNER_RULE_FEATURE_COUNT + 2;
+  int SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ = SCANNER_RULE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Enabled If</b></em>' containment reference.
@@ -1264,7 +1319,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_MULTI_LINE_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 3;
+  int SCANNER_MULTI_LINE_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Scanner Multi Line Rule</em>' class.
@@ -1273,7 +1328,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_MULTI_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 4;
+  int SCANNER_MULTI_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl <em>Scanner Pattern Rule</em>}' class.
@@ -1283,7 +1338,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_PatternRule()
    * @generated
    */
-  int SCANNER_PATTERN_RULE = 31;
+  int SCANNER_PATTERN_RULE = 32;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1347,7 +1402,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_CharacterRule()
    * @generated
    */
-  int SCANNER_CHARACTER_RULE = 32;
+  int SCANNER_CHARACTER_RULE = 33;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1393,7 +1448,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScanner_JSRule()
    * @generated
    */
-  int SCANNER_JS_RULE = 33;
+  int SCANNER_JS_RULE = 34;
 
   /**
    * The feature id for the '<em><b>Check</b></em>' containment reference.
@@ -1439,7 +1494,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerCondition()
    * @generated
    */
-  int SCANNER_CONDITION = 34;
+  int SCANNER_CONDITION = 35;
 
   /**
    * The number of structural features of the '<em>Scanner Condition</em>' class.
@@ -1458,7 +1513,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionComposite()
    * @generated
    */
-  int SCANNER_CONDITION_COMPOSITE = 35;
+  int SCANNER_CONDITION_COMPOSITE = 36;
 
   /**
    * The feature id for the '<em><b>Op</b></em>' attribute.
@@ -1495,7 +1550,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionExists()
    * @generated
    */
-  int SCANNER_CONDITION_EXISTS = 36;
+  int SCANNER_CONDITION_EXISTS = 37;
 
   /**
    * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1523,7 +1578,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionEquals()
    * @generated
    */
-  int SCANNER_CONDITION_EQUALS = 37;
+  int SCANNER_CONDITION_EQUALS = 38;
 
   /**
    * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1560,7 +1615,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getScannerConditionJs()
    * @generated
    */
-  int SCANNER_CONDITION_JS = 38;
+  int SCANNER_CONDITION_JS = 39;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1588,7 +1643,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getCheck()
    * @generated
    */
-  int CHECK = 39;
+  int CHECK = 40;
 
   /**
    * The number of structural features of the '<em>Check</em>' class.
@@ -1607,7 +1662,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getEquals()
    * @generated
    */
-  int EQUALS = 40;
+  int EQUALS = 41;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1635,7 +1690,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getRange()
    * @generated
    */
-  int RANGE = 41;
+  int RANGE = 42;
 
   /**
    * The feature id for the '<em><b>Lt Incl</b></em>' attribute.
@@ -1690,7 +1745,7 @@ public interface LDefPackage extends EPackage
    * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getWhitespaceRule()
    * @generated
    */
-  int WHITESPACE_RULE = 42;
+  int WHITESPACE_RULE = 43;
 
   /**
    * The feature id for the '<em><b>Characters</b></em>' attribute list.
@@ -2121,17 +2176,6 @@ public interface LDefPackage extends EPackage
   EReference getPartition_Rule_Parition();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getStartSeq <em>Start Seq</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Start Seq</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getStartSeq()
-   * @see #getPartition_Rule()
-   * @generated
-   */
-  EAttribute getPartition_Rule_StartSeq();
-
-  /**
    * Returns the meta object for the containment reference '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getCheck <em>Check</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2141,28 +2185,6 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EReference getPartition_Rule_Check();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getEndSeq <em>End Seq</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>End Seq</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getEndSeq()
-   * @see #getPartition_Rule()
-   * @generated
-   */
-  EAttribute getPartition_Rule_EndSeq();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getEscapeSeq <em>Escape Seq</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Escape Seq</em>'.
-   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule#getEscapeSeq()
-   * @see #getPartition_Rule()
-   * @generated
-   */
-  EAttribute getPartition_Rule_EscapeSeq();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule <em>Partition Single Line Rule</em>}'.
@@ -2175,6 +2197,50 @@ public interface LDefPackage extends EPackage
   EClass getPartition_SingleLineRule();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getStartSeq <em>Start Seq</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Seq</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getStartSeq()
+   * @see #getPartition_SingleLineRule()
+   * @generated
+   */
+  EAttribute getPartition_SingleLineRule_StartSeq();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getStartPattern <em>Start Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Pattern</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getStartPattern()
+   * @see #getPartition_SingleLineRule()
+   * @generated
+   */
+  EAttribute getPartition_SingleLineRule_StartPattern();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getEndSeq <em>End Seq</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>End Seq</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getEndSeq()
+   * @see #getPartition_SingleLineRule()
+   * @generated
+   */
+  EAttribute getPartition_SingleLineRule_EndSeq();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getEscapeSeq <em>Escape Seq</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Escape Seq</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getEscapeSeq()
+   * @see #getPartition_SingleLineRule()
+   * @generated
+   */
+  EAttribute getPartition_SingleLineRule_EscapeSeq();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule <em>Partition Multi Line Rule</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2183,6 +2249,71 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EClass getPartition_MultiLineRule();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getStartSeq <em>Start Seq</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Seq</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getStartSeq()
+   * @see #getPartition_MultiLineRule()
+   * @generated
+   */
+  EAttribute getPartition_MultiLineRule_StartSeq();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getStartPattern <em>Start Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Pattern</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getStartPattern()
+   * @see #getPartition_MultiLineRule()
+   * @generated
+   */
+  EAttribute getPartition_MultiLineRule_StartPattern();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getEndSeq <em>End Seq</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>End Seq</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getEndSeq()
+   * @see #getPartition_MultiLineRule()
+   * @generated
+   */
+  EAttribute getPartition_MultiLineRule_EndSeq();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getEscapeSeq <em>Escape Seq</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Escape Seq</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getEscapeSeq()
+   * @see #getPartition_MultiLineRule()
+   * @generated
+   */
+  EAttribute getPartition_MultiLineRule_EscapeSeq();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule <em>Partition JS Rule</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Partition JS Rule</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule
+   * @generated
+   */
+  EClass getPartition_JSRule();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule#getFileURI <em>File URI</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>File URI</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule#getFileURI()
+   * @see #getPartition_JSRule()
+   * @generated
+   */
+  EAttribute getPartition_JSRule_FileURI();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting <em>Lexical Highlighting</em>}'.
@@ -2525,6 +2656,17 @@ public interface LDefPackage extends EPackage
   EAttribute getScanner_SingleLineRule_StartSeq();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule#getStartPattern <em>Start Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Pattern</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule#getStartPattern()
+   * @see #getScanner_SingleLineRule()
+   * @generated
+   */
+  EAttribute getScanner_SingleLineRule_StartPattern();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule#getEndSeq <em>End Seq</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2577,6 +2719,17 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EAttribute getScanner_MultiLineRule_StartSeq();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartPattern <em>Start Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Pattern</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartPattern()
+   * @see #getScanner_MultiLineRule()
+   * @generated
+   */
+  EAttribute getScanner_MultiLineRule_StartPattern();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEndSeq <em>End Seq</em>}'.
@@ -3325,36 +3478,12 @@ public interface LDefPackage extends EPackage
     EReference PARTITION_RULE__PARITION = eINSTANCE.getPartition_Rule_Parition();
 
     /**
-     * The meta object literal for the '<em><b>Start Seq</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PARTITION_RULE__START_SEQ = eINSTANCE.getPartition_Rule_StartSeq();
-
-    /**
      * The meta object literal for the '<em><b>Check</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference PARTITION_RULE__CHECK = eINSTANCE.getPartition_Rule_Check();
-
-    /**
-     * The meta object literal for the '<em><b>End Seq</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PARTITION_RULE__END_SEQ = eINSTANCE.getPartition_Rule_EndSeq();
-
-    /**
-     * The meta object literal for the '<em><b>Escape Seq</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PARTITION_RULE__ESCAPE_SEQ = eINSTANCE.getPartition_Rule_EscapeSeq();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_SingleLineRuleImpl <em>Partition Single Line Rule</em>}' class.
@@ -3367,6 +3496,38 @@ public interface LDefPackage extends EPackage
     EClass PARTITION_SINGLE_LINE_RULE = eINSTANCE.getPartition_SingleLineRule();
 
     /**
+     * The meta object literal for the '<em><b>Start Seq</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_SINGLE_LINE_RULE__START_SEQ = eINSTANCE.getPartition_SingleLineRule_StartSeq();
+
+    /**
+     * The meta object literal for the '<em><b>Start Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_SINGLE_LINE_RULE__START_PATTERN = eINSTANCE.getPartition_SingleLineRule_StartPattern();
+
+    /**
+     * The meta object literal for the '<em><b>End Seq</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_SINGLE_LINE_RULE__END_SEQ = eINSTANCE.getPartition_SingleLineRule_EndSeq();
+
+    /**
+     * The meta object literal for the '<em><b>Escape Seq</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_SINGLE_LINE_RULE__ESCAPE_SEQ = eINSTANCE.getPartition_SingleLineRule_EscapeSeq();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_MultiLineRuleImpl <em>Partition Multi Line Rule</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3375,6 +3536,56 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EClass PARTITION_MULTI_LINE_RULE = eINSTANCE.getPartition_MultiLineRule();
+
+    /**
+     * The meta object literal for the '<em><b>Start Seq</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_MULTI_LINE_RULE__START_SEQ = eINSTANCE.getPartition_MultiLineRule_StartSeq();
+
+    /**
+     * The meta object literal for the '<em><b>Start Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_MULTI_LINE_RULE__START_PATTERN = eINSTANCE.getPartition_MultiLineRule_StartPattern();
+
+    /**
+     * The meta object literal for the '<em><b>End Seq</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_MULTI_LINE_RULE__END_SEQ = eINSTANCE.getPartition_MultiLineRule_EndSeq();
+
+    /**
+     * The meta object literal for the '<em><b>Escape Seq</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_MULTI_LINE_RULE__ESCAPE_SEQ = eINSTANCE.getPartition_MultiLineRule_EscapeSeq();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_JSRuleImpl <em>Partition JS Rule</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_JSRuleImpl
+     * @see org.eclipse.fx.code.editor.ldef.lDef.impl.LDefPackageImpl#getPartition_JSRule()
+     * @generated
+     */
+    EClass PARTITION_JS_RULE = eINSTANCE.getPartition_JSRule();
+
+    /**
+     * The meta object literal for the '<em><b>File URI</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_JS_RULE__FILE_URI = eINSTANCE.getPartition_JSRule_FileURI();
 
     /**
      * The meta object literal for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.LexicalHighlightingImpl <em>Lexical Highlighting</em>}' class.
@@ -3657,6 +3868,14 @@ public interface LDefPackage extends EPackage
     EAttribute SCANNER_SINGLE_LINE_RULE__START_SEQ = eINSTANCE.getScanner_SingleLineRule_StartSeq();
 
     /**
+     * The meta object literal for the '<em><b>Start Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_SINGLE_LINE_RULE__START_PATTERN = eINSTANCE.getScanner_SingleLineRule_StartPattern();
+
+    /**
      * The meta object literal for the '<em><b>End Seq</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3697,6 +3916,14 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EAttribute SCANNER_MULTI_LINE_RULE__START_SEQ = eINSTANCE.getScanner_MultiLineRule_StartSeq();
+
+    /**
+     * The meta object literal for the '<em><b>Start Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_MULTI_LINE_RULE__START_PATTERN = eINSTANCE.getScanner_MultiLineRule_StartPattern();
 
     /**
      * The meta object literal for the '<em><b>End Seq</b></em>' attribute feature.

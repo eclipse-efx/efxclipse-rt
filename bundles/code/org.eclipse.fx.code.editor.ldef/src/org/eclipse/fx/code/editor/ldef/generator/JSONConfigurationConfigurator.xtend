@@ -35,6 +35,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite
 import org.eclipse.fx.code.editor.configuration.Condition
+import org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule
 
 @SuppressWarnings("restriction")
 class JSONConfigurationConfigurator {
@@ -69,17 +70,37 @@ class JSONConfigurationConfigurator {
 		val tmp = model.paritioning.partitioner as Partitioner_Rule
 		return tmp.ruleList.filter[prl|prl.parition == pr].map[ prl |
 			if( prl instanceof Partition_SingleLineRule ) {
-				return m.PartitionRule_SingleLineBuilder
-					.startSeq(prl.startSeq)
-					.endSeq(prl.endSeq)
-					.escapedBy(prl.escapeSeq)
-					.build
+				if( prl.startPattern != null ) {
+					return m.PartitionRule_DynamicEndBuilder
+						.beginPrefix(prl.startSeq)
+						.beginMatch(prl.startPattern)
+						.endTemplate(prl.endSeq)
+						.singleLine(true)
+						.build
+				} else {
+					return m.PartitionRule_SingleLineBuilder
+						.startSeq(prl.startSeq)
+						.endSeq(prl.endSeq)
+						.escapedBy(prl.escapeSeq)
+						.build
+				}
 			} else if( prl instanceof Partition_MultiLineRule ) {
-				return m.PartitionRule_MultiLineBuilder
-					.startSeq(prl.startSeq)
-					.endSeq(prl.endSeq)
-					.escapedBy(prl.escapeSeq)
-					.build
+				if( prl.startPattern != null ) {
+					return m.PartitionRule_DynamicEndBuilder
+						.beginPrefix(prl.startSeq)
+						.beginMatch(prl.startPattern)
+						.endTemplate(prl.endSeq)
+						.singleLine(false)
+						.build
+				} else {
+					return m.PartitionRule_MultiLineBuilder
+						.startSeq(prl.startSeq)
+						.endSeq(prl.endSeq)
+						.escapedBy(prl.escapeSeq)
+						.build
+				}
+			} else if( prl instanceof Partition_JSRule ) {
+				// TODO Handle it
 			} else {
 				throw new IllegalStateException("Unknown rule '"+prl+"'")
 			}
@@ -113,23 +134,40 @@ class JSONConfigurationConfigurator {
 					.keywordList( sk.keywords.map[ k | k.name ].toList )
 					.build
 			} else if( ts instanceof Scanner_SingleLineRule ) {
-				val sr = ts as Scanner_SingleLineRule
-				return m.TokenScanner_SingleLineRuleBuilder
-					.check(createCheck(m,sr.check))
-					.condition(createCondition(m,ts.enabledIf))
-					.startSeq(sr.startSeq)
-					.endSeq(sr.endSeq)
-					.escapedBy(sr.escapeSeq)
-					.build
+				if( ts.startPattern != null ) {
+					return m.TokenScanner_DynamicEndBuilder
+						.beginPrefix(ts.startSeq)
+						.beginMatch(ts.startPattern)
+						.endTemplate(ts.endSeq)
+						.singleLine(true)
+						.build
+				} else {
+					val sr = ts as Scanner_SingleLineRule
+					return m.TokenScanner_SingleLineRuleBuilder
+						.check(createCheck(m,sr.check))
+						.condition(createCondition(m,ts.enabledIf))
+						.startSeq(sr.startSeq)
+						.endSeq(sr.endSeq)
+						.escapedBy(sr.escapeSeq)
+						.build
+				}
 			} else if( ts instanceof Scanner_MultiLineRule ) {
-				val mr = ts as Scanner_MultiLineRule
-				return m.TokenScanner_MultiLineRuleBuilder
-					.check(createCheck(m,mr.check))
-					.condition(createCondition(m,ts.enabledIf))
-					.startSeq(mr.startSeq)
-					.endSeq(mr.endSeq)
-					.escapedBy(mr.escapeSeq)
-					.build
+				if( ts.startPattern != null ) {
+					return m.TokenScanner_DynamicEndBuilder
+						.beginPrefix(ts.startSeq)
+						.beginMatch(ts.startPattern)
+						.endTemplate(ts.endSeq)
+						.build
+				} else {
+					val mr = ts as Scanner_MultiLineRule
+					return m.TokenScanner_MultiLineRuleBuilder
+						.check(createCheck(m,mr.check))
+						.condition(createCondition(m,ts.enabledIf))
+						.startSeq(mr.startSeq)
+						.endSeq(mr.endSeq)
+						.escapedBy(mr.escapeSeq)
+						.build
+				}
 			} else if( ts instanceof Scanner_CharacterRule ) {
 				val sc = ts as Scanner_CharacterRule
 				return m.TokenScanner_CharacterRuleBuilder

@@ -165,6 +165,11 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
         return createPartition_MultiLineRuleAdapter();
       }
       @Override
+      public Adapter casePartition_JSRule(Partition_JSRule object)
+      {
+        return createPartition_JSRuleAdapter();
+      }
+      @Override
       public Adapter caseLexicalHighlighting(LexicalHighlighting object)
       {
         return createLexicalHighlightingAdapter();
@@ -577,6 +582,21 @@ public class LDefAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPartition_MultiLineRuleAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule <em>Partition JS Rule</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule
+   * @generated
+   */
+  public Adapter createPartition_JSRuleAdapter()
   {
     return null;
   }

@@ -23,6 +23,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_MultiLineRuleImpl#getStartSeq <em>Start Seq</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_MultiLineRuleImpl#getStartPattern <em>Start Pattern</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_MultiLineRuleImpl#getEndSeq <em>End Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_MultiLineRuleImpl#getEscapeSeq <em>Escape Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_MultiLineRuleImpl#getEnabledIf <em>Enabled If</em>}</li>
@@ -51,6 +52,26 @@ public class Scanner_MultiLineRuleImpl extends Scanner_RuleImpl implements Scann
    * @ordered
    */
   protected String startSeq = START_SEQ_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getStartPattern() <em>Start Pattern</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStartPattern()
+   * @generated
+   * @ordered
+   */
+  protected static final String START_PATTERN_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getStartPattern() <em>Start Pattern</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStartPattern()
+   * @generated
+   * @ordered
+   */
+  protected String startPattern = START_PATTERN_EDEFAULT;
 
   /**
    * The default value of the '{@link #getEndSeq() <em>End Seq</em>}' attribute.
@@ -144,6 +165,29 @@ public class Scanner_MultiLineRuleImpl extends Scanner_RuleImpl implements Scann
     startSeq = newStartSeq;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_MULTI_LINE_RULE__START_SEQ, oldStartSeq, startSeq));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getStartPattern()
+  {
+    return startPattern;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setStartPattern(String newStartPattern)
+  {
+    String oldStartPattern = startPattern;
+    startPattern = newStartPattern;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_MULTI_LINE_RULE__START_PATTERN, oldStartPattern, startPattern));
   }
 
   /**
@@ -268,6 +312,8 @@ public class Scanner_MultiLineRuleImpl extends Scanner_RuleImpl implements Scann
     {
       case LDefPackage.SCANNER_MULTI_LINE_RULE__START_SEQ:
         return getStartSeq();
+      case LDefPackage.SCANNER_MULTI_LINE_RULE__START_PATTERN:
+        return getStartPattern();
       case LDefPackage.SCANNER_MULTI_LINE_RULE__END_SEQ:
         return getEndSeq();
       case LDefPackage.SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ:
@@ -290,6 +336,9 @@ public class Scanner_MultiLineRuleImpl extends Scanner_RuleImpl implements Scann
     {
       case LDefPackage.SCANNER_MULTI_LINE_RULE__START_SEQ:
         setStartSeq((String)newValue);
+        return;
+      case LDefPackage.SCANNER_MULTI_LINE_RULE__START_PATTERN:
+        setStartPattern((String)newValue);
         return;
       case LDefPackage.SCANNER_MULTI_LINE_RULE__END_SEQ:
         setEndSeq((String)newValue);
@@ -317,6 +366,9 @@ public class Scanner_MultiLineRuleImpl extends Scanner_RuleImpl implements Scann
       case LDefPackage.SCANNER_MULTI_LINE_RULE__START_SEQ:
         setStartSeq(START_SEQ_EDEFAULT);
         return;
+      case LDefPackage.SCANNER_MULTI_LINE_RULE__START_PATTERN:
+        setStartPattern(START_PATTERN_EDEFAULT);
+        return;
       case LDefPackage.SCANNER_MULTI_LINE_RULE__END_SEQ:
         setEndSeq(END_SEQ_EDEFAULT);
         return;
@@ -342,6 +394,8 @@ public class Scanner_MultiLineRuleImpl extends Scanner_RuleImpl implements Scann
     {
       case LDefPackage.SCANNER_MULTI_LINE_RULE__START_SEQ:
         return START_SEQ_EDEFAULT == null ? startSeq != null : !START_SEQ_EDEFAULT.equals(startSeq);
+      case LDefPackage.SCANNER_MULTI_LINE_RULE__START_PATTERN:
+        return START_PATTERN_EDEFAULT == null ? startPattern != null : !START_PATTERN_EDEFAULT.equals(startPattern);
       case LDefPackage.SCANNER_MULTI_LINE_RULE__END_SEQ:
         return END_SEQ_EDEFAULT == null ? endSeq != null : !END_SEQ_EDEFAULT.equals(endSeq);
       case LDefPackage.SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ:
@@ -365,6 +419,8 @@ public class Scanner_MultiLineRuleImpl extends Scanner_RuleImpl implements Scann
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (startSeq: ");
     result.append(startSeq);
+    result.append(", startPattern: ");
+    result.append(startPattern);
     result.append(", endSeq: ");
     result.append(endSeq);
     result.append(", escapeSeq: ");

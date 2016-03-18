@@ -84,19 +84,19 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//	ValidID (=> '.' ValidID)*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.2/@alternatives'
+		//ValidID (=> '.' ValidID)*
 		public Group getGroup() { return cGroup; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.2/@alternatives/@elements.0'
+		//ValidID
 		public RuleCall getValidIDParserRuleCall_0() { return cValidIDParserRuleCall_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.2/@alternatives/@elements.1'
+		//(=> '.' ValidID)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.2/@alternatives/@elements.1/@elements.0'
+		//=> '.'
 		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.2/@alternatives/@elements.1/@elements.1'
+		//ValidID
 		public RuleCall getValidIDParserRuleCall_1_1() { return cValidIDParserRuleCall_1_1; }
 	}
 
@@ -496,7 +496,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//partitions+=Partition+
 		public Assignment getPartitionsAssignment_2() { return cPartitionsAssignment_2; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#XtextFragmentProvider_org.eclipse.fx.code.editor.ldef.LDef/Partition'
+		//Partition
 		public RuleCall getPartitionsPartitionParserRuleCall_2_0() { return cPartitionsPartitionParserRuleCall_2_0; }
 
 		//partitioner=Partitioner
@@ -616,12 +616,13 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cPartition_SingleLineRuleParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cPartition_MultiLineRuleParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cPartition_JSRuleParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Partition_Rule:
-		//	Partition_SingleLineRule | Partition_MultiLineRule;
+		//	Partition_SingleLineRule | Partition_MultiLineRule | Partition_JSRule;
 		@Override public ParserRule getRule() { return rule; }
 
-		//Partition_SingleLineRule | Partition_MultiLineRule
+		//Partition_SingleLineRule | Partition_MultiLineRule | Partition_JSRule
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Partition_SingleLineRule
@@ -629,6 +630,9 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Partition_MultiLineRule
 		public RuleCall getPartition_MultiLineRuleParserRuleCall_1() { return cPartition_MultiLineRuleParserRuleCall_1; }
+
+		//Partition_JSRule
+		public RuleCall getPartition_JSRuleParserRuleCall_2() { return cPartition_JSRuleParserRuleCall_2; }
 	}
 
 	public class Partition_SingleLineRuleElements extends AbstractParserRuleElementFinder {
@@ -641,26 +645,30 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStartSeqAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cStartSeqSTRINGTerminalRuleCall_2_0 = (RuleCall)cStartSeqAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cColKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cCheckAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cCheckCheckParserRuleCall_3_1_0 = (RuleCall)cCheckAssignment_3_1.eContents().get(0);
+		private final Keyword cPatternKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cStartPatternAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cStartPatternSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cStartPatternAssignment_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cEndSeqAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cEndSeqSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cEndSeqAssignment_4_1.eContents().get(0);
+		private final Keyword cColKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cCheckAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_4_1_0 = (RuleCall)cCheckAssignment_4_1.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cEscapedKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Keyword cByKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final Assignment cEscapeSeqAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cEndSeqAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cEndSeqSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cEndSeqAssignment_5_1.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cEscapedKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Keyword cByKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
+		private final Assignment cEscapeSeqAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
+		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_6_2_0 = (RuleCall)cEscapeSeqAssignment_6_2.eContents().get(0);
 		
 		//Partition_SingleLineRule:
-		//	'single_line' parition=[Partition] startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by'
-		//	escapeSeq=STRING)?;
+		//	'single_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>'
+		//	endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'single_line' parition=[Partition] startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by'
-		//escapeSeq=STRING)?
+		//'single_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>'
+		//endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//'single_line'
@@ -681,44 +689,56 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_2_0() { return cStartSeqSTRINGTerminalRuleCall_2_0; }
 
-		//('col' check=Check)?
+		//('pattern' startPattern=STRING)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//'col'
-		public Keyword getColKeyword_3_0() { return cColKeyword_3_0; }
+		//'pattern'
+		public Keyword getPatternKeyword_3_0() { return cPatternKeyword_3_0; }
 
-		//check=Check
-		public Assignment getCheckAssignment_3_1() { return cCheckAssignment_3_1; }
-
-		//Check
-		public RuleCall getCheckCheckParserRuleCall_3_1_0() { return cCheckCheckParserRuleCall_3_1_0; }
-
-		//('=>' endSeq=STRING?)?
-		public Group getGroup_4() { return cGroup_4; }
-
-		//'=>'
-		public Keyword getEqualsSignGreaterThanSignKeyword_4_0() { return cEqualsSignGreaterThanSignKeyword_4_0; }
-
-		//endSeq=STRING?
-		public Assignment getEndSeqAssignment_4_1() { return cEndSeqAssignment_4_1; }
+		//startPattern=STRING
+		public Assignment getStartPatternAssignment_3_1() { return cStartPatternAssignment_3_1; }
 
 		//STRING
-		public RuleCall getEndSeqSTRINGTerminalRuleCall_4_1_0() { return cEndSeqSTRINGTerminalRuleCall_4_1_0; }
+		public RuleCall getStartPatternSTRINGTerminalRuleCall_3_1_0() { return cStartPatternSTRINGTerminalRuleCall_3_1_0; }
 
-		//('escaped' 'by' escapeSeq=STRING)?
+		//('col' check=Check)?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//'col'
+		public Keyword getColKeyword_4_0() { return cColKeyword_4_0; }
+
+		//check=Check
+		public Assignment getCheckAssignment_4_1() { return cCheckAssignment_4_1; }
+
+		//Check
+		public RuleCall getCheckCheckParserRuleCall_4_1_0() { return cCheckCheckParserRuleCall_4_1_0; }
+
+		//('=>' endSeq=STRING?)?
 		public Group getGroup_5() { return cGroup_5; }
 
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_5_0() { return cEqualsSignGreaterThanSignKeyword_5_0; }
+
+		//endSeq=STRING?
+		public Assignment getEndSeqAssignment_5_1() { return cEndSeqAssignment_5_1; }
+
+		//STRING
+		public RuleCall getEndSeqSTRINGTerminalRuleCall_5_1_0() { return cEndSeqSTRINGTerminalRuleCall_5_1_0; }
+
+		//('escaped' 'by' escapeSeq=STRING)?
+		public Group getGroup_6() { return cGroup_6; }
+
 		//'escaped'
-		public Keyword getEscapedKeyword_5_0() { return cEscapedKeyword_5_0; }
+		public Keyword getEscapedKeyword_6_0() { return cEscapedKeyword_6_0; }
 
 		//'by'
-		public Keyword getByKeyword_5_1() { return cByKeyword_5_1; }
+		public Keyword getByKeyword_6_1() { return cByKeyword_6_1; }
 
 		//escapeSeq=STRING
-		public Assignment getEscapeSeqAssignment_5_2() { return cEscapeSeqAssignment_5_2; }
+		public Assignment getEscapeSeqAssignment_6_2() { return cEscapeSeqAssignment_6_2; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.19/@alternatives/@elements.5/@elements.2/@terminal'
-		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_5_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_5_2_0; }
+		//STRING
+		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_6_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_6_2_0; }
 	}
 
 	public class Partition_MultiLineRuleElements extends AbstractParserRuleElementFinder {
@@ -731,23 +751,29 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStartSeqAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cStartSeqSTRINGTerminalRuleCall_2_0 = (RuleCall)cStartSeqAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cColKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cCheckAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cCheckCheckParserRuleCall_3_1_0 = (RuleCall)cCheckAssignment_3_1.eContents().get(0);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cEndSeqAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cEndSeqSTRINGTerminalRuleCall_5_0 = (RuleCall)cEndSeqAssignment_5.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cEscapedKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Keyword cByKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
-		private final Assignment cEscapeSeqAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
-		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_6_2_0 = (RuleCall)cEscapeSeqAssignment_6_2.eContents().get(0);
+		private final Keyword cPatternKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cStartPatternAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cStartPatternSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cStartPatternAssignment_3_1.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cColKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cCheckAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_4_1_0 = (RuleCall)cCheckAssignment_4_1.eContents().get(0);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cEndSeqAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cEndSeqSTRINGTerminalRuleCall_6_0 = (RuleCall)cEndSeqAssignment_6.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cEscapedKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Keyword cByKeyword_7_1 = (Keyword)cGroup_7.eContents().get(1);
+		private final Assignment cEscapeSeqAssignment_7_2 = (Assignment)cGroup_7.eContents().get(2);
+		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_7_2_0 = (RuleCall)cEscapeSeqAssignment_7_2.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#XtextFragmentProvider_org.eclipse.fx.code.editor.ldef.LDef/Partition_MultiLineRule'
+		//Partition_MultiLineRule:
+		//	'multi_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>'
+		//	endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'multi_line' parition=[Partition] startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
-		//escapeSeq=STRING)?
+		//'multi_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>'
+		//endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//'multi_line'
@@ -768,6 +794,94 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_2_0() { return cStartSeqSTRINGTerminalRuleCall_2_0; }
 
+		//('pattern' startPattern=STRING)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//'pattern'
+		public Keyword getPatternKeyword_3_0() { return cPatternKeyword_3_0; }
+
+		//startPattern=STRING
+		public Assignment getStartPatternAssignment_3_1() { return cStartPatternAssignment_3_1; }
+
+		//STRING
+		public RuleCall getStartPatternSTRINGTerminalRuleCall_3_1_0() { return cStartPatternSTRINGTerminalRuleCall_3_1_0; }
+
+		//('col' check=Check)?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//'col'
+		public Keyword getColKeyword_4_0() { return cColKeyword_4_0; }
+
+		//check=Check
+		public Assignment getCheckAssignment_4_1() { return cCheckAssignment_4_1; }
+
+		//Check
+		public RuleCall getCheckCheckParserRuleCall_4_1_0() { return cCheckCheckParserRuleCall_4_1_0; }
+
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_5() { return cEqualsSignGreaterThanSignKeyword_5; }
+
+		//endSeq=STRING
+		public Assignment getEndSeqAssignment_6() { return cEndSeqAssignment_6; }
+
+		//STRING
+		public RuleCall getEndSeqSTRINGTerminalRuleCall_6_0() { return cEndSeqSTRINGTerminalRuleCall_6_0; }
+
+		//('escaped' 'by' escapeSeq=STRING)?
+		public Group getGroup_7() { return cGroup_7; }
+
+		//'escaped'
+		public Keyword getEscapedKeyword_7_0() { return cEscapedKeyword_7_0; }
+
+		//'by'
+		public Keyword getByKeyword_7_1() { return cByKeyword_7_1; }
+
+		//escapeSeq=STRING
+		public Assignment getEscapeSeqAssignment_7_2() { return cEscapeSeqAssignment_7_2; }
+
+		//STRING
+		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_7_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_7_2_0; }
+	}
+
+	public class Partition_JSRuleElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Partition_JSRule");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cScriptKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cParitionAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cParitionPartitionCrossReference_1_0 = (CrossReference)cParitionAssignment_1.eContents().get(0);
+		private final RuleCall cParitionPartitionIDTerminalRuleCall_1_0_1 = (RuleCall)cParitionPartitionCrossReference_1_0.eContents().get(1);
+		private final Assignment cFileURIAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cFileURISTRINGTerminalRuleCall_2_0 = (RuleCall)cFileURIAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cColKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cCheckAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_3_1_0 = (RuleCall)cCheckAssignment_3_1.eContents().get(0);
+		
+		//Partition_JSRule:
+		//	'script' parition=[Partition] fileURI=STRING ('col' check=Check)?;
+		@Override public ParserRule getRule() { return rule; }
+
+		//'script' parition=[Partition] fileURI=STRING ('col' check=Check)?
+		public Group getGroup() { return cGroup; }
+
+		//'script'
+		public Keyword getScriptKeyword_0() { return cScriptKeyword_0; }
+
+		//parition=[Partition]
+		public Assignment getParitionAssignment_1() { return cParitionAssignment_1; }
+
+		//[Partition]
+		public CrossReference getParitionPartitionCrossReference_1_0() { return cParitionPartitionCrossReference_1_0; }
+
+		//ID
+		public RuleCall getParitionPartitionIDTerminalRuleCall_1_0_1() { return cParitionPartitionIDTerminalRuleCall_1_0_1; }
+
+		//fileURI=STRING
+		public Assignment getFileURIAssignment_2() { return cFileURIAssignment_2; }
+
+		//STRING
+		public RuleCall getFileURISTRINGTerminalRuleCall_2_0() { return cFileURISTRINGTerminalRuleCall_2_0; }
+
 		//('col' check=Check)?
 		public Group getGroup_3() { return cGroup_3; }
 
@@ -779,30 +893,6 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Check
 		public RuleCall getCheckCheckParserRuleCall_3_1_0() { return cCheckCheckParserRuleCall_3_1_0; }
-
-		//'=>'
-		public Keyword getEqualsSignGreaterThanSignKeyword_4() { return cEqualsSignGreaterThanSignKeyword_4; }
-
-		//endSeq=STRING
-		public Assignment getEndSeqAssignment_5() { return cEndSeqAssignment_5; }
-
-		//STRING
-		public RuleCall getEndSeqSTRINGTerminalRuleCall_5_0() { return cEndSeqSTRINGTerminalRuleCall_5_0; }
-
-		//('escaped' 'by' escapeSeq=STRING)?
-		public Group getGroup_6() { return cGroup_6; }
-
-		//'escaped'
-		public Keyword getEscapedKeyword_6_0() { return cEscapedKeyword_6_0; }
-
-		//'by'
-		public Keyword getByKeyword_6_1() { return cByKeyword_6_1; }
-
-		//escapeSeq=STRING
-		public Assignment getEscapeSeqAssignment_6_2() { return cEscapeSeqAssignment_6_2; }
-
-		//STRING
-		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_6_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_6_2_0; }
 	}
 
 	public class LexicalHighlightingElements extends AbstractParserRuleElementFinder {
@@ -903,28 +993,29 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cItalicAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cItalicItalicKeyword_3_0 = (Keyword)cItalicAssignment_3.eContents().get(0);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#XtextFragmentProvider_org.eclipse.fx.code.editor.ldef.LDef/TokenVisual'
+		//TokenVisual:
+		//	token=[Token] colorSpec=STRING bold?='bold'? italic?='italic'?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives'
+		//token=[Token] colorSpec=STRING bold?='bold'? italic?='italic'?
 		public Group getGroup() { return cGroup; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.0'
+		//token=[Token]
 		public Assignment getTokenAssignment_0() { return cTokenAssignment_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.0/@terminal'
+		//[Token]
 		public CrossReference getTokenTokenCrossReference_0_0() { return cTokenTokenCrossReference_0_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.0/@terminal/@terminal'
+		//ID
 		public RuleCall getTokenTokenIDTerminalRuleCall_0_0_1() { return cTokenTokenIDTerminalRuleCall_0_0_1; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.1'
+		//colorSpec=STRING
 		public Assignment getColorSpecAssignment_1() { return cColorSpecAssignment_1; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.1/@terminal'
+		//STRING
 		public RuleCall getColorSpecSTRINGTerminalRuleCall_1_0() { return cColorSpecSTRINGTerminalRuleCall_1_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.23/@alternatives/@elements.2'
+		//bold?='bold'?
 		public Assignment getBoldAssignment_2() { return cBoldAssignment_2; }
 
 		//'bold'
@@ -1060,37 +1151,38 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cScannerListScannerParserRuleCall_2_1_0 = (RuleCall)cScannerListAssignment_2_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#XtextFragmentProvider_org.eclipse.fx.code.editor.ldef.LDef/Scanner'
+		//Token:
+		//	default?='default'? name=ID ('{' scannerList+=Scanner+ '}')?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives'
+		//default?='default'? name=ID ('{' scannerList+=Scanner+ '}')?
 		public Group getGroup() { return cGroup; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.0'
+		//default?='default'?
 		public Assignment getDefaultAssignment_0() { return cDefaultAssignment_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.0/@terminal'
+		//'default'
 		public Keyword getDefaultDefaultKeyword_0_0() { return cDefaultDefaultKeyword_0_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.1'
+		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.1/@terminal'
+		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.2'
+		//('{' scannerList+=Scanner+ '}')?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.2/@elements.0'
+		//'{'
 		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.2/@elements.1'
+		//scannerList+=Scanner+
 		public Assignment getScannerListAssignment_2_1() { return cScannerListAssignment_2_1; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.2/@elements.1/@terminal'
+		//Scanner
 		public RuleCall getScannerListScannerParserRuleCall_2_1_0() { return cScannerListScannerParserRuleCall_2_1_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/eclipse/fx/code/editor/ldef/LDef.xtext#/0/@rules.27/@alternatives/@elements.2/@elements.2'
+		//'}'
 		public Keyword getRightCurlyBracketKeyword_2_2() { return cRightCurlyBracketKeyword_2_2; }
 	}
 
@@ -1253,30 +1345,34 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStartSeqAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cStartSeqSTRINGTerminalRuleCall_1_0 = (RuleCall)cStartSeqAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cColKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cCheckAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cCheckCheckParserRuleCall_2_1_0 = (RuleCall)cCheckAssignment_2_1.eContents().get(0);
+		private final Keyword cPatternKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cStartPatternAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cStartPatternSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cStartPatternAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cEndSeqAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cEndSeqSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cEndSeqAssignment_3_1.eContents().get(0);
+		private final Keyword cColKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cCheckAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_3_1_0 = (RuleCall)cCheckAssignment_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cEscapedKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Keyword cByKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cEscapeSeqAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_4_2_0 = (RuleCall)cEscapeSeqAssignment_4_2.eContents().get(0);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cEndSeqAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cEndSeqSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cEndSeqAssignment_4_1.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cEnabledifKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cEnabledIfAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cEnabledIfScannerConditionParserRuleCall_5_1_0 = (RuleCall)cEnabledIfAssignment_5_1.eContents().get(0);
+		private final Keyword cEscapedKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Keyword cByKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Assignment cEscapeSeqAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cEnabledifKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cEnabledIfAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cEnabledIfScannerConditionParserRuleCall_6_1_0 = (RuleCall)cEnabledIfAssignment_6_1.eContents().get(0);
 		
 		//Scanner_SingleLineRule:
-		//	'single_line' startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
-		//	('enabledif' enabledIf=ScannerCondition)?;
+		//	'single_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped'
+		//	'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'single_line' startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
-		//('enabledif' enabledIf=ScannerCondition)?
+		//'single_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped'
+		//'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?
 		public Group getGroup() { return cGroup; }
 
 		//'single_line'
@@ -1288,119 +1384,41 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
 
-		//('col' check=Check)?
+		//('pattern' startPattern=STRING)?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//'col'
-		public Keyword getColKeyword_2_0() { return cColKeyword_2_0; }
+		//'pattern'
+		public Keyword getPatternKeyword_2_0() { return cPatternKeyword_2_0; }
 
-		//check=Check
-		public Assignment getCheckAssignment_2_1() { return cCheckAssignment_2_1; }
+		//startPattern=STRING
+		public Assignment getStartPatternAssignment_2_1() { return cStartPatternAssignment_2_1; }
 
-		//Check
-		public RuleCall getCheckCheckParserRuleCall_2_1_0() { return cCheckCheckParserRuleCall_2_1_0; }
+		//STRING
+		public RuleCall getStartPatternSTRINGTerminalRuleCall_2_1_0() { return cStartPatternSTRINGTerminalRuleCall_2_1_0; }
 
-		//('=>' endSeq=STRING?)?
+		//('col' check=Check)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//'=>'
-		public Keyword getEqualsSignGreaterThanSignKeyword_3_0() { return cEqualsSignGreaterThanSignKeyword_3_0; }
-
-		//endSeq=STRING?
-		public Assignment getEndSeqAssignment_3_1() { return cEndSeqAssignment_3_1; }
-
-		//STRING
-		public RuleCall getEndSeqSTRINGTerminalRuleCall_3_1_0() { return cEndSeqSTRINGTerminalRuleCall_3_1_0; }
-
-		//('escaped' 'by' escapeSeq=STRING)?
-		public Group getGroup_4() { return cGroup_4; }
-
-		//'escaped'
-		public Keyword getEscapedKeyword_4_0() { return cEscapedKeyword_4_0; }
-
-		//'by'
-		public Keyword getByKeyword_4_1() { return cByKeyword_4_1; }
-
-		//escapeSeq=STRING
-		public Assignment getEscapeSeqAssignment_4_2() { return cEscapeSeqAssignment_4_2; }
-
-		//STRING
-		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_4_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_4_2_0; }
-
-		//('enabledif' enabledIf=ScannerCondition)?
-		public Group getGroup_5() { return cGroup_5; }
-
-		//'enabledif'
-		public Keyword getEnabledifKeyword_5_0() { return cEnabledifKeyword_5_0; }
-
-		//enabledIf=ScannerCondition
-		public Assignment getEnabledIfAssignment_5_1() { return cEnabledIfAssignment_5_1; }
-
-		//ScannerCondition
-		public RuleCall getEnabledIfScannerConditionParserRuleCall_5_1_0() { return cEnabledIfScannerConditionParserRuleCall_5_1_0; }
-	}
-
-	public class Scanner_MultiLineRuleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Scanner_MultiLineRule");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cMulti_lineKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cStartSeqAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cStartSeqSTRINGTerminalRuleCall_1_0 = (RuleCall)cStartSeqAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cColKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cCheckAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cCheckCheckParserRuleCall_2_1_0 = (RuleCall)cCheckAssignment_2_1.eContents().get(0);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cEndSeqAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cEndSeqSTRINGTerminalRuleCall_4_0 = (RuleCall)cEndSeqAssignment_4.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cEscapedKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Keyword cByKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final Assignment cEscapeSeqAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cEscapeSeqAssignment_5_2.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cEnabledifKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cEnabledIfAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cEnabledIfScannerConditionParserRuleCall_6_1_0 = (RuleCall)cEnabledIfAssignment_6_1.eContents().get(0);
-		
-		//Scanner_MultiLineRule:
-		//	'multi_line' startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? ('enabledif'
-		//	enabledIf=ScannerCondition)?;
-		@Override public ParserRule getRule() { return rule; }
-
-		//'multi_line' startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? ('enabledif'
-		//enabledIf=ScannerCondition)?
-		public Group getGroup() { return cGroup; }
-
-		//'multi_line'
-		public Keyword getMulti_lineKeyword_0() { return cMulti_lineKeyword_0; }
-
-		//startSeq=STRING
-		public Assignment getStartSeqAssignment_1() { return cStartSeqAssignment_1; }
-
-		//STRING
-		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
-
-		//('col' check=Check)?
-		public Group getGroup_2() { return cGroup_2; }
-
 		//'col'
-		public Keyword getColKeyword_2_0() { return cColKeyword_2_0; }
+		public Keyword getColKeyword_3_0() { return cColKeyword_3_0; }
 
 		//check=Check
-		public Assignment getCheckAssignment_2_1() { return cCheckAssignment_2_1; }
+		public Assignment getCheckAssignment_3_1() { return cCheckAssignment_3_1; }
 
 		//Check
-		public RuleCall getCheckCheckParserRuleCall_2_1_0() { return cCheckCheckParserRuleCall_2_1_0; }
+		public RuleCall getCheckCheckParserRuleCall_3_1_0() { return cCheckCheckParserRuleCall_3_1_0; }
+
+		//('=>' endSeq=STRING?)?
+		public Group getGroup_4() { return cGroup_4; }
 
 		//'=>'
-		public Keyword getEqualsSignGreaterThanSignKeyword_3() { return cEqualsSignGreaterThanSignKeyword_3; }
+		public Keyword getEqualsSignGreaterThanSignKeyword_4_0() { return cEqualsSignGreaterThanSignKeyword_4_0; }
 
-		//endSeq=STRING
-		public Assignment getEndSeqAssignment_4() { return cEndSeqAssignment_4; }
+		//endSeq=STRING?
+		public Assignment getEndSeqAssignment_4_1() { return cEndSeqAssignment_4_1; }
 
 		//STRING
-		public RuleCall getEndSeqSTRINGTerminalRuleCall_4_0() { return cEndSeqSTRINGTerminalRuleCall_4_0; }
+		public RuleCall getEndSeqSTRINGTerminalRuleCall_4_1_0() { return cEndSeqSTRINGTerminalRuleCall_4_1_0; }
 
 		//('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup_5() { return cGroup_5; }
@@ -1428,6 +1446,112 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ScannerCondition
 		public RuleCall getEnabledIfScannerConditionParserRuleCall_6_1_0() { return cEnabledIfScannerConditionParserRuleCall_6_1_0; }
+	}
+
+	public class Scanner_MultiLineRuleElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.fx.code.editor.ldef.LDef.Scanner_MultiLineRule");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cMulti_lineKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cStartSeqAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cStartSeqSTRINGTerminalRuleCall_1_0 = (RuleCall)cStartSeqAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cPatternKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cStartPatternAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cStartPatternSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cStartPatternAssignment_2_1.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cColKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cCheckAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cCheckCheckParserRuleCall_3_1_0 = (RuleCall)cCheckAssignment_3_1.eContents().get(0);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cEndSeqAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cEndSeqSTRINGTerminalRuleCall_5_0 = (RuleCall)cEndSeqAssignment_5.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cEscapedKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Keyword cByKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
+		private final Assignment cEscapeSeqAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
+		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_6_2_0 = (RuleCall)cEscapeSeqAssignment_6_2.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cEnabledifKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cEnabledIfAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cEnabledIfScannerConditionParserRuleCall_7_1_0 = (RuleCall)cEnabledIfAssignment_7_1.eContents().get(0);
+		
+		//Scanner_MultiLineRule:
+		//	'multi_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
+		//	escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
+		@Override public ParserRule getRule() { return rule; }
+
+		//'multi_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
+		//escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?
+		public Group getGroup() { return cGroup; }
+
+		//'multi_line'
+		public Keyword getMulti_lineKeyword_0() { return cMulti_lineKeyword_0; }
+
+		//startSeq=STRING
+		public Assignment getStartSeqAssignment_1() { return cStartSeqAssignment_1; }
+
+		//STRING
+		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
+
+		//('pattern' startPattern=STRING)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'pattern'
+		public Keyword getPatternKeyword_2_0() { return cPatternKeyword_2_0; }
+
+		//startPattern=STRING
+		public Assignment getStartPatternAssignment_2_1() { return cStartPatternAssignment_2_1; }
+
+		//STRING
+		public RuleCall getStartPatternSTRINGTerminalRuleCall_2_1_0() { return cStartPatternSTRINGTerminalRuleCall_2_1_0; }
+
+		//('col' check=Check)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//'col'
+		public Keyword getColKeyword_3_0() { return cColKeyword_3_0; }
+
+		//check=Check
+		public Assignment getCheckAssignment_3_1() { return cCheckAssignment_3_1; }
+
+		//Check
+		public RuleCall getCheckCheckParserRuleCall_3_1_0() { return cCheckCheckParserRuleCall_3_1_0; }
+
+		//'=>'
+		public Keyword getEqualsSignGreaterThanSignKeyword_4() { return cEqualsSignGreaterThanSignKeyword_4; }
+
+		//endSeq=STRING
+		public Assignment getEndSeqAssignment_5() { return cEndSeqAssignment_5; }
+
+		//STRING
+		public RuleCall getEndSeqSTRINGTerminalRuleCall_5_0() { return cEndSeqSTRINGTerminalRuleCall_5_0; }
+
+		//('escaped' 'by' escapeSeq=STRING)?
+		public Group getGroup_6() { return cGroup_6; }
+
+		//'escaped'
+		public Keyword getEscapedKeyword_6_0() { return cEscapedKeyword_6_0; }
+
+		//'by'
+		public Keyword getByKeyword_6_1() { return cByKeyword_6_1; }
+
+		//escapeSeq=STRING
+		public Assignment getEscapeSeqAssignment_6_2() { return cEscapeSeqAssignment_6_2; }
+
+		//STRING
+		public RuleCall getEscapeSeqSTRINGTerminalRuleCall_6_2_0() { return cEscapeSeqSTRINGTerminalRuleCall_6_2_0; }
+
+		//('enabledif' enabledIf=ScannerCondition)?
+		public Group getGroup_7() { return cGroup_7; }
+
+		//'enabledif'
+		public Keyword getEnabledifKeyword_7_0() { return cEnabledifKeyword_7_0; }
+
+		//enabledIf=ScannerCondition
+		public Assignment getEnabledIfAssignment_7_1() { return cEnabledIfAssignment_7_1; }
+
+		//ScannerCondition
+		public RuleCall getEnabledIfScannerConditionParserRuleCall_7_1_0() { return cEnabledIfScannerConditionParserRuleCall_7_1_0; }
 	}
 
 	public class Scanner_PatternRuleElements extends AbstractParserRuleElementFinder {
@@ -2005,6 +2129,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	private final Partition_RuleElements pPartition_Rule;
 	private final Partition_SingleLineRuleElements pPartition_SingleLineRule;
 	private final Partition_MultiLineRuleElements pPartition_MultiLineRule;
+	private final Partition_JSRuleElements pPartition_JSRule;
 	private final LexicalHighlightingElements pLexicalHighlighting;
 	private final TokenVisualsElements pTokenVisuals;
 	private final TokenVisualElements pTokenVisual;
@@ -2061,6 +2186,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		this.pPartition_Rule = new Partition_RuleElements();
 		this.pPartition_SingleLineRule = new Partition_SingleLineRuleElements();
 		this.pPartition_MultiLineRule = new Partition_MultiLineRuleElements();
+		this.pPartition_JSRule = new Partition_JSRuleElements();
 		this.pLexicalHighlighting = new LexicalHighlightingElements();
 		this.pTokenVisuals = new TokenVisualsElements();
 		this.pTokenVisual = new TokenVisualElements();
@@ -2325,7 +2451,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition_Rule:
-	//	Partition_SingleLineRule | Partition_MultiLineRule;
+	//	Partition_SingleLineRule | Partition_MultiLineRule | Partition_JSRule;
 	public Partition_RuleElements getPartition_RuleAccess() {
 		return pPartition_Rule;
 	}
@@ -2335,8 +2461,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition_SingleLineRule:
-	//	'single_line' parition=[Partition] startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by'
-	//	escapeSeq=STRING)?;
+	//	'single_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>'
+	//	endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?;
 	public Partition_SingleLineRuleElements getPartition_SingleLineRuleAccess() {
 		return pPartition_SingleLineRule;
 	}
@@ -2346,14 +2472,24 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition_MultiLineRule:
-	//	'multi_line' parition=[Partition] startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
-	//	escapeSeq=STRING)?;
+	//	'multi_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>'
+	//	endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?;
 	public Partition_MultiLineRuleElements getPartition_MultiLineRuleAccess() {
 		return pPartition_MultiLineRule;
 	}
 	
 	public ParserRule getPartition_MultiLineRuleRule() {
 		return getPartition_MultiLineRuleAccess().getRule();
+	}
+
+	//Partition_JSRule:
+	//	'script' parition=[Partition] fileURI=STRING ('col' check=Check)?;
+	public Partition_JSRuleElements getPartition_JSRuleAccess() {
+		return pPartition_JSRule;
+	}
+	
+	public ParserRule getPartition_JSRuleRule() {
+		return getPartition_JSRuleAccess().getRule();
 	}
 
 	//// -----------------------------------------------------
@@ -2474,8 +2610,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_SingleLineRule:
-	//	'single_line' startSeq=STRING ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
-	//	('enabledif' enabledIf=ScannerCondition)?;
+	//	'single_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped'
+	//	'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
 	public Scanner_SingleLineRuleElements getScanner_SingleLineRuleAccess() {
 		return pScanner_SingleLineRule;
 	}
@@ -2485,8 +2621,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_MultiLineRule:
-	//	'multi_line' startSeq=STRING ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? ('enabledif'
-	//	enabledIf=ScannerCondition)?;
+	//	'multi_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
+	//	escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
 	public Scanner_MultiLineRuleElements getScanner_MultiLineRuleAccess() {
 		return pScanner_MultiLineRule;
 	}

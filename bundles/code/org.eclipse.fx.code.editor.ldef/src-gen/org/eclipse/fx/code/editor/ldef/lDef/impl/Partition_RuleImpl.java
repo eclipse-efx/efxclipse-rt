@@ -25,10 +25,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_RuleImpl#getParition <em>Parition</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_RuleImpl#getStartSeq <em>Start Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_RuleImpl#getCheck <em>Check</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_RuleImpl#getEndSeq <em>End Seq</em>}</li>
- *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_RuleImpl#getEscapeSeq <em>Escape Seq</em>}</li>
  * </ul>
  *
  * @generated
@@ -46,26 +43,6 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
   protected Partition parition;
 
   /**
-   * The default value of the '{@link #getStartSeq() <em>Start Seq</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStartSeq()
-   * @generated
-   * @ordered
-   */
-  protected static final String START_SEQ_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getStartSeq() <em>Start Seq</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStartSeq()
-   * @generated
-   * @ordered
-   */
-  protected String startSeq = START_SEQ_EDEFAULT;
-
-  /**
    * The cached value of the '{@link #getCheck() <em>Check</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -74,46 +51,6 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
    * @ordered
    */
   protected Check check;
-
-  /**
-   * The default value of the '{@link #getEndSeq() <em>End Seq</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEndSeq()
-   * @generated
-   * @ordered
-   */
-  protected static final String END_SEQ_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getEndSeq() <em>End Seq</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEndSeq()
-   * @generated
-   * @ordered
-   */
-  protected String endSeq = END_SEQ_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getEscapeSeq() <em>Escape Seq</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEscapeSeq()
-   * @generated
-   * @ordered
-   */
-  protected static final String ESCAPE_SEQ_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getEscapeSeq() <em>Escape Seq</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEscapeSeq()
-   * @generated
-   * @ordered
-   */
-  protected String escapeSeq = ESCAPE_SEQ_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -184,29 +121,6 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getStartSeq()
-  {
-    return startSeq;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStartSeq(String newStartSeq)
-  {
-    String oldStartSeq = startSeq;
-    startSeq = newStartSeq;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.PARTITION_RULE__START_SEQ, oldStartSeq, startSeq));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Check getCheck()
   {
     return check;
@@ -255,52 +169,6 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getEndSeq()
-  {
-    return endSeq;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setEndSeq(String newEndSeq)
-  {
-    String oldEndSeq = endSeq;
-    endSeq = newEndSeq;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.PARTITION_RULE__END_SEQ, oldEndSeq, endSeq));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getEscapeSeq()
-  {
-    return escapeSeq;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setEscapeSeq(String newEscapeSeq)
-  {
-    String oldEscapeSeq = escapeSeq;
-    escapeSeq = newEscapeSeq;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.PARTITION_RULE__ESCAPE_SEQ, oldEscapeSeq, escapeSeq));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -325,14 +193,8 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
       case LDefPackage.PARTITION_RULE__PARITION:
         if (resolve) return getParition();
         return basicGetParition();
-      case LDefPackage.PARTITION_RULE__START_SEQ:
-        return getStartSeq();
       case LDefPackage.PARTITION_RULE__CHECK:
         return getCheck();
-      case LDefPackage.PARTITION_RULE__END_SEQ:
-        return getEndSeq();
-      case LDefPackage.PARTITION_RULE__ESCAPE_SEQ:
-        return getEscapeSeq();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -350,17 +212,8 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
       case LDefPackage.PARTITION_RULE__PARITION:
         setParition((Partition)newValue);
         return;
-      case LDefPackage.PARTITION_RULE__START_SEQ:
-        setStartSeq((String)newValue);
-        return;
       case LDefPackage.PARTITION_RULE__CHECK:
         setCheck((Check)newValue);
-        return;
-      case LDefPackage.PARTITION_RULE__END_SEQ:
-        setEndSeq((String)newValue);
-        return;
-      case LDefPackage.PARTITION_RULE__ESCAPE_SEQ:
-        setEscapeSeq((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -379,17 +232,8 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
       case LDefPackage.PARTITION_RULE__PARITION:
         setParition((Partition)null);
         return;
-      case LDefPackage.PARTITION_RULE__START_SEQ:
-        setStartSeq(START_SEQ_EDEFAULT);
-        return;
       case LDefPackage.PARTITION_RULE__CHECK:
         setCheck((Check)null);
-        return;
-      case LDefPackage.PARTITION_RULE__END_SEQ:
-        setEndSeq(END_SEQ_EDEFAULT);
-        return;
-      case LDefPackage.PARTITION_RULE__ESCAPE_SEQ:
-        setEscapeSeq(ESCAPE_SEQ_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -407,37 +251,10 @@ public class Partition_RuleImpl extends MinimalEObjectImpl.Container implements 
     {
       case LDefPackage.PARTITION_RULE__PARITION:
         return parition != null;
-      case LDefPackage.PARTITION_RULE__START_SEQ:
-        return START_SEQ_EDEFAULT == null ? startSeq != null : !START_SEQ_EDEFAULT.equals(startSeq);
       case LDefPackage.PARTITION_RULE__CHECK:
         return check != null;
-      case LDefPackage.PARTITION_RULE__END_SEQ:
-        return END_SEQ_EDEFAULT == null ? endSeq != null : !END_SEQ_EDEFAULT.equals(endSeq);
-      case LDefPackage.PARTITION_RULE__ESCAPE_SEQ:
-        return ESCAPE_SEQ_EDEFAULT == null ? escapeSeq != null : !ESCAPE_SEQ_EDEFAULT.equals(escapeSeq);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (startSeq: ");
-    result.append(startSeq);
-    result.append(", endSeq: ");
-    result.append(endSeq);
-    result.append(", escapeSeq: ");
-    result.append(escapeSeq);
-    result.append(')');
-    return result.toString();
   }
 
 } //Partition_RuleImpl

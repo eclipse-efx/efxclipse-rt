@@ -23,6 +23,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Paritioner_JS;
 import org.eclipse.fx.code.editor.ldef.lDef.Paritioning;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition;
+import org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
@@ -109,6 +110,9 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case LDefPackage.PARTITION:
 				sequence_Partition(context, (Partition) semanticObject); 
+				return; 
+			case LDefPackage.PARTITION_JS_RULE:
+				sequence_Partition_JSRule(context, (Partition_JSRule) semanticObject); 
 				return; 
 			case LDefPackage.PARTITION_MULTI_LINE_RULE:
 				sequence_Partition_MultiLineRule(context, (Partition_MultiLineRule) semanticObject); 
@@ -376,11 +380,31 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Partition_Rule returns Partition_JSRule
+	 *     Partition_JSRule returns Partition_JSRule
+	 *
+	 * Constraint:
+	 *     (parition=[Partition|ID] fileURI=STRING check=Check?)
+	 */
+	protected void sequence_Partition_JSRule(ISerializationContext context, Partition_JSRule semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Partition_Rule returns Partition_MultiLineRule
 	 *     Partition_MultiLineRule returns Partition_MultiLineRule
 	 *
 	 * Constraint:
-	 *     (parition=[Partition|ID] startSeq=STRING check=Check? endSeq=STRING escapeSeq=STRING?)
+	 *     (
+	 *         parition=[Partition|ID] 
+	 *         startSeq=STRING 
+	 *         startPattern=STRING? 
+	 *         check=Check? 
+	 *         endSeq=STRING 
+	 *         escapeSeq=STRING?
+	 *     )
 	 */
 	protected void sequence_Partition_MultiLineRule(ISerializationContext context, Partition_MultiLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -411,7 +435,14 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Partition_SingleLineRule returns Partition_SingleLineRule
 	 *
 	 * Constraint:
-	 *     (parition=[Partition|ID] startSeq=STRING check=Check? endSeq=STRING? escapeSeq=STRING?)
+	 *     (
+	 *         parition=[Partition|ID] 
+	 *         startSeq=STRING 
+	 *         startPattern=STRING? 
+	 *         check=Check? 
+	 *         endSeq=STRING? 
+	 *         escapeSeq=STRING?
+	 *     )
 	 */
 	protected void sequence_Partition_SingleLineRule(ISerializationContext context, Partition_SingleLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -577,7 +608,14 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Scanner_MultiLineRule returns Scanner_MultiLineRule
 	 *
 	 * Constraint:
-	 *     (startSeq=STRING check=Check? endSeq=STRING escapeSeq=STRING? enabledIf=ScannerCondition?)
+	 *     (
+	 *         startSeq=STRING 
+	 *         startPattern=STRING? 
+	 *         check=Check? 
+	 *         endSeq=STRING 
+	 *         escapeSeq=STRING? 
+	 *         enabledIf=ScannerCondition?
+	 *     )
 	 */
 	protected void sequence_Scanner_MultiLineRule(ISerializationContext context, Scanner_MultiLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -605,7 +643,14 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Scanner_SingleLineRule returns Scanner_SingleLineRule
 	 *
 	 * Constraint:
-	 *     (startSeq=STRING check=Check? endSeq=STRING? escapeSeq=STRING? enabledIf=ScannerCondition?)
+	 *     (
+	 *         startSeq=STRING 
+	 *         startPattern=STRING? 
+	 *         check=Check? 
+	 *         endSeq=STRING? 
+	 *         escapeSeq=STRING? 
+	 *         enabledIf=ScannerCondition?
+	 *     )
 	 */
 	protected void sequence_Scanner_SingleLineRule(ISerializationContext context, Scanner_SingleLineRule semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

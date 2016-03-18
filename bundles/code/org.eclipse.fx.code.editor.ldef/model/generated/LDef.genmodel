@@ -55,13 +55,23 @@
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Partition_Rule">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LDef.ecore#//Partition_Rule/parition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_Rule/startSeq"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Partition_Rule/check"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_Rule/endSeq"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_Rule/escapeSeq"/>
     </genClasses>
-    <genClasses ecoreClass="LDef.ecore#//Partition_SingleLineRule"/>
-    <genClasses ecoreClass="LDef.ecore#//Partition_MultiLineRule"/>
+    <genClasses ecoreClass="LDef.ecore#//Partition_SingleLineRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_SingleLineRule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_SingleLineRule/startPattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_SingleLineRule/endSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_SingleLineRule/escapeSeq"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Partition_MultiLineRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_MultiLineRule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_MultiLineRule/startPattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_MultiLineRule/endSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_MultiLineRule/escapeSeq"/>
+    </genClasses>
+    <genClasses ecoreClass="LDef.ecore#//Partition_JSRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_JSRule/fileURI"/>
+    </genClasses>
     <genClasses ecoreClass="LDef.ecore#//LexicalHighlighting">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LexicalHighlighting/list"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//LexicalHighlighting/vistual"/>
@@ -104,12 +114,14 @@
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Scanner_SingleLineRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/startPattern"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/escapeSeq"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_SingleLineRule/enabledIf"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Scanner_MultiLineRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/startSeq"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/startPattern"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/escapeSeq"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_MultiLineRule/enabledIf"/>

@@ -82,6 +82,7 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
       case LDefPackage.PARTITION_RULE: return createPartition_Rule();
       case LDefPackage.PARTITION_SINGLE_LINE_RULE: return createPartition_SingleLineRule();
       case LDefPackage.PARTITION_MULTI_LINE_RULE: return createPartition_MultiLineRule();
+      case LDefPackage.PARTITION_JS_RULE: return createPartition_JSRule();
       case LDefPackage.LEXICAL_HIGHLIGHTING: return createLexicalHighlighting();
       case LDefPackage.TOKEN_VISUALS: return createTokenVisuals();
       case LDefPackage.TOKEN_VISUAL: return createTokenVisual();
@@ -308,6 +309,17 @@ public class LDefFactoryImpl extends EFactoryImpl implements LDefFactory
   {
     Partition_MultiLineRuleImpl partition_MultiLineRule = new Partition_MultiLineRuleImpl();
     return partition_MultiLineRule;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Partition_JSRule createPartition_JSRule()
+  {
+    Partition_JSRuleImpl partition_JSRule = new Partition_JSRuleImpl();
+    return partition_JSRule;
   }
 
   /**

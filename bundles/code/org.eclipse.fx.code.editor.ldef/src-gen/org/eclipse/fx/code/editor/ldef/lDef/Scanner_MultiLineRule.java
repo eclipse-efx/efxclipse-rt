@@ -13,6 +13,7 @@ package org.eclipse.fx.code.editor.ldef.lDef;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartSeq <em>Start Seq</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartPattern <em>Start Pattern</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEndSeq <em>End Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEscapeSeq <em>Escape Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEnabledIf <em>Enabled If</em>}</li>
@@ -49,6 +50,32 @@ public interface Scanner_MultiLineRule extends Scanner_Rule
    * @generated
    */
   void setStartSeq(String value);
+
+  /**
+   * Returns the value of the '<em><b>Start Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Start Pattern</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Start Pattern</em>' attribute.
+   * @see #setStartPattern(String)
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScanner_MultiLineRule_StartPattern()
+   * @model
+   * @generated
+   */
+  String getStartPattern();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartPattern <em>Start Pattern</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Start Pattern</em>' attribute.
+   * @see #getStartPattern()
+   * @generated
+   */
+  void setStartPattern(String value);
 
   /**
    * Returns the value of the '<em><b>End Seq</b></em>' attribute.
