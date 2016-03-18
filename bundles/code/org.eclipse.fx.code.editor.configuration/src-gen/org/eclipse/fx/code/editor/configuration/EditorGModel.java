@@ -27,6 +27,7 @@ public interface EditorGModel {
 	public TokenScanner_SingleLineRule.Builder TokenScanner_SingleLineRuleBuilder();
 	public TokenScanner_MultiLineRule.Builder TokenScanner_MultiLineRuleBuilder();
 	public TokenScanner_JavaScript.Builder TokenScanner_JavaScriptBuilder();
+	public TokenScanner_DynamicEnd.Builder TokenScanner_DynamicEndBuilder();
 	public Check.Builder CheckBuilder();
 	public Equals.Builder EqualsBuilder();
 	public Range.Builder RangeBuilder();

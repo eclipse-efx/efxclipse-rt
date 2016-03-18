@@ -3,8 +3,8 @@ package org.eclipse.fx.code.editor.configuration.gson;
 import org.eclipse.fx.code.editor.configuration.*;
 import com.google.gson.JsonObject;
 
-public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, PartitionRule_DynamicEnd, PartitionRule {
-	public GsonPartitionRule_DynamicEndImpl(JsonObject jsonObject) {
+public final class GsonTokenScanner_DynamicEndImpl implements GsonBase, TokenScanner_DynamicEnd, TokenScanner {
+	public GsonTokenScanner_DynamicEndImpl(JsonObject jsonObject) {
 		this.beginMatch = jsonObject.has("beginMatch") ? jsonObject.get("beginMatch").getAsString() : null;
 		this.beginPrefix = jsonObject.has("beginPrefix") ? jsonObject.get("beginPrefix").getAsString() : null;
 		this.check = jsonObject.has("check") ? GsonElementFactory.createCheck(jsonObject.getAsJsonObject("check")) : null;
@@ -12,7 +12,7 @@ public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, Partiti
 		this.endTemplate = jsonObject.has("endTemplate") ? jsonObject.get("endTemplate").getAsString() : null;
 		this.singleLine = jsonObject.has("singleLine") ? jsonObject.get("singleLine").getAsBoolean() : false;
 	}
-	public GsonPartitionRule_DynamicEndImpl(String beginMatch, String beginPrefix, Check check, Condition condition, String endTemplate, boolean singleLine) {
+	public GsonTokenScanner_DynamicEndImpl(String beginMatch, String beginPrefix, Check check, Condition condition, String endTemplate, boolean singleLine) {
 		this.beginMatch = beginMatch;
 		this.beginPrefix = beginPrefix;
 		this.check = check;
@@ -23,7 +23,7 @@ public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, Partiti
 
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
-		o.addProperty( "$gtype", "PartitionRule_DynamicEnd" );
+		o.addProperty( "$gtype", "TokenScanner_DynamicEnd" );
 		o.addProperty( "beginMatch", getBeginMatch() );
 		o.addProperty( "beginPrefix", getBeginPrefix() );
 		o.add( "check", getCheck() == null ? null : ((GsonBase)getCheck()).toJSONObject() );
@@ -81,7 +81,7 @@ public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, Partiti
 	
 
 
-	public static class Builder implements PartitionRule_DynamicEnd.Builder {
+	public static class Builder implements TokenScanner_DynamicEnd.Builder {
 		private final EditorGModel instance;
 
 		public Builder(EditorGModel instance) {
@@ -118,8 +118,8 @@ public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, Partiti
 			return this;
 		}
 
-		public PartitionRule_DynamicEnd build() {
-			return new GsonPartitionRule_DynamicEndImpl(beginMatch, beginPrefix, check, condition, endTemplate, singleLine);
+		public TokenScanner_DynamicEnd build() {
+			return new GsonTokenScanner_DynamicEndImpl(beginMatch, beginPrefix, check, condition, endTemplate, singleLine);
 		}
 	}
 }

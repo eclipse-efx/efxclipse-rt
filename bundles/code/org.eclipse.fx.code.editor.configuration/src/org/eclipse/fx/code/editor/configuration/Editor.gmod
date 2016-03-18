@@ -30,6 +30,7 @@ package org.eclipse.fx.code.editor.configuration {
 		String beginPrefix;
 		String beginMatch;
 		String endTemplate;
+		Boolean singleLine;
 	}
 	type PartitionWhiteSpace {
 		Boolean javawhiteSpace;
@@ -67,6 +68,12 @@ package org.eclipse.fx.code.editor.configuration {
 	}
 	type TokenScanner_JavaScript extends TokenScanner {
 		String script;
+	}
+	type TokenScanner_DynamicEnd extends TokenScanner {
+		String beginPrefix;
+		String beginMatch;
+		String endTemplate;
+		Boolean singleLine;
 	}
 	type Check {
 

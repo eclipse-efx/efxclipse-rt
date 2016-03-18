@@ -174,6 +174,8 @@ public final class GsonElementFactory implements EditorGModel {
 					return new GsonTokenScanner_MultiLineRuleImpl(o);
 				case "TokenScanner_JavaScript":
 					return new GsonTokenScanner_JavaScriptImpl(o);
+				case "TokenScanner_DynamicEnd":
+					return new GsonTokenScanner_DynamicEndImpl(o);
 				default:
 					throw new IllegalStateException();
 			}
@@ -279,6 +281,22 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 	public TokenScanner_JavaScript.Builder TokenScanner_JavaScriptBuilder() {
 		return new GsonTokenScanner_JavaScriptImpl.Builder(this);
+	}
+
+	public static TokenScanner_DynamicEnd createTokenScanner_DynamicEnd(JsonObject o) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
+				case "TokenScanner_DynamicEnd":
+					return new GsonTokenScanner_DynamicEndImpl(o);
+				default:
+					throw new IllegalStateException();
+			}
+		} else {
+			return new GsonTokenScanner_DynamicEndImpl(o);
+		}
+	}
+	public TokenScanner_DynamicEnd.Builder TokenScanner_DynamicEndBuilder() {
+		return new GsonTokenScanner_DynamicEndImpl.Builder(this);
 	}
 
 	public static Check createCheck(JsonObject o) {
@@ -446,6 +464,8 @@ public final class GsonElementFactory implements EditorGModel {
 					return (T) createTokenScanner_MultiLineRule(o);
 				case "TokenScanner_JavaScript":
 					return (T) createTokenScanner_JavaScript(o);
+				case "TokenScanner_DynamicEnd":
+					return (T) createTokenScanner_DynamicEnd(o);
 				case "Check":
 					return (T) createCheck(o);
 				case "Equals":

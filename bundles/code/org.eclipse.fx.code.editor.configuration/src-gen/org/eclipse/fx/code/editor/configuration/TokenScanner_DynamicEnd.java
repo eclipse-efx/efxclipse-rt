@@ -1,6 +1,6 @@
 package org.eclipse.fx.code.editor.configuration;
 
-public interface PartitionRule_DynamicEnd extends EditorBase, PartitionRule {
+public interface TokenScanner_DynamicEnd extends EditorBase, TokenScanner {
 	public String getBeginPrefix();
 	public String getBeginMatch();
 	public String getEndTemplate();
@@ -15,6 +15,6 @@ public interface PartitionRule_DynamicEnd extends EditorBase, PartitionRule {
 		public Builder singleLine(boolean singleLine);
 		public Builder check(Check check);
 		public Builder condition(Condition condition);
-		public PartitionRule_DynamicEnd build();
+		public TokenScanner_DynamicEnd build();
 	}
 }
