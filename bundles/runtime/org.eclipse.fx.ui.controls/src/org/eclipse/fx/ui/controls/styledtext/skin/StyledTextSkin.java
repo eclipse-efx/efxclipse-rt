@@ -47,6 +47,7 @@ import org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
 import org.eclipse.jdt.annotation.NonNull;
 
+import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
 
@@ -261,6 +262,8 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			}
 		});
 
+
+
 		ObservableList<LineRulerAnnotationPresenter> lineRulerPresenters = FXCollections.observableArrayList();
 
 		this.sortedLineRulerPresenters = new SortedList<>(lineRulerPresenters, (a, b) -> a.getOrder() - b.getOrder());
@@ -474,5 +477,13 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	 */
 	public int getOffsetAtPosition(double x, double y) {
 		return this.content.getLineIndex(new Point2D(x, y)).orElse(Integer.valueOf(-1)).intValue();
+	}
+
+	public void refreshStyles(int start, int length) {
+		int startLine = getSkinnable().getContent().getLineAtOffset(start);
+		int endLine = getSkinnable().getContent().getLineAtOffset(start+length);
+		TreeRangeSet<Integer> set = TreeRangeSet.create();
+		set.add(Range.closed(startLine, endLine));
+		this.content.updatelines(set);
 	}
 }

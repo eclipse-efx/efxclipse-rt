@@ -675,7 +675,7 @@ public class StyledTextArea extends Control {
 	}
 
 	void setStyleRanges(int start, int length, int[] ranges, StyleRange[] styles, boolean reset) {
-
+		System.err.println("SETTING NEW STYLES");
 		int charCount = getContent().getCharCount();
 		int end = start + length;
 		if (start > end || start < 0) {
@@ -739,6 +739,10 @@ public class StyledTextArea extends Control {
 
 		if (styles != null && styles.length > 0) {
 			this.renderer.setStyleRanges(ranges, styles);
+		}
+
+		if( getSkin() instanceof StyledTextSkin ) {
+			((StyledTextSkin)getSkin()).refreshStyles(start, length);
 		}
 
 		// if (getSkin() instanceof StyledTextSkin) {

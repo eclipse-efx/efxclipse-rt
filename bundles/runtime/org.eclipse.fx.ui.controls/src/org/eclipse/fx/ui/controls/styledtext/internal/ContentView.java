@@ -745,6 +745,10 @@ public class ContentView  extends Pane {
 //	private RangeSet<Integer> toUpdate = TreeRangeSet.create();
 
 
+	public void updatelines(com.google.common.collect.RangeSet<Integer> rs) {
+		updateNodesNow(rs);
+	}
+
 	void updateNodesNow(com.google.common.collect.RangeSet<Integer> rs) {
 		RangeSet<Integer> subRangeSet = rs.subRangeSet(getVisibleLines()).subRangeSet(Range.closedOpen(Integer.valueOf(0), Integer.valueOf(getNumberOfLines())));
 		subRangeSet.asRanges().forEach(r-> {
