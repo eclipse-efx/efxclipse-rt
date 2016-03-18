@@ -20,7 +20,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import javax.xml.transform.stream.StreamSource;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
@@ -41,6 +45,7 @@ import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
+import org.eclipse.jdt.annotation.NonNull;
 
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
@@ -119,7 +124,11 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		styledText.caretOffsetProperty().addListener((obs, ol, ne) -> {
 			int lineIdx = styledText.getContent().getLineAtOffset(ne.intValue());
 			int colIdx = ne.intValue() - styledText.getContent().getOffsetAtLine(lineIdx);
-			scrollColumnIntoView(colIdx);
+
+			// fix colIdx with tabs
+			String line = styledText.getContent().getLine(lineIdx).substring(0, colIdx);
+			int tabCount = (int)line.chars().filter(c -> c == '\t').count();
+			scrollColumnIntoView(colIdx + tabCount * (styledText.tabAvanceProperty().get() - 1));
 			scrollLineIntoView(lineIdx);
 		});
 
@@ -349,19 +358,30 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	}
 
 	private void scrollColumnIntoView(int colIndex) {
+		double jumpAhead = 12; // chars to jump if col is out of screen
+		double charWidth = this.content.getCharWidth();
 
-		double w = 8;
+		double colOffset = charWidth * colIndex;
 
+		double contentWidth = this.content.getWidth();
 		double curOffset = this.contentArea.horizontal.getValue();
-		double colOffset = w * colIndex;
 
-		if (curOffset > colOffset) {
-			this.contentArea.horizontal.setValue(colOffset);
+		if (colOffset < curOffset) {
+			double jumpOffset = curOffset - jumpAhead * charWidth;
+			if (colOffset < jumpOffset) {
+				jumpOffset = colOffset;
+			}
+			double targetOffset = Math.max(this.contentArea.horizontal.getMin(), jumpOffset);
+			this.contentArea.horizontal.setValue(targetOffset);
+
 		}
-
-		double lastColDiff = this.content.getWidth() - w;
-		if (curOffset + lastColDiff < colOffset) {
-			this.contentArea.horizontal.setValue(colOffset - lastColDiff);
+		if (colOffset > curOffset + contentWidth) {
+			double jumpOffset = curOffset + jumpAhead * charWidth;
+			if (colOffset > jumpOffset + contentWidth) {
+				jumpOffset = colOffset + contentWidth;
+			}
+			double targetOffset = Math.min(this.contentArea.horizontal.getMax(), jumpOffset);
+			this.contentArea.horizontal.setValue(targetOffset);
 		}
 
 	}
@@ -412,51 +432,18 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		Optional<Point2D> location = this.content.getLocationInScene(caretPosition, locationHint);
 
 		return location.map(l -> this.rootContainer.sceneToLocal(l)).map(l -> new Point2D(l.getX(), l.getY() + this.content.getLineHeight())).orElse(null);
-
-		// int lineIndex =
-		// getSkinnable().getContent().getLineAtOffset(caretPosition);
-		//
-		//// Line lineObject = (Line) this.getModel().get(lineIndex);
-		//
-		// // TODO =?
-		//// for (LineCell c : getCurrentVisibleCells()) {
-		//// if (c.getDomainElement() == lineObject) {
-		//// StyledTextLayoutContainer b = (StyledTextLayoutContainer)
-		// c.getGraphic();
-		//// Point2D careLocation = b.getCareLocation(caretPosition -
-		// b.getStartOffset());
-		//// Point2D tmp =
-		// getSkinnable().sceneToLocal(b.localToScene(careLocation));
-		//// return new Point2D(tmp.getX(),
-		// getSkinnable().sceneToLocal(b.localToScene(0,
-		// b.getHeight())).getY());
-		//// }
-		//// }
-		//
-		// return null;
 	}
 
-//	/**
-//	 * Compute the min height
-//	 *
-//	 * @param width
-//	 *            the width that should be used if minimum height depends on it
-//	 * @return the min height
-//	 */
-//	protected double computeMinHeight(double width) {
-//		return 100; // this.contentView.minHeight(width);
-//	}
-//
-//	/**
-//	 * Compute the min width
-//	 *
-//	 * @param height
-//	 *            the height that should be used if minimum width depends on it
-//	 * @return the min width
-//	 */
-//	protected double computeMinWidth(double height) {
-//		return 100; // this.contentView.minWidth(height);
-//	}
+
+	@Override
+	protected double computeMinWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
+		return 100;
+	}
+
+	@Override
+	protected double computeMinHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
+		return 60;
+	}
 
 	/**
 	 * Scroll up a line
