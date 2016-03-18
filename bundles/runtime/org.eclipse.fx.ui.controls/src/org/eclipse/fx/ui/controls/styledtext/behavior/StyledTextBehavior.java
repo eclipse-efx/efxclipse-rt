@@ -867,8 +867,11 @@ public class StyledTextBehavior {
 			getControl().getContent().replaceTextRange(selection.offset, selection.length, ""); //$NON-NLS-1$
 			getControl().setCaretOffset(selection.offset);
 		} else {
-			getControl().getContent().replaceTextRange(getControl().getCaretOffset() - 1, 1, ""); //$NON-NLS-1$
-			getControl().setCaretOffset(offset - 1);
+			int start = getControl().getCaretOffset() - 1;
+			if( start >= 0 ) {
+				getControl().getContent().replaceTextRange(start, 1, ""); //$NON-NLS-1$
+				getControl().setCaretOffset(offset - 1);
+			}
 		}
 	}
 

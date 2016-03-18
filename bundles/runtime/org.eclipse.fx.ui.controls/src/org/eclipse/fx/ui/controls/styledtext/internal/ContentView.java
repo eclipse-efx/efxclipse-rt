@@ -487,6 +487,10 @@ public class ContentView  extends Pane {
 
 		@Override
 		public void textSet(TextChangedEvent event) {
+			if (!this.toUpdate.isEmpty()) {
+				updateNodesNow(this.toUpdate);
+				this.toUpdate.clear();
+			}
 			// update number of lines
 			ContentView.this.numberOfLines.set(getContent().getLineCount());
 
@@ -536,7 +540,10 @@ public class ContentView  extends Pane {
 			};
 
 			this.toUpdate.add(Range.closedOpen(Integer.valueOf(changeBeginLine), Integer.valueOf(firstUnchangedLine + deltaLines)));
-
+			// At least update myself
+			if( this.toUpdate.isEmpty() ) {
+				this.toUpdate.add(Range.closed(Integer.valueOf(changeBeginLine), Integer.valueOf(changeBeginLine)));
+			}
 
 //
 //			// simple insert
@@ -618,10 +625,8 @@ public class ContentView  extends Pane {
 				this.mapping = null;
 			}
 
-
 			// execute updates
 			if (!this.toUpdate.isEmpty()) {
-
 				updateNodesNow(this.toUpdate);
 				this.toUpdate.clear();
 			}
