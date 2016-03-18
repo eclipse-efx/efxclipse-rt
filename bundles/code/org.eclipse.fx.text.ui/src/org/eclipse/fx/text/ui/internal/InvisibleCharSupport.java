@@ -56,7 +56,6 @@ public class InvisibleCharSupport implements IFeature {
 			this.symbol = symbol;
 			this.range = range;
 			this.tabWidth = tabWidth;
-			System.err.println("InvisibleCharAnnotation " + range + " @ " + tabWidth);
 		}
 
 		@Override
