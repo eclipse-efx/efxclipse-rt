@@ -341,6 +341,7 @@ public class StyledTextBehavior {
 	private void doLink(QuickLink link) {
 		if (link instanceof SimpleQuickLink) {
 			SimpleQuickLink simple = (SimpleQuickLink) link;
+			getControl().setCaretOffset(simple.getRegion().upperEndpoint());
 			getControl().setSelection(new TextSelection(simple.getRegion().lowerEndpoint(), simple.getRegion().upperEndpoint() - simple.getRegion().lowerEndpoint()));
 		}
 		else if (link instanceof CustomQuickLink) {
@@ -391,6 +392,12 @@ public class StyledTextBehavior {
 	private Optional<TextNode> currentQuickLinkNode = Optional.empty();
 
 	private void setCurrentQuickLinkNode(Optional<TextNode> node) {
+		if (node.isPresent()) {
+			this.getControl().setCursor(Cursor.HAND);
+		}
+		else {
+			this.getControl().setCursor(null);
+		}
 		this.currentQuickLinkNode.ifPresent(n->n.getStyleClass().remove("quick_link")); //$NON-NLS-1$
 		this.currentQuickLinkNode.ifPresent(n->n.setCursor(null));
 		this.currentQuickLinkNode.ifPresent(n->n.requestLayout());
