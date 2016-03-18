@@ -266,12 +266,12 @@ public class GridLayoutPane extends AbstractLayoutPane<GridData> {
 
 	@Override
 	protected double computeMinHeight(double width) {
-		return computeSize(FX_DEFAULT, FX_DEFAULT, true).height;
+		return 0; //TODO fix calculation of min size
 	}
 
 	@Override
 	protected double computeMinWidth(double height) {
-		return computeSize(FX_DEFAULT, FX_DEFAULT, true).width;
+		return 0; //TODO fix calculation of min size
 	}
 
 	@Override
