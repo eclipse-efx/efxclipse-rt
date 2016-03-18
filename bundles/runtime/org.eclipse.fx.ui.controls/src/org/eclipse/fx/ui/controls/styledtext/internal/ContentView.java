@@ -343,6 +343,7 @@ public class ContentView  extends Pane {
 
 	public ContentView(LineHelper lineHelper, StyledTextArea area) {
 		this.lineLayer = new LineLayer(()->new LineNode(area.tabAvanceProperty()), (n, m)->{
+			n.caretLayerVisibleProperty().bind(area.focusedProperty());
 			n.setLineHelper(getLineHelper());
 			n.update(this.textAnnotationPresenter.get());
 		});

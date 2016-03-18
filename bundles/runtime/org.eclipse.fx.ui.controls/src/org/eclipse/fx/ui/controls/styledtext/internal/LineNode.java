@@ -31,6 +31,7 @@ import com.google.common.collect.Range;
 
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -589,6 +590,11 @@ public class LineNode extends StackPane {
 			return hoverTargets;
 		}
 
+	}
+
+
+	public BooleanProperty caretLayerVisibleProperty() {
+		return this.caretLayer.visibleProperty();
 	}
 
 	protected Range<Integer> toGlobal(Range<Integer> range) {

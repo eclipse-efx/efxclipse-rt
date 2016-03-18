@@ -23,6 +23,8 @@ import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
 
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 
@@ -30,6 +32,7 @@ public class InvisibleCharSupport implements IFeature {
 
 	public class InvisibleCharAnnotation implements TextAnnotation {
 
+		private final String styleClass;
 		private final Range range;
 		private final String symbol;
 		private int tabWidth;
@@ -48,9 +51,8 @@ public class InvisibleCharSupport implements IFeature {
 			return symbol;
 		}
 
-
-
-		public InvisibleCharAnnotation(String symbol, Range range, int tabWidth) {
+		public InvisibleCharAnnotation(String styleClass, String symbol, Range range, int tabWidth) {
+			this.styleClass = styleClass;
 			this.symbol = symbol;
 			this.range = range;
 			this.tabWidth = tabWidth;
@@ -110,9 +112,11 @@ public class InvisibleCharSupport implements IFeature {
 
 		@Override
 		public Node createNode() {
-			Text n = new Text();
-			n.getStyleClass().add("invisible-char");
-			return n;
+			InvisibleCharNode node = new InvisibleCharNode();
+			return node;
+//			Text n = new Text();
+//			n.getStyleClass().add("invisible-char");
+//			return n;
 		}
 
 		@Override
@@ -122,9 +126,9 @@ public class InvisibleCharSupport implements IFeature {
 
 		@Override
 		public void updateNode(Node node, Annotation annotation) {
-			Text t = (Text) node;
+			InvisibleCharNode n = (InvisibleCharNode) node;
 			InvisibleCharAnnotation a = (InvisibleCharAnnotation) annotation;
-			t.setText(a.getSymbol());
+			n.getStyleClass().setAll("invisible-char", a.styleClass);
 		}
 
 		@Override
@@ -161,12 +165,19 @@ public class InvisibleCharSupport implements IFeature {
 			Pattern tab = Pattern.compile("\\t");
 			Matcher matcher = tab.matcher(line);
 			while (matcher.find()) {
-				annotations.add(new InvisibleCharAnnotation("\u21E5", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance()));
+				annotations.add(new InvisibleCharAnnotation("tab", "", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance()));
+			}
+
+			// ADD SPACE
+			Pattern space = Pattern.compile("[ ]");
+			matcher = space.matcher(line);
+			while (matcher.find()) {
+				annotations.add(new InvisibleCharAnnotation("space", "", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance()));
 			}
 
 			// ADD NEWLINE
 			if (index < numOfLines-1) {
-				annotations.add(new InvisibleCharAnnotation("\u21B5", Range.closed(lineLength, lineLength +1), control.getTabAdvance()));
+				annotations.add(new InvisibleCharAnnotation("enter", "", Range.closed(lineLength, lineLength +1), control.getTabAdvance()));
 			}
 
 			return annotations;
@@ -175,16 +186,16 @@ public class InvisibleCharSupport implements IFeature {
 		private List<Consumer<RangeSet<Integer>>> listeners = new ArrayList<>();
 
 		public void notify(RangeSet<Integer> c) {
-			listeners.stream().forEach(x->x.accept(c));
+			this.listeners.stream().forEach(x->x.accept(c));
 		}
 
 		@Override
 		public Subscription registerChangeListener(Consumer<RangeSet<Integer>> onChange) {
-			listeners.add(onChange);
+			this.listeners.add(onChange);
 			return new Subscription() {
 				@Override
 				public void dispose() {
-					listeners.remove(onChange);
+					InvisibleCharAnnotationProvider.this.listeners.remove(onChange);
 				}
 			};
 		}
@@ -195,20 +206,22 @@ public class InvisibleCharSupport implements IFeature {
 	public Subscription install(final StyledTextArea control) {
 		final InvisibleCharAnnotationProvider provider = new InvisibleCharAnnotationProvider(control);
 		final InvisibleCharAnnotationPresenter presenter = new InvisibleCharAnnotationPresenter();
-		control.getAnnotationProvider().add(provider);
-		control.getAnnotationPresenter().add(presenter);
 
-		control.tabAvanceProperty().addListener((x, o, n)->{
-			System.err.println("ON TAB ADVANCE CHANGE!");
+		final ChangeListener<? super Number> onTabAdvanceChange = (x, o, n)->{
 			RangeSet<Integer> rs = TreeRangeSet.<Integer>create().complement();
 			provider.notify(rs);
-		});
+		};
+
+		control.getAnnotationProvider().add(provider);
+		control.getAnnotationPresenter().add(presenter);
+		control.tabAvanceProperty().addListener(onTabAdvanceChange);
 
 		return new Subscription() {
 			@Override
 			public void dispose() {
 				control.getAnnotationProvider().remove(provider);
 				control.getAnnotationPresenter().remove(presenter);
+				control.tabAvanceProperty().removeListener(onTabAdvanceChange);
 			}
 		};
 	}

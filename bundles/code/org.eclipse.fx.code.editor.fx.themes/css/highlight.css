@@ -5,10 +5,20 @@
 .styled-text-area .dart.quick_link {
 	-styled-text-color: blue !important;
 	-efx-decoration: "underline";
+	-fx-cursor: hand !important;
 }
 
-.styled-text-area .dart.quick_link Text {
-	-fx-fill: red !important;
+.invisible-char {
+	-fx-fill: darkgray;
+}
+.invisible-char.space {
+	-fx-content: "\u00B7";
+}
+.invisible-char.tab {
+	-fx-content: "\u21E5";
+}
+.invisible-char.enter {
+	-fx-content: "\u21B5";
 }
 
 .styled-text-area .list-view {
