@@ -23,6 +23,14 @@ package org.eclipse.fx.code.editor.configuration {
 		String endSeq;
 		String escapedBy;
 	}
+	type PartitionRule_JavaScript extends PartitionRule {
+		String script;
+	}
+	type PartitionRule_DynamicEnd extends PartitionRule {
+		String beginPrefix;
+		String beginMatch;
+		String endTemplate;
+	}
 	type PartitionWhiteSpace {
 		Boolean javawhiteSpace;
 		String[] characterList;
@@ -56,6 +64,9 @@ package org.eclipse.fx.code.editor.configuration {
 		String startSeq;
 		String endSeq;
 		String escapedBy;
+	}
+	type TokenScanner_JavaScript extends TokenScanner {
+		String script;
 	}
 	type Check {
 

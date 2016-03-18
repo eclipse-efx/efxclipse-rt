@@ -46,6 +46,10 @@ public final class GsonElementFactory implements EditorGModel {
 					return new GsonPartitionRule_MultiLineImpl(o);
 				case "PartitionRule_SingleLine":
 					return new GsonPartitionRule_SingleLineImpl(o);
+				case "PartitionRule_JavaScript":
+					return new GsonPartitionRule_JavaScriptImpl(o);
+				case "PartitionRule_DynamicEnd":
+					return new GsonPartitionRule_DynamicEndImpl(o);
 				default:
 					throw new IllegalStateException();
 			}
@@ -87,6 +91,38 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 	public PartitionRule_SingleLine.Builder PartitionRule_SingleLineBuilder() {
 		return new GsonPartitionRule_SingleLineImpl.Builder(this);
+	}
+
+	public static PartitionRule_JavaScript createPartitionRule_JavaScript(JsonObject o) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
+				case "PartitionRule_JavaScript":
+					return new GsonPartitionRule_JavaScriptImpl(o);
+				default:
+					throw new IllegalStateException();
+			}
+		} else {
+			return new GsonPartitionRule_JavaScriptImpl(o);
+		}
+	}
+	public PartitionRule_JavaScript.Builder PartitionRule_JavaScriptBuilder() {
+		return new GsonPartitionRule_JavaScriptImpl.Builder(this);
+	}
+
+	public static PartitionRule_DynamicEnd createPartitionRule_DynamicEnd(JsonObject o) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
+				case "PartitionRule_DynamicEnd":
+					return new GsonPartitionRule_DynamicEndImpl(o);
+				default:
+					throw new IllegalStateException();
+			}
+		} else {
+			return new GsonPartitionRule_DynamicEndImpl(o);
+		}
+	}
+	public PartitionRule_DynamicEnd.Builder PartitionRule_DynamicEndBuilder() {
+		return new GsonPartitionRule_DynamicEndImpl.Builder(this);
 	}
 
 	public static PartitionWhiteSpace createPartitionWhiteSpace(JsonObject o) {
@@ -136,6 +172,8 @@ public final class GsonElementFactory implements EditorGModel {
 					return new GsonTokenScanner_SingleLineRuleImpl(o);
 				case "TokenScanner_MultiLineRule":
 					return new GsonTokenScanner_MultiLineRuleImpl(o);
+				case "TokenScanner_JavaScript":
+					return new GsonTokenScanner_JavaScriptImpl(o);
 				default:
 					throw new IllegalStateException();
 			}
@@ -225,6 +263,22 @@ public final class GsonElementFactory implements EditorGModel {
 	}
 	public TokenScanner_MultiLineRule.Builder TokenScanner_MultiLineRuleBuilder() {
 		return new GsonTokenScanner_MultiLineRuleImpl.Builder(this);
+	}
+
+	public static TokenScanner_JavaScript createTokenScanner_JavaScript(JsonObject o) {
+		if( o.has("$gtype") ) {
+			switch( o.get("$gtype").getAsString() ) {
+				case "TokenScanner_JavaScript":
+					return new GsonTokenScanner_JavaScriptImpl(o);
+				default:
+					throw new IllegalStateException();
+			}
+		} else {
+			return new GsonTokenScanner_JavaScriptImpl(o);
+		}
+	}
+	public TokenScanner_JavaScript.Builder TokenScanner_JavaScriptBuilder() {
+		return new GsonTokenScanner_JavaScriptImpl.Builder(this);
 	}
 
 	public static Check createCheck(JsonObject o) {
@@ -370,6 +424,10 @@ public final class GsonElementFactory implements EditorGModel {
 					return (T) createPartitionRule_MultiLine(o);
 				case "PartitionRule_SingleLine":
 					return (T) createPartitionRule_SingleLine(o);
+				case "PartitionRule_JavaScript":
+					return (T) createPartitionRule_JavaScript(o);
+				case "PartitionRule_DynamicEnd":
+					return (T) createPartitionRule_DynamicEnd(o);
 				case "PartitionWhiteSpace":
 					return (T) createPartitionWhiteSpace(o);
 				case "Token":
@@ -386,6 +444,8 @@ public final class GsonElementFactory implements EditorGModel {
 					return (T) createTokenScanner_SingleLineRule(o);
 				case "TokenScanner_MultiLineRule":
 					return (T) createTokenScanner_MultiLineRule(o);
+				case "TokenScanner_JavaScript":
+					return (T) createTokenScanner_JavaScript(o);
 				case "Check":
 					return (T) createCheck(o);
 				case "Equals":
