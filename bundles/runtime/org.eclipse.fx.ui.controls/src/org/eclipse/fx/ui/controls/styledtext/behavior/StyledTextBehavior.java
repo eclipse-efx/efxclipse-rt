@@ -361,7 +361,7 @@ public class StyledTextBehavior {
 			}
 		}
 
-		if (event.isControlDown()) {
+		if (event.isShortcutDown()) {
 			Optional<QuickLinkable> linkable = getControl().getQuickLinkCallback().apply(event.getOffset());
 			linkable.ifPresent((l) -> {
 				if (l.getLinks().size() == 1) {
@@ -401,7 +401,7 @@ public class StyledTextBehavior {
 	}
 
 	private void onTextPositionMoved(TextPositionEvent event) {
-		if (event.isControlDown()) {
+		if (event.isShortcutDown()) {
 			Optional<QuickLinkable> linkable = getControl().getQuickLinkCallback().apply(event.getOffset());
 			if (linkable.isPresent()) {
 				Point2D screenLocation = new Point2D(event.getScreenX(), event.getScreenY());
