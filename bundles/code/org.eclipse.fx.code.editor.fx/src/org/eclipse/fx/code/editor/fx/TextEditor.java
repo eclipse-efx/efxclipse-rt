@@ -54,6 +54,8 @@ public class TextEditor {
 
 	private Integer tabAdvance;
 
+	private Boolean spacesForTab;
+
 	@Inject
 	public void setDocument(IDocument document) {
 		if( viewer != null ) {
@@ -91,6 +93,14 @@ public class TextEditor {
 	}
 
 	@Inject
+	public void setInsertSpacesForTab(@Preference(nodePath=Constants.PREFERENCE_NODE_PATH, key=Constants.PREFERENCE_SPACES_FOR_TAB) Boolean spacesForTab ) {
+		this.spacesForTab = spacesForTab;
+		if( viewer != null && spacesForTab != null ) {
+			viewer.getTextWidget().setInsertSpacesForTab(spacesForTab.booleanValue());
+		}
+	}
+
+	@Inject
 	public void setInput(Input<?> input) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The input has to be set before the editor is initialized");
@@ -110,6 +120,9 @@ public class TextEditor {
 		viewer = createSourceViewer();
 		if( tabAdvance != null ) {
 			viewer.getTextWidget().setTabAdvance(tabAdvance.intValue());
+		}
+		if( spacesForTab != null ) {
+			viewer.getTextWidget().setInsertSpacesForTab(spacesForTab.booleanValue());
 		}
 
 		if( document instanceof IDocumentExtension3 ) {
