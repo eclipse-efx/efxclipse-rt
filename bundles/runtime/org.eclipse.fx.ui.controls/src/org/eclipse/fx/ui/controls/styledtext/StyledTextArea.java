@@ -13,13 +13,13 @@
 package org.eclipse.fx.ui.controls.styledtext;
 
 import java.lang.ref.WeakReference;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
@@ -125,6 +125,9 @@ public class StyledTextArea extends Control {
 	@NonNull
 	private final IntegerProperty tabAdvance = new SimpleIntegerProperty(this, "tabAdvance", 4); //$NON-NLS-1$
 
+	@NonNull
+	private final BooleanProperty insertSpacesForTab = new SimpleBooleanProperty(this, "insertSpacesForTab", false); //$NON-NLS-1$
+
 	/**
 	 * Separator for lines
 	 */
@@ -175,6 +178,7 @@ public class StyledTextArea extends Control {
 
 	public static interface QuickLinkable {
 		Range<Integer> getRegion();
+
 		List<QuickLink> getLinks();
 	}
 
@@ -190,12 +194,17 @@ public class StyledTextArea extends Control {
 		Runnable getAction();
 	}
 
-	private ObjectProperty<Function<Integer, Optional<QuickLinkable>>> quickLinkCallbackProperty = new SimpleObjectProperty<>(this, "quickLinkCallback", (offset)->Optional.empty());
+	private ObjectProperty<Function<Integer, Optional<QuickLinkable>>> quickLinkCallbackProperty = new SimpleObjectProperty<>(this, "quickLinkCallback", (offset) -> Optional.empty());
 
 	/**
 	 * sets the quick link callback.
-	 * <p>If the callback returns one ore more entries, quick linking is available for the cursor position</p>
-	 * @param callback the quick linking callback
+	 * <p>
+	 * If the callback returns one ore more entries, quick linking is available
+	 * for the cursor position
+	 * </p>
+	 *
+	 * @param callback
+	 *            the quick linking callback
 	 */
 	public void setQuickLinkCallback(Function<Integer, Optional<QuickLinkable>> callback) {
 		this.quickLinkCallbackProperty.set(callback);
@@ -203,6 +212,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * returns the quick link callback.
+	 *
 	 * @return the quick linking callback
 	 */
 	public Function<Integer, Optional<QuickLinkable>> getQuickLinkCallback() {
@@ -1497,7 +1507,7 @@ public class StyledTextArea extends Control {
 		if (selection.length == 0) {
 			setCaretOffset(selection.offset);
 		} else {
-//			this.caretOffsetProperty.set(selection.offset+selection.length);
+			// this.caretOffsetProperty.set(selection.offset+selection.length);
 			this.currentSelection.set(selection);
 		}
 	}
@@ -1663,8 +1673,14 @@ public class StyledTextArea extends Control {
 			start = this.getCaretOffset();
 			replaceLength = 0;
 		}
-		this.getContent().replaceTextRange(start, replaceLength, text.toString());
-		this.setCaretOffset(start + text.length());
+
+		String content = text.toString();
+		if( isInsertSpacesForTab() ) {
+			content = content.replaceAll("\t", Util.createRepeatedString(' ', this.tabAdvance.get())); //$NON-NLS-1$
+		}
+
+		this.getContent().replaceTextRange(start, replaceLength, content);
+		this.setCaretOffset(start + content.length());
 	}
 
 	private IntegerProperty lineCount = new SimpleIntegerProperty(this, "lineCount", 0); //$NON-NLS-1$
@@ -1776,6 +1792,7 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * @return The number of chars a tab advances in the document. Default is 4.
+	 * @since 2.4.0
 	 */
 	public int getTabAdvance() {
 		return tabAvanceProperty().get();
@@ -1783,13 +1800,57 @@ public class StyledTextArea extends Control {
 
 	/**
 	 * @return The number of chars a tab advances in the document. Default is 4.
+	 * @since 2.4.0
 	 */
 	public @NonNull IntegerProperty tabAvanceProperty() {
 		return this.tabAdvance;
 	}
 
+	/**
+	 * When inserting a tab it is replaced with the number of spaces defined in
+	 * {@link #tabAvanceProperty()}
+	 * <p>
+	 * <b>Already existing tabs in the content are not replaced</b>
+	 * </p>
+	 *
+	 * @param insertSpacesForTab
+	 *            <code>true</code> to turn on the replacement
+	 * @since 2.4.0
+	 */
+	public void setInsertSpacesForTab(boolean insertSpacesForTab) {
+		this.insertSpacesForTab.set(insertSpacesForTab);
+	}
+
+	/**
+	 * When inserting a tab it is replaced with the number of spaces defined in
+	 * {@link #tabAvanceProperty()}
+	 * <p>
+	 * <b>Already existing tabs in the content are not replaced</b>
+	 * </p>
+	 *
+	 * @return <code>true</code> if replacement is turned on
+	 * @since 2.4.0
+	 */
+	public boolean isInsertSpacesForTab() {
+		return this.insertSpacesForTab.get();
+	}
+
+	/**
+	 * When inserting a tab it is replaced with the number of spaces defined in
+	 * {@link #tabAvanceProperty()}
+	 * <p>
+	 * <b>Already existing tabs in the content are not replaced</b>
+	 * </p>
+	 *
+	 * @return property to observe
+	 * @since 2.4.0
+	 */
+	public @NonNull BooleanProperty insertSpacesForTabProperty() {
+		return this.insertSpacesForTab;
+	}
+
 	public void revealCaret() {
 		int lineIndex = getContent().getLineAtOffset(getCaretOffset());
-		((StyledTextSkin)getSkin()).scrollLineIntoView(lineIndex);
+		((StyledTextSkin) getSkin()).scrollLineIntoView(lineIndex);
 	}
 }
