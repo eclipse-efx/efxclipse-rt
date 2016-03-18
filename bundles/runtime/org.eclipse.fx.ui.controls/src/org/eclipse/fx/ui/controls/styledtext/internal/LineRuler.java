@@ -21,8 +21,11 @@ import org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter.LayoutHint;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
+import javafx.scene.text.Font;
 
 @SuppressWarnings("javadoc")
 public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
@@ -33,6 +36,8 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 
 	private DoubleProperty yOffset = new SimpleDoubleProperty(this, "yOffset"); //$NON-NLS-1$
 
+	private ObjectProperty<Font> font = new SimpleObjectProperty<>(this, "font", Font.getDefault()); //$NON-NLS-1$
+
 	public DoubleProperty yOffsetProperty() {
 		return this.yOffset;
 	}
@@ -41,6 +46,10 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 	public LineRuler(LineRulerAnnotationPresenter.LayoutHint h, Function<Integer, Set<Annotation>> converter, Predicate<Set<Annotation>> needsPresentation, Supplier<Node> nodeFactory, BiConsumer<Node, Set<Annotation>> nodePopulator) {
 		super(converter, needsPresentation, nodeFactory, nodePopulator);
 		this.h = h;
+
+		this.yOffset.addListener((x, o, n)->{
+			requestLayout();
+		});
 	}
 
 	@Override
@@ -86,7 +95,7 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 				width = w;
 			}
 
-			double dy = height - e.getValue().getBoundsInLocal().getHeight();
+			double dy = 0; //height - e.getValue().getBoundsInLocal().getHeight();
 
 			e.getValue().resizeRelocate(x, y + dy, width, height);
 		});
