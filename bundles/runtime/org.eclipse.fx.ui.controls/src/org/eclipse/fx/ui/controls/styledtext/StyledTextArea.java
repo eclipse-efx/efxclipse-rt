@@ -29,6 +29,8 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import com.google.common.collect.Range;
 
+import javafx.application.Platform;
+import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
