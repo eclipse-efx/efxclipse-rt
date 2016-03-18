@@ -1,5 +1,6 @@
 package org.eclipse.fx.text.ui.internal;
 
+import org.eclipse.fx.core.Util;
 import org.eclipse.fx.text.ui.TextViewer;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
 import org.eclipse.fx.ui.controls.styledtext.ActionEvent.ActionType;
@@ -45,11 +46,16 @@ public class SimpleSmartIndent {
 
 				int count = findIndentAt(caret);
 
+				String tabString = "\t";
+				if( viewer.getTextWidget().isInsertSpacesForTab() ) {
+					tabString = Util.createRepeatedString(' ', viewer.getTextWidget().getTabAdvance());
+				}
+
 				int replaceAt = caret;
 				int replaceLen = 0;
 				String replace = "\n";
 				for (int i = 0; i < count; i++) {
-					replace += "\t";
+					replace += tabString;
 				}
 
 
@@ -60,12 +66,13 @@ public class SimpleSmartIndent {
 				if (before.matches("^\\s*}")) {
 					String tabs = "";
 					for (int i = 0; i < indent; i++) {
-						tabs += "\t";
+						tabs += tabString;
 					}
 					replaceAt = lineBegin;
 					replaceLen = before.length();
 					replace = tabs + '}' + replace;
 				}
+
 
 
 				viewer.getDocument().replace(replaceAt, replaceLen, replace);
