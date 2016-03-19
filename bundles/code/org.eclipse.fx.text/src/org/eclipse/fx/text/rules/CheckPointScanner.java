@@ -5,7 +5,7 @@ import org.eclipse.jface.text.rules.ICharacterScanner;
 @SuppressWarnings("restriction")
 public class CheckPointScanner implements ICharacterScanner {
 	private final ICharacterScanner realScanner;
-	private int charCount;
+	int charCount;
 
 	public CheckPointScanner(ICharacterScanner realScanner) {
 		this.realScanner = realScanner;
@@ -24,13 +24,13 @@ public class CheckPointScanner implements ICharacterScanner {
 	@Override
 	public int read() {
 		this.charCount++;
-		return this.read();
+		return this.realScanner.read();
 	}
 
 	@Override
 	public void unread() {
 		this.charCount--;
-		this.unread();
+		this.realScanner.unread();
 	}
 
 	public void setCheckpoint() {

@@ -49,12 +49,13 @@ import org.eclipse.jface.text.rules.IToken;
  *
  * <pre>
  * {@code
- * new DynamicEndRule( "[", Pattern.compile("(=*)\\["), "]{0}]" );
+ * new DynamicEndRule( "[", Pattern.compile("(=*)"), "[", "]{0}]" );
  * }
  * </pre>
  */
 @SuppressWarnings("restriction")
 public class DynamicEndRule extends ExtendedPatternRule {
+	private final char[] beginSuffix;
 	private final Pattern beginPattern;
 	private final String endTemplate;
 
@@ -67,13 +68,16 @@ public class DynamicEndRule extends ExtendedPatternRule {
 	 *            the prefix for the start must be at least one char
 	 * @param beginPattern
 	 *            the pattern with groups to find the end of the start-sequence
+	 * @param beginSuffix
+	 * 			  the suffix might be empty
 	 * @param endTemplate
 	 *            the end template who can references groups from the start
 	 *            sequence using {index} like in {@link MessageFormat}
 	 */
-	public DynamicEndRule(IToken token, String beginPrefix, Pattern beginPattern, String endTemplate) {
-		super(beginPrefix, "", token, '\\', false, true);
+	public DynamicEndRule(IToken token, String beginPrefix, Pattern beginPattern, String beginSuffix, String endTemplate) {
+		super(beginPrefix, "", token, '\\', false, false);
 		this.beginPattern = beginPattern;
+		this.beginSuffix = beginSuffix == null ? new char[0] : beginSuffix.toCharArray();
 		this.endTemplate = endTemplate;
 	}
 
@@ -87,34 +91,40 @@ public class DynamicEndRule extends ExtendedPatternRule {
 
 	@Override
 	protected boolean sequenceStartDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) {
-		boolean rv = super.sequenceStartDetected(scanner, sequence, eofAllowed);
-
+		CheckPointScanner cs = new CheckPointScanner(scanner);
+		cs.setCheckpoint();
+		boolean rv = super.sequenceStartDetected(cs, sequence, eofAllowed);
 		if (rv) {
-			CheckPointScanner checkPointScanner = new CheckPointScanner(scanner);
-			checkPointScanner.setCheckpoint();
-
-			StringBuilder b = new StringBuilder();
-			int c;
-			boolean hasOneMatch = false;
-			while ((c = scanner.read()) != ICharacterScanner.EOF) {
-				b.append(c);
-				if (!beginPattern.matcher(b).matches()) {
-					if (hasOneMatch) {
-						Matcher matcher = beginPattern.matcher(b.subSequence(0, b.length() - 1));
-						Object[] g = new String[matcher.groupCount()];
-						for (int i = 0; i < matcher.groupCount(); i++) {
-							g[i] = matcher.group(i + 1);
+			if( beginSuffix.length > 0 ) {
+				StringBuilder b = new StringBuilder();
+				int c;
+				while ((c = scanner.read()) != ICharacterScanner.EOF) {
+					if( c == beginSuffix[0] ) {
+						rv = super.sequenceDetected(cs, beginSuffix, false);
+						if( rv ) {
+							Matcher matcher = beginPattern.matcher(b);
+							rv = matcher.matches();
+							if( rv ) {
+								Object[] g = new String[matcher.groupCount()];
+								for (int i = 0; i < matcher.groupCount(); i++) {
+									System.err.println("G: " + matcher.group(i + 1));
+									g[i] = matcher.group(i + 1);
+								}
+								fEndSequence = MessageFormat.format(endTemplate, g).toCharArray();
+								break;
+							}
 						}
-						fEndSequence = MessageFormat.format(endTemplate, g).toCharArray();
-						return true;
 					} else {
-						checkPointScanner.rollbackToCheckPoint();
-						return false;
+						b.append((char)c);
 					}
-				} else {
-					hasOneMatch = true;
 				}
+			} else {
+				throw new UnsupportedOperationException();
 			}
+		}
+
+		if( ! rv ) {
+			cs.rollbackToCheckPoint();
 		}
 
 		return rv;
