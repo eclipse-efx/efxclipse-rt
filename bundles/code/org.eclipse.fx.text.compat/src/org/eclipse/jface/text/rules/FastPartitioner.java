@@ -308,7 +308,7 @@ public class FastPartitioner implements IDocumentPartitioner, IDocumentPartition
 					partitionStart= partition.getOffset();
 					contentType= partition.getType();
 //FIXED TO MAKE MULTI-LINE HAPPY
-//					if (e.getOffset() == partition.getOffset() + partition.getLength()) {
+//					if (e.getOffset() != partition.getOffset() + partition.getLength()) {
 						reparseStart= partitionStart;
 //					}
 
@@ -324,6 +324,7 @@ public class FastPartitioner implements IDocumentPartitioner, IDocumentPartition
 				}
 			} else {
 				//FIXED TO MULTI-LINE HAPPY
+				partitionStart = 0;
 				reparseStart = 0;
 			}
 
