@@ -29,6 +29,7 @@ package org.eclipse.fx.code.editor.configuration {
 	type PartitionRule_DynamicEnd extends PartitionRule {
 		String beginPrefix;
 		String beginMatch;
+		String beginSuffix;
 		String endTemplate;
 		Boolean singleLine;
 	}

@@ -7,14 +7,16 @@ public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, Partiti
 	public GsonPartitionRule_DynamicEndImpl(JsonObject jsonObject) {
 		this.beginMatch = jsonObject.has("beginMatch") ? jsonObject.get("beginMatch").getAsString() : null;
 		this.beginPrefix = jsonObject.has("beginPrefix") ? jsonObject.get("beginPrefix").getAsString() : null;
+		this.beginSuffix = jsonObject.has("beginSuffix") ? jsonObject.get("beginSuffix").getAsString() : null;
 		this.check = jsonObject.has("check") ? GsonElementFactory.createCheck(jsonObject.getAsJsonObject("check")) : null;
 		this.condition = jsonObject.has("condition") ? GsonElementFactory.createCondition(jsonObject.getAsJsonObject("condition")) : null;
 		this.endTemplate = jsonObject.has("endTemplate") ? jsonObject.get("endTemplate").getAsString() : null;
 		this.singleLine = jsonObject.has("singleLine") ? jsonObject.get("singleLine").getAsBoolean() : false;
 	}
-	public GsonPartitionRule_DynamicEndImpl(String beginMatch, String beginPrefix, Check check, Condition condition, String endTemplate, boolean singleLine) {
+	public GsonPartitionRule_DynamicEndImpl(String beginMatch, String beginPrefix, String beginSuffix, Check check, Condition condition, String endTemplate, boolean singleLine) {
 		this.beginMatch = beginMatch;
 		this.beginPrefix = beginPrefix;
+		this.beginSuffix = beginSuffix;
 		this.check = check;
 		this.condition = condition;
 		this.endTemplate = endTemplate;
@@ -26,6 +28,7 @@ public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, Partiti
 		o.addProperty( "$gtype", "PartitionRule_DynamicEnd" );
 		o.addProperty( "beginMatch", getBeginMatch() );
 		o.addProperty( "beginPrefix", getBeginPrefix() );
+		o.addProperty( "beginSuffix", getBeginSuffix() );
 		o.add( "check", getCheck() == null ? null : ((GsonBase)getCheck()).toJSONObject() );
 		o.add( "condition", getCondition() == null ? null : ((GsonBase)getCondition()).toJSONObject() );
 		o.addProperty( "endTemplate", getEndTemplate() );
@@ -37,6 +40,7 @@ public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, Partiti
 		return getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " { "
 					 + "beginMatch : " + beginMatch + ", "
 					 + "beginPrefix : " + beginPrefix + ", "
+					 + "beginSuffix : " + beginSuffix + ", "
 					 + "check : " + (check == null ? null : check.getClass().getSimpleName() + "@" + Integer.toHexString(check.hashCode())) + ", "
 					 + "condition : " + (condition == null ? null : condition.getClass().getSimpleName() + "@" + Integer.toHexString(condition.hashCode())) + ", "
 					 + "endTemplate : " + endTemplate + ", "
@@ -53,6 +57,12 @@ public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, Partiti
 	private final String beginPrefix;
 	public String getBeginPrefix() {
 		return this.beginPrefix;
+	}
+	
+
+	private final String beginSuffix;
+	public String getBeginSuffix() {
+		return this.beginSuffix;
 	}
 	
 
@@ -97,6 +107,11 @@ public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, Partiti
 			this.beginPrefix = beginPrefix;
 			return this;
 		}
+		private String beginSuffix;
+		public Builder beginSuffix(String beginSuffix) {
+			this.beginSuffix = beginSuffix;
+			return this;
+		}
 		private Check check;
 		public Builder check(Check check) {
 			this.check = check;
@@ -119,7 +134,7 @@ public final class GsonPartitionRule_DynamicEndImpl implements GsonBase, Partiti
 		}
 
 		public PartitionRule_DynamicEnd build() {
-			return new GsonPartitionRule_DynamicEndImpl(beginMatch, beginPrefix, check, condition, endTemplate, singleLine);
+			return new GsonPartitionRule_DynamicEndImpl(beginMatch, beginPrefix, beginSuffix, check, condition, endTemplate, singleLine);
 		}
 	}
 }
