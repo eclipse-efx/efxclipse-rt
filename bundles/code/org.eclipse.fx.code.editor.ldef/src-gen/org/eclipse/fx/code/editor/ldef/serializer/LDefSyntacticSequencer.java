@@ -57,10 +57,10 @@ public class LDefSyntacticSequencer extends AbstractSyntacticSequencer {
 	 * This ambiguous syntax occurs at:
 	 *     check=Check (ambiguity) 'escaped' 'by' escapeSeq=STRING
 	 *     check=Check (ambiguity) (rule end)
-	 *     startPattern=STRING (ambiguity) 'escaped' 'by' escapeSeq=STRING
-	 *     startPattern=STRING (ambiguity) (rule end)
 	 *     startSeq=STRING (ambiguity) 'escaped' 'by' escapeSeq=STRING
 	 *     startSeq=STRING (ambiguity) (rule end)
+	 *     startSuffix=STRING (ambiguity) 'escaped' 'by' escapeSeq=STRING
+	 *     startSuffix=STRING (ambiguity) (rule end)
 	 */
 	protected void emit_Partition_SingleLineRule_EqualsSignGreaterThanSignKeyword_5_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -74,12 +74,12 @@ public class LDefSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     check=Check (ambiguity) 'enabledif' enabledIf=ScannerCondition
 	 *     check=Check (ambiguity) 'escaped' 'by' escapeSeq=STRING
 	 *     check=Check (ambiguity) (rule end)
-	 *     startPattern=STRING (ambiguity) 'enabledif' enabledIf=ScannerCondition
-	 *     startPattern=STRING (ambiguity) 'escaped' 'by' escapeSeq=STRING
-	 *     startPattern=STRING (ambiguity) (rule end)
 	 *     startSeq=STRING (ambiguity) 'enabledif' enabledIf=ScannerCondition
 	 *     startSeq=STRING (ambiguity) 'escaped' 'by' escapeSeq=STRING
 	 *     startSeq=STRING (ambiguity) (rule end)
+	 *     startSuffix=STRING (ambiguity) 'enabledif' enabledIf=ScannerCondition
+	 *     startSuffix=STRING (ambiguity) 'escaped' 'by' escapeSeq=STRING
+	 *     startSuffix=STRING (ambiguity) (rule end)
 	 */
 	protected void emit_Scanner_SingleLineRule_EqualsSignGreaterThanSignKeyword_4_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

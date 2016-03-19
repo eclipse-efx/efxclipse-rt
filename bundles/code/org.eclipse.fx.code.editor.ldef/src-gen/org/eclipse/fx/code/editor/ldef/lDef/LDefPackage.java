@@ -641,13 +641,22 @@ public interface LDefPackage extends EPackage
   int PARTITION_SINGLE_LINE_RULE__START_PATTERN = PARTITION_RULE_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Start Suffix</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_SINGLE_LINE_RULE__START_SUFFIX = PARTITION_RULE_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARTITION_SINGLE_LINE_RULE__END_SEQ = PARTITION_RULE_FEATURE_COUNT + 2;
+  int PARTITION_SINGLE_LINE_RULE__END_SEQ = PARTITION_RULE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Escape Seq</b></em>' attribute.
@@ -656,7 +665,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_SINGLE_LINE_RULE__ESCAPE_SEQ = PARTITION_RULE_FEATURE_COUNT + 3;
+  int PARTITION_SINGLE_LINE_RULE__ESCAPE_SEQ = PARTITION_RULE_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Partition Single Line Rule</em>' class.
@@ -665,7 +674,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_SINGLE_LINE_RULE_FEATURE_COUNT = PARTITION_RULE_FEATURE_COUNT + 4;
+  int PARTITION_SINGLE_LINE_RULE_FEATURE_COUNT = PARTITION_RULE_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_MultiLineRuleImpl <em>Partition Multi Line Rule</em>}' class.
@@ -714,13 +723,22 @@ public interface LDefPackage extends EPackage
   int PARTITION_MULTI_LINE_RULE__START_PATTERN = PARTITION_RULE_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Start Suffix</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARTITION_MULTI_LINE_RULE__START_SUFFIX = PARTITION_RULE_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARTITION_MULTI_LINE_RULE__END_SEQ = PARTITION_RULE_FEATURE_COUNT + 2;
+  int PARTITION_MULTI_LINE_RULE__END_SEQ = PARTITION_RULE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Escape Seq</b></em>' attribute.
@@ -729,7 +747,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_MULTI_LINE_RULE__ESCAPE_SEQ = PARTITION_RULE_FEATURE_COUNT + 3;
+  int PARTITION_MULTI_LINE_RULE__ESCAPE_SEQ = PARTITION_RULE_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Partition Multi Line Rule</em>' class.
@@ -738,7 +756,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARTITION_MULTI_LINE_RULE_FEATURE_COUNT = PARTITION_RULE_FEATURE_COUNT + 4;
+  int PARTITION_MULTI_LINE_RULE_FEATURE_COUNT = PARTITION_RULE_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_JSRuleImpl <em>Partition JS Rule</em>}' class.
@@ -1222,13 +1240,22 @@ public interface LDefPackage extends EPackage
   int SCANNER_SINGLE_LINE_RULE__START_PATTERN = SCANNER_RULE_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Start Suffix</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_SINGLE_LINE_RULE__START_SUFFIX = SCANNER_RULE_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_SINGLE_LINE_RULE__END_SEQ = SCANNER_RULE_FEATURE_COUNT + 2;
+  int SCANNER_SINGLE_LINE_RULE__END_SEQ = SCANNER_RULE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Escape Seq</b></em>' attribute.
@@ -1237,7 +1264,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_SINGLE_LINE_RULE__ESCAPE_SEQ = SCANNER_RULE_FEATURE_COUNT + 3;
+  int SCANNER_SINGLE_LINE_RULE__ESCAPE_SEQ = SCANNER_RULE_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Enabled If</b></em>' containment reference.
@@ -1246,7 +1273,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_SINGLE_LINE_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 4;
+  int SCANNER_SINGLE_LINE_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 5;
 
   /**
    * The number of structural features of the '<em>Scanner Single Line Rule</em>' class.
@@ -1255,7 +1282,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_SINGLE_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 5;
+  int SCANNER_SINGLE_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 6;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_MultiLineRuleImpl <em>Scanner Multi Line Rule</em>}' class.
@@ -1295,13 +1322,22 @@ public interface LDefPackage extends EPackage
   int SCANNER_MULTI_LINE_RULE__START_PATTERN = SCANNER_RULE_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Start Suffix</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SCANNER_MULTI_LINE_RULE__START_SUFFIX = SCANNER_RULE_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>End Seq</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCANNER_MULTI_LINE_RULE__END_SEQ = SCANNER_RULE_FEATURE_COUNT + 2;
+  int SCANNER_MULTI_LINE_RULE__END_SEQ = SCANNER_RULE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Escape Seq</b></em>' attribute.
@@ -1310,7 +1346,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ = SCANNER_RULE_FEATURE_COUNT + 3;
+  int SCANNER_MULTI_LINE_RULE__ESCAPE_SEQ = SCANNER_RULE_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Enabled If</b></em>' containment reference.
@@ -1319,7 +1355,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_MULTI_LINE_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 4;
+  int SCANNER_MULTI_LINE_RULE__ENABLED_IF = SCANNER_RULE_FEATURE_COUNT + 5;
 
   /**
    * The number of structural features of the '<em>Scanner Multi Line Rule</em>' class.
@@ -1328,7 +1364,7 @@ public interface LDefPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCANNER_MULTI_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 5;
+  int SCANNER_MULTI_LINE_RULE_FEATURE_COUNT = SCANNER_RULE_FEATURE_COUNT + 6;
 
   /**
    * The meta object id for the '{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_PatternRuleImpl <em>Scanner Pattern Rule</em>}' class.
@@ -2219,6 +2255,17 @@ public interface LDefPackage extends EPackage
   EAttribute getPartition_SingleLineRule_StartPattern();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getStartSuffix <em>Start Suffix</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Suffix</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getStartSuffix()
+   * @see #getPartition_SingleLineRule()
+   * @generated
+   */
+  EAttribute getPartition_SingleLineRule_StartSuffix();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule#getEndSeq <em>End Seq</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2271,6 +2318,17 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EAttribute getPartition_MultiLineRule_StartPattern();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getStartSuffix <em>Start Suffix</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Suffix</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getStartSuffix()
+   * @see #getPartition_MultiLineRule()
+   * @generated
+   */
+  EAttribute getPartition_MultiLineRule_StartSuffix();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule#getEndSeq <em>End Seq</em>}'.
@@ -2667,6 +2725,17 @@ public interface LDefPackage extends EPackage
   EAttribute getScanner_SingleLineRule_StartPattern();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule#getStartSuffix <em>Start Suffix</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Suffix</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule#getStartSuffix()
+   * @see #getScanner_SingleLineRule()
+   * @generated
+   */
+  EAttribute getScanner_SingleLineRule_StartSuffix();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule#getEndSeq <em>End Seq</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2730,6 +2799,17 @@ public interface LDefPackage extends EPackage
    * @generated
    */
   EAttribute getScanner_MultiLineRule_StartPattern();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartSuffix <em>Start Suffix</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Start Suffix</em>'.
+   * @see org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartSuffix()
+   * @see #getScanner_MultiLineRule()
+   * @generated
+   */
+  EAttribute getScanner_MultiLineRule_StartSuffix();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEndSeq <em>End Seq</em>}'.
@@ -3512,6 +3592,14 @@ public interface LDefPackage extends EPackage
     EAttribute PARTITION_SINGLE_LINE_RULE__START_PATTERN = eINSTANCE.getPartition_SingleLineRule_StartPattern();
 
     /**
+     * The meta object literal for the '<em><b>Start Suffix</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_SINGLE_LINE_RULE__START_SUFFIX = eINSTANCE.getPartition_SingleLineRule_StartSuffix();
+
+    /**
      * The meta object literal for the '<em><b>End Seq</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3552,6 +3640,14 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EAttribute PARTITION_MULTI_LINE_RULE__START_PATTERN = eINSTANCE.getPartition_MultiLineRule_StartPattern();
+
+    /**
+     * The meta object literal for the '<em><b>Start Suffix</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARTITION_MULTI_LINE_RULE__START_SUFFIX = eINSTANCE.getPartition_MultiLineRule_StartSuffix();
 
     /**
      * The meta object literal for the '<em><b>End Seq</b></em>' attribute feature.
@@ -3876,6 +3972,14 @@ public interface LDefPackage extends EPackage
     EAttribute SCANNER_SINGLE_LINE_RULE__START_PATTERN = eINSTANCE.getScanner_SingleLineRule_StartPattern();
 
     /**
+     * The meta object literal for the '<em><b>Start Suffix</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_SINGLE_LINE_RULE__START_SUFFIX = eINSTANCE.getScanner_SingleLineRule_StartSuffix();
+
+    /**
      * The meta object literal for the '<em><b>End Seq</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3924,6 +4028,14 @@ public interface LDefPackage extends EPackage
      * @generated
      */
     EAttribute SCANNER_MULTI_LINE_RULE__START_PATTERN = eINSTANCE.getScanner_MultiLineRule_StartPattern();
+
+    /**
+     * The meta object literal for the '<em><b>Start Suffix</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SCANNER_MULTI_LINE_RULE__START_SUFFIX = eINSTANCE.getScanner_MultiLineRule_StartSuffix();
 
     /**
      * The meta object literal for the '<em><b>End Seq</b></em>' attribute feature.

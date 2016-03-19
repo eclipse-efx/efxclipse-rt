@@ -1174,37 +1174,55 @@ rulePartition_SingleLineRule returns [EObject current=null]
 	    }
 
 )
-))?(	otherlv_5='col' 
+)(
+(
+		lv_startSuffix_5_0=RULE_STRING
+		{
+			newLeafNode(lv_startSuffix_5_0, grammarAccess.getPartition_SingleLineRuleAccess().getStartSuffixSTRINGTerminalRuleCall_3_2_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPartition_SingleLineRuleRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"startSuffix",
+        		lv_startSuffix_5_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+))?(	otherlv_6='col' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getPartition_SingleLineRuleAccess().getColKeyword_4_0());
+    	newLeafNode(otherlv_6, grammarAccess.getPartition_SingleLineRuleAccess().getColKeyword_4_0());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getPartition_SingleLineRuleAccess().getCheckCheckParserRuleCall_4_1_0()); 
 	    }
-		lv_check_6_0=ruleCheck		{
+		lv_check_7_0=ruleCheck		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPartition_SingleLineRuleRule());
 	        }
        		set(
        			$current, 
        			"check",
-        		lv_check_6_0, 
+        		lv_check_7_0, 
         		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))?(	otherlv_7='=>' 
+))?(	otherlv_8='=>' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getPartition_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_5_0());
+    	newLeafNode(otherlv_8, grammarAccess.getPartition_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_5_0());
     }
 (
 (
-		lv_endSeq_8_0=RULE_STRING
+		lv_endSeq_9_0=RULE_STRING
 		{
-			newLeafNode(lv_endSeq_8_0, grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_5_1_0()); 
+			newLeafNode(lv_endSeq_9_0, grammarAccess.getPartition_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_5_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1213,24 +1231,24 @@ rulePartition_SingleLineRule returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"endSeq",
-        		lv_endSeq_8_0, 
+        		lv_endSeq_9_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
-)?)?(	otherlv_9='escaped' 
+)?)?(	otherlv_10='escaped' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getPartition_SingleLineRuleAccess().getEscapedKeyword_6_0());
+    	newLeafNode(otherlv_10, grammarAccess.getPartition_SingleLineRuleAccess().getEscapedKeyword_6_0());
     }
-	otherlv_10='by' 
+	otherlv_11='by' 
     {
-    	newLeafNode(otherlv_10, grammarAccess.getPartition_SingleLineRuleAccess().getByKeyword_6_1());
+    	newLeafNode(otherlv_11, grammarAccess.getPartition_SingleLineRuleAccess().getByKeyword_6_1());
     }
 (
 (
-		lv_escapeSeq_11_0=RULE_STRING
+		lv_escapeSeq_12_0=RULE_STRING
 		{
-			newLeafNode(lv_escapeSeq_11_0, grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_6_2_0()); 
+			newLeafNode(lv_escapeSeq_12_0, grammarAccess.getPartition_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_6_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1239,7 +1257,7 @@ rulePartition_SingleLineRule returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"escapeSeq",
-        		lv_escapeSeq_11_0, 
+        		lv_escapeSeq_12_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
@@ -1322,37 +1340,55 @@ rulePartition_MultiLineRule returns [EObject current=null]
 	    }
 
 )
-))?(	otherlv_5='col' 
+)(
+(
+		lv_startSuffix_5_0=RULE_STRING
+		{
+			newLeafNode(lv_startSuffix_5_0, grammarAccess.getPartition_MultiLineRuleAccess().getStartSuffixSTRINGTerminalRuleCall_3_2_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPartition_MultiLineRuleRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"startSuffix",
+        		lv_startSuffix_5_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+))?(	otherlv_6='col' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getPartition_MultiLineRuleAccess().getColKeyword_4_0());
+    	newLeafNode(otherlv_6, grammarAccess.getPartition_MultiLineRuleAccess().getColKeyword_4_0());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getPartition_MultiLineRuleAccess().getCheckCheckParserRuleCall_4_1_0()); 
 	    }
-		lv_check_6_0=ruleCheck		{
+		lv_check_7_0=ruleCheck		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getPartition_MultiLineRuleRule());
 	        }
        		set(
        			$current, 
        			"check",
-        		lv_check_6_0, 
+        		lv_check_7_0, 
         		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))?	otherlv_7='=>' 
+))?	otherlv_8='=>' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getPartition_MultiLineRuleAccess().getEqualsSignGreaterThanSignKeyword_5());
+    	newLeafNode(otherlv_8, grammarAccess.getPartition_MultiLineRuleAccess().getEqualsSignGreaterThanSignKeyword_5());
     }
 (
 (
-		lv_endSeq_8_0=RULE_STRING
+		lv_endSeq_9_0=RULE_STRING
 		{
-			newLeafNode(lv_endSeq_8_0, grammarAccess.getPartition_MultiLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_6_0()); 
+			newLeafNode(lv_endSeq_9_0, grammarAccess.getPartition_MultiLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_6_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1361,24 +1397,24 @@ rulePartition_MultiLineRule returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"endSeq",
-        		lv_endSeq_8_0, 
+        		lv_endSeq_9_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
-)(	otherlv_9='escaped' 
+)(	otherlv_10='escaped' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getPartition_MultiLineRuleAccess().getEscapedKeyword_7_0());
+    	newLeafNode(otherlv_10, grammarAccess.getPartition_MultiLineRuleAccess().getEscapedKeyword_7_0());
     }
-	otherlv_10='by' 
+	otherlv_11='by' 
     {
-    	newLeafNode(otherlv_10, grammarAccess.getPartition_MultiLineRuleAccess().getByKeyword_7_1());
+    	newLeafNode(otherlv_11, grammarAccess.getPartition_MultiLineRuleAccess().getByKeyword_7_1());
     }
 (
 (
-		lv_escapeSeq_11_0=RULE_STRING
+		lv_escapeSeq_12_0=RULE_STRING
 		{
-			newLeafNode(lv_escapeSeq_11_0, grammarAccess.getPartition_MultiLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_7_2_0()); 
+			newLeafNode(lv_escapeSeq_12_0, grammarAccess.getPartition_MultiLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_7_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1387,7 +1423,7 @@ rulePartition_MultiLineRule returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"escapeSeq",
-        		lv_escapeSeq_11_0, 
+        		lv_escapeSeq_12_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
@@ -2265,37 +2301,55 @@ ruleScanner_SingleLineRule returns [EObject current=null]
 	    }
 
 )
-))?(	otherlv_4='col' 
+)(
+(
+		lv_startSuffix_4_0=RULE_STRING
+		{
+			newLeafNode(lv_startSuffix_4_0, grammarAccess.getScanner_SingleLineRuleAccess().getStartSuffixSTRINGTerminalRuleCall_2_2_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScanner_SingleLineRuleRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"startSuffix",
+        		lv_startSuffix_4_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+))?(	otherlv_5='col' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getScanner_SingleLineRuleAccess().getColKeyword_3_0());
+    	newLeafNode(otherlv_5, grammarAccess.getScanner_SingleLineRuleAccess().getColKeyword_3_0());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getScanner_SingleLineRuleAccess().getCheckCheckParserRuleCall_3_1_0()); 
 	    }
-		lv_check_5_0=ruleCheck		{
+		lv_check_6_0=ruleCheck		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getScanner_SingleLineRuleRule());
 	        }
        		set(
        			$current, 
        			"check",
-        		lv_check_5_0, 
+        		lv_check_6_0, 
         		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))?(	otherlv_6='=>' 
+))?(	otherlv_7='=>' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getScanner_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_4_0());
+    	newLeafNode(otherlv_7, grammarAccess.getScanner_SingleLineRuleAccess().getEqualsSignGreaterThanSignKeyword_4_0());
     }
 (
 (
-		lv_endSeq_7_0=RULE_STRING
+		lv_endSeq_8_0=RULE_STRING
 		{
-			newLeafNode(lv_endSeq_7_0, grammarAccess.getScanner_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_1_0()); 
+			newLeafNode(lv_endSeq_8_0, grammarAccess.getScanner_SingleLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_4_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -2304,24 +2358,24 @@ ruleScanner_SingleLineRule returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"endSeq",
-        		lv_endSeq_7_0, 
+        		lv_endSeq_8_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
-)?)?(	otherlv_8='escaped' 
+)?)?(	otherlv_9='escaped' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getScanner_SingleLineRuleAccess().getEscapedKeyword_5_0());
+    	newLeafNode(otherlv_9, grammarAccess.getScanner_SingleLineRuleAccess().getEscapedKeyword_5_0());
     }
-	otherlv_9='by' 
+	otherlv_10='by' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getScanner_SingleLineRuleAccess().getByKeyword_5_1());
+    	newLeafNode(otherlv_10, grammarAccess.getScanner_SingleLineRuleAccess().getByKeyword_5_1());
     }
 (
 (
-		lv_escapeSeq_10_0=RULE_STRING
+		lv_escapeSeq_11_0=RULE_STRING
 		{
-			newLeafNode(lv_escapeSeq_10_0, grammarAccess.getScanner_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
+			newLeafNode(lv_escapeSeq_11_0, grammarAccess.getScanner_SingleLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_5_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -2330,28 +2384,28 @@ ruleScanner_SingleLineRule returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"escapeSeq",
-        		lv_escapeSeq_10_0, 
+        		lv_escapeSeq_11_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
-))?(	otherlv_11='enabledif' 
+))?(	otherlv_12='enabledif' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getScanner_SingleLineRuleAccess().getEnabledifKeyword_6_0());
+    	newLeafNode(otherlv_12, grammarAccess.getScanner_SingleLineRuleAccess().getEnabledifKeyword_6_0());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getScanner_SingleLineRuleAccess().getEnabledIfScannerConditionParserRuleCall_6_1_0()); 
 	    }
-		lv_enabledIf_12_0=ruleScannerCondition		{
+		lv_enabledIf_13_0=ruleScannerCondition		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getScanner_SingleLineRuleRule());
 	        }
        		set(
        			$current, 
        			"enabledIf",
-        		lv_enabledIf_12_0, 
+        		lv_enabledIf_13_0, 
         		"org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -2422,37 +2476,55 @@ ruleScanner_MultiLineRule returns [EObject current=null]
 	    }
 
 )
-))?(	otherlv_4='col' 
+)(
+(
+		lv_startSuffix_4_0=RULE_STRING
+		{
+			newLeafNode(lv_startSuffix_4_0, grammarAccess.getScanner_MultiLineRuleAccess().getStartSuffixSTRINGTerminalRuleCall_2_2_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getScanner_MultiLineRuleRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"startSuffix",
+        		lv_startSuffix_4_0, 
+        		"org.eclipse.xtext.common.Terminals.STRING");
+	    }
+
+)
+))?(	otherlv_5='col' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getScanner_MultiLineRuleAccess().getColKeyword_3_0());
+    	newLeafNode(otherlv_5, grammarAccess.getScanner_MultiLineRuleAccess().getColKeyword_3_0());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getScanner_MultiLineRuleAccess().getCheckCheckParserRuleCall_3_1_0()); 
 	    }
-		lv_check_5_0=ruleCheck		{
+		lv_check_6_0=ruleCheck		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getScanner_MultiLineRuleRule());
 	        }
        		set(
        			$current, 
        			"check",
-        		lv_check_5_0, 
+        		lv_check_6_0, 
         		"org.eclipse.fx.code.editor.ldef.LDef.Check");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-))?	otherlv_6='=>' 
+))?	otherlv_7='=>' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getScanner_MultiLineRuleAccess().getEqualsSignGreaterThanSignKeyword_4());
+    	newLeafNode(otherlv_7, grammarAccess.getScanner_MultiLineRuleAccess().getEqualsSignGreaterThanSignKeyword_4());
     }
 (
 (
-		lv_endSeq_7_0=RULE_STRING
+		lv_endSeq_8_0=RULE_STRING
 		{
-			newLeafNode(lv_endSeq_7_0, grammarAccess.getScanner_MultiLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_5_0()); 
+			newLeafNode(lv_endSeq_8_0, grammarAccess.getScanner_MultiLineRuleAccess().getEndSeqSTRINGTerminalRuleCall_5_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -2461,24 +2533,24 @@ ruleScanner_MultiLineRule returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"endSeq",
-        		lv_endSeq_7_0, 
+        		lv_endSeq_8_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
-)(	otherlv_8='escaped' 
+)(	otherlv_9='escaped' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getScanner_MultiLineRuleAccess().getEscapedKeyword_6_0());
+    	newLeafNode(otherlv_9, grammarAccess.getScanner_MultiLineRuleAccess().getEscapedKeyword_6_0());
     }
-	otherlv_9='by' 
+	otherlv_10='by' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getScanner_MultiLineRuleAccess().getByKeyword_6_1());
+    	newLeafNode(otherlv_10, grammarAccess.getScanner_MultiLineRuleAccess().getByKeyword_6_1());
     }
 (
 (
-		lv_escapeSeq_10_0=RULE_STRING
+		lv_escapeSeq_11_0=RULE_STRING
 		{
-			newLeafNode(lv_escapeSeq_10_0, grammarAccess.getScanner_MultiLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_6_2_0()); 
+			newLeafNode(lv_escapeSeq_11_0, grammarAccess.getScanner_MultiLineRuleAccess().getEscapeSeqSTRINGTerminalRuleCall_6_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -2487,28 +2559,28 @@ ruleScanner_MultiLineRule returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"escapeSeq",
-        		lv_escapeSeq_10_0, 
+        		lv_escapeSeq_11_0, 
         		"org.eclipse.xtext.common.Terminals.STRING");
 	    }
 
 )
-))?(	otherlv_11='enabledif' 
+))?(	otherlv_12='enabledif' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getScanner_MultiLineRuleAccess().getEnabledifKeyword_7_0());
+    	newLeafNode(otherlv_12, grammarAccess.getScanner_MultiLineRuleAccess().getEnabledifKeyword_7_0());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getScanner_MultiLineRuleAccess().getEnabledIfScannerConditionParserRuleCall_7_1_0()); 
 	    }
-		lv_enabledIf_12_0=ruleScannerCondition		{
+		lv_enabledIf_13_0=ruleScannerCondition		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getScanner_MultiLineRuleRule());
 	        }
        		set(
        			$current, 
        			"enabledIf",
-        		lv_enabledIf_12_0, 
+        		lv_enabledIf_13_0, 
         		"org.eclipse.fx.code.editor.ldef.LDef.ScannerCondition");
 	        afterParserOrEnumRuleCall();
 	    }

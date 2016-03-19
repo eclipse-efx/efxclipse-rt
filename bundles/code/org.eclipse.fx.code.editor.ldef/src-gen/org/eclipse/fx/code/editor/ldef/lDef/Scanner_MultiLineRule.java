@@ -14,6 +14,7 @@ package org.eclipse.fx.code.editor.ldef.lDef;
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartSeq <em>Start Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartPattern <em>Start Pattern</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartSuffix <em>Start Suffix</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEndSeq <em>End Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEscapeSeq <em>Escape Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getEnabledIf <em>Enabled If</em>}</li>
@@ -76,6 +77,32 @@ public interface Scanner_MultiLineRule extends Scanner_Rule
    * @generated
    */
   void setStartPattern(String value);
+
+  /**
+   * Returns the value of the '<em><b>Start Suffix</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Start Suffix</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Start Suffix</em>' attribute.
+   * @see #setStartSuffix(String)
+   * @see org.eclipse.fx.code.editor.ldef.lDef.LDefPackage#getScanner_MultiLineRule_StartSuffix()
+   * @model
+   * @generated
+   */
+  String getStartSuffix();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule#getStartSuffix <em>Start Suffix</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Start Suffix</em>' attribute.
+   * @see #getStartSuffix()
+   * @generated
+   */
+  void setStartSuffix(String value);
 
   /**
    * Returns the value of the '<em><b>End Seq</b></em>' attribute.

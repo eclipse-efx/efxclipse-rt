@@ -74,6 +74,7 @@ class JSONConfigurationConfigurator {
 					return m.PartitionRule_DynamicEndBuilder
 						.beginPrefix(prl.startSeq)
 						.beginMatch(prl.startPattern)
+						.beginSuffix(prl.startSuffix)
 						.endTemplate(prl.endSeq)
 						.singleLine(true)
 						.build
@@ -89,6 +90,7 @@ class JSONConfigurationConfigurator {
 					return m.PartitionRule_DynamicEndBuilder
 						.beginPrefix(prl.startSeq)
 						.beginMatch(prl.startPattern)
+						.beginSuffix(prl.startSuffix)
 						.endTemplate(prl.endSeq)
 						.singleLine(false)
 						.build

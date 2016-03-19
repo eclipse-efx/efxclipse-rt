@@ -24,6 +24,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_SingleLineRuleImpl#getStartSeq <em>Start Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_SingleLineRuleImpl#getStartPattern <em>Start Pattern</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_SingleLineRuleImpl#getStartSuffix <em>Start Suffix</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_SingleLineRuleImpl#getEndSeq <em>End Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_SingleLineRuleImpl#getEscapeSeq <em>Escape Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Scanner_SingleLineRuleImpl#getEnabledIf <em>Enabled If</em>}</li>
@@ -72,6 +73,26 @@ public class Scanner_SingleLineRuleImpl extends Scanner_RuleImpl implements Scan
    * @ordered
    */
   protected String startPattern = START_PATTERN_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getStartSuffix() <em>Start Suffix</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStartSuffix()
+   * @generated
+   * @ordered
+   */
+  protected static final String START_SUFFIX_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getStartSuffix() <em>Start Suffix</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStartSuffix()
+   * @generated
+   * @ordered
+   */
+  protected String startSuffix = START_SUFFIX_EDEFAULT;
 
   /**
    * The default value of the '{@link #getEndSeq() <em>End Seq</em>}' attribute.
@@ -188,6 +209,29 @@ public class Scanner_SingleLineRuleImpl extends Scanner_RuleImpl implements Scan
     startPattern = newStartPattern;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_SINGLE_LINE_RULE__START_PATTERN, oldStartPattern, startPattern));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getStartSuffix()
+  {
+    return startSuffix;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setStartSuffix(String newStartSuffix)
+  {
+    String oldStartSuffix = startSuffix;
+    startSuffix = newStartSuffix;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.SCANNER_SINGLE_LINE_RULE__START_SUFFIX, oldStartSuffix, startSuffix));
   }
 
   /**
@@ -314,6 +358,8 @@ public class Scanner_SingleLineRuleImpl extends Scanner_RuleImpl implements Scan
         return getStartSeq();
       case LDefPackage.SCANNER_SINGLE_LINE_RULE__START_PATTERN:
         return getStartPattern();
+      case LDefPackage.SCANNER_SINGLE_LINE_RULE__START_SUFFIX:
+        return getStartSuffix();
       case LDefPackage.SCANNER_SINGLE_LINE_RULE__END_SEQ:
         return getEndSeq();
       case LDefPackage.SCANNER_SINGLE_LINE_RULE__ESCAPE_SEQ:
@@ -339,6 +385,9 @@ public class Scanner_SingleLineRuleImpl extends Scanner_RuleImpl implements Scan
         return;
       case LDefPackage.SCANNER_SINGLE_LINE_RULE__START_PATTERN:
         setStartPattern((String)newValue);
+        return;
+      case LDefPackage.SCANNER_SINGLE_LINE_RULE__START_SUFFIX:
+        setStartSuffix((String)newValue);
         return;
       case LDefPackage.SCANNER_SINGLE_LINE_RULE__END_SEQ:
         setEndSeq((String)newValue);
@@ -369,6 +418,9 @@ public class Scanner_SingleLineRuleImpl extends Scanner_RuleImpl implements Scan
       case LDefPackage.SCANNER_SINGLE_LINE_RULE__START_PATTERN:
         setStartPattern(START_PATTERN_EDEFAULT);
         return;
+      case LDefPackage.SCANNER_SINGLE_LINE_RULE__START_SUFFIX:
+        setStartSuffix(START_SUFFIX_EDEFAULT);
+        return;
       case LDefPackage.SCANNER_SINGLE_LINE_RULE__END_SEQ:
         setEndSeq(END_SEQ_EDEFAULT);
         return;
@@ -396,6 +448,8 @@ public class Scanner_SingleLineRuleImpl extends Scanner_RuleImpl implements Scan
         return START_SEQ_EDEFAULT == null ? startSeq != null : !START_SEQ_EDEFAULT.equals(startSeq);
       case LDefPackage.SCANNER_SINGLE_LINE_RULE__START_PATTERN:
         return START_PATTERN_EDEFAULT == null ? startPattern != null : !START_PATTERN_EDEFAULT.equals(startPattern);
+      case LDefPackage.SCANNER_SINGLE_LINE_RULE__START_SUFFIX:
+        return START_SUFFIX_EDEFAULT == null ? startSuffix != null : !START_SUFFIX_EDEFAULT.equals(startSuffix);
       case LDefPackage.SCANNER_SINGLE_LINE_RULE__END_SEQ:
         return END_SEQ_EDEFAULT == null ? endSeq != null : !END_SEQ_EDEFAULT.equals(endSeq);
       case LDefPackage.SCANNER_SINGLE_LINE_RULE__ESCAPE_SEQ:
@@ -421,6 +475,8 @@ public class Scanner_SingleLineRuleImpl extends Scanner_RuleImpl implements Scan
     result.append(startSeq);
     result.append(", startPattern: ");
     result.append(startPattern);
+    result.append(", startSuffix: ");
+    result.append(startSuffix);
     result.append(", endSeq: ");
     result.append(endSeq);
     result.append(", escapeSeq: ");

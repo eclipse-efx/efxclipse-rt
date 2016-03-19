@@ -400,7 +400,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (
 	 *         parition=[Partition|ID] 
 	 *         startSeq=STRING 
-	 *         startPattern=STRING? 
+	 *         (startPattern=STRING startSuffix=STRING)? 
 	 *         check=Check? 
 	 *         endSeq=STRING 
 	 *         escapeSeq=STRING?
@@ -438,7 +438,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     (
 	 *         parition=[Partition|ID] 
 	 *         startSeq=STRING 
-	 *         startPattern=STRING? 
+	 *         (startPattern=STRING startSuffix=STRING)? 
 	 *         check=Check? 
 	 *         endSeq=STRING? 
 	 *         escapeSeq=STRING?
@@ -610,7 +610,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         startSeq=STRING 
-	 *         startPattern=STRING? 
+	 *         (startPattern=STRING startSuffix=STRING)? 
 	 *         check=Check? 
 	 *         endSeq=STRING 
 	 *         escapeSeq=STRING? 
@@ -645,7 +645,7 @@ public class LDefSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Constraint:
 	 *     (
 	 *         startSeq=STRING 
-	 *         startPattern=STRING? 
+	 *         (startPattern=STRING startSuffix=STRING)? 
 	 *         check=Check? 
 	 *         endSeq=STRING? 
 	 *         escapeSeq=STRING? 

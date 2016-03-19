@@ -106,11 +106,11 @@ Partition_Rule:
 ;
 
 Partition_SingleLineRule:
-	'single_line' parition=[Partition|ID] startSeq=STRING ( 'pattern' startPattern=STRING )? ( 'col' check=Check )? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
+	'single_line' parition=[Partition|ID] startSeq=STRING ( 'pattern' startPattern=STRING startSuffix=STRING )? ( 'col' check=Check )? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
 ;
 
 Partition_MultiLineRule:
-	'multi_line' parition=[Partition|ID] startSeq=STRING ( 'pattern' startPattern=STRING )? ( 'col' check=Check )? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
+	'multi_line' parition=[Partition|ID] startSeq=STRING ( 'pattern' startPattern=STRING startSuffix=STRING )? ( 'col' check=Check )? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
 ;
 
 Partition_JSRule:
@@ -172,11 +172,11 @@ Scanner_Rule:
 ;
 
 Scanner_SingleLineRule:
-	'single_line' startSeq=STRING ( 'pattern' startPattern=STRING )? ( 'col' check=Check )? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)? ( 'enabledif' enabledIf=ScannerCondition)?
+	'single_line' startSeq=STRING ( 'pattern' startPattern=STRING startSuffix=STRING )? ( 'col' check=Check )? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)? ( 'enabledif' enabledIf=ScannerCondition)?
 ;
 
 Scanner_MultiLineRule:
-	'multi_line' startSeq=STRING ( 'pattern' startPattern=STRING )? ( 'col' check=Check )? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?  ( 'enabledif' enabledIf=ScannerCondition)?
+	'multi_line' startSeq=STRING ( 'pattern' startPattern=STRING startSuffix=STRING )? ( 'col' check=Check )? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?  ( 'enabledif' enabledIf=ScannerCondition)?
 ;
 
 Scanner_PatternRule:

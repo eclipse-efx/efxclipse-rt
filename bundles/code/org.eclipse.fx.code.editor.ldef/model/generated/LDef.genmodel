@@ -60,12 +60,14 @@
     <genClasses ecoreClass="LDef.ecore#//Partition_SingleLineRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_SingleLineRule/startSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_SingleLineRule/startPattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_SingleLineRule/startSuffix"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_SingleLineRule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_SingleLineRule/escapeSeq"/>
     </genClasses>
     <genClasses ecoreClass="LDef.ecore#//Partition_MultiLineRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_MultiLineRule/startSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_MultiLineRule/startPattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_MultiLineRule/startSuffix"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_MultiLineRule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Partition_MultiLineRule/escapeSeq"/>
     </genClasses>
@@ -115,6 +117,7 @@
     <genClasses ecoreClass="LDef.ecore#//Scanner_SingleLineRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/startSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/startPattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/startSuffix"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_SingleLineRule/escapeSeq"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_SingleLineRule/enabledIf"/>
@@ -122,6 +125,7 @@
     <genClasses ecoreClass="LDef.ecore#//Scanner_MultiLineRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/startSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/startPattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/startSuffix"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/endSeq"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LDef.ecore#//Scanner_MultiLineRule/escapeSeq"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LDef.ecore#//Scanner_MultiLineRule/enabledIf"/>

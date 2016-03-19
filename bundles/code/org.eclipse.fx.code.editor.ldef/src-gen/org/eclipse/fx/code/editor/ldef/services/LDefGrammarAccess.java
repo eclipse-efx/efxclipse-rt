@@ -648,6 +648,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPatternKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cStartPatternAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cStartPatternSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cStartPatternAssignment_3_1.eContents().get(0);
+		private final Assignment cStartSuffixAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cStartSuffixSTRINGTerminalRuleCall_3_2_0 = (RuleCall)cStartSuffixAssignment_3_2.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cColKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cCheckAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -663,12 +665,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_6_2_0 = (RuleCall)cEscapeSeqAssignment_6_2.eContents().get(0);
 		
 		//Partition_SingleLineRule:
-		//	'single_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>'
-		//	endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?;
+		//	'single_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col'
+		//	check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'single_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>'
-		//endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
+		//'single_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col'
+		//check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//'single_line'
@@ -689,7 +691,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_2_0() { return cStartSeqSTRINGTerminalRuleCall_2_0; }
 
-		//('pattern' startPattern=STRING)?
+		//('pattern' startPattern=STRING startSuffix=STRING)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//'pattern'
@@ -700,6 +702,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getStartPatternSTRINGTerminalRuleCall_3_1_0() { return cStartPatternSTRINGTerminalRuleCall_3_1_0; }
+
+		//startSuffix=STRING
+		public Assignment getStartSuffixAssignment_3_2() { return cStartSuffixAssignment_3_2; }
+
+		//STRING
+		public RuleCall getStartSuffixSTRINGTerminalRuleCall_3_2_0() { return cStartSuffixSTRINGTerminalRuleCall_3_2_0; }
 
 		//('col' check=Check)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -754,6 +762,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPatternKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cStartPatternAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cStartPatternSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cStartPatternAssignment_3_1.eContents().get(0);
+		private final Assignment cStartSuffixAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cStartSuffixSTRINGTerminalRuleCall_3_2_0 = (RuleCall)cStartSuffixAssignment_3_2.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cColKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cCheckAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -768,12 +778,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEscapeSeqSTRINGTerminalRuleCall_7_2_0 = (RuleCall)cEscapeSeqAssignment_7_2.eContents().get(0);
 		
 		//Partition_MultiLineRule:
-		//	'multi_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>'
-		//	endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?;
+		//	'multi_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col'
+		//	check=Check)? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'multi_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>'
-		//endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
+		//'multi_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col'
+		//check=Check)? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//'multi_line'
@@ -794,7 +804,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_2_0() { return cStartSeqSTRINGTerminalRuleCall_2_0; }
 
-		//('pattern' startPattern=STRING)?
+		//('pattern' startPattern=STRING startSuffix=STRING)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//'pattern'
@@ -805,6 +815,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getStartPatternSTRINGTerminalRuleCall_3_1_0() { return cStartPatternSTRINGTerminalRuleCall_3_1_0; }
+
+		//startSuffix=STRING
+		public Assignment getStartSuffixAssignment_3_2() { return cStartSuffixAssignment_3_2; }
+
+		//STRING
+		public RuleCall getStartSuffixSTRINGTerminalRuleCall_3_2_0() { return cStartSuffixSTRINGTerminalRuleCall_3_2_0; }
 
 		//('col' check=Check)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -1348,6 +1364,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPatternKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cStartPatternAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cStartPatternSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cStartPatternAssignment_2_1.eContents().get(0);
+		private final Assignment cStartSuffixAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cStartSuffixSTRINGTerminalRuleCall_2_2_0 = (RuleCall)cStartSuffixAssignment_2_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cColKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cCheckAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -1367,12 +1385,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEnabledIfScannerConditionParserRuleCall_6_1_0 = (RuleCall)cEnabledIfAssignment_6_1.eContents().get(0);
 		
 		//Scanner_SingleLineRule:
-		//	'single_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped'
-		//	'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
+		//	'single_line' startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col' check=Check)? ('=>'
+		//	endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'single_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped'
-		//'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?
+		//'single_line' startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col' check=Check)? ('=>'
+		//endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?
 		public Group getGroup() { return cGroup; }
 
 		//'single_line'
@@ -1384,7 +1402,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
 
-		//('pattern' startPattern=STRING)?
+		//('pattern' startPattern=STRING startSuffix=STRING)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'pattern'
@@ -1395,6 +1413,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getStartPatternSTRINGTerminalRuleCall_2_1_0() { return cStartPatternSTRINGTerminalRuleCall_2_1_0; }
+
+		//startSuffix=STRING
+		public Assignment getStartSuffixAssignment_2_2() { return cStartSuffixAssignment_2_2; }
+
+		//STRING
+		public RuleCall getStartSuffixSTRINGTerminalRuleCall_2_2_0() { return cStartSuffixSTRINGTerminalRuleCall_2_2_0; }
 
 		//('col' check=Check)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -1458,6 +1482,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPatternKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cStartPatternAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cStartPatternSTRINGTerminalRuleCall_2_1_0 = (RuleCall)cStartPatternAssignment_2_1.eContents().get(0);
+		private final Assignment cStartSuffixAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cStartSuffixSTRINGTerminalRuleCall_2_2_0 = (RuleCall)cStartSuffixAssignment_2_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cColKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cCheckAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -1476,12 +1502,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEnabledIfScannerConditionParserRuleCall_7_1_0 = (RuleCall)cEnabledIfAssignment_7_1.eContents().get(0);
 		
 		//Scanner_MultiLineRule:
-		//	'multi_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
-		//	escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
+		//	'multi_line' startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col' check=Check)? '=>'
+		//	endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//'multi_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
-		//escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?
+		//'multi_line' startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col' check=Check)? '=>' endSeq=STRING
+		//('escaped' 'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?
 		public Group getGroup() { return cGroup; }
 
 		//'multi_line'
@@ -1493,7 +1519,7 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getStartSeqSTRINGTerminalRuleCall_1_0() { return cStartSeqSTRINGTerminalRuleCall_1_0; }
 
-		//('pattern' startPattern=STRING)?
+		//('pattern' startPattern=STRING startSuffix=STRING)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'pattern'
@@ -1504,6 +1530,12 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getStartPatternSTRINGTerminalRuleCall_2_1_0() { return cStartPatternSTRINGTerminalRuleCall_2_1_0; }
+
+		//startSuffix=STRING
+		public Assignment getStartSuffixAssignment_2_2() { return cStartSuffixAssignment_2_2; }
+
+		//STRING
+		public RuleCall getStartSuffixSTRINGTerminalRuleCall_2_2_0() { return cStartSuffixSTRINGTerminalRuleCall_2_2_0; }
 
 		//('col' check=Check)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -2461,8 +2493,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition_SingleLineRule:
-	//	'single_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>'
-	//	endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?;
+	//	'single_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col'
+	//	check=Check)? ('=>' endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)?;
 	public Partition_SingleLineRuleElements getPartition_SingleLineRuleAccess() {
 		return pPartition_SingleLineRule;
 	}
@@ -2472,8 +2504,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Partition_MultiLineRule:
-	//	'multi_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>'
-	//	endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?;
+	//	'multi_line' parition=[Partition] startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col'
+	//	check=Check)? '=>' endSeq=STRING ('escaped' 'by' escapeSeq=STRING)?;
 	public Partition_MultiLineRuleElements getPartition_MultiLineRuleAccess() {
 		return pPartition_MultiLineRule;
 	}
@@ -2610,8 +2642,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_SingleLineRule:
-	//	'single_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? ('=>' endSeq=STRING?)? ('escaped'
-	//	'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
+	//	'single_line' startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col' check=Check)? ('=>'
+	//	endSeq=STRING?)? ('escaped' 'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
 	public Scanner_SingleLineRuleElements getScanner_SingleLineRuleAccess() {
 		return pScanner_SingleLineRule;
 	}
@@ -2621,8 +2653,8 @@ public class LDefGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Scanner_MultiLineRule:
-	//	'multi_line' startSeq=STRING ('pattern' startPattern=STRING)? ('col' check=Check)? '=>' endSeq=STRING ('escaped' 'by'
-	//	escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
+	//	'multi_line' startSeq=STRING ('pattern' startPattern=STRING startSuffix=STRING)? ('col' check=Check)? '=>'
+	//	endSeq=STRING ('escaped' 'by' escapeSeq=STRING)? ('enabledif' enabledIf=ScannerCondition)?;
 	public Scanner_MultiLineRuleElements getScanner_MultiLineRuleAccess() {
 		return pScanner_MultiLineRule;
 	}

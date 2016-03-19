@@ -21,6 +21,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
  * <ul>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_SingleLineRuleImpl#getStartSeq <em>Start Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_SingleLineRuleImpl#getStartPattern <em>Start Pattern</em>}</li>
+ *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_SingleLineRuleImpl#getStartSuffix <em>Start Suffix</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_SingleLineRuleImpl#getEndSeq <em>End Seq</em>}</li>
  *   <li>{@link org.eclipse.fx.code.editor.ldef.lDef.impl.Partition_SingleLineRuleImpl#getEscapeSeq <em>Escape Seq</em>}</li>
  * </ul>
@@ -68,6 +69,26 @@ public class Partition_SingleLineRuleImpl extends Partition_RuleImpl implements 
    * @ordered
    */
   protected String startPattern = START_PATTERN_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getStartSuffix() <em>Start Suffix</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStartSuffix()
+   * @generated
+   * @ordered
+   */
+  protected static final String START_SUFFIX_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getStartSuffix() <em>Start Suffix</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getStartSuffix()
+   * @generated
+   * @ordered
+   */
+  protected String startSuffix = START_SUFFIX_EDEFAULT;
 
   /**
    * The default value of the '{@link #getEndSeq() <em>End Seq</em>}' attribute.
@@ -181,6 +202,29 @@ public class Partition_SingleLineRuleImpl extends Partition_RuleImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getStartSuffix()
+  {
+    return startSuffix;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setStartSuffix(String newStartSuffix)
+  {
+    String oldStartSuffix = startSuffix;
+    startSuffix = newStartSuffix;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, LDefPackage.PARTITION_SINGLE_LINE_RULE__START_SUFFIX, oldStartSuffix, startSuffix));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getEndSeq()
   {
     return endSeq;
@@ -236,6 +280,8 @@ public class Partition_SingleLineRuleImpl extends Partition_RuleImpl implements 
         return getStartSeq();
       case LDefPackage.PARTITION_SINGLE_LINE_RULE__START_PATTERN:
         return getStartPattern();
+      case LDefPackage.PARTITION_SINGLE_LINE_RULE__START_SUFFIX:
+        return getStartSuffix();
       case LDefPackage.PARTITION_SINGLE_LINE_RULE__END_SEQ:
         return getEndSeq();
       case LDefPackage.PARTITION_SINGLE_LINE_RULE__ESCAPE_SEQ:
@@ -259,6 +305,9 @@ public class Partition_SingleLineRuleImpl extends Partition_RuleImpl implements 
         return;
       case LDefPackage.PARTITION_SINGLE_LINE_RULE__START_PATTERN:
         setStartPattern((String)newValue);
+        return;
+      case LDefPackage.PARTITION_SINGLE_LINE_RULE__START_SUFFIX:
+        setStartSuffix((String)newValue);
         return;
       case LDefPackage.PARTITION_SINGLE_LINE_RULE__END_SEQ:
         setEndSeq((String)newValue);
@@ -286,6 +335,9 @@ public class Partition_SingleLineRuleImpl extends Partition_RuleImpl implements 
       case LDefPackage.PARTITION_SINGLE_LINE_RULE__START_PATTERN:
         setStartPattern(START_PATTERN_EDEFAULT);
         return;
+      case LDefPackage.PARTITION_SINGLE_LINE_RULE__START_SUFFIX:
+        setStartSuffix(START_SUFFIX_EDEFAULT);
+        return;
       case LDefPackage.PARTITION_SINGLE_LINE_RULE__END_SEQ:
         setEndSeq(END_SEQ_EDEFAULT);
         return;
@@ -310,6 +362,8 @@ public class Partition_SingleLineRuleImpl extends Partition_RuleImpl implements 
         return START_SEQ_EDEFAULT == null ? startSeq != null : !START_SEQ_EDEFAULT.equals(startSeq);
       case LDefPackage.PARTITION_SINGLE_LINE_RULE__START_PATTERN:
         return START_PATTERN_EDEFAULT == null ? startPattern != null : !START_PATTERN_EDEFAULT.equals(startPattern);
+      case LDefPackage.PARTITION_SINGLE_LINE_RULE__START_SUFFIX:
+        return START_SUFFIX_EDEFAULT == null ? startSuffix != null : !START_SUFFIX_EDEFAULT.equals(startSuffix);
       case LDefPackage.PARTITION_SINGLE_LINE_RULE__END_SEQ:
         return END_SEQ_EDEFAULT == null ? endSeq != null : !END_SEQ_EDEFAULT.equals(endSeq);
       case LDefPackage.PARTITION_SINGLE_LINE_RULE__ESCAPE_SEQ:
@@ -333,6 +387,8 @@ public class Partition_SingleLineRuleImpl extends Partition_RuleImpl implements 
     result.append(startSeq);
     result.append(", startPattern: ");
     result.append(startPattern);
+    result.append(", startSuffix: ");
+    result.append(startSuffix);
     result.append(", endSeq: ");
     result.append(endSeq);
     result.append(", escapeSeq: ");

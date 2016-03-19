@@ -130,8 +130,10 @@ public class JSONConfigurationConfigurator {
           PartitionRule_DynamicEnd.Builder _beginPrefix = _PartitionRule_DynamicEndBuilder.beginPrefix(_startSeq);
           String _startPattern_1 = ((Partition_SingleLineRule)prl).getStartPattern();
           PartitionRule_DynamicEnd.Builder _beginMatch = _beginPrefix.beginMatch(_startPattern_1);
+          String _startSuffix = ((Partition_SingleLineRule)prl).getStartSuffix();
+          PartitionRule_DynamicEnd.Builder _beginSuffix = _beginMatch.beginSuffix(_startSuffix);
           String _endSeq = ((Partition_SingleLineRule)prl).getEndSeq();
-          PartitionRule_DynamicEnd.Builder _endTemplate = _beginMatch.endTemplate(_endSeq);
+          PartitionRule_DynamicEnd.Builder _endTemplate = _beginSuffix.endTemplate(_endSeq);
           PartitionRule_DynamicEnd.Builder _singleLine = _endTemplate.singleLine(true);
           return _singleLine.build();
         } else {
@@ -155,8 +157,10 @@ public class JSONConfigurationConfigurator {
             PartitionRule_DynamicEnd.Builder _beginPrefix_1 = _PartitionRule_DynamicEndBuilder_1.beginPrefix(_startSeq_3);
             String _startPattern_3 = ((Partition_MultiLineRule)prl).getStartPattern();
             PartitionRule_DynamicEnd.Builder _beginMatch_1 = _beginPrefix_1.beginMatch(_startPattern_3);
+            String _startSuffix_1 = ((Partition_MultiLineRule)prl).getStartSuffix();
+            PartitionRule_DynamicEnd.Builder _beginSuffix_1 = _beginMatch_1.beginSuffix(_startSuffix_1);
             String _endSeq_3 = ((Partition_MultiLineRule)prl).getEndSeq();
-            PartitionRule_DynamicEnd.Builder _endTemplate_1 = _beginMatch_1.endTemplate(_endSeq_3);
+            PartitionRule_DynamicEnd.Builder _endTemplate_1 = _beginSuffix_1.endTemplate(_endSeq_3);
             PartitionRule_DynamicEnd.Builder _singleLine_1 = _endTemplate_1.singleLine(false);
             return _singleLine_1.build();
           } else {
