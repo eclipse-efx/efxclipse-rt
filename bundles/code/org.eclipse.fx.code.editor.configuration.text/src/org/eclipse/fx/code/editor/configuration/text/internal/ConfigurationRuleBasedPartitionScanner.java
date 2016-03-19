@@ -13,13 +13,21 @@ package org.eclipse.fx.code.editor.configuration.text.internal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import org.eclipse.fx.code.editor.configuration.Partition;
 import org.eclipse.fx.code.editor.configuration.PartitionRule;
+import org.eclipse.fx.code.editor.configuration.PartitionRule_DynamicEnd;
+import org.eclipse.fx.code.editor.configuration.PartitionRule_JavaScript;
 import org.eclipse.fx.code.editor.configuration.PartitionRule_MultiLine;
 import org.eclipse.fx.code.editor.configuration.PartitionRule_SingleLine;
 import org.eclipse.fx.code.editor.configuration.text.Util;
 import org.eclipse.fx.core.NamedValue;
+import org.eclipse.fx.text.rules.DynamicEndRule;
 import org.eclipse.jface.text.rules.IPredicateRule;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
@@ -44,11 +52,24 @@ public class ConfigurationRuleBasedPartitionScanner extends RuleBasedPartitionSc
 						String endSeq = mr.getEndSeq();
 						String escapeSeq = mr.getEscapedBy();
 						pr.add( (IPredicateRule) Util.wrap(r.getCheck(), new MultiLineRule(mr.getStartSeq(), endSeq, new Token(p.getName()), escapeSeq != null ? escapeSeq.charAt(0) : 0, endSeq == null || endSeq.isEmpty())));
+					} else if( r instanceof PartitionRule_JavaScript ) {
+						PartitionRule_JavaScript jr = (PartitionRule_JavaScript) r;
+
+						try {
+							ScriptEngineManager engineManager = new ScriptEngineManager();
+							ScriptEngine engine = engineManager.getEngineByName("nashorn");
+							pr.add( (IPredicateRule)Util.wrap(jr.getCheck(),(IPredicateRule) engine.eval(jr.getScript())));
+						} catch (ScriptException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if( r instanceof PartitionRule_DynamicEnd ) {
+						PartitionRule_DynamicEnd pde = (PartitionRule_DynamicEnd) r;
+						pr.add((IPredicateRule)Util.wrap(r.getCheck(), new DynamicEndRule(new Token(p.getName()), pde.getBeginPrefix(), Pattern.compile(pde.getBeginMatch()), pde.getBeginSuffix(), pde.getEndTemplate())));
 					}
 				}
 			}
 		}
 		setPredicateRules(pr.toArray(new IPredicateRule[0]));
 	}
-
 }
