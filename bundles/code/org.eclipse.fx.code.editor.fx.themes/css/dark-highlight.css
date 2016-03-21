@@ -7,16 +7,16 @@
 	-efx-decoration: "underline";
 }
 
-.invisible-char {
+.styled-text-area .invisible-char {
 	-fx-fill: darkgray;
 }
-.invisible-char.space {
+.styled-text-area .invisible-char.space {
 	-fx-content: "\u00B7";
 }
-.invisible-char.tab {
+.styled-text-area .invisible-char.tab {
 	-fx-content: "\u21E5";
 }
-.invisible-char.enter {
+.styled-text-area .invisible-char.enter {
 	-fx-content: "\u21B5";
 }
 
@@ -45,10 +45,6 @@
 
 .styled-text-area .list-view {
 	-fx-background-color: #393939;
-}
-
-.styled-text-area .list-cell:filled:focused:selected {
-	-fx-background-color: #414141;
 }
 
 .styled-text-area .current-line {

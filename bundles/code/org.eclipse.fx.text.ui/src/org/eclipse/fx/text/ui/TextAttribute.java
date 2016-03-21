@@ -61,7 +61,7 @@ public class TextAttribute {
 	private int fHashCode;
 
 	private String stylename;
-	
+
 	/**
 	 * Creates a text attribute with the given colors and style.
 	 *
@@ -102,11 +102,11 @@ public class TextAttribute {
 	public TextAttribute(String stylename, Color foreground) {
 		this(stylename, foreground, null, StyleRange.NORMAL);
 	}
-	
+
 	public TextAttribute(String stylename) {
 		this.stylename = stylename;
 	}
-	
+
 	public String getStylename() {
 		return stylename;
 	}
@@ -191,5 +191,10 @@ public class TextAttribute {
 	 */
 	public Font getFont() {
 		return font;
+	}
+
+	@Override
+	public String toString() {
+		return "TextAttribute [foreground=" + this.foreground + ", background=" + this.background + ", style=" + this.style + ", font=" + this.font + ", fHashCode=" + this.fHashCode + ", stylename=" + this.stylename + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
 	}
 }
