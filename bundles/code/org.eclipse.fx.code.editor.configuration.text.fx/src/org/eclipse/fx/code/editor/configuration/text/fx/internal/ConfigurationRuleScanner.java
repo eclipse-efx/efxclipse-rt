@@ -17,15 +17,22 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import org.eclipse.fx.code.editor.configuration.LanguageDef;
 import org.eclipse.fx.code.editor.configuration.Partition;
 import org.eclipse.fx.code.editor.configuration.TokenScanner;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_CharacterRule;
+import org.eclipse.fx.code.editor.configuration.TokenScanner_JavaScript;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_Keyword;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_MultiLineRule;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_PatternRule;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_SingleLineRule;
 import org.eclipse.fx.code.editor.configuration.text.Util;
+import org.eclipse.fx.code.editor.configuration.text.fx.ConfigurationPresentationReconciler;
+import org.eclipse.fx.code.editor.configuration.text.fx.DynamicScannerRuleCalculator;
 import org.eclipse.fx.core.NamedValue;
 import org.eclipse.fx.text.rules.CharacterRule;
 import org.eclipse.fx.text.rules.CombinedWordRule;
@@ -40,16 +47,17 @@ import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
+
 @SuppressWarnings("restriction")
 public class ConfigurationRuleScanner extends RuleBasedScanner {
-	public ConfigurationRuleScanner(LanguageDef languageDef, Partition parition, Map<String,NamedValue<Object>> values) {
-		Token defaultToken = null;
+	public ConfigurationRuleScanner(ConfigurationPresentationReconciler reconciler, LanguageDef languageDef, Partition parition, Map<String,NamedValue<Object>> values, DynamicScannerRuleCalculator dynamicRuleCalculator) {
 		List<IRule> rules = new ArrayList<>(getRuleCount(parition));
 		Map<Token,TokenScanner_Keyword> keyWordList = new HashMap<>();
 		for( org.eclipse.fx.code.editor.configuration.Token st : parition.getTokenList() ) {
 			Token token = new Token(new TextAttribute(languageDef.getFileSuffix() + "." + st.getName()));
 			if( st.isDefaultToken() ) {
-				defaultToken = token;
 				setDefaultReturnToken(token);
 			}
 
@@ -85,6 +93,17 @@ public class ConfigurationRuleScanner extends RuleBasedScanner {
 					} else if( ru instanceof TokenScanner_PatternRule ) {
 						TokenScanner_PatternRule rr = (TokenScanner_PatternRule) ru;
 						rules.add(Util.wrap(rr.getCheck(),new RegexRule(token, Pattern.compile(rr.getStartPattern()), Math.max(1,rr.getStartLength()),Pattern.compile(rr.getContainmentPattern()))));
+					} else if( ru instanceof TokenScanner_JavaScript ) {
+						TokenScanner_JavaScript jr = (TokenScanner_JavaScript) ru;
+
+						try {
+							ScriptEngineManager engineManager = new ScriptEngineManager();
+							ScriptEngine engine = engineManager.getEngineByName("nashorn");
+							rules.add(Util.wrap(jr.getCheck(),(IRule) engine.eval(jr.getScript())));
+						} catch (ScriptException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 			}
@@ -107,7 +126,7 @@ public class ConfigurationRuleScanner extends RuleBasedScanner {
 
 		if( ! keyWordList.isEmpty() ) {
 			JavaLikeWordDetector wordDetector= new JavaLikeWordDetector();
-			CombinedWordRule combinedWordRule= new CombinedWordRule(wordDetector, defaultToken);
+			CombinedWordRule combinedWordRule= new CombinedWordRule(wordDetector, Token.UNDEFINED);
 			for( Entry<Token, TokenScanner_Keyword> kg : keyWordList.entrySet() ) {
 				CombinedWordRule.WordMatcher wordRule= new CombinedWordRule.WordMatcher();
 				for( String k : kg.getValue().getKeywordList() ) {
@@ -116,6 +135,21 @@ public class ConfigurationRuleScanner extends RuleBasedScanner {
 				combinedWordRule.addWordMatcher(wordRule);
 			}
 			rules.add(combinedWordRule);
+		}
+
+		List<IRule> staticRules = new ArrayList<IRule>(rules);
+
+		if( dynamicRuleCalculator != null ) {
+			List<IRule> dynRule = dynamicRuleCalculator.getRule(parition.getName());
+			if( dynRule instanceof ObservableList ) {
+				((ObservableList<?>) dynRule).addListener( (Observable o) -> {
+					List<IRule> newList = new ArrayList<>(staticRules);
+					newList.addAll(dynRule);
+					setRules(newList.toArray(new IRule[0]));
+					reconciler.getViewer().invalidateTextPresentation();
+				});
+			}
+			rules.addAll(dynRule);
 		}
 
 		setRules(rules.toArray(new IRule[0]));
