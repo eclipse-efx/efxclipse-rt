@@ -126,6 +126,8 @@ public class ConfigurationRuleScanner extends RuleBasedScanner {
 
 		if( ! keyWordList.isEmpty() ) {
 			JavaLikeWordDetector wordDetector= new JavaLikeWordDetector();
+			// Possible optimization: We could provide the default token if we can ensure that this is always
+			// the last rule used
 			CombinedWordRule combinedWordRule= new CombinedWordRule(wordDetector, Token.UNDEFINED);
 			for( Entry<Token, TokenScanner_Keyword> kg : keyWordList.entrySet() ) {
 				CombinedWordRule.WordMatcher wordRule= new CombinedWordRule.WordMatcher();
