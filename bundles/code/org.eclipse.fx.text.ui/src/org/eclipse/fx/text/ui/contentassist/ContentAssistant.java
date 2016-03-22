@@ -14,29 +14,31 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.text.ui.ITextViewer;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.jface.text.IDocument;
 
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
-import javafx.util.Duration;
 
+@SuppressWarnings("restriction")
 public class ContentAssistant implements IContentAssistant {
 	private final Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer;
 	private ITextViewer fViewer;
 	private ContentProposalPopup fProposalPopup;
 	private ContextInformationPopup fContextInfoPopup;
+	private final ThreadSynchronize threadSynchnronize;
 
 	private String autoTriggers = null;
 	public void setAutoTriggers(String autoTriggers) {
 		this.autoTriggers = autoTriggers;
 	}
 
-	public ContentAssistant(Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
+	public ContentAssistant(ThreadSynchronize threadSynchnronize, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
+		this.threadSynchnronize = threadSynchnronize;
 		this.proposalComputer = proposalComputer;
 	}
 
@@ -44,17 +46,17 @@ public class ContentAssistant implements IContentAssistant {
 	public void install(ITextViewer textViewer) {
 		if( this.fViewer == null ) {
 			this.fViewer = textViewer;
-			this.fProposalPopup = new ContentProposalPopup(this, textViewer, proposalComputer);
+			this.fProposalPopup = new ContentProposalPopup(this.threadSynchnronize, this, textViewer, this.proposalComputer);
 
 			textViewer.getTextWidget().addEventHandler(VerifyEvent.VERIFY, this::handleVerify);
 
-			fContextInfoPopup = new ContextInformationPopup(this, textViewer);
+			this.fContextInfoPopup = new ContextInformationPopup(this, textViewer);
 		}
 	}
 
 	private void handleVerify(VerifyEvent event) {
 
-		boolean autoTrigger = !event.getText().isEmpty() && autoTriggers != null && autoTriggers.contains(event.getText());
+		boolean autoTrigger = !event.getText().isEmpty() && this.autoTriggers != null && this.autoTriggers.contains(event.getText());
 		boolean defaultTrigger = event.isControlDown() && event.getCode() == KeyCode.SPACE;
 
 		if( !(autoTrigger || defaultTrigger) ) {
@@ -71,9 +73,7 @@ public class ContentAssistant implements IContentAssistant {
 
 			final int offset = this.fViewer.getTextWidget().getCaretOffset();
 
-			System.err.println("caret offset = " + offset);
-
-			List<ICompletionProposal> proposals = proposalComputer.apply(new ContentAssistContextData(offset, this.fViewer.getDocument()/*,""*/));
+			List<ICompletionProposal> proposals = this.proposalComputer.apply(new ContentAssistContextData(offset, this.fViewer.getDocument()/*,""*/));
 
 
 
@@ -86,33 +86,27 @@ public class ContentAssistant implements IContentAssistant {
 
 				//this.fViewer.getTextWidget().setSelection(proposals.get(0).getSelection(this.fViewer.getDocument()));
 			} else if( ! proposals.isEmpty() ) {
-	//			System.err.println(this.viewer.getTextWidget().getCaretLocation());
-				System.err.println();
-
 				Point2D p = this.fViewer.getTextWidget().getLocationAtOffset(this.fViewer.getTextWidget().getCaretOffset(), LineLocation.BELOW);
-				System.err.println(p);
 
 				Point2D coords = this.fViewer.getTextWidget().localToScreen(p);
-				System.err.println(coords);
 
 				Optional<ICompletionProposal> chosenProposal = this.fProposalPopup.displayProposals(proposals, this.fViewer.getTextWidget().getCaretOffset(), coords);
-				System.err.println("Chosen: " + chosenProposal.map(c->c.getLabel()));
 
 				chosenProposal.ifPresent(proposal->{
 					IDocument document = this.fViewer.getDocument();
 					// apply the proposal
 					proposal.apply(document);
-					this.setAutoTriggers(autoTriggers);
+					this.setAutoTriggers(this.autoTriggers);
 					this.fViewer.getTextWidget().setSelection(proposal.getSelection(document));
 
 					if (proposal.getContextInformation() != null) {
-						showContextInformation(proposal.getContextInformation(), fViewer.getTextWidget().getCaretOffset());
+						showContextInformation(proposal.getContextInformation(), this.fViewer.getTextWidget().getCaretOffset());
 					}
 
 				});
 			}
 
-			fViewer.getTextWidget().layout();
+			this.fViewer.getTextWidget().layout();
 		});
 
 	}

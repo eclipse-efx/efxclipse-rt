@@ -13,16 +13,15 @@ package org.eclipse.fx.text.ui.contentassist;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.text.ui.ITextViewer;
 import org.eclipse.fx.ui.controls.list.SimpleListCell;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
-import org.eclipse.jface.text.IDocument;
 
 import com.sun.javafx.tk.Toolkit;
 
@@ -39,8 +38,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.PopupWindow;
-import javafx.stage.Stage;
 
+@SuppressWarnings("restriction")
 public class ContentProposalPopup implements IContentAssistListener {
 	ITextViewer viewer;
 	private PopupWindow stage;
@@ -55,8 +54,10 @@ public class ContentProposalPopup implements IContentAssistListener {
 
 
 	private ICompletionProposal chosenProposal = null;
+	private final ThreadSynchronize threadSync;
 
-	public ContentProposalPopup(ContentAssistant assistant, ITextViewer viewer, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
+	public ContentProposalPopup(ThreadSynchronize threadSync, ContentAssistant assistant, ITextViewer viewer, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
+		this.threadSync = threadSync;
 		this.viewer = viewer;
 		this.proposalComputer = proposalComputer;
 		this.fContentAssistant = assistant;
@@ -64,7 +65,6 @@ public class ContentProposalPopup implements IContentAssistListener {
 	}
 
 	public Optional<ICompletionProposal> displayProposals(List<ICompletionProposal> proposalList, int offset, Point2D position) {
-
 		setup();
 		this.prefix = ""; //$NON-NLS-1$
 		this.offset = offset;
@@ -82,11 +82,13 @@ public class ContentProposalPopup implements IContentAssistListener {
 		this.stage.show(this.viewer.getTextWidget().getScene().getWindow());
 
 
-		chosenProposal = null;
+		this.chosenProposal = null;
+		//FIXME We need to get rid if this calls!!!! by using UISynchronize#waitUntil()
+		// but we can get a dep on UISynchronize
 		Toolkit.getToolkit().checkFxUserThread();
 		Toolkit.getToolkit().enterNestedEventLoop(this);
 
-		return Optional.ofNullable(chosenProposal);
+		return Optional.ofNullable(this.chosenProposal);
 	}
 
 	public void close() {
@@ -226,6 +228,7 @@ public class ContentProposalPopup implements IContentAssistListener {
 			this.stage.getScene().setRoot(p);
 			this.stage.focusedProperty().addListener((o) -> {
 				if( this.stage != null && ! this.stage.isFocused() ) {
+					System.err.println("HIDE THAT GUY");
 					Platform.runLater(this.stage::hide);
 				}
 			});

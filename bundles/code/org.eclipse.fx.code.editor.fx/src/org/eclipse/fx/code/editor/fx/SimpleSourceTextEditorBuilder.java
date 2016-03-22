@@ -23,6 +23,7 @@ import org.eclipse.fx.code.editor.services.HoverInformationProvider;
 import org.eclipse.fx.code.editor.services.NavigationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.fx.code.editor.services.SearchProvider;
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.text.rules.CombinedWordRule;
 import org.eclipse.fx.text.rules.JavaLikeWordDetector;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
@@ -138,11 +139,11 @@ public class SimpleSourceTextEditorBuilder {
 		return this;
 	}
 
-	public TextEditor build(BorderPane pane, IDocument document, Input<?> input) {
-		return build(pane, document, input, null);
+	public TextEditor build(ThreadSynchronize threadSynchronize, BorderPane pane, IDocument document, Input<?> input) {
+		return build(threadSynchronize, pane, document, input, null);
 	}
 
-	public TextEditor build(BorderPane pane, IDocument document, Input<?> input, IAnnotationModel annotationModel) {
+	public TextEditor build(ThreadSynchronize threadSynchronize, BorderPane pane, IDocument document, Input<?> input, IAnnotationModel annotationModel) {
 		TextEditor editor = new TextEditor();
 		editor.setInput(input);
 		editor.setDocument(document);
@@ -170,7 +171,7 @@ public class SimpleSourceTextEditorBuilder {
 		}
 
 		editor.setPartitioner(new FastPartitioner(new PartitionerImpl(this), contentTypes.toArray(new String[0])));
-		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(input, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter, searchProvider, navigationProvider, editorOpener));
+		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(threadSynchronize, input, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter, searchProvider, navigationProvider, editorOpener));
 
 		return editor;
 	}
@@ -294,19 +295,19 @@ public class SimpleSourceTextEditorBuilder {
 		}
 	}
 
-	public static void main(String[] args) {
-		BorderPane p = new BorderPane();
-		LocalSourceFileInput in = new LocalSourceFileInput(Paths.get("/tmp/Sample.java"),null);
-
-		SimpleSourceTextEditorBuilder.create("java")
-			.addMultiLineComment("/*", "*/")
-			.addMultiLineDocComment("/**", "*/")
-			.addSingleLineCommentStart("//")
-			.addStringStartEnd('"')
-			.addStringStartEnd('\'')
-			.setStringEscapeChar('\\')
-			.addKeyWord("abstract")
-			.addKeyWord("assert")
-			.build(p, new Document(in.getData()), in);
-	}
+//	public static void main(String[] args) {
+//		BorderPane p = new BorderPane();
+//		LocalSourceFileInput in = new LocalSourceFileInput(Paths.get("/tmp/Sample.java"),null);
+//
+//		SimpleSourceTextEditorBuilder.create("java")
+//			.addMultiLineComment("/*", "*/")
+//			.addMultiLineDocComment("/**", "*/")
+//			.addSingleLineCommentStart("//")
+//			.addStringStartEnd('"')
+//			.addStringStartEnd('\'')
+//			.setStringEscapeChar('\\')
+//			.addKeyWord("abstract")
+//			.addKeyWord("assert")
+//			.build(p, new Document(in.getData()), in);
+//	}
 }

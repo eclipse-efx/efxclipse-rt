@@ -1,6 +1,5 @@
 package org.eclipse.fx.code.editor.fx.services.internal;
 
-import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +24,7 @@ import org.eclipse.fx.code.editor.services.NavigationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
 import org.eclipse.fx.code.editor.services.ProposalComputer.ProposalContext;
 import org.eclipse.fx.code.editor.services.SearchProvider;
-import org.eclipse.fx.code.editor.services.URIProvider;
+import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.fx.core.preferences.Preference;
 import org.eclipse.fx.text.hover.HoverInfo;
@@ -44,10 +43,9 @@ import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.source.AnnotationPresenter;
 import org.eclipse.fx.text.ui.source.ISourceViewer;
 import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.CustomQuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLinkable;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.SimpleQuickLink;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.CustomQuickLink;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
@@ -79,8 +77,11 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	private ContentAssistant contentAssistant;
 	private SetProperty<Feature> featureSet = new SimpleSetProperty<Feature>(this, "featureSet", FXCollections.observableSet());
 
+	private final ThreadSynchronize threadSynchronize;
+
 	@Inject
 	public DefaultSourceViewerConfiguration(
+			ThreadSynchronize threadSynchronize,
 			Input<?> input,
 			PresentationReconciler reconciler,
 			@Optional ProposalComputer proposalComputer,
@@ -92,6 +93,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			@Optional NavigationProvider navigationProvider,
 			@Optional EditorOpener editorOpener
 			) {
+		this.threadSynchronize = threadSynchronize;
 		this.input = input;
 		this.hoverInformationProvider = hoverInformationProvider;
 		this.reconciler = reconciler;
@@ -204,7 +206,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	public IContentAssistant getContentAssist() {
 		if( proposalComputer != null ) {
 			if( contentAssistant == null ) {
-				contentAssistant = new ContentAssistant(this::computeProposals);
+				contentAssistant = new ContentAssistant(this.threadSynchronize, this::computeProposals);
 			}
 
 			return contentAssistant;
