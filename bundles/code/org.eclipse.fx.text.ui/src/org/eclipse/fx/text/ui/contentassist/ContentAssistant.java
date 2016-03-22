@@ -33,13 +33,19 @@ public class ContentAssistant implements IContentAssistant {
 	private final ThreadSynchronize threadSynchnronize;
 
 	private String autoTriggers = null;
-	public void setAutoTriggers(String autoTriggers) {
-		this.autoTriggers = autoTriggers;
-	}
+	private boolean directlyApplySingleMatch;
 
 	public ContentAssistant(ThreadSynchronize threadSynchnronize, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.threadSynchnronize = threadSynchnronize;
 		this.proposalComputer = proposalComputer;
+	}
+
+	public void setAutoTriggers(String autoTriggers) {
+		this.autoTriggers = autoTriggers;
+	}
+
+	public void setDirectlyApplySingleMatch(boolean directlyApplySingleMatch) {
+		this.directlyApplySingleMatch = directlyApplySingleMatch;
 	}
 
 	@Override
@@ -77,7 +83,7 @@ public class ContentAssistant implements IContentAssistant {
 
 
 
-			if( proposals.size() == 1) {
+			if( proposals.size() == 1 && this.directlyApplySingleMatch) {
 				ICompletionProposal completionProposal = proposals.get(0);
 
 				completionProposal.apply(this.fViewer.getDocument());

@@ -228,7 +228,6 @@ public class ContentProposalPopup implements IContentAssistListener {
 			this.stage.getScene().setRoot(p);
 			this.stage.focusedProperty().addListener((o) -> {
 				if( this.stage != null && ! this.stage.isFocused() ) {
-					System.err.println("HIDE THAT GUY");
 					Platform.runLater(this.stage::hide);
 				}
 			});
