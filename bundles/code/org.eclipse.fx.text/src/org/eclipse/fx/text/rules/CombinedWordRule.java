@@ -40,6 +40,7 @@ import org.eclipse.jface.text.rules.Token;
  * @see IWordDetector
  * @since 3.0
  */
+@SuppressWarnings("restriction")
 public class CombinedWordRule implements IRule {
 
 	/**

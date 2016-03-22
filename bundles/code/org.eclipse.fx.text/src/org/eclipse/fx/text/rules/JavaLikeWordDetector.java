@@ -16,6 +16,7 @@ import org.eclipse.jface.text.rules.IWordDetector;
 /**
  * A Java aware word detector.
  */
+@SuppressWarnings("restriction")
 public class JavaLikeWordDetector implements IWordDetector {
 
 	/*
