@@ -30,6 +30,7 @@ import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
@@ -55,6 +56,7 @@ public class ContentProposalPopup implements IContentAssistListener {
 
 	private ICompletionProposal chosenProposal = null;
 	private final ThreadSynchronize threadSync;
+	private final EventHandler<MouseEvent> mouseEvent;
 
 	public ContentProposalPopup(ThreadSynchronize threadSync, ContentAssistant assistant, ITextViewer viewer, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.threadSync = threadSync;
@@ -62,6 +64,7 @@ public class ContentProposalPopup implements IContentAssistListener {
 		this.proposalComputer = proposalComputer;
 		this.fContentAssistant = assistant;
 		this.selectionChange = this::onSelectionChange;
+		this.mouseEvent = this::onMouseEvent;
 	}
 
 	public Optional<ICompletionProposal> displayProposals(List<ICompletionProposal> proposalList, int offset, Point2D position) {
@@ -98,10 +101,16 @@ public class ContentProposalPopup implements IContentAssistListener {
 	private void subscribe(Event e) {
 		this.viewer.getTextWidget().getContent().addTextChangeListener(this.textChangeListener);
 		this.viewer.getTextWidget().caretOffsetProperty().addListener(this.selectionChange);
+		this.viewer.getTextWidget().getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, this.mouseEvent);
 	}
 	private void unsubscribe(Event e) {
 		this.viewer.getTextWidget().getContent().removeTextChangeListener(this.textChangeListener);
 		this.viewer.getTextWidget().caretOffsetProperty().removeListener(this.selectionChange);
+		this.viewer.getTextWidget().getScene().removeEventFilter(MouseEvent.MOUSE_PRESSED, this.mouseEvent);
+	}
+
+	private void onMouseEvent(MouseEvent e) {
+		close();
 	}
 
 	// TODO calling updateProposals is way too slow
