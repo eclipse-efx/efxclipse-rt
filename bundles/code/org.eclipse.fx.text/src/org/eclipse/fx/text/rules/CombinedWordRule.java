@@ -334,6 +334,15 @@ public class CombinedWordRule implements IRule {
 	 * @see IRule#evaluate(ICharacterScanner)
 	 */
 	public IToken evaluate(ICharacterScanner scanner) {
+		// first check if the previous char is a none matching char
+		if( scanner.getColumn() > 0 ) {
+			scanner.unread();
+			int previousChar = scanner.read();
+			if( fDetector.isWordPart((char)previousChar) ) {
+				return Token.UNDEFINED;
+			}
+		}
+
 		int c= scanner.read();
 		if (fDetector.isWordStart((char) c)) {
 			if (fColumn == UNDEFINED || (fColumn == scanner.getColumn() - 1)) {
