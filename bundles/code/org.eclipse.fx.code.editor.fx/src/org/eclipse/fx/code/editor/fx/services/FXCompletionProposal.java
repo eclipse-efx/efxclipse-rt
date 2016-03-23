@@ -1,5 +1,6 @@
 package org.eclipse.fx.code.editor.fx.services;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.eclipse.fx.code.editor.services.CompletionProposal;
@@ -11,33 +12,56 @@ import org.eclipse.jface.text.IDocument;
 import javafx.scene.Node;
 
 @SuppressWarnings("restriction")
-public class FXCompletionProposal implements ICompletionProposal {
-	private final CompletionProposal proposal;
-	private final Supplier<Node> graphicSupplier;
-	private final CharSequence label;
-	private final String fHoverInfo;
+public class FXCompletionProposal<T extends CompletionProposal> implements ICompletionProposal {
+	private final T proposal;
+
+	private Node graphicNode;
+	private Function<T, Node> graphicComputer;
+
+	private final Function<T, CharSequence> labelComputer;
+	private CharSequence label;
+
+	private String fHoverInfo;
+	private final Function<T, String> hoverInfoComputer;
 
 	private final IContextInformation fContextInformation;
 
-	public FXCompletionProposal(CompletionProposal proposal, Supplier<Node> graphicSupplier, IContextInformation contextInformation, String hoverInfo) {
+	public FXCompletionProposal(T proposal, Supplier<Node> graphicSupplier, IContextInformation contextInformation, String hoverInfo) {
 		this(proposal, proposal.getLabel(), graphicSupplier, contextInformation, hoverInfo);
 	}
 
-	public FXCompletionProposal(CompletionProposal proposal, CharSequence label, Supplier<Node> graphicSupplier, IContextInformation contextInformation, String hoverInfo) {
+	public FXCompletionProposal(T proposal, CharSequence label, Supplier<Node> graphicSupplier, IContextInformation contextInformation, String hoverInfo) {
+		this(proposal, p -> label, p -> graphicSupplier.get(), contextInformation, p -> hoverInfo);
+	}
+
+	public FXCompletionProposal(T proposal, Function<T, CharSequence> labelComputer, Function<T, Node> graphicComputer, IContextInformation contextInformation, Function<T,String> hoverInfoComputer) {
 		this.proposal = proposal;
-		this.label = label;
-		this.graphicSupplier = graphicSupplier;
+
+		this.label = null;
+		this.labelComputer = labelComputer;
+
+		this.graphicNode = null;
+		this.graphicComputer = graphicComputer;
+
 		this.fContextInformation = contextInformation;
-		this.fHoverInfo = hoverInfo;
+
+		this.fHoverInfo = null;
+		this.hoverInfoComputer = hoverInfoComputer;
 	}
 
 	@Override
 	public Node getGraphic() {
-		return graphicSupplier.get();
+		if( graphicNode == null ) {
+			graphicNode = graphicComputer.apply(this.proposal);
+		}
+		return graphicNode;
 	}
 
 	@Override
 	public CharSequence getLabel() {
+		if( label == null ) {
+			label = labelComputer.apply(this.proposal);
+		}
 		return label;
 	}
 
@@ -59,6 +83,9 @@ public class FXCompletionProposal implements ICompletionProposal {
 
 	@Override
 	public String getHoverInfo() {
+		if( this.fHoverInfo == null ) {
+			this.fHoverInfo = hoverInfoComputer.apply(this.proposal);
+		}
 		return this.fHoverInfo;
 	}
 }
