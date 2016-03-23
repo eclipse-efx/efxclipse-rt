@@ -11,6 +11,7 @@ import org.eclipse.fx.code.editor.InputContext;
 import org.eclipse.fx.code.editor.configuration.LanguageDef;
 import org.eclipse.fx.code.editor.configuration.Partition;
 import org.eclipse.fx.code.editor.configuration.text.ConfigurationConditionDataProvider;
+import org.eclipse.fx.code.editor.configuration.text.DynamicScannerRuleCalculator;
 import org.eclipse.fx.code.editor.configuration.text.Util;
 import org.eclipse.fx.code.editor.configuration.text.fx.internal.ConfigurationRuleScanner;
 import org.eclipse.fx.core.NamedValue;

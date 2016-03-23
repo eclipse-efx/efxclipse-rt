@@ -1,4 +1,4 @@
-package org.eclipse.fx.code.editor.configuration.text.fx;
+package org.eclipse.fx.code.editor.configuration.text;
 
 import java.util.List;
 
