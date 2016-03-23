@@ -167,14 +167,9 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 
 			return (offset) -> {
 				try {
-					Future<List<NavigationRegion>> navigationRegions = navigationProvider.getNavigationRegions();
-					List<NavigationRegion> list = navigationRegions.get(400, TimeUnit.MILLISECONDS);
-
-					for (NavigationRegion region : list) {
-						if (region.getRegion().getOffset() <= offset && region.getRegion().getOffset() + region.getRegion().getLength() > offset) {
-							return java.util.Optional.of(convertNavigationRegion(region));
-						}
-					}
+					return navigationProvider.getNavigationRegion(offset)
+							.get(400, TimeUnit.MILLISECONDS)
+							.map(this::convertNavigationRegion);
 				}
 				catch (InterruptedException | TimeoutException | ExecutionException e) {
 					e.printStackTrace();
