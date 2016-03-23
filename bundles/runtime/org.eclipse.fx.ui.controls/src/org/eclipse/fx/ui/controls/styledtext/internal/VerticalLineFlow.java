@@ -131,8 +131,14 @@ public class VerticalLineFlow<M, N>  extends NodeCachePane {
 	}
 
 	private void prepareNode(int lineIndex) {
-		Node node = getNode(lineIndex);
-		this.nodePopulator.accept(node, this.converter.apply(Integer.valueOf(lineIndex)));
+		Set<N> blub = this.converter.apply(Integer.valueOf(lineIndex));
+		if (blub.isEmpty()) {
+			releaseNode(lineIndex);
+		}
+		else {
+			Node node = getNode(lineIndex);
+			this.nodePopulator.accept(node, blub);
+		}
 	}
 
 	public void setLineOffset(int lineIndex, double yOffset) {

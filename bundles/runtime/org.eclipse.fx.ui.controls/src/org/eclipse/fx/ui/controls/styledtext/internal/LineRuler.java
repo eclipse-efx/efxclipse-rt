@@ -24,6 +24,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.text.Font;
 
@@ -99,6 +100,17 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 
 			e.getValue().resizeRelocate(x, y + dy, width, height);
 		});
+	}
+
+
+	public int findLineIndex(Point2D localPoint) {
+		double y = localPoint.getY();
+		double yOffset = this.yOffsetProperty().get();
+		double lineHeight = this.lineHeightProperty().get();
+
+		double yAbsolute = yOffset + y;
+
+		return (int) Math.floor(yAbsolute / lineHeight);
 	}
 
 

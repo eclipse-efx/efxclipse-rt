@@ -57,11 +57,13 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.SetChangeListener;
 import javafx.collections.transformation.SortedList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -269,6 +271,8 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.sortedLineRulerPresenters = new SortedList<>(lineRulerPresenters, (a, b) -> a.getOrder() - b.getOrder());
 
 		Function<LineRulerAnnotationPresenter, LineRuler> map = (ap) -> {
+			// initialize LineRuler
+
 			Function<Integer, Set<Annotation>> converter = (index) -> this.lineHelper.getAnnotations(index.intValue()).stream().filter(ap::isApplicable).collect(Collectors.toSet());
 
 			Predicate<Set<Annotation>> needsPresentation = ap::isVisible;
@@ -293,6 +297,39 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			flow.prefWidthProperty().addListener((x, o, n) -> {
 				this.rootContainer.requestLayout();
 			});
+
+			org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter.LineRuler lr = new LineRulerAnnotationPresenter.LineRuler() {
+				@Override
+				public Subscription subscribeMouseReleased(BiConsumer<Integer, MouseEvent> callback) {
+					EventHandler<MouseEvent> handler = e-> {
+						callback.accept(flow.findLineIndex(new Point2D(e.getX(), e.getY())), e);
+					};
+					flow.addEventHandler(MouseEvent.MOUSE_RELEASED, handler);
+					return () -> flow.removeEventHandler(MouseEvent.MOUSE_RELEASED, handler);
+				}
+
+				@Override
+				public Subscription subscribeMousePressed(BiConsumer<Integer, MouseEvent> callback) {
+					EventHandler<MouseEvent> handler = e-> {
+						callback.accept(flow.findLineIndex(new Point2D(e.getX(), e.getY())), e);
+					};
+					flow.addEventHandler(MouseEvent.MOUSE_PRESSED, handler);
+					return () -> flow.removeEventHandler(MouseEvent.MOUSE_PRESSED, handler);
+				}
+
+				@Override
+				public Subscription subscribeMouseClicked(BiConsumer<Integer, MouseEvent> callback) {
+					EventHandler<MouseEvent> handler = e-> {
+						callback.accept(flow.findLineIndex(new Point2D(e.getX(), e.getY())), e);
+					};
+					flow.addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+					return () -> flow.removeEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+				}
+			};
+
+			ap.initialize(lr);
+
+
 			return flow;
 		};
 
