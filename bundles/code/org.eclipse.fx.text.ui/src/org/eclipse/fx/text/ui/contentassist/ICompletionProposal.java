@@ -10,18 +10,30 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui.contentassist;
 
-import javafx.scene.Node;
-
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.jface.text.IDocument;
 
+import javafx.scene.Node;
+
+/**
+ * Graphical representation of the proposal
+ */
+@SuppressWarnings("restriction")
 public interface ICompletionProposal {
+	/**
+	 * @return the label to display
+	 */
 	public CharSequence getLabel();
 
-	public String getHoverInfo();
+	/**
+	 * @return the hover information to show
+	 */
+	public CharSequence getHoverInfo();
 
+	/**
+	 * @return the graphic information to show
+	 */
 	public Node getGraphic();
-//	public List<String> getStyles();
 
 	/**
 	 * Inserts the proposed completion into the given document.
