@@ -21,8 +21,8 @@ public class FXCompletionProposal<T extends CompletionProposal> implements IComp
 	private final Function<T, CharSequence> labelComputer;
 	private CharSequence label;
 
-	private String fHoverInfo;
-	private final Function<T, String> hoverInfoComputer;
+	private CharSequence fHoverInfo;
+	private final Function<T, CharSequence> hoverInfoComputer;
 
 	private final IContextInformation fContextInformation;
 
@@ -34,7 +34,7 @@ public class FXCompletionProposal<T extends CompletionProposal> implements IComp
 		this(proposal, p -> label, p -> graphicSupplier.get(), contextInformation, p -> hoverInfo);
 	}
 
-	public FXCompletionProposal(T proposal, Function<T, CharSequence> labelComputer, Function<T, Node> graphicComputer, IContextInformation contextInformation, Function<T,String> hoverInfoComputer) {
+	public FXCompletionProposal(T proposal, Function<T, CharSequence> labelComputer, Function<T, Node> graphicComputer, IContextInformation contextInformation, Function<T,CharSequence> hoverInfoComputer) {
 		this.proposal = proposal;
 
 		this.label = null;
@@ -82,7 +82,7 @@ public class FXCompletionProposal<T extends CompletionProposal> implements IComp
 	}
 
 	@Override
-	public String getHoverInfo() {
+	public CharSequence getHoverInfo() {
 		if( this.fHoverInfo == null ) {
 			this.fHoverInfo = hoverInfoComputer.apply(this.proposal);
 		}
