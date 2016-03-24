@@ -11,8 +11,10 @@
 package org.eclipse.fx.core.text;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -24,9 +26,13 @@ import org.eclipse.fx.core.Subscription;
  */
 public class BasicTextRegistry implements TextRegistry {
 	final Map<Consumer<String>, Supplier<String>> bindings = new HashMap<>();
-	
+	Set<Consumer<String>> trackedConsumers;
+
 	@Override
 	public Subscription register(Consumer<String> consumer, Supplier<String> supplier) {
+		if (this.trackedConsumers != null) {
+			this.trackedConsumers.add(consumer);
+		}
 		this.bindings.put(consumer, supplier);
 		consumer.accept(supplier.get());
 		return new Subscription() {
@@ -47,4 +53,24 @@ public class BasicTextRegistry implements TextRegistry {
 		}
 	}
 
+	/**
+	 * Run and collect all produced bindings
+	 *
+	 * @param r
+	 *            the code to track creations
+	 * @return the subscription
+	 * @since 2.4.0
+	 */
+	public Subscription runAndCollect(Runnable r) {
+		this.trackedConsumers = new HashSet<>();
+		try {
+			r.run();
+			Set<Consumer<String>> trackedConsumers = this.trackedConsumers;
+			return () -> {
+				trackedConsumers.forEach(this.bindings::remove);
+			};
+		} finally {
+			this.trackedConsumers = null;
+		}
+	}
 }
