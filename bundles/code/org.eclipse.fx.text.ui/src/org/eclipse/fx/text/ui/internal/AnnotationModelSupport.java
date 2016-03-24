@@ -11,6 +11,9 @@ import java.util.function.Consumer;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
+import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
+import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotation;
 import org.eclipse.jface.text.Position;
@@ -210,6 +213,32 @@ public class AnnotationModelSupport {
 //			System.err.println("ON TAB ADVANCE CHANGE!");
 //			RangeSet<Integer> rs = TreeRangeSet.<Integer>create().complement();
 //			triggerChange(rs);
+		});
+
+		TextChangeListener textChangeListener = new TextChangeListener() {
+			@Override
+			public void textSet(TextChangedEvent event) {
+				onAnnotationModelChange();
+			}
+
+			@Override
+			public void textChanging(TextChangingEvent event) {
+
+			}
+
+			@Override
+			public void textChanged(TextChangedEvent event) {
+				onAnnotationModelChange();
+			}
+		};
+
+		control.contentProperty().addListener((x,o,n)-> {
+			if (o != null) {
+				o.removeTextChangeListener(textChangeListener);
+			}
+			if (n != null) {
+				n.addTextChangeListener(textChangeListener);
+			}
 		});
 	}
 
