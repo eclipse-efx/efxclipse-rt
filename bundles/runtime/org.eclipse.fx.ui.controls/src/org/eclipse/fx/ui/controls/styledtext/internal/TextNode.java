@@ -255,13 +255,6 @@ public class TextNode extends HBox {
 			((Text)n).fillProperty().unbind();
 		});
 
-//		setStyle("-fx-border-width: 0.1px; -fx-border-color: blue");
-
-
-		decorationStrategy.addListener((x, o, n)->{
-			System.err.println("deco start changed: " + n);
-		});
-
 		this.decorationStrategy.addListener(this::handleDecorationChange);
 	}
 

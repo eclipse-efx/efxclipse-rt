@@ -29,6 +29,10 @@
 	-fx-cursor: text;
 }
 
+.styled-text-area:quick-link-active .list-view {
+	-fx-cursor: hand;
+}
+
 .styled-text-area .current-line {
 	-fx-background-color: #e8f2fe
 }
@@ -39,10 +43,6 @@
 
 .styled-text-area .source-segment-container {
 
-}
-
-.styled-text-area .sheet {
-	-fx-cursor: text;
 }
 
 .styled-text-area .text-caret {
