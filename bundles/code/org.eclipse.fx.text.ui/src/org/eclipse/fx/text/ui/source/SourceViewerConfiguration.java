@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.navigation.NavigationRegion;
@@ -26,6 +27,7 @@ import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.reconciler.IReconciler;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLinkable;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.source.Annotation;
@@ -43,6 +45,7 @@ public abstract class SourceViewerConfiguration {
 		reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
 		return reconciler;
 	}
+
 
 	public abstract String getStyleclassName();
 
@@ -90,12 +93,11 @@ public abstract class SourceViewerConfiguration {
 		return new String[] { IDocument.DEFAULT_CONTENT_TYPE };
 	}
 
-	public String getContentAssistAutoTriggers() {
-		return ".";
-	}
-
 	public Function<Integer, Optional<QuickLinkable>> getQuicklinkCallback() {
 		return (offset) -> Optional.empty();
 	}
 
+	public TriggerActionMapping getOverrideMapping() {
+		return null;
+	}
 }

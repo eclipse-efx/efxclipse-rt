@@ -10,7 +10,12 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui;
 
+import java.util.function.BiFunction;
+
+import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping.Context;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 
@@ -33,4 +38,8 @@ public interface ITextViewer {
 
 	void setUndoManager(IUndoManager undoManager);
 	IUndoManager getUndoManager();
+
+
+	Subscription subscribeAction(BiFunction<TextEditAction, Context, Boolean> handler);
+
 }

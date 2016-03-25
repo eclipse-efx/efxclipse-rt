@@ -32,5 +32,6 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.Docu
  OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.HoverInformationProviderTypeProviderCF.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.SearchProviderTypeProviderCF.xml,
  OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.InputContextContextFunction.xml,
- OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.NavigationProviderTypeProviderCF2.xml
+ OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.BehaviorContributorContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.code.editor.e4.internal.NavigationProviderTypeProviderCF.xml
 Bundle-ActivationPolicy: lazy

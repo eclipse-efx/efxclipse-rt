@@ -129,6 +129,21 @@ public class StyledTextArea extends Control {
 	@NonNull
 	private final BooleanProperty insertSpacesForTab = new SimpleBooleanProperty(this, "insertSpacesForTab", false); //$NON-NLS-1$
 
+	@NonNull
+	private final ObjectProperty<TriggerActionMapping> overrideActionMappingProperty = new SimpleObjectProperty<>(this, "overrideActionMapping"); //$NON-NLS-1$
+
+	public void setOverrideActionMapping(TriggerActionMapping mapping) {
+		this.overrideActionMappingProperty.set(mapping);
+	}
+
+	public TriggerActionMapping getOverrideActionMapping() {
+		return this.overrideActionMappingProperty.get();
+	}
+
+	public ObjectProperty<TriggerActionMapping> overrideActionMappingProperty() {
+		return this.overrideActionMappingProperty;
+	}
+
 	/**
 	 * Separator for lines
 	 */

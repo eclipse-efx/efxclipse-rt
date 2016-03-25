@@ -14,7 +14,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 @SuppressWarnings("restriction")
 @Component(service=IContextFunction.class, property={"service.context.key=org.eclipse.fx.code.editor.services.NavigationProvider"})
-public class NavigationProviderTypeProviderCF2 extends InputBasedContextFunction<NavigationProvider, NavigationProviderTypeProvider> {
+public class NavigationProviderTypeProviderCF extends InputBasedContextFunction<NavigationProvider, NavigationProviderTypeProvider> {
 
 	@Override
 	@Reference(cardinality=ReferenceCardinality.MULTIPLE, policy=ReferencePolicy.DYNAMIC, policyOption=ReferencePolicyOption.GREEDY)

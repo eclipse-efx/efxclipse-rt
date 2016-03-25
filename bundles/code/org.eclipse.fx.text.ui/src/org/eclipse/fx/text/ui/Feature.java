@@ -4,7 +4,6 @@ import java.util.function.Supplier;
 
 import org.eclipse.fx.text.ui.internal.InvisibleCharSupport;
 import org.eclipse.fx.text.ui.internal.LineNumberSupport;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 
 public enum Feature {
 	SHOW_LINE_NUMBERS(()->new LineNumberSupport()),

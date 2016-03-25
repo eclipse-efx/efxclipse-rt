@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -17,7 +17,11 @@ import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.SourceSelection;
 import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
+import org.eclipse.fx.code.editor.services.BehaviorContributor;
+import org.eclipse.fx.code.editor.services.BehaviorContributor.MappingRegistry;
 import org.eclipse.fx.code.editor.services.CompletionProposal;
+import org.eclipse.fx.code.editor.services.EditingContext;
+import org.eclipse.fx.code.editor.services.EditingContext.IEditor;
 import org.eclipse.fx.code.editor.services.EditorOpener;
 import org.eclipse.fx.code.editor.services.HoverInformationProvider;
 import org.eclipse.fx.code.editor.services.NavigationProvider;
@@ -27,6 +31,7 @@ import org.eclipse.fx.code.editor.services.SearchProvider;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.fx.core.preferences.Preference;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.navigation.NavigationRegion;
 import org.eclipse.fx.text.navigation.NavigationTarget;
@@ -47,8 +52,11 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.CustomQuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLinkable;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping.Context;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 
@@ -71,8 +79,11 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	private final SearchProvider searchProvider;
 	private final NavigationProvider navigationProvider;
 	private final EditorOpener editorOpener;
+	private final BehaviorContributor behaviorContributor;
 
 	@Inject private EventBus eventBus;
+
+
 
 	private ContentAssistant contentAssistant;
 	private SetProperty<Feature> featureSet = new SimpleSetProperty<Feature>(this, "featureSet", FXCollections.observableSet());
@@ -91,7 +102,8 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			@Optional CompletionProposalPresenter proposalPresenter,
 			@Optional SearchProvider searchProvider,
 			@Optional NavigationProvider navigationProvider,
-			@Optional EditorOpener editorOpener
+			@Optional EditorOpener editorOpener,
+			@Optional BehaviorContributor behaviorContributor
 			) {
 		this.threadSynchronize = threadSynchronize;
 		this.input = input;
@@ -105,6 +117,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		this.searchProvider = searchProvider;
 		this.navigationProvider = navigationProvider;
 		this.editorOpener = editorOpener;
+		this.behaviorContributor = behaviorContributor;
 	}
 
 	@Inject
@@ -334,8 +347,66 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		}
 	}
 
-	@Override
-	public String getContentAssistAutoTriggers() {
-		return proposalPresenter.getAutoTriggers();
+	@Inject private IDocument document;
+	private EditingContext getEditingContext(Context context) {
+		return new EditingContext(input, document, context.control.getCaretOffset(), new IEditor() {
+			@Override
+			public int getCaret() {
+				return context.control.getCaretOffset();
+			}
+
+			@Override
+			public void setCaret(int loc) {
+				context.control.setCaretOffset(loc);
+			}
+
+			@Override
+			public void setCaret(int loc, boolean keepSelection) {
+				context.control.impl_setCaretOffset(loc, keepSelection);
+			}
+
+			@Override
+			public IRegion getSelection() {
+				return new Region(context.control.getSelection().offset, context.control.getSelection().length);
+			}
+
+			@Override
+			public void setSelection(IRegion selection) {
+				context.control.setSelection(new TextSelection(selection.getOffset(), selection.getLength()));
+			}
+
+		});
 	}
+
+	@Override
+	public TriggerActionMapping getOverrideMapping() {
+		if (behaviorContributor != null) {
+			TriggerActionMapping x = new TriggerActionMapping();
+			behaviorContributor.initializeMapping(new MappingRegistry() {
+				@Override
+				public void map(String combo, TextEditAction action) {
+					x.map(combo, action);
+				}
+
+				@Override
+				public void map(char typedChar, TextEditAction action) {
+					x.map(typedChar, action);
+				}
+
+				@Override
+				public void mapConditional(String conditionId, Supplier<Boolean> condition, String combo, TextEditAction action) {
+					x.mapConditional(conditionId, condition, combo, action);
+				}
+
+				@Override
+				public void mapConditional(String conditionId, Supplier<Boolean> condition, char typedChar, TextEditAction action) {
+					x.mapConditional(conditionId, condition, typedChar, action);
+				}
+			});
+			x.subscribe((e, c)->behaviorContributor.handle(e, getEditingContext(c)));
+			return x;
+		}
+		return super.getOverrideMapping();
+	}
+
 }

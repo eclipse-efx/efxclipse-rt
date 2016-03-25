@@ -15,14 +15,14 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.fx.core.text.SourceTextEditActions;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.text.ui.ITextViewer;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
-import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping.Context;
 import org.eclipse.jface.text.IDocument;
 
-import javafx.application.Platform;
 import javafx.geometry.Point2D;
-import javafx.scene.input.KeyCode;
 
 @SuppressWarnings("restriction")
 public class ContentAssistant implements IContentAssistant {
@@ -32,16 +32,11 @@ public class ContentAssistant implements IContentAssistant {
 	private ContextInformationPopup fContextInfoPopup;
 	private final ThreadSynchronize threadSynchnronize;
 
-	private String autoTriggers = null;
 	private boolean directlyApplySingleMatch;
 
 	public ContentAssistant(ThreadSynchronize threadSynchnronize, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.threadSynchnronize = threadSynchnronize;
 		this.proposalComputer = proposalComputer;
-	}
-
-	public void setAutoTriggers(String autoTriggers) {
-		this.autoTriggers = autoTriggers;
 	}
 
 	public void setDirectlyApplySingleMatch(boolean directlyApplySingleMatch) {
@@ -53,35 +48,16 @@ public class ContentAssistant implements IContentAssistant {
 		if( this.fViewer == null ) {
 			this.fViewer = textViewer;
 			this.fProposalPopup = new ContentProposalPopup(this.threadSynchnronize, this, textViewer, this.proposalComputer);
-
-			textViewer.getTextWidget().addEventHandler(VerifyEvent.VERIFY, this::handleVerify);
-
+			this.fViewer.subscribeAction(this::handleAction);
 			this.fContextInfoPopup = new ContextInformationPopup(this, textViewer);
 		}
 	}
 
-	private void handleVerify(VerifyEvent event) {
-
-		boolean autoTrigger = !event.getText().isEmpty() && this.autoTriggers != null && this.autoTriggers.contains(event.getText());
-		boolean defaultTrigger = event.isControlDown() && event.getCode() == KeyCode.SPACE;
-
-		if( !(autoTrigger || defaultTrigger) ) {
-			return;
-		}
-
-		if (defaultTrigger) {
-			// we cannot consume auto triggers, since they need to be inserted into the document
-			event.consume();
-		}
-
-		// the proposal needs to be delayed until the char was typed
-		Platform.runLater(()-> {
-
+	private boolean handleAction(TextEditAction action, Context context) {
+		if (action == SourceTextEditActions.PROPOSAL_REQUEST) {
 			final int offset = this.fViewer.getTextWidget().getCaretOffset();
 
 			List<ICompletionProposal> proposals = this.proposalComputer.apply(new ContentAssistContextData(offset, this.fViewer.getDocument()/*,""*/));
-
-
 
 			if( proposals.size() == 1 && this.directlyApplySingleMatch) {
 				ICompletionProposal completionProposal = proposals.get(0);
@@ -102,7 +78,6 @@ public class ContentAssistant implements IContentAssistant {
 					IDocument document = this.fViewer.getDocument();
 					// apply the proposal
 					proposal.apply(document);
-					this.setAutoTriggers(this.autoTriggers);
 					this.fViewer.getTextWidget().setSelection(proposal.getSelection(document));
 
 					if (proposal.getContextInformation() != null) {
@@ -113,8 +88,10 @@ public class ContentAssistant implements IContentAssistant {
 			}
 
 			this.fViewer.getTextWidget().layout();
-		});
 
+			return true;
+		}
+		return false;
 	}
 
 	void showContextInformation(IContextInformation contextInformation, int offset) {

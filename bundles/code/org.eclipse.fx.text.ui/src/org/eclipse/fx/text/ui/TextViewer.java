@@ -21,15 +21,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.text.hover.HoverInfo;
-import org.eclipse.fx.text.ui.internal.InvisibleCharSupport;
-import org.eclipse.fx.text.ui.internal.LineNumberSupport;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping.Context;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.text.BadLocationException;
@@ -101,6 +104,8 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 		return this.features;
 	}
 
+	private final TriggerActionMapping actionMapping = new TriggerActionMapping();
+
 	/**
 	 * Create a new text viewer
 	 */
@@ -114,6 +119,22 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 		bindFeatures();
 		this.features.addAll(Arrays.asList(features));
 
+		initActionMapping();
+	}
+
+	protected TriggerActionMapping getActionMapping() {
+		return actionMapping;
+	}
+
+	private void initActionMapping() {
+		// TODO add undo/redo stuff to action mapping
+		getTextWidget().setOverrideActionMapping(actionMapping);
+	}
+
+
+	@Override
+	public Subscription subscribeAction(BiFunction<TextEditAction, Context, Boolean> handler) {
+		return actionMapping.subscribe(handler);
 	}
 
 	private Map<Feature, Subscription> activeFeatures = new HashMap<>();
@@ -218,6 +239,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 //		}
 
 
+		// TODO add undo support to textViewer
 		if (getUndoManager() != null) {
 			if (Util.isWindows()) {
 				if (event.isControlDown() && !event.isShiftDown() && getKeyCode(event) == KeyCode.Z) {
