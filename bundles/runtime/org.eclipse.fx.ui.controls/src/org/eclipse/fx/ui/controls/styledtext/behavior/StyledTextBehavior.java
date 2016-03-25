@@ -320,6 +320,13 @@ public class StyledTextBehavior {
 			int targetOffset = event.getOffset();
 
 			if( getControl().getSelection().contains(targetOffset) ) {
+				this.dragMoveTextMode = false;
+				event.consume();
+				return;
+			}
+
+			if( targetOffset < 0 ) {
+				this.dragMoveTextMode = false;
 				event.consume();
 				return;
 			}
@@ -341,7 +348,6 @@ public class StyledTextBehavior {
 				// remove
 				getControl().getContent().replaceTextRange(this.dragMoveTextOffset, this.dragMoveTextLength, ""); //$NON-NLS-1$
 			}
-
 
 			// insert
 			getControl().getContent().replaceTextRange(targetOffset, 0, text);
