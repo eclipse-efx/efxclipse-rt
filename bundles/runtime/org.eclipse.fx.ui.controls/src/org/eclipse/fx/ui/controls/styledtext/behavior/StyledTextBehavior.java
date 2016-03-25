@@ -62,6 +62,7 @@ import org.eclipse.fx.ui.controls.styledtext.internal.TextNode;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
 import org.eclipse.jdt.annotation.NonNull;
 
+import javafx.css.PseudoClass;
 import javafx.event.Event;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
@@ -391,6 +392,8 @@ public class StyledTextBehavior {
 
 	private Optional<TextNode> currentQuickLinkNode = Optional.empty();
 
+	private static final PseudoClass QUICK_LINK_ACTIVE_PSEUDOCLASS_STATE = PseudoClass.getPseudoClass("quick-link-active");
+
 	private void setCurrentQuickLinkNode(Optional<TextNode> node) {
 		if (node.isPresent()) {
 			this.getControl().setCursor(Cursor.HAND);
@@ -400,10 +403,12 @@ public class StyledTextBehavior {
 		}
 		this.currentQuickLinkNode.ifPresent(n->n.getStyleClass().remove("quick_link")); //$NON-NLS-1$
 		this.currentQuickLinkNode.ifPresent(n->n.setCursor(null));
-		this.currentQuickLinkNode.ifPresent(n->n.requestLayout());
+		if( this.currentQuickLinkNode.isPresent() != node.isPresent() ) {
+			getControl().pseudoClassStateChanged(QUICK_LINK_ACTIVE_PSEUDOCLASS_STATE, ! this.currentQuickLinkNode.isPresent());
+		}
+
 		this.currentQuickLinkNode = node;
 		this.currentQuickLinkNode.ifPresent(n->n.getStyleClass().add("quick_link")); //$NON-NLS-1$
-		this.currentQuickLinkNode.ifPresent(n->n.setCursor(Cursor.HAND));
 		this.currentQuickLinkNode.ifPresent(n->n.requestLayout());
 	}
 
