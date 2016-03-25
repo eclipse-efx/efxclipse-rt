@@ -392,7 +392,7 @@ public class StyledTextBehavior {
 
 	private Optional<TextNode> currentQuickLinkNode = Optional.empty();
 
-	private static final PseudoClass QUICK_LINK_ACTIVE_PSEUDOCLASS_STATE = PseudoClass.getPseudoClass("quick-link-active");
+	private static final PseudoClass QUICK_LINK_ACTIVE_PSEUDOCLASS_STATE = PseudoClass.getPseudoClass("quick-link-active"); //$NON-NLS-1$
 
 	private void setCurrentQuickLinkNode(Optional<TextNode> node) {
 		if (node.isPresent()) {
