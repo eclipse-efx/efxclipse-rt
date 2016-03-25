@@ -449,4 +449,12 @@ public class Util {
 			return getTextHeight(text, font.getValue());
 		}, font);
 	}
+
+	public static boolean isCopyEvent(MouseEvent event) {
+		if( org.eclipse.fx.core.Util.isMacOS() ) {
+			return event.isAltDown();
+		} else {
+			return event.isControlDown();
+		}
+	}
 }

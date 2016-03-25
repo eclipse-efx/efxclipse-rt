@@ -43,7 +43,6 @@ import javafx.beans.property.SimpleSetProperty;
 import javafx.collections.FXCollections;
 import javafx.css.CssMetaData;
 import javafx.css.FontCssMetaData;
-import javafx.css.PseudoClass;
 import javafx.css.StyleConverter;
 import javafx.css.StyleOrigin;
 import javafx.css.Styleable;

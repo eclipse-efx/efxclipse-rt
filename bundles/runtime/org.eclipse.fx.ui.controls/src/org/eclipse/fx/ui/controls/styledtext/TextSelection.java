@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * <b>This is an experimental component provided as a preview we'll improve and
  * fix problems in up coming releases</b>
  * </p>
+ *
  * @noreference
  */
 public class TextSelection {
@@ -34,7 +35,7 @@ public class TextSelection {
 	 * An empty selection
 	 */
 	@NonNull
-	public static final TextSelection EMPTY = new TextSelection(0,0);
+	public static final TextSelection EMPTY = new TextSelection(0, 0);
 
 	/**
 	 * Create a new selection
@@ -48,8 +49,6 @@ public class TextSelection {
 		this.offset = offset;
 		this.length = length;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -81,5 +80,15 @@ public class TextSelection {
 		return true;
 	}
 
+	/**
+	 * Added method to check if provided offset is contained
+	 *
+	 * @param checkOffset
+	 *            the offset to check against
+	 * @return <code>true</code> if offset is contained
+	 */
+	public boolean contains(int checkOffset) {
+		return this.offset <= checkOffset && this.offset + this.length >= checkOffset;
+	}
 
 }

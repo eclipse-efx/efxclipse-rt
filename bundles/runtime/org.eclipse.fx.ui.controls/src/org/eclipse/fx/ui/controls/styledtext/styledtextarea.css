@@ -33,6 +33,15 @@
 	-fx-cursor: hand;
 }
 
+.styled-text-area:drag-text-move-active .list-view {
+	-fx-cursor: move;
+}
+
+.styled-text-area:drag-text-copy-active .list-view {
+	-fx-cursor: text; /* we need a copy gesture icon */
+}
+
+
 .styled-text-area .current-line {
 	-fx-background-color: #e8f2fe
 }

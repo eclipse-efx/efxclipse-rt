@@ -220,6 +220,16 @@ public class StyledTextBehavior {
 	}
 
 	private void onKeyPressed(KeyEvent event) {
+		if( this.dragMoveTextMode ) {
+			if( event.isShortcutDown() ) {
+				getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, false);
+				getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, true);
+			} else {
+				getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, true);
+				getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, false);
+			}
+		}
+
 		VerifyEvent evt = new VerifyEvent(getControl(), getControl(), event);
 		Event.fireEvent(getControl(), evt);
 
@@ -270,6 +280,11 @@ public class StyledTextBehavior {
 
 	private void onTextPositionDragDetected(TextPositionEvent event) {
 		if (this.pressedInSelection) {
+			if( org.eclipse.fx.ui.controls.Util.isCopyEvent(event) ) {
+				getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, true);
+			} else {
+				getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, true);
+			}
 			this.dragMoveTextMode = true;
 			this.dragMoveTextOffset = getControl().getSelection().offset;
 			this.dragMoveTextLength = getControl().getSelection().length;
@@ -283,6 +298,13 @@ public class StyledTextBehavior {
 			moveCaretAbsolute(event.getOffset(), true);
 			event.consume();
 		} else if (this.dragMoveTextMode) {
+			if( org.eclipse.fx.ui.controls.Util.isCopyEvent(event) ) {
+				getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, false);
+				getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, true);
+			} else {
+				getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, true);
+				getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, false);
+			}
 			event.consume();
 		}
 	}
@@ -292,23 +314,34 @@ public class StyledTextBehavior {
 			this.dragSelectionMode = false;
 			event.consume();
 		} else if (this.dragMoveTextMode) {
+			getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, false);
+			getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, false);
+
 			int targetOffset = event.getOffset();
 
-			// replace
-			if (isInRange(targetOffset, this.dragMoveTextOffset, this.dragMoveTextLength)) {
-				targetOffset = this.dragMoveTextOffset;
-			}
-			// after
-			else if (targetOffset >= this.dragMoveTextOffset + this.dragMoveTextLength) {
-				targetOffset -= this.dragMoveTextLength;
+			if( getControl().getSelection().contains(targetOffset) ) {
+				event.consume();
+				return;
 			}
 
 			// read text
 			@NonNull
 			String text = getControl().getContent().getTextRange(this.dragMoveTextOffset, this.dragMoveTextLength);
 
-			// remove
-			getControl().getContent().replaceTextRange(this.dragMoveTextOffset, this.dragMoveTextLength, ""); //$NON-NLS-1$
+			if( ! org.eclipse.fx.ui.controls.Util.isCopyEvent(event) ) {
+				// replace
+				if (isInRange(targetOffset, this.dragMoveTextOffset, this.dragMoveTextLength)) {
+					targetOffset = this.dragMoveTextOffset;
+				}
+				// after
+				else if (targetOffset >= this.dragMoveTextOffset + this.dragMoveTextLength) {
+					targetOffset -= this.dragMoveTextLength;
+				}
+
+				// remove
+				getControl().getContent().replaceTextRange(this.dragMoveTextOffset, this.dragMoveTextLength, ""); //$NON-NLS-1$
+			}
+
 
 			// insert
 			getControl().getContent().replaceTextRange(targetOffset, 0, text);
@@ -393,6 +426,8 @@ public class StyledTextBehavior {
 	private Optional<TextNode> currentQuickLinkNode = Optional.empty();
 
 	private static final PseudoClass QUICK_LINK_ACTIVE_PSEUDOCLASS_STATE = PseudoClass.getPseudoClass("quick-link-active"); //$NON-NLS-1$
+	private static final PseudoClass DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE = PseudoClass.getPseudoClass("drag-text-move-active"); //$NON-NLS-1$
+	private static final PseudoClass DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE = PseudoClass.getPseudoClass("drag-text-copy-active"); //$NON-NLS-1$
 
 	private void setCurrentQuickLinkNode(Optional<TextNode> node) {
 		if (node.isPresent()) {
