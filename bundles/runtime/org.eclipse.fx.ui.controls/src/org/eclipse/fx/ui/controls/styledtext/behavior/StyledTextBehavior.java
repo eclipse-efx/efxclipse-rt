@@ -352,8 +352,9 @@ public class StyledTextBehavior {
 			// insert
 			getControl().getContent().replaceTextRange(targetOffset, 0, text);
 
-			// move caret to end of insertion
+			// move caret to end of insertion and select the text
 			moveCaretAbsolute(targetOffset + text.length());
+			getControl().setSelection(new TextSelection(targetOffset, text.length()));
 
 			this.dragMoveTextMode = false;
 			event.consume();
