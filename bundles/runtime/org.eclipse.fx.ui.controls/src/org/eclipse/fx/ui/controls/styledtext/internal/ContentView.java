@@ -719,6 +719,7 @@ public class ContentView  extends Pane {
 	}
 
 	public double getCharWidth() {
+		applyCss();
 		return this.charWidth.get();
 	}
 

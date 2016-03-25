@@ -51,6 +51,7 @@ import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
 
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -131,7 +132,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			// fix colIdx with tabs
 			String line = styledText.getContent().getLine(lineIdx).substring(0, colIdx);
 			int tabCount = (int)line.chars().filter(c -> c == '\t').count();
-			scrollColumnIntoView(colIdx + tabCount * (styledText.tabAvanceProperty().get() - 1));
+			scrollColumnIntoView(colIdx + tabCount * (styledText.tabAvanceProperty().get() - 1), 12);
 			scrollLineIntoView(lineIdx);
 		});
 
@@ -390,6 +391,10 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		});
 		getSkinnable().getAnnotationPresenter().forEach(installPresenter);
 
+
+		Platform.runLater( () -> {
+			scrollOffsetIntoView(getSkinnable().getCaretOffset(), 10, 12);
+		});
 	}
 
 	public Optional<TextNode> findTextNode(Point2D screenLocation) {
@@ -397,14 +402,17 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		return this.content.findTextNode(contentLocalLocation);
 	}
 
-	private void scrollColumnIntoView(int colIndex) {
-		double jumpAhead = 12; // chars to jump if col is out of screen
+	private void scrollColumnIntoView(int colIndex, int jumpAhead) {
 		double charWidth = this.content.getCharWidth();
 
 		double colOffset = charWidth * colIndex;
 
 		double contentWidth = this.content.getWidth();
 		double curOffset = this.contentArea.horizontal.getValue();
+
+		System.err.println( contentWidth + ", " + colOffset + ", " + curOffset + ", " + colIndex);
+//		Thread.dumpStack();
+
 
 		if (colOffset < curOffset) {
 			double jumpOffset = curOffset - jumpAhead * charWidth;
@@ -416,11 +424,13 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		}
 		if (colOffset > curOffset + contentWidth) {
+			System.err.println("====> Scroll to the right: " + curOffset);
 			double jumpOffset = curOffset + jumpAhead * charWidth;
 			if (colOffset > jumpOffset + contentWidth) {
 				jumpOffset = colOffset + contentWidth;
 			}
 			double targetOffset = Math.min(this.contentArea.horizontal.getMax(), jumpOffset);
+			System.err.println("===> the target " + targetOffset);
 			this.contentArea.horizontal.setValue(targetOffset);
 		}
 
@@ -436,6 +446,27 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 	public void scrollLineIntoView(int lineIndex) {
 		this.scroller.scrollIntoView(lineIndex);
+	}
+
+	public void scrollOffsetIntoView(int offset, int verticalOffset, int horizontalOffset) {
+		if( offset >= 0 ) {
+			int lineIdx = getSkinnable().getContent().getLineAtOffset(offset);
+			Range<Integer> visibleLines = this.content.getVisibleLines();
+			if( ! visibleLines.contains(Integer.valueOf(lineIdx)) ) {
+				int linesVisible = visibleLines.upperEndpoint().intValue();
+				int delta = linesVisible - verticalOffset;
+				int scrollLine = Math.min(lineIdx+delta, getSkinnable().getContent().getLineCount()-1);
+				scrollLineIntoView(scrollLine);
+			}
+
+			int colIdx = offset - getSkinnable().getContent().getOffsetAtLine(lineIdx);
+			String line = getSkinnable().getContent().getLine(lineIdx).substring(0, colIdx);
+			int tabCount = (int)line.chars().filter(c -> c == '\t').count();
+			scrollColumnIntoView(colIdx + tabCount * (getSkinnable().tabAvanceProperty().get() - 1), horizontalOffset);
+		} else {
+			scrollLineIntoView(0);
+			scrollColumnIntoView(0, 0);
+		}
 	}
 
 	StyledTextBehavior getBehavior() {

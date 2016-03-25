@@ -29,7 +29,6 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import com.google.common.collect.Range;
 
-import javafx.application.Platform;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -1858,18 +1857,13 @@ public class StyledTextArea extends Control {
 		return this.insertSpacesForTab;
 	}
 
+	/**
+	 * Reveal the current caret location
+	 * @since 2.4.0
+	 */
 	public void revealCaret() {
-		int lineIndex = getContent().getLineAtOffset(getCaretOffset());
-		((StyledTextSkin) getSkin()).scrollLineIntoView(lineIndex);
 		if (getSkin() != null) {
-			((StyledTextSkin)getSkin()).scrollLineIntoView(lineIndex);
-		}
-		else {
-			Platform.runLater(()-> {
-				if (getSkin() != null) {
-					((StyledTextSkin)getSkin()).scrollLineIntoView(lineIndex);
-				}
-			});
+			((StyledTextSkin)getSkin()).scrollOffsetIntoView(getCaretOffset(), 2, 2);
 		}
 	}
 }
