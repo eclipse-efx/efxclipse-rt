@@ -18,6 +18,7 @@ import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.LocalSourceFileInput;
 import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
 import org.eclipse.fx.code.editor.fx.services.internal.DefaultSourceViewerConfiguration;
+import org.eclipse.fx.code.editor.services.BehaviorContributor;
 import org.eclipse.fx.code.editor.services.EditorOpener;
 import org.eclipse.fx.code.editor.services.HoverInformationProvider;
 import org.eclipse.fx.code.editor.services.NavigationProvider;
@@ -69,6 +70,7 @@ public class SimpleSourceTextEditorBuilder {
 	private SearchProvider searchProvider;
 	private NavigationProvider navigationProvider;
 	private EditorOpener editorOpener;
+	private BehaviorContributor behaviorContributor;
 
 	static class MultiLine {
 		private final String start;
@@ -171,7 +173,7 @@ public class SimpleSourceTextEditorBuilder {
 		}
 
 		editor.setPartitioner(new FastPartitioner(new PartitionerImpl(this), contentTypes.toArray(new String[0])));
-		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(threadSynchronize, input, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter, searchProvider, navigationProvider, editorOpener));
+		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(threadSynchronize, input, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter, searchProvider, navigationProvider, editorOpener, behaviorContributor));
 
 		return editor;
 	}

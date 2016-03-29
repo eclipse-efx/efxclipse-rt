@@ -20,6 +20,10 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.eclipse.core.commands.operations.TriggeredOperations;
+import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.text.SourceTextEditActions;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.navigation.NavigationRegion;
 import org.eclipse.fx.text.navigation.NavigationTarget;
@@ -33,6 +37,8 @@ import org.eclipse.fx.text.ui.internal.WrappedLineRulerAnnotationPresenter;
 import org.eclipse.fx.text.ui.internal.WrappedTextAnnotationPresenter;
 import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
 import org.eclipse.fx.text.ui.reconciler.IReconciler;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping.Context;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLinkable;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.SimpleQuickLink;
@@ -57,16 +63,29 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 	private Annotation fRangeIndicator;
 
+	private final TriggerActionMapping actionMapping = new TriggerActionMapping();
 
 	private BiFunction<IDocument, Integer, Set<HoverInfo>> documentHoverInfoLookup = null;
 	private Function<Annotation, Set<HoverInfo>> annotationHoverInfoLookup = null;
+
+	private void initSourceViewerActionMapping() {
+		this.actionMapping.map("Ctrl+Space", SourceTextEditActions.PROPOSAL_REQUEST); //$NON-NLS-1$
+		super.getActionMapping().setOverride(actionMapping);
+	}
+
+	@Override
+	public Subscription subscribeAction(BiFunction<TextEditAction, Context, Boolean> handler) {
+		return actionMapping.subscribe(handler);
+	}
 
 	@Override
 	public void configure(SourceViewerConfiguration configuration) {
 		if (getTextWidget() == null)
 			return;
 
-//		installPlugin(new InvisibleCharacterPlugin());
+		initSourceViewerActionMapping();
+
+		this.actionMapping.setOverride(configuration.getOverrideMapping());
 
 		if (configuration.getFeatures() != null) {
 			getFeatures().bind(configuration.getFeatures());
@@ -92,10 +111,6 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 //			}
 //		});
 
-		if (configuration.getContentAssist() instanceof ContentAssistant) {
-			((ContentAssistant)configuration.getContentAssist()).setAutoTriggers(configuration.getContentAssistAutoTriggers());
-		}
-
 		setDocumentPartitioning(configuration.getConfiguredDocumentPartitioning(this));
 
 		// install content type independent plug-ins
@@ -113,29 +128,7 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		}
 
 		//TODO This is complete different to JFace-Text
-		IAnnotationModel annotationModel = configuration.getAnnotationModel();
-		if( annotationModel != null ) {
-//			getTextWidget().setLineRulerGraphicNodeFactory(this::annotationFactory);
 
-			// NFO: the line ruler is updated by changes to the annotation model
-
-//			annotationModel.addAnnotationModelListener(new IAnnotationModelListener() {
-//
-//				private boolean scheduled = false;
-//
-//				@Override
-//				public void modelChanged(IAnnotationModel model) {
-//					if( ! this.scheduled ) {
-//						this.scheduled = true;
-//						Platform.runLater(() -> {
-//							this.scheduled = false;
-//							getTextWidget().refreshLineRuler();
-//						});
-//					}
-//				}
-//
-//			});
-		}
 
 		if( configuration.getAnnotationPresenter() != null ) {
 			// install presenters
@@ -148,13 +141,12 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 			});
 		}
 
-//		presenterMap.putAll(configuration.getAnnotationPresenters().stream().collect(Collectors.toMap(p -> p.getType(), p -> p)));
 
-		AnnotationPainter annotationPainter = configuration.getAnnotationPainter(this);
-		if( annotationModel != null && annotationPainter != null ) {
-			annotationModel.addAnnotationModelListener(annotationPainter);
-			addTextPresentationListener(annotationPainter);
-		}
+//		AnnotationPainter annotationPainter = configuration.getAnnotationPainter(this);
+//		if( annotationModel != null && annotationPainter != null ) {
+//			annotationModel.addAnnotationModelListener(annotationPainter);
+//			addTextPresentationListener(annotationPainter);
+//		}
 
 		String[] types= configuration.getConfiguredContentTypes(this);
 		for (int i= 0; i < types.length; i++) {
@@ -162,83 +154,11 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 			setTextHover(configuration.getTextHover(this, t), t, ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
 		}
 
+		IAnnotationModel annotationModel = configuration.getAnnotationModel();
 		// register annotation model with text widget
 		if (annotationModel != null) {
-
 			AnnotationModelSupport support = new AnnotationModelSupport(annotationModel, getTextWidget());
 			support.install();
-
-//			MarkerAnnotationPlugin markerAnnotationPlugin = new MarkerAnnotationPlugin(annotationModel, getTextWidget(), presenterMap);
-//			markerAnnotationPlugin.install();
-
-//			new AnnotationIconLineAnnotationPlugin(annotationModel, getTextWidget(),
-//
-//
-//					(a)->presenterMap.get(a.getType()).getPresentation(a));
-
-//			installPlugin(new AnnotationPlugin(annotationModel));
-//			annotationModel.addAnnotationModelListener(new IAnnotationModelListener() {
-//				@Override
-//				public void modelChanged(IAnnotationModel model) {
-//					System.err.println("Annotation model change!");
-//
-//					Map<String, StyledTextAnnotation> toAdd = new HashMap<>();
-//					Map<String, StyledTextAnnotation> toRemove = new HashMap<>();
-//
-//
-//					Map<String, StyledTextAnnotation> current = new HashMap<>();
-//					for (StyledTextAnnotation n : getTextWidget().getAnnotations()) {
-//						current.put(n.getId(), n);
-//						toRemove.put(n.getId(), n);
-//					}
-//
-//					Iterator it = model.getAnnotationIterator();
-//					while (it.hasNext()) {
-//						Annotation next = (Annotation) it.next();
-//						Position pos = model.getPosition(next);
-//						String id = Integer.toHexString(next.hashCode());
-//						if (pos != null) {
-//
-//							if (current.containsKey(id)) {
-//								toRemove.remove(id);
-//							}
-//							else {
-//								StyledTextAnnotation s = new StyledTextAnnotation() {
-//									@Override
-//									public String getId() {
-//										return id;
-//									}
-//
-//									@Override
-//									public String getType() {
-//										return next.getType();
-//									}
-//
-//									@Override
-//									public String getText() {
-//										return next.getText();
-//									}
-//
-//									@Override
-//									public int getStartOffset() {
-//										return pos.offset;
-//									}
-//
-//									@Override
-//									public int getLength() {
-//										return pos.length;
-//									}
-//								};
-//								toAdd.put(id,  s);
-//							}
-//
-//						}
-//					}
-//					getTextWidget().getAnnotations().removeAll(toRemove.values());
-//					getTextWidget().getAnnotations().addAll(toAdd.values());
-//				}
-//
-//			});
 		}
 
 		getTextWidget().setQuickLinkCallback(configuration.getQuicklinkCallback());
@@ -247,25 +167,6 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		new SimpleSmartIndent(this);
 
 	}
-
-//	private Node annotationFactory(StyledTextLine l) {
-//		//TODO Should use IAnnotationExtension2
-//		@SuppressWarnings("unchecked")
-//		Iterator<Annotation> annotationIterator = this.fVisualAnnotationModel.getAnnotationIterator();
-//		while( annotationIterator.hasNext() ) {
-//			Annotation a = annotationIterator.next();
-//			Position position = this.fVisualAnnotationModel.getPosition(a);
-//
-//			if( l.getLineIndex() == getTextWidget().getContent().getLineAtOffset(position.offset) ) {
-//				AnnotationPresenter annotationPresenter = this.presenterMap.get(a.getType());
-//				if( annotationPresenter != null ) {
-//					return annotationPresenter.getPresentation(a);
-//				}
-//				return null;
-//			}
-//		}
-//		return null;
-//	}
 
 	@Override
 	public Set<HoverInfo> getHoverInfo(int offset) {

@@ -11,8 +11,6 @@
 package org.eclipse.fx.text.ui;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,7 +18,6 @@ import java.util.stream.Collectors;
 import org.eclipse.fx.text.hover.DocumentHoverProvider;
 import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.ui.hover.HoverPresenter;
-import org.eclipse.fx.text.ui.hover.HoverWindowPresenter;
 import org.eclipse.fx.text.ui.hover.internal.DefaultHoverPresenter;
 import org.eclipse.fx.text.ui.hover.internal.DefaultHoverWindowPresenter;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
@@ -28,12 +25,9 @@ import org.eclipse.fx.ui.controls.styledtext.events.HoverTarget;
 import org.eclipse.fx.ui.controls.styledtext.events.TextHoverEvent;
 import org.eclipse.fx.ui.controls.styledtext.model.Annotation;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.Region;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.PopupWindow;
 

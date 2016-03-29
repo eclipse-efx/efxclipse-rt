@@ -7,20 +7,9 @@ import org.eclipse.fx.code.editor.Input;
 import org.eclipse.jface.text.IDocument;
 
 public interface ProposalComputer {
-	public class ProposalContext {
-		public final Input<?> input;
-		public final IDocument document;
-		public final int location;
-
+	public class ProposalContext extends EditingContext {
 		public ProposalContext(Input<?> input, IDocument document, int location) {
-			this.input = input;
-			this.document = document;
-			this.location = location;
-		}
-
-		@Override
-		public String toString() {
-			return "ProposalContext [input=" + input + ", document=" + document + ", location=" + location + "]";
+			super(input, document, location, null);
 		}
 	}
 

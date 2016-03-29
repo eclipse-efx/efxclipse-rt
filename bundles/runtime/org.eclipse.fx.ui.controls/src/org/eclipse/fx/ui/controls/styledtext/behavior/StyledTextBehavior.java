@@ -11,42 +11,13 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext.behavior;
 
-import static javafx.scene.input.KeyCode.A;
-import static javafx.scene.input.KeyCode.BACK_SPACE;
-import static javafx.scene.input.KeyCode.C;
-import static javafx.scene.input.KeyCode.D;
-import static javafx.scene.input.KeyCode.DELETE;
-import static javafx.scene.input.KeyCode.DOWN;
-import static javafx.scene.input.KeyCode.END;
-import static javafx.scene.input.KeyCode.ENTER;
-import static javafx.scene.input.KeyCode.HOME;
-import static javafx.scene.input.KeyCode.LEFT;
-import static javafx.scene.input.KeyCode.RIGHT;
-import static javafx.scene.input.KeyCode.TAB;
-import static javafx.scene.input.KeyCode.UP;
-import static javafx.scene.input.KeyCode.V;
-import static javafx.scene.input.KeyCode.X;
-import static org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.MetaKey.AltKey;
-import static org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.MetaKey.ControlKey;
-import static org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.MetaKey.MetaKey;
-import static org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.MetaKey.ShiftKey;
-
 import java.text.BreakIterator;
 import java.text.StringCharacterIterator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Supplier;
 
 import org.eclipse.fx.core.Util;
-import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
-import org.eclipse.fx.ui.controls.styledtext.ActionEvent.ActionType;
+import org.eclipse.fx.core.text.DefaultTextEditActions;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.CustomQuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLink;
@@ -54,9 +25,9 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLinkable;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.SimpleQuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping.Context;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
-import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.InputAction;
-import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior.KeyMapping.KeyCombo;
 import org.eclipse.fx.ui.controls.styledtext.events.TextPositionEvent;
 import org.eclipse.fx.ui.controls.styledtext.internal.TextNode;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
@@ -67,6 +38,7 @@ import javafx.event.Event;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -76,12 +48,12 @@ import javafx.scene.input.MouseEvent;
  */
 public class StyledTextBehavior {
 
+	private TriggerActionMapping keyTriggerMapping = new TriggerActionMapping();
+
 	private TextPositionSupport textPositionSupport;
 	private HoverSupport hoverSupport;
 
 	private final StyledTextArea styledText;
-
-	private KeyMapping keyMapping = new KeyMapping();
 
 	/**
 	 * Create a new behavior
@@ -97,7 +69,9 @@ public class StyledTextBehavior {
 		styledText.addEventHandler(MouseEvent.MOUSE_PRESSED, this::onMousePressed);
 		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_MOVED, this::onTextPositionMoved);
 
-		initKeymapping(this.keyMapping);
+		this.keyTriggerMapping.subscribe(this::defaultHandle);
+		initKeymapping(this.keyTriggerMapping);
+
 
 		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_PRESSED, this::onTextPositionPressed);
 		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_CLICKED, this::onTextPositionClicked);
@@ -105,6 +79,7 @@ public class StyledTextBehavior {
 		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_DRAGGED, this::onTextPositionDragged);
 		styledText.addEventHandler(TextPositionEvent.TEXT_POSITION_DRAG_DETECTED, this::onTextPositionDragDetected);
 
+		this.keyTriggerMapping.overrideProperty().bind(styledText.overrideActionMappingProperty());
 	}
 
 	/**
@@ -220,6 +195,13 @@ public class StyledTextBehavior {
 	}
 
 	private void onKeyPressed(KeyEvent event) {
+	
+		boolean handled = this.keyTriggerMapping.triggerAction(event, new Context(getControl()));
+		if (handled) {
+			event.consume();
+			return;
+		}
+	
 		if( this.dragMoveTextMode ) {
 			if( event.isShortcutDown() ) {
 				getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, false);
@@ -245,11 +227,12 @@ public class StyledTextBehavior {
 			return;
 		}
 
-		Optional<InputAction> keyAction = this.keyMapping.get(event);
-		keyAction.ifPresent(a -> {
-			a.run();
+		// tab insertion if not otherwise handled
+		if (KeyCombination.keyCombination("Tab").match(event)) { //$NON-NLS-1$
+			getControl().insert("\t"); //$NON-NLS-1$
 			event.consume();
-		});
+		}
+
 	}
 
 	private void onKeyTyped(KeyEvent event) {
@@ -273,6 +256,9 @@ public class StyledTextBehavior {
 					&& !event.isMetaDown()) {
 
 				getControl().insert(character);
+
+				// check for typed char action
+				this.keyTriggerMapping.triggerAction(character.charAt(0), new Context(getControl()));
 			}
 
 		}
@@ -394,11 +380,11 @@ public class StyledTextBehavior {
 	private void onTextPositionClicked(TextPositionEvent event) {
 		if (event.isStillSincePress()) {
 			if (event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY) {
-				this.ACTION_SELECT_WORD.run();
+				this.keyTriggerMapping.triggerAction(DefaultTextEditActions.SELECT_WORD, new Context(getControl()));
 				event.consume();
 			}
 			if (event.getClickCount() == 3 && event.getButton() == MouseButton.PRIMARY) {
-				this.ACTION_SELECT_LINE.run();
+				this.keyTriggerMapping.triggerAction(DefaultTextEditActions.SELECT_LINE, new Context(getControl()));
 				event.consume();
 			}
 		}
@@ -490,37 +476,186 @@ public class StyledTextBehavior {
 		return getControl().getOffsetAtLine(lineNumber);
 	}
 
-	/**
-	 * Action to go the start of the text
-	 */
-	protected final StyledTextInputAction ACTION_NAVIGATE_TEXT_START = new StyledTextInputAction(ActionType.TEXT_START, this::defaultNavigateTextStart);
+	protected boolean defaultHandle(TextEditAction action, Context context) {
+		if (action == DefaultTextEditActions.TEXT_START) {
+			defaultNavigateTextStart();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.TEXT_END) {
+			defaultNavigateTextEnd();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.LINE_START) {
+			defaultNavigateLineStart();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.LINE_END) {
+			defaultNavigateLineEnd();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.WORD_NEXT) {
+			defaultNavigateWordNext();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.WORD_PREVIOUS) {
+			defaultNavigateWordPrevious();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_TEXT_START) {
+			defaultSelectTextStart();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_TEXT_END) {
+			defaultSelectTextEnd();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_LINE_START) {
+			defaultSelectLineStart();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_LINE_END) {
+			defaultSelectLineEnd();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_WORD_NEXT) {
+			defaultSelectWordNext();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_WORD_PREVIOUS) {
+			defaultSelectWordPrevious();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_WORD) {
+			defaultSelectWord();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_LINE) {
+			defaultSelectLine();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.DELETE_LINE) {
+			defaultDeleteLine();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.DELETE_WORD_NEXT) {
+			defaultDeleteWordNext();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.DELETE_WORD_PREVIOUS) {
+			defaultDeleteWordPrevious();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.MOVE_LINES_UP) {
+			defaultMoveLinesUp();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.MOVE_LINES_DOWN) {
+			defaultMoveLinesDown();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.INDENT) {
+			defaultIndent();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.OUTDENT) {
+			defaultOutdent();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.NEW_LINE) {
+			defaultNewLine();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_ALL) {
+			defaultSelectAll();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.CUT) {
+			defaultCut();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.COPY) {
+			defaultCopy();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.PASTE) {
+			defaultPaste();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.DELETE) {
+			defaultDelete();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.DELETE_PREVIOUS) {
+			defaultDeletePrevious();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.DELETE_LINE) {
+			defaultDeleteLine();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SCROLL_LINE_UP) {
+			defaultScrollLineUp();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SCROLL_LINE_DOWN)  {
+			defaultScrollLineDown();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.NAVIGATE_TO_LINE) {
+			defaultNavigateLineEnd();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.MOVE_UP) {
+			defaultUp(false);
+			return true;
+		}
+		else if (action == DefaultTextEditActions.MOVE_LEFT) {
+			defaultLeft(false);
+			return true;
+		}
+		else if (action == DefaultTextEditActions.MOVE_RIGHT) {
+			defaultRight(false);
+			return true;
+		}
+		else if (action == DefaultTextEditActions.MOVE_DOWN) {
+			defaultDown(false);
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_UP) {
+			defaultUp(true);
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_LEFT) {
+			defaultLeft(true);
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_RIGHT) {
+			defaultRight(true);
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_DOWN) {
+			defaultDown(true);
+			return true;
+		}
+		return false;
+	}
 
 	/**
-	 * default implementation for {@link #ACTION_NAVIGATE_TEXT_START}
+	 * default implementation for {@link DefaultTextEditActions#TEXT_START}
 	 */
 	protected void defaultNavigateTextStart() {
 		getControl().setCaretOffset(0);
 	}
 
 	/**
-	 * Action to go the start of the text
-	 */
-	protected final InputAction ACTION_NAVIGATE_TEXT_END = new StyledTextInputAction(ActionType.TEXT_END, this::defaultNavigateTextEnd);
-
-	/**
-	 * default implementation for {@link #ACTION_NAVIGATE_TEXT_END}
+	 * default implementation for {@link DefaultTextEditActions#TEXT_END}
 	 */
 	protected void defaultNavigateTextEnd() {
 		getControl().setCaretOffset(getControl().getContent().getCharCount());
 	}
 
 	/**
-	 * Action to go to the line start
-	 */
-	protected final InputAction ACTION_NAVIGATE_LINE_START = new StyledTextInputAction(ActionType.LINE_START, this::defaultNavigateLineStart);
-
-	/**
-	 * default implementation for {@link #ACTION_NAVIGATE_LINE_START}
+	 * default implementation for {@link DefaultTextEditActions#LINE_START}
 	 */
 	protected void defaultNavigateLineStart() {
 		// TODO Should be position to the first none whitespace char??
@@ -528,12 +663,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to go to the line end
-	 */
-	protected final InputAction ACTION_NAVIGATE_LINE_END = new StyledTextInputAction(ActionType.LINE_END, this::defaultNavigateLineEnd);
-
-	/**
-	 * default implementation for {@link #ACTION_NAVIGATE_LINE_END}
+	 * default implementation for {@link DefaultTextEditActions#LINE_END}
 	 */
 	protected void defaultNavigateLineEnd() {
 		final int caretLine = computeCurrentLineNumber();
@@ -541,12 +671,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to go to the next word
-	 */
-	protected final InputAction ACTION_NAVIGATE_WORD_NEXT = new StyledTextInputAction(ActionType.WORD_NEXT, this::defaultNavigateWordNext);
-
-	/**
-	 * default implementation for {@link #ACTION_NAVIGATE_WORD_NEXT}
+	 * default implementation for {@link DefaultTextEditActions#WORD_NEXT}
 	 */
 	protected void defaultNavigateWordNext() {
 		BreakIterator wordInstance = BreakIterator.getWordInstance();
@@ -558,12 +683,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to go to the previous word
-	 */
-	protected final InputAction ACTION_NAVIGATE_WORD_PREVIOUS = new StyledTextInputAction(ActionType.WORD_PREVIOUS, this::defaultNavigateWordPrevious);
-
-	/**
-	 * default implementation for {@link #ACTION_NAVIGATE_WORD_PREVIOUS}
+	 * default implementation for {@link DefaultTextEditActions#WORD_PREVIOUS}
 	 */
 	protected void defaultNavigateWordPrevious() {
 		BreakIterator wordInstance = BreakIterator.getWordInstance();
@@ -575,36 +695,22 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to select to the start of the text
-	 */
-	protected final InputAction ACTION_SELECT_TEXT_START = new StyledTextInputAction(ActionType.SELECT_TEXT_START, this::defaultSelectTextStart);
-
-	/**
-	 * default implementation for {@link #ACTION_SELECT_TEXT_START}
+	 * default implementation for {@link DefaultTextEditActions#TEXT_START}
 	 */
 	protected void defaultSelectTextStart() {
 		moveCaretAbsolute(0, true);
 	}
 
-	/**
-	 * Action to select to the end of the text
-	 */
-	protected final InputAction ACTION_SELECT_TEXT_END = new StyledTextInputAction(ActionType.SELECT_TEXT_END, this::defaultSelectTextEnd);
 
 	/**
-	 * default implementation for {@link #ACTION_SELECT_TEXT_END}
+	 * default implementation for {@link DefaultTextEditActions#TEXT_END}
 	 */
 	protected void defaultSelectTextEnd() {
 		moveCaretAbsolute(getControl().getCharCount(), true);
 	}
 
 	/**
-	 * Action to select until the start of the line
-	 */
-	protected final InputAction ACTION_SELECT_LINE_START = new StyledTextInputAction(ActionType.SELECT_LINE_START, this::defaultSelectLineStart);
-
-	/**
-	 * default implementation for {@link #ACTION_SELECT_LINE_START}
+	 * default implementation for {@link DefaultTextEditActions#LINE_START}
 	 */
 	protected void defaultSelectLineStart() {
 		// TODO Should be position to the first none whitespace char??
@@ -612,12 +718,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to select until the end of the line
-	 */
-	protected final InputAction ACTION_SELECT_LINE_END = new StyledTextInputAction(ActionType.SELECT_LINE_END, this::defaultSelectLineEnd);
-
-	/**
-	 * default implementation for {@link #ACTION_SELECT_LINE_END}
+	 * default implementation for {@link DefaultTextEditActions#LINE_END}
 	 */
 	protected void defaultSelectLineEnd() {
 		int caretLine = getControl().getContent().getLineAtOffset(getControl().getCaretOffset());
@@ -626,12 +727,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to select the next word
-	 */
-	protected final InputAction ACTION_SELECT_WORD_NEXT = new StyledTextInputAction(ActionType.SELECT_WORD_NEXT, this::defaultSelectWordNext);
-
-	/**
-	 * default implementation for {@link #ACTION_SELECT_WORD_NEXT}
+	 * default implementation for {@link DefaultTextEditActions#SELECT_WORD_NEXT}
 	 */
 	protected void defaultSelectWordNext() {
 		BreakIterator wordInstance = BreakIterator.getWordInstance();
@@ -643,12 +739,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to select the previous word
-	 */
-	protected final InputAction ACTION_SELECT_WORD_PREVIOUS = new StyledTextInputAction(ActionType.SELECT_WORD_PREVIOUS, this::defaultSelectWordPrevious);
-
-	/**
-	 * default implementation for {@link #ACTION_SELECT_WORD_PREVIOUS}
+	 * default implementation for {@link DefaultTextEditActions#SELECT_WORD_PREVIOUS}
 	 */
 	protected void defaultSelectWordPrevious() {
 		BreakIterator wordInstance = BreakIterator.getWordInstance();
@@ -660,12 +751,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to select the word at the current cursor
-	 */
-	protected final InputAction ACTION_SELECT_WORD = new StyledTextInputAction(ActionType.SELECT_WORD, this::defaultSelectWord);
-
-	/**
-	 * default implementation for {@link #ACTION_SELECT_WORD}
+	 * default implementation for {@link DefaultTextEditActions#SELECT_WORD}
 	 */
 	protected void defaultSelectWord() {
 		BreakIterator wordInstance = BreakIterator.getWordInstance();
@@ -679,12 +765,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to select the line at the current cursor
-	 */
-	protected final InputAction ACTION_SELECT_LINE = new StyledTextInputAction(this::defaultSelectLine);
-
-	/**
-	 * default implementation for {@link #ACTION_SELECT_LINE}
+	 * default implementation for {@link DefaultTextEditActions#SELECT_LINE}
 	 */
 	protected void defaultSelectLine() {
 		@NonNull
@@ -693,12 +774,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to delete current line
-	 */
-	protected final InputAction ACTION_DELETE_LINE = new StyledTextInputAction(this::defaultDeleteLine);
-
-	/**
-	 * default implementation for {@link #ACTION_DELETE_WORD_NEXT}
+	 * default implementation for {@link DefaultTextEditActions#DELETE_LINE}
 	 */
 	protected void defaultDeleteLine() {
 		LineRegion lineRegion = getLineRegion(getControl().getSelection());
@@ -707,12 +783,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to delete next word
-	 */
-	protected final InputAction ACTION_DELETE_WORD_NEXT = new StyledTextInputAction(ActionType.DELETE_WORD_NEXT, this::defaultDeleteWordNext);
-
-	/**
-	 * default implementation for {@link #ACTION_DELETE_WORD_NEXT}
+	 * default implementation for {@link DefaultTextEditActions#DELETE_WORD_NEXT}
 	 */
 	protected void defaultDeleteWordNext() {
 		int offset = getControl().getCaretOffset();
@@ -725,12 +796,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to delete previous word
-	 */
-	protected final InputAction ACTION_DELETE_WORD_PREVIOUS = new StyledTextInputAction(ActionType.DELETE_WORD_PREVIOUS, this::defaultDeleteWordPrevious);
-
-	/**
-	 * default implementation for {@link #ACTION_DELETE_WORD_PREVIOUS}
+	 * default implementation for {@link DefaultTextEditActions#DELETE_WORD_PREVIOUS}
 	 */
 	protected void defaultDeleteWordPrevious() {
 		int offset = getControl().getCaretOffset();
@@ -744,12 +810,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to move selected lines up
-	 */
-	protected final InputAction ACTION_MOVE_LINES_UP = new StyledTextInputAction(this::defaultMoveLinesUp);
-
-	/**
-	 * default implementation for {@link #ACTION_MOVE_LINES_UP}
+	 * default implementation for {@link DefaultTextEditActions#MOVE_LINES_UP}
 	 */
 	protected void defaultMoveLinesUp() {
 		LineRegion moveTarget = getLineRegion(getControl().getSelection());
@@ -771,12 +832,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to move selected lines down
-	 */
-	protected final InputAction ACTION_MOVE_LINES_DOWN = new StyledTextInputAction(this::defaultMoveLinesDown);
-
-	/**
-	 * default implementation for {@link #ACTION_MOVE_LINES_DOWN}
+	 * default implementation for {@link DefaultTextEditActions#MOVE_LINES_DOWN}
 	 */
 	protected void defaultMoveLinesDown() {
 		LineRegion moveTarget = getLineRegion(getControl().getSelection());
@@ -799,12 +855,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to create a new line
-	 */
-	protected final InputAction ACTION_NEW_LINE = new StyledTextInputAction(ActionType.NEW_LINE, this::defaultNewLine);
-
-	/**
-	 * default implementation for {@link #ACTION_NEW_LINE}
+	 * default implementation for {@link DefaultTextEditActions#NEW_LINE}
 	 */
 	protected void defaultNewLine() {
 		int offset = getControl().getCaretOffset();
@@ -827,12 +878,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to select all
-	 */
-	protected final InputAction ACTION_SELECT_ALL = new StyledTextInputAction(this::defaultSelectAll);
-
-	/**
-	 * default implementation for {@link #ACTION_SELECT_ALL}
+	 * default implementation for {@link DefaultTextEditActions#SELECT_ALL}
 	 */
 	protected void defaultSelectAll() {
 		int length = getControl().getContent().getCharCount();
@@ -840,24 +886,14 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to copy
-	 */
-	protected final InputAction ACTION_COPY = new StyledTextInputAction(this::defaultCopy);
-
-	/**
-	 * default implementation for {@link #ACTION_COPY}
+	 * default implementation for {@link DefaultTextEditActions#COPY}
 	 */
 	protected void defaultCopy() {
 		getControl().copy();
 	}
 
 	/**
-	 * Action to paste
-	 */
-	protected final InputAction ACTION_PASTE = new StyledTextInputAction(this::defaultPaste);
-
-	/**
-	 * default implementation for {@link #ACTION_PASTE}
+	 * default implementation for {@link DefaultTextEditActions#PASTE}
 	 */
 	protected void defaultPaste() {
 		if (getControl().getEditable()) {
@@ -866,12 +902,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to cut
-	 */
-	protected final InputAction ACTION_CUT = new StyledTextInputAction(this::defaultCut);
-
-	/**
-	 * default implementation for {@link #ACTION_CUT}
+	 * default implementation for {@link DefaultTextEditActions#CUT}
 	 */
 	protected void defaultCut() {
 		if (getControl().getEditable()) {
@@ -880,12 +911,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to delete
-	 */
-	protected final InputAction ACTION_DELETE = new StyledTextInputAction(this::defaultDelete);
-
-	/**
-	 * default implementation for {@link #ACTION_DELETE}
+	 * default implementation for {@link DefaultTextEditActions#DELETE}
 	 */
 	protected void defaultDelete() {
 		int offset = getControl().getCaretOffset();
@@ -900,14 +926,9 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to delete backwards
+	 * default implementation for {@link DefaultTextEditActions#DELETE_PREVIOUS}
 	 */
-	protected final InputAction ACTION_BACKSPACE = new StyledTextInputAction(this::defaultBackspace);
-
-	/**
-	 * default implementation for {@link #ACTION_BACKSPACE}
-	 */
-	protected void defaultBackspace() {
+	protected void defaultDeletePrevious() {
 		int offset = getControl().getCaretOffset();
 		TextSelection selection = getControl().getSelection();
 		if (selection.length > 0) {
@@ -927,12 +948,7 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to indent
-	 */
-	protected final InputAction ACTION_INDENT = new StyledTextInputAction(ActionType.INDENT, this::defaultIndent);
-
-	/**
-	 * default implementation for {@link #ACTION_INDENT}
+	 * default implementation for {@link DefaultTextEditActions#INDENT}
 	 */
 	protected void defaultIndent() {
 		if (isMultilineSelection()) {
@@ -978,13 +994,9 @@ public class StyledTextBehavior {
 		}
 	}
 
-	/**
-	 * Action to outdent (opposite of indentation)
-	 */
-	protected final StyledTextInputAction ACTION_OUTDENT = new StyledTextInputAction(ActionType.OUTDENT, this::defaultOutdent);
 
 	/**
-	 * default implementation for {@link #ACTION_OUTDENT}
+	 * default implementation for {@link DefaultTextEditActions#OUTDENT}
 	 */
 	protected void defaultOutdent() {
 		// TODO use LineRegion
@@ -1035,17 +1047,8 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to move caret upwards
-	 */
-	protected final StyledTextInputAction ACTION_MOVE_UP = new StyledTextInputAction(() -> defaultUp(false));
-	/**
-	 * Action to move caret upwards while selecting
-	 */
-	protected final StyledTextInputAction ACTION_SELECT_UP = new StyledTextInputAction(() -> defaultUp(true));
-
-	/**
-	 * default implementation for {@link #ACTION_MOVE_UP} and
-	 * {@link #ACTION_SELECT_UP}
+	 * default implementation for {@link DefaultTextEditActions#MOVE_UP} and
+	 * {@link DefaultTextEditActions#SELECT_UP}
 	 *
 	 * @param select
 	 *            whether to change the selection
@@ -1071,18 +1074,10 @@ public class StyledTextBehavior {
 		moveCaretAbsolute(Math.min(newCaretPosition, maxPosition), select);
 	}
 
-	/**
-	 * Action to move caret down
-	 */
-	protected final StyledTextInputAction ACTION_MOVE_DOWN = new StyledTextInputAction(() -> defaultDown(false));
-	/**
-	 * Action to move caret down while selecting
-	 */
-	protected final StyledTextInputAction ACTION_SELECT_DOWN = new StyledTextInputAction(() -> defaultDown(true));
 
 	/**
-	 * default implementation for {@link #ACTION_MOVE_DOWN} and
-	 * {@link #ACTION_SELECT_DOWN}
+	 * default implementation for {@link DefaultTextEditActions#MOVE_DOWN} and
+	 * {@link DefaultTextEditActions#SELECT_DOWN}
 	 *
 	 * @param select
 	 *            whether to change the selection
@@ -1108,17 +1103,8 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to move caret left
-	 */
-	protected final StyledTextInputAction ACTION_MOVE_LEFT = new StyledTextInputAction(() -> defaultLeft(false));
-	/**
-	 * Action to move caret left while selecting
-	 */
-	protected final StyledTextInputAction ACTION_SELECT_LEFT = new StyledTextInputAction(() -> defaultLeft(true));
-
-	/**
-	 * default implementation for {@link #ACTION_MOVE_LEFT} and
-	 * {@link #ACTION_SELECT_LEFT}
+	 * default implementation for {@link DefaultTextEditActions#MOVE_LEFT} and
+	 * {@link DefaultTextEditActions#SELECT_LEFT}
 	 *
 	 * @param select
 	 *            whether to change the selection
@@ -1127,24 +1113,11 @@ public class StyledTextBehavior {
 		moveCaretRelative(-1, select);
 	}
 
-	protected final StyledTextInputAction ACTION_NAVIGATE_TO_LINE = new StyledTextInputAction(this::defaultNavigateToLine);
+	/**
+	 * default implementation for {@link DefaultTextEditActions#NAVIGATE_TO_LINE}
+	 */
 	protected void defaultNavigateToLine() {
 		try {
-
-//			s-> {
-//				try {
-//					int num = Integer.parseInt(s);
-//					int lineCount = getControl().getContent().getLineCount();
-//					if (num < 0 || num >= lineCount) {
-//						return Optional.of("Must be between 0 and " + lineCount);
-//					}
-//				}
-//				catch (NumberFormatException e) {
-//					return Optional.of(e.getMessage());
-//				}
-//				return Optional.empty();
-//			}
-
 			Optional<Integer> num = ((StyledTextSkin)getControl().getSkin()).fastQuery("Goto Line", "Line Number", Integer::parseInt);
 			num.ifPresent((n)->defaultNavigateToLine(n-1));
 
@@ -1159,18 +1132,10 @@ public class StyledTextBehavior {
 	}
 
 
-	/**
-	 * Action to move caret right
-	 */
-	protected final StyledTextInputAction ACTION_MOVE_RIGHT = new StyledTextInputAction(() -> defaultRight(false));
-	/**
-	 * Action to move caret right while selecting
-	 */
-	protected final StyledTextInputAction ACTION_SELECT_RIGHT = new StyledTextInputAction(() -> defaultRight(true));
 
 	/**
-	 * default implementation for {@link #ACTION_MOVE_RIGHT} and
-	 * {@link #ACTION_SELECT_RIGHT}
+	 * default implementation for {@link DefaultTextEditActions#MOVE_RIGHT} and
+	 * {@link DefaultTextEditActions#SELECT_RIGHT}
 	 *
 	 * @param select
 	 *            whether to change the selection
@@ -1180,24 +1145,15 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Action to scroll one line up
-	 */
-	protected final StyledTextInputAction ACTION_SCROLL_LINE_UP = new StyledTextInputAction(this::defaultScrollLineUp);
-
-	/**
-	 * default implementation for {@link #ACTION_SCROLL_LINE_UP}
+	 * default implementation for {@link DefaultTextEditActions#SCROLL_LINE_UP}
 	 */
 	protected void defaultScrollLineUp() {
 		((StyledTextSkin) getControl().getSkin()).scrollLineUp();
 	}
 
-	/**
-	 * Action to scroll one line down
-	 */
-	protected final StyledTextInputAction ACTION_SCROLL_LINE_DOWN = new StyledTextInputAction(this::defaultScrollLineDown);
 
 	/**
-	 * default implementation for {@link #ACTION_SCROLL_LINE_DOWN}
+	 * default implementation for {@link DefaultTextEditActions#SCROLL_LINE_DOWN}
 	 */
 	protected void defaultScrollLineDown() {
 		((StyledTextSkin) getControl().getSkin()).scrollLineDown();
@@ -1222,420 +1178,104 @@ public class StyledTextBehavior {
 	}
 
 	/**
-	 * Key mappings
-	 */
-	protected static class KeyMapping {
-		/**
-		 * Meta keys
-		 */
-		public static enum MetaKey {
-			/**
-			 * Alt
-			 */
-			AltKey,
-			/**
-			 * Control
-			 */
-			ControlKey,
-			/**
-			 * Meta
-			 */
-			MetaKey,
-			/**
-			 * Shift
-			 */
-			ShiftKey
-		}
-
-		/**
-		 * Key combination
-		 */
-		public static class KeyCombo {
-			/**
-			 * The keycode
-			 */
-			public final KeyCode code;
-			/**
-			 * The meta key
-			 */
-			public final Set<MetaKey> meta;
-
-			/**
-			 * Create a key combination
-			 *
-			 * @param code
-			 *            the code
-			 * @param meta
-			 *            the meta key
-			 */
-			public KeyCombo(KeyCode code, MetaKey... meta) {
-				this.code = code;
-				this.meta = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(meta)));
-			}
-
-			@Override
-			public String toString() {
-				return this.code + " " + this.meta; //$NON-NLS-1$
-			}
-
-			@Override
-			public int hashCode() {
-				final int prime = 31;
-				int result = 1;
-				result = prime * result + ((this.code == null) ? 0 : this.code.hashCode());
-				result = prime * result + ((this.meta == null) ? 0 : this.meta.hashCode());
-				return result;
-			}
-
-			@Override
-			public boolean equals(Object obj) {
-				if (this == obj)
-					return true;
-				if (obj == null)
-					return false;
-				if (getClass() != obj.getClass())
-					return false;
-				KeyCombo other = (KeyCombo) obj;
-				if (this.code != other.code)
-					return false;
-				if (this.meta == null) {
-					if (other.meta != null)
-						return false;
-				} else if (!this.meta.equals(other.meta))
-					return false;
-				return true;
-			}
-
-		}
-
-		/**
-		 * A mapping
-		 */
-		public static interface Mapping {
-			/**
-			 * @return the condition
-			 */
-			Supplier<Boolean> getCondition();
-
-			/**
-			 * @return the action
-			 */
-			InputAction getAction();
-		}
-
-		/**
-		 * A simple mapping
-		 */
-		public static class SimpleMapping implements Mapping {
-			private final Supplier<Boolean> condition;
-			private final InputAction action;
-
-			@Override
-			public Supplier<Boolean> getCondition() {
-				return this.condition;
-			}
-
-			@Override
-			public InputAction getAction() {
-				return this.action;
-			}
-
-			/**
-			 * Create a simple mapping
-			 *
-			 * @param condition
-			 *            the condition
-			 * @param action
-			 *            the action
-			 */
-			public SimpleMapping(Supplier<Boolean> condition, InputAction action) {
-				this.condition = condition;
-				this.action = action;
-			}
-
-		}
-
-		/**
-		 * An input action
-		 */
-		public interface InputAction extends Runnable {
-			// Empty by design
-		}
-
-		private Map<KeyCombo, List<Mapping>> comboMapping = new HashMap<>();
-
-		/**
-		 * maps a key combination to an action
-		 *
-		 * @param combo
-		 * @param action
-		 */
-		public void mapKey(KeyCombo combo, InputAction action) {
-			List<Mapping> list = this.comboMapping.get(combo);
-			if (list == null) {
-				list = new ArrayList<>();
-				this.comboMapping.put(combo, list);
-			}
-			list.add(new SimpleMapping(() -> Boolean.valueOf(true), action));
-		}
-
-		/**
-		 * maps a key combination to an action
-		 *
-		 * @param combo
-		 * @param action
-		 * @param condition
-		 */
-		public void mapKey(KeyCombo combo, InputAction action, Supplier<Boolean> condition) {
-			List<Mapping> list = this.comboMapping.get(combo);
-			if (list == null) {
-				list = new ArrayList<>();
-				this.comboMapping.put(combo, list);
-			}
-			list.add(new SimpleMapping(condition, action));
-		}
-
-		/**
-		 * looks up the action for the specified combo.
-		 *
-		 * @param combo
-		 * @return the input action
-		 */
-		public Optional<InputAction> get(KeyCombo combo) {
-			final List<Mapping> list = this.comboMapping.getOrDefault(combo, Collections.emptyList());
-			return list.stream().filter(m -> m.getCondition().get().booleanValue()).findFirst().map(m -> m.getAction());
-		}
-
-		/**
-		 * looks up the action for the specified key event
-		 *
-		 * @param event
-		 * @return the input action
-		 */
-		public Optional<InputAction> get(KeyEvent event) {
-			return this.get(createFromEvent(event));
-		}
-
-		/**
-		 * unmaps all keys
-		 */
-		public void clearKeyMappings() {
-			this.comboMapping.clear();
-		}
-
-		/**
-		 * unmaps a key
-		 *
-		 * @param combo
-		 */
-		public void unmapKey(KeyCombo combo) {
-			this.comboMapping.remove(combo);
-		}
-
-		/**
-		 * Create a key combination from an event
-		 * @param event the event
-		 * @return the key combination
-		 */
-		public static KeyCombo createFromEvent(KeyEvent event) {
-			Set<MetaKey> metaKeys = new HashSet<>();
-			if (event.isShiftDown())
-				metaKeys.add(ShiftKey);
-			if (event.isControlDown())
-				metaKeys.add(ControlKey);
-			if (event.isAltDown())
-				metaKeys.add(AltKey);
-			if (event.isMetaDown())
-				metaKeys.add(MetaKey);
-
-			return new KeyCombo(event.getCode(), metaKeys.toArray(new MetaKey[] {}));
-		}
-
-	}
-
-	private class StyledTextInputAction implements KeyMapping.InputAction {
-		private final ActionType event;
-		private final Runnable fallback;
-
-		private final Runnable action;
-
-		public StyledTextInputAction(ActionType event, Runnable fallback) {
-			this.event = event;
-			this.fallback = fallback;
-			this.action = null;
-		}
-
-		public StyledTextInputAction(Runnable action) {
-			this.event = null;
-			this.fallback = null;
-			this.action = action;
-		}
-
-		@Override
-		public void run() {
-			if (this.event != null) {
-				ActionEvent evt = new ActionEvent(getControl(), getControl(), this.event);
-				Event.fireEvent(getControl(), evt);
-
-				if (!evt.isConsumed()) {
-					this.fallback.run();
-				}
-			} else {
-				this.action.run();
-			}
-		}
-	}
-
-	/**
 	 * initializes the key mappings.
 	 *
 	 * @param keyMapping
 	 *            the mapping
 	 */
-	protected void initKeymapping(KeyMapping keyMapping) {
+	protected void initKeymapping(TriggerActionMapping m) {
 
 		if (Util.isMacOS()) {
+			m.map("Meta+Left", DefaultTextEditActions.LINE_START); //$NON-NLS-1$
+			m.map("Meta+Right", DefaultTextEditActions.LINE_END); //$NON-NLS-1$
+			m.map("Meta+Up", DefaultTextEditActions.TEXT_START); //$NON-NLS-1$
+			m.map("Meta+Down", DefaultTextEditActions.TEXT_END); //$NON-NLS-1$
+			m.map("Alt+Right", DefaultTextEditActions.WORD_NEXT); //$NON-NLS-1$
+			m.map("Alt+Left", DefaultTextEditActions.WORD_PREVIOUS); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(LEFT, MetaKey), this.ACTION_NAVIGATE_LINE_START);
-			// keyMapping.mapKey(new KeyCombo(A, ControlKey),
-			// this.ACTION_NAVIGATE_LINE_START);
-			keyMapping.mapKey(new KeyCombo(RIGHT, MetaKey), this.ACTION_NAVIGATE_LINE_END);
-			// keyMapping.mapKey(new KeyCombo(E, ControlKey),
-			// this.ACTION_NAVIGATE_LINE_END);
-			keyMapping.mapKey(new KeyCombo(UP, MetaKey), this.ACTION_NAVIGATE_TEXT_START);
-			keyMapping.mapKey(new KeyCombo(DOWN, MetaKey), this.ACTION_NAVIGATE_TEXT_END);
-			keyMapping.mapKey(new KeyCombo(RIGHT, AltKey), this.ACTION_NAVIGATE_WORD_NEXT);
-			keyMapping.mapKey(new KeyCombo(LEFT, AltKey), this.ACTION_NAVIGATE_WORD_PREVIOUS);
+			m.map("Meta+Shift+Left", DefaultTextEditActions.SELECT_LINE_START); //$NON-NLS-1$
+			m.map("Meta+Shift+Right", DefaultTextEditActions.SELECT_LINE_END); //$NON-NLS-1$
+			m.map("Meta+Shift+Up", DefaultTextEditActions.SELECT_TEXT_START); //$NON-NLS-1$
+			m.map("Meta+Shift+Down", DefaultTextEditActions.SELECT_TEXT_END); //$NON-NLS-1$
+			m.map("Alt+Shift+Right", DefaultTextEditActions.SELECT_WORD_NEXT); //$NON-NLS-1$
+			m.map("Alt+Shift+Left", DefaultTextEditActions.SELECT_WORD_PREVIOUS); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(LEFT, MetaKey, ShiftKey), this.ACTION_SELECT_LINE_START);
-			// keyMapping.mapKey(new KeyCombo(A, ControlKey, ShiftKey),
-			// this.ACTION_SELECT_LINE_START);
-			keyMapping.mapKey(new KeyCombo(RIGHT, MetaKey, ShiftKey), this.ACTION_SELECT_LINE_END);
-			// keyMapping.mapKey(new KeyCombo(E, ControlKey, ShiftKey),
-			// this.ACTION_SELECT_LINE_END);
-			keyMapping.mapKey(new KeyCombo(UP, MetaKey, ShiftKey), this.ACTION_SELECT_TEXT_START);
-			keyMapping.mapKey(new KeyCombo(DOWN, MetaKey, ShiftKey), this.ACTION_SELECT_TEXT_END);
-			keyMapping.mapKey(new KeyCombo(RIGHT, AltKey, ShiftKey), this.ACTION_SELECT_WORD_NEXT);
-			keyMapping.mapKey(new KeyCombo(LEFT, AltKey, ShiftKey), this.ACTION_SELECT_WORD_PREVIOUS);
+			m.map("Alt+Delete", DefaultTextEditActions.DELETE_WORD_NEXT); //$NON-NLS-1$
+			m.map("Alt+Backspace", DefaultTextEditActions.DELETE_WORD_PREVIOUS); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(DELETE, AltKey), this.ACTION_DELETE_WORD_NEXT);
-			keyMapping.mapKey(new KeyCombo(BACK_SPACE, AltKey), this.ACTION_DELETE_WORD_PREVIOUS);
-			keyMapping.mapKey(new KeyCombo(D, MetaKey), this.ACTION_DELETE_LINE);
+			m.map("Meta+D", DefaultTextEditActions.DELETE_LINE); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(C, MetaKey), this.ACTION_COPY);
-			keyMapping.mapKey(new KeyCombo(V, MetaKey), this.ACTION_PASTE);
-			keyMapping.mapKey(new KeyCombo(X, MetaKey), this.ACTION_CUT);
+			m.map("Meta+C", DefaultTextEditActions.COPY); //$NON-NLS-1$
+			m.map("Meta+V", DefaultTextEditActions.PASTE); //$NON-NLS-1$
+			m.map("Meta+X", DefaultTextEditActions.CUT); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(A, MetaKey), this.ACTION_SELECT_ALL);
-			keyMapping.mapKey(new KeyCombo(D, MetaKey), this.ACTION_DELETE_LINE);
-			keyMapping.mapKey(new KeyCombo(UP, AltKey), this.ACTION_MOVE_LINES_UP);
-			keyMapping.mapKey(new KeyCombo(DOWN, AltKey), this.ACTION_MOVE_LINES_DOWN);
+			m.map("Meta+A", DefaultTextEditActions.SELECT_ALL); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(KeyCode.L, MetaKey), this.ACTION_NAVIGATE_TO_LINE);
+			m.map("Meta+Up", DefaultTextEditActions.SCROLL_LINE_UP); //$NON-NLS-1$
+			m.map("Meta+Down", DefaultTextEditActions.SCROLL_LINE_DOWN); //$NON-NLS-1$
+
+			m.map("Alt+Up", DefaultTextEditActions.MOVE_LINES_UP); //$NON-NLS-1$
+			m.map("Alt+Down", DefaultTextEditActions.MOVE_LINES_DOWN); //$NON-NLS-1$
+
+			m.map("Meta+L", DefaultTextEditActions.NAVIGATE_TO_LINE); //$NON-NLS-1$
 		} else {
-			keyMapping.mapKey(new KeyCombo(RIGHT, ControlKey), this.ACTION_NAVIGATE_WORD_NEXT);
-			keyMapping.mapKey(new KeyCombo(LEFT, ControlKey), this.ACTION_NAVIGATE_WORD_PREVIOUS);
 
-			keyMapping.mapKey(new KeyCombo(RIGHT, ShiftKey, ControlKey), this.ACTION_SELECT_WORD_NEXT);
-			keyMapping.mapKey(new KeyCombo(LEFT, ShiftKey, ControlKey), this.ACTION_SELECT_WORD_PREVIOUS);
+			m.map("Ctrl+Right", DefaultTextEditActions.WORD_NEXT); //$NON-NLS-1$
+			m.map("Ctrl+Left", DefaultTextEditActions.WORD_PREVIOUS); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(HOME), this.ACTION_NAVIGATE_LINE_START);
-			keyMapping.mapKey(new KeyCombo(HOME, ShiftKey), this.ACTION_SELECT_LINE_START);
-			keyMapping.mapKey(new KeyCombo(HOME, ControlKey), this.ACTION_NAVIGATE_TEXT_START);
-			keyMapping.mapKey(new KeyCombo(HOME, ControlKey, ShiftKey), this.ACTION_SELECT_TEXT_START);
+			m.map("Ctrl+Shift+Right", DefaultTextEditActions.SELECT_WORD_NEXT); //$NON-NLS-1$
+			m.map("Ctrl+Shift+Left", DefaultTextEditActions.SELECT_WORD_PREVIOUS); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(END), this.ACTION_NAVIGATE_LINE_END);
-			keyMapping.mapKey(new KeyCombo(END, ShiftKey), this.ACTION_SELECT_LINE_END);
-			keyMapping.mapKey(new KeyCombo(END, ControlKey), this.ACTION_NAVIGATE_TEXT_END);
-			keyMapping.mapKey(new KeyCombo(END, ControlKey, ShiftKey), this.ACTION_SELECT_TEXT_END);
+			m.map("Home", DefaultTextEditActions.LINE_START); //$NON-NLS-1$
+			m.map("Shift+Home", DefaultTextEditActions.SELECT_LINE_START); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(DELETE, ControlKey), this.ACTION_DELETE_WORD_NEXT);
-			keyMapping.mapKey(new KeyCombo(BACK_SPACE, ControlKey), this.ACTION_DELETE_WORD_PREVIOUS);
+			m.map("Ctrl+Home", DefaultTextEditActions.TEXT_START); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(C, ControlKey), this.ACTION_COPY);
-			keyMapping.mapKey(new KeyCombo(V, ControlKey), this.ACTION_PASTE);
-			keyMapping.mapKey(new KeyCombo(X, ControlKey), this.ACTION_CUT);
+			m.map("Ctrl+Shift+Home", DefaultTextEditActions.SELECT_TEXT_START); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(A, ControlKey), this.ACTION_SELECT_ALL);
+			m.map("End", DefaultTextEditActions.LINE_END); //$NON-NLS-1$
+			m.map("Shift+End", DefaultTextEditActions.SELECT_LINE_END); //$NON-NLS-1$
+			m.map("Ctrl+End", DefaultTextEditActions.TEXT_END); //$NON-NLS-1$
+			m.map("Ctrl+Shift+End", DefaultTextEditActions.SELECT_TEXT_END); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(UP, ControlKey), this.ACTION_SCROLL_LINE_UP);
-			keyMapping.mapKey(new KeyCombo(DOWN, ControlKey), this.ACTION_SCROLL_LINE_DOWN);
+			m.map("Ctrl+Delete", DefaultTextEditActions.DELETE_WORD_NEXT); //$NON-NLS-1$
+			m.map("Ctrl+Backspace", DefaultTextEditActions.DELETE_WORD_PREVIOUS); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(D, ControlKey), this.ACTION_DELETE_LINE);
+			m.map("Ctrl+C", DefaultTextEditActions.COPY); //$NON-NLS-1$
+			m.map("Ctrl+V", DefaultTextEditActions.PASTE); //$NON-NLS-1$
+			m.map("Ctrl+X", DefaultTextEditActions.CUT); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(UP, AltKey), this.ACTION_MOVE_LINES_UP);
-			keyMapping.mapKey(new KeyCombo(DOWN, AltKey), this.ACTION_MOVE_LINES_DOWN);
+			m.map("Ctrl+A", DefaultTextEditActions.SELECT_ALL); //$NON-NLS-1$
 
-			keyMapping.mapKey(new KeyCombo(KeyCode.L, ControlKey), this.ACTION_NAVIGATE_TO_LINE);
+			m.map("Ctrl+Up", DefaultTextEditActions.SCROLL_LINE_UP); //$NON-NLS-1$
+			m.map("Ctrl+Down", DefaultTextEditActions.SCROLL_LINE_DOWN); //$NON-NLS-1$
+
+			m.map("Ctrl+D", DefaultTextEditActions.DELETE_LINE); //$NON-NLS-1$
+
+			m.map("Alt+Up", DefaultTextEditActions.MOVE_LINES_UP); //$NON-NLS-1$
+			m.map("Alt+Down", DefaultTextEditActions.MOVE_LINES_DOWN); //$NON-NLS-1$
+
+			m.map("Ctrl+L", DefaultTextEditActions.NAVIGATE_TO_LINE); //$NON-NLS-1$
 
 		}
 
-		keyMapping.mapKey(new KeyCombo(TAB), this.ACTION_INDENT, this::isMultilineSelection);
-		keyMapping.mapKey(new KeyCombo(TAB, ShiftKey), this.ACTION_OUTDENT);
+		m.mapConditional("tab-on-multiline", this::isMultilineSelection, "Tab", DefaultTextEditActions.INDENT);  //$NON-NLS-1$//$NON-NLS-2$
+		m.map("Shift+Tab", DefaultTextEditActions.OUTDENT); //$NON-NLS-1$
 
-		keyMapping.mapKey(new KeyCombo(DELETE), this.ACTION_DELETE);
-		keyMapping.mapKey(new KeyCombo(BACK_SPACE), this.ACTION_BACKSPACE);
+		m.map("Delete", DefaultTextEditActions.DELETE); //$NON-NLS-1$
+		m.map("Backspace", DefaultTextEditActions.DELETE_PREVIOUS); //$NON-NLS-1$
 
-		keyMapping.mapKey(new KeyCombo(ENTER), this.ACTION_NEW_LINE);
+		m.map("Enter", DefaultTextEditActions.NEW_LINE); //$NON-NLS-1$
 
-		keyMapping.mapKey(new KeyCombo(UP), this.ACTION_MOVE_UP);
-		keyMapping.mapKey(new KeyCombo(DOWN), this.ACTION_MOVE_DOWN);
-		keyMapping.mapKey(new KeyCombo(LEFT), this.ACTION_MOVE_LEFT);
-		keyMapping.mapKey(new KeyCombo(RIGHT), this.ACTION_MOVE_RIGHT);
+		m.map("Up", DefaultTextEditActions.MOVE_UP); //$NON-NLS-1$
+		m.map("Down", DefaultTextEditActions.MOVE_DOWN); //$NON-NLS-1$
+		m.map("Left", DefaultTextEditActions.MOVE_LEFT); //$NON-NLS-1$
+		m.map("Right", DefaultTextEditActions.MOVE_RIGHT); //$NON-NLS-1$
 
-		keyMapping.mapKey(new KeyCombo(UP, ShiftKey), this.ACTION_SELECT_UP);
-		keyMapping.mapKey(new KeyCombo(DOWN, ShiftKey), this.ACTION_SELECT_DOWN);
-		keyMapping.mapKey(new KeyCombo(LEFT, ShiftKey), this.ACTION_SELECT_LEFT);
-		keyMapping.mapKey(new KeyCombo(RIGHT, ShiftKey), this.ACTION_SELECT_RIGHT);
-
-		// action for insert tab support
-		keyMapping.mapKey(new KeyCombo(TAB), () -> getControl().insert("\t")); //$NON-NLS-1$
+		m.map("Shift+Up", DefaultTextEditActions.SELECT_UP); //$NON-NLS-1$
+		m.map("Shift+Down", DefaultTextEditActions.SELECT_DOWN); //$NON-NLS-1$
+		m.map("Shift+Left", DefaultTextEditActions.SELECT_LEFT); //$NON-NLS-1$
+		m.map("Shift+Right", DefaultTextEditActions.SELECT_RIGHT); //$NON-NLS-1$
 	}
-
-	// /**
-	// * computes the text offset under the mouse cursor.
-	// * @param event
-	// * @return the offset
-	// */
-	// private int x_computeCursorOffset(MouseEvent event) {
-	// List<LineCell1> visibleCells = ((StyledTextSkin)
-	// getControl().getSkin()).getCurrentVisibleCells();
-	//
-	// LineCell lastCell = null;
-	//
-	// int result = getControl().getContent().getCharCount();
-	//
-	// for (LineCell tmp : visibleCells) {
-	// Bounds boundsInParent = tmp.getBoundsInParent();
-	// if (boundsInParent.getMinY() > event.getY()) {
-	// if (lastCell == null) {
-	// lastCell = tmp;
-	// }
-	//
-	// if (lastCell.getDomainElement() != null) {
-	// StyledTextLayoutContainer n = (StyledTextLayoutContainer)
-	// lastCell.getGraphic();
-	// if (n.localToScene(n.getBoundsInLocal()).contains(event.getSceneX(),
-	// event.getSceneY())) {
-	// int index = n.getCaretIndexAtPoint(n.sceneToLocal(event.getSceneX(),
-	// event.getSceneY()));
-	// if (index >= 0) {
-	// return n.getStartOffset() + index;
-	// }
-	// }
-	//
-	// final double minX = n.localToScene(n.getBoundsInLocal()).getMinX();
-	// final double mouseX = event.getSceneX();
-	// final boolean left = minX >= mouseX;
-	//
-	// result = lastCell.getDomainElement().getLineOffset() + (left ? 0 :
-	// lastCell.getDomainElement().getLineLength());
-	// }
-	// break;
-	// }
-	// lastCell = tmp;
-	// }
-	// return result;
-	// }
 
 }

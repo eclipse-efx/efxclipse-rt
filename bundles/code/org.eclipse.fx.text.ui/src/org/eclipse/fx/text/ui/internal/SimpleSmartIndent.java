@@ -1,9 +1,11 @@
 package org.eclipse.fx.text.ui.internal;
 
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.text.DefaultTextEditActions;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.text.ui.TextViewer;
-import org.eclipse.fx.ui.controls.styledtext.ActionEvent;
-import org.eclipse.fx.ui.controls.styledtext.ActionEvent.ActionType;
+import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping.Context;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 
@@ -11,17 +13,19 @@ public class SimpleSmartIndent {
 
 	private TextViewer viewer;
 
+	Subscription subscription;
+
 	public SimpleSmartIndent(TextViewer viewer) {
 		this.viewer = viewer;
-		this.viewer.getTextWidget().addEventHandler(ActionEvent.ACTION, this::handle);
+		this.subscription = viewer.subscribeAction(this::handle);
 	}
 
 	public void dispose() {
-		this.viewer.getTextWidget().removeEventHandler(ActionEvent.ACTION, this::handle);
+		this.subscription.dispose();
 	}
 
 	private int findIndentAt(int index) {
-		String beforeEnter = viewer.getDocument().get().substring(0, index);
+		String beforeEnter = this.viewer.getDocument().get().substring(0, index);
 
 		int count = 0;
 		for (int idx = 0; idx < beforeEnter.length(); idx++) {
@@ -37,17 +41,17 @@ public class SimpleSmartIndent {
 		return Math.max(0, count);
 	}
 
-	private void handle(ActionEvent event) {
+	private boolean handle(TextEditAction action, Context context) {
 
-		if (event.type == ActionType.NEW_LINE) {
+		if (action == DefaultTextEditActions.NEW_LINE) {
 			try {
-				IDocument doc = viewer.getDocument();
-				int caret = viewer.getTextWidget().getCaretOffset();
+				IDocument doc = this.viewer.getDocument();
+				int caret = this.viewer.getTextWidget().getCaretOffset();
 
 				int count = findIndentAt(caret);
 
 				String tabString = "\t";
-				if( viewer.getTextWidget().isInsertSpacesForTab() ) {
+				if( this.viewer.getTextWidget().isInsertSpacesForTab() ) {
 					tabString = Util.createRepeatedString(' ', viewer.getTextWidget().getTabAdvance());
 				}
 
@@ -75,9 +79,9 @@ public class SimpleSmartIndent {
 
 
 
-				viewer.getDocument().replace(replaceAt, replaceLen, replace);
-				viewer.getTextWidget().setCaretOffset(caret - replaceLen + replace.length());
-				event.consume();
+				this.viewer.getDocument().replace(replaceAt, replaceLen, replace);
+				this.viewer.getTextWidget().setCaretOffset(caret - replaceLen + replace.length());
+				return true;
 
 
 			}
@@ -85,7 +89,7 @@ public class SimpleSmartIndent {
 				e.printStackTrace();
 			}
 		}
-
+		return false;
 	}
 
 }
