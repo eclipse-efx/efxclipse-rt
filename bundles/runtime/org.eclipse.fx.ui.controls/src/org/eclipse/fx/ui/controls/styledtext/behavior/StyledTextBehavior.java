@@ -18,6 +18,7 @@ import java.util.Optional;
 import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.text.DefaultTextEditActions;
 import org.eclipse.fx.core.text.TextEditAction;
+import org.eclipse.fx.core.text.TextUtil;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.CustomQuickLink;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLink;
@@ -689,9 +690,7 @@ public class StyledTextBehavior {
 	 * default implementation for {@link DefaultTextEditActions#WORD_NEXT}
 	 */
 	protected void defaultNavigateWordNext() {
-		BreakIterator wordInstance = BreakIterator.getWordInstance();
-		wordInstance.setText(new StringCharacterIterator(getControl().getContent().getTextRange(0, getControl().getContent().getCharCount())));
-		int following = wordInstance.following(getControl().getCaretOffset());
+		int following = TextUtil.findWordEndOffset(getControl().getContent(), getControl().getCaretOffset(), true);
 		if (following != BreakIterator.DONE) {
 			moveCaretAbsolute(following);
 		}
@@ -701,9 +700,7 @@ public class StyledTextBehavior {
 	 * default implementation for {@link DefaultTextEditActions#WORD_PREVIOUS}
 	 */
 	protected void defaultNavigateWordPrevious() {
-		BreakIterator wordInstance = BreakIterator.getWordInstance();
-		wordInstance.setText(new StringCharacterIterator(getControl().getContent().getTextRange(0, getControl().getContent().getCharCount())));
-		int previous = wordInstance.preceding(getControl().getCaretOffset());
+		int previous = TextUtil.findWordStartOffset(getControl().getContent(), getControl().getCaretOffset(), true);
 		if (previous != BreakIterator.DONE) {
 			moveCaretAbsolute(previous);
 		}
@@ -745,9 +742,9 @@ public class StyledTextBehavior {
 	 * default implementation for {@link DefaultTextEditActions#SELECT_WORD_NEXT}
 	 */
 	protected void defaultSelectWordNext() {
-		BreakIterator wordInstance = BreakIterator.getWordInstance();
-		wordInstance.setText(new StringCharacterIterator(getControl().getContent().getTextRange(0, getControl().getContent().getCharCount())));
-		int following = wordInstance.following(getControl().getCaretOffset());
+		int following = TextUtil.findWordEndOffset(
+				getControl().getContent(),
+				getControl().getCaretOffset(), true);
 		if (following != BreakIterator.DONE) {
 			moveCaretAbsolute(following, true);
 		}
@@ -757,9 +754,9 @@ public class StyledTextBehavior {
 	 * default implementation for {@link DefaultTextEditActions#SELECT_WORD_PREVIOUS}
 	 */
 	protected void defaultSelectWordPrevious() {
-		BreakIterator wordInstance = BreakIterator.getWordInstance();
-		wordInstance.setText(new StringCharacterIterator(getControl().getContent().getTextRange(0, getControl().getContent().getCharCount())));
-		int previous = wordInstance.preceding(getControl().getCaretOffset());
+		int previous = TextUtil.findWordEndOffset(
+				getControl().getContent(),
+				getControl().getCaretOffset(), true);
 		if (previous != BreakIterator.DONE) {
 			moveCaretAbsolute(previous, true);
 		}
@@ -802,9 +799,9 @@ public class StyledTextBehavior {
 	 */
 	protected void defaultDeleteWordNext() {
 		int offset = getControl().getCaretOffset();
-		BreakIterator wordInstance = BreakIterator.getWordInstance();
-		wordInstance.setText(new StringCharacterIterator(getControl().getContent().getTextRange(0, getControl().getContent().getCharCount())));
-		int following = wordInstance.following(getControl().getCaretOffset());
+		int following = TextUtil.findWordEndOffset(
+				getControl().getContent(),
+				offset, true);
 		if (following != BreakIterator.DONE) {
 			getControl().getContent().replaceTextRange(getControl().getCaretOffset(), following - offset, ""); //$NON-NLS-1$
 		}
@@ -815,9 +812,7 @@ public class StyledTextBehavior {
 	 */
 	protected void defaultDeleteWordPrevious() {
 		int offset = getControl().getCaretOffset();
-		BreakIterator wordInstance = BreakIterator.getWordInstance();
-		wordInstance.setText(new StringCharacterIterator(getControl().getContent().getTextRange(0, getControl().getContent().getCharCount())));
-		int previous = wordInstance.preceding(getControl().getCaretOffset());
+		int previous = TextUtil.findWordStartOffset(getControl().getContent(), offset, true);
 		if (previous != BreakIterator.DONE) {
 			getControl().setCaretOffset(previous);
 			getControl().getContent().replaceTextRange(previous, offset - previous, ""); //$NON-NLS-1$
