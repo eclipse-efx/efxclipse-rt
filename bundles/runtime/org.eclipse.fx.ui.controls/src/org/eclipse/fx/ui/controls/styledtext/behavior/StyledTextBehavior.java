@@ -12,9 +12,9 @@
 package org.eclipse.fx.ui.controls.styledtext.behavior;
 
 import java.text.BreakIterator;
-import java.text.StringCharacterIterator;
 import java.util.Optional;
 
+import org.eclipse.fx.core.IntTuple;
 import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.text.DefaultTextEditActions;
 import org.eclipse.fx.core.text.TextEditAction;
@@ -766,10 +766,9 @@ public class StyledTextBehavior {
 	 * default implementation for {@link DefaultTextEditActions#SELECT_WORD}
 	 */
 	protected void defaultSelectWord() {
-		BreakIterator wordInstance = BreakIterator.getWordInstance();
-		wordInstance.setText(new StringCharacterIterator(getControl().getContent().getTextRange(0, getControl().getContent().getCharCount())));
-		int previous = wordInstance.preceding(getControl().getCaretOffset());
-		int next = wordInstance.following(getControl().getCaretOffset());
+		IntTuple bounds = TextUtil.findWordBounds(getControl().getContent(), getControl().getCaretOffset(), true);
+		int previous = bounds.value1;
+		int next = bounds.value2;
 		if (previous != BreakIterator.DONE && next != BreakIterator.DONE) {
 			moveCaretAbsolute(previous);
 			moveCaretAbsolute(next, true);

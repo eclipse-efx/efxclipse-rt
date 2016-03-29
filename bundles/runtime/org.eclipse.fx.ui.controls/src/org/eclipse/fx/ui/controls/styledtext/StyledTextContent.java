@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.styledtext;
 
+import org.eclipse.fx.core.text.TextUtil.IterableCharSequence;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
@@ -21,7 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * </p>
  * @noreference
  */
-public interface StyledTextContent {
+public interface StyledTextContent extends IterableCharSequence {
 	/**
 	 * Get the content of the line with the given index
 	 *
@@ -133,5 +134,20 @@ public interface StyledTextContent {
 		 *            the event
 		 */
 		public void textChanging(TextChangingEvent event);
+	}
+
+	@Override
+	public default int length() {
+		return getCharCount();
+	}
+
+	@Override
+	public default char charAt(int index) {
+		return getTextRange(index, 1).charAt(0);
+	}
+
+	@Override
+	public default CharSequence subSequence(int start, int end) {
+		return getTextRange(start, end - start);
 	}
 }
