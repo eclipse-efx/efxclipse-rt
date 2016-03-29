@@ -87,6 +87,7 @@ public class PerspectiveListView {
 	@PostConstruct
 	public void init(BorderPane parent) {
 		this.listView = new ListView<>();
+		this.listView.getStyleClass().add("efx-perspective-list"); //$NON-NLS-1$
 		this.listView.setCellFactory(PerspectiveCell::new);
 		this.listView.setItems(FXCollections.observableArrayList(this.modelService.findElements(this.window, null, MPerspective.class, null)));
 		this.listView.getSelectionModel().selectedItemProperty().addListener((o, ol, ne) -> {

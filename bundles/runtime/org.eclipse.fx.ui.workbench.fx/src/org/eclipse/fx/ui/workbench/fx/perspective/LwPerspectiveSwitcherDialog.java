@@ -55,6 +55,7 @@ public class LwPerspectiveSwitcherDialog extends TitleAreaDialog {
 		this.partService = partService;
 		setClientArea(createClient());
 		addDefaultButtons();
+		getStyleClass().add("efx-perspective-switch-dialog"); //$NON-NLS-1$
 	}
 
 	private BorderPane createClient() {
