@@ -53,7 +53,7 @@ public abstract class TitleAreaDialog extends Dialog {
 
 	/**
 	 * Create a new dialog
-	 * 
+	 *
 	 * @param parent
 	 *            the parent
 	 * @param windowTitle
@@ -76,7 +76,7 @@ public abstract class TitleAreaDialog extends Dialog {
 
 	/**
 	 * Create a new dialog
-	 * 
+	 *
 	 * @param parent
 	 *            the parent
 	 * @param windowTitle
@@ -145,7 +145,7 @@ public abstract class TitleAreaDialog extends Dialog {
 		pane.getChildren().add(titleArea);
 		BorderPane dialogContent = new BorderPane();
 		dialogContent.getStyleClass().add("titleDialog_ContentArea"); //$NON-NLS-1$
-		dialogContent.setLeft(createDialogContent());
+		dialogContent.setCenter(createDialogContent());
 		dialogContent.setPadding(new Insets(10, 10, 10, 10));
 		pane.getChildren().add(dialogContent);
 
