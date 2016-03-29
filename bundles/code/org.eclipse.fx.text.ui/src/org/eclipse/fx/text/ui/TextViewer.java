@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.fx.core.Subscription;
@@ -34,6 +33,7 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping;
 import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping.Context;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
+import org.eclipse.fx.ui.controls.styledtext.events.UndoHintEvent;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
@@ -197,6 +197,9 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 
 		this.fTextWidget.addEventHandler(VerifyEvent.VERIFY, this::onVerify);
 
+		this.fTextWidget.addEventHandler(UndoHintEvent.UNDO_HINT_BEGIN_COMPOUND_CHANGE, e->getUndoManager().beginCompoundChange());
+		this.fTextWidget.addEventHandler(UndoHintEvent.UNDO_HINT_END_COMPOUND_CHANGE, e->getUndoManager().endCompoundChange());
+
 //		new LineNumberSupport(this.fTextWidget).install();
 //		new InvisibleCharSupport(this.fTextWidget).install();
 	}
@@ -216,6 +219,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 		return kc;
 	}
 
+	// TODO get rid of onVerify event
 	protected void onVerify(VerifyEvent event) {
 
 //		if (event.isControlDown() && getKeyCode(event) == KeyCode.L) {
@@ -237,7 +241,6 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 //			}
 //			System.err.println("SETTING FEATURES: " + getFeatures().get());
 //		}
-
 
 		// TODO add undo support to textViewer
 		if (getUndoManager() != null) {
@@ -278,7 +281,6 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 					}
 				}
 			}
-
 		}
 	}
 
