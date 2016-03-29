@@ -28,6 +28,7 @@ import org.eclipse.jface.text.IDocument;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.PopupWindow;
 
@@ -160,6 +161,10 @@ public class TextViewerHoverManager {
 			else {
 				this.windowPresenter.hide();
 			}
+
+			styledTextArea.addEventHandler(MouseEvent.MOUSE_PRESSED, event-> {
+				this.windowPresenter.hide();
+			});
 
 
 //			if( e.getOffset() > 0 ) {
