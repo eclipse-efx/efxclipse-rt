@@ -21,12 +21,10 @@ import org.eclipse.fx.code.editor.services.BehaviorContributor;
 import org.eclipse.fx.code.editor.services.BehaviorContributor.MappingRegistry;
 import org.eclipse.fx.code.editor.services.CompletionProposal;
 import org.eclipse.fx.code.editor.services.EditingContext;
-import org.eclipse.fx.code.editor.services.EditingContext.IEditor;
 import org.eclipse.fx.code.editor.services.EditorOpener;
 import org.eclipse.fx.code.editor.services.HoverInformationProvider;
 import org.eclipse.fx.code.editor.services.NavigationProvider;
 import org.eclipse.fx.code.editor.services.ProposalComputer;
-import org.eclipse.fx.code.editor.services.ProposalComputer.ProposalContext;
 import org.eclipse.fx.code.editor.services.SearchProvider;
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.event.EventBus;
@@ -224,7 +222,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 
 	List<ICompletionProposal> computeProposals(ContentAssistContextData data) {
 		try {
-			return proposalComputer.compute(new ProposalContext(input, data.document, data.offset)).get()
+			return proposalComputer.compute(/*new ProposalContext(input, data.document, data.offset)*/).get()
 						.stream()
 						.map(proposalPresenter::createProposal)
 						.collect(Collectors.toList());
@@ -348,35 +346,36 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	}
 
 	@Inject private IDocument document;
-	private EditingContext getEditingContext(Context context) {
-		return new EditingContext(input, document, context.control.getCaretOffset(), new IEditor() {
-			@Override
-			public int getCaret() {
-				return context.control.getCaretOffset();
-			}
 
-			@Override
-			public void setCaret(int loc) {
-				context.control.setCaretOffset(loc);
-			}
-
-			@Override
-			public void setCaret(int loc, boolean keepSelection) {
-				context.control.impl_setCaretOffset(loc, keepSelection);
-			}
-
-			@Override
-			public IRegion getSelection() {
-				return new Region(context.control.getSelection().offset, context.control.getSelection().length);
-			}
-
-			@Override
-			public void setSelection(IRegion selection) {
-				context.control.setSelection(new TextSelection(selection.getOffset(), selection.getLength()));
-			}
-
-		});
-	}
+//	private EditingContext getEditingContext(Context context) {
+//		return new EditingContext(input, document, context.control.getCaretOffset(), new IEditor() {
+//			@Override
+//			public int getCaret() {
+//				return context.control.getCaretOffset();
+//			}
+//
+//			@Override
+//			public void setCaret(int loc) {
+//				context.control.setCaretOffset(loc);
+//			}
+//
+//			@Override
+//			public void setCaret(int loc, boolean keepSelection) {
+//				context.control.impl_setCaretOffset(loc, keepSelection);
+//			}
+//
+//			@Override
+//			public IRegion getSelection() {
+//				return new Region(context.control.getSelection().offset, context.control.getSelection().length);
+//			}
+//
+//			@Override
+//			public void setSelection(IRegion selection) {
+//				context.control.setSelection(new TextSelection(selection.getOffset(), selection.getLength()));
+//			}
+//
+//		});
+//	}
 
 	@Override
 	public TriggerActionMapping getOverrideMapping() {
@@ -403,7 +402,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 					x.mapConditional(conditionId, condition, typedChar, action);
 				}
 			});
-			x.subscribe((e, c)->behaviorContributor.handle(e, getEditingContext(c)));
+			x.subscribe((e, c)->behaviorContributor.handle(e));
 			return x;
 		}
 		return super.getOverrideMapping();

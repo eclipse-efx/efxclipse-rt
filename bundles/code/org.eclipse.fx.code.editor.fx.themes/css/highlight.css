@@ -2,6 +2,18 @@
 	-type-info-color: darkgray;
 }
 
+.styled-text-area .pair-annotation {
+	-fx-background-color: lightgray;
+	-fx-border-color: gray;
+	-fx-border-width: thin;
+}
+
+.styled-text-area .same-word-annotation {
+	-fx-background-color: lightblue;
+	-fx-border-color: blue;
+	-fx-border-width: thin;
+}
+
 .styled-text-area .dart.quick_link {
 	-styled-text-color: blue !important;
 	-efx-decoration: "underline";

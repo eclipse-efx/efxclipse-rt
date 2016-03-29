@@ -23,7 +23,7 @@ public interface BehaviorContributor {
 	 * @param context
 	 * @return true if this action was consumed
 	 */
-	public default boolean handle(TextEditAction action, EditingContext context) {
+	public default boolean handle(TextEditAction action) {
 		return false;
 	}
 

@@ -1,33 +1,26 @@
 package org.eclipse.fx.code.editor.services;
 
-import org.eclipse.fx.code.editor.Input;
-import org.eclipse.jface.text.IDocument;
+import java.util.function.Consumer;
+
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.jface.text.IRegion;
 
-public class EditingContext {
+/**
+ * represents the actual editor instance
+ * <p>allows client code to interact with the editor caret and selection</p>
+ *
+ */
+public interface EditingContext {
 
-	public static interface IEditor {
-		int getCaret();
-		void setCaret(int loc);
-		void setCaret(int loc, boolean keepSelection);
-		IRegion getSelection();
-		void setSelection(IRegion selection);
-	}
+	int getCaretOffset();
+	void setCaretOffset(int offset);
 
-	public final Input<?> input;
-	public final IDocument document;
-	public final int location;
-	public final IEditor editor;
+	void setCaretOffset(int offset, boolean keepSelection);
 
-	public EditingContext(Input<?> input, IDocument document, int location, IEditor editor) {
-		this.input = input;
-		this.document = document;
-		this.location = location;
-		this.editor = editor;
-	}
+	IRegion getSelection();
+	void setSelection(IRegion selection);
 
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + " [input=" + input + ", document=" + document + ", location=" + location + "]";
-	}
+	Subscription registerOnCaretOffsetChanged(Consumer<Integer> listener);
+	Subscription registerOnSelectionChanged(Consumer<IRegion> listener);
+
 }

@@ -10,6 +10,8 @@
 *******************************************************************************/
 package org.eclipse.fx.code.editor.fx;
 
+import java.util.function.Consumer;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
@@ -20,7 +22,10 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.SourceSelection;
+import org.eclipse.fx.code.editor.services.DelegatingEditingContext;
+import org.eclipse.fx.code.editor.services.EditingContext;
 import org.eclipse.fx.code.editor.services.URIProvider;
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.di.ContextValue;
 import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.fx.core.preferences.Preference;
@@ -30,8 +35,11 @@ import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.Region;
 
 import javafx.beans.property.Property;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -55,6 +63,16 @@ public class TextEditor {
 	private Integer tabAdvance;
 
 	private Boolean spacesForTab;
+
+	private EditingContext editingContext;
+
+	@Inject
+	public void setEditingContext(EditingContext editingContext) {
+		if( viewer != null ) {
+			throw new IllegalArgumentException("The EditingContext has to be set before the editor is initialized");
+		}
+		this.editingContext = editingContext;
+	}
 
 	@Inject
 	public void setDocument(IDocument document) {
@@ -140,6 +158,74 @@ public class TextEditor {
 		}
 
 		eventBus.subscribe(Constants.TOPIC_SELECT_SOURCE, EventBus.data(this::onSourceSelect));
+
+
+
+		if (editingContext instanceof DelegatingEditingContext) {
+			DelegatingEditingContext c = (DelegatingEditingContext) editingContext;
+			c.setDelegate(new EditingContext() {
+				private TextSelection convert(IRegion selection) {
+					return new TextSelection(selection.getOffset(), selection.getLength());
+				}
+				private IRegion convert(TextSelection selection) {
+					return new Region(selection.offset, selection.length);
+				}
+
+				@Override
+				public void setSelection(IRegion selection) {
+					viewer.getTextWidget().setSelection(convert(selection));
+				}
+
+				@Override
+				public void setCaretOffset(int offset, boolean keepSelection) {
+					viewer.getTextWidget().impl_setCaretOffset(offset, keepSelection);
+				}
+
+				@Override
+				public void setCaretOffset(int offset) {
+					viewer.getTextWidget().setCaretOffset(offset);
+				}
+
+				@Override
+				public Subscription registerOnSelectionChanged(Consumer<IRegion> listener) {
+					ChangeListener<TextSelection> l = (x, o, n) -> {
+						listener.accept(convert(n));
+					};
+					viewer.getTextWidget().selectionProperty().addListener(l);
+					return new Subscription() {
+						@Override
+						public void dispose() {
+							viewer.getTextWidget().selectionProperty().removeListener(l);
+						}
+					};
+				}
+
+				@Override
+				public Subscription registerOnCaretOffsetChanged(Consumer<Integer> listener) {
+					ChangeListener<? super Number> l = (x, o, n) -> {
+						listener.accept(n.intValue());
+					};
+					viewer.getTextWidget().caretOffsetProperty().addListener(l);
+					return new Subscription() {
+						@Override
+						public void dispose() {
+							viewer.getTextWidget().caretOffsetProperty().removeListener(l);
+						}
+					};
+				}
+
+				@Override
+				public IRegion getSelection() {
+					TextSelection selection = viewer.getTextWidget().getSelection();
+					return convert(selection);
+				}
+
+				@Override
+				public int getCaretOffset() {
+					return viewer.getTextWidget().getCaretOffset();
+				}
+			});
+		}
 	}
 
 	private void onSourceSelect(SourceSelection data) {
