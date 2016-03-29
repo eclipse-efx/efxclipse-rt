@@ -5,7 +5,6 @@
 .styled-text-area .dart.quick_link {
 	-styled-text-color: blue !important;
 	-efx-decoration: "underline";
-	-fx-cursor: hand !important;
 }
 
 .styled-text-area .insertion-marker {
