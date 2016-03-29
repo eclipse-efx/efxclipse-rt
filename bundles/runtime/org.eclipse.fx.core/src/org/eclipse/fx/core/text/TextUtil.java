@@ -15,6 +15,8 @@ import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.Locale;
 
+import org.eclipse.fx.core.IntTuple;
+
 /**
  * Utility methods to deal with texts
  *
@@ -67,5 +69,24 @@ public class TextUtil {
 		BreakIterator wordInstance = pointAsBoundary ? POSIX_ITERATOR : BreakIterator.getWordInstance();
 		wordInstance.setText(content.getIterator());
 		return wordInstance.preceding(offset);
+	}
+
+	/**
+	 * Find the bounds of the word
+	 *
+	 * @param content
+	 *            the content
+	 * @param offset
+	 *            the offset
+	 * @param pointAsBoundary
+	 *            should the '.' treated as word boundary
+	 * @return a tuple of value representing start and end
+	 */
+	public static IntTuple findWordBounds(IterableCharSequence content, int offset, boolean pointAsBoundary) {
+		BreakIterator wordInstance = pointAsBoundary ? POSIX_ITERATOR : BreakIterator.getWordInstance();
+		wordInstance.setText(content.getIterator());
+		int previous = wordInstance.preceding(offset);
+		int next = wordInstance.following(offset);
+		return new IntTuple(previous, next);
 	}
 }
