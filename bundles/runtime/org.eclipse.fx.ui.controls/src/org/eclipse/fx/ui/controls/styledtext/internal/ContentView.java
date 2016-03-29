@@ -346,6 +346,7 @@ public class ContentView  extends Pane {
 		this.lineLayer = new LineLayer(()->new LineNode(area.tabAvanceProperty()), (n, m)->{
 			n.caretLayerVisibleProperty().bind(area.focusedProperty());
 			n.setLineHelper(getLineHelper());
+			n.updateInsertionMarkerIndex(this.insertionMarkerIndex);
 			n.update(this.textAnnotationPresenter.get());
 		});
 		this.area = area;
@@ -753,6 +754,16 @@ public class ContentView  extends Pane {
 
 	public void updatelines(com.google.common.collect.RangeSet<Integer> rs) {
 		updateNodesNow(rs);
+	}
+
+	private int insertionMarkerIndex = -1;
+
+	public void updateInsertionMarkerIndex(int index) {
+		if (this.insertionMarkerIndex != index) {
+			this.insertionMarkerIndex = index;
+		}
+		com.google.common.collect.RangeSet<Integer> rs = TreeRangeSet.create();
+		updateNodesNow(rs.complement());
 	}
 
 	void updateNodesNow(com.google.common.collect.RangeSet<Integer> rs) {

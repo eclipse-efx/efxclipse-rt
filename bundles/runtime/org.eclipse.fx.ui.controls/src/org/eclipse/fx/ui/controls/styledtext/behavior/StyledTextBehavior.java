@@ -195,13 +195,13 @@ public class StyledTextBehavior {
 	}
 
 	private void onKeyPressed(KeyEvent event) {
-	
+
 		boolean handled = this.keyTriggerMapping.triggerAction(event, new Context(getControl()));
 		if (handled) {
 			event.consume();
 			return;
 		}
-	
+
 		if( this.dragMoveTextMode ) {
 			if( event.isShortcutDown() ) {
 				getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, false);
@@ -284,6 +284,9 @@ public class StyledTextBehavior {
 			moveCaretAbsolute(event.getOffset(), true);
 			event.consume();
 		} else if (this.dragMoveTextMode) {
+			// update insertion marker
+			((StyledTextSkin)getControl().getSkin()).updateInsertionMarkerIndex(event.getOffset());
+
 			if( org.eclipse.fx.ui.controls.Util.isCopyEvent(event) ) {
 				getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, false);
 				getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, true);
@@ -300,6 +303,9 @@ public class StyledTextBehavior {
 			this.dragSelectionMode = false;
 			event.consume();
 		} else if (this.dragMoveTextMode) {
+			// update insertion marker
+			((StyledTextSkin)getControl().getSkin()).updateInsertionMarkerIndex(-1);
+
 			getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, false);
 			getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, false);
 

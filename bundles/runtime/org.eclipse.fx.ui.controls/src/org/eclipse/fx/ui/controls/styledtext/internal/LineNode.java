@@ -40,10 +40,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.ClosePath;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 @SuppressWarnings("javadoc")
@@ -258,6 +263,8 @@ public class LineNode extends StackPane {
 
 	}
 
+
+
 	public class SelectionLayer extends Region {
 		Region selectionMarker = new Region();
 
@@ -407,6 +414,75 @@ public class LineNode extends StackPane {
 			this.caret.setStartY(0);
 			this.caret.setEndY(getHeight());
 			this.caret.toFront();
+		}
+	}
+
+	private Node createInsertionMarker(double lineHeight) {
+		double lineWidth = lineHeight / 15d;
+		double arrowSide = lineHeight / 2d;
+		double arrowHeight = arrowSide / 2d;
+
+		Path marker = new Path();
+		marker.getElements().add(new MoveTo(- arrowSide / 2d, - arrowHeight));
+		marker.getElements().add(new LineTo(+ arrowSide / 2d, - arrowHeight));
+		marker.getElements().add(new LineTo(+ lineWidth / 2d, 0));
+		marker.getElements().add(new LineTo(+ lineWidth / 2d, lineHeight));
+		marker.getElements().add(new LineTo(+ arrowSide / 2d, lineHeight + arrowHeight));
+		marker.getElements().add(new LineTo(- arrowSide / 2d, lineHeight + arrowHeight));
+		marker.getElements().add(new LineTo(- lineWidth / 2d, lineHeight));
+		marker.getElements().add(new LineTo(- lineWidth / 2d, 0));
+		marker.getElements().add(new ClosePath());
+
+		marker.setVisible(false);
+		marker.getStyleClass().add("insertion-marker"); //$NON-NLS-1$
+
+		marker.setMouseTransparent(true);
+		return marker;
+	}
+
+	public class InsertionMarkerLayer extends Region {
+		private int insertionIndex = -1;
+
+		private Node insertionMarker;
+
+		public InsertionMarkerLayer() {
+			heightProperty().addListener((x, o, n)-> {
+				this.getChildren().remove(this.insertionMarker);
+				this.insertionMarker = createInsertionMarker(n.doubleValue());
+				this.getChildren().add(this.insertionMarker);
+			});
+			this.insertionMarker = createInsertionMarker(getHeight());
+			this.getChildren().add(this.insertionMarker);
+		}
+
+		void hideMarker() {
+			this.insertionMarker.setVisible(false);
+		}
+
+		private void showMarker() {
+			this.insertionMarker.setVisible(true);
+		}
+
+		public void updateInsertionIndex(int index) {
+			if (index != this.insertionIndex) {
+				if (index == -1) {
+					hideMarker();
+				}
+				else {
+					showMarker();
+				}
+
+				this.insertionIndex = index;
+				requestLayout();
+			}
+		}
+
+		@Override
+		public void layoutChildren() {
+			double caretOffset = getCharLocation(this.insertionIndex);
+			this.insertionMarker.setLayoutX(caretOffset);
+			this.insertionMarker.setLayoutY(0);
+			this.insertionMarker.toFront();
 		}
 	}
 
@@ -611,6 +687,7 @@ public class LineNode extends StackPane {
 	private SelectionLayer selectionLayer = new SelectionLayer();
 	private CaretLayer caretLayer = new CaretLayer();
 	private AnnotationLayer annotationLayer = new AnnotationLayer();
+	private InsertionMarkerLayer insertionMarkerLayer = new InsertionMarkerLayer();
 
 	public LineNode(IntegerProperty tabCharAdvance) {
 		this.textLayer = new TextLayer(tabCharAdvance);
@@ -622,7 +699,7 @@ public class LineNode extends StackPane {
 
 //		setStyle("-fx-border-width: 0.1px; -fx-border-color: red");
 
-		getChildren().setAll(this.selectionLayer, this.textLayer, this.caretLayer, this.annotationLayer);
+		getChildren().setAll(this.insertionMarkerLayer, this.selectionLayer, this.textLayer, this.caretLayer, this.annotationLayer);
 
 		if (debugAnimation) {
 			this.debugUpdateAnnotations = new DebugMarker(Color.RED, 400);
@@ -671,6 +748,14 @@ public class LineNode extends StackPane {
 		updateSelection(this.lineHelper.getSelection(this.index), this.lineHelper.isValidLineIndex(this.index+1) ? this.lineHelper.getSelection(this.index+1) : null  );
 		updateCaret(this.lineHelper.getCaret(this.index));
 		updateAnnotations(this.lineHelper.getTextAnnotations(this.index), presenters);
+	}
+
+	public void updateInsertionMarkerIndex(int globalOffset) {
+		final int lineOffset = this.lineHelper.getOffset(this.index);
+		final int lineWidth = this.lineHelper.getLength(this.index);
+		final int localOffset = globalOffset >= lineOffset && globalOffset <= lineOffset + lineWidth ? globalOffset - lineOffset : -1;
+		//System.err.println("update insertion marker idx in line: " + this.index + ": " + globalOffset + " / " + localOffset);
+		this.insertionMarkerLayer.updateInsertionIndex(localOffset);
 	}
 
 

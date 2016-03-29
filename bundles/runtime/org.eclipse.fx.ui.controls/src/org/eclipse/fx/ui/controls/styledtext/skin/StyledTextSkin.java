@@ -33,6 +33,7 @@ import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
+import org.eclipse.fx.ui.controls.styledtext.events.TextPositionEvent;
 import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
 import org.eclipse.fx.ui.controls.styledtext.internal.FXBindUtil;
 import org.eclipse.fx.ui.controls.styledtext.internal.LineHelper;
@@ -395,6 +396,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		Platform.runLater( () -> {
 			scrollOffsetIntoView(getSkinnable().getCaretOffset(), 10, 12);
 		});
+
 	}
 
 	public Optional<TextNode> findTextNode(Point2D screenLocation) {
@@ -553,5 +555,9 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		TreeRangeSet<Integer> set = TreeRangeSet.create();
 		set.add(Range.closed(startLine, endLine));
 		this.content.updatelines(set);
+	}
+
+	public void updateInsertionMarkerIndex(int offset) {
+		this.content.updateInsertionMarkerIndex(offset);
 	}
 }

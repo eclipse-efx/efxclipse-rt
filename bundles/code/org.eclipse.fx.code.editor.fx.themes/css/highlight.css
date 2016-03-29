@@ -8,6 +8,11 @@
 	-fx-cursor: hand !important;
 }
 
+.styled-text-area .insertion-marker {
+	-fx-fill: rgb(42, 0, 255);
+	-fx-stroke: none;
+}
+
 .styled-text-area .invisible-char {
 	-fx-fill: darkgray;
 }

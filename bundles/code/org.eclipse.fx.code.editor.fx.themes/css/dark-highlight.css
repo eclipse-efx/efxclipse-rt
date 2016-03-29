@@ -7,6 +7,11 @@
 	-efx-decoration: "underline";
 }
 
+.styled-text-area .insertion-marker {
+	-fx-fill: lightblue;
+	-fx-stroke: none;
+}
+
 .styled-text-area .invisible-char {
 	-fx-fill: darkgray;
 }
