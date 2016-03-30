@@ -197,10 +197,16 @@ public class StyledTextBehavior {
 
 	private void onKeyPressed(KeyEvent event) {
 
-		boolean handled = this.keyTriggerMapping.triggerAction(event, new Context(getControl()));
-		if (handled) {
-			event.consume();
-			return;
+		getControl().fireEvent(UndoHintEvent.createBeginCompoundChangeEvent());
+		try {
+			boolean handled = this.keyTriggerMapping.triggerAction(event, new Context(getControl()));
+			if (handled) {
+				event.consume();
+				return;
+			}
+		}
+		finally {
+			getControl().fireEvent(UndoHintEvent.createEndCompoundChangeEvent());
 		}
 
 		if( this.dragMoveTextMode ) {
@@ -259,7 +265,15 @@ public class StyledTextBehavior {
 				getControl().insert(character);
 
 				// check for typed char action
-				this.keyTriggerMapping.triggerAction(character.charAt(0), new Context(getControl()));
+
+				getControl().fireEvent(UndoHintEvent.createBeginCompoundChangeEvent());
+				try {
+					this.keyTriggerMapping.triggerAction(character.charAt(0), new Context(getControl()));
+				}
+				finally {
+					getControl().fireEvent(UndoHintEvent.createEndCompoundChangeEvent());
+				}
+
 			}
 
 		}
