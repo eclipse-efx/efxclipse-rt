@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.fx.core.Subscription;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -50,6 +51,8 @@ public abstract class TitleAreaDialog extends Dialog {
 	private URL imageURI;
 	@Nullable
 	private String iconClass;
+	private Label messageLabel;
+	private Subscription currentTemporyMessage;
 
 	/**
 	 * Create a new dialog
@@ -65,9 +68,7 @@ public abstract class TitleAreaDialog extends Dialog {
 	 * @param imageURI
 	 *            the uri of the image to display
 	 */
-	public TitleAreaDialog(@Nullable Window parent,
-			@NonNull String windowTitle, @NonNull String title,
-			@NonNull String message, @Nullable URL imageURI) {
+	public TitleAreaDialog(@Nullable Window parent, @NonNull String windowTitle, @NonNull String title, @NonNull String message, @Nullable URL imageURI) {
 		super(parent, windowTitle);
 		this.title = title;
 		this.message = message;
@@ -88,9 +89,7 @@ public abstract class TitleAreaDialog extends Dialog {
 	 * @param iconClass
 	 *            the css class to use for the icon
 	 */
-	public TitleAreaDialog(@Nullable Window parent,
-			@NonNull String windowTitle, @NonNull String title,
-			@Nullable String message, @Nullable String iconClass) {
+	public TitleAreaDialog(@Nullable Window parent, @NonNull String windowTitle, @NonNull String title, @Nullable String message, @Nullable String iconClass) {
 		super(parent, windowTitle);
 		this.title = title;
 		this.message = message;
@@ -110,10 +109,10 @@ public abstract class TitleAreaDialog extends Dialog {
 		VBox pane = new VBox();
 		BorderPane titleArea = new BorderPane();
 		titleArea.getStyleClass().add("titleDialog_TitleArea"); //$NON-NLS-1$
-//		titleArea.setPadding(new Insets(0, 0, 0, 10));
+		// titleArea.setPadding(new Insets(0, 0, 0, 10));
 
 		VBox messageArea = new VBox();
-//		messageArea.setPadding(new Insets(10, 0, 0, 0));
+		// messageArea.setPadding(new Insets(10, 0, 0, 0));
 		messageArea.getStyleClass().add("titleDialog_MessageArea"); //$NON-NLS-1$
 
 		{
@@ -123,9 +122,9 @@ public abstract class TitleAreaDialog extends Dialog {
 		}
 
 		{
-			Label l = new Label(this.message);
-			l.getStyleClass().add("titleDialog_Message"); //$NON-NLS-1$
-			messageArea.getChildren().add(l);
+			this.messageLabel = new Label(this.message);
+			this.messageLabel.getStyleClass().add("titleDialog_Message"); //$NON-NLS-1$
+			messageArea.getChildren().add(this.messageLabel);
 		}
 
 		titleArea.setCenter(messageArea);
@@ -161,4 +160,69 @@ public abstract class TitleAreaDialog extends Dialog {
 	 * @return create the content node
 	 */
 	protected abstract Node createDialogContent();
+
+	/**
+	 * Show a temporary message if another temporary message is already showing
+	 * then the original one will be removed before
+	 *
+	 * @param temporaryMessage
+	 *            the message to display
+	 * @param messageStyles
+	 *            the message styles to apply
+	 * @return the subscription to remove the temporary message
+	 * @since 2.4.0
+	 */
+	public Subscription showTemporaryMessage(String temporaryMessage, String... messageStyles) {
+		if (this.currentTemporyMessage != null) {
+			this.currentTemporyMessage.dispose();
+		}
+		this.messageLabel.setText(temporaryMessage);
+		this.messageLabel.getStyleClass().addAll(messageStyles);
+		this.currentTemporyMessage = () -> {
+			this.messageLabel.setText(this.message);
+			this.messageLabel.getStyleClass().removeAll(messageStyles);
+			this.currentTemporyMessage = null;
+		};
+
+		return this.currentTemporyMessage;
+	}
+
+	/**
+	 * Show a temporary warning message if another temporary message is already
+	 * showing then the original one will be removed before
+	 *
+	 * @param temporaryMessage
+	 *            the temporary message
+	 * @return the subscription to remove the temporary message
+	 * @since 2.4.0
+	 */
+	public Subscription showTemporaryWarningMessage(String temporaryMessage) {
+		return showTemporaryMessage(temporaryMessage, "warning-message"); //$NON-NLS-1$
+	}
+
+	/**
+	 * Show a temporary error message if another temporary message is already
+	 * showing then the original one will be removed before
+	 *
+	 * @param temporaryMessage
+	 *            the temporary message
+	 * @return the subscription to remove the temporary message
+	 * @since 2.4.0
+	 */
+	public Subscription showTemporaryErrorMessage(String temporaryMessage) {
+		return showTemporaryMessage(temporaryMessage, "error-message"); //$NON-NLS-1$
+	}
+
+	/**
+	 * Show a temporary info message if another temporary message is already
+	 * showing then the original one will be removed before
+	 *
+	 * @param temporaryMessage
+	 *            the temporary message
+	 * @return the subscription to remove the temporary message
+	 * @since 2.4.0
+	 */
+	public Subscription showTemporaryInfoMessage(String temporaryMessage) {
+		return showTemporaryMessage(temporaryMessage, "info-message"); //$NON-NLS-1$
+	}
 }

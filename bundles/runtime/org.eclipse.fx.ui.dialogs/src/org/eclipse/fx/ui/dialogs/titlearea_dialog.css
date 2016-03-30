@@ -1,6 +1,6 @@
 .titleDialog_TitleArea {
-	-fx-border-style: none none solid none; 
-	-fx-border-color: #b4b4b4; 
+	-fx-border-style: none none solid none;
+	-fx-border-color: #b4b4b4;
 	-fx-border-width: 0 0 1 0;
 	-fx-background-color: derive( -fx-background, 40% );
 	-fx-padding: 10;
@@ -20,7 +20,7 @@ VBox.titleDialog_MessageArea {
 }
 
 .MessageTitleDialog {
-	-fx-background-color: linear-gradient(#ffffff,#f3f3f4);	
+	-fx-background-color: linear-gradient(#ffffff,#f3f3f4);
 }
 
 .MessageTitleDialog .titleDialog_Icon-error {
@@ -45,4 +45,16 @@ VBox.titleDialog_MessageArea {
 
 .MessageTitleDialog .titleDialog_Icon-question_cancel {
 	-fx-image: url("icons/system-help.png");
+}
+
+.titleDialog_MessageArea .titleDialog_Message.warning-message {
+	-fx-graphic: url("icons/dialog-warning-16.png");
+}
+
+.titleDialog_MessageArea .titleDialog_Message.error-message {
+	-fx-graphic: url("icons/dialog-error-16.png");
+}
+
+.titleDialog_MessageArea .titleDialog_Message.info-message {
+	-fx-graphic: url("icons/dialog-information-16.png");
 }
