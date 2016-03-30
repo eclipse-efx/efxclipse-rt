@@ -12,36 +12,24 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui.source;
 
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import org.eclipse.core.commands.operations.TriggeredOperations;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.text.SourceTextEditActions;
 import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.text.hover.HoverInfo;
-import org.eclipse.fx.text.navigation.NavigationRegion;
-import org.eclipse.fx.text.navigation.NavigationTarget;
 import org.eclipse.fx.text.ui.ITextViewerExtension2;
 import org.eclipse.fx.text.ui.TextViewer;
-import org.eclipse.fx.text.ui.contentassist.ContentAssistant;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
 import org.eclipse.fx.text.ui.internal.AnnotationModelSupport;
-import org.eclipse.fx.text.ui.internal.SimpleSmartIndent;
 import org.eclipse.fx.text.ui.internal.WrappedLineRulerAnnotationPresenter;
 import org.eclipse.fx.text.ui.internal.WrappedTextAnnotationPresenter;
 import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
 import org.eclipse.fx.text.ui.reconciler.IReconciler;
 import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping;
 import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping.Context;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLink;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.QuickLinkable;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.SimpleQuickLink;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ISynchronizable;
@@ -51,8 +39,6 @@ import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.AnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelExtension;
-
-import com.google.common.collect.Range;
 
 public class SourceViewer extends TextViewer implements ISourceViewer, ISourceViewerExtension, ISourceViewerExtension2, ISourceViewerExtension3, ISourceViewerExtension4 {
 
@@ -162,9 +148,6 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		}
 
 		getTextWidget().setQuickLinkCallback(configuration.getQuicklinkCallback());
-
-
-		new SimpleSmartIndent(this);
 
 	}
 
