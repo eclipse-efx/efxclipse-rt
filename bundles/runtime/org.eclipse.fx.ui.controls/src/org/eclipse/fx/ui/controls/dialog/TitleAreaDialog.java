@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.controls.dialog;
 
+import org.eclipse.fx.core.Subscription;
+
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -22,9 +24,11 @@ import javafx.scene.layout.VBox;
  * A dialog with a reserved area at the top to display informations
  */
 public class TitleAreaDialog extends Dialog {
+	private Subscription currentTemporyMessage;
+
 	/**
 	 * Create a new dialog
-	 * 
+	 *
 	 * @param frameTitle
 	 *            the title displayed in the frame
 	 * @param title
@@ -38,7 +42,7 @@ public class TitleAreaDialog extends Dialog {
 
 	/**
 	 * Create a new dialog
-	 * 
+	 *
 	 * @param clientArea
 	 *            the client area
 	 * @param frameTitle
@@ -58,16 +62,16 @@ public class TitleAreaDialog extends Dialog {
 	protected TitleAreaDialogPane getDialogPane() {
 		return (TitleAreaDialogPane) super.getDialogPane();
 	}
-	
+
 	/**
 	 * Pane with a title area next to the content area
 	 */
 	public static class TitleAreaDialogPane extends DefaultDialogContentPane {
 		private final Label titleLabel;
-		private final Label titleMessage;
-		
+		final Label titleMessage;
+
 		/**
-		 * 
+		 *
 		 */
 		public TitleAreaDialogPane() {
 			HBox box = new HBox();
@@ -94,19 +98,85 @@ public class TitleAreaDialog extends Dialog {
 
 			setTop(box);
 		}
-		
+
 		/**
 		 * @return the title property
 		 */
 		public StringProperty titleProperty() {
 			return this.titleLabel.textProperty();
 		}
-		
+
 		/**
 		 * @return the message property
 		 */
 		public StringProperty titleMessageProperty() {
 			return this.titleMessage.textProperty();
 		}
+	}
+
+	/**
+	 * Show a temporary message if another temporary message is already showing
+	 * then the original one will be removed before
+	 *
+	 * @param temporaryMessage
+	 *            the message to display
+	 * @param messageStyles
+	 *            the message styles to apply
+	 * @return the subscription to remove the temporary message
+	 * @since 2.4.0
+	 */
+	public Subscription showTemporaryMessage(String temporaryMessage, String... messageStyles) {
+		if (this.currentTemporyMessage != null) {
+			this.currentTemporyMessage.dispose();
+		}
+		TitleAreaDialogPane dialogPane = getDialogPane();
+		dialogPane.titleMessage.setText(temporaryMessage);
+		dialogPane.titleMessage.getStyleClass().addAll(messageStyles);
+		this.currentTemporyMessage = () -> {
+			dialogPane.titleMessage.setText(titleProperty().get());
+			dialogPane.titleMessage.getStyleClass().removeAll(messageStyles);
+			this.currentTemporyMessage = null;
+		};
+
+		return this.currentTemporyMessage;
+	}
+
+	/**
+	 * Show a temporary warning message if another temporary message is already
+	 * showing then the original one will be removed before
+	 *
+	 * @param temporaryMessage
+	 *            the temporary message
+	 * @return the subscription to remove the temporary message
+	 * @since 2.4.0
+	 */
+	public Subscription showTemporaryWarningMessage(String temporaryMessage) {
+		return showTemporaryMessage(temporaryMessage, "warning-message"); //$NON-NLS-1$
+	}
+
+	/**
+	 * Show a temporary error message if another temporary message is already
+	 * showing then the original one will be removed before
+	 *
+	 * @param temporaryMessage
+	 *            the temporary message
+	 * @return the subscription to remove the temporary message
+	 * @since 2.4.0
+	 */
+	public Subscription showTemporaryErrorMessage(String temporaryMessage) {
+		return showTemporaryMessage(temporaryMessage, "error-message"); //$NON-NLS-1$
+	}
+
+	/**
+	 * Show a temporary info message if another temporary message is already
+	 * showing then the original one will be removed before
+	 *
+	 * @param temporaryMessage
+	 *            the temporary message
+	 * @return the subscription to remove the temporary message
+	 * @since 2.4.0
+	 */
+	public Subscription showTemporaryInfoMessage(String temporaryMessage) {
+		return showTemporaryMessage(temporaryMessage, "info-message"); //$NON-NLS-1$
 	}
 }

@@ -57,3 +57,15 @@
 .efx-messagedialog-question_cancel ImageView.efx-messagedialog-icon {
 	-fx-image: url("icons/system-help.png");
 }
+
+.efx-dialog-title-area .efx-dialog-title-message.warning-message {
+	-fx-graphic: url("icons/dialog-warning-16.png");
+}
+
+.efx-dialog-title-area .efx-dialog-title-message.error-message {
+	-fx-graphic: url("icons/dialog-error-16.png");
+}
+
+.efx-dialog-title-area .efx-dialog-title-message.info-message {
+	-fx-graphic: url("icons/dialog-information-16.png");
+}
