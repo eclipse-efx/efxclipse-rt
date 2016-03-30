@@ -19,7 +19,7 @@ package org.eclipse.fx.core;
  *            type of value 2
  * @since 2.4.0
  */
-public final class Duple<U, V> {
+public final class Tuple<U, V> {
 	/**
 	 * Value 1
 	 */
@@ -37,7 +37,7 @@ public final class Duple<U, V> {
 	 * @param value2
 	 *            the value
 	 */
-	public Duple(U value1, V value2) {
+	public Tuple(U value1, V value2) {
 		this.value1 = value1;
 		this.value2 = value2;
 	}
