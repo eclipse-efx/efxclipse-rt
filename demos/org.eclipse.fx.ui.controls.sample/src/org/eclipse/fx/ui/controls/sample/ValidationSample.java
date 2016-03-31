@@ -53,7 +53,8 @@ public class ValidationSample extends Application {
 			p.getChildren().add(l);
 
 			TextField field = new TextField();
-			p.getChildren().add(form.builder("firstname",field.textProperty(), vm.firstname, BindingConfiguration.VALIDATE_TO_OPPOSITE).decoratedNode(field)
+			p.getChildren().add(form.builder("firstname",field.textProperty(), vm.firstname, BindingConfiguration.VALIDATE_TO_OPPOSITE)
+				.decoratedNode(field)
 				.decoratedNodeMutator(new GridData(GridData.FILL_HORIZONTAL), GridLayoutPane::setConstraint)
 				.validator( s -> s.isEmpty() ? Status.status(State.ERROR, -1, "Vorname muß befüllt sein", null) : Status.ok())
 				.build()
@@ -65,7 +66,8 @@ public class ValidationSample extends Application {
 			p.getChildren().add(l);
 
 			TextField field = new TextField();
-			p.getChildren().add(form.builder("lastname",field.textProperty(), vm.lastname, BindingConfiguration.VALIDATE_TO_OPPOSITE).decoratedNode(field)
+			p.getChildren().add(form.builder("lastname",field.textProperty(), vm.lastname, BindingConfiguration.VALIDATE_TO_OPPOSITE)
+				.decoratedNode(field)
 				.decoratedNodeMutator(new GridData(GridData.FILL_HORIZONTAL), GridLayoutPane::setConstraint)
 				.validator( s -> s.isEmpty() ? Status.status(State.ERROR, -1, "Nachname muß befüllt sein", null) : Status.ok())
 				.build()
