@@ -173,7 +173,7 @@ public class DefaultForm implements Form {
 		private BindingConfiguration type;
 		private final DefaultForm form;
 		private Node decoratedNode;
-		private Optional<Node> cachedNode;
+		private Node cachedNode;
 
 		public BindingImpl(DefaultForm form, String id, Node decoratedNode, Property<T> validatedProperty,
 				Property<T> oppositeProperty,
@@ -237,16 +237,14 @@ public class DefaultForm implements Form {
 		}
 
 		@Override
-		public Optional<Node> decoratedNode() {
+		public Node nodeWithStatus() {
 			if( this.cachedNode == null ) {
-				this.cachedNode = Optional.ofNullable(this.decoratedNode)
-						.map( n -> this.form.decorator.decorate(this.validationStatus, n))
-						.map( n -> {
-							if( this.nodeMutatorList != null ) {
-								this.nodeMutatorList.forEach( m -> m.mutator.accept(n, m.data));
-							}
-							return n;
-						});
+				this.cachedNode = this.form.decorator.decorate(this.validationStatus, this.decoratedNode);
+				if( this.nodeMutatorList != null ) {
+					this.nodeMutatorList.forEach( m -> m.mutator.accept(this.cachedNode, m.data));
+				}
+			} else {
+				this.cachedNode = new StatusNode(this.validationStatus);
 			}
 			return this.cachedNode;
 		}
