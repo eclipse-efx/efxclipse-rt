@@ -22,7 +22,6 @@ public class StatusNode extends Region {
 		statusIcon.getStyleClass().add("status-icon"); //$NON-NLS-1$
 		updatePseudoState(statusIcon, statusProperty.getValue());
 		statusProperty.addListener( (o, ol, ne) -> {
-			System.err.println("STATUS CHANGED!!!!");
 			updatePseudoState(statusIcon, ne);
 		});
 		getChildren().add(statusIcon);
