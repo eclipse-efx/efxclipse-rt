@@ -1,0 +1,20 @@
+.status-icon {
+	-fx-pref-width: 24;
+	-fx-pref-height: 24;
+}
+
+.status-icon:error {
+	-fx-graphic: url("icons/dialog-error-24.png");
+}
+
+.status-icon:warning {
+	-fx-graphic: url("icons/dialog-warning-24.png");
+}
+
+.status-icon:cancel {
+
+}
+
+.status-icon:ok {
+	visibility: false;
+}
