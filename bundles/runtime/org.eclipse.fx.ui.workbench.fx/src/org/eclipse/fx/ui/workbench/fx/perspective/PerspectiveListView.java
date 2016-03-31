@@ -92,7 +92,7 @@ public class PerspectiveListView {
 		this.listView.setItems(FXCollections.observableArrayList(this.modelService.findElements(this.window, null, MPerspective.class, null)));
 		this.listView.getSelectionModel().selectedItemProperty().addListener((o, ol, ne) -> {
 			if (this.selectionConsumer != null) {
-				this.selectionConsumer.accept(this.currentPerspective);
+				this.selectionConsumer.accept(ne);
 			}
 		});
 		this.listView.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
