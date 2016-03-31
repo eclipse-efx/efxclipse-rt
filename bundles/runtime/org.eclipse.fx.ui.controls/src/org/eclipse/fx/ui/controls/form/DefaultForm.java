@@ -35,7 +35,7 @@ public class DefaultForm implements Form {
 	static Predicate<Status> WARNING_ERROR = s -> s.getState() == State.ERROR || s.getState() == State.WARNING;
 
 	public DefaultForm() {
-		this(Util.lookupService(DefaultForm.class, StatusDecorator.class));
+		this(Util.getService(DefaultForm.class, StatusDecorator.class).orElse(new SimpleStatusDecorator()));
 	}
 
 	public DefaultForm(StatusDecorator decorator) {
