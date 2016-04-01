@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.fx.ui.controls.image.skin.FontIconViewSkin;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -26,6 +28,7 @@ import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleableProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Control;
+import javafx.scene.control.Skin;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -39,15 +42,14 @@ public class FontIconView extends Control {
 	 * Create a new font icon view
 	 */
 	public FontIconView() {
-		getStyleClass().setAll("fonticonview"); //$NON-NLS-1$
+		getStyleClass().setAll("font-icon-view"); //$NON-NLS-1$
 		setFocusTraversable(false);
 		setMouseTransparent(true);
 	}
 
 	@Override
-	public String getUserAgentStylesheet() {
-		String uri = FontIconView.class.getResource("fonticonview.css").toExternalForm(); //$NON-NLS-1$
-		return uri;
+	protected Skin<?> createDefaultSkin() {
+		return new FontIconViewSkin(this);
 	}
 
 	@Deprecated

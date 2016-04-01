@@ -69,3 +69,7 @@
 .efx-dialog-title-area .efx-dialog-title-message.info-message {
 	-fx-graphic: url("icons/dialog-information-16.png");
 }
+
+.efx-dialog-title-font-icon {
+	visibility: hidden;
+}

@@ -11,6 +11,7 @@
 package org.eclipse.fx.ui.controls.dialog;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.ui.controls.image.FontIconView;
 
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
@@ -18,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -92,9 +94,17 @@ public class TitleAreaDialog extends Dialog {
 
 			HBox.setHgrow(messageArea, Priority.ALWAYS);
 
+			StackPane container = new StackPane();
+			container.getStyleClass().add("efx-dialog-graphic-container"); //$NON-NLS-1$
+
 			ImageView titleImage = new ImageView();
 			titleImage.getStyleClass().add("efx-dialog-title-image"); //$NON-NLS-1$
-			box.getChildren().addAll(messageArea, titleImage);
+
+			FontIconView v = new FontIconView();
+			v.getStyleClass().add("efx-dialog-title-font-icon"); //$NON-NLS-1$
+			container.getChildren().addAll(titleImage,v);
+
+			box.getChildren().addAll(messageArea, container);
 
 			setTop(box);
 		}
