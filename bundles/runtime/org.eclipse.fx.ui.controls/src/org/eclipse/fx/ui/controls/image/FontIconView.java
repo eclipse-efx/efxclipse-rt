@@ -265,7 +265,7 @@ public class FontIconView extends Control {
 			@SuppressWarnings("unchecked")
 			@Override
 			public StyleableProperty<Number> getStyleableProperty(FontIconView n) {
-				return (StyleableProperty<Number>) n.iconFontSize;
+				return (StyleableProperty<Number>) n.iconFontSizeProperty();
 			}
 		};
 
