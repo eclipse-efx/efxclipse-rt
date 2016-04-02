@@ -197,10 +197,13 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			p.setOnMouseClicked( e -> {
 				if( e.getClickCount() > 1 ) {
 					if( this.minMaxCallback != null ) {
-						Node node = p.lookup(".tab-header-background"); //$NON-NLS-1$
-						if( node != null && node.localToScene(node.getBoundsInLocal()).contains(e.getSceneX(), e.getSceneY()) ) {
-							this.minMaxCallback.call(WMinMaxState.TOGGLE);
-						}
+						p.getChildrenUnmodifiable().stream().filter( n -> n.getStyleClass().contains("tab-header-area")).findFirst().ifPresent( //$NON-NLS-1$
+							node -> {
+								if( node.localToScene(node.getBoundsInLocal()).contains(e.getSceneX(), e.getSceneY()) ) {
+									this.minMaxCallback.call(WMinMaxState.TOGGLE);
+								}
+								}
+							);
 					}
 				}
 			});
