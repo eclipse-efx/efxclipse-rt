@@ -11,16 +11,14 @@
 package org.eclipse.fx.ui.services.resources.impl;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-
-import javafx.scene.image.Image;
 
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.ui.services.resources.ImageProvider;
 import org.osgi.service.component.annotations.Component;
+
+import javafx.scene.image.Image;
 
 /**
  * A default image provider
@@ -41,10 +39,6 @@ public class DefaultImageProvider implements ImageProvider {
 
 	@Override
 	public Image getImage(URI uri) throws IOException {
-		try(InputStream in = new URL(uri.toString()).openStream() ) {
-			return new Image(in);
-		} catch (IOException e) {
-			throw e;
-		}
+		return new Image(uri.toString());
 	}
 }
