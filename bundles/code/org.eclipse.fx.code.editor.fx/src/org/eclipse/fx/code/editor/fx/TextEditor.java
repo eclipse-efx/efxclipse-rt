@@ -22,6 +22,8 @@ import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.SourceSelection;
+import org.eclipse.fx.code.editor.fx.services.ContextInformationPresenter;
+import org.eclipse.fx.code.editor.services.ContextInformation;
 import org.eclipse.fx.code.editor.services.DelegatingEditingContext;
 import org.eclipse.fx.code.editor.services.EditingContext;
 import org.eclipse.fx.code.editor.services.URIProvider;
@@ -29,6 +31,7 @@ import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.di.ContextValue;
 import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.fx.core.preferences.Preference;
+import org.eclipse.fx.text.ui.contentassist.IContextInformation;
 import org.eclipse.fx.text.ui.source.SourceViewer;
 import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
 import org.eclipse.fx.ui.controls.styledtext.TextSelection;
@@ -65,6 +68,13 @@ public class TextEditor {
 	private Boolean spacesForTab;
 
 	private EditingContext editingContext;
+
+	private ContextInformationPresenter contextInformationPresenter;
+
+	@Inject
+	public void setContextInformationPresenter(ContextInformationPresenter contextInformationPresenter) {
+		this.contextInformationPresenter = contextInformationPresenter;
+	}
 
 	@Inject
 	public void setEditingContext(EditingContext editingContext) {
@@ -169,6 +179,14 @@ public class TextEditor {
 				}
 				private IRegion convert(TextSelection selection) {
 					return new Region(selection.offset, selection.length);
+				}
+
+				@Override
+				public void showContextInformation(ContextInformation info) {
+					if (contextInformationPresenter != null) {
+						IContextInformation ci = contextInformationPresenter.createInformation(info);
+						viewer.showContextInformation(ci);
+					}
 				}
 
 				@Override

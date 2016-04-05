@@ -30,7 +30,10 @@ public interface EditingContext {
 	IRegion getSelection();
 	void setSelection(IRegion selection);
 
+	void showContextInformation(ContextInformation info);
+
 	Subscription registerOnCaretOffsetChanged(Consumer<Integer> listener);
 	Subscription registerOnSelectionChanged(Consumer<IRegion> listener);
+
 
 }
