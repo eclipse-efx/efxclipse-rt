@@ -23,6 +23,7 @@ import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.ui.ITextViewerExtension2;
 import org.eclipse.fx.text.ui.TextViewer;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
+import org.eclipse.fx.text.ui.contentassist.IContextInformation;
 import org.eclipse.fx.text.ui.internal.AnnotationModelSupport;
 import org.eclipse.fx.text.ui.internal.WrappedLineRulerAnnotationPresenter;
 import org.eclipse.fx.text.ui.internal.WrappedTextAnnotationPresenter;
@@ -53,6 +54,8 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 	private BiFunction<IDocument, Integer, Set<HoverInfo>> documentHoverInfoLookup = null;
 	private Function<Annotation, Set<HoverInfo>> annotationHoverInfoLookup = null;
+
+	private IContentAssistant assistant;
 
 	private void initSourceViewerActionMapping() {
 		this.actionMapping.map("Ctrl+Space", SourceTextEditActions.PROPOSAL_REQUEST); //$NON-NLS-1$
@@ -149,6 +152,7 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 
 		getTextWidget().setQuickLinkCallback(configuration.getQuicklinkCallback());
 
+		this.assistant = configuration.getContentAssist();
 	}
 
 	@Override
@@ -249,6 +253,10 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		}
 
 		return null;
+	}
+
+	public void showContextInformation(IContextInformation ci) {
+		this.assistant.showContextInformation(ci);
 	}
 
 }
