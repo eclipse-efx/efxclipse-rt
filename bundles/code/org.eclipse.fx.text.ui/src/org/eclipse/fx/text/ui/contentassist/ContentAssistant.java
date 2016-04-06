@@ -99,4 +99,11 @@ public class ContentAssistant implements IContentAssistant {
 			this.fContextInfoPopup.showContextInformation(contextInformation, offset);
 		}
 	}
+
+	@Override
+	public void showContextInformation(IContextInformation info) {
+		if (this.fContextInfoPopup != null) {
+			this.fContextInfoPopup.showContextInformation(info, info.getContextInformationPosition());
+		}
+	}
 }

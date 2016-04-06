@@ -82,6 +82,11 @@ public class DelegatingEditingContext implements EditingContext {
 	}
 
 	@Override
+	public void showContextInformation(ContextInformation info) {
+		delegate.showContextInformation(info);
+	}
+
+	@Override
 	public Subscription registerOnCaretOffsetChanged(Consumer<Integer> listener) {
 		if (delegate == null) {
 			todoCaretListeners.add(listener);

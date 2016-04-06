@@ -14,4 +14,5 @@ import org.eclipse.fx.text.ui.ITextViewer;
 
 public interface IContentAssistant {
 	void install(ITextViewer textViewer);
+	void showContextInformation(IContextInformation info);
 }
