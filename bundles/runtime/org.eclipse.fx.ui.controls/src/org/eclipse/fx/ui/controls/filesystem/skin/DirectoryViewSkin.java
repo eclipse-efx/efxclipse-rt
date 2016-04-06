@@ -23,7 +23,6 @@ import org.eclipse.fx.ui.controls.filesystem.FileItem;
 import org.eclipse.fx.ui.controls.filesystem.IconSize;
 import org.eclipse.fx.ui.controls.filesystem.ResourceEvent;
 import org.eclipse.fx.ui.controls.filesystem.ResourceItem;
-import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -50,10 +49,9 @@ import javafx.scene.image.ImageView;
 public class DirectoryViewSkin extends
 		SkinBase<DirectoryView> {
 
-	private ObservableList<@NonNull ResourceItem> elements = FXCollections
-			.observableArrayList();
 	private final ObservableList<ResourceItem> selectedItems;
 	private DirItem currentItem;
+	private TableView<ResourceItem> tableView;
 
 	/**
 	 * Create a new instance
@@ -88,8 +86,8 @@ public class DirectoryViewSkin extends
 	}
 
 	private Node setupListView() {
-		TableView<ResourceItem> t = new TableView<>();
-		t.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		this.tableView = new TableView<>();
+		this.tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 		ResourceBundle b = ResourceBundle
 				.getBundle("org.eclipse.fx.ui.controls.filesystem.skin.resource"); //$NON-NLS-1$
@@ -102,7 +100,7 @@ public class DirectoryViewSkin extends
 			c.setCellFactory((co) -> new NameTableCell());
 			c.setCellValueFactory((cdf) -> new SimpleObjectProperty<>(cdf
 					.getValue()));
-			t.getColumns().add(c);
+			this.tableView.getColumns().add(c);
 		}
 
 		{
@@ -112,7 +110,7 @@ public class DirectoryViewSkin extends
 			c.setCellFactory((co) -> new LastModifiedCell());
 			c.setCellValueFactory((cdf) -> cdf.getValue()
 					.lastModifiedProperty());
-			t.getColumns().add(c);
+			this.tableView.getColumns().add(c);
 		}
 
 		{
@@ -127,29 +125,25 @@ public class DirectoryViewSkin extends
 			});
 
 			c.setMinWidth(100);
-			t.getColumns().add(c);
+			this.tableView.getColumns().add(c);
 		}
 
-		t.setItems(this.elements);
-		t.setOnMouseReleased((e) -> {
+		this.tableView.setOnMouseReleased((e) -> {
 			if (e.getClickCount() == 2) {
 				openSelectedResources();
 			}
 		});
-		Bindings.bindContent(this.selectedItems, t.getSelectionModel()
+		Bindings.bindContent(this.selectedItems, this.tableView.getSelectionModel()
 				.getSelectedItems());
-		return t;
+		return this.tableView;
 	}
 
 	private void pathChangedHandler(Observable o) {
-		if (this.currentItem != null) {
-			Bindings.unbindContent(this.elements,
-					this.currentItem.getChildren());
-		}
-		this.elements.clear();
 		this.currentItem = getSkinnable().getDir();
 		if (this.currentItem != null) {
-			Bindings.bindContent(this.elements, this.currentItem.getChildren());
+			this.tableView.setItems(this.currentItem.getChildren());
+		} else {
+			this.tableView.setItems(FXCollections.observableArrayList());
 		}
 	}
 
