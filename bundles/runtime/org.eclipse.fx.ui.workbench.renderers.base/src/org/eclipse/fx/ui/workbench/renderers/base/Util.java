@@ -80,7 +80,7 @@ public class Util {
 	 * @return a new context
 	 */
 	public static IEclipseContext createLocalHandlerContext(@NonNull IEclipseContext parent, @NonNull IEclipseContext activeLeaf, @NonNull String name) {
-		IEclipseContext rv = EclipseContextFactory.create("HI-Item");
+		IEclipseContext rv = EclipseContextFactory.create(name);
 //		IEclipseContext rv = parent.createChild(name);
 		rv.set("efx_handler_context", activeLeaf); //$NON-NLS-1$
 		return rv;
