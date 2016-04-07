@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.internal.contexts.Computation;
 import org.eclipse.e4.core.internal.contexts.ContextChangeEvent;
@@ -79,7 +80,8 @@ public class Util {
 	 * @return a new context
 	 */
 	public static IEclipseContext createLocalHandlerContext(@NonNull IEclipseContext parent, @NonNull IEclipseContext activeLeaf, @NonNull String name) {
-		IEclipseContext rv = parent.createChild(name);
+		IEclipseContext rv = EclipseContextFactory.create("HI-Item");
+//		IEclipseContext rv = parent.createChild(name);
 		rv.set("efx_handler_context", activeLeaf); //$NON-NLS-1$
 		return rv;
 	}
