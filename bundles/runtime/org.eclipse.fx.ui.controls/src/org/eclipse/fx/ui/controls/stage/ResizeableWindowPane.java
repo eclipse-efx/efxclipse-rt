@@ -15,10 +15,28 @@ import javafx.scene.Node;
 
 /**
  * A window pane who has handles at the borders to resize it
- * 
+ *
  * @since 2.0
  */
 public abstract class ResizeableWindowPane extends ResizeableFramePane implements Window {
+	/**
+	 * Create a new pane
+	 */
+	public ResizeableWindowPane() {
+		super();
+	}
+
+	/**
+	 * Create a new pane
+	 *
+	 * @param lightweight
+	 *            <code>true</code> to mark it lightweight
+	 * @since 2.4.0
+	 */
+	public ResizeableWindowPane(boolean lightweight) {
+		super(lightweight);
+	}
+
 	@Override
 	public final void setMenuBar(Node node) {
 		menuBarProperty().set(node);

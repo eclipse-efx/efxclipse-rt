@@ -33,7 +33,7 @@ import javafx.stage.Modality;
 
 /**
  * A default implementation for the window
- * 
+ *
  * @since 2.0
  */
 public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements TrimmedWindow {
@@ -76,13 +76,38 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 	}
 
 	/**
+	 * Create a default window pane
+	 *
+	 * @param lightweight
+	 *            <code>true</code> to mark the window lightweight
+	 * @since 2.4.0
+	 */
+	public DefaultTrimmedWindowPane(boolean lightweight) {
+		this(lightweight, null);
+	}
+
+	/**
 	 * Create a default window pane with a default client area as
 	 * {@link #setContent(Node)}
-	 * 
+	 *
 	 * @param clientArea
 	 *            a client area
 	 */
 	public DefaultTrimmedWindowPane(@Nullable Pane clientArea) {
+		this(false, clientArea);
+	}
+
+	/**
+	 * Create a default window pane
+	 *
+	 * @param lightweight
+	 *            <code>true</code> to mark the window lightweight
+	 * @param clientArea
+	 *            a client area
+	 * @since 2.4.0
+	 */
+	public DefaultTrimmedWindowPane(boolean lightweight, @Nullable Pane clientArea) {
+		super(lightweight);
 		menuBarProperty().addListener(this::updateMenuBar);
 		clientAreaProperty().addListener(this::updateClientArea);
 		topTrimProperty().addListener(this::updateTopTrim);
@@ -310,7 +335,7 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 	protected void requestCancelClose() {
 		close(true);
 	}
-	
+
 	class TitleAreaNodeImpl extends HBox implements TitleAreaNode {
 		private static final int HEADER_HEIGHT = 28;
 		private Label titleLabel;
@@ -349,8 +374,6 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 
 			getChildren().addAll(this.titleLabel, spacer, windowBtns);
 		}
-		
-		
 
 		@Override
 		public StringProperty titleProperty() {
