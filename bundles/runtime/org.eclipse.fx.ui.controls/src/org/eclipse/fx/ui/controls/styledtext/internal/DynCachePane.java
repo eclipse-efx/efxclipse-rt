@@ -68,4 +68,43 @@ public class DynCachePane<K, N extends Node> extends Pane {
 		}
 	}
 
+
+//	protected N create(K key) {
+//		N node = this.nodeFactory.get();
+//		this.existingNodes.put(key, node);
+//		this.getChildren().add(node);
+//		count++;
+//		if (count > 1000 ) {
+//			System.err.println("ALLOCATED "+ count + " nodes!!!");
+//		}
+//		return node;
+//	}
+//
+//	protected void destroy(K key) {
+//		N removed = this.existingNodes.remove(key);
+//		getChildren().remove(removed);
+//	}
+//
+//	protected void release(K key) {
+//		N removed = this.existingNodes.remove(key);
+//		removed.setVisible(false);
+//		cachedNodes.add(removed);
+//	}
+//
+//	protected Optional<N> get(K key) {
+//		return Optional.ofNullable(this.existingNodes.get(key));
+//	}
+//
+//	protected N getCreate(K key) {
+//		N n = this.existingNodes.get(key);
+//		if (n == null) {
+//			return create(key);
+//		}
+//		return n;
+//	}
+
+
+
+
+
 }

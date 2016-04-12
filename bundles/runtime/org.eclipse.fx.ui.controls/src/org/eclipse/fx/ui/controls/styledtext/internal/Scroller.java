@@ -70,16 +70,20 @@ public class Scroller {
 	private void recomputeContentHeight(Observable x) {
 		double contentHeight = this.lineCount.get() * this.lineHeight.get();
 		this.contentHeight.set(contentHeight);
+//		System.err.println("Scroller: contentHeight = " + contentHeight);
 	}
 
 	private void recomputeMax(Observable x) {
+//		System.err.println("Scroller: max = " + contentHeight.get() + " - " + contentAreaHeight.get());
 		double max = Math.max(0, this.contentHeight.get() - this.contentAreaHeight.get());
 		this.max.set(max);
+//		System.err.println("Scroller: max = " + max);
 	}
 
 	private void recomputeVisibleLineCount(Observable x) {
 		int visibleLineCount = (int) Math.ceil(this.contentAreaHeight.get() / this.lineHeight.get());
 		this.visibleLineCount.set(visibleLineCount);
+//		System.err.println("Scroller: visibleLineCount = " + visibleLineCount);
 	}
 
 	private void recomputeVisibleLines(Observable x) {
@@ -87,6 +91,7 @@ public class Scroller {
 		int upper = lower + this.visibleLineCount.get();
 		Range<Integer> visibleLines = Range.closed(Integer.valueOf(lower), Integer.valueOf(upper));
 		this.visibleLines.set(visibleLines);
+//		System.err.println("Scroller: visibleLines = " + visibleLines);
 	}
 
 	private void recomputeAll() {

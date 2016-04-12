@@ -76,6 +76,75 @@ public class ContentView  extends Pane {
 			setOnActivate((idx, n)->n.setIndex(idx.intValue()));
 		}
 
+
+
+//		protected void releaseNode(int lineIndex) {
+//
+//			get(model.get(lineIndex)).ifPresent(n->{
+//				n.setVisible(false);
+//				n.release();
+//			});
+//		}
+
+//		protected void releaseNode(StyledTextLine line) {
+//			if (debugOut) System.err.println("RELEASE " + line);
+//			release(line);
+////			get(line).ifPresent(n->{
+////				n.setVisible(false);
+////				n.release();
+////			});
+//		}
+
+//		private void updateNode(StyledTextLine line) {
+//			if (debugOut) System.err.println("UPDATE " + line);
+//			LineNode node = get(line);
+//			node.update(line, textAnnotationPresenter);
+////			LineNode node = getCreate(m);
+////			node.setVisible(true);
+//////			node.setModel(m);
+////			node.update(m, textAnnotationPresenter);
+//		}
+
+//		private void updateNode(int lineIndex, StyledTextLine m) {
+//			LineNode node = getCreate(m);
+//			node.setVisible(true);
+////			node.setModel(m);
+//			node.update(m, textAnnotationPresenter);
+//		}
+
+//		@Override
+//		public void requestLayout() {
+//			super.requestLayout();
+//		}
+
+//		@Override
+//		protected void layoutChildren() {
+//			if (debugOut) System.err.println("layout LineLayer");
+//			ContiguousSet.create(visibleLines.get(), DiscreteDomain.integers()).forEach(e -> {
+//				if (!yOffsetData.containsKey(e)) {
+//					if (debugOut) System.err.println("NO yOffset FOR " + e);
+//					return;
+//				}
+//				double x = 0;
+//				double y = yOffsetData.get(e);
+//				double width = getWidth();
+//				double height = getLineHeight();
+//
+//				if (model.size() > e) {
+//					StyledTextLine m = model.get(e);
+//					LineNode lineNode = get(m);
+//					lineNode.resizeRelocate(x, y, width, height);
+//
+//					if (debugOut) System.err.println("layout " + e + ": y=" + y + " line= " + lineNode);
+//					if (debugOut) System.err.println("      visible = " + lineNode.isVisible());
+//					if (debugOut) System.err.println("      bounds = " + lineNode.getBoundsInParent());
+////					get(m).ifPresent(n->n.resizeRelocate(x, y, width, height));
+//
+//					lineNode.layout();
+//				}
+//			});
+//		}
+
 		@Override
 		protected void releaseNode(int lineIndex) {
 			super.releaseNode(lineIndex);
@@ -196,6 +265,68 @@ public class ContentView  extends Pane {
 	protected LineHelper getLineHelper() {
 		return this.lineHelper;
 	}
+
+//	private ObservableList<StyledTextLine> model;
+//	private IntegerBinding modelSize;
+
+//	public void setModel(ObservableList<StyledTextLine> model) {
+//		this.model = model;
+//
+//
+////		model.addListener((InvalidationListener)(x)->prepareNodes(getVisibleLines()));
+//
+////		model.addListener((ListChangeListener<StyledTextLine>)(c)->{
+////			RangeSet<Integer> updateNodes = TreeRangeSet.create();
+////
+////			while (c.next()) {
+////				if (debugOut) System.err.println("CHANGE [");
+////				if (c.wasPermutated()) {
+////					if (debugOut) System.err.println("-> permutation " + c);
+//////					for (int i = c.getFrom(); i < c.getTo(); i++) {
+//////						lineLayer.permutate(i, c.getPermutation(i));
+//////					}
+//////					lineLayer.requestLayout();
+////				}
+////				if (c.wasUpdated() || c.wasReplaced()) {
+////					if (debugOut) System.err.println("-> updated or replaced: " + c.getFrom() + " - " + c.getTo());
+////					updateNodes.add(Range.closedOpen(c.getFrom(), c.getTo()));
+////
+////
+////				}
+////				if (c.wasAdded()) {
+////					if (debugOut) System.err.println("-> added: " + c.getFrom() + " - " + c.getTo());
+////					updateNodes.add(Range.closedOpen(c.getFrom(), model.size()));
+////				}
+////				if (c.wasRemoved()) {
+////					if (debugOut) System.err.println("-> removed: " + c.getFrom() + " - " + c.getTo());
+////
+////					c.getRemoved().forEach(line->lineLayer.releaseNode(line));
+////
+////					updateNodes.add(Range.closedOpen(c.getFrom(), model.size()));
+////				}
+////				if (debugOut) System.err.println("]");
+////			}
+////
+////			updateNodesNow(updateNodes);
+////		});
+////
+////		modelSize = Bindings.size(model);
+////
+////		modelSize.addListener((x, o, n)-> {
+////			int newSize = n.intValue();
+////			int oldSize = o.intValue();
+////			if (newSize < oldSize) {
+//////				for (int lineIdx = newSize; lineIdx < oldSize; lineIdx++) {
+//////					lineLayer.releaseNode(lineIdx);
+//////				}
+////			}
+////		});
+//	}
+
+//	private ListProperty<StyledTextLine> model = new SimpleListProperty<>(this, "model", FXCollections.observableArrayList());
+//	public ListProperty<StyledTextLine> getModel() {
+//		return this.model;
+//	}
 
 	ObjectProperty<Range<Integer>> visibleLines = new SimpleObjectProperty<>(this, "visibleLines", Range.closed(Integer.valueOf(0), Integer.valueOf(0))); //$NON-NLS-1$
 	public ObjectProperty<Range<Integer>> visibleLinesProperty() {
@@ -415,6 +546,71 @@ public class ContentView  extends Pane {
 				this.toUpdate.add(Range.closed(Integer.valueOf(changeBeginLine), Integer.valueOf(changeBeginLine)));
 			}
 
+//
+//			// simple insert
+//			if (event.replaceCharCount == 0) {
+//				System.err.println("# Simple Insert");
+//				if (event.newLineCount > 0) {
+//					System.err.println("# We have new lines");
+//
+//					int lineIndex = getContent().getLineAtOffset(event.offset);
+//					int lineBegin = getContent().getOffsetAtLine(lineIndex);
+//					int lineLength = lineHelper.getLength(lineIndex);
+//
+//					int firstSafeLine;
+//					Range<Integer> updateRange;
+//
+//					if (lineBegin == event.offset) {
+//						// at beginning of line
+//						firstSafeLine = lineIndex;
+//						updateRange = Range.closedOpen(lineIndex, lineIndex + event.newLineCount);
+//					}
+//					else if (lineBegin == event.offset + lineLength) {
+//						// insert was at end of line
+//						firstSafeLine= lineIndex + 1;
+//						updateRange = Range.closedOpen(lineIndex, lineIndex + event.newLineCount);
+//					}
+//					else {
+//						// insert was in middle of line
+//						firstSafeLine = lineIndex + 2;
+//						updateRange = Range.closedOpen(lineIndex, lineIndex + 1 + event.newLineCount);
+//					}
+//					System.err.println("# firstSafeLine = " + firstSafeLine + " / updateRange " + updateRange);
+//
+//					// prepare update
+//					toUpdate.add(updateRange);
+//
+//					// prepare permutation
+//					this.mapping = (idx) -> {
+//						if (idx >= firstSafeLine) {
+//							return idx + event.newLineCount;
+//						}
+//						return idx;
+//					};
+//
+//				}
+//			}
+
+
+
+//			int firstUnchangedLine = changeBeginLine + replaceLines;
+//
+//			int newFirstUnchnagedLine = changeBeginLine + newLines;
+//
+//			System.err.println(" changeBeginLine = " + changeBeginLine);
+//			System.err.println(" firstUnchangedLine = " + firstUnchangedLine);
+//			System.err.println(" newFirstUnchangedLine = " + newFirstUnchnagedLine);
+//
+//			// prepare updates
+//			toUpdate.add(Range.closedOpen(changeBeginLine, changeBeginLine + newLines));
+//			// prepare permutation
+//			this.mapping = (idx) -> {
+//				if (idx >= firstUnchangedLine) {
+//					return idx + firstUnchangedLine - newFirstUnchnagedLine;
+//				}
+//				return idx;
+//			};
+
 		}
 
 		@Override
@@ -475,6 +671,9 @@ public class ContentView  extends Pane {
 		com.google.common.collect.Range<Integer> visibleLines = visibleLinesProperty().get();
 		ContiguousSet<Integer> set = ContiguousSet.create(visibleLines, DiscreteDomain.integers());
 		double lineHeight = lineHeightProperty().get();
+
+//		System.err.println("onLineChange " + offsetY + " " + visibleLines);
+
 
 		// schedule visible line updates
 		if (this.curVisibleLines == null) {
@@ -580,12 +779,80 @@ public class ContentView  extends Pane {
 
 	void releaseNodesNow(com.google.common.collect.RangeSet<Integer> rs) {
 		RangeSet<Integer> subRangeSet = rs.subRangeSet(Range.closedOpen(Integer.valueOf(0), Integer.valueOf(getNumberOfLines())));
+//		System.err.println("releaseNodesNow " + subRangeSet);
 		subRangeSet.asRanges().forEach(r-> {
 			ContiguousSet.create(r, DiscreteDomain.integers()).forEach(index-> {
 				getLineLayer().releaseNode(index.intValue());
+//				StyledTextLine m = this.model.get(index);
+//				System.err.println("RELEASE " + m);
+//				lineLayer.releaseNode(m);
 			});
 		});
 	}
+
+//	private void updateNodes(com.google.common.collect.Range<Integer> range) {
+//		if (debugOut) System.err.println("updateNodes(" + range + ")");
+//		toUpdate.add(range);
+//		scheduleUpdate();
+////
+////		if (range.intersects(getVisibleLines())) {
+////			Range intersection = range.intersect(getVisibleLines());
+////			for (int index = intersection.getOffset(); index <intersection.getEndOffset(); index++) {
+////				toUpdate.add(index);
+//////				StyledTextLine m = this.model.get(index);
+//////				prepareNode(index, m);
+////			}
+////		}
+//	}
+
+//	private boolean doUpdate() {
+//		try {
+//			long now = -System.nanoTime();
+//			if (!toRelease.isEmpty()) {
+//				toRelease.asRanges().forEach(r-> {
+//					ContiguousSet.create(r, DiscreteDomain.integers()).forEach(this.lineLayer::releaseNode);
+//				});
+//				toRelease.clear();
+//			}
+//
+//			if (!toUpdate.isEmpty()) {
+//				toUpdate.subRangeSet(getVisibleLines()).subRangeSet(Range.closedOpen(0, this.model.size())).asRanges().forEach(r-> {
+//					ContiguousSet.create(r, DiscreteDomain.integers()).forEach(index-> {
+//						StyledTextLine m = this.model.get(index);
+//						lineLayer.updateNode(index, m);
+//					});
+//				});
+//				toUpdate.clear();
+//			}
+//
+//
+//			now += System.nanoTime();
+//
+//			if (now > 1000_000 * 5) {
+//				System.err.println("update needed " + (now/1000000) + "ms");
+//			}
+//
+//			if (!toRelease.isEmpty() || !toUpdate.isEmpty() || forceLayout) {
+////				System.err.println("releasing " + toRelease + " and updating " + toUpdate + " lines");
+//
+//			    lineLayer.requestLayout();
+//
+//				forceLayout = false;
+//
+//				return true;
+//			}
+//		}
+//		catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return false;
+//
+//	}
+//
+//	private void updatePulse(long now) {
+//		doUpdate();
+//	}
+
 
 	public Optional<Point2D> getLocationInScene(int globalOffset, LineLocation locationHint) {
 		applyCss();

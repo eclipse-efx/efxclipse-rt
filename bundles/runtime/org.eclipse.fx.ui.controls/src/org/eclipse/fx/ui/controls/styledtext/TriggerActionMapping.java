@@ -234,6 +234,7 @@ public class TriggerActionMapping {
 				return overridden;
 			}
 		}
+		System.err.println("ACTION: " + findTrigger(event).map(t->this.mapping.get(t)));
 		return findTrigger(event).map(t->this.mapping.get(t));
 	}
 

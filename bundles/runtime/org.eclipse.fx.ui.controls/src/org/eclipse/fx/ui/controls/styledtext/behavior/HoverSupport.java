@@ -156,6 +156,7 @@ public class HoverSupport {
 		List<HoverTarget> hoverTargets = ((ContentView)this.control).findHoverTargets(new Point2D(event.getX(), event.getY()));
 		TextHoverEvent e = new TextHoverEvent(event, hoverTargets);
 		if (this.curHover == null || !e.equals(curHover)) {
+			System.err.println("FIRING HOVER");
 			Event.fireEvent(this.control, e);
 			curHover = e;
 		}

@@ -689,6 +689,7 @@ public class StyledTextArea extends Control {
 	}
 
 	void setStyleRanges(int start, int length, int[] ranges, StyleRange[] styles, boolean reset) {
+		System.err.println("SETTING NEW STYLES");
 		int charCount = getContent().getCharCount();
 		int end = start + length;
 		if (start > end || start < 0) {
