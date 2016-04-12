@@ -27,10 +27,10 @@ public class ValidationVMSample extends Application {
 
 		public VM(String firstname, String lastname) {
 			this.firstname = new ValidatedSimpleStringProperty(new SimpleStringProperty(this, "firstname",firstname));
-			this.firstname.validator(s -> s.isEmpty() ? Status.status(State.ERROR, -1, "Vorname muß befüllt sein", null) : Status.ok());
+			this.firstname.registerValidator(s -> s.isEmpty() ? Status.status(State.ERROR, -1, "Vorname muß befüllt sein", null) : Status.ok());
 
 			this.lastname = new ValidatedSimpleStringProperty(new SimpleStringProperty(this, "lastname", lastname));
-			this.lastname.validator(s -> s.isEmpty() ? Status.status(State.ERROR, -1, "Nachname muß befüllt sein", null) : Status.ok());
+			this.lastname.registerValidator(s -> s.isEmpty() ? Status.status(State.ERROR, -1, "Nachname muß befüllt sein", null) : Status.ok());
 
 			this.aggregator = new StatusAggregator(this.firstname,this.lastname);
 		}
