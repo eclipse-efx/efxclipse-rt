@@ -107,7 +107,6 @@ public class DynamicEndRule extends ExtendedPatternRule {
 							if( rv ) {
 								Object[] g = new String[matcher.groupCount()];
 								for (int i = 0; i < matcher.groupCount(); i++) {
-									System.err.println("G: " + matcher.group(i + 1));
 									g[i] = matcher.group(i + 1);
 								}
 								fEndSequence = MessageFormat.format(endTemplate, g).toCharArray();
