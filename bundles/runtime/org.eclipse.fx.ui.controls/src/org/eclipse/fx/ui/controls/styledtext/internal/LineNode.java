@@ -150,9 +150,7 @@ public class LineNode extends StackPane {
 				if (t.localToScene(t.getBoundsInLocal()).contains(scenePoint)) {
 					int idx = t.getCaretIndexAtPoint(t.sceneToLocal(scenePoint));
 					if( idx != -1 ) {
-//						System.err.println("returning " + idx + " + " + offset);
 						int result = idx + offset;
-//						System.err.println("==> (LineNode)" + result);
 						return result;
 					}
 				}
@@ -199,7 +197,6 @@ public class LineNode extends StackPane {
 //				}
 //				offset += length;
 //			}
-//			System.err.println("getCharLocation(" + charOffset + ") -> " + location);
 //			return location;
 		}
 
@@ -279,7 +276,6 @@ public class LineNode extends StackPane {
 		}
 
 		private boolean isSelectionChange(com.google.common.collect.Range<Integer> localSelection) {
-//			System.err.println("change? " + localSelection + " vs " + selection);
 			if (localSelection == null && this.selection == null) {
 				return false;
 			}
@@ -318,8 +314,6 @@ public class LineNode extends StackPane {
 				}
 
 
-	//			System.err.println("SelectionLayer: layoutChildren()");
-	//			System.err.println(" setting selection to " + begin + " - " + end);
 				this.selectionMarker.resizeRelocate(begin, 0, end - begin, getHeight());
 			}
 		}
@@ -560,7 +554,6 @@ public class LineNode extends StackPane {
 				// release non used nodes
 //				HashSet<Node> all = new HashSet<>(getChildren());
 //				all.removeAll(usedNodes.values());
-//				System.err.println("FORCE RELEASE OF " + all);
 //				all.forEach(this::releaseNode);
 
 				int presented = 0;
@@ -754,13 +747,11 @@ public class LineNode extends StackPane {
 		final int lineOffset = this.lineHelper.getOffset(this.index);
 		final int lineWidth = this.lineHelper.getLength(this.index);
 		final int localOffset = globalOffset >= lineOffset && globalOffset <= lineOffset + lineWidth ? globalOffset - lineOffset : -1;
-		//System.err.println("update insertion marker idx in line: " + this.index + ": " + globalOffset + " / " + localOffset);
 		this.insertionMarkerLayer.updateInsertionIndex(localOffset);
 	}
 
 
 //	public void update(StyledTextLine model, Set<TextAnnotationPresenter> annotationPresenter) {
-////		System.err.println("update " + model.getLineIndex());
 //
 //		this.model = model;
 //
@@ -773,8 +764,6 @@ public class LineNode extends StackPane {
 //	}
 
 	public void updateSelection(com.google.common.collect.Range<Integer> lineSelection, com.google.common.collect.Range<Integer> nextLine) {
-//		System.err.println("LineNode: updateSelection " + lineSelection);
-
 		if (lineSelection != null && lineSelection.isEmpty()) {
 			this.selectionLayer.updateSelection(null, false);
 		}
@@ -879,7 +868,6 @@ public class LineNode extends StackPane {
 //		else {
 //			result = new Range(0, 0);
 //		}
-//		System.err.println("Line local intersection " + this + ": " + globalRange + " -> " + result);
 //		return result;
 //	}
 
@@ -901,7 +889,6 @@ public class LineNode extends StackPane {
 	}
 
 	public void setIndex(int idx) {
-//		System.err.println("LineNode#setIndex " + index + " -> " + idx);
 		this.index = idx;
 	}
 

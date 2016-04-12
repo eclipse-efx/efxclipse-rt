@@ -87,7 +87,6 @@ public class ContentView  extends Pane {
 //		}
 
 //		protected void releaseNode(StyledTextLine line) {
-//			if (debugOut) System.err.println("RELEASE " + line);
 //			release(line);
 ////			get(line).ifPresent(n->{
 ////				n.setVisible(false);
@@ -96,7 +95,6 @@ public class ContentView  extends Pane {
 //		}
 
 //		private void updateNode(StyledTextLine line) {
-//			if (debugOut) System.err.println("UPDATE " + line);
 //			LineNode node = get(line);
 //			node.update(line, textAnnotationPresenter);
 ////			LineNode node = getCreate(m);
@@ -119,10 +117,8 @@ public class ContentView  extends Pane {
 
 //		@Override
 //		protected void layoutChildren() {
-//			if (debugOut) System.err.println("layout LineLayer");
 //			ContiguousSet.create(visibleLines.get(), DiscreteDomain.integers()).forEach(e -> {
 //				if (!yOffsetData.containsKey(e)) {
-//					if (debugOut) System.err.println("NO yOffset FOR " + e);
 //					return;
 //				}
 //				double x = 0;
@@ -135,9 +131,6 @@ public class ContentView  extends Pane {
 //					LineNode lineNode = get(m);
 //					lineNode.resizeRelocate(x, y, width, height);
 //
-//					if (debugOut) System.err.println("layout " + e + ": y=" + y + " line= " + lineNode);
-//					if (debugOut) System.err.println("      visible = " + lineNode.isVisible());
-//					if (debugOut) System.err.println("      bounds = " + lineNode.getBoundsInParent());
 ////					get(m).ifPresent(n->n.resizeRelocate(x, y, width, height));
 //
 //					lineNode.layout();
@@ -279,32 +272,26 @@ public class ContentView  extends Pane {
 ////			RangeSet<Integer> updateNodes = TreeRangeSet.create();
 ////
 ////			while (c.next()) {
-////				if (debugOut) System.err.println("CHANGE [");
 ////				if (c.wasPermutated()) {
-////					if (debugOut) System.err.println("-> permutation " + c);
 //////					for (int i = c.getFrom(); i < c.getTo(); i++) {
 //////						lineLayer.permutate(i, c.getPermutation(i));
 //////					}
 //////					lineLayer.requestLayout();
 ////				}
 ////				if (c.wasUpdated() || c.wasReplaced()) {
-////					if (debugOut) System.err.println("-> updated or replaced: " + c.getFrom() + " - " + c.getTo());
 ////					updateNodes.add(Range.closedOpen(c.getFrom(), c.getTo()));
 ////
 ////
 ////				}
 ////				if (c.wasAdded()) {
-////					if (debugOut) System.err.println("-> added: " + c.getFrom() + " - " + c.getTo());
 ////					updateNodes.add(Range.closedOpen(c.getFrom(), model.size()));
 ////				}
 ////				if (c.wasRemoved()) {
-////					if (debugOut) System.err.println("-> removed: " + c.getFrom() + " - " + c.getTo());
 ////
 ////					c.getRemoved().forEach(line->lineLayer.releaseNode(line));
 ////
 ////					updateNodes.add(Range.closedOpen(c.getFrom(), model.size()));
 ////				}
-////				if (debugOut) System.err.println("]");
 ////			}
 ////
 ////			updateNodesNow(updateNodes);
@@ -549,9 +536,7 @@ public class ContentView  extends Pane {
 //
 //			// simple insert
 //			if (event.replaceCharCount == 0) {
-//				System.err.println("# Simple Insert");
 //				if (event.newLineCount > 0) {
-//					System.err.println("# We have new lines");
 //
 //					int lineIndex = getContent().getLineAtOffset(event.offset);
 //					int lineBegin = getContent().getOffsetAtLine(lineIndex);
@@ -575,7 +560,6 @@ public class ContentView  extends Pane {
 //						firstSafeLine = lineIndex + 2;
 //						updateRange = Range.closedOpen(lineIndex, lineIndex + 1 + event.newLineCount);
 //					}
-//					System.err.println("# firstSafeLine = " + firstSafeLine + " / updateRange " + updateRange);
 //
 //					// prepare update
 //					toUpdate.add(updateRange);
@@ -597,9 +581,6 @@ public class ContentView  extends Pane {
 //
 //			int newFirstUnchnagedLine = changeBeginLine + newLines;
 //
-//			System.err.println(" changeBeginLine = " + changeBeginLine);
-//			System.err.println(" firstUnchangedLine = " + firstUnchangedLine);
-//			System.err.println(" newFirstUnchangedLine = " + newFirstUnchnagedLine);
 //
 //			// prepare updates
 //			toUpdate.add(Range.closedOpen(changeBeginLine, changeBeginLine + newLines));
@@ -671,8 +652,6 @@ public class ContentView  extends Pane {
 		com.google.common.collect.Range<Integer> visibleLines = visibleLinesProperty().get();
 		ContiguousSet<Integer> set = ContiguousSet.create(visibleLines, DiscreteDomain.integers());
 		double lineHeight = lineHeightProperty().get();
-
-//		System.err.println("onLineChange " + offsetY + " " + visibleLines);
 
 
 		// schedule visible line updates
@@ -779,19 +758,16 @@ public class ContentView  extends Pane {
 
 	void releaseNodesNow(com.google.common.collect.RangeSet<Integer> rs) {
 		RangeSet<Integer> subRangeSet = rs.subRangeSet(Range.closedOpen(Integer.valueOf(0), Integer.valueOf(getNumberOfLines())));
-//		System.err.println("releaseNodesNow " + subRangeSet);
 		subRangeSet.asRanges().forEach(r-> {
 			ContiguousSet.create(r, DiscreteDomain.integers()).forEach(index-> {
 				getLineLayer().releaseNode(index.intValue());
 //				StyledTextLine m = this.model.get(index);
-//				System.err.println("RELEASE " + m);
 //				lineLayer.releaseNode(m);
 			});
 		});
 	}
 
 //	private void updateNodes(com.google.common.collect.Range<Integer> range) {
-//		if (debugOut) System.err.println("updateNodes(" + range + ")");
 //		toUpdate.add(range);
 //		scheduleUpdate();
 ////
@@ -829,11 +805,9 @@ public class ContentView  extends Pane {
 //			now += System.nanoTime();
 //
 //			if (now > 1000_000 * 5) {
-//				System.err.println("update needed " + (now/1000000) + "ms");
 //			}
 //
 //			if (!toRelease.isEmpty() || !toUpdate.isEmpty() || forceLayout) {
-////				System.err.println("releasing " + toRelease + " and updating " + toUpdate + " lines");
 //
 //			    lineLayer.requestLayout();
 //

@@ -212,9 +212,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		((IntegerProperty) getSkinnable().lineCountProperty()).bind(this.content.numberOfLinesProperty());
 
 		// content.numberOfLinesProperty().addListener((x, o, n)->
-		// System.err.println("FUCKING LINE COUNT CHANGE: " + n));
 		// getSkinnable().lineCountProperty().addListener((x, o, n)->
-		// System.err.println("FUCKING LINE COUNT CHANGE2: " + n));
 
 		this.scroller.lineCountProperty().bind(this.content.numberOfLinesProperty());
 		this.scroller.bind(this.contentArea.vertical);
@@ -412,10 +410,6 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		double contentWidth = this.content.getWidth();
 		double curOffset = this.contentArea.horizontal.getValue();
 
-		System.err.println( contentWidth + ", " + colOffset + ", " + curOffset + ", " + colIndex);
-//		Thread.dumpStack();
-
-
 		if (colOffset < curOffset) {
 			double jumpOffset = curOffset - jumpAhead * charWidth;
 			if (colOffset < jumpOffset) {
@@ -426,13 +420,11 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		}
 		if (colOffset > curOffset + contentWidth) {
-			System.err.println("====> Scroll to the right: " + curOffset);
 			double jumpOffset = curOffset + jumpAhead * charWidth;
 			if (colOffset > jumpOffset + contentWidth) {
 				jumpOffset = colOffset + contentWidth;
 			}
 			double targetOffset = Math.min(this.contentArea.horizontal.getMax(), jumpOffset);
-			System.err.println("===> the target " + targetOffset);
 			this.contentArea.horizontal.setValue(targetOffset);
 		}
 

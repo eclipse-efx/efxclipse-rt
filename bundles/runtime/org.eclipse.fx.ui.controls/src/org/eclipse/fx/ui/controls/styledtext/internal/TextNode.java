@@ -390,7 +390,6 @@ public class TextNode extends HBox {
 	 */
 	public int getCaretIndexAtPoint(Point2D point) {
 		Point2D local = this.sceneToLocal(localToScene(point));
-//		System.err.println(local);
 
 		Optional<Node> charNode = this.getChildren().stream().filter( n -> n.getBoundsInParent().contains(local)).findFirst();
 		if( charNode.isPresent() ) {
@@ -418,11 +417,8 @@ public class TextNode extends HBox {
 				}
 			}
 			idx -= toRemove;
-//			System.err.println("==> (TextNode)" + idx);
 			return idx;
 		} else {
-//			System.err.println("COULD NOT FIND NODE AT: " + local);
-//			this.textNode.getChildren().stream().map( n -> n.getBoundsInParent()).forEach(System.err::println);
 		}
 
 //		@SuppressWarnings("deprecation")

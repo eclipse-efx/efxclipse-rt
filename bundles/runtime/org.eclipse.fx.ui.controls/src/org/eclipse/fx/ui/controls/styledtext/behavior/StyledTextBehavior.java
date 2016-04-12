@@ -427,7 +427,6 @@ public class StyledTextBehavior {
 				}
 				else {
 					// TODO handle case of multiple links
-					System.err.println("multiple targets: " + l.getLinks());
 				}
 			});
 
@@ -477,14 +476,10 @@ public class StyledTextBehavior {
 				Point2D screenLocation = new Point2D(event.getScreenX(), event.getScreenY());
 				Optional<TextNode> node = ((StyledTextSkin)getControl().getSkin()).findTextNode(screenLocation);
 
-				System.err.println("NODE: " + node);
-
 				if (!this.currentQuickLinkNode.equals(node)) {
 					// changed
 					setCurrentQuickLinkNode(node);
 				}
-
-				System.err.println("node2: " + node.map(n->n.getStyleClass()));
 			}
 			else {
 				setCurrentQuickLinkNode(Optional.empty());

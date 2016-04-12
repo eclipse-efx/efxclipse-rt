@@ -75,7 +75,6 @@ public class DynCachePane<K, N extends Node> extends Pane {
 //		this.getChildren().add(node);
 //		count++;
 //		if (count > 1000 ) {
-//			System.err.println("ALLOCATED "+ count + " nodes!!!");
 //		}
 //		return node;
 //	}

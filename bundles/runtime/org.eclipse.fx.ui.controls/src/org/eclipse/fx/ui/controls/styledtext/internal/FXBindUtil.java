@@ -25,10 +25,7 @@ public class FXBindUtil {
 	public static <A, B> Subscription uniMapBindList(ObservableList<A> a, ObservableList<B> b, Function<A, B> map) {
 		final ListChangeListener<A> aChange = (ListChangeListener.Change<? extends A> change) -> {
 			while (change.next()) {
-//				System.err.println("NEXT");
-//				if (change.wasAdded() && change.wasRemoved()) System.err.println("WTF?!?");
 				if (change.wasPermutated()) {
-//					System.err.println("permutate");
 					List<B> beforePermutate = b.subList(change.getFrom(), change.getTo());
 					for (int i = 0; i < beforePermutate.size(); i++) {
 						b.set(change.getPermutation(change.getFrom() + i), beforePermutate.get(i));
@@ -36,11 +33,9 @@ public class FXBindUtil {
 				}
 
 				if (change.wasRemoved()) {
-//					System.err.println("removed");
 					b.remove(change.getFrom(), change.getFrom() + change.getRemovedSize());
 				}
 				if (change.wasAdded()) {
-//					System.err.println("added");
 					List<? extends A> added = change.getAddedSubList();
 					List<B> addedMapped = added.stream().map(map).collect(Collectors.toList());
 
@@ -48,7 +43,6 @@ public class FXBindUtil {
 
 				}
 				else if (change.wasUpdated() || change.wasReplaced()) {
-//					System.err.println("updated/replaced");
 					List<? extends A> updated = a.subList(change.getFrom(), change.getTo());
 					List<B> updatedMapped = updated.stream().map(map).collect(Collectors.toList());
 					for (int i = 0; i < updatedMapped.size(); i++) {
@@ -73,9 +67,6 @@ public class FXBindUtil {
 //		ObservableList<Integer> b = FXCollections.observableArrayList();
 //
 //		uniMapBindList(a, b, Integer::valueOf);
-//
-//		b.addListener((InvalidationListener)(x)->System.err.println(b));
-//
 //
 //		a.add("1");
 //		assert(b.get(0) == 1);
