@@ -933,6 +933,8 @@ public class StyledTextBehavior {
 		}
 	}
 
+
+
 	/**
 	 * default implementation for {@link DefaultTextEditActions#DELETE}
 	 */
@@ -943,8 +945,18 @@ public class StyledTextBehavior {
 			getControl().getContent().replaceTextRange(selection.offset, selection.length, ""); //$NON-NLS-1$
 			getControl().setCaretOffset(selection.offset);
 		} else {
-			getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 1, ""); //$NON-NLS-1$
-			getControl().setCaretOffset(offset);
+
+			int del = 1;
+			if (getControl().getCaretOffset() + 2 <= getControl().getContent().getCharCount()) {
+				if ("\r\n".equals(getControl().getContent().getTextRange(getControl().getCaretOffset(), 2))) { //$NON-NLS-1$
+					del = 2;
+				}
+			}
+
+			if (getControl().getCaretOffset() + del <= getControl().getContent().getCharCount()) {
+				getControl().getContent().replaceTextRange(getControl().getCaretOffset(), del, ""); //$NON-NLS-1$
+				getControl().setCaretOffset(offset);
+			}
 		}
 	}
 
@@ -959,10 +971,18 @@ public class StyledTextBehavior {
 			getControl().setCaretOffset(selection.offset);
 		} else {
 			int start = getControl().getCaretOffset() - 1;
-			if( start >= 0 ) {
-				getControl().getContent().replaceTextRange(start, 1, ""); //$NON-NLS-1$
-				getControl().setCaretOffset(offset - 1);
+			int del = 1;
+
+			if (start - 1 >= 0) {
+				if ("\r\n".equals(getControl().getContent().getTextRange(getControl().getCaretOffset()-2, 2))) { //$NON-NLS-1$
+					start = start - 1;
+					del = 2;
+				}
 			}
+
+			if( start >= 0 ) {
+				getControl().getContent().replaceTextRange(start, del, ""); //$NON-NLS-1$
+				getControl().setCaretOffset(offset - del);			}
 		}
 	}
 
