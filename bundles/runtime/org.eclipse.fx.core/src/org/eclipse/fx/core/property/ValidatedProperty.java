@@ -38,7 +38,7 @@ public interface ValidatedProperty<O> extends ValidationStatusPropertyOwner {
 	 *            the validator function
 	 * @return the subscription to remove the validator
 	 */
-	public Subscription validator(Function<O, Status> validator);
+	public Subscription registerValidator(Function<O, Status> validator);
 
 	/**
 	 * Register a validator who is also use the values from dependent
@@ -48,7 +48,7 @@ public interface ValidatedProperty<O> extends ValidationStatusPropertyOwner {
 	 *            the validator
 	 * @return the subscription to remove the validator
 	 */
-	public Subscription validator(BiFunction<O, Map<String, Object>, Status> validator);
+	public Subscription registerValidator(BiFunction<O, Map<String, Object>, Status> validator);
 
 	/**
 	 * Register a dependent validated property
@@ -57,7 +57,7 @@ public interface ValidatedProperty<O> extends ValidationStatusPropertyOwner {
 	 *            the property
 	 * @return the subscription to remove the dependency
 	 */
-	public Subscription dependency(ValidatedPropertyBase<?> property);
+	public Subscription registerDependency(ValidatedPropertyBase<?> property);
 
 	/**
 	 * Register a dependent property
@@ -66,14 +66,14 @@ public interface ValidatedProperty<O> extends ValidationStatusPropertyOwner {
 	 *            the property
 	 * @return the subscription to remove the dependency
 	 */
-	public Subscription dependency(Property<?> property);
+	public Subscription registerDependency(Property<?> property);
 
 	/**
 	 * Register a dependent validated property
 	 *
 	 * @param name
 	 *            the name used when build the map for
-	 *            {@link ValidatedPropertyBase#validator(BiFunction)}
+	 *            {@link ValidatedPropertyBase#registerValidator(BiFunction)}
 	 * @param property
 	 *            the property
 	 * @return the subscription to remove the dependency
@@ -85,7 +85,7 @@ public interface ValidatedProperty<O> extends ValidationStatusPropertyOwner {
 	 *
 	 * @param name
 	 *            the name used when build the map for
-	 *            {@link ValidatedPropertyBase#validator(BiFunction)}
+	 *            {@link ValidatedPropertyBase#registerValidator(BiFunction)}
 	 * @param property
 	 *            the property
 	 * @return the subscription to remove the dependency

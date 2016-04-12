@@ -78,12 +78,12 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 	}
 
 	@Override
-	public Subscription validator(Function<O, Status> validator) {
-		return validator((t, dep) -> validator.apply(t));
+	public Subscription registerValidator(Function<O, Status> validator) {
+		return registerValidator((t, dep) -> validator.apply(t));
 	}
 
 	@Override
-	public Subscription validator(BiFunction<O, Map<String, Object>, Status> validator) {
+	public Subscription registerValidator(BiFunction<O, Map<String, Object>, Status> validator) {
 		this.validationList.add(validator);
 		return () -> {
 			this.validationList.remove(validator);
@@ -92,12 +92,12 @@ public abstract class ValidatedPropertyBase<O> implements ValidatedProperty<O> {
 	}
 
 	@Override
-	public Subscription dependency(ValidatedPropertyBase<?> property) {
+	public Subscription registerDependency(ValidatedPropertyBase<?> property) {
 		return dependency(property.domainProperty.getName(), property);
 	}
 
 	@Override
-	public Subscription dependency(Property<?> property) {
+	public Subscription registerDependency(Property<?> property) {
 		return dependency(property.getName(), property);
 	}
 
