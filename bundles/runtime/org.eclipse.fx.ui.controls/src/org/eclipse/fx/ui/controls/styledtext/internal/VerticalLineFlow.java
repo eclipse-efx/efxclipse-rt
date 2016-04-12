@@ -112,8 +112,6 @@ public class VerticalLineFlow<M, N>  extends NodeCachePane {
 	private void prepareNodes(RangeSet<Integer> range) {
 		if (range == null) return;
 
-//		System.err.println("VerticalLineFlow: prepareNodes " + range);
-
 		// release invisible nodes
 		Iterator<Entry<Integer, Node>> iterator = this.activeNodes.entrySet().iterator();
 		while (iterator.hasNext()) {

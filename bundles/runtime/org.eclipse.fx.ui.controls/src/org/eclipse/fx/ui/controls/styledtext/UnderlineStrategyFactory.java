@@ -15,9 +15,7 @@ import org.eclipse.fx.ui.controls.styledtext.model.DecorationStrategy;
 import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.component.annotations.Component;
 
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 /**
@@ -44,7 +42,6 @@ public class UnderlineStrategyFactory implements DecorationStrategyFactory {
 	static class UnderlineStrategy implements DecorationStrategy {
 		@Override
 		public void attach(Pane node, TextNode textNode) {
-			System.err.println("underline-attach");
 			Line l = (Line) textNode.getUserData();
 			if( l == null ) {
 				l = new Line();
@@ -56,15 +53,12 @@ public class UnderlineStrategyFactory implements DecorationStrategyFactory {
 				l.setEndX(textNode.getBoundsInLocal().getWidth());
 				//l.setTranslateY(textNode.getBaselineOffset() + 2.0);
 				textNode.setUserData(l);
-
-				System.err.println();
 			}
 			node.getChildren().add(l);
 		}
 
 		@Override
 		public void unattach(Pane node, TextNode textNode) {
-			System.err.println("underline-detach");
 			Line l = (Line) textNode.getUserData();
 			if( l != null ) {
 				textNode.setUserData(null);
@@ -75,7 +69,6 @@ public class UnderlineStrategyFactory implements DecorationStrategyFactory {
 
 		@Override
 		public void layout(Pane node, TextNode textNode) {
-			System.err.println("underline-layout");
 			Line l = (Line) textNode.getUserData();
 			if( l != null ) {
 				l.setEndX(node.getWidth());

@@ -390,7 +390,6 @@ public class TextNode extends HBox {
 	 */
 	public int getCaretIndexAtPoint(Point2D point) {
 		Point2D local = this.sceneToLocal(localToScene(point));
-//		System.err.println(local);
 
 		Optional<Node> charNode = this.getChildren().stream().filter( n -> n.getBoundsInParent().contains(local)).findFirst();
 		if( charNode.isPresent() ) {
@@ -418,34 +417,8 @@ public class TextNode extends HBox {
 				}
 			}
 			idx -= toRemove;
-//			System.err.println("==> (TextNode)" + idx);
 			return idx;
-		} else {
-//			System.err.println("COULD NOT FIND NODE AT: " + local);
-//			this.textNode.getChildren().stream().map( n -> n.getBoundsInParent()).forEach(System.err::println);
 		}
-
-//		@SuppressWarnings("deprecation")
-//		HitInfo info = this.textNode.impl_hitTestChar(this.textNode.sceneToLocal(localToScene(point)));
-//		if (info != null) {
-//			int idx = info.getInsertionIndex();
-//			int toRemove = 0;
-//			for (Integer i : this.tabPositions) {
-//				if (i.intValue() <= idx && idx < i.intValue() + this.tabCharAdvance.get()) {
-//					toRemove += idx - i.intValue();
-//					// If we are in the 2nd half of the tab we
-//					// simply move one past the value
-//					if ((idx - i.intValue()) % this.tabCharAdvance.get() >= this.tabCharAdvance.get() / 2) {
-//						idx += 1;
-//					}
-//					break;
-//				} else if (i.intValue() < idx) {
-//					toRemove += this.tabCharAdvance.get() - 1;
-//				}
-//			}
-//			idx -= toRemove;
-//			return idx;
-//		}
 		return -1;
 	}
 
