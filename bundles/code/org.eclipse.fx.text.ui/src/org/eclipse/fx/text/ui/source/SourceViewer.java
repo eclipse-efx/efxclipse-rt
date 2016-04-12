@@ -122,7 +122,6 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		if( configuration.getAnnotationPresenter() != null ) {
 			// install presenters
 			configuration.getAnnotationPresenter().getLineRulerAnnotationPresenter().forEach(p -> {
-				System.err.println("adding line ruler presenter " + p);
 				getTextWidget().getAnnotationPresenter().add(new WrappedLineRulerAnnotationPresenter(p));
 			});
 			configuration.getAnnotationPresenter().getTextAnnotationPresenter().forEach(p -> {

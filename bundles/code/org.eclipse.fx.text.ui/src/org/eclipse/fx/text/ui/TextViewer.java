@@ -221,27 +221,6 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 
 	// TODO get rid of onVerify event
 	protected void onVerify(VerifyEvent event) {
-
-//		if (event.isControlDown() && getKeyCode(event) == KeyCode.L) {
-//			if (getFeatures().contains(Feature.SHOW_LINE_NUMBERS)) {
-//				getFeatures().remove(Feature.SHOW_LINE_NUMBERS);
-//			}
-//			else {
-//				getFeatures().add(Feature.SHOW_LINE_NUMBERS);
-//			}
-//			System.err.println("SETTING FEATURES: " + getFeatures().get());
-//		}
-//
-//		if (event.isControlDown() && getKeyCode(event) == KeyCode.K) {
-//			if (getFeatures().contains(Feature.SHOW_HIDDEN_SYMBOLS)) {
-//				getFeatures().remove(Feature.SHOW_HIDDEN_SYMBOLS);
-//			}
-//			else {
-//				getFeatures().add(Feature.SHOW_HIDDEN_SYMBOLS);
-//			}
-//			System.err.println("SETTING FEATURES: " + getFeatures().get());
-//		}
-
 		// TODO add undo support to textViewer
 		if (getUndoManager() != null) {
 			if (Util.isWindows()) {

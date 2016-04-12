@@ -163,7 +163,6 @@ public class AnnotationModelSupport {
 				result.add(annotation);
 			}
 		}
-//		System.err.println("AnnotationModelSupport: findAnnotations("+lineIndex+") needed " + (System.currentTimeMillis() - now) + "ms");
 		return result;
 	}
 
@@ -179,7 +178,6 @@ public class AnnotationModelSupport {
 	}
 
 	private void onAnnotationModelChange() {
-//		System.err.println("AnnotationModelSupport: clearing annotation cache");
 		annotationCache.clear();
 		RangeSet<Integer> range = TreeRangeSet.create();
 		range.add(com.google.common.collect.Range.closed(0, Integer.MAX_VALUE));
@@ -191,10 +189,6 @@ public class AnnotationModelSupport {
 		@Override
 		public void modelChanged(AnnotationModelEvent event) {
 			onAnnotationModelChange();
-//			System.err.println("modelChanged");
-//			System.err.println(" added: " + Arrays.toString(event.getAddedAnnotations()));
-//			System.err.println(" removed: " + Arrays.toString(event.getRemovedAnnotations()));
-//			System.err.println(" changed: " + Arrays.toString(event.getChangedAnnotations()));
 		}
 
 		@Override
@@ -210,9 +204,6 @@ public class AnnotationModelSupport {
 		control.getAnnotationProvider().add(new AnnotationModelAnnotationProvider());
 		control.tabAvanceProperty().addListener((x, o, n)->{
 			onAnnotationModelChange();
-//			System.err.println("ON TAB ADVANCE CHANGE!");
-//			RangeSet<Integer> rs = TreeRangeSet.<Integer>create().complement();
-//			triggerChange(rs);
 		});
 
 		TextChangeListener textChangeListener = new TextChangeListener() {

@@ -62,26 +62,26 @@ class ContextInformationPopup implements IContentAssistListener {
 		 * @since 3.1
 		 */
 		public ContextFrame(IContextInformation information, int beginOffset, int offset, int visibleOffset, IContextInformationValidator validator, IContextInformationPresenter presenter) {
-			fInformation = information;
-			fBeginOffset = beginOffset;
-			fOffset = offset;
-			fVisibleOffset = visibleOffset;
-			fValidator = validator;
-			fPresenter = presenter;
+			this.fInformation = information;
+			this.fBeginOffset = beginOffset;
+			this.fOffset = offset;
+			this.fVisibleOffset = visibleOffset;
+			this.fValidator = validator;
+			this.fPresenter = presenter;
 		}
 
 		@Override
 		public boolean equals(Object obj) {
 			if (obj instanceof ContextFrame) {
 				ContextFrame frame= (ContextFrame) obj;
-				return fInformation.equals(frame.fInformation) && fBeginOffset == frame.fBeginOffset;
+				return this.fInformation.equals(frame.fInformation) && this.fBeginOffset == frame.fBeginOffset;
 			}
 			return super.equals(obj);
 		}
 
 		@Override
 		public int hashCode() {
-			return (fInformation.hashCode() << 16) | fBeginOffset;
+			return (this.fInformation.hashCode() << 16) | this.fBeginOffset;
 		}
 	}
 
@@ -114,8 +114,8 @@ class ContextInformationPopup implements IContentAssistListener {
 	 * @param viewer the viewer on top of which the context information is shown
 	 */
 	public ContextInformationPopup(ContentAssistant contentAssistant, ITextViewer viewer) {
-		fContentAssistant= contentAssistant;
-		fViewer= viewer;
+		this.fContentAssistant= contentAssistant;
+		this.fViewer= viewer;
 
 		this.fContextInfoPopup = new PopupWindow() {
 		};
@@ -123,17 +123,17 @@ class ContextInformationPopup implements IContentAssistListener {
 		this.fContextInfoPopup.setAutoHide(false);
 		viewer.getTextWidget().sceneProperty().addListener( e -> {
 			if( viewer.getTextWidget().getScene() != null ) {
-				fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
+				this.fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
 			}
 		});
 		if( viewer.getTextWidget().getScene() != null ) {
-			fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
+			this.fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
 		}
-		fRoot = new BorderPane();
-		fRoot.getStyleClass().add("styled-text-hover");
-		fContent = new Label();
-		fRoot.setCenter(fContent);
-		fContent.getStyleClass().add("context-info");
+		this.fRoot = new BorderPane();
+		this.fRoot.getStyleClass().add("styled-text-hover");
+		this.fContent = new Label();
+		this.fRoot.setCenter(fContent);
+		this.fContent.getStyleClass().add("context-info");
 		fContextInfoPopup.getScene().setRoot(fRoot);
 	}
 
@@ -144,7 +144,6 @@ class ContextInformationPopup implements IContentAssistListener {
 	 * @return  a potential error message or <code>null</code> in case of no error
 	 */
 	public String showContextProposals(final boolean autoActivated) {
-		System.err.println("showContextProposals(" + autoActivated + ") (TODO)");
 		return "TODO";
 	}
 
@@ -160,7 +159,6 @@ class ContextInformationPopup implements IContentAssistListener {
 				fContent.setText(info.getInformationDisplayString());
 				Point2D locationAtOffset = fViewer.getTextWidget().getLocationAtOffset(offset, LineLocation.ABOVE);
 				locationAtOffset = fViewer.getTextWidget().localToScreen(locationAtOffset);
-				System.err.println("CoNTEXT INFO @ " + locationAtOffset);
 				if (locationAtOffset != null) {
 					double y = locationAtOffset.getY() - fContextInfoPopup.getHeight();
 					fContextInfoPopup.show(fViewer.getTextWidget().getScene().getWindow(), locationAtOffset.getX(), y);

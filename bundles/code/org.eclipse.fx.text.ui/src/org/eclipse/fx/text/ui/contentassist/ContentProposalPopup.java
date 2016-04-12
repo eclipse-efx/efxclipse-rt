@@ -257,8 +257,6 @@ public class ContentProposalPopup implements IContentAssistListener {
 	@Override
 	public boolean verifyKey(VerifyEvent event) {
 
-		System.err.println("CONTENT PROPOSAL POPUP: VerifyEvent " + event);
-
 		return true;
 	}
 

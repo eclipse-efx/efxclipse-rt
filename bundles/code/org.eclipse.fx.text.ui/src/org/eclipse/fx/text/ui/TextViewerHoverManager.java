@@ -81,7 +81,6 @@ public class TextViewerHoverManager {
 
 	public void install(StyledTextArea styledTextArea) {
 		styledTextArea.addEventHandler(TextHoverEvent.HOVER, e -> {
-			System.err.println(e.getOffset() + " " + e);
 			if( e.getOffset() > 0 ) {
 				final IDocument document = getTextViewer().getDocument();
 				final int offset = e.getOffset();
@@ -105,7 +104,6 @@ public class TextViewerHoverManager {
 					.flatMap(a->getTextViewer().getHoverInfo(a).stream())
 					.collect(Collectors.toSet());
 
-				System.err.println("AnnotationHovers: " + annotationHovers);
 				hovers.addAll(annotationHovers);
 
 
@@ -134,11 +132,6 @@ public class TextViewerHoverManager {
 //				getPopup().hide();
 //			}
 
-				System.err.println("found hover infos: " + hovers);
-
-
-
-
 				if (!hovers.isEmpty()) {
 					// TODO on multiple hovers we need to determine which screenAnchor to use°!!
 					Point2D anchor = e.getHoverTargets().get(0).screenAnchor;
@@ -148,9 +141,6 @@ public class TextViewerHoverManager {
 						anchor = next.screenAnchor;
 						bounds = next.screenBounds;
 					}
-
-					System.err.println("showing @ " + anchor);
-
 
 					this.windowPresenter.show(anchor, bounds, hovers);
 				}
