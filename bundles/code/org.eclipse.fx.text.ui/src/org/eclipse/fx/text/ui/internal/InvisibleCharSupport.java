@@ -161,22 +161,31 @@ public class InvisibleCharSupport implements IFeature {
 			int numOfLines = content.getLineCount();
 
 			// ADD TABS
-			Pattern tab = Pattern.compile("\\t");
+			Pattern tab = Pattern.compile("\\t"); //$NON-NLS-1$
 			Matcher matcher = tab.matcher(line);
 			while (matcher.find()) {
-				annotations.add(new InvisibleCharAnnotation("tab", "", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance()));
+				annotations.add(new InvisibleCharAnnotation("tab", "", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance())); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
 			// ADD SPACE
-			Pattern space = Pattern.compile("[ ]");
+			Pattern space = Pattern.compile("[ ]"); //$NON-NLS-1$
 			matcher = space.matcher(line);
 			while (matcher.find()) {
-				annotations.add(new InvisibleCharAnnotation("space", "", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance()));
+				annotations.add(new InvisibleCharAnnotation("space", "", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance())); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
 			// ADD NEWLINE
 			if (index < numOfLines-1) {
-				annotations.add(new InvisibleCharAnnotation("enter", "", Range.closed(lineLength, lineLength +1), control.getTabAdvance()));
+
+
+				if (control.getContent().getCharCount() >= control.getOffsetAtLine(index) + lineLength + 2 &&
+					"\r\n".equals(control.getContent().getTextRange(control.getOffsetAtLine(index) +lineLength, 2))) { //$NON-NLS-1$
+					annotations.add(new InvisibleCharAnnotation("winenter", "", Range.closed(lineLength, lineLength +2), control.getTabAdvance())); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				else {
+					annotations.add(new InvisibleCharAnnotation("enter", "", Range.closed(lineLength, lineLength +1), control.getTabAdvance())); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+
 			}
 
 			return annotations;

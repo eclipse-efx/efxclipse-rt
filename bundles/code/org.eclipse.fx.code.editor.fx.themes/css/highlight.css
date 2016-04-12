@@ -40,6 +40,10 @@
 	-fx-content: "\u21B5";
 }
 
+.styled-text-area .invisible-char.winenter {
+	-fx-content: "\u27E1\u21B5";
+}
+
 .styled-text-area .list-view {
 	-fx-background-color: white;
 
