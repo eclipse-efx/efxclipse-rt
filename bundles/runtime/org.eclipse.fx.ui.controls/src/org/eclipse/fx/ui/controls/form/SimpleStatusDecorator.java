@@ -1,12 +1,10 @@
 package org.eclipse.fx.ui.controls.form;
 
 import org.eclipse.fx.core.Status;
-import org.eclipse.fx.core.Status.State;
 import org.osgi.service.component.annotations.Component;
 
-import javafx.beans.property.Property;
+import javafx.beans.property.ReadOnlyProperty;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
@@ -14,7 +12,7 @@ import javafx.scene.layout.Priority;
 public class SimpleStatusDecorator implements StatusDecorator {
 
 	@Override
-	public Node decorate(Property<Status> statusProperty, Node node) {
+	public Node decorate(ReadOnlyProperty<Status> statusProperty, Node node) {
 		HBox box = new HBox();
 		box.getStyleClass().add("status-decoration-container"); //$NON-NLS-1$
 
