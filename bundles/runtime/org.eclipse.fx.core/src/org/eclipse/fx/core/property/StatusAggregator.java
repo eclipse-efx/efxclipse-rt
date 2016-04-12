@@ -83,5 +83,6 @@ public class StatusAggregator implements ValidationStatusPropertyOwner {
 
 	private void _validate() {
 		this.statusProperty.set(this.list.stream().map(b -> b.statusProperty().get()).sorted(STATUS_SORTER).filter(WARNING_ERROR).findFirst().orElse(Status.ok()));
+		this.validationScheduled.set(false);
 	}
 }
