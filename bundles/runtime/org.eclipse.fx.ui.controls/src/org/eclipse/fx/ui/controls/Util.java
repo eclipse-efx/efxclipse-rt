@@ -65,6 +65,13 @@ public class Util {
 	public static final String FIND_NODE_EXCLUDE = "findNodeExclude"; //$NON-NLS-1$
 
 	/**
+	 * Boolean to indicate if mnemonic fixing is enabled
+	 *
+	 * @noreference
+	 */
+	public static final boolean MNEMONICS_FIX = ! Boolean.getBoolean("efxclipse.mnemonicfix.disabled"); //$NON-NLS-1$
+
+	/**
 	 * Dump the scene graph to a formatted string
 	 *
 	 * @param n
