@@ -505,6 +505,15 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 				s = new Scene(this.rootPane, this.mWindow.getWidth(), this.mWindow.getHeight());
 			}
 
+			// Fix freaking mnemonics activation on ALTGR
+			if( ! Util.isMacOS() && org.eclipse.fx.ui.controls.Util.MNEMONICS_FIX ) {
+				s.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+					if( e.isAltDown() && e.isControlDown() ) {
+						e.consume();
+					}
+				});
+			}
+
 			if( this.stage.getStyle() == StageStyle.TRANSPARENT ) {
 				s.setFill(Color.TRANSPARENT);
 			}
