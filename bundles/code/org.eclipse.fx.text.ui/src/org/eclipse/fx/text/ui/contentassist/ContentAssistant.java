@@ -19,6 +19,7 @@ import org.eclipse.fx.core.text.SourceTextEditActions;
 import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.text.ui.ITextViewer;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
+import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.TriggerActionMapping.Context;
 import org.eclipse.jface.text.IDocument;
 
@@ -78,7 +79,12 @@ public class ContentAssistant implements IContentAssistant {
 					IDocument document = this.fViewer.getDocument();
 					// apply the proposal
 					proposal.apply(document);
-					this.fViewer.getTextWidget().setSelection(proposal.getSelection(document));
+					TextSelection selection = proposal.getSelection(document);
+					if( selection.length > 0 ) {
+						this.fViewer.getTextWidget().setCaretOffset(offset+selection.length);
+					}
+
+					this.fViewer.getTextWidget().setSelection(selection);
 
 					if (proposal.getContextInformation() != null) {
 						showContextInformation(proposal.getContextInformation(), this.fViewer.getTextWidget().getCaretOffset());
