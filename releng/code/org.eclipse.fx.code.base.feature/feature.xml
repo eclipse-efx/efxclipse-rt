@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.fx.code.base.feature"
-      label="Feature"
-      version="1.0.0.qualifier">
+      label="e(fx)clipse - Code Editing - Basic"
+      version="2.3.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -88,6 +88,20 @@
 
    <plugin
          id="org.eclipse.fx.code.editor.configuration.text.fx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.google.gson"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.text"
          download-size="0"
          install-size="0"
          version="0.0.0"
