@@ -257,6 +257,7 @@ public class StyledTextArea extends Control {
 		this.contentProperty = new ContentProperty(this, "content", new DefaultContent()); //$NON-NLS-1$
 		setFocusTraversable(true);
 
+		//FIXME This rules out the CSS-Setting!
 		DoubleBinding lineHeight = org.eclipse.fx.ui.controls.Util.createTextHeightBinding("Pj", fontProperty());
 		fixedLineHeightProperty().bind(lineHeight);
 	}
