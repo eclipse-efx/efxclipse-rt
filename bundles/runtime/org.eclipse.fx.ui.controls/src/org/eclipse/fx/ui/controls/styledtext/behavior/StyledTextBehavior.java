@@ -228,6 +228,11 @@ public class StyledTextBehavior {
 			if (event.getCode() == KeyCode.ALT || event.isAltDown()) {
 				event.consume();
 			}
+		} else {
+			// Fix JavaFX bug with invalid mnemonics activation on ALTGR
+			if( event.isAltDown() && event.isControlDown() ) {
+				event.consume();
+			}
 		}
 
 		if (evt.isConsumed()) {
