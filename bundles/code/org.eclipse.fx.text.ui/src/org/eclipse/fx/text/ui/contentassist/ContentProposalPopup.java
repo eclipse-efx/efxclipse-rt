@@ -100,12 +100,10 @@ public class ContentProposalPopup implements IContentAssistListener {
 	}
 
 	private void subscribe(Event e) {
-		this.viewer.getTextWidget().getContent().addTextChangeListener(this.textChangeListener);
 		this.viewer.getTextWidget().caretOffsetProperty().addListener(this.selectionChange);
 		this.viewer.getTextWidget().getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, this.mouseEvent);
 	}
 	private void unsubscribe(Event e) {
-		this.viewer.getTextWidget().getContent().removeTextChangeListener(this.textChangeListener);
 		this.viewer.getTextWidget().caretOffsetProperty().removeListener(this.selectionChange);
 		this.viewer.getTextWidget().getScene().removeEventFilter(MouseEvent.MOUSE_PRESSED, this.mouseEvent);
 	}
@@ -120,25 +118,6 @@ public class ContentProposalPopup implements IContentAssistListener {
 		this.offset = this.viewer.getTextWidget().getCaretOffset();
 		updateProposals();
 	}
-
-	private TextChangeListener textChangeListener = new TextChangeListener() {
-		@Override
-		public void textSet(TextChangedEvent event) {
-			ContentProposalPopup.this.offset = ContentProposalPopup.this.viewer.getTextWidget().getCaretOffset();
-			updateProposals();
-		}
-
-		@Override
-		public void textChanging(TextChangingEvent event) {
-			//nothing to do
-		}
-
-		@Override
-		public void textChanged(TextChangedEvent event) {
-			ContentProposalPopup.this.offset = ContentProposalPopup.this.viewer.getTextWidget().getCaretOffset();
-			updateProposals();
-		}
-	};
 
 	private void updateProposals() {
 		List<ICompletionProposal> list = this.proposalComputer.apply(new ContentAssistContextData(this.offset,this.viewer.getDocument()/*,prefix*/));

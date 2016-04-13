@@ -4,8 +4,8 @@ Bundle-Name: Basic Text extension
 Bundle-SymbolicName: org.eclipse.fx.text
 Bundle-Version: 2.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.eclipse.fx.text.hover,
- org.eclipse.fx.text.navigation,
+Export-Package: org.eclipse.fx.text.hover;version="2.3.0",
+ org.eclipse.fx.text.navigation;version="2.3.0",
  org.eclipse.fx.text.rules;version="2.3.0";x-internal:=true
 Require-Bundle: org.eclipse.text;bundle-version="3.5.300",
  org.eclipse.equinox.common;bundle-version="3.6.200"
