@@ -1,0 +1,4 @@
+.button.dialog-opener {
+	-fx-graphic: url("icons/new_persp.png");
+	-fx-content-display: graphic-only;
+}
