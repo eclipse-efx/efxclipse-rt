@@ -101,6 +101,8 @@
 		<module>../runtime/org.eclipse.fx.target.rcp.feature</module>
 		<module>../runtime/org.eclipse.fx.target.rcp4.feature</module>
 		<module>../runtime/org.eclipse.fx..slf4j.target.feature</module>
+
+		<module>../code/org.eclipse.fx.code.langs.feature</module>
 		<module>../code/org.eclipse.fx.code.base.feature</module>
 		<module>../code/org.eclipse.fx.code.target.feature</module>
 
