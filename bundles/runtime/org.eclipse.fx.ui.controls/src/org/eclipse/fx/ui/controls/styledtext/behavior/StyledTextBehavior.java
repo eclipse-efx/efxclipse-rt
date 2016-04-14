@@ -768,7 +768,7 @@ public class StyledTextBehavior {
 	 * default implementation for {@link DefaultTextEditActions#SELECT_WORD_PREVIOUS}
 	 */
 	protected void defaultSelectWordPrevious() {
-		int previous = TextUtil.findWordEndOffset(
+		int previous = TextUtil.findWordStartOffset(
 				getControl().getContent(),
 				getControl().getCaretOffset(), true);
 		if (previous != BreakIterator.DONE) {
