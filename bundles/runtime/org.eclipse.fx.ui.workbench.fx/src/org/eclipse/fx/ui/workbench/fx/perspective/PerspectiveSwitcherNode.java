@@ -33,7 +33,9 @@ import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.workbench.fx.EMFUri;
 import org.osgi.service.event.Event;
 
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 
@@ -78,7 +80,9 @@ public class PerspectiveSwitcherNode extends HBox {
 			dialogbutton.setOnAction(e -> {
 				commandService.execute(fCommandId, Collections.emptyMap());
 			});
-			getChildren().add(dialogbutton);
+			Separator separator = new Separator();
+			separator.setOrientation(Orientation.VERTICAL);
+			getChildren().addAll(dialogbutton, separator);
 			this.hasDialogButton = true;
 		} else {
 			this.hasDialogButton = false;
@@ -115,7 +119,7 @@ public class PerspectiveSwitcherNode extends HBox {
 				if (p.isToBeRendered()) {
 					PerspectiveButton b = new PerspectiveButton(this.loader, p, this.partService, this.stack.getSelectedElement() == p);
 					List<MPerspective> visibleList = this.stack.getChildren().stream().filter(pp -> pp.isToBeRendered()).collect(Collectors.toList());
-					getChildren().add(visibleList.indexOf(p) + (this.hasDialogButton ? 1 : 0), b);
+					getChildren().add(visibleList.indexOf(p) + (this.hasDialogButton ? 2 : 0), b);
 				} else {
 					getChildren().removeIf(b -> b instanceof PerspectiveButton && ((PerspectiveButton) b).perspective == p);
 				}
