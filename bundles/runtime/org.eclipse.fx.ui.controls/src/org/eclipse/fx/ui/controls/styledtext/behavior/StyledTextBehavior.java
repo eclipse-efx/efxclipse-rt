@@ -211,6 +211,23 @@ public class StyledTextBehavior {
 		}
 
 		if( this.dragMoveTextMode ) {
+
+			if (event.getCode() == KeyCode.ESCAPE) {
+				// Bug 491693 - StyledTextArea - Drag And Drop not canceled on Esc
+				// cancel dnd operation
+				this.dragMoveTextMode = false;
+				this.pressedInSelection = false; // to prevent selection changes after cancel
+
+				// update insertion marker
+				((StyledTextSkin)getControl().getSkin()).updateInsertionMarkerIndex(-1);
+
+				getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, false);
+				getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, false);
+
+				event.consume();
+				return;
+			}
+
 			if( event.isShortcutDown() ) {
 				getControl().pseudoClassStateChanged(DRAG_TEXT_MOVE_ACTIVE_PSEUDOCLASS_STATE, false);
 				getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, true);
@@ -895,8 +912,15 @@ public class StyledTextBehavior {
 				break;
 			}
 		}
-		getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, getControl().getLineSeparator().getValue() + prefix);
-		getControl().setCaretOffset(offset + getControl().getLineSeparator().getValue().length() + prefix.length());
+
+		if (getControl().getSelection().length > 0) {
+			getControl().getContent().replaceTextRange(getControl().getSelection().offset, getControl().getSelection().length, getControl().getLineSeparator().getValue() + prefix);
+			getControl().setCaretOffset(getControl().getSelection().offset + getControl().getLineSeparator().getValue().length() + prefix.length());
+		}
+		else {
+			getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, getControl().getLineSeparator().getValue() + prefix);
+			getControl().setCaretOffset(offset + getControl().getLineSeparator().getValue().length() + prefix.length());
+		}
 
 	}
 
