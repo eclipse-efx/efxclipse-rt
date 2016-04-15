@@ -81,7 +81,7 @@ public class ContentAssistant implements IContentAssistant {
 					proposal.apply(document);
 					TextSelection selection = proposal.getSelection(document);
 					if( selection.length > 0 ) {
-						this.fViewer.getTextWidget().setCaretOffset(offset+selection.length);
+						this.fViewer.getTextWidget().setCaretOffset(selection.offset +selection.length);
 					}
 
 					this.fViewer.getTextWidget().setSelection(selection);
