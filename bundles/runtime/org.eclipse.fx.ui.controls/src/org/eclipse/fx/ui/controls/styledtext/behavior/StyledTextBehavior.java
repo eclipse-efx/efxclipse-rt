@@ -912,8 +912,15 @@ public class StyledTextBehavior {
 				break;
 			}
 		}
-		getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, getControl().getLineSeparator().getValue() + prefix);
-		getControl().setCaretOffset(offset + getControl().getLineSeparator().getValue().length() + prefix.length());
+
+		if (getControl().getSelection().length > 0) {
+			getControl().getContent().replaceTextRange(getControl().getSelection().offset, getControl().getSelection().length, getControl().getLineSeparator().getValue() + prefix);
+			getControl().setCaretOffset(getControl().getSelection().offset + getControl().getLineSeparator().getValue().length() + prefix.length());
+		}
+		else {
+			getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, getControl().getLineSeparator().getValue() + prefix);
+			getControl().setCaretOffset(offset + getControl().getLineSeparator().getValue().length() + prefix.length());
+		}
 
 	}
 
