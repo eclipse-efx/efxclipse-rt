@@ -10,21 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.renderers.fx;
 
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -32,7 +17,6 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.UIEvents;
-import org.eclipse.e4.ui.workbench.UIEvents.UIElement;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
@@ -45,7 +29,20 @@ import org.eclipse.fx.ui.workbench.renderers.fx.internal.CustomContainerSupport;
 import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.w3c.dom.events.UIEvent;
+
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 
 /**
  * default renderer for {@link MPart}
@@ -327,7 +324,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 		}
 
 		@Inject
-		public void setLabel(@Named(UIEvents.UILabel.LABEL) String label) {
+		public void setLabel(@Named(UIEvents.UILabel.LOCALIZED_LABEL) String label) {
 			// ensure init
 			getWidget();
 			if( this.titleLabel != null ) {
