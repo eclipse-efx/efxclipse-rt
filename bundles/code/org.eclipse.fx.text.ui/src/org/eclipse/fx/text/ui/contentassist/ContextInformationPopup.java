@@ -120,7 +120,7 @@ class ContextInformationPopup implements IContentAssistListener {
 		this.fContextInfoPopup = new PopupWindow() {
 		};
 		this.fContextInfoPopup.setAutoFix(false);
-		this.fContextInfoPopup.setAutoHide(false);
+		this.fContextInfoPopup.setAutoHide(true);
 		viewer.getTextWidget().sceneProperty().addListener( e -> {
 			if( viewer.getTextWidget().getScene() != null ) {
 				this.fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
