@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.databinding.internal;
 
+import javafx.scene.Node;
 import javafx.scene.control.Control;
 
 import org.eclipse.core.databinding.observable.Observables;
@@ -18,6 +19,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.SimpleValueProperty;
 import org.eclipse.fx.ui.databinding.IJFXControlValueObservable;
 import org.eclipse.fx.ui.databinding.IJFXControlValueProperty;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  *
@@ -27,9 +29,17 @@ public abstract class ControlValueProperty extends SimpleValueProperty implement
 	@Override
 	public IJFXControlValueObservable observeDelayed(int delay, Control control) {
 		IObservableValue v = observe(control);
-		return new ControlObservableValueDecorator(Observables.observeDelayedValue(delay, v));
+		return new ControlDelayedObservableValueDecorator(Observables.observeDelayedValue(delay, v), control);
 	}
-	
+
+	@Override
+	public IJFXControlValueObservable observeDelayed(int delay, @NonNull Node control) {
+		IObservableValue v = observe(control);
+		return new ControlDelayedObservableValueDecorator(Observables.observeDelayedValue(delay, v), control);
+	}
+
+	// ---
+
 	@Override
 	public IJFXControlValueObservable observe(Control control) {
 		IObservableValue v = super.observe(Realm.getDefault(), control);
@@ -37,11 +47,25 @@ public abstract class ControlValueProperty extends SimpleValueProperty implement
 	}
 
 	@Override
+	public @NonNull IJFXControlValueObservable observe(@NonNull Node control) {
+		IObservableValue v = super.observe(Realm.getDefault(), control);
+		return new ControlObservableValueDecorator(v);
+	}
+
+	// ---
+
+	@Override
 	public IJFXControlValueObservable observe(Realm realm, Control control) {
 		IObservableValue v = super.observe(realm, control);
 		return new ControlObservableValueDecorator(v);
 	}
-	
+
+	@Override
+	public IJFXControlValueObservable observe(@NonNull Realm realm, @NonNull Node control) {
+		IObservableValue v = super.observe(realm, control);
+		return new ControlObservableValueDecorator(v);
+	}
+
 	@Override
 	public IJFXControlValueObservable observe(Realm realm, Object source) {
 		if( realm == null ) {
@@ -52,7 +76,7 @@ public abstract class ControlValueProperty extends SimpleValueProperty implement
 		}
 		return observe(realm, (Control)source);
 	}
-	
+
 	@Override
 	public IJFXControlValueObservable observe(Object source) {
 		if( source == null ) {

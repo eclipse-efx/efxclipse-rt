@@ -21,6 +21,7 @@ import org.eclipse.fx.core.databinding.IJFXBeanValueProperty;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
 import org.eclipse.fx.ui.databinding.internal.DatePickerValueProperty;
 import org.eclipse.fx.ui.databinding.internal.SingleSelectionProperty;
+import org.eclipse.fx.ui.databinding.internal.TextValueProperty;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
@@ -36,7 +37,7 @@ public class JFXUIProperties {
 	 * <li>{@link TreeView}</li>
 	 * <li>{@link TreeTableView}</li>
 	 * </ul>
-	 * 
+	 *
 	 * @return the property
 	 */
 	@NonNull
@@ -46,17 +47,30 @@ public class JFXUIProperties {
 
 	/**
 	 * Create a property for the text-property of a javafx bean
-	 * 
+	 *
 	 * @return the text property
+	 * @deprecated use {@link #text2()}
 	 */
 	@NonNull
+	@Deprecated
 	public static IJFXBeanValueProperty text() {
 		return JFXBeanProperties.value("text"); //$NON-NLS-1$
 	}
 
 	/**
+	 * Create a property for the text-property of a javafx bean
+	 *
+	 * @return the text property
+	 * @since 2.4.0
+	 */
+	@NonNull
+	public static IJFXControlValueProperty text2() {
+		return new TextValueProperty();
+	}
+
+	/**
 	 * Create a date property of the {@link DatePicker}
-	 * 
+	 *
 	 * @return the property
 	 */
 	@NonNull
