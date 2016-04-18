@@ -36,6 +36,8 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import javafx.beans.property.SetProperty;
 
 public abstract class SourceViewerConfiguration {
+	private IUndoManager undoManager;
+
 	public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
 		return IDocumentExtension3.DEFAULT_PARTITIONING;
 	}
@@ -74,7 +76,14 @@ public abstract class SourceViewerConfiguration {
 	}
 
 	public IUndoManager getUndoManager(ISourceViewer sourceViewer) {
-		return new DefaultUndoManager(25);
+		if( this.undoManager == null ) {
+			this.undoManager = new DefaultUndoManager(getMaxUndoLevel());
+		}
+		return this.undoManager;
+	}
+
+	protected int getMaxUndoLevel() {
+		return 25;
 	}
 
 	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
