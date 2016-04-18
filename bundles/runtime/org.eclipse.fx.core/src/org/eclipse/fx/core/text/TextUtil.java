@@ -10,10 +10,18 @@
  *******************************************************************************/
 package org.eclipse.fx.core.text;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.BreakIterator;
 import java.text.CharacterIterator;
+import java.text.MessageFormat;
 import java.text.StringCharacterIterator;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.apache.commons.lang.text.StrLookup;
+import org.apache.commons.lang.text.StrSubstitutor;
 import org.eclipse.fx.core.IntTuple;
 
 /**
@@ -22,8 +30,10 @@ import org.eclipse.fx.core.IntTuple;
  * @since 2.4.0
  */
 public class TextUtil {
-//TODO This would work with ICU
-//	private static final BreakIterator POSIX_ITERATOR = BreakIterator.getWordInstance(new Locale("en", "US", "POSIX"));   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+	// TODO This would work with ICU
+	// private static final BreakIterator POSIX_ITERATOR =
+	// BreakIterator.getWordInstance(new Locale("en", "US", "POSIX"));
+	// //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 
 	/**
 	 * A {@link CharSequence} who can provide an {@link CharacterIterator}
@@ -52,14 +62,14 @@ public class TextUtil {
 		BreakIterator wordInstance = BreakIterator.getWordInstance();
 		wordInstance.setText(content.getIterator());
 		int rv = wordInstance.following(offset);
-		if( rv != BreakIterator.DONE && pointAsBoundary ) {
+		if (rv != BreakIterator.DONE && pointAsBoundary) {
 			String s = content.subSequence(offset, rv).toString();
 			int idx = s.indexOf('.');
-			if( idx >= 0 ) {
+			if (idx >= 0) {
 				rv = offset + idx;
 			}
 
-			if( rv == offset ) {
+			if (rv == offset) {
 				rv = offset + 1;
 			}
 		}
@@ -82,15 +92,15 @@ public class TextUtil {
 		wordInstance.setText(content.getIterator());
 		int rv = wordInstance.preceding(offset);
 
-		if( rv != BreakIterator.DONE && pointAsBoundary ) {
+		if (rv != BreakIterator.DONE && pointAsBoundary) {
 			String s = content.subSequence(rv, offset).toString();
 			int idx = s.lastIndexOf('.');
-			if( idx > 0 ) {
+			if (idx > 0) {
 				rv += idx + 1;
 			}
 
 			// move before the point
-			if( rv == offset ) {
+			if (rv == offset) {
 				rv -= 1;
 			}
 		}
@@ -115,21 +125,107 @@ public class TextUtil {
 		int previous = wordInstance.preceding(offset);
 		int next = wordInstance.following(offset);
 
-		if( pointAsBoundary && previous != BreakIterator.DONE && next != BreakIterator.DONE ) {
+		if (pointAsBoundary && previous != BreakIterator.DONE && next != BreakIterator.DONE) {
 			String preMatch = content.subSequence(previous, offset).toString();
 			String postMatch = content.subSequence(offset, next).toString();
 
 			int idx = preMatch.lastIndexOf('.');
-			if( idx > 0 ) {
+			if (idx > 0) {
 				previous += idx + 1;
 			}
 
 			idx = postMatch.indexOf('.');
-			if( idx > 0 ) {
+			if (idx > 0) {
 				next = offset + idx;
 			}
 		}
 
 		return new IntTuple(previous, next);
+	}
+
+	/**
+	 * Substitute template values (including child-properties) and format them
+	 *
+	 * The following examples are possible:
+	 * <p>
+	 * <pre>
+	 * The name is ${person.firstname}.
+	 * The birthdate is ${person.birthdate,date,dd.MM.yyyy}.
+	 * </pre>
+	 * </p>
+	 *
+	 * @param template
+	 *            the template
+	 * @param data
+	 *            the data
+	 * @return the final string
+	 * @since 2.4.0
+	 */
+	public static String templateValuSubstitutor(String template, Map<String, Object> data) {
+		return new StrSubstitutor(new StrLookupImpl(data)).replace(template);
+	}
+
+	/**
+	 * Make the first character in the string upper case
+	 *
+	 * @param value
+	 *            the value
+	 * @return the value with the first character as uppercase
+	 * @since 2.4.0
+	 */
+	public static String toFirstUpper(String value) {
+		char[] cs = value.toCharArray();
+		cs[0] = Character.toUpperCase(cs[0]);
+		return String.valueOf(cs);
+	}
+
+	static class StrLookupImpl extends StrLookup {
+		private final Map<String, Object> data;
+
+		public StrLookupImpl(Map<String, Object> data) {
+			this.data = data;
+		}
+
+		@Override
+		public String lookup(String key) {
+			String[] pathAndFormat = key.split(","); //$NON-NLS-1$
+			String[] path = pathAndFormat[0].split("\\."); //$NON-NLS-1$
+
+			Object object = this.data.get(path[0]);
+			if (object != null && path.length > 1) {
+				int i = 1;
+				while (object != null && i < path.length) {
+					Method m = null;
+					try {
+						m = object.getClass().getDeclaredMethod("get" + toFirstUpper(path[i])); //$NON-NLS-1$
+					} catch (NoSuchMethodException | SecurityException e) {
+						try {
+							m = object.getClass().getDeclaredMethod("is" + toFirstUpper(path[i])); //$NON-NLS-1$
+						} catch (NoSuchMethodException | SecurityException e1) {
+							// nothing todo
+						}
+					}
+					if (m == null) {
+						throw new IllegalStateException("Unable to locate accessor property for property '" + path[i] + "' on object " + object + "."); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
+					}
+
+					m.setAccessible(true);
+					try {
+						object = m.invoke(object);
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+						throw new IllegalStateException(e);
+					}
+					i++;
+				}
+			}
+
+			if (pathAndFormat.length > 1) {
+				String msg = "{0," + Stream.of(pathAndFormat).skip(1).collect(Collectors.joining(",")) + "}"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				return MessageFormat.format(msg, object);
+			}
+
+			return object == null ? null : object.toString();
+		}
+
 	}
 }
