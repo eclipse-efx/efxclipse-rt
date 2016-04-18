@@ -22,11 +22,14 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MElementContainer;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.menu.MPopupMenu;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.fx.e4.EditorClassURLProvider;
 import org.eclipse.fx.code.editor.fx.e4.EditorContainerService;
+import org.eclipse.fx.code.editor.fx.e4.EditorContextMenuService;
+import org.eclipse.fx.code.editor.fx.services.EditorContextMenuProvider.Type;
 import org.eclipse.fx.code.editor.services.EditorOpener;
 import org.eclipse.fx.code.editor.services.EditorOpenerTypeProvider;
 import org.eclipse.fx.code.editor.services.FileIconProvider;
@@ -112,6 +115,9 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 		@Service
 		List<EditorClassURLProvider> editorUrlProvider;
 
+		@Inject
+		EditorContextMenuService contextMenuService;
+
 		@Override
 		public boolean openEditor(String uri) {
 			List<MPart> list = modelService.findElements(application, MPart.class, EModelService.ANYWHERE, (p) -> {
@@ -143,6 +149,10 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 					part.setIconURI(iconUri);
 					part.getPersistedState().put(Constants.DOCUMENT_URL, uri);
 					part.getTags().add(EPartService.REMOVE_ON_HIDE_TAG);
+					MPopupMenu menu = contextMenuService.getContextMenu(modelService, application, part, Type.CONTENT);
+					if( menu != null ) {
+						part.getMenus().add(menu);
+					}
 					container.getChildren().add(part);
 				}
 			} else {

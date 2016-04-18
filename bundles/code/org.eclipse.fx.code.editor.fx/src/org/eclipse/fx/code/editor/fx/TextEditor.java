@@ -23,6 +23,8 @@ import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.Input;
 import org.eclipse.fx.code.editor.SourceSelection;
 import org.eclipse.fx.code.editor.fx.services.ContextInformationPresenter;
+import org.eclipse.fx.code.editor.fx.services.EditorContextMenuProvider;
+import org.eclipse.fx.code.editor.fx.services.EditorContextMenuProvider.Type;
 import org.eclipse.fx.code.editor.services.ContextInformation;
 import org.eclipse.fx.code.editor.services.DelegatingEditingContext;
 import org.eclipse.fx.code.editor.services.EditingContext;
@@ -70,6 +72,13 @@ public class TextEditor {
 	private EditingContext editingContext;
 
 	private ContextInformationPresenter contextInformationPresenter;
+
+	private EditorContextMenuProvider contextMenuProvider;
+
+	@Inject
+	public void setContextMenuProvider(EditorContextMenuProvider contextMenuProvider) {
+		this.contextMenuProvider = contextMenuProvider;
+	}
 
 	@Inject
 	public void setContextInformationPresenter(ContextInformationPresenter contextInformationPresenter) {
@@ -169,8 +178,6 @@ public class TextEditor {
 
 		eventBus.subscribe(Constants.TOPIC_SELECT_SOURCE, EventBus.data(this::onSourceSelect));
 
-
-
 		if (editingContext instanceof DelegatingEditingContext) {
 			DelegatingEditingContext c = (DelegatingEditingContext) editingContext;
 			c.setDelegate(new EditingContext() {
@@ -244,6 +251,8 @@ public class TextEditor {
 				}
 			});
 		}
+
+		contextMenuProvider.attacheMenu(viewer.getTextWidget(), Type.CONTENT);
 	}
 
 	private void onSourceSelect(SourceSelection data) {
