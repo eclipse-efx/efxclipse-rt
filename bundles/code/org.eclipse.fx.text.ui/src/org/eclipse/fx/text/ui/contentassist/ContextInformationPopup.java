@@ -17,6 +17,8 @@ import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
 
 import org.eclipse.fx.text.ui.ITextViewer;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
+import org.eclipse.fx.ui.controls.Util;
+import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 
 import javafx.geometry.Point2D;
@@ -155,8 +157,15 @@ class ContextInformationPopup implements IContentAssistListener {
 	 * @since 2.0
 	 */
 	public void showContextInformation(final IContextInformation info, final int offset) {
-			if (info != null && info.getInformationDisplayString() != null && !info.getInformationDisplayString().isEmpty()) {
-				fContent.setText(info.getInformationDisplayString());
+			CharSequence infoText = info.getInformationDisplayString();
+			if (info != null && info != null && infoText.length() > 0) {
+				if( infoText instanceof StyledString ) {
+					fContent.setText("");
+					fContent.setGraphic(Util.toNode((StyledString) infoText));
+				} else {
+					fContent.setText(infoText.toString());
+					fContent.setGraphic(null);
+				}
 				Point2D locationAtOffset = fViewer.getTextWidget().getLocationAtOffset(offset, LineLocation.ABOVE);
 				locationAtOffset = fViewer.getTextWidget().localToScreen(locationAtOffset);
 				if (locationAtOffset != null) {

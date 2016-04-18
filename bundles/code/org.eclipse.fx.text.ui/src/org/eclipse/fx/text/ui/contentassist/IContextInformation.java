@@ -45,7 +45,7 @@ public interface IContextInformation {
 	 *
 	 * @return the string to be displayed for the context
 	 */
-	String getContextDisplayString();
+	CharSequence getContextDisplayString();
 
 	/**
 	 * Returns the image for this context information.
@@ -60,7 +60,7 @@ public interface IContextInformation {
 	 *
 	 * @return the string to be displayed
 	 */
-	String getInformationDisplayString();
+	CharSequence getInformationDisplayString();
 
 	/**
 	 * Compares the given object with this receiver. Two context informations are equal if there
