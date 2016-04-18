@@ -76,6 +76,10 @@ public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderSe
 
 		S s = getSelectorValue(context);
 
+		if( s == null ) {
+			return null;
+		}
+
 		Optional<? extends T> value;
 		synchronized (this.registry) {
 			value = this.registry.unsynchronizedStream().filter(p -> p.test(s)).findFirst().map(p -> ContextInjectionFactory.make(p.getType(s), context));
