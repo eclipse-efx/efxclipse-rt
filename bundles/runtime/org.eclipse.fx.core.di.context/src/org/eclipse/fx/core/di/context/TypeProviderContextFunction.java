@@ -89,8 +89,26 @@ public abstract class TypeProviderContextFunction<S, T, P extends TypeProviderSe
 			context.set(cacheKey, v);
 			return v;
 		} else {
-			return null;
+			T v = createDefault(context);
+			if (v != null) {
+				postInstanceCreation(v, context);
+			}
+			context.set(cacheKey, v);
+			return v;
 		}
+	}
+
+	/**
+	 * Create a default value if no provider matched
+	 *
+	 * @param context
+	 *            the context
+	 * @return the default or <code>null</code>
+	 * @since 2.4.0
+	 */
+	@SuppressWarnings("null")
+	protected T createDefault(IEclipseContext context) {
+		return (T) null;
 	}
 
 	/**
