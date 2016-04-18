@@ -914,8 +914,9 @@ public class StyledTextBehavior {
 		}
 
 		if (getControl().getSelection().length > 0) {
+			int caretPos = getControl().getSelection().offset + getControl().getLineSeparator().getValue().length() + prefix.length();
 			getControl().getContent().replaceTextRange(getControl().getSelection().offset, getControl().getSelection().length, getControl().getLineSeparator().getValue() + prefix);
-			getControl().setCaretOffset(getControl().getSelection().offset + getControl().getLineSeparator().getValue().length() + prefix.length());
+			getControl().setCaretOffset( caretPos );
 		}
 		else {
 			getControl().getContent().replaceTextRange(getControl().getCaretOffset(), 0, getControl().getLineSeparator().getValue() + prefix);
