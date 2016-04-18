@@ -174,7 +174,11 @@ public class ContentProposalPopup implements IContentAssistListener {
 
 	private static String getDocumentation(ICompletionProposal proposal) {
 		if (proposal != null && proposal.getHoverInfo() != null) {
-			return "<html><body><pre>"+proposal.getHoverInfo()+"</pre></body></html>"; //$NON-NLS-1$ //$NON-NLS-2$
+			if( proposal.getHoverInfo().toString().startsWith("<html>") ) { //$NON-NLS-1$
+				return proposal.getHoverInfo().toString();
+			} else {
+				return "<html><body><pre>"+proposal.getHoverInfo()+"</pre></body></html>"; //$NON-NLS-1$ //$NON-NLS-2$
+			}
 		}
 		return "<html></html>"; //$NON-NLS-1$
 	}
