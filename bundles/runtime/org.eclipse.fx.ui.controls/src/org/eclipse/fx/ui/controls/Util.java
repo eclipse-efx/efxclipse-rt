@@ -31,12 +31,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -125,7 +123,9 @@ public class Util {
 			segList.add(t);
 		}
 
-		return new TextFlow(segList.toArray(new Node[0]));
+		TextFlow textFlow = new TextFlow(segList.toArray(new Node[0]));
+		textFlow.getStyleClass().add("styled-string"); //$NON-NLS-1$
+		return textFlow;
 	}
 
 	/**
