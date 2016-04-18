@@ -161,11 +161,11 @@ public class ContentProposalPopup implements IContentAssistListener {
 			break;
 		case LEFT:
 			event.consume();
-			updateProposals();
+			this.viewer.getTextWidget().setCaretOffset(Math.max(0,this.viewer.getTextWidget().getCaretOffset()-1));
 			break;
 		case RIGHT:
 			event.consume();
-			updateProposals();
+			this.viewer.getTextWidget().setCaretOffset(Math.min(this.viewer.getDocument().getLength()-1,this.viewer.getTextWidget().getCaretOffset()+1));
 			break;
 		default:
 			break;
@@ -191,7 +191,9 @@ public class ContentProposalPopup implements IContentAssistListener {
 			p.setPrefHeight(200);
 			p.setPrefWidth(600);
 			this.stage.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
-
+			this.stage.getScene().focusOwnerProperty().addListener( o -> {
+				System.err.println(this.stage.getScene().focusOwnerProperty().get());
+			});
 			this.stage.getScene().getStylesheets().addAll(this.viewer.getTextWidget().getScene().getStylesheets());
 			this.proposalList = new ListView<>();
 			this.proposalList.setMinWidth(300);
