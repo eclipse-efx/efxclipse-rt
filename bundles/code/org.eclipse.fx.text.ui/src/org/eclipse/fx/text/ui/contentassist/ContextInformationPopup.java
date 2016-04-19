@@ -157,8 +157,8 @@ class ContextInformationPopup implements IContentAssistListener {
 	 * @since 2.0
 	 */
 	public void showContextInformation(final IContextInformation info, final int offset) {
-			CharSequence infoText = info.getInformationDisplayString();
-			if (info != null && info != null && infoText.length() > 0) {
+			CharSequence infoText = info == null ? null : info.getInformationDisplayString();
+			if (infoText != null && infoText.length() > 0) {
 				if( infoText instanceof StyledString ) {
 					fContent.setText("");
 					fContent.setGraphic(Util.toNode((StyledString) infoText));
