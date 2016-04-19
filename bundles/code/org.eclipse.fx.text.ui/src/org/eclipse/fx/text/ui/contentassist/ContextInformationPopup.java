@@ -19,8 +19,11 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 
 import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.event.Event;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.PopupWindow;
 
@@ -102,15 +105,18 @@ class ContextInformationPopup implements IContentAssistListener {
 
 	private IContextInformationValidator contextInfoValidator;
 
+	private ChangeListener<Number> selectionChange;
+
 	/**
 	 * Creates a new context information popup.
 	 *
 	 * @param viewer the viewer on top of which the context information is shown
 	 */
 	public ContextInformationPopup(IContextInformationValidator contextInfoValidator, ITextViewer viewer) {
+		this.selectionChange = this::onSelectionChange;
 		this.contextInfoValidator = contextInfoValidator;
+		System.err.println("======> VALIDATOR: " + this.contextInfoValidator);
 		this.fViewer= viewer;
-		this.fViewer.getTextWidget().caretOffsetProperty().addListener(this::handleCursorChange);
 
 		this.fContextInfoPopup = new PopupWindow() {
 		};
@@ -130,11 +136,27 @@ class ContextInformationPopup implements IContentAssistListener {
 		this.fRoot.setCenter(this.fContent);
 		this.fContent.getStyleClass().add("context-info");
 		this.fContextInfoPopup.getScene().setRoot(this.fRoot);
+
+		this.fContextInfoPopup.setOnShowing(this::subscribe);
+		this.fContextInfoPopup.setOnHidden(this::unsubscribe);
 	}
 
-	private void handleCursorChange(Observable o) {
-		this.fViewer.getTextWidget().caretOffsetProperty().get();
+	private void subscribe(Event e) {
+		this.fViewer.getTextWidget().caretOffsetProperty().addListener(this.selectionChange);
+//		this.viewer.getTextWidget().caretOffsetProperty().addListener(this.selectionChange);
+//		this.viewer.getTextWidget().getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, this.mouseEvent);
 	}
+	private void unsubscribe(Event e) {
+		this.fViewer.getTextWidget().caretOffsetProperty().removeListener(this.selectionChange);
+	}
+
+	private void onSelectionChange(Observable x, Number oldSelection, Number newSelection) {
+		int offset = this.fViewer.getTextWidget().caretOffsetProperty().get();
+		if( this.contextInfoValidator != null && ! this.contextInfoValidator.isContextInformationValid(offset) ) {
+			this.fContextInfoPopup.hide();
+		}
+	}
+
 
 	/**
 	 * Shows all possible contexts for the given cursor position of the viewer.
@@ -157,6 +179,9 @@ class ContextInformationPopup implements IContentAssistListener {
 	public void showContextInformation(final IContextInformation info, final int offset) {
 			CharSequence infoText = info == null ? null : info.getInformationDisplayString();
 			if (infoText != null && infoText.length() > 0) {
+				if( this.contextInfoValidator != null ) {
+					this.contextInfoValidator.install(info, this.fViewer, offset);
+				}
 				if( infoText instanceof StyledString ) {
 					this.fContent.setText(""); //$NON-NLS-1$
 					this.fContent.setGraphic(Util.toNode((StyledString) infoText));
