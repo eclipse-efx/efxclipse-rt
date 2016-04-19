@@ -41,6 +41,7 @@ import org.eclipse.fx.text.ui.contentassist.ContentAssistant;
 import org.eclipse.fx.text.ui.contentassist.ICompletionProposal;
 import org.eclipse.fx.text.ui.contentassist.IContentAssistant;
 import org.eclipse.fx.text.ui.contentassist.IContextInformation;
+import org.eclipse.fx.text.ui.contentassist.IContextInformationValidator;
 import org.eclipse.fx.text.ui.presentation.IPresentationReconciler;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.source.AnnotationPresenter;
@@ -87,6 +88,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	private SetProperty<Feature> featureSet = new SimpleSetProperty<Feature>(this, "featureSet", FXCollections.observableSet());
 
 	private final ThreadSynchronize threadSynchronize;
+	private final IContextInformationValidator contextInformationValidator;
 
 	@Inject
 	public DefaultSourceViewerConfiguration(
@@ -101,9 +103,11 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			@Optional SearchProvider searchProvider,
 			@Optional NavigationProvider navigationProvider,
 			@Optional EditorOpener editorOpener,
-			@Optional BehaviorContributor behaviorContributor
+			@Optional BehaviorContributor behaviorContributor,
+			@Optional IContextInformationValidator contextInformationValidator
 			) {
 		this.threadSynchronize = threadSynchronize;
+		this.contextInformationValidator = contextInformationValidator;
 		this.input = input;
 		this.hoverInformationProvider = hoverInformationProvider;
 		this.reconciler = reconciler;
@@ -212,7 +216,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	public IContentAssistant getContentAssist() {
 		if( proposalComputer != null ) {
 			if( contentAssistant == null ) {
-				contentAssistant = new ContentAssistant(this.threadSynchronize, this::computeProposals);
+				contentAssistant = new ContentAssistant(this.contextInformationValidator, this.threadSynchronize, this::computeProposals);
 			}
 
 			return contentAssistant;
