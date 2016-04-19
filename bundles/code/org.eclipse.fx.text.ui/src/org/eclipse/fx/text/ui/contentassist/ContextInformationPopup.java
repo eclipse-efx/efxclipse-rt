@@ -100,12 +100,15 @@ class ContextInformationPopup implements IContentAssistListener {
 //	 */
 //	private ContextFrame fLastContext= null;
 
+	private IContextInformationValidator contextInfoValidator;
+
 	/**
 	 * Creates a new context information popup.
 	 *
 	 * @param viewer the viewer on top of which the context information is shown
 	 */
-	public ContextInformationPopup(ITextViewer viewer) {
+	public ContextInformationPopup(IContextInformationValidator contextInfoValidator, ITextViewer viewer) {
+		this.contextInfoValidator = contextInfoValidator;
 		this.fViewer= viewer;
 		this.fViewer.getTextWidget().caretOffsetProperty().addListener(this::handleCursorChange);
 

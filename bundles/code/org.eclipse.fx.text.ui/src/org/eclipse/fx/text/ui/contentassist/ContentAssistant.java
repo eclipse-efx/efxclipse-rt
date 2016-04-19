@@ -32,10 +32,12 @@ public class ContentAssistant implements IContentAssistant {
 	private ContentProposalPopup fProposalPopup;
 	private ContextInformationPopup fContextInfoPopup;
 	private final ThreadSynchronize threadSynchnronize;
+	private final IContextInformationValidator validator;
 
 	private boolean directlyApplySingleMatch;
 
-	public ContentAssistant(ThreadSynchronize threadSynchnronize, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
+	public ContentAssistant(IContextInformationValidator validator, ThreadSynchronize threadSynchnronize, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
+		this.validator = validator;
 		this.threadSynchnronize = threadSynchnronize;
 		this.proposalComputer = proposalComputer;
 	}
@@ -50,7 +52,7 @@ public class ContentAssistant implements IContentAssistant {
 			this.fViewer = textViewer;
 			this.fProposalPopup = new ContentProposalPopup(this.threadSynchnronize, this, textViewer, this.proposalComputer);
 			this.fViewer.subscribeAction(this::handleAction);
-			this.fContextInfoPopup = new ContextInformationPopup(textViewer);
+			this.fContextInfoPopup = new ContextInformationPopup(validator, textViewer);
 		}
 	}
 
