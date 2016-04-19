@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.fx.code.editor.Constants;
+import org.eclipse.fx.code.editor.SourceFileInput;
 import org.eclipse.fx.code.editor.StringInput;
 import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.jface.text.Document;
@@ -42,8 +43,15 @@ public class InputDocument extends Document {
 	public InputDocument(@Named("org.eclipse.fx.code.editor.Input") StringInput input, EventBus eventBus) {
 		this.input = input;
 		this.eventBus = eventBus;
+		this.eventBus.subscribe(Constants.TOPIC_SOURCE_FILE_RELOADED, EventBus.data(this::handleReload));
 		set(input.getData());
 		addDocumentListener(listener);
+	}
+
+	private void handleReload(SourceFileInput file) {
+		if( input == file ) {
+			set(file.getData());
+		}
 	}
 
 	public void persist() {

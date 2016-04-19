@@ -77,14 +77,18 @@ public class LocalSourceFileInput implements SourceFileInput, LocalFile {
 	@Override
 	public String getData() {
 		if( data == null ) {
-			try {
-				byte[] bytes = Files.readAllBytes(path);
-				data = new String(bytes, charSet);
-			} catch (IOException e) {
-				throw new RuntimeException("Unable to read file content of '"+path+"'", e);
-			}
+			data = loadFileContent();
 		}
 		return data;
+	}
+
+	private String loadFileContent() {
+		try {
+			byte[] bytes = Files.readAllBytes(path);
+			return new String(bytes, charSet);
+		} catch (IOException e) {
+			throw new RuntimeException("Unable to read file content of '"+path+"'", e);
+		}
 	}
 
 	@Override
@@ -120,6 +124,14 @@ public class LocalSourceFileInput implements SourceFileInput, LocalFile {
 		if( eventBus != null ) {
 			SourceFileChange sourceChange = new SourceFileChange(this, offset, length, replacement);
 			eventBus.publish(Constants.TOPIC_SOURCE_FILE_INPUT_MODIFIED, sourceChange, true);
+		}
+	}
+
+	@Override
+	public void reload() {
+		String newData = loadFileContent();
+		if( ! newData.equals(data) ) {
+			eventBus.publish(Constants.TOPIC_SOURCE_FILE_RELOADED, this, true);
 		}
 	}
 }
