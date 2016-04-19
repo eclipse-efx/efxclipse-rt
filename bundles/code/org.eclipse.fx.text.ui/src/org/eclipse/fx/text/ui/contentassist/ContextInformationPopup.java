@@ -47,46 +47,46 @@ import javafx.stage.PopupWindow;
 class ContextInformationPopup implements IContentAssistListener {
 
 
-	/**
-	 * Represents the state necessary for embedding contexts.
-	 *
-	 * @since 2.0
-	 */
-	static class ContextFrame {
-
-		final int fBeginOffset;
-		final int fOffset;
-		final int fVisibleOffset;
-		final IContextInformation fInformation;
-		final IContextInformationValidator fValidator;
-		final IContextInformationPresenter fPresenter;
-
-		/*
-		 * @since 3.1
-		 */
-		public ContextFrame(IContextInformation information, int beginOffset, int offset, int visibleOffset, IContextInformationValidator validator, IContextInformationPresenter presenter) {
-			this.fInformation = information;
-			this.fBeginOffset = beginOffset;
-			this.fOffset = offset;
-			this.fVisibleOffset = visibleOffset;
-			this.fValidator = validator;
-			this.fPresenter = presenter;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (obj instanceof ContextFrame) {
-				ContextFrame frame= (ContextFrame) obj;
-				return this.fInformation.equals(frame.fInformation) && this.fBeginOffset == frame.fBeginOffset;
-			}
-			return super.equals(obj);
-		}
-
-		@Override
-		public int hashCode() {
-			return (this.fInformation.hashCode() << 16) | this.fBeginOffset;
-		}
-	}
+//	/**
+//	 * Represents the state necessary for embedding contexts.
+//	 *
+//	 * @since 2.0
+//	 */
+//	static class ContextFrame {
+//
+//		final int fBeginOffset;
+//		final int fOffset;
+//		final int fVisibleOffset;
+//		final IContextInformation fInformation;
+//		final IContextInformationValidator fValidator;
+//		final IContextInformationPresenter fPresenter;
+//
+//		/*
+//		 * @since 3.1
+//		 */
+//		public ContextFrame(IContextInformation information, int beginOffset, int offset, int visibleOffset, IContextInformationValidator validator, IContextInformationPresenter presenter) {
+//			this.fInformation = information;
+//			this.fBeginOffset = beginOffset;
+//			this.fOffset = offset;
+//			this.fVisibleOffset = visibleOffset;
+//			this.fValidator = validator;
+//			this.fPresenter = presenter;
+//		}
+//
+//		@Override
+//		public boolean equals(Object obj) {
+//			if (obj instanceof ContextFrame) {
+//				ContextFrame frame= (ContextFrame) obj;
+//				return this.fInformation.equals(frame.fInformation) && this.fBeginOffset == frame.fBeginOffset;
+//			}
+//			return super.equals(obj);
+//		}
+//
+//		@Override
+//		public int hashCode() {
+//			return (this.fInformation.hashCode() << 16) | this.fBeginOffset;
+//		}
+//	}
 
 	private ITextViewer fViewer;
 
@@ -115,7 +115,6 @@ class ContextInformationPopup implements IContentAssistListener {
 	public ContextInformationPopup(IContextInformationValidator contextInfoValidator, ITextViewer viewer) {
 		this.selectionChange = this::onSelectionChange;
 		this.contextInfoValidator = contextInfoValidator;
-		System.err.println("======> VALIDATOR: " + this.contextInfoValidator);
 		this.fViewer= viewer;
 
 		this.fContextInfoPopup = new PopupWindow() {
@@ -152,8 +151,15 @@ class ContextInformationPopup implements IContentAssistListener {
 
 	private void onSelectionChange(Observable x, Number oldSelection, Number newSelection) {
 		int offset = this.fViewer.getTextWidget().caretOffsetProperty().get();
-		if( this.contextInfoValidator != null && ! this.contextInfoValidator.isContextInformationValid(offset) ) {
-			this.fContextInfoPopup.hide();
+		if( this.contextInfoValidator != null ) {
+			if( ! this.contextInfoValidator.isContextInformationValid(offset) ) {
+				this.fContextInfoPopup.hide();
+			} else {
+				CharSequence infoText = this.contextInfoValidator.getInformationDisplayString(offset);
+				if( infoText != null ) {
+					updateInfoText(infoText);
+				}
+			}
 		}
 	}
 
@@ -169,6 +175,16 @@ class ContextInformationPopup implements IContentAssistListener {
 		return "TODO";
 	}
 
+	private void updateInfoText(CharSequence infoText) {
+		if( infoText instanceof StyledString ) {
+			this.fContent.setText(""); //$NON-NLS-1$
+			this.fContent.setGraphic(Util.toNode((StyledString) infoText));
+		} else {
+			this.fContent.setText(infoText.toString());
+			this.fContent.setGraphic(null);
+		}
+	}
+
 	/**
 	 * Displays the given context information for the given offset.
 	 *
@@ -182,13 +198,7 @@ class ContextInformationPopup implements IContentAssistListener {
 				if( this.contextInfoValidator != null ) {
 					this.contextInfoValidator.install(info, this.fViewer, offset);
 				}
-				if( infoText instanceof StyledString ) {
-					this.fContent.setText(""); //$NON-NLS-1$
-					this.fContent.setGraphic(Util.toNode((StyledString) infoText));
-				} else {
-					this.fContent.setText(infoText.toString());
-					this.fContent.setGraphic(null);
-				}
+				updateInfoText(infoText);
 				Point2D locationAtOffset = this.fViewer.getTextWidget().getLocationAtOffset(offset, LineLocation.ABOVE);
 				locationAtOffset = this.fViewer.getTextWidget().localToScreen(locationAtOffset);
 				if (locationAtOffset != null) {
