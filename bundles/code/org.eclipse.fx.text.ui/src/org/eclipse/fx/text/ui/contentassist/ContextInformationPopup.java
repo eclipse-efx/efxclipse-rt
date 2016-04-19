@@ -10,21 +10,18 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui.contentassist;
 
-import java.util.Iterator;
 import java.util.Stack;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
-
 import org.eclipse.fx.text.ui.ITextViewer;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 
+import javafx.beans.Observable;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Popup;
 import javafx.stage.PopupWindow;
 
 
@@ -43,6 +40,7 @@ import javafx.stage.PopupWindow;
  * @see IContextInformation
  * @see IContextInformationValidator
  */
+@SuppressWarnings("restriction")
 class ContextInformationPopup implements IContentAssistListener {
 
 
@@ -88,36 +86,28 @@ class ContextInformationPopup implements IContentAssistListener {
 	}
 
 	private ITextViewer fViewer;
-	private ContentAssistant fContentAssistant;
-
-	private PopupWindow fContextSelectorStage;
-	private IContextInformation[] fContextSelectorInput;
-	private String fLineDelimiter= null;
 
 	private PopupWindow fContextInfoPopup;
 	private BorderPane fRoot;
 	private Label fContent;
 
 
-	private Stack<ContextFrame> fContextFrameStack= new Stack<>();
-
-	/**
-	 * The last removed context frame is remembered in order to not re-query the
-	 * user about which context should be used.
-	 *
-	 * @since 3.0
-	 */
-	private ContextFrame fLastContext= null;
+//	/**
+//	 * The last removed context frame is remembered in order to not re-query the
+//	 * user about which context should be used.
+//	 *
+//	 * @since 3.0
+//	 */
+//	private ContextFrame fLastContext= null;
 
 	/**
 	 * Creates a new context information popup.
 	 *
-	 * @param contentAssistant the content assist for computing the context information
 	 * @param viewer the viewer on top of which the context information is shown
 	 */
-	public ContextInformationPopup(ContentAssistant contentAssistant, ITextViewer viewer) {
-		this.fContentAssistant= contentAssistant;
+	public ContextInformationPopup(ITextViewer viewer) {
 		this.fViewer= viewer;
+		this.fViewer.getTextWidget().caretOffsetProperty().addListener(this::handleCursorChange);
 
 		this.fContextInfoPopup = new PopupWindow() {
 		};
@@ -134,9 +124,13 @@ class ContextInformationPopup implements IContentAssistListener {
 		this.fRoot = new BorderPane();
 		this.fRoot.getStyleClass().add("styled-text-hover");
 		this.fContent = new Label();
-		this.fRoot.setCenter(fContent);
+		this.fRoot.setCenter(this.fContent);
 		this.fContent.getStyleClass().add("context-info");
-		fContextInfoPopup.getScene().setRoot(fRoot);
+		this.fContextInfoPopup.getScene().setRoot(this.fRoot);
+	}
+
+	private void handleCursorChange(Observable o) {
+		this.fViewer.getTextWidget().caretOffsetProperty().get();
 	}
 
 	/**
@@ -145,6 +139,7 @@ class ContextInformationPopup implements IContentAssistListener {
 	 * @param autoActivated <code>true</code>  if auto activated
 	 * @return  a potential error message or <code>null</code> in case of no error
 	 */
+	@SuppressWarnings("static-method")
 	public String showContextProposals(final boolean autoActivated) {
 		return "TODO";
 	}
@@ -160,21 +155,22 @@ class ContextInformationPopup implements IContentAssistListener {
 			CharSequence infoText = info == null ? null : info.getInformationDisplayString();
 			if (infoText != null && infoText.length() > 0) {
 				if( infoText instanceof StyledString ) {
-					fContent.setText("");
-					fContent.setGraphic(Util.toNode((StyledString) infoText));
+					this.fContent.setText(""); //$NON-NLS-1$
+					this.fContent.setGraphic(Util.toNode((StyledString) infoText));
 				} else {
-					fContent.setText(infoText.toString());
-					fContent.setGraphic(null);
+					this.fContent.setText(infoText.toString());
+					this.fContent.setGraphic(null);
 				}
-				Point2D locationAtOffset = fViewer.getTextWidget().getLocationAtOffset(offset, LineLocation.ABOVE);
-				locationAtOffset = fViewer.getTextWidget().localToScreen(locationAtOffset);
+				Point2D locationAtOffset = this.fViewer.getTextWidget().getLocationAtOffset(offset, LineLocation.ABOVE);
+				locationAtOffset = this.fViewer.getTextWidget().localToScreen(locationAtOffset);
 				if (locationAtOffset != null) {
-					double y = locationAtOffset.getY() - fContextInfoPopup.getHeight();
-					fContextInfoPopup.show(fViewer.getTextWidget().getScene().getWindow(), locationAtOffset.getX(), y);
+					this.fContent.applyCss();
+					double y = locationAtOffset.getY() - this.fContent.prefHeight(-1);
+					this.fContextInfoPopup.show(this.fViewer.getTextWidget().getScene().getWindow(), locationAtOffset.getX(), y);
 				}
 			}
 			else {
-				fContextInfoPopup.hide();
+				this.fContextInfoPopup.hide();
 			}
 	}
 
