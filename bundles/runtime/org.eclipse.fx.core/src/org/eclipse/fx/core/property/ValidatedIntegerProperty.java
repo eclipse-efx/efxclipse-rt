@@ -11,7 +11,6 @@
 package org.eclipse.fx.core.property;
 
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
 
 /**
  * A validated property using {@link IntegerProperty}
@@ -21,5 +20,5 @@ import javafx.beans.property.LongProperty;
 public interface ValidatedIntegerProperty extends ValidatedProperty<Number> {
 
 	@Override
-	public LongProperty bindProperty();
+	public IntegerProperty bindProperty();
 }
