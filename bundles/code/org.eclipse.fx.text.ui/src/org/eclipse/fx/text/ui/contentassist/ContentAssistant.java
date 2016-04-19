@@ -50,7 +50,7 @@ public class ContentAssistant implements IContentAssistant {
 			this.fViewer = textViewer;
 			this.fProposalPopup = new ContentProposalPopup(this.threadSynchnronize, this, textViewer, this.proposalComputer);
 			this.fViewer.subscribeAction(this::handleAction);
-			this.fContextInfoPopup = new ContextInformationPopup(this, textViewer);
+			this.fContextInfoPopup = new ContextInformationPopup(textViewer);
 		}
 	}
 
