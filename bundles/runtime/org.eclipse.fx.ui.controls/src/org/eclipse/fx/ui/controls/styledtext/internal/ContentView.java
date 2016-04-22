@@ -853,7 +853,6 @@ public class ContentView  extends Pane {
 	public Optional<Integer> getLineIndex(Point2D point) {
 		// transform point to respect horizontal scrolling
 		Point2D p = this.lineLayer.sceneToLocal(this.localToScene(point));
-		System.err.println(p);
 		Optional<Integer> result =  this.lineLayer.getLineIndex(p);
 		return result;
 
