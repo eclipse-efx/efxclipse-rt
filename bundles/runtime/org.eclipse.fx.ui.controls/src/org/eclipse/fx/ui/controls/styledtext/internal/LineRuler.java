@@ -48,9 +48,8 @@ public class LineRuler extends VerticalLineFlow<Integer, Annotation>{
 		super(converter, needsPresentation, nodeFactory, nodePopulator);
 		this.h = h;
 
-		this.yOffset.addListener((x, o, n)->{
-			requestLayout();
-		});
+		this.yOffset.addListener((x, o, n)->requestLayout());
+		this.fixedWidth.addListener((x, o, n)->requestLayout());
 	}
 
 	@Override

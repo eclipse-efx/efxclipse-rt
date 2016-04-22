@@ -293,11 +293,6 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			// flow.getModel().bindContent(this.getModel());
 
 			flow.fixedWidthProperty().bind(ap.getWidth());
-//			flow.prefWidthProperty().bind(ap.getWidth());
-
-			flow.prefWidthProperty().addListener((x, o, n) -> {
-				this.rootContainer.requestLayout();
-			});
 
 			org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter.LineRuler lr = new LineRulerAnnotationPresenter.LineRuler() {
 				@Override
@@ -349,7 +344,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 						f.visibleLinesProperty().unbind();
 						f.numberOfLinesProperty().unbind();
 						f.yOffsetProperty().unbind();
-						f.prefWidthProperty().unbind();
+						f.fixedWidthProperty().unbind();
 					});
 				}
 			}
