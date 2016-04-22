@@ -1750,10 +1750,12 @@ public class StyledTextArea extends Control {
 	 * Cut the current selection into the clipboard
 	 */
 	public void cut() {
-		if (getSelection().length > 0) {
+		TextSelection selection = getSelection();
+		if (selection.length > 0) {
 			final Clipboard clipboard = Clipboard.getSystemClipboard();
-			String content = getContent().getTextRange(getSelection().offset, getSelection().length);
-			getContent().replaceTextRange(getSelection().offset, content.length(), ""); //$NON-NLS-1$
+			String content = getContent().getTextRange(selection.offset, selection.length);
+			setCaretOffset(selection.offset);
+			getContent().replaceTextRange(selection.offset, content.length(), ""); //$NON-NLS-1$
 			clipboard.setContent(Collections.singletonMap(DataFormat.PLAIN_TEXT, content));
 		}
 	}
