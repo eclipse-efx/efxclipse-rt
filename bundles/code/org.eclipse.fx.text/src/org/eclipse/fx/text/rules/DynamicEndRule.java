@@ -96,9 +96,14 @@ public class DynamicEndRule extends ExtendedPatternRule {
 		boolean rv = super.sequenceStartDetected(cs, sequence, eofAllowed);
 		if (rv) {
 			if( beginSuffix.length > 0 ) {
+				rv = false;
 				StringBuilder b = new StringBuilder();
 				int c;
-				while ((c = scanner.read()) != ICharacterScanner.EOF) {
+				while ((c = cs.read()) != ICharacterScanner.EOF) {
+					if( c == '\r' || c == '\n' ) {
+						rv = false;
+						break;
+					}
 					if( c == beginSuffix[0] ) {
 						rv = super.sequenceDetected(cs, beginSuffix, false);
 						if( rv ) {
