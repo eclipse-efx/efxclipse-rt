@@ -319,7 +319,9 @@ public class StyledTextBehavior {
 
 	private void onTextPositionDragged(TextPositionEvent event) {
 		if (this.dragSelectionMode) {
-			moveCaretAbsolute(event.getOffset(), true);
+			if( event.getOffset() >= 0 ) {
+				moveCaretAbsolute(event.getOffset(), true);
+			}
 			event.consume();
 		} else if (this.dragMoveTextMode) {
 			// update insertion marker

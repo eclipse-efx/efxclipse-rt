@@ -160,8 +160,10 @@ public class ContentView  extends Pane {
 				if (i >= 0 ) {
 					return Integer.valueOf(n.getStartOffset() + i);
 				}
-				else {
+				else if( point.getX() > 0 ) {
 					return Integer.valueOf(n.getEndOffset());
+				} else {
+					return Integer.valueOf(-1);
 				}
 			});
 			return index;
@@ -851,6 +853,7 @@ public class ContentView  extends Pane {
 	public Optional<Integer> getLineIndex(Point2D point) {
 		// transform point to respect horizontal scrolling
 		Point2D p = this.lineLayer.sceneToLocal(this.localToScene(point));
+		System.err.println(p);
 		Optional<Integer> result =  this.lineLayer.getLineIndex(p);
 		return result;
 
