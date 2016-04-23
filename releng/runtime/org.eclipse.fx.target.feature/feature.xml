@@ -2405,4 +2405,20 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          install-size="0"
          version="0.0.0"/>
 
+	<plugin
+		 id="com.google.inject.multibindings"
+		 fragment="true"
+		 download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"
+	/>
+
+	<plugin
+		 id="com.google.inject.multibindings.source"
+		 download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"
+	/>
 </feature>
