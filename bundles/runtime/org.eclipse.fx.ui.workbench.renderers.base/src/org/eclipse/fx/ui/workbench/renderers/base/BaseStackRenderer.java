@@ -63,6 +63,11 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 	 */
 	public final static String MAP_MOVE = "fx.rendering.stackitem.move"; //$NON-NLS-1$
 
+	/**
+	 * Tag key used to mark a menu as a tab-menu
+	 */
+	public final static String TAG_TAB_CONTEXT_MENU = "tabmenu"; //$NON-NLS-1$
+
 	@Inject
 	RendererFactory factory;
 

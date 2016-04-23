@@ -20,9 +20,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MPopupMenu;
+import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.fx.ui.controls.tabpane.DndTabPaneFactory;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
@@ -32,6 +36,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WPopupMenu;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WStack.WStackItem;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupport;
@@ -50,6 +55,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -375,10 +381,17 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		Tab tab;
 		private WCallback<WStackItem<Object, Node>, Node> initCallback;
 		WCallback<WStackItem<Object, Node>, Boolean> closeCallback;
+
 		private MStackElement domElement;
 
 		@Inject
 		private GraphicsLoader graphicsLoader;
+
+		@Inject
+		private EModelService modelService;
+
+		@Inject
+		IPresentationEngine engine;
 
 		private String label;
 		private boolean dirty;
@@ -397,6 +410,20 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 		@Override
 		public void setDomElement(MStackElement domElement) {
 			this.domElement = domElement;
+			if( this.domElement instanceof MPart ) {
+				((MPart)this.domElement)
+					.getMenus()
+					.stream()
+					.filter( m -> m instanceof MPopupMenu)
+					.filter( m -> m.getTags().contains(TAG_TAB_CONTEXT_MENU))
+					.findFirst()
+					.map( m -> {
+						return (ContextMenu) ((WPopupMenu<ContextMenu>) this.engine.createGui(m,null,modelService.getContainingContext(domElement.getParent()))).getWidget();
+					})
+					.ifPresent(getWidget()::setContextMenu);
+			} else {
+				getWidget().setContextMenu(null);
+			}
 		}
 
 		@Override

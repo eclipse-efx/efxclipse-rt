@@ -29,6 +29,7 @@ import org.eclipse.fx.code.editor.Constants;
 import org.eclipse.fx.code.editor.fx.e4.EditorClassURLProvider;
 import org.eclipse.fx.code.editor.fx.e4.EditorContainerService;
 import org.eclipse.fx.code.editor.fx.e4.EditorContextMenuService;
+import org.eclipse.fx.code.editor.fx.e4.EditorPartTabContextMenuService;
 import org.eclipse.fx.code.editor.fx.services.EditorContextMenuProvider.Type;
 import org.eclipse.fx.code.editor.services.EditorOpener;
 import org.eclipse.fx.code.editor.services.EditorOpenerTypeProvider;
@@ -37,6 +38,7 @@ import org.eclipse.fx.core.RankedObjectRegistry;
 import org.eclipse.fx.core.URI;
 import org.eclipse.fx.core.di.Service;
 import org.eclipse.fx.core.di.context.ServiceContextFunction;
+import org.eclipse.fx.ui.workbench.renderers.base.BaseStackRenderer;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -118,6 +120,9 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 		@Inject
 		EditorContextMenuService contextMenuService;
 
+		@Inject
+		EditorPartTabContextMenuService tabContextMenuService;
+
 		@Override
 		public boolean openEditor(String uri) {
 			List<MPart> list = modelService.findElements(application, MPart.class, EModelService.ANYWHERE, (p) -> {
@@ -153,7 +158,14 @@ public class EditorOpenerContextFunction extends ServiceContextFunction<EditorOp
 					if( menu != null ) {
 						part.getMenus().add(menu);
 					}
+
+					menu = tabContextMenuService.getContextMenu(modelService, application, part);
+					if( menu != null ) {
+						menu.getTags().add(BaseStackRenderer.TAG_TAB_CONTEXT_MENU);
+						part.getMenus().add(menu);
+					}
 					container.getChildren().add(part);
+
 				}
 			} else {
 				part = list.get(0);
