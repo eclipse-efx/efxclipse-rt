@@ -38,6 +38,8 @@ import org.osgi.service.event.Event;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
@@ -116,23 +118,23 @@ public class PerspectiveSwitcherNode extends HBox {
 				List<PerspectiveButton> buttonList = this.stack.getChildren().stream()
 					.filter( p -> p.isToBeRendered())
 					.filter( p -> value.contains(p.getElementId()))
-					.map( p -> new PerspectiveButton(loader,p,partService, p == selected))
+					.map( p -> new PerspectiveButton(this,loader,p,partService, p == selected))
 					.collect(Collectors.toList());
 				if( selected != null && ! value.contains(selected.getElementId()) ) {
-					buttonList.add(new PerspectiveButton(loader,selected,partService, true));
-					publishNewPerspectiveList(selected.getElementId());
+					buttonList.add(new PerspectiveButton(this,loader,selected,partService, true));
+					publishNewPerspectiveList(selected.getElementId(),true);
 				}
 				getChildren().addAll(buttonList);
 			} else {
 				if( selected != null ) {
-					getChildren().add(new PerspectiveButton(loader,selected,partService,true));
-					publishNewPerspectiveList(selected.getElementId());
+					getChildren().add(new PerspectiveButton(this,loader,selected,partService,true));
+					publishNewPerspectiveList(selected.getElementId(),true);
 				}
 			}
 		}
 	}
 
-	private void publishNewPerspectiveList(String newPerspective) {
+	void publishNewPerspectiveList(String newPerspective, boolean add) {
 		List<String> value = this.lastPerspectives.getValue();
 		if( value == null ) {
 			value = new ArrayList<>();
@@ -140,8 +142,10 @@ public class PerspectiveSwitcherNode extends HBox {
 			value = new ArrayList<>(value);
 		}
 
-		if( ! value.contains(newPerspective) ) {
+		if( add && ! value.contains(newPerspective) ) {
 			value.add(newPerspective);
+		} else {
+			value.remove(newPerspective);
 		}
 		this.lastPerspectives.publish(value);
 	}
@@ -164,8 +168,8 @@ public class PerspectiveSwitcherNode extends HBox {
 						.filter( pe -> pe.perspective == p)
 						.findFirst()
 						.isPresent() ) {
-					getChildren().add(new PerspectiveButton(this.loader, p, this.partService, true));
-					publishNewPerspectiveList(p.getElementId());
+					getChildren().add(new PerspectiveButton(this,this.loader, p, this.partService, true));
+					publishNewPerspectiveList(p.getElementId(),true);
 				}
 			}
 		}
@@ -174,7 +178,7 @@ public class PerspectiveSwitcherNode extends HBox {
 	static class PerspectiveButton extends ToggleButton {
 		final MPerspective perspective;
 
-		public PerspectiveButton(GraphicsLoader loader, MPerspective perspective, EPartService service, boolean toggled) {
+		public PerspectiveButton(PerspectiveSwitcherNode container, GraphicsLoader loader, MPerspective perspective, EPartService service, boolean toggled) {
 			setSelected(toggled);
 			getStyleClass().add("perspective-button"); //$NON-NLS-1$
 			// FIXME React on perspective renaming and locale changes!
@@ -188,6 +192,15 @@ public class PerspectiveSwitcherNode extends HBox {
 			setOnAction(e -> {
 				service.switchPerspective(perspective);
 			});
+			ContextMenu m = new ContextMenu();
+			MenuItem item = new MenuItem("Remove");
+			item.disableProperty().bind(selectedProperty());
+			item.setOnAction( e -> {
+				container.getChildren().remove(this);
+				container.publishNewPerspectiveList(perspective.getElementId(), false);
+			});
+			m.getItems().add(item);
+			setContextMenu(m);
 		}
 	}
 }
