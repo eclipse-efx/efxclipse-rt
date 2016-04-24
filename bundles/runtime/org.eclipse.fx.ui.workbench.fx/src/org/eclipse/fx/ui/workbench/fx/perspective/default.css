@@ -2,3 +2,26 @@
 	-fx-graphic: url("icons/new_persp.png");
 	-fx-content-display: graphic-only;
 }
+
+.perspective-button {
+	-fx-content-display: graphic-only ;
+}
+
+.perspective-button, .dialog-opener {
+	-fx-background-color: transparent;
+}
+
+.perspective-button:selected {
+	-fx-background-color:
+            -fx-shadow-highlight-color,
+            linear-gradient(to bottom, derive(-fx-outer-border, -20%), -fx-outer-border),
+            linear-gradient(to bottom,
+                    derive(-fx-color, -22%) 0%,
+                    derive(-fx-color, -13%) 20%,
+                    derive(-fx-color, -11%) 50%);
+    -fx-background-insets: 0 0 -1 0, 0, 1;
+}
+
+.perspective-button:armed {
+	-fx-background-color: transparent;
+}
