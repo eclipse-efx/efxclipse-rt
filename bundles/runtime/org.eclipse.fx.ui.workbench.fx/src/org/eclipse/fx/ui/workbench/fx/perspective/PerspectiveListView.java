@@ -12,6 +12,7 @@ package org.eclipse.fx.ui.workbench.fx.perspective;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -89,7 +90,11 @@ public class PerspectiveListView {
 		this.listView = new ListView<>();
 		this.listView.getStyleClass().add("efx-perspective-list"); //$NON-NLS-1$
 		this.listView.setCellFactory(PerspectiveCell::new);
-		this.listView.setItems(FXCollections.observableArrayList(this.modelService.findElements(this.window, null, MPerspective.class, null)));
+		List<MPerspective> list = this.modelService.findElements(this.window, null, MPerspective.class, null);
+		this.listView.setItems(
+				FXCollections.observableArrayList(
+						list.stream().filter( e -> e.isToBeRendered()).collect(Collectors.toList()))
+		);
 		this.listView.getSelectionModel().selectedItemProperty().addListener((o, ol, ne) -> {
 			if (this.selectionConsumer != null) {
 				this.selectionConsumer.accept(ne);
