@@ -410,6 +410,10 @@ public class StyledTextBehavior {
 	private void onTextPositionPressed(TextPositionEvent event) {
 		this.mousePressedOffset = event.getOffset();
 
+		if( this.mousePressedOffset < 0 ) {
+			this.mousePressedOffset = getControl().getContent().getCharCount();
+		}
+
 		if (isInSelection(this.mousePressedOffset)) {
 			this.pressedInSelection = true;
 			event.consume();
