@@ -131,6 +131,7 @@ public class LocalSourceFileInput implements SourceFileInput, LocalFile {
 	public void reload() {
 		String newData = loadFileContent();
 		if( ! newData.equals(data) ) {
+			this.data = newData;
 			eventBus.publish(Constants.TOPIC_SOURCE_FILE_RELOADED, this, true);
 		}
 	}
