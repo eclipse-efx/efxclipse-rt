@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -52,8 +53,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleSetProperty;
 import javafx.collections.FXCollections;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -154,7 +157,11 @@ public class ContentView  extends Pane {
 		}
 
 		Optional<Integer> getLineIndex(javafx.geometry.Point2D point) {
-			final Optional<LineNode> hitLine = createVisibleLineNodesStream().filter(n->n.getBoundsInParent().contains(point)).findFirst();
+			Predicate<Node> filter = n -> {
+				Bounds b = n.getBoundsInParent();
+				return b.getMinY() <= point.getY() && point.getY() <= b.getMaxY();
+			};
+			final Optional<LineNode> hitLine = createVisibleLineNodesStream().filter(filter).findFirst();
 			final Optional<Integer> index = hitLine.map(n->{
 				int i = n.getCaretIndexAtPoint(new javafx.geometry.Point2D(point.getX(), n.getHeight()/2));
 				if (i >= 0 ) {
