@@ -34,6 +34,7 @@ public class LocalSourceFileInput implements SourceFileInput, LocalFile {
 	private String data;
 	private EventBus eventBus;
 	private Map<String, Object> transientData = new HashMap<>();
+	private boolean reloading;
 
 	@Inject
 	public LocalSourceFileInput(@Adapt @Named(Constants.DOCUMENT_URL) Path path, @Optional EventBus eventBus) {
@@ -115,6 +116,10 @@ public class LocalSourceFileInput implements SourceFileInput, LocalFile {
 
 	@Override
 	public void updateData(int offset, int length, String replacement) {
+		if( reloading ) {
+			return;
+		}
+
 		StringBuilder b = new StringBuilder(data.length() - length + replacement.length());
 		b.append(data.substring(0, offset));
 		b.append(replacement);
@@ -129,10 +134,15 @@ public class LocalSourceFileInput implements SourceFileInput, LocalFile {
 
 	@Override
 	public void reload() {
-		String newData = loadFileContent();
-		if( ! newData.equals(data) ) {
-			this.data = newData;
-			eventBus.publish(Constants.TOPIC_SOURCE_FILE_RELOADED, this, true);
+		try {
+			reloading = true;
+			String newData = loadFileContent();
+			if( ! newData.equals(data) ) {
+				this.data = newData;
+				eventBus.publish(Constants.TOPIC_SOURCE_FILE_RELOADED, this, true);
+			}
+		} finally {
+			reloading = false;
 		}
 	}
 }
