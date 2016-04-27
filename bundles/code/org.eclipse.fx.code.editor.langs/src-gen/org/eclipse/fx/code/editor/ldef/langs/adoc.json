@@ -362,7 +362,12 @@
             }
           ]
         }
-      ]
+      ],
+      "whitespace": {
+        "$gtype": "PartitionWhiteSpace",
+        "characterList": [],
+        "javawhiteSpace": true
+      }
     },
     {
       "$gtype": "Partition",
