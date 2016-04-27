@@ -18,6 +18,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -52,6 +53,10 @@ public class Scroller {
 	private ObjectProperty<Range<Integer>> visibleLines = new SimpleObjectProperty<>(this, "visibleLines", Range.all()); //$NON-NLS-1$
 	public ReadOnlyObjectProperty<Range<Integer>> visibleLinesProperty() {
 		return this.visibleLines;
+	}
+
+	public ReadOnlyIntegerProperty visibleLineCountProperty() {
+		return this.visibleLineCount;
 	}
 
 	private DoubleProperty offset = new SimpleDoubleProperty(this, "offset", 0.01); //$NON-NLS-1$

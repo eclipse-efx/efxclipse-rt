@@ -548,4 +548,8 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	public void updateInsertionMarkerIndex(int offset) {
 		this.content.updateInsertionMarkerIndex(offset);
 	}
+
+	public int getVisibleLineCount() {
+		return scroller.visibleLineCountProperty().get();
+	}
 }
