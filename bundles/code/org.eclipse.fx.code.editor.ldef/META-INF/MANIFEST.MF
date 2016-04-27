@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Language Editor DSL
 Bundle-Vendor: Eclipse.org
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Bundle-SymbolicName: org.eclipse.fx.code.editor.ldef; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;visibility:=reexport,
@@ -17,16 +17,16 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.fx.code.editor.configuration;bundle-version="2.3.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.eclipse.fx.code.editor.ldef;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.formatting;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.generator;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.lDef;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.lDef.impl;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.lDef.util;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.parser.antlr;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.parser.antlr.internal;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.scoping;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.serializer;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.services;version="2.3.0";x-internal:=true,
- org.eclipse.fx.code.editor.ldef.validation;version="2.3.0";x-internal:=true
+Export-Package: org.eclipse.fx.code.editor.ldef;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.formatting;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.generator;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.lDef;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.lDef.impl;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.lDef.util;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.parser.antlr;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.parser.antlr.internal;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.scoping;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.serializer;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.services;version="2.4.0";x-internal:=true,
+ org.eclipse.fx.code.editor.ldef.validation;version="2.4.0";x-internal:=true
 

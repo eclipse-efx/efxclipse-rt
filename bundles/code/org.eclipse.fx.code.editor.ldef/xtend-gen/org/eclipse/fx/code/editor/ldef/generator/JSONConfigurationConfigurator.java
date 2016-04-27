@@ -21,6 +21,7 @@ import org.eclipse.fx.code.editor.configuration.PartitionRule;
 import org.eclipse.fx.code.editor.configuration.PartitionRule_DynamicEnd;
 import org.eclipse.fx.code.editor.configuration.PartitionRule_MultiLine;
 import org.eclipse.fx.code.editor.configuration.PartitionRule_SingleLine;
+import org.eclipse.fx.code.editor.configuration.PartitionWhiteSpace;
 import org.eclipse.fx.code.editor.configuration.Token;
 import org.eclipse.fx.code.editor.configuration.TokenScanner;
 import org.eclipse.fx.code.editor.configuration.TokenScanner_CharacterRule;
@@ -57,6 +58,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
 import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
+import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -104,9 +106,42 @@ public class JSONConfigurationConfigurator {
         return this.tokenList(m2, model, pr);
       };
       Partition.Builder _kenList = _ruleList.tokenList(_function_2);
-      return _kenList.build();
+      PartitionWhiteSpace _whitespaceRule = this.whitespaceRule(m, model, pr);
+      Partition.Builder _whitespace = _kenList.whitespace(_whitespaceRule);
+      return _whitespace.build();
     };
     return ListExtensions.<org.eclipse.fx.code.editor.ldef.lDef.Partition, Partition>map(_partitions, _function);
+  }
+  
+  public PartitionWhiteSpace whitespaceRule(final EditorGModel m, final LanguageDef model, final org.eclipse.fx.code.editor.ldef.lDef.Partition pr) {
+    LexicalHighlighting _lexicalHighlighting = model.getLexicalHighlighting();
+    EList<LexicalPartitionHighlighting> _list = _lexicalHighlighting.getList();
+    Iterable<LexicalPartitionHighlighting_Rule> _filter = Iterables.<LexicalPartitionHighlighting_Rule>filter(_list, LexicalPartitionHighlighting_Rule.class);
+    final Function1<LexicalPartitionHighlighting_Rule, Boolean> _function = (LexicalPartitionHighlighting_Rule lp) -> {
+      org.eclipse.fx.code.editor.ldef.lDef.Partition _partition = lp.getPartition();
+      return Boolean.valueOf(Objects.equal(_partition, pr));
+    };
+    final LexicalPartitionHighlighting_Rule rv = IterableExtensions.<LexicalPartitionHighlighting_Rule>findFirst(_filter, _function);
+    boolean _and = false;
+    boolean _notEquals = (!Objects.equal(rv, null));
+    if (!_notEquals) {
+      _and = false;
+    } else {
+      WhitespaceRule _whitespace = rv.getWhitespace();
+      boolean _notEquals_1 = (!Objects.equal(_whitespace, null));
+      _and = _notEquals_1;
+    }
+    if (_and) {
+      PartitionWhiteSpace.Builder _PartitionWhiteSpaceBuilder = m.PartitionWhiteSpaceBuilder();
+      WhitespaceRule _whitespace_1 = rv.getWhitespace();
+      boolean _isJavawhitespace = _whitespace_1.isJavawhitespace();
+      PartitionWhiteSpace.Builder _javawhiteSpace = _PartitionWhiteSpaceBuilder.javawhiteSpace(_isJavawhitespace);
+      WhitespaceRule _whitespace_2 = rv.getWhitespace();
+      EList<String> _characters = _whitespace_2.getCharacters();
+      PartitionWhiteSpace.Builder _characterList = _javawhiteSpace.characterList(_characters);
+      return _characterList.build();
+    }
+    return null;
   }
   
   public List<PartitionRule> ruleList(final EditorGModel m, final LanguageDef model, final org.eclipse.fx.code.editor.ldef.lDef.Partition pr) {
