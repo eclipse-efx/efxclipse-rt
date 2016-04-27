@@ -169,7 +169,11 @@ public class ContentView  extends Pane {
 				}
 				else if( point.getX() > 0 ) {
 					return Integer.valueOf(n.getEndOffset());
-				} else {
+				}
+				else if (point.getX() < 0) {
+					return Integer.valueOf(n.getStartOffset());
+				}
+				else {
 					return Integer.valueOf(-1);
 				}
 			});
