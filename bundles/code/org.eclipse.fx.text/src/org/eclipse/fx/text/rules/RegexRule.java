@@ -23,9 +23,15 @@ public class RegexRule implements IRule {
 	private final int startLength;
 	private final Pattern startPattern;
 	private final Pattern containmentPattern;
+	private final Pattern leadCharPattern;
 
 	public RegexRule(IToken token, Pattern startPattern, int startLength, Pattern containmentPattern) {
+		this(token, null, startPattern, startLength, containmentPattern);
+	}
+
+	public RegexRule(IToken token, Pattern leadCharPattern, Pattern startPattern, int startLength, Pattern containmentPattern) {
 		this.token = token;
+		this.leadCharPattern = leadCharPattern;
 		this.startLength = startLength;
 		this.startPattern = startPattern;
 		this.containmentPattern = containmentPattern;
@@ -33,6 +39,14 @@ public class RegexRule implements IRule {
 
 	@Override
 	public IToken evaluate(ICharacterScanner scanner) {
+		if( leadCharPattern != null && scanner.getColumn() > 0 ) {
+			scanner.unread();
+			int c = scanner.read();
+			if( ! leadCharPattern.matcher(String.valueOf((char)c)).matches() ) {
+				return Token.UNDEFINED;
+			}
+		}
+
 		StringBuilder b = new StringBuilder();
 		int readCount = 0;
 		for( int i = 0; i < startLength; i++ ) {
