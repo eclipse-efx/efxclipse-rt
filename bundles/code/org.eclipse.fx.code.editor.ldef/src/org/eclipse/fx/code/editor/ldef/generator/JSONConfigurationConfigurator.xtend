@@ -36,6 +36,7 @@ import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs
 import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite
 import org.eclipse.fx.code.editor.configuration.Condition
 import org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule
+import org.eclipse.fx.code.editor.configuration.PartitionWhiteSpace
 
 @SuppressWarnings("restriction")
 class JSONConfigurationConfigurator {
@@ -62,8 +63,19 @@ class JSONConfigurationConfigurator {
 				.tokenList( m2 |
 					m2.tokenList(model,pr)
 				)
+				.whitespace( m.whitespaceRule(model,pr) )
 				.build
 		]
+	}
+
+	def whitespaceRule(EditorGModel m, LanguageDef model, org.eclipse.fx.code.editor.ldef.lDef.Partition pr) {
+		val rv = model.lexicalHighlighting.list.filter(typeof(LexicalPartitionHighlighting_Rule)).findFirst[lp | lp.partition == pr]
+		if( rv != null && rv.whitespace != null ) {
+			return m.PartitionWhiteSpaceBuilder
+			.javawhiteSpace(rv.whitespace.isJavawhitespace)
+			.characterList( rv.whitespace.characters )
+			.build;
+		}
 	}
 
 	def ruleList(EditorGModel m, LanguageDef model, org.eclipse.fx.code.editor.ldef.lDef.Partition pr) {
