@@ -540,6 +540,14 @@ public class StyledTextBehavior {
 			defaultNavigateTextEnd();
 			return true;
 		}
+		else if (action == DefaultTextEditActions.TEXT_PAGE_DOWN) {
+			defaultNavigateTextPageDown();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.TEXT_PAGE_UP) {
+			defaultNavigateTextPageUp();
+			return true;
+		}
 		else if (action == DefaultTextEditActions.LINE_START) {
 			defaultNavigateLineStart();
 			return true;
@@ -562,6 +570,14 @@ public class StyledTextBehavior {
 		}
 		else if (action == DefaultTextEditActions.SELECT_TEXT_END) {
 			defaultSelectTextEnd();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_TEXT_PAGE_DOWN) {
+			defaultSelectTextPageDown();
+			return true;
+		}
+		else if (action == DefaultTextEditActions.SELECT_TEXT_PAGE_UP) {
+			defaultSelectTextPageUp();
 			return true;
 		}
 		else if (action == DefaultTextEditActions.SELECT_LINE_START) {
@@ -709,6 +725,44 @@ public class StyledTextBehavior {
 		getControl().setCaretOffset(getControl().getContent().getCharCount());
 	}
 
+	private int calculatePageDownOffset() {
+		final int linesPerPage = ((StyledTextSkin)getControl().getSkin()).getVisibleLineCount();
+		final int globalOffset = getControl().getCaretOffset();
+		final int lineIndex = getControl().getContent().getLineAtOffset(globalOffset);
+		final int lineLocalOffset = globalOffset - getControl().getContent().getOffsetAtLine(lineIndex);
+
+		final int newLineIndex = Math.min(getControl().getContent().getLineCount()-1, lineIndex + linesPerPage);
+		final int newLineLocalOffset = Math.min(getControl().getContent().getLine(newLineIndex).length(), lineLocalOffset);
+
+		return getControl().getOffsetAtLine(newLineIndex) + newLineLocalOffset;
+	}
+
+	private int calculatePageUpOffset() {
+		final int linesPerPage = ((StyledTextSkin)getControl().getSkin()).getVisibleLineCount();
+		final int globalOffset = getControl().getCaretOffset();
+		final int lineIndex = getControl().getContent().getLineAtOffset(globalOffset);
+		final int lineLocalOffset = globalOffset - getControl().getContent().getOffsetAtLine(lineIndex);
+
+		final int newLineIndex = Math.max(0, lineIndex - linesPerPage);
+		final int newLineLocalOffset = Math.min(getControl().getContent().getLine(newLineIndex).length(), lineLocalOffset);
+
+		return getControl().getOffsetAtLine(newLineIndex) + newLineLocalOffset;
+	}
+
+	/**
+	 * default implementation for {@link DefaultTextEditActions#TEXT_PAGE_UP}
+	 */
+	protected void defaultSelectTextPageUp() {
+		moveCaretAbsolute(calculatePageUpOffset(), true);
+	}
+
+	/**
+	 * default implementation for {@link DefaultTextEditActions#TEXT_PAGE_DOWN}
+	 */
+	protected void defaultSelectTextPageDown() {
+		moveCaretAbsolute(calculatePageDownOffset(), true);
+	}
+
 	/**
 	 * default implementation for {@link DefaultTextEditActions#LINE_START}
 	 */
@@ -758,6 +812,20 @@ public class StyledTextBehavior {
 	 */
 	protected void defaultSelectTextEnd() {
 		moveCaretAbsolute(getControl().getCharCount(), true);
+	}
+
+	/**
+	 * default implementation for {@link DefaultTextEditActions#SELECT_TEXT_PAGE_UP}
+	 */
+	protected void defaultNavigateTextPageUp() {
+		moveCaretAbsolute(calculatePageUpOffset(), false);
+	}
+
+	/**
+	 * default implementation for {@link DefaultTextEditActions#SELECT_TEXT_PAGE_DOWN}
+	 */
+	protected void defaultNavigateTextPageDown() {
+		moveCaretAbsolute(calculatePageDownOffset(), false);
 	}
 
 	/**
@@ -1268,6 +1336,8 @@ public class StyledTextBehavior {
 			m.map("Meta+Down", DefaultTextEditActions.TEXT_END); //$NON-NLS-1$
 			m.map("Alt+Right", DefaultTextEditActions.WORD_NEXT); //$NON-NLS-1$
 			m.map("Alt+Left", DefaultTextEditActions.WORD_PREVIOUS); //$NON-NLS-1$
+			m.map("Page Down", DefaultTextEditActions.TEXT_PAGE_DOWN); //$NON-NLS-1$
+			m.map("Page Up", DefaultTextEditActions.TEXT_PAGE_UP); //$NON-NLS-1$
 
 			m.map("Meta+Shift+Left", DefaultTextEditActions.SELECT_LINE_START); //$NON-NLS-1$
 			m.map("Meta+Shift+Right", DefaultTextEditActions.SELECT_LINE_END); //$NON-NLS-1$
@@ -1275,6 +1345,8 @@ public class StyledTextBehavior {
 			m.map("Meta+Shift+Down", DefaultTextEditActions.SELECT_TEXT_END); //$NON-NLS-1$
 			m.map("Alt+Shift+Right", DefaultTextEditActions.SELECT_WORD_NEXT); //$NON-NLS-1$
 			m.map("Alt+Shift+Left", DefaultTextEditActions.SELECT_WORD_PREVIOUS); //$NON-NLS-1$
+			m.map("Shift+Page Down", DefaultTextEditActions.SELECT_TEXT_PAGE_DOWN); //$NON-NLS-1$
+			m.map("Shift+Page Up", DefaultTextEditActions.SELECT_TEXT_PAGE_UP); //$NON-NLS-1$
 
 			m.map("Alt+Delete", DefaultTextEditActions.DELETE_WORD_NEXT); //$NON-NLS-1$
 			m.map("Alt+Backspace", DefaultTextEditActions.DELETE_WORD_PREVIOUS); //$NON-NLS-1$
@@ -1301,6 +1373,11 @@ public class StyledTextBehavior {
 
 			m.map("Ctrl+Shift+Right", DefaultTextEditActions.SELECT_WORD_NEXT); //$NON-NLS-1$
 			m.map("Ctrl+Shift+Left", DefaultTextEditActions.SELECT_WORD_PREVIOUS); //$NON-NLS-1$
+
+			m.map("Page Down", DefaultTextEditActions.TEXT_PAGE_DOWN); //$NON-NLS-1$
+			m.map("Page Up", DefaultTextEditActions.TEXT_PAGE_UP); //$NON-NLS-1$
+			m.map("Shift+Page Down", DefaultTextEditActions.SELECT_TEXT_PAGE_DOWN); //$NON-NLS-1$
+			m.map("Shift+Page Up", DefaultTextEditActions.SELECT_TEXT_PAGE_UP); //$NON-NLS-1$
 
 			m.map("Home", DefaultTextEditActions.LINE_START); //$NON-NLS-1$
 			m.map("Shift+Home", DefaultTextEditActions.SELECT_LINE_START); //$NON-NLS-1$

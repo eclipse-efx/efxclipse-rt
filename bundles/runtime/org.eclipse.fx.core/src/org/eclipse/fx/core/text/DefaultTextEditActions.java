@@ -41,6 +41,14 @@ public enum DefaultTextEditActions implements TextEditAction {
 	 * Action to go the end of the text
 	 */
 	TEXT_END,
+	/**
+	 * Action to go one page down
+	 */
+	TEXT_PAGE_DOWN,
+	/**
+	 * Action to go one page up
+	 */
+	TEXT_PAGE_UP,
 
 	// SELECT
 	/**
@@ -75,6 +83,14 @@ public enum DefaultTextEditActions implements TextEditAction {
 	 * Action to select to the end of the text
 	 */
 	SELECT_TEXT_END,
+	/**
+	 * Action to select a page down
+	 */
+	SELECT_TEXT_PAGE_DOWN,
+	/**
+	 * Action to select a page up
+	 */
+	SELECT_TEXT_PAGE_UP,
 
 	// Editing
 	/**
