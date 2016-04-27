@@ -1,47 +1,69 @@
 package org.eclipse.fx.code.editor.ldef.langs
 
 lua {
-	partitioning {
-		partition __dftl_partition_content_type
-		partition __lua_single_line_comment
-		partition __lua_multi_line_comment
-		partition __lua_string
-		rule {
-			multi_line __lua_multi_line_comment 	"--[[" 	=> "]]--"
-			single_line __lua_single_line_comment 	"--" 	=> ''
-			multi_line __lua_string 				'"' 	=> '"'
-		}
-	}
-	lexical_highlighting {
-		rule __dftl_partition_content_type whitespace javawhitespace {
-			default lua_default
-			lua_keyword {
-				keywords [ "function", "end", "for", "if" ]
-			}
-		}
-		rule __lua_single_line_comment {
-			default lua_doc_default
-		}
-		rule __lua_multi_line_comment {
-			default lua_doc_default
-		}
-		rule __lua_string {
-			default lua_string
-		}
+  partitioning {
+    partition __dftl_partition_content_type
+    partition __lua_multi_line_string
+    partition __lua_string
+    partition __lua_multi_line_comment
+    partition __lua_single_line_comment
+    rule {
+      multi_line __lua_multi_line_comment    "--[" pattern '(=*)' '['   => "]{0}]"
+      single_line __lua_single_line_comment  "--"  => ''
+      multi_line __lua_multi_line_string     "["  pattern '(=*)' '['   => "]{0}]"
+      single_line __lua_string               "'"   => "'" escaped by "\\"
+      single_line __lua_string               '"'   => '"' escaped by "\\"
+    }
+  }
+  lexical_highlighting {
+    rule __dftl_partition_content_type whitespace javawhitespace {
+      default lua_default
+      lua_operator {
+        character [
+          '.', '=', '#', '/', '\\', '+', '-', '*',
+          '<', '>', ':', '?', '!', ',', '|', '&', '^', '%', '~'
+        ]
+      }
+      lua_bracket {
+        character [ '(', ')', '{', '}', '[', ']' ]
+      }
+      lua_keyword {
+        keywords [
+          "and", "break", "do", "end", "goto", "local",
+          "else", "elseif", "for", "function",
+          "if", "in", "or", "not", "repeat",
+          "return", "then", "until", "while"
+        ]
+      }
+      lua_constant {
+        keywords [ "true", "false", "self", "nil"]
+      }
+      lua_number {
+        pattern "\\d" containing "[\\d|\\.]"
+      }
+    }
+    rule __lua_single_line_comment {
+      default lua_doc_default
+    }
+    rule __lua_multi_line_comment {
+      default lua_doc_default
+    }
+    rule __lua_string {
+      default lua_string
+    }
+    rule __lua_multi_line_string {
+      default lua_string
+    }
 
-		token_def {
-			lua_default "-source-editor-code";
-			lua_keyword "-source-editor-keyword" bold;
-			lua_doc_default "-source-editor-doc";
-			lua_string "-source-editor-string";
-		}
-	}
-
-//	integration {
-//		javafx {
-//			java "org.eclipse.fx.code.editor.langs.codegen.fx.lua" {
-//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
-//			}
-//		}
-//	}
+    token_def {
+      lua_default "-source-editor-code";
+      lua_operator "-source-editor-operator";
+      lua_bracket "-source-editor-bracket";
+      lua_keyword "-source-editor-keyword" bold;
+      lua_doc_default "-source-editor-doc";
+      lua_string "-source-editor-string";
+      lua_constant "-source-editor-keyword" bold;
+      lua_number "-source-editor-number";
+    }
+  }
 }

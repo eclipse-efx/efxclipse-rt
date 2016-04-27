@@ -11,6 +11,20 @@
 	},
 	{
 	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "lua.lua_operator",
+	  "textRefColor": "-source-editor-operator"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "lua.lua_bracket",
+	  "textRefColor": "-source-editor-bracket"
+	},
+	{
+	  "$gtype": "StyleDefinition",
 	  "bold": true,
 	  "italic": false,
 	  "name": "lua.lua_keyword",
@@ -29,6 +43,20 @@
 	  "italic": false,
 	  "name": "lua.lua_string",
 	  "textRefColor": "-source-editor-string"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": true,
+	  "italic": false,
+	  "name": "lua.lua_constant",
+	  "textRefColor": "-source-editor-keyword"
+	},
+	{
+	  "$gtype": "StyleDefinition",
+	  "bold": false,
+	  "italic": false,
+	  "name": "lua.lua_number",
+	  "textRefColor": "-source-editor-number"
 	}
 	]
 }

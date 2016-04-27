@@ -2,6 +2,14 @@
 	-styled-text-color: -source-editor-code;
 }
 
+.styled-text-area .lua.lua_operator {
+	-styled-text-color: -source-editor-operator;
+}
+
+.styled-text-area .lua.lua_bracket {
+	-styled-text-color: -source-editor-bracket;
+}
+
 .styled-text-area .lua.lua_keyword {
 	-styled-text-color: -source-editor-keyword;
 	-fx-font-weight: bold;
@@ -13,5 +21,14 @@
 
 .styled-text-area .lua.lua_string {
 	-styled-text-color: -source-editor-string;
+}
+
+.styled-text-area .lua.lua_constant {
+	-styled-text-color: -source-editor-keyword;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .lua.lua_number {
+	-styled-text-color: -source-editor-number;
 }
 

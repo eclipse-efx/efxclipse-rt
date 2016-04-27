@@ -16,18 +16,181 @@
         {
           "$gtype": "Token",
           "defaultToken": false,
+          "name": "lua_operator",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                ".",
+                "\u003d",
+                "#",
+                "/",
+                "\\",
+                "+",
+                "-",
+                "*",
+                "\u003c",
+                "\u003e",
+                ":",
+                "?",
+                "!",
+                ",",
+                "|",
+                "\u0026",
+                "^",
+                "%",
+                "~"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "lua_bracket",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_CharacterRule",
+              "characterList": [
+                "(",
+                ")",
+                "{",
+                "}",
+                "[",
+                "]"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
           "name": "lua_keyword",
           "tokenScannerList": [
             {
               "$gtype": "TokenScanner_Keyword",
               "keywordList": [
-                "function",
+                "and",
+                "break",
+                "do",
                 "end",
+                "goto",
+                "local",
+                "else",
+                "elseif",
                 "for",
-                "if"
+                "function",
+                "if",
+                "in",
+                "or",
+                "not",
+                "repeat",
+                "return",
+                "then",
+                "until",
+                "while"
               ]
             }
           ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "lua_constant",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "true",
+                "false",
+                "self",
+                "nil"
+              ]
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "lua_number",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "[\\d|\\.]",
+              "startLength": 0,
+              "startPattern": "\\d"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__lua_multi_line_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_DynamicEnd",
+          "beginMatch": "(\u003d*)",
+          "beginPrefix": "[",
+          "beginSuffix": "[",
+          "endTemplate": "]{0}]",
+          "singleLine": false
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "lua_string",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__lua_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\u0027",
+          "escapedBy": "\\",
+          "startSeq": "\u0027"
+        },
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "lua_string",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__lua_multi_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_DynamicEnd",
+          "beginMatch": "(\u003d*)",
+          "beginPrefix": "--[",
+          "beginSuffix": "[",
+          "endTemplate": "]{0}]",
+          "singleLine": false
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "lua_doc_default",
+          "tokenScannerList": []
         }
       ]
     },
@@ -46,44 +209,6 @@
           "$gtype": "Token",
           "defaultToken": true,
           "name": "lua_doc_default",
-          "tokenScannerList": []
-        }
-      ]
-    },
-    {
-      "$gtype": "Partition",
-      "name": "__lua_multi_line_comment",
-      "ruleList": [
-        {
-          "$gtype": "PartitionRule_MultiLine",
-          "endSeq": "]]--",
-          "startSeq": "--[["
-        }
-      ],
-      "tokenList": [
-        {
-          "$gtype": "Token",
-          "defaultToken": true,
-          "name": "lua_doc_default",
-          "tokenScannerList": []
-        }
-      ]
-    },
-    {
-      "$gtype": "Partition",
-      "name": "__lua_string",
-      "ruleList": [
-        {
-          "$gtype": "PartitionRule_MultiLine",
-          "endSeq": "\"",
-          "startSeq": "\""
-        }
-      ],
-      "tokenList": [
-        {
-          "$gtype": "Token",
-          "defaultToken": true,
-          "name": "lua_string",
           "tokenScannerList": []
         }
       ]
