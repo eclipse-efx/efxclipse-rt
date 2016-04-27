@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.fx.core.slf4j
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional
 Service-Component: OSGI-INF/slf4jlogger.xml
 Import-Package: javax.inject;version="1.0.0",
- org.eclipse.fx.core;version="2.3.0",
- org.eclipse.fx.core.log;version="2.3.0",
+ org.eclipse.fx.core;version="2.4.0",
+ org.eclipse.fx.core.log;version="2.4.0",
  org.slf4j;version="1.7.2"
 Bundle-Vendor: %Bundle-Vendor
