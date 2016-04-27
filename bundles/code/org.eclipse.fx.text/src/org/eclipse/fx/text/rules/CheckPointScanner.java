@@ -34,7 +34,9 @@ public class CheckPointScanner implements ICharacterScanner {
 	@Override
 	public int read() {
 		this.charCount++;
-		return this.realScanner.read();
+		int read = this.realScanner.read();
+		System.err.println("READ: '"+((char)read)+"'");
+		return read;
 	}
 
 	@Override

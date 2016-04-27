@@ -192,14 +192,31 @@ public class PatternRule implements IPredicateRule {
 			int c= scanner.read();
 			if (c == fStartSequence[0]) {
 				if (sequenceDetected(scanner, fStartSequence, false)) {
-					if (endSequenceDetected(scanner))
+					if (endSequenceDetected(scanner)) {
 						return fToken;
+					} else if(greedySuccess()) {
+						if( fBreaksOnEOL ) {
+							int cc;
+							do {
+								cc = scanner.read();
+							} while( cc != '\n' || cc != '\r' );
+							return fToken;
+						} else if (fBreaksOnEOF) {
+							while (scanner.read() != ICharacterScanner.EOF) {
+							}
+							return fToken;
+						}
+					}
 				}
 			}
 		}
 
 		scanner.unread();
 		return Token.UNDEFINED;
+	}
+
+	protected boolean greedySuccess() {
+		return true;
 	}
 
 	/*
