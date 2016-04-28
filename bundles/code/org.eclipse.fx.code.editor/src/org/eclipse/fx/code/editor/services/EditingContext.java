@@ -13,6 +13,7 @@ package org.eclipse.fx.code.editor.services;
 import java.util.function.Consumer;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.jface.text.IRegion;
 
 /**
@@ -31,6 +32,7 @@ public interface EditingContext {
 	void setSelection(IRegion selection);
 
 	void showContextInformation(ContextInformation info);
+	void triggerAction(TextEditAction action);
 
 	Subscription registerOnCaretOffsetChanged(Consumer<Integer> listener);
 	Subscription registerOnSelectionChanged(Consumer<IRegion> listener);

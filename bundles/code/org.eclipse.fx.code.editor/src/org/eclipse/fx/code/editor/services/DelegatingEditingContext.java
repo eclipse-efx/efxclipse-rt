@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.jface.text.IRegion;
 
 public class DelegatingEditingContext implements EditingContext {
@@ -84,6 +85,11 @@ public class DelegatingEditingContext implements EditingContext {
 	@Override
 	public void showContextInformation(ContextInformation info) {
 		delegate.showContextInformation(info);
+	}
+
+	@Override
+	public void triggerAction(TextEditAction action) {
+		delegate.triggerAction(action);
 	}
 
 	@Override

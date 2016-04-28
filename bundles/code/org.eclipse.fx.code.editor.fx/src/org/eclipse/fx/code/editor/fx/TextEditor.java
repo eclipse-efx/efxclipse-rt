@@ -33,6 +33,7 @@ import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.di.ContextValue;
 import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.fx.core.preferences.Preference;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.text.ui.contentassist.IContextInformation;
 import org.eclipse.fx.text.ui.source.SourceViewer;
 import org.eclipse.fx.text.ui.source.SourceViewerConfiguration;
@@ -194,6 +195,11 @@ public class TextEditor {
 						IContextInformation ci = contextInformationPresenter.createInformation(info);
 						viewer.showContextInformation(ci);
 					}
+				}
+
+				@Override
+				public void triggerAction(TextEditAction action) {
+					viewer.getTextWidget().triggerAction(action);
 				}
 
 				@Override
