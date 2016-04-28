@@ -24,6 +24,7 @@ import org.eclipse.fx.ui.controls.styledtext.model.DecorationStrategy;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -244,9 +245,18 @@ public class TextNode extends HBox {
 
 		rebuildText(text);
 
-		this.tabCharAdvance.addListener(o -> {
+		// TODO We need to trigger this from ContentView / StyledTextAreaSkin
+		InvalidationListener listener = o -> {
 			rebuildText(this.originalText);
+		};
+		this.parentProperty().addListener( e -> {
+			if( this.getParent() == null ) {
+				this.tabCharAdvance.removeListener(listener);
+			} else {
+				this.tabCharAdvance.addListener(listener);
+			}
 		});
+
 		this.cache.addOnActivate((n)->{
 			((Text)n).fillProperty().bind(fillProperty());
 
