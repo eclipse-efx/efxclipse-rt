@@ -321,8 +321,6 @@ public class StyledTextBehavior {
 		if (this.dragSelectionMode) {
 			if( event.getOffset() >= 0 ) {
 				moveCaretAbsolute(event.getOffset(), true);
-			} else {
-				System.err.println("SKIPPED!!!!");
 			}
 			event.consume();
 		} else if (this.dragMoveTextMode) {
