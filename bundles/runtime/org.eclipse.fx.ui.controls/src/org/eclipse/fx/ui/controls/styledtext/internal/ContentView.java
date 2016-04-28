@@ -341,6 +341,7 @@ public class ContentView  extends Pane {
 
 	private Range<Integer> curVisibleLines;
 	private StyledTextArea area;
+	private boolean skipCSSApply;
 
 	public ContentView(LineHelper lineHelper, StyledTextArea area) {
 		this.lineLayer = new LineLayer(()->new LineNode(area.tabAvanceProperty()), (n, m)->{
@@ -712,7 +713,13 @@ public class ContentView  extends Pane {
 	}
 
 	public double getCharWidth() {
-		applyCss();
+		if( ! this.skipCSSApply )  {
+			applyCss();
+			if( getParent() != null ) {
+				this.skipCSSApply = true;
+			}
+		}
+
 		return this.charWidth.get();
 	}
 
