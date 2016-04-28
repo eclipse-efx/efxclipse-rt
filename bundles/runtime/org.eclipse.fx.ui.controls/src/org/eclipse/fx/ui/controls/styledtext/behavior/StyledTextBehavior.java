@@ -410,6 +410,10 @@ public class StyledTextBehavior {
 	}
 
 	private void onTextPositionPressed(TextPositionEvent event) {
+		if( event.getButton() != MouseButton.PRIMARY ) {
+			return;
+		}
+
 		this.mousePressedOffset = event.getOffset();
 
 		if( this.mousePressedOffset < 0 ) {
