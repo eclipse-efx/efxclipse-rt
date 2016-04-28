@@ -1317,7 +1317,23 @@ public class StyledTextBehavior {
 	private void moveCaretAbsolute(int absoluteOffset, boolean select) {
 		int offset = Math.max(0, absoluteOffset);
 		offset = Math.min(getControl().getCharCount(), offset);
-		getControl().impl_setCaretOffset(offset, select);
+
+		// we need to jump 2 chars if windows line endings are in effect
+		if( offset > 0 ) {
+			String textRange = getControl().getContent().getTextRange(offset-1, 1);
+			// check the navigation direction
+			if( getControl().getCaretOffset() > offset ) {
+				if( textRange.equals("\r") ) { //$NON-NLS-1$
+					offset -= 1;
+				}
+			} else {
+				if( textRange.equals("\r") ) { //$NON-NLS-1$
+					offset += 1;
+				}
+			}
+		}
+
+		getControl().impl_setCaretOffset(Math.max(0,offset), select);
 	}
 
 	private void moveCaretRelative(int deltaOffset, boolean select) {
