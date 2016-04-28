@@ -60,7 +60,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
 
 @SuppressWarnings("javadoc")
 public class ContentView  extends Pane {
@@ -356,6 +355,7 @@ public class ContentView  extends Pane {
 		this.contentBody.setPadding(new Insets(2));
 		this.contentBody.getChildren().setAll(this.lineLayer);
 
+
 //		this.lineLayer.setStyle("-fx-border-color: orange; -fx-border-width:2px; -fx-border-style: solid;");
 
 
@@ -411,6 +411,7 @@ public class ContentView  extends Pane {
 		bindSelectionListener();
 
 		initBindings();
+		this.charWidth.addListener( o -> this.cachedLongestLine = 0.0);
 	}
 
 	private DoubleBinding charWidth;
@@ -700,13 +701,26 @@ public class ContentView  extends Pane {
 //		scheduleUpdate();
 	}
 
+	private double cachedLongestLine;
+	private int lastContentLength;
+
 	private double computeLongestLine() {
+		if( this.cachedLongestLine != 0.0 ) {
+			if( this.lastContentLength == getContent().getCharCount() ) {
+				return Math.max(this.cachedLongestLine,getWidth());
+			}
+		}
+
 		OptionalInt longestLine = IntStream.range(0, getNumberOfLines())
 			.map( index -> this.lineHelper.getLengthCountTabsAsChars(index))
 			.max();
 		if( longestLine.isPresent() ) {
 			int lineLength = longestLine.getAsInt() + 2;
-			return Math.max(getWidth(), lineLength * getCharWidth());
+			this.cachedLongestLine = lineLength * getCharWidth();
+			this.lastContentLength = getContent().getCharCount();
+			return Math.max(getWidth(), this.cachedLongestLine);
+		} else {
+			this.cachedLongestLine = 0.0;
 		}
 
 		return getWidth();
