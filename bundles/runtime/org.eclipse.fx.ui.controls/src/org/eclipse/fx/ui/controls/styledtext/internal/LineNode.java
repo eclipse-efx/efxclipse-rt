@@ -30,17 +30,17 @@ import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
 import com.google.common.collect.Range;
 
 import javafx.animation.Animation;
-import javafx.animation.Animation.Status;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -362,17 +362,6 @@ public class LineNode extends StackPane {
 			this.getChildren().add(this.caret);
 
 			this.caretAnimation = createCaretAnimation(this.caret);
-
-			this.caret.visibleProperty().addListener((x, o, n)->{
-				if (n.booleanValue()) {
-					if (this.caretAnimation.getStatus() != Status.RUNNING) {
-						this.caretAnimation.playFromStart();
-					}
-				}
-				else {
-					this.caretAnimation.stop();
-				}
-			});
 		}
 
 		void hideCaret() {
@@ -383,13 +372,25 @@ public class LineNode extends StackPane {
 			this.caret.setVisible(true);
 		}
 
+		Timeline scheduledAnimation = new Timeline(new KeyFrame(Duration.millis(200), (a) -> {
+			this.caretAnimation.playFromStart();
+		}));
+
 		public void updateCaret(int index) {
 			if (index != this.caretIndex) {
+				if( this.scheduledAnimation != null ) {
+					this.scheduledAnimation.stop();
+				}
+
+				this.caretAnimation.stop();
+
 				if (index == -1) {
 					hideCaret();
 				}
 				else {
 					showCaret();
+					this.caret.setOpacity(1);
+					this.scheduledAnimation.playFromStart();
 				}
 
 				this.caretIndex = index;
