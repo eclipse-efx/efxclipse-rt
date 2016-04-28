@@ -16,10 +16,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.eclipse.fx.core.text.TextUtil;
 import org.eclipse.fx.ui.controls.styledtext.StyleRange;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent;
@@ -151,7 +150,7 @@ public class LineHelper {
 	}
 
 	static String removeLineending(String s) {
-		return s.replace("\n", "").replace("\r", ""); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return TextUtil.stripOff(s,  c -> c == '\r' || c == '\n');
 	}
 
 	public List<Segment> getSegments(int index) {
