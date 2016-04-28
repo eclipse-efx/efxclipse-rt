@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.IntConsumer;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -217,7 +218,7 @@ public class TextUtil {
 	 * @since 2.4.0
 	 */
 	public static <R> Stream<R> foreachCharPosition(String content, char c, IntFunction<R> consumer) {
-		//TODO We should not precreate the list
+		// TODO We should not precreate the list
 		List<R> list = new ArrayList<>();
 		char[] cs = content.toCharArray();
 		for (int i = 0; i < cs.length; i++) {
@@ -226,6 +227,33 @@ public class TextUtil {
 			}
 		}
 		return list.stream();
+	}
+
+	/**
+	 * Strip characters matched by the filter
+	 *
+	 * @param content
+	 *            the content
+	 * @param filter
+	 *            the filter
+	 * @return string without the filtered characters
+	 * @since 2.4.0
+	 */
+	public static String stripOff(String content, IntPredicate filter) {
+		char[] cs = content.toCharArray();
+		char[] target = new char[cs.length];
+		int j = 0;
+		for( int i = 0; i < cs.length; i++ ) {
+			if( ! filter.test(cs[i]) ) {
+				target[j++] = cs[i];
+			}
+		}
+
+		if( j < cs.length ) {
+			return new String(target,0,j);
+		}
+
+		return content;
 	}
 
 	static class StrLookupImpl extends StrLookup {
