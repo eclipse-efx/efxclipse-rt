@@ -16,7 +16,11 @@ import java.text.BreakIterator;
 import java.text.CharacterIterator;
 import java.text.MessageFormat;
 import java.text.StringCharacterIterator;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -148,6 +152,7 @@ public class TextUtil {
 	 *
 	 * The following examples are possible:
 	 * <p>
+	 *
 	 * <pre>
 	 * The name is ${person.firstname}.
 	 * The birthdate is ${person.birthdate,date,dd.MM.yyyy}.
@@ -177,6 +182,50 @@ public class TextUtil {
 		char[] cs = value.toCharArray();
 		cs[0] = Character.toUpperCase(cs[0]);
 		return String.valueOf(cs);
+	}
+
+	/**
+	 * Apply the consumer for each matched char
+	 *
+	 * @param content
+	 *            the content
+	 * @param c
+	 *            the character to find
+	 * @param consumer
+	 *            the consumer who gets passed the position of the matched char
+	 * @since 2.4.0
+	 */
+	public static void foreachCharPosition(String content, char c, IntConsumer consumer) {
+		char[] cs = content.toCharArray();
+		for (int i = 0; i < cs.length; i++) {
+			if (cs[i] == c) {
+				consumer.accept(i);
+			}
+		}
+	}
+
+	/**
+	 * Apply the consumer for each matched char
+	 *
+	 * @param content
+	 *            the content
+	 * @param c
+	 *            the character to find
+	 * @param consumer
+	 *            the function who gets passed the position of the matched char
+	 * @return stream with objects produced by the function
+	 * @since 2.4.0
+	 */
+	public static <R> Stream<R> foreachCharPosition(String content, char c, IntFunction<R> consumer) {
+		//TODO We should not precreate the list
+		List<R> list = new ArrayList<>();
+		char[] cs = content.toCharArray();
+		for (int i = 0; i < cs.length; i++) {
+			if (cs[i] == c) {
+				list.add(consumer.apply(i));
+			}
+		}
+		return list.stream();
 	}
 
 	static class StrLookupImpl extends StrLookup {
