@@ -78,7 +78,7 @@ public class LineHelper {
 
 	public int getLengthCountTabsAsChars(int index) {
 		String t = getText(index);
-		return t.length() + countTabs(t) * 3;
+		return t.length() + countTabs(t) * (this.control.getTabAdvance()-1);
 	}
 
 	public String getText(int index) {
