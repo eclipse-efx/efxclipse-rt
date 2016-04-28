@@ -20,7 +20,9 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import org.eclipse.fx.core.Util;
+import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
+import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
@@ -1882,5 +1884,13 @@ public class StyledTextArea extends Control {
 		if (getSkin() != null) {
 			((StyledTextSkin)getSkin()).scrollOffsetIntoView(getCaretOffset(), 2, 2);
 		}
+	}
+
+	/**
+	 * Trigger the respective action
+	 * @param action the action
+	 */
+	public void triggerAction(TextEditAction action) {
+		((StyledTextBehavior)((StyledTextSkin)getSkin()).getBehavior()).triggerAction(action);
 	}
 }

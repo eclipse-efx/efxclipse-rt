@@ -1451,4 +1451,12 @@ public class StyledTextBehavior {
 		m.map("Shift+Right", DefaultTextEditActions.SELECT_RIGHT); //$NON-NLS-1$
 	}
 
+	/**
+	 * Trigger the action
+	 * @param action the action
+	 */
+	public void triggerAction(TextEditAction action) {
+		keyTriggerMapping.triggerAction(action, new Context(getControl()));
+	}
+
 }

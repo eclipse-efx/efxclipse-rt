@@ -459,7 +459,10 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		}
 	}
 
-	StyledTextBehavior getBehavior() {
+	/**
+	 * @return The behavior
+	 */
+	public StyledTextBehavior getBehavior() {
 		return this.behavior;
 	}
 
