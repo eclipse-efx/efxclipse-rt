@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.text.TextUtil;
 import org.eclipse.fx.text.ui.IFeature;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent;
@@ -160,19 +161,14 @@ public class InvisibleCharSupport implements IFeature {
 
 			int numOfLines = content.getLineCount();
 
-			// ADD TABS
-			Pattern tab = Pattern.compile("\\t"); //$NON-NLS-1$
-			Matcher matcher = tab.matcher(line);
-			while (matcher.find()) {
-				annotations.add(new InvisibleCharAnnotation("tab", "", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance())); //$NON-NLS-1$ //$NON-NLS-2$
-			}
+			TextUtil.foreachCharPosition(line, '\t', pos -> {
+				annotations.add(new InvisibleCharAnnotation("tab", "", Range.closed(pos, pos + 1), control.getTabAdvance())); //$NON-NLS-1$ //$NON-NLS-2$
+			});
 
-			// ADD SPACE
-			Pattern space = Pattern.compile("[ ]"); //$NON-NLS-1$
-			matcher = space.matcher(line);
-			while (matcher.find()) {
-				annotations.add(new InvisibleCharAnnotation("space", "", Range.closed(matcher.start(), matcher.start() + 1), control.getTabAdvance())); //$NON-NLS-1$ //$NON-NLS-2$
-			}
+			TextUtil.foreachCharPosition(line, ' ', pos -> {
+				annotations.add(new InvisibleCharAnnotation("space", "", Range.closed(pos, pos + 1), control.getTabAdvance())); //$NON-NLS-1$ //$NON-NLS-2$
+			});
+
 
 			// ADD NEWLINE
 			if (index < numOfLines-1) {
