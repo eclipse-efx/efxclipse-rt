@@ -238,14 +238,15 @@ public class LineHelper {
 		return result;
 	}
 
-	private static final Pattern TAB_PATTERN = Pattern.compile("\t"); //$NON-NLS-1$
-
 	private static int countTabs(String s) {
-		Matcher matcher = TAB_PATTERN.matcher(s);
 		int count = 0;
-		while (matcher.find()) {
-			count++;
+		char[] cs = s.toCharArray();
+		for( int i = 0; i < s.length(); i++ ) {
+			if( cs[i] == '\t' ) {
+				count++;
+			}
 		}
+
 		return count;
 	}
 
