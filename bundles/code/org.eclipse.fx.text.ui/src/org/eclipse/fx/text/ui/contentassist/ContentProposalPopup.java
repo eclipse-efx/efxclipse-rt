@@ -69,6 +69,11 @@ public class ContentProposalPopup implements IContentAssistListener {
 
 	public Optional<ICompletionProposal> displayProposals(List<ICompletionProposal> proposalList, int offset, Point2D position) {
 		setup();
+
+		if( this.stage.isShowing() ) {
+			return Optional.empty();
+		}
+
 		this.prefix = ""; //$NON-NLS-1$
 		this.offset = offset;
 		this.proposalList.setItems(FXCollections.observableArrayList(proposalList));
