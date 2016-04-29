@@ -220,7 +220,11 @@ public class TextEditor {
 				@Override
 				public Subscription registerOnSelectionChanged(Consumer<IRegion> listener) {
 					ChangeListener<TextSelection> l = (x, o, n) -> {
-						listener.accept(convert(n));
+						if( n != null ) {
+							listener.accept(convert(n));
+						} else {
+							listener.accept(null);
+						}
 					};
 					viewer.getTextWidget().selectionProperty().addListener(l);
 					return new Subscription() {
