@@ -151,6 +151,9 @@ public class AnnotationModelSupport {
 		while( annotationIterator.hasNext() ) {
 			Annotation a = annotationIterator.next();
 			Position position = annotationModel.getPosition(a);
+			if( position == null ) {
+				continue;
+			}
 			int curLineIndex = control.getLineAtOffset(position.offset);
 			if (curLineIndex == lineIndex) {
 				int lineBegin = control.getOffsetAtLine(curLineIndex);
