@@ -799,6 +799,7 @@ public class LineNode extends StackPane {
 	public void updateContent(List<Segment> content) {
 		boolean updated = this.textLayer.updateContent(content);
 		if (updated) {
+			applyCss();
 			if (debugAnimation) {
 				this.debugUpdateText.play();
 			}
