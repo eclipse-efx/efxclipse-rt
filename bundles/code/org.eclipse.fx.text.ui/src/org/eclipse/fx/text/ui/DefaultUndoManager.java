@@ -110,8 +110,11 @@ public class DefaultUndoManager implements IUndoManager {
 					StyledTextArea widget= fTextViewer.getTextWidget();
 					// TODO select?
 //					if (widget != null && !widget.isDisposed() && (widget.isFocusControl()))// || fTextViewer.getTextWidget() == control))
-
-					selectAndReveal(event.getOffset(), event.getText() == null ? 0 : event.getText().length());
+					if( (eventType & DocumentUndoEvent.UNDONE) != 0 ) {
+						reveal(event.getOffset(), event.getText() == null ? 0 : event.getText().length());
+					} else {
+						selectAndReveal(event.getOffset(), event.getText() == null ? 0 : event.getText().length());
+					}
 				}
 			}
 		}
@@ -132,6 +135,17 @@ public class DefaultUndoManager implements IUndoManager {
 			fTextViewer.resetVisibleRegion();
 
 		fTextViewer.getTextWidget().setSelection(new TextSelection(offset, length));
+//		fTextViewer.revealRange(offset, length);
+	}
+
+	private void reveal(int offset, int length) {
+		if (fTextViewer instanceof ITextViewerExtension5) {
+			ITextViewerExtension5 extension= (ITextViewerExtension5) fTextViewer;
+			extension.exposeModelRange(new Region(offset, length));
+		} else if (!fTextViewer.overlapsWithVisibleRegion(offset, length))
+			fTextViewer.resetVisibleRegion();
+
+		fTextViewer.getTextWidget().setCaretOffset(offset);
 //		fTextViewer.revealRange(offset, length);
 	}
 

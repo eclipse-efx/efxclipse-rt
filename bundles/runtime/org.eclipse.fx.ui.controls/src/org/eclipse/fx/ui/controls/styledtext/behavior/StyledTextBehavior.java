@@ -199,16 +199,18 @@ public class StyledTextBehavior {
 
 	private void onKeyPressed(KeyEvent event) {
 
-		getControl().fireEvent(UndoHintEvent.createBeginCompoundChangeEvent());
-		try {
-			boolean handled = this.keyTriggerMapping.triggerAction(event, new Context(getControl()));
-			if (handled) {
-				event.consume();
-				return;
+		if( this.keyTriggerMapping.exists(event) ) {
+			getControl().fireEvent(UndoHintEvent.createBeginCompoundChangeEvent());
+			try {
+				boolean handled = this.keyTriggerMapping.triggerAction(event, new Context(getControl()));
+				if (handled) {
+					event.consume();
+					return;
+				}
 			}
-		}
-		finally {
-			getControl().fireEvent(UndoHintEvent.createEndCompoundChangeEvent());
+			finally {
+				getControl().fireEvent(UndoHintEvent.createEndCompoundChangeEvent());
+			}
 		}
 
 		if( this.dragMoveTextMode ) {
@@ -290,16 +292,16 @@ public class StyledTextBehavior {
 
 				// check for typed char action
 
-				getControl().fireEvent(UndoHintEvent.createBeginCompoundChangeEvent());
-				try {
-					this.keyTriggerMapping.triggerAction(character.charAt(0), new Context(getControl()));
+				if( this.keyTriggerMapping.exists(event) ) {
+					getControl().fireEvent(UndoHintEvent.createBeginCompoundChangeEvent());
+					try {
+						this.keyTriggerMapping.triggerAction(character.charAt(0), new Context(getControl()));
+					}
+					finally {
+						getControl().fireEvent(UndoHintEvent.createEndCompoundChangeEvent());
+					}
 				}
-				finally {
-					getControl().fireEvent(UndoHintEvent.createEndCompoundChangeEvent());
-				}
-
 			}
-
 		}
 	}
 
@@ -1121,6 +1123,7 @@ public class StyledTextBehavior {
 			int added = 0;
 
 			int firstLineDelta = 0;
+			int indentLength = getControl().isInsertSpacesForTab() ? getControl().getTabAdvance() : 1;
 
 			String insertString = "\t"; //$NON-NLS-1$
 			if( getControl().isInsertSpacesForTab() ) {
@@ -1137,16 +1140,18 @@ public class StyledTextBehavior {
 				added += insertString.length();
 				if (lineNumber == firstLine) {
 					if (selectionOffset > lineStart) {
-						firstLineDelta = 1;
+						firstLineDelta = selectionOffset - lineStart;
 					}
 				}
 			}
 
-			String data = dataBuffer.toString();
+			int start = selectionOffset - firstLineDelta;
+			int length = selectionLength + added + firstLineDelta;
+			String replaced = dataBuffer.substring(start,start+length);
 
-			getControl().getContent().setText(data == null ? "" : data); //$NON-NLS-1$
+			getControl().getContent().replaceTextRange(start, length-added, replaced);
 			getControl().setCaretOffset(caret + added);
-			getControl().setSelectionRange(selectionOffset + firstLineDelta, selectionLength + added - firstLineDelta);
+			getControl().setSelectionRange(selectionOffset + indentLength, selectionLength + added - indentLength);
 		}
 	}
 

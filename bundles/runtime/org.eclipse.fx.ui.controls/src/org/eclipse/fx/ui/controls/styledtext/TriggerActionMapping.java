@@ -257,6 +257,10 @@ public class TriggerActionMapping {
 		return optional.map(a->handle(a, context)).orElse(false);
 	}
 
+	public boolean exists(KeyEvent event) {
+		return get(event).isPresent();
+	}
+
 	public boolean triggerAction(char typedChar, Context context) {
 		Optional<TextEditAction> optional = get(typedChar);
 		return optional.map(a->handle(a, context)).orElse(false);
