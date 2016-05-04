@@ -12,6 +12,7 @@
 package org.eclipse.fx.ui.controls.styledtext.behavior;
 
 import java.text.BreakIterator;
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.fx.core.IntTuple;
@@ -1173,15 +1174,34 @@ public class StyledTextBehavior {
 		}
 
 		int firstLineDelta = 0;
+		int[] removals = new int[lastLine-firstLine];
 
 		for (int lineNumber = firstLine; lineNumber < lastLine; lineNumber++) {
 			int lineStart = getControl().getOffsetAtLine(lineNumber);
 			if (dataBuffer.charAt(lineStart) != '\t') {
-				return;
+				String begin = dataBuffer.substring(lineStart,Math.min(lineStart + getControl().getTabAdvance(), dataBuffer.length()));
+				if( begin.length() != getControl().getTabAdvance() ) {
+					return;
+				} else {
+					char[] cs = begin.toCharArray();
+					for( int i = 0; i < cs.length; i++ ) {
+						if( cs[i] == '\t' ) {
+							removals[lineNumber-firstLine] = i+1;
+							break;
+						} else if( cs[i] != ' ' ) {
+							return;
+						}
+					}
+					if( removals[lineNumber-firstLine] == 0 ) {
+						removals[lineNumber-firstLine] = getControl().getTabAdvance();
+					}
+				}
+			} else {
+				removals[lineNumber-firstLine] = 1;
 			}
 			if (lineNumber == firstLine) {
 				if (selectionOffset > lineStart) {
-					firstLineDelta = 1;
+					firstLineDelta = removals[lineNumber-firstLine];
 				}
 			}
 		}
@@ -1190,8 +1210,8 @@ public class StyledTextBehavior {
 
 		for (int lineNumber = lastLine - 1; lineNumber >= firstLine; lineNumber--) {
 			int lineStart = getControl().getOffsetAtLine(lineNumber);
-			dataBuffer.replace(lineStart, lineStart + 1, ""); //$NON-NLS-1$
-			removed += 1;
+			dataBuffer.replace(lineStart, lineStart + removals[lineNumber-firstLine], ""); //$NON-NLS-1$
+			removed += removals[lineNumber-firstLine];
 		}
 
 		String data = dataBuffer.toString();
