@@ -1150,7 +1150,7 @@ public class StyledTextBehavior {
 			String replaced = dataBuffer.substring(start,start+length);
 
 			getControl().getContent().replaceTextRange(start, length-added, replaced);
-			getControl().setCaretOffset(caret + added);
+			getControl().setCaretOffset(selectionOffset == caret ? caret + indentLength : caret + added);
 			getControl().setSelectionRange(selectionOffset + indentLength, selectionLength + added - indentLength);
 		}
 	}
@@ -1179,6 +1179,7 @@ public class StyledTextBehavior {
 		}
 
 		int firstLineDelta = 0;
+		int firstLineSelectionIndent = 0;
 		int[] removals = new int[lastLine-firstLine];
 
 		for (int lineNumber = firstLine; lineNumber < lastLine; lineNumber++) {
@@ -1207,9 +1208,14 @@ public class StyledTextBehavior {
 			if (lineNumber == firstLine) {
 				if (selectionOffset > lineStart) {
 					firstLineDelta = removals[lineNumber-firstLine];
+					firstLineSelectionIndent = selectionOffset - lineStart;
 				}
 			}
 		}
+
+		int start = selectionOffset - firstLineSelectionIndent;
+		int end = start + selectionLength + firstLineSelectionIndent;
+		String replacedText = dataBuffer.substring(start, end);
 
 		int removed = 0;
 
@@ -1219,10 +1225,10 @@ public class StyledTextBehavior {
 			removed += removals[lineNumber-firstLine];
 		}
 
-		String data = dataBuffer.toString();
+		String newText = dataBuffer.substring(start, end - removed);
 
-		getControl().getContent().setText(data == null ? "" : data); //$NON-NLS-1$
-		getControl().setCaretOffset(caret - removed);
+		getControl().getContent().replaceTextRange(start, replacedText.length(), newText);
+		getControl().setCaretOffset(selectionOffset == caret ? caret - firstLineDelta : caret - removed);
 		getControl().setSelectionRange(selectionOffset - firstLineDelta, selectionLength - removed + firstLineDelta);
 	}
 
