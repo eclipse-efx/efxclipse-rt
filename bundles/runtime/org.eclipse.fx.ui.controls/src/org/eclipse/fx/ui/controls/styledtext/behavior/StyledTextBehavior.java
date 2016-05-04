@@ -1121,10 +1121,19 @@ public class StyledTextBehavior {
 
 			int firstLineDelta = 0;
 
+			String insertString = "\t"; //$NON-NLS-1$
+			if( getControl().isInsertSpacesForTab() ) {
+				StringBuilder b = new StringBuilder();
+				for( int i = 0; i < getControl().getTabAdvance(); i++ ) {
+					b.append(" "); //$NON-NLS-1$
+				}
+				insertString = b.toString();
+			}
+
 			for (int lineNumber = firstLine; lineNumber < lastLine; lineNumber++) {
 				int lineStart = getControl().getOffsetAtLine(lineNumber) + added;
-				dataBuffer.replace(lineStart, lineStart + 0, "\t"); //$NON-NLS-1$
-				added += 1;
+				dataBuffer.replace(lineStart, lineStart + 0, insertString);
+				added += insertString.length();
 				if (lineNumber == firstLine) {
 					if (selectionOffset > lineStart) {
 						firstLineDelta = 1;
