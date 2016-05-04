@@ -63,8 +63,10 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -120,6 +122,9 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		super(styledText);
 		this.behavior = behavior;
 		this.rootContainer = new HBox();
+		this.rootContainer.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, e -> {
+			e.consume();
+		});
 
 		this.rootContainer.setSpacing(0);
 
@@ -177,6 +182,9 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		}
 
 		this.content.getStyleClass().addAll(CSS_LIST_VIEW);
+		this.content.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, e -> {
+			getSkinnable().getContextMenu().show(this.content, e.getScreenX(), e.getScreenY());
+		});
 
 		// focus delegation
 		this.content.focusedProperty().addListener((x, o, n) -> {
