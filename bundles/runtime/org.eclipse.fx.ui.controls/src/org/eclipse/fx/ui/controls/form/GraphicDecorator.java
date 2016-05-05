@@ -13,6 +13,7 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.SkinBase;
+import javafx.scene.control.Tooltip;
 
 @Component
 public class GraphicDecorator implements NodeDecorator {
@@ -113,12 +114,20 @@ public class GraphicDecorator implements NodeDecorator {
 			});
 		}
 
-		private static void updatePseudoState(Node statusIcon, Status status) {
+		private static void updatePseudoState(Label statusIcon, Status status) {
 			statusIcon.pseudoClassStateChanged(error, status.getState() == State.ERROR);
 			statusIcon.pseudoClassStateChanged(warning, status.getState() == State.WARNING);
 			statusIcon.pseudoClassStateChanged(ok, status.getState() == State.OK);
 			statusIcon.pseudoClassStateChanged(cancel, status.getState() == State.CANCEL);
 			statusIcon.autosize();
+			if( statusIcon.getTooltip() == null ) {
+				if( status.getState() != State.OK ) {
+					statusIcon.setTooltip(new Tooltip(status.getMessage()));
+				}
+
+			} else {
+				statusIcon.getTooltip().setText(status.getMessage());
+			}
 		}
 
 		@Override
