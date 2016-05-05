@@ -1,0 +1,20 @@
+.status-decorator-icon {
+	-fx-pref-width: 8;
+	-fx-pref-height: 8;
+}
+
+.status-decorator-icon:error {
+	-fx-graphic: url("icons/dialog-error-8.png");
+}
+
+.status-decorator-icon:warning {
+	-fx-graphic: url("icons/dialog-warning-8.png");
+}
+
+.status-decorator-icon:cancel {
+
+}
+
+.status-decorator-icon:ok {
+	visibility: false;
+}

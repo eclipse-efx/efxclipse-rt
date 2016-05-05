@@ -5,7 +5,7 @@ import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.core.property.StatusAggregator;
 import org.eclipse.fx.core.property.ValidatedSimpleStringProperty;
 import org.eclipse.fx.core.property.ValidatedStringProperty;
-import org.eclipse.fx.ui.controls.form.SimpleDecoratedNode;
+import org.eclipse.fx.ui.controls.form.NodeDecorator;
 import org.eclipse.fx.ui.controls.form.StatusNode;
 import org.eclipse.fx.ui.panes.GridData;
 import org.eclipse.fx.ui.panes.GridData.Alignment;
@@ -18,7 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ValidationVMSample extends Application {
+public class ValidationVMSample2 extends Application {
 
 	static class VM {
 		private final ValidatedStringProperty firstname;
@@ -61,11 +61,10 @@ public class ValidationVMSample extends Application {
 
 			TextField field = new TextField();
 			field.textProperty().bindBidirectional(vm.firstname.bindProperty());
+			GridLayoutPane.setConstraint(field, new GridData(GridData.FILL_HORIZONTAL));
 
-			SimpleDecoratedNode d = SimpleDecoratedNode.create(field, vm.firstname);
-			GridLayoutPane.setConstraint(d, new GridData(GridData.FILL_HORIZONTAL));
-
-			p.getChildren().add(d);
+			NodeDecorator.apply(field, vm.firstname);
+			p.getChildren().add(field);
 		}
 
 		{
@@ -74,11 +73,10 @@ public class ValidationVMSample extends Application {
 
 			TextField field = new TextField();
 			field.textProperty().bindBidirectional(vm.lastname.bindProperty());
+			GridLayoutPane.setConstraint(field, new GridData(GridData.FILL_HORIZONTAL));
 
-			SimpleDecoratedNode d = SimpleDecoratedNode.create(field, vm.lastname);
-			GridLayoutPane.setConstraint(d, new GridData(GridData.FILL_HORIZONTAL));
-
-			p.getChildren().add(d);
+			NodeDecorator.apply(field, vm.lastname);
+			p.getChildren().add(field);
 		}
 
 		primaryStage.setScene(new Scene(p,800,600));

@@ -15,7 +15,7 @@ public class StatusNode extends Region {
 	private static PseudoClass ok = PseudoClass.getPseudoClass("ok");
 	private static PseudoClass cancel = PseudoClass.getPseudoClass("cancel");
 
-	static final String BASE_STYLESHEET = SimpleStatusDecorator.class.getResource("status-icon.css").toExternalForm(); //$NON-NLS-1$
+	static final String BASE_STYLESHEET = SimpleDecoratedNode.class.getResource("status-icon.css").toExternalForm(); //$NON-NLS-1$
 
 	public StatusNode(ReadOnlyProperty<Status> statusProperty) {
 		Label statusIcon = new Label();
