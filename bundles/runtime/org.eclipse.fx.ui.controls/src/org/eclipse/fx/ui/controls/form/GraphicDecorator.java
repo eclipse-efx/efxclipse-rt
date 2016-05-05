@@ -83,23 +83,23 @@ public class GraphicDecorator implements NodeDecorator {
 			});
 
 			if( location == Location.TOP_LEFT ) {
-				this.icon.translateXProperty().bind(this.icon.widthProperty().divide(-2));
-				this.icon.translateYProperty().bind(this.icon.heightProperty().divide(-2));
+				this.icon.layoutXProperty().bind(this.icon.widthProperty().divide(-2));
+				this.icon.layoutYProperty().bind(this.icon.heightProperty().divide(-2));
 			} else if( location == Location.TOP_RIGHT ) {
-				this.icon.translateXProperty().bind(Bindings.createDoubleBinding(() -> {
+				this.icon.layoutXProperty().bind(Bindings.createDoubleBinding(() -> {
 					return Double.valueOf(c.getWidth() - this.icon.widthProperty().get() / 2);
 				},this.icon.widthProperty(), c.widthProperty()));
-				this.icon.translateYProperty().bind(this.icon.heightProperty().divide(-2));
+				this.icon.layoutYProperty().bind(this.icon.heightProperty().divide(-2));
 			} else if( location == Location.BOTTOM_LEFT ) {
-				this.icon.translateXProperty().bind(this.icon.widthProperty().divide(-2));
-				this.icon.translateYProperty().bind(Bindings.createDoubleBinding(() -> {
+				this.icon.layoutXProperty().bind(this.icon.widthProperty().divide(-2));
+				this.icon.layoutYProperty().bind(Bindings.createDoubleBinding(() -> {
 					return Double.valueOf(c.getHeight() - this.icon.heightProperty().get() / 2);
 				}, this.icon.heightProperty(), c.heightProperty()));
 			} else if( location == Location.BOTTOM_RIGHT ) {
-				this.icon.translateXProperty().bind(Bindings.createDoubleBinding(() -> {
+				this.icon.layoutXProperty().bind(Bindings.createDoubleBinding(() -> {
 					return Double.valueOf(c.getWidth() - this.icon.widthProperty().get() / 2);
 				},this.icon.widthProperty(), c.widthProperty()));
-				this.icon.translateYProperty().bind(Bindings.createDoubleBinding(() -> {
+				this.icon.layoutYProperty().bind(Bindings.createDoubleBinding(() -> {
 					return Double.valueOf(c.getHeight() - this.icon.heightProperty().get() / 2);
 				}, this.icon.heightProperty(), c.heightProperty()));
 			}
