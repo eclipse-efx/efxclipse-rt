@@ -150,6 +150,10 @@ Java and all Java-based trademarks are trademarks of Oracle Corporation in the U
          id="org.eclipse.fx.runtime.e4fx.p2.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.equinox.executable"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.fx.ui.animation"
          download-size="0"
