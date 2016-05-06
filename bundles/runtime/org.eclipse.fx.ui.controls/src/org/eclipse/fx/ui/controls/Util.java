@@ -232,7 +232,7 @@ public class Util {
 	 * @return the subscription to dispose the binding
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static <T, E> Subscription bindContent(List<? extends T> target, ObservableList<E> sourceList, Function<E, T> converterFunction) {
+	public static <T, E> Subscription bindContent(List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction) {
 		List<T> list = sourceList.stream().map(converterFunction).collect(Collectors.toList());
 
 		if (target instanceof ObservableList<?>) {
@@ -245,14 +245,14 @@ public class Util {
 		ListChangeListener<E> l = change -> {
 			while (change.next()) {
 				if (change.wasPermutated()) {
-					list.subList(change.getFrom(), change.getTo()).clear();
-					list.addAll(change.getFrom(), transformList(change.getList().subList(change.getFrom(), change.getTo()), converterFunction));
+					target.subList(change.getFrom(), change.getTo()).clear();
+					target.addAll(change.getFrom(), transformList(change.getList().subList(change.getFrom(), change.getTo()), converterFunction));
 				} else {
 					if (change.wasRemoved()) {
-						list.subList(change.getFrom(), change.getFrom() + change.getRemovedSize()).clear();
+						target.subList(change.getFrom(), change.getFrom() + change.getRemovedSize()).clear();
 					}
 					if (change.wasAdded()) {
-						list.addAll(change.getFrom(), transformList(change.getAddedSubList(), converterFunction));
+						target.addAll(change.getFrom(), transformList(change.getAddedSubList(), converterFunction));
 					}
 				}
 			}
