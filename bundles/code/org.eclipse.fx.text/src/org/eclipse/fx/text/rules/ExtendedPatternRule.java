@@ -188,7 +188,6 @@ public class ExtendedPatternRule implements IPredicateRule {
 	protected IToken doEvaluate(ICharacterScanner scanner, boolean resume) {
 
 		if (resume) {
-
 			if (endSequenceDetected(scanner))
 				return fToken;
 
@@ -204,6 +203,9 @@ public class ExtendedPatternRule implements IPredicateRule {
 							int cc;
 							do {
 								cc = scanner.read();
+								if( cc == ICharacterScanner.EOF ) {
+									return fToken;
+								}
 							} while( cc != '\n' || cc != '\r' );
 							return fToken;
 						} else {

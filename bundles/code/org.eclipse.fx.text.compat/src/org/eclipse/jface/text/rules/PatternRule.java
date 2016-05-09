@@ -199,6 +199,9 @@ public class PatternRule implements IPredicateRule {
 							int cc;
 							do {
 								cc = scanner.read();
+								if( cc == ICharacterScanner.EOF ) {
+									return fToken;
+								}
 							} while( cc != '\n' || cc != '\r' );
 							return fToken;
 						} else if (fBreaksOnEOF) {
