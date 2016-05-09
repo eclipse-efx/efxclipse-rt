@@ -130,7 +130,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		this.lineRulerArea = new HBox();
 		// Align with ContentView insets!
-		this.lineRulerArea.setPadding(new Insets(2,0,0,0));
+		this.lineRulerArea.setPadding(new Insets(0,0,0,0));
 		this.rootContainer.getChildren().add(this.lineRulerArea);
 		styledText.caretOffsetProperty().addListener((obs, ol, ne) -> {
 			int lineIdx = styledText.getContent().getLineAtOffset(ne.intValue());

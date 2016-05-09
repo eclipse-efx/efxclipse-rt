@@ -352,7 +352,7 @@ public class ContentView  extends Pane {
 		this.area = area;
 		this.lineHelper = lineHelper;
 //		setStyle("-fx-border-color: green; -fx-border-width:2px; -fx-border-style: dashed;");
-		this.contentBody.setPadding(new Insets(2));
+		this.contentBody.setPadding(new Insets(0,0,0,2));
 		this.contentBody.getChildren().setAll(this.lineLayer);
 
 
