@@ -291,8 +291,7 @@ public class StyledTextBehavior {
 				getControl().insert(character);
 
 				// check for typed char action
-
-				if( this.keyTriggerMapping.exists(event) ) {
+				if( this.keyTriggerMapping.exists(character.charAt(0)) ) {
 					getControl().fireEvent(UndoHintEvent.createBeginCompoundChangeEvent());
 					try {
 						this.keyTriggerMapping.triggerAction(character.charAt(0), new Context(getControl()));
