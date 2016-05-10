@@ -122,6 +122,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 	private static final String ID_RIGHT_TRIM_AREA = "right-trim-area"; //$NON-NLS-1$
 
 	private static final String TAG_LIGHTWEIGHT_DIALOGS = "efx-lightweight-dialogs"; //$NON-NLS-1$
+	private static final String TAG_CENTER_ON_SCREEN = "efx-center-on-screen"; //$NON-NLS-1$
 
 	@Inject
 	@Translation
@@ -981,6 +982,10 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		private void internalShow() {
 			if (getWidget().isShowing()) {
 				return;
+			}
+
+			if( this.mWindow.getTags().contains(TAG_CENTER_ON_SCREEN) ) {
+				this.stage.centerOnScreen();
 			}
 
 			if (this.windowTransitionService != null) {
