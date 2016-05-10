@@ -545,7 +545,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	 * @return the offset
 	 */
 	public int getOffsetAtPosition(double x, double y) {
-		if (this.content.getBoundsInLocal().contains(x, y)) {
+		if (this.content.getBoundsInLocal().getMinY() <= y && this.content.getBoundsInLocal().getMaxY() >= y) {
 			return this.content.getLineIndex(new Point2D(x, y)).orElse(Integer.valueOf(getSkinnable().getContent().getCharCount())).intValue();
 		}
 		else {
