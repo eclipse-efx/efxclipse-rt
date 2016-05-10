@@ -985,7 +985,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			}
 
 			if( this.mWindow.getTags().contains(TAG_CENTER_ON_SCREEN) ) {
-				this.stage.centerOnScreen();
+				getWidget().centerOnScreen();
 			}
 
 			if (this.windowTransitionService != null) {
