@@ -60,6 +60,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.SetChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -567,5 +568,9 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 	public int getVisibleLineCount() {
 		return scroller.visibleLineCountProperty().get();
+	}
+
+	public Bounds getContentBounds() {
+		return content.getLayoutBounds();
 	}
 }

@@ -36,8 +36,13 @@ import org.eclipse.fx.ui.controls.styledtext.internal.TextNode;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
 import org.eclipse.jdt.annotation.NonNull;
 
+import javafx.animation.Animation;
+import javafx.animation.Animation.Status;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.css.PseudoClass;
 import javafx.event.Event;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
@@ -45,6 +50,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 /**
  * Behavior for styled text
@@ -58,6 +64,39 @@ public class StyledTextBehavior {
 
 	private final StyledTextArea styledText;
 
+	int acceleration = 3;
+
+	private final int AUTO_SCROLL_RATE = 50;
+
+	private static final boolean AUTO_SCROLL = ! Boolean.getBoolean("styledtext.autoscroll.disabled"); //$NON-NLS-1$
+
+	private final Timeline positionUpdaterTop = new Timeline(new KeyFrame(Duration.millis(this.AUTO_SCROLL_RATE), e -> {
+		if( getControl().getCaretOffset() > 0 ) {
+			int lineIdx = getControl().getContent().getLineAtOffset(getControl().getCaretOffset());
+			if( lineIdx > 0 ) {
+				int lineStart = getControl().getContent().getOffsetAtLine(Math.max(lineIdx - this.acceleration,0));
+				moveCaretAbsolute(lineStart,true);
+			}
+		}
+	}));
+
+	private final Timeline positionUpdaterBottom = new Timeline(new KeyFrame(Duration.millis(this.AUTO_SCROLL_RATE), e -> {
+		if( getControl().getCaretOffset() < getControl().getContent().getCharCount() ) {
+			int lineIdx = getControl().getContent().getLineAtOffset(getControl().getCaretOffset());
+			if( lineIdx < getControl().getContent().getLineCount() - 1 ) {
+				int targetIndex = Math.min(lineIdx + this.acceleration,getControl().getContent().getLineCount()-1);
+				int lineEndStart = getControl().getContent().getOffsetAtLine(targetIndex);
+
+				// At the last line move to the last caret
+				if( targetIndex == getControl().getLineCount()-1 ) {
+					lineEndStart = Math.min(lineEndStart + getControl().getContent().getLine(targetIndex).length(),getControl().getCharCount());
+				}
+
+				moveCaretAbsolute(lineEndStart,true);
+			}
+		}
+	}));
+
 	/**
 	 * Create a new behavior
 	 *
@@ -66,6 +105,8 @@ public class StyledTextBehavior {
 	 */
 	public StyledTextBehavior(StyledTextArea styledText) {
 		this.styledText = styledText;
+		this.positionUpdaterTop.setCycleCount(Animation.INDEFINITE);
+		this.positionUpdaterBottom.setCycleCount(Animation.INDEFINITE);
 		styledText.addEventHandler(KeyEvent.KEY_PRESSED, this::onKeyPressed);
 		styledText.addEventHandler(KeyEvent.KEY_TYPED, this::onKeyTyped);
 
@@ -322,7 +363,26 @@ public class StyledTextBehavior {
 	private void onTextPositionDragged(TextPositionEvent event) {
 		if (this.dragSelectionMode) {
 			if( event.getOffset() >= 0 ) {
+				this.positionUpdaterTop.stop();
+				this.positionUpdaterBottom.stop();
 				moveCaretAbsolute(event.getOffset(), true);
+			} else {
+				if( AUTO_SCROLL ) {
+					if( event.getY() <= 0 ) {
+						this.acceleration = (int) Math.abs(event.getY());
+						this.positionUpdaterBottom.stop();
+						if( this.positionUpdaterTop.getStatus() != Status.RUNNING ) {
+							this.positionUpdaterTop.playFromStart();
+						}
+					} else {
+						Bounds b = ((StyledTextSkin)getControl().getSkin()).getContentBounds();
+						this.acceleration = (int) Math.abs( b.getMaxY() - event.getY());
+						this.positionUpdaterTop.stop();
+						if( this.positionUpdaterBottom.getStatus() != Status.RUNNING ) {
+							this.positionUpdaterBottom.playFromStart();
+						}
+					}
+				}
 			}
 			event.consume();
 		} else if (this.dragMoveTextMode) {
@@ -343,6 +403,8 @@ public class StyledTextBehavior {
 	private void onTextPositionReleased(TextPositionEvent event) {
 		if (this.dragSelectionMode) {
 			this.dragSelectionMode = false;
+			this.positionUpdaterTop.stop();
+			this.positionUpdaterBottom.stop();
 			event.consume();
 		} else if (this.dragMoveTextMode) {
 			// update insertion marker
