@@ -18,7 +18,10 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
 public class LineNumberSupport implements IFeature {
 
@@ -83,8 +86,9 @@ public class LineNumberSupport implements IFeature {
 		@Override
 		public Node createNode() {
 			Text node = new Text();
+			node.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
 			node.getStyleClass().add("line-ruler-text");
-			return node;
+			return new StackPane(node);
 		}
 
 		private DoubleProperty w = new SimpleDoubleProperty(16);
@@ -106,7 +110,7 @@ public class LineNumberSupport implements IFeature {
 
 		@Override
 		public void updateNode(Node node, Set<Annotation> annotation) {
-			Text n = (Text) node;
+			Text n = (Text) ((Pane)node).getChildren().get(0);
 			annotation.stream().findFirst().ifPresent(m->{
 				int nr = ((LineNrAnnotation)m).getNr();
 				n.setText("" + nr);

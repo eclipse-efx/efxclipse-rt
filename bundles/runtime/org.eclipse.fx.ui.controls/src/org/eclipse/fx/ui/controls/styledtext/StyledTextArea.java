@@ -261,7 +261,7 @@ public class StyledTextArea extends Control {
 
 		//FIXME This rules out the CSS-Setting!
 		DoubleBinding lineHeight = org.eclipse.fx.ui.controls.Util.createTextHeightBinding("Pj", fontProperty());
-		fixedLineHeightProperty().bind(lineHeight);
+		fixedLineHeightProperty().bind(lineHeight.add(4));
 	}
 
 	static final CssMetaData<StyledTextArea, Number> FIXED_LINE_HEIGHT = new CssMetaData<StyledTextArea, Number>("-fx-fixed-line-height", //$NON-NLS-1$

@@ -37,6 +37,7 @@ import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -226,6 +227,7 @@ public class TextNode extends HBox {
 	 */
 	public TextNode(String text, IntegerProperty tabCharAdvance) {
 		this.tabCharAdvance = tabCharAdvance;
+		setAlignment(Pos.CENTER_LEFT);
 		setMinWidth(Region.USE_COMPUTED_SIZE);
 		this.cache = new ReuseCache<>(()->{
 			Text letter = new Text();
