@@ -49,6 +49,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.util.Duration;
 
 @SuppressWarnings("javadoc")
@@ -405,6 +406,7 @@ public class LineNode extends StackPane {
 		public void layoutChildren() {
 			double caretOffset = getCharLocation(this.caretIndex);
 			this.caret.setStartX(caretOffset);
+			this.caret.setStrokeLineCap(StrokeLineCap.BUTT);
 			this.caret.setEndX(caretOffset);
 			this.caret.setStartY(0);
 			this.caret.setEndY(getHeight());
