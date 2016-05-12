@@ -154,16 +154,18 @@ public class AnnotationModelSupport {
 			if( position == null ) {
 				continue;
 			}
-			int curLineIndex = control.getLineAtOffset(position.offset);
-			if (curLineIndex == lineIndex) {
-				int lineBegin = control.getOffsetAtLine(curLineIndex);
-				int lineLength = control.getContent().getLine(curLineIndex).length();
-				// TODO multiline = ????
-				int lower = position.offset - lineBegin;
-				int upper = lower + Math.min(position.length, lineLength);
-				Range<Integer> lineLocalRange = Range.closed(lower, upper);
-				MarkerAnnotation annotation = new MarkerAnnotation(a, lineLocalRange, control.getTabAdvance());
-				result.add(annotation);
+			if( position.offset < control.getContent().getCharCount() ) {
+				int curLineIndex = control.getLineAtOffset(position.offset);
+				if (curLineIndex == lineIndex) {
+					int lineBegin = control.getOffsetAtLine(curLineIndex);
+					int lineLength = control.getContent().getLine(curLineIndex).length();
+					// TODO multiline = ????
+					int lower = position.offset - lineBegin;
+					int upper = lower + Math.min(position.length, lineLength);
+					Range<Integer> lineLocalRange = Range.closed(lower, upper);
+					MarkerAnnotation annotation = new MarkerAnnotation(a, lineLocalRange, control.getTabAdvance());
+					result.add(annotation);
+				}
 			}
 		}
 		return result;
