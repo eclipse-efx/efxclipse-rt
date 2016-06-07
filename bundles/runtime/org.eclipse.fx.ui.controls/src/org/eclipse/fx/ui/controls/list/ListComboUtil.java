@@ -17,12 +17,14 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import javafx.beans.binding.StringExpression;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.util.StringConverter;
 
 /**
- * Utility to set up a {@link ComboBox} and {@link ListView}
+ * Utility to set up a {@link ComboBox} and {@link ListView} and {@link ChoiceBox}
  *
  * @since 2.3.0
  */
@@ -43,6 +45,25 @@ public class ListComboUtil {
 		comboBox.setButtonCell(new SimpleListCell<>(labelExtractor));
 		comboBox.setItems(items);
 		return comboBox;
+	}
+
+	/**
+	 * Setup a choice box
+	 *
+	 * @param choiceBox
+	 *            the choice box
+	 * @param items
+	 *            the items
+	 * @param labelExtractor
+	 *            function to extract the label
+	 * @return the choice box passed in
+	 *
+	 * @since 2.4.0
+	 */
+	public static <T> ChoiceBox<T> setupChoiceBox(ChoiceBox<T> choiceBox, ObservableList<T> items, @NonNull StringConverter<T> labelExtractor) {
+		choiceBox.setConverter(labelExtractor);
+		choiceBox.setItems(items);
+		return choiceBox;
 	}
 
 	/**
