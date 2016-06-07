@@ -71,7 +71,7 @@ public class ConfigurationRuleScanner extends RuleBasedScanner {
 								endSeq,
 								token,
 								sru.getEscapedBy() != null ? sru.getEscapedBy().charAt(0) : 0,
-								endSeq == null || endSeq.isEmpty())));
+								true)));
 					} else if( ru instanceof TokenScanner_MultiLineRule ) {
 						TokenScanner_MultiLineRule sml = (TokenScanner_MultiLineRule) ru;
 						String endSeq = sml.getEndSeq();
@@ -80,7 +80,7 @@ public class ConfigurationRuleScanner extends RuleBasedScanner {
 								endSeq,
 								token,
 								sml.getEscapedBy() != null ? sml.getEscapedBy().charAt(0) : 0,
-								endSeq == null || endSeq.isEmpty())));
+								true)));
 					} else if( ru instanceof TokenScanner_CharacterRule ) {
 						TokenScanner_CharacterRule scr = (TokenScanner_CharacterRule) ru;
 						char[] c = new char[scr.getCharacterList().size()];

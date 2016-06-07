@@ -46,12 +46,12 @@ public class ConfigurationRuleBasedPartitionScanner extends RuleBasedPartitionSc
 						PartitionRule_SingleLine sr = (PartitionRule_SingleLine) r;
 						String endSeq = sr.getEndSeq();
 						String escapeSeq = sr.getEscapedBy();
-						pr.add( (IPredicateRule) Util.wrap(r.getCheck(),new SingleLineRule(sr.getStartSeq(), endSeq, new Token(p.getName()), escapeSeq != null ? escapeSeq.charAt(0) : 0, endSeq == null || endSeq.isEmpty())));
+						pr.add( (IPredicateRule) Util.wrap(r.getCheck(),new SingleLineRule(sr.getStartSeq(), endSeq, new Token(p.getName()), escapeSeq != null ? escapeSeq.charAt(0) : 0, true)));
 					} else if( r instanceof PartitionRule_MultiLine ) {
 						PartitionRule_MultiLine mr = (PartitionRule_MultiLine) r;
 						String endSeq = mr.getEndSeq();
 						String escapeSeq = mr.getEscapedBy();
-						pr.add( (IPredicateRule) Util.wrap(r.getCheck(), new MultiLineRule(mr.getStartSeq(), endSeq, new Token(p.getName()), escapeSeq != null ? escapeSeq.charAt(0) : 0, endSeq == null || endSeq.isEmpty())));
+						pr.add( (IPredicateRule) Util.wrap(r.getCheck(), new MultiLineRule(mr.getStartSeq(), endSeq, new Token(p.getName()), escapeSeq != null ? escapeSeq.charAt(0) : 0, true)));
 					} else if( r instanceof PartitionRule_JavaScript ) {
 						PartitionRule_JavaScript jr = (PartitionRule_JavaScript) r;
 
