@@ -82,6 +82,7 @@ import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultProgressState;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.base.internal.Activator;
+import org.eclipse.fx.ui.workbench.base.internal.CommandEventDispatcher;
 import org.eclipse.fx.ui.workbench.base.internal.LoggerProviderImpl;
 import org.eclipse.fx.ui.workbench.base.restart.RestartPreferenceUtil;
 import org.eclipse.fx.ui.workbench.base.restart.RestartServiceImpl;
@@ -538,6 +539,7 @@ public abstract class AbstractE4Application implements IApplication {
 				return ContextInjectionFactory.make(SelectionServiceImpl.class, context);
 			}
 		});
+		ContextInjectionFactory.make(CommandEventDispatcher.class, appContext);
 	}
 
 	/**
