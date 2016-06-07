@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.runtime.e4fx.p2.feature"
       label="Feature"
-      version="2.4.0.qualifier"
+      version="3.0.0.qualifier"
       provider-name="Eclipse.org">
 
    <description>
