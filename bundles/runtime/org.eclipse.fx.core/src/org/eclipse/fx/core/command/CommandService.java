@@ -13,6 +13,7 @@ package org.eclipse.fx.core.command;
 import java.util.Map;
 import java.util.Optional;
 
+import org.eclipse.fx.core.event.Topic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -23,6 +24,15 @@ import org.eclipse.jdt.annotation.Nullable;
  * @noimplement
  */
 public interface CommandService {
+//	public static final Topic<CommandInfo> TOPIC_COMMAND_NOT_HANDLED = new Topic<>("org/eclipse/fx/core/command/notHandled"); //$NON-NLS-1$
+//	public static final Topic<CommandInfo> TOPIC_COMMAND_POST_EXECUTE_SUCCESS = new Topic<>("org/eclipse/fx/core/command/execute/post/success"); //$NON-NLS-1$
+//	public static final Topic<Object> TOPIC_COMMAND_POST_EXECUTE_FAIL = new Topic<>("org/eclipse/fx/core/command/execute/post/fail"); //$NON-NLS-1$
+//	public static final Topic<Object> TOPIC_COMMAND_PRE_EXECUTE = new Topic<>("org/eclipse/fx/core/command/execute/pre"); //$NON-NLS-1$
+//
+//	public interface CommandInfo {
+//
+//	}
+
 	/**
 	 * Check if a command exits
 	 *
