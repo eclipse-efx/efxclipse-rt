@@ -11,9 +11,10 @@
 
 	<groupId>org.eclipse.fx.shared</groupId>
 	<artifactId>releng</artifactId>
-	<version>2.4.0-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
+		<!-- KEEP VERSION 0.22.0 other one will fail on hudson -->
 		<tycho-version>0.22.0</tycho-version>
 		<tycho-extras.version>0.22.0</tycho-extras.version>
 		<cbi-plugins.version>1.1.2-SNAPSHOT</cbi-plugins.version>
