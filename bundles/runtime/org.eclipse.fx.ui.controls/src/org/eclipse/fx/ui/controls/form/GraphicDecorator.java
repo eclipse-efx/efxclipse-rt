@@ -115,18 +115,17 @@ public class GraphicDecorator implements NodeDecorator {
 		}
 
 		private static void updatePseudoState(Label statusIcon, Status status) {
-			statusIcon.pseudoClassStateChanged(error, status.getState() == State.ERROR);
-			statusIcon.pseudoClassStateChanged(warning, status.getState() == State.WARNING);
-			statusIcon.pseudoClassStateChanged(ok, status.getState() == State.OK);
-			statusIcon.pseudoClassStateChanged(cancel, status.getState() == State.CANCEL);
+			statusIcon.pseudoClassStateChanged(error, status != null && status.getState() == State.ERROR);
+			statusIcon.pseudoClassStateChanged(warning, status != null && status.getState() == State.WARNING);
+			statusIcon.pseudoClassStateChanged(ok, status == null || status.getState() == State.OK);
+			statusIcon.pseudoClassStateChanged(cancel, status != null && status.getState() == State.CANCEL);
 			statusIcon.autosize();
 			if( statusIcon.getTooltip() == null ) {
-				if( status.getState() != State.OK ) {
+				if( status != null && status.getState() != State.OK ) {
 					statusIcon.setTooltip(new Tooltip(status.getMessage()));
 				}
-
 			} else {
-				statusIcon.getTooltip().setText(status.getMessage());
+				statusIcon.getTooltip().setText(status == null ? "" : status.getMessage()); //$NON-NLS-1$
 			}
 		}
 
