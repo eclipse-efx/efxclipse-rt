@@ -32,6 +32,7 @@ import org.eclipse.fx.ui.services.Constants;
 import org.eclipse.fx.ui.services.resources.GraphicsLoader;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultProgressState;
+import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.ProgressState;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.services.theme.Theme;
 import org.eclipse.fx.ui.services.theme.ThemeManager;
@@ -72,6 +73,8 @@ public class E4Application extends AbstractE4Application {
 	Object returnValue;
 	protected EventAdmin eventAdmin;
 
+	StartupProgressTrackerService startupService;
+
 	/**
 	 * Gets the {@link E4Application}.
 	 * <p>
@@ -92,17 +95,18 @@ public class E4Application extends AbstractE4Application {
 	public Object start(IApplicationContext context) throws Exception {
 		SELF = this;
 		this.applicationContext = context;
-		
+
 		Bundle b = FrameworkUtil.getBundle(AbstractJFXApplication.class);
 		BundleContext bundleContext = b.getBundleContext();
 		ServiceReference<EventAdmin> ref = bundleContext.getServiceReference(EventAdmin.class);
 		if (ref != null) {
 			this.eventAdmin = bundleContext.getService(ref);
 		}
-		
+
 		ServiceReference<StartupProgressTrackerService> serviceReference = bundleContext.getServiceReference(StartupProgressTrackerService.class);
 		if( serviceReference != null ) {
-			bundleContext.getService(serviceReference).osgiApplicationLaunched(this.applicationContext);
+			this.startupService = bundleContext.getService(serviceReference);
+			this.startupService.osgiApplicationLaunched(this.applicationContext);
 		} else {
 			// if the service is not available we make sure to bring the splash down
 			this.applicationContext.applicationRunning();
@@ -134,18 +138,8 @@ public class E4Application extends AbstractE4Application {
 	 *            {@link Application}.
 	 */
 	public void jfxStart(IApplicationContext context, Application jfxApplication, Stage primaryStage) {
-		Bundle b = FrameworkUtil.getBundle(AbstractJFXApplication.class);
-		BundleContext bundleContext = b.getBundleContext();
+		updateStartupState(DefaultProgressState.JAVAFX_INITIALIZED);
 
-		ServiceReference<StartupProgressTrackerService> serviceReference = bundleContext.getServiceReference(StartupProgressTrackerService.class);
-		StartupProgressTrackerService service = null;
-		if( serviceReference != null ) {
-			service = bundleContext.getService(serviceReference);
-			service.stateReached(DefaultProgressState.JAVAFX_INITIALIZED);
-		}
-		
-		StartupProgressTrackerService fservice = service;
-		
 		Runnable startRunnable = new Runnable() {
 			@Override
 			public void run() {
@@ -171,12 +165,10 @@ public class E4Application extends AbstractE4Application {
 					E4Application.this.instanceLocation = (Location) wbContext.get(E4Workbench.INSTANCE_LOCATION);
 					try {
 						if (!checkInstanceLocation(E4Application.this.instanceLocation, wbContext)) {
-							if( fservice != null ) {
-								fservice.stateReached(DefaultProgressState.LOCATION_CHECK_FAILED);
-							}
+							updateStartupState(DefaultProgressState.LOCATION_CHECK_FAILED);
 							return;
 						}
-							
+
 						// Create and run the UI (if any)
 						workbench.createAndRunUI(E4Application.this.workbench.getApplication());
 					} finally {
@@ -331,19 +323,22 @@ public class E4Application extends AbstractE4Application {
 	protected void postJfxStarted(final IApplicationContext context) {
 		final Map<String, Object> map = new HashMap<String, Object>();
 		sendEvent(Constants.APPLICATION_LAUNCHED, map);
-		
-		Bundle b = FrameworkUtil.getBundle(AbstractJFXApplication.class);
-		BundleContext bundleContext = b.getBundleContext();
-
-		ServiceReference<StartupProgressTrackerService> serviceReference = bundleContext.getServiceReference(StartupProgressTrackerService.class);
-		if( serviceReference != null ) {
-			bundleContext.getService(serviceReference).stateReached(DefaultProgressState.WORKBENCH_GUI_SHOWING);
-		}
+		updateStartupState(DefaultProgressState.WORKBENCH_GUI_SHOWING);
 	}
 
 	@Override
 	protected Realm createRealm(IEclipseContext appContext) {
 		return JFXRealm.createDefault();
+	}
+
+	/**
+	 * Update the startup progress state
+	 * @param progressState
+	 */
+	protected void updateStartupState(ProgressState progressState) {
+		if( this.startupService != null ) {
+			this.startupService.stateReached(progressState);
+		}
 	}
 
 	@Override

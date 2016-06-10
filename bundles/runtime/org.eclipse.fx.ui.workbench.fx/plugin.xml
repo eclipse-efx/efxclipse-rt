@@ -21,7 +21,7 @@
             thread="main"
             visible="true">
          <run
-               class="org.eclipse.fx.ui.workbench.fx.E4Application">
+               class="org.eclipse.fx.ui.workbench.fx.E4MainThreadApplication">
          </run>
       </application>
    </extension>

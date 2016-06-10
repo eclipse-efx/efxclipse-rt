@@ -62,6 +62,9 @@ public interface StartupProgressTrackerService {
 		 * <p>
 		 * This state is guaranteed to be reached on launcher thread
 		 * </p>
+		 * <p>
+		 * <strong>This state is only reach if you are launching on the if you are launching the E4MainThreadApplication</strong>
+		 * </p>
 		 */
 		JAVAFX_INITIALIZED_LAUNCHER_THREAD,
 		/**
