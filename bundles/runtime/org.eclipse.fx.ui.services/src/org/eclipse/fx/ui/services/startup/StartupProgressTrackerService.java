@@ -60,7 +60,7 @@ public interface StartupProgressTrackerService {
 		 * The JavaFX subsystem has been initialized so custom stages can be
 		 * shown.
 		 * <p>
-		 * This state is guaranteed to be reached on JavaFX event thread
+		 * This state is guaranteed to be reached on launcher thread
 		 * </p>
 		 */
 		JAVAFX_INITIALIZED_LAUNCHER_THREAD,
