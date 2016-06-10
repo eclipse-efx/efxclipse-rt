@@ -8,6 +8,9 @@ import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 
+import com.sun.javafx.tk.Toolkit;
+
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,10 +48,19 @@ public class InteractiveSplashStartup implements StartupProgressTrackerService {
 					stage.setX(x);
 					stage.setY(y);
 				} else {
-					stage.centerOnScreen();
+					double x = Screen.getPrimary().getBounds().getWidth() / 2 - img.getWidth() / 2 - 1;
+					double y = Screen.getPrimary().getBounds().getHeight() / 2 - img.getHeight() / 2;
+					stage.setX(x);
+					stage.setY(y);
 				}
 
+				stage.setOnShown( e -> {
+					Platform.runLater( () -> {
+						Toolkit.getToolkit().exitNestedEventLoop(this, null);
+					});
+				});
 				stage.show();
+				Toolkit.getToolkit().enterNestedEventLoop(this);
 			}
 		} else if( state == DefaultProgressState.JAVAFX_INITIALIZED_LAUNCHER_THREAD ) {
 			System.err.println("JavaFX initialized on Launcher Thread");
