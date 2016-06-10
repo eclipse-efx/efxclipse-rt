@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Base interface implemented by all renderers
- * 
+ *
  * @param <M>
  *            the model element type
  * @param <C>
@@ -25,8 +25,13 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public interface ElementRenderer<M extends MUIElement, C> {
 	/**
+	 * Event sent if a window is finally shown
+	 */
+	public static final String TOPIC_WINDOW_SHOWN = "org/eclipse/fx/ui/workbench/base/rendering/window/shown"; //$NON-NLS-1$
+
+	/**
 	 * Create the widget for the given model element
-	 * 
+	 *
 	 * @param element
 	 *            the model element
 	 * @return the widget created
@@ -35,7 +40,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Setup the context for rendering the element
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @return the context
@@ -44,7 +49,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Bind the widget and the element together
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @param widget
@@ -54,7 +59,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Process the elements content
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 */
@@ -62,7 +67,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Post process the element
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 */
@@ -70,7 +75,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Inform the that a direct child of the parentElement has been rendered
-	 * 
+	 *
 	 * @param parentElement
 	 *            the parent
 	 * @param element
@@ -80,7 +85,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Inform about destruction of the element
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 */
@@ -88,7 +93,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Hide the child of the element
-	 * 
+	 *
 	 * @param parent
 	 *            the element container
 	 * @param element
@@ -98,7 +103,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Destroy the widget associated with the element
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 */
@@ -106,7 +111,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Retrieve the model context for the given element
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @return the context
@@ -115,7 +120,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Focus the given element
-	 * 
+	 *
 	 * @param element
 	 *            the element to focus
 	 */
@@ -123,7 +128,7 @@ public interface ElementRenderer<M extends MUIElement, C> {
 
 	/**
 	 * Get the widget for the given elemenet
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 * @return the widget

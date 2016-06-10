@@ -65,7 +65,7 @@ public class InteractiveSplashStartup implements StartupProgressTrackerService {
 		} else if( state == DefaultProgressState.JAVAFX_INITIALIZED_LAUNCHER_THREAD ) {
 			System.err.println("JavaFX initialized on Launcher Thread");
 			applicationContext.applicationRunning();
-		} else if( state == DefaultProgressState.WORKBENCH_GUI_SHOWING ) {
+		} else if( state == DefaultProgressState.WORKBENCH_GUI_SHOWN ) {
 			stage.hide();
 		}
 	}

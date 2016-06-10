@@ -83,12 +83,19 @@ public interface StartupProgressTrackerService {
 		 */
 		POST_CONTEXT_LF_FINISHED,
 		/**
-		 * The workbench UI is shown
+		 * The workbench UI is showing
 		 * <p>
 		 * This method is guaranteed to be called on JavaFX event thread
 		 * </p>
 		 */
 		WORKBENCH_GUI_SHOWING,
+		/**
+		 * The workbench UI is shown
+		 * <p>
+		 * This method is guaranteed to be called on JavaFX event thread
+		 * </p>
+		 */
+		WORKBENCH_GUI_SHOWN,
 		/**
 		 * State reached when check for workspace could not be locked
 		 * <p>

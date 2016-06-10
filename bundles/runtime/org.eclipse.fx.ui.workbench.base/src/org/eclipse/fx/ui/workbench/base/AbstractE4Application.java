@@ -36,6 +36,7 @@ import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.e4.core.internal.services.EclipseAdapter;
 import org.eclipse.e4.core.services.adapter.Adapter;
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.core.services.log.ILoggerProvider;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.core.services.translation.TranslationProviderFactory;
@@ -84,6 +85,7 @@ import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.base.internal.Activator;
 import org.eclipse.fx.ui.workbench.base.internal.CommandEventDispatcher;
 import org.eclipse.fx.ui.workbench.base.internal.LoggerProviderImpl;
+import org.eclipse.fx.ui.workbench.base.rendering.ElementRenderer;
 import org.eclipse.fx.ui.workbench.base.restart.RestartPreferenceUtil;
 import org.eclipse.fx.ui.workbench.base.restart.RestartServiceImpl;
 import org.eclipse.fx.ui.workbench.services.EModelStylingService;
@@ -214,6 +216,9 @@ public abstract class AbstractE4Application implements IApplication {
 			}
 
 			startupProgressTrackerService.stateReached(DefaultProgressState.DI_SYSTEM_INITIALIZED);
+			appContext.get(IEventBroker.class).subscribe(ElementRenderer.TOPIC_WINDOW_SHOWN, e -> {
+				startupProgressTrackerService.stateReached(DefaultProgressState.WORKBENCH_GUI_SHOWN);
+			});
 		}
 
 		// Get the factory to create DI instances with
