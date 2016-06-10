@@ -48,7 +48,8 @@ Import-Package: org.apache.commons.lang.text;version="2.6.0",
  org.osgi.service.event;version="1.3.0"
 Export-Package: org.eclipse.fx.ui.workbench.fx;version="3.0.0";x-friends:="org.eclipse.fx.ui.workbench.renderers.fx",
  org.eclipse.fx.ui.workbench.fx.key;version="3.0.0";x-internal:=true,
- org.eclipse.fx.ui.workbench.fx.perspective;version="3.0.0";x-internal:=true
+ org.eclipse.fx.ui.workbench.fx.perspective;version="3.0.0";x-internal:=true,
+ org.eclipse.fx.ui.workbench.fx.services
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/services/org.eclipse.fx.ui.workbench.fx.internal.UISynchronizeImpl.xml,
  OSGI-INF/services/org.eclipse.fx.ui.workbench.fx.key.FxKeyLookup.xml,
