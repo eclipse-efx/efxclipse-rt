@@ -11,7 +11,6 @@ import com.sun.javafx.application.PlatformImpl;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  * An E4Application who assumes to be launched at the same thread as the
@@ -29,13 +28,16 @@ public class E4MainThreadApplication extends E4Application {
 	@Override
 	protected void launchE4JavaFxApplication() throws Exception {
 		if (Util.isMacOS()) {
+			Platform.setImplicitExit(false);
 			PlatformImpl.addListener(new PlatformImpl.FinishListener() {
 
 				@Override
 				public void idle(boolean implicitExit) {
-					jfxStop();
-					Platform.exit();
-					SHUTDOWN_LATCH.countDown();
+					if( implicitExit == false ) {
+						jfxStop();
+						PlatformImpl.removeListener(this);
+						Platform.setImplicitExit(true);
+					}
 				}
 
 				@Override
@@ -45,14 +47,9 @@ public class E4MainThreadApplication extends E4Application {
 			});
 			PlatformImpl.startup(() -> {
 				JFXRealm.createDefault();
-				if (Util.isMacOS()) {
-					updateStartupState(DefaultProgressState.JAVAFX_INITIALIZED_LAUNCHER_THREAD);
-				}
-
 				jfxStart(getApplicationContext(), null, null);
+				updateStartupState(DefaultProgressState.JAVAFX_INITIALIZED_LAUNCHER_THREAD);
 			});
-
-			SHUTDOWN_LATCH.await();
 		} else {
 			Thread t = new Thread() {
 				@Override
