@@ -7,10 +7,12 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-vm /Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/bin/java
-      </programArgs>
+      <programArgsMac>-vm /Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/bin/java
+      </programArgsMac>
       <vmArgs>-Dorg.osgi.framework.bundle.parent=ext
       </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
