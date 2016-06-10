@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.services.startup;
 
+import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 
 /**
@@ -24,12 +25,14 @@ public interface StartupProgressTrackerService {
 		/**
 		 * Continue with the start process
 		 */
-		CONTINUE, /**
-					 * End the statt process and restart
-					 */
-		RESTART, /**
-					 * End the start process and shutdown
-					 */
+		CONTINUE,
+		/**
+		 * End the statt process and restart
+		 */
+		RESTART,
+		/**
+		 * End the start process and shutdown
+		 */
 		EXIT
 	}
 
@@ -46,32 +49,57 @@ public interface StartupProgressTrackerService {
 	 */
 	public enum DefaultProgressState implements ProgressState {
 		/**
-		 * The JavaFX subsystem has been initialized so
-		 * custom stages can be shown
+		 * The JavaFX subsystem has been initialized so custom stages can be
+		 * shown.
+		 * <p>
+		 * This state is guaranteed to be reached on JavaFX event thread
+		 * </p>
 		 */
 		JAVAFX_INITIALIZED,
 		/**
+		 * The JavaFX subsystem has been initialized so custom stages can be
+		 * shown.
+		 * <p>
+		 * This state is guaranteed to be reached on JavaFX event thread
+		 * </p>
+		 */
+		JAVAFX_INITIALIZED_LAUNCHER_THREAD,
+		/**
 		 * The DI-System is started (in case the implementation has @Inject
 		 * annotated fields and methods the have been filled now with values)
+		 * <p>
+		 * This state is guaranteed to be reached on JavaFX event thread
+		 * </p>
 		 */
 		DI_SYSTEM_INITIALIZED,
-		 /**
-							 * The lifecycle @PostContextCreate has been
-							 * finished
-							 */
-		POST_CONTEXT_LF_FINISHED, /**
-									 * The workbench UI is shown
-									 */
+		/**
+		 * The lifecycle @PostContextCreate has been finished
+		 * <p>
+		 * This state is guaranteed to be reached on JavaFX event thread
+		 * </p>
+		 */
+		POST_CONTEXT_LF_FINISHED,
+		/**
+		 * The workbench UI is shown
+		 * <p>
+		 * This method is guaranteed to be called on JavaFX event thread
+		 * </p>
+		 */
 		WORKBENCH_GUI_SHOWING,
 		/**
 		 * State reached when check for workspace could not be locked
+		 * <p>
+		 * This state is guaranteed to be reached on JavaFX event thread
+		 * </p>
 		 */
 		LOCATION_CHECK_FAILED
 	}
 
 	/**
-	 * Invoked when the OSGi-Framework has been launched
-	 * 
+	 * Invoked when the OSGi-Framework has been launched. This method is
+	 * guaranteed to be called on the thread
+	 * {@link IApplication#start(IApplicationContext)} has been invoked
+	 *
 	 * @param applicationContext
 	 *            the application context
 	 * @return information how to proceed
@@ -80,7 +108,7 @@ public interface StartupProgressTrackerService {
 
 	/**
 	 * Method called when a certain state has been reached
-	 * 
+	 *
 	 * @param state
 	 *            the state reached
 	 */
