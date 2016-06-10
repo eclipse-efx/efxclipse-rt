@@ -1,0 +1,53 @@
+<project name="native-build" default="do-deploy" basedir="."  xmlns:fx="javafx:com.sun.javafx.tools.ant">
+	<property name="eclipse-app-dir" value="../sample.splash.app.product/target/products/sample.splash.app.product/noenv/noenv/noenv" />
+
+	<target name="init-fx-tasks">
+		<taskdef name="fxosgilauncher" classpath="org.eclipse.fx.ide.ant.jar" classname="org.eclipse.fx.ide.ant.FXOsgiLaunchTask" />
+		<path id="fxant">
+			<filelist>
+				<file name="${java.home}\..\lib\ant-javafx.jar"/>
+				<file name="${java.home}\lib\ant-jfxrt.jar"/>
+			</filelist>
+		</path>
+		<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+					uri="javafx:com.sun.javafx.tools.ant"
+					classpathref="fxant"/>
+	</target>
+
+	<target name="do-deploy" depends="init-fx-tasks">
+		<fileset id="equinox-launcher" dir="../sample.splash.app.product/target/products/sample.splash.app.product/noenv/noenv/noenv">
+			<filename name="plugins/org.eclipse.equinox.launcher_*.jar"/>
+		</fileset>
+		<fxosgilauncher classpathref="fxant" equinoxlauncherjarref="equinox-launcher"/>
+
+		<fx:resources id="appRes">
+			<fx:fileset dir="." includes="fx-osgi-launch.jar"/>
+			<fx:fileset dir="${eclipse-app-dir}" includes="**/*"/>
+		</fx:resources>
+
+		<fx:application id="fxApplication"
+								name="Sample Splash"
+								mainClass="org.eclipse.equinox.launcher.Main"
+								toolkit="swing"
+
+							/>
+
+		<fx:deploy
+			embedJNLP="false"
+			extension="false"
+			includeDT="false"
+			offlineAllowed="true"
+			outdir="${basedir}/deploy"
+			outfile="fix-ide"
+			nativeBundles="all"
+			updatemode="background"
+			>
+			<fx:platform basedir="${java.home}">
+				<fx:property name="org.osgi.framework.bundle.parent" value="ext"/>
+			</fx:platform>
+			<fx:info title="Sample Splash" vendor=""/>
+			<fx:application refid="fxApplication"/>
+			<fx:resources refid="appRes"/>
+		</fx:deploy>
+	</target>
+</project>
