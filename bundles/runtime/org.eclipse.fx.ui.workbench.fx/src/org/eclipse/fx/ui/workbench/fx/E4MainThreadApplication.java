@@ -9,7 +9,9 @@ import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultP
 import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * An E4Application who assumes to be launched at the same thread as the
@@ -27,6 +29,20 @@ public class E4MainThreadApplication extends E4Application {
 	@Override
 	protected void launchE4JavaFxApplication() throws Exception {
 		if (Util.isMacOS()) {
+			PlatformImpl.addListener(new PlatformImpl.FinishListener() {
+
+				@Override
+				public void idle(boolean implicitExit) {
+					jfxStop();
+					Platform.exit();
+					SHUTDOWN_LATCH.countDown();
+				}
+
+				@Override
+				public void exitCalled() {
+					// nothing to do
+				}
+			});
 			PlatformImpl.startup(() -> {
 				JFXRealm.createDefault();
 				if (Util.isMacOS()) {
@@ -35,6 +51,8 @@ public class E4MainThreadApplication extends E4Application {
 
 				jfxStart(getApplicationContext(), null, null);
 			});
+
+			SHUTDOWN_LATCH.await();
 		} else {
 			Thread t = new Thread() {
 				@Override
