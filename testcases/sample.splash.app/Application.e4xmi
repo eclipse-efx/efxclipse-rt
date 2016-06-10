@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmi:id="_LBxvwS8CEeac341peg8x-g" elementId="org.eclipse.e4.application" bindingContexts="_LBxvwC8CEeac341peg8x-g">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_awGCwC8CEeac341peg8x-g" elementId="sample.splash.app.trimmedwindow.hellosplash" label="Hello Splash" x="100" y="100" width="800" height="600"/>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_LBxvwS8CEeac341peg8x-g" elementId="org.eclipse.e4.application" bindingContexts="_LBxvwC8CEeac341peg8x-g">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_awGCwC8CEeac341peg8x-g" elementId="sample.splash.app.trimmedwindow.hellosplash" label="Hello Splash" x="100" y="100" width="800" height="600">
+    <mainMenu xmi:id="_vIGK8C80Eeac341peg8x-g" elementId="sample.splash.app.menu.0">
+      <children xsi:type="menu:Menu" xmi:id="_vwJCYC80Eeac341peg8x-g" elementId="sample.splash.app.menu.file" label="File">
+        <children xsi:type="menu:DirectMenuItem" xmi:id="_w1YMIC80Eeac341peg8x-g" elementId="sample.splash.app.directmenuitem.restart" label="Restart" contributionURI="bundleclass://sample.splash.app/sample.splash.app.RestartHandler"/>
+      </children>
+    </mainMenu>
+  </children>
   <rootContext xmi:id="_LBxvwC8CEeac341peg8x-g" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_LBxvwi8CEeac341peg8x-g" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_LBxvwy8CEeac341peg8x-g" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
