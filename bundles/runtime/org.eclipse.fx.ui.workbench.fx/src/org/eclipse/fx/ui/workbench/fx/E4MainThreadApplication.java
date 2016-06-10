@@ -9,7 +9,6 @@ import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService.DefaultP
 import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 
 /**
@@ -28,16 +27,12 @@ public class E4MainThreadApplication extends E4Application {
 	@Override
 	protected void launchE4JavaFxApplication() throws Exception {
 		if (Util.isMacOS()) {
-			Platform.setImplicitExit(false);
 			PlatformImpl.addListener(new PlatformImpl.FinishListener() {
 
 				@Override
 				public void idle(boolean implicitExit) {
-					if( implicitExit == false ) {
-						jfxStop();
-						PlatformImpl.removeListener(this);
-						Platform.setImplicitExit(true);
-					}
+					jfxStop();
+					PlatformImpl.removeListener(this);
 				}
 
 				@Override

@@ -1,4 +1,4 @@
-package sample.splash.app.themes;
+package sample.splash.app;
 
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.fx.ui.services.startup.StartupProgressTrackerService;
@@ -13,7 +13,7 @@ public class InteractiveSplashStartup implements StartupProgressTrackerService {
 	@Override
 	public OSGiRV osgiApplicationLaunched(IApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
-		System.err.println("launched");
+		System.err.println("launched: " + Thread.currentThread());
 		return OSGiRV.CONTINUE;
 	}
 
