@@ -423,6 +423,9 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			}
 
 			this.stage.setOnCloseRequest(this::handleOnCloseRequest);
+			this.stage.setOnShown( e -> {
+				this.eventBroker.send(TOPIC_WINDOW_SHOWN, this.stage);
+			});
 
 			this.stage.focusedProperty().addListener(this::handledFocus);
 			this.stage.setFullScreen(this.fullscreen);
