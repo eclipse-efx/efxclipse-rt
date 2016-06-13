@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="sample.splash.app.InteractiveSplashStartup">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="sample.splash.app.LoginSplashStartup">
    <property name="service.ranking" type="Integer" value="1"/>
    <service>
       <provide interface="org.eclipse.fx.ui.services.startup.StartupProgressTrackerService"/>
    </service>
-   <implementation class="sample.splash.app.InteractiveSplashStartup"/>
+   <implementation class="sample.splash.app.LoginSplashStartup"/>
 </scr:component>

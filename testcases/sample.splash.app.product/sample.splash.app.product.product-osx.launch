@@ -8,15 +8,17 @@
 <stringAttribute key="bootstrap" value=""/>
 <stringAttribute key="checked" value="[NONE]"/>
 <booleanAttribute key="clearConfig" value="false"/>
-<booleanAttribute key="clearws" value="true"/>
+<booleanAttribute key="clearws" value="false"/>
 <booleanAttribute key="clearwslog" value="false"/>
-<stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/sample.splash.app.product.product"/>
+<stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/sample.splash.app.product.product-osx"/>
 <booleanAttribute key="default" value="false"/>
 <stringAttribute key="featureDefaultLocation" value="workspace"/>
 <stringAttribute key="featurePluginResolution" value="workspace"/>
 <booleanAttribute key="includeOptional" value="true"/>
 <stringAttribute key="location" value="${workspace_loc}/../runtime-sample.splash.app.product"/>
-<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.debug.core.source_locator_id" value="org.eclipse.pde.ui.launcher.PDESourceLookupDirector"/>
+<stringAttribute key="org.eclipse.debug.core.source_locator_memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;sourceLookupDirector&gt;&#10;&lt;sourceContainers duplicates=&quot;false&quot;&gt;&#10;&lt;container memento=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt;&amp;#10;&amp;lt;archive detectRoot=&amp;quot;true&amp;quot; path=&amp;quot;/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/javafx-src.zip&amp;quot;/&amp;gt;&amp;#10;&quot; typeId=&quot;org.eclipse.debug.core.containerType.externalArchive&quot;/&gt;&#10;&lt;container memento=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt;&amp;#10;&amp;lt;default/&amp;gt;&amp;#10;&quot; typeId=&quot;org.eclipse.debug.core.containerType.default&quot;/&gt;&#10;&lt;/sourceContainers&gt;&#10;&lt;/sourceLookupDirector&gt;&#10;"/>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-nl ${target.nl} -consoleLog"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>

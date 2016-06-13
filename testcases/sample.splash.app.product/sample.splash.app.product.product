@@ -11,8 +11,6 @@
       </programArgsMac>
       <vmArgs>-Dorg.osgi.framework.bundle.parent=ext
       </vmArgs>
-      <vmArgsMac>-XstartOnFirstThread
-      </vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
