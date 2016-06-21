@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ContextBoundValueTestCase.class, PreferenceValueTestCase.class})
+@SuiteClasses({ContextBoundValueTestCase.class, PreferenceValueTestCase.class,ServiceSupplierTestCase.class})
 public class ContextTestSuite {
 
 }

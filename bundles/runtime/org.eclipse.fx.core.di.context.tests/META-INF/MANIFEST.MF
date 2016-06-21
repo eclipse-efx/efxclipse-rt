@@ -17,5 +17,8 @@ Require-Bundle: org.junit;bundle-version="4.11.0",
 Import-Package: javax.annotation;version="1.1.0";resolution:=optional,
  javax.inject;version="1.0.0",
  org.eclipse.core.runtime;version="3.5.0",
- org.osgi.framework;version="1.8.0"
+ org.osgi.framework;version="1.8.0",
+ org.osgi.service.component.annotations;version="1.2.0"
 Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/services/org.eclipse.fx.core.di.context.tests.SampleServiceA.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.tests.SampleServiceB.xml

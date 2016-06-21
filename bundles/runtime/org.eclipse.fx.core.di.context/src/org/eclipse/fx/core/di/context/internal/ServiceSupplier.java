@@ -109,7 +109,7 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 					Arrays.sort(serviceReferences);
 
 					if( serviceReferences.length > 0 ) {
-						return context.getService(serviceReferences[0]);
+						return context.getService(serviceReferences[serviceReferences.length-1]);
 					}
 				}
 			}
@@ -155,10 +155,14 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 
 				for (ServiceReference<?> serviceReference : serviceReferences) {
 					rv.add(context.getService(serviceReference));
-					if( track ) {
-						context.addServiceListener(new ServiceHandler(requestor, context, cl));
-					}
 				}
+			}
+
+			// We are in the wrong order
+			Collections.reverse(rv);
+
+			if( track ) {
+				context.addServiceListener(new ServiceHandler(requestor, context, cl));
 			}
 		} catch (InvalidSyntaxException e) {
 			// TODO Auto-generated catch block
