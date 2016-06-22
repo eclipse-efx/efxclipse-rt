@@ -70,15 +70,17 @@ public class TreeUtil {
 			setValue(element);
 			this.factory = factory;
 			this.list = factory.createObservable(element);
-			getChildren().add(new TreeItem<>());
+			if( this.list != null ) {
+				getChildren().add(new TreeItem<>());
 
-			expandedProperty().addListener((o) -> {
-				if( isExpanded() ) {
-					if( ! this.hasLoadedChildren ) {
-						loadChildren();
+				expandedProperty().addListener((o) -> {
+					if( isExpanded() ) {
+						if( ! this.hasLoadedChildren ) {
+							loadChildren();
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
 //		@Override
