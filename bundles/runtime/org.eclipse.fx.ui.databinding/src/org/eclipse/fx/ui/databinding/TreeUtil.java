@@ -20,7 +20,6 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.jdt.annotation.NonNull;
 
-import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
@@ -30,7 +29,7 @@ import javafx.scene.control.TreeItem;
 public class TreeUtil {
 	/**
 	 * Create a tree model backed by the given {@link ObservableFactory}
-	 * 
+	 *
 	 * @param root
 	 *            the root of the model
 	 * @param factory
@@ -46,14 +45,14 @@ public class TreeUtil {
 
 	/**
 	 * Factory to create child observables
-	 * 
+	 *
 	 * @param <T>
 	 *            the type
 	 */
 	public interface ObservableFactory<T> {
 		/**
 		 * Create an observable list for the parent element
-		 * 
+		 *
 		 * @param parent
 		 *            the parent
 		 * @return the list
@@ -72,7 +71,7 @@ public class TreeUtil {
 			this.factory = factory;
 			this.list = factory.createObservable(element);
 			getChildren().add(new TreeItem<>());
-			
+
 			expandedProperty().addListener((o) -> {
 				if( isExpanded() ) {
 					if( ! this.hasLoadedChildren ) {
@@ -81,7 +80,7 @@ public class TreeUtil {
 				}
 			});
 		}
-		
+
 //		@Override
 //		public ObservableList<TreeItem<T>> getChildren() {
 //			if (this.hasLoadedChildren == false) {
@@ -89,7 +88,7 @@ public class TreeUtil {
 //			}
 //			return super.getChildren();
 //		}
-		
+
 //		@Override
 //		public boolean isLeaf() {
 //			if( this.hasLoadedChildren ) {
@@ -143,18 +142,26 @@ public class TreeUtil {
 									itemList.add(new TreeItemImpl<@NonNull T>((T) element, TreeItemImpl.this.factory));
 								}
 							}
+
+							@Override
+							public void handleMove(int oldIndex, int newIndex, Object element) {
+								TreeItem<T> item = getChildren().remove(oldIndex);
+								getChildren().add(newIndex,item);
+							}
 						});
 					}
 				});
 				List<TreeItemImpl<@NonNull T>> l = new ArrayList<>(this.list.size());
-				
+
 				for (Object o : this.list) {
 					@SuppressWarnings("unchecked")
 					T t = (T) o;
 					l.add(new TreeItemImpl<@NonNull T>(t, this.factory));
 				}
-				
+
 				itemList.setAll(l);
+			} else {
+				getChildren().clear();
 			}
 		}
 
