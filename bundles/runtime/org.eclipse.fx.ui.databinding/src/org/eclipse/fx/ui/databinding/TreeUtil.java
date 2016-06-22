@@ -119,20 +119,7 @@ public class TreeUtil {
 
 							@Override
 							public void handleRemove(int index, Object element) {
-								if (itemList.size() < index) {
-									TreeItem<T> t = itemList.get(index);
-									if (t.getValue() == element) {
-										itemList.remove(index);
-									} else {
-										Iterator<TreeItem<T>> it = itemList.iterator();
-										while (it.hasNext()) {
-											if (it.next().getValue() == element) {
-												it.remove();
-												break;
-											}
-										}
-									}
-								}
+								itemList.remove(index);
 							}
 
 							@SuppressWarnings({ "unchecked" })
