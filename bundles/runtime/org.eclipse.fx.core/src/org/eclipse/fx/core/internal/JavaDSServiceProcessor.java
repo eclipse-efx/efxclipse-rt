@@ -35,6 +35,7 @@ import javax.xml.bind.Unmarshaller;
 import org.eclipse.fx.core.RankedService;
 import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.function.ExExecutor;
+import org.eclipse.fx.core.function.ExFunction;
 import org.eclipse.fx.core.internal.sm.Component;
 import org.eclipse.fx.core.internal.sm.Component11;
 import org.eclipse.fx.core.internal.sm.Component12;
@@ -42,6 +43,7 @@ import org.eclipse.fx.core.internal.sm.Properties;
 import org.eclipse.fx.core.internal.sm.Reference;
 import org.eclipse.fx.core.internal.sm.Reference.ReferenceCardinality;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Implements parts of the OSGi-DS-Specification resolving services with it's
@@ -81,11 +83,16 @@ public class JavaDSServiceProcessor {
 		if (componentList != null) {
 			List<?> collect = componentList.stream()
 					.map(c -> c.getImplementation().getClazz())
-					.map(c -> ExExecutor.executeFunction(c, Class::forName, "Could not load class '" + c + "'").orElse(null)) //$NON-NLS-1$ //$NON-NLS-2$
+					.map(c -> {
+						@NonNull
+						ExFunction<@Nullable String, ?> r = Class::forName;
+						return ExExecutor.executeFunction(c, r, "Could not load class '" + c + "'").orElse(null);//$NON-NLS-1$ //$NON-NLS-2$
+					}) 
 					.filter(c -> c != null)
 					.map(c -> {
 						if (c != null) {
-							return ExExecutor.executeSupplier(c::newInstance, "Could not create instance").get(); //$NON-NLS-1$
+							Class<S> type = (Class<S>) c;
+							return ExExecutor.executeSupplier(type::newInstance, "Could not create instance").get(); //$NON-NLS-1$
 						} else {
 							return null;
 						}
