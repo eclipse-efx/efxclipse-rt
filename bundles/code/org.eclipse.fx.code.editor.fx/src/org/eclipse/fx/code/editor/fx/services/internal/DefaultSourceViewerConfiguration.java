@@ -68,7 +68,6 @@ import javafx.scene.Node;
 
 @SuppressWarnings("restriction")
 public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration {
-	private final Input<?> input;
 	private final PresentationReconciler reconciler;
 	private final ProposalComputer proposalComputer;
 	private final IAnnotationModel annotationModel;
@@ -93,7 +92,6 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 	@Inject
 	public DefaultSourceViewerConfiguration(
 			ThreadSynchronize threadSynchronize,
-			Input<?> input,
 			PresentationReconciler reconciler,
 			@Optional ProposalComputer proposalComputer,
 			@Optional IAnnotationModel annotationModel,
@@ -108,7 +106,6 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			) {
 		this.threadSynchronize = threadSynchronize;
 		this.contextInformationValidator = contextInformationValidator;
-		this.input = input;
 		this.hoverInformationProvider = hoverInformationProvider;
 		this.reconciler = reconciler;
 		this.proposalComputer = proposalComputer;
