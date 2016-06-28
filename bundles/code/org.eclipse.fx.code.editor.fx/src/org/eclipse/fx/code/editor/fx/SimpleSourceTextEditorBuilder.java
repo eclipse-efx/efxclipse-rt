@@ -10,12 +10,10 @@
 *******************************************************************************/
 package org.eclipse.fx.code.editor.fx;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.fx.code.editor.Input;
-import org.eclipse.fx.code.editor.LocalSourceFileInput;
 import org.eclipse.fx.code.editor.fx.services.CompletionProposalPresenter;
 import org.eclipse.fx.code.editor.fx.services.internal.DefaultSourceViewerConfiguration;
 import org.eclipse.fx.code.editor.services.BehaviorContributor;
@@ -30,7 +28,6 @@ import org.eclipse.fx.text.rules.JavaLikeWordDetector;
 import org.eclipse.fx.text.ui.presentation.PresentationReconciler;
 import org.eclipse.fx.text.ui.rules.DefaultDamagerRepairer;
 import org.eclipse.fx.text.ui.source.AnnotationPresenter;
-import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.rules.IPredicateRule;
@@ -173,7 +170,7 @@ public class SimpleSourceTextEditorBuilder {
 		}
 
 		editor.setPartitioner(new FastPartitioner(new PartitionerImpl(this), contentTypes.toArray(new String[0])));
-		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(threadSynchronize, input, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter, searchProvider, navigationProvider, editorOpener, behaviorContributor, null));
+		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(threadSynchronize, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter, searchProvider, navigationProvider, editorOpener, behaviorContributor, null));
 
 		return editor;
 	}
