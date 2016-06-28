@@ -8,7 +8,8 @@ Import-Package: javax.annotation;resolution:=optional,
  javax.inject;version="1.0.0",
  org.apache.commons.lang.text;version="2.6.0",
  org.osgi.framework;version="1.8.0";resolution:=optional,
- org.osgi.service.component.annotations;version="1.2.0";resolution:=optional
+ org.osgi.service.component.annotations;version="1.2.0";resolution:=optional,
+ org.osgi.service.event;version="1.3.1";resolution:=optional
 Export-Package: org.eclipse.fx.core;version="3.0.0",
  org.eclipse.fx.core.adapter;version="3.0.0",
  org.eclipse.fx.core.command;version="3.0.0",
@@ -27,7 +28,8 @@ Service-Component: OSGI-INF/services/org.eclipse.fx.core.internal.JAXBObjectSeri
  OSGI-INF/services/org.eclipse.fx.core.internal.FileSystemServiceImpl.xml,
  OSGI-INF/services/org.eclipse.fx.core.internal.DefaultValueSerializer.xml,
  OSGI-INF/services/org.eclipse.fx.core.internal.DynamicDataStreamHandler.xml,
- OSGI-INF/services/org.eclipse.fx.core.internal.TplURLDynamicDataStreamHandler.xml
+ OSGI-INF/services/org.eclipse.fx.core.internal.TplURLDynamicDataStreamHandler.xml,
+ OSGI-INF/services/org.eclipse.fx.core.internal.OSGiEventBusImpl.xml
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.jdt.annotation;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
  com.google.guava;bundle-version="15.0.0"
