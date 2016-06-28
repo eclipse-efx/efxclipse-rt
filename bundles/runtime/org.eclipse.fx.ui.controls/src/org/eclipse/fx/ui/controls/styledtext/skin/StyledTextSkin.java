@@ -184,7 +184,9 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		this.content.getStyleClass().addAll(CSS_LIST_VIEW);
 		this.content.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, e -> {
-			getSkinnable().getContextMenu().show(this.content, e.getScreenX(), e.getScreenY());
+			if( getSkinnable().getContextMenu() != null ) {
+				getSkinnable().getContextMenu().show(this.content, e.getScreenX(), e.getScreenY());
+			}
 		});
 
 		// focus delegation
