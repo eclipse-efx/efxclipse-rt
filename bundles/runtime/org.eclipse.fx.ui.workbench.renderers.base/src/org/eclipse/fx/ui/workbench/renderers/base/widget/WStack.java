@@ -33,6 +33,10 @@ public interface WStack<N, I, IC> extends WLayoutedWidget<MPartStack>, WMinMaxab
 	 */
 	public static final String TAG_PAGINATION = "fx_pagination"; //$NON-NLS-1$
 	/**
+	 * Tag to use a StackPane control
+	 */
+	public static final String TAG_STACKPANE = "fx_stackpane"; //$NON-NLS-1$
+	/**
 	 * None of the tabs can be closed
 	 * @since 1.2
 	 */
