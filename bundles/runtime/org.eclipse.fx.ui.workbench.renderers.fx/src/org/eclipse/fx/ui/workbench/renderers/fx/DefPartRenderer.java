@@ -76,7 +76,7 @@ public class DefPartRenderer extends BasePartRenderer<Pane, Node, Node> {
 			WPart<BorderPane, Node, Node> part = ((WPart<BorderPane, Node, Node>) element.getWidget());
 			if (part == null)
 				return;
-			if (!checkFocusControl((Node) part.getWidget())) {
+			if (!checkFocusControl((Node) part.getStaticLayoutNode())) {
 				Node node = (Node) part.getWidget();
 				node.requestFocus();
 			}
