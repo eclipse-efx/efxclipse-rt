@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.workbench.renderers.fx;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -74,6 +75,8 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 	protected Class<? extends WStack<Node, Object, Node>> getWidgetClass(MPartStack stack) {
 		if (stack.getTags().contains(WStack.TAG_PAGINATION)) {
 			return PaginationWidgetImpl.class;
+		} else if (stack.getTags().contains(WStack.TAG_STACKPANE)) {
+			return StackPaneWidgetImpl.class;
 		} else {
 			return StackWidgetImpl.class;
 		}
@@ -695,4 +698,176 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 			this.initCallback = null;
 		}
 	}
+	
+	static class StackPaneWidgetImpl extends WLayoutedWidgetImpl<Node, Node, MPartStack> implements WStack<Node, Object, Node> {
+		@NonNull
+		List<@NonNull WStackItem<Object, Node>> items = new ArrayList<>();
+		@Nullable
+		WCallback<WStackItem<Object, Node>, Void> mouseSelectedItemCallback;
+
+		@Override
+		public void setMinMaxCallback(WCallback<WMinMaxState, Void> minMaxCallback) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void setMinMaxState(WMinMaxState state) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public Class<? extends WStackItem<Object, Node>> getStackItemClass() {
+			return StackPaneItemImpl.class;
+		}
+
+		@Override
+		public StackPane getWidget() {
+			return (StackPane) super.getWidget();
+		}
+		
+		private void addChildNode(WStackItem<Object, Node> item) {
+			addStackPaneItem((StackPaneItemImpl)item);
+		}
+		
+		@Override
+		public void addItem(WStackItem<Object, Node> item) {
+			this.items.add(item);
+			addChildNode(item);
+		}
+
+		@Override
+		public void addItems(List<@NonNull WStackItem<Object, Node>> items) {
+			this.items.addAll(items);
+			items.stream().map(item -> (StackPaneItemImpl)item).forEach(this::addStackPaneItem);
+		}
+
+		@Override
+		public void addItems(int index, @NonNull List<@NonNull WStackItem<Object, Node>> items) {
+			this.items.addAll(index, items);
+			List<Node> collect = items.stream().map(item -> (StackPaneItemImpl)item)
+					.filter(item -> item.getNativeItem() != null)
+					.map(StackPaneItemImpl::getNativeItem)
+					.collect(Collectors.toList());
+			collect.forEach(node -> {
+				node.setVisible(false);
+				node.setManaged(false);
+			});
+			getWidget().getChildren().addAll(index, collect);
+		}
+		
+		private void addStackPaneItem(StackPaneItemImpl item) {
+			Node node = item.getNativeItem();
+			if (node != null) {
+				node.setVisible(false);
+				node.setManaged(false);
+				getWidget().getChildren().add(node);
+			}
+		}
+
+		@Override
+		public void selectItem(int idx) {
+			int index = (idx == -1) ? 0 : idx;
+			if (this.items.size() > index) {
+				StackPaneItemImpl item = (StackPaneItemImpl)this.items.get(index);
+				item.handleSelection();
+				
+				getWidget().getChildren().forEach(node -> {
+					node.setVisible(false);
+					node.setManaged(false);
+				});
+				Node node = getWidget().getChildren().get(index);
+				node.setVisible(true);
+				node.setManaged(true);
+			}
+		}
+
+		@Override
+		public int indexOf(WStackItem<Object, Node> item) {
+			return this.items.indexOf(item);
+		}
+
+		@Override
+		public List<@NonNull WStackItem<Object, Node>> getItems() {
+			return this.items;
+		}
+
+		@Override
+		public void removeItems(List<WStackItem<Object, Node>> items) {
+			this.items.removeAll(items);
+		}
+
+		@Override
+		public void setMouseSelectedItemCallback(WCallback<WStack.WStackItem<Object, Node>, Void> selectedItemCallback) {
+			this.mouseSelectedItemCallback = selectedItemCallback;
+		}
+
+		@Override
+		public void setKeySelectedItemCallback(WCallback<WStack.WStackItem<Object, Node>, Void> selectedItemCallback) {
+			// empty
+		}
+
+		@Override
+		public int getItemCount() {
+			return this.items.size();
+		}
+
+		@Override
+		public StackPane getWidgetNode() {
+			return getWidget();
+		}
+
+		@Override
+		protected StackPane createWidget() {
+			return new StackPane();
+		}
+
+		@Override
+		public void setDragStartCallback(@NonNull WCallback<@NonNull DragData, @NonNull Boolean> dragStackCallback) {
+			// no drag in this control
+		}
+	}
+	
+	static class StackPaneItemImpl implements WStackItem<Object, Node> {
+		private WCallback<WStackItem<Object, Node>, Node> initCallback;
+		private StackPane internalPane = new StackPane();
+		private MStackElement domElement;
+		
+		void handleSelection() {
+			if (this.initCallback != null) {
+				this.internalPane.getChildren().add(this.initCallback.call(this));
+				this.initCallback = null;
+			}
+		}
+
+		@Override
+		public Node getNativeItem() {
+			return this.internalPane;
+		}
+
+		@Override
+		public void setDomElement(MStackElement domElement) {
+			this.domElement = domElement;
+		}
+
+		@Override
+		public MStackElement getDomElement() {
+			return this.domElement;
+		}
+
+		@Override
+		public void setInitCallback(WCallback<WStackItem<Object, Node>, Node> callback) {
+			this.initCallback = callback;
+		}
+
+		@Override
+		public void setOnCloseCallback(WCallback<WStackItem<Object, Node>, Boolean> callback) {
+			// there's no close
+		}
+
+		@PreDestroy
+		public void dispose() {
+			this.initCallback = null;
+		}
+	}
+	
 }
