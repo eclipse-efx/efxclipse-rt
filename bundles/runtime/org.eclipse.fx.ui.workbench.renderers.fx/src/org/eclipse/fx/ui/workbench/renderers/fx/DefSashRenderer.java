@@ -14,6 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
+import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.fx.core.log.Logger.Level;
+import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
+import org.eclipse.fx.ui.workbench.renderers.base.BaseSashRenderer;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
+import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
+import org.eclipse.jdt.annotation.Nullable;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,23 +36,10 @@ import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.SplitPane.Divider;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainer;
-import org.eclipse.e4.ui.model.application.ui.basic.MPartSashContainerElement;
-import org.eclipse.e4.ui.workbench.UIEvents;
-import org.eclipse.fx.ui.panes.GridData;
-import org.eclipse.fx.ui.panes.GridData.Alignment;
-import org.eclipse.fx.ui.panes.GridLayoutPane;
-import org.eclipse.fx.ui.workbench.renderers.base.BaseRenderer;
-import org.eclipse.fx.ui.workbench.renderers.base.BaseSashRenderer;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
-import org.eclipse.fx.ui.workbench.renderers.base.widget.WSash;
-import org.eclipse.fx.ui.workbench.renderers.fx.widget.WLayoutedWidgetImpl;
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 
 /**
  * default renderer for sash
@@ -54,67 +55,40 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		}
 	}
 
-	static class WFixedSashImpl extends WLayoutedWidgetImpl<GridLayoutPane, Node, MPartSashContainer> implements WSash<Node> {
+	static class WFixedSashImpl extends WLayoutedWidgetImpl<GridPane, Node, MPartSashContainer> implements WSash<Node> {
 
-		private static @NonNull GridData toGridData(Map<String, String> dataMap) {
-			GridData gd = new GridData();
-			if (dataMap.containsKey(WSash.FIXED_LAYOUT_WIDTH)) {
-				gd.widthHintProperty().set(Integer.parseInt(dataMap.get(WSash.FIXED_LAYOUT_WIDTH)));
-				if (!dataMap.containsKey(WSash.FIXED_LAYOUT_HEIGHT)) {
-					gd.grabExcessVerticalSpaceProperty().set(true);
-					gd.verticalAlignmentProperty().set(Alignment.FILL);
-				}
-			} else {
-				gd.horizontalAlignmentProperty().set(Alignment.FILL);
-			}
+		static RowConstraints toRowConstraint(Map<String, String> dataMap) {
+			RowConstraints r;
 
 			if (dataMap.containsKey(WSash.FIXED_LAYOUT_HEIGHT)) {
-				gd.heightHintProperty().set(Integer.parseInt(dataMap.get(WSash.FIXED_LAYOUT_HEIGHT)));
-				if (!dataMap.containsKey(WSash.FIXED_LAYOUT_WIDTH)) {
-					gd.grabExcessHorizontalSpaceProperty().set(true);
-					gd.horizontalAlignmentProperty().set(Alignment.FILL);
-				}
+				int h = Integer.parseInt(dataMap.get(WSash.FIXED_LAYOUT_HEIGHT));
+				r = new RowConstraints(h);
 			} else {
-				gd.verticalAlignmentProperty().set(Alignment.FILL);
+				r = new RowConstraints();
 			}
 
-			if (dataMap.containsKey(WSash.FIXED_LAYOUT_GRAB_HORIZONTAL)) {
-				gd.grabExcessHorizontalSpaceProperty().set(Boolean.parseBoolean(dataMap.get(WSash.FIXED_LAYOUT_GRAB_HORIZONTAL)));
-				gd.horizontalAlignmentProperty().set(Alignment.FILL);
+			if( dataMap.containsKey(WSash.FIXED_LAYOUT_GRAB_VERTICAL) && Boolean.parseBoolean(dataMap.get(WSash.FIXED_LAYOUT_GRAB_VERTICAL)) ) {
+				r.setVgrow(Priority.ALWAYS);
 			}
 
-			if (dataMap.containsKey(WSash.FIXED_LAYOUT_GRAB_VERTICAL)) {
-				gd.grabExcessVerticalSpaceProperty().set(Boolean.parseBoolean(dataMap.get(WSash.FIXED_LAYOUT_GRAB_VERTICAL)));
-				gd.verticalAlignmentProperty().set(Alignment.FILL);
-			}
-
-			return gd;
+			return r;
 		}
 
-		
-		private final @NonNull MPartSashContainer mPartSashContainer;
-		
-		@Inject
-		public WFixedSashImpl(@NonNull @Named(BaseRenderer.CONTEXT_DOM_ELEMENT) MPartSashContainer mPartSashContainer) {
-			this.mPartSashContainer = mPartSashContainer;
-		}
+		static ColumnConstraints toColConstraint(Map<String, String> dataMap) {
+			ColumnConstraints c;
 
-		@Override
-		public void addItem(WLayoutedWidget<MPartSashContainerElement> widget) {
-			Node n = (Node) widget.getStaticLayoutNode();
-
-			GridLayoutPane p = getWidget();
-			MPartSashContainer element = getDomElement();
-			if ( element != null && element.isHorizontal()) {
-				p.setNumColumns(p.getNumColumns() + 1);
+			if( dataMap.containsKey(WSash.FIXED_LAYOUT_WIDTH) ) {
+				int w = Integer.parseInt(dataMap.get(WSash.FIXED_LAYOUT_WIDTH));
+				c = new ColumnConstraints(w);
+			} else {
+				c = new ColumnConstraints();
 			}
 
-			MPartSashContainerElement domElement2 = widget.getDomElement();
-			if( domElement2 != null ) {
-				GridData gd = toGridData(domElement2.getPersistedState());
-				GridLayoutPane.setConstraint(n, gd);				
+			if (dataMap.containsKey(WSash.FIXED_LAYOUT_GRAB_HORIZONTAL) && Boolean.parseBoolean(dataMap.get(WSash.FIXED_LAYOUT_GRAB_HORIZONTAL)) )  {
+				c.setHgrow(Priority.ALWAYS);
 			}
-			p.getChildren().add(n);
+
+			return c;
 		}
 
 		@Override
@@ -122,86 +96,183 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			return getWidget().getChildren().size();
 		}
 
+		private static void fixIndex(GridPane p, MPartSashContainer c) {
+			if( c.isHorizontal() ) {
+				int i = 0;
+				for( Node n : p.getChildren() ) {
+					GridPane.setColumnIndex(n, Integer.valueOf(i));
+
+					Map<String, String> map = c.getChildren().get(i).getPersistedState();
+
+					if( map.containsKey(WSash.FIXED_LAYOUT_GRAB_VERTICAL) ) {
+						if( Boolean.parseBoolean(map.get(WSash.FIXED_LAYOUT_GRAB_VERTICAL)) ) {
+							GridPane.setFillHeight(n, Boolean.TRUE);
+							GridPane.setVgrow(n, Priority.ALWAYS);
+						}
+					} else {
+						GridPane.setFillHeight(n, Boolean.TRUE);
+						GridPane.setVgrow(n, Priority.ALWAYS);
+					}
+					i++;
+				}
+			} else {
+				int i = 0;
+				for( Node n : p.getChildren() ) {
+					GridPane.setRowIndex(n, Integer.valueOf(i));
+					Map<String, String> map = c.getChildren().get(i).getPersistedState();
+
+					if( map.containsKey(WSash.FIXED_LAYOUT_GRAB_HORIZONTAL) ) {
+						if( Boolean.parseBoolean(map.get(WSash.FIXED_LAYOUT_GRAB_HORIZONTAL)) ) {
+							GridPane.setHgrow(n, Priority.ALWAYS);
+							GridPane.setFillWidth(n, Boolean.TRUE);
+						}
+					} else {
+						GridPane.setHgrow(n, Priority.ALWAYS);
+						GridPane.setFillWidth(n, Boolean.TRUE);
+					}
+
+					i++;
+				}
+			}
+		}
+
+		@Override
+		public void addItem(WLayoutedWidget<MPartSashContainerElement> widget) {
+			Node n = (Node) widget.getStaticLayoutNode();
+
+			GridPane p = getWidget();
+			MPartSashContainer domElement = getDomElement();
+			MPartSashContainerElement widgetElement = widget.getDomElement();
+
+			if( domElement == null ) {
+				this.logger.log(Level.ERROR, "Could not find DOM element for '"+this+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
+
+			if( widgetElement == null ) {
+				this.logger.log(Level.ERROR, "Could not find DOM element for '"+widget+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
+
+			if( domElement.isHorizontal() ) {
+				p.getColumnConstraints().add(toColConstraint(widgetElement.getPersistedState()));
+			} else {
+				p.getRowConstraints().add(toRowConstraint(widgetElement.getPersistedState()));
+			}
+			p.getChildren().add(n);
+
+			fixIndex(p, domElement);
+		}
+
 		@Override
 		public void addItems(List<WLayoutedWidget<MPartSashContainerElement>> list) {
 			List<Node> nodeList = new ArrayList<Node>();
-			GridLayoutPane p = getWidget();
+			GridPane p = getWidget();
+
+			MPartSashContainer domElement = getDomElement();
+
+			if( domElement == null ) {
+				this.logger.log(Level.ERROR, "Could not find DOM element for '"+this+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
 
 			for (WLayoutedWidget<MPartSashContainerElement> w : list) {
 				Node n = (Node) w.getStaticLayoutNode();
-				
-				MPartSashContainerElement element = w.getDomElement();
-				if( element != null ) {
-					GridData gd = toGridData(element.getPersistedState());
-					GridLayoutPane.setConstraint(n, gd);					
+
+				MPartSashContainerElement widgetElement = w.getDomElement();
+				if( widgetElement != null ) {
+					if( domElement.isHorizontal() ) {
+						p.getColumnConstraints().add(toColConstraint(widgetElement.getPersistedState()));
+					} else {
+						p.getRowConstraints().add(toRowConstraint(widgetElement.getPersistedState()));
+					}
 				}
 				nodeList.add(n);
 			}
 
-			MPartSashContainer element = getDomElement();
-			if (element != null && element.isHorizontal()) {
-				p.setNumColumns(p.getNumColumns() + nodeList.size());
-			}
-
 			p.getChildren().addAll(nodeList);
+			fixIndex(p,domElement);
 		}
 
 		@Override
 		public void addItems(int index, List<WLayoutedWidget<MPartSashContainerElement>> list) {
 			List<Node> nodeList = new ArrayList<Node>();
-			GridLayoutPane p = getWidget();
+			GridPane p = getWidget();
+
+			MPartSashContainer domElement = getDomElement();
+			if( domElement == null ) {
+				this.logger.log(Level.ERROR, "Could not find DOM element for '"+this+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
+
+			List<ColumnConstraints> columnConstraints = new ArrayList<>();
+			List<RowConstraints> rowConstraints = new ArrayList<>();
 
 			for (WLayoutedWidget<MPartSashContainerElement> w : list) {
 				Node n = (Node) w.getStaticLayoutNode();
-				
+
 				MPartSashContainerElement element = w.getDomElement();
 				if( element != null ) {
-					GridData gd = toGridData(element.getPersistedState());
-					GridLayoutPane.setConstraint(n, gd);					
+					if( domElement.isHorizontal() ) {
+						columnConstraints.add(toColConstraint(element.getPersistedState()));
+					} else {
+						rowConstraints.add(toRowConstraint(element.getPersistedState()));
+					}
+				} else {
+					this.logger.log(Level.ERROR, "Could not find DOM element for '"+w+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+					return;
 				}
+
 				nodeList.add(n);
 			}
 
-			MPartSashContainer element = getDomElement();
-			if (element != null && element.isHorizontal()) {
-				p.setNumColumns(p.getNumColumns() + nodeList.size());
+			if( domElement.isHorizontal() ) {
+				p.getColumnConstraints().addAll(index, columnConstraints);
+			} else {
+				p.getRowConstraints().addAll(index,rowConstraints);
 			}
 
 			p.getChildren().addAll(index, nodeList);
+			fixIndex(p, domElement);
 		}
 
 		@Override
 		public void removeItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			Node n = (Node) widget.getStaticLayoutNode();
-			GridLayoutPane p = getWidget();
+			GridPane p = getWidget();
 			MPartSashContainer domElement = getDomElement();
-			
-			if( domElement != null && domElement.isHorizontal() ) {
-				p.setNumColumns(p.getNumColumns() - 1);	
+
+			if( domElement == null ) {
+				this.logger.log(Level.ERROR, "Could not find DOM element for '"+this+"'"); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
+
+			int idx = p.getChildren().indexOf(n);
+
+			if( domElement.isHorizontal() ) {
+				p.getColumnConstraints().remove(idx);
+			} else {
+				p.getRowConstraints().remove(idx);
 			}
 			p.getChildren().remove(n);
+			fixIndex(p, domElement);
 		}
 
 		@Override
-		public GridLayoutPane getWidgetNode() {
+		public GridPane getWidgetNode() {
 			return getWidget();
 		}
 
 		@Override
-		protected GridLayoutPane createWidget() {
-			GridLayoutPane p = new GridLayoutPane();
-			p.setMarginWidth(0);
-			p.setMarginHeight(0);
-			p.setHorizontalSpacing(0);
-			p.setVerticalSpacing(0);
-			p.setNumColumns(this.mPartSashContainer.isHorizontal() ? 0 : 1); 
+		protected GridPane createWidget() {
+			GridPane p = new GridPane();
 			return p;
 		}
 
 		@Override
 		public void updateLayout() {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 
@@ -227,7 +298,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 				}
 			}
 		};
-		
+
 		@Override
 		public void updateLayout() {
 			updateDividers();
@@ -238,12 +309,12 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			MPartSashContainer domElement = getDomElement();
 			if( domElement != null ) {
 				BaseRenderer<?, ?> r = (BaseRenderer<?, ?>) domElement.getRenderer();
-				r.syncUIModifications(domElement, this::doRecalcWeight);	
+				r.syncUIModifications(domElement, this::doRecalcWeight);
 			} else {
 				this.logger.error("The domain object should not be null at this point"); //$NON-NLS-1$
 			}
 		}
-		
+
 		void doRecalcWeight() {
 			if (this.state != WidgetState.CREATED) {
 				return;
@@ -260,13 +331,13 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			for (double d : getWidget().getDividerPositions()) {
 				MPartSashContainerElement element = this.items.get(idx++).getDomElement();
 				if( element != null ) {
-					element.setContainerData((d - prev) * 10 + ""); //$NON-NLS-1$	
+					element.setContainerData((d - prev) * 10 + ""); //$NON-NLS-1$
 				}
 				prev = d;
 			}
 			MPartSashContainerElement element = this.items.get(this.items.size() - 1).getDomElement();
 			if( element != null ) {
-				element.setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$	
+				element.setContainerData((1.0 - prev) * 10 + ""); //$NON-NLS-1$
 			}
 		}
 
