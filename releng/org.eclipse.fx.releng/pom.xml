@@ -113,9 +113,9 @@
 
 	<repositories>
 		<repository>
-			<id>mars</id>
+			<id>neon</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/eclipse/updates/4.5/R-4.5.1-201509040015</url>
+			<url>http://download.eclipse.org/eclipse/updates/4.6/R-4.6-201606061100/</url>
 		</repository>
 		<repository>
 			<id>orbit</id>
