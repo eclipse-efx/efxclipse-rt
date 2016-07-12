@@ -64,6 +64,18 @@ public interface Status {
 	}
 
 	/**
+	 * Create a new value status with {@link State#OK}
+	 *
+	 * @param value
+	 *            the value
+	 * @return a status
+	 */
+	@NonNull
+	public static <@Nullable O> ValueStatus<O> ok(O value) {
+		return status(value, State.OK, 0, "", null); //$NON-NLS-1$
+	}
+
+	/**
 	 * Create a new status object
 	 *
 	 * @param state
@@ -98,8 +110,7 @@ public interface Status {
 	 * @return the new status instance
 	 */
 	@NonNull
-	public static <@Nullable O> ValueStatus<O> status(@Nullable O value, @NonNull State state, int code,
-			@NonNull String message, @Nullable Throwable t) {
+	public static <@Nullable O> ValueStatus<O> status(@Nullable O value, @NonNull State state, int code, @NonNull String message, @Nullable Throwable t) {
 		return new ValueStatusImpl<O>(value, state, code, message, t);
 	}
 
