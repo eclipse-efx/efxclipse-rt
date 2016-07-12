@@ -17,6 +17,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
 
+import java.time.LocalDate;
+
 import org.eclipse.fx.core.databinding.IJFXBeanValueProperty;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
 import org.eclipse.fx.ui.databinding.internal.DatePickerValueProperty;
@@ -41,8 +43,8 @@ public class JFXUIProperties {
 	 * @return the property
 	 */
 	@NonNull
-	public static IJFXControlValueProperty singleViewSelection() {
-		return new SingleSelectionProperty();
+	public static <@NonNull S,T> IJFXControlValueProperty<S,T> singleViewSelection() {
+		return new SingleSelectionProperty<S,T>();
 	}
 
 	/**
@@ -64,8 +66,8 @@ public class JFXUIProperties {
 	 * @since 2.4.0
 	 */
 	@NonNull
-	public static IJFXControlValueProperty text2() {
-		return new TextValueProperty();
+	public static <@NonNull S> IJFXControlValueProperty<S,String> text2() {
+		return new TextValueProperty<>();
 	}
 
 	/**
@@ -74,7 +76,7 @@ public class JFXUIProperties {
 	 * @return the property
 	 */
 	@NonNull
-	public static IJFXControlValueProperty date() {
+	public static IJFXControlValueProperty<@NonNull DatePicker,LocalDate> date() {
 		return new DatePickerValueProperty();
 	}
 }

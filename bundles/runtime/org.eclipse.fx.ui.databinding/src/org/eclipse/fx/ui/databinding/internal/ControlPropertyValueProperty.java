@@ -10,20 +10,19 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.databinding.internal;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import javafx.beans.property.Property;
 
-/**
- * @param <O>
- */
-public abstract class ControlPropertyValueProperty<O> extends ControlReadOnlyPropertyValueProperty<O> {
+@SuppressWarnings("javadoc")
+public abstract class ControlPropertyValueProperty<@NonNull S,T> extends ControlReadOnlyPropertyValueProperty<S,T> {
 	@Override
-	protected abstract Property<O> getProperty(Object source);
-	
-	@SuppressWarnings("unchecked")
+	protected abstract Property<T> getProperty(S source);
+
 	@Override
-	protected void doSetValue(Object source, Object value) {
-		Property<O> p = getProperty(source);
-		p.setValue((O) value);
+	protected void doSetValue(S source, T value) {
+		Property<T> p = getProperty(source);
+		p.setValue((T) value);
 	}
-	
+
 }

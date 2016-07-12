@@ -10,26 +10,19 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.databinding;
 
-import javafx.scene.Node;
-import javafx.scene.control.Control;
-
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Base interface of control properties
+ *
+ * @param <S>
+ *            type of the source object
+ * @param <T>
+ *            type of the value of the property
  */
-public interface IJFXControlValueProperty extends IValueProperty {
-	/**
-	 * Create an observable on the default realm
-	 *
-	 * @param control
-	 *            the control
-	 * @return the observable
-	 */
-	@NonNull
-	public IJFXControlValueObservable observe(@NonNull Control control);
+public interface IJFXControlValueProperty<S, T> extends IValueProperty<S, T> {
 
 	/**
 	 * Create an observable on the default realm
@@ -39,19 +32,9 @@ public interface IJFXControlValueProperty extends IValueProperty {
 	 * @return the observable
 	 * @since 2.4.0
 	 */
+	@Override
 	@NonNull
-	public IJFXControlValueObservable observe(@NonNull Node control);
-
-	/**
-	 * Create an observable on the given realm
-	 *
-	 * @param realm
-	 *            the realm
-	 * @param control
-	 *            the control
-	 * @return the observable
-	 */
-	public IJFXControlValueObservable observe(@NonNull Realm realm, @NonNull Control control);
+	public IJFXControlValueObservable<T> observe(S control);
 
 	/**
 	 * Create an observable on the given realm
@@ -63,19 +46,8 @@ public interface IJFXControlValueProperty extends IValueProperty {
 	 * @return the observable
 	 * @since 2.4.0
 	 */
-	public IJFXControlValueObservable observe(@NonNull Realm realm, @NonNull Node control);
-
-	/**
-	 * Create an observable who waits for the given delay until informing about
-	 * the change
-	 *
-	 * @param delay
-	 *            the delay
-	 * @param control
-	 *            the control
-	 * @return the observable
-	 */
-	public IJFXControlValueObservable observeDelayed(int delay, @NonNull Control control);
+	@Override
+	public IJFXControlValueObservable<T> observe(Realm realm, S control);
 
 	/**
 	 * Create an observable who waits for the given delay until informing about
@@ -88,5 +60,5 @@ public interface IJFXControlValueProperty extends IValueProperty {
 	 * @return the observable
 	 * @since 2.4.0
 	 */
-	public IJFXControlValueObservable observeDelayed(int delay, @NonNull Node control);
+	public IJFXControlValueObservable<T> observeDelayed(int delay, S control);
 }

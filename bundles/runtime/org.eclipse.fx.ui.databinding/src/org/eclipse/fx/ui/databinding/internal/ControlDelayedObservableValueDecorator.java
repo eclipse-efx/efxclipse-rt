@@ -5,10 +5,11 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import javafx.beans.Observable;
 import javafx.scene.Node;
 
-public class ControlDelayedObservableValueDecorator extends ControlObservableValueDecorator {
+@SuppressWarnings("javadoc")
+public class ControlDelayedObservableValueDecorator<T> extends ControlObservableValueDecorator<T> {
 	private final Node control;
 
-	public ControlDelayedObservableValueDecorator(IObservableValue decorated, Node control) {
+	public ControlDelayedObservableValueDecorator(IObservableValue<T> decorated, Node control) {
 		super(decorated);
 		this.control = control;
 		control.focusedProperty().addListener( this::handleFocusChange );

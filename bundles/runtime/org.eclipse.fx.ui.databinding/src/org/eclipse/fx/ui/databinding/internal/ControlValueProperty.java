@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.databinding.internal;
 
-import javafx.scene.Node;
-import javafx.scene.control.Control;
-
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -21,67 +18,32 @@ import org.eclipse.fx.ui.databinding.IJFXControlValueObservable;
 import org.eclipse.fx.ui.databinding.IJFXControlValueProperty;
 import org.eclipse.jdt.annotation.NonNull;
 
-/**
- *
- */
-public abstract class ControlValueProperty extends SimpleValueProperty implements IJFXControlValueProperty {
+import javafx.scene.Node;
+
+@SuppressWarnings("javadoc")
+public abstract class ControlValueProperty<S, T> extends SimpleValueProperty<S, T>
+		implements IJFXControlValueProperty<S, T> {
 
 	@Override
-	public IJFXControlValueObservable observeDelayed(int delay, Control control) {
-		IObservableValue v = observe(control);
-		return new ControlDelayedObservableValueDecorator(Observables.observeDelayedValue(delay, v), control);
-	}
-
-	@Override
-	public IJFXControlValueObservable observeDelayed(int delay, @NonNull Node control) {
-		IObservableValue v = observe(control);
-		return new ControlDelayedObservableValueDecorator(Observables.observeDelayedValue(delay, v), control);
+	public IJFXControlValueObservable<T> observeDelayed(int delay, S control) {
+		IObservableValue<T> v = Observables.observeDelayedValue(delay, observe(control));
+		return new ControlDelayedObservableValueDecorator<>(v, (Node) control);
 	}
 
 	// ---
 
 	@Override
-	public IJFXControlValueObservable observe(Control control) {
-		IObservableValue v = super.observe(Realm.getDefault(), control);
-		return new ControlObservableValueDecorator(v);
-	}
-
-	@Override
-	public @NonNull IJFXControlValueObservable observe(@NonNull Node control) {
-		IObservableValue v = super.observe(Realm.getDefault(), control);
-		return new ControlObservableValueDecorator(v);
+	public @NonNull IJFXControlValueObservable<T> observe(S control) {
+		IObservableValue<T> v = super.observe(Realm.getDefault(), control);
+		return new ControlObservableValueDecorator<>(v);
 	}
 
 	// ---
 
 	@Override
-	public IJFXControlValueObservable observe(Realm realm, Control control) {
-		IObservableValue v = super.observe(realm, control);
-		return new ControlObservableValueDecorator(v);
+	public IJFXControlValueObservable<T> observe(Realm realm, S control) {
+		IObservableValue<T> v = super.observe(realm, control);
+		return new ControlObservableValueDecorator<>(v);
 	}
 
-	@Override
-	public IJFXControlValueObservable observe(@NonNull Realm realm, @NonNull Node control) {
-		IObservableValue v = super.observe(realm, control);
-		return new ControlObservableValueDecorator(v);
-	}
-
-	@Override
-	public IJFXControlValueObservable observe(Realm realm, Object source) {
-		if( realm == null ) {
-			throw new IllegalArgumentException("Realm can not be null"); //$NON-NLS-1$
-		}
-		if( source == null ) {
-			throw new IllegalArgumentException("Source can not be null"); //$NON-NLS-1$
-		}
-		return observe(realm, (Control)source);
-	}
-
-	@Override
-	public IJFXControlValueObservable observe(Object source) {
-		if( source == null ) {
-			throw new IllegalArgumentException("Source can not be null"); //$NON-NLS-1$
-		}
-		return observe((Control)source);
-	}
 }

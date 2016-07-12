@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * A computed value using the the message template
  */
-public final class TemplateComputedValue extends ComputedValue {
+public final class TemplateComputedValue extends ComputedValue<String> {
 	@NonNull
 	private final List<@NonNull Struct> values;
 	@NonNull
@@ -79,7 +79,7 @@ public final class TemplateComputedValue extends ComputedValue {
 	}
 
 	@Override
-	protected Object calculate() {
+	protected String calculate() {
 		Object[] v = this.values.stream().map((o) -> this.converter.apply(o.property, o.value.getValue())).toArray();
 		return MessageFormat.format(this.template, v);
 	}

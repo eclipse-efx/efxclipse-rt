@@ -14,7 +14,10 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 
 /**
  * Base interface of all control observables
+ *
+ * @param <T>
+ *            type of the value of the property
  */
-public interface IJFXControlValueObservable extends IObservableValue {
+public interface IJFXControlValueObservable<T> extends IObservableValue<T> {
 	// nothing to spec
 }

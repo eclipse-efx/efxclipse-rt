@@ -2,13 +2,13 @@ package org.eclipse.fx.ui.databinding.internal;
 
 import java.time.LocalDate;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import javafx.beans.property.Property;
 import javafx.scene.control.DatePicker;
 
-/**
- *
- */
-public class DatePickerValueProperty extends ControlPropertyValueProperty<LocalDate> {
+@SuppressWarnings("javadoc")
+public class DatePickerValueProperty extends ControlPropertyValueProperty<@NonNull DatePicker,LocalDate> {
 
 	@Override
 	public Object getValueType() {
@@ -17,9 +17,8 @@ public class DatePickerValueProperty extends ControlPropertyValueProperty<LocalD
 
 	@SuppressWarnings("null")
 	@Override
-	protected Property<LocalDate> getProperty(Object source) {
-		DatePicker p = (DatePicker) source;
-		return p.valueProperty();
+	protected Property<LocalDate> getProperty(DatePicker source) {
+		return source.valueProperty();
 	}
 
 }
