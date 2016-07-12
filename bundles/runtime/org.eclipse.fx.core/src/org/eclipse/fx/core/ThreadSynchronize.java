@@ -175,6 +175,56 @@ public interface ThreadSynchronize {
 	}
 
 	/**
+	 * Schedule a delayed execution on the provided list of properties.
+	 *
+	 * @param delay
+	 *            the delay
+	 * @param consumer
+	 *            the consumer receiving the values of the properties
+	 * @param properties
+	 *            the list of properties
+	 * @return the subscription
+	 * @since 3.0
+	 */
+	default <T> Subscription delayedChangeExecution(long delay, Consumer<List<T>> consumer, @SuppressWarnings("unchecked") Property<T>... properties) {
+		Runnable r = () -> {
+			List<T> l = new ArrayList<>();
+			for (Property<T> p : properties) {
+				l.add(p.getValue());
+			}
+			consumer.accept(l);
+		};
+
+		ChangeListener<T> l = new ChangeListener<T>() {
+			private Subscription currentSubscription;
+
+			@Override
+			public void changed(ObservableValue<? extends T> observable, T oldValue, T newValue) {
+				if (this.currentSubscription != null) {
+					this.currentSubscription.dispose();
+				}
+				this.currentSubscription = scheduleExecution(delay, () -> {
+					r.run();
+					this.currentSubscription = null;
+				});
+			}
+		};
+		for (Property<T> p : properties) {
+			p.addListener(l);
+		}
+
+		return new Subscription() {
+
+			@Override
+			public void dispose() {
+				for (Property<T> p : properties) {
+					p.removeListener(l);
+				}
+			}
+		};
+	}
+
+	/**
 	 * Wraps a runnable so that it is called on the UI thread.
 	 * <p>
 	 * This is handy if you pass a {@link Runnable} as callback into some async
@@ -250,17 +300,16 @@ public interface ThreadSynchronize {
 	// public <O> void schedule(int priority, O value, Consumer<O> consumer);
 	// }
 
-//TODO Make API in 3.0
-// 	/**
-//	 * Block the UI-Thread in a way that events are still processed until the
-//	 * given condition is released
-//	 *
-//	 * @param blockCondition
-//	 *            the condition
-//	 * @return the value
-//	 */
-//	<T> @Nullable T block(@NonNull BlockCondition<T> blockCondition);
-
+	// TODO Make API in 3.0
+	// /**
+	// * Block the UI-Thread in a way that events are still processed until the
+	// * given condition is released
+	// *
+	// * @param blockCondition
+	// * the condition
+	// * @return the value
+	// */
+	// <T> @Nullable T block(@NonNull BlockCondition<T> blockCondition);
 
 	/**
 	 * A block condition
