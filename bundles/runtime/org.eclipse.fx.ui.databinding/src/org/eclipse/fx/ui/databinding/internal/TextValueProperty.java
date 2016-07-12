@@ -2,7 +2,6 @@ package org.eclipse.fx.ui.databinding.internal;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.fx.core.databinding.JFXBeanProperties;
 import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.beans.property.Property;
@@ -11,7 +10,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextInputControl;
 
-public class TextValueProperty extends ControlPropertyValueProperty<String> {
+@SuppressWarnings("javadoc")
+public class TextValueProperty<@NonNull S> extends ControlPropertyValueProperty<S,String> {
 
 	@Override
 	public Object getValueType() {
@@ -19,7 +19,7 @@ public class TextValueProperty extends ControlPropertyValueProperty<String> {
 	}
 
 	@Override
-	protected @NonNull Property<String> getProperty(Object source) {
+	protected @NonNull Property<String> getProperty(S source) {
 		if( source instanceof TextInputControl ) {
 			TextInputControl field = (TextInputControl) source;
 			return field.textProperty();
