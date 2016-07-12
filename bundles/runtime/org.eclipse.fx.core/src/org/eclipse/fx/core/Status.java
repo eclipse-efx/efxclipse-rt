@@ -69,6 +69,7 @@ public interface Status {
 	 * @param value
 	 *            the value
 	 * @return a status
+	 * @since 3.0
 	 */
 	@NonNull
 	public static <@Nullable O> ValueStatus<O> ok(O value) {
