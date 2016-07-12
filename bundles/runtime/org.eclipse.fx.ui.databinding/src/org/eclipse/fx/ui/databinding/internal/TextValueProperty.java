@@ -11,7 +11,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextInputControl;
 
 @SuppressWarnings("javadoc")
-public class TextValueProperty<@NonNull S> extends ControlPropertyValueProperty<S,String> {
+public class TextValueProperty<S> extends ControlPropertyValueProperty<S,String> {
 
 	@Override
 	public Object getValueType() {

@@ -10,12 +10,10 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.databinding.internal;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 import javafx.beans.property.Property;
 
 @SuppressWarnings("javadoc")
-public abstract class ControlPropertyValueProperty<@NonNull S,T> extends ControlReadOnlyPropertyValueProperty<S,T> {
+public abstract class ControlPropertyValueProperty<S,T> extends ControlReadOnlyPropertyValueProperty<S,T> {
 	@Override
 	protected abstract Property<T> getProperty(S source);
 
