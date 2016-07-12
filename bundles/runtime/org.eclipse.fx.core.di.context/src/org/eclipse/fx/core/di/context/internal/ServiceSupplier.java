@@ -14,19 +14,18 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Predicate;
 
-import javax.inject.Named;
-
-import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.core.di.IInjector;
 import org.eclipse.e4.core.di.suppliers.ExtendedObjectSupplier;
 import org.eclipse.e4.core.di.suppliers.IObjectDescriptor;
 import org.eclipse.e4.core.di.suppliers.IRequestor;
-import org.eclipse.e4.core.internal.contexts.ContextObjectSupplier;
-import org.eclipse.e4.core.internal.di.Requestor;
 import org.eclipse.fx.core.di.Service;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -48,35 +47,56 @@ import org.osgi.service.component.annotations.Component;
 public class ServiceSupplier extends ExtendedObjectSupplier {
 
 	static class ServiceHandler implements ServiceListener {
-		private final IRequestor requestor;
+		private final ServiceSupplier supplier;
+		final Set<IRequestor> requestors = new HashSet<>();
 		private final BundleContext bundleContext;
-		private final Class<?> type;
+		private final Class<?> serviceType;
 
-		public ServiceHandler(IRequestor requestor, BundleContext bundleContext, Class<?> type) {
-			this.requestor = requestor;
+		public ServiceHandler(ServiceSupplier supplier, BundleContext bundleContext, Class<?> serviceType) {
+			this.supplier = supplier;
 			this.bundleContext = bundleContext;
-			this.type = type;
+			this.serviceType = serviceType;
 		}
 
 		@Override
 		public void serviceChanged(ServiceEvent event) {
-			if (!this.requestor.isValid()) {
-				this.bundleContext.removeServiceListener(this);
-				return;
-			}
+			synchronized (this.supplier) {
+				Predicate<IRequestor> pr = IRequestor::isValid;
+				this.requestors.removeIf(pr.negate());
 
-			String[] data = (String[]) event.getServiceReference().getProperty(Constants.OBJECTCLASS);
-			for (String d : data) {
-				if (this.type.getName().equals(d)) {
-					this.requestor.resolveArguments(false);
-					break;
-				} else if( d.equals(IContextFunction.SERVICE_NAME) && this.type.getName().equals(event.getServiceReference().getProperty(IContextFunction.SERVICE_CONTEXT_KEY)) ) {
-					this.requestor.resolveArguments(false);
-					break;
+				if( this.requestors.isEmpty() ) {
+					Map<Class<?>, ServiceHandler> map = this.supplier.handlerList.get(this.bundleContext);
+					if( map != null ) {
+						map.remove(this.serviceType);
+
+						if( map.isEmpty() ) {
+							this.supplier.handlerList.remove(this.bundleContext);
+						}
+					}
+
+					this.bundleContext.removeServiceListener(this);
+					return;
+				}
+
+				String[] data = (String[]) event.getServiceReference().getProperty(Constants.OBJECTCLASS);
+				for (String d : data) {
+					if (this.serviceType.getName().equals(d)) {
+						this.requestors.forEach( r -> {
+							try {
+								r.resolveArguments(false);
+								r.execute();
+							} catch(Throwable t) {
+								t.printStackTrace();
+							}
+						});
+						break;
+					}
 				}
 			}
 		}
 	}
+
+	Map<BundleContext,Map<Class<?>,ServiceHandler>> handlerList = new HashMap<>();
 
 	@Override
 	public Object get(IObjectDescriptor descriptor, IRequestor requestor, boolean track, boolean group) {
@@ -109,27 +129,26 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 					Arrays.sort(serviceReferences);
 
 					if( serviceReferences.length > 0 ) {
+						if( track ) {
+							trackService(context, cl, requestor);
+						}
 						return context.getService(serviceReferences[serviceReferences.length-1]);
 					}
 				}
 			}
-
-			Requestor<?> rr = (Requestor<?>) requestor;
-			ContextObjectSupplier cp = (ContextObjectSupplier) rr.getPrimarySupplier();
-
-			Collection<ServiceReference<IContextFunction>> serviceReferences = context.getServiceReferences(IContextFunction.class, null);
-			List<ServiceReference<IContextFunction>> l = new ArrayList<>(serviceReferences);
-			Collections.sort(l);
-			for( ServiceReference<IContextFunction> r : l ) {
-				if( cl.getName().equals(r.getProperty(SERVICE_CONTEXT_KEY)) ) {
-					Named qualifier = descriptor.getQualifier(Named.class);
-					return context.getService(r).compute(cp.getContext(), qualifier == null ? cl.getName() : qualifier.value());
-				}
-			}
-
-			if( track ) {
-				context.addServiceListener(new ServiceHandler(requestor, context, cl));
-			}
+//FIXME This code looks strange
+//			Requestor<?> rr = (Requestor<?>) requestor;
+//			ContextObjectSupplier cp = (ContextObjectSupplier) rr.getPrimarySupplier();
+//
+//			Collection<ServiceReference<IContextFunction>> serviceReferences = context.getServiceReferences(IContextFunction.class, null);
+//			List<ServiceReference<IContextFunction>> l = new ArrayList<>(serviceReferences);
+//			Collections.sort(l);
+//			for( ServiceReference<IContextFunction> r : l ) {
+//				if( cl.getName().equals(r.getProperty(SERVICE_CONTEXT_KEY)) ) {
+//					Named qualifier = descriptor.getQualifier(Named.class);
+//					return context.getService(r).compute(cp.getContext(), qualifier == null ? cl.getName() : qualifier.value());
+//				}
+//			}
 		} catch (InvalidSyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -162,7 +181,7 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 			Collections.reverse(rv);
 
 			if( track ) {
-				context.addServiceListener(new ServiceHandler(requestor, context, cl));
+				trackService(context, cl, requestor);
 			}
 		} catch (InvalidSyntaxException e) {
 			// TODO Auto-generated catch block
@@ -170,5 +189,15 @@ public class ServiceSupplier extends ExtendedObjectSupplier {
 		}
 
 		return rv;
+	}
+
+	private synchronized void trackService(BundleContext context, Class<?> serviceClass, IRequestor requestor) {
+		Map<Class<?>, ServiceHandler> map = this.handlerList.computeIfAbsent(context, (k) -> new HashMap<>());
+		ServiceHandler handler = map.computeIfAbsent(serviceClass, (cl) -> {
+			ServiceHandler h = new ServiceHandler(this,context, serviceClass);
+			context.addServiceListener(h);
+			return h;
+		});
+		handler.requestors.add(requestor);
 	}
 }
