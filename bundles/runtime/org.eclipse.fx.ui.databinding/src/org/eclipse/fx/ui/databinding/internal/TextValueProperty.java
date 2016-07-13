@@ -18,6 +18,7 @@ public class TextValueProperty<S> extends ControlPropertyValueProperty<S,String>
 		return String.class;
 	}
 
+	@SuppressWarnings("null")
 	@Override
 	protected @NonNull Property<String> getProperty(S source) {
 		if( source instanceof TextInputControl ) {
