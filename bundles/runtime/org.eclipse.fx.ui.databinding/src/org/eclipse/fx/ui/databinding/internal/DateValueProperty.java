@@ -8,7 +8,7 @@ import javafx.beans.property.Property;
 import javafx.scene.control.DatePicker;
 
 @SuppressWarnings("javadoc")
-public class DatePickerValueProperty extends ControlPropertyValueProperty<@NonNull DatePicker,LocalDate> {
+public class DateValueProperty<@NonNull S> extends ControlPropertyValueProperty<S,LocalDate> {
 
 	@Override
 	public Object getValueType() {
@@ -17,8 +17,11 @@ public class DatePickerValueProperty extends ControlPropertyValueProperty<@NonNu
 
 	@SuppressWarnings("null")
 	@Override
-	protected Property<LocalDate> getProperty(DatePicker source) {
-		return source.valueProperty();
+	protected Property<LocalDate> getProperty(S source) {
+		if( source instanceof DatePicker ) {
+			return ((DatePicker) source).valueProperty();
+		}
+		throw new IllegalArgumentException("Unable to get Date-Property from " + source); //$NON-NLS-1$
 	}
 
 }
