@@ -76,7 +76,7 @@ public class JFXUIProperties {
 	 * @return the property
 	 */
 	@NonNull
-	public static IJFXControlValueProperty<@NonNull DatePicker,LocalDate> date() {
-		return new DateValueProperty();
+	public static <@NonNull S> IJFXControlValueProperty<S,LocalDate> date() {
+		return new DateValueProperty<>();
 	}
 }
