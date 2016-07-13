@@ -25,7 +25,7 @@ public class TextValueProperty<S> extends ControlPropertyValueProperty<S,String>
 			TextInputControl field = (TextInputControl) source;
 			return field.textProperty();
 		} else if( source instanceof ComboBox<?> ) {
-			return ((ComboBox) source).getEditor().textProperty();
+			return ((ComboBox<?>) source).getEditor().textProperty();
 		} else if( source instanceof Cell<?> ) {
 			return ((Cell<?>) source).textProperty();
 		} else if( source instanceof Tab ) {
