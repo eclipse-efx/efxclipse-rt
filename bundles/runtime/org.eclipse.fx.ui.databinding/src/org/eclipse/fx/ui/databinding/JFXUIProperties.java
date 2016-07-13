@@ -96,6 +96,15 @@ public class JFXUIProperties {
 	}
 
 	/**
+	 * @return text property for an {@link Object} who has a property named "text"
+	 * @since 3.0.0
+	 */
+	@NonNull
+	public static IJFXControlValueProperty<Object,String> anyText() {
+		return new TextValueProperty<>();
+	}
+
+	/**
 	 * @return text property for a {@link TextInputControl}
 	 * @since 3.0.0
 	 */
