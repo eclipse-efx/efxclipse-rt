@@ -21,7 +21,7 @@ import java.time.LocalDate;
 
 import org.eclipse.fx.core.databinding.IJFXBeanValueProperty;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
-import org.eclipse.fx.ui.databinding.internal.DatePickerValueProperty;
+import org.eclipse.fx.ui.databinding.internal.DateValueProperty;
 import org.eclipse.fx.ui.databinding.internal.SingleSelectionProperty;
 import org.eclipse.fx.ui.databinding.internal.TextValueProperty;
 import org.eclipse.jdt.annotation.NonNull;
@@ -77,6 +77,6 @@ public class JFXUIProperties {
 	 */
 	@NonNull
 	public static IJFXControlValueProperty<@NonNull DatePicker,LocalDate> date() {
-		return new DatePickerValueProperty();
+		return new DateValueProperty();
 	}
 }
