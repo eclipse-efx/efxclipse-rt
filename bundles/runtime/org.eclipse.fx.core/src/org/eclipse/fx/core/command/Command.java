@@ -16,10 +16,10 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
 
 /**
@@ -82,6 +82,11 @@ public interface Command<T> {
 	public ObservableMap<String, String> parameters();
 
 	/**
+	 * Evaluate if the command can be execute
+	 */
+	public void evaluate();
+
+	/**
 	 * Create a simple command executing the provided function
 	 *
 	 * @param action
@@ -96,6 +101,11 @@ public interface Command<T> {
 			@Override
 			public ObservableMap<String, String> parameters() {
 				return this.parameters;
+			}
+
+			@Override
+			public void evaluate() {
+				//nothing to do
 			}
 
 			@Override
@@ -130,9 +140,14 @@ public interface Command<T> {
 			private ObservableMap<String, String> parameters = FXCollections.observableMap(new HashMap<>());
 
 			{
-				this.parameters.addListener( (Observable o) -> {
-					this.enabled.set(enabledCalculator.test(this.parameters));
+				this.parameters.addListener( (MapChangeListener.Change<? extends String, ? extends String> change) -> {
+					evaluate();
 				});
+			}
+
+			@Override
+			public void evaluate() {
+				this.enabled.set(enabledCalculator.test(this.parameters));
 			}
 
 			@Override

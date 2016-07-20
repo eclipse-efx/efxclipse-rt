@@ -25,12 +25,10 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.e4.ui.workbench.Selector;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.fx.core.command.Command;
 import org.eclipse.fx.core.command.CommandService;
 import org.eclipse.fx.core.di.ScopedObjectFactory;
-import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -134,6 +132,11 @@ public class CommandServiceImpl implements CommandService {
 					return true;
 				}
 			});
+		}
+
+		@Override
+		public void evaluate() {
+			recalculateState();
 		}
 
 		@Inject
