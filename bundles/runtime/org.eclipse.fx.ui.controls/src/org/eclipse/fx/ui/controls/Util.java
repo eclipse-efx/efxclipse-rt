@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
+import org.eclipse.fx.core.property.FXObservableUtils;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
 import org.eclipse.jdt.annotation.NonNull;
@@ -230,6 +231,7 @@ public class Util {
 	 * @param <E>
 	 *            the source type
 	 * @return the subscription to dispose the binding
+	 * @deprecated use {@link FXObservableUtils#bindContent(List, ObservableList, Function)}
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static <T, E> Subscription bindContent(List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction) {
