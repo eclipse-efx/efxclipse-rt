@@ -10,17 +10,35 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.workbench.base.internal;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.contexts.RunAndTrack;
+import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.e4.ui.workbench.Selector;
+import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.fx.core.command.Command;
 import org.eclipse.fx.core.command.CommandService;
+import org.eclipse.fx.core.di.ScopedObjectFactory;
+import org.eclipse.fx.core.event.EventBus;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+
+import javafx.beans.Observable;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 
 /**
  * A command service implementation
@@ -33,6 +51,8 @@ public class CommandServiceImpl implements CommandService {
 	private final ECommandService commandService;
 	@NonNull
 	private final EHandlerService handlerService;
+	@NonNull
+	private final IEclipseContext context;
 
 	/**
 	 * Create a new instance
@@ -41,11 +61,14 @@ public class CommandServiceImpl implements CommandService {
 	 *            command service
 	 * @param handlerService
 	 *            handler service
+	 * @param context
+	 *            the context
 	 */
 	@Inject
-	public CommandServiceImpl(@NonNull ECommandService commandService, @NonNull EHandlerService handlerService) {
+	public CommandServiceImpl(@NonNull ECommandService commandService, @NonNull EHandlerService handlerService, @NonNull IEclipseContext context) {
 		this.commandService = commandService;
 		this.handlerService = handlerService;
+		this.context = context;
 	}
 
 	@Override
@@ -63,7 +86,87 @@ public class CommandServiceImpl implements CommandService {
 	@Override
 	public <O> Optional<@NonNull O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
 		ParameterizedCommand cmd = this.commandService.createCommand(commandId, parameters);
-		return Optional.ofNullable((O)this.handlerService.executeHandler(cmd));
+		return Optional.ofNullable((O) this.handlerService.executeHandler(cmd));
 	}
 
+	@Override
+	public <O> Optional<Command<O>> createCommand(@NonNull String commandId) {
+		org.eclipse.core.commands.Command command = this.commandService.getCommand(commandId);
+		if (command == null || !command.isDefined()) {
+			return Optional.empty();
+		}
+		CommandImpl<O> c = new CommandImpl<O>(commandId, this.context);
+		ContextInjectionFactory.inject(c, this.context);
+		return Optional.of(c);
+	}
+
+	static class CommandImpl<O> implements Command<O> {
+		private final String commandId;
+		private CommandService commandService;
+		private final IEclipseContext context;
+
+		private ReadOnlyBooleanWrapper enabledProperty = new ReadOnlyBooleanWrapper(this, "enabled"); //$NON-NLS-1$
+		private final ObservableMap<String, String> parameters = FXCollections.observableMap(new HashMap<>());
+
+		public CommandImpl(String commandId, IEclipseContext context) {
+			this.commandId = commandId;
+			this.context = context;
+			this.parameters.addListener((Observable o) -> {
+				recalculateState();
+			});
+		}
+
+		@PostConstruct
+		void init(IEventBroker eventBroker) {
+			eventBroker.subscribe(ScopedObjectFactory.KEYMODIFED_TOPIC, e -> recalculateState());
+			eventBroker.subscribe(UIEvents.REQUEST_ENABLEMENT_UPDATE_TOPIC, e -> {
+				recalculateState();
+			});
+			eventBroker.subscribe(UIEvents.Dirtyable.TOPIC_DIRTY, e -> recalculateState());
+			this.context.runAndTrack(new RunAndTrack() {
+
+				@Override
+				public boolean changed(IEclipseContext context) {
+					context.get(IServiceConstants.ACTIVE_CONTEXTS);
+					context.get(IServiceConstants.ACTIVE_SELECTION);
+					context.get(IServiceConstants.ACTIVE_PART);
+					recalculateState();
+					return true;
+				}
+			});
+		}
+
+		@Inject
+		public void setCommandService(CommandService commandService) {
+			this.commandService = commandService;
+			recalculateState();
+		}
+
+		@SuppressWarnings({ "unchecked", "null" })
+		void recalculateState() {
+			this.enabledProperty.set(this.commandService.canExecute(this.commandId, (Map<String, Object>) (Map<?, ?>) this.parameters));
+		}
+
+		@Override
+		public ReadOnlyBooleanProperty enabledProperty() {
+			return this.enabledProperty.getReadOnlyProperty();
+		}
+
+		@Override
+		public boolean isEnabled() {
+			return this.enabledProperty.get();
+		}
+
+		@SuppressWarnings({ "null", "unchecked" })
+		@Override
+		public Optional<O> execute() {
+			return this.commandService.execute(this.commandId, (Map<String, Object>) (Map<?, ?>) this.parameters);
+		}
+
+		@Override
+		public ObservableMap<String, String> parameters() {
+			return this.parameters;
+		}
+
+	}
 }
