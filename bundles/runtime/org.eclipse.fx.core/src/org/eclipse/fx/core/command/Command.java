@@ -10,16 +10,17 @@
  *******************************************************************************/
 package org.eclipse.fx.core.command;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.function.Predicate;
 
-import javafx.beans.property.BooleanProperty;
+import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 
 /**
  * Interface representing a command
@@ -71,11 +72,14 @@ public interface Command<T> {
 	/**
 	 * Execute the command with the provided parameters
 	 *
-	 * @param parameters
-	 *            the parameters
 	 * @return the result
 	 */
-	public Optional<T> execute(ParameterValue... parameters);
+	public Optional<T> execute();
+
+	/**
+	 * @return Parameters used to execute the command
+	 */
+	public ObservableMap<String, String> parameters();
 
 	/**
 	 * Create a simple command executing the provided function
@@ -87,6 +91,12 @@ public interface Command<T> {
 	public static <T> Command<T> createCommand(Function<Map<String, String>, T> action) {
 		return new Command<T>() {
 			private ReadOnlyBooleanWrapper enabled = new ReadOnlyBooleanWrapper(this, "enabled", true); //$NON-NLS-1$
+			private ObservableMap<String, String> parameters = FXCollections.observableMap(new HashMap<>());
+
+			@Override
+			public ObservableMap<String, String> parameters() {
+				return this.parameters;
+			}
 
 			@Override
 			public ReadOnlyBooleanProperty enabledProperty() {
@@ -99,9 +109,8 @@ public interface Command<T> {
 			}
 
 			@Override
-			public Optional<T> execute(ParameterValue... parameters) {
-				Map<String, String> data = Collections.unmodifiableMap(Stream.of(parameters).collect(Collectors.toMap(p -> p.name, p -> p.value)));
-				return Optional.of(action.apply(data));
+			public Optional<T> execute() {
+				return Optional.of(action.apply(new HashMap<>(this.parameters)));
 			}
 		};
 	}
@@ -109,19 +118,26 @@ public interface Command<T> {
 	/**
 	 * Create a simple command executing the provided function
 	 *
-	 * @param enabledProperty
-	 *            the enabled property
-	 *
 	 * @param action
 	 *            the action
+	 * @param enabledCalculator
+	 *            predicate to calculate the enabled state
 	 * @return the command instance
 	 */
-	public static <T> Command<T> createCommand(BooleanProperty enabledProperty, Function<Map<String, String>, T> action) {
+	public static <T> Command<T> createCommand(Function<Map<String, String>, T> action, Predicate<Map<String, String>> enabledCalculator) {
 		return new Command<T>() {
 			private ReadOnlyBooleanWrapper enabled = new ReadOnlyBooleanWrapper(this, "enabled", true); //$NON-NLS-1$
+			private ObservableMap<String, String> parameters = FXCollections.observableMap(new HashMap<>());
 
 			{
-				this.enabled.bind(enabledProperty);
+				this.parameters.addListener( (Observable o) -> {
+					this.enabled.set(enabledCalculator.test(this.parameters));
+				});
+			}
+
+			@Override
+			public ObservableMap<String, String> parameters() {
+				return this.parameters;
 			}
 
 			@Override
@@ -135,9 +151,8 @@ public interface Command<T> {
 			}
 
 			@Override
-			public Optional<T> execute(ParameterValue... parameters) {
-				Map<String, String> data = Collections.unmodifiableMap(Stream.of(parameters).collect(Collectors.toMap(p -> p.name, p -> p.value)));
-				return Optional.of(action.apply(data));
+			public Optional<T> execute() {
+				return Optional.of(action.apply(new HashMap<>(this.parameters)));
 			}
 		};
 	}

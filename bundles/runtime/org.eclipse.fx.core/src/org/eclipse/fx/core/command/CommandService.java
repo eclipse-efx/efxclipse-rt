@@ -63,4 +63,14 @@ public interface CommandService {
 	 * @return the return value of the command
 	 */
 	public <O> Optional<O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters);
+
+	/**
+	 * Create a command for the provided id
+	 *
+	 * @param commandId
+	 *            the command id
+	 * @return the command
+	 * @since 3.0
+	 */
+	public <O> Optional<Command<O>> createCommand(@NonNull String commandId);
 }
