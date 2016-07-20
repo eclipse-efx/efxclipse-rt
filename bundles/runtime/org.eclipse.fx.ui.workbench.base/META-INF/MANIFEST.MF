@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.1.0",
  org.eclipse.e4.core.commands,
  org.eclipse.core.commands;bundle-version="3.6.100",
  org.eclipse.emf.ecore.xmi;bundle-version="2.11.0",
- org.eclipse.fx.core
+ org.eclipse.fx.core,
+ org.eclipse.fx.core.di
 Export-Package: org.eclipse.fx.ui.workbench.base;version="3.0.0";x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx,org.eclipse.fx.ui.workbench.renderers.base",
  org.eclipse.fx.ui.workbench.base.rendering;version="3.0.0";x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx,org.eclipse.fx.ui.workbench.renderers.base"
 Import-Package: javax.annotation;version="1.2.0";resolution:=optional,
