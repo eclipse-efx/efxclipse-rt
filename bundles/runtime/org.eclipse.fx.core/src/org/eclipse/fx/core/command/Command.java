@@ -13,8 +13,10 @@ package org.eclipse.fx.core.command;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
@@ -87,6 +89,43 @@ public interface Command<T> {
 	public void evaluate();
 
 	/**
+	 * Create a command who uses a supplier
+	 *
+	 * @param action
+	 *            the action
+	 * @return the command instance
+	 */
+	public static <T> Command<T> createCommand(Supplier<T> action) {
+		return createCommand((Function<Map<String,String>, T>) (m -> action.get()));
+	}
+
+	/**
+	 * Create a command who uses the runnable
+	 *
+	 * @param action
+	 *            the action to run
+	 * @return the command instance
+	 */
+	public static Command<Void> createCommand(Runnable action) {
+		return createCommand( (Function<Map<String,String>, Void>) (m -> {
+			action.run();
+			return null;
+		}));
+	}
+
+	/**
+	 * Create a command who uses the provided consumer
+	 * @param action the action
+	 * @return the command instance
+	 */
+	public static Command<Void> createCommand(Consumer<Map<String, String>> action) {
+		return createCommand((Function<Map<String,String>, Void>) (m -> {
+			action.accept(m);
+			return null;
+		}));
+	}
+
+	/**
 	 * Create a simple command executing the provided function
 	 *
 	 * @param action
@@ -105,7 +144,7 @@ public interface Command<T> {
 
 			@Override
 			public void evaluate() {
-				//nothing to do
+				// nothing to do
 			}
 
 			@Override
@@ -120,7 +159,7 @@ public interface Command<T> {
 
 			@Override
 			public Optional<T> execute() {
-				return Optional.of(action.apply(new HashMap<>(this.parameters)));
+				return Optional.ofNullable(action.apply(new HashMap<>(this.parameters)));
 			}
 		};
 	}
@@ -140,7 +179,7 @@ public interface Command<T> {
 			private ObservableMap<String, String> parameters = FXCollections.observableMap(new HashMap<>());
 
 			{
-				this.parameters.addListener( (MapChangeListener.Change<? extends String, ? extends String> change) -> {
+				this.parameters.addListener((MapChangeListener.Change<? extends String, ? extends String> change) -> {
 					evaluate();
 				});
 			}
@@ -167,7 +206,7 @@ public interface Command<T> {
 
 			@Override
 			public Optional<T> execute() {
-				return Optional.of(action.apply(new HashMap<>(this.parameters)));
+				return Optional.ofNullable(action.apply(new HashMap<>(this.parameters)));
 			}
 		};
 	}
