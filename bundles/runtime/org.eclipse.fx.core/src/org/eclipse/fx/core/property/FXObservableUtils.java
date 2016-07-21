@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.ThreadSynchronize;
 
 import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
@@ -29,7 +30,7 @@ import javafx.collections.ObservableList;
  *
  * @since 3.0
  */
-public class FXObservableUtils {
+public class FXObservableUtils{
 	/**
 	 * Bind the content to the source list to the target and apply the converter
 	 * in between
@@ -47,14 +48,48 @@ public class FXObservableUtils {
 	 * @return the subscription to dispose the binding
 	 */
 	public static <T, E> Subscription bindContent(List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction) {
+		return bindContent(null, target, sourceList, converterFunction);
+	}
+
+	/**
+	 * Bind the content to the source list to the target and apply the converter
+	 * in between
+	 *
+	 * @param threadSync
+	 *            strategy to synchronize the target on a certain thread, might be <code>null</code>
+	 * @param target
+	 *            the target list
+	 * @param sourceList
+	 *            the source list
+	 * @param converterFunction
+	 *            the function used to convert
+	 * @param <T>
+	 *            the target type
+	 * @param <E>
+	 *            the source type
+	 * @return the subscription to dispose the binding
+	 */
+	public static <T, E> Subscription bindContent(ThreadSynchronize threadSync, List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction) {
 		List<T> list = sourceList.stream().map(converterFunction).collect(Collectors.toList());
 
-		if (target instanceof ObservableList<?>) {
-			((ObservableList<T>) target).setAll(list);
+		if( threadSync == null ) {
+			if (target instanceof ObservableList<?>) {
+				((ObservableList<T>) target).setAll(list);
+			} else {
+				target.clear();
+				target.addAll(list);
+			}
 		} else {
-			target.clear();
-			target.addAll(list);
+			threadSync.asyncExec(() -> {
+				if (target instanceof ObservableList<?>) {
+					((ObservableList<T>) target).setAll(list);
+				} else {
+					target.clear();
+					target.addAll(list);
+				}
+			});
 		}
+		ListChangeListener<E> fl;
 
 		ListChangeListener<E> l = change -> {
 			while (change.next()) {
@@ -71,12 +106,25 @@ public class FXObservableUtils {
 				}
 			}
 		};
-		sourceList.addListener(l);
+		if( threadSync == null ) {
+			fl = l;
+			sourceList.addListener(l);
+		} else {
+			fl = change -> {
+				threadSync.asyncExec( () -> l.onChanged(change) );
+			};
+			sourceList.addListener( fl );
+		}
+
 		return new Subscription() {
 
 			@Override
 			public void dispose() {
-				sourceList.removeListener(l);
+				if( threadSync == null ) {
+					sourceList.removeListener(fl);
+				} else {
+					threadSync.asyncExec(fl, sourceList::removeListener);
+				}
 			}
 		};
 	}
@@ -95,12 +143,14 @@ public class FXObservableUtils {
 		final ListChangeListener<E> l;
 		final IntFunction<T> paddingEntryFactory;
 		final List<T> target;
+		final ThreadSynchronize threadSync;
 
-		PaddedListBinding(int padding, List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
+		PaddedListBinding(ThreadSynchronize threadSync, int padding, List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
+			this.threadSync = threadSync;
 			this.padding = new SimpleIntegerProperty(this, "padding", padding); //$NON-NLS-1$
 			this.target = target;
 			this.sourceList = sourceList;
-			this.l = change -> {
+			ListChangeListener<E> l = change -> {
 				while (change.next()) {
 					if (change.wasPermutated()) {
 						target.subList(change.getFrom() + getPadding(), change.getTo() + getPadding()).clear();
@@ -115,6 +165,16 @@ public class FXObservableUtils {
 					}
 				}
 			};
+
+			if( threadSync == null ) {
+				this.l = l;
+			} else {
+				ListChangeListener<E> ll = change -> {
+					threadSync.asyncExec( () -> l.onChanged(change) );
+				};
+				this.l = ll;
+			}
+
 			this.sourceList.addListener(this.l);
 			this.paddingEntryFactory = paddingEntryFactory;
 			this.padding.addListener((o, ol, ne) -> {
@@ -131,22 +191,44 @@ public class FXObservableUtils {
 
 			List<T> list = sourceList.stream().map(converterFunction).collect(Collectors.toList());
 
-			if (padding == 0) {
-				if (target instanceof ObservableList<?>) {
-					((ObservableList<T>) target).setAll(list);
+			if( threadSync == null ) {
+				if (padding == 0) {
+					if (target instanceof ObservableList<?>) {
+						((ObservableList<T>) target).setAll(list);
+					} else {
+						target.clear();
+						target.addAll(list);
+					}
 				} else {
-					target.clear();
-					target.addAll(list);
+					if (!target.isEmpty()) {
+						target.subList(padding, target.size()).clear();
+						target.addAll(padding, list);
+					} else {
+						List<T> t = IntStream.range(0, padding).mapToObj(paddingEntryFactory).collect(Collectors.toList());
+						t.addAll(list);
+						target.addAll(t);
+					}
 				}
 			} else {
-				if (!target.isEmpty()) {
-					target.subList(padding, target.size()).clear();
-					target.addAll(padding, list);
-				} else {
-					List<T> t = IntStream.range(0, padding).mapToObj(paddingEntryFactory).collect(Collectors.toList());
-					t.addAll(list);
-					target.addAll(t);
-				}
+				threadSync.asyncExec(() -> {
+					if (padding == 0) {
+						if (target instanceof ObservableList<?>) {
+							((ObservableList<T>) target).setAll(list);
+						} else {
+							target.clear();
+							target.addAll(list);
+						}
+					} else {
+						if (!target.isEmpty()) {
+							target.subList(padding, target.size()).clear();
+							target.addAll(padding, list);
+						} else {
+							List<T> t = IntStream.range(0, padding).mapToObj(paddingEntryFactory).collect(Collectors.toList());
+							t.addAll(list);
+							target.addAll(t);
+						}
+					}
+				});
 			}
 		}
 
@@ -176,7 +258,12 @@ public class FXObservableUtils {
 
 		@Override
 		public void dispose() {
-			this.sourceList.remove(this.l);
+			if( this.threadSync == null ) {
+				this.sourceList.remove(this.l);
+			} else {
+				this.threadSync.asyncExec(this.l, this.sourceList::remove);
+			}
+
 		}
 	}
 
@@ -197,7 +284,29 @@ public class FXObservableUtils {
 	 * @return the binding
 	 */
 	public static <T, E> PaddedListBinding<T, E> bindContent(int padding, List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
-		return new PaddedListBinding<>(padding, target, sourceList, converterFunction, paddingEntryFactory);
+		return bindContent(null, padding, target, sourceList, converterFunction, paddingEntryFactory);
+	}
+
+	/**
+	 * Bind the content to the source list to the target with an optional
+	 * padding and apply the converter in between
+	 *
+	 * @param threadSync
+	 *            strategy to synchronize the target on a certain thread, might be <code>null</code>
+	 * @param padding
+	 *            the initial padding
+	 * @param target
+	 *            the target
+	 * @param sourceList
+	 *            the source list
+	 * @param converterFunction
+	 *            the converter function
+	 * @param paddingEntryFactory
+	 *            function to consult when filling padding slots
+	 * @return the binding
+	 */
+	public static <T, E> PaddedListBinding<T, E> bindContent(ThreadSynchronize threadSync, int padding, List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
+		return new PaddedListBinding<>(threadSync, padding, target, sourceList, converterFunction, paddingEntryFactory);
 	}
 
 	/**
