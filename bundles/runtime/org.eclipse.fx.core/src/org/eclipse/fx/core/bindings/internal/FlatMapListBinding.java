@@ -20,6 +20,7 @@ import javafx.beans.binding.ListBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+@SuppressWarnings("javadoc")
 public class FlatMapListBinding<A, B> extends ListBinding<B> {
 
 	private Set<ObservableList<?>> cur = new HashSet<>();
@@ -38,9 +39,9 @@ public class FlatMapListBinding<A, B> extends ListBinding<B> {
 	}
 
 	private void fixListener() {
-		Set<ObservableList<?>> toWatch = source.stream().map(map).collect(Collectors.toSet());
-		Set<ObservableList<?>> toDispose = new HashSet<>(cur); toDispose.removeIf(x->toWatch.stream().anyMatch(c->System.identityHashCode(c) == System.identityHashCode(x)));
-		Set<ObservableList<?>> toAdd = new HashSet<>(toWatch); toAdd.removeIf(x->cur.stream().anyMatch(c->System.identityHashCode(c) == System.identityHashCode(x)));
+		Set<ObservableList<?>> toWatch = this.source.stream().map(this.map).collect(Collectors.toSet());
+		Set<ObservableList<?>> toDispose = new HashSet<>(this.cur); toDispose.removeIf(x->toWatch.stream().anyMatch(c->System.identityHashCode(c) == System.identityHashCode(x)));
+		Set<ObservableList<?>> toAdd = new HashSet<>(toWatch); toAdd.removeIf(x->this.cur.stream().anyMatch(c->System.identityHashCode(c) == System.identityHashCode(x)));
 
 		for (ObservableList<?> d : toDispose) {
 			d.removeListener(this.onInvalidate);

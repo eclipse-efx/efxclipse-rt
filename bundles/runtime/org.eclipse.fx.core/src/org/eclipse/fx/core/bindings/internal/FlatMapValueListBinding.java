@@ -21,6 +21,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+@SuppressWarnings("javadoc")
 public class FlatMapValueListBinding<A, B> extends ListBinding<B> {
 
 	private Set<ObservableValue<?>> cur = new HashSet<>();

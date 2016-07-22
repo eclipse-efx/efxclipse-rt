@@ -16,6 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 
+@SuppressWarnings("javadoc")
 public class ConcatListBinding<A> extends ListBinding<A> {
 
 	private ObservableList<A>[] source;
@@ -34,6 +35,7 @@ public class ConcatListBinding<A> extends ListBinding<A> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public ConcatListBinding(ObservableList<A>... source) {
 		this.source = source;
 		initListeners();

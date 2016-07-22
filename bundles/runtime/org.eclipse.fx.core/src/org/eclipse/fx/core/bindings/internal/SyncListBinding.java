@@ -17,6 +17,7 @@ import javafx.beans.binding.ListBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+@SuppressWarnings("javadoc")
 public class SyncListBinding<A> extends ListBinding<A> {
 
 	private	ObservableList<A> source;
@@ -45,7 +46,7 @@ public class SyncListBinding<A> extends ListBinding<A> {
 
 	@Override
 	protected ObservableList<A> computeValue() {
-		return FXCollections.observableArrayList(source);
+		return FXCollections.observableArrayList(this.source);
 	}
 
 }

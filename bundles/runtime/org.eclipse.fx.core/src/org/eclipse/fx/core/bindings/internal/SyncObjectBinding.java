@@ -16,6 +16,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ObservableValue;
 
+@SuppressWarnings("javadoc")
 public class SyncObjectBinding<A> extends ObjectBinding<A> {
 
 	private ObservableValue<A> source;

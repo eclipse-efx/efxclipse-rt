@@ -18,6 +18,7 @@ import javafx.beans.binding.ListBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+@SuppressWarnings("javadoc")
 public class MapListBinding<A, B> extends ListBinding<B> {
 
 	private ObservableList<A> source;
