@@ -4,5 +4,6 @@ Bundle-Name: Tests
 Bundle-SymbolicName: org.eclipse.fx.core.tests
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.eclipse.fx.core.property
+Import-Package: org.eclipse.fx.core.bindings,
+ org.eclipse.fx.core.property
 Require-Bundle: org.junit;bundle-version="4.12.0"
