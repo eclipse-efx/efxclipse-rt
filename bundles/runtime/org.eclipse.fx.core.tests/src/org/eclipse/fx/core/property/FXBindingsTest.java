@@ -5,6 +5,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import javafx.beans.binding.ListBinding;
+import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
@@ -12,6 +15,81 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class FXBindingsTest {
+
+	public static class Inner {
+		public final StringProperty Value;
+
+		public Inner(String blub) {
+			this.Value = new SimpleStringProperty(blub);
+		}
+	}
+
+	public static class Outer {
+		public ObjectProperty<Inner> Value = new SimpleObjectProperty<>();
+	}
+
+	@Test
+	public void testBindStream() {
+		Outer outer = new Outer();
+		Inner inner = new Inner("Hello");
+		outer.Value.set(inner);
+
+		ObjectProperty<Outer> master = new SimpleObjectProperty<Outer>(outer);
+
+		ObjectBinding<String> m2 = FXBindings.bindStream(master).map(o -> o.Value).map(i -> i.Value).toBinding();
+
+		Assert.assertEquals("Hello", m2.get());
+
+		inner.Value.set("test1");
+
+		Assert.assertEquals("test1", m2.get());
+
+		Inner inner2 = new Inner("test2");
+		outer.Value.set(inner2);
+
+		Assert.assertEquals("test2", m2.get());
+
+		Outer outer2 = new Outer();
+		Inner inner3 = new Inner("test3");
+		outer2.Value.set(inner3);
+		master.set(outer2);
+
+		Assert.assertEquals("test3", m2.get());
+
+
+	}
+
+	@Test
+	public void testMapObject() {
+		Outer outer = new Outer();
+		Inner inner = new Inner("Hello");
+		outer.Value.set(inner);
+
+		ObjectProperty<Outer> master = new SimpleObjectProperty<Outer>(outer);
+
+		ObjectBinding<Inner> m1 = FXBindings.map(master, o -> o.Value);
+		ObjectBinding<String> m2 = FXBindings.map(m1, i -> i.Value);
+
+
+		Assert.assertEquals("Hello", m2.get());
+
+		inner.Value.set("test1");
+
+		Assert.assertEquals("test1", m2.get());
+
+		Inner inner2 = new Inner("test2");
+		outer.Value.set(inner2);
+
+		Assert.assertEquals("test2", m2.get());
+
+		Outer outer2 = new Outer();
+		Inner inner3 = new Inner("test3");
+		outer2.Value.set(inner3);
+		master.set(outer2);
+
+		Assert.assertEquals("test3", m2.get());
+
+	}
 
 	@Test
 	public void testConcat() {
