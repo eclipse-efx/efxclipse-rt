@@ -8,6 +8,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Binding;
 
+@SuppressWarnings("javadoc")
 public class SyncedBindingHelperObserver implements InvalidationListener {
 
 	private final ThreadSynchronize thread;
