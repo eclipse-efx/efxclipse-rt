@@ -11,6 +11,7 @@
 package org.eclipse.fx.core.bindings.internal;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 
 import org.eclipse.fx.core.ThreadSynchronize;
 
@@ -25,9 +26,7 @@ public class SyncedBindingHelperObserver implements InvalidationListener {
 	private final WeakReference<Binding<?>> ref;
 
     public SyncedBindingHelperObserver(ThreadSynchronize thread, Binding<?> binding) {
-        if (binding == null) {
-            throw new NullPointerException("Binding has to be specified."); //$NON-NLS-1$
-        }
+    	Objects.requireNonNull(binding);
         this.ref = new WeakReference<Binding<?>>(binding);
         this.thread = thread;
     }
