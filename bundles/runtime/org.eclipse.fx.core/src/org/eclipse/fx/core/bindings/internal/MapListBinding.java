@@ -13,7 +13,6 @@ package org.eclipse.fx.core.bindings.internal;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.binding.ListBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,20 +23,10 @@ public class MapListBinding<A, B> extends ListBinding<B> {
 	private ObservableList<A> source;
 	private Function<A, B> map;
 
-	private InvalidationListener onInvalidate = obs -> this.invalidate();
-
 	public MapListBinding(ObservableList<A> source, Function<A, B> map) {
 		this.source = source;
 		this.map = map;
-		initListeners();
-	}
-
-	private void initListeners() {
-		this.source.addListener(this.onInvalidate);
-	}
-
-	private void disposeListeners() {
-		this.source.removeListener(this.onInvalidate);
+		bind(this.source);
 	}
 
 	@Override
@@ -47,7 +36,7 @@ public class MapListBinding<A, B> extends ListBinding<B> {
 
 	@Override
 	public void dispose() {
-		disposeListeners();
+		unbind(this.source);
 		super.dispose();
 	}
 }

@@ -10,12 +10,11 @@
  *******************************************************************************/
 package org.eclipse.fx.core.bindings.internal;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.ListBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,52 +22,42 @@ import javafx.collections.ObservableList;
 @SuppressWarnings("javadoc")
 public class FlatMapListBinding<A, B> extends ListBinding<B> {
 
-	private Set<ObservableList<?>> cur = new HashSet<>();
+	private Observable[] currentDependencies;
 
 	private ObservableList<A> source;
 	private Function<A, ObservableList<B>> map;
 
-	private InvalidationListener onInvalidate = obs -> this.invalidate();
-
-
 	public FlatMapListBinding(ObservableList<A> source, Function<A, ObservableList<B>> map) {
 		this.source = source;
 		this.map = map;
-		this.source.addListener(this.onInvalidate);
-		this.fixListener();
 	}
 
-	private void fixListener() {
+	private Observable[] computeDependencies() {
 		Set<ObservableList<?>> toWatch = this.source.stream().map(this.map).collect(Collectors.toSet());
-		Set<ObservableList<?>> toDispose = new HashSet<>(this.cur); toDispose.removeIf(x->toWatch.stream().anyMatch(c->System.identityHashCode(c) == System.identityHashCode(x)));
-		Set<ObservableList<?>> toAdd = new HashSet<>(toWatch); toAdd.removeIf(x->this.cur.stream().anyMatch(c->System.identityHashCode(c) == System.identityHashCode(x)));
-
-		for (ObservableList<?> d : toDispose) {
-			d.removeListener(this.onInvalidate);
-
-		}
-		for (ObservableList<?> a : toAdd) {
-			a.addListener(this.onInvalidate);
-		}
-
-		this.cur = toWatch;
+		toWatch.add(this.source);
+		return toWatch.toArray(new Observable[0]);
 	}
 
+	private void updateDependencies() {
+		if (this.currentDependencies != null) {
+			unbind(this.currentDependencies);
+		}
+		this.currentDependencies = computeDependencies();
+		bind(this.currentDependencies);
+	}
 
 	@Override
 	protected ObservableList<B> computeValue() {
-		this.fixListener();
+		this.updateDependencies();
 		return FXCollections.observableList(this.source.stream().map(this.map).flatMap(o->o.stream()).collect(Collectors.toList()));
 	}
 
 	@Override
 	public void dispose() {
-		super.dispose();
-
-		for (ObservableList<?> d : this.cur) {
-			d.removeListener(this.onInvalidate);
+		if (this.currentDependencies != null) {
+			unbind(this.currentDependencies);
+			this.currentDependencies = null;
 		}
-
-		this.source.removeListener(this.onInvalidate);
+		super.dispose();
 	}
 }

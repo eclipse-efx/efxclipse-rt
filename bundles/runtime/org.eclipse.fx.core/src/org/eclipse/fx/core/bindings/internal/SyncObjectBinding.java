@@ -12,38 +12,72 @@ package org.eclipse.fx.core.bindings.internal;
 
 import org.eclipse.fx.core.ThreadSynchronize;
 
-import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ObservableValue;
 
 @SuppressWarnings("javadoc")
 public class SyncObjectBinding<A> extends ObjectBinding<A> {
 
+	private SyncedBindingHelperObserver observer;
+
 	private ObservableValue<A> source;
 	private ThreadSynchronize thread;
 
-	private InvalidationListener onInvalidate = x -> {
-		this.thread.asyncExec(()-> {
-			SyncObjectBinding.this.invalidate();
-		});
-	};
 
 	public SyncObjectBinding(ObservableValue<A> source, ThreadSynchronize thread) {
 		this.source = source;
 		this.thread = thread;
 
-		this.source.addListener(this.onInvalidate);
+		syncedBind(this.source);
 	}
 
 	@Override
 	public void dispose() {
-		this.source.removeListener(this.onInvalidate);
+		syncedUnbind(this.source);
 		super.dispose();
 	}
 
 	@Override
 	protected A computeValue() {
 		return this.source.getValue();
+	}
+
+	/**
+	 * Start observing the dependencies for changes. If the value of one of the
+	 * dependencies changes, the binding is marked as invalid.
+	 *
+	 * @param dependencies
+	 *            the dependencies to observe
+	 */
+	protected final void syncedBind(Observable... dependencies) {
+		if ((dependencies != null) && (dependencies.length > 0)) {
+			if (this.observer == null) {
+				this.observer = new SyncedBindingHelperObserver(this.thread, this);
+			}
+			for (final Observable dep : dependencies) {
+				if (dep != null) {
+					dep.addListener(this.observer);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Stop observing the dependencies for changes.
+	 *
+	 * @param dependencies
+	 *            the dependencies to stop observing
+	 */
+	protected final void syncedUnbind(Observable... dependencies) {
+		if (this.observer != null) {
+			for (final Observable dep : dependencies) {
+				if (dep != null) {
+					dep.removeListener(this.observer);
+				}
+			}
+			this.observer = null;
+		}
 	}
 
 }
