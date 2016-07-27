@@ -29,6 +29,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
 /**
@@ -37,7 +38,7 @@ import javafx.scene.text.Font;
  *
  * @since 3.0
  */
-public class GraphicNode extends Region {
+public class GraphicNode extends StackPane {
 	static class CustomProtocolConverter extends StyleConverter<Object, String> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
