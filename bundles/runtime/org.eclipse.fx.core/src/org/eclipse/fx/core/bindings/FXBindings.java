@@ -13,10 +13,12 @@ package org.eclipse.fx.core.bindings;
 import java.util.function.Function;
 
 import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.fx.core.bindings.internal.BindingStreamImpl;
 import org.eclipse.fx.core.bindings.internal.ConcatListBinding;
 import org.eclipse.fx.core.bindings.internal.FlatMapListBinding;
 import org.eclipse.fx.core.bindings.internal.FlatMapValueListBinding;
 import org.eclipse.fx.core.bindings.internal.MapListBinding;
+import org.eclipse.fx.core.bindings.internal.MapObjectBinding;
 import org.eclipse.fx.core.bindings.internal.SyncListBinding;
 import org.eclipse.fx.core.bindings.internal.SyncObjectBinding;
 
@@ -34,6 +36,17 @@ import javafx.collections.ObservableList;
 public class FXBindings {
 
 	/**
+	 * allows to apply multiple functions before creating a Binding.
+	 * useful for feature paths
+	 *
+	 * @param source
+	 * @return an ObjectBinding
+	 */
+	public static <T> BindingStream<T> bindStream(ObservableValue<T> source) {
+		return new BindingStreamImpl<>(source);
+	}
+
+	/**
 	 * Concatenates multiple observable lists together.
 	 * @param sources
 	 * @return the concatinated list binding
@@ -42,6 +55,18 @@ public class FXBindings {
 	public static <A> ListBinding<A> concat(ObservableList<A>... sources) {
 		return new ConcatListBinding<>(sources);
 	}
+
+	/**
+	 * Maps an obserbable list
+	 * @param source
+	 * @param map
+	 * @return the mapped list binding
+	 */
+	public static <A, B> ObjectBinding<B> map(ObservableValue<A> source, Function<A, ObservableValue<B>> map) {
+		return new MapObjectBinding<>(source, map);
+	}
+
+
 
 	/**
 	 * Maps an obserbable list
@@ -92,5 +117,7 @@ public class FXBindings {
 	public static <A> ObjectBinding<A> syncValue(ObservableValue<A> source, ThreadSynchronize thread) {
 		return new SyncObjectBinding<>(source, thread);
 	}
+
+
 
 }
