@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize.BlockCondition;
-import org.eclipse.fx.core.property.FXObservableUtils;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledStringSegment;
 import org.eclipse.jdt.annotation.NonNull;
