@@ -13,6 +13,7 @@ package org.eclipse.fx.core.bindings;
 import java.util.function.Function;
 
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.Property;
 import javafx.beans.value.ObservableValue;
 
 /**
@@ -44,4 +45,6 @@ public interface BindingStream<T> {
 	 */
 	ObjectBinding<T> toBinding();
 
+
+	<S> Property<S> toProperty(Function<T, Property<S>> map);
 }

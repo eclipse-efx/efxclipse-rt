@@ -11,6 +11,7 @@ import org.junit.Test;
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -31,6 +32,14 @@ public class FXBindingsTest {
 
 	public static class Outer {
 		public ObjectProperty<Inner> Value = new SimpleObjectProperty<>();
+	}
+
+	public static class Person {
+		private ObjectProperty<Address> address = new SimpleObjectProperty<>();
+	}
+
+	public static class Address {
+		private StringProperty street = new SimpleStringProperty();
 	}
 
 	@Test
@@ -61,7 +70,39 @@ public class FXBindingsTest {
 
 		Assert.assertEquals("test3", m2.get());
 
+		ObjectProperty<Person> p = new SimpleObjectProperty<>( new Person() );
 
+		ObjectBinding<String> street = FXBindings.bindStream( p ).map( o -> o.address).map( o -> o.street).toBinding();
+		Property<String> streetProperty = FXBindings.bindStream( p ).map( o -> o.address).toProperty( o -> o.street);
+
+		Assert.assertNull(street.get());
+		Address a = new Address();
+		p.get().address.set(a);
+		Assert.assertNull(street.get());
+		p.get().address.get().street.set("Test");
+		Assert.assertEquals("Test",street.get());
+		streetProperty.setValue("Super geil 1");
+		Assert.assertEquals("Super geil 1",street.get());
+
+		Address a2 = new Address();
+		a2.street.set("Bla");
+		p.get().address.set(a2);
+		Assert.assertEquals("Bla",street.get());
+
+		streetProperty.setValue("Super geil 2");
+		Assert.assertEquals("Super geil 2",street.get());
+
+		Assert.assertEquals(a.street.get(), "Super geil 1");
+		Assert.assertEquals(a2.street.get(), "Super geil 2");
+
+
+		StringProperty uiProp = new SimpleStringProperty();
+		uiProp.bindBidirectional(streetProperty);
+		Assert.assertEquals("Super geil 2", uiProp.get());
+		streetProperty.setValue("ui value");
+		Assert.assertEquals("ui value", uiProp.get());
+		uiProp.set("back to model");
+		Assert.assertEquals("back to model", a2.street.get());
 	}
 
 	@Test

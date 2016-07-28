@@ -20,6 +20,8 @@ import org.eclipse.fx.core.bindings.BindingStream;
 
 import javafx.beans.Observable;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 
 @SuppressWarnings("javadoc")
@@ -40,6 +42,9 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 		}
 		@Override
 		public S apply(T cur, Set<Observable> toTrack) {
+			if( cur == null ) {
+				return (S)null;
+			}
 			ObservableValue<S> r = this.map.apply((T)cur);
 			toTrack.add(r);
 			return r.getValue();
@@ -53,6 +58,9 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 		}
 		@Override
 		public S apply(T cur, Set<Observable> toTrack) {
+			if( cur == null ) {
+				return (S)null;
+			}
 			return this.map.apply((T)cur);
 		}
 	}
@@ -129,4 +137,24 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 		return new StreamBinding<>(this.base, this.path);
 	}
 
+	@Override
+	public <S> Property<S> toProperty(Function<T, Property<S>> map) {
+		Property<S> rv = new SimpleObjectProperty<>();
+		ObjectBinding<Property<S>> binding = mapNoObservalbe(map).toBinding();
+		if( binding.get() != null ) {
+			rv.bindBidirectional(binding.get());
+		}
+
+		binding.addListener( (o, ol, ne) -> {
+			if( ol != null ) {
+				rv.unbindBidirectional(ol);
+			}
+
+			if( ne != null ) {
+				rv.bindBidirectional(ne);
+			}
+		});
+
+		return rv;
+	}
 }
