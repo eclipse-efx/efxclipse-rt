@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.fx.core.bindings;
 
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.function.Function;
 
 import org.eclipse.fx.core.ThreadSynchronize;
@@ -17,6 +19,7 @@ import org.eclipse.fx.core.bindings.internal.BindingStreamImpl;
 import org.eclipse.fx.core.bindings.internal.ConcatListBinding;
 import org.eclipse.fx.core.bindings.internal.FlatMapListBinding;
 import org.eclipse.fx.core.bindings.internal.FlatMapValueListBinding;
+import org.eclipse.fx.core.bindings.internal.FormattedTemporalAccessorBinding;
 import org.eclipse.fx.core.bindings.internal.MapListBinding;
 import org.eclipse.fx.core.bindings.internal.MapObjectBinding;
 import org.eclipse.fx.core.bindings.internal.SyncListBinding;
@@ -24,6 +27,7 @@ import org.eclipse.fx.core.bindings.internal.SyncObjectBinding;
 
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 
@@ -119,5 +123,13 @@ public class FXBindings {
 	}
 
 
-
+	/**
+	 * allows to format an {@link ObservableValue} who holds an {@link TemporalAccessor}
+	 * @param source the source
+	 * @param formatter the formatter
+	 * @return the string binding
+	 */
+	public static StringBinding formattedTemporal(ObservableValue<? extends TemporalAccessor> source, DateTimeFormatter formatter) {
+		return new FormattedTemporalAccessorBinding(source, formatter, ""); //$NON-NLS-1$
+	}
 }
