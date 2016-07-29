@@ -269,7 +269,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 		return widget;
 	}
 
-	private Object createWidget(MUIElement element) {
+	private Object createWidget(@NonNull MUIElement element) {
 		ElementRenderer<MUIElement, Object> renderer = getRenderer(element);
 		if (renderer != null) {
 			// Remember which renderer is responsible for this widget
@@ -282,12 +282,12 @@ public class PartRenderingEngine implements IPresentationEngine {
 		return null;
 	}
 
-	private ElementRenderer<MUIElement, Object> getRenderer(MUIElement uiElement) {
+	private ElementRenderer<@NonNull MUIElement, Object> getRenderer(@NonNull MUIElement uiElement) {
 		return this.factory.getRenderer(uiElement);
 	}
 
 	@SuppressWarnings({ "unchecked", "static-method" })
-	protected <R extends ElementRenderer<? extends M, Object>, M extends MUIElement> R getRendererFor(M element) {
+	protected <R extends ElementRenderer<? extends M, Object>, M extends MUIElement> R getRendererFor(@NonNull M element) {
 		return (R) element.getRenderer();
 	}
 
