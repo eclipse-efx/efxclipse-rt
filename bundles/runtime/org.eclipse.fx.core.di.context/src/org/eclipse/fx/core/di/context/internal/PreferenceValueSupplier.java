@@ -231,7 +231,7 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 			try {
 				PreferenceDefaultValueFactory<T> instance;
 				instance = (PreferenceDefaultValueFactory<@Nullable T>) factory.newInstance();
-				if( instance == null ) {
+				if( instance != null ) {
 					return instance.create(p);
 				}
 
