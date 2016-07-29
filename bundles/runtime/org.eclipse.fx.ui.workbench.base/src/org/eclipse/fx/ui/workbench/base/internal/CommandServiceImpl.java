@@ -80,9 +80,9 @@ public class CommandServiceImpl implements CommandService {
 		return this.handlerService.canExecute(cmd);
 	}
 
-	@SuppressWarnings({ "unchecked", "null" })
+	@SuppressWarnings({ "unchecked" })
 	@Override
-	public <O> Optional<@NonNull O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
+	public <O> Optional<O> execute(@NonNull String commandId, @NonNull Map<@NonNull String, @Nullable Object> parameters) {
 		ParameterizedCommand cmd = this.commandService.createCommand(commandId, parameters);
 		return Optional.ofNullable((O) this.handlerService.executeHandler(cmd));
 	}
