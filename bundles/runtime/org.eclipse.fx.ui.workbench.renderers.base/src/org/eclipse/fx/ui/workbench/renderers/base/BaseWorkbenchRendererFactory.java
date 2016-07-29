@@ -104,7 +104,7 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 
 	/**
 	 * Create a new instance of the renderer factory
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 */
@@ -118,7 +118,7 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <R extends ElementRenderer<?, ?>> R getRenderer(MUIElement modelObject) {
+	public <R extends ElementRenderer<@NonNull ?, ?>> R getRenderer(MUIElement modelObject) {
 		if(modelObject instanceof MCompositePart) {
 			if (this.compositePartRenderer == null) {
 				this.compositePartRenderer = make(getCompositePartRendererClass());
@@ -234,7 +234,7 @@ public abstract class BaseWorkbenchRendererFactory implements RendererFactory {
 	/**
 	 * Obtain an instance of the specified renderer and inject it with the
 	 * context of this factory.
-	 * 
+	 *
 	 * @param rendererClass
 	 *            The renderer class to be instantiated.
 	 * @param <R> the renderer type

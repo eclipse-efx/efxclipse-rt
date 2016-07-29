@@ -142,7 +142,7 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 	private void bindFeatures() {
 		this.features.addListener((SetChangeListener<Feature>)change->{
 			if (change.wasAdded()) {
-				Feature feature = change.getElementAdded();
+				@NonNull Feature feature = change.getElementAdded();
 				IFeature iFeature = feature.getFeatureFactory().get();
 				Subscription put = this.activeFeatures.put(feature, iFeature.install(getTextWidget()));
 				if (put != null) {

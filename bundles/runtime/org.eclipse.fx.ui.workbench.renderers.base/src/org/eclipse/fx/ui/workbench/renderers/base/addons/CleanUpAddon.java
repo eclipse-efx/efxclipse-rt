@@ -29,6 +29,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.workbench.IPresentationEngine;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.fx.core.log.LoggerCreator;
 import org.eclipse.fx.ui.services.sync.UISynchronize;
 import org.eclipse.fx.ui.workbench.renderers.base.BaseWindowRenderer;
 import org.osgi.service.event.Event;
@@ -62,10 +63,10 @@ public class CleanUpAddon {
 				return;
 			}
 
-			if (container instanceof MWindow 
+			if (container instanceof MWindow
 					&& containerParent instanceof MApplication) {
 				if( ! container.getTags().contains(BaseWindowRenderer.TAG_SECONDARY_WINDOW) ) {
-					return;	
+					return;
 				}
 			}
 
@@ -86,9 +87,14 @@ public class CleanUpAddon {
 
 					String containerData = tile.getContainerData();
 					MUIElement child = container.getChildren().remove(0);
-					child.setContainerData(containerData);
-					container.getParent().getChildren().add(idx,child);
-					container.setParent(null);
+					if( child != null ) {
+						child.setContainerData(containerData);
+						container.getParent().getChildren().add(idx,child);
+						container.setParent(null);
+					} else {
+						LoggerCreator.createLogger(getClass()).error("Container has a NULL value as a child"); //$NON-NLS-1$
+					}
+
 				}
 			});
 		}
@@ -106,13 +112,13 @@ public class CleanUpAddon {
 		if (container == null) {
 			return;
 		}
-		
+
 		// never hide top-level windows
 		MUIElement containerElement = container;
 		if (containerElement instanceof MWindow && ! containerElement.getTags().contains(BaseWindowRenderer.TAG_SECONDARY_WINDOW) && containerElement.getParent() != null) {
 			return;
 		}
-		
+
 		// These elements should neither be shown nor hidden based on their containment state
 		if (isLastEditorStack(containerElement) || containerElement instanceof MPerspective
 				|| containerElement instanceof MPerspectiveStack)

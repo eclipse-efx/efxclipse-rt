@@ -231,7 +231,10 @@ public class PreferenceValueSupplier extends ExtendedObjectSupplier {
 			try {
 				PreferenceDefaultValueFactory<T> instance;
 				instance = (PreferenceDefaultValueFactory<@Nullable T>) factory.newInstance();
-				return instance.create(p);
+				if( instance != null ) {
+					return instance.create(p);
+				}
+
 			} catch (InstantiationException | IllegalAccessException e) {
 				getLogger().error("Failed to create instance of '"+factory+"'", e);  //$NON-NLS-1$//$NON-NLS-2$
 			}
