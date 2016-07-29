@@ -23,7 +23,7 @@ public class EAttributeCellEditHandler implements ICellEditHandler {
 
 	/**
 	 * Create a new instance
-	 * 
+	 *
 	 * @param attribute
 	 *            the attribute
 	 * @param editingDomain
@@ -43,7 +43,13 @@ public class EAttributeCellEditHandler implements ICellEditHandler {
 	@Override
 	public void startEdit(final Cell<?> cell) {
 		EObject item = (EObject) cell.getItem();
-		String string = EcoreUtil.convertToString(this.attribute.getEAttributeType(), item.eGet(this.attribute));
+		String string;
+		if( item == null ) {
+			string = null;
+		} else {
+			string = EcoreUtil.convertToString(this.attribute.getEAttributeType(), item.eGet(this.attribute));
+		}
+
 		this.textField = new TextField();
 		this.textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
