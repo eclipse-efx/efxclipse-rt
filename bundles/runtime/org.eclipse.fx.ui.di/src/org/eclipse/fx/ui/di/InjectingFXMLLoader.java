@@ -297,7 +297,9 @@ public abstract class InjectingFXMLLoader<N> implements FXMLBuilder<N> {
 				o = this.context.get(param.getName());
 			} else {
 				o = ContextInjectionFactory.make(param, this.context);
-				this.context.set(o.getClass().getName(), o);
+				if( o != null ) {
+					this.context.set(o.getClass().getName(), o);
+				}
 			}
 
 			return o;
