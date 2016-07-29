@@ -79,6 +79,14 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 	boolean inLazyInit;
 
+	private @NonNull RendererFactory getFactory() {
+		RendererFactory factory = this.factory;
+		if( factory == null ) {
+			throw new IllegalStateException("Renderfactory must not be null"); //$NON-NLS-1$
+		}
+		return factory;
+	}
+
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
 		//TODO Switch to EventProcessor.attachChildProcessor
@@ -234,7 +242,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 
 		for (MStackElement e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
-			ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(e);
+			ElementRenderer<@NonNull MStackElement, ?> renderer = getFactory().getRenderer(e);
 			if (renderer != null && isChildRenderedAndVisible(e)) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
@@ -276,6 +284,10 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 		IEclipseContext context = renderer.setupRenderingContext(e);
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
 		e.getTransientData().put(MAP_ITEM_KEY, item);
+		if( item == null ) {
+			throw new IllegalStateException("The item must not be null"); //$NON-NLS-1$
+		}
+
 		item.setDomElement(e);
 		item.setInitCallback(new WCallback<@NonNull WStackItem<I, IC>, @Nullable IC>() {
 
@@ -302,7 +314,6 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 				return Boolean.valueOf(!handleStackItemClose(e, param));
 			}
 		});
-
 		return item;
 	}
 
@@ -322,9 +333,8 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			if (isChildRenderedAndVisible(element)) {
 				int idx = getRenderedIndex(parent, element);
 
-				ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
+				ElementRenderer<@NonNull MStackElement, ?> renderer = getFactory().getRenderer(element);
 				if( renderer != null ) {
-
 
 					WStack<N, I, IC> stack = widget;
 					@SuppressWarnings("unchecked")
@@ -489,7 +499,7 @@ public abstract class BaseStackRenderer<N, I, IC> extends BaseRenderer<MPartStac
 			}
 		}
 
-		ElementRenderer<MStackElement, ?> renderer = this.factory.getRenderer(element);
+		ElementRenderer<@NonNull MStackElement, ?> renderer = getFactory().getRenderer(element);
 		if( renderer != null ) {
 			int idx = getRenderedIndex(parentElement, element);
 			stack.addItems(idx, Collections.singletonList(createStackItem(stack, (MStackElement) element, renderer)));

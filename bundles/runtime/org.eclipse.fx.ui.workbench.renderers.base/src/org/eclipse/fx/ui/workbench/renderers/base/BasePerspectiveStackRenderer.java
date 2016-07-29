@@ -60,6 +60,14 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 
 	boolean inLazyInit;
 
+	private @NonNull RendererFactory getFactory() {
+		RendererFactory factory = this.factory;
+		if( factory == null ) {
+			throw new IllegalStateException("Renderfactory must not be null"); //$NON-NLS-1$
+		}
+		return factory;
+	}
+
 	@PostConstruct
 	void init(IEventBroker eventBroker) {
 		eventBroker.subscribe(UIEvents.ElementContainer.TOPIC_CHILDREN, new EventHandler() {
@@ -142,6 +150,8 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		// nothing to do
 	}
 
+
+
 	@SuppressWarnings("null")
 	@Override
 	public void doProcessContent(MPerspectiveStack element) {
@@ -155,7 +165,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 
 		for (MPerspective e : element.getChildren()) {
 			// Precreate the rendering context for the subitem
-			ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(e);
+			ElementRenderer<@NonNull MPerspective, ?> renderer = getFactory().getRenderer(e);
 			if (renderer != null && isChildRenderedAndVisible(e)) {
 				WStackItem<I, IC> item = createStackItem(stack, e, renderer);
 				items.add(item);
@@ -194,6 +204,10 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 	private WStackItem<I, IC> createStackItem(@NonNull WPerspectiveStack<N, I, IC> stack, @NonNull final MPerspective e, ElementRenderer<MPerspective, ?> renderer) {
 		IEclipseContext context = renderer.setupRenderingContext(e);
 		WStackItem<I, IC> item = ContextInjectionFactory.make(stack.getStackItemClass(), context);
+		if( item == null ) {
+			throw new IllegalStateException("The item must not be null"); //$NON-NLS-1$
+		}
+
 		item.setDomElement(e);
 		item.setInitCallback(new WCallback<WStackItem<I, IC>, @Nullable IC>() {
 
@@ -219,8 +233,8 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 				return Boolean.valueOf(!handleStackItemClose(e, param));
 			}
 		});
-
 		return item;
+
 	}
 
 	@SuppressWarnings("null")
@@ -237,7 +251,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 			if (element.isToBeRendered()) {
 				int idx = getRenderedIndex(parent, element);
 
-				ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(element);
+				ElementRenderer<@NonNull MPerspective, ?> renderer = getFactory().getRenderer(element);
 				WStackItem<I, IC> item = createStackItem(stack, element, renderer);
 				stack.addItems(idx, Collections.singletonList(item));
 			}
@@ -306,7 +320,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 		}
 
 		int idx = getRenderedIndex(parentElement, element);
-		ElementRenderer<MPerspective, ?> renderer = this.factory.getRenderer(element);
+		ElementRenderer<@NonNull MPerspective, ?> renderer = getFactory().getRenderer(element);
 		WStackItem<I, IC> item = createStackItem(stack, (MPerspective) element, renderer);
 		stack.addItems(idx, Collections.singletonList(item));
 	}
@@ -412,7 +426,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 				if (isWindowChildRendered(kid)) {
 					visCount++;
 				}
-					
+
 			}
 			if (visCount > 0)
 				element.setVisible(true);
@@ -444,7 +458,7 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 				}
 			}
 		}
-		
+
 		// restore perspective's maximized content
 		if(element instanceof MPerspective) {
 			String maxElementId = element.getPersistedState().get("MAXIMIZED"); //$NON-NLS-1$
@@ -459,13 +473,13 @@ public abstract class BasePerspectiveStackRenderer<N, I, IC> extends BaseRendere
 			}
 		}
 	}
-	
+
 	private boolean isWindowChildRendered(@NonNull MUIElement kid) {
 		ElementRenderer<?, ?> renderer = this.factory.getRenderer(kid);
 		if( renderer == null ) {
 			return false;
 		}
-		
+
 		return renderer.isChildRenderedAndVisible(kid);
 	}
 }
