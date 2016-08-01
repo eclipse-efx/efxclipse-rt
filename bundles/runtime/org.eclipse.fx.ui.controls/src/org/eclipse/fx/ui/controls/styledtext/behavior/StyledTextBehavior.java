@@ -430,35 +430,36 @@ public class StyledTextBehavior {
 			// read text
 			@NonNull
 			String text = getControl().getContent().getTextRange(this.dragMoveTextOffset, this.dragMoveTextLength);
+			if( getControl().getEditable() ) {
 
-			// notify the undo implementation that a compund change occurs
-			getControl().fireEvent(UndoHintEvent.createBeginCompoundChangeEvent());
-			try {
-				if( ! org.eclipse.fx.ui.controls.Util.isCopyEvent(event) ) {
-					// replace
-					if (isInRange(targetOffset, this.dragMoveTextOffset, this.dragMoveTextLength)) {
-						targetOffset = this.dragMoveTextOffset;
-					}
-					// after
-					else if (targetOffset >= this.dragMoveTextOffset + this.dragMoveTextLength) {
-						targetOffset -= this.dragMoveTextLength;
+				// notify the undo implementation that a compund change occurs
+				getControl().fireEvent(UndoHintEvent.createBeginCompoundChangeEvent());
+				try {
+					if( ! org.eclipse.fx.ui.controls.Util.isCopyEvent(event) ) {
+						// replace
+						if (isInRange(targetOffset, this.dragMoveTextOffset, this.dragMoveTextLength)) {
+							targetOffset = this.dragMoveTextOffset;
+						}
+						// after
+						else if (targetOffset >= this.dragMoveTextOffset + this.dragMoveTextLength) {
+							targetOffset -= this.dragMoveTextLength;
+						}
+
+						// remove
+						getControl().getContent().replaceTextRange(this.dragMoveTextOffset, this.dragMoveTextLength, ""); //$NON-NLS-1$
 					}
 
-					// remove
-					getControl().getContent().replaceTextRange(this.dragMoveTextOffset, this.dragMoveTextLength, ""); //$NON-NLS-1$
+					// insert
+					getControl().getContent().replaceTextRange(targetOffset, 0, text);
+
+					// move caret to end of insertion and select the text
+					moveCaretAbsolute(targetOffset + text.length());
+					getControl().setSelection(new TextSelection(targetOffset, text.length()));
 				}
-
-				// insert
-				getControl().getContent().replaceTextRange(targetOffset, 0, text);
-
-				// move caret to end of insertion and select the text
-				moveCaretAbsolute(targetOffset + text.length());
-				getControl().setSelection(new TextSelection(targetOffset, text.length()));
+				finally {
+					getControl().fireEvent(UndoHintEvent.createEndCompoundChangeEvent());
+				}
 			}
-			finally {
-				getControl().fireEvent(UndoHintEvent.createEndCompoundChangeEvent());
-			}
-
 
 			this.dragMoveTextMode = false;
 			event.consume();
@@ -598,6 +599,10 @@ public class StyledTextBehavior {
 	}
 
 	protected boolean defaultHandle(TextEditAction action, Context context) {
+		if( ! getControl().getEditable() && action.isModification() ) {
+			return true;
+		}
+
 		if (action == DefaultTextEditActions.TEXT_START) {
 			defaultNavigateTextStart();
 			return true;

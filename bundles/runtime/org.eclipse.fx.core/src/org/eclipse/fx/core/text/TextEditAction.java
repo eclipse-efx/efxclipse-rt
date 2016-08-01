@@ -11,4 +11,11 @@ public interface TextEditAction {
 	public final static TextEditAction NOOP = new TextEditAction() {
 		// empty
 	};
+
+	/**
+	 * @return true if the action modifies the text
+	 */
+	public default boolean isModification() {
+		return false;
+	}
 }
