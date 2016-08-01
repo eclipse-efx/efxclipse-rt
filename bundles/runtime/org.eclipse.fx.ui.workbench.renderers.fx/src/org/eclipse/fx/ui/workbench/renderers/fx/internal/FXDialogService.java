@@ -38,7 +38,7 @@ public class FXDialogService implements LightWeightDialogService {
 
 	/**
 	 * Create a new instance
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 */
@@ -77,6 +77,9 @@ public class FXDialogService implements LightWeightDialogService {
 			WDialogHost fhost = host;
 			IEclipseContext dialogContext = this.context.createChild();
 			Node dialogInstance = (Node) ContextInjectionFactory.make(dialogClass, dialogContext);
+			if( dialogInstance == null ) {
+				throw new IllegalStateException("The new instance must not be null"); //$NON-NLS-1$
+			}
 			dialogInstance.addEventHandler(FrameEvent.CLOSED, e -> {
 				fhost.setDialog(null);
 			});
@@ -88,7 +91,7 @@ public class FXDialogService implements LightWeightDialogService {
 			throw new IllegalStateException();
 		}
 	}
-	
+
 	@Override
 	public <T extends Node & Frame> void openDialog(T dialog, ModalityScope scope) {
 		WDialogHost host = null;
@@ -118,6 +121,9 @@ public class FXDialogService implements LightWeightDialogService {
 			WDialogHost fhost = host;
 			IEclipseContext dialogContext = this.context.createChild();
 			Node dialogInstance = dialog;
+			if( dialogInstance == null ) {
+				throw new IllegalStateException("The new instance must not be null"); //$NON-NLS-1$
+			}
 			dialogInstance.addEventHandler(FrameEvent.CLOSED, e -> {
 				fhost.setDialog(null);
 			});
