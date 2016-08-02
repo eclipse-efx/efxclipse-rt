@@ -185,15 +185,28 @@ public class FXBindingsTest {
 	}
 
 	@Test
-	public void testMapObject() {
+	public void testMap() {
+		ObjectProperty<String> master = new SimpleObjectProperty<String>("Test");
+
+		ObjectBinding<String> map = FXBindings.map(master, x -> "Hallo " + x);
+
+		Assert.assertEquals("Hallo Test", map.get());
+
+		master.set("Foo");
+
+		Assert.assertEquals("Hallo Foo", map.get());
+	}
+
+	@Test
+	public void testFlatMap() {
 		Outer outer = new Outer();
 		Inner inner = new Inner("Hello");
 		outer.Value.set(inner);
 
 		ObjectProperty<Outer> master = new SimpleObjectProperty<Outer>(outer);
 
-		ObjectBinding<Inner> m1 = FXBindings.mapValue(master, o -> o.Value);
-		ObjectBinding<String> m2 = FXBindings.mapValue(m1, i -> i.Value);
+		ObjectBinding<Inner> m1 = FXBindings.flatMap(master, o -> o.Value);
+		ObjectBinding<String> m2 = FXBindings.flatMap(m1, i -> i.Value);
 
 
 		Assert.assertEquals("Hello", m2.get());
@@ -284,7 +297,7 @@ public class FXBindingsTest {
 	}
 
 	@Test
-	public void testMap() {
+	public void testMapList() {
 		ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
 
 		ListBinding<String> result = FXBindings.mapList(source, s -> s + " apples");
@@ -376,7 +389,7 @@ public class FXBindingsTest {
 	}
 
 	@Test
-	public void testFlatMapValue() {
+	public void testFlatMapListValue() {
 
 		StringProperty a = new SimpleStringProperty("a");
 		StringProperty b = new SimpleStringProperty("b");
@@ -384,7 +397,7 @@ public class FXBindingsTest {
 
 		ObservableList<ObservableValue<String>> source = FXCollections.observableArrayList(a, b, c);
 
-		ListBinding<String> flatMap = FXBindings.flatMapValue(source, x->x);
+		ListBinding<String> flatMap = FXBindings.flatMapListValue(source, x->x);
 
 
 		Assert.assertArrayEquals(new String[] {

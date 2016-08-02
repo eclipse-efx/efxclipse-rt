@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.fx.core.bindings;
 
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -24,15 +22,14 @@ import org.eclipse.fx.core.bindings.internal.BindingStreamImpl;
 import org.eclipse.fx.core.bindings.internal.ConcatListBinding;
 import org.eclipse.fx.core.bindings.internal.FlatMapListBinding;
 import org.eclipse.fx.core.bindings.internal.FlatMapValueListBinding;
-import org.eclipse.fx.core.bindings.internal.FormattedTemporalAccessorBinding;
 import org.eclipse.fx.core.bindings.internal.MapListBinding;
 import org.eclipse.fx.core.bindings.internal.MapObjectBinding;
+import org.eclipse.fx.core.bindings.internal.MapSimpleObjectBinding;
 import org.eclipse.fx.core.bindings.internal.SyncListBinding;
 import org.eclipse.fx.core.bindings.internal.SyncObjectBinding;
 
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.ObjectBinding;
-import javafx.beans.binding.StringBinding;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
@@ -61,7 +58,7 @@ public class FXBindings {
 	 * Concatenates multiple observable lists together.
 	 *
 	 * @param sources
-	 * @return the concatinated list binding
+	 * @return the concatenated list binding
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A> ListBinding<A> concat(ObservableList<A>... sources) {
@@ -69,18 +66,29 @@ public class FXBindings {
 	}
 
 	/**
-	 * Maps an obserbable list
+	 * Maps an observable value to another observable value
 	 *
 	 * @param source
 	 * @param map
-	 * @return the mapped list binding
+	 * @return the mapped value binding
 	 */
-	public static <A, B> ObjectBinding<B> mapValue(ObservableValue<A> source, Function<A, ObservableValue<B>> map) {
+	public static <A, B> ObjectBinding<B> flatMap(ObservableValue<A> source, Function<A, ObservableValue<B>> map) {
 		return new MapObjectBinding<>(source, map);
 	}
 
 	/**
-	 * Maps an obserbable list
+	 * Maps an observable value
+	 *
+	 * @param source
+	 * @param map
+	 * @return the mapped value binding
+	 */
+	public static <A, B> ObjectBinding<B> map(ObservableValue<A> source, Function<A, B> map) {
+		return new MapSimpleObjectBinding<>(source, map);
+	}
+
+	/**
+	 * Maps an observable list
 	 *
 	 * @param source
 	 * @param map
@@ -108,7 +116,7 @@ public class FXBindings {
 	 * @param map
 	 * @return the flat mapped list binding
 	 */
-	public static <A, B> ListBinding<B> flatMapValue(ObservableList<A> source, Function<A, ObservableValue<B>> map) {
+	public static <A, B> ListBinding<B> flatMapListValue(ObservableList<A> source, Function<A, ObservableValue<B>> map) {
 		return new FlatMapValueListBinding<>(source, map);
 	}
 
@@ -130,22 +138,8 @@ public class FXBindings {
 	 * @param thread
 	 * @return the synced object binding
 	 */
-	public static <A> ObjectBinding<A> syncValue(ObservableValue<A> source, ThreadSynchronize thread) {
+	public static <A> ObjectBinding<A> sync(ObservableValue<A> source, ThreadSynchronize thread) {
 		return new SyncObjectBinding<>(source, thread);
-	}
-
-	/**
-	 * allows to format an {@link ObservableValue} who holds an
-	 * {@link TemporalAccessor}
-	 *
-	 * @param source
-	 *            the source
-	 * @param formatter
-	 *            the formatter
-	 * @return the string binding
-	 */
-	public static StringBinding formattedTemporal(ObservableValue<? extends TemporalAccessor> source, DateTimeFormatter formatter) {
-		return new FormattedTemporalAccessorBinding(source, formatter, ""); //$NON-NLS-1$
 	}
 
 	/**
