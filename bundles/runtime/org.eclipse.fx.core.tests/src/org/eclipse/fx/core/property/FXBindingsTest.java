@@ -192,8 +192,8 @@ public class FXBindingsTest {
 
 		ObjectProperty<Outer> master = new SimpleObjectProperty<Outer>(outer);
 
-		ObjectBinding<Inner> m1 = FXBindings.map(master, o -> o.Value);
-		ObjectBinding<String> m2 = FXBindings.map(m1, i -> i.Value);
+		ObjectBinding<Inner> m1 = FXBindings.mapValue(master, o -> o.Value);
+		ObjectBinding<String> m2 = FXBindings.mapValue(m1, i -> i.Value);
 
 
 		Assert.assertEquals("Hello", m2.get());
@@ -287,7 +287,7 @@ public class FXBindingsTest {
 	public void testMap() {
 		ObservableList<String> source = FXCollections.observableArrayList("one", "two", "three");
 
-		ListBinding<String> result = FXBindings.map(source, s -> s + " apples");
+		ListBinding<String> result = FXBindings.mapList(source, s -> s + " apples");
 
 		Assert.assertArrayEquals(new String[] {
 				"one apples",
