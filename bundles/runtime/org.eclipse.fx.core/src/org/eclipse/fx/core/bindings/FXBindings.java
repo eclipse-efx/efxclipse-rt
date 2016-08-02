@@ -75,7 +75,7 @@ public class FXBindings {
 	 * @param map
 	 * @return the mapped list binding
 	 */
-	public static <A, B> ObjectBinding<B> map(ObservableValue<A> source, Function<A, ObservableValue<B>> map) {
+	public static <A, B> ObjectBinding<B> mapValue(ObservableValue<A> source, Function<A, ObservableValue<B>> map) {
 		return new MapObjectBinding<>(source, map);
 	}
 
@@ -86,7 +86,7 @@ public class FXBindings {
 	 * @param map
 	 * @return the mapped list binding
 	 */
-	public static <A, B> ListBinding<B> map(ObservableList<A> source, Function<A, B> map) {
+	public static <A, B> ListBinding<B> mapList(ObservableList<A> source, Function<A, B> map) {
 		return new MapListBinding<A, B>(source, map);
 	}
 

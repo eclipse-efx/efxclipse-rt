@@ -136,7 +136,7 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 	}
 
 	@Override
-	public <S> BindingStream<S> mapNoObservalbe(Function<T, S> map) {
+	public <S> BindingStream<S> mapNoObservable(Function<T, S> map) {
 		MapNoObservable<T, S> segment = new MapNoObservable<>(map);
 		this.path.add(segment);
 		return new BindingStreamImpl<S>(this.base, this.path);
@@ -150,7 +150,7 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 	@Override
 	public <S> Property<S> toProperty(Function<T, Property<S>> map) {
 		// Remember the binding to prevent GC to clean it up
-		ObjectBinding<Property<S>> binding = mapNoObservalbe(map).toBinding();
+		ObjectBinding<Property<S>> binding = mapNoObservable(map).toBinding();
 		Property<S> rv = new SimpleObjectProperty<S>() {
 			@SuppressWarnings("unused")
 			private ObjectBinding<Property<S>> b = binding;

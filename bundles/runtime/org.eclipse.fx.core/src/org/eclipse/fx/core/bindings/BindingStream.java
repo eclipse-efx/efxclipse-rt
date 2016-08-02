@@ -37,7 +37,7 @@ public interface BindingStream<T> {
 	 * @param map
 	 * @return the {@link BindingStream}
 	 */
-	<S> BindingStream<S> mapNoObservalbe(Function<T, S> map);
+	<S> BindingStream<S> mapNoObservable(Function<T, S> map);
 
 	/**
 	 * creates the {@link ObjectBinding}
