@@ -5,14 +5,18 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.core.bindings.FXBindings;
+import org.eclipse.fx.core.bindings.FXBindings.StatusBinding;
 import org.junit.Assert;
 import org.junit.Test;
 
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -515,5 +519,30 @@ public class FXBindingsTest {
 		Assert.assertEquals("Converted " + 1, target.get(1));
 		Assert.assertEquals("Converted " + 2, target.get(2));
 		Assert.assertEquals("Converted " + 3, target.get(3));
+	}
+
+	@Test
+	public void testBindBidirectional() {
+
+		Property<String> s = new SimpleStringProperty("99");
+		Property<Integer> i = new SimpleObjectProperty<Integer>();
+
+		StatusBinding binding = FXBindings.bindBidirectional(i, s, Integer.class, String.class);
+
+		Assert.assertEquals(99, i.getValue().intValue());
+		Assert.assertEquals(State.OK, binding.getValue().getState());
+
+		s.setValue("100");
+		Assert.assertEquals(100, i.getValue().intValue());
+		Assert.assertEquals(State.OK, binding.getValue().getState());
+
+		s.setValue("abcd");
+		Assert.assertEquals(100, i.getValue().intValue());
+		Assert.assertEquals(State.ERROR, binding.getValue().getState());
+
+		s.setValue("101");
+		Assert.assertEquals(101, i.getValue().intValue());
+		Assert.assertEquals(State.OK, binding.getValue().getState());
+
 	}
 }

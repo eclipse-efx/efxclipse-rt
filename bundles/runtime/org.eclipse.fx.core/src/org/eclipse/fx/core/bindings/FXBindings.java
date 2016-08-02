@@ -10,14 +10,19 @@
  *******************************************************************************/
 package org.eclipse.fx.core.bindings;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.fx.core.Tuple;
+import org.eclipse.fx.core.bindings.internal.BidiPropertyBinding;
 import org.eclipse.fx.core.bindings.internal.BindingStreamImpl;
 import org.eclipse.fx.core.bindings.internal.ConcatListBinding;
 import org.eclipse.fx.core.bindings.internal.FlatMapListBinding;
@@ -28,9 +33,13 @@ import org.eclipse.fx.core.bindings.internal.MapSimpleObjectBinding;
 import org.eclipse.fx.core.bindings.internal.SyncListBinding;
 import org.eclipse.fx.core.bindings.internal.SyncObjectBinding;
 
+import com.sun.javafx.binding.BidirectionalBinding;
+
+import javafx.beans.binding.Binding;
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -415,4 +424,81 @@ public class FXBindings {
 	static <T, E> List<T> transformList(List<? extends E> list, Function<E, T> converterFunction) {
 		return list.stream().map(converterFunction).collect(Collectors.toList());
 	}
+
+	/**
+	 * Registry to track and lookup globally available converters
+	 *
+	 */
+	public static class ConverterRegistry {
+
+		private static Map<Tuple<Class<?>, Class<?>>, Function<?, ?>> map = new HashMap<>();
+
+		static {
+			// TODO add some default mappings here
+			registerConverter(Integer.class, String.class, i -> i.toString());
+			registerConverter(String.class, Integer.class, s -> Integer.parseInt(s));
+		}
+
+		/**
+		 * registers a converter
+		 * @param sourceType
+		 * @param targetType
+		 * @param converter
+		 */
+		public static <S, T> void registerConverter(Class<S> sourceType, Class<T> targetType, Function<S, T> converter) {
+			map.put(new Tuple<Class<?>, Class<?>>(sourceType, targetType), converter);
+		}
+
+		/**
+		 * retrieves a converter
+		 * @param sourceType
+		 * @param targetType
+		 * @return the converter or <code>null</code> if none was found
+		 */
+		@SuppressWarnings("unchecked")
+		public static <S, T> Function<S, T> getConverter(Class<S> sourceType, Class<T> targetType) {
+			return (Function<S, T>) map.get(new Tuple<Class<S>, Class<T>>(sourceType, targetType));
+		}
+	}
+
+	/**
+	 * Binding status.
+	 *
+	 */
+	public static interface StatusBinding extends Binding<Status> {
+		// empty
+	}
+
+	/**
+	 * Bidirectional binding between two properties with conversion.
+	 * The conversion is looked up in the {@link ConverterRegistry}
+	 * if no converter is found a runtime exception is thrown
+	 * @param target
+	 * @param source
+	 * @param targetType
+	 * @param sourceType
+	 * @return a StatusBinding which can be used to watch conversion failures and to dispose the whole bidi binding
+	 */
+	public static <S, T> StatusBinding bindBidirectional(Property<T> target, Property<S> source, Class<T> targetType, Class<S> sourceType) {
+		// lookup in registry
+		Function<T, S> targetToSource = ConverterRegistry.getConverter(targetType, sourceType);
+		Function<S, T> sourceToTarget = ConverterRegistry.getConverter(sourceType, targetType);
+		if (sourceToTarget == null) throw new RuntimeException("Cannot find converter from " + sourceType + " to " + targetType);  //$NON-NLS-1$//$NON-NLS-2$
+		if (targetToSource == null) throw new RuntimeException("Cannot find converter from " + targetType + " to " + sourceType);  //$NON-NLS-1$//$NON-NLS-2$
+		return bindBidirectional(target, source, targetToSource, sourceToTarget);
+	}
+
+	/**
+	 * Bidirectional binding between two properties with conversion.
+	 * @param target
+	 * @param source
+	 * @param targetToSource
+	 * @param sourceToTarget
+	 * @return a StatusBinding which can be used to watch conversion failures and to dispose the whole bidi binding
+	 */
+	public static <S, T> StatusBinding bindBidirectional(Property<T> target, Property<S> source, Function<T, S> targetToSource, Function<S, T> sourceToTarget) {
+		return new BidiPropertyBinding<>(target, source, targetToSource, sourceToTarget);
+	}
+
 }
+
