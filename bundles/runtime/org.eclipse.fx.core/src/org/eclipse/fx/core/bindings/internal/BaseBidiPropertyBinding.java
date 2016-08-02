@@ -1,7 +1,5 @@
 package org.eclipse.fx.core.bindings.internal;
 
-import java.util.function.Function;
-
 import org.eclipse.fx.core.Status;
 import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.core.bindings.FXBindings.StatusBinding;
@@ -9,48 +7,41 @@ import org.eclipse.fx.core.bindings.FXBindings.StatusBinding;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.ObjectBinding;
-import javafx.beans.property.Property;
 
-
-@SuppressWarnings("javadoc")
-public class BidiPropertyBinding<S, T> extends ObjectBinding<Status> implements StatusBinding {
-
-	private final Property<T> target;
-	private final Property<S> source;
-	private final Function<T, S> targetToSource;
-	private final Function<S, T> sourceToTarget;
-
+public abstract class BaseBidiPropertyBinding extends ObjectBinding<Status> implements StatusBinding {
+	private Observable source;
+	private Observable target;
 	private Status curStatus;
 
 	private boolean inUpdate = false;
 
-	public BidiPropertyBinding(Property<T> target, Property<S> source, Function<T, S> targetToSource, Function<S, T> sourceToTarget) {
-		this.target = target;
+	public BaseBidiPropertyBinding(Observable target, Observable source) {
 		this.source = source;
-		this.targetToSource = targetToSource;
-		this.sourceToTarget = sourceToTarget;
+		this.target = target;
 
-		source.addListener(this.onInvalidate);
 		target.addListener(this.onInvalidate);
+		source.addListener(this.onInvalidate);
 
-		doSourceToTarget();
+		_doSourceToTarget();
 	}
 
 	private InvalidationListener onInvalidate = this::onInvalidate;
 	private void onInvalidate(Observable o) {
 		if (o == this.source) {
-			doSourceToTarget();
+			_doSourceToTarget();
 		}
 		else if (o == this.target) {
 			doTargetToSource();
 		}
 	}
 
-	private void doSourceToTarget() {
+	protected abstract void syncTarget();
+
+	private void _doSourceToTarget() {
 		if (this.inUpdate) return;
 		this.inUpdate = true;
 		try {
-			this.target.setValue(this.sourceToTarget.apply(this.source.getValue()));
+			syncTarget();
 			setStatus(Status.ok());
 		}
 		catch (Throwable t) {
@@ -61,11 +52,13 @@ public class BidiPropertyBinding<S, T> extends ObjectBinding<Status> implements 
 		}
 	}
 
+	protected abstract void syncSource();
+
 	private void doTargetToSource() {
 		if (this.inUpdate) return;
 		this.inUpdate = true;
 		try {
-			this.source.setValue(this.targetToSource.apply(this.target.getValue()));
+			syncSource();
 			setStatus(Status.ok());
 		}
 		catch (Throwable t) {
