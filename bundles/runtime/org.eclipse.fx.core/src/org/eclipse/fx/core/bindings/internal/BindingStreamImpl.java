@@ -11,6 +11,7 @@
 package org.eclipse.fx.core.bindings.internal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,7 +75,9 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 		public StreamBinding(ObservableValue<?> base, List<StreamStep<?, ?>> path) {
 			this.base = base;
-			this.path = path;
+			this.path = new ArrayList<>(path);
+			bind(base);
+			curToTrack = Collections.singleton(this.base);
 		}
 
 		@Override
@@ -91,18 +94,25 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			Set<Observable> toTrack = new HashSet<>();
 			toTrack.add(this.base);
 
-			Object cur = this.base.getValue();
+			try {
+				if( this.path.isEmpty() ) {
+					return (T) this.base.getValue();
+				} else {
+					Object cur = this.base.getValue();
 
-			for (StreamStep s : this.path) {
-				cur = s.apply(cur, toTrack);
-			}
+					for (StreamStep s : this.path) {
+						cur = s.apply(cur, toTrack);
+					}
+					return (T) cur;
+				}
+			} finally {
+				if (this.curToTrack != null) {
+					unbind(this.curToTrack.toArray(new Observable[0]));
+				}
+				this.curToTrack = toTrack;
+				bind(this.curToTrack.toArray(new Observable[0]));
 
-			if (this.curToTrack != null) {
-				unbind(this.curToTrack.toArray(new Observable[0]));
 			}
-			this.curToTrack = toTrack;
-			bind(this.curToTrack.toArray(new Observable[0]));
-			return (T) cur;
 		}
 
 	}
@@ -139,8 +149,13 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 	@Override
 	public <S> Property<S> toProperty(Function<T, Property<S>> map) {
-		Property<S> rv = new SimpleObjectProperty<>();
+		// Remember the binding to prevent GC to clean it up
 		ObjectBinding<Property<S>> binding = mapNoObservalbe(map).toBinding();
+		Property<S> rv = new SimpleObjectProperty<S>() {
+			@SuppressWarnings("unused")
+			private ObjectBinding<Property<S>> b = binding;
+		};
+
 		if( binding.get() != null ) {
 			rv.bindBidirectional(binding.get());
 		}

@@ -2,6 +2,7 @@ package org.eclipse.fx.core.property;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.bindings.FXBindings;
@@ -35,7 +36,17 @@ public class FXBindingsTest {
 	}
 
 	public static class Person {
+		private static int i;
+		private final StringProperty name;
 		private ObjectProperty<Address> address = new SimpleObjectProperty<>();
+
+		public Person() {
+			this.name = new SimpleStringProperty(this, "name", i++ + "");
+		}
+
+		public Person(String name) {
+			this.name = new SimpleStringProperty(this, "name", name);
+		}
 	}
 
 	public static class Address {
@@ -81,6 +92,7 @@ public class FXBindingsTest {
 		Assert.assertNull(street.get());
 		p.get().address.get().street.set("Test");
 		Assert.assertEquals("Test",street.get());
+		Assert.assertEquals("Test",streetProperty.getValue());
 		streetProperty.setValue("Super geil 1");
 		Assert.assertEquals("Super geil 1",street.get());
 
@@ -103,6 +115,73 @@ public class FXBindingsTest {
 		Assert.assertEquals("ui value", uiProp.get());
 		uiProp.set("back to model");
 		Assert.assertEquals("back to model", a2.street.get());
+	}
+
+	@Test
+	public void testGC() {
+		ObjectProperty<Person> p = new SimpleObjectProperty<>( new Person() );
+
+		ObjectBinding<String> street = FXBindings.bindStream( p ).map( o -> o.address).map( o -> o.street).toBinding();
+		Property<String> streetProperty = FXBindings.bindStream( p ).map( o -> o.address).toProperty( o -> o.street);
+
+		System.gc();
+
+		Assert.assertNull(street.get());
+		Address a = new Address();
+		p.get().address.set(a);
+		Assert.assertNull(street.get());
+		p.get().address.get().street.set("Test");
+		Assert.assertEquals("Test",street.get());
+		Assert.assertEquals("Test",streetProperty.getValue());
+		streetProperty.setValue("Super geil 1");
+		Assert.assertEquals("Super geil 1",street.get());
+	}
+
+	@Test
+	public void testHop0() {
+		ObjectProperty<Person> currentPerson = new SimpleObjectProperty<>();
+
+		ObjectBinding<Person> binding = FXBindings.bindStream(currentPerson).toBinding();
+		Assert.assertNull(binding.get());
+		Person p1 = new Person();
+		currentPerson.set(p1);
+		Assert.assertSame(p1,binding.get());
+
+		Person p2 = new Person();
+		currentPerson.set(p2);
+		Assert.assertSame(p2,binding.get());
+	}
+
+	@Test
+	public void testListenerInit() {
+		ObjectProperty<Person> currentPerson = new SimpleObjectProperty<>();
+
+		ObjectBinding<Person> binding = FXBindings.bindStream(currentPerson).toBinding();
+		AtomicInteger i = new AtomicInteger();
+		binding.addListener( o -> {
+			i.incrementAndGet();
+		});
+
+		Assert.assertEquals(0, i.get());
+		Person p1 = new Person();
+		currentPerson.set(p1);
+		Assert.assertEquals(1, i.get());
+	}
+
+	@Test
+	public void testListenerInitComplex() {
+		ObjectProperty<Person> currentPerson = new SimpleObjectProperty<>();
+
+		ObjectBinding<Address> binding = FXBindings.bindStream(currentPerson).map( p -> p.address).toBinding();
+		AtomicInteger i = new AtomicInteger();
+		binding.addListener( o -> {
+			i.incrementAndGet();
+		});
+
+		Assert.assertEquals(0, i.get());
+		Person p1 = new Person();
+		currentPerson.set(p1);
+		Assert.assertEquals(1, i.get());
 	}
 
 	@Test
