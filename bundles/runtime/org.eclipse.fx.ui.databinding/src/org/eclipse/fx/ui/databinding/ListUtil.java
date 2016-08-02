@@ -118,7 +118,7 @@ public class ListUtil {
 	 *            the list element type
 	 * @see #setupList(ListView, String, IValueProperty...)
 	 */
-	public static <T> void setupList(@NonNull ListView<T> listView, @NonNull IObservableList list,
+	public static <T> void setupList(@NonNull ListView<T> listView, @NonNull IObservableList<T> list,
 			@NonNull String template, @NonNull IValueProperty... properties) {
 		setupList(listView, template, properties);
 		listView.setItems(AdapterFactory.<T> adapt(list));

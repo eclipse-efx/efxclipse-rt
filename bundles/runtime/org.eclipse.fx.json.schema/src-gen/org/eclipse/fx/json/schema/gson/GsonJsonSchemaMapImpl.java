@@ -14,6 +14,9 @@ public final class GsonJsonSchemaMapImpl implements GsonBase, JsonSchemaMap {
 	public JsonObject toJSONObject() {
 		JsonObject o = new JsonObject();
 		o.addProperty( "$gtype", "JsonSchemaMap" );
+		for( java.util.Map.Entry<String,JsonSchema> e : this.propertyMap ) {
+			o.add( e.getKey(), ((GsonBase)e.getValue()).toJSONObject() );
+		}
 		return o;
 	}
 
@@ -26,6 +29,9 @@ public final class GsonJsonSchemaMapImpl implements GsonBase, JsonSchemaMap {
 	private static java.util.Map<String,JsonSchema> toMap(JsonObject o) {
 		java.util.Map<String,JsonSchema> rv = new java.util.HashMap<>();
 		for( java.util.Map.Entry<String,com.google.gson.JsonElement> e : o.entrySet() ) {
+			if( e.getKey().startsWith("$") ) {
+				continue;
+			}
 			rv.put( e.getKey(), GsonElementFactory.createJsonSchema(e.getValue().getAsJsonObject()) );
 		}
 		return rv;

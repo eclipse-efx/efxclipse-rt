@@ -20,20 +20,15 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import javax.xml.transform.stream.StreamSource;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
-import org.eclipse.fx.ui.controls.styledtext.events.TextPositionEvent;
 import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
 import org.eclipse.fx.ui.controls.styledtext.internal.FXBindUtil;
 import org.eclipse.fx.ui.controls.styledtext.internal.LineHelper;
@@ -46,7 +41,6 @@ import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
-import org.eclipse.jdt.annotation.NonNull;
 
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
@@ -64,7 +58,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.ContextMenuEvent;

@@ -76,6 +76,7 @@ public class LangsConfigurationModelProvider implements ConfigurationModelProvid
 		prefix("ts","platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/ts.json").ifPresent(urlList::add);
 		prefix("xml","platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/xml.json").ifPresent(urlList::add);
 		prefix("html","platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/xml.json").ifPresent(urlList::add);
+		prefix("sh","platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/sh.json").ifPresent(urlList::add);
 	}
 
 	private static final Optional<Function<Input<?>, URL>> prefix(String prefix, String url) {

@@ -32,12 +32,7 @@
 		<repository>
 			<id>efxclipse-repo</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/efxclipse/runtime-nightly/site</url>
-		</repository>
-		<repository>
-			<id>efxclipse-addons</id>
-			<layout>p2</layout>
-			<url>http://downloads.efxclipse.org/efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url>
+			<url>file://Users/tomschindl/git/efxclipse/releng/org.eclipse.fx.updatesite/target/site</url>
 		</repository>
 
 	</repositories>

@@ -34,6 +34,7 @@ public class DefaultEditorStylesheets implements MultiURLStylesheet {
 		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/swift.css", true).ifPresent(stylesheets::add);
 		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/ts.css", true).ifPresent(stylesheets::add);
 		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/xml.css", true).ifPresent(stylesheets::add);
+		Util.createUrl("platform:/plugin/org.eclipse.fx.code.editor.langs/org/eclipse/fx/code/editor/ldef/langs/sh.css", true).ifPresent(stylesheets::add);
 		this.stylesheets = stylesheets;
 	}
 

@@ -4,60 +4,29 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.fx.code.editor.configuration.CompositeCondition;
+import org.eclipse.fx.code.editor.configuration.Check;
 import org.eclipse.fx.code.editor.configuration.Condition;
 import org.eclipse.fx.code.editor.configuration.EditorGModel;
-import org.eclipse.fx.code.editor.configuration.EqualsCondition;
-import org.eclipse.fx.code.editor.configuration.ExistsCondition;
 import org.eclipse.fx.code.editor.configuration.Partition;
 import org.eclipse.fx.code.editor.configuration.PartitionRule;
-import org.eclipse.fx.code.editor.configuration.PartitionRule_DynamicEnd;
-import org.eclipse.fx.code.editor.configuration.PartitionRule_MultiLine;
-import org.eclipse.fx.code.editor.configuration.PartitionRule_SingleLine;
 import org.eclipse.fx.code.editor.configuration.PartitionWhiteSpace;
 import org.eclipse.fx.code.editor.configuration.Token;
 import org.eclipse.fx.code.editor.configuration.TokenScanner;
-import org.eclipse.fx.code.editor.configuration.TokenScanner_CharacterRule;
-import org.eclipse.fx.code.editor.configuration.TokenScanner_DynamicEnd;
-import org.eclipse.fx.code.editor.configuration.TokenScanner_Keyword;
-import org.eclipse.fx.code.editor.configuration.TokenScanner_MultiLineRule;
-import org.eclipse.fx.code.editor.configuration.TokenScanner_PatternRule;
-import org.eclipse.fx.code.editor.configuration.TokenScanner_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.LDefStandaloneSetup;
-import org.eclipse.fx.code.editor.ldef.lDef.Check;
 import org.eclipse.fx.code.editor.ldef.lDef.Equals;
-import org.eclipse.fx.code.editor.ldef.lDef.Keyword;
 import org.eclipse.fx.code.editor.ldef.lDef.LanguageDef;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalHighlighting;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting;
 import org.eclipse.fx.code.editor.ldef.lDef.LexicalPartitionHighlighting_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Paritioning;
-import org.eclipse.fx.code.editor.ldef.lDef.Partition_JSRule;
-import org.eclipse.fx.code.editor.ldef.lDef.Partition_MultiLineRule;
-import org.eclipse.fx.code.editor.ldef.lDef.Partition_Rule;
-import org.eclipse.fx.code.editor.ldef.lDef.Partition_SingleLineRule;
-import org.eclipse.fx.code.editor.ldef.lDef.Partitioner;
-import org.eclipse.fx.code.editor.ldef.lDef.Partitioner_Rule;
 import org.eclipse.fx.code.editor.ldef.lDef.Range;
 import org.eclipse.fx.code.editor.ldef.lDef.Root;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerCondition;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionComposite;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionEquals;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionExists;
-import org.eclipse.fx.code.editor.ldef.lDef.ScannerConditionJs;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_CharacterRule;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_Keyword;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_MultiLineRule;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_PatternRule;
-import org.eclipse.fx.code.editor.ldef.lDef.Scanner_SingleLineRule;
 import org.eclipse.fx.code.editor.ldef.lDef.WhitespaceRule;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -145,84 +114,9 @@ public class JSONConfigurationConfigurator {
   }
   
   public List<PartitionRule> ruleList(final EditorGModel m, final LanguageDef model, final org.eclipse.fx.code.editor.ldef.lDef.Partition pr) {
-    Paritioning _paritioning = model.getParitioning();
-    Partitioner _partitioner = _paritioning.getPartitioner();
-    final Partitioner_Rule tmp = ((Partitioner_Rule) _partitioner);
-    EList<Partition_Rule> _ruleList = tmp.getRuleList();
-    final Function1<Partition_Rule, Boolean> _function = (Partition_Rule prl) -> {
-      org.eclipse.fx.code.editor.ldef.lDef.Partition _parition = prl.getParition();
-      return Boolean.valueOf(Objects.equal(_parition, pr));
-    };
-    Iterable<Partition_Rule> _filter = IterableExtensions.<Partition_Rule>filter(_ruleList, _function);
-    final Function1<Partition_Rule, PartitionRule> _function_1 = (Partition_Rule prl) -> {
-      Object _xifexpression = null;
-      if ((prl instanceof Partition_SingleLineRule)) {
-        String _startPattern = ((Partition_SingleLineRule)prl).getStartPattern();
-        boolean _notEquals = (!Objects.equal(_startPattern, null));
-        if (_notEquals) {
-          PartitionRule_DynamicEnd.Builder _PartitionRule_DynamicEndBuilder = m.PartitionRule_DynamicEndBuilder();
-          String _startSeq = ((Partition_SingleLineRule)prl).getStartSeq();
-          PartitionRule_DynamicEnd.Builder _beginPrefix = _PartitionRule_DynamicEndBuilder.beginPrefix(_startSeq);
-          String _startPattern_1 = ((Partition_SingleLineRule)prl).getStartPattern();
-          PartitionRule_DynamicEnd.Builder _beginMatch = _beginPrefix.beginMatch(_startPattern_1);
-          String _startSuffix = ((Partition_SingleLineRule)prl).getStartSuffix();
-          PartitionRule_DynamicEnd.Builder _beginSuffix = _beginMatch.beginSuffix(_startSuffix);
-          String _endSeq = ((Partition_SingleLineRule)prl).getEndSeq();
-          PartitionRule_DynamicEnd.Builder _endTemplate = _beginSuffix.endTemplate(_endSeq);
-          PartitionRule_DynamicEnd.Builder _singleLine = _endTemplate.singleLine(true);
-          return _singleLine.build();
-        } else {
-          PartitionRule_SingleLine.Builder _PartitionRule_SingleLineBuilder = m.PartitionRule_SingleLineBuilder();
-          String _startSeq_1 = ((Partition_SingleLineRule)prl).getStartSeq();
-          PartitionRule_SingleLine.Builder _startSeq_2 = _PartitionRule_SingleLineBuilder.startSeq(_startSeq_1);
-          String _endSeq_1 = ((Partition_SingleLineRule)prl).getEndSeq();
-          PartitionRule_SingleLine.Builder _endSeq_2 = _startSeq_2.endSeq(_endSeq_1);
-          String _escapeSeq = ((Partition_SingleLineRule)prl).getEscapeSeq();
-          PartitionRule_SingleLine.Builder _escapedBy = _endSeq_2.escapedBy(_escapeSeq);
-          return _escapedBy.build();
-        }
-      } else {
-        Object _xifexpression_1 = null;
-        if ((prl instanceof Partition_MultiLineRule)) {
-          String _startPattern_2 = ((Partition_MultiLineRule)prl).getStartPattern();
-          boolean _notEquals_1 = (!Objects.equal(_startPattern_2, null));
-          if (_notEquals_1) {
-            PartitionRule_DynamicEnd.Builder _PartitionRule_DynamicEndBuilder_1 = m.PartitionRule_DynamicEndBuilder();
-            String _startSeq_3 = ((Partition_MultiLineRule)prl).getStartSeq();
-            PartitionRule_DynamicEnd.Builder _beginPrefix_1 = _PartitionRule_DynamicEndBuilder_1.beginPrefix(_startSeq_3);
-            String _startPattern_3 = ((Partition_MultiLineRule)prl).getStartPattern();
-            PartitionRule_DynamicEnd.Builder _beginMatch_1 = _beginPrefix_1.beginMatch(_startPattern_3);
-            String _startSuffix_1 = ((Partition_MultiLineRule)prl).getStartSuffix();
-            PartitionRule_DynamicEnd.Builder _beginSuffix_1 = _beginMatch_1.beginSuffix(_startSuffix_1);
-            String _endSeq_3 = ((Partition_MultiLineRule)prl).getEndSeq();
-            PartitionRule_DynamicEnd.Builder _endTemplate_1 = _beginSuffix_1.endTemplate(_endSeq_3);
-            PartitionRule_DynamicEnd.Builder _singleLine_1 = _endTemplate_1.singleLine(false);
-            return _singleLine_1.build();
-          } else {
-            PartitionRule_MultiLine.Builder _PartitionRule_MultiLineBuilder = m.PartitionRule_MultiLineBuilder();
-            String _startSeq_4 = ((Partition_MultiLineRule)prl).getStartSeq();
-            PartitionRule_MultiLine.Builder _startSeq_5 = _PartitionRule_MultiLineBuilder.startSeq(_startSeq_4);
-            String _endSeq_4 = ((Partition_MultiLineRule)prl).getEndSeq();
-            PartitionRule_MultiLine.Builder _endSeq_5 = _startSeq_5.endSeq(_endSeq_4);
-            String _escapeSeq_1 = ((Partition_MultiLineRule)prl).getEscapeSeq();
-            PartitionRule_MultiLine.Builder _escapedBy_1 = _endSeq_5.escapedBy(_escapeSeq_1);
-            return _escapedBy_1.build();
-          }
-        } else {
-          Object _xifexpression_2 = null;
-          if ((prl instanceof Partition_JSRule)) {
-            _xifexpression_2 = null;
-          } else {
-            throw new IllegalStateException((("Unknown rule \'" + prl) + "\'"));
-          }
-          _xifexpression_1 = _xifexpression_2;
-        }
-        _xifexpression = _xifexpression_1;
-      }
-      return ((PartitionRule)_xifexpression);
-    };
-    Iterable<PartitionRule> _map = IterableExtensions.<Partition_Rule, PartitionRule>map(_filter, _function_1);
-    return IterableExtensions.<PartitionRule>toList(_map);
+    throw new Error("Unresolved compilation problems:"
+      + "\nPartition_JSRule cannot be resolved to a type."
+      + "\nUnreachable code: The if condition can never match. It is already handled by a previous condition.");
   }
   
   public List<Token> tokenList(final EditorGModel m, final LanguageDef model, final org.eclipse.fx.code.editor.ldef.lDef.Partition pr) {
@@ -261,175 +155,44 @@ public class JSONConfigurationConfigurator {
   }
   
   public List<TokenScanner> tokenScannerList(final EditorGModel m, final org.eclipse.fx.code.editor.ldef.lDef.Token t) {
-    EList<Scanner> _scannerList = t.getScannerList();
-    final Function1<Scanner, TokenScanner> _function = (Scanner ts) -> {
-      if ((ts instanceof Scanner_Keyword)) {
-        final Scanner_Keyword sk = ((Scanner_Keyword) ts);
-        TokenScanner_Keyword.Builder _TokenScanner_KeywordBuilder = m.TokenScanner_KeywordBuilder();
-        ScannerCondition _enabledIf = ((Scanner_Keyword)ts).getEnabledIf();
-        Condition _createCondition = this.createCondition(m, _enabledIf);
-        TokenScanner_Keyword.Builder _condition = _TokenScanner_KeywordBuilder.condition(_createCondition);
-        EList<Keyword> _keywords = sk.getKeywords();
-        final Function1<Keyword, String> _function_1 = (Keyword k) -> {
-          return k.getName();
-        };
-        List<String> _map = ListExtensions.<Keyword, String>map(_keywords, _function_1);
-        List<String> _list = IterableExtensions.<String>toList(_map);
-        TokenScanner_Keyword.Builder _keywordList = _condition.keywordList(_list);
-        return _keywordList.build();
-      } else {
-        if ((ts instanceof Scanner_SingleLineRule)) {
-          String _startPattern = ((Scanner_SingleLineRule)ts).getStartPattern();
-          boolean _notEquals = (!Objects.equal(_startPattern, null));
-          if (_notEquals) {
-            TokenScanner_DynamicEnd.Builder _TokenScanner_DynamicEndBuilder = m.TokenScanner_DynamicEndBuilder();
-            String _startSeq = ((Scanner_SingleLineRule)ts).getStartSeq();
-            TokenScanner_DynamicEnd.Builder _beginPrefix = _TokenScanner_DynamicEndBuilder.beginPrefix(_startSeq);
-            String _startPattern_1 = ((Scanner_SingleLineRule)ts).getStartPattern();
-            TokenScanner_DynamicEnd.Builder _beginMatch = _beginPrefix.beginMatch(_startPattern_1);
-            String _endSeq = ((Scanner_SingleLineRule)ts).getEndSeq();
-            TokenScanner_DynamicEnd.Builder _endTemplate = _beginMatch.endTemplate(_endSeq);
-            TokenScanner_DynamicEnd.Builder _singleLine = _endTemplate.singleLine(true);
-            return _singleLine.build();
-          } else {
-            final Scanner_SingleLineRule sr = ((Scanner_SingleLineRule) ts);
-            TokenScanner_SingleLineRule.Builder _TokenScanner_SingleLineRuleBuilder = m.TokenScanner_SingleLineRuleBuilder();
-            Check _check = sr.getCheck();
-            org.eclipse.fx.code.editor.configuration.Check _createCheck = this.createCheck(m, _check);
-            TokenScanner_SingleLineRule.Builder _check_1 = _TokenScanner_SingleLineRuleBuilder.check(_createCheck);
-            ScannerCondition _enabledIf_1 = ((Scanner_SingleLineRule)ts).getEnabledIf();
-            Condition _createCondition_1 = this.createCondition(m, _enabledIf_1);
-            TokenScanner_SingleLineRule.Builder _condition_1 = _check_1.condition(_createCondition_1);
-            String _startSeq_1 = sr.getStartSeq();
-            TokenScanner_SingleLineRule.Builder _startSeq_2 = _condition_1.startSeq(_startSeq_1);
-            String _endSeq_1 = sr.getEndSeq();
-            TokenScanner_SingleLineRule.Builder _endSeq_2 = _startSeq_2.endSeq(_endSeq_1);
-            String _escapeSeq = sr.getEscapeSeq();
-            TokenScanner_SingleLineRule.Builder _escapedBy = _endSeq_2.escapedBy(_escapeSeq);
-            return _escapedBy.build();
-          }
-        } else {
-          if ((ts instanceof Scanner_MultiLineRule)) {
-            String _startPattern_2 = ((Scanner_MultiLineRule)ts).getStartPattern();
-            boolean _notEquals_1 = (!Objects.equal(_startPattern_2, null));
-            if (_notEquals_1) {
-              TokenScanner_DynamicEnd.Builder _TokenScanner_DynamicEndBuilder_1 = m.TokenScanner_DynamicEndBuilder();
-              String _startSeq_3 = ((Scanner_MultiLineRule)ts).getStartSeq();
-              TokenScanner_DynamicEnd.Builder _beginPrefix_1 = _TokenScanner_DynamicEndBuilder_1.beginPrefix(_startSeq_3);
-              String _startPattern_3 = ((Scanner_MultiLineRule)ts).getStartPattern();
-              TokenScanner_DynamicEnd.Builder _beginMatch_1 = _beginPrefix_1.beginMatch(_startPattern_3);
-              String _endSeq_3 = ((Scanner_MultiLineRule)ts).getEndSeq();
-              TokenScanner_DynamicEnd.Builder _endTemplate_1 = _beginMatch_1.endTemplate(_endSeq_3);
-              return _endTemplate_1.build();
-            } else {
-              final Scanner_MultiLineRule mr = ((Scanner_MultiLineRule) ts);
-              TokenScanner_MultiLineRule.Builder _TokenScanner_MultiLineRuleBuilder = m.TokenScanner_MultiLineRuleBuilder();
-              Check _check_2 = mr.getCheck();
-              org.eclipse.fx.code.editor.configuration.Check _createCheck_1 = this.createCheck(m, _check_2);
-              TokenScanner_MultiLineRule.Builder _check_3 = _TokenScanner_MultiLineRuleBuilder.check(_createCheck_1);
-              ScannerCondition _enabledIf_2 = ((Scanner_MultiLineRule)ts).getEnabledIf();
-              Condition _createCondition_2 = this.createCondition(m, _enabledIf_2);
-              TokenScanner_MultiLineRule.Builder _condition_2 = _check_3.condition(_createCondition_2);
-              String _startSeq_4 = mr.getStartSeq();
-              TokenScanner_MultiLineRule.Builder _startSeq_5 = _condition_2.startSeq(_startSeq_4);
-              String _endSeq_4 = mr.getEndSeq();
-              TokenScanner_MultiLineRule.Builder _endSeq_5 = _startSeq_5.endSeq(_endSeq_4);
-              String _escapeSeq_1 = mr.getEscapeSeq();
-              TokenScanner_MultiLineRule.Builder _escapedBy_1 = _endSeq_5.escapedBy(_escapeSeq_1);
-              return _escapedBy_1.build();
-            }
-          } else {
-            if ((ts instanceof Scanner_CharacterRule)) {
-              final Scanner_CharacterRule sc = ((Scanner_CharacterRule) ts);
-              TokenScanner_CharacterRule.Builder _TokenScanner_CharacterRuleBuilder = m.TokenScanner_CharacterRuleBuilder();
-              ScannerCondition _enabledIf_3 = ((Scanner_CharacterRule)ts).getEnabledIf();
-              Condition _createCondition_3 = this.createCondition(m, _enabledIf_3);
-              TokenScanner_CharacterRule.Builder _condition_3 = _TokenScanner_CharacterRuleBuilder.condition(_createCondition_3);
-              Check _check_4 = sc.getCheck();
-              org.eclipse.fx.code.editor.configuration.Check _createCheck_2 = this.createCheck(m, _check_4);
-              TokenScanner_CharacterRule.Builder _check_5 = _condition_3.check(_createCheck_2);
-              EList<String> _characters = sc.getCharacters();
-              TokenScanner_CharacterRule.Builder _characterList = _check_5.characterList(_characters);
-              return _characterList.build();
-            } else {
-              if ((ts instanceof Scanner_PatternRule)) {
-                final Scanner_PatternRule sp = ((Scanner_PatternRule) ts);
-                TokenScanner_PatternRule.Builder _TokenScanner_PatternRuleBuilder = m.TokenScanner_PatternRuleBuilder();
-                Check _check_6 = sp.getCheck();
-                org.eclipse.fx.code.editor.configuration.Check _createCheck_3 = this.createCheck(m, _check_6);
-                TokenScanner_PatternRule.Builder _check_7 = _TokenScanner_PatternRuleBuilder.check(_createCheck_3);
-                ScannerCondition _enabledIf_4 = ((Scanner_PatternRule)ts).getEnabledIf();
-                Condition _createCondition_4 = this.createCondition(m, _enabledIf_4);
-                TokenScanner_PatternRule.Builder _condition_4 = _check_7.condition(_createCondition_4);
-                int _length = sp.getLength();
-                TokenScanner_PatternRule.Builder _startLength = _condition_4.startLength(_length);
-                String _startPattern_4 = sp.getStartPattern();
-                TokenScanner_PatternRule.Builder _startPattern_5 = _startLength.startPattern(_startPattern_4);
-                String _contentPattern = sp.getContentPattern();
-                TokenScanner_PatternRule.Builder _containmentPattern = _startPattern_5.containmentPattern(_contentPattern);
-                return _containmentPattern.build();
-              }
-            }
-          }
-        }
-      }
-      return null;
-    };
-    return ListExtensions.<Scanner, TokenScanner>map(_scannerList, _function);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field enabledIf is undefined for the type Scanner_Keyword"
+      + "\nThe method or field enabledIf is undefined for the type Scanner_SingleLineRule"
+      + "\nThe method or field enabledIf is undefined for the type Scanner_MultiLineRule"
+      + "\nThe method or field enabledIf is undefined for the type Scanner_CharacterRule"
+      + "\nThe method or field enabledIf is undefined for the type Scanner_PatternRule"
+      + "\nThe method createCondition(EditorGModel, ScannerCondition) from the type JSONConfigurationConfigurator refers to the missing type ScannerCondition"
+      + "\nThe method createCondition(EditorGModel, ScannerCondition) from the type JSONConfigurationConfigurator refers to the missing type ScannerCondition"
+      + "\nThe method createCondition(EditorGModel, ScannerCondition) from the type JSONConfigurationConfigurator refers to the missing type ScannerCondition"
+      + "\nThe method createCondition(EditorGModel, ScannerCondition) from the type JSONConfigurationConfigurator refers to the missing type ScannerCondition"
+      + "\nThe method createCondition(EditorGModel, ScannerCondition) from the type JSONConfigurationConfigurator refers to the missing type ScannerCondition");
   }
   
-  public Condition createCondition(final EditorGModel m, final ScannerCondition c) {
-    EqualsCondition _xblockexpression = null;
-    {
-      boolean _equals = Objects.equal(c, null);
-      if (_equals) {
-        return null;
-      }
-      EqualsCondition _xifexpression = null;
-      if ((c instanceof ScannerConditionExists)) {
-        ExistsCondition.Builder _ExistsConditionBuilder = m.ExistsConditionBuilder();
-        String _key = ((ScannerConditionExists)c).getKey();
-        ExistsCondition.Builder _name = _ExistsConditionBuilder.name(_key);
-        return _name.build();
-      } else {
-        EqualsCondition _xifexpression_1 = null;
-        if ((c instanceof ScannerConditionEquals)) {
-          EqualsCondition.Builder _EqualsConditionBuilder = m.EqualsConditionBuilder();
-          String _key_1 = ((ScannerConditionEquals)c).getKey();
-          EqualsCondition.Builder _name_1 = _EqualsConditionBuilder.name(_key_1);
-          String _value = ((ScannerConditionEquals)c).getValue();
-          EqualsCondition.Builder _value_1 = _name_1.value(_value);
-          _xifexpression_1 = _value_1.build();
-        } else {
-          if ((c instanceof ScannerConditionJs)) {
-            return null;
-          } else {
-            if ((c instanceof ScannerConditionComposite)) {
-              CompositeCondition.Builder _CompositeConditionBuilder = m.CompositeConditionBuilder();
-              String _op = ((ScannerConditionComposite)c).getOp();
-              boolean _equals_1 = Objects.equal(_op, "and");
-              final CompositeCondition.Builder b = _CompositeConditionBuilder.and(_equals_1);
-              EList<ScannerCondition> _elements = ((ScannerConditionComposite)c).getElements();
-              final Function1<ScannerCondition, Condition> _function = (ScannerCondition e) -> {
-                return this.createCondition(m, e);
-              };
-              List<Condition> _map = ListExtensions.<ScannerCondition, Condition>map(_elements, _function);
-              final Consumer<Condition> _function_1 = (Condition c1) -> {
-                b.appendElementList(c1);
-              };
-              _map.forEach(_function_1);
-              return b.build();
-            }
-          }
-        }
-        _xifexpression = _xifexpression_1;
-      }
-      _xblockexpression = _xifexpression;
-    }
-    return _xblockexpression;
+  public Condition createCondition(final EditorGModel m, final /* ScannerCondition */Object c) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nScannerConditionExists cannot be resolved to a type."
+      + "\nScannerConditionEquals cannot be resolved to a type."
+      + "\nScannerConditionJs cannot be resolved to a type."
+      + "\nScannerConditionComposite cannot be resolved to a type."
+      + "\nAmbiguous feature call.\nThe methods\n\tappendElementList(Condition) in Builder and\n\tappendElementList(Function<Builder, Condition>) in Builder\nboth match."
+      + "\nUnreachable code: The if condition can never match. It is already handled by a previous condition."
+      + "\nUnreachable code: The if condition can never match. It is already handled by a previous condition."
+      + "\nUnreachable code: The if condition can never match. It is already handled by a previous condition."
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\nThe method createCondition(EditorGModel, ScannerCondition) from the type JSONConfigurationConfigurator refers to the missing type ScannerCondition"
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\n== cannot be resolved"
+      + "\nkey cannot be resolved"
+      + "\nkey cannot be resolved"
+      + "\nvalue cannot be resolved"
+      + "\nop cannot be resolved"
+      + "\n== cannot be resolved"
+      + "\nelements cannot be resolved"
+      + "\nmap cannot be resolved"
+      + "\nforEach cannot be resolved");
   }
   
-  public org.eclipse.fx.code.editor.configuration.Check createCheck(final EditorGModel m, final Check c) {
+  public Check createCheck(final EditorGModel m, final org.eclipse.fx.code.editor.ldef.lDef.Check c) {
     boolean _equals = Objects.equal(c, null);
     if (_equals) {
       return null;
