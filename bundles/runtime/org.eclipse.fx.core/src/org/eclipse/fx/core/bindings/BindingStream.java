@@ -13,7 +13,14 @@ package org.eclipse.fx.core.bindings;
 import java.util.function.Function;
 
 import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 
 /**
@@ -47,4 +54,18 @@ public interface BindingStream<T> {
 
 
 	<S> Property<S> toProperty(Function<T, Property<S>> map);
+
+	<S> ObjectProperty<S> toObjectProperty(Function<T, ObjectProperty<S>> map);
+
+	StringProperty toStringProperty(Function<T, StringProperty> map);
+
+	DoubleProperty toDoubleProperty(Function<T, DoubleProperty> map);
+
+	BooleanProperty toBooleanProperty(Function<T, BooleanProperty> map);
+
+	FloatProperty toFloatProperty(Function<T, FloatProperty> map);
+
+	LongProperty toLongProperty(Function<T, LongProperty> map);
+
+	IntegerProperty toIntegerProperty(Function<T, IntegerProperty> map);
 }
