@@ -58,6 +58,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -532,6 +533,317 @@ public class FXBindings {
 	 * Specialized bindings for {@link IntegerProperty}, {@link FloatProperty}, {@link DoubleProperty}, {@link LongProperty}, {@link BooleanProperty}
 	 */
 	public static class PrimitivesBindings {
+		// ----------------------------------------------------------------------------------------------------------
+		// StringProperty
+		// ----------------------------------------------------------------------------------------------------------
+		/*
+		 * Self
+		 */
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(StringProperty target, StringProperty source, Function<String, String> targetToSource, Function<String, String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.set(sourceToTarget.apply(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.apply(target.get()));
+				}
+			};
+		}
+
+		/*
+		 * StringProperty as source
+		 */
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static <T> StatusBinding bindBidirectional(Property<T> target, StringProperty source, Function<T, String> targetToSource, Function<String, T> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.setValue(sourceToTarget.apply(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.apply(target.getValue()));
+				}
+			};
+		}
+
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(IntegerProperty target, StringProperty source, IntFunction<String> targetToSource, ToIntFunction<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.set(sourceToTarget.applyAsInt(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.apply(target.get()));
+				}
+			};
+		}
+
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(DoubleProperty target, StringProperty source, DoubleFunction<String> targetToSource, ToDoubleFunction<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.set(sourceToTarget.applyAsDouble(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.apply(target.get()));
+				}
+			};
+		}
+
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(FloatProperty target, StringProperty source, DoubleFunction<String> targetToSource, ToDoubleFunction<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.set((float)sourceToTarget.applyAsDouble(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.apply(target.get()));
+				}
+			};
+		}
+
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(LongProperty target, StringProperty source, LongFunction<String> targetToSource, ToLongFunction<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.set(sourceToTarget.applyAsLong(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.apply(target.get()));
+				}
+			};
+		}
+
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(BooleanProperty target, StringProperty source, Function<Boolean,String> targetToSource, Predicate<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.set(sourceToTarget.test(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.apply(Boolean.valueOf(target.get())));
+				}
+			};
+		}
+
+		/*
+		 * StringProperty as target
+		 */
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static <T> StatusBinding bindBidirectional(StringProperty target, Property<T> source, Function<String, T> targetToSource, Function<T, String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.setValue(sourceToTarget.apply(source.getValue()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.setValue(targetToSource.apply(target.get()));
+				}
+			};
+		}
+
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(StringProperty target, IntegerProperty source, ToIntFunction<String> targetToSource, IntFunction<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.setValue(sourceToTarget.apply(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.applyAsInt(target.get()));
+				}
+			};
+		}
+
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(StringProperty target, DoubleProperty source,ToDoubleFunction<String> targetToSource, DoubleFunction<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.setValue(sourceToTarget.apply(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.applyAsDouble(target.get()));
+				}
+			};
+		}
+
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(StringProperty target, FloatProperty source, ToDoubleFunction<String> targetToSource, DoubleFunction<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.setValue(sourceToTarget.apply(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set((float)targetToSource.applyAsDouble(target.get()));
+				}
+			};
+		}
+
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(StringProperty target, LongProperty source, ToLongFunction<String> targetToSource, LongFunction<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.setValue(sourceToTarget.apply(source.get()));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.applyAsLong(target.get()));
+				}
+			};
+		}
+
+		/**
+		 * Bind a properties
+		 * @param target the target
+		 * @param source the source
+		 * @param targetToSource the conversion from target to source
+		 * @param sourceToTarget the conversion from source to target
+		 * @return the binding
+		 */
+		public static StatusBinding bindBidirectional(StringProperty target, BooleanProperty source,Predicate<String> targetToSource, Function<Boolean,String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target,source) {
+
+				@Override
+				protected void syncTarget() {
+					target.setValue(sourceToTarget.apply(Boolean.valueOf(source.get())));
+				}
+
+				@Override
+				protected void syncSource() {
+					source.set(targetToSource.test(target.get()));
+				}
+			};
+		}
+
 		// ----------------------------------------------------------------------------------------------------------
 		// BooleanProperty
 		// ----------------------------------------------------------------------------------------------------------
