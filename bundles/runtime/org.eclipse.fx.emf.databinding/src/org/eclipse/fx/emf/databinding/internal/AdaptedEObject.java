@@ -10,13 +10,15 @@
  *******************************************************************************/
 package org.eclipse.fx.emf.databinding.internal;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -26,6 +28,12 @@ import org.eclipse.fx.emf.databinding.EFXObject;
 import org.eclipse.fx.emf.databinding.EProperty;
 import org.eclipse.jdt.annotation.NonNull;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -34,96 +42,163 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 
 @SuppressWarnings("javadoc")
 public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> {
 	final Map<EStructuralFeature, Property<?>> map = new HashMap<>();
-	final Map<EStructuralFeature, Property<?>> editMap = new HashMap<>();
-	private final O eo;
+	final O eo;
 	private final EditingDomain ed;
+	private Adapter adapter;
 
 	public AdaptedEObject(EditingDomain ed, O eo) {
 		this.eo = eo;
 		this.ed = ed;
-		this.eo.eAdapters().add( new AdapterImpl() {
-			@Override
-			public void notifyChanged(Notification msg) {
-				super.notifyChanged(msg);
-				Property<Object> property = (Property<Object>) AdaptedEObject.this.map.get(msg.getFeature());
-				if( property != null && ! property.isBound() ) {
-					property.setValue(msg.getNewValue());
-				}
-
-				property = (Property<Object>) AdaptedEObject.this.editMap.get(msg.getFeature());
-				if( property != null && ! property.isBound() ) {
-					property.setValue(msg.getNewValue());
-				}
-			}
-		});
+		this.adapter = new MyInnerAdapter(this);
+		this.eo.eAdapters().add(this.adapter);
 	}
 
-	public <@NonNull P extends EProperty<@NonNull O,?>> P getProperty(EStructuralFeature feature) {
-		 Map<EStructuralFeature, Property<?>> map = ed == null ? this.map : this.editMap;
-		Property<?> property = map.get(feature);
+	static class MyInnerAdapter extends AdapterImpl {
+		private WeakReference<AdaptedEObject<?>> eo;
 
-		if( property == null ) {
-			if( feature instanceof EReference ) {
-				if( feature.isMany() ) {
-					throw new UnsupportedOperationException();
-				} else {
-					property = new ObjectPropertyImpl<>(this.eo, feature, ed);
-					map.put(feature, property);
+		public MyInnerAdapter(AdaptedEObject<?> eo) {
+			this.eo = new WeakReference<AdaptedEObject<?>>(eo);
+		}
+
+		@Override
+		public void notifyChanged(Notification msg) {
+			super.notifyChanged(msg);
+			AdaptedEObject<?> eo = this.eo.get();
+			if( eo == null ) {
+				if( msg.getEventType() != Notification.REMOVING_ADAPTER ) {
+					((EObject)msg.getNotifier()).eAdapters().remove(this);
 				}
 			} else {
-				EAttribute ea = (EAttribute) feature;
-				if( ! ea.isMany() ) {
-					if(ea.getEType().getInstanceClass() == String.class) {
-						property = new StringPropertyImpl<>(this.eo, feature, ed);
-						map.put(ea, property);
-					} else if( ea.getEType().getInstanceClass() == int.class ) {
-						property = new IntegerPropertyImpl<>(this.eo, feature, ed);
-						map.put(ea, property);
-					} else if( ea.getEType().getInstanceClass() == double.class ) {
-						property = new DoublePropertyImpl<>(this.eo, feature, ed);
-						map.put(ea, property);
-					} else if( ea.getEType().getInstanceClass() == long.class ) {
-						property = new LongPropertyImpl<>(this.eo, feature, ed);
-						map.put(ea, property);
-					} else if( ea.getEType().getInstanceClass() == float.class ) {
-						property = new FloatPropertyImpl<>(this.eo, feature, ed);
-						map.put(ea, property);
-					} else if( ea.getEType().getInstanceClass() == boolean.class ) {
-						property = new BooleanPropertyImpl<>(this.eo, feature, ed);
-						map.put(ea, property);
-					} else {
-						property = new ObjectPropertyImpl<>(this.eo, feature, ed);
-						map.put(ea, property);
-					}
-				} else {
-					throw new UnsupportedOperationException();
+				Property<Object> property = (Property<Object>) eo.map.get(msg.getFeature());
+				if( property != null && ! property.isBound() ) {
+					//TODO could avoid boxing
+					property.setValue(msg.getNewValue());
 				}
 			}
 		}
 
-		return (P) property;
+		@Override
+		public void setTarget(Notifier newTarget) {
+			super.setTarget(newTarget);
+		}
+	}
+
+	@Override
+	public BooleanProperty getBooleanProperty(EStructuralFeature feature) {
+		if( feature.isMany() ) {
+			throw new IllegalArgumentException("Feature is multi valued"); //$NON-NLS-1$
+		}
+		if(feature.getEType().getInstanceClass() == boolean.class) {
+			return (BooleanProperty) this.map.computeIfAbsent(feature, f -> new BooleanPropertyImpl<>(this, f, this.ed));
+		} else {
+			throw new IllegalAccessError("The feature type is not boolean.class"); //$NON-NLS-1$
+		}
+	}
+
+	@Override
+	public DoubleProperty getDoubleProperty(EStructuralFeature feature) {
+		if( feature.isMany() ) {
+			throw new IllegalArgumentException("Feature is multi valued"); //$NON-NLS-1$
+		}
+		if(feature.getEType().getInstanceClass() == double.class) {
+			return (DoubleProperty) this.map.computeIfAbsent(feature, f -> new DoublePropertyImpl<>(this, f, this.ed));
+		} else {
+			throw new IllegalAccessError("The feature type is not double.class"); //$NON-NLS-1$
+		}
+	}
+
+	@Override
+	public FloatProperty getFloatProperty(EStructuralFeature feature) {
+		if( feature.isMany() ) {
+			throw new IllegalArgumentException("Feature is multi valued"); //$NON-NLS-1$
+		}
+		if(feature.getEType().getInstanceClass() == float.class) {
+			return (FloatProperty) this.map.computeIfAbsent(feature, f -> new FloatPropertyImpl<>(this, f, this.ed));
+		} else {
+			throw new IllegalAccessError("The feature type is not float.class"); //$NON-NLS-1$
+		}
+	}
+
+	@Override
+	public IntegerProperty getIntegerProperty(EStructuralFeature feature) {
+		if( feature.isMany() ) {
+			throw new IllegalArgumentException("Feature is multi valued"); //$NON-NLS-1$
+		}
+		if(feature.getEType().getInstanceClass() == int.class) {
+			return (IntegerProperty) this.map.computeIfAbsent(feature, f -> new IntegerPropertyImpl<>(this, f, this.ed));
+		} else {
+			throw new IllegalAccessError("The feature type is not float.class"); //$NON-NLS-1$
+		}
+	}
+
+	@Override
+	public LongProperty getLongProperty(EStructuralFeature feature) {
+		if( feature.isMany() ) {
+			throw new IllegalArgumentException("Feature is multi valued"); //$NON-NLS-1$
+		}
+		if(feature.getEType().getInstanceClass() == long.class) {
+			return (LongProperty) this.map.computeIfAbsent(feature, f -> new LongPropertyImpl<>(this, f, this.ed));
+		} else {
+			throw new IllegalAccessError("The feature type is not float.class"); //$NON-NLS-1$
+		}
+	}
+
+	@Override
+	public <T> ObjectProperty<T> getObjectProperty(Class<T> type, EStructuralFeature feature) {
+		if( feature.isMany() ) {
+			throw new IllegalArgumentException("Feature is multi valued"); //$NON-NLS-1$
+		}
+
+		if( feature instanceof EReference ) {
+			return (ObjectProperty<T>) map.computeIfAbsent(feature, f -> new ObjectPropertyImpl<>(this, f, ed));
+		} else {
+			Class<?> t = feature.getEType().getInstanceClass();
+			if( t == String.class
+					|| t == int.class
+					|| t == long.class
+					|| t == double.class
+					|| t == float.class
+					|| t == boolean.class) {
+				throw new IllegalArgumentException("Feature holds a primitive value");
+			} else {
+				return new ObjectPropertyImpl<>(this, feature, this.ed);
+			}
+		}
+	}
+
+	@Override
+	public StringProperty getStringProperty(EStructuralFeature feature) {
+		if( feature.isMany() ) {
+			throw new IllegalArgumentException("Feature is multi valued"); //$NON-NLS-1$
+		}
+		if(feature.getEType().getInstanceClass() == String.class) {
+			return (StringProperty) this.map.computeIfAbsent(feature, f -> new StringPropertyImpl<>(this, f, this.ed));
+		} else {
+			throw new IllegalAccessError("The feature type is not String.class"); //$NON-NLS-1$
+		}
 	}
 
 	static class ObjectPropertyImpl<@NonNull O extends EObject, V> extends SimpleObjectProperty<V> implements EProperty<O, V> {
-		private final O eo;
+		private final AdaptedEObject<O> adapter;
 		private final EStructuralFeature f;
 		private final EditingDomain ed;
 
-		public ObjectPropertyImpl(O eo, EStructuralFeature f, EditingDomain ed) {
-			this.eo = eo;
+		public ObjectPropertyImpl(AdaptedEObject<O> adapter, EStructuralFeature f, EditingDomain ed) {
+			this.adapter = adapter;
 			this.f = f;
 			this.ed = ed;
-			set(((V) this.eo.eGet(this.f)));
+			set(((V) this.adapter.eo.eGet(this.f)));
 		}
 
 		@Override
 		public O getBean() {
-			return this.eo;
+			return this.adapter.eo;
 		}
 
 		@Override
@@ -139,7 +214,7 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 		@Override
 		public void unbind() {
 			super.unbind();
-			set(((V) this.eo.eGet(this.f)));
+			set(((V) this.adapter.eo.eGet(this.f)));
 		}
 
 		@Override
@@ -147,11 +222,11 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 			super.invalidated();
 
 			V value = get();
-			if( this.eo.eGet(this.f) != value ) {
+			if( this.adapter.eo.eGet(this.f) != value ) {
 				if( this.ed == null ) {
-					this.eo.eSet(this.f, value);
+					this.adapter.eo.eSet(this.f, value);
 				} else {
-					Command command = SetCommand.create(this.ed, this.eo, this.f, value);
+					Command command = SetCommand.create(this.ed, this.adapter.eo, this.f, value);
 					if( command.canExecute() ) {
 						this.ed.getCommandStack().execute(command);
 					}
@@ -161,20 +236,20 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 	}
 
 	static class BooleanPropertyImpl<@NonNull O extends EObject> extends SimpleBooleanProperty implements EProperty<O, Boolean> {
-		private final O eo;
+		private final AdaptedEObject<O> adapter;
 		private final EStructuralFeature f;
 		private final EditingDomain ed;
 
-		public BooleanPropertyImpl(O eo, EStructuralFeature f, EditingDomain ed) {
-			this.eo = eo;
+		public BooleanPropertyImpl(AdaptedEObject<O> adapter, EStructuralFeature f, EditingDomain ed) {
+			this.adapter = adapter;
 			this.f = f;
 			this.ed = ed;
-			set(((Boolean) this.eo.eGet(this.f)).booleanValue());
+			set(((Boolean) this.adapter.eo.eGet(this.f)).booleanValue());
 		}
 
 		@Override
 		public O getBean() {
-			return this.eo;
+			return this.adapter.eo;
 		}
 
 		@Override
@@ -190,7 +265,7 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 		@Override
 		public void unbind() {
 			super.unbind();
-			set(((Boolean) this.eo.eGet(this.f)).booleanValue());
+			set(((Boolean) this.adapter.eo.eGet(this.f)).booleanValue());
 		}
 
 		@Override
@@ -198,11 +273,11 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 			super.invalidated();
 
 			boolean value = get();
-			if( ((Boolean) this.eo.eGet(this.f)).booleanValue() != value ) {
+			if( ((Boolean) this.adapter.eo.eGet(this.f)).booleanValue() != value ) {
 				if( this.ed == null ) {
-					this.eo.eSet(this.f, Boolean.valueOf(value));
+					this.adapter.eo.eSet(this.f, Boolean.valueOf(value));
 				} else {
-					Command command = SetCommand.create(this.ed, this.eo, this.f, Boolean.valueOf(value));
+					Command command = SetCommand.create(this.ed, this.adapter.eo, this.f, Boolean.valueOf(value));
 					if( command.canExecute() ) {
 						this.ed.getCommandStack().execute(command);
 					}
@@ -212,20 +287,20 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 	}
 
 	static class FloatPropertyImpl<@NonNull O extends EObject> extends SimpleFloatProperty implements EProperty<O, Number> {
-		private final O eo;
+		private final AdaptedEObject<O> adapter;
 		private final EStructuralFeature f;
 		private final EditingDomain ed;
 
-		public FloatPropertyImpl(O eo, EStructuralFeature f, EditingDomain ed) {
-			this.eo = eo;
+		public FloatPropertyImpl(AdaptedEObject<O> adapter, EStructuralFeature f, EditingDomain ed) {
+			this.adapter = adapter;
 			this.f = f;
 			this.ed = ed;
-			set(((Float) this.eo.eGet(this.f)).floatValue());
+			set(((Float) this.adapter.eo.eGet(this.f)).floatValue());
 		}
 
 		@Override
 		public O getBean() {
-			return this.eo;
+			return this.adapter.eo;
 		}
 
 		@Override
@@ -241,7 +316,7 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 		@Override
 		public void unbind() {
 			super.unbind();
-			set(((Float) this.eo.eGet(this.f)).floatValue());
+			set(((Float) this.adapter.eo.eGet(this.f)).floatValue());
 		}
 
 		@Override
@@ -249,11 +324,11 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 			super.invalidated();
 
 			float value = get();
-			if( ((Float) this.eo.eGet(this.f)).floatValue() != value ) {
+			if( ((Float) this.adapter.eo.eGet(this.f)).floatValue() != value ) {
 				if( this.ed == null ) {
-					this.eo.eSet(this.f, Float.valueOf(value));
+					this.adapter.eo.eSet(this.f, Float.valueOf(value));
 				} else {
-					Command command = SetCommand.create(this.ed, this.eo, this.f, Float.valueOf(value));
+					Command command = SetCommand.create(this.ed, this.adapter.eo, this.f, Float.valueOf(value));
 					if( command.canExecute() ) {
 						this.ed.getCommandStack().execute(command);
 					}
@@ -263,20 +338,20 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 	}
 
 	static class LongPropertyImpl<@NonNull O extends EObject> extends SimpleLongProperty implements EProperty<O, Number> {
-		private final O eo;
+		private final AdaptedEObject<O> adapter;
 		private final EStructuralFeature f;
 		private final EditingDomain ed;
 
-		public LongPropertyImpl(O eo, EStructuralFeature f, EditingDomain ed) {
-			this.eo = eo;
+		public LongPropertyImpl(AdaptedEObject<O> adapter, EStructuralFeature f, EditingDomain ed) {
+			this.adapter = adapter;
 			this.f = f;
 			this.ed = ed;
-			set(((Long) this.eo.eGet(this.f)).longValue());
+			set(((Long) this.adapter.eo.eGet(this.f)).longValue());
 		}
 
 		@Override
 		public O getBean() {
-			return this.eo;
+			return this.adapter.eo;
 		}
 
 		@Override
@@ -292,7 +367,7 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 		@Override
 		public void unbind() {
 			super.unbind();
-			set(((Long) this.eo.eGet(this.f)).longValue());
+			set(((Long) this.adapter.eo.eGet(this.f)).longValue());
 		}
 
 		@Override
@@ -300,11 +375,11 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 			super.invalidated();
 
 			long value = get();
-			if( ((Long) this.eo.eGet(this.f)).longValue() != value ) {
+			if( ((Long) this.adapter.eo.eGet(this.f)).longValue() != value ) {
 				if( this.ed == null ) {
-					this.eo.eSet(this.f, Long.valueOf(value));
+					this.adapter.eo.eSet(this.f, Long.valueOf(value));
 				} else {
-					Command command = SetCommand.create(this.ed, this.eo, this.f, Long.valueOf(value));
+					Command command = SetCommand.create(this.ed, this.adapter.eo, this.f, Long.valueOf(value));
 					if( command.canExecute() ) {
 						this.ed.getCommandStack().execute(command);
 					}
@@ -314,20 +389,20 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 	}
 
 	static class IntegerPropertyImpl<@NonNull O extends EObject> extends SimpleIntegerProperty implements EProperty<O, Number> {
-		private final O eo;
+		private final AdaptedEObject<O> adapter;
 		private final EStructuralFeature f;
 		private final EditingDomain ed;
 
-		public IntegerPropertyImpl(O eo, EStructuralFeature f, EditingDomain ed) {
-			this.eo = eo;
+		public IntegerPropertyImpl(AdaptedEObject<O> adapter, EStructuralFeature f, EditingDomain ed) {
+			this.adapter = adapter;
 			this.f = f;
 			this.ed = ed;
-			set(((Integer) this.eo.eGet(this.f)).intValue());
+			set(((Integer) this.adapter.eo.eGet(this.f)).intValue());
 		}
 
 		@Override
 		public O getBean() {
-			return this.eo;
+			return this.adapter.eo;
 		}
 
 		@Override
@@ -343,7 +418,7 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 		@Override
 		public void unbind() {
 			super.unbind();
-			set(((Integer) this.eo.eGet(this.f)).intValue());
+			set(((Integer) this.adapter.eo.eGet(this.f)).intValue());
 		}
 
 		@Override
@@ -351,11 +426,11 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 			super.invalidated();
 
 			int value = get();
-			if( ((Integer) this.eo.eGet(this.f)).intValue() != value ) {
+			if( ((Integer) this.adapter.eo.eGet(this.f)).intValue() != value ) {
 				if( this.ed == null ) {
-					this.eo.eSet(this.f, Integer.valueOf(value));
+					this.adapter.eo.eSet(this.f, Integer.valueOf(value));
 				} else {
-					Command command = SetCommand.create(this.ed, this.eo, this.f, Integer.valueOf(value));
+					Command command = SetCommand.create(this.ed, this.adapter.eo, this.f, Integer.valueOf(value));
 					if( command.canExecute() ) {
 						this.ed.getCommandStack().execute(command);
 					}
@@ -365,20 +440,20 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 	}
 
 	static class DoublePropertyImpl<@NonNull O extends EObject> extends SimpleDoubleProperty implements EProperty<O, Number> {
-		private final O eo;
+		private final AdaptedEObject<O> adapter;
 		private final EStructuralFeature f;
 		private final EditingDomain ed;
 
-		public DoublePropertyImpl(O eo, EStructuralFeature f, EditingDomain ed) {
-			this.eo = eo;
+		public DoublePropertyImpl(AdaptedEObject<O> adapter, EStructuralFeature f, EditingDomain ed) {
+			this.adapter = adapter;
 			this.f = f;
 			this.ed = ed;
-			set(((Double) this.eo.eGet(this.f)).doubleValue());
+			set(((Double) this.adapter.eo.eGet(this.f)).doubleValue());
 		}
 
 		@Override
 		public O getBean() {
-			return this.eo;
+			return this.adapter.eo;
 		}
 
 		@Override
@@ -394,7 +469,7 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 		@Override
 		public void unbind() {
 			super.unbind();
-			set(((Double) this.eo.eGet(this.f)).doubleValue());
+			set(((Double) this.adapter.eo.eGet(this.f)).doubleValue());
 		}
 
 		@Override
@@ -402,11 +477,11 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 			super.invalidated();
 
 			double value = get();
-			if( ((Double) this.eo.eGet(this.f)).doubleValue() != value ) {
+			if( ((Double) this.adapter.eo.eGet(this.f)).doubleValue() != value ) {
 				if( this.ed == null ) {
-					this.eo.eSet(this.f, Double.valueOf(value));
+					this.adapter.eo.eSet(this.f, Double.valueOf(value));
 				} else {
-					Command command = SetCommand.create(this.ed, this.eo, this.f,  Double.valueOf(value));
+					Command command = SetCommand.create(this.ed, this.adapter.eo, this.f,  Double.valueOf(value));
 					if( command.canExecute() ) {
 						this.ed.getCommandStack().execute(command);
 					}
@@ -416,20 +491,20 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 	}
 
 	static class StringPropertyImpl<@NonNull O extends EObject> extends SimpleStringProperty implements EProperty<O, String> {
-		private final O eo;
+		private final AdaptedEObject<O> adapter;
 		private final EStructuralFeature f;
 		private final EditingDomain ed;
 
-		public StringPropertyImpl(O eo, EStructuralFeature f, EditingDomain ed) {
-			this.eo = eo;
+		public StringPropertyImpl(AdaptedEObject<O> adapter, EStructuralFeature f, EditingDomain ed) {
+			this.adapter = adapter;
 			this.f = f;
 			this.ed = ed;
-			set((String) eo.eGet(f));
+			set((String) adapter.eo.eGet(f));
 		}
 
 		@Override
 		public O getBean() {
-			return this.eo;
+			return this.adapter.eo;
 		}
 
 		@Override
@@ -445,7 +520,7 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 		@Override
 		public void unbind() {
 			super.unbind();
-			set((String) this.eo.eGet(this.f));
+			set((String) this.adapter.eo.eGet(this.f));
 		}
 
 		@Override
@@ -453,11 +528,11 @@ public class AdaptedEObject<@NonNull O extends EObject> implements EFXObject<O> 
 			super.invalidated();
 
 			String value = get();
-			if( this.eo.eGet(this.f) != value ) {
+			if( this.adapter.eo.eGet(this.f) != value ) {
 				if( this.ed == null ) {
-					this.eo.eSet(this.f, value);
+					this.adapter.eo.eSet(this.f, value);
 				} else {
-					Command command = SetCommand.create(this.ed, this.eo, this.f, value);
+					Command command = SetCommand.create(this.ed, this.adapter.eo, this.f, value);
 					if( command.canExecute() ) {
 						this.ed.getCommandStack().execute(command);
 					}
