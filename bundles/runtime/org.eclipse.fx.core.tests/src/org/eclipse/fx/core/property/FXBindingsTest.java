@@ -142,6 +142,31 @@ public class FXBindingsTest {
 	}
 
 	@Test
+	public void testNullRoot() {
+		ObjectProperty<Person> p = new SimpleObjectProperty<>( new Person() );
+		p.get().address.set(new Address());
+		p.get().address.get().street.set("Street");
+		Property<String> streetProperty = FXBindings.bindStream( p ).map( o -> o.address).toProperty( o -> o.street);
+		p.set(null);
+		Assert.assertNull(streetProperty.getValue());
+
+		Person p2 = new Person();
+		Address a2 = new Address();
+		a2.street.set("New Street");
+		p2.address.set(a2);
+		p.set(p2);
+		Assert.assertNotNull(streetProperty.getValue());
+
+		p2.address.set(null);
+		Assert.assertNull(streetProperty.getValue());
+
+		Address a3 = new Address();
+		a3.street.set("New New Street");
+		p2.address.set(a3);
+		Assert.assertNotNull(streetProperty.getValue());
+	}
+
+	@Test
 	public void testHop0() {
 		ObjectProperty<Person> currentPerson = new SimpleObjectProperty<>();
 

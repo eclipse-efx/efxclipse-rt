@@ -180,6 +180,8 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 			if( ne != null ) {
 				rv.bindBidirectional(ne);
+			} else {
+				rv.set((S)null);
 			}
 		});
 
@@ -205,6 +207,8 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 			if( ne != null ) {
 				rv.bindBidirectional(ne);
+			} else {
+				rv.set(false);
 			}
 		});
 
@@ -230,6 +234,8 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 			if( ne != null ) {
 				rv.bindBidirectional(ne);
+			} else {
+				rv.set(0.0);
 			}
 		});
 
@@ -255,6 +261,8 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 			if( ne != null ) {
 				rv.bindBidirectional(ne);
+			} else {
+				rv.set(0.0f);
 			}
 		});
 
@@ -280,6 +288,8 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 			if( ne != null ) {
 				rv.bindBidirectional(ne);
+			} else {
+				rv.set(0);
 			}
 		});
 
@@ -305,6 +315,8 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 			if( ne != null ) {
 				rv.bindBidirectional(ne);
+			} else {
+				rv.set(0);
 			}
 		});
 
@@ -331,6 +343,8 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 			if( ne != null ) {
 				rv.bindBidirectional(ne);
+			} else {
+				rv.set((S)null);
 			}
 		});
 
@@ -356,6 +370,8 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 
 			if( ne != null ) {
 				rv.bindBidirectional(ne);
+			} else {
+				rv.set(null);
 			}
 		});
 
