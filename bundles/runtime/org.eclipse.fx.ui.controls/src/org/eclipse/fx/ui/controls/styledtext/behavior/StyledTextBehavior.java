@@ -346,6 +346,10 @@ public class StyledTextBehavior {
 	}
 
 	private void onTextPositionDragDetected(TextPositionEvent event) {
+		if( event.getButton() != MouseButton.PRIMARY ) {
+			return;
+		}
+
 		if (this.pressedInSelection) {
 			if( org.eclipse.fx.ui.controls.Util.isCopyEvent(event) ) {
 				getControl().pseudoClassStateChanged(DRAG_TEXT_COPY_ACTIVE_PSEUDOCLASS_STATE, true);
