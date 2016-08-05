@@ -18,6 +18,8 @@ import java.util.Set;
 import java.util.function.Function;
 
 import org.eclipse.fx.core.bindings.BindingStream;
+import org.eclipse.fx.core.bindings.FXCollector;
+import org.eclipse.jdt.annotation.NonNull;
 
 import javafx.beans.Observable;
 import javafx.beans.binding.ObjectBinding;
@@ -41,8 +43,8 @@ import javafx.beans.value.ObservableValue;
 @SuppressWarnings("javadoc")
 public class BindingStreamImpl<T> implements BindingStream<T> {
 
-	private ObservableValue<?> base;
-	private List<StreamStep<?, ?>> path;
+	public final ObservableValue<?> base;
+	public final List<StreamStep<?, ?>> path;
 
 
 	private interface StreamStep<T, S> {
@@ -54,6 +56,7 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 		public MapValue(Function<T, ObservableValue<S>> map) {
 			this.map = map;
 		}
+		@SuppressWarnings("null")
 		@Override
 		public S apply(T cur, Set<Observable> toTrack) {
 			if( cur == null ) {
@@ -70,6 +73,7 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 		public MapNoObservable(Function<T, S> map) {
 			this.map = map;
 		}
+		@SuppressWarnings("null")
 		@Override
 		public S apply(T cur, Set<Observable> toTrack) {
 			if( cur == null ) {
@@ -79,7 +83,7 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 		}
 	}
 
-	private static class StreamBinding<T> extends ObjectBinding<T> {
+	public static class StreamBinding<T> extends ObjectBinding<T> {
 
 		private ObservableValue<?> base;
 		private List<StreamStep<?, ?>> path;
@@ -90,7 +94,7 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 			this.base = base;
 			this.path = new ArrayList<>(path);
 			bind(base);
-			curToTrack = Collections.singleton(this.base);
+			this.curToTrack = Collections.singleton(this.base);
 		}
 
 		@Override
@@ -158,6 +162,11 @@ public class BindingStreamImpl<T> implements BindingStream<T> {
 	@Override
 	public ObjectBinding<T> toBinding() {
 		return new StreamBinding<>(this.base, this.path);
+	}
+
+	@Override
+	public <@NonNull R> R collect(FXCollector<T, R> collector) {
+		return collector.finish(this);
 	}
 
 	@Override

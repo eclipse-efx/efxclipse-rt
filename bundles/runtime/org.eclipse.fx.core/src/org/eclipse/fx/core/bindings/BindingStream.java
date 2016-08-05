@@ -26,7 +26,9 @@ import javafx.beans.value.ObservableValue;
 /**
  * allows chaining of binding operations
  *
- * @param <T>
+ * @param <T> the stream type
+ *
+ * @since 3.0
  */
 public interface BindingStream<T> {
 
@@ -50,22 +52,30 @@ public interface BindingStream<T> {
 	 * creates the {@link ObjectBinding}
 	 * @return the binding
 	 */
+	@Deprecated
 	ObjectBinding<T> toBinding();
 
-
+	@Deprecated
 	<S> Property<S> toProperty(Function<T, Property<S>> map);
-
+	@Deprecated
 	<S> ObjectProperty<S> toObjectProperty(Function<T, ObjectProperty<S>> map);
-
+	@Deprecated
 	StringProperty toStringProperty(Function<T, StringProperty> map);
-
+	@Deprecated
 	DoubleProperty toDoubleProperty(Function<T, DoubleProperty> map);
-
+	@Deprecated
 	BooleanProperty toBooleanProperty(Function<T, BooleanProperty> map);
-
+	@Deprecated
 	FloatProperty toFloatProperty(Function<T, FloatProperty> map);
-
+	@Deprecated
 	LongProperty toLongProperty(Function<T, LongProperty> map);
-
+	@Deprecated
 	IntegerProperty toIntegerProperty(Function<T, IntegerProperty> map);
+
+	/**
+	 * Collect the stream
+	 * @param collector
+	 * @return the terminal type
+	 */
+	<R> R collect(FXCollector<T,R> collector);
 }
