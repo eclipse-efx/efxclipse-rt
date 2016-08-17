@@ -1,17 +1,11 @@
 package org.eclipse.fx.text.ui.hover.internal;
 
-import org.eclipse.fx.text.hover.DefaultHoverInfoType;
 import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.ui.hover.HoverPresenter;
 
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 
 public class DefaultHoverPresenter implements HoverPresenter {
 
@@ -22,7 +16,7 @@ public class DefaultHoverPresenter implements HoverPresenter {
 
 	@Override
 	public boolean isApplicable(Class<? extends HoverInfo> hover) {
-		return true;
+		return hover == HoverInfo.class;
 	}
 
 	@Override

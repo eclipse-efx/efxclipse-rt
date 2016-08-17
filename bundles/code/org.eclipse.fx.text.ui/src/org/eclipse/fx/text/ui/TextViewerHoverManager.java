@@ -20,6 +20,7 @@ import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.ui.hover.HoverPresenter;
 import org.eclipse.fx.text.ui.hover.internal.DefaultHoverPresenter;
 import org.eclipse.fx.text.ui.hover.internal.DefaultHoverWindowPresenter;
+import org.eclipse.fx.text.ui.hover.internal.HTMLHoverPresenter;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.events.HoverTarget;
 import org.eclipse.fx.ui.controls.styledtext.events.TextHoverEvent;
@@ -28,7 +29,6 @@ import org.eclipse.jface.text.IDocument;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.PopupWindow;
 
@@ -47,6 +47,7 @@ public class TextViewerHoverManager {
 
 		this.windowPresenter = new DefaultHoverWindowPresenter(textViewer.getTextWidget());
 		this.hoverPresenters.add(new DefaultHoverPresenter());
+		this.hoverPresenters.add(new HTMLHoverPresenter());
 		this.windowPresenter.setHoverPresenter(this.hoverPresenters);
 
 		this.textViewer = textViewer;
@@ -77,109 +78,59 @@ public class TextViewerHoverManager {
 		return root;
 	}
 
-
-
-	public void install(StyledTextArea styledTextArea) {
-		styledTextArea.addEventHandler(TextHoverEvent.HOVER, e -> {
-			if( e.getOffset() > 0 ) {
-				final IDocument document = getTextViewer().getDocument();
-				final int offset = e.getOffset();
-
-
-				List<HoverInfo> hovers = new ArrayList<>();
-
-				hovers.addAll(getTextViewer().getHoverInfo(e.getOffset()));
-
-				hovers.addAll(this.providers.stream().flatMap(p->p.getHoverInfo(document, offset).stream()).collect(Collectors.toSet()));
-
-				Set<HoverTarget> annotationTargets = e.getHoverTargets().stream()
-						.filter(t->t.model instanceof Annotation)
-						.collect(Collectors.toSet());
-
-				Set<HoverInfo> annotationHovers = e.getHoverTargets().stream()
+	public void doHovers(TextHoverEvent e) {
+		if (e.getOffset() > 0) {
+			final IDocument document = getTextViewer().getDocument();
+			
+			List<HoverInfo> hovers = new ArrayList<>();
+	
+			hovers.addAll(getTextViewer().getHoverInfo(e.getOffset()));
+	
+			hovers.addAll(this.providers.stream().flatMap(p->p.getHoverInfo(document, e.getOffset()).stream()).collect(Collectors.toSet()));
+	
+			Set<HoverTarget> annotationTargets = e.getHoverTargets().stream()
 					.filter(t->t.model instanceof Annotation)
-					.map(t->(Annotation) t.model)
-					.filter(a->a.getModel() instanceof org.eclipse.jface.text.source.Annotation)
-					.map(a->(org.eclipse.jface.text.source.Annotation)a.getModel())
-					.flatMap(a->getTextViewer().getHoverInfo(a).stream())
 					.collect(Collectors.toSet());
-
-				hovers.addAll(annotationHovers);
-
-
-
-//				if( e.getOffset() > 0 ) {
-//				final ITextHover hover= getTextViewer().getTextHover(e.getOffset(), /*getHoverEventStateMask()*/ ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
-//				if( hover != null ) {
-//					String text = hover.getHoverInfo(getTextViewer(), hover.getHoverRegion(getTextViewer(), e.getOffset()));
-//					if( text != null && ! text.isEmpty() ) {
-//						Label value = new Label(text);
-//						value.getStyleClass().add("styled-text-hover-text");
-//						getRoot().setCenter(value);
-//						Point2D locationAtOffset = getTextViewer().getTextWidget().getLocationAtOffset(e.getOffsetTokenStart());
-//						double x = e.getScreenX();
-//						if( locationAtOffset != null ) {
-//							x = getTextViewer().getTextWidget().localToScreen(locationAtOffset.getX(),0).getX();
-//						}
-//						getPopup().show(getTextViewer().getTextWidget().getScene().getWindow(), x, e.getScreenY()+5);
-//					} else {
-//						getPopup().hide();
-//					}
-//				} else {
-//					getPopup().hide();
-//				}
-//			} else {
-//				getPopup().hide();
-//			}
-
-				if (!hovers.isEmpty()) {
-					// TODO on multiple hovers we need to determine which screenAnchor to use°!!
-					Point2D anchor = e.getHoverTargets().get(0).screenAnchor;
-					Bounds bounds = e.getHoverTargets().get(0).screenBounds;
-					if (!annotationHovers.isEmpty()) {
-						HoverTarget next = annotationTargets.iterator().next();
-						anchor = next.screenAnchor;
-						bounds = next.screenBounds;
-					}
-
-					this.windowPresenter.show(anchor, bounds, hovers);
+	
+			Set<HoverInfo> annotationHovers = e.getHoverTargets().stream()
+				.filter(t->t.model instanceof Annotation)
+				.map(t->(Annotation) t.model)
+				.filter(a->a.getModel() instanceof org.eclipse.jface.text.source.Annotation)
+				.map(a->(org.eclipse.jface.text.source.Annotation)a.getModel())
+				.flatMap(a->getTextViewer().getHoverInfo(a).stream())
+				.collect(Collectors.toSet());
+	
+			hovers.addAll(annotationHovers);
+			
+			if (!hovers.isEmpty()) {
+				// TODO on multiple hovers we need to determine which screenAnchor to use°!!
+				Point2D anchor = e.getHoverTargets().get(0).screenAnchor;
+				Bounds bounds = e.getHoverTargets().get(0).screenBounds;
+				if (!annotationHovers.isEmpty()) {
+					HoverTarget next = annotationTargets.iterator().next();
+					anchor = next.screenAnchor;
+					bounds = next.screenBounds;
 				}
-				else {
-					this.windowPresenter.hide();
-				}
+				this.windowPresenter.show(anchor, bounds, hovers);
+				
 			}
 			else {
 				this.windowPresenter.hide();
 			}
+		}
+		else {
+			this.windowPresenter.hide();
+		}
+	}
+	
+	public void install(StyledTextArea styledTextArea) {
+		
+		styledTextArea.addEventHandler(TextHoverEvent.MOUSE_PRESSED, event -> {
+			this.windowPresenter.hide();
+		});
 
-			styledTextArea.addEventHandler(MouseEvent.MOUSE_PRESSED, event-> {
-				this.windowPresenter.hide();
-			});
-
-
-//			if( e.getOffset() > 0 ) {
-//				final ITextHover hover= getTextViewer().getTextHover(e.getOffset(), /*getHoverEventStateMask()*/ ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
-//				if( hover != null ) {
-//					String text = hover.getHoverInfo(getTextViewer(), hover.getHoverRegion(getTextViewer(), e.getOffset()));
-//					if( text != null && ! text.isEmpty() ) {
-//						Label value = new Label(text);
-//						value.getStyleClass().add("styled-text-hover-text");
-//						getRoot().setCenter(value);
-//						Point2D locationAtOffset = getTextViewer().getTextWidget().getLocationAtOffset(e.getOffsetTokenStart());
-//						double x = e.getScreenX();
-//						if( locationAtOffset != null ) {
-//							x = getTextViewer().getTextWidget().localToScreen(locationAtOffset.getX(),0).getX();
-//						}
-//						getPopup().show(getTextViewer().getTextWidget().getScene().getWindow(), x, e.getScreenY()+5);
-//					} else {
-//						getPopup().hide();
-//					}
-//				} else {
-//					getPopup().hide();
-//				}
-//			} else {
-//				getPopup().hide();
-//			}
+		styledTextArea.addEventHandler(TextHoverEvent.HOVER, e -> {
+			doHovers(e);
 		});
 	}
 }

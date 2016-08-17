@@ -16,6 +16,7 @@ import org.eclipse.fx.text.hover.AnnotationHoverProvider;
 import org.eclipse.fx.text.hover.DocumentHoverProvider;
 import org.eclipse.jface.text.IRegion;
 
+@Deprecated
 public interface HoverInformationProvider {
 	public CharSequence getHoverInformation(String partitionType, IRegion region);
 	public IRegion getHoverRegion(String partitionType, int offset);
