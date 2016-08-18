@@ -1,13 +1,17 @@
 package org.eclipse.fx.core.property;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.core.Status.State;
 import org.eclipse.fx.core.bindings.FXBindings;
 import org.eclipse.fx.core.bindings.FXBindings.StatusBinding;
+import org.eclipse.fx.core.bindings.FXCollectors;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,6 +26,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 
@@ -88,7 +93,7 @@ public class FXBindingsTest {
 		ObjectProperty<Person> p = new SimpleObjectProperty<>( new Person() );
 
 		ObjectBinding<String> street = FXBindings.bindStream( p ).map( o -> o.address).map( o -> o.street).toBinding();
-		Property<String> streetProperty = FXBindings.bindStream( p ).map( o -> o.address).toProperty( o -> o.street);
+		Property<String> streetProperty = FXBindings.bindStream( p ).map( o -> o.address).collect(FXCollectors.toProperty(o -> o.street));
 
 		Assert.assertNull(street.get());
 		Address a = new Address();
@@ -126,7 +131,7 @@ public class FXBindingsTest {
 		ObjectProperty<Person> p = new SimpleObjectProperty<>( new Person() );
 
 		ObjectBinding<String> street = FXBindings.bindStream( p ).map( o -> o.address).map( o -> o.street).toBinding();
-		Property<String> streetProperty = FXBindings.bindStream( p ).map( o -> o.address).toProperty( o -> o.street);
+		Property<String> streetProperty = FXBindings.bindStream( p ).map( o -> o.address).collect(FXCollectors.toProperty(o -> o.street));
 
 		System.gc();
 
@@ -146,7 +151,7 @@ public class FXBindingsTest {
 		ObjectProperty<Person> p = new SimpleObjectProperty<>( new Person() );
 		p.get().address.set(new Address());
 		p.get().address.get().street.set("Street");
-		Property<String> streetProperty = FXBindings.bindStream( p ).map( o -> o.address).toProperty( o -> o.street);
+		Property<String> streetProperty = FXBindings.bindStream( p ).map( o -> o.address).collect(FXCollectors.toProperty(o -> o.street));
 		p.set(null);
 		Assert.assertNull(streetProperty.getValue());
 
@@ -323,6 +328,73 @@ public class FXBindingsTest {
 		l1.remove("Hello");
 
 		Assert.assertEquals(0, concat.size());
+	}
+
+	@Test
+	public void testConcatChangeEvents() {
+		ObservableList<String> l0 = FXCollections.observableArrayList("A","B","C");
+		ObservableList<String> l1 = FXCollections.observableArrayList("E","F","G");
+		ObservableList<String> l2 = FXCollections.observableArrayList("I","J","K");
+
+		ObservableList<String> concat = FXBindings.concatenatedList(l0, l1, l2);
+
+		AtomicInteger totalEventCount = new AtomicInteger();
+		AtomicInteger changeCount = new AtomicInteger();
+		AtomicBoolean addCount = new AtomicBoolean();
+		AtomicBoolean removeCount = new AtomicBoolean();
+
+		concat.addListener( (Change<? extends String> c) -> {
+			totalEventCount.incrementAndGet();
+			changeCount.set(0);
+			while( c.next() ) {
+				changeCount.incrementAndGet();
+				addCount.set(c.wasAdded());
+				removeCount.set(c.wasRemoved());
+			}
+		});
+
+		l0.add(3, "D");
+		Assert.assertEquals(1, changeCount.get());
+		Assert.assertTrue(addCount.get());
+		Assert.assertFalse(removeCount.get());
+
+		l0.remove("D");
+		Assert.assertEquals(1, changeCount.get());
+		Assert.assertFalse(addCount.get());
+		Assert.assertTrue(removeCount.get());
+
+		l0.addAll(3, Arrays.asList("D", "D2"));
+		Assert.assertEquals(1, changeCount.get());
+		Assert.assertTrue(addCount.get());
+		Assert.assertFalse(removeCount.get());
+
+		l0.removeAll("D","D2");
+		Assert.assertEquals(1, changeCount.get());
+		Assert.assertFalse(addCount.get());
+		Assert.assertTrue(removeCount.get());
+
+		l1.add(3,"H");
+		Assert.assertEquals(1, changeCount.get());
+		Assert.assertTrue(addCount.get());
+		Assert.assertFalse(removeCount.get());
+
+		l1.remove("H");
+		Assert.assertEquals(1, changeCount.get());
+		Assert.assertFalse(addCount.get());
+		Assert.assertTrue(removeCount.get());
+
+		totalEventCount.set(0);
+		l0.setAll("C","B","A");
+		Assert.assertEquals(2, totalEventCount.get()); // TODO Not ideal but currently no better solution
+
+//		ObservableList<String> list = FXCollections.observableArrayList("A","B","C");
+//		list.addListener( (Change<? extends String> c) -> {
+//			while( c.next() ) {
+//				System.err.println(c.getAddedSubList());
+//				System.err.println(c.getRemoved());
+//			}
+//		} );
+//		list.setAll("B","A","C");
 	}
 
 	@Test

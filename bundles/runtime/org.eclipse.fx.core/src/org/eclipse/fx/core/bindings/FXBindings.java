@@ -60,7 +60,9 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 
 /**
@@ -69,6 +71,53 @@ import javafx.collections.ObservableList;
  * @since 3.0.0
  */
 public class FXBindings {
+
+	private static class ConcatListHelper<T> {
+		private final int[] index;
+		private final ObservableList<T> concatedList = FXCollections.observableArrayList();
+		ObservableList<T> roConcatedList = FXCollections.unmodifiableObservableList(this.concatedList);
+
+		@SafeVarargs
+		ConcatListHelper(ObservableList<T>... list) {
+			this.index = new int[list.length];
+
+			for (int i = 0; i < list.length; i++) {
+				int j = i;
+				this.index[i] = this.concatedList.size();
+				this.concatedList.addAll(list[i]);
+				list[i].addListener((Change<? extends T> c) -> {
+					while (c.next()) {
+						if (c.wasRemoved()) {
+							this.concatedList.remove(this.index[j] + c.getFrom(), this.index[j] + c.getFrom() + c.getRemovedSize());
+							for (int k = j + 1; k < this.index.length; k++) {
+								this.index[k] -= c.getRemoved().size();
+							}
+						}
+
+						if (c.wasAdded()) {
+							this.concatedList.addAll(this.index[j] + c.getFrom(), c.getAddedSubList());
+							for (int k = j + 1; k < this.index.length; k++) {
+								this.index[k] += c.getAddedSubList().size();
+							}
+						}
+					}
+				});
+			}
+		}
+	}
+
+	/**
+	 * Create a concatenated list similar to
+	 * {@link FXCollections#concat(ObservableList...)}
+	 *
+	 * @param lists
+	 *            the source lists
+	 * @return an observable list who is synchronized with the source lists
+	 */
+	@SafeVarargs
+	public static <T> ObservableList<T> concatenatedList(ObservableList<T>... lists) {
+		return new ConcatListHelper<>(lists).roConcatedList;
+	}
 
 	/**
 	 * allows to apply multiple functions before creating a Binding. useful for
@@ -194,7 +243,8 @@ public class FXBindings {
 	 * in between
 	 *
 	 * @param threadSync
-	 *            strategy to synchronize the target on a certain thread, might be <code>null</code>
+	 *            strategy to synchronize the target on a certain thread, might
+	 *            be <code>null</code>
 	 * @param target
 	 *            the target list
 	 * @param sourceList
@@ -210,7 +260,7 @@ public class FXBindings {
 	public static <T, E> Subscription bindContent(ThreadSynchronize threadSync, List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction) {
 		List<T> list = sourceList.stream().map(converterFunction).collect(Collectors.toList());
 
-		if( threadSync == null ) {
+		if (threadSync == null) {
 			if (target instanceof ObservableList<?>) {
 				((ObservableList<T>) target).setAll(list);
 			} else {
@@ -244,21 +294,21 @@ public class FXBindings {
 				}
 			}
 		};
-		if( threadSync == null ) {
+		if (threadSync == null) {
 			fl = l;
 			sourceList.addListener(l);
 		} else {
 			fl = change -> {
-				threadSync.asyncExec( () -> l.onChanged(change) );
+				threadSync.asyncExec(() -> l.onChanged(change));
 			};
-			sourceList.addListener( fl );
+			sourceList.addListener(fl);
 		}
 
 		return new Subscription() {
 
 			@Override
 			public void dispose() {
-				if( threadSync == null ) {
+				if (threadSync == null) {
 					sourceList.removeListener(fl);
 				} else {
 					threadSync.asyncExec(fl, sourceList::removeListener);
@@ -296,11 +346,11 @@ public class FXBindings {
 				}
 			};
 
-			if( threadSync == null ) {
+			if (threadSync == null) {
 				this.l = l;
 			} else {
 				ListChangeListener<E> ll = change -> {
-					threadSync.asyncExec( () -> l.onChanged(change) );
+					threadSync.asyncExec(() -> l.onChanged(change));
 				};
 				this.l = ll;
 			}
@@ -321,7 +371,7 @@ public class FXBindings {
 
 			List<T> list = sourceList.stream().map(converterFunction).collect(Collectors.toList());
 
-			if( threadSync == null ) {
+			if (threadSync == null) {
 				if (padding == 0) {
 					if (target instanceof ObservableList<?>) {
 						((ObservableList<T>) target).setAll(list);
@@ -388,7 +438,7 @@ public class FXBindings {
 
 		@Override
 		public void dispose() {
-			if( this.threadSync == null ) {
+			if (this.threadSync == null) {
 				this.sourceList.remove(this.l);
 			} else {
 				this.threadSync.asyncExec(this.l, this.sourceList::remove);
@@ -422,7 +472,8 @@ public class FXBindings {
 	 * padding and apply the converter in between
 	 *
 	 * @param threadSync
-	 *            strategy to synchronize the target on a certain thread, might be <code>null</code>
+	 *            strategy to synchronize the target on a certain thread, might
+	 *            be <code>null</code>
 	 * @param padding
 	 *            the initial padding
 	 * @param target
@@ -435,7 +486,7 @@ public class FXBindings {
 	 *            function to consult when filling padding slots
 	 * @return the binding
 	 */
-	public static <T, E>Subscription bindContent(ThreadSynchronize threadSync, int padding, List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
+	public static <T, E> Subscription bindContent(ThreadSynchronize threadSync, int padding, List<T> target, ObservableList<E> sourceList, Function<E, T> converterFunction, IntFunction<T> paddingEntryFactory) {
 		return new PaddedListBinding<>(threadSync, padding, target, sourceList, converterFunction, paddingEntryFactory);
 	}
 
@@ -459,6 +510,7 @@ public class FXBindings {
 
 		/**
 		 * registers a converter
+		 *
 		 * @param sourceType
 		 * @param targetType
 		 * @param converter
@@ -469,6 +521,7 @@ public class FXBindings {
 
 		/**
 		 * retrieves a converter
+		 *
 		 * @param sourceType
 		 * @param targetType
 		 * @return the converter or <code>null</code> if none was found
@@ -488,34 +541,40 @@ public class FXBindings {
 	}
 
 	/**
-	 * Bidirectional binding between two properties with conversion.
-	 * The conversion is looked up in the {@link ConverterRegistry}
-	 * if no converter is found a runtime exception is thrown
+	 * Bidirectional binding between two properties with conversion. The
+	 * conversion is looked up in the {@link ConverterRegistry} if no converter
+	 * is found a runtime exception is thrown
+	 *
 	 * @param target
 	 * @param source
 	 * @param targetType
 	 * @param sourceType
-	 * @return a StatusBinding which can be used to watch conversion failures and to dispose the whole bidi binding
+	 * @return a StatusBinding which can be used to watch conversion failures
+	 *         and to dispose the whole bidi binding
 	 */
 	public static <S, T> StatusBinding bindBidirectional(Property<T> target, Property<S> source, Class<T> targetType, Class<S> sourceType) {
 		// lookup in registry
 		Function<T, S> targetToSource = ConverterRegistry.getConverter(targetType, sourceType);
 		Function<S, T> sourceToTarget = ConverterRegistry.getConverter(sourceType, targetType);
-		if (sourceToTarget == null) throw new RuntimeException("Cannot find converter from " + sourceType + " to " + targetType);  //$NON-NLS-1$//$NON-NLS-2$
-		if (targetToSource == null) throw new RuntimeException("Cannot find converter from " + targetType + " to " + sourceType);  //$NON-NLS-1$//$NON-NLS-2$
+		if (sourceToTarget == null)
+			throw new RuntimeException("Cannot find converter from " + sourceType + " to " + targetType); //$NON-NLS-1$//$NON-NLS-2$
+		if (targetToSource == null)
+			throw new RuntimeException("Cannot find converter from " + targetType + " to " + sourceType); //$NON-NLS-1$//$NON-NLS-2$
 		return bindBidirectional(target, source, targetToSource, sourceToTarget);
 	}
 
 	/**
 	 * Bidirectional binding between two properties with conversion.
+	 *
 	 * @param target
 	 * @param source
 	 * @param targetToSource
 	 * @param sourceToTarget
-	 * @return a StatusBinding which can be used to watch conversion failures and to dispose the whole bidi binding
+	 * @return a StatusBinding which can be used to watch conversion failures
+	 *         and to dispose the whole bidi binding
 	 */
 	public static <S, T> StatusBinding bindBidirectional(Property<T> target, Property<S> source, Function<T, S> targetToSource, Function<S, T> sourceToTarget) {
-		return new BaseBidiPropertyBinding(target,source) {
+		return new BaseBidiPropertyBinding(target, source) {
 
 			@Override
 			protected void syncTarget() {
@@ -530,7 +589,8 @@ public class FXBindings {
 	}
 
 	/**
-	 * Specialized bindings for {@link IntegerProperty}, {@link FloatProperty}, {@link DoubleProperty}, {@link LongProperty}, {@link BooleanProperty}
+	 * Specialized bindings for {@link IntegerProperty}, {@link FloatProperty},
+	 * {@link DoubleProperty}, {@link LongProperty}, {@link BooleanProperty}
 	 */
 	public static class PrimitivesBindings {
 		// ----------------------------------------------------------------------------------------------------------
@@ -541,14 +601,19 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(StringProperty target, StringProperty source, Function<String, String> targetToSource, Function<String, String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -567,14 +632,19 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <T> StatusBinding bindBidirectional(Property<T> target, StringProperty source, Function<T, String> targetToSource, Function<String, T> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -590,14 +660,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(IntegerProperty target, StringProperty source, IntFunction<String> targetToSource, ToIntFunction<String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -613,14 +688,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(DoubleProperty target, StringProperty source, DoubleFunction<String> targetToSource, ToDoubleFunction<String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -636,18 +716,23 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(FloatProperty target, StringProperty source, DoubleFunction<String> targetToSource, ToDoubleFunction<String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
-					target.set((float)sourceToTarget.applyAsDouble(source.get()));
+					target.set((float) sourceToTarget.applyAsDouble(source.get()));
 				}
 
 				@Override
@@ -659,14 +744,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(LongProperty target, StringProperty source, LongFunction<String> targetToSource, ToLongFunction<String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -682,14 +772,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static StatusBinding bindBidirectional(BooleanProperty target, StringProperty source, Function<Boolean,String> targetToSource, Predicate<String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+		public static StatusBinding bindBidirectional(BooleanProperty target, StringProperty source, Function<Boolean, String> targetToSource, Predicate<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -708,14 +803,19 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <T> StatusBinding bindBidirectional(StringProperty target, Property<T> source, Function<String, T> targetToSource, Function<T, String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -731,14 +831,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(StringProperty target, IntegerProperty source, ToIntFunction<String> targetToSource, IntFunction<String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -754,14 +859,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static StatusBinding bindBidirectional(StringProperty target, DoubleProperty source,ToDoubleFunction<String> targetToSource, DoubleFunction<String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+		public static StatusBinding bindBidirectional(StringProperty target, DoubleProperty source, ToDoubleFunction<String> targetToSource, DoubleFunction<String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -777,14 +887,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(StringProperty target, FloatProperty source, ToDoubleFunction<String> targetToSource, DoubleFunction<String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -793,21 +908,26 @@ public class FXBindings {
 
 				@Override
 				protected void syncSource() {
-					source.set((float)targetToSource.applyAsDouble(target.get()));
+					source.set((float) targetToSource.applyAsDouble(target.get()));
 				}
 			};
 		}
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(StringProperty target, LongProperty source, ToLongFunction<String> targetToSource, LongFunction<String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -823,14 +943,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static StatusBinding bindBidirectional(StringProperty target, BooleanProperty source,Predicate<String> targetToSource, Function<Boolean,String> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+		public static StatusBinding bindBidirectional(StringProperty target, BooleanProperty source, Predicate<String> targetToSource, Function<Boolean, String> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -849,14 +974,19 @@ public class FXBindings {
 		// ----------------------------------------------------------------------------------------------------------
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <T> StatusBinding bindBidirectional(Property<T> target, BooleanProperty source, Predicate<T> targetToSource, Function<Boolean, T> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 				@Override
 				protected void syncTarget() {
 					target.setValue(sourceToTarget.apply(Boolean.valueOf(source.get())));
@@ -871,14 +1001,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static <T> StatusBinding bindBidirectional(BooleanProperty target,  Property<T> source, Function<Boolean, T> targetToSource, Predicate<T> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+		public static <T> StatusBinding bindBidirectional(BooleanProperty target, Property<T> source, Function<Boolean, T> targetToSource, Predicate<T> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target, source) {
 				@Override
 				protected void syncTarget() {
 					target.set(sourceToTarget.test(source.getValue()));
@@ -891,7 +1026,6 @@ public class FXBindings {
 			};
 		}
 
-
 		// ----------------------------------------------------------------------------------------------------------
 		// IntegerProperty
 		// ----------------------------------------------------------------------------------------------------------
@@ -900,14 +1034,19 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <T> StatusBinding bindBidirectional(Property<T> target, IntegerProperty source, ToIntFunction<T> targetToSource, IntFunction<T> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -923,14 +1062,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(DoubleProperty target, IntegerProperty source, DoubleToIntFunction targetToSource, IntToDoubleFunction sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -946,18 +1090,23 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(FloatProperty target, IntegerProperty source, /* FloatToIntFunction */ DoubleToIntFunction targetToSource, /* IntToFloatFunction */IntToDoubleFunction sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
-					target.set((float)sourceToTarget.applyAsDouble(source.get()));
+					target.set((float) sourceToTarget.applyAsDouble(source.get()));
 				}
 
 				@Override
@@ -969,14 +1118,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(LongProperty target, IntegerProperty source, LongToIntFunction targetToSource, IntToLongFunction sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -995,14 +1149,19 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static <T> StatusBinding bindBidirectional(IntegerProperty target,  Property<T> source, IntFunction<T> targetToSource, ToIntFunction<T> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+		public static <T> StatusBinding bindBidirectional(IntegerProperty target, Property<T> source, IntFunction<T> targetToSource, ToIntFunction<T> sourceToTarget) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1018,14 +1177,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static StatusBinding bindBidirectional(IntegerProperty target,  DoubleProperty source, IntToDoubleFunction targetToSource, DoubleToIntFunction sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+		public static StatusBinding bindBidirectional(IntegerProperty target, DoubleProperty source, IntToDoubleFunction targetToSource, DoubleToIntFunction sourceToTarget) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1041,14 +1205,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static StatusBinding bindBidirectional(IntegerProperty  target, FloatProperty source, /* IntToFloatFunction */IntToDoubleFunction targetToSource, /* FloatToIntFunction */ DoubleToIntFunction sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+		public static StatusBinding bindBidirectional(IntegerProperty target, FloatProperty source, /* IntToFloatFunction */IntToDoubleFunction targetToSource, /* FloatToIntFunction */ DoubleToIntFunction sourceToTarget) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1057,21 +1226,26 @@ public class FXBindings {
 
 				@Override
 				protected void syncSource() {
-					source.set((float)targetToSource.applyAsDouble(target.get()));
+					source.set((float) targetToSource.applyAsDouble(target.get()));
 				}
 			};
 		}
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
-		public static StatusBinding bindBidirectional(IntegerProperty target,  LongProperty source, IntToLongFunction targetToSource, LongToIntFunction sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+		public static StatusBinding bindBidirectional(IntegerProperty target, LongProperty source, IntToLongFunction targetToSource, LongToIntFunction sourceToTarget) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1090,14 +1264,19 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <S> StatusBinding bindBidirectional(IntegerProperty target, IntegerProperty source, IntUnaryOperator targetToSource, IntUnaryOperator sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1119,14 +1298,19 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <T> StatusBinding bindBidirectional(Property<T> target, DoubleProperty source, ToDoubleFunction<T> targetToSource, DoubleFunction<T> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1139,25 +1323,32 @@ public class FXBindings {
 				}
 			};
 		}
-// Already defined above in the integer area
-//		public static StatusBinding bindBidirectional(IntegerProperty target, DoubleProperty source, IntToDoubleFunction targetToSource, DoubleToIntFunction sourceToTarget) {
-//			return null;
-//		}
+		// Already defined above in the integer area
+		// public static StatusBinding bindBidirectional(IntegerProperty target,
+		// DoubleProperty source, IntToDoubleFunction targetToSource,
+		// DoubleToIntFunction sourceToTarget) {
+		// return null;
+		// }
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(FloatProperty target, DoubleProperty source, /* FloatToDoubleFunction */ DoubleUnaryOperator targetToSource, /* DoubleToFloatFunction */DoubleUnaryOperator sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
-					target.set((float)sourceToTarget.applyAsDouble(source.get()));
+					target.set((float) sourceToTarget.applyAsDouble(source.get()));
 				}
 
 				@Override
@@ -1169,14 +1360,19 @@ public class FXBindings {
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(LongProperty target, DoubleProperty source, LongToDoubleFunction targetToSource, DoubleToLongFunction sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1195,14 +1391,19 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <T> StatusBinding bindBidirectional(DoubleProperty target, Property<T> source, DoubleFunction<T> targetToSource, ToDoubleFunction<T> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1216,21 +1417,28 @@ public class FXBindings {
 			};
 		}
 
-// Already defined above integer area
-//		public static StatusBinding bindBidirectional(DoubleProperty target, IntegerProperty source, DoubleToIntFunction targetToSource, IntToDoubleFunction sourceToTarget) {
-//			return null;
-//		}
+		// Already defined above integer area
+		// public static StatusBinding bindBidirectional(DoubleProperty target,
+		// IntegerProperty source, DoubleToIntFunction targetToSource,
+		// IntToDoubleFunction sourceToTarget) {
+		// return null;
+		// }
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(DoubleProperty target, FloatProperty source, /* DoubleToFloatFunction */DoubleUnaryOperator targetToSource, /* FloatToDoubleFunction */ DoubleUnaryOperator sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1239,21 +1447,26 @@ public class FXBindings {
 
 				@Override
 				protected void syncSource() {
-					source.set((float)targetToSource.applyAsDouble(target.get()));
+					source.set((float) targetToSource.applyAsDouble(target.get()));
 				}
 			};
 		}
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(DoubleProperty target, LongProperty source, DoubleToLongFunction targetToSource, LongToDoubleFunction sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1272,14 +1485,19 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <S> StatusBinding bindBidirectional(DoubleProperty target, DoubleProperty source, DoubleUnaryOperator targetToSource, DoubleUnaryOperator sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1301,10 +1519,15 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <T> StatusBinding bindBidirectional(Property<T> target, FloatProperty source, ToDoubleFunction<T> targetToSource, DoubleFunction<T> sourceToTarget) {
@@ -1317,29 +1540,39 @@ public class FXBindings {
 
 				@Override
 				protected void syncSource() {
-					source.set((float)targetToSource.applyAsDouble(target.getValue()));
+					source.set((float) targetToSource.applyAsDouble(target.getValue()));
 				}
 			};
 		}
-// Already defined above in the integer area
-//		public static StatusBinding bindBidirectional(IntegerProperty target, FloatProperty source, IntToDoubleFunction targetToSource, DoubleToIntFunction sourceToTarget) {
-//			return null;
-//		}
-// Already defined in double area
-//		public static StatusBinding bindBidirectional(DoubleProperty target, FloatProperty source, /* DoubleToDoubleFunction */ DoubleUnaryOperator targetToSource, /* FloatToDoubleFunction */DoubleUnaryOperator sourceToTarget) {
-//			return null;
-//		}
+		// Already defined above in the integer area
+		// public static StatusBinding bindBidirectional(IntegerProperty target,
+		// FloatProperty source, IntToDoubleFunction targetToSource,
+		// DoubleToIntFunction sourceToTarget) {
+		// return null;
+		// }
+		// Already defined in double area
+		// public static StatusBinding bindBidirectional(DoubleProperty target,
+		// FloatProperty source, /* DoubleToDoubleFunction */
+		// DoubleUnaryOperator targetToSource, /* FloatToDoubleFunction
+		// */DoubleUnaryOperator sourceToTarget) {
+		// return null;
+		// }
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(LongProperty target, FloatProperty source, /* LongToFloatFunction */ LongToDoubleFunction targetToSource, /* FloatToLongFunction */ DoubleToLongFunction sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1348,7 +1581,7 @@ public class FXBindings {
 
 				@Override
 				protected void syncSource() {
-					source.set((float)targetToSource.applyAsDouble(target.get()));
+					source.set((float) targetToSource.applyAsDouble(target.get()));
 				}
 			};
 		}
@@ -1358,18 +1591,23 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <T> StatusBinding bindBidirectional(FloatProperty target, Property<T> source, DoubleFunction<T> targetToSource, ToDoubleFunction<T> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
-					target.set((float)sourceToTarget.applyAsDouble(source.getValue()));
+					target.set((float) sourceToTarget.applyAsDouble(source.getValue()));
 				}
 
 				@Override
@@ -1378,29 +1616,39 @@ public class FXBindings {
 				}
 			};
 		}
-// Already defined above in the integer area
-//		public static StatusBinding bindBidirectional(FloatProperty target,  source, IntegerProperty DoubleToIntFunction targetToSource, IntToDoubleFunction sourceToTarget) {
-//			return null;
-//		}
-// Already defined in double area
-//		public static StatusBinding bindBidirectional(FloatProperty target, DoubleProperty source, /* FloatToDoubleFunction */DoubleUnaryOperator targetToSource, /* DoubleToDoubleFunction */ DoubleUnaryOperator sourceToTarget) {
-//			return null;
-//		}
+		// Already defined above in the integer area
+		// public static StatusBinding bindBidirectional(FloatProperty target,
+		// source, IntegerProperty DoubleToIntFunction targetToSource,
+		// IntToDoubleFunction sourceToTarget) {
+		// return null;
+		// }
+		// Already defined in double area
+		// public static StatusBinding bindBidirectional(FloatProperty target,
+		// DoubleProperty source, /* FloatToDoubleFunction */DoubleUnaryOperator
+		// targetToSource, /* DoubleToDoubleFunction */ DoubleUnaryOperator
+		// sourceToTarget) {
+		// return null;
+		// }
 
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static StatusBinding bindBidirectional(FloatProperty target, LongProperty source, /* LongToFloatFunction */ DoubleToLongFunction targetToSource, /* FloatToLongFunction */ LongToDoubleFunction sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
-					target.set((float)sourceToTarget.applyAsDouble(source.get()));
+					target.set((float) sourceToTarget.applyAsDouble(source.get()));
 				}
 
 				@Override
@@ -1415,23 +1663,28 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <S> StatusBinding bindBidirectional(FloatProperty target, FloatProperty source, DoubleUnaryOperator targetToSource, DoubleUnaryOperator sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
-					target.set((float)sourceToTarget.applyAsDouble(source.get()));
+					target.set((float) sourceToTarget.applyAsDouble(source.get()));
 				}
 
 				@Override
 				protected void syncSource() {
-					source.set((float)targetToSource.applyAsDouble(target.get()));
+					source.set((float) targetToSource.applyAsDouble(target.get()));
 				}
 			};
 		}
@@ -1444,14 +1697,19 @@ public class FXBindings {
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <T> StatusBinding bindBidirectional(Property<T> target, LongProperty source, ToLongFunction<T> targetToSource, LongFunction<T> sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
@@ -1464,32 +1722,45 @@ public class FXBindings {
 				}
 			};
 		}
-// Already defined above in the integer area
-//		public static StatusBinding bindBidirectional(IntegerProperty target, LongProperty source, IntToDoubleFunction targetToSource, DoubleToIntFunction sourceToTarget) {
-//			return null;
-//		}
-// Already defined in double area
-//		public static StatusBinding bindBidirectional(DoubleProperty target, LongProperty source, /* DoubleToDoubleFunction */ DoubleUnaryOperator targetToSource, /* FloatToDoubleFunction */DoubleUnaryOperator sourceToTarget) {
-//			return null;
-//		}
-//
-//		public static StatusBinding bindBidirectional(FloatProperty target, LongProperty source, /* LongToFloatFunction */ DoubleToLongFunction targetToSource, /* FloatToLongFunction */ LongToDoubleFunction sourceToTarget) {
-//			return null;
-//		}
+		// Already defined above in the integer area
+		// public static StatusBinding bindBidirectional(IntegerProperty target,
+		// LongProperty source, IntToDoubleFunction targetToSource,
+		// DoubleToIntFunction sourceToTarget) {
+		// return null;
+		// }
+		// Already defined in double area
+		// public static StatusBinding bindBidirectional(DoubleProperty target,
+		// LongProperty source, /* DoubleToDoubleFunction */ DoubleUnaryOperator
+		// targetToSource, /* FloatToDoubleFunction */DoubleUnaryOperator
+		// sourceToTarget) {
+		// return null;
+		// }
+		//
+		// public static StatusBinding bindBidirectional(FloatProperty target,
+		// LongProperty source, /* LongToFloatFunction */ DoubleToLongFunction
+		// targetToSource, /* FloatToLongFunction */ LongToDoubleFunction
+		// sourceToTarget) {
+		// return null;
+		// }
 
 		/*
 		 * Self
 		 */
 		/**
 		 * Bind a properties
-		 * @param target the target
-		 * @param source the source
-		 * @param targetToSource the conversion from target to source
-		 * @param sourceToTarget the conversion from source to target
+		 *
+		 * @param target
+		 *            the target
+		 * @param source
+		 *            the source
+		 * @param targetToSource
+		 *            the conversion from target to source
+		 * @param sourceToTarget
+		 *            the conversion from source to target
 		 * @return the binding
 		 */
 		public static <S> StatusBinding bindBidirectional(LongProperty target, LongProperty source, LongUnaryOperator targetToSource, LongUnaryOperator sourceToTarget) {
-			return new BaseBidiPropertyBinding(target,source) {
+			return new BaseBidiPropertyBinding(target, source) {
 
 				@Override
 				protected void syncTarget() {
