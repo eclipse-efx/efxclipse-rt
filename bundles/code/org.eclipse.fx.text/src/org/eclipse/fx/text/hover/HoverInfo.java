@@ -11,6 +11,7 @@ public class HoverInfo {
 	
 	private final CharSequence hoverContent;
 
+	@Deprecated
 	public HoverInfo(HoverInfoType type, IRegion region, String hoverText, Object hoverModel) {
 		this.type = type;
 		this.region = region;

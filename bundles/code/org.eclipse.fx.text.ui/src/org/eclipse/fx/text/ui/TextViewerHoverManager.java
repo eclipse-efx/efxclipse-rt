@@ -20,7 +20,7 @@ import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.ui.hover.HoverPresenter;
 import org.eclipse.fx.text.ui.hover.internal.DefaultHoverPresenter;
 import org.eclipse.fx.text.ui.hover.internal.DefaultHoverWindowPresenter;
-import org.eclipse.fx.text.ui.hover.internal.HTMLHoverPresenter;
+import org.eclipse.fx.text.ui.hover.internal.HtmlHoverPresenter;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.events.HoverTarget;
 import org.eclipse.fx.ui.controls.styledtext.events.TextHoverEvent;
@@ -47,7 +47,7 @@ public class TextViewerHoverManager {
 
 		this.windowPresenter = new DefaultHoverWindowPresenter(textViewer.getTextWidget());
 		this.hoverPresenters.add(new DefaultHoverPresenter());
-		this.hoverPresenters.add(new HTMLHoverPresenter());
+		this.hoverPresenters.add(new HtmlHoverPresenter());
 		this.windowPresenter.setHoverPresenter(this.hoverPresenters);
 
 		this.textViewer = textViewer;
@@ -57,25 +57,25 @@ public class TextViewerHoverManager {
 		this.popup.setAutoHide(false);
 		this.textViewer.getTextWidget().sceneProperty().addListener( e -> {
 			if( textViewer.getTextWidget().getScene() != null ) {
-				popup.getScene().getStylesheets().setAll(textViewer.getTextWidget().getScene().getStylesheets());
+				this.popup.getScene().getStylesheets().setAll(textViewer.getTextWidget().getScene().getStylesheets());
 			}
 
 		});
-		root = new BorderPane();
-		root.getStyleClass().add("styled-text-hover");
-		popup.getScene().setRoot(root);
+		this.root = new BorderPane();
+		this.root.getStyleClass().add("styled-text-hover");
+		this.popup.getScene().setRoot(root);
 	}
 
 	public TextViewer getTextViewer() {
-		return textViewer;
+		return this.textViewer;
 	}
 
 	public PopupWindow getPopup() {
-		return popup;
+		return this.popup;
 	}
 
 	public BorderPane getRoot() {
-		return root;
+		return this.root;
 	}
 
 	public void doHovers(TextHoverEvent e) {

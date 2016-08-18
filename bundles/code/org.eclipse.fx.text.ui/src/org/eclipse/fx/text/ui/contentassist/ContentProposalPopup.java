@@ -16,11 +16,10 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.fx.text.hover.HtmlString;
 import org.eclipse.fx.text.ui.ITextViewer;
+import org.eclipse.fx.text.ui.internal.SimpleHtmlViewer;
 import org.eclipse.fx.ui.controls.list.SimpleListCell;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
-import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
-import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
 import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 
 import com.sun.javafx.tk.Toolkit;
@@ -31,13 +30,17 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.web.WebView;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.stage.PopupWindow;
 
 @SuppressWarnings("restriction")
@@ -45,7 +48,8 @@ public class ContentProposalPopup implements IContentAssistListener {
 	ITextViewer viewer;
 	private PopupWindow stage;
 	private ListView<ICompletionProposal> proposalList;
-	private WebView documentationView;
+	private SimpleHtmlViewer htmlViewer;
+	
 	private String prefix;
 	int offset;
 	private Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer;
@@ -177,17 +181,22 @@ public class ContentProposalPopup implements IContentAssistListener {
 		}
 	}
 
-	private static String getDocumentation(ICompletionProposal proposal) {
+	private static HtmlString getHtml(ICompletionProposal proposal) {
 		if (proposal != null && proposal.getHoverInfo() != null) {
-			if( proposal.getHoverInfo().toString().startsWith("<html>") ) { //$NON-NLS-1$
-				return proposal.getHoverInfo().toString();
-			} else {
-				return "<html><body><pre>"+proposal.getHoverInfo()+"</pre></body></html>"; //$NON-NLS-1$ //$NON-NLS-2$
+			if (proposal.getHoverInfo() instanceof HtmlString) {
+				return (HtmlString) proposal.getHoverInfo();
+			}
+			else {
+				if( proposal.getHoverInfo().toString().startsWith("<html>") ) { //$NON-NLS-1$
+					return new HtmlString(proposal.getHoverInfo().toString());
+				} else {
+					return new HtmlString("<html><body><pre>"+proposal.getHoverInfo()+"</pre></body></html>"); //$NON-NLS-1$ //$NON-NLS-2$
+				}
 			}
 		}
-		return "<html></html>"; //$NON-NLS-1$
+		return new HtmlString("<html></html>"); //$NON-NLS-1$
 	}
-
+	
 	private void setup() {
 		if( this.stage == null ) {
 			this.stage = new PopupWindow() {
@@ -197,6 +206,7 @@ public class ContentProposalPopup implements IContentAssistListener {
 			this.stage.setWidth(300);
 			this.stage.setHeight(200);
 			BorderPane p = new BorderPane();
+			p.getStyleClass().add("content-proposal-container"); //$NON-NLS-1$
 			p.setPrefHeight(200);
 			p.setPrefWidth(600);
 			this.stage.getScene().addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPressed);
@@ -209,22 +219,25 @@ public class ContentProposalPopup implements IContentAssistListener {
 			this.proposalList.getStyleClass().add("content-proposal-list"); //$NON-NLS-1$
 			this.proposalList.setOnMouseClicked(this::handleMouseClicked);
 
-			this.documentationView = new WebView();
-			this.documentationView.setPrefWidth(300);
-			this.documentationView.getStyleClass().add("content-proposal-doc"); //$NON-NLS-1$
+			this.htmlViewer = new SimpleHtmlViewer();
+			this.htmlViewer.setPrefWidth(300);
+			this.htmlViewer.getStyleClass().add("content-proposal-doc"); //$NON-NLS-1$
 
 			this.proposalList.getSelectionModel().selectedItemProperty().addListener((ChangeListener<ICompletionProposal>) (observable, oldValue, newValue) -> {
-				this.documentationView.getEngine().loadContent(getDocumentation(newValue));
+				this.htmlViewer.setContent(getHtml(newValue));
 			});
-
+			
 			Function<ICompletionProposal, CharSequence> label = (c) -> c.getLabel();
 			Function<ICompletionProposal, Node> graphic = (c) -> c.getGraphic();
 			Function<ICompletionProposal, List<String>> css = (c) -> Collections.emptyList();
 
-
 			this.proposalList.setCellFactory((v) -> new SimpleListCell<ICompletionProposal>(label,graphic,css));
 			p.setCenter(this.proposalList);
-			p.setRight(this.documentationView);
+			p.setRight(this.htmlViewer);
+			
+			p.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(3), Insets.EMPTY)));
+			p.setPadding(new Insets(5));
+			
 			this.stage.getScene().setRoot(p);
 			this.stage.focusedProperty().addListener((o) -> {
 				if( this.stage != null && ! this.stage.isFocused() ) {

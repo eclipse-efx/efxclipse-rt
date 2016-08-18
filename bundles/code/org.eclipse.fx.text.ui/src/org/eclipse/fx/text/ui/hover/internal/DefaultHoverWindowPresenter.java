@@ -135,8 +135,8 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 	}
 
 	private Optional<HoverPresenter> findPresenter(HoverInfo hover) {
-		return this.presenters.stream().filter(p->p.isApplicable(hover.getClass()))
-				.sorted((a,b)->a.getOrder()-b.getOrder())
+		return this.presenters.stream().filter(p->p.isApplicable(hover))
+				.sorted((a,b)->b.getOrder()-a.getOrder())
 				.findFirst();
 	}
 

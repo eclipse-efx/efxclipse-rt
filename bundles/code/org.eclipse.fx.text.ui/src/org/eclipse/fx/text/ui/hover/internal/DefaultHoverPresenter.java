@@ -15,8 +15,8 @@ public class DefaultHoverPresenter implements HoverPresenter {
 	}
 
 	@Override
-	public boolean isApplicable(Class<? extends HoverInfo> hover) {
-		return hover == HoverInfo.class;
+	public boolean isApplicable(HoverInfo hover) {
+		return true;
 	}
 
 	@Override
