@@ -73,31 +73,30 @@ import javafx.collections.ObservableList;
 public class FXBindings {
 
 	private static class ConcatListHelper<T> {
-		private final int[] index;
 		private final ObservableList<T> concatedList = FXCollections.observableArrayList();
-		ObservableList<T> roConcatedList = FXCollections.unmodifiableObservableList(this.concatedList);
+		final ObservableList<T> roConcatedList = FXCollections.unmodifiableObservableList(this.concatedList);
 
 		@SafeVarargs
 		ConcatListHelper(ObservableList<T>... list) {
-			this.index = new int[list.length];
+			int[] index = new int[list.length];
 
 			for (int i = 0; i < list.length; i++) {
 				int j = i;
-				this.index[i] = this.concatedList.size();
+				index[i] = this.concatedList.size();
 				this.concatedList.addAll(list[i]);
 				list[i].addListener((Change<? extends T> c) -> {
 					while (c.next()) {
 						if (c.wasRemoved()) {
-							this.concatedList.remove(this.index[j] + c.getFrom(), this.index[j] + c.getFrom() + c.getRemovedSize());
-							for (int k = j + 1; k < this.index.length; k++) {
-								this.index[k] -= c.getRemoved().size();
+							this.concatedList.remove(index[j] + c.getFrom(), index[j] + c.getFrom() + c.getRemovedSize());
+							for (int k = j + 1; k < index.length; k++) {
+								index[k] -= c.getRemoved().size();
 							}
 						}
 
 						if (c.wasAdded()) {
-							this.concatedList.addAll(this.index[j] + c.getFrom(), c.getAddedSubList());
-							for (int k = j + 1; k < this.index.length; k++) {
-								this.index[k] += c.getAddedSubList().size();
+							this.concatedList.addAll(index[j] + c.getFrom(), c.getAddedSubList());
+							for (int k = j + 1; k < index.length; k++) {
+								index[k] += c.getAddedSubList().size();
 							}
 						}
 					}
