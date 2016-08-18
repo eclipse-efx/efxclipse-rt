@@ -33,21 +33,6 @@ import java.util.function.ToLongFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.eclipse.fx.core.Status;
-import org.eclipse.fx.core.Subscription;
-import org.eclipse.fx.core.ThreadSynchronize;
-import org.eclipse.fx.core.Tuple;
-import org.eclipse.fx.core.bindings.internal.BaseBidiPropertyBinding;
-import org.eclipse.fx.core.bindings.internal.BindingStreamImpl;
-import org.eclipse.fx.core.bindings.internal.ConcatListBinding;
-import org.eclipse.fx.core.bindings.internal.FlatMapListBinding;
-import org.eclipse.fx.core.bindings.internal.FlatMapValueListBinding;
-import org.eclipse.fx.core.bindings.internal.MapListBinding;
-import org.eclipse.fx.core.bindings.internal.MapObjectBinding;
-import org.eclipse.fx.core.bindings.internal.MapSimpleObjectBinding;
-import org.eclipse.fx.core.bindings.internal.SyncListBinding;
-import org.eclipse.fx.core.bindings.internal.SyncObjectBinding;
-
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.ObjectBinding;
@@ -64,6 +49,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+
+import org.eclipse.fx.core.Status;
+import org.eclipse.fx.core.Subscription;
+import org.eclipse.fx.core.ThreadSynchronize;
+import org.eclipse.fx.core.Tuple;
+import org.eclipse.fx.core.bindings.internal.BaseBidiPropertyBinding;
+import org.eclipse.fx.core.bindings.internal.BindingStreamImpl;
+import org.eclipse.fx.core.bindings.internal.ConcatListBinding;
+import org.eclipse.fx.core.bindings.internal.FixListBinding;
+import org.eclipse.fx.core.bindings.internal.FlatMapListBinding;
+import org.eclipse.fx.core.bindings.internal.FlatMapValueListBinding;
+import org.eclipse.fx.core.bindings.internal.MapListBinding;
+import org.eclipse.fx.core.bindings.internal.MapObjectBinding;
+import org.eclipse.fx.core.bindings.internal.MapSimpleObjectBinding;
+import org.eclipse.fx.core.bindings.internal.SyncListBinding;
+import org.eclipse.fx.core.bindings.internal.SyncObjectBinding;
 
 /**
  * Collection of JavaFX bean bindings.
@@ -137,7 +138,7 @@ public class FXBindings {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <A> ListBinding<A> concat(ObservableList<A>... sources) {
-		return new ConcatListBinding<>(sources);
+		return new FixListBinding<>(new ConcatListBinding<>(sources));
 	}
 
 	/**
@@ -170,7 +171,7 @@ public class FXBindings {
 	 * @return the mapped list binding
 	 */
 	public static <A, B> ListBinding<B> mapList(ObservableList<A> source, Function<A, B> map) {
-		return new MapListBinding<A, B>(source, map);
+		return new FixListBinding<>(new MapListBinding<A, B>(source, map));
 	}
 
 	/**
@@ -181,7 +182,7 @@ public class FXBindings {
 	 * @return the flat mapped list binding
 	 */
 	public static <A, B> ListBinding<B> flatMapList(ObservableList<A> source, Function<A, ObservableList<B>> map) {
-		return new FlatMapListBinding<A, B>(source, map);
+		return new FixListBinding<>(new FlatMapListBinding<A, B>(source, map));
 	}
 
 	/**
@@ -192,7 +193,7 @@ public class FXBindings {
 	 * @return the flat mapped list binding
 	 */
 	public static <A, B> ListBinding<B> flatMapListValue(ObservableList<A> source, Function<A, ObservableValue<B>> map) {
-		return new FlatMapValueListBinding<>(source, map);
+		return new FixListBinding<>(new FlatMapValueListBinding<>(source, map));
 	}
 
 	/**

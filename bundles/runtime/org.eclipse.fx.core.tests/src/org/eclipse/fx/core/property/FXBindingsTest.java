@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import org.eclipse.fx.core.Subscription;
@@ -26,6 +27,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -262,6 +264,43 @@ public class FXBindingsTest {
 		Assert.assertEquals("test3", m2.get());
 
 	}
+	
+	private static interface ChangeTest<T> {
+		void test(Change<? extends T> change);
+	}
+	private static class RemoveAdd<T> implements ChangeTest<T> {
+		private T[] added;
+		private T[] removed;
+		private int from;
+		
+		public RemoveAdd(T[] removed, T[] added, int from) {
+			this.added = added;
+			this.removed = removed;
+			this.from = from;
+		}
+		
+		@Override
+		public void test(Change<? extends T> change) {
+			Assert.assertEquals(added.length > 0, change.wasAdded());
+			Assert.assertEquals(removed.length > 0, change.wasRemoved());
+			Assert.assertEquals(from, change.getFrom());
+			Assert.assertArrayEquals(added, change.getAddedSubList().toArray());
+			Assert.assertArrayEquals(removed, change.getRemoved().toArray());
+		}
+		
+	}
+	
+	private <T> void assertChange(List<Change<? extends T>> actual, ChangeTest<T>... expected) {
+		Assert.assertEquals(expected.length, actual.size());
+		int idx = 0;
+		for (Change<? extends T> c : actual) {
+			c.reset();
+			c.next();
+			expected[idx].test(c);
+			idx++;
+		}
+		actual.clear();
+	}
 
 	@Test
 	public void testConcat() {
@@ -272,6 +311,16 @@ public class FXBindingsTest {
 
 		ListBinding<String> concat = FXBindings.concat(l0, l1, l2);
 
+		List<Change<? extends String>> curChange = new ArrayList<>();
+		ListChangeListener<String> l = c -> {
+			curChange.add(c);
+			c.next();
+			System.err.println("Removed: " + c.getRemoved());
+			System.err.println("Added: " + c.getAddedSubList());
+		};
+		concat.addListener(l);
+		
+		
 		Assert.assertEquals(0, concat.size());
 
 		l1.add("Hello");
@@ -279,6 +328,8 @@ public class FXBindingsTest {
 		Assert.assertArrayEquals(new String[] {
 				"Hello"
 		}, concat.toArray());
+		assertChange(curChange, new RemoveAdd<String>(new String[] {}, new String[] { "Hello" }, 0));
+		
 
 		l2.add("World");
 
@@ -286,7 +337,8 @@ public class FXBindingsTest {
 				"Hello",
 				"World"
 		}, concat.toArray());
-
+		assertChange(curChange, new RemoveAdd<String>(new String[] {}, new String[] { "World" }, 1));
+		
 		l0.add("yay");
 
 		Assert.assertArrayEquals(new String[] {
@@ -294,6 +346,7 @@ public class FXBindingsTest {
 				"Hello",
 				"World"
 		}, concat.toArray());
+		assertChange(curChange, new RemoveAdd<String>(new String[] {}, new String[] { "yay" }, 0));
 
 		l0.add("!!!");
 
@@ -303,7 +356,8 @@ public class FXBindingsTest {
 				"Hello",
 				"World"
 		}, concat.toArray());
-
+		assertChange(curChange, new RemoveAdd<String>(new String[] {}, new String[] { "!!!" }, 1));
+		
 		l0.remove("!!!");
 
 		Assert.assertArrayEquals(new String[] {
@@ -311,6 +365,7 @@ public class FXBindingsTest {
 				"Hello",
 				"World"
 		}, concat.toArray());
+		assertChange(curChange, new RemoveAdd<String>(new String[] { "!!!" }, new String[] { }, 1));
 
 		l0.remove("yay");
 
@@ -318,16 +373,19 @@ public class FXBindingsTest {
 				"Hello",
 				"World"
 		}, concat.toArray());
-
+		assertChange(curChange, new RemoveAdd<String>(new String[] { "yay" }, new String[] { }, 0));
+		
 		l2.remove("World");
 
 		Assert.assertArrayEquals(new String[] {
 				"Hello"
 		}, concat.toArray());
+		assertChange(curChange, new RemoveAdd<String>(new String[] { "World" }, new String[] { }, 1));
 
 		l1.remove("Hello");
 
 		Assert.assertEquals(0, concat.size());
+		assertChange(curChange, new RemoveAdd<String>(new String[] { "Hello" }, new String[] { }, 0));
 	}
 
 	@Test
@@ -446,47 +504,65 @@ public class FXBindingsTest {
 
 		ListBinding<String> flatMap = FXBindings.flatMapList(source, x->x);
 
+		List<Change<? extends String>> curChange = new ArrayList<>();
+		ListChangeListener<String> l = c -> {
+			curChange.add(c);
+			c.next();
+			System.err.println("Removed: " + c.getRemoved());
+			System.err.println("Added: " + c.getAddedSubList());
+		};
+		flatMap.addListener(l);
+		
 		Assert.assertArrayEquals(new String[] {
 				"1", "2", "3", "a", "b", "c"
 			}, flatMap.toArray());
 
 		two.add("two");
-
+		
 		Assert.assertArrayEquals(new String[] {
 			"1", "2", "3", "two", "a", "b", "c"
 		}, flatMap.toArray());
-
+		assertChange(curChange, new RemoveAdd<String>(new String[] { }, new String[] { "two" }, 3));
+		
+		
 		one.set(1, "xx");
 
 		Assert.assertArrayEquals(new String[] {
 			"1", "xx", "3", "two", "a", "b", "c"
 		}, flatMap.toArray());
+		System.err.println(curChange);
+		assertChange(curChange, 
+				new RemoveAdd<String>(new String[] {"2"}, new String[]{ }, 1),
+				new RemoveAdd<String>(new String[] { }, new String[] { "xx" }, 1));
+		
 
 		three.remove(1);
 
 		Assert.assertArrayEquals(new String[] {
 			"1", "xx", "3", "two", "a", "c"
 		}, flatMap.toArray());
+		assertChange(curChange, new RemoveAdd<String>(new String[] { "b" }, new String[] { }, 5));
 
 		source.remove(one);
 
 		Assert.assertArrayEquals(new String[] {
 			"two", "a", "c"
 		}, flatMap.toArray());
-
+		assertChange(curChange, new RemoveAdd<String>(new String[] { "1", "xx", "3" }, new String[] { }, 0));
 
 		one.add("offline");
 
 		Assert.assertArrayEquals(new String[] {
 			"two", "a", "c"
 		}, flatMap.toArray());
+		Assert.assertEquals(0, curChange.size());
 
 		source.add(one);
 
 		Assert.assertArrayEquals(new String[] {
 			"two", "a", "c", "1", "xx", "3", "offline"
 		}, flatMap.toArray());
-
+		assertChange(curChange, new RemoveAdd<String>(new String[] { }, new String[] { "1", "xx", "3", "offline"}, 3));
 	}
 
 	@Test
