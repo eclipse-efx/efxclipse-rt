@@ -28,8 +28,6 @@ public class FixListBinding<A> extends ListBinding<A> {
 			if (change.wasRemoved() && change.wasAdded() && change.getRemovedSize() == this.fixed.size()) {
 				
 				int maxIdx = Math.max(change.getRemovedSize(), change.getAddedSize());
-				System.err.println("removed = " + change.getRemoved());
-				System.err.println("added = " + change.getAddedSubList());
 				int firstMismatch = -1;
 				
 				for (int i = 0; i < maxIdx; i++) {
@@ -62,7 +60,6 @@ public class FixListBinding<A> extends ListBinding<A> {
 				
 				for (int i = firstMismatch; i < maxIdx; i++) {
 					int idxAdded = i + offset;
-					System.err.println("i = " + i + " / idxAdded = " + idxAdded);
 					if (idxAdded < 0) continue;
 					
 					final boolean inRemoved = change.getRemovedSize() > i;
@@ -73,7 +70,6 @@ public class FixListBinding<A> extends ListBinding<A> {
 //					}
 					
 //					if (!inAdded) {
-//						System.err.println("foo");
 //						firstMatchAfterChange = i;
 //						if (firstMatchAfterChange == change.getRemovedSize() - 1) firstMatchAfterChange+=1;
 //						break;
@@ -81,7 +77,6 @@ public class FixListBinding<A> extends ListBinding<A> {
 //					
 					
 					if (inAdded && inRemoved) {
-						System.err.println("inAddedRemoved");
 						A removed = change.getRemoved().get(i);
 						A added = change.getAddedSubList().get(idxAdded);
 						
@@ -96,24 +91,19 @@ public class FixListBinding<A> extends ListBinding<A> {
 					}
 				}
 				
-				System.err.println("firstMismatch = " + firstMismatch);
-				System.err.println("firstMatchAfterChange = " + firstMatchAfterChange);
 				
 				int removed = firstMatchAfterChange - firstMismatch;
 				
 				if (firstMismatch != -1) {
 					List<A> subList = this.fixed.subList(firstMismatch, firstMatchAfterChange);
-					System.err.println("clear-add-subList = " + subList);
 					subList.clear();
 					if (offset + removed > 0) {
 						List<? extends A> add = change.getAddedSubList().subList(firstMismatch, firstMismatch + offset + removed);
-						System.err.println("add-sublist = " + add);
 						subList.addAll(add);
 					}
 				}
 				else {
 					// replace
-					System.err.println("REPLACE CASE");
 					this.fixed.setAll(change.getAddedSubList());
 				}
 				
