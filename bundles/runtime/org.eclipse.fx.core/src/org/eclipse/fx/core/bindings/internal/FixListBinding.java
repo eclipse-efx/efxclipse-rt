@@ -5,9 +5,9 @@ import java.util.Objects;
 
 import javafx.beans.binding.ListBinding;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
-import javafx.collections.WeakListChangeListener;
 
 
 @SuppressWarnings("javadoc")
@@ -15,7 +15,7 @@ public class FixListBinding<A> extends ListBinding<A> {
 	private ObservableList<A> source;
 	private ObservableList<A> fixed;
 	
-	private WeakListChangeListener<A> changeListener = new WeakListChangeListener<>(this::onSourceChange);
+	private ListChangeListener<A> changeListener = this::onSourceChange;
 	
 	public FixListBinding(ObservableList<A> source) {
 		this.source = source;
