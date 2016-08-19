@@ -350,6 +350,8 @@ public class FXBindingsTest {
 
 		l0.add("!!!");
 
+		System.gc();
+		
 		Assert.assertArrayEquals(new String[] {
 				"yay",
 				"!!!",
