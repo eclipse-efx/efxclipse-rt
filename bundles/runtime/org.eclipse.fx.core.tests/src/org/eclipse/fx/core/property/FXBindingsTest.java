@@ -129,6 +129,27 @@ public class FXBindingsTest {
 	}
 
 	@Test
+	public void testCollectors() {
+		Outer outer = new Outer();
+		Inner inner = new Inner("Hello");
+		outer.Value.set(inner);
+
+		ObjectProperty<Outer> master = new SimpleObjectProperty<Outer>(outer);
+
+		ObjectBinding<String> m2 = FXBindings.bindStream(master).map(o -> o.Value).map(i -> i.Value).collect(FXCollectors.toBinding());
+
+		Assert.assertEquals(m2.get(), "Hello");
+		master.set(null);
+		Assert.assertNull(m2.get());
+
+		master.set(outer);
+		m2 = FXBindings.bindStream(master).map(o -> o.Value).map(i -> i.Value).collect(FXCollectors.toBinding("No Null"));
+		Assert.assertEquals(m2.get(), "Hello");
+		master.set(null);
+		Assert.assertEquals(m2.get(),"No Null");
+	}
+
+	@Test
 	public void testGC() {
 		ObjectProperty<Person> p = new SimpleObjectProperty<>( new Person() );
 
@@ -264,7 +285,7 @@ public class FXBindingsTest {
 		Assert.assertEquals("test3", m2.get());
 
 	}
-	
+
 	private static interface ChangeTest<T> {
 		void test(Change<? extends T> change);
 	}
@@ -272,13 +293,13 @@ public class FXBindingsTest {
 		private T[] added;
 		private T[] removed;
 		private int from;
-		
+
 		public RemoveAdd(T[] removed, T[] added, int from) {
 			this.added = added;
 			this.removed = removed;
 			this.from = from;
 		}
-		
+
 		@Override
 		public void test(Change<? extends T> change) {
 			Assert.assertEquals(added.length > 0, change.wasAdded());
@@ -287,9 +308,9 @@ public class FXBindingsTest {
 			Assert.assertArrayEquals(added, change.getAddedSubList().toArray());
 			Assert.assertArrayEquals(removed, change.getRemoved().toArray());
 		}
-		
+
 	}
-	
+
 	private <T> void assertChange(List<Change<? extends T>> actual, ChangeTest<T>... expected) {
 		Assert.assertEquals(expected.length, actual.size());
 		int idx = 0;
@@ -319,8 +340,8 @@ public class FXBindingsTest {
 			System.err.println("Added: " + c.getAddedSubList());
 		};
 		concat.addListener(l);
-		
-		
+
+
 		Assert.assertEquals(0, concat.size());
 
 		l1.add("Hello");
@@ -329,7 +350,7 @@ public class FXBindingsTest {
 				"Hello"
 		}, concat.toArray());
 		assertChange(curChange, new RemoveAdd<String>(new String[] {}, new String[] { "Hello" }, 0));
-		
+
 
 		l2.add("World");
 
@@ -338,7 +359,7 @@ public class FXBindingsTest {
 				"World"
 		}, concat.toArray());
 		assertChange(curChange, new RemoveAdd<String>(new String[] {}, new String[] { "World" }, 1));
-		
+
 		l0.add("yay");
 
 		Assert.assertArrayEquals(new String[] {
@@ -351,7 +372,7 @@ public class FXBindingsTest {
 		l0.add("!!!");
 
 		System.gc();
-		
+
 		Assert.assertArrayEquals(new String[] {
 				"yay",
 				"!!!",
@@ -359,7 +380,7 @@ public class FXBindingsTest {
 				"World"
 		}, concat.toArray());
 		assertChange(curChange, new RemoveAdd<String>(new String[] {}, new String[] { "!!!" }, 1));
-		
+
 		l0.remove("!!!");
 
 		Assert.assertArrayEquals(new String[] {
@@ -376,7 +397,7 @@ public class FXBindingsTest {
 				"World"
 		}, concat.toArray());
 		assertChange(curChange, new RemoveAdd<String>(new String[] { "yay" }, new String[] { }, 0));
-		
+
 		l2.remove("World");
 
 		Assert.assertArrayEquals(new String[] {
@@ -514,29 +535,29 @@ public class FXBindingsTest {
 			System.err.println("Added: " + c.getAddedSubList());
 		};
 		flatMap.addListener(l);
-		
+
 		Assert.assertArrayEquals(new String[] {
 				"1", "2", "3", "a", "b", "c"
 			}, flatMap.toArray());
 
 		two.add("two");
-		
+
 		Assert.assertArrayEquals(new String[] {
 			"1", "2", "3", "two", "a", "b", "c"
 		}, flatMap.toArray());
 		assertChange(curChange, new RemoveAdd<String>(new String[] { }, new String[] { "two" }, 3));
-		
-		
+
+
 		one.set(1, "xx");
 
 		Assert.assertArrayEquals(new String[] {
 			"1", "xx", "3", "two", "a", "b", "c"
 		}, flatMap.toArray());
 		System.err.println(curChange);
-		assertChange(curChange, 
+		assertChange(curChange,
 				new RemoveAdd<String>(new String[] {"2"}, new String[]{ }, 1),
 				new RemoveAdd<String>(new String[] { }, new String[] { "xx" }, 1));
-		
+
 
 		three.remove(1);
 

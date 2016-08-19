@@ -12,6 +12,7 @@
 package org.eclipse.fx.core.bindings;
 
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import org.eclipse.fx.core.bindings.internal.BindingStreamImpl;
 import org.eclipse.fx.core.bindings.internal.BindingStreamImpl.StreamBinding;
@@ -325,11 +326,34 @@ public class FXCollectors {
 
 	/**
 	 * creates the {@link ObjectBinding}
-	 * @return the binding
+	 * @return the collector
 	 */
 	public static <T> FXCollector<T, ObjectBinding<T>> toBinding() {
 		return stream -> {
 			return new StreamBinding<>(((BindingStreamImpl<T>) stream).base, ((BindingStreamImpl<T>) stream).path);
+		};
+	}
+
+	/**
+	 * create the {@link ObjectBinding} but replaces the null value with the provided value
+	 * @param nullReplacement the replacement for a null value
+	 * @return the collector
+	 */
+	public static <T> FXCollector<T, ObjectBinding<T>> toBinding(T nullReplacement) {
+		return stream -> {
+			ObjectBinding<T> b = stream.collect(FXCollectors.toBinding());
+
+			ObjectBinding<T> rv = new ObjectBinding<T>() {
+				{
+					bind(b);
+				}
+				@Override
+				protected T computeValue() {
+					return b.get() == null ? nullReplacement : b.get();
+				}
+			};
+
+			return rv;
 		};
 	}
 }
