@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.fx.core.shared.feature_2.4.0.qualifier.jar" id="org.eclipse.fx.core.shared.feature" version="2.4.0.qualifier"/>
-   <feature url="features/org.eclipse.fx.runtime.min.feature_2.4.0.qualifier.jar" id="org.eclipse.fx.runtime.min.feature" version="2.4.0.qualifier"/>
+   <feature url="features/org.eclipse.fx.core.shared.feature_2.5.0.qualifier.jar" id="org.eclipse.fx.core.shared.feature" version="2.5.0.qualifier"/>
+   <feature url="features/org.eclipse.fx.runtime.min.feature_2.5.0.qualifier.jar" id="org.eclipse.fx.runtime.min.feature" version="2.5.0.qualifier"/>
 </site>
