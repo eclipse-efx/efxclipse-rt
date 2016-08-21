@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.target.rcp4.feature"
       label="RCP e4 Target Platform Feature"
-      version="2.4.0.qualifier"
+      version="2.5.0.qualifier"
       provider-name="Eclipse.org">
 
    <description url="http://www.example.com/description">

@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.fx.code.langs.feature"
       label="e(fx)clipse - Code Editing - Default Language Support"
-      version="2.5.0.qualifier">
+      version="2.5.0.201608211840">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -18,30 +18,30 @@
 
    <plugin
          id="org.eclipse.fx.code.editor.fx.themes"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
+         download-size="6"
+         install-size="9"
+         version="2.5.0.201608211840"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.fx.code.editor.langs"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
+         download-size="52"
+         install-size="194"
+         version="2.5.0.201608211840"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.fx.code.editor.langs.contrib"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
+         download-size="7"
+         install-size="13"
+         version="2.5.0.201608211840"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.fx.code.editor.langs.themes"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
+         download-size="3"
+         install-size="5"
+         version="2.5.0.201608211840"
          unpack="false"/>
 
 </feature>
