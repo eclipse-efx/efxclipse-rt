@@ -417,7 +417,7 @@ public class ContentView  extends Pane {
 	private DoubleBinding charWidth;
 
 	private void initBindings() {
-		DoubleBinding b0 = Util.createTextWidthBinding("M" , this.area.fontProperty()); //$NON-NLS-1$
+		DoubleBinding b0 = Util.createTextWidthBinding("M" , this.area.fontProperty(), this.area.fontZoomFactorProperty()); //$NON-NLS-1$
 		this.charWidth = Bindings.createDoubleBinding(()->Math.ceil(b0.get()), b0);
 	}
 

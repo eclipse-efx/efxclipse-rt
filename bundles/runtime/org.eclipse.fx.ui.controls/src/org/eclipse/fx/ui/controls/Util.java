@@ -421,9 +421,9 @@ public class Util {
 	 * @return the width
 	 * @since 2.3.0
 	 */
-	public static double getTextWidth(String text, Font font) {
+	public static double getTextWidth(String text, Font font, double fontZoomFactor) {
 		Text t = new Text(text);
-		t.setFont(font);
+		t.setFont(Font.font(font.getName(), font.getSize() * fontZoomFactor));
 		return t.getLayoutBounds().getWidth();
 	}
 
@@ -433,28 +433,28 @@ public class Util {
 	 * @param font
 	 * @return
 	 */
-	public static DoubleBinding createTextWidthBinding(ObservableValue<String> text, ObservableValue<Font> font) {
+	public static DoubleBinding createTextWidthBinding(ObservableValue<String> text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
 		return Bindings.createDoubleBinding(()->{
-			return getTextWidth(text.getValue(), font.getValue());
-		}, text, font);
+			return getTextWidth(text.getValue(), font.getValue(), fontZoomFactor.getValue().doubleValue());
+		}, text, font, fontZoomFactor);
 	}
 
-	public static DoubleBinding createTextWidthBinding(String text, ObservableValue<Font> font) {
+	public static DoubleBinding createTextWidthBinding(String text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
 		return Bindings.createDoubleBinding(()->{
-			return getTextWidth(text, font.getValue());
-		}, font);
+			return getTextWidth(text, font.getValue(), fontZoomFactor.getValue().doubleValue());
+		}, font, fontZoomFactor);
 	}
 
-	public static double getTextHeight(String text, Font font) {
+	public static double getTextHeight(String text, Font font, double fontZoomFactor) {
 		Text t = new Text(text);
-		t.setFont(font);
+		t.setFont(Font.font(font.getName(), font.getSize() * fontZoomFactor));
 		return t.getLayoutBounds().getHeight();
 	}
 
-	public static DoubleBinding createTextHeightBinding(String text, ObservableValue<Font> font) {
+	public static DoubleBinding createTextHeightBinding(String text, ObservableValue<Font> font, ObservableValue<Number> fontZoomFactor) {
 		return Bindings.createDoubleBinding(()->{
-			return getTextHeight(text, font.getValue());
-		}, font);
+			return getTextHeight(text, font.getValue(), fontZoomFactor.getValue().doubleValue());
+		}, font, fontZoomFactor);
 	}
 
 	public static boolean isCopyEvent(MouseEvent event) {

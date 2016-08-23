@@ -20,20 +20,15 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import javax.xml.transform.stream.StreamSource;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
-import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
-import org.eclipse.fx.ui.controls.styledtext.events.TextPositionEvent;
 import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
 import org.eclipse.fx.ui.controls.styledtext.internal.FXBindUtil;
 import org.eclipse.fx.ui.controls.styledtext.internal.LineHelper;
@@ -46,13 +41,15 @@ import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.model.LineRulerAnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.TextAnnotationPresenter;
-import org.eclipse.jdt.annotation.NonNull;
 
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
 import com.google.common.collect.TreeRangeSet;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.StringExpression;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -64,7 +61,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.ContextMenuEvent;
@@ -72,6 +68,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
 
 /**
  * Styled text skin
@@ -153,11 +150,30 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.lineHelper = new LineHelper(getSkinnable());
 		this.content = new ContentView(this.lineHelper, styledText);
 		this.content.lineHeightProperty().bind(styledText.fixedLineHeightProperty());
-
+		
+		final DoubleBinding origFontSize = new DoubleBinding() {
+			{
+				bind(getSkinnable().fontProperty());
+			}
+			@Override
+			protected double computeValue() {
+				Font original = getSkinnable().fontProperty().get();
+				if (original == null) {
+					return 12;
+				}
+				return original.getSize();
+			}
+		};
+		final DoubleBinding zoomedFontSize = origFontSize.multiply(getSkinnable().fontZoomFactorProperty());
+		final StringExpression zoomedFontStyle = Bindings.concat("-fx-font-size: ", zoomedFontSize, ";");  //$NON-NLS-1$//$NON-NLS-2$
+		
+		this.content.styleProperty().bind(zoomedFontStyle);
+		this.lineRulerArea.styleProperty().bind(zoomedFontStyle);
+		
 		this.contentArea = new ScrollbarPane<>();
 
 		this.contentArea.setCenter(this.content);
-
+		
 		Map<AnnotationProvider, Subscription> subscriptions = new HashMap<>();
 		Consumer<RangeSet<Integer>> onAnnotationChange = r -> {
 			this.content.updateAnnotations(r);
@@ -400,6 +416,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			scrollOffsetIntoView(getSkinnable().getCaretOffset(), 10, 12);
 		});
 
+		this.content.lineHeightProperty().bind(getSkinnable().fixedLineHeightProperty());
 	}
 
 	public Optional<TextNode> findTextNode(Point2D screenLocation) {

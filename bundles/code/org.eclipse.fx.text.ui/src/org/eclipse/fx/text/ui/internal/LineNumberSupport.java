@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import org.eclipse.fx.core.Subscription;
 import org.eclipse.fx.text.ui.IFeature;
+import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 import org.eclipse.fx.ui.controls.styledtext.model.Annotation;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
@@ -148,15 +149,8 @@ public class LineNumberSupport implements IFeature {
 		LineNrAnnotationPresenter presenter = new LineNrAnnotationPresenter();
 		LineNrAnnotationProvider provider = new LineNrAnnotationProvider();
 
-		DoubleBinding charWidth = Bindings.createDoubleBinding(()->{
-			Text dummy = new Text();
-			dummy.setFont(control.getFont());
-			dummy.setText("C");
-			dummy.applyCss();
-			dummy.autosize();
-			return dummy.getBoundsInLocal().getWidth();
-		}, control.fontProperty());
-
+		DoubleBinding charWidth = Util.createTextWidthBinding("C", control.fontProperty(), control.fontZoomFactorProperty());
+		
 		DoubleBinding width = Bindings.createDoubleBinding(()->Integer.toString(control.lineCountProperty().get()).length() * charWidth.get(), control.lineCountProperty(), charWidth);
 		presenter.w.bind(width);
 		control.getAnnotationProvider().add(provider);
