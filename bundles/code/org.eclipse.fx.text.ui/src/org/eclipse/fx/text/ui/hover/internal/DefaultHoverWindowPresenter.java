@@ -39,11 +39,14 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 	private final VBox root;
 
 	private List<HoverInfo> currentVisible;
+	
+	private boolean preventHide = false;
 
 	private AtomicReference<Boolean> currentScheduledHide = new AtomicReference<>(true);
 	private void scheduleHide(long delay) {
 		this.currentScheduledHide.set(true);
 		Timeline t = new Timeline(new KeyFrame(Duration.millis(delay), (a) -> {
+			if (preventHide) return;
 			if (this.currentScheduledHide.get()) {
 				DefaultHoverWindowPresenter.this.popup.hide();
 			}
@@ -82,11 +85,16 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 
 		
 		this.root.setOnMouseEntered(this::onMouseEntered);
+		this.root.setOnMouseExited(this::onMouseExited);
 		
 	}
 	
 	private void onMouseEntered(MouseEvent event) {
 		cancelScheduledHide();
+		preventHide = true;
+	}
+	private void onMouseExited(MouseEvent event) {
+		preventHide = false;
 	}
 	
 	private void onShowing(WindowEvent event) {
@@ -211,7 +219,7 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 
 	@Override
 	public void hide() {
-		scheduleHide(500);
+		scheduleHide(300);
 	}
 
 	public void setHoverPresenter(List<HoverPresenter> hoverPresenters) {
