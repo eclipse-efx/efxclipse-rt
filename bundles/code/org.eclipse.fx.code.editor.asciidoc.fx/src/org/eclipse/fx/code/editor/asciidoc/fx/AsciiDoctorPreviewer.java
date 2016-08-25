@@ -76,7 +76,7 @@ public class AsciiDoctorPreviewer {
 	private void refreshPreview(String data) {
 		if( converter != null ) {
 			CompletableFuture<String> convert = converter.convert("",  data);
-			Consumer<String> consumer = threadSynchronize.wrap(view.getEngine()::loadContent);
+			Consumer<String> consumer = threadSynchronize.wrap((Consumer<String>)view.getEngine()::loadContent);
 			convert.thenAccept(consumer);
 		}
 	}
