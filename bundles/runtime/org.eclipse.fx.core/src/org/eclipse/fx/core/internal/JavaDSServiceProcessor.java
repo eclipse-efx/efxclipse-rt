@@ -81,7 +81,7 @@ public class JavaDSServiceProcessor {
 		if (componentList != null) {
 			List<?> collect = componentList.stream()
 					.map(c -> c.getImplementation().getClazz())
-					.map(c -> ExExecutor.executeFunction(c, Class::forName, "Could not load class '" + c + "'").orElse(null)) //$NON-NLS-1$ //$NON-NLS-2$
+					.map(c -> ExExecutor.executeFunction(c, className -> Class.forName(className) , "Could not load class '" + c + "'").orElse(null)) //$NON-NLS-1$ //$NON-NLS-2$
 					.filter(c -> c != null)
 					.map(c -> {
 						if (c != null) {
