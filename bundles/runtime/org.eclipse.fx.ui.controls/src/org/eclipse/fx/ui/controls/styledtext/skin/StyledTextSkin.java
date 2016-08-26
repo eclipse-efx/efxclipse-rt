@@ -28,6 +28,7 @@ import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
 import org.eclipse.fx.ui.controls.styledtext.TextChangedEvent;
 import org.eclipse.fx.ui.controls.styledtext.TextChangingEvent;
+import org.eclipse.fx.ui.controls.styledtext.TextSelection;
 import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
 import org.eclipse.fx.ui.controls.styledtext.internal.ContentView;
 import org.eclipse.fx.ui.controls.styledtext.internal.FXBindUtil;
@@ -64,7 +65,9 @@ import javafx.scene.Node;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -417,6 +420,42 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		});
 
 		this.content.lineHeightProperty().bind(getSkinnable().fixedLineHeightProperty());
+		
+		this.content.setOnDragOver(e -> {
+			Point2D coords = new Point2D(e.getX(), e.getY());
+			Optional<Integer> lineIndex = content.getLineIndex(coords);
+			
+			if (lineIndex.isPresent()) {
+				if (lineIndex.get() != -1) {
+					e.acceptTransferModes(TransferMode.ANY);
+					updateInsertionMarkerIndex(lineIndex.get());
+				}
+			}
+			else {
+				updateInsertionMarkerIndex(-1);
+			}
+			
+			e.consume();
+		});
+		
+		this.content.setOnDragDropped(e -> {
+			
+			if (e.getDragboard().hasContent(DataFormat.PLAIN_TEXT)) {
+				
+				String insert = e.getDragboard().getString();
+				
+				Point2D coords = new Point2D(e.getX(), e.getY());
+				Optional<Integer> lineIndex = content.getLineIndex(coords);
+				if (lineIndex.isPresent() && lineIndex.get() != -1) {
+					getSkinnable().getContent().replaceTextRange(lineIndex.get(), 0, insert);
+					getSkinnable().setCaretOffset(lineIndex.get() + insert.length());
+					getSkinnable().setSelection(new TextSelection(lineIndex.get(), insert.length()));
+					updateInsertionMarkerIndex(-1);
+					e.setDropCompleted(true);
+				}
+			}
+			e.consume();
+		});
 	}
 
 	public Optional<TextNode> findTextNode(Point2D screenLocation) {
