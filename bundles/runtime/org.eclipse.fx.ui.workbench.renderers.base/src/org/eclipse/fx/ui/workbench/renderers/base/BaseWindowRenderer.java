@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -317,8 +318,15 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				// if we don't we see strange invalid context types sticking
 				// around in PartRenderingEngine.clearContext
 				MWindow element = param.getDomElement();
-				if (element != null && !((MApplicationElement) element.getParent() instanceof MApplication)) {
-					element.setToBeRendered(false);
+				if (element != null) {
+					if( !((MApplicationElement) element.getParent() instanceof MApplication) ) {
+						// If this is not a top level hide it
+						element.setToBeRendered(false);
+					} else {
+						if( element.getParent().getChildren().stream().filter( c -> c.isToBeRendered() ).count() > 1 ) {
+							element.setToBeRendered(false);
+						}
+					}
 				}
 
 				if (element != null && shouldRemoveWindowFromModel(element)) {
