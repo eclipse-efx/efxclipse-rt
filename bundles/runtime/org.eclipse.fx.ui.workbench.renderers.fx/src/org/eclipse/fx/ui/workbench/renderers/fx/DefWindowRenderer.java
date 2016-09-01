@@ -970,8 +970,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 		public void addChildWindow(WWindow<?> widget) {
 			this.windows.add(widget);
 			if (this.initDone && this.stage.isShowing()) {
-				Stage s = (Stage) widget.getWidget();
-				s.show();
+				widget.show();
 			}
 		}
 
@@ -1031,6 +1030,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 
 			// I don't think sub-windows should be activated
 			for (WWindow<?> c : this.windows) {
+				System.err.println("SHOW CHILD: " + c);
 				c.show();
 				this.eventBroker.send(Constants.WINDOW_SHOWN, this.mWindow);
 			}
