@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -28,7 +27,6 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.MApplicationElement;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
-import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimmedWindow;
@@ -325,6 +323,8 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 					} else {
 						if( element.getParent().getChildren().stream().filter( c -> c.isToBeRendered() ).count() > 1 ) {
 							element.setToBeRendered(false);
+						} else {
+							BaseWindowRenderer.this.presentationEngine.removeGui(element);
 						}
 					}
 				}
