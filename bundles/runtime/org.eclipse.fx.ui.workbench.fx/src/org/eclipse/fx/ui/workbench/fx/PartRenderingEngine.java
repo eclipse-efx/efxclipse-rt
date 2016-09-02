@@ -353,7 +353,6 @@ public class PartRenderingEngine implements IPresentationEngine {
 					} catch (Throwable t) {
 						this.logger.error(t.getMessage(), t);
 					}
-
 				}
 
 				// Need clean up everything below
