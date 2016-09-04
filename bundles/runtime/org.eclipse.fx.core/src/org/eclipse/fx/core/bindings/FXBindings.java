@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javafx.beans.binding.Binding;
+import javafx.beans.binding.BooleanExpression;
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.BooleanProperty;
@@ -44,6 +45,7 @@ import javafx.beans.property.LongProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -65,6 +67,7 @@ import org.eclipse.fx.core.bindings.internal.MapObjectBinding;
 import org.eclipse.fx.core.bindings.internal.MapSimpleObjectBinding;
 import org.eclipse.fx.core.bindings.internal.SyncListBinding;
 import org.eclipse.fx.core.bindings.internal.SyncObjectBinding;
+import org.eclipse.fx.core.bindings.internal.TenaryBinding;
 
 /**
  * Collection of JavaFX bean bindings.
@@ -128,6 +131,30 @@ public class FXBindings {
 	 */
 	public static <T> BindingStream<T> bindStream(ObservableValue<T> source) {
 		return new BindingStreamImpl<>(source);
+	}
+
+	/**
+	 * Creates a binding dependending on the value of the condition
+	 *
+	 * @param condition the condition
+	 * @param then the value held by the binding if the condition is <code>true</code>
+	 * @param _else the value held by the binding if the condition is <code>false</code>
+	 * @return the binding
+	 */
+	public static <T> Binding<T> tenaryBinding(ObservableBooleanValue condition, ObservableValue<T> then, ObservableValue<T> _else ) {
+		return new TenaryBinding<>(condition, then, _else);
+	}
+
+	/**
+	 * Creates a binding dependending on the value of the condition
+	 *
+	 * @param condition the condition
+	 * @param then the value held by the binding if the condition is <code>true</code>
+	 * @param _else the value held by the binding if the condition is <code>false</code>
+	 * @return the binding
+	 */
+	public static <T> Binding<T> tenaryBinding(ObservableBooleanValue condition, T then, T _else ) {
+		return new TenaryBinding<>(condition, then, _else);
 	}
 
 	/**
