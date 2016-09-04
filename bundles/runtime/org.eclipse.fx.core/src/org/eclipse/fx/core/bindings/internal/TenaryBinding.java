@@ -16,6 +16,7 @@ import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 
+@SuppressWarnings("javadoc")
 public class TenaryBinding<T> extends ObjectBinding<T> {
 	private final ObservableBooleanValue condition;
 	@Nullable
