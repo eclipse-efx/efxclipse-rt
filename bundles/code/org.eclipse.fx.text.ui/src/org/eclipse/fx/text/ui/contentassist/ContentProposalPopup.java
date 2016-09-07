@@ -40,6 +40,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.PopupWindow;
 
@@ -221,7 +222,6 @@ public class ContentProposalPopup implements IContentAssistListener {
 
 			this.htmlViewer = new SimpleHtmlViewer();
 			this.htmlViewer.setPrefWidth(300);
-			this.htmlViewer.getStyleClass().add("content-proposal-doc"); //$NON-NLS-1$
 
 			this.proposalList.getSelectionModel().selectedItemProperty().addListener((ChangeListener<ICompletionProposal>) (observable, oldValue, newValue) -> {
 				this.htmlViewer.setContent(getHtml(newValue));
@@ -233,7 +233,12 @@ public class ContentProposalPopup implements IContentAssistListener {
 
 			this.proposalList.setCellFactory((v) -> new SimpleListCell<ICompletionProposal>(label,graphic,css));
 			p.setCenter(this.proposalList);
-			p.setRight(this.htmlViewer);
+			
+			StackPane border = new StackPane();
+			border.getStyleClass().add("content-proposal-doc"); //$NON-NLS-1$
+			border.getChildren().add(this.htmlViewer);
+			
+			p.setRight(border);
 			
 			p.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE, new CornerRadii(3), Insets.EMPTY)));
 			p.setPadding(new Insets(5));
