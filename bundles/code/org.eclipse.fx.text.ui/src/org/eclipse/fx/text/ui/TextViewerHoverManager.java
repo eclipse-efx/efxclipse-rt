@@ -27,6 +27,7 @@ import org.eclipse.fx.ui.controls.styledtext.events.TextHoverEvent;
 import org.eclipse.fx.ui.controls.styledtext.model.Annotation;
 import org.eclipse.jface.text.IDocument;
 
+import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.BorderPane;
@@ -49,8 +50,17 @@ public class TextViewerHoverManager {
 		this.hoverPresenters.add(new DefaultHoverPresenter());
 		this.hoverPresenters.add(new HtmlHoverPresenter());
 		this.windowPresenter.setHoverPresenter(this.hoverPresenters);
-
 		this.textViewer = textViewer;
+
+		// TODO FXBindings better observe scene -> window to install this listener
+		Platform.runLater(()->{
+			this.textViewer.getScene().getWindow().focusedProperty().addListener((x, o, n)-> {
+				if (!n) {
+					this.windowPresenter.hide();
+				}
+			});
+		});
+		
 		this.popup = new PopupWindow() {
 		};
 		this.popup.setAutoFix(false);
