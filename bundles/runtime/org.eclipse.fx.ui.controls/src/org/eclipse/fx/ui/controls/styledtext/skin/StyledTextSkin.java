@@ -66,6 +66,7 @@ import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
@@ -427,8 +428,11 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			
 			if (lineIndex.isPresent()) {
 				if (lineIndex.get() != -1) {
-					e.acceptTransferModes(TransferMode.ANY);
-					updateInsertionMarkerIndex(lineIndex.get());
+					Dragboard db = e.getDragboard();
+					if (db.hasString() && !db.hasFiles() && !db.hasImage()) {
+						e.acceptTransferModes(TransferMode.ANY);
+						updateInsertionMarkerIndex(lineIndex.get());
+					}
 				}
 			}
 			else {
