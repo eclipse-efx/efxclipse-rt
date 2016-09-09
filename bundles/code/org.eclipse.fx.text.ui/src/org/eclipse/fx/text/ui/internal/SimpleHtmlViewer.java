@@ -2,6 +2,7 @@ package org.eclipse.fx.text.ui.internal;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import org.eclipse.fx.text.hover.HtmlString;
 import org.eclipse.fx.text.hover.LinkActionEvent;
@@ -42,6 +43,31 @@ public class SimpleHtmlViewer extends BorderPane {
 	private WebView webView;
 	private WebEngine webEngine;
 		
+	private static String STYLE_INLINE = "<style>body{display: inline;}</style>"; //$NON-NLS-1$
+	private static String STYLE_NO_PADDING = "<style>body{padding: 0px}</style>"; //$NON-NLS-1$
+	
+	private boolean inline;
+	
+	@Override
+	protected double computePrefWidth(double height) {
+		if (inline && webEngine.getDocument() != null) {
+			Integer width = (Integer) this.webEngine.executeScript("document.body.offsetWidth");
+			System.err.println("computePrefWidth -> " + width);
+			return width + 4;
+		}
+		return super.computePrefWidth(height);
+	}
+	
+	@Override
+	protected double computePrefHeight(double width) {
+		if (inline && webEngine.getDocument() != null) {
+			Integer height = (Integer) this.webEngine.executeScript("document.body.offsetHeight");
+			System.err.println("computePrefHeight -> " + height);
+			return height + 4;
+		}
+		return super.computePrefHeight(width);
+	}
+	
 	private Region findFirstParentWithBackground(Node n) {
 		System.err.println("CHECKING " + n);
 		if (n == null) return null;
@@ -55,8 +81,13 @@ public class SimpleHtmlViewer extends BorderPane {
 		return findFirstParentWithBackground(n.getParent());
 	}
 	
-	// TODO 3.0.0 replace listeners with FXBindings
 	public SimpleHtmlViewer() {
+		this(false, false);
+	}
+	
+	// TODO 3.0.0 replace listeners with FXBindings
+	public SimpleHtmlViewer(boolean noPaddingInBody, boolean inline) {
+		this.inline = inline;
 		this.webView = new WebView();
 		this.webEngine = this.webView.getEngine();
 		
@@ -70,9 +101,24 @@ public class SimpleHtmlViewer extends BorderPane {
 			((HTMLDocument)doc).getBody().setAttribute("style", style); //$NON-NLS-1$
 		};
 		
+		Consumer<Document> updateSizes = (doc) -> {
+			if (inline) {
+				Integer width = (Integer) this.webEngine.executeScript("document.body.offsetWidth");
+				Integer height = (Integer) this.webEngine.executeScript("document.body.offsetHeight");
+				if (width != null) {
+					setPrefWidth(width + 20);
+				}
+				if (height != null) {
+					System.err.println("SET PREF HEIGHT " + height);
+					setPrefHeight(height + 4);
+				}
+			}
+		};
+		
 		AtomicReference<Color> curCol = new AtomicReference<>();
 		this.webEngine.documentProperty().addListener((x, o, n)-> {
 			applyBackground.accept(n, curCol.get());
+			updateSizes.accept(n);
 		});
 		
 		ChangeListener<? super Background> backgroundListener = (x1, o1, background) -> {
@@ -123,7 +169,7 @@ public class SimpleHtmlViewer extends BorderPane {
 		// bind the content
 		contentProperty().addListener((x, o, n) -> {
 			if (n != null) {
-				this.webEngine.loadContent("<html><body>" + n.toString() + "</body></html>"); //$NON-NLS-1$ //$NON-NLS-2$
+				this.webEngine.loadContent("<html>"+(noPaddingInBody?STYLE_NO_PADDING:"")+(inline?STYLE_INLINE:"")+"<body>" + n.toString() + "</body></html>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$			
 			}
 			else {
 				this.webEngine.load("about:blank"); //$NON-NLS-1$
