@@ -14,6 +14,7 @@ import java.util.List;
 
 import javafx.scene.Node;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -31,6 +32,7 @@ import org.eclipse.fx.ui.workbench.renderers.base.services.DnDService;
 import org.eclipse.fx.ui.workbench.renderers.base.services.DnDFeedbackService;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WCallback;
 import org.eclipse.fx.ui.workbench.renderers.base.widget.WLayoutedWidget;
+import org.eclipse.fx.ui.workbench.renderers.fx.internal.DnDSupport;
 import org.eclipse.fx.ui.workbench.renderers.fx.internal.SplitDnDSupport;
 import org.eclipse.fx.ui.workbench.services.ModelService;
 import org.eclipse.jdt.annotation.NonNull;
@@ -38,7 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Base implementation for all {@link WLayoutedWidget} implementations
- * 
+ *
  * @param <N>
  *            the business control
  * @param <NN>
@@ -59,7 +61,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@Inject
 	@NonNull
 	EModelService modelService;
-	
+
 	@Inject
 	@Optional
 	@Nullable
@@ -68,7 +70,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 	@Inject
 	@NonNull
 	ModelService efxModelService;
-	
+
 	/**
 	 * @return the widget node
 	 */
@@ -96,7 +98,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 
 	/**
 	 * Create the static layout node
-	 * 
+	 *
 	 * @return the layout node
 	 */
 	@NonNull
@@ -114,7 +116,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 
 	/**
 	 * Initialize drag and drop
-	 * 
+	 *
 	 * @param staticLayoutGroup
 	 *            the static group we attach the DnD to
 	 */
@@ -123,10 +125,13 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_OVER, dndSupport::handleDragOver);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_EXITED, dndSupport::handleDragExit);
 		staticLayoutGroup.addEventHandler(DragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
-		
+
 		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_OVER, dndSupport::handleDragOver);
 //		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_EXITED, dndSupport::handleDragExit);
 		staticLayoutGroup.addEventHandler(EFXDragEvent.DRAG_DROPPED, dndSupport::handleDragDropped);
+		if( DnDSupport.DETACHABLE_DRAG ) {
+			staticLayoutGroup.addEventHandler(MouseDragEvent.MOUSE_DRAG_EXITED, dndSupport::handleDragExit);
+		}
 	}
 
 	@Override
@@ -141,7 +146,7 @@ public abstract class WLayoutedWidgetImpl<N, NN extends Node, M extends MUIEleme
 
 	/**
 	 * Create the static layout pane
-	 * 
+	 *
 	 * @return the layout pane
 	 */
 	@SuppressWarnings("static-method")

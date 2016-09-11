@@ -190,7 +190,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 				s.setFeedbackConsumer(dnd::handleFeedback);
 				s.setDragFinishedConsumer(dnd::handleFinished);
 				s.setClipboardDataFunction(dnd::clipboardDataFunction);
-			});
+			},DnDSupport.DETACHABLE_DRAG);
 
 			String location = this.domainElement.getPersistedState().get(WStack.STATE_KEY_TABS_LOCATION);
 			if( location != null ) {

@@ -17,6 +17,7 @@ import org.eclipse.fx.ui.controls.dnd.EFXDragEvent;
 import org.eclipse.fx.ui.controls.markers.PositionMarker;
 import org.eclipse.fx.ui.controls.markers.TabOutlineMarker;
 import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkin;
+import org.eclipse.fx.ui.controls.tabpane.skin.DnDTabPaneSkinFullDrag;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -41,7 +42,7 @@ public final class DndTabPaneFactory {
 
 	/**
 	 * Setup a drag and drop for the given instance
-	 * 
+	 *
 	 * @param feedbackType
 	 *            the feedback type
 	 * @param dragSetup
@@ -59,25 +60,18 @@ public final class DndTabPaneFactory {
 
 	/**
 	 * Create a tab pane and set the drag strategy
-	 * 
+	 *
 	 * @param setup
 	 *            the setup instance for the pane
 	 * @return the tab pane
 	 */
 	public static TabPane createDndTabPane(Consumer<DragSetup> setup) {
-		return new TabPane() {
-			@Override
-			protected javafx.scene.control.Skin<?> createDefaultSkin() {
-				DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
-				setup.accept(skin);
-				return skin;
-			}
-		};
+		return createDndTabPane(setup, false);
 	}
 
 	/**
 	 * Create a tab pane with a default setup for drag feedback
-	 * 
+	 *
 	 * @param feedbackType
 	 *            the feedback type
 	 * @param setup
@@ -85,14 +79,60 @@ public final class DndTabPaneFactory {
 	 * @return a pane containing the TabPane
 	 */
 	public static Pane createDefaultDnDPane(FeedbackType feedbackType, Consumer<TabPane> setup) {
+		return createDefaultDnDPane(feedbackType, false, setup);
+	}
+
+	/**
+	 * Create a tab pane and set the drag strategy
+	 *
+	 * @param setup
+	 *            the setup instance for the pane
+	 * @param allowDetach
+	 * 			  allow detaching
+	 * @return the tab pane
+	 */
+	public static TabPane createDndTabPane(Consumer<DragSetup> setup, boolean allowDetach) {
+		return new TabPane() {
+			@Override
+			protected javafx.scene.control.Skin<?> createDefaultSkin() {
+				if( allowDetach ) {
+					DnDTabPaneSkinFullDrag skin = new DnDTabPaneSkinFullDrag(this);
+					setup.accept(skin);
+					return skin;
+				} else {
+					DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
+					setup.accept(skin);
+					return skin;
+				}
+			}
+		};
+	}
+
+	/**
+	 * Create a tab pane with a default setup for drag feedback
+	 *
+	 * @param feedbackType
+	 *            the feedback type
+	 * @param allowDetach
+	 *            allow detaching
+	 * @param setup
+	 *            consumer to set up the tab pane
+	 * @return a pane containing the TabPane
+	 */
+	public static Pane createDefaultDnDPane(FeedbackType feedbackType, boolean allowDetach, Consumer<TabPane> setup) {
 		StackPane pane = new StackPane();
 		TabPane tabPane = new TabPane() {
 			@Override
 			protected javafx.scene.control.Skin<?> createDefaultSkin() {
-				DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
-				setup(feedbackType, pane, skin, null);
-
-				return skin;
+				if (allowDetach) {
+					DnDTabPaneSkinFullDrag skin = new DnDTabPaneSkinFullDrag(this);
+					setup(feedbackType, pane, skin, null);
+					return skin;
+				} else {
+					DnDTabPaneSkin skin = new DnDTabPaneSkin(this);
+					setup(feedbackType, pane, skin, null);
+					return skin;
+				}
 			}
 		};
 		setup.accept(tabPane);
@@ -102,7 +142,7 @@ public final class DndTabPaneFactory {
 
 	/**
 	 * Extract the tab content
-	 * 
+	 *
 	 * @param e
 	 *            the event
 	 * @return the content
@@ -118,7 +158,7 @@ public final class DndTabPaneFactory {
 
 	/**
 	 * Extract the content
-	 * 
+	 *
 	 * @param e
 	 *            the event
 	 * @return the return value
@@ -134,7 +174,7 @@ public final class DndTabPaneFactory {
 
 	/**
 	 * Setup insert marker
-	 * 
+	 *
 	 * @param layoutNode
 	 *            the layout node used to position
 	 * @param setup
@@ -153,7 +193,7 @@ public final class DndTabPaneFactory {
 			if (detachHandler != null) {
 				detachHandler.accept(data.draggedTab);
 			}
-		} else {
+		} else if (data.targetTab != null) {
 			GenericTabPane targetPane = data.targetTab.getOwner();
 			data.draggedTab.getOwner().remove(data.draggedTab);
 			int idx = targetPane.indexOf(data.targetTab);
@@ -290,15 +330,18 @@ public final class DndTabPaneFactory {
 		/**
 		 * No dropping
 		 */
-		NONE, /**
-				 * Dropped before a reference tab
-				 */
-		BEFORE, /**
-				 * Dropped after a reference tab
-				 */
-		AFTER, /**
-				 * Dropped in an area to detach
-				 */
+		NONE,
+		/**
+		 * Dropped before a reference tab
+		 */
+		BEFORE,
+		/**
+		 * Dropped after a reference tab
+		 */
+		AFTER,
+		/**
+		 * Dropped in an area to detach
+		 */
 		DETACH
 	}
 
@@ -309,9 +352,10 @@ public final class DndTabPaneFactory {
 		/**
 		 * Show a marker
 		 */
-		MARKER, /**
-				 * Show an outline
-				 */
+		MARKER,
+		/**
+		 * Show an outline
+		 */
 		OUTLINE
 	}
 
@@ -338,7 +382,7 @@ public final class DndTabPaneFactory {
 
 		/**
 		 * Create a feedback data
-		 * 
+		 *
 		 * @param draggedTab
 		 *            the dragged tab
 		 * @param targetTab
@@ -405,7 +449,7 @@ public final class DndTabPaneFactory {
 		/**
 		 * The reference tab
 		 */
-		public final @NonNull GenericTab targetTab;
+		public final @Nullable GenericTab targetTab;
 		/**
 		 * The drop type
 		 */
@@ -423,13 +467,13 @@ public final class DndTabPaneFactory {
 
 		/**
 		 * Create drop data
-		 * 
+		 *
 		 * @param x
 		 *            the x coordinate
-		 * 
+		 *
 		 * @param y
 		 *            the y coordinate
-		 * 
+		 *
 		 * @param draggedTab
 		 *            the dragged tab
 		 * @param targetTab
@@ -437,7 +481,7 @@ public final class DndTabPaneFactory {
 		 * @param dropType
 		 *            the drop type
 		 */
-		public DroppedData(double x, double y, @NonNull GenericTab draggedTab, @NonNull GenericTab targetTab, @NonNull DropType dropType) {
+		public DroppedData(double x, double y, @NonNull GenericTab draggedTab, @Nullable GenericTab targetTab, @NonNull DropType dropType) {
 			this.x = x;
 			this.y = y;
 			this.draggedTab = draggedTab;
@@ -452,7 +496,7 @@ public final class DndTabPaneFactory {
 	public interface DragSetup {
 		/**
 		 * Function to handle the starting of the the drag
-		 * 
+		 *
 		 * @param startFunction
 		 *            the function
 		 */
@@ -460,7 +504,7 @@ public final class DndTabPaneFactory {
 
 		/**
 		 * Consumer called to handle the finishing of the drag process
-		 * 
+		 *
 		 * @param dragFinishedConsumer
 		 *            the consumer
 		 */
@@ -468,7 +512,7 @@ public final class DndTabPaneFactory {
 
 		/**
 		 * Consumer called to present drag feedback
-		 * 
+		 *
 		 * @param feedbackConsumer
 		 *            the consumer to call
 		 */
@@ -476,7 +520,7 @@ public final class DndTabPaneFactory {
 
 		/**
 		 * Consumer called when the drop has to be handled
-		 * 
+		 *
 		 * @param dropConsumer
 		 *            the consumer
 		 */
@@ -484,7 +528,7 @@ public final class DndTabPaneFactory {
 
 		/**
 		 * Function to translate the tab content into clipboard content
-		 * 
+		 *
 		 * @param clipboardDataFunction
 		 *            the function
 		 */
