@@ -26,11 +26,11 @@ public class FXCompletionProposal<T extends CompletionProposal> implements IComp
 
 	private final IContextInformation fContextInformation;
 
-	public FXCompletionProposal(T proposal, Supplier<Node> graphicSupplier, IContextInformation contextInformation, String hoverInfo) {
+	public FXCompletionProposal(T proposal, Supplier<Node> graphicSupplier, IContextInformation contextInformation, CharSequence hoverInfo) {
 		this(proposal, proposal.getLabel(), graphicSupplier, contextInformation, hoverInfo);
 	}
 
-	public FXCompletionProposal(T proposal, CharSequence label, Supplier<Node> graphicSupplier, IContextInformation contextInformation, String hoverInfo) {
+	public FXCompletionProposal(T proposal, CharSequence label, Supplier<Node> graphicSupplier, IContextInformation contextInformation, CharSequence hoverInfo) {
 		this(proposal, p -> label, p -> graphicSupplier.get(), contextInformation, p -> hoverInfo);
 	}
 

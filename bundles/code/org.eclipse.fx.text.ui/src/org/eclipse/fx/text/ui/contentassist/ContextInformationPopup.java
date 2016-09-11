@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.fx.text.ui.contentassist;
 
-import java.util.Stack;
-
+import org.eclipse.fx.text.hover.HtmlString;
 import org.eclipse.fx.text.ui.ITextViewer;
+import org.eclipse.fx.text.ui.internal.SimpleHtmlViewer;
 import org.eclipse.fx.ui.controls.Util;
 import org.eclipse.fx.ui.controls.styledtext.StyledString;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextArea.LineLocation;
@@ -22,9 +22,10 @@ import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.PopupWindow;
 
 
@@ -92,8 +93,8 @@ class ContextInformationPopup implements IContentAssistListener {
 
 	private PopupWindow fContextInfoPopup;
 	private BorderPane fRoot;
-	private Label fContent;
 
+	private Node fContent;
 
 //	/**
 //	 * The last removed context frame is remembered in order to not re-query the
@@ -119,6 +120,9 @@ class ContextInformationPopup implements IContentAssistListener {
 
 		this.fContextInfoPopup = new PopupWindow() {
 		};
+		
+		
+		
 		this.fContextInfoPopup.setAutoFix(false);
 		this.fContextInfoPopup.setAutoHide(true);
 		viewer.getTextWidget().sceneProperty().addListener( e -> {
@@ -130,14 +134,13 @@ class ContextInformationPopup implements IContentAssistListener {
 			this.fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
 		}
 		this.fRoot = new BorderPane();
-		this.fRoot.getStyleClass().add("styled-text-hover");
-		this.fContent = new Label();
-		this.fRoot.setCenter(this.fContent);
-		this.fContent.getStyleClass().add("context-info");
+		this.fRoot.getStyleClass().add("styled-text-hover"); //$NON-NLS-1$
+		
 		this.fContextInfoPopup.getScene().setRoot(this.fRoot);
 
 		this.fContextInfoPopup.setOnShowing(this::subscribe);
 		this.fContextInfoPopup.setOnHidden(this::unsubscribe);
+		
 	}
 
 	private void subscribe(Event e) {
@@ -177,12 +180,28 @@ class ContextInformationPopup implements IContentAssistListener {
 
 	private void updateInfoText(CharSequence infoText) {
 		if( infoText instanceof StyledString ) {
-			this.fContent.setText(""); //$NON-NLS-1$
-			this.fContent.setGraphic(Util.toNode((StyledString) infoText));
+			StackPane wrap = new StackPane();
+			wrap.getStyleClass().add("context-info"); //$NON-NLS-1$
+			Node content = Util.toNode((StyledString) infoText);
+			wrap.getChildren().add(content);
+			this.fRoot.setCenter(wrap);
+			this.fContent = wrap;
+		} else if ( infoText instanceof HtmlString) {
+			StackPane wrap = new StackPane();
+			wrap.getStyleClass().add("context-info"); //$NON-NLS-1$
+			wrap.setPrefHeight(this.fViewer.getTextWidget().getLineHeight(0) + 4);
+			SimpleHtmlViewer content = new SimpleHtmlViewer(true, true);
+			content.setContent((HtmlString) infoText);
+			wrap.getChildren().add(content);
+			this.fRoot.setCenter(wrap);
+			this.fContent = wrap;
 		} else {
-			this.fContent.setText(infoText.toString());
-			this.fContent.setGraphic(null);
-		}
+			Label content = new Label();
+			content.getStyleClass().add("context-info"); //$NON-NLS-1$
+			content.setText(infoText.toString());
+			this.fRoot.setCenter(content);
+			this.fContent = content;
+		} 
 	}
 
 	/**

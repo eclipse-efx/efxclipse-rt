@@ -154,7 +154,7 @@ public class AnnotationModelSupport {
 			if( position == null ) {
 				continue;
 			}
-			if( position.offset < control.getContent().getCharCount() ) {
+			if( position.offset <= control.getContent().getCharCount() ) {
 				int curLineIndex = control.getLineAtOffset(position.offset);
 				if (curLineIndex == lineIndex) {
 					int lineBegin = control.getOffsetAtLine(curLineIndex);
