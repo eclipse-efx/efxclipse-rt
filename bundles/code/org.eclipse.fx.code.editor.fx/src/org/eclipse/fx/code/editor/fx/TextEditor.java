@@ -76,17 +76,14 @@ public class TextEditor {
 
 	private EditorContextMenuProvider contextMenuProvider;
 
-	@Inject
 	public void setContextMenuProvider(EditorContextMenuProvider contextMenuProvider) {
 		this.contextMenuProvider = contextMenuProvider;
 	}
 
-	@Inject
 	public void setContextInformationPresenter(ContextInformationPresenter contextInformationPresenter) {
 		this.contextInformationPresenter = contextInformationPresenter;
 	}
 
-	@Inject
 	public void setEditingContext(EditingContext editingContext) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The EditingContext has to be set before the editor is initialized");
@@ -94,7 +91,6 @@ public class TextEditor {
 		this.editingContext = editingContext;
 	}
 
-	@Inject
 	public void setDocument(IDocument document) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The document has to be set before the editor is initialized");
@@ -102,7 +98,6 @@ public class TextEditor {
 		this.document = document;
 	}
 
-	@Inject
 	public void setSourceViewerConfiguration(SourceViewerConfiguration configuration) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The configuration has to be set before the editor is initialized");
@@ -110,7 +105,6 @@ public class TextEditor {
 		this.configuration = configuration;
 	}
 
-	@Inject
 	public void setPartitioner(IDocumentPartitioner partitioner) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The partitioner has to be set before the editor is initialized");
@@ -138,7 +132,6 @@ public class TextEditor {
 		}
 	}
 
-	@Inject
 	public void setInput(Input<?> input) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The input has to be set before the editor is initialized");
@@ -147,14 +140,30 @@ public class TextEditor {
 		this.input = input;
 	}
 
-	@Inject
-	@Optional
 	public void setActiveInputTracker(@ContextValue("activeInput") Property<Input<?>> activeInput) {
 		this.activeInput = activeInput;
 	}
 
 	@PostConstruct
-	public void initUI(BorderPane pane, EventBus eventBus) {
+	public void initUI(BorderPane pane,
+			EventBus eventBus,
+			EditorContextMenuProvider contextMenuProvider,
+			ContextInformationPresenter contextInformationPresenter,
+			EditingContext editingContext,
+			IDocument document,
+			SourceViewerConfiguration configuration,
+			IDocumentPartitioner partitioner,
+			Input<?> input,
+			@Optional @ContextValue("activeInput") Property<Input<?>> activeInput) {
+		setContextMenuProvider(contextMenuProvider);
+		setContextInformationPresenter(contextInformationPresenter);
+		setEditingContext(editingContext);
+		setDocument(document);
+		setSourceViewerConfiguration(configuration);
+		setPartitioner(partitioner);
+		setInput(input);
+		setActiveInputTracker(activeInput);
+
 		viewer = createSourceViewer();
 		if( tabAdvance != null ) {
 			viewer.getTextWidget().setTabAdvance(tabAdvance.intValue());
