@@ -142,6 +142,9 @@ public class DnDTabPaneSkinFullDrag extends TabPaneSkin implements DragSetup {
 	}
 
 	void handle_mouseDragged(MouseEvent e) {
+		if( DRAGGED_TAB == null ) {
+			return;
+		}
 		Node node = Util.findNode(getSkinnable().getScene().getWindow(), e.getScreenX(), e.getScreenY());
 		if (node != null) {
 			((Stage)node.getScene().getWindow()).toFront();
@@ -166,6 +169,7 @@ public class DnDTabPaneSkinFullDrag extends TabPaneSkin implements DragSetup {
 
         Event.fireEvent(getSkinnable(), new EFXDragEvent(getSkinnable(), getSkinnable(),
                         EFXDragEvent.DRAG_DONE, e.getScreenX(), e.getScreenY(), isComplete));
+        DRAGGED_TAB = null;
 	}
 
 	void tabPane_handleDragStart(MouseEvent event) {
