@@ -141,19 +141,21 @@ public class Util {
 	 */
 	@SuppressWarnings("deprecation")
 	public static Node findNode(Window w, double screenX, double screenY) {
+		// FIXME If multiple match take the closest
+		Iterator<Window> impl_getWindows = Window.impl_getWindows();
+		while (impl_getWindows.hasNext()) {
+			Window window = impl_getWindows.next();
+			if (w != window && !FIND_NODE_EXCLUDE.equals(window.getUserData()) && new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
+				return findNode(window.getScene().getRoot(), screenX, screenY);
+			}
+		}
+
 		// First check the owner
 		if (new BoundingBox(w.getX(), w.getY(), w.getWidth(), w.getHeight()).contains(screenX, screenY)) {
 			return findNode(w.getScene().getRoot(), screenX, screenY);
 		}
 
-		// FIXME If multiple match take the closest
-		Iterator<Window> impl_getWindows = Window.impl_getWindows();
-		while (impl_getWindows.hasNext()) {
-			Window window = impl_getWindows.next();
-			if (!FIND_NODE_EXCLUDE.equals(window.getUserData()) && new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
-				return findNode(window.getScene().getRoot(), screenX, screenY);
-			}
-		}
+
 		return null;
 	}
 
