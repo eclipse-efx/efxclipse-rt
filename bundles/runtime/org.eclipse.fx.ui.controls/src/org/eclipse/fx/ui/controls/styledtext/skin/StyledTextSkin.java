@@ -154,7 +154,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.lineHelper = new LineHelper(getSkinnable());
 		this.content = new ContentView(this.lineHelper, styledText);
 		this.content.lineHeightProperty().bind(styledText.fixedLineHeightProperty());
-		
+
 		final DoubleBinding origFontSize = new DoubleBinding() {
 			{
 				bind(getSkinnable().fontProperty());
@@ -170,14 +170,14 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		};
 		final DoubleBinding zoomedFontSize = origFontSize.multiply(getSkinnable().fontZoomFactorProperty());
 		final StringExpression zoomedFontStyle = Bindings.concat("-fx-font-size: ", zoomedFontSize, ";");  //$NON-NLS-1$//$NON-NLS-2$
-		
+
 		this.content.styleProperty().bind(zoomedFontStyle);
 		this.lineRulerArea.styleProperty().bind(zoomedFontStyle);
-		
+
 		this.contentArea = new ScrollbarPane<>();
 
 		this.contentArea.setCenter(this.content);
-		
+
 		Map<AnnotationProvider, Subscription> subscriptions = new HashMap<>();
 		Consumer<RangeSet<Integer>> onAnnotationChange = r -> {
 			this.content.updateAnnotations(r);
@@ -421,16 +421,16 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		});
 
 		this.content.lineHeightProperty().bind(getSkinnable().fixedLineHeightProperty());
-		
+
 		this.content.setOnDragOver(e -> {
 			Point2D coords = new Point2D(e.getX(), e.getY());
 			Optional<Integer> lineIndex = content.getLineIndex(coords);
-			
+
 			if (lineIndex.isPresent()) {
 				if (lineIndex.get() != -1) {
 					Dragboard db = e.getDragboard();
-					if (db.hasString() && !db.hasFiles() && !db.hasImage()) {
-						e.acceptTransferModes(TransferMode.ANY);
+					if (db.hasString()) {
+						e.acceptTransferModes(TransferMode.COPY);
 						updateInsertionMarkerIndex(lineIndex.get());
 					}
 				}
@@ -438,16 +438,16 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			else {
 				updateInsertionMarkerIndex(-1);
 			}
-			
+
 			e.consume();
 		});
-		
+
 		this.content.setOnDragDropped(e -> {
-			
+
 			if (e.getDragboard().hasContent(DataFormat.PLAIN_TEXT)) {
-				
+
 				String insert = e.getDragboard().getString();
-				
+
 				Point2D coords = new Point2D(e.getX(), e.getY());
 				Optional<Integer> lineIndex = content.getLineIndex(coords);
 				if (lineIndex.isPresent() && lineIndex.get() != -1) {
