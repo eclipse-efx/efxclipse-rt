@@ -132,6 +132,13 @@ public class TextEditor {
 		}
 	}
 
+	@Inject
+	public void setZoomFactor(@Preference(nodePath=Constants.PREFERENCE_NODE_PATH, key=Constants.PREFERENCE_ZOOMFACTOR, defaultValue="1.0") double zoomFactor) {
+		if( viewer != null ) {
+			viewer.getTextWidget().setFontZoomFactor(zoomFactor);
+		}
+	}
+
 	public void setInput(Input<?> input) {
 		if( viewer != null ) {
 			throw new IllegalArgumentException("The input has to be set before the editor is initialized");
@@ -154,7 +161,8 @@ public class TextEditor {
 			SourceViewerConfiguration configuration,
 			IDocumentPartitioner partitioner,
 			Input<?> input,
-			@Optional @ContextValue("activeInput") Property<Input<?>> activeInput) {
+			@Optional @ContextValue("activeInput") Property<Input<?>> activeInput,
+			@Preference(nodePath=Constants.PREFERENCE_NODE_PATH, key=Constants.PREFERENCE_ZOOMFACTOR, defaultValue="1.0") Property<Double> zoomFactor) {
 		setContextMenuProvider(contextMenuProvider);
 		setContextInformationPresenter(contextInformationPresenter);
 		setEditingContext(editingContext);
@@ -185,6 +193,10 @@ public class TextEditor {
 		if( activeInput != null ) {
 			activeInput.setValue(input);
 		}
+		viewer.getTextWidget().setFontZoomFactor(zoomFactor.getValue() != null ? zoomFactor.getValue() : 1.0);
+		viewer.getTextWidget().fontZoomFactorProperty().addListener( (o,ol,ne) -> {
+			zoomFactor.setValue(ne.doubleValue());
+		});
 
 		eventBus.subscribe(Constants.TOPIC_SELECT_SOURCE, EventBus.data(this::onSourceSelect));
 
