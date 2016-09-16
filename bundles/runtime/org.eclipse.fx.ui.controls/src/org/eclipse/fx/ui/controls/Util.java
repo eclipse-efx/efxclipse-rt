@@ -13,6 +13,7 @@ package org.eclipse.fx.ui.controls;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -177,10 +178,13 @@ public class Util {
 			return rv;
 		}
 		Point2D b = n.screenToLocal(screenX, screenY);
-		if (n.getBoundsInLocal().contains(b)) {
+		if (n.getBoundsInLocal().contains(b) && ! FIND_NODE_EXCLUDE.equals(n.getUserData())) {
 			rv = n;
 			if (n instanceof Parent) {
-				for (Node c : ((Parent) n).getChildrenUnmodifiable()) {
+				List<Node> cList = ((Parent) n).getChildrenUnmodifiable()
+						.stream().filter( no -> no.isVisible()).collect(Collectors.toList());
+
+				for (Node c : cList) {
 					Node cn = findNode(c, screenX, screenY);
 					if (cn != null) {
 						rv = cn;
