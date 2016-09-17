@@ -368,7 +368,7 @@ public class DefaultTrimmedWindowPane extends ResizeableWindowPane implements Tr
 			maxButton.setFocusTraversable(false);
 			maxButton.setOnAction(e -> maximize());
 
-			HBox windowBtns = new HBox(3);
+			HBox windowBtns = new HBox();
 			windowBtns.getStyleClass().add("window-buttons"); //$NON-NLS-1$
 			windowBtns.getChildren().addAll(this.minButton, maxButton, closeButton);
 

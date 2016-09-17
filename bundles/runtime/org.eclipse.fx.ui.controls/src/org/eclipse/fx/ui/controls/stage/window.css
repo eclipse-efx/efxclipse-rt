@@ -74,6 +74,7 @@
 
 .default-window .window-buttons {
     -fx-padding: 6 0 0 0;
+    -fx-spacing: 3;
 }
 
 .default-window .window-button:pressed {
