@@ -347,7 +347,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 			// Check if the control is already rendered
 			if (renderer != null) {
-				if (parentRenderer != null && container != null) {
+				if (!(element instanceof MWindow) && parentRenderer != null && container != null) {
 					try {
 						parentRenderer.hideChild(container, element);
 					} catch (Throwable t) {
@@ -378,6 +378,14 @@ public class PartRenderingEngine implements IPresentationEngine {
 				if (selectedElement != null && eo.eContents().contains(selectedElement)) {
 					// now remove the selected element
 					removeGui(selectedElement);
+				}
+
+				if ((element instanceof MWindow) && parentRenderer != null && container != null) {
+					try {
+						parentRenderer.hideChild(container, element);
+					} catch (Throwable t) {
+						this.logger.error(t.getMessage(), t);
+					}
 				}
 
 				if (element instanceof MContribution) {
