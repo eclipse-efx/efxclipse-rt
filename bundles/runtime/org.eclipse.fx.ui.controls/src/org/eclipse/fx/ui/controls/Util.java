@@ -14,8 +14,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -49,6 +51,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.PopupWindow;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
@@ -141,21 +145,55 @@ public class Util {
 	 * @return the node or <code>null</code>
 	 */
 	@SuppressWarnings("deprecation")
-	public static Node findNode(Window w, double screenX, double screenY) {
-		// FIXME If multiple match take the closest
-		Iterator<Window> impl_getWindows = Window.impl_getWindows();
-		while (impl_getWindows.hasNext()) {
-			Window window = impl_getWindows.next();
-			if (w != window && !FIND_NODE_EXCLUDE.equals(window.getUserData()) && new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
-				return findNode(window.getScene().getRoot(), screenX, screenY);
-			}
-		}
-
-		// First check the owner
-		if (new BoundingBox(w.getX(), w.getY(), w.getWidth(), w.getHeight()).contains(screenX, screenY)) {
+	public static Node findNode(@Nullable Window w, double screenX, double screenY) {
+		if (w != null && new BoundingBox(w.getX(), w.getY(), w.getWidth(), w.getHeight()).contains(screenX, screenY)) {
 			return findNode(w.getScene().getRoot(), screenX, screenY);
 		}
 
+		Iterator<Window> impl_getWindows = Window.impl_getWindows();
+
+		List<Window> sortedWindows = new ArrayList<>();
+		Map<Window,List<Window>> parentChildRelation = new HashMap<>();
+
+		while( impl_getWindows.hasNext() ) {
+			Window window = impl_getWindows.next();
+			Window owner;
+			if( window instanceof Stage ) {
+				owner = ((Stage)window).getOwner();
+			} else if( window instanceof PopupWindow ) {
+				owner = ((PopupWindow)window).getOwnerWindow();
+			} else {
+				owner = null;
+			}
+
+			if( owner == null ) {
+				sortedWindows.add(window);
+			} else {
+				List<Window> list = parentChildRelation.get(owner);
+				if( list == null ) {
+					list = new ArrayList<>();
+					parentChildRelation.put(owner, list);
+				}
+				list.add(window);
+			}
+		}
+
+		while( ! parentChildRelation.isEmpty() ) {
+			for( Window rw : sortedWindows.toArray(new Window[0]) ) {
+				List<Window> list = parentChildRelation.remove(rw);
+				if( list != null ) {
+					sortedWindows.addAll(list);
+				}
+			}
+		}
+
+		Collections.reverse(sortedWindows);
+
+		for( Window window : sortedWindows ) {
+			if (!FIND_NODE_EXCLUDE.equals(window.getUserData()) && new BoundingBox(window.getX(), window.getY(), window.getWidth(), window.getHeight()).contains(screenX, screenY)) {
+				return findNode(window.getScene().getRoot(), screenX, screenY);
+			}
+		}
 
 		return null;
 	}
