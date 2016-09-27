@@ -422,6 +422,11 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		this.content.lineHeightProperty().bind(getSkinnable().fixedLineHeightProperty());
 
+		this.content.setOnDragExited(e -> {
+			updateInsertionMarkerIndex(-1);
+			e.consume();
+		});
+		
 		this.content.setOnDragOver(e -> {
 			Point2D coords = new Point2D(e.getX(), e.getY());
 			Optional<Integer> lineIndex = content.getLineIndex(coords);

@@ -1042,12 +1042,13 @@ public class StyledTextBehavior {
 	protected void defaultNewLine() {
 		int offset = getControl().getCaretOffset();
 		int line = getControl().getContent().getLineAtOffset(offset);
+		int lineOffset = offset - getControl().getContent().getOffsetAtLine(line);
 		String lineContent = getControl().getContent().getLine(line);
 
 		// Should we make this configurable
 		char[] chars = lineContent.toCharArray();
 		String prefix = ""; //$NON-NLS-1$
-		for (int i = 0; i < chars.length; i++) {
+		for (int i = 0; i < Math.min(lineOffset, chars.length); i++) {
 			if (chars[i] == ' ' || chars[i] == '\t') {
 				prefix += chars[i];
 			} else {
