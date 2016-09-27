@@ -19,10 +19,12 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Control;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javafx.stage.Popup;
 import javafx.stage.PopupWindow;
 import javafx.stage.Screen;
@@ -92,9 +94,13 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 	private void onMouseEntered(MouseEvent event) {
 		cancelScheduledHide();
 		preventHide = true;
+		
+		setDisableOnWebViews(root, false);
 	}
 	private void onMouseExited(MouseEvent event) {
 		preventHide = false;
+		
+		setDisableOnWebViews(root, true);
 	}
 	
 	private void onShowing(WindowEvent event) {
@@ -208,8 +214,18 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 
 
 		this.currentVisible = hovers;
+		setDisableOnWebViews(root, true);
 	}
 
+	void setDisableOnWebViews(Node cur, boolean state) {
+		if (cur instanceof WebView) {
+			cur.setDisable(state);
+		}
+		else if (cur instanceof Parent) {
+			((Parent)cur).getChildrenUnmodifiable().forEach(n->setDisableOnWebViews(n, state));
+		}
+	}
+	
 	@Override
 	public void show(Point2D screenAnchor, Bounds screenBounds, List<HoverInfo> hover) {
 		cancelScheduledHide();
