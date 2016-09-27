@@ -43,6 +43,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 /**
@@ -145,7 +146,7 @@ public class DnDTabPaneSkinFullDrag extends TabPaneSkin implements DragSetup {
 		if( DRAGGED_TAB == null ) {
 			return;
 		}
-		Node node = Util.findNode(getSkinnable().getScene().getWindow(), e.getScreenX(), e.getScreenY());
+		Node node = Util.findNode((Window)null, e.getScreenX(), e.getScreenY());
 		if (node != null) {
 			((Stage)node.getScene().getWindow()).toFront();
             Event.fireEvent(node, new EFXDragEvent(this, node, EFXDragEvent.DRAG_OVER, e.getScreenX(),
@@ -156,7 +157,7 @@ public class DnDTabPaneSkinFullDrag extends TabPaneSkin implements DragSetup {
 	}
 
 	private void handleMouseReleased(MouseEvent e) {
-		Node node = Util.findNode(getSkinnable().getScene().getWindow(), e.getScreenX(), e.getScreenY());
+		Node node = Util.findNode((Window)null, e.getScreenX(), e.getScreenY());
         boolean isComplete = false;
         if (node != null) {
                 EFXDragEvent event = new EFXDragEvent(node, node, EFXDragEvent.DRAG_DROPPED, e.getScreenX(),
