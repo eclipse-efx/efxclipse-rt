@@ -113,6 +113,8 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 			marker.setManaged(false);
 			layoutNode.getChildren().add(marker);
 		} else {
+			layoutNode.getChildren().remove(marker);
+			layoutNode.getChildren().add(marker);
 			marker.setVisible(true);
 		}
 
@@ -160,6 +162,8 @@ public class DefaultDnDFeedback implements DnDFeedbackService {
 			marker.setMouseTransparent(true);
 			layoutNode.getChildren().add(marker);
 		} else {
+			layoutNode.getChildren().remove(marker);
+			layoutNode.getChildren().add(marker);
 			marker.updateBounds(layoutNode.getBoundsInLocal(), new BoundingBox(data.containerRegion.x, data.containerRegion.y, data.containerRegion.width, data.containerRegion.height), data.dropType == BasicDropLocation.BEFORE);
 			marker.setVisible(true);
 		}
