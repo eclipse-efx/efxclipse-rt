@@ -157,7 +157,7 @@ public class DnDSupport extends BaseDnDSupport {
 				MElementContainer<MUIElement> parentRef = reference != null ? reference.getParent() : null;
 				MElementContainer<MUIElement> parentSource = sourceReference != null ? sourceReference.getParent() : null;
 
-				if (parentRef != parentSource && sourceReference != null && this.dndService != null && !this.dndService.repartentAllowed(sourceReference)) {
+				if (parentRef != parentSource && parentRef != null && sourceReference != null && this.dndService != null && !this.dndService.reparentAllowed(sourceReference, parentRef)) {
 					cleanup();
 					return;
 				}
@@ -191,7 +191,7 @@ public class DnDSupport extends BaseDnDSupport {
 		MElementContainer<MUIElement> parentRef = reference != null ? reference.getParent() : null;
 		MElementContainer<MUIElement> parentSource = sourceReference != null ? sourceReference.getParent() : null;
 
-		if (parentRef != parentSource && sourceReference != null && this.dndService != null && !this.dndService.repartentAllowed(sourceReference)) {
+		if (parentRef != parentSource && parentRef != null && sourceReference != null && this.dndService != null && !this.dndService.reparentAllowed(sourceReference,parentRef)) {
 			cleanup();
 			return;
 		}

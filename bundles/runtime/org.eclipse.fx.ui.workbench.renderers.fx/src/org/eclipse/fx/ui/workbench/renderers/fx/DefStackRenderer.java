@@ -292,7 +292,7 @@ public class DefStackRenderer extends BaseStackRenderer<Node, Object, Node> {
 										}
 									});
 								} else {
-									StackWidgetImpl.this.logger.info("An endless activation update has been blocked!"); //$NON-NLS-1$
+									StackWidgetImpl.this.logger.debug("An endless activation update has been blocked!"); //$NON-NLS-1$
 								}
 							} else {
 								// We are in the init phase
