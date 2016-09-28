@@ -1212,11 +1212,14 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			}
 
 			Runnable finisher = () -> {
+				staticLayoutNode.getChildren().stream().forEach( n -> n.setVisible(false));
+				maximizationContainer.setVisible(true);
 				maximizationContainer.getChildren().clear();
 				maximizationContainer.getChildren().add((Region) childWidget.getWidgetNode());
 				greyPane.setOpacity(1.0);
 				this.maximizationContainer = maximizationContainer;
 				this.greyPane = greyPane;
+
 			};
 
 			if(this.maximizationTransition != null) {
@@ -1243,6 +1246,7 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 					staticLayoutNode.getChildren().remove(greyPane);
 					staticLayoutNode.getChildren().remove(maximizationContainer);
 					childStaticNode.getChildren().add(childPane);
+					staticLayoutNode.getChildren().stream().forEach( n -> n.setVisible(true));
 				};
 
 				if(this.maximizationTransition != null) {

@@ -36,7 +36,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * default renderer for {@link MPerspective}
  */
 public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPane> {
-	
+
 	@Override
 	protected Class<? extends WPerspective<FillLayoutPane>> getWidgetClass(MPerspective perspective) {
 		return PerspectiveWidgetImpl.class;
@@ -56,7 +56,7 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 		 * Reference to the currently maximized widget
 		 */
 		private WLayoutedWidget<? extends MUIElement> maximizedWidget;
-		
+
 		@Inject
 		@Optional
 		private MaximizationTransitionService<Pane, Region> maximizationTransition;
@@ -110,7 +110,7 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 						this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 					});
 				}
-				
+
 				this.overlayContainer.resize(staticLayoutNode.getWidth(), staticLayoutNode.getHeight());
 				this.overlayContainer.getChildren().setAll((Node)dialogNode);
 				((Pane) staticLayoutNode).getChildren().add(this.overlayContainer);
@@ -124,15 +124,15 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 			}
 
 			final WLayoutedWidget<? extends MUIElement> childWidget = widget;
-			
+
 			Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
 			this.maximizedWidget = widget;
-			
+
 			final FillLayoutPane maximizationContainer = new FillLayoutPane();
 			final FillLayoutPane greyPane = new FillLayoutPane();
 			greyPane.getStyleClass().add("maximization-container"); //$NON-NLS-1$
 			greyPane.setOpacity(0.0);
-			
+
 			int size = staticLayoutNode.getChildren().size();
 			if (this.overlayContainer == staticLayoutNode.getChildren().get(size - 1)) {
 				// do not cover overlay container
@@ -142,41 +142,44 @@ public class DefPerspectiveRenderer extends BasePerspectiveRenderer<FillLayoutPa
 				staticLayoutNode.getChildren().add(greyPane);
 				staticLayoutNode.getChildren().add(maximizationContainer);
 			}
-			
+
 			Runnable finisher = () -> {
+				staticLayoutNode.getChildren().stream().forEach( n -> n.setVisible(false));
+				maximizationContainer.setVisible(true);
 				maximizationContainer.getChildren().clear();
 				maximizationContainer.getChildren().add((Region) childWidget.getWidgetNode());
 				greyPane.setOpacity(1.0);
 				this.maximizationContainer = maximizationContainer;
 				this.greyPane = greyPane;
 			};
-			
+
 			if(this.maximizationTransition != null) {
 				this.maximizationTransition.maximize(getWidget(), greyPane, maximizationContainer, (Region) childWidget.getWidgetNode(), finisher);
 			} else {
 				finisher.run();
 			}
 		}
-		
+
 		@Override
 		public void removeMaximizedContent() {
 			if (this.maximizationContainer != null) {
 				Pane staticLayoutNode = (@NonNull Pane) getStaticLayoutNode();
-				
+
 				Pane childStaticNode = (Pane) this.maximizedWidget.getStaticLayoutNode();
-				Region childPane = (Region) this.maximizedWidget.getWidgetNode();	
-				
+				Region childPane = (Region) this.maximizedWidget.getWidgetNode();
+
 				FillLayoutPane maximizationContainer = this.maximizationContainer;
 				FillLayoutPane greyPane = this.greyPane;
 				this.maximizationContainer = null;
 				this.maximizedWidget = null;
-				
+
 				Runnable finisher = () -> {
 					staticLayoutNode.getChildren().remove(greyPane);
 					staticLayoutNode.getChildren().remove(maximizationContainer);
 					childStaticNode.getChildren().add(childPane);
+					staticLayoutNode.getChildren().stream().forEach( n -> n.setVisible(true));
 				};
-				
+
 				if(this.maximizationTransition != null) {
 					this.maximizationTransition.restore(staticLayoutNode, greyPane, maximizationContainer, childStaticNode, childPane, finisher);
 				} else {
