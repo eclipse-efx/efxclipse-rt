@@ -157,6 +157,9 @@ public class DnDTabPaneSkinFullDrag extends TabPaneSkin implements DragSetup {
 	}
 
 	private void handleMouseReleased(MouseEvent e) {
+		if( DRAGGED_TAB == null ) {
+			return;
+		}
 		Node node = Util.findNode((Window)null, e.getScreenX(), e.getScreenY());
         boolean isComplete = false;
         if (node != null) {
@@ -252,6 +255,7 @@ public class DnDTabPaneSkinFullDrag extends TabPaneSkin implements DragSetup {
 
 	@SuppressWarnings("all")
 	void tabPane_handleDragOver(Pane tabHeaderArea, Pane headersRegion, EFXDragEvent event) {
+//		System.err.println("==========> OVER AT HEADER");
 		Tab draggedTab = DRAGGED_TAB;
 		if (draggedTab == null) {
 			return;
