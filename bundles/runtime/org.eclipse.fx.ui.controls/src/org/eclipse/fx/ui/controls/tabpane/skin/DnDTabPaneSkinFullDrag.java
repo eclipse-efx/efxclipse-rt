@@ -160,20 +160,23 @@ public class DnDTabPaneSkinFullDrag extends TabPaneSkin implements DragSetup {
 		if( DRAGGED_TAB == null ) {
 			return;
 		}
-		Node node = Util.findNode((Window)null, e.getScreenX(), e.getScreenY());
-        boolean isComplete = false;
-        if (node != null) {
-                EFXDragEvent event = new EFXDragEvent(node, node, EFXDragEvent.DRAG_DROPPED, e.getScreenX(),
-                                e.getScreenY(), false);
-                Event.fireEvent(node, event);
-                isComplete = event.isComplete();
-        } else {
-        	efx_dropped(e.getScreenX(), e.getScreenY(),FXTabWrapper.wrap(DRAGGED_TAB), null, DropType.DETACH);
-        }
 
-        Event.fireEvent(getSkinnable(), new EFXDragEvent(getSkinnable(), getSkinnable(),
-                        EFXDragEvent.DRAG_DONE, e.getScreenX(), e.getScreenY(), isComplete));
-        DRAGGED_TAB = null;
+		boolean isComplete = false;
+		try {
+			Node node = Util.findNode((Window)null, e.getScreenX(), e.getScreenY());
+	        if (node != null) {
+	                EFXDragEvent event = new EFXDragEvent(node, node, EFXDragEvent.DRAG_DROPPED, e.getScreenX(),
+	                                e.getScreenY(), false);
+	                Event.fireEvent(node, event);
+	                isComplete = event.isComplete();
+	        } else {
+	        	efx_dropped(e.getScreenX(), e.getScreenY(),FXTabWrapper.wrap(DRAGGED_TAB), null, DropType.DETACH);
+	        }
+		} finally {
+	        Event.fireEvent(getSkinnable(), new EFXDragEvent(getSkinnable(), getSkinnable(),
+                    EFXDragEvent.DRAG_DONE, e.getScreenX(), e.getScreenY(), isComplete));
+	        DRAGGED_TAB = null;
+		}
 	}
 
 	void tabPane_handleDragStart(MouseEvent event) {
