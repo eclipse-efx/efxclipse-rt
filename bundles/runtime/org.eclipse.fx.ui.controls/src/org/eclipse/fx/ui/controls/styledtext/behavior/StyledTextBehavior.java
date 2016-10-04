@@ -1520,7 +1520,8 @@ public class StyledTextBehavior {
 
 			m.map("Ctrl+Insert", DefaultTextEditActions.COPY); //$NON-NLS-1$
 			m.map("Shift+Insert", DefaultTextEditActions.PASTE); //$NON-NLS-1$
-			
+			m.map("Shift+Delete", DefaultTextEditActions.CUT); //$NON-NLS-1$
+
 			m.map("Ctrl+A", DefaultTextEditActions.SELECT_ALL); //$NON-NLS-1$
 
 			m.map("Ctrl+Up", DefaultTextEditActions.SCROLL_LINE_UP); //$NON-NLS-1$
