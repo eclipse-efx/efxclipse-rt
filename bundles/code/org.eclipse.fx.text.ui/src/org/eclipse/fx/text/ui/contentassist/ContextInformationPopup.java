@@ -120,9 +120,9 @@ class ContextInformationPopup implements IContentAssistListener {
 
 		this.fContextInfoPopup = new PopupWindow() {
 		};
-		
-		
-		
+
+
+
 		this.fContextInfoPopup.setAutoFix(false);
 		this.fContextInfoPopup.setAutoHide(true);
 		viewer.getTextWidget().sceneProperty().addListener( e -> {
@@ -135,12 +135,12 @@ class ContextInformationPopup implements IContentAssistListener {
 		}
 		this.fRoot = new BorderPane();
 		this.fRoot.getStyleClass().add("styled-text-hover"); //$NON-NLS-1$
-		
+
 		this.fContextInfoPopup.getScene().setRoot(this.fRoot);
 
 		this.fContextInfoPopup.setOnShowing(this::subscribe);
 		this.fContextInfoPopup.setOnHidden(this::unsubscribe);
-		
+
 	}
 
 	private void subscribe(Event e) {
@@ -201,7 +201,7 @@ class ContextInformationPopup implements IContentAssistListener {
 			content.setText(infoText.toString());
 			this.fRoot.setCenter(content);
 			this.fContent = content;
-		} 
+		}
 	}
 
 	/**
@@ -224,6 +224,7 @@ class ContextInformationPopup implements IContentAssistListener {
 					this.fContent.applyCss();
 					double y = locationAtOffset.getY() - this.fContent.prefHeight(-1);
 					this.fContextInfoPopup.show(this.fViewer.getTextWidget().getScene().getWindow(), locationAtOffset.getX(), y);
+					this.fContextInfoPopup.sizeToScene();
 				}
 			}
 			else {
