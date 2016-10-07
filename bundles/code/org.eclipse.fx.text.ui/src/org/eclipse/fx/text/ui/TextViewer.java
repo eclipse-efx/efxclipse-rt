@@ -120,6 +120,15 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 		this.features.addAll(Arrays.asList(features));
 
 		initActionMapping();
+		
+		// cleanup
+		sceneProperty().addListener((x, o, n)-> {
+			if (n == null) {
+				if (this.fUndoManager != null) {
+					this.fUndoManager.disconnect();
+				}
+			}
+		});
 	}
 
 	protected TriggerActionMapping getActionMapping() {

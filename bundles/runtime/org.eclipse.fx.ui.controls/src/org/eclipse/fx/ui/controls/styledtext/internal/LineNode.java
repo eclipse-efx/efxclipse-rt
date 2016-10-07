@@ -363,6 +363,18 @@ public class LineNode extends StackPane {
 			this.getChildren().add(this.caret);
 
 			this.caretAnimation = createCaretAnimation(this.caret);
+			
+			this.sceneProperty().addListener((x, o, n)->{
+				if (n == null) {
+					if (this.caretAnimation != null) {
+						this.caretAnimation.stop();
+					}
+					this.caretAnimation = null;
+				}
+				else {
+					this.caretAnimation = createCaretAnimation(this.caret);
+				}
+			});
 		}
 
 		void hideCaret() {

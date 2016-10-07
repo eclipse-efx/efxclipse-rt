@@ -163,6 +163,7 @@ public class DefaultUndoManager implements IUndoManager {
 
 	private void disconnectDocumentUndoManager() {
 		if (fDocumentUndoManager != null) {
+			DocumentUndoManagerRegistry.disconnect(fDocument);
 			fDocumentUndoManager.disconnect(this);
 			fDocumentUndoManager.removeDocumentUndoListener(fDocumentUndoListener);
 			fDocumentUndoListener= null;
