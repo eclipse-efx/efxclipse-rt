@@ -7,16 +7,14 @@ import java.util.function.Consumer;
 import org.eclipse.fx.text.hover.HtmlString;
 import org.eclipse.fx.text.hover.LinkActionEvent;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
+import javafx.concurrent.Worker.State;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Background;
@@ -25,6 +23,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
 
 @SuppressWarnings("javadoc")
 public class SimpleHtmlViewer extends BorderPane {
@@ -85,6 +84,51 @@ public class SimpleHtmlViewer extends BorderPane {
 		this(false, false);
 	}
 	
+	public static class WebBridge {
+		private HtmlString html;
+		
+		public WebBridge(HtmlString html) {
+			this.html = html;
+		}
+		
+		public void onLinkAction(String target, long screenX, long screenY) {
+			this.html.fireEvent(new LinkActionEvent(LinkActionEvent.LINK_ACTION, target, screenX, screenY));
+		}
+		public void onLinkContext(String target, long screenX, long screenY) {
+			this.html.fireEvent(new LinkActionEvent(LinkActionEvent.LINK_CONTEXT, target, screenX, screenY));
+		}
+	}
+	
+	private class WorkerStateChangeListener implements ChangeListener<Worker.State> {
+		@Override
+		public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
+			if (newValue == Worker.State.SUCCEEDED) {
+				
+				// install WebBridge
+				JSObject window = (JSObject) webEngine.executeScript("window"); //$NON-NLS-1$
+				window.setMember("java", new WebBridge(getContent())); //$NON-NLS-1$
+
+				// hook all links
+				webEngine.executeScript(
+					"var callback = function(e) {" + 									//$NON-NLS-1$
+					"	if (e.button == 0) {" + 										//$NON-NLS-1$
+					"		java.onLinkAction(e.target.href, e.screenX, e.screenY);" + 	//$NON-NLS-1$
+					"	}" + 															//$NON-NLS-1$
+					"	else if (e.button == 2) {" + 									//$NON-NLS-1$
+					"		java.onLinkContext(e.target.href, e.screenX, e.screenY);" +	//$NON-NLS-1$
+					"	}" +															//$NON-NLS-1$
+					"};" +																//$NON-NLS-1$
+					"var allAnchors = document.getElementsByTagName('a');" +			//$NON-NLS-1$
+					"for (var i = 0; i < allAnchors.length; i++) {" +					//$NON-NLS-1$
+					"	allAnchors[i].onmousedown = callback;" +						//$NON-NLS-1$
+					"}"																	//$NON-NLS-1$
+				);
+			}
+		}
+	}
+	
+	private WorkerStateChangeListener workerStateChangeListener = new WorkerStateChangeListener();
+	
 	// TODO 3.0.0 replace listeners with FXBindings
 	public SimpleHtmlViewer(boolean noPaddingInBody, boolean inline) {
 		this.inline = inline;
@@ -109,7 +153,7 @@ public class SimpleHtmlViewer extends BorderPane {
 					setPrefWidth(width + 20);
 				}
 				if (height != null) {
-					System.err.println("SET PREF HEIGHT " + height);
+//					System.err.println("SET PREF HEIGHT " + height);
 					setPrefHeight(height + 4);
 				}
 			}
@@ -142,29 +186,7 @@ public class SimpleHtmlViewer extends BorderPane {
 		parentProperty().addListener(parentListener);
 		
 		// install the Link Callbacks
-		EventListener listener = event -> {
-			HtmlString html = getContent();
-			if (html != null) {
-				if ("mouseup".equals(event.getType())) { //$NON-NLS-1$
-					org.w3c.dom.events.MouseEvent ev = (org.w3c.dom.events.MouseEvent)event;
-					if (ev.getButton() == 0) {
-						System.err.println(ev.getScreenX() + "/" + ev.getScreenY());
-						html.fireEvent(new LinkActionEvent(LinkActionEvent.LINK_ACTION, event.getCurrentTarget().toString(), ev.getScreenX(), ev.getScreenY()));
-					}
-					else if (ev.getButton() == 2) {
-						html.fireEvent(new LinkActionEvent(LinkActionEvent.LINK_CONTEXT, event.getCurrentTarget().toString(), ev.getScreenX(), ev.getScreenY()));
-					}
-				}
-			}
-		};
-		this.webEngine.getLoadWorker().stateProperty().addListener((x, o, n)-> {
-			if (n == Worker.State.SUCCEEDED) {
-				NodeList links = this.webEngine.getDocument().getElementsByTagName("a"); //$NON-NLS-1$
-				for (int i=0; i < links.getLength(); i++) {
-					((EventTarget)links.item(i)).addEventListener("mouseup", listener, false); //$NON-NLS-1$
-				}
-			}
-		});
+		webEngine.getLoadWorker().stateProperty().addListener(workerStateChangeListener);
 		
 		// bind the content
 		contentProperty().addListener((x, o, n) -> {
@@ -177,9 +199,25 @@ public class SimpleHtmlViewer extends BorderPane {
 			
 			
 		});
+		
+		sceneProperty().addListener((x, o, n)->{
+			if (o != null) {
+				o.getWindow().setOnHidden(null);
+				o.getWindow().setOnShown(null);
+			}
+			if (n != null) {
+				n.getWindow().setOnShown(e -> {
+					// install WebBridge
+					JSObject window = (JSObject) webEngine.executeScript("window"); //$NON-NLS-1$
+					window.setMember("java", new WebBridge(getContent())); //$NON-NLS-1$
+				});
+				n.getWindow().setOnHidden(e-> {
+					// uninstall WebBridge
+					JSObject window = (JSObject) webEngine.executeScript("window"); //$NON-NLS-1$
+					window.removeMember("java"); //$NON-NLS-1$
+				});
+			}
+		});
 	}
-
-	
-	
 	
 }
