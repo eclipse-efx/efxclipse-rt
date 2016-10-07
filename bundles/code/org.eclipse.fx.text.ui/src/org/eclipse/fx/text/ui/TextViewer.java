@@ -128,6 +128,11 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 					this.fUndoManager.disconnect();
 				}
 			}
+			else {
+				if (this.fUndoManager != null) {
+					this.fUndoManager.connect(this);
+				}
+			}
 		});
 	}
 
