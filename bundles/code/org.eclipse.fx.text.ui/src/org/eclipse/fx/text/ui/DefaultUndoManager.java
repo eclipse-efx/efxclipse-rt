@@ -62,64 +62,67 @@ public class DefaultUndoManager implements IUndoManager {
 		}
 	};
 
-	private IDocumentUndoListener fDocumentUndoListener = new IDocumentUndoListener() {
-
-		@Override
-		public void documentUndoNotification(DocumentUndoEvent event ){
-			if (!isConnected()) return;
-
-			int eventType= event.getEventType();
-			if (((eventType & DocumentUndoEvent.ABOUT_TO_UNDO) != 0) || ((eventType & DocumentUndoEvent.ABOUT_TO_REDO) != 0))  {
-				if (event.isCompound()) {
-//					ITextViewerExtension extension= null;
-//					if (fTextViewer instanceof ITextViewerExtension)
-//						extension= (ITextViewerExtension) fTextViewer;
-//
-//					if (extension != null)
-//						extension.setRedraw(false);
-				}
-				// TODO turn of auto edit strategies
-//				fTextViewer.getTextWidget().getDisplay().syncExec(new Runnable() {
-//					@Override
-//					public void run() {
-//						if (fTextViewer instanceof TextViewer)
-//							((TextViewer)fTextViewer).ignoreAutoEditStrategies(true);
-//					}
-//			    });
-
-			} else if (((eventType & DocumentUndoEvent.UNDONE) != 0) || ((eventType & DocumentUndoEvent.REDONE) != 0))  {
-				// TODO turn on auto edit strategies
-//				fTextViewer.getTextWidget().getDisplay().syncExec(new Runnable() {
-//					@Override
-//					public void run() {
-//						if (fTextViewer instanceof TextViewer)
-//							((TextViewer)fTextViewer).ignoreAutoEditStrategies(false);
-//					}
-//			    });
-				if (event.isCompound()) {
-//					ITextViewerExtension extension= null;
-//					if (fTextViewer instanceof ITextViewerExtension)
-//						extension= (ITextViewerExtension) fTextViewer;
-//
-//					if (extension != null)
-//						extension.setRedraw(true);
-				}
-
-				// Reveal the change if this manager's viewer has the focus.
-				if (fTextViewer != null) {
-					StyledTextArea widget= fTextViewer.getTextWidget();
-					// TODO select?
-//					if (widget != null && !widget.isDisposed() && (widget.isFocusControl()))// || fTextViewer.getTextWidget() == control))
-					if( (eventType & DocumentUndoEvent.UNDONE) != 0 ) {
-						reveal(event.getOffset(), event.getText() == null ? 0 : event.getText().length());
-					} else {
-						selectAndReveal(event.getOffset(), event.getText() == null ? 0 : event.getText().length());
+	
+	private IDocumentUndoListener fDocumentUndoListener = createUndoListener();
+	private IDocumentUndoListener createUndoListener() {
+		return new IDocumentUndoListener() {
+			@Override
+			public void documentUndoNotification(DocumentUndoEvent event ){
+				if (!isConnected()) return;
+	
+				int eventType= event.getEventType();
+				if (((eventType & DocumentUndoEvent.ABOUT_TO_UNDO) != 0) || ((eventType & DocumentUndoEvent.ABOUT_TO_REDO) != 0))  {
+					if (event.isCompound()) {
+	//					ITextViewerExtension extension= null;
+	//					if (fTextViewer instanceof ITextViewerExtension)
+	//						extension= (ITextViewerExtension) fTextViewer;
+	//
+	//					if (extension != null)
+	//						extension.setRedraw(false);
+					}
+					// TODO turn of auto edit strategies
+	//				fTextViewer.getTextWidget().getDisplay().syncExec(new Runnable() {
+	//					@Override
+	//					public void run() {
+	//						if (fTextViewer instanceof TextViewer)
+	//							((TextViewer)fTextViewer).ignoreAutoEditStrategies(true);
+	//					}
+	//			    });
+	
+				} else if (((eventType & DocumentUndoEvent.UNDONE) != 0) || ((eventType & DocumentUndoEvent.REDONE) != 0))  {
+					// TODO turn on auto edit strategies
+	//				fTextViewer.getTextWidget().getDisplay().syncExec(new Runnable() {
+	//					@Override
+	//					public void run() {
+	//						if (fTextViewer instanceof TextViewer)
+	//							((TextViewer)fTextViewer).ignoreAutoEditStrategies(false);
+	//					}
+	//			    });
+					if (event.isCompound()) {
+	//					ITextViewerExtension extension= null;
+	//					if (fTextViewer instanceof ITextViewerExtension)
+	//						extension= (ITextViewerExtension) fTextViewer;
+	//
+	//					if (extension != null)
+	//						extension.setRedraw(true);
+					}
+	
+					// Reveal the change if this manager's viewer has the focus.
+					if (fTextViewer != null) {
+						StyledTextArea widget= fTextViewer.getTextWidget();
+						// TODO select?
+	//					if (widget != null && !widget.isDisposed() && (widget.isFocusControl()))// || fTextViewer.getTextWidget() == control))
+						if( (eventType & DocumentUndoEvent.UNDONE) != 0 ) {
+							reveal(event.getOffset(), event.getText() == null ? 0 : event.getText().length());
+						} else {
+							selectAndReveal(event.getOffset(), event.getText() == null ? 0 : event.getText().length());
+						}
 					}
 				}
 			}
-		}
-
-	};
+	
+		};
+	}
 
 	/**
 	 * Selects and reveals the specified range.
@@ -157,12 +160,16 @@ public class DefaultUndoManager implements IUndoManager {
 			fDocumentUndoManager= DocumentUndoManagerRegistry.getDocumentUndoManager(fDocument);
 			fDocumentUndoManager.connect(this);
 			setMaximalUndoLevel(fUndoLevel);
+			if (fDocumentUndoListener == null) {
+				fDocumentUndoListener = createUndoListener();
+			}
 			fDocumentUndoManager.addDocumentUndoListener(fDocumentUndoListener);
 		}
 	}
 
 	private void disconnectDocumentUndoManager() {
 		if (fDocumentUndoManager != null) {
+			DocumentUndoManagerRegistry.disconnect(fDocument);
 			fDocumentUndoManager.disconnect(this);
 			fDocumentUndoManager.removeDocumentUndoListener(fDocumentUndoListener);
 			fDocumentUndoListener= null;

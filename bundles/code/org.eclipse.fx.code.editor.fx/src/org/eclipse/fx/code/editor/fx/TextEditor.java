@@ -331,5 +331,6 @@ public class TextEditor {
 			activeInput.setValue(null);
 		}
 		this.input = null;
+		viewer.dispose();
 	}
 }

@@ -28,6 +28,7 @@ import org.eclipse.fx.ui.controls.styledtext.model.Annotation;
 import org.eclipse.jface.text.IDocument;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.BorderPane;
@@ -44,6 +45,12 @@ public class TextViewerHoverManager {
 	private final PopupWindow popup;
 	private final BorderPane root;
 
+	private final ChangeListener<Boolean> windowFocusListener = (x, o, n)-> {
+		if (!n) {
+			this.windowPresenter.hide();
+		}
+	};
+	
 	public TextViewerHoverManager(TextViewer textViewer) {
 
 		this.windowPresenter = new DefaultHoverWindowPresenter(textViewer.getTextWidget());
@@ -52,17 +59,19 @@ public class TextViewerHoverManager {
 		this.windowPresenter.setHoverPresenter(this.hoverPresenters);
 		this.textViewer = textViewer;
 
-		// TODO FXBindings better observe scene -> window to install this listener
-		Platform.runLater(()->{
-			this.textViewer.getScene().getWindow().focusedProperty().addListener((x, o, n)-> {
-				if (!n) {
-					this.windowPresenter.hide();
-				}
-			});
+		this.textViewer.sceneProperty().addListener((x, o, n)-> {
+			if (o != null) {
+				o.getWindow().focusedProperty().removeListener(windowFocusListener);
+			}
+			if (n != null) {
+				n.getWindow().focusedProperty().addListener(windowFocusListener);
+			}
 		});
+		if (this.textViewer.getScene() != null) {
+			this.textViewer.getScene().getWindow().focusedProperty().addListener(windowFocusListener);
+		}
 		
-		this.popup = new PopupWindow() {
-		};
+		this.popup = new PopupWindow() { };
 		this.popup.setAutoFix(false);
 		this.popup.setAutoHide(false);
 		this.textViewer.getTextWidget().sceneProperty().addListener( e -> {

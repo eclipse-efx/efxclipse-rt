@@ -121,6 +121,12 @@ public class TextViewer extends AnchorPane implements ITextViewer, ITextViewerEx
 
 		initActionMapping();
 	}
+	
+	public void dispose() {
+		if (this.fUndoManager != null) {
+			this.fUndoManager.disconnect();
+		}
+	}
 
 	protected TriggerActionMapping getActionMapping() {
 		return actionMapping;
