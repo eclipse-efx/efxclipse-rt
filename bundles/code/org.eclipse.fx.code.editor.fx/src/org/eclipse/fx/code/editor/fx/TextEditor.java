@@ -10,6 +10,8 @@
 *******************************************************************************/
 package org.eclipse.fx.code.editor.fx;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
@@ -76,6 +78,18 @@ public class TextEditor {
 
 	private EditorContextMenuProvider contextMenuProvider;
 
+	private List<Subscription> toDispose = new ArrayList<>();
+	
+	private <T> void installListener(Property<T> property, ChangeListener<? super T> listener) {
+		property.addListener(listener);
+		toDispose.add(() -> property.removeListener(listener));
+	}
+	
+	private void disposeListeners() {
+		toDispose.forEach(s -> s.dispose());
+		toDispose.clear();
+	}
+	
 	public void setContextMenuProvider(EditorContextMenuProvider contextMenuProvider) {
 		this.contextMenuProvider = contextMenuProvider;
 	}
@@ -194,12 +208,15 @@ public class TextEditor {
 			activeInput.setValue(input);
 		}
 		viewer.getTextWidget().setFontZoomFactor(zoomFactor.getValue() != null ? zoomFactor.getValue() : 1.0);
-		viewer.getTextWidget().fontZoomFactorProperty().addListener( (o,ol,ne) -> {
+		
+		installListener(viewer.getTextWidget().fontZoomFactorProperty(), (o,ol,ne) -> {
 			zoomFactor.setValue(ne.doubleValue());
 		});
-
-		eventBus.subscribe(Constants.TOPIC_SELECT_SOURCE, EventBus.data(this::onSourceSelect));
-
+		
+		toDispose.add(
+				eventBus.subscribe(Constants.TOPIC_SELECT_SOURCE, EventBus.data(this::onSourceSelect))
+		);
+		
 		if (editingContext instanceof DelegatingEditingContext) {
 			DelegatingEditingContext c = (DelegatingEditingContext) editingContext;
 			c.setDelegate(new EditingContext() {
@@ -331,6 +348,15 @@ public class TextEditor {
 			activeInput.setValue(null);
 		}
 		this.input = null;
+		
+		if (editingContext instanceof DelegatingEditingContext) {
+			// cleanup delegate
+			DelegatingEditingContext c = (DelegatingEditingContext) editingContext;
+			c.dispose();
+		}
+		
+		disposeListeners();
+		
 		viewer.dispose();
 	}
 }
