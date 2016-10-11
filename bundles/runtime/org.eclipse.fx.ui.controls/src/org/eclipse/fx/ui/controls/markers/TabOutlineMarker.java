@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.css.CssMetaData;
 import javafx.css.SimpleStyleableObjectProperty;
@@ -27,8 +29,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.StrokeType;
-
-import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Marks a Tab-Position
@@ -70,10 +70,6 @@ public final class TabOutlineMarker extends Group {
 	 *            bounds
 	 */
 	public void updateBounds(@NonNull Bounds containerBounds, @NonNull Bounds referenceBounds, boolean before) {
-		if (containerBounds.equals(this.containerBounds) && referenceBounds.equals(this.referenceBounds) && before == this.before) {
-			return;
-		}
-
 		this.containerBounds = containerBounds;
 		this.referenceBounds = referenceBounds;
 		this.before = before;
