@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  */
 class SimpleURI implements URI {
-	@SuppressWarnings("null")
 	@NonNull
 	private String[] segments = new String[0];
 
@@ -27,7 +26,7 @@ class SimpleURI implements URI {
 
 	@NonNull
 	private String uri;
-	
+
 	@Nullable
 	private String host = null;
 
@@ -50,7 +49,7 @@ class SimpleURI implements URI {
 		if (schemeEnd != -1) {
 			_uri = _uri.substring(schemeEnd + 1);
 		}
-		
+
 		int queryStart = _uri.indexOf('?');
 
 		if (queryStart != -1) {
@@ -61,7 +60,7 @@ class SimpleURI implements URI {
 		if( _uri.startsWith("//") ) { //$NON-NLS-1$
 			String[] vals = _uri.substring(2).split("/"); //$NON-NLS-1$
 			if( vals.length > 0 ) {
-				this.segments = new String[vals.length-1];  
+				this.segments = new String[vals.length-1];
 				for( int i = 1; i < vals.length; i++ ) {
 					this.segments[i-1] = vals[i];
 				}
@@ -71,7 +70,7 @@ class SimpleURI implements URI {
 			this.segments = _uri.substring(1).split("/"); //$NON-NLS-1$
 		}
 	}
-	
+
 	@Override
 	public String host() {
 		return this.host;

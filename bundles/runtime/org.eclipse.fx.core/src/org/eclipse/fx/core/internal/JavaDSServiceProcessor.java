@@ -32,14 +32,15 @@ import java.util.stream.Stream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
-import org.eclipse.fx.core.RankedService;
-import org.eclipse.fx.core.Util;
-import org.eclipse.fx.core.function.ExExecutor;
-import org.eclipse.fx.core.function.ExFunction;
+import org.eclipse.fx.core.IOUtils;
+import org.eclipse.fx.core.KeyValueStore;
+import org.eclipse.fx.core.ServiceUtils;
+import org.eclipse.fx.core.ServiceUtils.ServiceReference;
 import org.eclipse.fx.core.internal.sm.Component;
 import org.eclipse.fx.core.internal.sm.Component11;
 import org.eclipse.fx.core.internal.sm.Component12;
 import org.eclipse.fx.core.internal.sm.Properties;
+import org.eclipse.fx.core.internal.sm.Property;
 import org.eclipse.fx.core.internal.sm.Reference;
 import org.eclipse.fx.core.internal.sm.Reference.ReferenceCardinality;
 import org.eclipse.jdt.annotation.NonNull;
@@ -53,7 +54,50 @@ public class JavaDSServiceProcessor {
 	private Map<String, Component> componentCache;
 	private Map<String, List<Component>> serviceList;
 	private Map<Class<?>, List<?>> serviceCache = new HashMap<>();
+	private Map<Class<?>, List<ServiceReference<?>>> serviceReferenceCache = new HashMap<>();
 	private static JavaDSServiceProcessor INSTANCE;
+
+	class JavaServiceReference<S> implements ServiceReference<S> {
+		private final Component c;
+		private S service;
+		private KeyValueStore<String, Object> properties;
+
+		public JavaServiceReference(Component c) {
+			this.c = c;
+		}
+
+		@Override
+		public S get() {
+			if( this.service == null ) {
+				try {
+					Class<?> serviceClass = Class.forName(this.c.getImplementation().getClazz());
+					S service = (S) serviceClass.newInstance();
+					process(service);
+					this.service = service;
+				} catch (Throwable e) {
+					throw new RuntimeException(e);
+				}
+			}
+			return this.service;
+		}
+
+		@Override
+		public KeyValueStore<String, Object> getProperties() {
+			// TODO create the KeyValueStore lazy
+			if( this.properties == null ) {
+				this.properties = KeyValueStore.fromMap(this.c.getProperty().stream().collect(Collectors.toMap(Property::getName, Property::getValue)));
+				//TODO Implement Properties
+			}
+			// TODO Auto-generated method stub
+			return this.properties;
+		}
+
+		@Override
+		public int getRanking() {
+			Object object = getProperties().contains("service.ranking") ? getProperties().get("service.ranking") : null; //$NON-NLS-1$ //$NON-NLS-2$
+			return object == null ? 0 : object instanceof Integer ? ((Integer)object).intValue() : Integer.parseInt(object.toString());
+		}
+	}
 
 	/**
 	 * Retrieve all services for the given type ordered by their ranking
@@ -71,6 +115,49 @@ public class JavaDSServiceProcessor {
 		return INSTANCE._lookupServiceList(requestor, clazz);
 	}
 
+	public synchronized static <S> @NonNull List<@NonNull ServiceReference<@NonNull S>> lookupServiceReferenceList(Class<?> requestor, Class<S> clazz) {
+		if (INSTANCE == null) {
+			INSTANCE = new JavaDSServiceProcessor();
+		}
+		return INSTANCE._lookupServiceReferenceList(requestor, clazz);
+	}
+
+	public static <S> @NonNull List<@NonNull S> lookupServiceList(@Nullable Class<?> requestor,
+			@NonNull String serviceClass) {
+		if (INSTANCE == null) {
+			INSTANCE = new JavaDSServiceProcessor();
+		}
+		Class<S> cl;
+		try {
+			cl = (Class<S>)(Class)Class.forName(serviceClass);
+			return INSTANCE.lookupServiceList(null, cl);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked", "null" })
+	private synchronized <S> @NonNull List<@NonNull ServiceReference<@NonNull S>> _lookupServiceReferenceList(Class<?> requestor, Class<S> clazz) {
+		List<ServiceReference<?>> list = this.serviceReferenceCache.get(clazz);
+		if( list != null ) {
+			return (List<ServiceReference<S>>)(List)list;
+		}
+		initializeComponentCache();
+
+		List<Component> componentList = this.serviceList.get(clazz.getName());
+		if (componentList != null) {
+			List<ServiceReference<?>> referenceList = componentList
+				.stream()
+				.map(JavaServiceReference::new)
+				.sorted()
+				.collect(Collectors.toList());
+			Collections.reverse(referenceList); // reverse the order so that highest is first
+			this.serviceReferenceCache.put(clazz, referenceList);
+			return (List<ServiceReference<S>>)(List)referenceList;
+		}
+		return Collections.emptyList();
+	}
+
 	@SuppressWarnings({ "unchecked", "null" })
 	private synchronized <S> @NonNull List<@NonNull S> _lookupServiceList(Class<?> requestor, Class<S> clazz) {
 		List<?> list = this.serviceCache.get(clazz);
@@ -79,38 +166,12 @@ public class JavaDSServiceProcessor {
 		}
 		initializeComponentCache();
 
-		List<Component> componentList = this.serviceList.get(clazz.getName());
-		if (componentList != null) {
-			List<?> collect = componentList.stream()
-					.map(c -> c.getImplementation().getClazz())
-					.map(c -> {
-						@NonNull
-						ExFunction<@Nullable String, ?> r = Class::forName;
-						return ExExecutor.executeFunction(c, r, "Could not load class '" + c + "'").orElse(null);//$NON-NLS-1$ //$NON-NLS-2$
-					}) 
-					.filter(c -> c != null)
-					.map(c -> {
-						if (c != null) {
-							Class<S> type = (Class<S>) c;
-							return ExExecutor.executeSupplier(type::newInstance, "Could not create instance").get(); //$NON-NLS-1$
-						} else {
-							return null;
-						}
-					}).filter(c -> c != null).sorted((o1, o2) -> {
-						if (o1 instanceof RankedService && o2 instanceof RankedService) {
-							return -1 * Integer.compare(((RankedService) o1).getRanking(), ((RankedService) o2).getRanking());
-						} else {
-							return 0;
-						}
-					}).collect(Collectors.toList());
-			this.serviceCache.put(clazz, collect);
-			collect.stream().forEach(this::process);
-			return (List<S>) collect;
-		}
-		return Collections.emptyList();
+		List<@NonNull S> collect = _lookupServiceReferenceList(requestor, clazz).stream().map(ServiceReference::get).collect(Collectors.toList());
+		this.serviceCache.put(clazz, collect);
+		return collect;
 	}
 
-	private void process(Object o) {
+	void process(Object o) {
 		Component component = this.componentCache.get(o.getClass().getName());
 
 		if (component != null) {
@@ -218,7 +279,7 @@ public class JavaDSServiceProcessor {
 					switch (cardinality) {
 					case AT_LEAST_ONE:
 					case MULTIPLE: {
-						List<?> list = Util.lookupServiceList(serviceInterface);
+						List<?> list = ServiceUtils.getServiceList(serviceInterface);
 						if (cardinality == ReferenceCardinality.AT_LEAST_ONE && list.isEmpty()) {
 							logError("Unsatisfied dependency '"+r.getIface()+"'. There must be at least one component providing this service", null);  //$NON-NLS-1$//$NON-NLS-2$
 						} else {
@@ -228,7 +289,7 @@ public class JavaDSServiceProcessor {
 					}
 					case MANDATORY:
 					case OPTIONAL: {
-						Optional<?> service = Util.getService(serviceInterface);
+						Optional<?> service = ServiceUtils.getService(serviceInterface);
 						if (ReferenceCardinality.MANDATORY == cardinality && !service.isPresent()) {
 							logError("Unsatisfied dependency '"+r.getIface()+"'. There must be at least one component providing this service", null);  //$NON-NLS-1$//$NON-NLS-2$
 						} else {
@@ -295,7 +356,7 @@ public class JavaDSServiceProcessor {
 
 	private Component handle(URL resource) {
 		try (InputStream in = resource.openStream()) {
-			String data = Util.readToString(in, Charset.forName("UTF-8")); //$NON-NLS-1$
+			String data = IOUtils.readToString(in, Charset.forName("UTF-8")); //$NON-NLS-1$
 			JAXBContext jaxbContext;
 			if (data.contains("http://www.osgi.org/xmlns/scr/v1.1.0")) { //$NON-NLS-1$
 				jaxbContext = JAXBContext.newInstance(Component11.class);
@@ -311,4 +372,8 @@ public class JavaDSServiceProcessor {
 		}
 		return null;
 	}
+
+
+
+
 }
