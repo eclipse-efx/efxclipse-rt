@@ -306,6 +306,7 @@ public class LineNode extends StackPane {
 			//if (model == null) return;
 
 			if (this.selection != null) {
+				LineNode.this.textLayer.applyCss();
 				LineNode.this.textLayer.layout();
 
 				double begin = LineNode.this.textLayer.getCharLocation(this.selection.lowerEndpoint().intValue());
