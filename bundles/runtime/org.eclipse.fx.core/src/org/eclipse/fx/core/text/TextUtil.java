@@ -17,6 +17,7 @@ import java.text.CharacterIterator;
 import java.text.MessageFormat;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.IntConsumer;
@@ -28,6 +29,8 @@ import java.util.stream.Stream;
 import org.apache.commons.lang.text.StrLookup;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.eclipse.fx.core.IntTuple;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Utility methods to deal with texts
@@ -254,6 +257,36 @@ public class TextUtil {
 		}
 
 		return content;
+	}
+
+	/**
+	 * Make use the value is not null
+	 *
+	 * @param value
+	 *            the nullable value
+	 * @param defaultValue
+	 *            the default if the value is null
+	 * @return a nonnull string
+	 * @since 2.0
+	 */
+	public static @NonNull String notNull(@Nullable String value, @NonNull String defaultValue) {
+		return value == null ? defaultValue : value;
+	}
+
+	/**
+	 * Create a string of the same char
+	 *
+	 * @param c
+	 *            the character
+	 * @param length
+	 *            the length
+	 * @return the created string
+	 * @since 2.4.0
+	 */
+	public static String createRepeatedString(char c, int length) {
+		char[] vals = new char[length];
+		Arrays.fill(vals, ' ');
+		return String.valueOf(vals);
 	}
 
 	static class StrLookupImpl extends StrLookup {

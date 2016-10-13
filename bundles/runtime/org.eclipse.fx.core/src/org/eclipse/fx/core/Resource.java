@@ -55,7 +55,7 @@ public interface Resource<@NonNull O> {
 				try {
 					return Files.deleteIfExists(path);
 				} catch (IOException e) {
-					LoggerCreator.createLogger(Util.class).error("Unable to delete path '" + path + "'", e); //$NON-NLS-1$//$NON-NLS-2$
+					LoggerCreator.createLogger(Resource.class).error("Unable to delete path '" + path + "'", e); //$NON-NLS-1$//$NON-NLS-2$
 				}
 				return false;
 			}

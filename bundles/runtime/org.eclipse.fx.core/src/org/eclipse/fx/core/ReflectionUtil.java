@@ -7,10 +7,15 @@
  *
  * Contributors:
  *     Christoph Keimel <c.keimel@emsw.de> - initial API and implementation
+ *     Tom Schindl <tom.schindl@bestsolution.at> - various improvements
  *******************************************************************************/
 package org.eclipse.fx.core;
 
 import java.lang.reflect.Field;
+import java.security.CodeSource;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * Utility Functions using the Java Reflection API
@@ -39,7 +44,7 @@ public class ReflectionUtil {
 		}
 		return field;
 	}
-	
+
 	/**
 	 * Utility method to set a field to a value. If the field is not accessible, it will be set to be accessible.
 	 * @param object Instance in which the value should be set
@@ -56,7 +61,7 @@ public class ReflectionUtil {
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			throw new RuntimeException("Could not set field value: " + object.getClass().getSimpleName() + "." + name, e); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		
+
 	}
 
 	/**
@@ -77,4 +82,26 @@ public class ReflectionUtil {
 		}
 	}
 
+	/**
+	 * Get a better description of a class (eg. what OSGi-Bundle, Jar, Java9 Module, ... it is found in)
+	 * @param cl the clazz
+	 * @return description
+	 */
+	public static String describeClass(Class<?> cl) {
+		if (SystemUtils.isOsgiEnv()) {
+			Bundle b = FrameworkUtil.getBundle(cl);
+			if (b != null) {
+				return b.getSymbolicName() + ":" + b.getVersion() + ":" + cl.getName(); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		}
+
+		CodeSource clazzCS = cl.getProtectionDomain().getCodeSource();
+		if (clazzCS != null) {
+			return clazzCS.getLocation() + ">" + cl.getName(); //$NON-NLS-1$
+		}
+		if (cl.getClassLoader() == null) {
+			return cl.getName() + " [via bootstrap classloader]"; //$NON-NLS-1$
+		}
+		return cl.getName();
+	}
 }
