@@ -22,6 +22,24 @@ Import-Package: javax.annotation;version="1.1.0";resolution:=optional,
  org.eclipse.fx.core.preferences;version="3.0.0",
  org.eclipse.fx.core.text;version="3.0.0",
  org.osgi.framework;version="1.8.0"
-Service-Component: OSGI-INF/services/*
 Export-Package: org.eclipse.fx.core.di.context;version="3.0.0"
 Bundle-Vendor: Eclipse.org
+Service-Component: OSGI-INF/services/org.eclipse.fx.core.di.context.internal.LocaleProviderFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.ConsumerAdapterProvider_Value.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.AdaptValueSupplier.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.ObservableAdapterProvider_Value.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.ObservableAdapterProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.PropertyAdapterProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.EventSystemContextFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.ScopedObjectFactoryFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.FXMLLoaderTypeProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.PreferenceValueSupplier.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.ConsumerAdapterProvider.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.ServiceSupplier.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.LoggerSupplier.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.PropertyAdapterProvider_Value.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.NumberFormatterFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.DateFormatterFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.ContextBoundValueSupplier.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.TemportalAccessorFormatterFunction.xml,
+ OSGI-INF/services/org.eclipse.fx.core.di.context.internal.LocalInstanceObjectSupplier.xml
