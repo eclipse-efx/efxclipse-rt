@@ -319,9 +319,11 @@ public abstract class BaseWindowRenderer<N> extends BaseRenderer<MWindow, WWindo
 				if (element != null) {
 					if( !((MApplicationElement) element.getParent() instanceof MApplication) ) {
 						// If this is not a top level hide it
+						BaseWindowRenderer.this.presentationEngine.removeGui(element); // Workarund for a Bug in EPartService-Impl causing exceptions
 						element.setToBeRendered(false);
 					} else {
 						if( element.getParent().getChildren().stream().filter( c -> c.isToBeRendered() ).count() > 1 ) {
+							BaseWindowRenderer.this.presentationEngine.removeGui(element); // Workarund for a Bug in EPartService-Impl causing exceptions
 							element.setToBeRendered(false);
 						} else {
 							BaseWindowRenderer.this.presentationEngine.removeGui(element);
