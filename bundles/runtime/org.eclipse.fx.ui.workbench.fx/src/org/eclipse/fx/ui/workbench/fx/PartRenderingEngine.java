@@ -347,7 +347,7 @@ public class PartRenderingEngine implements IPresentationEngine {
 
 			// Check if the control is already rendered
 			if (renderer != null) {
-				if (!(element instanceof MWindow) && parentRenderer != null && container != null) {
+				if (/* Introduced regressions !(element instanceof MWindow) */ parentRenderer != null && container != null) {
 					try {
 						parentRenderer.hideChild(container, element);
 					} catch (Throwable t) {
@@ -379,14 +379,14 @@ public class PartRenderingEngine implements IPresentationEngine {
 					// now remove the selected element
 					removeGui(selectedElement);
 				}
-
-				if ((element instanceof MWindow) && parentRenderer != null && container != null) {
-					try {
-						parentRenderer.hideChild(container, element);
-					} catch (Throwable t) {
-						this.logger.error(t.getMessage(), t);
-					}
-				}
+// Introduced regression in existing apps
+//				if ((element instanceof MWindow) && parentRenderer != null && container != null) {
+//					try {
+//						parentRenderer.hideChild(container, element);
+//					} catch (Throwable t) {
+//						this.logger.error(t.getMessage(), t);
+//					}
+//				}
 
 				if (element instanceof MContribution) {
 					MContribution contribution = (MContribution) element;
