@@ -11,9 +11,11 @@
  *******************************************************************************/
 package org.eclipse.fx.core.log;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Logger interface delegating to real log framework implementation like log4j,
@@ -47,6 +49,24 @@ public interface Logger {
 	}
 
 	/**
+	 * logs a dynamically created message in the specified log level
+	 *
+	 * @param level
+	 *            the level
+	 * @param value
+	 *            the value
+	 * @param messageCreator
+	 *            function to create the log message
+	 * @since 3.0.0
+	 */
+	default <T> void log(@NonNull Level level, @Nullable T value,
+			Function<@Nullable T, @NonNull String> messageCreator) {
+		if (isEnabled(level)) {
+			log(level, messageCreator.apply(value));
+		}
+	}
+
+	/**
 	 * logs a message and an exception in the specified log level
 	 *
 	 * @param level
@@ -66,12 +86,33 @@ public interface Logger {
 	 * @param messageSupplier
 	 *            the message supplier
 	 * @param t
-	 *            the Exception
+	 *            the exception
 	 * @since 2.2.0
 	 */
 	default void log(@NonNull Level level, @NonNull Supplier<@NonNull String> messageSupplier, @NonNull Throwable t) {
 		if (isEnabled(level)) {
 			log(level, messageSupplier.get(), t);
+		}
+	}
+
+	/**
+	 * logs a dynamically created message and an exception in the specified log
+	 * level
+	 *
+	 * @param level
+	 *            the level
+	 * @param value
+	 *            the value to log
+	 * @param messageCreator
+	 *            function to create a message
+	 * @param t
+	 *            the exception
+	 * @since 3.0.0
+	 */
+	default <T> void log(@NonNull Level level, @Nullable T value,
+			@NonNull Function<@Nullable T, @NonNull String> messageCreator, @NonNull Throwable t) {
+		if (isEnabled(level)) {
+			log(level, messageCreator.apply(value), t);
 		}
 	}
 
@@ -146,6 +187,22 @@ public interface Logger {
 	}
 
 	/**
+	 * convenience method for {@link #log(Level, Object, Function)} with
+	 * {@link Level#TRACE}
+	 *
+	 * @param value
+	 *            the value
+	 * @param messageCreator
+	 *            the message creator
+	 * @since 3.0.0
+	 */
+	default <T> void trace(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+		if (isEnabled(Level.TRACE)) {
+			trace(messageCreator.apply(value));
+		}
+	}
+
+	/**
 	 * convenience method for {@link #log(Level, String)} with
 	 * {@link Level#DEBUG}.
 	 *
@@ -166,6 +223,23 @@ public interface Logger {
 	default void debug(@NonNull Supplier<@NonNull String> messageSupplier) {
 		if (isEnabled(Level.DEBUG)) {
 			debug(messageSupplier.get());
+		}
+	}
+
+	/**
+	 * convenience method for {@link #log(Level, Object, Function)} with
+	 * {@link Level#DEBUG}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message creator
+	 * @since 3.0.0
+	 */
+	default <T> void debug(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+		if (isEnabled(Level.DEBUG)) {
+			debug(messageCreator.apply(value));
 		}
 	}
 
@@ -194,6 +268,23 @@ public interface Logger {
 	}
 
 	/**
+	 * convenience method for {@link #log(Level, Object, Function)} with
+	 * {@link Level#INFO}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message creator
+	 * @since 3.0.0
+	 */
+	default <T> void info(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+		if (isEnabled(Level.INFO)) {
+			info(messageCreator.apply(value));
+		}
+	}
+
+	/**
 	 * convenience method for {@link #log(Level, String)} with
 	 * {@link Level#WARNING}.
 	 *
@@ -214,6 +305,23 @@ public interface Logger {
 	default void warning(@NonNull Supplier<@NonNull String> messageSupplier) {
 		if (isEnabled(Level.WARNING)) {
 			warning(messageSupplier.get());
+		}
+	}
+
+	/**
+	 * convenience method for {@link #log(Level, Object, Function)} with
+	 * {@link Level#WARNING}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message supplier
+	 * @since 3.0.0
+	 */
+	default <T> void warning(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+		if (isEnabled(Level.WARNING)) {
+			warning(messageCreator.apply(value));
 		}
 	}
 
@@ -242,6 +350,23 @@ public interface Logger {
 	}
 
 	/**
+	 * convenience method for {@link #log(Level, Object, Function)} with
+	 * {@link Level#ERROR}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message creator
+	 * @since 3.0.0
+	 */
+	default <T> void error(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+		if (isEnabled(Level.ERROR)) {
+			error(messageCreator.apply(value));
+		}
+	}
+
+	/**
 	 * convenience method for {@link #log(Level, String)} with
 	 * {@link Level#FATAL}.
 	 *
@@ -262,6 +387,23 @@ public interface Logger {
 	default void fatal(@NonNull Supplier<@NonNull String> messageSupplier) {
 		if (isEnabled(Level.FATAL)) {
 			fatal(messageSupplier.get());
+		}
+	}
+
+	/**
+	 * convenience method for {@link #log(Level, Object, Function)} with
+	 * {@link Level#FATAL}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message creator
+	 * @since 3.0.0
+	 */
+	default <T> void fatal(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+		if (isEnabled(Level.FATAL)) {
+			fatal(messageCreator.apply(value));
 		}
 	}
 
@@ -294,6 +436,26 @@ public interface Logger {
 	}
 
 	/**
+	 * convenience method for {@link #log(Level, Object, Function, Throwable)}
+	 * with {@link Level#TRACE}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message creator
+	 * @param t
+	 *            the exception
+	 * @since 3.0.0
+	 */
+	default <T> void trace(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+			@NonNull Throwable t) {
+		if (isEnabled(Level.TRACE)) {
+			trace(messageCreator.apply(value), t);
+		}
+	}
+
+	/**
 	 * convenience method for {@link #log(Level, String, Throwable)} with
 	 * {@link Level#DEBUG}.
 	 *
@@ -318,6 +480,26 @@ public interface Logger {
 	default void debug(@NonNull Supplier<@NonNull String> messageSupplier, @NonNull Throwable t) {
 		if (isEnabled(Level.DEBUG)) {
 			debug(messageSupplier.get(), t);
+		}
+	}
+
+	/**
+	 * convenience method for {@link #log(Level, Object, Function, Throwable)}
+	 * with {@link Level#DEBUG}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message creator
+	 * @param t
+	 *            the exception
+	 * @since 3.0.0
+	 */
+	default <T> void debug(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+			@NonNull Throwable t) {
+		if (isEnabled(Level.DEBUG)) {
+			debug(messageCreator.apply(value), t);
 		}
 	}
 
@@ -350,6 +532,26 @@ public interface Logger {
 	}
 
 	/**
+	 * convenience method for {@link #log(Level, Object, Function, Throwable)}
+	 * with {@link Level#INFO}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message supplier
+	 * @param t
+	 *            the exception
+	 * @since 3.0.0
+	 */
+	default <T> void info(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+			@NonNull Throwable t) {
+		if (isEnabled(Level.INFO)) {
+			info(messageCreator.apply(value), t);
+		}
+	}
+
+	/**
 	 * convenience method for {@link #log(Level, String, Throwable)} with
 	 * {@link Level#WARNING}.
 	 *
@@ -374,6 +576,26 @@ public interface Logger {
 	default void warning(@NonNull Supplier<@NonNull String> messageSupplier, @NonNull Throwable t) {
 		if (isEnabled(Level.WARNING)) {
 			warning(messageSupplier.get(), t);
+		}
+	}
+
+	/**
+	 * convenience method for {@link #log(Level, Object, Function, Throwable)} with
+	 * {@link Level#WARNING}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message creator
+	 * @param t
+	 *            the exception
+	 * @since 3.0.0
+	 */
+	default <T> void warning(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+			@NonNull Throwable t) {
+		if (isEnabled(Level.WARNING)) {
+			warning(messageCreator.apply(value), t);
 		}
 	}
 
@@ -407,6 +629,26 @@ public interface Logger {
 
 	/**
 	 * convenience method for {@link #log(Level, String, Throwable)} with
+	 * {@link Level#ERROR}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message creator
+	 * @param t
+	 *            the Exception
+	 * @since 3.0.0
+	 */
+	default <T> void error(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+			@NonNull Throwable t) {
+		if (isEnabled(Level.ERROR)) {
+			error(messageCreator.apply(value), t);
+		}
+	}
+
+	/**
+	 * convenience method for {@link #log(Level, String, Throwable)} with
 	 * {@link Level#FATAL}.
 	 *
 	 * @see #log(Level, String, Throwable)
@@ -430,6 +672,26 @@ public interface Logger {
 	default void fatal(@NonNull Supplier<@NonNull String> messageSupplier, @NonNull Throwable t) {
 		if (isEnabled(Level.FATAL)) {
 			fatal(messageSupplier.get(), t);
+		}
+	}
+
+	/**
+	 * convenience method for {@link #log(Level, String, Throwable)} with
+	 * {@link Level#FATAL}.
+	 *
+	 * @param value
+	 *            the value
+	 *
+	 * @param messageCreator
+	 *            the message creator
+	 * @param t
+	 *            the Exception
+	 * @since 3.0.0
+	 */
+	default <T> void fatal(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+			@NonNull Throwable t) {
+		if (isEnabled(Level.FATAL)) {
+			fatal(messageCreator.apply(value), t);
 		}
 	}
 
@@ -617,25 +879,29 @@ public interface Logger {
 		/**
 		 * Trace: Use this log level when you want to track things line by line
 		 */
-		TRACE, /**
-				 * Debug: Use this log level to help developers debug your
-				 * application
-				 */
-		DEBUG, /**
-				 * Info: Use this log level for normal log statements like
-				 * (request received, ...)
-				 */
-		INFO, /**
-				 * Warning: Use this log level for problems like informing about
-				 * a resource pool is getting low, ...
-				 */
-		WARNING, /**
-					 * Error: Use this log level if something goes wrong e.g. an
-					 * SQL-Query could not be executed, ...
-					 */
-		ERROR, /**
-				 * Fatal: Use this log level in case of a sever error
-				 */
+		TRACE,
+		/**
+		 * Debug: Use this log level to help developers debug your application
+		 */
+		DEBUG,
+		/**
+		 * Info: Use this log level for normal log statements like (request
+		 * received, ...)
+		 */
+		INFO,
+		/**
+		 * Warning: Use this log level for problems like informing about a
+		 * resource pool is getting low, ...
+		 */
+		WARNING,
+		/**
+		 * Error: Use this log level if something goes wrong e.g. an SQL-Query
+		 * could not be executed, ...
+		 */
+		ERROR,
+		/**
+		 * Fatal: Use this log level in case of a sever error
+		 */
 		FATAL
 	}
 }
