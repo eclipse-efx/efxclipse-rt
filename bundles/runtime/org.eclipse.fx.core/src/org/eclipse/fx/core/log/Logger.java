@@ -57,13 +57,15 @@ public interface Logger {
 	 *            the value
 	 * @param messageCreator
 	 *            function to create the log message
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void log(@NonNull Level level, @Nullable T value,
+	default <T> @Nullable T  log(@NonNull Level level, @Nullable T value,
 			Function<@Nullable T, @NonNull String> messageCreator) {
 		if (isEnabled(level)) {
 			log(level, messageCreator.apply(value));
 		}
+		return value;
 	}
 
 	/**
@@ -107,13 +109,15 @@ public interface Logger {
 	 *            function to create a message
 	 * @param t
 	 *            the exception
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void log(@NonNull Level level, @Nullable T value,
+	default <T> @Nullable T log(@NonNull Level level, @Nullable T value,
 			@NonNull Function<@Nullable T, @NonNull String> messageCreator, @NonNull Throwable t) {
 		if (isEnabled(level)) {
 			log(level, messageCreator.apply(value), t);
 		}
+		return value;
 	}
 
 	/**
@@ -194,12 +198,15 @@ public interface Logger {
 	 *            the value
 	 * @param messageCreator
 	 *            the message creator
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void trace(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+	default <T> @Nullable T  trace(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
 		if (isEnabled(Level.TRACE)) {
 			trace(messageCreator.apply(value));
 		}
+
+		return value;
 	}
 
 	/**
@@ -235,12 +242,14 @@ public interface Logger {
 	 *
 	 * @param messageCreator
 	 *            the message creator
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void debug(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+	default <T> @Nullable T debug(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
 		if (isEnabled(Level.DEBUG)) {
 			debug(messageCreator.apply(value));
 		}
+		return value;
 	}
 
 	/**
@@ -276,12 +285,15 @@ public interface Logger {
 	 *
 	 * @param messageCreator
 	 *            the message creator
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void info(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+	default <T> @Nullable T  info(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
 		if (isEnabled(Level.INFO)) {
 			info(messageCreator.apply(value));
 		}
+
+		return value;
 	}
 
 	/**
@@ -317,12 +329,14 @@ public interface Logger {
 	 *
 	 * @param messageCreator
 	 *            the message supplier
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void warning(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+	default <T> @Nullable T  warning(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
 		if (isEnabled(Level.WARNING)) {
 			warning(messageCreator.apply(value));
 		}
+		return value;
 	}
 
 	/**
@@ -358,12 +372,14 @@ public interface Logger {
 	 *
 	 * @param messageCreator
 	 *            the message creator
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void error(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+	default <T> @Nullable T  error(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
 		if (isEnabled(Level.ERROR)) {
 			error(messageCreator.apply(value));
 		}
+		return value;
 	}
 
 	/**
@@ -399,12 +415,15 @@ public interface Logger {
 	 *
 	 * @param messageCreator
 	 *            the message creator
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void fatal(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
+	default <T> @Nullable T  fatal(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator) {
 		if (isEnabled(Level.FATAL)) {
 			fatal(messageCreator.apply(value));
 		}
+
+		return value;
 	}
 
 	/**
@@ -446,13 +465,15 @@ public interface Logger {
 	 *            the message creator
 	 * @param t
 	 *            the exception
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void trace(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+	default <T> @Nullable T  trace(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
 			@NonNull Throwable t) {
 		if (isEnabled(Level.TRACE)) {
 			trace(messageCreator.apply(value), t);
 		}
+		return value;
 	}
 
 	/**
@@ -494,13 +515,15 @@ public interface Logger {
 	 *            the message creator
 	 * @param t
 	 *            the exception
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void debug(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+	default <T> @Nullable T  debug(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
 			@NonNull Throwable t) {
 		if (isEnabled(Level.DEBUG)) {
 			debug(messageCreator.apply(value), t);
 		}
+		return value;
 	}
 
 	/**
@@ -542,13 +565,16 @@ public interface Logger {
 	 *            the message supplier
 	 * @param t
 	 *            the exception
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void info(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+	default <T> @Nullable T  info(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
 			@NonNull Throwable t) {
 		if (isEnabled(Level.INFO)) {
 			info(messageCreator.apply(value), t);
 		}
+
+		return value;
 	}
 
 	/**
@@ -590,13 +616,16 @@ public interface Logger {
 	 *            the message creator
 	 * @param t
 	 *            the exception
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void warning(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+	default <T> @Nullable T  warning(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
 			@NonNull Throwable t) {
 		if (isEnabled(Level.WARNING)) {
 			warning(messageCreator.apply(value), t);
 		}
+
+		return value;
 	}
 
 	/**
@@ -638,13 +667,16 @@ public interface Logger {
 	 *            the message creator
 	 * @param t
 	 *            the Exception
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void error(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+	default <T> @Nullable T  error(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
 			@NonNull Throwable t) {
 		if (isEnabled(Level.ERROR)) {
 			error(messageCreator.apply(value), t);
 		}
+
+		return value;
 	}
 
 	/**
@@ -686,13 +718,16 @@ public interface Logger {
 	 *            the message creator
 	 * @param t
 	 *            the Exception
+	 * @return the value passed in
 	 * @since 3.0.0
 	 */
-	default <T> void fatal(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
+	default <T> @Nullable T  fatal(@Nullable T value, @NonNull Function<@Nullable T, @NonNull String> messageCreator,
 			@NonNull Throwable t) {
 		if (isEnabled(Level.FATAL)) {
 			fatal(messageCreator.apply(value), t);
 		}
+
+		return value;
 	}
 
 	/**
