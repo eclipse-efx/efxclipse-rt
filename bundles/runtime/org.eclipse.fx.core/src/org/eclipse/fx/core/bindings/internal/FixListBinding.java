@@ -25,6 +25,10 @@ public class FixListBinding<A> extends ListBinding<A> {
 	}
 	
 	private void onSourceChange(Change<? extends A> change) {
+		// make sure that fixed is initialized
+		if (this.fixed == null) {
+			this.fixed = FXCollections.observableArrayList(this.source);
+		}
 		while (change.next()) {
 			// we handle the setAll change explicitly to produce a nice change event
 			if (change.wasRemoved() && change.wasAdded() && change.getRemovedSize() == this.fixed.size()) {
