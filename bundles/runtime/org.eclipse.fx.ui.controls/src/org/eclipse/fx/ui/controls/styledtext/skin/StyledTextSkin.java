@@ -137,7 +137,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		styledText.caretOffsetProperty().addListener((obs, ol, ne) -> {
 			int lineIdx = styledText.getContent().getLineAtOffset(ne.intValue());
 			int colIdx = ne.intValue() - styledText.getContent().getOffsetAtLine(lineIdx);
-
+			
 			// fix colIdx with tabs
 			String line = styledText.getContent().getLine(lineIdx).substring(0, colIdx);
 			int tabCount = (int)line.chars().filter(c -> c == '\t').count();
@@ -220,7 +220,12 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		// scroll support
 		this.content.setOnScroll((e) -> {
-			this.scroller.scrollBy(Math.round(-e.getDeltaY()));
+			if (e.getDeltaY() < 0) {
+				this.scroller.scrollBy(1);
+			}
+			else {
+				this.scroller.scrollBy(-1);
+			}
 		});
 
 		// HBox.setHgrow(this.contentView, Priority.ALWAYS);
