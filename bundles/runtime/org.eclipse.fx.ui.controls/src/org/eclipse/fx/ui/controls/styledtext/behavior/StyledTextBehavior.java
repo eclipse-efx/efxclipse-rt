@@ -293,6 +293,8 @@ public class StyledTextBehavior {
 			// Fix JavaFX bug with invalid mnemonics activation on ALTGR
 			if( event.isAltDown() && event.isControlDown() ) {
 				event.consume();
+			} else if( event.isAltDown() && event.getCode() == KeyCode.TAB ) {
+				event.consume();
 			}
 		}
 

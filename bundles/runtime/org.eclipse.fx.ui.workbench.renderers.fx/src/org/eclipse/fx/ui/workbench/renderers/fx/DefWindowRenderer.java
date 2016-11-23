@@ -88,6 +88,7 @@ import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -510,6 +511,8 @@ public class DefWindowRenderer extends BaseWindowRenderer<Stage> {
 			if( ! Util.isMacOS() && org.eclipse.fx.ui.controls.Util.MNEMONICS_FIX ) {
 				s.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
 					if( e.isAltDown() && e.isControlDown() ) {
+						e.consume();
+					} else if( e.isAltDown() && e.getCode() == KeyCode.TAB ) {
 						e.consume();
 					}
 				});
