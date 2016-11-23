@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Base
 Bundle-SymbolicName: org.eclipse.fx.ui.workbench.base
-Bundle-Version: 2.5.0.qualifier
+Bundle-Version: 2.6.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.1.0",
  org.eclipse.e4.ui.model.workbench;bundle-version="0.10.1",
@@ -21,19 +21,19 @@ Require-Bundle: org.eclipse.e4.core.contexts;bundle-version="1.1.0",
  org.eclipse.e4.core.commands,
  org.eclipse.core.commands;bundle-version="3.6.100",
  org.eclipse.emf.ecore.xmi;bundle-version="2.11.0"
-Export-Package: org.eclipse.fx.ui.workbench.base;version="2.5.0";x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx,org.eclipse.fx.ui.workbench.renderers.base",
- org.eclipse.fx.ui.workbench.base.rendering;version="2.5.0";x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx,org.eclipse.fx.ui.workbench.renderers.base"
+Export-Package: org.eclipse.fx.ui.workbench.base;version="2.6.0";x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx,org.eclipse.fx.ui.workbench.renderers.base",
+ org.eclipse.fx.ui.workbench.base.rendering;version="2.6.0";x-friends:="org.eclipse.fx.ui.workbench.fx,org.eclipse.fx.ui.workbench.renderers.fx,org.eclipse.fx.ui.workbench.renderers.base"
 Import-Package: javax.annotation;version="1.2.0";resolution:=optional,
  javax.inject;version="1.0.0",
- org.eclipse.fx.core;version="2.5.0",
- org.eclipse.fx.core.adapter;version="2.5.0",
- org.eclipse.fx.core.command;version="2.5.0",
- org.eclipse.fx.core.log;version="2.5.0",
- org.eclipse.fx.ui.services;version="2.5.0",
- org.eclipse.fx.ui.services.restart;version="2.5.0",
- org.eclipse.fx.ui.services.startup;version="2.5.0",
- org.eclipse.fx.ui.services.sync;version="2.5.0",
- org.eclipse.fx.ui.workbench.services;version="2.5.0",
+ org.eclipse.fx.core;version="2.6.0",
+ org.eclipse.fx.core.adapter;version="2.6.0",
+ org.eclipse.fx.core.command;version="2.6.0",
+ org.eclipse.fx.core.log;version="2.6.0",
+ org.eclipse.fx.ui.services;version="2.6.0",
+ org.eclipse.fx.ui.services.restart;version="2.6.0",
+ org.eclipse.fx.ui.services.startup;version="2.6.0",
+ org.eclipse.fx.ui.services.sync;version="2.6.0",
+ org.eclipse.fx.ui.workbench.services;version="2.6.0",
  org.osgi.service.component.annotations;version="1.2.0"
 Bundle-Activator: org.eclipse.fx.ui.workbench.base.internal.Activator
 Bundle-ActivationPolicy: lazy
