@@ -173,6 +173,10 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 		this.content.styleProperty().bind(zoomedFontStyle);
 		this.lineRulerArea.styleProperty().bind(zoomedFontStyle);
+		
+		getSkinnable().fontZoomFactorProperty().addListener((x, o, n)->{
+			this.sortedLineRulerFlows.forEach(LineRuler::requestLayout);
+		});
 
 		this.contentArea = new ScrollbarPane<>();
 
