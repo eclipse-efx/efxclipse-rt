@@ -96,7 +96,7 @@ public class ContentProposalPopup implements IContentAssistListener {
 		this.stage.get().setOnShowing(this::subscribe);
 		this.stage.get().setOnHidden(this::unsubscribe);
 
-		this.stage.get().show(this.viewer.getTextWidget().getScene().getWindow());
+		this.stage.get().show(this.viewer.getTextWidget().getScene().getWindow(), position.getX(), position.getY(), this.viewer.getTextWidget().getFixedLineHeight());
 		this.proposalList.requestFocus();
 
 		this.chosenProposal = null;
