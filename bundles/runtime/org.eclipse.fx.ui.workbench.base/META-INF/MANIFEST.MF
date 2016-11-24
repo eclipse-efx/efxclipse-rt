@@ -40,5 +40,6 @@ Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.MementoCF.xml,
  OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.ModelServiceImpl.xml,
  OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.EObjectAdapterProvider.xml,
- OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.CommandServiceImplCF.xml
+ OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.CommandServiceImplCF.xml,
+ OSGI-INF/services/org.eclipse.fx.ui.workbench.base.internal.AppMementoCF.xml
 Bundle-Vendor: Eclipse.org
