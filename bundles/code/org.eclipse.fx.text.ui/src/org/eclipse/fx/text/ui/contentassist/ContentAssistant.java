@@ -12,7 +12,9 @@ package org.eclipse.fx.text.ui.contentassist;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.eclipse.fx.core.ThreadSynchronize;
 import org.eclipse.fx.core.text.SourceTextEditActions;
@@ -29,17 +31,24 @@ import javafx.geometry.Point2D;
 public class ContentAssistant implements IContentAssistant {
 	private final Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer;
 	private ITextViewer fViewer;
-	private ContentProposalPopup fProposalPopup;
+//	private ContentProposalPopup fProposalPopup;
 	private ContextInformationPopup fContextInfoPopup;
 	private final ThreadSynchronize threadSynchnronize;
 	private final IContextInformationValidator validator;
 
 	private boolean directlyApplySingleMatch;
-
+	
+	private LazyInitReference<ContentProposalPopup> fProposalPopup = new LazyInitReference<>();
+	
 	public ContentAssistant(IContextInformationValidator validator, ThreadSynchronize threadSynchnronize, Function<ContentAssistContextData, List<ICompletionProposal>> proposalComputer) {
 		this.validator = validator;
 		this.threadSynchnronize = threadSynchnronize;
 		this.proposalComputer = proposalComputer;
+	}
+	
+	@Override
+	public void configureWindowSize(Supplier<Point2D> windowSizeRetriever, Consumer<Point2D> windowSizePersister) {
+		this.fProposalPopup.init(r -> r.configureWindowSize(windowSizeRetriever, windowSizePersister));
 	}
 
 	public void setDirectlyApplySingleMatch(boolean directlyApplySingleMatch) {
@@ -50,7 +59,8 @@ public class ContentAssistant implements IContentAssistant {
 	public void install(ITextViewer textViewer) {
 		if( this.fViewer == null ) {
 			this.fViewer = textViewer;
-			this.fProposalPopup = new ContentProposalPopup(this.threadSynchnronize, this, textViewer, this.proposalComputer);
+			this.fProposalPopup.setFactory(()->new ContentProposalPopup(this.threadSynchnronize, this, textViewer, this.proposalComputer));
+//			this.fProposalPopup = new ContentProposalPopup(this.threadSynchnronize, this, textViewer, this.proposalComputer);
 			this.fViewer.subscribeAction(this::handleAction);
 			this.fContextInfoPopup = new ContextInformationPopup(validator, textViewer);
 		}
@@ -75,7 +85,7 @@ public class ContentAssistant implements IContentAssistant {
 
 				Point2D coords = this.fViewer.getTextWidget().localToScreen(p);
 
-				Optional<ICompletionProposal> chosenProposal = this.fProposalPopup.displayProposals(proposals, this.fViewer.getTextWidget().getCaretOffset(), coords);
+				Optional<ICompletionProposal> chosenProposal = this.fProposalPopup.get().displayProposals(proposals, this.fViewer.getTextWidget().getCaretOffset(), coords);
 
 				chosenProposal.ifPresent(proposal->{
 					IDocument document = this.fViewer.getDocument();

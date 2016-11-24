@@ -173,7 +173,7 @@ public class SimpleSourceTextEditorBuilder {
 		}
 
 		editor.setPartitioner(new FastPartitioner(new PartitionerImpl(this), contentTypes.toArray(new String[0])));
-		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(threadSynchronize, input, new ReconcilerImpl(this), proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter, searchProvider, navigationProvider, editorOpener, behaviorContributor, null));
+		editor.setSourceViewerConfiguration(new DefaultSourceViewerConfiguration(threadSynchronize, input, new ReconcilerImpl(this), null, proposalComputer, annotationModel, annotationPresenter, hoverInformationProvider, completionProposalPresenter, searchProvider, navigationProvider, editorOpener, behaviorContributor, null));
 
 		return editor;
 	}

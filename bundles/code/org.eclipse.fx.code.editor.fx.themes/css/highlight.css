@@ -97,6 +97,17 @@
 	-fx-border-width: thin;
 }
 
+.resize-popup-pane {
+	-fx-background-color: rgba(20,20,20,0.7); 
+	-fx-background-radius: 4px;
+	-efx-resize-handle-size: 7px;
+}
+
+.content-proposal-container .split-pane .split-pane-divider {
+	-fx-background-color: transparent;
+}
+
+
 .styled-text-hover {
 /*  -fx-background-color: #ecebec;
 	-fx-background-radius: 5;

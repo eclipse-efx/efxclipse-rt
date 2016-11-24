@@ -34,8 +34,12 @@ import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 
 import javafx.beans.property.SetProperty;
+import javafx.geometry.Point2D;
 
 public abstract class SourceViewerConfiguration {
+	private Point2D hoverWindowSize = new Point2D(600, 400);
+	private Point2D proposalWindowSize = new Point2D(600, 400);
+	
 	private IUndoManager undoManager;
 
 	public String getConfiguredDocumentPartitioning(ISourceViewer sourceViewer) {
@@ -47,7 +51,6 @@ public abstract class SourceViewerConfiguration {
 		reconciler.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
 		return reconciler;
 	}
-
 
 	public abstract String getStyleclassName();
 
@@ -108,5 +111,19 @@ public abstract class SourceViewerConfiguration {
 
 	public TriggerActionMapping getOverrideMapping() {
 		return null;
+	}
+	
+	
+	
+	public Point2D getHoverWindowSize() {
+		return hoverWindowSize;
+	}
+	public void storeHoverWindowSize(Point2D size) {
+	}
+	
+	public Point2D getProposalWindowSize() {
+		return proposalWindowSize;
+	}
+	public void storeProposalWindowSize(Point2D size) {
 	}
 }

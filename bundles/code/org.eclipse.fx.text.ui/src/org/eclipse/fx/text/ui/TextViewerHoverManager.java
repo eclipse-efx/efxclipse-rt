@@ -13,6 +13,8 @@ package org.eclipse.fx.text.ui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import org.eclipse.fx.text.hover.DocumentHoverProvider;
@@ -84,6 +86,11 @@ public class TextViewerHoverManager {
 		this.root.getStyleClass().add("styled-text-hover");
 		this.popup.getScene().setRoot(root);
 	}
+	
+	public void configureWindowSize(Supplier<Point2D> windowSizeRetriever, Consumer<Point2D> windowSizePersister) {
+		this.windowPresenter.configureWindowSize(windowSizeRetriever, windowSizePersister);
+	}
+
 
 	public TextViewer getTextViewer() {
 		return this.textViewer;

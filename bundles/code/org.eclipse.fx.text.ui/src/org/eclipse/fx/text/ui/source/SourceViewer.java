@@ -179,6 +179,8 @@ public class SourceViewer extends TextViewer implements ISourceViewer, ISourceVi
 		getTextWidget().setQuickLinkCallback(configuration.getQuicklinkCallback());
 
 		this.assistant = configuration.getContentAssist();
+		
+		configureHoverSize(configuration::getHoverWindowSize, configuration::storeHoverWindowSize);
 	}
 
 	@Override
