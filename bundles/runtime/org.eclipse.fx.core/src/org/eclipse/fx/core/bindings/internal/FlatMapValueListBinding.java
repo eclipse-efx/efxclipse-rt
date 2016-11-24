@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.fx.core.bindings.internal;
 
-import java.util.Set;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -35,7 +35,7 @@ public class FlatMapValueListBinding<A, B> extends ListBinding<B> {
 	}
 
 	private Observable[] computeDependencies() {
-		Set<Observable> toWatch = this.source.stream().map(this.map).collect(Collectors.toSet());
+		List<ObservableList<?>> toWatch = this.source.stream().map(this.map).collect(Collectors.toList());
 		toWatch.add(this.source);
 		return toWatch.toArray(new Observable[0]);
 	}
