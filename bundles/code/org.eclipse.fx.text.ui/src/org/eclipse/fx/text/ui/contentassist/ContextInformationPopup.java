@@ -21,9 +21,12 @@ import org.eclipse.fx.ui.controls.styledtext.VerifyEvent;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.PopupWindow;
@@ -121,10 +124,9 @@ class ContextInformationPopup implements IContentAssistListener {
 		this.fContextInfoPopup = new PopupWindow() {
 		};
 
-
-
 		this.fContextInfoPopup.setAutoFix(false);
-		this.fContextInfoPopup.setAutoHide(true);
+		// we set autohide to false, because it prevents click events on the parent window
+		this.fContextInfoPopup.setAutoHide(false);
 		viewer.getTextWidget().sceneProperty().addListener( e -> {
 			if( viewer.getTextWidget().getScene() != null ) {
 				this.fContextInfoPopup.getScene().getStylesheets().setAll(viewer.getTextWidget().getScene().getStylesheets());
@@ -140,16 +142,37 @@ class ContextInformationPopup implements IContentAssistListener {
 
 		this.fContextInfoPopup.setOnShowing(this::subscribe);
 		this.fContextInfoPopup.setOnHidden(this::unsubscribe);
-
+		
 	}
 
+	// we manually hide whenever a mouse pressed somewhere outside of the editor control occurs
+	private EventHandler<MouseEvent> mousePressed = me -> {
+		Bounds b = this.fViewer.getTextWidget().getBoundsInLocal();
+		Bounds bScreen = this.fViewer.getTextWidget().localToScreen(b);
+		if (bScreen.contains(me.getScreenX(), me.getScreenY())) {
+			// click within text widget -> no hide
+		}
+		else {
+			this.fContextInfoPopup.hide();
+		}
+	};
+	
+	// we manually hide whenever the stage loses its focus
+	private ChangeListener<Boolean> stageFocusChanged = (x, o, n) -> {
+		if (!n) {
+			this.fContextInfoPopup.hide();
+		}
+	};
+	
 	private void subscribe(Event e) {
 		this.fViewer.getTextWidget().caretOffsetProperty().addListener(this.selectionChange);
-//		this.viewer.getTextWidget().caretOffsetProperty().addListener(this.selectionChange);
-//		this.viewer.getTextWidget().getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, this.mouseEvent);
+		this.fViewer.getTextWidget().getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, this.mousePressed);
+		this.fViewer.getTextWidget().getScene().getWindow().focusedProperty().addListener(this.stageFocusChanged);
 	}
 	private void unsubscribe(Event e) {
 		this.fViewer.getTextWidget().caretOffsetProperty().removeListener(this.selectionChange);
+		this.fViewer.getTextWidget().getScene().removeEventFilter(MouseEvent.MOUSE_PRESSED, this.mousePressed);
+		this.fViewer.getTextWidget().getScene().getWindow().focusedProperty().removeListener(this.stageFocusChanged);
 	}
 
 	private void onSelectionChange(Observable x, Number oldSelection, Number newSelection) {
