@@ -33,7 +33,7 @@ public class FlatMapListBinding<A, B> extends ListBinding<B> {
 	}
 
 	private Observable[] computeDependencies() {
-		List<ObservableList<?>> toWatch = this.source.stream().map(this.map).collect(Collectors.toList());
+		List<Observable> toWatch = this.source.stream().map(this.map).collect(Collectors.toList());
 		toWatch.add(this.source);
 		return toWatch.toArray(new Observable[0]);
 	}
