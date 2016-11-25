@@ -424,13 +424,10 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 
 	@Override
 	public Point2D getHoverWindowSize() {
-		System.err.println("####################");
 		if (appMemento == null) return super.getHoverWindowSize();
 		double width = appMemento.get(KEY_HOVER_WINDOW_WIDTH, 600d);
 		double height = appMemento.get(KEY_HOVER_WINDOW_HEIGHT, 400d);
-		Point2D result = new Point2D(width, height);
-		System.err.println("READ HOVER " + result);
-		return result;
+		return new Point2D(width, height);
 	}
 	
 	@Override
@@ -439,7 +436,6 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			appMemento.put(KEY_HOVER_WINDOW_WIDTH, size.getX());
 			appMemento.put(KEY_HOVER_WINDOW_HEIGHT, size.getY());
 		}
-		System.err.println("STORE HOVER " + size);
 	}
 	
 	@Override
@@ -447,9 +443,7 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 		if (appMemento == null) return super.getProposalWindowSize();
 		double width = appMemento.get(KEY_PROPOSAL_WINDOW_WIDTH, 600d);
 		double height = appMemento.get(KEY_PROPOSAL_WINDOW_HEIGHT, 400d);
-		Point2D result = new Point2D(width, height);		
-		System.err.println("READ PROPOSAL " + result);
-		return result;
+		return new Point2D(width, height);
 	}
 	
 	@Override
@@ -458,6 +452,5 @@ public class DefaultSourceViewerConfiguration extends SourceViewerConfiguration 
 			appMemento.put(KEY_PROPOSAL_WINDOW_WIDTH, size.getX());
 			appMemento.put(KEY_PROPOSAL_WINDOW_HEIGHT, size.getY());
 		}
-		System.err.println("STORE PROPOSAL " + size);
 	}
 }

@@ -3,7 +3,6 @@ package org.eclipse.fx.text.ui.hover.internal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -12,28 +11,24 @@ import org.eclipse.fx.text.hover.DefaultHoverInfoType;
 import org.eclipse.fx.text.hover.HoverInfo;
 import org.eclipse.fx.text.ui.hover.HoverPresenter;
 import org.eclipse.fx.text.ui.hover.HoverWindowPresenter;
+import org.eclipse.fx.ui.controls.styledtext.StyledTextArea;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Control;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
-import javafx.stage.Screen;
-import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 
 	private List<HoverPresenter> presenters = new ArrayList<>();
 
-	private final Control parent;
+	private final StyledTextArea parent;
 
 	private final ResizeablePopupWindow popup;
 	private final VBox root;
@@ -42,28 +37,26 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 	
 	private boolean preventHide = false;
 
-	private Consumer<Point2D> windowSizePersister;
-	private Supplier<Point2D> windowSizeRetriever;
-	
-	
-	private AtomicReference<Boolean> currentScheduledHide = new AtomicReference<>(true);
+	private volatile Timeline hideTimeline;
 	private void scheduleHide(long delay) {
-		this.currentScheduledHide.set(true);
-		Timeline t = new Timeline(new KeyFrame(Duration.millis(delay), (a) -> {
-			if (preventHide) return;
-			if (this.currentScheduledHide.get()) {
+		Timeline t = new Timeline();
+		t.getKeyFrames().add(new KeyFrame(Duration.millis(delay), (a) -> {
+			if (this.preventHide) return;
+			if (t == this.hideTimeline) {
 				DefaultHoverWindowPresenter.this.popup.hide();
 			}
 		}));
+		this.hideTimeline = t;
 		t.play();
 	}
 	private void cancelScheduledHide() {
-		this.currentScheduledHide.set(false);
+		if (this.hideTimeline != null) {
+			this.hideTimeline.stop();
+		}
+		this.hideTimeline = null;
 	}
 
-	
-	
-	public DefaultHoverWindowPresenter(Control parent) {
+	public DefaultHoverWindowPresenter(StyledTextArea parent) {
 		this.parent = parent;
 		this.root = new VBox();
 		this.popup = new ResizeablePopupWindow(root);
@@ -77,19 +70,10 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 				this.popup.getScene().getStylesheets().clear();
 			}
 		});
-		
+		this.popup.getScene().getRoot().setOnMouseExited(this::onMouseExited);
+		this.popup.getScene().getRoot().setOnMouseEntered(this::onMouseEntered);
 		this.root.setSpacing(3);
-		this.root.getStyleClass().add("styled-text-hover");
-		//this.popup.getScene().setRoot(this.root);
-//		this.popup.setAnchorLocation(AnchorLocation.CONTENT_BOTTOM_LEFT);
-		
-		
-		this.popup.setOnShowing(this::onShowing);
-		this.popup.setOnShown(this::onShown);
-		
-		this.root.setOnMouseEntered(this::onMouseEntered);
-		this.root.setOnMouseExited(this::onMouseExited);
-		
+		this.root.getStyleClass().add("styled-text-hover"); //$NON-NLS-1$
 	}
 	
 	public void configureWindowSize(Supplier<Point2D> windowSizeRetriever, Consumer<Point2D> windowSizePersister) {
@@ -98,60 +82,13 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 	
 	private void onMouseEntered(MouseEvent event) {
 		cancelScheduledHide();
-		preventHide = true;
-		
-		setDisableOnWebViews(root, false);
+		setDisableOnWebViews(this.root, false);
 	}
 	private void onMouseExited(MouseEvent event) {
-		preventHide = false;
-		
-		setDisableOnWebViews(root, true);
+		scheduleHide(500);
+		setDisableOnWebViews(this.root, true);
 	}
 	
-	private void onShowing(WindowEvent event) {
-		// fix popup size to stay on screen
-		
-		
-		
-		Rectangle2D popupBounds = new Rectangle2D( this.popup.getX(), this.popup.getY(), this.popup.getWidth(), this.popup.getHeight());
-		ObservableList<Screen> screens = Screen.getScreensForRectangle( this.popup.getX(), this.popup.getY(), this.popup.getWidth(), this.popup.getHeight());
-		System.err.println(popupBounds);
-		System.err.println(screens);
-		
-		Optional<Screen> popupScreen = screens.stream().filter(s -> s.getBounds().contains(popup.getX(), popup.getY())).findFirst();
-		
-		
-		if (popupScreen.isPresent()) {
-			Screen screen = popupScreen.get();
-			
-			boolean isOk = screen.getBounds().contains(popupBounds);
-			
-			if (!isOk) {
-//				System.err.println("Popup: needs fixing!!");
-				if (!screen.getBounds().contains(this.popup.getX(), this.popup.getY() + this.popup.getHeight())) {
-//					System.err.println("Popup: needs height adjustment");
-					double adjustedHeight = screen.getBounds().getMaxY() - this.popup.getY();
-					System.err.println("Popup: adjusted height = " + adjustedHeight);
-					this.root.setPrefHeight(adjustedHeight);
-				}
-				if (!screen.getBounds().contains(this.popup.getX() + this.popup.getWidth(), this.popup.getY())) {
-//					System.err.println("Popup: needs x adjustment");
-					double adjustedX = screen.getBounds().getMaxX() - this.popup.getWidth();
-//					System.err.println("Popup: adjusted X = " + adjustedX);
-					this.popup.setX(adjustedX);
-				}
-			}
-			else {
-//				System.err.println("Popup: perfectly visible");
-			}
-		}
-				
-	}
-	private void onShown(WindowEvent event) {
-		
-		
-	}
-
 	private Optional<HoverPresenter> findPresenter(HoverInfo hover) {
 		return this.presenters.stream().filter(p->p.isApplicable(hover))
 				.sorted((a,b)->b.getOrder()-a.getOrder())
@@ -218,7 +155,7 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 
 
 		this.currentVisible = hovers;
-		setDisableOnWebViews(root, true);
+		setDisableOnWebViews(this.root, true);
 	}
 
 	void setDisableOnWebViews(Node cur, boolean state) {
@@ -232,10 +169,9 @@ public class DefaultHoverWindowPresenter implements HoverWindowPresenter {
 	
 	@Override
 	public void show(Point2D screenAnchor, Bounds screenBounds, List<HoverInfo> hover) {
-		System.err.println("SHOW!!!");
 		cancelScheduledHide();
 		populate(hover);
-		this.popup.show(this.parent.getScene().getWindow(), screenAnchor.getX(), screenAnchor.getY());
+		this.popup.show(this.parent.getScene().getWindow(), screenAnchor.getX(), screenAnchor.getY(), parent.getFixedLineHeight());
 	}
 
 	@Override
