@@ -10,6 +10,7 @@
 *******************************************************************************/
 package org.eclipse.fx.text.ui.source;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
@@ -95,5 +96,7 @@ public interface ILineRulerAnnotationPresenter extends IAnnotationPresenter {
 	default void initialize(LineRuler lineRuler) {
 		// empty by default
 	}
+
+	default Optional<String> getStyleClass() { return Optional.empty(); }
 
 }

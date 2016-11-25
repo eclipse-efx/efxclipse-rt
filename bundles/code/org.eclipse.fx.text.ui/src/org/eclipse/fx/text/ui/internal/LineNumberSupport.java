@@ -1,6 +1,7 @@
 package org.eclipse.fx.text.ui.internal;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -34,12 +35,12 @@ public class LineNumberSupport implements IFeature {
 			this.nr = nr;
 		}
 		public int getNr() {
-			return nr;
+			return this.nr;
 		}
 
 		@Override
 		public Object getModel() {
-			return nr;
+			return this.nr;
 		}
 
 		@Override
@@ -47,7 +48,7 @@ public class LineNumberSupport implements IFeature {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + getOuterType().hashCode();
-			result = prime * result + nr;
+			result = prime * result + this.nr;
 			return result;
 		}
 		@Override
@@ -61,7 +62,7 @@ public class LineNumberSupport implements IFeature {
 			LineNrAnnotation other = (LineNrAnnotation) obj;
 			if (!getOuterType().equals(other.getOuterType()))
 				return false;
-			if (nr != other.nr)
+			if (this.nr != other.nr)
 				return false;
 			return true;
 		}
@@ -96,7 +97,7 @@ public class LineNumberSupport implements IFeature {
 
 		@Override
 		public DoubleProperty getWidth() {
-			return w;
+			return this.w;
 		}
 
 		@Override
@@ -121,6 +122,11 @@ public class LineNumberSupport implements IFeature {
 		@Override
 		public String toString() {
 			return "LineNrAP@" + hashCode(); //$NON-NLS-1$
+		}
+		
+		@Override
+		public Optional<String> getStyleClass() {
+			return Optional.of("line-number-ruler"); //$NON-NLS-1$
 		}
 
 	}
