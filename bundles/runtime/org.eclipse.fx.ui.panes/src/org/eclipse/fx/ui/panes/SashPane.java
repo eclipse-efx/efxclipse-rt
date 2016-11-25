@@ -10,17 +10,27 @@
  *******************************************************************************/
 package org.eclipse.fx.ui.panes;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.css.CssMetaData;
 import javafx.css.PseudoClass;
+import javafx.css.SimpleStyleableIntegerProperty;
+import javafx.css.StyleConverter;
+import javafx.css.Styleable;
+import javafx.css.StyleableProperty;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
@@ -40,6 +50,7 @@ import javafx.scene.layout.StackPane;
  * <p>
  * The relative sizes of the children may be specified using weights
  * </p>
+ *
  * @since 2.6.0
  */
 public class SashPane extends Region {
@@ -63,6 +74,42 @@ public class SashPane extends Region {
 			clearCache();
 		}
 	};
+
+	private static final CssMetaData<SashPane, Number> SASH_WIDTH = new CssMetaData<SashPane, Number>("-fx-sash-width", //$NON-NLS-1$
+			StyleConverter.getSizeConverter(), Integer.valueOf(8)) {
+
+		@Override
+		public boolean isSettable(SashPane node) {
+			return !node.sashWidthProperty().isBound();
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public StyleableProperty<Number> getStyleableProperty(SashPane node) {
+			return (StyleableProperty<Number>) node.sashWidthProperty();
+		}
+	};
+	@NonNull
+	private final IntegerProperty sashWidth = new SimpleStyleableIntegerProperty(SASH_WIDTH, this, "sashWidth", //$NON-NLS-1$
+			Integer.valueOf(8));
+
+	private static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
+
+	static {
+		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<>(Region.getClassCssMetaData());
+		styleables.add(SASH_WIDTH);
+		STYLEABLES = Collections.unmodifiableList(styleables);
+	}
+
+	public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+		return STYLEABLES;
+	}
+
+	@Override
+	public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
+		return getClassCssMetaData();
+	}
+
 	private ObservableList<Node> items = FXCollections.observableArrayList();
 
 	private Sash draggedSash;
@@ -72,7 +119,6 @@ public class SashPane extends Region {
 	private double resize_2;
 	private double start;
 	private Bounds clientArea;
-	private int sashwidth = 10;
 
 	private double resize_total;
 
@@ -85,23 +131,28 @@ public class SashPane extends Region {
 	public SashPane() {
 		getStyleClass().add("sash-pane"); //$NON-NLS-1$
 		this.items.addListener((Change<? extends Node> c) -> {
-			while( c.next() ) {
-				if( c.wasRemoved() ) {
-					getChildren().removeIf( n -> n instanceof SashChild && c.getRemoved().contains(((SashChild)n).getChildren().get(0)) );
+			while (c.next()) {
+				if (c.wasRemoved()) {
+					getChildren().removeIf(n -> n instanceof SashChild
+							&& c.getRemoved().contains(((SashChild) n).getChildren().get(0)));
 				}
-				if( c.wasAdded() ) {
-					getChildren().addAll(c.getFrom(), c.getAddedSubList().stream().map( SashChild::new).collect(Collectors.toList()));
+				if (c.wasAdded()) {
+					getChildren().addAll(c.getFrom(),
+							c.getAddedSubList().stream().map(SashChild::new).collect(Collectors.toList()));
 				}
 			}
 			clearCache();
 		});
+		this.sashWidth.addListener( o -> {
+			clearCache();
+			requestLayout();
+		} );
 		pseudoClassStateChanged(HORIZONTAL, true);
 		pseudoClassStateChanged(VERTICAL, false);
-		this.horizontal.addListener( (o,ol,ne) -> {
+		this.horizontal.addListener((o, ol, ne) -> {
 			pseudoClassStateChanged(HORIZONTAL, ne.booleanValue());
 			pseudoClassStateChanged(VERTICAL, !ne.booleanValue());
-		} );
-
+		});
 	}
 
 	@Override
@@ -201,36 +252,36 @@ public class SashPane extends Region {
 		// int sashwidth = 10; //TODO sashes.length > 0 ? sashForm.SASH_WIDTH +
 		// sashes [0].getBorderWidth() * 2 : sashForm.SASH_WIDTH;
 		if (this.horizontal.get()) {
-			int width = (int) (ratios[0] * (w - this.sashes.length * this.sashwidth) / total);
+			int width = (int) (ratios[0] * (w - this.sashes.length * getSashWidth()) / total);
 			children.get(0).resizeRelocate(x, y, width, h);
 			x += width;
 			for (int i = 1; i < children.size() - 1; i++) {
-				this.sashes[i - 1].resizeRelocate(x, y, this.sashwidth, h);
-				x += this.sashwidth;
-				width = (int) (ratios[i] * (w - this.sashes.length * this.sashwidth) / total);
+				this.sashes[i - 1].resizeRelocate(x, y, getSashWidth(), h);
+				x += getSashWidth();
+				width = (int) (ratios[i] * (w - this.sashes.length * getSashWidth()) / total);
 				children.get(i).resizeRelocate(x, y, width, h);
 				x += width;
 			}
 			if (children.size() > 1) {
-				this.sashes[this.sashes.length - 1].resizeRelocate(x, y, this.sashwidth, h);
-				x += this.sashwidth;
+				this.sashes[this.sashes.length - 1].resizeRelocate(x, y, getSashWidth(), h);
+				x += getSashWidth();
 				width = w - x;
 				children.get(children.size() - 1).resizeRelocate(x, y, width, h);
 			}
 		} else {
-			int height = (int) (ratios[0] * (h - this.sashes.length * this.sashwidth) / total);
+			int height = (int) (ratios[0] * (h - this.sashes.length * getSashWidth()) / total);
 			children.get(0).resizeRelocate(x, y, w, height);
 			y += height;
 			for (int i = 1; i < children.size() - 1; i++) {
-				this.sashes[i - 1].resizeRelocate(x, y, w, this.sashwidth);
-				y += this.sashwidth;
-				height = (int) (ratios[i] * (h - this.sashes.length * this.sashwidth) / total);
+				this.sashes[i - 1].resizeRelocate(x, y, w, getSashWidth());
+				y += getSashWidth();
+				height = (int) (ratios[i] * (h - this.sashes.length * getSashWidth()) / total);
 				children.get(i).resizeRelocate(x, y, w, height);
 				y += height;
 			}
 			if (children.size() > 1) {
-				this.sashes[this.sashes.length - 1].resizeRelocate(x, y, w, this.sashwidth);
-				y += this.sashwidth;
+				this.sashes[this.sashes.length - 1].resizeRelocate(x, y, w, getSashWidth());
+				y += getSashWidth();
 				height = h - y;
 				children.get(children.size() - 1).resizeRelocate(x, y, w, height);
 			}
@@ -245,17 +296,16 @@ public class SashPane extends Region {
 		if (this.horizontal.get()) {
 			double delta = e.getScreenX() - this.start;
 
-
 			long newSize_1 = (long) (this.resize_1 + delta);
 			long newSize_2 = (long) (this.resize_2 - delta);
 
-			if( newSize_1 < DRAG_MINIMUM ) {
-				newSize_2 = (long)this.resize_total - DRAG_MINIMUM;
+			if (newSize_1 < DRAG_MINIMUM) {
+				newSize_2 = (long) this.resize_total - DRAG_MINIMUM;
 				newSize_1 = DRAG_MINIMUM;
 			}
 
-			if( newSize_2 < DRAG_MINIMUM ) {
-				newSize_1 = (long)this.resize_total - DRAG_MINIMUM;
+			if (newSize_2 < DRAG_MINIMUM) {
+				newSize_1 = (long) this.resize_total - DRAG_MINIMUM;
 				newSize_2 = DRAG_MINIMUM;
 			}
 
@@ -274,7 +324,8 @@ public class SashPane extends Region {
 			((SashFormData) data2).weight = (((long) newSize_2 << 16) + rectangle.width - 1) / rectangle.width;
 
 			this.c1.resize(newSize_1, rectangle.height);
-			this.c2.resizeRelocate(this.c1.getLayoutX() + newSize_1 + this.sashwidth, this.c2.getLayoutY(), newSize_2, rectangle.height);
+			this.c2.resizeRelocate(this.c1.getLayoutX() + newSize_1 + getSashWidth(), this.c2.getLayoutY(), newSize_2,
+					rectangle.height);
 			this.draggedSash.relocate(this.c1.getLayoutX() + newSize_1, this.draggedSash.getLayoutY());
 		} else {
 			double delta = e.getScreenY() - this.start;
@@ -296,7 +347,8 @@ public class SashPane extends Region {
 			((SashFormData) data2).weight = (((long) newSize_2 << 16) + rectangle.height - 1) / rectangle.height;
 
 			this.c1.resize(rectangle.width, newSize_1);
-			this.c2.resizeRelocate(this.c2.getLayoutX(), this.c1.getLayoutY() + newSize_1 + this.sashwidth, rectangle.width, newSize_2);
+			this.c2.resizeRelocate(this.c2.getLayoutX(), this.c1.getLayoutY() + newSize_1 + getSashWidth(),
+					rectangle.width, newSize_2);
 			this.draggedSash.relocate(this.draggedSash.getLayoutX(), this.c1.getLayoutY() + newSize_1);
 		}
 		requestLayout();
@@ -386,14 +438,13 @@ public class SashPane extends Region {
 	 * Answer the relative weight of each child in the SashForm.
 	 * </p>
 	 * <p>
-	 * The weight represents the percent of the total width (if SashForm has Horizontal
-	 * orientation) or total height (if SashForm has Vertical orientation) each
-	 * control occupies.
+	 * The weight represents the percent of the total width (if SashForm has
+	 * Horizontal orientation) or total height (if SashForm has Vertical
+	 * orientation) each control occupies.
 	 * </p>
 	 * <p>
-	 * The weights are returned in order of the creation of
-	 * the widgets (weight[0] corresponds to the weight of the first child
-	 * created).
+	 * The weights are returned in order of the creation of the widgets
+	 * (weight[0] corresponds to the weight of the first child created).
 	 * </p>
 	 *
 	 * @return the relative weight of each child
@@ -413,7 +464,8 @@ public class SashPane extends Region {
 	}
 
 	/**
-	 * @return Property defining if children are layed out in columns (<code>true</code>) or rows (<code>false</code>)
+	 * @return Property defining if children are layed out in columns
+	 *         (<code>true</code>) or rows (<code>false</code>)
 	 */
 	public final BooleanProperty horizontalProperty() {
 		return this.horizontal;
@@ -427,24 +479,50 @@ public class SashPane extends Region {
 	}
 
 	/**
-	 * Change the layout of children to columns (<code>true</code>) or rows (<code>false</code>)
+	 * Change the layout of children to columns (<code>true</code>) or rows
+	 * (<code>false</code>)
+	 *
 	 * @param horizontal
 	 */
 	public final void setHorizontal(final boolean horizontal) {
 		this.horizontalProperty().set(horizontal);
 	}
 
-//	public final ObjectProperty<Node> maximizedControlProperty() {
-//		return this.maximizedControl;
-//	}
-//
-//	public final Node getMaximizedControl() {
-//		return this.maximizedControlProperty().get();
-//	}
-//
-//	public final void setMaximizedControl(final Node maximizedControl) {
-//		this.maximizedControlProperty().set(maximizedControl);
-//	}
+	// public final ObjectProperty<Node> maximizedControlProperty() {
+	// return this.maximizedControl;
+	// }
+	//
+	// public final Node getMaximizedControl() {
+	// return this.maximizedControlProperty().get();
+	// }
+	//
+	// public final void setMaximizedControl(final Node maximizedControl) {
+	// this.maximizedControlProperty().set(maximizedControl);
+	// }
+
+	/**
+	 * @return width of the sash shown between items
+	 */
+	public final IntegerProperty sashWidthProperty() {
+		return this.sashWidth;
+	}
+
+	/**
+	 * @return the width of a sash
+	 */
+	public final int getSashWidth() {
+		return this.sashWidthProperty().get();
+	}
+
+	/**
+	 * Set the width of a sash
+	 *
+	 * @param sashWidth
+	 *            the width
+	 */
+	public final void setSashWidth(final int sashWidth) {
+		this.sashWidthProperty().set(sashWidth);
+	}
 
 	static class SashFormData {
 		public long weight;
@@ -453,7 +531,7 @@ public class SashPane extends Region {
 	static class Sash extends Region {
 		public Sash() {
 			getStyleClass().add("sash"); //$NON-NLS-1$
-//			setStyle("-fx-background-color: black;");
+			// setStyle("-fx-background-color: black;");
 			setManaged(false);
 			setMouseTransparent(false);
 		}
