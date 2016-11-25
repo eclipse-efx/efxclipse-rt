@@ -97,6 +97,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 
 	private LineHelper lineHelper;
 
+	private static final String CSS_CLASS_LINE_RULER_AREA = "line-ruler-area"; //$NON-NLS-1$
 	private static final String CSS_CLASS_LINE_RULER = "line-ruler"; //$NON-NLS-1$
 	private static final String CSS_CLASS_SPACER = "spacer"; //$NON-NLS-1$
 	private static final String CSS_LIST_VIEW = "list-view"; //$NON-NLS-1$
@@ -131,6 +132,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		this.rootContainer.setSpacing(0);
 
 		this.lineRulerArea = new HBox();
+		this.lineRulerArea.getStyleClass().setAll(CSS_CLASS_LINE_RULER_AREA);
 		// Align with ContentView insets!
 		this.lineRulerArea.setPadding(new Insets(0,0,0,0));
 		this.rootContainer.getChildren().add(this.lineRulerArea);
@@ -146,7 +148,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		});
 
 		Region spacer = new Region();
-		spacer.getStyleClass().addAll(CSS_CLASS_LINE_RULER, CSS_CLASS_SPACER);
+		spacer.getStyleClass().addAll(CSS_CLASS_SPACER);
 		spacer.setMinWidth(2);
 		spacer.setMaxWidth(2);
 		this.rootContainer.getChildren().add(spacer);
@@ -319,6 +321,11 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 			BiConsumer<Node, Set<Annotation>> populator = ap::updateNode;
 
 			LineRuler flow = new LineRuler(ap.getLayoutHint(), converter, needsPresentation, nodeFactory, populator);
+			
+			flow.getStyleClass().setAll(CSS_CLASS_LINE_RULER);
+			// add the styleclass from the provider
+			ap.getStyleClass().ifPresent(flow.getStyleClass()::add);
+			
 			// VerticalLineFlow<Integer, Annotation> flow = new
 			// VerticalLineFlow<Integer, Annotation>(converter,
 			// needsPresentation, nodeFactory, populator);
@@ -368,11 +375,6 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		};
 
 		this.sortedLineRulerFlows = FXCollections.observableArrayList();
-		this.sortedLineRulerFlows.addListener((ListChangeListener<LineRuler>) (c) -> {
-			for (LineRuler flow : this.sortedLineRulerFlows) {
-				flow.getStyleClass().setAll(CSS_CLASS_LINE_RULER);
-			}
-		});
 		FXBindUtil.uniMapBindList(this.sortedLineRulerPresenters, this.sortedLineRulerFlows, map);
 		FXBindUtil.uniMapBindList(this.sortedLineRulerFlows, this.lineRulerArea.getChildren(), (flow) -> (Node) flow);
 		this.sortedLineRulerFlows.addListener((ListChangeListener<? super LineRuler>) (c) -> {
@@ -438,7 +440,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 		
 		this.content.setOnDragOver(e -> {
 			Point2D coords = new Point2D(e.getX(), e.getY());
-			Optional<Integer> lineIndex = content.getLineIndex(coords);
+			Optional<Integer> lineIndex = this.content.getLineIndex(coords);
 
 			if (lineIndex.isPresent()) {
 				if (lineIndex.get() != -1) {
@@ -463,7 +465,7 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 				String insert = e.getDragboard().getString();
 
 				Point2D coords = new Point2D(e.getX(), e.getY());
-				Optional<Integer> lineIndex = content.getLineIndex(coords);
+				Optional<Integer> lineIndex = this.content.getLineIndex(coords);
 				if (lineIndex.isPresent() && lineIndex.get() != -1) {
 					getSkinnable().getContent().replaceTextRange(lineIndex.get(), 0, insert);
 					getSkinnable().setCaretOffset(lineIndex.get() + insert.length());
@@ -641,10 +643,10 @@ public class StyledTextSkin extends SkinBase<StyledTextArea> {
 	}
 
 	public int getVisibleLineCount() {
-		return scroller.visibleLineCountProperty().get();
+		return this.scroller.visibleLineCountProperty().get();
 	}
 
 	public Bounds getContentBounds() {
-		return content.getLayoutBounds();
+		return this.content.getLayoutBounds();
 	}
 }

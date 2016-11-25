@@ -22,7 +22,6 @@ import java.util.function.Function;
 import org.eclipse.fx.core.Util;
 import org.eclipse.fx.core.text.TextEditAction;
 import org.eclipse.fx.ui.controls.styledtext.StyledTextContent.TextChangeListener;
-import org.eclipse.fx.ui.controls.styledtext.behavior.StyledTextBehavior;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationPresenter;
 import org.eclipse.fx.ui.controls.styledtext.model.AnnotationProvider;
 import org.eclipse.fx.ui.controls.styledtext.skin.StyledTextSkin;
@@ -1744,11 +1743,20 @@ public class StyledTextArea extends Control {
 	public void paste() {
 		final Clipboard clipboard = Clipboard.getSystemClipboard();
 		if (clipboard.hasString()) {
-			final String text = clipboard.getString();
+			final String text = fix0TerminatedString(clipboard.getString());
 			if (text != null) {
 				insert(text);
 			}
 		}
+	}
+	
+	private static String fix0TerminatedString(String text) {
+		String result = text;
+		int nullIdx = text.indexOf(0); 
+		if(nullIdx>0) {
+			result = text.substring(0, nullIdx); 
+		}
+		return result;
 	}
 
 	/**
@@ -1905,6 +1913,6 @@ public class StyledTextArea extends Control {
 	 * @param action the action
 	 */
 	public void triggerAction(TextEditAction action) {
-		((StyledTextBehavior)((StyledTextSkin)getSkin()).getBehavior()).triggerAction(action);
+		((StyledTextSkin)getSkin()).getBehavior().triggerAction(action);
 	}
 }
