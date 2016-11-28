@@ -6,6 +6,7 @@
     ),
     linear-gradient(to right, derive(#ececec,55%), derive(#ececec,-5%));
    -fx-background-insets: 0, 0 1 0 1;
+   -fx-cursor: h-resize;
 }
 
 .sash-pane:vertical > .sash {
@@ -32,4 +33,5 @@
                     derive(#ececec,-5%) 100%
                 ));
 	-fx-background-insets: 0, 1 0 1 0;
+	-fx-cursor: v-resize;
 }
