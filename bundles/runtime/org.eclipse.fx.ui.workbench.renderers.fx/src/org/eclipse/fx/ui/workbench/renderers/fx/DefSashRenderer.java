@@ -318,7 +318,6 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		private static void setResizableWithParent(WLayoutedWidget widget) {
 			MUIElement domElement = widget.getDomElement();
 			if( domElement != null ) {
-				System.err.println(domElement);
 				SplitPane.setResizableWithParent((Node)widget.getStaticLayoutNode(), ! domElement.getTags().contains(WSash.TAG_NO_AUTO_RESIZE));
 			}
 		}
