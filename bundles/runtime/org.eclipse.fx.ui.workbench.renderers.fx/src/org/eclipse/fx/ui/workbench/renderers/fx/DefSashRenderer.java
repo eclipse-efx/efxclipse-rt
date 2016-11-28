@@ -53,6 +53,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 		if (container.getTags().contains(WSash.TAG_FIXED_LAYOUT)) {
 			return WFixedSashImpl.class;
 		} else if(Boolean.getBoolean("efxclipse.eclipse.compat.sash")) { //$NON-NLS-1$
+			System.err.println("======> CUSTOM IMPL");
 			return WResizableSashImpl_2.class;
 		} else {
 			return WResizableSashImpl.class;
@@ -314,9 +315,18 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			return getWidget();
 		}
 
+		private static void setResizableWithParent(WLayoutedWidget widget) {
+			MUIElement domElement = widget.getDomElement();
+			if( domElement != null ) {
+				System.err.println(domElement);
+				SplitPane.setResizableWithParent((Node)widget.getStaticLayoutNode(), ! domElement.getTags().contains(WSash.TAG_NO_AUTO_RESIZE));
+			}
+		}
+
 		@Override
 		public void addItem(WLayoutedWidget<MPartSashContainerElement> widget) {
 			SplitPane p = getWidget();
+			setResizableWithParent(widget);
 			p.getItems().add((Node) widget.getStaticLayoutNode());
 			this.items.add(widget);
 			updateDividers();
@@ -327,6 +337,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			SplitPane p = getWidget();
 			List<Node> l = new ArrayList<Node>();
 			for (WLayoutedWidget<MPartSashContainerElement> i : list) {
+				setResizableWithParent(i);
 				l.add((Node) i.getStaticLayoutNode());
 			}
 			p.getItems().addAll(index, l);
@@ -339,6 +350,7 @@ public class DefSashRenderer extends BaseSashRenderer<Node> {
 			SplitPane p = getWidget();
 			List<Node> l = new ArrayList<Node>();
 			for (WLayoutedWidget<MPartSashContainerElement> i : list) {
+				setResizableWithParent(i);
 				l.add((Node) i.getStaticLayoutNode());
 			}
 			p.getItems().addAll(l);

@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * Widget abstraction for sash
- * 
+ *
  * @param <N>
  *            the native widget
  */
@@ -65,8 +65,14 @@ public interface WSash<N> extends WLayoutedWidget<MPartSashContainer> {
 	public static final String FIXED_LAYOUT_GRAB_VERTICAL = "fx_layout_grab_vertical"; //$NON-NLS-1$
 
 	/**
+	 * A child of a sash tagged with {@link #TAG_NO_AUTO_RESIZE} will not resize
+	 * if its parent is growing shrinking
+	 */
+	public static final String TAG_NO_AUTO_RESIZE = "fx_no_auto_resize"; //$NON-NLS-1$
+
+	/**
 	 * Append a widget
-	 * 
+	 *
 	 * @param widget
 	 *            the widget
 	 */
@@ -79,7 +85,7 @@ public interface WSash<N> extends WLayoutedWidget<MPartSashContainer> {
 
 	/**
 	 * Append a list of widgets
-	 * 
+	 *
 	 * @param list
 	 *            the list of widgets
 	 */
@@ -87,7 +93,7 @@ public interface WSash<N> extends WLayoutedWidget<MPartSashContainer> {
 
 	/**
 	 * Insert items at the given index
-	 * 
+	 *
 	 * @param index
 	 *            the index
 	 * @param list
@@ -97,12 +103,12 @@ public interface WSash<N> extends WLayoutedWidget<MPartSashContainer> {
 
 	/**
 	 * Remove item
-	 * 
+	 *
 	 * @param widget
 	 *            the widget
 	 */
 	public void removeItem(@NonNull WLayoutedWidget<MPartSashContainerElement> widget);
-	
+
 	/**
 	 * Update the layout
 	 */
