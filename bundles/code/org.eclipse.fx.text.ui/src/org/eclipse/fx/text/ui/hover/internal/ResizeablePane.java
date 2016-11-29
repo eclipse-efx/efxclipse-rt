@@ -287,8 +287,8 @@ public class ResizeablePane extends Region {
 	private void resizeWindow(double x, double y, double width, double height) {
 		getWindow().setX(x);
 		getWindow().setY(y);
-		setMinWidth(width);
-		setMinHeight(height);
+		setMinWidth(Math.max(computeMinWidth(height), width));
+		setMinHeight(Math.max(computeMinHeight(width), height));
 		setPrefWidth(width);
 		setPrefHeight(height);
 		setMaxWidth(width);
