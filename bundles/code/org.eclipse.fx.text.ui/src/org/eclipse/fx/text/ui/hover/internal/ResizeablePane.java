@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ListBinding;
 import javafx.beans.property.DoubleProperty;
@@ -22,16 +21,12 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.stage.PopupWindow;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class ResizeablePane extends Region {
@@ -76,7 +71,7 @@ public class ResizeablePane extends Region {
 	
 	private ObjectProperty<Node> contentProperty = new SimpleObjectProperty<>(this, "content");
 	public ObjectProperty<Node> contentProperty() {
-		return contentProperty;
+		return this.contentProperty;
 	}
 	public void setContent(Node node) {
 		this.contentProperty().set(node);
@@ -101,22 +96,22 @@ public class ResizeablePane extends Region {
 	
 	@Override
 	protected double computeMinWidth(double height) {
-		return 2 * resizeHandleSize.get() + getContent().minWidth(height);
+		return 2 * this.resizeHandleSize.get() + getContent().minWidth(height);
 	}
 	
 	@Override
 	protected double computeMinHeight(double width) {
-		return 2 * resizeHandleSize.get() + getContent().minHeight(width);
+		return 2 * this.resizeHandleSize.get() + getContent().minHeight(width);
 	}
 	
 	@Override
 	protected double computePrefHeight(double width) {
-		return 2 * resizeHandleSize.get() + getContent().prefHeight(width);
+		return 2 * this.resizeHandleSize.get() + getContent().prefHeight(width);
 	}
 	
 	@Override
 	protected double computePrefWidth(double height) {
-		return 2 * resizeHandleSize.get() + getContent().prefWidth(height);
+		return 2 * this.resizeHandleSize.get() + getContent().prefWidth(height);
 	}
 	
 	private Node createHandle(Cursor cursor) {
@@ -141,12 +136,12 @@ public class ResizeablePane extends Region {
 		protected ObservableList<Node> computeValue() {
 			Node center = contentProperty().get();
 			if (center == null) {
-				return FXCollections.observableArrayList(resizeWest, resizeEast, resizeSouth, resizeNorth, 
-						resizeNorthWest, resizeNorthEast, resizeSouthWest, resizeSouthEast);
+				return FXCollections.observableArrayList(ResizeablePane.this.resizeWest, ResizeablePane.this.resizeEast, ResizeablePane.this.resizeSouth, ResizeablePane.this.resizeNorth, 
+						ResizeablePane.this.resizeNorthWest, ResizeablePane.this.resizeNorthEast, ResizeablePane.this.resizeSouthWest, ResizeablePane.this.resizeSouthEast);
 			}
 			else {
-				return FXCollections.observableArrayList(resizeWest, resizeEast, resizeSouth, resizeNorth, 
-						resizeNorthWest, resizeNorthEast, resizeSouthWest, resizeSouthEast,
+				return FXCollections.observableArrayList(ResizeablePane.this.resizeWest, ResizeablePane.this.resizeEast, ResizeablePane.this.resizeSouth, ResizeablePane.this.resizeNorth, 
+						ResizeablePane.this.resizeNorthWest, ResizeablePane.this.resizeNorthEast, ResizeablePane.this.resizeSouthWest, ResizeablePane.this.resizeSouthEast,
 						center);
 			}
 		}
@@ -160,10 +155,8 @@ public class ResizeablePane extends Region {
 	
 	private void initialize() {
 		this.getStyleClass().add("resize-popup-pane"); //$NON-NLS-1$
-		//this.setStyle("-fx-background-color: rgba(255,0,0,0.7); -fx-background-radius: 5px");
-//		this.setStyle("-fx-background-color: rgba(20,20,20,0.7); -fx-background-radius: 4px;");
 		
-		this.setBackground(new Background(new BackgroundFill(Color.RED.deriveColor(1, 1, 1, 0.7), new CornerRadii(this. resizeHandleSize.get()), Insets.EMPTY)));
+		this.setBackground(new Background(new BackgroundFill(Color.rgb(20, 20, 20, 0.7), new CornerRadii(this. resizeHandleSize.get()), Insets.EMPTY)));
 		
 		this.resizeWest = createHandle(Cursor.W_RESIZE);
 		this.resizeEast = createHandle(Cursor.E_RESIZE);
@@ -205,41 +198,41 @@ public class ResizeablePane extends Region {
 		public void handle(MouseEvent e) {
 			if (MouseEvent.MOUSE_PRESSED == e.getEventType()) {
 				System.err.println("BEGIN");
-				dragBeginX = e.getScreenX();
-				dragBeginY = e.getScreenY();
+				this.dragBeginX = e.getScreenX();
+				this.dragBeginY = e.getScreenY();
 				
-				x = getWindow().getX();
-				y = getWindow().getY();
-				width = getWidth();
-				height = getHeight();
+				this.x = getWindow().getX();
+				this.y = getWindow().getY();
+				this.width = getWidth();
+				this.height = getHeight();
 						
-				if (e.getSource() == resizeNorth) {
-					rN = true;
+				if (e.getSource() == ResizeablePane.this.resizeNorth) {
+					this.rN = true;
 				}
-				else if (e.getSource() == resizeNorthEast) {
-					rN = true;
-					rE = true;
+				else if (e.getSource() == ResizeablePane.this.resizeNorthEast) {
+					this.rN = true;
+					this.rE = true;
 				}
-				else if (e.getSource() == resizeEast) {
-					rE = true;
+				else if (e.getSource() == ResizeablePane.this.resizeEast) {
+					this.rE = true;
 				}
-				else if (e.getSource() == resizeSouthEast) {
-					rS = true;
-					rE = true;
+				else if (e.getSource() == ResizeablePane.this.resizeSouthEast) {
+					this.rS = true;
+					this.rE = true;
 				}
-				else if (e.getSource() == resizeSouth) {
-					rS = true;
+				else if (e.getSource() == ResizeablePane.this.resizeSouth) {
+					this.rS = true;
 				}
-				else if (e.getSource() == resizeSouthWest) {
-					rS = true;
-					rW = true;
+				else if (e.getSource() == ResizeablePane.this.resizeSouthWest) {
+					this.rS = true;
+					this.rW = true;
 				}
-				else if (e.getSource() == resizeWest) {
-					rW = true;
+				else if (e.getSource() == ResizeablePane.this.resizeWest) {
+					this.rW = true;
 				}
-				else if (e.getSource() == resizeNorthWest) {
-					rW = true;
-					rN = true;
+				else if (e.getSource() == ResizeablePane.this.resizeNorthWest) {
+					this.rW = true;
+					this.rN = true;
 				}
  			}
 			else if (MouseEvent.MOUSE_DRAGGED == e.getEventType()) {
@@ -250,19 +243,19 @@ public class ResizeablePane extends Region {
 				double minWidth = getContent().minWidth(-1) + ResizeablePane.this.resizeHandleSize.get() * 2;
 				double minHeight = getContent().minHeight(-1) + ResizeablePane.this.resizeHandleSize.get() * 2;
 //				System.err.println( "=> " + minWidth + " / " + minHeight);
-				if (rS) {
+				if (this.rS) {
 					height += deltaY;
 					if (height < minHeight) {
 						height = minHeight;
 					}
 				}
-				if (rE) {
+				if (this.rE) {
 					width += deltaX;
 					if (width < minWidth) {
 						width = minWidth;
 					}
 				}
-				if (rN) {
+				if (this.rN) {
 					y += deltaY;
 					height -= deltaY;
 					if (height < minHeight) {
@@ -270,7 +263,7 @@ public class ResizeablePane extends Region {
 						y = this.y + this.height - minHeight;
 					}
 				}
-				if (rW) {
+				if (this.rW) {
 					x += deltaX;
 					width -= deltaX;
 					if (width < minWidth) {
@@ -285,15 +278,13 @@ public class ResizeablePane extends Region {
 				resizeWindow(x, y, width, height);
 			}
 			else if (MouseEvent.MOUSE_RELEASED == e.getEventType()) {
-				System.err.println("END");
-				rN = false; rS = false; rE = false; rW = false;
+				this.rN = false; this.rS = false; this.rE = false; this.rW = false;
 			}
 		}
 		
 	}
 	
 	private void resizeWindow(double x, double y, double width, double height) {
-		System.err.println("resizeWindow " + width);
 		getWindow().setX(x);
 		getWindow().setY(y);
 		setMinWidth(width);
@@ -312,14 +303,14 @@ public class ResizeablePane extends Region {
 		final double handleSize = this.resizeHandleSize.get();
 		final double width = getWidth();
 		final double height = getHeight();
-		resizeWest.resizeRelocate(0, handleSize, handleSize, height - handleSize);
-		resizeNorthWest.resizeRelocate(0, 0, handleSize, handleSize);
-		resizeNorth.resizeRelocate(handleSize, 0, width - handleSize, handleSize);
-		resizeNorthEast.resizeRelocate(width - handleSize, 0, handleSize, handleSize);
-		resizeEast.resizeRelocate(width - handleSize, handleSize, handleSize, height - handleSize);
-		resizeSouthEast.resizeRelocate(width - handleSize, height - handleSize, handleSize, handleSize);
-		resizeSouth.resizeRelocate(handleSize, height - handleSize, width - handleSize, handleSize);
-		resizeSouthWest.resizeRelocate(0, height - handleSize, handleSize, handleSize);
+		this.resizeWest.resizeRelocate(0, handleSize, handleSize, height - handleSize);
+		this.resizeNorthWest.resizeRelocate(0, 0, handleSize, handleSize);
+		this.resizeNorth.resizeRelocate(handleSize, 0, width - handleSize, handleSize);
+		this.resizeNorthEast.resizeRelocate(width - handleSize, 0, handleSize, handleSize);
+		this.resizeEast.resizeRelocate(width - handleSize, handleSize, handleSize, height - handleSize);
+		this.resizeSouthEast.resizeRelocate(width - handleSize, height - handleSize, handleSize, handleSize);
+		this.resizeSouth.resizeRelocate(handleSize, height - handleSize, width - handleSize, handleSize);
+		this.resizeSouthWest.resizeRelocate(0, height - handleSize, handleSize, handleSize);
 		Node center = contentProperty().get();
 		if (center != null) {
 			center.resizeRelocate(handleSize, handleSize, width - 2 * handleSize, height - 2 * handleSize);
