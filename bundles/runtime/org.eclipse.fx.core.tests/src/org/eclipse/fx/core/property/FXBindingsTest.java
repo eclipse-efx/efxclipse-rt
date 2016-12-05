@@ -629,6 +629,13 @@ public class FXBindingsTest {
 		}, flatMap.toArray());
 	}
 
+	@Test
+	public void testBindContent() {
+		List<String> target = new ArrayList<>();
+		ObservableList<Integer> sourceList = FXCollections.observableArrayList(1);
+		FXBindings.bindContent(target, sourceList,  i -> ""+i);
+		sourceList.remove(0);
+	}
 
 	@Test
 	public void testBindingPaddedContent() {
