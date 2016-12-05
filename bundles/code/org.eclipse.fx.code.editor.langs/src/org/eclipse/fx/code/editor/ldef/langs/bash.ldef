@@ -1,0 +1,44 @@
+package org.eclipse.fx.code.editor.ldef.langs
+
+sh {
+	partitioning {
+		partition __dftl_partition_content_type
+		partition __sh_single_line_comment
+		partition __sh_string
+		rule {
+			single_line __sh_single_line_comment 	"#"
+			single_line __sh_string 				"'"	 	=> "'" escaped by "\\"
+			single_line __sh_string 				'"' 	=> '"' escaped by "\\"
+		}
+	}
+	lexical_highlighting {
+		rule __dftl_partition_content_type whitespace javawhitespace {
+			default sh_default
+			sh_number {
+				pattern "\\d" containing "[\\d|\\.]"
+			}
+			sh_common_executables {
+				keywords [ "rm", "cd", "rmdir", "java", "javac", "echo", "jlink" ]
+			}
+		}
+		rule __sh_single_line_comment {
+			default sh_doc_default
+		}
+		rule __sh_string {
+			default sh_string
+		}
+		token_def {
+			sh_default "-source-editor-code";
+			sh_common_executables "-source-editor-code" bold;
+			sh_doc_default "-source-editor-doc";
+			sh_string "-source-editor-string";
+		}
+	}
+//	integration {
+//		javafx {
+//			java "org.eclipse.fx.code.editor.langs.codegen.fx.js" {
+//				project : "org.eclipse.fx.code.editor.langs.codegen.fx"
+//			}
+//		}
+//	}
+}

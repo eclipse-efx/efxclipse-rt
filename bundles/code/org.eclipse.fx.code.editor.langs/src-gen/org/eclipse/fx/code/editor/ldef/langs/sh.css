@@ -1,0 +1,17 @@
+.styled-text-area .sh.sh_default {
+	-styled-text-color: -source-editor-code;
+}
+
+.styled-text-area .sh.sh_common_executables {
+	-styled-text-color: -source-editor-code;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .sh.sh_doc_default {
+	-styled-text-color: -source-editor-doc;
+}
+
+.styled-text-area .sh.sh_string {
+	-styled-text-color: -source-editor-string;
+}
+

@@ -1,0 +1,100 @@
+{
+  "$gtype": "LanguageDef",
+  "fileSuffix": "sh",
+  "partitionList": [
+    {
+      "$gtype": "Partition",
+      "name": "__dftl_partition_content_type",
+      "ruleList": [],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "sh_default",
+          "tokenScannerList": []
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "sh_number",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_PatternRule",
+              "containmentPattern": "[\\d|\\.]",
+              "startLength": 0,
+              "startPattern": "\\d"
+            }
+          ]
+        },
+        {
+          "$gtype": "Token",
+          "defaultToken": false,
+          "name": "sh_common_executables",
+          "tokenScannerList": [
+            {
+              "$gtype": "TokenScanner_Keyword",
+              "keywordList": [
+                "rm",
+                "cd",
+                "rmdir",
+                "java",
+                "javac",
+                "echo",
+                "jlink"
+              ]
+            }
+          ]
+        }
+      ],
+      "whitespace": {
+        "$gtype": "PartitionWhiteSpace",
+        "characterList": [],
+        "javawhiteSpace": true
+      }
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__sh_single_line_comment",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "startSeq": "#"
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "sh_doc_default",
+          "tokenScannerList": []
+        }
+      ]
+    },
+    {
+      "$gtype": "Partition",
+      "name": "__sh_string",
+      "ruleList": [
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\u0027",
+          "escapedBy": "\\",
+          "startSeq": "\u0027"
+        },
+        {
+          "$gtype": "PartitionRule_SingleLine",
+          "endSeq": "\"",
+          "escapedBy": "\\",
+          "startSeq": "\""
+        }
+      ],
+      "tokenList": [
+        {
+          "$gtype": "Token",
+          "defaultToken": true,
+          "name": "sh_string",
+          "tokenScannerList": []
+        }
+      ]
+    }
+  ]
+}
